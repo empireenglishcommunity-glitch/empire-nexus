@@ -6,7 +6,9 @@ A Complete Learning Operating System — **From Zero to Native-Like Fluency**
 American Accent Mastery Through System-Driven Execution
 *Instructional Architecture & Implementation Blueprint*
 
-> This document is the execution-ready blueprint for the Empire English Community System. Every element is designed to be implemented, operated, and scaled — from an initial pilot of 10 members to a global platform serving thousands of learners.
+> This document is the design blueprint for the Empire English Community System. Every element is designed to be implemented, operated, and scaled — from an initial pilot of 10 members to a global platform serving thousands of learners. The mechanics described here are **pending validation through the Phase 1 pilot** (see [§12.1](#121-phase-1-vip-pilot-10-members)); outcome, adherence, and automation claims are treated as hypotheses to be tested, not as proven results.
+
+> **V1 Refinements (Audit-Aligned).** This revision of the V1 blueprint incorporates corrective refinements from the independent system audit (`SYSTEM_AUDIT_REVIEW.md`). These refinements **preserve V1** — they do not redesign the system or introduce a V2. They make effort and outcome claims realistic, fix the beginner on-ramp, de-risk the AI-scoring dependency, resolve the manual-labor-vs-scale contradiction, and add the missing business and governance guardrails. Refined passages are marked inline with **"Refinement:"**.
 
 ---
 
@@ -25,6 +27,7 @@ American Accent Mastery Through System-Driven Execution
 11. [AI Tooling & Prompt Ecosystem](#11-ai-tooling--prompt-ecosystem)
 12. [Scalability Architecture](#12-scalability-architecture)
 13. [Implementation Roadmap](#13-implementation-roadmap)
+14. [Data, Privacy, Safety & Governance](#14-data-privacy-safety--governance-refinement)
 - [Appendices](#appendices)
 
 ---
@@ -91,6 +94,15 @@ Each level represents a distinct phase of English competency with clear entry re
 | 1 | Survival English | 10-14 weeks | Daily conversation, 1,500 words, present/past tense | 2 - 2.5 hrs |
 | 2 | Communication Stage | 12-16 weeks | Complex topics, 3,000 words, all tenses, native-speed listening | 2.5 - 3 hrs |
 | 3 | Fluency + Native Accent | Ongoing | Native-like flow, 5,000+ words, accent refinement, idioms | 3+ hrs |
+
+> **Refinement — Effort Tiers (realistic adherence).** The daily hours above describe the **Intensive track** — an ideal, not a universal requirement. Because sustained 2–3.5 hrs/day adherence is unrealistic for most working adults, every level offers two officially-supported tracks. Both follow the *same* daily loop and the *same* advancement criteria; only pace and daily time differ. No learner is penalized for choosing Core; it simply means a longer, sustainable timeline.
+
+| Track | Daily Time (L0 → L3) | Best For | Expected Pace |
+|---|---|---|---|
+| **Core (default)** | 45 min → 75 min | Working adults, students, sustainable habit-building | ~1.5× the level duration |
+| **Intensive** | 1.5 hrs → 3+ hrs | Full-time learners, gap-year, accelerated goals | Standard level duration |
+
+> Learners self-select a track at onboarding and may switch at any time. The system optimizes for **consistency over volume**: a sustained Core routine outperforms an Intensive routine that collapses in week 3.
 
 ### 2.1 Level 0: Absolute Beginner (Zero English)
 
@@ -225,7 +237,9 @@ Each level represents a distinct phase of English competency with clear entry re
 |---|---|---|---|
 | Silver | 85-89% | 5 min continuous | Occasionally detected as non-native |
 | Gold | 90-94% | 10 min continuous | Rarely detected in short interactions |
-| Platinum | 95%+ | 15+ min continuous | Native speakers assume the speaker is American |
+| Platinum | 95%+ | 15+ min continuous | High intelligibility with minimal accent; often mistaken for native in short interactions |
+
+> **Refinement — Honest outcome framing.** Attaining an accent *indistinguishable from native* is rare for adult second-language learners (consistent with critical-period research) and is **not promised as a standard outcome**. Platinum represents an exceptional, aspirational ceiling. All marketing and learner-facing materials should lead with **measurable, attainable gains** — intelligibility, fluency, confidence, and assessment scores — rather than "you will sound American." Under-promise, over-deliver.
 
 ### 2.5 Level Advancement Criteria Summary
 
@@ -243,6 +257,8 @@ Each level represents a distinct phase of English competency with clear entry re
 | Writing Accuracy | 80% | 80% | 85% |
 
 > **Critical Rule — No Exceptions to Advancement Criteria:** Learners who fail any single criterion remain at their current level until all criteria are satisfied. No exceptions, instructor overrides, or appeals.
+
+> **Refinement — Competency gates preserved; completion gate humanized.** The competency criteria above (exam, vocabulary, speaking, grammar, listening, accent, writing) are **kept exactly as designed** — they are the system's core quality safeguard and a defensible asset. The single change is to the *Task Completion* row: it is measured **relative to the learner's chosen track** (Core or Intensive) over the final weeks, and serves as a consistency check rather than a volume hurdle. This protects outcome integrity without punishing learners who progress sustainably at a lower daily volume.
 
 ---
 
@@ -282,6 +298,8 @@ The placement algorithm uses a **majority-rules approach with a speaking-priorit
 - **B:** Speaking 65, Listening 70, Vocab 1,000, Grammar 55% → **Level 1** (majority)
 - **C:** Speaking 70, Listening 35, Vocab 2,800, Grammar 40% → **Flag for Review** (uneven profile)
 
+> **Refinement — Reduce misplacement churn at the edges.** Majority-rules can place a learner *below* their real ability (e.g., Scenario B: strong L2 speaking/listening placed at L1), risking boredom-driven churn. **Refinement:** (1) when the two strongest dimensions disagree with the majority by a full level, **default to the higher placement on a 2-week trial** rather than the lower; (2) any flagged/edge profile gets a **short human placement check** during onboarding; (3) **fast-track re-placement** — a misplaced learner can be moved within their first week without waiting for an advancement exam.
+
 ### 3.3 Onboarding Flow
 
 **Table 14 — 48-Hour Onboarding Sequence**
@@ -298,6 +316,10 @@ The placement algorithm uses a **majority-rules approach with a speaking-priorit
 | 8 | Hour 36-48 | First checkpoint: buddy reviews Day 1 completion | Discord DM or voice |
 
 > **Onboarding Success Metric:** Target 90% of new members complete all 8 steps within 48 hours.
+
+> **Refinement — Beginner on-ramp (resolves the "English-only for zero-English" paradox).** Steps 1–6 are delivered in the learner's **native language for Level 0 only** (initially Arabic, the founding market). Rules, level overview, the placement result, and orientation are bilingual so a true beginner is never asked to act on instructions they cannot read. English-only immersion then **phases in progressively**: heavy native-language support in L0 weeks 1–4, reducing through L0, and standard English-only from L1 onward. The immersion philosophy is preserved where it matters (L1+); the scaffold only removes the comprehension wall at the single highest-churn moment (Day 1).
+
+> **Refinement — Gradual Day-1 load.** New L0 learners are **not** given the full 7-task loop on Day 1. The loop is introduced one or two tasks at a time across the first two weeks (e.g., Days 1–3: phonemes + one speaking mission only), so the first experience is a quick win, not an operating system to learn on top of a new language. Recording/submission is optional for the first three days, then encouraged.
 
 ---
 
@@ -360,7 +382,7 @@ Focuses on application and integration.
 | Block 2 (Afternoon) | Extended Shadowing: 45-min movie scene + transcription | Extended Speaking: 10-min recorded presentation |
 | Block 3 (Evening) | Community Event: group discussion/debate/game night | Planning & Prep: review next week's materials, set targets |
 
-> **Daily Compliance Metric:** Target 90% task completion per week (min 38 of 42 tasks). Below 75% for two consecutive weeks triggers intervention.
+> **Daily Compliance Metric.** A 90% weekly task-completion rate (≈38 of 42 tasks) is the **aspirational ideal**, not a pass/fail gate. **Refinement:** completion is treated as a *health signal*, not a punishment trigger. Targets are track-relative (Core learners complete fewer daily tasks) and framed around personal streaks and improvement rather than an absolute bar. Dips trigger **supportive** outreach (a check-in, a buddy nudge, a plan adjustment) — never shaming or automatic penalties. The one hard gate remains demonstrated competency at advancement (§2.5), not daily volume.
 
 ---
 
@@ -576,6 +598,8 @@ The Discord server is the digital home of the system — a 24/7 immersive enviro
 
 **Exceptions:** #l0-questions (one-sentence translation requests), private DMs (not monitored), ADMIN/SYSTEM channels.
 
+> **Refinement — Supportive enforcement for L0–L1.** The timeout-based escalation above applies in full only from **Level 2 onward**. For **Level 0 and Level 1**, native-language use is met with **gentle, non-punitive redirection** (a friendly nudge, a model of the English phrase, buddy encouragement) — never text timeouts. Beginners are building confidence; punishing them for reaching for their native language at the exact moment they are most fragile drives churn. Enforcement firmness scales **up** with proficiency, not down.
+
 ### 8.4 Peer-to-Peer Learning Structure
 
 The **Mentorship Ladder**: New Member → Onboarding Buddy → Peer Mentor → Level Ambassador → Community Moderator. Every learner both receives and provides support.
@@ -599,6 +623,10 @@ The **Mentorship Ladder**: New Member → Onboarding Buddy → Peer Mentor → L
 | 7-day perfect streak | 200 bonus | Elite |
 
 **Attendance Intervention:** 1 day → DM reminder · 2 days → buddy reaches out · 3 days → moderator 1-on-1 · 5 days → re-engagement conversation · 7 days → membership paused.
+
+> **Refinement — Leaderboards that motivate the bottom half.** Public absolute-rank leaderboards reward already-strong members and can discourage strugglers (often the majority). **Refinement:** lead with **improvement-based and effort-based** boards (Biggest Improvement, Most Consistent, Most Helpful) and **cohort-relative** framing rather than a single global ranking. Recognition emphasizes personal progress and contribution, so a beginner can "win" without out-ranking advanced members.
+
+> **Refinement — Tone of intervention.** Every step in this ladder is framed as **support, not surveillance**: messages ask "how can we help you get back on track?" rather than flagging failure. For L0–L1 learners the cadence is gentler (no pressure language), and a paused membership is always **easily reactivatable** with no penalty. The goal is re-engagement, not enforcement.
 
 ---
 
@@ -635,6 +663,11 @@ Every Sunday — a standardized 30-minute assessment across five dimensions (Spe
 
 A comprehensive report: score trend graph, dimension breakdown, strengths/weaknesses, consistency analysis, community participation, level-readiness indicator, and AI recommendations — followed by a mandatory 15-minute voice review meeting.
 
+> **Refinement — Make the monthly review scale.** A mandatory 1-on-1 voice meeting per learner does not scale (≈250 staff-hours/month at 1,000 learners; ≈2,500 at 10,000) and contradicts the lean-team target in §12.4. The review is therefore **tiered by need and phase**:
+> - **Phase 1 (pilot):** keep the 1-on-1 voice meeting — high-touch is the point at small N.
+> - **Phase 2+:** the monthly report is **auto-generated and delivered async** (written + short personalized video). A live human meeting is reserved for **At-Risk / Critical** learners (per Table 44) and for any learner who requests one. Healthy learners get an async report plus an optional **group** "monthly review" voice session.
+> - **Premium tier:** a guaranteed live 1-on-1 can be offered as a paid benefit, aligning the highest-cost human touch with the revenue that funds it.
+
 ### 9.3 Level Advancement Examination
 
 **Table 45 — Level Advancement Examination**
@@ -648,6 +681,12 @@ A comprehensive report: score trend graph, dimension breakdown, strengths/weakne
 | Writing Test | 20 min | Essay on assigned topic | 80% |
 
 **Rules:** Max one attempt per month · all five sections must pass · exam recorded · results within 48 hours · passing triggers automatic role upgrade.
+
+> **Refinement — AI-first exams with human audit sampling (scalable + fair).** Moderator-administered live exams do not scale. The advancement exam therefore becomes **AI-first with human oversight**:
+> - **Listening, Vocabulary, Writing** sections are auto-scored (objective or rubric-based).
+> - **Live Speaking and Accent** are AI-scored, but a **sample is human-audited** (e.g., all borderline/near-pass results plus a random percentage of clear passes) to catch scoring errors and maintain quality. The audit rate decreases as AI–human agreement is proven (§11 refinement).
+> - **Human override and appeal are preserved.** Any learner can request a human re-score of a failed speaking/accent section; low-confidence results are auto-routed to a human.
+> - The **competency bar itself does not change** — only who/what does the first-pass scoring. This keeps advancement integrity while removing the linear human-labor bottleneck.
 
 ### 9.4 Progress Metrics Dashboard
 
@@ -717,6 +756,12 @@ The AI Engine generates materials, evaluates submissions, creates study plans, a
 
 > **Deployment:** Designed for GPT-4 / Claude-class models via Discord bots, web backend, moderator use, or batch generation. Always fill bracketed variables `[LIKE THIS]` with learner data. Spot-check AI output until validated.
 
+> **Refinement — Validate AI scoring before it gates anything.** Automated accent/pronunciation and speaking scoring is the system's hardest technical bet and is currently **unproven**. It must not gate advancement until proven reliable. The following guardrails apply:
+> - **Rater-agreement study first.** Before any AI score affects advancement, run a calibration study comparing AI scores against human expert raters on the same recordings. Publish the agreement (target: ≥0.8 correlation / acceptable inter-rater agreement). Until the target is met, AI output is **advisory only**.
+> - **Mandatory human override.** A moderator can review and override any AI score. Advancement exams (§9.3) retain a human-in-the-loop until calibration is proven and re-checked each phase.
+> - **Low-confidence fallback.** When the model's confidence is low or inputs are poor (bad audio, off-task response), the item is **routed to human review** rather than auto-scored. Learners are never failed by a low-confidence automated judgment.
+> - **Ongoing drift monitoring.** Re-run the agreement check whenever the underlying model changes, since model updates can silently shift scoring behavior.
+
 ---
 
 ## 12. Scalability Architecture
@@ -726,12 +771,27 @@ Designed to scale from 10 pilot members to 10,000+ without structural redesign.
 ### 12.1 Phase 1: VIP Pilot (10 Members)
 **Weeks 1-8** — Validate mechanics, gather feedback. Single Discord server, 1 founder + 1 moderator, basic bot, manually-reviewed AI content. **Exit:** 8+ of 10 complete the 8-week program with consistent improvement.
 
+> **Refinement — Run the pilot as a falsification experiment.** The pilot's job is to find out whether the model is *wrong*, not to confirm that it is right. Treat success testimonials as **selection-biased** (early members are self-selected and highly motivated) and instrument the pilot ruthlessly. **Pre-register the metrics that would disprove the model** and decide *in advance* what result triggers a course correction:
+
+| Pre-Registered "Kill / Fix" Signal | Threshold That Forces a Rethink |
+|---|---|
+| Week-4 retention | < 60% of pilot members still active |
+| Daily adherence (Core track) | Median completion < 50% by week 3 |
+| AI–human scoring agreement | Correlation < 0.8 on speaking/accent |
+| Feedback latency | Submissions not scored within 24–48h |
+| Onboarding completion | < 70% finish all 8 steps in 48h |
+| Qualitative friction | Any single step cited as blocking by ≥ 3 of 10 |
+
+> Capture **CAC inputs, AI-cost-per-learner, and human-hours-per-learner** during the pilot to seed the §12.5 unit-economics model. A pilot that "feels great" but misses these thresholds is a signal to fix before scaling — not to proceed on optimism.
+
 ### 12.2 Phase 2: Early Growth (100 Members)
 **Months 3-6** — Automate onboarding and AI evaluation. 1 admin + 2 moderators + 4 volunteer ambassadors. Automated placement, daily missions, weekly scoring, leaderboards. **Targets:** 10-15 new members/week, 90% onboarding within 48h, 1:25 moderator ratio, 90% AI-vs-human correlation.
 
 ### 12.3 Phase 3: Scale (1,000+ Members)
 **Months 7-18** — Multi-server architecture, full automation, predictive intervention, web dashboard, mobile app. Strategies: server sharding (>250 active per level), 24-hour time-zone coverage, automated content pipeline, peer moderation, self-organizing communities.
 **Revenue Model:** Freemium (Premium $29/month), Corporate B2B, paid Certification, Affiliate.
+
+> **Refinement — Certification needs external recognition.** A self-issued "Mastery Certification" has limited market value without third-party credibility. Before monetizing certification, pursue a recognition strategy: align scoring with a known framework (e.g., **CEFR**) so results are interpretable to employers/schools, and/or partner with an established assessment body. Until then, market certification as an **internal proficiency milestone**, not an externally-recognized credential.
 
 ### 12.4 Phase 4: Mass Scale (10,000+ Members)
 **18+ months** — Custom web + mobile app as primary interface (Discord optional). Lean team (3 core + AI), autonomous AI tutors, localization, third-party content marketplace, microservices, CDN, WebRTC/WebSockets, async AI pipeline, data warehouse.
@@ -747,6 +807,28 @@ Designed to scale from 10 pilot members to 10,000+ without structural redesign.
 | Evaluation | Manual + AI assist | AI scored, human spot-check | AI scored, human appeal | AI only, human escalation |
 | Content | AI + manual review | AI + 10% spot-check | AI + feedback loop | AI + marketplace |
 | Community | Founder-led | Moderator + ambassadors | Self-managing + AI | Autonomous pods |
+
+### 12.5 Unit Economics (Refinement — validate before scaling)
+
+> The original "fixed system cost, infinite scale" claim ignores two real per-learner costs: **AI inference** (speech evaluation is compute-heavy) and **human-in-the-loop** time (audits, at-risk reviews, moderation). Before scaling spend, the following one-page model must be populated with **real pilot data** — the numbers below are illustrative placeholders, not validated figures.
+
+**Table 50 — Unit-Economics Model (populate from pilot)**
+
+| Metric | Definition | Target / To Validate |
+|---|---|---|
+| CAC | Cost to acquire one paying member | TBD from pilot acquisition channels |
+| Free → Paid conversion | % of free members who subscribe | TBD (assumption to test, not assume) |
+| Monthly churn | % of paying members lost per month | TBD; LTV is highly sensitive to this |
+| ARPU | Avg revenue per user (blended) | Anchored on $29/mo premium |
+| LTV | ARPU ÷ churn × gross margin | Must exceed **3× CAC** to be sustainable |
+| AI cost / learner / month | Inference for scoring + content generation | **Measure in pilot**; the key margin risk |
+| Human cost / learner / month | Audits, at-risk reviews, moderation | Should trend down per-learner as automation matures |
+| Gross margin / learner | Revenue − (AI + human + platform) cost | Target 70%+ at scale |
+
+**Rules of thumb adopted for V1:**
+- Do **not** assume freemium conversion or churn — measure them in Phases 1–2 before funding growth.
+- Track **AI-cost-per-learner** as a first-class metric from day one; it determines whether the model is actually high-margin.
+- Treat **LTV:CAC ≥ 3:1** and **positive contribution margin per learner** as preconditions for Phase 3 acquisition spend.
 
 ---
 
@@ -765,6 +847,41 @@ Complete L0-L1 curriculum, begin L2, automate weekly scoring, launch voice sched
 Begin member acquisition (10-15/week), complete L2 & begin L3, recruit 2 more moderators, launch referral program, reach 50 then 100 members, automate onboarding, launch community-generated content, plan Phase 3 architecture.
 
 **Critical Success Factors:** Content quality (spot-check until validated) · Community warmth · Founder presence (Phase 1) · Fast iteration (within 48h) · Retention over acquisition.
+
+---
+
+## 14. Data, Privacy, Safety & Governance (Refinement)
+
+> This section is added as a V1 refinement. The system continuously collects **learner voice recordings and writing**, runs **live voice lounges**, and may attract **minors** — none of which were governed in the original blueprint. These are latent legal, ethical, and reputational liabilities that must be addressed **before** voice-data collection and community scale, not after an incident.
+
+### 14.1 Data Collection & Consent
+- **Explicit, informed consent** is captured at onboarding for recording, storing, and AI-processing of voice and writing. Consent is **granular**: using a recording for *feedback* is separate from using it for *marketing / success stories*.
+- A plain-language (and, for L0, native-language) privacy notice explains what is collected, why, where it is stored, and how to delete it.
+
+### 14.2 Retention, Access & Deletion
+- Define explicit **retention periods** for recordings and assessment data; auto-expire or archive beyond the window unless the learner opts in.
+- **Right to access and deletion:** learners can export or permanently delete their archive on request.
+- Access is **role-scoped** (learner = own data; moderators = coaching access with audit logging; admins = least-privilege).
+
+### 14.3 Regional Compliance
+- Map obligations for the operating markets (e.g., **GDPR** for EU learners; applicable data-protection laws in the MENA region and elsewhere).
+- Document a lawful basis for processing and a data-processing agreement with any third-party AI provider.
+
+### 14.4 Minor Safeguarding
+- Set and enforce a **minimum age** consistent with Discord's terms and applicable law (e.g., COPPA-type concerns for under-13s).
+- For permitted minors, require **parental/guardian consent** and apply stricter defaults (no public showcase, restricted DMs).
+
+### 14.5 Voice-Lounge & Community Safety
+- A published **code of conduct** plus a **reporting/blocking** flow for harassment or abuse in voice and text.
+- **Moderator coverage** expectations for live voice sessions; recording/consent rules for any session that is captured.
+- Clear escalation and ban policy for safety violations (distinct from the English-only learning rules in §8.3).
+
+### 14.6 AI & Content Governance
+- Human spot-check of AI-generated material before distribution until validated (ties to §11).
+- A feedback path for learners to flag inaccurate AI scoring or inappropriate generated content.
+- Bias/fairness review of AI accent scoring across different first-language backgrounds (a fairness risk for an Arabic-first, multilingual audience).
+
+> **Status:** This governance layer is a **prerequisite for Phase 2+**. Phase 1 (10 members) may operate under a lightweight consent + manual moderation model, but the policies above must be in place before broad voice-data collection or admitting minors at scale.
 
 ---
 
@@ -890,13 +1007,27 @@ Begin member acquisition (10-15/week), complete L2 & begin L3, recruit 2 more mo
 
 | Field | Value |
 |---|---|
-| **Version** | 1.0 |
-| **Last Updated** | May 2026 |
-| **Next Review** | July 2026 |
+| **Version** | 1.0 (audit-refined) |
+| **Last Updated** | June 2026 |
+| **Next Review** | After Phase 1 pilot |
 | **Owner** | Empire English System Architect |
-| **Status** | Active — Execution Ready |
+| **Status** | Active — Design Blueprint (pending Phase 1 validation) |
 
 > This document is a living blueprint. As the system operates and data is collected, sections will be updated with real performance metrics, refined prompts, and optimized processes. Version 2.0 will incorporate Phase 1 pilot data and lessons learned.
+
+### Changelog — V1 Audit-Aligned Refinements (June 2026)
+
+These refinements **preserve V1** (no redesign, no V2). They apply the recommendations from the independent audit (`SYSTEM_AUDIT_REVIEW.md`):
+
+- **A — Honest claims:** reframed "execution-ready" → design blueprint pending validation; added Core/Intensive effort tiers (Table 2); reframed the Platinum accent tier; humanized the 90% completion metric (§4.4, Table 12).
+- **B — Beginner on-ramp:** bilingual (Arabic) L0 onboarding scaffold and progressive English-only phase-in; gradual Day-1 task load (§3.3); supportive, non-punitive enforcement for L0–L1 (§8.3, §8.5).
+- **C — AI-scoring de-risk:** rater-agreement study before AI gates advancement, mandatory human override, low-confidence fallback, drift monitoring (§11).
+- **D — Scalability fix:** tiered/async monthly reviews; AI-first advancement exams with human audit sampling (§9.2, §9.3).
+- **E — Unit economics:** added §12.5 with CAC/LTV/conversion/churn/AI-cost-per-learner model.
+- **F — Governance:** added §14 covering consent, retention/deletion, regional compliance, minor safeguarding, voice-lounge safety, and AI/content governance.
+- **G — Pilot rigor & minor fixes:** Phase 1 reframed as a falsification experiment with pre-registered kill/fix thresholds (§12.1); placement misplacement safeguards (§3.2); certification external-recognition strategy (§12.3); improvement-based leaderboards (§8.5).
+
+> **Scope guardrail:** competency-based advancement criteria, the "system over instructor" philosophy, accent-from-day-one, and the unified daily loop are **unchanged** — these are the system's protected strengths.
 
 ---
 
