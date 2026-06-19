@@ -1,0 +1,88 @@
+key,ar,en
+btn_lang_ar,"عربي 🇸🇦","عربي 🇸🇦"
+btn_lang_en,"English 🇬🇧","English 🇬🇧"
+menu_title,"🏛 أهلاً بك في Empire English","🏛 Welcome to Empire English"
+btn_quiz,"🎯 حدّد مستواي (دقيقتان)","🎯 Find my level (2 min)"
+btn_resource,"🎁 هديتي المجانية","🎁 My free gift"
+btn_how,"📚 كيف يعمل Empire","📚 How Empire works"
+btn_call,"📅 احجز مكالمة مجانية","📅 Book a free call"
+btn_community,"💬 انضم للمجتمع","💬 Join the community"
+btn_back,"↩️ رجوع للقائمة","↩️ Back to menu"
+btn_yes,"نعم","Yes"
+btn_no,"لا","No"
+btn_start_quiz,"لنبدأ الاختبار","Start the quiz"
+fallback,"لم أفهم ذلك تمامًا 🙂 اختر من القائمة بالأسفل.","I didn't quite get that 🙂 Pick an option below."
+help_text,"أنا بوت Empire English. أساعدك تعرف مستواك، تحصل على هدية مجانية، تعرف كيف نشتغل، وتحجز مكالمة. اكتب /menu للقائمة، أو /language لتغيير اللغة. لإيقاف الرسائل: /stop","I'm the Empire English bot. I help you find your level, get a free gift, learn how we work, and book a call. Send /menu for the menu, /language to switch language. To stop messages: /stop"
+talk_human,"تفضّل التحدث مع إنسان؟ احجز مكالمة مجانية 👇","Prefer to talk to a human? Book a free call 👇"
+done_thanks,"تمام! 🙌","Done! 🙌"
+optout_done,"تم إيقاف الرسائل الترويجية. ترجع في أي وقت بكتابة /menu 🙏","Marketing messages stopped. Come back anytime with /menu 🙏"
+welcome_1,"أهلاً بك في Empire English 🏛
+أنا هنا عشان أساعدك تتكلم إنجليزي بثقة — خطوة بخطوة، بنظام واضح، مش مجرد دروس.
+تحب نكمل بالعربي ولا English؟","Welcome to Empire English 🏛
+I'm here to help you speak English with confidence — step by step, with a clear system, not just random lessons.
+Continue in العربية or English?"
+welcome_2,"رائع يا {first_name} 👋
+في Empire ما نعتمد على ""معلّم شاطر"" — نعتمد على نظام يمشي معك كل يوم: نطق أمريكي من أول يوم، ممارسة كلام حقيقية، ومجتمع يدعمك.
+تعرف وش أفضل بداية؟ نشوف مستواك الحالي في دقيقتين بس — وبعدها أعطيك خطة شخصية مجانية.","Awesome, {first_name} 👋
+At Empire we don't rely on a ""talented teacher"" — we rely on a system that walks with you every day: American pronunciation from day one, real speaking practice, and a community that backs you.
+Best first step? Let's find your current level in just 2 minutes — then I'll give you a free personalized plan."
+quiz_intro,"تمام يا {first_name}! 7 أسئلة سريعة، تقريبًا دقيقتين. اضغط الإجابة الأقرب لك — ما في صح وغلط، بس نعرف نقطة بدايتك. 🚀","Great, {first_name}! 7 quick questions, about 2 minutes. Tap the answer closest to you — there's no right or wrong, we just find your starting point. 🚀"
+quiz_transition,"ممتاز! حسبت نتيجتك… لحظة 👇","Perfect! Calculating your result… one moment 👇"
+plan_review_note,"ملاحظة: نتيجتك قريبة بين مستويين — رح نتأكد من أنسب مستوى لك في مكالمة قصيرة أو في أول أيام التجربة. ما عليك شي 🙂","Note: your result is close between two levels — we'll confirm the best fit in a short call or during your first trial days. No worries 🙂"
+goal_confidence,"التحدث بثقة","speaking with confidence"
+goal_interview,"اجتياز مقابلة عمل","passing a job interview"
+goal_travel,"السفر والتعامل بالخارج","traveling and getting by abroad"
+goal_exam,"اجتياز اختبار (IELTS/TOEFL)","passing an exam (IELTS/TOEFL)"
+goal_accent,"تحسين اللهجة الأمريكية","improving your American accent"
+resource_deliver,"هديتك جاهزة يا {first_name}! 🎁
+""3 أصوات تخليك تنطق أمريكي أكثر"" — دليل قصير + 3 مقاطع صوتية تتمرّن معها.
+حمّلها من هنا 👇
+{RESOURCE_LINK}
+جرّب صوت واحد اليوم فقط — النتيجة تفاجئك 🔥","Your gift is ready, {first_name}! 🎁
+""3 Sounds That Make You Sound More American"" — a short guide + 3 audio clips to practice with.
+Download it here 👇
+{RESOURCE_LINK}
+Try just one sound today — the result will surprise you 🔥"
+how_1,"في Empire، ما نبيعك ""كورس"" — نعطيك نظام تعلّم كامل يمشي معك كل يوم 👇
+• نطق أمريكي من اليوم الأول
+• مهام كلام يومية (مو بس نظري — تتكلم فعلاً)
+• مجتمع يدعمك + متابعة لتقدّمك
+• مستويات واضحة: ما ترتقي إلا لما تتقن.","At Empire, we don't sell a ""course"" — we give you a complete learning system that walks with you daily 👇
+• American pronunciation from day one
+• Daily speaking missions (not just theory — you actually talk)
+• A community that supports you + progress tracking
+• Clear levels: you only advance when you've mastered it."
+how_2,"عندنا مسار واضح يبدأ من المجاني:
+🆓 Recruit (مجاني): تذوّق المستوى صفر + المجتمع + كلمة اليوم
+⭐ Core: النظام اليومي الكامل + المجتمع + المتابعة
+👑 Citizen: كل ما سبق + مدرّب ذكاء اصطناعي + أولوية في التصحيح
+🏛️ Founding Citizen (مقاعد محدودة): عضوية دائمة + لقب مؤسس
+الأسعار نرتّبها لك حسب هدفك في مكالمة قصيرة أو رسالة خاصة — عشان تختار الأنسب لك فعلاً.","We have a clear path that starts free:
+🆓 Recruit (free): Level 0 taster + community + word of the day
+⭐ Core: the full daily system + community + tracking
+👑 Citizen: all that + AI tutor + priority feedback
+🏛️ Founding Citizen (limited seats): lifetime access + founder status
+We'll sort out pricing around your goal in a short call or DM — so you pick what truly fits you."
+how_3,"أنصحك تبدأ بتجربة 7 أيام المجانية وتشوف بنفسك 👇 وإذا حبيت تفاصيل الأسعار والباقات، احجز مكالمة قصيرة أو راسلنا.","I'd start with the free 7-day trial and see for yourself 👇 and if you'd like pricing and package details, book a short call or DM us."
+call_intro,"مكالمة قصيرة (15–20 دقيقة)، بدون ضغط بيع 🙂
+في المكالمة:
+• نحدّد مستواك وهدفك بدقة
+• نرسم لك خطة واضحة للأسابيع القادمة
+• تسأل أي شي وتشوف إذا Empire يناسبك
+اختر وقت يناسبك 👇
+{CALL_URL}","A short call (15–20 min), zero sales pressure 🙂
+On the call we'll:
+• Pinpoint your exact level and goal
+• Map a clear plan for your coming weeks
+• Answer anything, so you can see if Empire fits you
+Pick a time that suits you 👇
+{CALL_URL}"
+community_invite,"أهلاً فيك في عائلة Empire 🏛
+• مجتمع Discord (تمارين، صوتيات، فعاليات): {DISCORD_INVITE}
+• مجموعة النقاش على تيليجرام (أسئلة + كلمة اليوم): {GROUP_INVITE}
+ادخل، عرّف عن نفسك، وابدأ معنا 💪","Welcome to the Empire family 🏛
+• Discord community (drills, voice rooms, events): {DISCORD_INVITE}
+• Telegram discussion group (Q&A + word of the day): {GROUP_INVITE}
+Hop in, introduce yourself, and start with us 💪"
+consent_prompt,"قبل ما نكمل: تسمح لنا نرسل لك خطتك ونصائح مفيدة من وقت لآخر؟ (تقدر توقفها أي وقت بكتابة /stop)","Before we continue: may we send you your plan and occasional helpful tips? (You can stop anytime with /stop)"
+consent_no,"تمام، ما رح نرسل رسائل ترويجية 🙂 هديتك/خطتك تحت 👇","No problem, we won't send marketing messages 🙂 Your gift/plan is below 👇"
