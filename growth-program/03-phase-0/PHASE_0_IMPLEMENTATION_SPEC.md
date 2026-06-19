@@ -82,12 +82,12 @@ A/B testing, follow-up/reactivation drips, referral system, gamification, the fu
 |---|---|---|
 | **Telegram Channel** | Broadcast value + proof; route to bot | Telegram |
 | **Telegram Bot** | Conversation, menus, quiz, consent, deliver resources, route to booking | Telegram Bot API |
-| **Orchestrator** | Logic, branching, read/write to CRM, trigger emails | **Make.com free tier** (primary) or **n8n self-host** (zero-cost alt) |
+| **Orchestrator** | Logic, branching, read/write to CRM, trigger emails | **Make.com free tier (CONFIRMED)** — n8n self-host kept as a $0 fallback |
 | **CRM / source of truth** | Store every subscriber + their fields, tags, score | **Google Sheets** |
 | **Booking** | Show availability, take bookings, send reminders | **Cal.com** |
 | **Email (backup list)** | Owned-list insurance + later drips | **MailerLite or Brevo free tier** (account only in Phase 0) |
 
-> **Why Make.com as primary:** no server to maintain (solo-operator friendly), native Telegram + Google Sheets + webhook modules, generous free tier. **n8n self-host** is the truly-$0 alternative if free-tier task limits become a constraint (see §14). The spec is written tool-neutral; either works.
+> **Orchestrator decision (locked): Make.com.** Chosen for no server to maintain (solo-operator friendly), native Telegram + Google Sheets + webhook modules, and a generous free tier. **n8n self-host** remains the documented truly-$0 fallback **if** free-tier task limits become a constraint (see §14). Build on Make.com unless/until that ceiling is hit.
 
 ### 2.2 The data flow (happy path)
 
@@ -127,7 +127,7 @@ The **Telegram numeric user ID** is the primary key across all systems (stable, 
 | 1 | **Telegram bot** via @BotFather | The bot token | Free |
 | 2 | **Telegram channel** (exists) + **linked discussion group** | Hub + two-way engagement | Free |
 | 3 | **Google account** (dedicated, e.g., ops@) | Owns the Sheets CRM + backups | Free |
-| 4 | **Make.com** (or n8n) | Orchestration | Free tier: limited ops/month — monitor |
+| 4 | **Make.com** (confirmed orchestrator) | Orchestration | Free tier: limited ops/month — monitor; n8n self-host fallback |
 | 5 | **Cal.com** | Booking | Free tier sufficient for 1 host |
 | 6 | **MailerLite or Brevo** | Backup email list (account only in Phase 0) | Free tier |
 | 7 | **Canva (free)** | Produce the quick-win PDF + plan template | Free |
@@ -182,7 +182,7 @@ The **Telegram numeric user ID** is the primary key across all systems (stable, 
 
 **Flow D — How Empire works + pricing**
 1. Short bilingual explainer (system-over-instructor, accent-from-day-one).
-2. Present the ladder: Free → Core (main) → Citizen → Elite; highlight **Founding Citizen (limited)**.
+2. Present the value ladder: Free → Core (main) → Citizen → Elite; highlight **Founding Citizen (limited)**. **No public prices on day one** — route pricing to a call/DM (see Content Asset 6).
 3. CTAs: `[Start free taster] [Book a free call] [Back to menu]`.
 4. Log `OFFER_OPENED`.
 

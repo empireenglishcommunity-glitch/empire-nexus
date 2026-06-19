@@ -19,21 +19,21 @@ Curly-brace tokens are filled by the bot/CRM or set once in the Sheets `Config` 
 | `{level_name}` | Provisional level label | Quiz result |
 | `{goal}` | Chosen goal (confidence/interview/travel/exam/accent) | Quiz Q6 |
 | `{track}` | Core or Intensive | Quiz Q7 |
-| `{CORE_PRICE}` | Core membership price (local-friendly) | **Config — TBD, confirm** |
-| `{CITIZEN_PRICE}` | Citizen tier price | **Config — TBD, confirm** |
-| `{FOUNDING_PRICE}` | Founding Citizen one-time price | **Config — TBD, confirm** |
-| `{FOUNDING_SEATS}` | Remaining founding seats | **Config — update manually** |
+| `{CORE_PRICE}` | Core membership price (local-friendly) | **Reserved — not used day one (pricing via call/DM)** |
+| `{CITIZEN_PRICE}` | Citizen tier price | **Reserved — not used day one (pricing via call/DM)** |
+| `{FOUNDING_PRICE}` | Founding Citizen one-time price | **Reserved — not used day one (pricing via call/DM)** |
+| `{FOUNDING_SEATS}` | Remaining founding seats | **Discussed on call/DM; must be real** |
 | `{CALL_URL}` | Cal.com booking link (with `?src=bot&tid=`) | Config |
 | `{DISCORD_INVITE}` | Discord community invite | Config |
 | `{GROUP_INVITE}` | Telegram discussion-group link | Config |
 | `{RESOURCE_LINK}` | "3 American Sounds" file/link | Config |
 
-> **PRICING IS NOT FINALIZED.** All price tokens are placeholders. Per the roadmap, prices are *indicative anchors* to validate. **Do not publish real numbers until the founder confirms them in `Config`.**
+> **PRICING — DAY-ONE DECISION (locked).** Prices are **not displayed publicly** in the bot on launch. Pricing is handled **via a short call or DM**, so the founder can price-discover and match the right tier to each lead while the audience is small. The `{CORE_PRICE}` / `{CITIZEN_PRICE}` / `{FOUNDING_PRICE}` / `{FOUNDING_SEATS}` tokens are **reserved for a later phase** and are not used in any go-live copy. Canonical pricing home remains `STRATEGIC_EXPANSION_ROADMAP.md` §7.
 
 ### Style rules
 - **Arabic-led:** Arabic appears first, English second. Default bot language = Arabic; English on toggle.
 - **Tone:** warm, personal, founder-voice; confident but honest (no "sound 100% native" promises — lead with attainable wins: confidence, clarity, fluency, scores). Mirrors the audit's under-promise/over-deliver guardrail.
-- **Arabic register:** clear, friendly Modern Standard Arabic that beginners can read; short sentences; minimal jargon.
+- **Arabic register (locked):** **Modern Standard Arabic (MSA)** — kept **fresh and conversational**, not stiff or formal. Pan-Arab so it reads naturally from the Gulf to North Africa; short sentences, warm tone, minimal jargon, light use of everyday phrasing. Beginners must be able to read it easily.
 - **RTL note:** Arabic strings render right-to-left. In the bot, store Arabic and English as separate fields; do not mix LTR/RTL in one line where avoidable. Emoji placement may shift in RTL — test on-device.
 - **Length:** keep each bot message short (1–3 lines); prefer buttons over paragraphs.
 - **Buttons:** button labels are bilingual on one line where short (`عربي / English`); longer flows use the user's stored language only.
@@ -428,7 +428,7 @@ Curly-brace tokens are filled by the bot/CRM or set once in the Sheets `Config` 
 
 ## Asset 6 — "How Empire Works + Pricing" explainer
 
-> Shown on the `📚 How Empire works + pricing` button (spec §4.4 Flow D). Three short messages: (1) how it works, (2) the ladder, (3) CTA. Logs `OFFER_OPENED`. **All prices are `{...}` placeholders — confirm before publishing.**
+> Shown on the `📚 How Empire works + pricing` button (spec §4.4 Flow D). Three short messages: (1) how it works, (2) the value ladder, (3) CTA. Logs `OFFER_OPENED`. **Day-one decision (locked):** prices are **not shown publicly** in the bot — pricing is handled in a short call or DM. Price tokens are reserved for a later phase.
 
 ### Message 1 — how it works
 
@@ -446,30 +446,32 @@ Curly-brace tokens are filled by the bot/CRM or set once in the Sheets `Config` 
 > • A community that supports you + progress tracking
 > • Clear levels: you only advance when you've mastered it — real quality, not fake.
 
-### Message 2 — the ladder (placeholder prices)
+### Message 2 — the value ladder (no public prices on day one; pricing via call/DM)
 
 **AR:**
-> اختر اللي يناسبك:
+> عندنا مسار واضح يبدأ من المجاني:
 > 🆓 **Recruit (مجاني):** تذوّق المستوى صفر + المجتمع + كلمة اليوم
-> ⭐ **Core (الأساس):** النظام اليومي الكامل + المجتمع + المتابعة — `{CORE_PRICE}`/شهر
-> 👑 **Citizen:** كل ما سبق + مدرّب ذكاء اصطناعي + أولوية في التصحيح — `{CITIZEN_PRICE}`/شهر
-> 🏛️ **Founding Citizen (محدود):** عضوية دائمة + لقب مؤسس — `{FOUNDING_PRICE}` لمرة واحدة (باقٍ {FOUNDING_SEATS} مقعد)
+> ⭐ **Core (الأساس):** النظام اليومي الكامل + المجتمع + المتابعة
+> 👑 **Citizen:** كل ما سبق + مدرّب ذكاء اصطناعي + أولوية في التصحيح
+> 🏛️ **Founding Citizen (مقاعد محدودة):** عضوية دائمة + لقب مؤسس
+> الأسعار نرتّبها لك حسب هدفك في مكالمة قصيرة أو رسالة خاصة — عشان تختار الأنسب لك فعلاً، مو الأغلى.
 
 **EN:**
-> Pick what fits you:
+> We have a clear path that starts free:
 > 🆓 **Recruit (free):** Level 0 taster + community + word of the day
-> ⭐ **Core:** the full daily system + community + tracking — `{CORE_PRICE}`/mo
-> 👑 **Citizen:** all that + AI tutor + priority feedback — `{CITIZEN_PRICE}`/mo
-> 🏛️ **Founding Citizen (limited):** lifetime access + founder status — `{FOUNDING_PRICE}` one-time ({FOUNDING_SEATS} seats left)
+> ⭐ **Core:** the full daily system + community + tracking
+> 👑 **Citizen:** all that + AI tutor + priority feedback
+> 🏛️ **Founding Citizen (limited seats):** lifetime access + founder status
+> We'll sort out pricing around your goal in a short call or DM — so you pick what truly fits you, not the most expensive.
 
 ### Message 3 — CTA
 
-**AR:** أنصحك تبدأ بتجربة 7 أيام المجانية وتشوف بنفسك 👇 أو احجز مكالمة قصيرة نرتّب لك خطة.
-**EN:** I'd start with the free 7-day trial and see for yourself 👇 or book a short call and we'll map a plan for you.
+**AR:** أنصحك تبدأ بتجربة 7 أيام المجانية وتشوف بنفسك 👇 وإذا حبيت تفاصيل الأسعار والباقات، احجز مكالمة قصيرة أو راسلنا.
+**EN:** I'd start with the free 7-day trial and see for yourself 👇 and if you'd like pricing and package details, book a short call or DM us.
 
 *(Buttons: `ابدأ تحدي 7 أيام / Start 7-Day Starter` · `احجز مكالمة / Book a call` · `↩️`)*
 
-> **Honesty + scarcity rule:** `{FOUNDING_SEATS}` must reflect *real* remaining seats (updated in `Config`). Never fabricate scarcity.
+> **Honesty + scarcity rule:** "limited seats" for Founding Citizen must reflect *real* availability when discussed on the call/DM. Never fabricate scarcity. When public prices are later introduced, anchor with the high tier so the mid tier feels sensible (Strategic Expansion §7).
 
 ---
 
@@ -578,10 +580,10 @@ Consent: {consent}
 | 10. Hot-lead alert | Asset 10 |
 
 ### Still needed before go-live (not content — production/decisions)
-- **Confirm prices** for `{CORE_PRICE}`, `{CITIZEN_PRICE}`, `{FOUNDING_PRICE}`, and real `{FOUNDING_SEATS}`.
+- ~~Confirm prices~~ ✅ **Decided:** no public prices day one — pricing via call/DM. Price tokens reserved for later.
 - **Record** the 3 audio clips (scripts A5-1/2/3) and **produce** the PDF in Canva.
 - **Set** `{CALL_URL}`, `{DISCORD_INVITE}`, `{GROUP_INVITE}`, `{RESOURCE_LINK}` in `Config`.
-- **Native-speaker Arabic proofread** recommended before publishing (copy here is solid MSA, but a final human pass ensures tone fits your audience's dialect comfort).
+- **Arabic register decided:** MSA, fresh/conversational. A light native-speaker proofread before publishing is still recommended (final polish only).
 
 ---
 

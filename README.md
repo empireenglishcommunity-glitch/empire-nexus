@@ -69,8 +69,9 @@ To prevent the same thing being defined in multiple places, each cross-cutting t
 | Phase 0 bilingual content | ✅ Drafted |
 | Full phased roadmap (P0→P3) | ✅ Mapped |
 | Docs organized into `growth-program/` | ✅ Complete |
+| Pre-build decisions (pricing display, Arabic register, orchestrator) | ✅ Locked |
 | **Phase 0 BUILD (live tools)** | ⬜ Not started — awaiting founder go |
-| Price confirmation + Arabic proofread | ⬜ Pending |
+| Asset production (3 audio clips + PDF) + Config links | ⬜ Pending |
 | Phase 1–3 detailed specs | ⬜ Written at each gate (not before) |
 
 ---
@@ -78,6 +79,8 @@ To prevent the same thing being defined in multiple places, each cross-cutting t
 ## ⚙️ Locked decisions (quick reference)
 
 Telegram channel + bot → Discord product · 5-button bot menu · primary goal = free taster/trial (self-serve) **+** founder-led calls in parallel · main offer = **Core** + time-boxed **Founding Citizen** · lead-magnet ladder (quiz → "3 American Sounds" → 7-Day Speaking Starter → Core) · **Arabic-led bilingual** · high call capacity · explicit consent + **Google Sheets** CRM · **5–6 posts/week** · **Cal.com** booking.
+
+**Pre-build finalizations (locked):** **no public prices day one** — pricing via call/DM · Arabic register = **MSA, fresh & conversational** · orchestrator = **Make.com** (n8n self-host fallback).
 
 *(Full detail: `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §10.)*
 

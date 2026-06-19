@@ -89,14 +89,17 @@ The program is documented across a small set of artifacts. This roadmap sits **o
 
 | Milestone | State |
 |---|---|
-| Strategy locked (10 decisions, Telegram confirmed) | ✅ Done (PR #6 merged) |
-| Phase 0 build spec | ✅ Done (PR #7 merged) |
-| Phase 0 content drafted | 🟡 In review (PR #8 open) |
-| **This master roadmap** | 🟡 In review (you're reading it) |
+| Strategy locked (10 decisions, Telegram confirmed) | ✅ Done (PR #6) |
+| Phase 0 build spec | ✅ Done (PR #7) |
+| Phase 0 content drafted | ✅ Done (PR #8) |
+| Master roadmap | ✅ Done (PR #9) |
+| Repo cleanup + index + folder organization | ✅ Done (PR #10, #11) |
+| Pre-build decisions (pricing display, Arabic register, orchestrator) | ✅ Locked |
 | Phase 0 **build** (actual bot/CRM setup) | ⬜ Not started — awaiting your go |
+| Asset production (3 audio clips + PDF) + Config links | ⬜ Pending |
 | Phases 1–3 detailed specs | ⬜ Not written — open only at each gate |
 
-> **Decision point:** everything to date is **planning + content**. The next action that touches a live tool is the Phase 0 *build*, and it does not start until you say so. This roadmap is here so you can see the full road before taking that step.
+> **Decision point:** everything to date is **planning + content**, now fully organized with pre-build decisions locked. The next action that touches a live tool is the Phase 0 *build*, and it does not start until you say so.
 
 ---
 
@@ -280,19 +283,20 @@ Some things should **never** be fully automated, because at this scale they *are
 
 ## 14. Decisions Needed From the Founder
 
-To keep moving, these are the open decisions — none block reviewing this roadmap, but they gate specific next steps:
+Most pre-build decisions are now **locked** (✅). Remaining open items gate the build itself.
 
-| # | Decision | Gates / affects | Recommended default |
-|---|---|---|---|
-| D1 | **Approve this roadmap's direction & sequence** | Everything downstream | Approve as-is, or adjust phase scope |
-| D2 | **Approve PR #8 (Phase 0 content)** | Phase 0 build | Approve; proofread Arabic later |
-| D3 | **Confirm prices** (Core/Citizen/Founding + real seats) | Asset 6 go-live, P1–P2 | Lock now or keep as placeholders |
-| D4 | **Arabic dialect/tone** for final copy | Content polish | Tell me Gulf/Egyptian/Levantine to tune warmth |
-| D5 | **Give the go to BUILD Phase 0** | First live-tool action | Build only after D1–D2 |
-| D6 | **Orchestrator choice** (Make.com vs n8n self-host) | Phase 0 build | Make.com to start; n8n if limits hit |
-| D7 | **Whether to pre-write Phase 1 spec now** or wait for Gate 0→1 | Phase 1 timing | Wait for the gate (keeps focus) |
+| # | Decision | Status |
+|---|---|---|
+| D1 | Approve roadmap's direction & sequence | ✅ Approved |
+| D2 | Approve Phase 0 content (PR #8) | ✅ Merged |
+| D3 | Pricing display | ✅ **Locked: no public prices day one — pricing via call/DM.** Price tokens reserved for later |
+| D4 | Arabic register/tone | ✅ **Locked: MSA, fresh & conversational** (pan-Arab); light proofread before publish |
+| D6 | Orchestrator choice | ✅ **Locked: Make.com** (n8n self-host fallback if limits hit) |
+| D5 | **Give the go to BUILD Phase 0** | ⬜ **Open — the one remaining decision** |
+| D7 | Pre-write Phase 1 spec now vs wait for Gate 0→1 | ⬜ Open (recommend wait) |
+| — | Produce 2 assets (audio ×3 + PDF) + set Config links | ⬜ Pending (can run in parallel with build) |
 
-> **My recommendation on sequence:** approve this roadmap (D1) → approve/merge Phase 0 content (D2) → confirm prices + dialect (D3, D4) → give the build go (D5). Hold Phase 1's detailed spec until Gate 0→1 passes (D7) so we don't over-plan ahead of real data.
+> **Where we are:** the plan, content, and all design decisions are locked. The **only** thing standing between here and a working Phase 0 is the **build go (D5)** plus producing two assets and creating the accounts/Config values. Phase 1's detailed spec stays parked until Gate 0→1 passes (D7).
 
 ---
 

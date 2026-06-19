@@ -622,6 +622,18 @@ Because call capacity is not a constraint, the funnel runs **two parallel conver
 
 As volume grows, the call path is **deliberately tapered** (reserved for high-intent / high-ticket) to protect founder time. This is a feature of the plan, not a contradiction of the "trial-primary" decision.
 
+### 10.4 Pre-build finalizations (locked before Phase 0 build)
+
+Three execution decisions finalized after the §10 review, to remove all ambiguity before building:
+
+| # | Decision | Locked answer | Rationale |
+|---|---|---|---|
+| F1 | **Pricing display (day one)** | **No public prices in the bot — pricing handled via call/DM.** Price tokens reserved for a later phase | Lets the founder price-discover and match the right tier per lead while small; keeps the bot value-first |
+| F2 | **Arabic register** | **Modern Standard Arabic (MSA), kept fresh & conversational** (pan-Arab, not stiff) | Travels naturally across the whole Arab world; warm and readable for beginners |
+| F3 | **Automation orchestrator** | **Make.com** (free tier) — n8n self-host as $0 fallback if limits hit | No server to maintain; native Telegram + Sheets modules; solo-operator friendly |
+
+> These refine *how* the locked §10 decisions are executed; they do not change the strategy. Reflected in the Phase 0 spec and content pack.
+
 ---
 
 ## 11. Summary
