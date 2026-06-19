@@ -512,43 +512,18 @@ Automation health: [ok/issues]   Manual time spent: __ hrs
 
 ## 8. Scale-Up Roadmap
 
-> Phased, gated, free-first. Do **not** advance a phase until its exit criteria are met. This protects the solo operator from over-building before validation.
+> **Canonical source moved.** The detailed phase-by-phase plan (Phases 0→3, gates, milestones, tool stack, sequencing) now lives in **`MASTER_IMPLEMENTATION_ROADMAP.md`** — the single source of truth for the program's phasing. This section is kept as a short strategic summary only, to avoid duplication.
 
-### 8.1 Phase 0 — Foundation & instrumentation (Weeks 1–2)
+**The four phases, at a glance:**
 
-- **Priorities:** confirm platform; define the 6-stage funnel events; set up CRM (Sheets); set up the basic bot (welcome + quiz + capture + one booking path); connect booking; capture consent + backup list.
-- **Build first:** bot core + CRM + booking + welcome automation.
-- **Resources:** founder time (~setup); free tools only.
-- **Exit criteria:** a new joiner can be welcomed, take the quiz, be captured/tagged, and book — end to end.
+| Phase | Focus | One-line goal | Entry gate |
+|---|---|---|---|
+| **0 — Foundation** | Build the capture spine | Bot + quiz + CRM + booking work end-to-end | (start) |
+| **1 — Content & Reporting** | Cadence + visibility | 5–6 posts/week + weekly auto-report; baseline KPIs | Phase 0 tests pass |
+| **2 — Conversion Optimization** | Lift + recover | A/B tests + follow-up/reactivation drips + referral v1 | ≥4 wks of KPIs + a proven content category |
+| **3 — Growth Loops & Scale** | Compound + delegate | Referral, gamification, scaled discovery, optional paid | Lift on ≥2 steps + LTV:CAC ≥ 3:1 |
 
-### 8.2 Phase 1 — Content rhythm & trust (Weeks 3–8)
-
-- **Priorities:** establish the ~6-posts/week cadence (batched); launch discussion group; start transformation-story collection; begin weekly digest.
-- **Build second:** scheduling automation, reminder/nudge automation, weekly report automation.
-- **Milestones:** consistent posting held for 6 weeks; first bot-driven bookings; first segmented CRM; baseline conversion rates established.
-- **Exit criteria:** funnel rates measured for ≥4 weeks; at least one repeatable content category proven to drive bot taps.
-
-### 8.3 Phase 2 — Conversion optimization (Weeks 9–16)
-
-- **Priorities:** A/B test CTAs and bot flows; build follow-up + reactivation drips; introduce lead scoring + Hot-lead founder alerts; first ethical referral loop.
-- **Milestones:** improved Engagement→Lead and Lead→Appointment rates; follow-up drips recover non-bookers; referral produces first member-sourced joins.
-- **Exit criteria:** documented lift on ≥2 funnel steps; LTV:CAC sanity check (per roadmap guardrail) before any paid push.
-
-### 8.4 Phase 3 — Growth loops & scale (Month 5+)
-
-- **Priorities:** scale discovery (Reels/Shorts/UGC), formalize referral + gamification, add second discovery channel, consider light paid amplification *only if* LTV:CAC ≥ 3:1.
-- **Milestones:** compounding growth via proof + referral loops; report-driven weekly optimization is routine.
-- **Resources:** possibly first VA hire for content batching/story collection once volume justifies it.
-- **Exit criteria:** self-sustaining flywheel; founder time concentrated on sales + strategy, not manual ops.
-
-### 8.5 Sequencing summary (what first, second, later)
-
-| Order | Build | Rationale |
-|---|---|---|
-| **First** | Bot core, CRM, booking, welcome, consent/backup | Without capture + routing, traffic leaks. |
-| **Second** | Content cadence, discussion group, scheduling + reminder + report automations | Trust + measurement engine. |
-| **Later** | A/B testing, follow-up/reactivation drips, lead scoring, referral, gamification | Optimization only makes sense once there's flow + data. |
-| **Last** | Paid amplification, second channels, VA, advanced AI | Scale only a *validated* funnel. |
+> **Principle (unchanged):** phased, gated, free-first — do not advance a phase until its gate passes. Full detail, deliverables, and decision gates: see `MASTER_IMPLEMENTATION_ROADMAP.md` §5–§9.
 
 
 ---
