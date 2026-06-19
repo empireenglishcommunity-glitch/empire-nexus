@@ -1,6 +1,8 @@
 # Empire English Community — Channel Growth & Conversion Blueprint
 
-**Strategic Planning Document v1.0** · *Confidential* · **Date:** June 2026
+**Strategic Planning Document v1.1** · *Confidential* · **Date:** June 2026
+
+> **v1.1 update.** All 10 open questions are now **finalized with the founder** (see [§10 Locked Decisions](#10-locked-decisions-finalized-v11)). Platform is confirmed as **Telegram channel + Telegram bot**. This remains a planning artifact — no implementation has been performed.
 
 > **Purpose & guardrails.** This is a **planning, analysis, and architecture** document only. It does **not** build anything, create content, or configure workflows. Every item is a *recommendation to be reviewed, refined, accepted, modified, or rejected* before implementation. A strict **free-tools-first, low-maintenance, solo-operator** lens is applied throughout. Numbers (conversion rates, costs, timelines) are **planning anchors to be validated**, never promises.
 
@@ -10,7 +12,7 @@
 >
 > This document focuses narrowly on the **public front-facing channel** (~57 members today) and the journey: **discovery → trust → engagement → lead → appointment → customer**, with all conversion paths routing through a **dedicated bot**.
 
-> **Platform assumption (please confirm).** Your description — a *public channel* with a *dedicated bot* that has *menus*, *offers*, and *appointment booking*, serving a primarily Arabic-speaking audience — maps most cleanly to a **Telegram channel + Telegram bot** front-end that feeds your existing **Discord** learning community. This document is written with that assumption but is **platform-adaptable**: if the channel is actually Discord, WhatsApp Channel, or Instagram Broadcast, the architecture holds with minor tool swaps (noted where relevant). **Action required:** confirm the channel platform before implementation.
+> **Platform — CONFIRMED.** The front channel is a **Telegram channel + Telegram bot** that feeds the existing **Discord** learning community. The bot provides menus, offers, the level quiz, lead capture, and appointment booking. This document leverages Telegram-native capabilities (quiz polls, inline-button menus, deep links, a linked discussion group, and `/start` DM onboarding).
 
 ---
 
@@ -25,7 +27,7 @@
 7. [Weekly Reporting System](#7-weekly-reporting-system)
 8. [Scale-Up Roadmap](#8-scale-up-roadmap)
 9. [Optimization & "WOW" Opportunities](#9-optimization--wow-opportunities)
-10. [Open Questions & Decisions Needed](#10-open-questions--decisions-needed-before-implementation)
+10. [Locked Decisions](#10-locked-decisions-finalized-v11)
 
 ---
 
@@ -599,20 +601,51 @@ Automation health: [ok/issues]   Manual time spent: __ hrs
 
 ---
 
-## 10. Open Questions & Decisions Needed (Before Implementation)
+## 10. Locked Decisions (Finalized v1.1)
 
-These must be answered to turn this blueprint into a build plan:
+The 10 open questions were reviewed and finalized with the founder. These decisions are now the basis for the phased build plan.
 
-1. **Platform confirmation:** Is the public channel **Telegram**, Discord, WhatsApp Channel, or Instagram Broadcast? (Drives the entire tool stack.)
-2. **Bot scope:** What exactly should the bot's first menu tree contain? (Quiz, offers, booking, FAQ, resources?)
-3. **Primary conversion goal:** Is the immediate priority **booked calls**, **free-trial signups**, or **direct purchases**?
-4. **Offer for the channel:** Which ladder tier is the channel's main conversion target right now (Core, Citizen, or a Founding-Citizen push)?
-5. **Lead magnet:** Confirm the first free lead magnet (level quiz + plan is recommended).
-6. **Language:** Bilingual (Arabic/English) flows confirmed for bot + welcome?
-7. **Capacity:** How many calls/week can the founder realistically handle? (Caps the booking push.)
-8. **Consent & data:** Comfortable with the consent/backup-list approach for compliance?
-9. **Cadence commitment:** Is ~6 posts/week sustainable, or should Phase 1 start lower?
-10. **Booking tool:** Cal.com vs. Google Calendar preference?
+| # | Decision | **Locked answer** | Implementation implication |
+|---|---|---|---|
+| 1 | **Platform** | **Telegram channel + Telegram bot**, feeding the existing Discord product | Use Telegram-native features: quiz polls, inline-button menus, deep links, linked discussion group, bot DM on `/start` |
+| 2 | **Bot first menu** | 5-button menu (below) — small by design | Front menu = Find my level · Free resource · How Empire works/pricing · Book a free call · Join community. All else nested inside |
+| 3 | **Primary conversion goal** | **Free taster / trial signup** (self-serve), with a **free call offered in parallel** (see #7) | Quiz → quick-win → 7-day taster → Core. Calls run alongside as an accelerator |
+| 4 | **Main offer target** | **Core Membership** (volume) + a **time-boxed Founding Citizen (lifetime)** push | Two offers live at once: Core as default, Founding Citizen for honest early-adopter scarcity |
+| 5 | **Lead magnet** | **3-rung ladder:** (1) 2-min level quiz → plan [hero], (2) "3 Sounds That Make You Sound More American" quick-win, (3) "7-Day Speaking Starter" free taster | Quick-win packaged from existing sound-pattern tables; taster reuses the daily-loop design |
+| 6 | **Language** | **Arabic for now; Arabic-led bilingual** bot + welcome + L0 flows | Arabic-first UX with English terms where natural; smooth comprehension prioritized; language toggle optional later |
+| 7 | **Call capacity** | **High / not a bottleneck** | Strategy: lean into founder-led calls as a trust accelerator *now* (while small); offer free "level & roadmap" calls generously to warm leads + Founding-Citizen prospects; taper to self-serve as volume scales |
+| 8 | **Consent & data** | **Yes** — explicit in-bot opt-in + Google Sheets subscriber DB (backup list) | Opt-in prompt in bot; Sheets CRM as single source of truth; anti-platform-risk insurance |
+| 9 | **Posting cadence** | Founder commits meaningful time (Empire is the priority) → target **5–6 posts/week**, batched weekly | Plan for 5–6/week but always protect *consistency over volume* |
+| 10 | **Booking tool** | **Cal.com** (free/OSS, timezone-aware) | Connect via Telegram deep link from the "Book a call" button |
+
+### 10.1 Locked bot first-menu tree
+
+```
+🏛 Welcome to Empire English  (Arabic-led bilingual)
+─────────────────────────────────────────────
+[ 🎯 Find my English level (2-min quiz) ]   ← primary / hero
+[ 🎁 Get my free starter resource ]          ← quick-win lead magnet
+[ 📚 How Empire works / pricing ]            ← Core + Founding Citizen
+[ 📅 Book a free strategy call ]             ← founder-led accelerator
+[ 💬 Join the community ]                     ← Discord / discussion group
+```
+*FAQ, testimonials, objection-handlers, and the 7-day taster live nested inside these branches — not on the front menu.*
+
+### 10.2 Locked lead-magnet ladder
+
+```
+Quiz (level + plan)  →  Quick-win ("3 American Sounds")  →  7-Day Speaking Starter (free taster)  →  Core Membership
+        │                         │                                   │                               │
+   intent + segment         reciprocity / win                 trial / habit + streak            conversion
+```
+
+### 10.3 Strategic note — calls as an early-stage trust accelerator (from Q7)
+
+Because call capacity is not a constraint, the funnel runs **two parallel conversion paths** while the audience is small:
+1. **Self-serve** (quiz → taster → Core) — the scalable, automated default.
+2. **Founder-led free call** — offered generously to warm leads and Founding-Citizen prospects to exploit the small-scale trust advantage big competitors can't match.
+
+As volume grows, the call path is **deliberately tapered** (reserved for high-intent / high-ticket) to protect founder time. This is a feature of the plan, not a contradiction of the "trial-primary" decision.
 
 ---
 
@@ -622,8 +655,8 @@ This blueprint reframes the 57-member public channel as the **front door of an i
 
 The core moves are: (1) **define and instrument** the 6-stage funnel; (2) **build the bot + CRM + booking** first; (3) **establish a sustainable content rhythm** with an 80/20 give:ask ratio; (4) **automate the repetitive**, keep human the trust-building; (5) **segment by intent** and spend scarce founder time top-down; (6) **let a weekly self-assembling report** drive one experiment at a time; and (7) **layer growth loops, retention, and AI** only after the core funnel is validated.
 
-> **Next step:** review, refine, and approve. Once the [open questions](#10-open-questions--decisions-needed-before-implementation) are answered, this becomes a concrete, phased build plan — implemented strictly free-first and solo-operator-sustainable.
+> **Next step:** all 10 decisions are now [locked (§10)](#10-locked-decisions-finalized-v11). This blueprint is ready to be converted into a concrete, phased build plan (starting with Phase 0: bot core + CRM + booking + welcome) — implemented strictly free-first and solo-operator-sustainable, on approval.
 
 ---
 
-*End of Channel Growth & Conversion Blueprint v1.0 — planning artifact only. No implementation has been performed.*
+*End of Channel Growth & Conversion Blueprint v1.1 — planning artifact only. All 10 decisions locked. No implementation has been performed.*
