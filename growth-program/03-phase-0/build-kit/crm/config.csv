@@ -1,0 +1,21 @@
+key,value,notes
+CALL_URL,,"Cal.com booking link; MUST include ?src=bot&tid= so bookings match back to CRM"
+DISCORD_INVITE,,Discord community invite link
+GROUP_INVITE,,Telegram discussion-group link
+RESOURCE_LINK,,"'3 American Sounds' PDF/file URL; until produced, bot serves PDF text + 'audio coming soon'"
+DEFAULT_LANGUAGE,ar,Bot default language on first /start (ar = Arabic-led)
+SHOW_PUBLIC_PRICES,FALSE,"Day-one decision: prices NOT shown in bot; pricing handled via call/DM"
+FOUNDER_ALERT_CHAT_ID,,"Telegram chat id (or email) where Hot-lead alerts are sent"
+HOT_LEAD_THRESHOLD,80,Lead score at/above which segment becomes Hot and founder is alerted
+SCORE_JOINED_BOT,5,Lead-score points for JOINED_BOT
+SCORE_QUIZ_COMPLETED,30,Lead-score points for QUIZ_COMPLETED
+SCORE_RESOURCE_CLAIMED,15,Lead-score points for RESOURCE_CLAIMED
+SCORE_OFFER_OPENED,20,Lead-score points for OFFER_OPENED
+SCORE_BOOKED,50,Lead-score points for BOOKED
+SCORE_COMMUNITY_CLICK,10,Lead-score points for COMMUNITY_CLICK
+SCORE_DECAY_INACTIVE_14D,-15,Lead-score decay applied after 14 days inactivity
+LAPSED_DAYS,21,Days of inactivity after which an active member is tagged Lapsed
+LEVEL_BAND_L0_MAX,3,Quiz sum 0..this => Level 0
+LEVEL_BAND_L1_MAX,7,Quiz sum (L0_MAX+1)..this => Level 1
+LEVEL_BAND_L2_MAX,11,Quiz sum (L1_MAX+1)..this => Level 2
+QUIZ_EDGE_GAP,2,"If speaking(Q2) differs from avg of others by >= this, nudge up + set review_flag"
