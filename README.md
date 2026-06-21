@@ -8,10 +8,12 @@
 
 ## 🗂️ Repository structure
 
-All working documents live under **`growth-program/`**, grouped by layer. The root stays clean — just this index and the program folder. Future phases get their own folder (e.g., `04-phase-1/`).
+All working documents live under **`growth-program/`**, grouped by layer. Infrastructure documentation lives under **`infrastructure/`**. The root holds this index, status documents, and checkpoints.
 
 ```
 README.md                         ← you are here (the map)
+PROJECT_STATUS_AND_HANDOVER.md    ← full project status & agent handover
+CHECKPOINT_2026-06-20.md          ← daily checkpoint (infrastructure day)
 growth-program/
   01-foundation/                  ← the product + business
       Empire English Community Learning System.md
@@ -22,7 +24,11 @@ growth-program/
   03-phase-0/                     ← the first build phase
       PHASE_0_IMPLEMENTATION_SPEC.md
       PHASE_0_CONTENT_ASSETS.md
-  (future) 04-phase-1/ , 05-phase-2/ , 06-phase-3/ ...
+      build-kit/                  ← hands-on build assets & CRM templates
+infrastructure/                   ← technical implementation references
+    N8N_WORKFLOW_PATTERNS.md      ← verified n8n patterns (MANDATORY reference)
+    QUIZ_SYSTEM_TECHNICAL_AUDIT.md ← quiz system audit & troubleshooting
+    SERVER_REFERENCE.md           ← server & hosting documentation
 ```
 
 ---
@@ -55,6 +61,9 @@ To prevent the same thing being defined in multiple places, each cross-cutting t
 | **Phase 0 build details** | `03-phase-0/PHASE_0_IMPLEMENTATION_SPEC.md` |
 | **Phase 0 copy/strings** | `03-phase-0/PHASE_0_CONTENT_ASSETS.md` |
 | **KPIs & weekly report** | `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §7 |
+| **n8n workflow implementation patterns** | `infrastructure/N8N_WORKFLOW_PATTERNS.md` |
+| **Quiz system architecture & troubleshooting** | `infrastructure/QUIZ_SYSTEM_TECHNICAL_AUDIT.md` |
+| **Server & hosting infrastructure** | `infrastructure/SERVER_REFERENCE.md` |
 
 > **Rule of thumb:** strategy lives in the Blueprint, phasing lives in the Master Roadmap, build detail lives in the Phase specs, and copy lives in the Content pack. Don't restate one in another — link instead.
 
@@ -70,7 +79,12 @@ To prevent the same thing being defined in multiple places, each cross-cutting t
 | Full phased roadmap (P0→P3) | ✅ Mapped |
 | Docs organized into `growth-program/` | ✅ Complete |
 | Pre-build decisions (pricing display, Arabic register, orchestrator) | ✅ Locked |
-| **Phase 0 BUILD (live tools)** | ⬜ Not started — awaiting founder go |
+| **Infrastructure (Hetzner + n8n + Cloudflare Tunnel)** | ✅ Complete & running |
+| **Phase 0 BUILD — Bot Core (start, menu, buttons)** | ✅ Working |
+| **Phase 0 BUILD — Quiz System (Q1–Q7 + scoring + plan)** | ✅ Working |
+| **Phase 0 BUILD — CRM Integration (Google Sheets)** | ✅ Working |
+| Phase 0 BUILD — remaining routes (resource, how, call, community) | 🟡 Partially built |
+| Phase 0 BUILD — booking sync, backup, hot-lead alerts | ⬜ Not started |
 | Asset production (3 audio clips + PDF) + Config links | ⬜ Pending |
 | Phase 1–3 detailed specs | ⬜ Written at each gate (not before) |
 
@@ -80,7 +94,7 @@ To prevent the same thing being defined in multiple places, each cross-cutting t
 
 Telegram channel + bot → Discord product · 5-button bot menu · primary goal = free taster/trial (self-serve) **+** founder-led calls in parallel · main offer = **Core** + time-boxed **Founding Citizen** · lead-magnet ladder (quiz → "3 American Sounds" → 7-Day Speaking Starter → Core) · **Arabic-led bilingual** · high call capacity · explicit consent + **Google Sheets** CRM · **5–6 posts/week** · **Cal.com** booking.
 
-**Pre-build finalizations (locked):** **no public prices day one** — pricing via call/DM · Arabic register = **MSA, fresh & conversational** · orchestrator = **Make.com** (n8n self-host fallback).
+**Pre-build finalizations (locked):** **no public prices day one** — pricing via call/DM · Arabic register = **MSA, fresh & conversational** · orchestrator = **n8n self-hosted** (migrated from Make.com) · hosting = **Hetzner Cloud CX23** ($7.09/mo) · domain = **empireenglish.online** (Cloudflare Tunnel).
 
 *(Full detail: `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §10.)*
 
