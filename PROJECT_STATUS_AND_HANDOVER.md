@@ -1,4 +1,7 @@
-# Empire English Community — Project Status & Handover Document
+# Empire English Community — Project Status & Handover
+
+> **Last Updated:** June 25, 2026
+> **Status:** Phase 0 COMPLETE — Bot fully operational, automations running, MCP infrastructure live Document
 
 **Date:** June 20, 2026  
 **Version:** 1.0  
