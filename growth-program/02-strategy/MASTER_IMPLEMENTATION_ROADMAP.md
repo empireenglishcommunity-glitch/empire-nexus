@@ -95,11 +95,15 @@ The program is documented across a small set of artifacts. This roadmap sits **o
 | Master roadmap | ✅ Done (PR #9) |
 | Repo cleanup + index + folder organization | ✅ Done (PR #10, #11) |
 | Pre-build decisions (pricing display, Arabic register, orchestrator) | ✅ Locked |
-| Phase 0 **build** (actual bot/CRM setup) | ⬜ Not started — awaiting your go |
-| Asset production (3 audio clips + PDF) + Config links | ⬜ Pending |
-| Phases 1–3 detailed specs | ⬜ Not written — open only at each gate |
+| **Phase 0 BUILD — Bot + Quiz + CRM + Automations** | ✅ **COMPLETE** (June 25, 2026) |
+| **Infrastructure — Hetzner + n8n + Cloudflare Tunnel + MCP** | ✅ **COMPLETE** |
+| **Asset production (PDF lead magnet)** | ✅ **COMPLETE** (hosted on Google Drive) |
+| **Gate 0→1 — All acceptance tests passing** | ✅ **PASSED** |
+| **Phase 1 — Content Rhythm & Reporting** | 🟡 **IN PROGRESS** (content written, publishing starting) |
+| Phase 1 detailed spec | ✅ Written (`04-phase-1/PHASE_1_IMPLEMENTATION_SPEC.md`) |
+| Phases 2–3 detailed specs | ⬜ Written at each gate (not before) |
 
-> **Decision point:** everything to date is **planning + content**, now fully organized with pre-build decisions locked. The next action that touches a live tool is the Phase 0 *build*, and it does not start until you say so.
+> **Current state (June 25, 2026):** Phase 0 is COMPLETE and passing all acceptance tests. Phase 1 has begun — content is written, discussion group is live, weekly report is running. The system is operational on n8n self-hosted (migrated from Make.com). Gate 1→2 will be evaluated after ≥4 weeks of measured funnel data.
 
 ---
 
