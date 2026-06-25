@@ -1,0 +1,250 @@
+{
+  "name": "Empire Bot — Main v2 (Complete)",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["message", "callback_query"],
+        "additionalFields": {}
+      },
+      "id": "t1",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [180, 580],
+      "credentials": { "telegramApi": { "id": "CRED_TELEGRAM", "name": "Telegram account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const u=$input.first().json;let route='unknown',chat_id='',first_name='',telegram_id='',username='',cb='';\nif(u.callback_query){cb=(u.callback_query.data||'').trim();chat_id=u.callback_query.message.chat.id;first_name=u.callback_query.from.first_name||'';telegram_id=String(u.callback_query.from.id);username=u.callback_query.from.username||'';route=cb.match(/^q\\d+_/)?'quiz_answer':cb.toLowerCase();}else if(u.message){const t=(u.message.text||'').trim();chat_id=u.message.chat.id;first_name=u.message.from.first_name||'';telegram_id=String(u.message.from.id);username=u.message.from.username||'';route=(t==='/start'||t==='/menu')?'start':t==='/stop'?'stop':'unknown';}\nreturn[{json:{_route:route,chat_id:Number(chat_id),first_name,telegram_id,username,callback_data:cb}}];"
+      },
+      "id": "r1",
+      "name": "Code Router",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [400, 580]
+    },
+    {
+      "parameters": {
+        "rules": { "values": [
+
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"start","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Start"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"quiz","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Quiz"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"quiz_answer","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"QuizAnswer"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"resource","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Resource"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"how","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"How"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"call","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Call"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"community","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Community"},
+          {"conditions":{"options":{"caseSensitive":false},"conditions":[{"leftValue":"={{ $json._route }}","rightValue":"menu","operator":{"type":"string","operation":"equals"}}]},"renameOutput":true,"outputKey":"Menu"}
+        ]},
+        "options": {"fallbackOutput":"none"}
+      },
+      "id": "sw1",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [620, 580]
+    },
+
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const text=`أهلاً بك في Empire English 🏛\\n\\nأنا هنا عشان أساعدك تتكلم إنجليزي بثقة — خطوة بخطوة، بنظام واضح، مش مجرد دروس.\\n\\nاختر من القائمة 👇`;const kb=JSON.stringify({inline_keyboard:[[{text:'🎯 حدّد مستواي (دقيقتان)',callback_data:'quiz'}],[{text:'🎁 هديتي المجانية',callback_data:'resource'}],[{text:'📚 كيف يعمل Empire + الأسعار',callback_data:'how'}],[{text:'📅 احجز مكالمة مجانية',callback_data:'call'}],[{text:'💬 انضم للمجتمع',callback_data:'community'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb,telegram_id:c.telegram_id,first_name:c.first_name,username:c.username,event_type:'JOINED_BOT'}}];"
+      },
+      "id": "c_start", "name": "Build Welcome", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_start", "name": "Send Welcome", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 200]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Events"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","event_type":"JOINED_BOT","timestamp":"={{ $now.toISO() }}","meta":"{}"}}
+      },
+      "id": "s_start_ev", "name": "Log JOINED_BOT", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 200],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Subscribers"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","first_name":"={{ $json.first_name }}","username":"={{ $json.username }}","status":"New","first_seen_at":"={{ $now.toISO() }}","last_active_at":"={{ $now.toISO() }}"}},
+        "options": {"matchingColumns":["telegram_id"]}
+      },
+      "id": "s_start_sub", "name": "Upsert Subscriber", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 300],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    },
+
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const text='❓ السؤال 1/7\\n\\nكيف تصف إنجليزيتك اليوم؟';const kb=JSON.stringify({inline_keyboard:[[{text:'أعرف حروف/كلمات بسيطة فقط',callback_data:'q1_0'}],[{text:'أكوّن جُمل بسيطة بصعوبة',callback_data:'q1_1'}],[{text:'أتعامل مع محادثات يومية',callback_data:'q1_2'}],[{text:'أتحدث بطلاقة عن معظم المواضيع',callback_data:'q1_3'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb}}];"
+      },
+      "id": "c_quiz", "name": "Build Quiz Q1", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_quiz", "name": "Send Quiz Q1", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const cb=c.callback_data;const m=cb.match(/^q(\\d+)_(.+)$/);if(!m)return[{json:{chat_id:c.chat_id,text:'خطأ',reply_markup:'{}',_done:false}}];const qNum=parseInt(m[1]);const val=m[2];\nconst Qs=[null,null,{t:'❓ السؤال 2/7\\n\\nتقدر تعرّف عن نفسك بالإنجليزي 30 ثانية؟',o:[['لا، ليس بعد','q2_0'],['بصعوبة وبجُمل قصيرة','q2_1'],['نعم، بشكل مقبول','q2_2'],['نعم، بسهولة وثقة','q2_3']]},{t:'❓ السؤال 3/7\\n\\nأي جملة صحيحة؟',o:[['She go to work every day.','q3_0'],['She goes to work every day. ✅','q3_3'],['She going to work every day.','q3_1'],['She is go to work every day.','q3_0']]},{t:'❓ السؤال 4/7\\n\\nماذا تعني كلمة \"improve\"؟',o:[['يتحسّن / to get better ✅','q4_3'],['يتوقف / to stop','q4_0'],['يسافر / to travel','q4_0'],['ينسى / to forget','q4_0']]},{t:'❓ السؤال 5/7\\n\\nتقدر تتابع فيديو/بودكاست إنجليزي بسرعة طبيعية؟',o:[['لا أفهم تقريبًا شيء','q5_0'],['أفهم بعض الكلمات','q5_1'],['أفهم معظم الفكرة','q5_2'],['أفهم كل شيء تقريبًا','q5_3']]},{t:'❓ السؤال 6/7\\n\\nما هو هدفك الأول من تعلّم الإنجليزي؟',o:[['🗣️ أتكلم بثقة','q6_confidence'],['💼 مقابلة عمل','q6_interview'],['✈️ السفر','q6_travel'],['📝 اختبار','q6_exam'],['🇺🇸 تحسين اللهجة','q6_accent']]},{t:'❓ السؤال 7/7\\n\\nكم وقت تقدر تعطي يوميًا؟',o:[['⏱️ حوالي 15 دقيقة','q7_Core'],['⏱️ حوالي 30 دقيقة','q7_Core'],['⏱️ 60 دقيقة أو أكثر','q7_Intensive']]}];\nconst next=qNum+1;\nif(next<=7&&Qs[next]){const q=Qs[next];const kb=JSON.stringify({inline_keyboard:q.o.map(x=>[{text:x[0],callback_data:x[1]}])});return[{json:{chat_id:c.chat_id,text:q.t,reply_markup:kb,_done:false,_qnum:qNum,_val:val,telegram_id:c.telegram_id}}];}\nreturn[{json:{chat_id:c.chat_id,text:'⏳ ممتاز! نتيجتك جاهزة…',reply_markup:'{}',_done:true,_qnum:qNum,_val:val,telegram_id:c.telegram_id,first_name:c.first_name}}];"
+      },
+      "id": "c_qa", "name": "Quiz Answer Handler", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 580]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_qa", "name": "Send Quiz Next", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 580]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Subscribers"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","last_active_at":"={{ $now.toISO() }}"}},
+        "options": {"matchingColumns":["telegram_id"]}
+      },
+      "id": "s_qa_update", "name": "Update Last Active", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 580],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    },
+
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const fn=c.first_name||'';const RESOURCE_LINK='https://empireenglish.online/3sounds';const text=`هديتك جاهزة يا ${fn}! 🎁\\n\\n3 أصوات تخليك تنطق أمريكي أكثر — دليل قصير + 3 مقاطع صوتية تتمرّن معها.\\n\\nحمّلها من هنا 👇\\n${RESOURCE_LINK}\\n\\nجرّب صوت واحد اليوم فقط — النتيجة تفاجئك 🔥`;const kb=JSON.stringify({inline_keyboard:[[{text:'📚 كيف يعمل Empire',callback_data:'how'},{text:'📅 احجز مكالمة',callback_data:'call'}],[{text:'↩️ القائمة',callback_data:'menu'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb,telegram_id:c.telegram_id,event_type:'RESOURCE_CLAIMED'}}];"
+      },
+      "id": "c_res", "name": "Build Resource", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 780]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_res", "name": "Send Resource", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 780]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Events"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","event_type":"RESOURCE_CLAIMED","timestamp":"={{ $now.toISO() }}","meta":"{}"}}
+      },
+      "id": "s_res", "name": "Log RESOURCE", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 780],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const text=`في Empire، ما نبيعك \"كورس\" — نعطيك نظام تعلّم كامل يمشي معك كل يوم 👇\\n\\n• نطق أمريكي من اليوم الأول\\n• مهام كلام يومية (مو بس نظري — تتكلم فعلاً)\\n• مجتمع يدعمك + متابعة لتقدّمك\\n• مستويات واضحة: ما ترتقي إلا لما تتقن\\n\\n━━━━━━━━━━━━━━━━━━\\n\\nعندنا مسار واضح يبدأ من المجاني:\\n\\n🆓 Recruit (مجاني): تذوّق المستوى صفر + المجتمع + كلمة اليوم\\n⭐ Core (الأساس): النظام اليومي الكامل + المجتمع + المتابعة\\n👑 Citizen: كل ما سبق + مدرّب ذكاء اصطناعي + أولوية في التصحيح\\n🏛️ Founding Citizen (مقاعد محدودة): عضوية دائمة + لقب مؤسس\\n\\nالأسعار نرتّبها لك حسب هدفك في مكالمة قصيرة — عشان تختار الأنسب لك فعلاً.\\n\\n━━━━━━━━━━━━━━━━━━\\n\\nأنصحك تبدأ باختبار المستوى أو تحجز مكالمة قصيرة 👇`;const kb=JSON.stringify({inline_keyboard:[[{text:'🎯 حدّد مستواي',callback_data:'quiz'},{text:'📅 احجز مكالمة',callback_data:'call'}],[{text:'🎁 هديتي المجانية',callback_data:'resource'},{text:'↩️ القائمة',callback_data:'menu'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb,telegram_id:c.telegram_id,event_type:'OFFER_OPENED'}}];"
+      },
+      "id": "c_how", "name": "Build How", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 960]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_how", "name": "Send How", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 960]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Events"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","event_type":"OFFER_OPENED","timestamp":"={{ $now.toISO() }}","meta":"{}"}}
+      },
+      "id": "s_how", "name": "Log OFFER", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 960],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    },
+
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const tid=c.telegram_id;const CALL_URL='https://cal.com/macalempire/empire-english?src=bot&tid='+tid;const text=`مكالمة قصيرة (15–20 دقيقة)، بدون ضغط بيع 🙂\\n\\nفي المكالمة:\\n• نحدّد مستواك وهدفك بدقة\\n• نرسم لك خطة واضحة للأسابيع القادمة\\n• تسأل أي شي وتشوف إذا Empire يناسبك\\n\\nاختر وقت يناسبك 👇`;const kb=JSON.stringify({inline_keyboard:[[{text:'📅 احجز الآن',url:CALL_URL}],[{text:'↩️ القائمة',callback_data:'menu'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb,telegram_id:tid}}];"
+      },
+      "id": "c_call", "name": "Build Call", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 1140]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_call", "name": "Send Call", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 1140]
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$('Code Router').first().json;const DISCORD='https://discord.gg/YOUR_INVITE_HERE';const GROUP='https://t.me/YOUR_GROUP_HERE';const text=`أهلاً فيك في عائلة Empire 🏛\\n\\n• مجتمع Discord (تمارين، صوتيات، فعاليات)\\n• مجموعة النقاش على تيليجرام (أسئلة + كلمة اليوم)\\n\\nادخل، عرّف عن نفسك، وابدأ معنا 💪`;const kb=JSON.stringify({inline_keyboard:[[{text:'🎮 Discord',url:DISCORD},{text:'💬 مجموعة تيليجرام',url:GROUP}],[{text:'↩️ القائمة',callback_data:'menu'}]]});return[{json:{chat_id:c.chat_id,text,reply_markup:kb,telegram_id:c.telegram_id,event_type:'COMMUNITY_CLICK'}}];"
+      },
+      "id": "c_com", "name": "Build Community", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [880, 1320]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN_HERE/sendMessage",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={\"chat_id\":{{ $json.chat_id }},\"text\":{{ JSON.stringify($json.text) }},\"reply_markup\":{{ $json.reply_markup }}}"
+      },
+      "id": "h_com", "name": "Send Community", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1100, 1320]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl":true,"mode":"id","value":"YOUR_SHEET_ID_HERE"},
+        "sheetName": {"__rl":true,"mode":"list","value":"Events"},
+        "columns": {"mappingMode":"defineBelow","value":{"telegram_id":"={{ $json.telegram_id }}","event_type":"COMMUNITY_CLICK","timestamp":"={{ $now.toISO() }}","meta":"{}"}}
+      },
+      "id": "s_com", "name": "Log COMMUNITY", "type": "n8n-nodes-base.googleSheets", "typeVersion": 4.5, "position": [1320, 1320],
+      "credentials": {"googleSheetsOAuth2Api":{"id":"CRED_SHEETS","name":"Google Sheets account"}}
+    }
+  ],
+
+  "connections": {
+    "Telegram Trigger": {"main":[[{"node":"Code Router","type":"main","index":0}]]},
+    "Code Router": {"main":[[{"node":"Switch","type":"main","index":0}]]},
+    "Switch": {"main":[
+      [{"node":"Build Welcome","type":"main","index":0}],
+      [{"node":"Build Quiz Q1","type":"main","index":0}],
+      [{"node":"Quiz Answer Handler","type":"main","index":0}],
+      [{"node":"Build Resource","type":"main","index":0}],
+      [{"node":"Build How","type":"main","index":0}],
+      [{"node":"Build Call","type":"main","index":0}],
+      [{"node":"Build Community","type":"main","index":0}],
+      [{"node":"Build Welcome","type":"main","index":0}]
+    ]},
+    "Build Welcome": {"main":[[{"node":"Send Welcome","type":"main","index":0}]]},
+    "Send Welcome": {"main":[[{"node":"Log JOINED_BOT","type":"main","index":0},{"node":"Upsert Subscriber","type":"main","index":0}]]},
+    "Build Quiz Q1": {"main":[[{"node":"Send Quiz Q1","type":"main","index":0}]]},
+    "Quiz Answer Handler": {"main":[[{"node":"Send Quiz Next","type":"main","index":0}]]},
+    "Send Quiz Next": {"main":[[{"node":"Update Last Active","type":"main","index":0}]]},
+    "Build Resource": {"main":[[{"node":"Send Resource","type":"main","index":0}]]},
+    "Send Resource": {"main":[[{"node":"Log RESOURCE","type":"main","index":0}]]},
+    "Build How": {"main":[[{"node":"Send How","type":"main","index":0}]]},
+    "Send How": {"main":[[{"node":"Log OFFER","type":"main","index":0}]]},
+    "Build Call": {"main":[[{"node":"Send Call","type":"main","index":0}]]},
+    "Build Community": {"main":[[{"node":"Send Community","type":"main","index":0}]]},
+    "Send Community": {"main":[[{"node":"Log COMMUNITY","type":"main","index":0}]]}
+  },
+  "settings": {"executionOrder":"v1"},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1
+}
