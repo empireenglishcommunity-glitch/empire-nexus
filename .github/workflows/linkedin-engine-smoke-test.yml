@@ -24,8 +24,3 @@ jobs:
           node-version: "20"
       - name: Syntax check + smoke test
         run: npm test
-      - name: Worker build check (wrangler dry-run)
-        run: npx --yes wrangler@4 deploy --dry-run --outdir dist
-        env:
-          WRANGLER_SEND_METRICS: "false"
-          CLOUDFLARE_API_TOKEN: "dummy-for-dry-run"

@@ -94,10 +94,10 @@ await worker.fetch(msg("/new"), env);
 ok(tgCalls.some(c => /your idea/.test((c.body && c.body.text) || "")), "Phase 5: next /new consumes the saved idea");
 ok((JSON.parse(store.get("ideas") || "[]")).length === 0, "idea consumed from KV");
 
-// 7) Carousel with no web app configured -> graceful message
+// 7) Carousel generates self-contained slides (v3.0 — no external dependency)
 tgCalls.length = 0;
 await worker.fetch(cb("lp:car", midSeq), env);
-ok(tgCalls.some(c => /Carousel unavailable|not configured/.test(c.body.text || "")), "Phase 3: carousel degrades gracefully when not configured");
+ok(tgCalls.some(c => /CAROUSEL SLIDES|SLIDE \d/.test(c.body.text || "")), "Phase 3: self-contained carousel generates slides as text");
 
 // 8) Non-admin ignored
 tgCalls.length = 0;
