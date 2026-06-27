@@ -1,113 +1,254 @@
-# Empire English — Documentation Index
+# Empire English Community
 
-**Repository purpose.** This repo holds the **planning, strategy, and build specifications** for Empire English Community — a system-driven English-learning program and the Telegram-channel funnel that grows and converts it. These are working documents; **no application code is built or deployed from this repo yet.**
-
-> **New here? Read in this order:** 1 → 2 → 3 → 4 → 5 → 6 (below).
+> **Speak like an Emperor.** — An online English-learning community for Arabic speakers.
+> Sub-brand of MACAL Empire.
 
 ---
 
-## 🗂️ Repository structure
+## What This Repository Is
 
-All working documents live under **`growth-program/`**, grouped by layer. Infrastructure documentation lives under **`infrastructure/`**. The root holds this index, status documents, and checkpoints.
+This is the **single source of truth** for all Empire English Community assets — strategy, code, infrastructure, content, documentation, and automation. Everything lives here.
+
+---
+
+## Repository Structure
 
 ```
-README.md                         ← you are here (the map)
-PROJECT_STATUS_AND_HANDOVER.md    ← full project status & agent handover
-CHECKPOINT_2026-06-20.md          ← daily checkpoint (infrastructure day)
-growth-program/
-  01-foundation/                  ← the product + business
-      Empire English Community Learning System.md
-      STRATEGIC_EXPANSION_ROADMAP.md
-  02-strategy/                    ← funnel strategy + phasing
-      CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md
-      MASTER_IMPLEMENTATION_ROADMAP.md
-  03-phase-0/                     ← the first build phase
-      PHASE_0_IMPLEMENTATION_SPEC.md
-      PHASE_0_CONTENT_ASSETS.md
-      build-kit/                  ← hands-on build assets & CRM templates
-infrastructure/                   ← technical implementation references
-    N8N_WORKFLOW_PATTERNS.md      ← verified n8n patterns (MANDATORY reference)
-    QUIZ_SYSTEM_TECHNICAL_AUDIT.md ← quiz system audit & troubleshooting
-    SERVER_REFERENCE.md           ← server & hosting documentation
+empire-english-community/
+│
+├── bots/                               ← All bot source code
+│   ├── discord-learning-bot/           ← Discord L0 learning system (Python/Docker)
+│   │   ├── src/                        ← Bot modules (ai_engine, database, tasks)
+│   │   ├── content/                    ← L0 curriculum (accent, grammar, speaking, writing, immersion)
+│   │   ├── data/                       ← Week 1-8 JSON data files + advancement exam
+│   │   ├── scripts/                    ← Server setup automation
+│   │   ├── Dockerfile + docker-compose.yml
+│   │   └── requirements.txt
+│   │
+│   ├── discord-challenge-bot/          ← 30-day challenge bot (Python/Docker)
+│   │   ├── src/                        ← Bot, AI coach, certificates, challenges, database
+│   │   ├── data/                       ← Challenge data, captions, promo content
+│   │   ├── tests/                      ← 49 pytest tests
+│   │   ├── fonts/                      ← Cairo Arabic font (PDF certificates)
+│   │   ├── scripts/                    ← Backup, server setup
+│   │   ├── Dockerfile + docker-compose.yml
+│   │   └── DEPLOYMENT.md
+│   │
+│   └── telegram-sales-bot/             ← Telegram sales/funnel bot (Cloudflare Worker)
+│       ├── worker.js                   ← Live bot (v13) — single-file deployment
+│       └── SETUP.md
+│
+├── workers/                            ← Cloudflare Workers (serverless)
+│   └── linkedin-engine/                ← LinkedIn content automation (v3.0)
+│       ├── worker.js                   ← 55 hooks, 25 styles, 15 formats, carousel
+│       ├── wrangler.toml               ← Cloudflare Worker config
+│       ├── SETUP.md
+│       └── _test.mjs                   ← Smoke test
+│
+├── apps/                               ← Web & mobile applications
+│   ├── mobile/                         ← React Native / Expo pronunciation dictionary
+│   │   ├── app/                        ← Expo Router screens
+│   │   ├── src/                        ← Components, data, services, theme
+│   │   ├── package.json
+│   │   ├── app.json
+│   │   └── tsconfig.json
+│   │
+│   └── web/                            ← Web applications
+│       ├── landing-pages/              ← Static HTML (EN + AR RTL)
+│       │   ├── index.html
+│       │   └── index-ar.html
+│       └── next-app/                   ← Next.js web app (student dashboard)
+│           ├── app/
+│           ├── components/
+│           └── lib/
+│
+├── infrastructure/                     ← Deployment & server configuration
+│   ├── server-hardening/               ← Hetzner VPS security (7 hardening scripts)
+│   │   ├── deploy.sh                   ← Master deployment script
+│   │   ├── scripts/                    ← Swap, firewall, SSH, fail2ban, Docker, monitoring, backup
+│   │   ├── configs/                    ← docker-compose.yml, watchdog.sh
+│   │   └── systemd/                    ← Monitor timer + service
+│   │
+│   ├── n8n-mcp/                        ← MCP server for AI workflow building
+│   │   ├── docker-compose.yml
+│   │   ├── deploy.sh
+│   │   └── deploy_mcp.py
+│   │
+│   └── n8n-workflows/                  ← n8n workflow JSON exports
+│       ├── EMPIRE-BOT-FINAL.json
+│       ├── empire-bot-main-v2.json
+│       └── IMPORT_INSTRUCTIONS.md
+│
+├── content/                            ← Content & marketing assets
+│   ├── telegram-posts/                 ← 6 weeks of Telegram channel posts
+│   │   ├── WEEK_1_POSTS.md → WEEK_6_POSTS.md
+│   │   ├── GROUP_SEEDING_WEEK1.md
+│   │   └── WORD_OF_THE_DAY_14.md
+│   │
+│   ├── build-kit/                      ← CRM templates, quiz logic, operational assets
+│   │   ├── crm/                        ← Google Sheets CRM templates (CSV)
+│   │   ├── quiz-logic.md
+│   │   ├── botfather-setup.md
+│   │   └── weekly-report.gs
+│   │
+│   └── brand/                          ← MACAL brand voice & identity
+│       └── macal-brand-bible.md
+│
+├── docs/                               ← All documentation
+│   ├── strategy/                       ← Business strategy & roadmaps
+│   │   ├── Empire English Community Learning System.md
+│   │   ├── STRATEGIC_EXPANSION_ROADMAP.md
+│   │   ├── CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md
+│   │   ├── MASTER_IMPLEMENTATION_ROADMAP.md
+│   │   └── FULL_IMPLEMENTATION_ROADMAP.md
+│   │
+│   ├── specs/                          ← Phase build specifications
+│   │   ├── phase-0/                    ← Bot, quiz, CRM, automations
+│   │   ├── phase-1/                    ← Content, discussion group, 3 American Sounds
+│   │   ├── learning-system/            ← Discord L0 curriculum plan
+│   │   └── ecosystem/                  ← Brand universe, ecosystem architecture
+│   │
+│   ├── operations/                     ← Server, recovery, audits, operational guides
+│   │   ├── SERVER_REFERENCE.md
+│   │   ├── EMERGENCY-RECOVERY.md
+│   │   ├── SERVER_AUDIT.md
+│   │   ├── GUIDE.md
+│   │   ├── PROJECT-CONTEXT.md
+│   │   └── PROJECTS-CHECKLIST.md
+│   │
+│   ├── business/                       ← Feasibility studies, pricing, launch
+│   │   ├── EEC-Feasibility-Study.md
+│   │   ├── EEC-International-Pricing-and-Feasibility.md
+│   │   ├── EEC-Launch-Night-Playbook.md
+│   │   └── تحدي-30-يوم-المنطقة-غير-المريحة.md
+│   │
+│   ├── infrastructure/                 ← Technical infrastructure docs
+│   │   ├── N8N_WORKFLOW_PATTERNS.md
+│   │   ├── QUIZ_SYSTEM_TECHNICAL_AUDIT.md
+│   │   └── EEC_SERVER_REFERENCE.md
+│   │
+│   └── checkpoints/                    ← Session checkpoint history
+│       ├── CHECKPOINT_2026-06-19.md
+│       ├── CHECKPOINT_2026-06-20.md
+│       ├── CHECKPOINT_2026-06-25.md
+│       └── CHECKPOINT_2026-06-25-B.md
+│
+├── .github/workflows/                  ← CI/CD pipelines
+│   ├── challenge-bot-test.yml
+│   └── linkedin-engine-smoke-test.yml
+│
+├── .kiro/steering/                     ← AI agent rules & protocols
+│   ├── project-rules.md
+│   └── sync-protocol.md
+│
+├── PROJECT_STATUS.md                   ← Current project status & handover
+├── .gitignore
+└── README.md                           ← This file
 ```
 
 ---
 
-## 📚 The documents (read order)
+## Live Systems (Deployed)
 
-| # | Document | Layer | What it answers |
-|---|---|---|---|
-| 1 | [Empire English Community Learning System](growth-program/01-foundation/Empire%20English%20Community%20Learning%20System.md) | Product | *What we teach* — curriculum, four levels, daily loop, Discord community, AI content factory, placement, governance |
-| 2 | [STRATEGIC_EXPANSION_ROADMAP](growth-program/01-foundation/STRATEGIC_EXPANSION_ROADMAP.md) | Business | *How we sustain it* — pricing ladder, community structures, monetization, free-tool stack, branding |
-| 3 | [CHANNEL_GROWTH_CONVERSION_BLUEPRINT](growth-program/02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md) | Funnel strategy | *How we grow & convert* — the channel→bot funnel, content engine, segmentation, reporting, and the **10 locked decisions** |
-| 4 | [MASTER_IMPLEMENTATION_ROADMAP](growth-program/02-strategy/MASTER_IMPLEMENTATION_ROADMAP.md) | Program map | *In what order we build* — the full phased picture (P0→P3), gates, and "you are here" |
-| 5 | [PHASE_0_IMPLEMENTATION_SPEC](growth-program/03-phase-0/PHASE_0_IMPLEMENTATION_SPEC.md) | Build spec | *Exactly how to build Phase 0* — bot, quiz, CRM schema, automations, acceptance tests |
-| 6 | [PHASE_0_CONTENT_ASSETS](growth-program/03-phase-0/PHASE_0_CONTENT_ASSETS.md) | Content | *The words that fill the bot* — bilingual (Arabic-led) copy for every Phase 0 flow |
-
-**Mental model:** Product + Business (1–2) → Funnel strategy (3) → Program map (4) → Phase build spec (5) → Content (6).
-
----
-
-## 🧭 Single sources of truth (avoid duplication)
-
-To prevent the same thing being defined in multiple places, each cross-cutting topic has **one canonical home**. When in doubt, edit only the canonical doc; everything else should *reference* it.
-
-| Topic | Canonical source |
-|---|---|
-| **Phasing / roadmap (P0–P3, gates)** | `02-strategy/MASTER_IMPLEMENTATION_ROADMAP.md` |
-| **Pricing ladder & prices** | `01-foundation/STRATEGIC_EXPANSION_ROADMAP.md` §7 *(live prices set at build time in the CRM `Config` tab)* |
-| **Free-tool stack** | `01-foundation/STRATEGIC_EXPANSION_ROADMAP.md` §8 |
-| **Locked funnel decisions** | `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §10 |
-| **Phase 0 build details** | `03-phase-0/PHASE_0_IMPLEMENTATION_SPEC.md` |
-| **Phase 0 copy/strings** | `03-phase-0/PHASE_0_CONTENT_ASSETS.md` |
-| **KPIs & weekly report** | `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §7 |
-| **n8n workflow implementation patterns** | `infrastructure/N8N_WORKFLOW_PATTERNS.md` |
-| **Quiz system architecture & troubleshooting** | `infrastructure/QUIZ_SYSTEM_TECHNICAL_AUDIT.md` |
-| **Server & hosting infrastructure** | `infrastructure/SERVER_REFERENCE.md` |
-
-> **Rule of thumb:** strategy lives in the Blueprint, phasing lives in the Master Roadmap, build detail lives in the Phase specs, and copy lives in the Content pack. Don't restate one in another — link instead.
+| System | Platform | Status | Source |
+|--------|----------|:------:|--------|
+| Telegram Sales Bot | Cloudflare Worker | LIVE (v13) | `bots/telegram-sales-bot/` |
+| Discord Learning Bot | Docker on Hetzner | LIVE | `bots/discord-learning-bot/` |
+| Discord Challenge Bot | Docker on Hetzner | LIVE | `bots/discord-challenge-bot/` |
+| LinkedIn Engine | Cloudflare Worker | LIVE (v3.0) | `workers/linkedin-engine/` |
+| n8n Workflows (7) | Docker on Hetzner | RUNNING | `infrastructure/n8n-workflows/` |
+| Server Hardening | Hetzner VPS | DEPLOYED | `infrastructure/server-hardening/` |
+| MCP Server | Docker on Hetzner | RUNNING | `infrastructure/n8n-mcp/` |
 
 ---
 
-## ✅ Status — where the program stands
+## Infrastructure
 
-| Milestone | Status |
-|---|---|
-| Strategy & 10 funnel decisions locked | ✅ Complete |
-| Phase 0 build spec | ✅ Complete |
-| Phase 0 bilingual content | ✅ Drafted |
-| Full phased roadmap (P0→P3) | ✅ Mapped |
-| Docs organized into `growth-program/` | ✅ Complete |
-| Pre-build decisions (pricing display, Arabic register, orchestrator) | ✅ Locked |
-| **Infrastructure (Hetzner + n8n + Cloudflare Tunnel)** | ✅ Complete & running |
-| **Phase 0 BUILD — Bot Core (start, menu, buttons)** | ✅ Working |
-| **Phase 0 BUILD — Quiz System (Q1–Q7 + scoring + plan)** | ✅ Working |
-| **Phase 0 BUILD — CRM Integration (Google Sheets)** | ✅ Working |
-| Phase 0 BUILD — remaining routes (resource, how, call, community) | 🟡 Partially built |
-| Phase 0 BUILD — booking sync, backup, hot-lead alerts | ⬜ Not started |
-| Asset production (3 audio clips + PDF) + Config links | ⬜ Pending |
-| Phase 1–3 detailed specs | ⬜ Written at each gate (not before) |
+| Layer | Tool | Status |
+|-------|------|:------:|
+| **Server** | Hetzner CX23 (Helsinki, 4GB RAM, Ubuntu 26.04) | Running |
+| **Automation** | n8n (Docker, pinned v2.26.8) | Running |
+| **Routing** | Cloudflare Tunnel → `bot.empireenglish.online` | Running |
+| **MCP** | AI workflow builder → `mcp.empireenglish.online` | Running |
+| **Monitoring** | Telegram watchdog (60s) + BetterStack (3min) | Active |
+| **Security** | Key-only SSH, Fail2Ban, UFW, resource limits | Hardened |
+| **Backups** | Daily 3AM, 14-day rotation | Automated |
 
 ---
 
-## ⚙️ Locked decisions (quick reference)
+## Project Phases
 
-Telegram channel + bot → Discord product · 5-button bot menu · primary goal = free taster/trial (self-serve) **+** founder-led calls in parallel · main offer = **Core** + time-boxed **Founding Citizen** · lead-magnet ladder (quiz → "3 American Sounds" → 7-Day Speaking Starter → Core) · **Arabic-led bilingual** · high call capacity · explicit consent + **Google Sheets** CRM · **5–6 posts/week** · **Cal.com** booking.
-
-**Pre-build finalizations (locked):** **no public prices day one** — pricing via call/DM · Arabic register = **MSA, fresh & conversational** · orchestrator = **n8n self-hosted** (migrated from Make.com) · hosting = **Hetzner Cloud CX23** ($7.09/mo) · domain = **empireenglish.online** (Cloudflare Tunnel).
-
-*(Full detail: `02-strategy/CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md` §10.)*
-
----
-
-## 🚧 Conventions
-
-- All documents are **planning artifacts** until a Phase is explicitly approved for build.
-- Prices, costs, conversion rates, and timelines are **anchors to validate**, never promises.
-- Tone guardrail: honest, attainable claims — never "sound 100% native."
-- Free-first; paid spend only after LTV:CAC ≥ 3:1 (Phase 3 at earliest).
-- **Folder convention:** working docs live in `growth-program/`; each new phase gets its own numbered subfolder. Keep the repo root limited to this README and the program folder.
+| Phase | Description | Status |
+|:-----:|-------------|:------:|
+| 0 | Funnel (Telegram bot, quiz, CRM, automations, booking) | COMPLETE |
+| 1 | Content (6 weeks posts, discussion group, report + KPI) | IN PROGRESS |
+| L0 | Learning System (Discord, curriculum, bot, 8 weeks) | DEPLOYED |
+| 2 | Growth (paid ads, content scaling) | NOT STARTED |
+| 3 | Scale (team, multi-level, paid tools) | NOT STARTED |
 
 ---
 
-*Index maintained as part of repo organization. Update this file whenever a document is added, moved, renamed, or its canonical role changes.*
+## Quick Start (by component)
+
+### Telegram Sales Bot (live)
+```bash
+# Already deployed on Cloudflare Workers
+# Edit: bots/telegram-sales-bot/worker.js → paste in Cloudflare dashboard → Deploy
+```
+
+### LinkedIn Engine (live)
+```bash
+# Already deployed on Cloudflare Workers
+# Edit: workers/linkedin-engine/worker.js → wrangler deploy
+```
+
+### Discord Learning Bot (deployed)
+```bash
+# On Hetzner: /opt/empire-english-bot/
+# Update: ssh in → cd /opt/empire-english-bot && git pull && docker compose up -d --build
+```
+
+### Discord Challenge Bot (deployed)
+```bash
+# On Hetzner: /opt/empire-challenge/empire-challenge-bot/
+# Update: ssh in → cd /opt/empire-challenge && git pull && docker compose up -d --build
+```
+
+### Mobile App (Expo)
+```bash
+cd apps/mobile
+npm install
+npx expo start --tunnel
+```
+
+---
+
+## For New AI Agents / Developers
+
+Start with these files in order:
+1. **This README** — understand the project map
+2. **`PROJECT_STATUS.md`** — current state & priorities
+3. **`docs/operations/PROJECT-CONTEXT.md`** — full handoff context
+4. **`docs/operations/SERVER_REFERENCE.md`** — server architecture
+5. **`.kiro/steering/project-rules.md`** — constraints & conventions
+
+---
+
+## Design Principles
+
+- **Zero vendor lock-in** — self-hosted, open-source tools preferred
+- **Zero/near-zero cost** — Cloudflare free, Hetzner $7/mo, all APIs on free tiers
+- **No AI dependency for critical paths** — keyword banks + fallback pools for 100% uptime
+- **Human-in-the-loop** — all sensitive actions require admin approval
+- **Single-file deployments** — each Cloudflare Worker is one self-contained `.js` file
+- **Arabic-first UX** — all customer-facing copy in Egyptian Arabic dialect
+
+---
+
+## Brand
+
+- **Community:** Empire English Community
+- **Parent Brand:** MACAL Empire ("Common Sense First")
+- **Visual Identity:** Gold (#D4AF37) on matte black (#0A0A0B)
+- **Voice:** Authoritative, sarcastic (scalpel not sledgehammer), paternal/protective
+- **Owner:** Mahmoud Ashri (@macal_emperor)

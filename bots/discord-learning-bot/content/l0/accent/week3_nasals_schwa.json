@@ -1,0 +1,175 @@
+{
+  "level": "L0",
+  "week": 3,
+  "focus": "Nasals & Glides (/m/ /n/ /ŋ/ /h/ /w/ /j/) + The Schwa (/ə/) + Vowels (/ɜːr/ /ɛ/ /ʌ/)",
+  "focus_ar": "الحروف الأنفية والانزلاقية + صوت الشوا + حروف علة جديدة",
+  "arabic_challenge": "The schwa /ə/ is the MOST COMMON sound in English but doesn't exist as a distinct phoneme in Arabic. Arabic speakers tend to pronounce every vowel fully — Americans 'swallow' unstressed vowels into schwa.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/m/", "/n/", "/ŋ/"],
+      "isolation": {
+        "instructions": "/m/ = lips closed, air through nose. /n/ = tongue tip behind upper teeth, air through nose. /ŋ/ (sing) = BACK of tongue up, air through nose. (No /g/ sound at end!)",
+        "instructions_ar": "/m/ = الشفاه مغلقة. /n/ = طرف اللسان خلف الأسنان. /ŋ/ = مؤخرة اللسان مرتفعة (مثل نهاية 'سِنْج' بدون g).",
+        "practice": ["mmm (hum with lips closed)", "nnn (tongue tip up, hum)", "ng-ng-ng (back of tongue, like end of 'sing')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sim", "sin", "sing"], "meaning": ["—", "خطيئة", "يغني"]},
+        {"pair": ["ram", "ran", "rang"], "meaning": ["كبش", "ركض", "رنّ"]},
+        {"pair": ["sum", "sun", "sung"], "meaning": ["مجموع", "شمس", "غُنّي"]},
+        {"pair": ["thin", "thing"], "meaning": ["نحيف", "شيء"]},
+        {"pair": ["win", "wing"], "meaning": ["يفوز", "جناح"]}
+      ],
+      "word_practice": ["morning", "evening", "running", "coming", "going", "nothing", "something", "anything", "king", "young", "long", "strong"],
+      "sentence_practice": [
+        "Good morning! I am coming soon.",
+        "Nothing is wrong — everything is going well.",
+        "The young king is strong."
+      ],
+      "record_this": "Good morning. Something interesting is happening this evening. I am running — nothing can stop me. I am getting stronger and stronger.",
+      "self_check": "For /ŋ/ (sing, morning, going): your tongue should NOT touch your teeth. It's the BACK of the tongue. Say 'sing' — do NOT say 'sing-guh' (no /g/ at the end!)."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/h/", "/w/", "/j/"],
+      "isolation": {
+        "instructions": "/h/ = just a breath of air (like fogging a mirror). /w/ = lips very rounded, then open (like starting to say 'oo'). /j/ = tongue high and forward (like starting to say 'ee').",
+        "instructions_ar": "/h/ = نفس هواء فقط (مثل تبخير مرآة). /w/ = الشفاه مدوّرة ثم تفتح. /j/ = اللسان مرتفع (مثل بداية ee).",
+        "practice": ["hah hah hah (just air)", "woo-wah woo-wah (round lips)", "yee-yah yee-yah (tongue high)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["hat", "at"], "meaning": ["قبعة", "في/عند"]},
+        {"pair": ["heat", "eat"], "meaning": ["حرارة", "يأكل"]},
+        {"pair": ["wine", "vine"], "meaning": ["نبيذ", "كرمة"]},
+        {"pair": ["west", "vest"], "meaning": ["غرب", "سترة"]},
+        {"pair": ["yet", "jet"], "meaning": ["بعد/لسّا", "طائرة"]}
+      ],
+      "word_practice": ["hello", "happy", "home", "how", "who", "want", "with", "water", "week", "work", "yes", "you", "your", "year", "young"],
+      "sentence_practice": [
+        "Hello! How are you? I want water.",
+        "We work with young people every week.",
+        "Yes, you are welcome to my home."
+      ],
+      "record_this": "Hello! How are you today? I want to go home with you. We worked hard this week. Yes, you are young and happy.",
+      "self_check": "/h/ is just air — no friction in the throat. /w/ starts with rounded lips. /j/ (y-sound) starts with tongue high like 'ee'."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/ə/ (the schwa)"],
+      "isolation": {
+        "instructions": "THE MOST IMPORTANT SOUND IN ENGLISH. /ə/ = short, lazy, neutral — like a tiny 'uh'. It appears in EVERY unstressed syllable. Americans never pronounce unstressed vowels clearly — they ALL become schwa.",
+        "instructions_ar": "أهم صوت في الإنجليزية! /ə/ = صوت 'اَه' قصير وكسول. يظهر في كل مقطع غير مشدد. الأمريكان ما ينطقون الحروف غير المشددة بوضوح — كلها تتحول لشوا.",
+        "practice": ["uh uh uh (very short, very lazy, mouth barely open)", "Try saying 'a' as fast and lazy as possible — that's schwa"]
+      },
+      "examples_of_schwa": [
+        {"word": "about", "phonetic": "ə-BOWT", "schwa_position": "first syllable", "common_mistake": "ah-BOWT (too clear)"},
+        {"word": "banana", "phonetic": "bə-NA-nə", "schwa_position": "first + last syllable", "common_mistake": "ba-NA-na (all vowels equal)"},
+        {"word": "today", "phonetic": "tə-DAY", "schwa_position": "first syllable", "common_mistake": "too-DAY (too clear)"},
+        {"word": "problem", "phonetic": "PROB-ləm", "schwa_position": "second syllable", "common_mistake": "PROB-lem (too clear)"},
+        {"word": "family", "phonetic": "FAM-ə-lee", "schwa_position": "middle", "common_mistake": "FA-mi-lee (3 clear syllables)"},
+        {"word": "computer", "phonetic": "kəm-PYOO-tər", "schwa_position": "first + last syllable", "common_mistake": "com-PYU-ter (all clear)"},
+        {"word": "together", "phonetic": "tə-GEH-ðər", "schwa_position": "first + last syllable", "common_mistake": "to-GE-ther"},
+        {"word": "support", "phonetic": "sə-PORT", "schwa_position": "first syllable", "common_mistake": "soo-PORT"}
+      ],
+      "the_rule": "ANY vowel letter (a, e, i, o, u) in an unstressed syllable becomes /ə/. The spelling doesn't matter — only the stress matters.",
+      "sentence_practice": [
+        "I want to go to the store today. (to = /tə/, the = /ðə/, today = /tə-DAY/)",
+        "A banana and a cup of coffee. (a = /ə/, of = /əv/)",
+        "My family lives together in a comfortable apartment. (4+ schwas!)"
+      ],
+      "record_this": "Today I want to go to a computer store. My family and I — we live together. About a hundred people support us. It's not a problem.",
+      "self_check": "Record yourself. Then listen: do your unstressed syllables sound lazy and short? Or are you pronouncing every vowel clearly? The lazier your unstressed syllables, the more American you sound."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/ɜːr/ (bird)", "/ʌ/ (cup)"],
+      "isolation": {
+        "instructions": "/ɜːr/ = the American 'R-colored vowel'. Tongue curls back, lips slightly rounded. Like saying 'errr' as in 'bird'. /ʌ/ = short, open, relaxed — like a quick 'uh' but stressed (unlike schwa which is unstressed).",
+        "instructions_ar": "/ɜːr/ = صوت R الأمريكي الممدود (مثل bird). اللسان يرجع للخلف. /ʌ/ = صوت 'أَه' قصير ومفتوح (مثل cup).",
+        "practice": ["errr errr errr (tongue curls back)", "uh uh uh (short, stressed, mouth slightly open)", "errr-uh-errr-uh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bird", "bud"], "meaning": ["طائر", "برعم"]},
+        {"pair": ["her", "hut"], "meaning": ["لها", "كوخ"]},
+        {"pair": ["sir", "sun"], "meaning": ["سيد", "شمس"]},
+        {"pair": ["word", "won"], "meaning": ["كلمة", "فاز"]},
+        {"pair": ["turn", "ton"], "meaning": ["ينعطف", "طن"]}
+      ],
+      "word_practice": {
+        "er_sound": ["work", "word", "learn", "her", "first", "turn", "bird", "girl", "world", "early"],
+        "uh_sound": ["cup", "but", "come", "some", "run", "fun", "sun", "love", "money", "mother", "brother", "country"]
+      },
+      "sentence_practice": [
+        "I work hard and learn new words first.",
+        "My mother loves her brother. He comes from another country.",
+        "The girl turned and heard a bird. It was wonderful."
+      ],
+      "record_this": "I work early in the morning. First, I learn some new words. My mother and brother come from another country. I love them very much — it's a wonderful world.",
+      "self_check": "For /ɜːr/: is your tongue curling back? You should feel tension in your tongue. For /ʌ/: it's quick and relaxed — don't hold it long."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ɛ/ (bed)"],
+      "isolation": {
+        "instructions": "/ɛ/ = mouth open medium-wide, tongue mid-height and front. Like the 'e' in 'bed' — wider than /ɪ/ (sit) but not as wide as /æ/ (cat).",
+        "instructions_ar": "/ɛ/ = الفم مفتوح متوسط، اللسان في الوسط والأمام. أوسع من /ɪ/ (sit) بس أضيق من /æ/ (cat).",
+        "practice": ["eh eh eh (medium opening)", "Compare: ih (sit) — eh (set) — ah (sat) — feel mouth open progressively"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sit", "set"], "meaning": ["يجلس", "يضع"]},
+        {"pair": ["pin", "pen"], "meaning": ["دبوس", "قلم"]},
+        {"pair": ["bid", "bed"], "meaning": ["يزايد", "سرير"]},
+        {"pair": ["tin", "ten"], "meaning": ["قصدير", "عشرة"]},
+        {"pair": ["fill", "fell"], "meaning": ["يملأ", "سقط"]}
+      ],
+      "word_practice": ["bed", "red", "get", "set", "ten", "pen", "men", "when", "then", "every", "never", "better", "seven", "breakfast", "friend", "said"],
+      "sentence_practice": [
+        "Get ten red pens from the desk.",
+        "My friend said breakfast is better when it's fresh.",
+        "I never get seven hours of rest in bed."
+      ],
+      "record_this": "I get up and get ready. Then I eat breakfast with my friend at seven. He said he never gets enough rest. I set ten things on the desk every morning. It's getting better.",
+      "self_check": "Compare these three: sit /ɪ/ — set /ɛ/ — sat /æ/. Your mouth should open MORE with each one. Can you feel three distinct positions?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 sounds",
+      "type": "review",
+      "focus_areas": [
+        "The schwa in common words: about, today, banana, together, computer",
+        "/ɜːr/ in: work, learn, first, bird, world, girl",
+        "/ŋ/ endings: morning, going, nothing, something, running",
+        "/ɛ/ vs /ɪ/: pen/pin, bed/bid, set/sit, ten/tin"
+      ],
+      "challenge_sentences": [
+        "Every morning I go to work together with my brother.",
+        "Nothing is better than learning something new about the world.",
+        "I want to get a computer — it's not a problem.",
+        "My friend said something funny at breakfast."
+      ],
+      "record_this": "This morning I went to work early. I learned something new about computers. My friend and brother were together — they said nothing about the problem. Everything is getting better. I never give up.",
+      "self_check": "Count the schwas in your recording. There should be 10+ schwas in that passage. Are you swallowing the unstressed syllables?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment",
+      "type": "assessment",
+      "test_yourself": {
+        "passage": "Every morning I learn something new about the world. My mother and brother work together at a computer company. Nothing about it is a problem for her — she is wonderful. I want to get better at everything. First, I turn on my computer. Then I work for about seven hours. In the evening, my family comes together. We never forget to support each other.",
+        "sounds_to_check": {
+          "/ə/ schwa": "every(ə), about(ə), together(ə-ə), computer(ə-ə), something(ə), a(ə), for(ər), to(tə), the(ðə)",
+          "/ɜːr/": "learn, work, her, first, turn",
+          "/ʌ/": "something, come, mother, brother, other, company, nothing, wonderful",
+          "/ŋ/": "morning, something, nothing, evening, everything",
+          "/ɛ/": "every, get, better, seven, never, together"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Schwas clearly reduced. /ɜːr/ has tongue retraction. All nasals distinct.",
+        "70_89": "Good schwa usage in most words. Occasional full pronunciation of unstressed syllables.",
+        "50_69": "Still pronouncing most unstressed vowels clearly. /ɜːr/ sounds flat (no tongue curl).",
+        "below_50": "Every syllable equally stressed (Arabic pattern). Need to practice schwa reduction extensively."
+      }
+    }
+  ]
+}

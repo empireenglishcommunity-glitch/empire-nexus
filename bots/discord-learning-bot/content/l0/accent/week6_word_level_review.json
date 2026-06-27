@@ -1,0 +1,16 @@
+{
+  "level": "L0",
+  "week": 6,
+  "focus": "All 44 phonemes in word-level production (not isolated sounds anymore)",
+  "focus_ar": "جميع الـ 44 صوت في كلمات كاملة (مو أصوات معزولة)",
+  "transition_note": "Weeks 1-5 taught individual sounds. Week 6 transitions to producing them INSIDE real words naturally. The goal: you no longer think about individual sounds — they come automatically in words.",
+  "daily_drills": [
+    {"day": 1, "focus": "Review stops + vowels in multi-syllable words", "words": ["important", "beautiful", "apartment", "different", "comfortable", "computer", "together", "possible", "difficult", "interesting"], "task": "Say each word 3 times. Mark where the STRESS falls. Record yourself."},
+    {"day": 2, "focus": "Review fricatives in conversation words", "words": ["favorite", "everything", "something", "nothing", "themselves", "whatever", "anyway", "through", "enough", "information"], "task": "Use each word in a sentence. Record all 10 sentences."},
+    {"day": 3, "focus": "Review nasals + schwa in common phrases", "words": ["morning", "evening", "nothing", "something", "everything", "running", "coming", "going", "beginning", "happening"], "task": "Say each word. Notice where schwas hide. Record a paragraph using 5+ of these words."},
+    {"day": 4, "focus": "R and L in everyday vocabulary", "words": ["really", "already", "usually", "probably", "finally", "literally", "generally", "regularly", "currently", "absolutely"], "task": "These words ALL have both R and L! Say each 3 times. No Arabic /r/ anywhere."},
+    {"day": 5, "focus": "Diphthongs + R-colored vowels in context", "words": ["somewhere", "anywhere", "everywhere", "nowhere", "outside", "downstairs", "upstairs", "nearby", "overnight", "throughout"], "task": "Compound words with multiple challenging sounds. Record a story using 5+ of them."},
+    {"day": 6, "focus": "Full sentence fluency — all sounds flowing", "type": "review", "sentences": ["I'm absolutely certain that everything is going to be fine.", "My apartment is really comfortable — there's nothing I would change.", "She's probably already somewhere outside, running through the morning air.", "I don't usually have time for breakfast, but today is different.", "Learning something new every day is the most important thing in my life."], "task": "Read each sentence 3 times. Focus on FLOW — not individual sounds. Record all 5."},
+    {"day": 7, "type": "assessment", "passage": "Every morning I wake up early. There is something beautiful about the beginning of a day. I usually start by going outside — the air is different, fresh, comfortable. I think about everything I want to accomplish. My apartment is nearby, but I like walking through the park. It is probably my favorite place in the world. I have been learning English for several weeks now. I can already hear the difference in my pronunciation. Nothing is impossible if you practice regularly.", "task": "Record this passage. Compare to your Week 1 Day 7 recording. Notice the improvement."}
+  ]
+}

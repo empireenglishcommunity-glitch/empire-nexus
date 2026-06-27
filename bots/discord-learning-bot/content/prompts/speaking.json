@@ -1,0 +1,27 @@
+{
+  "category": "Speaking Practice (§11.2)",
+  "prompts": [
+    {
+      "id": 5,
+      "name": "Speaking Evaluation & Feedback",
+      "description": "Evaluates a speaking submission (transcribed text or description) and provides scored feedback across fluency, accuracy, pronunciation, and task completion.",
+      "trigger": "When learner submits a recording in #speaking-feedback or #l0-showcase (transcribed via Whisper or described by moderator)",
+      "delivers_to": "Reply to submission or DM",
+      "system_prompt": "You are an encouraging American English speaking coach for Arabic speakers. Score their speaking on a rubric but always lead with what they did WELL. Be specific — don't say 'good job', say exactly what was good. Corrections should be actionable and limited to 2-3 per feedback.",
+      "user_prompt_template": "Evaluate this speaking submission:\n\nTranscription/Description: \"{TRANSCRIPTION}\"\nTask prompt given: \"{ORIGINAL_PROMPT}\"\nTarget duration: {TARGET_SECONDS} seconds\nActual duration: {ACTUAL_SECONDS} seconds\nLearner level: {LEVEL}\nLearner name: {NAME}\n\nScore (0-100) on:\n1. fluency_score: words per minute, natural pauses vs hesitations, flow\n2. accuracy_score: grammar correctness for this level\n3. pronunciation_score: based on described/observed pronunciation\n4. task_completion_score: did they address the prompt fully?\n5. overall_score: weighted average (fluency 30%, accuracy 30%, pronunciation 20%, task 20%)\n\nAlso provide:\n- strengths: 2 specific things done well\n- improvements: 2-3 specific, actionable corrections\n- accent_note: one pronunciation observation\n- next_challenge: slightly harder task to try next\n- rating: Excellent/Strong/Satisfactory/Needs Work/Keep Trying\n- encouragement: 1 sentence of genuine encouragement\n\nReturn as JSON.",
+      "variables": ["TRANSCRIPTION", "ORIGINAL_PROMPT", "TARGET_SECONDS", "ACTUAL_SECONDS", "LEVEL", "NAME"],
+      "output_format": "JSON with scores + feedback fields"
+    },
+    {
+      "id": 6,
+      "name": "Role-Play Scenario Generator",
+      "description": "Creates a structured role-play scenario for pair practice in voice lounges. Defines two roles, objectives, must-use vocabulary, and a surprise element.",
+      "trigger": "Automated: 3x per week for voice lounge sessions, or on demand",
+      "delivers_to": "#events or voice lounge text chat",
+      "system_prompt": "You are creating structured English practice scenarios for Arabic-speaking learners. Scenarios should be realistic, culturally appropriate, and use vocabulary from the current week's theme. Include a 'twist' to prevent memorization.",
+      "user_prompt_template": "Generate a Role-Play Scenario:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTheme: {THEME}\nVocabulary to include: {VOCAB_WORDS}\nGrammar pattern in focus: {GRAMMAR}\n\nProvide:\n1. scenario_title: descriptive name\n2. scenario_title_ar: Arabic\n3. setting: where this takes place\n4. role_a: {name, objective, phrases_to_use}\n5. role_b: {name, objective, phrases_to_use}\n6. must_use_vocabulary: 5 words both must try to include\n7. must_use_grammar: the pattern both should practice\n8. time_limit: suggested duration in minutes\n9. twist: something unexpected that happens mid-conversation (forces improvisation)\n10. debrief_questions: 2 questions to discuss after\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "THEME", "VOCAB_WORDS", "GRAMMAR"],
+      "output_format": "JSON with scenario structure"
+    }
+  ]
+}

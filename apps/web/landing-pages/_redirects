@@ -1,0 +1,5 @@
+# Cloudflare Pages / Netlify redirects
+# Arabic version is the default (primary audience)
+/en    /index.html    200
+/ar    /index-ar.html 200
+/      /index-ar.html 200

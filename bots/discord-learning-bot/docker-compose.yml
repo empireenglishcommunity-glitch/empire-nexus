@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  empire-english-bot:
+    build: .
+    container_name: empire-english-bot
+    restart: always
+    env_file: .env
+    volumes:
+      - bot-data:/app/data_persist
+    mem_limit: 512m
+    cpus: "0.5"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  bot-data:

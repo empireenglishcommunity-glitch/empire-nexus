@@ -1,0 +1,27 @@
+{
+  "category": "Listening Exercises (§11.3)",
+  "prompts": [
+    {
+      "id": 7,
+      "name": "Listening Comprehension Exercise Creator",
+      "description": "Creates a complete listening exercise with transcript, 8 questions (literal + inference + detail), vocabulary highlights, accent focus, and answer key.",
+      "trigger": "Automated: daily as part of Task 5, or batch-generated weekly",
+      "delivers_to": "Daily task delivery or #l0-daily-tasks",
+      "system_prompt": "You are creating listening comprehension exercises for Arabic-speaking English learners. Content must be at the specified WPM speed. Questions should test literal comprehension first, then inference. Always include vocabulary from the current week's theme.",
+      "user_prompt_template": "Create a Listening Comprehension Exercise:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTheme: {THEME}\nTarget WPM: {TARGET_WPM}\nDuration: {DURATION_SECONDS} seconds\nVocabulary focus: {VOCAB_WORDS}\n\nProvide:\n1. transcript: a natural monologue or dialogue at the target WPM (include speaker labels if dialogue)\n2. word_count: verify it matches target WPM × duration\n3. questions: 8 questions [{type: literal/inference/detail, question, options: [4 choices], answer, timestamp_hint}]\n4. new_vocabulary: 5 words from the transcript the learner should learn [{word, meaning_ar, context_sentence}]\n5. accent_focus: one pronunciation pattern highlighted in this audio (linking, stress, schwa, etc.)\n6. shadow_sentence: one sentence to shadow 5 times\n7. answer_key: all correct answers with brief explanations\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "THEME", "TARGET_WPM", "DURATION_SECONDS", "VOCAB_WORDS"],
+      "output_format": "JSON with transcript, questions array, vocabulary, accent_focus, shadow_sentence, answer_key"
+    },
+    {
+      "id": 8,
+      "name": "Transcription Exercise Generator",
+      "description": "Creates a gapped transcription exercise where learners fill in missing words while listening. Annotates connected speech patterns.",
+      "trigger": "2x per week for Levels L1+ (introduced at L0 Week 6+)",
+      "delivers_to": "Daily task or #l0-daily-tasks",
+      "system_prompt": "You are creating transcription exercises that teach learners to recognize connected speech patterns. Remove words that demonstrate linking, reduction, or stress patterns — these are the gaps learners must fill.",
+      "user_prompt_template": "Create a Transcription Exercise:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTarget speed: {WPM} WPM\nFocus pattern: {FOCUS_PATTERN}\n\nProvide:\n1. full_transcript: complete text with annotations: [LINK] for linking, [REDUCE] for reduction, [STRESS] for stress patterns\n2. gapped_version: same text with 8-10 gaps (blanks where connected speech makes words hard to hear)\n3. focus_pattern_explanation: explain the connected speech pattern being practiced\n4. hints: for each gap, a hint about what sound to listen for\n5. answers: the missing words\n6. practice_instruction: how to use this exercise (listen → fill → check → shadow)\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "WPM", "FOCUS_PATTERN"],
+      "output_format": "JSON with full_transcript, gapped_version, focus_pattern_explanation, hints, answers, practice_instruction"
+    }
+  ]
+}

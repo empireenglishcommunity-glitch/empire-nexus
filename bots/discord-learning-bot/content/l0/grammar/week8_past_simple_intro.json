@@ -1,0 +1,61 @@
+{
+  "id": "grammar_l0_w8",
+  "level": "L0",
+  "week": 8,
+  "pattern_name": "Past Simple (Introduction: was/were + regular -ed)",
+  "pattern_name_ar": "الماضي البسيط (مقدمة: كان/كانوا + الأفعال المنتظمة)",
+  "formula": "Subject + was/were OR Subject + verb-ed",
+  "formula_visual": "[Subject] + [was/were] + adjective/noun  |  [Subject] + [verb+ed]",
+  "when_to_use": "To talk about things that happened in the past (yesterday, last week, before).",
+  "when_to_use_ar": "للتحدث عن أشياء صارت في الماضي (أمس، الأسبوع الماضي، قبل).",
+  "part_1_was_were": {
+    "rule": "I/he/she/it = WAS · you/we/they = WERE",
+    "examples": [
+      {"en": "I was tired yesterday.", "ar": "كنت تعبان أمس"},
+      {"en": "She was happy.", "ar": "كانت سعيدة"},
+      {"en": "We were at home.", "ar": "كنا في البيت"},
+      {"en": "They were busy.", "ar": "كانوا مشغولين"}
+    ],
+    "negative": "was not = wasn't · were not = weren't",
+    "question": "Was he tired? · Were they at home?"
+  },
+  "part_2_regular_verbs": {
+    "rule": "Add -ed to the base verb: work → worked, play → played, study → studied",
+    "spelling_rules": [
+      {"rule": "Most verbs: + ed", "examples": "worked, played, wanted, started"},
+      {"rule": "Ends in -e: + d only", "examples": "liked, lived, used, closed"},
+      {"rule": "Ends in consonant+y: y → ied", "examples": "studied, carried, tried, worried"},
+      {"rule": "Short verb (CVC): double last letter + ed", "examples": "stopped, planned"}
+    ],
+    "pronunciation_rules": [
+      {"sound": "/t/", "when": "After voiceless sounds (k, p, f, s, sh, ch)", "examples": "worked, liked, stopped, washed"},
+      {"sound": "/d/", "when": "After voiced sounds and vowels", "examples": "played, lived, studied, called"},
+      {"sound": "/ɪd/", "when": "After t or d", "examples": "wanted, started, needed, visited"}
+    ]
+  },
+  "time_signals": ["yesterday", "last week", "last night", "last year", "ago", "in 2020", "before", "when I was young"],
+  "examples": [
+    {"en": "I worked yesterday.", "ar": "اشتغلت أمس", "verb": "work → worked /t/"},
+    {"en": "She studied English last year.", "ar": "درست إنجليزي السنة الماضية", "verb": "study → studied /d/"},
+    {"en": "We visited my grandmother.", "ar": "زرنا جدتي", "verb": "visit → visited /ɪd/"},
+    {"en": "They played football.", "ar": "لعبوا كرة قدم", "verb": "play → played /d/"},
+    {"en": "I wanted to sleep.", "ar": "كنت أبي أنام", "verb": "want → wanted /ɪd/"}
+  ],
+  "common_errors": [
+    {"wrong": "I am worked yesterday.", "correct": "I worked yesterday.", "explanation": "Past simple = just the -ed verb. No 'am/is' before it."},
+    {"wrong": "She was worked.", "correct": "She worked.", "explanation": "Don't combine 'was' with -ed for regular past. Use one or the other."},
+    {"wrong": "He didn't worked.", "correct": "He didn't work.", "explanation": "After 'didn't', verb = base form (no -ed)."},
+    {"wrong": "I goed to school.", "correct": "I went to school.", "explanation": "'go' is irregular (go → went). Regular -ed only works for regular verbs."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (be) tired yesterday.", "answer": "was"},
+    {"sentence": "They ___ (be) at the park.", "answer": "were"},
+    {"sentence": "She ___ (work) all day.", "answer": "worked"},
+    {"sentence": "We ___ (visit) our friends last week.", "answer": "visited"},
+    {"sentence": "He ___ (study) English for 2 hours.", "answer": "studied"}
+  ],
+  "important_note": "This week introduces ONLY was/were + regular -ed verbs. Irregular verbs (go→went, eat→ate, see→saw) will be covered in Level 1.",
+  "quick_rule": "Past = was/were (for states) + verb-ed (for actions). Time signals tell you it's past.",
+  "quick_rule_ar": "الماضي = was/were (للحالات) + فعل+ed (للأفعال). كلمات الوقت تدلّك إنه ماضي.",
+  "connect_to_speaking": "Tell someone about yesterday: 'Yesterday I was tired. I worked a lot. I studied English. I watched a movie. I played with my kids. It was a good day.'"
+}

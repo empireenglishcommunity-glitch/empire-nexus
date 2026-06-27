@@ -1,0 +1,109 @@
+{
+  "name": "Weekly Assessment System",
+  "section": "Blueprint §9.1",
+  "schedule": "Every Sunday, delivered at 10:00 AM (Asia/Dubai)",
+  "duration": "30 minutes",
+  "description": "Standardized 5-dimension assessment + task completion rate. Produces a numeric score that tracks progress over time and determines readiness for advancement.",
+
+  "dimensions": [
+    {"id": "speaking", "name": "Speaking Fluency", "weight": 0.30, "assessment_method": "60-second recorded response to a prompt. Scored on WPM, pauses, grammar accuracy, task completion."},
+    {"id": "listening", "name": "Listening Comprehension", "weight": 0.20, "assessment_method": "5 questions on a short audio clip at target WPM for the level."},
+    {"id": "vocabulary", "name": "Vocabulary Recall", "weight": 0.15, "assessment_method": "15 words from this week + last week. Match definition or use in sentence."},
+    {"id": "accent", "name": "Accent/Pronunciation", "weight": 0.15, "assessment_method": "Read a 3-sentence passage aloud. Scored on phoneme accuracy for this week's targets."},
+    {"id": "writing", "name": "Writing Sample", "weight": 0.10, "assessment_method": "Write 5 sentences on a given topic (timed: 8 minutes)."},
+    {"id": "completion", "name": "Task Completion Rate", "weight": 0.10, "assessment_method": "Automatic: (tasks submitted this week / total tasks) × 100"}
+  ],
+
+  "delivery_format": {
+    "channel": "Discord DM to each active member",
+    "trigger": "n8n scheduled workflow OR Discord bot scheduled task (Sunday 10 AM)",
+    "message_template": "📊 **WEEKLY ASSESSMENT — Week {WEEK}**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nComplete these 5 tasks today (30 min total):\n\n**1️⃣ SPEAKING** (5 min)\nRecord yourself answering:\n\"{SPEAKING_PROMPT}\"\n→ Target: 60 seconds, no script\n→ Send the recording HERE (this DM)\n\n**2️⃣ LISTENING** (5 min)\nListen to this clip: {AUDIO_DESCRIPTION}\nAnswer these questions:\n{LISTENING_QUESTIONS}\n\n**3️⃣ VOCABULARY** (5 min)\nDefine or use these 15 words in a sentence:\n{VOCABULARY_LIST}\n\n**4️⃣ PRONUNCIATION** (5 min)\nRead this passage aloud and record:\n\"{READING_PASSAGE}\"\n→ Send recording HERE\n\n**5️⃣ WRITING** (8 min)\nWrite 5 sentences about:\n\"{WRITING_PROMPT}\"\n→ Type your response HERE\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n⏰ Due by: Sunday 11:59 PM\nTask completion rate is calculated automatically from your !done submissions this week."
+  },
+
+  "l0_weekly_prompts": {
+    "week_1": {
+      "speaking": "Tell me your name, where you are from, and one thing you like. Speak for 60 seconds.",
+      "listening_description": "Short self-introduction at 75 WPM (from module2_listening Section A style)",
+      "vocabulary_words": ["hello", "name", "from", "like", "want", "good", "morning", "work", "live", "learn", "speak", "help", "happy", "friend", "every"],
+      "reading_passage": "Hello. My name is ___. I am from ___. I live in a nice place. I like to learn English every day. My friend helps me. I am happy.",
+      "writing_prompt": "Write about yourself: your name, where you live, what you like, and why you want to learn English."
+    },
+    "week_2": {
+      "speaking": "Describe your daily routine from morning to evening. What time do you wake up? What do you do?",
+      "listening_description": "Daily routine description at 78 WPM",
+      "vocabulary_words": ["wake", "morning", "breakfast", "early", "always", "usually", "sometimes", "walk", "drive", "start", "finish", "evening", "sleep", "today", "every day"],
+      "reading_passage": "I wake up early every morning. First, I eat breakfast. Then I go to work. I usually finish at five. In the evening, I study English. I always go to sleep before eleven.",
+      "writing_prompt": "Write about your morning routine. What time do you wake up? What do you eat? Where do you go?"
+    },
+    "week_3": {
+      "speaking": "Tell me about your family. Who are they? What do they do? Describe one person.",
+      "listening_description": "Family description at 76 WPM",
+      "vocabulary_words": ["mother", "father", "brother", "sister", "family", "works", "likes", "has", "tall", "kind", "together", "love", "young", "old", "lives"],
+      "reading_passage": "My family is not very big. My mother is kind. She works as a nurse. My father is tall and strong. He drives a taxi. We live together and I love them.",
+      "writing_prompt": "Write about your family. How many people? What do they do? Describe one person you love."
+    },
+    "week_4": {
+      "speaking": "Describe your home. What rooms are there? What do you do in the morning and evening?",
+      "listening_description": "Home and routine description at 78 WPM",
+      "vocabulary_words": ["house", "room", "kitchen", "bedroom", "clean", "open", "close", "usually", "don't", "doesn't", "first", "then", "finally", "comfortable", "inside"],
+      "reading_passage": "My house is not very big. I have a bedroom and a small kitchen. I don't have a garden. Every morning I open the window. I usually clean the kitchen first. Then I eat breakfast. My house is comfortable.",
+      "writing_prompt": "Describe your home and your evening routine. Use: first, then, after that, finally."
+    },
+    "week_5": {
+      "speaking": "Talk about food. What do you like to eat? Where do you buy food? Order something at a restaurant.",
+      "listening_description": "Shopping/restaurant dialogue at 80 WPM",
+      "vocabulary_words": ["food", "water", "hungry", "buy", "how much", "restaurant", "order", "delicious", "cheap", "expensive", "prefer", "need", "some", "any", "favorite"],
+      "reading_passage": "I am hungry. I want to buy some food. The restaurant near my house is not expensive. I usually order chicken and rice. The food is always delicious. I prefer tea, not coffee. How much does the bread cost?",
+      "writing_prompt": "Write about food: what you like, what you don't like, where you buy food, and your favorite meal."
+    },
+    "week_6": {
+      "speaking": "Describe your neighborhood. What places are near your house? Give directions from your house to the nearest shop.",
+      "listening_description": "Directions dialogue at 80 WPM",
+      "vocabulary_words": ["street", "near", "far", "turn", "left", "right", "straight", "there is", "there are", "between", "next to", "how do I get", "excuse me", "place", "walk"],
+      "reading_passage": "Excuse me, where is the bank? Go straight on this street. Then turn left. The bank is next to the hospital. There is a park between the school and the market. It is not far from here.",
+      "writing_prompt": "Describe your neighborhood using 'there is/are' and prepositions. Give directions to a place."
+    },
+    "week_7": {
+      "speaking": "Talk about abilities. What can you do well? What can't you do? What do you want to learn?",
+      "listening_description": "Abilities and skills discussion at 80 WPM",
+      "vocabulary_words": ["can", "can't", "fast", "slow", "easy", "difficult", "possible", "strong", "quickly", "carefully", "really", "already", "also", "well", "enough"],
+      "reading_passage": "I can speak Arabic quickly, but I can't speak English fast yet. It is difficult but not impossible. I practice carefully every day. I can already understand some English. I am getting better slowly. It is really important to be consistent.",
+      "writing_prompt": "Write about your abilities: 5 things you can do and 3 things you can't do yet. Use adverbs (quickly, slowly, well)."
+    },
+    "week_8": {
+      "speaking": "Talk about how you feel today, what you did yesterday, and what you hope for next week.",
+      "listening_description": "Past events and feelings at 80 WPM",
+      "vocabulary_words": ["happy", "tired", "was", "were", "yesterday", "last week", "worked", "studied", "enjoyed", "because", "but", "think", "believe", "hope", "feel"],
+      "reading_passage": "Yesterday I was tired because I worked a lot. But I was happy because I studied English. Last week I visited my friend. We played together and it was wonderful. I feel good now. I believe I am improving. I hope next week will be even better.",
+      "writing_prompt": "Write about yesterday AND how you feel today. Use past tense (was, were, -ed verbs) and feeling words."
+    }
+  },
+
+  "scoring_pipeline": {
+    "auto_scored": {
+      "listening": "Objective MCQ answers → correct/total × 100",
+      "vocabulary": "Correct definitions or appropriate usage → correct/15 × 100",
+      "completion": "Tasks submitted via !done this week / 7×7(or track-adjusted) × 100"
+    },
+    "ai_scored": {
+      "writing": "Use Writing Assessment prompt (#9) from §11 → returns 0-100",
+      "speaking": "Phase 1 (pilot): founder listens and scores using rubric. Phase 2+: Whisper transcription → Speaking Evaluation prompt (#5)",
+      "accent": "Phase 1: founder scores using accent rubric. Phase 2+: AI pronunciation analysis"
+    },
+    "overall_calculation": "Sum of (dimension_score × weight) for all 6 dimensions",
+    "delivery_of_results": "Monday morning DM with visual progress report (prompt #10 generates this)"
+  },
+
+  "score_interpretation": {
+    "90-100": {"rating": "Excellent", "action": "Maintain approach. Consider peer mentoring role.", "color": "green"},
+    "80-89": {"rating": "Strong", "action": "Minor adjustments. Focus on weakest dimension.", "color": "green"},
+    "70-79": {"rating": "Satisfactory", "action": "Review daily execution. Fix gaps in weakest area.", "color": "yellow"},
+    "60-69": {"rating": "At Risk", "action": "Mandatory check-in. Buddy outreach. Revised study plan.", "color": "orange"},
+    "below_60": {"rating": "Critical", "action": "Immediate 1-on-1. Personal coaching. Consider track adjustment.", "color": "red"}
+  },
+
+  "advancement_readiness": {
+    "indicator": "When overall score is consistently 80+ for 3 consecutive weeks AND all dimensions are above their passing threshold, the learner is flagged as 'advancement-ready'.",
+    "notification": "Bot DMs the learner: 'You're showing strong progress! You may be ready for the Level Exit Exam. Would you like to attempt it this month? Type !exam to learn more.'"
+  }
+}

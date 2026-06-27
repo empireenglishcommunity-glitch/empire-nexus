@@ -1,0 +1,91 @@
+{
+  "module": 1,
+  "name": "Speaking Assessment",
+  "duration_minutes": 10,
+  "description": "Tests production ability through three sub-tasks: Read Aloud, Spontaneous Response, and Shadowing.",
+  "delivery": "Discord voice channel or recorded submission",
+  "scoring": "AI-scored in Phase 2+; founder-scored in pilot",
+
+  "part_a_read_aloud": {
+    "duration": "3 minutes",
+    "instructions": "Read the passage below clearly. Don't rush — speak at a comfortable pace.",
+    "instructions_ar": "اقرأ النص أدناه بوضوح. لا تستعجل — تكلّم بسرعة مريحة.",
+    "passages": {
+      "beginner_passage": "Hello. My name is [your name]. I am from [your country]. I live in [your city]. I have a family. My father works every day. My mother is kind. I like to eat rice and chicken. I want to learn English because it is important. Thank you.",
+      "intermediate_passage": "I believe that learning English is one of the most important things I can do for my future. Every morning, I try to practice for at least thirty minutes. Sometimes it's difficult, but I think that consistent practice is better than studying for many hours once a week. My goal is to speak confidently in professional situations.",
+      "advanced_passage": "The relationship between language acquisition and cultural immersion has been extensively studied over the past few decades. Researchers have consistently found that learners who engage with authentic materials and participate in meaningful conversations tend to achieve higher levels of fluency than those who rely solely on structured instruction. This finding has significant implications for how we design language learning systems."
+    },
+    "scoring_rubric": {
+      "phoneme_accuracy": {"weight": 40, "description": "Correct pronunciation of individual sounds"},
+      "word_stress": {"weight": 25, "description": "Correct stress on multi-syllable words"},
+      "fluency_flow": {"weight": 20, "description": "Smooth reading without excessive pausing"},
+      "intelligibility": {"weight": 15, "description": "Would a native speaker understand easily?"}
+    },
+    "level_assignment": {
+      "L0": "Cannot read the beginner passage, or reads with extreme difficulty (many word-level errors)",
+      "L1": "Reads beginner passage adequately; struggles with intermediate",
+      "L2": "Reads intermediate passage well; some issues with advanced",
+      "L3": "Reads advanced passage with natural flow and correct pronunciation"
+    }
+  },
+
+  "part_b_spontaneous_response": {
+    "duration": "5 minutes (3 prompts × 60 seconds each + transition time)",
+    "instructions": "Answer each question by speaking for about 60 seconds. There is no right or wrong answer — just speak naturally.",
+    "instructions_ar": "أجب على كل سؤال بالتحدث لمدة ٦٠ ثانية تقريبًا. لا يوجد جواب صح أو خطأ — فقط تكلّم بشكل طبيعي.",
+    "prompts": [
+      {
+        "id": "SP1",
+        "level_target": "L0-L1",
+        "prompt": "Tell me about yourself. What is your name? Where are you from? What do you do?",
+        "prompt_ar": "أخبرني عن نفسك. ما اسمك؟ من أين أنت؟ ماذا تعمل؟"
+      },
+      {
+        "id": "SP2",
+        "level_target": "L1-L2",
+        "prompt": "Describe your typical day from morning to evening. What do you do? What do you like about your routine?",
+        "prompt_ar": "صف يومك المعتاد من الصباح إلى المساء."
+      },
+      {
+        "id": "SP3",
+        "level_target": "L2-L3",
+        "prompt": "What is something you believe strongly about? Explain your opinion and give reasons why you think this way.",
+        "prompt_ar": "ما هو شيء تؤمن به بقوة؟ اشرح رأيك وأعط أسباب."
+      }
+    ],
+    "scoring_rubric": {
+      "fluency": {"weight": 30, "metrics": "Words per minute, pause frequency, hesitation markers"},
+      "grammar_accuracy": {"weight": 30, "metrics": "Correct sentence structure, tense usage, agreement"},
+      "vocabulary_range": {"weight": 20, "metrics": "Variety of words used, appropriateness"},
+      "task_completion": {"weight": 20, "metrics": "Did they address the prompt? Duration achieved?"}
+    },
+    "level_indicators": {
+      "L0": "Single words or very short phrases. Frequent long pauses. Under 20 WPM. Cannot form complete sentences.",
+      "L1": "Simple sentences (SVO). 40-60 WPM. Can answer basic questions. Limited vocabulary. Frequent pauses.",
+      "L2": "Complex sentences. 80-100 WPM. Can explain opinions. Good vocabulary. Occasional hesitation.",
+      "L3": "Natural flow. 100+ WPM. Complex ideas with supporting arguments. Varied vocabulary. Minimal hesitation."
+    }
+  },
+
+  "part_c_shadowing_test": {
+    "duration": "2 minutes",
+    "instructions": "Listen to the audio clip and repeat what you hear, matching the speaker's rhythm and pronunciation as closely as possible.",
+    "instructions_ar": "استمع للمقطع وكرّر ما تسمعه، حاول تطابق إيقاع ونطق المتحدث.",
+    "clips": [
+      {"id": "SH1", "speed": "70 WPM", "text": "Hello. Nice to meet you. My name is Sarah. I am from New York.", "target_level": "L0"},
+      {"id": "SH2", "speed": "110 WPM", "text": "I usually wake up early and go for a walk before breakfast. It helps me feel more energetic during the day.", "target_level": "L1"},
+      {"id": "SH3", "speed": "140 WPM", "text": "One of the most interesting things about living in a new country is discovering how different cultures approach everyday situations in completely different ways.", "target_level": "L2-L3"}
+    ],
+    "scoring": {
+      "accuracy": "How much of the text was correctly reproduced",
+      "rhythm_match": "Did the learner match the speaker's stress and intonation pattern",
+      "speed_match": "Could the learner keep up with the audio speed"
+    },
+    "level_indicators": {
+      "L0": "Can shadow SH1 partially (catches some words). Cannot attempt SH2.",
+      "L1": "Shadows SH1 well. Partially shadows SH2. Cannot attempt SH3.",
+      "L2": "Shadows SH1-SH2 well. Partially shadows SH3.",
+      "L3": "Shadows all three with good accuracy and natural rhythm."
+    }
+  }
+}

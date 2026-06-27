@@ -1,0 +1,30 @@
+{
+  "level": "L0",
+  "section": "7.2",
+  "description": "Music & song integration for Level 0. Songs chosen for: slow tempo, clear pronunciation, simple vocabulary, repetitive structure. Learning method: listen with lyrics → shadow chorus → learn 5 items.",
+  "method": {
+    "step_1": "Listen to the full song once (just enjoy)",
+    "step_2": "Read the lyrics while listening (connect sound to text)",
+    "step_3": "Identify 5 new words or phrases",
+    "step_4": "Shadow the chorus 5 times (match rhythm and pronunciation)",
+    "step_5": "Write 2 sentences using words from the song"
+  },
+  "weekly_songs": [
+    {"week": 1, "song": "Hello, Goodbye", "artist": "The Beatles", "search": "Beatles Hello Goodbye lyrics", "why": "Simple greetings vocabulary. 'Hello' and 'goodbye' repeated. Slow, clear.", "target_words": ["hello", "goodbye", "yes", "no", "say"]},
+    {"week": 2, "song": "Count on Me", "artist": "Bruno Mars", "search": "Bruno Mars Count on Me lyrics", "why": "Numbers theme. Slow tempo. Clear pronunciation. Friendship vocabulary.", "target_words": ["count", "friend", "always", "need", "find"]},
+    {"week": 3, "song": "Lean on Me", "artist": "Bill Withers", "search": "Bill Withers Lean on Me lyrics", "why": "Family/support theme. Very slow. Clear words. Emotional vocabulary.", "target_words": ["friend", "help", "strong", "carry", "need"]},
+    {"week": 4, "song": "Our House", "artist": "Madness", "search": "Madness Our House lyrics", "why": "Home/daily life theme. Describes a house and routine. Fun rhythm.", "target_words": ["house", "morning", "always", "together", "happy"]},
+    {"week": 5, "song": "Food Glorious Food", "artist": "Oliver! (Musical)", "search": "Food Glorious Food Oliver lyrics", "why": "Food vocabulary. Fun and energetic. Lists many foods.", "target_words": ["food", "eat", "hot", "cold", "wonderful"]},
+    {"week": 6, "song": "Walking on Sunshine", "artist": "Katrina and the Waves", "search": "Walking on Sunshine lyrics", "why": "Movement/direction verbs. Happy, energetic. 'Walking' repeated.", "target_words": ["walk", "feel", "good", "stop", "love"]},
+    {"week": 7, "song": "I Can See Clearly Now", "artist": "Johnny Nash", "search": "I Can See Clearly Now lyrics", "why": "Can/ability theme. Slow, clear. Positive emotions. Simple vocabulary.", "target_words": ["can", "see", "feel", "gone", "bright"]},
+    {"week": 8, "song": "Yesterday", "artist": "The Beatles", "search": "Beatles Yesterday lyrics", "why": "Past tense introduction. Very slow. Clear words. Emotional. Perfect for Week 8 grammar.", "target_words": ["yesterday", "was", "said", "wrong", "believe"]}
+  ],
+  "bonus_songs": [
+    {"song": "Imagine", "artist": "John Lennon", "why": "Very slow. Simple vocabulary. Good for dreaming/wishing (I want to...)."},
+    {"song": "What a Wonderful World", "artist": "Louis Armstrong", "why": "Slow. Describes the world. Colors, nature, people. Beautiful for L0."},
+    {"song": "Three Little Birds", "artist": "Bob Marley", "why": "Very repetitive. 'Don't worry' repeated. Positive. Clear Caribbean English."},
+    {"song": "You Are My Sunshine", "artist": "Traditional", "why": "Extremely simple. You/my/make/happy. Perfect for absolute beginners."},
+    {"song": "Let It Be", "artist": "The Beatles", "why": "Slow, clear, repetitive. Good for practicing connected speech."}
+  ],
+  "integration_with_daily_tasks": "One song per week. Listen Monday, shadow chorus Tuesday-Wednesday, learn words Thursday, write sentences Friday. Weekend: choose any song and enjoy it."
+}

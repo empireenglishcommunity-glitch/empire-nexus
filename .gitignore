@@ -1,0 +1,59 @@
+# ============================================================
+#  Empire English Community — Consolidated Repository .gitignore
+# ============================================================
+
+# ── Dependencies ──
+node_modules/
+
+# ── Mobile App (Expo / React Native) ──
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+.metro-health-check*
+
+# ── Python (Bots) ──
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+*.db
+output/*.pdf
+
+# ── Cloudflare Workers ──
+.dev.vars
+.wrangler/
+
+# ── Environment & Secrets ──
+.env
+.env.*
+!.env.example
+!.dev.vars.example
+
+# ── Debug & Logs ──
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Binary assets ──
+*.docx

@@ -1,0 +1,53 @@
+{
+  "id": "grammar_l0_w6",
+  "level": "L0",
+  "week": 6,
+  "pattern_name": "There is / There are (Existence)",
+  "pattern_name_ar": "يوجد (مفرد / جمع)",
+  "formula": "There is + singular noun / There are + plural noun",
+  "formula_visual": "[There is] + [ONE thing] / [There are] + [MANY things]",
+  "when_to_use": "To say something exists in a place. Use 'there is' for one thing, 'there are' for more than one.",
+  "when_to_use_ar": "للتعبير عن وجود شيء في مكان. 'There is' لشيء واحد، 'There are' لأكثر من شيء.",
+  "examples": [
+    {"en": "There is a bank near my house.", "ar": "يوجد بنك قريب من بيتي", "type": "singular"},
+    {"en": "There are three schools in my area.", "ar": "يوجد ثلاث مدارس في منطقتي", "type": "plural"},
+    {"en": "There is a park next to the hospital.", "ar": "يوجد حديقة بجانب المستشفى", "type": "singular"},
+    {"en": "There are many people here.", "ar": "يوجد ناس كثير هنا", "type": "plural"},
+    {"en": "There is no water.", "ar": "ما فيه ماء", "type": "negative"}
+  ],
+  "contractions": {
+    "there_is": "There's (There's a bank here.)",
+    "there_are": "No common contraction in writing; spoken: 'There're' or just 'There are'",
+    "negative": "There isn't / There aren't (There isn't a store. There aren't any chairs.)"
+  },
+  "with_prepositions": [
+    "There is a bank **next to** the school.",
+    "There are shops **near** my house.",
+    "There is a park **between** the hospital and the mosque.",
+    "There is a restaurant **on** the corner.",
+    "There are trees **in front of** the building."
+  ],
+  "common_errors": [
+    {"wrong": "It has a bank near here.", "correct": "There is a bank near here.", "explanation": "Don't use 'it has' for existence. Use 'there is/are'."},
+    {"wrong": "There is three schools.", "correct": "There are three schools.", "explanation": "'Three schools' = plural → use 'there are'."},
+    {"wrong": "Have a park here.", "correct": "There is a park here.", "explanation": "English uses 'there is/are' — not 'have' for places."},
+    {"wrong": "There are a bank.", "correct": "There is a bank.", "explanation": "'a bank' = singular → use 'there is'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "There ___ a hospital near my house.", "answer": "is", "hint": "a hospital = singular"},
+    {"sentence": "There ___ many cars on the street.", "answer": "are", "hint": "many cars = plural"},
+    {"sentence": "There ___ a park between the school and the bank.", "answer": "is", "hint": "a park = singular"},
+    {"sentence": "There ___ no milk in the kitchen.", "answer": "is", "hint": "milk = uncountable → is"},
+    {"sentence": "___ there any shops near here?", "answer": "Are", "hint": "shops = plural → are"}
+  ],
+  "question_form": {
+    "formula": "Is there...? / Are there...?",
+    "examples": [
+      {"q": "Is there a bank near here?", "a": "Yes, there is. / No, there isn't."},
+      {"q": "Are there any restaurants?", "a": "Yes, there are. / No, there aren't."}
+    ]
+  },
+  "quick_rule": "ONE thing = there IS. MANY things = there ARE. For questions: flip it (Is there...? / Are there...?).",
+  "quick_rule_ar": "شيء واحد = there IS. أشياء كثيرة = there ARE.",
+  "connect_to_speaking": "Use 'there is/are' to describe your neighborhood: 'There is a mosque near my house. There are many shops on my street. There isn't a park, but there is a garden.'"
+}

@@ -1,0 +1,30 @@
+name: linkedin-engine smoke test
+
+# Run on any push or PR that touches the engine (or this workflow itself).
+on:
+  push:
+    paths:
+      - "workers/linkedin-engine/**"
+      - ".github/workflows/linkedin-engine-smoke-test.yml"
+  pull_request:
+    paths:
+      - "workers/linkedin-engine/**"
+      - ".github/workflows/linkedin-engine-smoke-test.yml"
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workers/linkedin-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Syntax check + smoke test
+        run: npm test
+      - name: Worker build check (wrangler dry-run)
+        run: npx --yes wrangler@4 deploy --dry-run
+        env:
+          WRANGLER_SEND_METRICS: "false"

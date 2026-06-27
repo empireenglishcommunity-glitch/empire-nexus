@@ -1,0 +1,15 @@
+{
+  "category": "Community & Social (\u00a711 - Appendix B)",
+  "prompts": [
+    {
+      "id": 23,
+      "name": "Debate Topic Generator",
+      "trigger": "For L2-L3 debate sessions, 2x per week",
+      "user_prompt_template": "Generate a Debate Topic for Level {LEVEL}. Theme: {THEME}. Provide: topic_statement (clear proposition to argue for/against), background (2-3 sentences of context), side_a (position + 3 supporting arguments), side_b (position + 3 supporting arguments), useful_debate_phrases (10 phrases for agreeing, disagreeing, adding points), vocabulary (8 topic-specific words), rules (time limits, turn-taking, must-use phrases), judging_criteria (what makes a good argument). Return JSON.",
+      "variables": [
+        "LEVEL",
+        "THEME"
+      ]
+    }
+  ]
+}

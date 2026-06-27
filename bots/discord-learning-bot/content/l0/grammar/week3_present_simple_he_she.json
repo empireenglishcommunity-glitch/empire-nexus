@@ -1,0 +1,53 @@
+{
+  "id": "grammar_l0_w3",
+  "level": "L0",
+  "week": 3,
+  "pattern_name": "Present Simple (He / She / It) — The -s Rule",
+  "pattern_name_ar": "المضارع البسيط (هو / هي) — قاعدة الـ s",
+  "formula": "He/She/It + verb-s",
+  "formula_visual": "[He/She/It] + [verb + s] + ...",
+  "when_to_use": "When talking about ONE other person (he, she, it, my mother, Ahmad, the teacher), add -s to the verb.",
+  "when_to_use_ar": "لمّا تتكلم عن شخص واحد آخر (هو، هي، أمي، أحمد)، أضف s للفعل.",
+  "why_arabic_speakers_struggle": "Arabic doesn't add anything to the verb for third person. English requires -s, and forgetting it is the #1 error for Arabic speakers at this level.",
+  "the_rule": {
+    "base": "Most verbs: add -s (likes, wants, works, lives)",
+    "es_rule": "Verbs ending in -s, -sh, -ch, -x, -o: add -es (goes, watches, washes, does)",
+    "y_rule": "Verbs ending in consonant + y: change y to -ies (studies, carries, tries)",
+    "irregular": "have → has (only one to memorize!)"
+  },
+  "examples": [
+    {"en": "She speaks Arabic.", "ar": "هي تتكلم عربي", "base_verb": "speak → speaks"},
+    {"en": "He works every day.", "ar": "هو يشتغل كل يوم", "base_verb": "work → works"},
+    {"en": "My mother cooks dinner.", "ar": "أمي تطبخ العشاء", "base_verb": "cook → cooks"},
+    {"en": "It rains a lot here.", "ar": "تمطر كثير هنا", "base_verb": "rain → rains"},
+    {"en": "Ahmad has two brothers.", "ar": "أحمد عنده أخوين", "base_verb": "have → has"}
+  ],
+  "common_errors": [
+    {"wrong": "She speak English.", "correct": "She speaks English.", "explanation": "ALWAYS add -s for he/she/it. This is the most common mistake."},
+    {"wrong": "He go to work.", "correct": "He goes to work.", "explanation": "'go' ends in -o, so add -es: goes."},
+    {"wrong": "My father work hard.", "correct": "My father works hard.", "explanation": "'My father' = he. Add -s."},
+    {"wrong": "She haves a car.", "correct": "She has a car.", "explanation": "have is irregular: have → has (not haves)."}
+  ],
+  "negative_form": {
+    "formula": "He/She/It + doesn't + base verb (NO -s!)",
+    "examples": ["She doesn't like fish.", "He doesn't work today.", "It doesn't rain in summer."],
+    "critical_note": "After 'doesn't', the verb goes BACK to base form. No -s! The 's' moves to 'does'.",
+    "critical_note_ar": "بعد doesn't، الفعل يرجع لشكله الأساسي. بدون s!"
+  },
+  "question_form": {
+    "formula": "Does + he/she/it + base verb (NO -s!)?",
+    "examples": ["Does she speak English?", "Does he work here?", "Does it cost a lot?"],
+    "critical_note": "Same rule: after 'does', verb = base form. No -s."
+  },
+  "practice_fill_blank": [
+    {"sentence": "She ___ (like) coffee.", "answer": "likes", "hint": "She = add -s"},
+    {"sentence": "He ___ (go) to school.", "answer": "goes", "hint": "go + es (ends in -o)"},
+    {"sentence": "My sister ___ (study) English.", "answer": "studies", "hint": "y → ies"},
+    {"sentence": "He ___ (have) a big family.", "answer": "has", "hint": "have → has (irregular)"},
+    {"sentence": "She doesn't ___ (like) fish.", "answer": "like", "hint": "After doesn't = base form, no -s!"}
+  ],
+  "quick_rule": "He/She/It = add -s to the verb. ALWAYS. Exception: after doesn't/does = base form.",
+  "quick_rule_ar": "هو/هي = أضف s للفعل. دائماً. الاستثناء: بعد doesn't أو does = الشكل الأساسي.",
+  "mnemonic": "He SpeakS, She WorkS, It RainS — the S follows he/she/it everywhere!",
+  "connect_to_speaking": "When describing your family: 'My mother WORKS. My father DRIVES. My sister STUDIES.' Practice the -s sound!"
+}

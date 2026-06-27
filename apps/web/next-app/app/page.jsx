@@ -1,0 +1,10 @@
+import Hero from '../components/Hero'
+import Problem from '../components/Problem'
+import System from '../components/System'
+import Levels from '../components/Levels'
+import Proof from '../components/Proof'
+import Pricing from '../components/Pricing'
+import FAQ from '../components/FAQ'
+import CTA from '../components/CTA'
+import Footer from '../components/Footer'
+export default function Home() { return (<main><Hero /><Problem /><System /><Levels /><Proof /><Pricing /><FAQ /><CTA /><Footer /></main>) }

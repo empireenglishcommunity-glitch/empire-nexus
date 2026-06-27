@@ -1,0 +1,206 @@
+{
+  "exam_name": "Level 0 Exit Examination",
+  "from_level": "L0",
+  "to_level": "L1",
+  "passing_score": 70,
+  "total_duration_minutes": 60,
+  "sections": 5,
+  "available_after_week": 8,
+  "max_attempts_per_month": 1,
+  "description_ar": "اختبار الانتقال من المستوى صفر إلى المستوى الأول. يجب اجتياز جميع الأقسام الخمسة.",
+  "description_en": "Level 0 Exit Exam. All 5 sections must pass individually to advance to Level 1.",
+
+  "section_1_speaking": {
+    "name": "Live Speaking",
+    "duration_minutes": 10,
+    "passing_score": 70,
+    "format": "5-min presentation + 5-min Q&A",
+    "instructions_en": "Part A: Deliver a 60-second unscripted self-introduction (name, origin, family, daily routine, goal). Part B: Answer 5 follow-up questions from the examiner.",
+    "instructions_ar": "الجزء أ: قدّم نفسك لمدة ٦٠ ثانية بدون نص (الاسم، البلد، العائلة، الروتين اليومي، الهدف). الجزء ب: أجب على ٥ أسئلة متابعة.",
+    "presentation_prompt": "Introduce yourself completely: your name, where you're from, your family, what you do every day, and your goal for learning English. Speak for at least 60 seconds.",
+    "followup_questions": [
+      "What time do you wake up every day?",
+      "Tell me about your family. How many people?",
+      "What do you like to eat for breakfast?",
+      "Where do you live? Describe your house.",
+      "Why do you want to learn English?",
+      "What did you do yesterday?",
+      "Can you cook? What can you make?",
+      "Do you have a friend? Tell me about them."
+    ],
+    "scoring_rubric": {
+      "fluency": {"weight": 30, "criteria": "Words per minute, pauses, hesitations. Target: 50+ WPM with natural pauses."},
+      "grammar": {"weight": 30, "criteria": "SVO order, present simple correct, basic negation. Target: 80% accuracy."},
+      "vocabulary": {"weight": 20, "criteria": "Uses words from L0 word bank appropriately. Target: 15+ unique words in 60 sec."},
+      "task_completion": {"weight": 20, "criteria": "Addressed all required topics (name, origin, family, routine, goal). Target: 4/5 topics covered."}
+    }
+  },
+
+  "section_2_listening": {
+    "name": "Listening Comprehension",
+    "duration_minutes": 15,
+    "passing_score": 70,
+    "format": "15 questions on audio clips at 80 WPM",
+    "instructions_en": "Listen to 5 short audio clips (30-45 seconds each, 80 WPM). Answer 3 questions per clip. You may listen twice.",
+    "instructions_ar": "استمع لـ ٥ مقاطع صوتية قصيرة (٣٠-٤٥ ثانية لكل واحد). أجب على ٣ أسئلة لكل مقطع. يمكنك الاستماع مرتين.",
+    "clips": [
+      {
+        "id": "L1",
+        "topic": "Self-introduction",
+        "transcript": "Hello. My name is Sarah. I am from Canada. I live in a small house with my family. I have one brother and one sister. Every morning I wake up early and eat breakfast. I like eggs and coffee. Then I go to work. I am a teacher.",
+        "speed_wpm": 75,
+        "questions": [
+          {"q": "Where is Sarah from?", "options": ["Canada", "America", "England", "Australia"], "answer": "Canada"},
+          {"q": "How many brothers does Sarah have?", "options": ["0", "1", "2", "3"], "answer": "1"},
+          {"q": "What does Sarah do for work?", "options": ["Doctor", "Teacher", "Student", "Cook"], "answer": "Teacher"}
+        ]
+      },
+      {
+        "id": "L2",
+        "topic": "Daily routine",
+        "transcript": "I wake up at six thirty every day. First I take a shower. Then I get dressed and eat breakfast. I usually have bread and tea. I leave the house at seven thirty. I walk to the bus station. It takes ten minutes. I arrive at work at eight o'clock.",
+        "speed_wpm": 78,
+        "questions": [
+          {"q": "What time does the speaker wake up?", "options": ["6:00", "6:30", "7:00", "7:30"], "answer": "6:30"},
+          {"q": "What does the speaker eat for breakfast?", "options": ["Eggs and coffee", "Bread and tea", "Rice and chicken", "Fruit and milk"], "answer": "Bread and tea"},
+          {"q": "How does the speaker get to work?", "options": ["By car", "By bus", "Walking only", "By train"], "answer": "By bus"}
+        ]
+      },
+      {
+        "id": "L3",
+        "topic": "Family description",
+        "transcript": "My family is not very big. There are five people: my mother, my father, my two sisters, and me. My mother is a nurse. She works at a hospital. My father is tall and strong. He drives a taxi. My sisters are young. They go to school every day.",
+        "speed_wpm": 76,
+        "questions": [
+          {"q": "How many people are in the family?", "options": ["3", "4", "5", "6"], "answer": "5"},
+          {"q": "What does the mother do?", "options": ["Teacher", "Nurse", "Doctor", "Cook"], "answer": "Nurse"},
+          {"q": "What does the father do?", "options": ["Bus driver", "Taxi driver", "Teacher", "Builder"], "answer": "Taxi driver"}
+        ]
+      },
+      {
+        "id": "L4",
+        "topic": "Giving directions",
+        "transcript": "Excuse me, where is the bank? Go straight on this street. Then turn left at the big building. The bank is next to the hospital. It is not far from here. You can walk there in five minutes. It is on the right side of the street.",
+        "speed_wpm": 80,
+        "questions": [
+          {"q": "Where does the person need to turn?", "options": ["Turn right", "Turn left", "Go straight", "Go back"], "answer": "Turn left"},
+          {"q": "What is next to the bank?", "options": ["School", "Park", "Hospital", "Restaurant"], "answer": "Hospital"},
+          {"q": "How long is the walk?", "options": ["2 minutes", "5 minutes", "10 minutes", "15 minutes"], "answer": "5 minutes"}
+        ]
+      },
+      {
+        "id": "L5",
+        "topic": "Shopping/Food",
+        "transcript": "I need to buy some food today. I want chicken, rice, and vegetables. I also need some fruit — maybe apples and bananas. The market is near my house. It is cheap and the food is always fresh. I don't buy expensive things. I usually spend about twenty dollars.",
+        "speed_wpm": 80,
+        "questions": [
+          {"q": "What meat does the speaker want to buy?", "options": ["Fish", "Beef", "Chicken", "Lamb"], "answer": "Chicken"},
+          {"q": "Where does the speaker shop?", "options": ["Supermarket", "Market near house", "Online", "Restaurant"], "answer": "Market near house"},
+          {"q": "How much does the speaker usually spend?", "options": ["$10", "$15", "$20", "$50"], "answer": "$20"}
+        ]
+      }
+    ]
+  },
+
+  "section_3_vocabulary": {
+    "name": "Vocabulary Test",
+    "duration_minutes": 10,
+    "passing_score": 70,
+    "format": "50 words — match meaning, fill blank, or use in sentence",
+    "instructions_en": "50 questions testing your knowledge of the Level 0 vocabulary (500 words). Mix of: match word to Arabic meaning, fill in the blank, choose the correct word.",
+    "instructions_ar": "٥٠ سؤال تختبر معرفتك بمفردات المستوى صفر. مزيج من: مطابقة الكلمة بالمعنى العربي، ملء الفراغ، اختيار الكلمة الصحيحة.",
+    "question_types": {
+      "match_meaning": 20,
+      "fill_blank": 15,
+      "choose_correct": 15
+    },
+    "sample_questions": [
+      {"type": "match_meaning", "word": "hungry", "options": ["سعيد", "جائع", "تعبان", "غاضب"], "answer": "جائع"},
+      {"type": "match_meaning", "word": "between", "options": ["فوق", "تحت", "بين", "خلف"], "answer": "بين"},
+      {"type": "match_meaning", "word": "expensive", "options": ["رخيص", "غالي", "جديد", "قديم"], "answer": "غالي"},
+      {"type": "fill_blank", "sentence": "I ___ up at 7 every morning.", "options": ["wake", "walk", "work", "wash"], "answer": "wake"},
+      {"type": "fill_blank", "sentence": "My mother ___ dinner every night.", "options": ["cooks", "plays", "drives", "sleeps"], "answer": "cooks"},
+      {"type": "fill_blank", "sentence": "The bank is ___ the hospital.", "options": ["under", "next to", "inside", "above"], "answer": "next to"},
+      {"type": "choose_correct", "prompt": "Which word means 'يتذكر'?", "options": ["forget", "remember", "decide", "believe"], "answer": "remember"},
+      {"type": "choose_correct", "prompt": "Which is a feeling?", "options": ["kitchen", "worried", "breakfast", "street"], "answer": "worried"},
+      {"type": "choose_correct", "prompt": "'She ___ to school every day' — choose:", "options": ["go", "goes", "going", "gone"], "answer": "goes"}
+    ],
+    "word_sources": "All 447 words from l0_week1.json through l0_week8.json. Questions drawn randomly from this pool on each attempt."
+  },
+
+  "section_4_accent": {
+    "name": "Accent/Pronunciation Evaluation",
+    "duration_minutes": 5,
+    "passing_score": 70,
+    "format": "Read passage + 30-second spontaneous speech",
+    "instructions_en": "Part A: Read the passage below aloud (clearly, not fast). Part B: Speak freely for 30 seconds about any topic.",
+    "instructions_ar": "الجزء أ: اقرأ النص التالي بصوت واضح. الجزء ب: تكلّم بحرية لمدة ٣٠ ثانية عن أي موضوع.",
+    "reading_passage": "Hello. My name is [your name]. I am from [your country]. I live with my family in a nice house. Every morning I wake up early. I eat breakfast and drink coffee. Then I go to work. I like my job because the people are kind. After work I come home and cook dinner. I feel happy when I practice English. I think it is difficult but possible. I want to speak well. I am getting better every day.",
+    "scoring_rubric": {
+      "phoneme_accuracy": {"weight": 40, "criteria": "Correct production of target phonemes (th, v/f, p/b, r/l, schwa). Target: 25+ of 30 phoneme instances correct."},
+      "word_stress": {"weight": 25, "criteria": "Correct stress on 2+ syllable words (morning, because, breakfast, possible, practice). Target: 75% correct."},
+      "rhythm_flow": {"weight": 20, "criteria": "Natural pacing, not robotic word-by-word reading. Some linking attempted."},
+      "intelligibility": {"weight": 15, "criteria": "A native speaker can understand 90%+ without difficulty."}
+    },
+    "target_phonemes_in_passage": [
+      "/θ/ — think", "/ð/ — the, with, then",
+      "/v/ — every, have", "/f/ — family, after, feel",
+      "/p/ — people, practice, possible", "/b/ — breakfast, because, better",
+      "/r/ — morning, work, practice ⚠️", "/l/ — like, well, feel ⚠️",
+      "/ə/ — about, possible, breakfast (schwa)"
+    ]
+  },
+
+  "section_5_writing": {
+    "name": "Writing Test",
+    "duration_minutes": 20,
+    "passing_score": 70,
+    "format": "Write a paragraph on an assigned topic",
+    "instructions_en": "Write at least 7 sentences about the topic below. Use vocabulary from Level 0. You have 20 minutes. No dictionary or translator allowed.",
+    "instructions_ar": "اكتب ٧ جمل على الأقل عن الموضوع أدناه. استخدم مفردات المستوى صفر. عندك ٢٠ دقيقة. ممنوع استخدام مترجم.",
+    "prompts": [
+      "Write about your daily routine from morning to night. What do you do? When? Where?",
+      "Write about your family. Who are they? What do they do? Where do they live?",
+      "Write about your favorite day last week. What did you do? How did you feel? Why was it good?",
+      "Write about food: What do you like to eat? What do you cook? Where do you buy food?",
+      "Write about your home and neighborhood: What is in your house? What is near it?"
+    ],
+    "prompt_selection": "One prompt is randomly selected for each exam attempt.",
+    "scoring_rubric": {
+      "grammar": {"weight": 30, "criteria": "SVO order correct, present simple (with he/she -s), past simple (was/were, -ed), negation (don't/doesn't). Target: 80% sentences grammatically acceptable."},
+      "vocabulary": {"weight": 25, "criteria": "Uses 20+ unique L0 words appropriately. No major meaning errors."},
+      "organization": {"weight": 25, "criteria": "Logical sequence (time order or topic grouping). Has a beginning and end. Coherent."},
+      "task_completion": {"weight": 20, "criteria": "Minimum 7 sentences. Addresses the prompt fully. Relevant content."}
+    }
+  },
+
+  "advancement_criteria": {
+    "all_sections_must_pass": true,
+    "minimum_per_section": 70,
+    "no_section_below": 70,
+    "additional_requirements": [
+      "Must have completed at least 8 weeks of daily tasks",
+      "Must have task completion rate ≥ 60% over the final 3 weeks",
+      "Exam is recorded for quality assurance",
+      "Results delivered within 48 hours",
+      "Passing triggers automatic Discord role upgrade (Level 0 → Level 1)"
+    ]
+  },
+
+  "post_exam_actions": {
+    "on_pass": [
+      "Update member level to L1 in database",
+      "Remove 🌱 Level 0 role, assign 💪 Level 1 role in Discord",
+      "Post celebration in #announcements",
+      "Award 500 points (ADVANCEMENT bonus)",
+      "DM member with L1 welcome + new schedule",
+      "Record baseline comparison (Day 1 recording vs exam recording)"
+    ],
+    "on_fail": [
+      "DM member with encouragement + specific areas to improve",
+      "Recommend 2-4 more weeks of focused practice on weakest section",
+      "No penalty — can retake after 30 days",
+      "Offer a 1-on-1 review session if score was 60-69% (close to passing)"
+    ]
+  }
+}

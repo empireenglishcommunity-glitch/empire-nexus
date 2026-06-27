@@ -1,0 +1,119 @@
+{
+  "level": "L0",
+  "description": "Ready-to-use speaking frameworks for Level 0 learners. Each template provides a structure the learner fills with their own information.",
+  "templates": [
+    {
+      "id": "self_introduction",
+      "name": "Self-Introduction",
+      "name_ar": "تعريف بالنفس",
+      "when_to_use": "Meeting someone new, joining a group, or as a daily speaking warm-up.",
+      "structure": [
+        "1. Greeting: Hello / Hi / Good morning",
+        "2. Name: My name is ___.",
+        "3. Origin: I am from ___.",
+        "4. Living: I live in ___.",
+        "5. Work/Study: I work as ___ / I am a student.",
+        "6. Family: I have ___ (brothers/sisters/children).",
+        "7. Goal: I want to learn English because ___.",
+        "8. Closing: Nice to meet you."
+      ],
+      "example": "Hello! My name is Ahmad. I am from Saudi Arabia. I live in Riyadh. I work as an engineer. I have two brothers and one sister. I want to learn English because I need it for my job. Nice to meet you.",
+      "target_duration_seconds": 30,
+      "progression": {
+        "week_1": "Say items 1-3 only (15 seconds)",
+        "week_2": "Say items 1-5 (20 seconds)",
+        "week_4": "Say all items (30 seconds)",
+        "week_6": "Add details to each item (45 seconds)",
+        "week_8": "60 seconds with natural flow, no script"
+      },
+      "tips": ["Speak slowly and clearly", "It's okay to pause between sentences", "Don't memorize — use the structure as a guide", "Record yourself and listen back"]
+    },
+    {
+      "id": "daily_routine",
+      "name": "Describing Daily Routine",
+      "name_ar": "وصف الروتين اليومي",
+      "when_to_use": "Answering 'What do you do every day?' or 'Tell me about your day.'",
+      "structure": [
+        "1. Wake up: I wake up at ___.",
+        "2. Morning: First, I ___. Then I ___.",
+        "3. Leave: I leave the house at ___.",
+        "4. Work/Study: I go to ___. I work/study until ___.",
+        "5. Afternoon: After work, I ___.",
+        "6. Evening: In the evening, I ___.",
+        "7. Sleep: I go to bed at ___."
+      ],
+      "time_connectors": ["First", "Then", "After that", "Next", "Finally", "In the morning", "In the afternoon", "In the evening", "At night"],
+      "example": "I wake up at 7 o'clock. First, I take a shower. Then I eat breakfast — usually bread and tea. I leave the house at 8. I go to work by car. I work until 5. After work, I go to the gym. In the evening, I eat dinner with my family. I go to bed at 11.",
+      "target_duration_seconds": 45,
+      "tips": ["Use time connectors (first, then, after that)", "Include specific times", "Use present simple (I wake, I eat, I go)"]
+    },
+    {
+      "id": "describe_person",
+      "name": "Describing a Person",
+      "name_ar": "وصف شخص",
+      "when_to_use": "Talking about family members, friends, or colleagues.",
+      "structure": [
+        "1. Who: This is my ___. His/Her name is ___.",
+        "2. Appearance: He/She is ___ (tall/short/young/old).",
+        "3. Personality: He/She is ___ (kind/funny/smart/quiet).",
+        "4. What they do: He/She works as ___ / is a student.",
+        "5. Habits: He/She likes ___. He/She always ___.",
+        "6. Your relationship: We ___ together."
+      ],
+      "example": "This is my mother. Her name is Fatima. She is not very tall. She is very kind and smart. She works as a nurse at a hospital. She likes cooking — she always makes delicious food. We eat dinner together every evening.",
+      "target_duration_seconds": 35,
+      "useful_adjectives": {
+        "appearance": ["tall", "short", "young", "old", "strong"],
+        "personality": ["kind", "funny", "smart", "quiet", "friendly", "serious", "hardworking"]
+      }
+    },
+    {
+      "id": "describe_place",
+      "name": "Describing a Place",
+      "name_ar": "وصف مكان",
+      "when_to_use": "Talking about your house, city, neighborhood, or a place you visited.",
+      "structure": [
+        "1. What/Where: This is ___. It is in ___.",
+        "2. Size: It is big/small/medium.",
+        "3. What's inside/around: There is ___ and ___. There are ___.",
+        "4. Location details: It is next to ___. It is near ___.",
+        "5. Your opinion: I like it because ___.",
+        "6. Activity: I ___ here every day."
+      ],
+      "example": "This is my house. It is in a quiet area. It is not very big but it is comfortable. There are three bedrooms and a kitchen. There is a small garden outside. It is next to a park. I like it because it is quiet. I rest here every evening.",
+      "target_duration_seconds": 35,
+      "useful_prepositions": ["next to", "near", "in front of", "behind", "between", "on the corner"]
+    },
+    {
+      "id": "express_opinion",
+      "name": "Expressing Simple Opinions",
+      "name_ar": "التعبير عن رأي بسيط",
+      "when_to_use": "When asked 'What do you think about...?' or sharing a preference.",
+      "structure": [
+        "1. State opinion: I think ___ is ___. / I like ___ because ___.",
+        "2. Reason 1: First, ___.",
+        "3. Reason 2: Also, ___.",
+        "4. Conclusion: So, I think/prefer ___."
+      ],
+      "example": "I think English is important. First, I need it for my job. Also, I want to travel to many countries. So, I think learning English is very useful for me.",
+      "target_duration_seconds": 25,
+      "opinion_starters": ["I think", "I believe", "I like", "I prefer", "In my opinion"],
+      "reason_connectors": ["because", "first", "also", "and", "so"]
+    },
+    {
+      "id": "ask_for_help",
+      "name": "Asking for Help / Making Requests",
+      "name_ar": "طلب المساعدة",
+      "when_to_use": "When you need directions, information, or assistance.",
+      "structure": [
+        "1. Get attention: Excuse me. / Sorry, can you help me?",
+        "2. The question: Where is ___? / How do I get to ___? / Do you have ___?",
+        "3. Clarification: Can you repeat? / More slowly please?",
+        "4. Thank: Thank you very much. / Thanks a lot."
+      ],
+      "example": "Excuse me, can you help me? Where is the bank? ... I'm sorry, can you repeat that more slowly? ... Go straight and turn left? ... Thank you very much!",
+      "target_duration_seconds": 20,
+      "polite_phrases": ["Excuse me", "Can you help me?", "I'm sorry", "Could you please...?", "Thank you", "Thanks a lot"]
+    }
+  ]
+}

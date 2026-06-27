@@ -17,8 +17,8 @@ When the user sends `/sync`, execute the full repository closing protocol below.
 - Validate that any credentials referenced use proper placeholder patterns (never real values in repo)
 
 ### 3. Documentation Sync
-- Update `PROJECT_STATUS_AND_HANDOVER.md` to reflect current state
-- Create or update checkpoint file (`CHECKPOINT_YYYY-MM-DD.md`) for significant sessions
+- Update `PROJECT_STATUS.md` to reflect current state
+- Create or update checkpoint file in `docs/checkpoints/` for significant sessions
 - Ensure all architectural decisions made during the session are documented
 - Update README or relevant docs if project structure changed
 - Record any new configurations, URLs, or system details
@@ -43,25 +43,25 @@ Deliver a structured summary:
   /sync — SESSION CLOSE REPORT
 ═══════════════════════════════════════
 
-✅ COMPLETED:
+COMPLETED:
   - [list of completed items]
 
-📁 FILES CHANGED:
+FILES CHANGED:
   - [list of files modified/created/deleted]
 
-🔧 SYSTEMS MODIFIED:
+SYSTEMS MODIFIED:
   - [n8n workflows, bots, infrastructure changes]
 
-📝 DOCS UPDATED:
+DOCS UPDATED:
   - [documentation files updated]
 
-⚠️ OPEN ITEMS:
+OPEN ITEMS:
   - [anything remaining for next session]
 
-🔒 SYSTEM HEALTH:
+SYSTEM HEALTH:
   - [status of all running services]
 
-📌 NEXT SESSION PRIORITIES:
+NEXT SESSION PRIORITIES:
   - [recommended next steps in priority order]
 ═══════════════════════════════════════
 ```

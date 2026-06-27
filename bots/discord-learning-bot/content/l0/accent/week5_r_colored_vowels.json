@@ -1,0 +1,147 @@
+{
+  "level": "L0",
+  "week": 5,
+  "focus": "R-colored vowels (/ɪr/ /ɛr/ /ɑːr/) — the American R sound in vowel combinations",
+  "focus_ar": "حروف العلة مع R — صوت R الأمريكي عندما يتبع حرف علة",
+  "arabic_challenge": "Arabic has a trilled /r/ (tongue tip vibrates rapidly). American English uses a retroflex /r/ where the tongue curls back without touching anything. When /r/ follows a vowel, it 'colors' the vowel — making a unique blended sound that doesn't exist in Arabic.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/ɪr/ (here, near, fear)"],
+      "isolation": {
+        "instructions": "/ɪr/ = start with short /ɪ/ (as in 'sit'), then curl tongue back for /r/. The two blend together. Think: 'ih' + 'rr' = 'eer'.",
+        "instructions_ar": "/ɪr/ = ابدأ بـ /ɪ/ القصير (مثل sit)، ثم اسحب لسانك للخلف لـ /r/. الصوتين يندمجون.",
+        "practice": ["ih-rr ih-rr ih-rr (blend them: eer eer eer)", "here here here", "near near near"]
+      },
+      "word_practice": ["here", "near", "fear", "year", "hear", "clear", "dear", "appear", "beer", "steer", "career", "weird"],
+      "sentence_practice": [
+        "Come here, dear. I can hear you clearly.",
+        "Near here there is a career fair this year.",
+        "I fear nothing. The path is clear."
+      ],
+      "record_this": "I am here. I can hear you clearly. This year is nearly over. I have no fear — my career path is clear. Come near and listen, dear.",
+      "self_check": "In 'here' — does the word END with your tongue curled back? It should NOT end with a tongue tap or trill."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ɛr/ (air, there, care)"],
+      "isolation": {
+        "instructions": "/ɛr/ = start with /ɛ/ (as in 'bed'), then curl tongue back. More open mouth than /ɪr/. Think: 'eh' + 'rr' = 'air'.",
+        "instructions_ar": "/ɛr/ = ابدأ بـ /ɛ/ (مثل bed)، ثم اسحب لسانك للخلف. الفم أكثر انفتاحاً من /ɪr/.",
+        "practice": ["eh-rr eh-rr (air air air)", "there there there", "care care care"]
+      },
+      "word_practice": ["there", "where", "air", "care", "share", "fair", "pair", "hair", "chair", "wear", "bear", "prepare", "compare", "aware"],
+      "contrast_with_eer": [
+        {"pair": ["here", "hair"], "distinction": "/ɪr/ vs /ɛr/ — mouth more closed for 'here', more open for 'hair'"},
+        {"pair": ["beer", "bear"], "distinction": "/ɪr/ vs /ɛr/"},
+        {"pair": ["fear", "fair"], "distinction": "/ɪr/ vs /ɛr/"},
+        {"pair": ["steer", "stare"], "distinction": "/ɪr/ vs /ɛr/"}
+      ],
+      "sentence_practice": [
+        "Where is the chair? It's over there.",
+        "I don't care — the air is fresh and fair.",
+        "Prepare to share — don't compare your hair!"
+      ],
+      "record_this": "Where is my chair? Over there, in the fresh air. I prepared to share my work. It's only fair. I don't care about my hair. I am aware of what's there.",
+      "self_check": "Compare 'here' vs 'hair'. Your mouth should be MORE open for 'hair'. Both end with tongue curled back."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/ɑːr/ (car, far, heart)"],
+      "isolation": {
+        "instructions": "/ɑːr/ = start with wide open /ɑː/ (mouth wide like at the doctor: 'ahhh'), then curl tongue back. The longest and most open R-colored vowel.",
+        "instructions_ar": "/ɑːr/ = ابدأ بفتح الفم واسع (آآآ)، ثم اسحب لسانك للخلف. أوسع وأطول صوت R.",
+        "practice": ["ahhh-rr ahhh-rr (car car car)", "far far far", "heart heart heart"]
+      },
+      "word_practice": ["car", "far", "star", "hard", "start", "heart", "part", "dark", "park", "market", "apartment", "garden", "party", "guitar"],
+      "contrast_all_three": [
+        {"triplet": ["here", "hair", "hard"], "distinction": "/ɪr/ → /ɛr/ → /ɑːr/ — mouth opens progressively wider"},
+        {"triplet": ["beer", "bear", "bar"], "distinction": "Closed → medium → wide open"},
+        {"triplet": ["steer", "stare", "star"], "distinction": "Notice how the vowel BEFORE the /r/ determines the sound"}
+      ],
+      "sentence_practice": [
+        "My car is parked far from the market.",
+        "It's hard to start in the dark.",
+        "My heart is in the garden under the stars."
+      ],
+      "record_this": "I parked my car far from the apartment. It was dark but not hard to find. I walked through the garden to the market. The stars were beautiful. My heart felt happy. This is the start of something wonderful.",
+      "self_check": "For /ɑːr/: your mouth should be WIDE open before the tongue curls back. Compare: 'here' (small opening) vs 'car' (wide open)."
+    },
+    {
+      "day": 4,
+      "target_sounds": "All three R-colored vowels in context",
+      "focus": "Distinguishing /ɪr/, /ɛr/, /ɑːr/ in natural speech",
+      "sorting_exercise": {
+        "instructions": "Sort these words into three groups by their R-vowel sound:",
+        "words": ["year", "chair", "start", "clear", "where", "far", "near", "share", "park", "hear", "care", "dark", "fear", "fair", "heart"],
+        "answers": {
+          "eer_group": ["year", "clear", "near", "hear", "fear"],
+          "air_group": ["chair", "where", "share", "care", "fair"],
+          "ar_group": ["start", "far", "park", "dark", "heart"]
+        }
+      },
+      "mixed_sentence_practice": [
+        "I fear parking the car near here — it's too dark there.",
+        "Where did you hear that? I shared it at the party last year.",
+        "I don't care how far the star is — it's clear from here."
+      ],
+      "record_this": "This year I started a new career. I heard about it at a party — my friend shared the news. I wasn't afraid to start far from here. Where I work now, the air is clear and the garden is dark and beautiful. I care about my heart and my art.",
+      "self_check": "In your recording, find one example of each: /ɪr/ (year, career, here, clear), /ɛr/ (shared, where, care), /ɑːr/ (started, far, dark, heart, art). Are all three clearly different?"
+    },
+    {
+      "day": 5,
+      "target_sounds": "R in initial, middle, and final position (comprehensive)",
+      "focus": "The American R in ALL positions — building toward natural production",
+      "positions": {
+        "initial_r": {"words": ["run", "read", "room", "right", "really"], "tip": "Tongue curls back BEFORE the vowel comes"},
+        "middle_r": {"words": ["very", "sorry", "during", "morning", "around"], "tip": "Tongue curls back briefly between vowels"},
+        "final_r": {"words": ["car", "door", "here", "more", "after"], "tip": "Tongue curls back AT THE END — hold it"},
+        "r_clusters": {"words": ["three", "street", "strong", "drink", "friend"], "tip": "Tongue positions for /r/ even in clusters with other consonants"}
+      },
+      "sentence_practice": [
+        "I really ran around the room three times this morning.",
+        "My friend drove straight to the restaurant on the right.",
+        "I'm sorry — the street is very far from here.",
+        "During the morning, strong rain arrived from the north."
+      ],
+      "record_this": "I run every morning. The road is really long — three streets from here. My friend drives me around in her car. I'm sorry I arrived late. During breakfast I remembered: the restaurant is on the right after the bridge. It was a strong, rainy morning.",
+      "self_check": "Listen to EVERY /r/ in your recording. Is your tongue curling back for each one? Or do some still have an Arabic tongue-trill?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Week 5 Review",
+      "type": "review",
+      "focus_areas": [
+        "R-colored vowels: /ɪr/ (hear) vs /ɛr/ (hair) vs /ɑːr/ (heart)",
+        "R in all positions: run (initial), very (middle), car (final), three (cluster)",
+        "Avoiding Arabic trilled /r/ — American /r/ = tongue curls, never vibrates"
+      ],
+      "challenge_paragraph": "I started my career near here last year. The market is far from my apartment but I don't care. Every morning I prepare, start the car, and drive through the dark streets. The air is clear and I can hear the birds. My heart feels free. I share my story wherever I go — it's fair to say this year has been hard but I'm not afraid. I steer my life in the right direction.",
+      "record_this": "I started my career near here last year. The market is far from my apartment but I don't care. Every morning I prepare, start the car, and drive through the dark streets. The air is clear and I can hear the birds.",
+      "self_check": "This paragraph has 25+ instances of /r/. Listen back: do ANY of them have a tongue-trill (Arabic /r/)? Every single one should be the American retroflex /r/ — tongue curled back, no contact, no vibration."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment",
+      "type": "assessment",
+      "test_yourself": {
+        "passage": "Every year I hear the same story: learning English is hard. I don't agree. The truth is clear — if you start, if you care, if you practice, you get better. My friend started last year with fear in her heart. She could barely share a word. Now? She reads, she speaks, she drives conversations forward. Her career is far from where it started. She is near her dream. The air is different here — full of opportunity. Don't stare at the mountain — start climbing.",
+        "sounds_to_check": {
+          "/ɪr/": "year, hear, clear, fear, here, near",
+          "/ɛr/": "share, there, where, barely, stare",
+          "/ɑːr/": "hard, start(ed), heart, far",
+          "Initial /r/": "reading, really",
+          "Middle /r/": "every, story, agree, truth, practice, better, forward, career, started, different, opportunity",
+          "Final /r/": "year, hear, clear, better, her, for, far, near, here, air"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All R-colored vowels distinct. No Arabic trills. Natural American /r/ in all positions.",
+        "70_89": "R-colored vowels mostly correct. Occasional Arabic /r/ creeping in (especially in clusters like 'three').",
+        "50_69": "Still distinguishing /ɪr/ from /ɛr/ with effort. Some Arabic /r/ remains. This is NORMAL at week 5.",
+        "below_50": "R-colored vowels sound the same. Arabic /r/ dominant. Focus on Day 1-3 exercises daily until improvement."
+      },
+      "progress_note": "The American /r/ is the SINGLE hardest sound for Arabic speakers. It typically takes 4-8 weeks of dedicated daily practice. If you're at 50-69%, you are on schedule. Keep practicing — it WILL come."
+    }
+  ]
+}

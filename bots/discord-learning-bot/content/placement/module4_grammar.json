@@ -1,0 +1,47 @@
+{
+  "module": 4,
+  "name": "Grammar Awareness Assessment",
+  "duration_minutes": 10,
+  "description": "25 multiple-choice questions testing structural awareness from basic SVO to complex conditionals and passive voice.",
+  "delivery": "Text-based MCQ via Discord bot or web form",
+  "scoring": "Auto-scored. Percentage maps to level.",
+
+  "questions": [
+    {"id": "G1", "level": "L0", "topic": "SVO order", "question": "Choose the correct sentence:", "options": ["Like I coffee.", "I like coffee.", "Coffee I like.", "I coffee like."], "answer": "I like coffee."},
+    {"id": "G2", "level": "L0", "topic": "To be", "question": "She ___ a teacher.", "options": ["am", "is", "are", "be"], "answer": "is"},
+    {"id": "G3", "level": "L0", "topic": "Present simple", "question": "He ___ to work every day.", "options": ["go", "goes", "going", "gone"], "answer": "goes"},
+    {"id": "G4", "level": "L0", "topic": "Negation", "question": "I ___ like fish.", "options": ["no", "not", "don't", "doesn't"], "answer": "don't"},
+    {"id": "G5", "level": "L0", "topic": "Questions", "question": "___ you speak English?", "options": ["Are", "Do", "Is", "Does"], "answer": "Do"},
+    {"id": "G6", "level": "L1", "topic": "Present continuous", "question": "She ___ right now.", "options": ["study", "studies", "is studying", "studied"], "answer": "is studying"},
+    {"id": "G7", "level": "L1", "topic": "Past simple", "question": "I ___ to the store yesterday.", "options": ["go", "went", "gone", "going"], "answer": "went"},
+    {"id": "G8", "level": "L1", "topic": "Future", "question": "I ___ visit my friend tomorrow.", "options": ["will", "am", "was", "do"], "answer": "will"},
+    {"id": "G9", "level": "L1", "topic": "Articles", "question": "I saw ___ interesting movie.", "options": ["a", "an", "the", "—"], "answer": "an"},
+    {"id": "G10", "level": "L1", "topic": "Prepositions", "question": "The book is ___ the table.", "options": ["in", "on", "at", "to"], "answer": "on"},
+    {"id": "G11", "level": "L1", "topic": "Comparatives", "question": "This one is ___ than that one.", "options": ["more big", "bigger", "biggest", "big"], "answer": "bigger"},
+    {"id": "G12", "level": "L1", "topic": "Count/uncount", "question": "How ___ water do you need?", "options": ["many", "much", "some", "any"], "answer": "much"},
+    {"id": "G13", "level": "L2", "topic": "Present perfect", "question": "I ___ been to London.", "options": ["have", "has", "had", "am"], "answer": "have"},
+    {"id": "G14", "level": "L2", "topic": "Present perfect vs past", "question": "She ___ here since 2020.", "options": ["lived", "has lived", "is living", "lives"], "answer": "has lived"},
+    {"id": "G15", "level": "L2", "topic": "Passive voice", "question": "The book ___ by millions of people.", "options": ["read", "is read", "reads", "reading"], "answer": "is read"},
+    {"id": "G16", "level": "L2", "topic": "Reported speech", "question": "She said she ___ tired.", "options": ["is", "was", "be", "been"], "answer": "was"},
+    {"id": "G17", "level": "L2", "topic": "Conditionals (1st)", "question": "If it rains, I ___ at home.", "options": ["stay", "will stay", "stayed", "staying"], "answer": "will stay"},
+    {"id": "G18", "level": "L2", "topic": "Relative clauses", "question": "The man ___ lives here is my friend.", "options": ["which", "who", "whose", "whom"], "answer": "who"},
+    {"id": "G19", "level": "L2", "topic": "Modal verbs", "question": "You ___ see a doctor about that.", "options": ["should", "must to", "can to", "will to"], "answer": "should"},
+    {"id": "G20", "level": "L2", "topic": "Gerund vs infinitive", "question": "I enjoy ___ books.", "options": ["read", "to read", "reading", "reads"], "answer": "reading"},
+    {"id": "G21", "level": "L3", "topic": "Conditionals (2nd)", "question": "If I ___ rich, I would travel the world.", "options": ["am", "was", "were", "will be"], "answer": "were"},
+    {"id": "G22", "level": "L3", "topic": "Conditionals (3rd)", "question": "If I had studied harder, I ___ passed.", "options": ["will have", "would have", "should", "could"], "answer": "would have"},
+    {"id": "G23", "level": "L3", "topic": "Inversion", "question": "___ had I arrived when the phone rang.", "options": ["No sooner", "Hardly", "Barely", "Scarcely"], "answer": "No sooner"},
+    {"id": "G24", "level": "L3", "topic": "Subjunctive", "question": "I insist that he ___ on time.", "options": ["is", "be", "will be", "being"], "answer": "be"},
+    {"id": "G25", "level": "L3", "topic": "Complex passive", "question": "The project is believed ___ completed next month.", "options": ["to be", "being", "be", "to being"], "answer": "to be"}
+  ],
+
+  "scoring_rules": {
+    "total_questions": 25,
+    "score_calculation": "correct_answers / 25 × 100",
+    "level_mapping": {
+      "L0": "0-35% (0-8 correct — mostly G1-G5)",
+      "L1": "36-60% (9-15 correct — G1-G12 range)",
+      "L2": "61-80% (16-20 correct — G1-G20 range)",
+      "L3": "81-100% (21-25 correct — all levels)"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "category": "Immersion Content (\u00a711 - Appendix B)",
+  "prompts": [
+    {
+      "id": 21,
+      "name": "Song Analysis Worksheet",
+      "trigger": "Weekly (one song per week)",
+      "user_prompt_template": "Create a Song Analysis Worksheet for the song \"{SONG}\" by {ARTIST}. Level: {LEVEL}. Provide: song_context (what the song is about), vocabulary_from_lyrics (10 words with meanings), pronunciation_focus (3 interesting sounds/links in the lyrics), chorus_shadowing_guide (annotated chorus), comprehension_questions (5), cultural_notes (if relevant), writing_extension (use a phrase from the song in your own sentence). Return JSON.",
+      "variables": [
+        "SONG",
+        "ARTIST",
+        "LEVEL"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Movie Scene Transcript Activity",
+      "trigger": "2x per week for Levels L1+, once for L0 Week 5+",
+      "user_prompt_template": "Create a Movie Scene Activity for Level {LEVEL}. Scene description: {SCENE_DESC}. Provide: scene_summary (what happens), transcript (dialogue with speaker labels, max 20 lines), vocabulary_highlight (5 new words from the scene), connected_speech_notes (where linking/reduction happens), comprehension_questions (5), shadow_lines (3 lines to practice), discussion_question (1 opinion question about the scene). Return JSON.",
+      "variables": [
+        "LEVEL",
+        "SCENE_DESC"
+      ]
+    }
+  ]
+}

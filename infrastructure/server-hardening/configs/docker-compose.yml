@@ -1,0 +1,59 @@
+# ============================================================
+#  Empire English — n8n Docker Compose (Hardened)
+#  Location on server: /opt/n8n/docker-compose.yml
+#
+#  DEPLOYED STATE (June 21, 2026):
+#    - Image: n8nio/n8n:2.26.8 (pinned)
+#    - Port: 127.0.0.1 only (not publicly accessible)
+#    - Memory limit: 2560M
+#    - CPU limit: 1.5 cores
+#    - PID limit: 200 (inside deploy.resources)
+#    - Log rotation: 10MB x 5 files
+#    - HEALTHCHECK: auto-restart if n8n process dies
+#
+#  To update n8n version:
+#    1. Check releases: https://github.com/n8n-io/n8n/releases
+#    2. Change the image tag below
+#    3. Run: docker compose pull && docker compose up -d
+#    4. Verify: docker inspect --format='{{.State.Health.Status}}' empire-n8n
+# ============================================================
+
+services:
+  n8n:
+    image: n8nio/n8n:2.26.8
+    container_name: empire-n8n
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      - N8N_HOST=bot.empireenglish.online
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://bot.empireenglish.online/
+      - N8N_SECURE_COOKIE=false
+      - GENERIC_TIMEZONE=Asia/Dubai
+      - TZ=Asia/Dubai
+    volumes:
+      - n8n_data:/home/node/.n8n
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2560M
+          pids: 200
+        reservations:
+          memory: 512M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5678/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  n8n_data:

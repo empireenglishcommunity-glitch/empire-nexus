@@ -1,0 +1,171 @@
+{
+  "level": "L0",
+  "week": 4,
+  "focus": "R vs L contrast + Affricates (/tʃ/ /dʒ/) + Diphthongs (/aɪ/ /aʊ/ /ɔɪ/)",
+  "focus_ar": "التمييز بين R و L + الحروف المركبة + الحروف المتحركة المزدوجة",
+  "arabic_challenge": "R/L confusion is the #1 pronunciation issue for Arabic speakers. Arabic /r/ is a trill (tongue tip vibrates). American /r/ is retroflex (tongue curls back without touching anything). Arabic /l/ is similar to English but Arabic speakers often substitute their /r/ where English has /l/ and vice versa.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/r/", "/l/"],
+      "isolation": {
+        "instructions": "CRITICAL DIFFERENCE: /l/ = tongue TIP touches the ridge behind upper teeth. /r/ = tongue curls BACK — does NOT touch anything. Your tongue tip points toward the roof but stays suspended in mid-air.",
+        "instructions_ar": "الفرق الحاسم: /l/ = طرف اللسان يلمس الحافة خلف الأسنان العلوية. /r/ = اللسان يرجع للخلف — ما يلمس أي شي! طرف اللسان يتجه لسقف الفم بس يبقى معلّق بالهواء.",
+        "practice": ["la la la (tongue TOUCHES roof)", "ra ra ra (tongue curls BACK, doesn't touch)", "la-ra-la-ra-la-ra"],
+        "mirror_check": "Use a mirror: for /l/, you can see your tongue tip touching behind your teeth. For /r/, your tongue tip is hidden (curled back)."
+      },
+      "minimal_pairs": [
+        {"pair": ["right", "light"], "meaning": ["يمين/صحيح", "ضوء/خفيف"]},
+        {"pair": ["road", "load"], "meaning": ["طريق", "حمولة"]},
+        {"pair": ["rain", "lane"], "meaning": ["مطر", "ممر"]},
+        {"pair": ["red", "led"], "meaning": ["أحمر", "قاد"]},
+        {"pair": ["wrong", "long"], "meaning": ["خطأ", "طويل"]},
+        {"pair": ["fry", "fly"], "meaning": ["يقلي", "يطير"]},
+        {"pair": ["pray", "play"], "meaning": ["يصلي", "يلعب"]},
+        {"pair": ["grow", "glow"], "meaning": ["ينمو", "يتوهج"]}
+      ],
+      "word_practice": {
+        "r_words": ["run", "read", "room", "right", "really", "restaurant", "ready", "rich", "river", "remember"],
+        "l_words": ["live", "learn", "like", "long", "look", "late", "leave", "listen", "love", "let"]
+      },
+      "sentence_practice": [
+        "I really like reading in my room.",
+        "The long road leads to the restaurant on the left.",
+        "Look right, then look left before you cross."
+      ],
+      "record_this": "I really like learning languages. The road is long but I love the ride. I look at the light on the right. I read and I listen. I learn and I grow.",
+      "self_check": "For /r/: your tongue should NOT touch anything inside your mouth. If it touches, that's /l/ or an Arabic /r/. American /r/ = tongue floats backward. Practice in a mirror."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/r/", "/l/"],
+      "focus": "R and L in the MIDDLE and END of words (harder than initial position)",
+      "isolation": {
+        "instructions": "R and L at word END: /l/ ('feel') = tongue goes UP to touch roof. /r/ ('fear') = tongue curls BACK. Listen for the difference in the vowel quality too — vowels before /r/ sound 'colored'.",
+        "instructions_ar": "R و L في نهاية الكلمة أصعب: /l/ (feel) = اللسان يرتفع. /r/ (fear) = اللسان يرجع.",
+        "practice": ["feel-fear feel-fear", "tall-tar tall-tar", "call-car call-car"]
+      },
+      "minimal_pairs": [
+        {"pair": ["feel", "fear"], "meaning": ["يشعر", "خوف"]},
+        {"pair": ["call", "car"], "meaning": ["يتصل", "سيارة"]},
+        {"pair": ["tall", "tar"], "meaning": ["طويل", "قطران"]},
+        {"pair": ["hall", "hard"], "meaning": ["قاعة", "صعب"]},
+        {"pair": ["collect", "correct"], "meaning": ["يجمع", "صحيح"]},
+        {"pair": ["alive", "arrive"], "meaning": ["حي", "يصل"]}
+      ],
+      "word_practice": {
+        "r_middle_end": ["car", "far", "star", "door", "more", "here", "there", "where", "are", "year", "morning", "after", "water", "other", "number"],
+        "l_middle_end": ["all", "call", "tall", "well", "feel", "real", "full", "people", "table", "little", "beautiful", "family", "usually", "school", "world"]
+      },
+      "sentence_practice": [
+        "I feel like calling my family after work.",
+        "The world is beautiful from here.",
+        "Where are the other people? They are all in the hall."
+      ],
+      "record_this": "I feel really good this morning. I arrived here early. The world looks beautiful after the rain. I want to call my family. All of them are far from here. I live near the school. The water is cold but I don't care.",
+      "self_check": "Record 'feel' and 'fear' back to back. They should sound CLEARLY different. If they sound the same, focus on tongue position: UP (l) vs BACK (r)."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/tʃ/", "/dʒ/"],
+      "isolation": {
+        "instructions": "/tʃ/ (chair, which) = tongue tip to roof, release with 'sh' sound. Like t+sh combined. /dʒ/ (job, age) = same position + voice. Like d+zh combined.",
+        "instructions_ar": "/tʃ/ = مثل 'تش' (chair). /dʒ/ = مثل 'ج' (في بعض اللهجات العربية).",
+        "practice": ["ch ch ch (like sneezing: achoo!)", "j j j (like the start of 'jam')", "ch-j-ch-j"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cheap", "jeep"], "meaning": ["رخيص", "سيارة جيب"]},
+        {"pair": ["chair", "jar"], "meaning": ["كرسي", "جرة"]},
+        {"pair": ["chin", "gin"], "meaning": ["ذقن", "شراب"]},
+        {"pair": ["rich", "ridge"], "meaning": ["غني", "حافة"]},
+        {"pair": ["match", "badge"], "meaning": ["مباراة/كبريت", "شارة"]}
+      ],
+      "word_practice": ["change", "choose", "teacher", "kitchen", "watch", "lunch", "each", "which", "job", "just", "age", "join", "language", "large", "enjoy", "orange"],
+      "sentence_practice": [
+        "Each teacher chooses which language to teach.",
+        "I enjoy my job — I just joined last June.",
+        "Watch the children in the kitchen change the channel."
+      ],
+      "record_this": "I just changed my job in June. My teacher is rich and generous. I enjoy watching the children choose lunch. Each age brings a new challenge. Which language do you like?",
+      "self_check": "For /tʃ/: start with your tongue touching the roof (like /t/) then release into /ʃ/ (sh). It's a TWO-PART sound."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/aɪ/", "/aʊ/", "/ɔɪ/"],
+      "isolation": {
+        "instructions": "Diphthongs are MOVING sounds (two vowel positions in one syllable). /aɪ/ (my, like) = mouth open → closes upward. /aʊ/ (how, now) = mouth open → lips round. /ɔɪ/ (boy, join) = lips round → spread.",
+        "instructions_ar": "الأصوات المزدوجة: يبدأ الصوت في مكان وينتهي في مكان ثاني. /aɪ/ = أه→إي. /aʊ/ = أه→أو. /ɔɪ/ = أو→إي.",
+        "practice": ["ah-ee ah-ee (like 'my')", "ah-oo ah-oo (like 'how')", "oy oy oy (like 'boy')"]
+      },
+      "word_practice": {
+        "ai_sound": ["my", "I", "like", "time", "five", "nice", "right", "night", "find", "why", "try", "eye"],
+        "au_sound": ["how", "now", "down", "town", "house", "out", "about", "around", "sound", "found"],
+        "oi_sound": ["boy", "toy", "join", "enjoy", "oil", "noise", "point", "choice", "voice", "coin"]
+      },
+      "sentence_practice": [
+        "I like my nice house in town.",
+        "How about going out now? I found my toy!",
+        "The boy enjoys the noise. It's his choice."
+      ],
+      "record_this": "I like my life right now. Five times I tried to find my voice. The boy pointed down the road. How about we go out? I enjoy the sound of the night. It's time to join.",
+      "self_check": "Diphthongs must MOVE. Say 'my' — does your mouth start open and close? Say 'how' — do your lips start open and round at the end? If the sound is flat/stable, it's wrong."
+    },
+    {
+      "day": 5,
+      "target_sounds": "R/L + Diphthongs combined",
+      "focus": "Putting it all together — R and L before/after diphthongs",
+      "practice_words": {
+        "r_with_diphthongs": ["ride", "right", "write", "round", "around", "royal", "roil"],
+        "l_with_diphthongs": ["light", "like", "line", "loud", "allow", "loyal", "oil"]
+      },
+      "challenge_pairs": [
+        {"pair": ["right", "light"], "meaning": ["يمين", "ضوء"]},
+        {"pair": ["ride", "lied"], "meaning": ["يركب", "كذب"]},
+        {"pair": ["round", "loud"], "meaning": ["مدوّر", "صاخب"]},
+        {"pair": ["royal", "loyal"], "meaning": ["ملكي", "مخلص"]}
+      ],
+      "sentence_practice": [
+        "Turn right at the traffic light.",
+        "I like riding around the town at night.",
+        "The loud noise came from the round tower on the right.",
+        "The royal family is loyal and proud."
+      ],
+      "record_this": "I ride my bike around town. I turn right at the light. The road is long but I like it. The loud boys are playing outside. I enjoy this time — night time is the right time. I am loyal to my choice.",
+      "self_check": "In 'right' — is the /r/ different from 'light'? Record both and compare."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Week 4 Review",
+      "type": "review",
+      "focus_areas": ["R vs L (initial, middle, final)", "/tʃ/ vs /dʒ/", "Diphthongs moving properly"],
+      "challenge_sentences": [
+        "I really love learning languages. It's my choice.",
+        "The children are playing loudly around the large room.",
+        "Right now I enjoy watching the night sky from my rooftop.",
+        "Join me — let's ride our bikes around the town."
+      ],
+      "record_this": "I really love my life right now. Learning English is my choice. I enjoy riding around town — the roads are long but beautiful. Last night I joined my friends. The children were playing loudly. It was really nice.",
+      "self_check": "Count every R and L in your recording. Are they ALL distinct? Focus especially on: really, right, around, long, love, learning, loudly."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment",
+      "type": "assessment",
+      "test_yourself": {
+        "passage": "I really like my life right now. I live in a large house near a beautiful river. Every morning I ride my bike around the town. I look right, then left. The road is long but I enjoy the ride. Last night I joined my friends at a restaurant. The children were playing loudly. We had a choice: watch a movie or listen to music. I chose to listen. The royal concert was loud and joyful. Learning English is my choice — I love it.",
+        "sounds_to_check": {
+          "/r/ vs /l/": "really, right, river, ride, around, road, restaurant, royal — like, live, large, look, left, long, loudly, listen, loud, love, learning",
+          "/tʃ/ vs /dʒ/": "children, choice, chose, watch — joined, joyful, enjoy",
+          "Diphthongs": "like(/aɪ/), life(/aɪ/), right(/aɪ/), ride(/aɪ/), night(/aɪ/) — around(/aʊ/), house(/aʊ/), loud(/aʊ/) — joined(/ɔɪ/), joyful(/ɔɪ/), choice(/ɔɪ/)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear R/L distinction in all positions. Diphthongs move properly. Affricates crisp.",
+        "70_89": "R/L mostly distinct. Occasional confusion in final position (feel/fear). Diphthongs good.",
+        "50_69": "R/L confusion persists in several words. This is NORMAL for week 4 — keep practicing.",
+        "below_50": "R still sounds like Arabic trilled /r/ or like /l/. Spend extra time on Day 1-2 drills."
+      },
+      "encouragement": "R/L is the HARDEST distinction for Arabic speakers. If you scored 50-69%, you are on track. It takes most learners 4-8 weeks of daily practice to make this automatic. Don't give up — every day of practice builds the new neural pathway."
+    }
+  ]
+}

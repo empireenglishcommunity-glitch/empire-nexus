@@ -1,0 +1,105 @@
+{
+  "level": "L0",
+  "description": "Writing frameworks for Level 0 learners. Each framework provides a sentence-by-sentence template the learner fills in.",
+  "frameworks": [
+    {
+      "id": "simple_sentences",
+      "name": "Simple Sentences (Weeks 1-2)",
+      "name_ar": "جمل بسيطة",
+      "instruction": "Write 3-5 simple sentences. Each sentence = Subject + Verb + Object/Detail.",
+      "template": [
+        "My name is ___.",
+        "I am from ___.",
+        "I live in ___.",
+        "I like ___.",
+        "I want ___."
+      ],
+      "rules": ["One idea per sentence", "Start with capital letter", "End with period", "Subject first, then verb"],
+      "example_output": "My name is Sara. I am from Egypt. I live in Cairo. I like reading books. I want to learn English.",
+      "checklist": ["Does every sentence have a subject?", "Does every sentence have a verb?", "Did you start with a capital letter?", "Did you end with a period?"]
+    },
+    {
+      "id": "short_paragraph",
+      "name": "Short Paragraph (Weeks 3-4)",
+      "name_ar": "فقرة قصيرة",
+      "instruction": "Write 4-6 sentences about ONE topic. Use time connectors to link your ideas.",
+      "structure": {
+        "sentence_1": "Topic sentence: state your main point",
+        "sentence_2": "Detail 1 (First, ...)",
+        "sentence_3": "Detail 2 (Then, ... / Also, ...)",
+        "sentence_4": "Detail 3 (After that, ...)",
+        "sentence_5": "Closing: summarize or give opinion"
+      },
+      "connectors": ["First", "Then", "Also", "After that", "Finally", "And", "But"],
+      "example_topic": "My morning routine",
+      "example_output": "Every morning I wake up at 6:30. First, I take a shower and brush my teeth. Then I eat breakfast with my family. After that, I get dressed and leave the house. I usually walk to work. I like mornings because they are quiet.",
+      "checklist": ["Did you write about ONE topic?", "Did you use at least 2 connectors?", "Are your sentences in logical order?", "Is there a first sentence and a last sentence?"]
+    },
+    {
+      "id": "describe_routine",
+      "name": "Describe a Routine (Weeks 4-5)",
+      "name_ar": "وصف روتين",
+      "instruction": "Write 5-7 sentences about something you do regularly. Include times and sequence words.",
+      "template": [
+        "I [activity] every [when].",
+        "I start at [time].",
+        "First, I ___.",
+        "Then, I ___.",
+        "After that, I ___.",
+        "I finish at [time].",
+        "I [feel/think] ___ about this."
+      ],
+      "example_topic": "My English study routine",
+      "example_output": "I study English every evening. I start at 8 o'clock. First, I listen to a short audio clip and repeat. Then, I learn 8 new words and say each in a sentence. After that, I write 5 sentences about my day. I finish at 8:45. I feel good because I am getting better every day."
+    },
+    {
+      "id": "describe_person_writing",
+      "name": "Describe a Person (Weeks 3-5)",
+      "name_ar": "وصف شخص",
+      "instruction": "Write 5-6 sentences about someone you know. Include: who, appearance, personality, what they do, your relationship.",
+      "template": [
+        "I want to tell you about my ___.",
+        "His/Her name is ___.",
+        "He/She is ___ (appearance).",
+        "He/She is ___ (personality).",
+        "He/She works as ___ / likes to ___.",
+        "I love/like him/her because ___."
+      ],
+      "example_output": "I want to tell you about my father. His name is Khalid. He is tall and strong. He is kind and hardworking. He works as a driver. I like him because he always helps our family."
+    },
+    {
+      "id": "simple_opinion",
+      "name": "Express an Opinion (Weeks 5-6)",
+      "name_ar": "التعبير عن رأي",
+      "instruction": "Write 4-5 sentences giving your opinion about something. Include: your opinion + 2 reasons + a conclusion.",
+      "template": [
+        "I think ___ is ___.",
+        "First, ___.",
+        "Also, ___.",
+        "So, I think/believe ___."
+      ],
+      "example_topic": "Learning English",
+      "example_output": "I think learning English is very important. First, many jobs need English now. Also, I can talk to people from many countries. So, I believe every person should learn English.",
+      "opinion_words": ["I think", "I believe", "In my opinion", "I feel"]
+    },
+    {
+      "id": "past_event",
+      "name": "Write About the Past (Weeks 7-8)",
+      "name_ar": "الكتابة عن الماضي",
+      "instruction": "Write 5-7 sentences about something that happened. Use was/were and -ed verbs. Include when it happened and how you felt.",
+      "template": [
+        "Last [when], I ___.",
+        "I was ___.",
+        "First, I ___.",
+        "Then, I ___.",
+        "I felt ___ because ___.",
+        "It was a ___ day/experience."
+      ],
+      "example_topic": "Last weekend",
+      "example_output": "Last Saturday, I visited my grandmother. I was happy to see her. First, we cooked lunch together. Then, we watched a movie. I felt relaxed because I love her house. It was a wonderful day.",
+      "time_words_past": ["yesterday", "last week", "last Saturday", "last month", "two days ago"]
+    }
+  ],
+  "progression_note": "Weeks 1-2: Simple Sentences only. Week 3-4: Short Paragraph. Weeks 5-6: Opinion. Weeks 7-8: Past Event. Each builds on the previous — never skip ahead.",
+  "submission_channel": "#writing-feedback (AI will evaluate and provide corrections within minutes)"
+}

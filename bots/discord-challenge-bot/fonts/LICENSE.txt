@@ -1,0 +1,8 @@
+Cairo Font — Google Fonts
+Licensed under the SIL Open Font License, Version 1.1.
+
+The Cairo font is designed by Mohamed Gaber and published via Google Fonts.
+Source: https://fonts.google.com/specimen/Cairo
+
+This font is bundled for PDF certificate generation in the Empire Challenge Bot.
+Full OFL license: https://scripts.sil.org/OFL
