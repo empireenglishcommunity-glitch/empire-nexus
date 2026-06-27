@@ -1,6 +1,6 @@
 # 🤖 LinkedIn Content Engine — Setup Guide
 
-[![smoke test](https://github.com/empireenglishcommunity-glitch/Claude/actions/workflows/linkedin-engine-smoke-test.yml/badge.svg)](https://github.com/empireenglishcommunity-glitch/Claude/actions/workflows/linkedin-engine-smoke-test.yml)
+[![smoke test](https://github.com/empireenglishcommunity-glitch/EEC-REPO/actions/workflows/linkedin-engine-smoke-test.yml/badge.svg)](https://github.com/empireenglishcommunity-glitch/EEC-REPO/actions/workflows/linkedin-engine-smoke-test.yml)
 
 Generates a daily, **brand-voice** LinkedIn post (hook + body + hashtags) with Gemini's
 free tier and sends it to you on **Telegram** with buttons:

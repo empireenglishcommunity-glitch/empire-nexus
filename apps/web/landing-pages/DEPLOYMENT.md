@@ -5,11 +5,11 @@
 ### Steps:
 1. Log in to Cloudflare dashboard → Pages
 2. Click **"Create a project"** → **"Connect to Git"**
-3. Select the `empireenglishcommunity-glitch/Claude` repository
+3. Select the `empireenglishcommunity-glitch/EEC-REPO` repository
 4. Configure build settings:
    - **Production branch:** `main`
    - **Build command:** (leave empty — static files, no build needed)
-   - **Build output directory:** `web`
+   - **Build output directory:** `apps/web/landing-pages`
 5. Click **"Save and Deploy"**
 6. After deploy, go to **Custom domains** → Add `empireenglish.online` (or `www.empireenglish.online`)
 7. Cloudflare auto-configures DNS since you already use Cloudflare NS
@@ -31,9 +31,9 @@ Since `empireenglish.online` is already on Cloudflare (from the Tunnel setup), a
 2. Under "Build and deployment":
    - Source: **Deploy from a branch**
    - Branch: `main`
-   - Folder: `/web`
+   - Folder: `/apps/web/landing-pages`
 3. Click Save
-4. Pages will be live at: `https://empireenglishcommunity-glitch.github.io/Claude/`
+4. Pages will be live at: `https://empireenglishcommunity-glitch.github.io/EEC-REPO/`
 
 ### Custom domain (GitHub Pages):
 1. In the Pages settings, add custom domain: `empireenglish.online`

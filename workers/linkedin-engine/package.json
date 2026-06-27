@@ -1,9 +1,9 @@
 {
   "name": "linkedin-engine",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "LinkedIn Content Engine — Cloudflare Worker (text + image + carousel + Telegram cockpit)",
+  "description": "LinkedIn Content Engine v3.0 — Cloudflare Worker (text + image + carousel + Telegram cockpit)",
   "scripts": {
     "check": "node --check worker.js",
     "test": "node --check worker.js && node _test.mjs"

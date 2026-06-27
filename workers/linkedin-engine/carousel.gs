@@ -1,5 +1,10 @@
 /**
- * LinkedIn Content Engine — Carousel generator (Google Apps Script) — Phase 3
+ * LinkedIn Content Engine — Carousel generator (Google Apps Script) — Phase 3 OPTIONAL
+ * ---------------------------------------------------------------------------
+ * NOTE: As of v3.0, the LinkedIn Engine generates carousels as self-contained
+ * formatted Telegram text (no external dependency). This Google Apps Script is an
+ * OPTIONAL ALTERNATIVE for creating actual PDF slide decks when needed.
+ * It is NOT required for normal operation.
  * ---------------------------------------------------------------------------
  * Free, unlimited, on-brand carousels. The Cloudflare Worker POSTs slide copy here;
  * this script builds a branded Google Slides deck, exports it as a PDF, and returns a

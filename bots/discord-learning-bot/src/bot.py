@@ -430,8 +430,7 @@ async def cmd_level(ctx):
             f"\n**To advance to the next level:**\n"
             f"• Pass the Exit Exam (minimum {level_info['advancement_score']}%)\n"
             f"• Available after week {level_info['duration_weeks'][0]} minimum\n"
-            f"• All 5 exam sections must pass individually\n"
-            f"• Type `!exam` when you're ready (after {level_info['duration_weeks'][0]} weeks)"
+            f"• All 5 exam sections must pass individually"
         )
     else:
         msg += "\n👑 Level 3 is the mastery level — no advancement. Pursue quarterly certification!"

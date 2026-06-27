@@ -5,71 +5,379 @@
   "phoneme_focus": "Multi-syllable words with correct stress",
   "grammar_pattern": "Can / Can't (ability)",
   "vocabulary": [
-    {"word": "can", "pronunciation": "KAN", "arabic": "يقدر/يستطيع", "pos": "verb"},
-    {"word": "can't", "pronunciation": "KANT", "arabic": "لا يقدر", "pos": "verb"},
-    {"word": "run", "pronunciation": "RUN ⚠️", "arabic": "يركض", "pos": "verb"},
-    {"word": "swim", "pronunciation": "SWIM", "arabic": "يسبح", "pos": "verb"},
-    {"word": "write", "pronunciation": "RYT ⚠️", "arabic": "يكتب", "pos": "verb"},
-    {"word": "draw", "pronunciation": "DRAW", "arabic": "يرسم", "pos": "verb"},
-    {"word": "sing", "pronunciation": "SING", "arabic": "يغني", "pos": "verb"},
-    {"word": "dance", "pronunciation": "DANS", "arabic": "يرقص", "pos": "verb"},
-    {"word": "jump", "pronunciation": "JUMP", "arabic": "يقفز", "pos": "verb"},
-    {"word": "climb", "pronunciation": "KLYM", "arabic": "يتسلق", "pos": "verb"},
-
-    {"word": "carry", "pronunciation": "KA-ree ⚠️", "arabic": "يحمل", "pos": "verb"},
-    {"word": "throw", "pronunciation": "THROH ⚠️", "arabic": "يرمي", "pos": "verb"},
-    {"word": "catch", "pronunciation": "KACH", "arabic": "يمسك", "pos": "verb"},
-    {"word": "push", "pronunciation": "PUSH", "arabic": "يدفع", "pos": "verb"},
-    {"word": "pull", "pronunciation": "PUUL", "arabic": "يسحب", "pos": "verb"},
-    {"word": "fix", "pronunciation": "FIKS", "arabic": "يصلح", "pos": "verb"},
-    {"word": "break", "pronunciation": "BRAYK", "arabic": "يكسر", "pos": "verb"},
-    {"word": "build", "pronunciation": "BILD", "arabic": "يبني", "pos": "verb"},
-    {"word": "teach", "pronunciation": "TEECH", "arabic": "يعلّم", "pos": "verb"},
-    {"word": "use", "pronunciation": "YOOZ", "arabic": "يستخدم", "pos": "verb"},
-    {"word": "make", "pronunciation": "MAYK", "arabic": "يصنع", "pos": "verb"},
-    {"word": "give", "pronunciation": "GIV ⚠️", "arabic": "يعطي", "pos": "verb"},
-    {"word": "take", "pronunciation": "TAYK", "arabic": "يأخذ", "pos": "verb"},
-    {"word": "send", "pronunciation": "SEND", "arabic": "يرسل", "pos": "verb"},
-    {"word": "receive", "pronunciation": "rih-SEEV ⚠️", "arabic": "يستلم", "pos": "verb"},
-    {"word": "fast", "pronunciation": "FAST", "arabic": "سريع", "pos": "adjective"},
-    {"word": "slow", "pronunciation": "SLOH", "arabic": "بطيء", "pos": "adjective"},
-    {"word": "strong", "pronunciation": "STRONG ⚠️", "arabic": "قوي", "pos": "adjective"},
-    {"word": "weak", "pronunciation": "WEEK", "arabic": "ضعيف", "pos": "adjective"},
-    {"word": "easy", "pronunciation": "EE-zee", "arabic": "سهل", "pos": "adjective"},
-    {"word": "difficult", "pronunciation": "DIH-fih-kəlt", "arabic": "صعب", "pos": "adjective"},
-    {"word": "possible", "pronunciation": "PAH-sih-bəl ⚠️", "arabic": "ممكن", "pos": "adjective"},
-    {"word": "impossible", "pronunciation": "im-PAH-sih-bəl ⚠️", "arabic": "مستحيل", "pos": "adjective"},
-    {"word": "important", "pronunciation": "im-POR-tənt ⚠️", "arabic": "مهم", "pos": "adjective"},
-    {"word": "dangerous", "pronunciation": "DAYN-jər-əs ⚠️", "arabic": "خطير", "pos": "adjective"},
-    {"word": "safe", "pronunciation": "SAYF", "arabic": "آمن", "pos": "adjective"},
-    {"word": "useful", "pronunciation": "YOOS-fəl", "arabic": "مفيد", "pos": "adjective"},
-    {"word": "hard", "pronunciation": "HARD ⚠️", "arabic": "صعب/صلب", "pos": "adjective"},
-    {"word": "soft", "pronunciation": "SOFT", "arabic": "ناعم/سهل", "pos": "adjective"},
-    {"word": "heavy", "pronunciation": "HEH-vee ⚠️", "arabic": "ثقيل", "pos": "adjective"},
-    {"word": "light", "pronunciation": "LYT", "arabic": "خفيف", "pos": "adjective"},
-    {"word": "quickly", "pronunciation": "KWIK-lee", "arabic": "بسرعة", "pos": "adverb"},
-    {"word": "slowly", "pronunciation": "SLOH-lee", "arabic": "ببطء", "pos": "adverb"},
-    {"word": "carefully", "pronunciation": "KAIR-fə-lee ⚠️", "arabic": "بحذر", "pos": "adverb"},
-    {"word": "easily", "pronunciation": "EE-zə-lee", "arabic": "بسهولة", "pos": "adverb"},
-    {"word": "well", "pronunciation": "WEL", "arabic": "بشكل جيد", "pos": "adverb"},
-    {"word": "badly", "pronunciation": "BAD-lee", "arabic": "بشكل سيء", "pos": "adverb"},
-    {"word": "really", "pronunciation": "REE-uh-lee ⚠️", "arabic": "حقًا/فعلاً", "pos": "adverb"},
-    {"word": "almost", "pronunciation": "OL-mohst", "arabic": "تقريبًا", "pos": "adverb"},
-    {"word": "still", "pronunciation": "STIL", "arabic": "لا يزال", "pos": "adverb"},
-    {"word": "already", "pronunciation": "ol-REH-dee ⚠️", "arabic": "بالفعل", "pos": "adverb"},
-    {"word": "also", "pronunciation": "OL-soh", "arabic": "أيضًا", "pos": "adverb"},
-    {"word": "too", "pronunciation": "TOO", "arabic": "أيضًا/جدًا", "pos": "adverb"},
-    {"word": "enough", "pronunciation": "ih-NUF", "arabic": "بما يكفي", "pos": "adverb"},
-    {"word": "maybe", "pronunciation": "MAY-bee", "arabic": "ربما", "pos": "adverb"}
+    {
+      "word": "can",
+      "pronunciation": "KAN",
+      "arabic": "يقدر/يستطيع",
+      "pos": "verb"
+    },
+    {
+      "word": "can't",
+      "pronunciation": "KANT",
+      "arabic": "لا يقدر",
+      "pos": "verb"
+    },
+    {
+      "word": "run",
+      "pronunciation": "RUN ⚠️",
+      "arabic": "يركض",
+      "pos": "verb"
+    },
+    {
+      "word": "swim",
+      "pronunciation": "SWIM",
+      "arabic": "يسبح",
+      "pos": "verb"
+    },
+    {
+      "word": "write",
+      "pronunciation": "RYT ⚠️",
+      "arabic": "يكتب",
+      "pos": "verb"
+    },
+    {
+      "word": "draw",
+      "pronunciation": "DRAW",
+      "arabic": "يرسم",
+      "pos": "verb"
+    },
+    {
+      "word": "sing",
+      "pronunciation": "SING",
+      "arabic": "يغني",
+      "pos": "verb"
+    },
+    {
+      "word": "dance",
+      "pronunciation": "DANS",
+      "arabic": "يرقص",
+      "pos": "verb"
+    },
+    {
+      "word": "jump",
+      "pronunciation": "JUMP",
+      "arabic": "يقفز",
+      "pos": "verb"
+    },
+    {
+      "word": "climb",
+      "pronunciation": "KLYM",
+      "arabic": "يتسلق",
+      "pos": "verb"
+    },
+    {
+      "word": "carry",
+      "pronunciation": "KA-ree ⚠️",
+      "arabic": "يحمل",
+      "pos": "verb"
+    },
+    {
+      "word": "throw",
+      "pronunciation": "THROH ⚠️",
+      "arabic": "يرمي",
+      "pos": "verb"
+    },
+    {
+      "word": "catch",
+      "pronunciation": "KACH",
+      "arabic": "يمسك",
+      "pos": "verb"
+    },
+    {
+      "word": "push",
+      "pronunciation": "PUSH",
+      "arabic": "يدفع",
+      "pos": "verb"
+    },
+    {
+      "word": "pull",
+      "pronunciation": "PUUL",
+      "arabic": "يسحب",
+      "pos": "verb"
+    },
+    {
+      "word": "fix",
+      "pronunciation": "FIKS",
+      "arabic": "يصلح",
+      "pos": "verb"
+    },
+    {
+      "word": "break",
+      "pronunciation": "BRAYK",
+      "arabic": "يكسر",
+      "pos": "verb"
+    },
+    {
+      "word": "build",
+      "pronunciation": "BILD",
+      "arabic": "يبني",
+      "pos": "verb"
+    },
+    {
+      "word": "teach",
+      "pronunciation": "TEECH",
+      "arabic": "يعلّم",
+      "pos": "verb"
+    },
+    {
+      "word": "use",
+      "pronunciation": "YOOZ",
+      "arabic": "يستخدم",
+      "pos": "verb"
+    },
+    {
+      "word": "make",
+      "pronunciation": "MAYK",
+      "arabic": "يصنع",
+      "pos": "verb"
+    },
+    {
+      "word": "give",
+      "pronunciation": "GIV ⚠️",
+      "arabic": "يعطي",
+      "pos": "verb"
+    },
+    {
+      "word": "take",
+      "pronunciation": "TAYK",
+      "arabic": "يأخذ",
+      "pos": "verb"
+    },
+    {
+      "word": "send",
+      "pronunciation": "SEND",
+      "arabic": "يرسل",
+      "pos": "verb"
+    },
+    {
+      "word": "receive",
+      "pronunciation": "rih-SEEV ⚠️",
+      "arabic": "يستلم",
+      "pos": "verb"
+    },
+    {
+      "word": "fast",
+      "pronunciation": "FAST",
+      "arabic": "سريع",
+      "pos": "adjective"
+    },
+    {
+      "word": "slow",
+      "pronunciation": "SLOH",
+      "arabic": "بطيء",
+      "pos": "adjective"
+    },
+    {
+      "word": "strong",
+      "pronunciation": "STRONG ⚠️",
+      "arabic": "قوي",
+      "pos": "adjective"
+    },
+    {
+      "word": "weak",
+      "pronunciation": "WEEK",
+      "arabic": "ضعيف",
+      "pos": "adjective"
+    },
+    {
+      "word": "easy",
+      "pronunciation": "EE-zee",
+      "arabic": "سهل",
+      "pos": "adjective"
+    },
+    {
+      "word": "difficult",
+      "pronunciation": "DIH-fih-kəlt",
+      "arabic": "صعب",
+      "pos": "adjective"
+    },
+    {
+      "word": "possible",
+      "pronunciation": "PAH-sih-bəl ⚠️",
+      "arabic": "ممكن",
+      "pos": "adjective"
+    },
+    {
+      "word": "impossible",
+      "pronunciation": "im-PAH-sih-bəl ⚠️",
+      "arabic": "مستحيل",
+      "pos": "adjective"
+    },
+    {
+      "word": "important",
+      "pronunciation": "im-POR-tənt ⚠️",
+      "arabic": "مهم",
+      "pos": "adjective"
+    },
+    {
+      "word": "dangerous",
+      "pronunciation": "DAYN-jər-əs ⚠️",
+      "arabic": "خطير",
+      "pos": "adjective"
+    },
+    {
+      "word": "safe",
+      "pronunciation": "SAYF",
+      "arabic": "آمن",
+      "pos": "adjective"
+    },
+    {
+      "word": "useful",
+      "pronunciation": "YOOS-fəl",
+      "arabic": "مفيد",
+      "pos": "adjective"
+    },
+    {
+      "word": "hard",
+      "pronunciation": "HARD ⚠️",
+      "arabic": "صعب/صلب",
+      "pos": "adjective"
+    },
+    {
+      "word": "soft",
+      "pronunciation": "SOFT",
+      "arabic": "ناعم/سهل",
+      "pos": "adjective"
+    },
+    {
+      "word": "heavy",
+      "pronunciation": "HEH-vee ⚠️",
+      "arabic": "ثقيل",
+      "pos": "adjective"
+    },
+    {
+      "word": "light",
+      "pronunciation": "LYT",
+      "arabic": "خفيف",
+      "pos": "adjective"
+    },
+    {
+      "word": "quickly",
+      "pronunciation": "KWIK-lee",
+      "arabic": "بسرعة",
+      "pos": "adverb"
+    },
+    {
+      "word": "slowly",
+      "pronunciation": "SLOH-lee",
+      "arabic": "ببطء",
+      "pos": "adverb"
+    },
+    {
+      "word": "carefully",
+      "pronunciation": "KAIR-fə-lee ⚠️",
+      "arabic": "بحذر",
+      "pos": "adverb"
+    },
+    {
+      "word": "easily",
+      "pronunciation": "EE-zə-lee",
+      "arabic": "بسهولة",
+      "pos": "adverb"
+    },
+    {
+      "word": "well",
+      "pronunciation": "WEL",
+      "arabic": "بشكل جيد",
+      "pos": "adverb"
+    },
+    {
+      "word": "badly",
+      "pronunciation": "BAD-lee",
+      "arabic": "بشكل سيء",
+      "pos": "adverb"
+    },
+    {
+      "word": "really",
+      "pronunciation": "REE-uh-lee ⚠️",
+      "arabic": "حقًا/فعلاً",
+      "pos": "adverb"
+    },
+    {
+      "word": "almost",
+      "pronunciation": "OL-mohst",
+      "arabic": "تقريبًا",
+      "pos": "adverb"
+    },
+    {
+      "word": "still",
+      "pronunciation": "STIL",
+      "arabic": "لا يزال",
+      "pos": "adverb"
+    },
+    {
+      "word": "already",
+      "pronunciation": "ol-REH-dee ⚠️",
+      "arabic": "بالفعل",
+      "pos": "adverb"
+    },
+    {
+      "word": "also",
+      "pronunciation": "OL-soh",
+      "arabic": "أيضًا",
+      "pos": "adverb"
+    },
+    {
+      "word": "too",
+      "pronunciation": "TOO",
+      "arabic": "أيضًا/جدًا",
+      "pos": "adverb"
+    },
+    {
+      "word": "enough",
+      "pronunciation": "ih-NUF",
+      "arabic": "بما يكفي",
+      "pos": "adverb"
+    },
+    {
+      "word": "maybe",
+      "pronunciation": "MAY-bee",
+      "arabic": "ربما",
+      "pos": "adverb"
+    },
+    {
+      "word": "always",
+      "pronunciation": "AWL-wayz",
+      "arabic": "دائمًا",
+      "pos": "adverb"
+    }
   ],
   "speaking_missions": {
-    "Saturday": {"type": "self_introduction", "prompt": "Talk about abilities: 'I can ___. I can't ___. I want to learn to ___.'", "target_seconds": 50},
-    "Sunday": {"type": "describe", "prompt": "Describe a person you know using abilities and descriptions: what can they do?", "target_seconds": 50},
-    "Monday": {"type": "list_count", "prompt": "List 5 things you can do and 3 things you can't do.", "target_seconds": 50},
-    "Tuesday": {"type": "read_aloud", "prompt": "Read: 'I can speak Arabic quickly, but I can't speak English fast yet. It's difficult but not impossible. I practice carefully every day. I'm already better than last week.'", "target_seconds": 35},
-    "Wednesday": {"type": "answer_questions", "prompt": "Answer: What can you do well? What is easy for you? What is difficult for you in English?", "target_seconds": 50},
-    "Thursday": {"type": "shadow_repeat", "prompt": "Repeat 3 times: 'Can you swim? I can swim slowly but I can't run fast. It's really important to practice every day.'", "target_seconds": 30},
-    "Friday": {"type": "free_talk", "prompt": "Talk for 55 seconds about skills: what you can do, what you want to learn, what is easy/hard.", "target_seconds": 55}
+    "Saturday": {
+      "type": "self_introduction",
+      "prompt": "Talk about abilities: 'I can ___. I can't ___. I want to learn to ___.'",
+      "target_seconds": 50
+    },
+    "Sunday": {
+      "type": "describe",
+      "prompt": "Describe a person you know using abilities and descriptions: what can they do?",
+      "target_seconds": 50
+    },
+    "Monday": {
+      "type": "list_count",
+      "prompt": "List 5 things you can do and 3 things you can't do.",
+      "target_seconds": 50
+    },
+    "Tuesday": {
+      "type": "read_aloud",
+      "prompt": "Read: 'I can speak Arabic quickly, but I can't speak English fast yet. It's difficult but not impossible. I practice carefully every day. I'm already better than last week.'",
+      "target_seconds": 35
+    },
+    "Wednesday": {
+      "type": "answer_questions",
+      "prompt": "Answer: What can you do well? What is easy for you? What is difficult for you in English?",
+      "target_seconds": 50
+    },
+    "Thursday": {
+      "type": "shadow_repeat",
+      "prompt": "Repeat 3 times: 'Can you swim? I can swim slowly but I can't run fast. It's really important to practice every day.'",
+      "target_seconds": 30
+    },
+    "Friday": {
+      "type": "free_talk",
+      "prompt": "Talk for 55 seconds about skills: what you can do, what you want to learn, what is easy/hard.",
+      "target_seconds": 55
+    }
   },
   "writing_prompts": [
     "Write 5 things you can do and 3 you can't.",

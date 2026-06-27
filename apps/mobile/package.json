@@ -4,7 +4,7 @@
   "main": "expo-router/entry",
   "private": true,
   "scripts": {
-    "setup": "expo install expo-router expo-linking expo-constants expo-status-bar expo-system-ui expo-speech expo-linear-gradient @react-native-async-storage/async-storage react-native-safe-area-context react-native-screens react-native-gesture-handler @expo/vector-icons && expo install --fix",
+    "setup": "expo install --fix",
     "start": "expo start",
     "tunnel": "expo start --tunnel",
     "android": "expo start --android",
@@ -14,6 +14,18 @@
   },
   "dependencies": {
     "expo": "^56.0.0",
+    "expo-router": "~4.0.0",
+    "expo-linking": "~7.0.0",
+    "expo-constants": "~17.0.0",
+    "expo-status-bar": "~2.0.0",
+    "expo-system-ui": "~4.0.0",
+    "expo-speech": "~13.0.0",
+    "expo-linear-gradient": "~14.0.0",
+    "@react-native-async-storage/async-storage": "2.1.0",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0",
+    "react-native-gesture-handler": "~2.24.0",
+    "@expo/vector-icons": "^14.0.0",
     "react": "^19.2.3",
     "react-native": "^0.85.0"
   },

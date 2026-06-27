@@ -20,10 +20,11 @@ services:
     image: ghcr.io/czlonkowski/n8n-mcp:latest
     container_name: empire-n8n-mcp
     restart: unless-stopped
+    env_file: .env
     environment:
-      # Your n8n instance connection
-      N8N_API_URL: "https://bot.empireenglish.online/api/v1"
-      N8N_API_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODExZjBlMC0xYzIyLTQ4MmEtOTk5ZC0wZThlYzVkZDk3YjkiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiMTE2NGM3ODUtZTlmMy00MWQwLWE0MzctZDg3MjFlMzAyMGUyIiwiaWF0IjoxNzgyMzkyNDA5fQ.FyfkFGAdV7kCOdMUUk_lab2PnDzSKbmAzSVK-TJVgfw"
+      # Your n8n instance connection (set values in .env file)
+      N8N_API_URL: "${N8N_API_URL}"
+      N8N_API_KEY: "${N8N_API_KEY}"
 
       # MCP server mode (HTTP streamable for remote access)
       MCP_TRANSPORT: "http"
