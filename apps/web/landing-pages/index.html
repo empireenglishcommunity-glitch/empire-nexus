@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Empire English — Build Your English Empire</title>
+<meta name="description" content="Empire English Community — a complete learning system that takes you from zero to native-like fluency. Become a Founding Citizen." />
+<!-- Open Graph / social preview (replace og-image.png with your share image) -->
+<meta property="og:title" content="Empire English — Build Your English Empire" />
+<meta property="og:description" content="Not a course. A complete system: daily missions, 24/7 community, AI feedback, American accent from day one." />
+<meta property="og:image" content="og-image.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<!-- Favicon: crown now; replace with your logo favicon (favicon.png) when ready -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#070707; --panel:#13110d;
+  --gold:#d4af37; --gold-bright:#f5d77a; --gold-soft:#b8923a;
+  --text:#efe9da; --muted:#a89f8c; --line:rgba(212,175,55,.22);
+  --emerald:#2dd4a7; --purple:#9b6bff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);
+  font-family:'Times New Roman','EB Garamond',Georgia,serif;overflow-x:hidden;line-height:1.7}
+h1,h2,h3,h4,.cinzel,.btn,.tag,.pname,.node,.cd-num,.trust b{font-family:'Cinzel','Times New Roman',serif}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+section{position:relative;padding:90px 0}
+a{color:inherit;text-decoration:none}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:12px 22px;transition:.3s}
+.topbar.scrolled{background:rgba(7,7,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--gold-bright);font-size:18px;letter-spacing:1px}
+.brand img{height:40px;width:auto}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:50px;
+  padding:8px 14px;font-size:13px;color:var(--gold-bright);background:rgba(212,175,55,.05);cursor:pointer;transition:.3s;font-family:'Cinzel',serif}
+.pill:hover{border-color:var(--gold);background:rgba(212,175,55,.12)}
+.tt-pill{color:#fff}
+
+.btn{display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;font-weight:700;font-size:15px;
+  letter-spacing:1px;padding:16px 34px;border-radius:50px;transition:.3s}
+.btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold-soft));color:#1a1505;box-shadow:0 10px 30px rgba(212,175,55,.35)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(212,175,55,.55)}
+.btn-ghost{background:transparent;color:var(--gold-bright);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(212,175,55,.07)}
+.tag{display:inline-block;font-size:12px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;
+  border:1px solid var(--line);padding:7px 16px;border-radius:30px;margin-bottom:22px}
+.section-title{font-size:clamp(26px,4.5vw,44px);font-weight:900;text-align:center;
+  background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px}
+.section-sub{text-align:center;color:var(--muted);max-width:660px;margin:0 auto 50px;font-size:18px}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding-top:70px;z-index:1}
+.gate{position:absolute;top:0;height:100%;width:50%;z-index:-1;background:linear-gradient(180deg,#15120a,#0a0805);transition:transform 2.2s cubic-bezier(.7,0,.2,1)}
+.gate::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(212,175,55,.06) 38px,rgba(212,175,55,.06) 40px)}
+.gate-l{left:0;border-right:2px solid rgba(212,175,55,.3)}
+.gate-r{right:0;border-left:2px solid rgba(212,175,55,.3)}
+body.open .gate-l{transform:translateX(-101%)}
+body.open .gate-r{transform:translateX(101%)}
+.crown{font-size:54px;filter:drop-shadow(0 0 20px rgba(212,175,55,.7));animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+.hero h1{font-size:clamp(38px,8vw,86px);font-weight:900;line-height:1.05;margin:18px 0;
+  background:linear-gradient(180deg,#fff 30%,var(--gold) 90%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .lead{font-size:clamp(16px,2.4vw,21px);color:var(--text);max-width:640px;margin:0 auto 12px}
+.hero .lead-ar{font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:600px;margin:0 auto 26px;direction:rtl;font-family:Georgia,serif}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.countdown{display:flex;gap:14px;justify-content:center;margin:8px 0 24px;flex-wrap:wrap}
+.cd-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;min-width:78px}
+.cd-num{font-size:30px;font-weight:900;color:var(--gold-bright);line-height:1}
+.cd-lbl{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:6px}
+.cd-note{color:var(--gold);font-size:13px;letter-spacing:2px}
+
+.trust{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;background:rgba(212,175,55,.02)}
+.trust div{text-align:center}
+.trust b{display:block;font-size:26px;color:var(--gold-bright)}
+.trust span{font-size:13px;color:var(--muted)}
+
+.grid{display:grid;gap:22px}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.card{background:linear-gradient(180deg,var(--panel),#0c0a07);border:1px solid var(--line);border-radius:18px;padding:28px;transition:.35s}
+.card:hover{border-color:var(--gold);transform:translateY(-5px)}
+.card .ico{font-size:30px;margin-bottom:14px}
+.card h3{font-size:19px;color:var(--gold-bright);margin-bottom:10px}
+.card p{color:var(--muted);font-size:15px}
+
+.path{display:flex;justify-content:space-between;gap:16px;position:relative;flex-wrap:wrap}
+.path::before{content:"";position:absolute;top:34px;left:6%;right:6%;height:2px;background:linear-gradient(90deg,var(--gold-soft),var(--gold-bright));opacity:.4}
+.step{flex:1;min-width:200px;text-align:center;position:relative;z-index:1}
+.node{width:68px;height:68px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;background:var(--panel);border:2px solid var(--gold);color:var(--gold-bright);box-shadow:0 0 24px rgba(212,175,55,.25)}
+.step h4{color:var(--text);margin-bottom:6px;font-size:17px}
+.step p{color:var(--muted);font-size:14px}
+
+.toggle{display:flex;justify-content:center;margin-bottom:40px}
+.toggle .switch{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:50px;padding:6px}
+.toggle button{font-family:'Cinzel',serif;font-weight:700;letter-spacing:1px;border:none;background:transparent;color:var(--muted);padding:11px 26px;border-radius:50px;cursor:pointer;transition:.3s;font-size:14px}
+.toggle button.active{background:linear-gradient(135deg,var(--gold-bright),var(--gold-soft));color:#1a1505}
+.plan{background:linear-gradient(180deg,var(--panel),#0b0906);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;position:relative;transition:.35s}
+.plan:hover{transform:translateY(-6px);border-color:var(--gold)}
+.plan.featured{border-color:var(--emerald);box-shadow:0 0 40px rgba(45,212,167,.18)}
+.ribbon{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--emerald),#1b9c79);color:#04130e;font-weight:700;font-size:11px;letter-spacing:2px;padding:6px 16px;border-radius:30px;white-space:nowrap}
+.plan .pname{font-size:22px;font-weight:900;color:var(--gold-bright)}
+.plan .ptag{color:var(--muted);font-size:13px;margin-bottom:16px}
+.plan .price{font-size:34px;font-weight:900;color:#fff;font-family:'Cinzel',serif}
+.plan .price small{font-size:14px;color:var(--muted);font-weight:400}
+.plan .pfor{font-size:13px;color:var(--gold);margin:10px 0 18px;min-height:34px}
+.plan ul{list-style:none;margin-bottom:22px;flex:1}
+.plan li{font-size:14px;color:var(--text);padding:7px 0 7px 26px;position:relative}
+.plan li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+.plan .quote{font-size:13px;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:14px;margin-bottom:16px}
+.founder-note{text-align:center;color:var(--gold);font-size:13px;margin-top:26px}
+.seats{max-width:560px;margin:0 auto 10px;text-align:center}
+.seats .bar{height:12px;background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:10px 0 8px}
+.seats .fill{height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold-bright));width:27%}
+.seats span{font-size:13px;color:var(--muted)}
+
+.tcard{background:linear-gradient(180deg,var(--panel),#0c0a07);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tcard .stars{color:var(--gold);margin-bottom:10px;letter-spacing:3px}
+.tcard p{font-size:15px;color:var(--text);margin-bottom:16px}
+.tcard .who{display:flex;align-items:center;gap:12px}
+.tcard .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold-soft));display:flex;align-items:center;justify-content:center;font-weight:900;color:#1a1505}
+.tcard .who b{font-size:14px;color:var(--gold-bright)}
+.tcard .who span{font-size:12px;color:var(--muted)}
+
+.faq-item{border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;background:var(--panel)}
+.faq-q{padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:16px}
+.faq-q span{color:var(--gold);font-size:22px;transition:.3s}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;color:var(--muted);font-size:15px}
+.faq-a div{padding:0 24px 20px}
+.faq-item.active .faq-a{max-height:240px}
+.faq-item.active .faq-q span{transform:rotate(45deg)}
+
+.final{text-align:center;background:radial-gradient(circle at 50% 0%,rgba(212,175,55,.12),transparent 60%)}
+.paybox{background:linear-gradient(180deg,var(--panel),#0c0a07);border:1px solid var(--line);border-radius:18px;padding:30px;max-width:620px;margin:0 auto}
+.payrow{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.payrow:last-child{border-bottom:none}
+.payrow b{color:var(--gold-bright)}
+
+/* follow / tiktok strip */
+.follow{text-align:center}
+.tt-card{display:inline-flex;align-items:center;gap:16px;background:linear-gradient(135deg,#0f0f0f,#1c1c1c);
+  border:1px solid var(--line);border-radius:20px;padding:20px 30px;transition:.35s}
+.tt-card:hover{transform:translateY(-4px);border-color:#fff;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.tt-ico{width:52px;height:52px;border-radius:14px;background:#000;display:flex;align-items:center;justify-content:center;color:#fff;
+  box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+.tt-card b{display:block;font-family:'Cinzel',serif;color:#fff;font-size:18px}
+.tt-card span{color:var(--muted);font-size:14px}
+
+footer{border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
+.footer-social{display:flex;gap:14px;justify-content:center;margin:16px 0}
+.footer-social a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--gold-bright);transition:.3s}
+.footer-social a:hover{border-color:var(--gold);background:rgba(212,175,55,.08)}
+
+/* floating + sticky */
+.totop{position:fixed;bottom:84px;right:18px;z-index:46;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(7,7,7,.85);color:var(--gold-bright);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  opacity:0;pointer-events:none;transition:.3s;font-size:20px}
+.totop.show{opacity:1;pointer-events:auto}
+.mcta{position:fixed;bottom:0;left:0;right:0;z-index:45;display:none;gap:10px;padding:10px 14px;background:rgba(7,7,7,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+.mcta a{flex:1;justify-content:center;padding:14px}
+
+.reveal{opacity:0;transform:translateY(30px);transition:.8s}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:860px){.cols-4{grid-template-columns:repeat(2,1fr)}.cols-3{grid-template-columns:1fr}.cols-2{grid-template-columns:1fr}section{padding:64px 0}}
+@media(max-width:680px){.mcta{display:flex}.totop{bottom:84px}.brand span{display:none}body{padding-bottom:70px}}
+@media(max-width:520px){.cols-4{grid-template-columns:1fr}.trust{gap:18px}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- TOP BAR -->
+<div class="topbar" id="topbar">
+  <a class="brand" href="#top">
+    <img src="logo.png" alt="Empire English" onerror="this.remove()">
+    <span>EMPIRE ENGLISH</span>
+  </a>
+  <div class="topbar-right">
+    <a class="pill tt-pill" href="https://www.tiktok.com/@macal.empire" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-1.9-3.32V2h-2.9v12.5a2.6 2.6 0 1 1-2.6-2.6c.28 0 .55.04.8.12V8.9a5.74 5.74 0 0 0-.8-.06A5.84 5.84 0 1 0 14.7 14.5V8.6a7.1 7.1 0 0 0 4.2 1.36V7.05a4.28 4.28 0 0 1-2.3-1.23z"/></svg>
+      TikTok
+    </a>
+    <button class="pill" id="langBtn" onclick="switchLang()">العربية</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="gate gate-l"></div>
+  <div class="gate gate-r"></div>
+  <div class="wrap">
+    <div class="crown">👑</div>
+    <div class="tag">Empire English Community</div>
+    <h1>Build Your<br>English Empire</h1>
+    <p class="lead">Not a course. A complete <b>learning system</b> — daily missions, a 24/7 community, AI feedback, and American accent from day one. From zero to native-like fluency.</p>
+    <p class="lead-ar">مش كورس... ده نظام كامل بياخدك من الصفر لطلاقة زي الـ native. كن من المؤسسين.</p>
+    <div class="cd-note">⏳ Founding Cohort 1 begins</div>
+    <div class="countdown" id="countdown"></div>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#join">ENTER THE GATES 👑</a>
+      <a class="btn btn-ghost" href="#packages">VIEW RANKS</a>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div><b>51+</b><span>Founding members</span></div>
+  <div><b>9</b><span>Success stories</span></div>
+  <div><b>0→Fluent</b><span>Full pathway</span></div>
+  <div><b>7-day</b><span>Money-back guarantee</span></div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="tag" style="display:block;text-align:center;width:fit-content;margin:0 auto 22px">Why Empire is different</div>
+    <h2 class="section-title">The System Beats the Course</h2>
+    <p class="section-sub">Courses give you information and leave you alone. Empire makes you <b>execute every day</b> — that's why people actually start speaking.</p>
+    <div class="grid cols-4">
+      <div class="card reveal"><div class="ico">⚙️</div><h3>Daily Loop</h3><p>A structured daily mission: accent, vocab, shadowing, speaking, writing, community.</p></div>
+      <div class="card reveal"><div class="ico">🗣️</div><h3>Accent from Day 1</h3><p>American pronunciation training built into every level — not an afterthought.</p></div>
+      <div class="card reveal"><div class="ico">🏛️</div><h3>24/7 Community</h3><p>Live voice lounges, peer practice, and accountability that never closes.</p></div>
+      <div class="card reveal"><div class="ico">🤖</div><h3>AI Feedback</h3><p>Instant correction on your speaking & writing — personalized to your level.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,rgba(212,175,55,.03),transparent)">
+  <div class="wrap">
+    <div class="tag" style="display:block;text-align:center;width:fit-content;margin:0 auto 22px">Your Quest</div>
+    <h2 class="section-title">The Path to Fluency</h2>
+    <p class="section-sub">Every Founder walks the same journey — from the first word to a native-like throne.</p>
+    <div class="path">
+      <div class="step reveal"><div class="node">0</div><h4>Absolute Beginner</h4><p>Build the foundation — sounds, first 500 words, simple sentences.</p></div>
+      <div class="step reveal"><div class="node">1</div><h4>Survival English</h4><p>Hold daily conversations with confidence.</p></div>
+      <div class="step reveal"><div class="node">2</div><h4>Communication</h4><p>Discuss complex topics, understand native speed.</p></div>
+      <div class="step reveal"><div class="node">3</div><h4>Native-Like 👑</h4><p>Refine your accent and speak like it's your first language.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="wrap">
+    <div class="tag" style="display:block;text-align:center;width:fit-content;margin:0 auto 22px">Choose your rank</div>
+    <h2 class="section-title">Founding Membership</h2>
+    <p class="section-sub">🏛️ Founding price <b>locked forever</b> · Founder badge · free Accent Bootcamp · priority access.</p>
+    <div class="seats">
+      <div class="bar"><div class="fill" id="seatFill"></div></div>
+      <span id="seatText">73 of 100 Founding seats remaining</span>
+    </div>
+    <div class="toggle">
+      <div class="switch">
+        <button id="btnEgypt" class="active" onclick="setRegion('egypt')">🇪🇬 Inside Egypt</button>
+        <button id="btnWorld" onclick="setRegion('world')">🌍 Worldwide</button>
+      </div>
+    </div>
+    <div class="grid cols-4">
+      <div class="plan reveal">
+        <div class="pname">RECRUIT</div><div class="ptag">Start the Journey</div>
+        <div class="price"><span data-egypt="199 EGP" data-world="$19">199 EGP</span> <small>/ mo</small></div>
+        <div class="pfor">For beginners who want structure, no pressure.</div>
+        <ul><li>Full daily learning system</li><li>Weekly AI cheat sheets</li><li>Level text & voice channels</li><li>Weekly assessment & progress</li><li>Points, streaks & leaderboard</li></ul>
+        <div class="quote">"Start right. Build the daily habit."</div>
+        <a class="btn btn-ghost" style="justify-content:center" href="#join">Choose Recruit</a>
+      </div>
+      <div class="plan featured reveal">
+        <div class="ribbon">MOST POPULAR</div>
+        <div class="pname">BUILDER ⭐</div><div class="ptag">Real Progress</div>
+        <div class="price"><span data-egypt="399 EGP" data-world="$39">399 EGP</span> <small>/ mo</small></div>
+        <div class="pfor">For serious learners who want to actually speak.</div>
+        <ul><li>Everything in Recruit</li><li>AI feedback on speaking & writing</li><li>Full immersion library</li><li>All daily voice sessions</li><li>Buddy, mentorship & exams</li></ul>
+        <div class="quote">"This is what makes you actually speak."</div>
+        <a class="btn btn-gold" style="justify-content:center" href="#join">Choose Builder</a>
+      </div>
+      <div class="plan reveal">
+        <div class="pname">EMPIRE</div><div class="ptag">Faster + Personal</div>
+        <div class="price"><span data-egypt="799 EGP" data-world="$89">799 EGP</span> <small>/ mo</small></div>
+        <div class="pfor">For ambitious learners with a goal.</div>
+        <ul><li>Everything in Builder</li><li>Priority human-reviewed feedback</li><li>2 group coaching calls / mo</li><li>Personal plan + 1-on-1 review</li><li>Mastery Certification + badge</li></ul>
+        <div class="quote">"Faster results — you're not alone."</div>
+        <a class="btn btn-ghost" style="justify-content:center" href="#join">Choose Empire</a>
+      </div>
+      <div class="plan reveal" style="border-color:var(--purple)">
+        <div class="pname" style="color:#c9b3ff">VIP</div><div class="ptag">Inner Circle · Your Personal Coach</div>
+        <div class="price"><span data-egypt="3,500 EGP" data-world="$249">3,500 EGP</span> <small>/ mo</small></div>
+        <div class="pfor">Limited seats · for fast, personal transformation.</div>
+        <ul><li>Everything in Empire</li><li>4 private 1-on-1 sessions / mo</li><li>Unlimited 24h human feedback</li><li>Direct WhatsApp line to coach</li><li>Custom roadmap + before/after</li></ul>
+        <div class="quote">"Like a personal coach by your side."</div>
+        <a class="btn btn-ghost" style="justify-content:center" href="#join">Apply for VIP</a>
+      </div>
+    </div>
+    <p class="founder-note">💡 Annual plans save ~35% · Fair regional pricing, like Netflix & Spotify.</p>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES (9) — PLACEHOLDERS: replace text/names with the real 9 members -->
+<section style="background:linear-gradient(180deg,transparent,rgba(212,175,55,.03),transparent)">
+  <div class="wrap">
+    <div class="tag" style="display:block;text-align:center;width:fit-content;margin:0 auto 22px">The first Founders</div>
+    <h2 class="section-title">9 Success Stories</h2>
+    <p class="section-sub">Real members, real results from our first batch.</p>
+    <div class="grid cols-3">
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"For the first time I held a full conversation in English without freezing. The daily system changed everything."</p><div class="who"><div class="av">A</div><div><b>Ahmed M.</b><span>Builder · 6 weeks</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"The accent training is unreal. People asked if I lived abroad. I just followed the system every day."</p><div class="who"><div class="av">S</div><div><b>Sara K.</b><span>Empire · 2 months</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"The community keeps me accountable. I look forward to the voice lounges every night."</p><div class="who"><div class="av">M</div><div><b>Mostafa H.</b><span>Builder · 5 weeks</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"Worth every pound. The 1-on-1 sessions fixed mistakes I'd had for years."</p><div class="who"><div class="av">N</div><div><b>Nour A.</b><span>VIP · 7 weeks</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"I started from zero. Now I understand movies without subtitles. Unbelievable progress."</p><div class="who"><div class="av">Y</div><div><b>Youssef T.</b><span>Builder · 3 months</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"The structure is everything. No more random studying — I know exactly what to do each day."</p><div class="who"><div class="av">R</div><div><b>Rana E.</b><span>Empire · 6 weeks</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"My confidence at work skyrocketed. I lead meetings in English now without fear."</p><div class="who"><div class="av">K</div><div><b>Khaled S.</b><span>VIP · 2 months</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"The shadowing technique fixed my pronunciation faster than years of classes."</p><div class="who"><div class="av">H</div><div><b>Habiba M.</b><span>Builder · 4 weeks</span></div></div></div>
+      <div class="tcard reveal"><div class="stars">★★★★★</div><p>"Best investment I made in myself. The accountability and the people make all the difference."</p><div class="who"><div class="av">O</div><div><b>Omar F.</b><span>Empire · 5 weeks</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="final">
+  <div class="wrap">
+    <div class="crown" style="font-size:40px">👑</div>
+    <h2 class="section-title">Become a Founding Citizen</h2>
+    <p class="section-sub">Founding prices end soon — then they rise. Lock yours forever today.</p>
+    <div class="countdown" id="countdown2" style="margin-bottom:34px"></div>
+    <div class="paybox reveal">
+      <h3 style="text-align:center;color:var(--gold-bright);margin-bottom:8px">How to Join in 3 Steps</h3>
+      <p style="text-align:center;color:var(--muted);margin-bottom:22px">1️⃣ DM "EMPIRE" + your plan → 2️⃣ Pay → 3️⃣ Send screenshot → activated as a Founder 👑</p>
+      <div class="payrow"><b>🇪🇬 Vodafone Cash</b><span>01004581035</span></div>
+      <div class="payrow"><b>🇪🇬 InstaPay</b><span>01004581035 / mohamedashry10041</span></div>
+      <div class="payrow"><b>🌍 PayPal</b><span><a href="https://paypal.me/bioroma" style="color:var(--gold-bright)">paypal.me/bioroma</a></span></div>
+      <div class="payrow"><b>🇦🇪 From UAE</b><span>Bank transfer — DM for details</span></div>
+    </div>
+    <div class="hero-cta" style="margin-top:34px">
+      <a class="btn btn-gold" id="tgBtn" href="#" target="_blank" rel="noopener">DM ON TELEGRAM 🚀</a>
+      <a class="btn btn-ghost" href="#packages">Compare Ranks</a>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin-top:14px">🛡️ 7-day money-back guarantee · Zero risk</p>
+  </div>
+</section>
+
+<!-- FOLLOW / TIKTOK -->
+<section class="follow">
+  <div class="wrap">
+    <h2 class="section-title">Follow the Empire</h2>
+    <p class="section-sub">Daily English tips, accent drills, and behind-the-scenes on TikTok.</p>
+    <a class="tt-card" href="https://www.tiktok.com/@macal.empire" target="_blank" rel="noopener">
+      <span class="tt-ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-1.9-3.32V2h-2.9v12.5a2.6 2.6 0 1 1-2.6-2.6c.28 0 .55.04.8.12V8.9a5.74 5.74 0 0 0-.8-.06A5.84 5.84 0 1 0 14.7 14.5V8.6a7.1 7.1 0 0 0 4.2 1.36V7.05a4.28 4.28 0 0 1-2.3-1.23z"/></svg></span>
+      <span style="text-align:left"><b>@macal.empire</b><span>Follow us on TikTok →</span></span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:760px">
+    <h2 class="section-title">Questions</h2>
+    <div style="margin-top:30px">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is it worth the price? <span>+</span></div><div class="faq-a"><div>Far less than a private tutor, with a full system + 24/7 community + AI feedback. Plus a 7-day money-back guarantee — zero risk.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Why is Egypt cheaper than worldwide? <span>+</span></div><div class="faq-a"><div>Prices adapt to each region's purchasing power — fair access for everyone, like Netflix and Spotify.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">I'm a complete beginner. Is this for me? <span>+</span></div><div class="faq-a"><div>Perfect — we start from Level 0, absolute zero. The system is built for exactly you, step by step.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What does "price locked forever" mean? <span>+</span></div><div class="faq-a"><div>Whatever price you join at today stays your price for life — even when prices rise for the public later.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">When does my learning start? <span>+</span></div><div class="faq-a"><div>The moment you join you get community access + your placement test. The full daily system begins with Founding Cohort 1.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Are there recorded videos I can keep? <span>+</span></div><div class="faq-a"><div>Yes — every live session and coaching call is recorded into your Recording Vault, and you keep all weekly cheat sheets & resources forever. It's a living library that grows every week (Builder tier and up).</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I change my plan later? <span>+</span></div><div class="faq-a"><div>Absolutely. Upgrade anytime (instantly), or switch/downgrade from your next month — no lock-in. Your founding price stays safe as long as your membership stays active.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="crown" style="font-size:26px">🏛️</div>
+  <div class="footer-social">
+    <a href="https://www.tiktok.com/@macal.empire" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-1.9-3.32V2h-2.9v12.5a2.6 2.6 0 1 1-2.6-2.6c.28 0 .55.04.8.12V8.9a5.74 5.74 0 0 0-.8-.06A5.84 5.84 0 1 0 14.7 14.5V8.6a7.1 7.1 0 0 0 4.2 1.36V7.05a4.28 4.28 0 0 1-2.3-1.23z"/></svg></a>
+    <a id="tgFoot" href="#" target="_blank" rel="noopener" aria-label="Telegram">✈</a>
+  </div>
+  <p>Empire English Community — a sub-brand of MACALE EMPIRE · TikTok @macal.empire</p>
+  <p style="margin-top:6px;opacity:.6">© 2026 Empire English. From zero to native-like fluency.</p>
+</footer>
+
+<div class="totop" id="totop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="mcta">
+  <a class="btn btn-gold" href="#join">Become a Founder 👑</a>
+</div>
+
+<script>
+/* ====== EDIT ONLY THIS ====== */
+const CONFIG = {
+  telegram: "https://t.me/YOUR_USERNAME",   // <-- your Telegram username/link
+  tiktok: "https://www.tiktok.com/@macal.empire",
+  cohortDate: "2026-06-27T00:00:00+04:00",  // Sat 27 June, Dubai time
+  founderSeatsTotal: 100,
+  founderSeatsLeft: 73
+};
+/* ============================ */
+
+document.getElementById('tgBtn').href = CONFIG.telegram;
+document.getElementById('tgFoot').href = CONFIG.telegram;
+
+// seats
+(function(){
+  const pct=Math.round((1-CONFIG.founderSeatsLeft/CONFIG.founderSeatsTotal)*100);
+  document.getElementById('seatFill').style.width=pct+"%";
+  document.getElementById('seatText').textContent=CONFIG.founderSeatsLeft+" of "+CONFIG.founderSeatsTotal+" Founding seats remaining";
+})();
+
+// region toggle
+function setRegion(r){
+  document.getElementById('btnEgypt').classList.toggle('active',r==='egypt');
+  document.getElementById('btnWorld').classList.toggle('active',r==='world');
+  document.querySelectorAll('[data-egypt]').forEach(el=>{el.textContent=r==='egypt'?el.dataset.egypt:el.dataset.world;});
+}
+
+// language: manual switch (remembers choice)
+function switchLang(){ localStorage.setItem('eec_lang','ar'); location.href='index-ar.html'; }
+
+// language: auto-detect by country (runs once, manual choice always wins)
+(function(){
+  if(localStorage.getItem('eec_lang')) return;
+  if(sessionStorage.getItem('eec_redir')) return;
+  const arab=['EG','SA','AE','KW','QA','BH','OM','JO','LB','IQ','SY','PS','YE','LY','DZ','MA','TN','SD','MR'];
+  fetch('https://ipapi.co/country/').then(r=>r.text()).then(cc=>{
+    cc=(cc||'').trim().toUpperCase();
+    sessionStorage.setItem('eec_redir','1');
+    if(cc.length===2 && arab.includes(cc)) location.replace('index-ar.html');
+  }).catch(()=>{
+    sessionStorage.setItem('eec_redir','1');
+    if((navigator.language||'').toLowerCase().startsWith('ar')) location.replace('index-ar.html');
+  });
+})();
+
+// countdown
+function renderCountdown(){
+  const target=new Date(CONFIG.cohortDate).getTime(),now=Date.now();
+  let d=Math.max(0,target-now);
+  const days=Math.floor(d/864e5);d-=days*864e5;
+  const hrs=Math.floor(d/36e5);d-=hrs*36e5;
+  const min=Math.floor(d/6e4);d-=min*6e4;
+  const sec=Math.floor(d/1e3);
+  const html=[[days,'Days'],[hrs,'Hours'],[min,'Min'],[sec,'Sec']].map(([n,l])=>`<div class="cd-box"><div class="cd-num">${String(n).padStart(2,'0')}</div><div class="cd-lbl">${l}</div></div>`).join('');
+  document.getElementById('countdown').innerHTML=html;
+  const c2=document.getElementById('countdown2');if(c2)c2.innerHTML=html;
+}
+renderCountdown();setInterval(renderCountdown,1000);
+
+function toggleFaq(el){el.parentElement.classList.toggle('active');}
+
+// gates + topbar + totop + reveal
+window.addEventListener('load',()=>setTimeout(()=>document.body.classList.add('open'),300));
+addEventListener('scroll',()=>{
+  document.getElementById('topbar').classList.toggle('scrolled',scrollY>40);
+  document.getElementById('totop').classList.toggle('show',scrollY>500);
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// gold particles
+(function(){
+  const c=document.getElementById('stars'),x=c.getContext('2d');let w,h,ps=[];
+  function rs(){w=c.width=innerWidth;h=c.height=innerHeight;}rs();addEventListener('resize',rs);
+  for(let i=0;i<70;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.3,s:Math.random()*.4+.1});
+  (function loop(){x.clearRect(0,0,w,h);ps.forEach(p=>{p.y-=p.s;if(p.y<0){p.y=h;p.x=Math.random()*w;}x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle="rgba(212,175,55,"+(p.r*.5)+")";x.fill();});requestAnimationFrame(loop);})();
+})();
+</script>
+</body>
+</html>

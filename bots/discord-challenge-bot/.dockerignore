@@ -1,0 +1,12 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.db
+output/*.pdf
+.git
+.pytest_cache
+tests/
+requirements-dev.txt
+.DS_Store

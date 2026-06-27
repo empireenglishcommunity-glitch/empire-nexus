@@ -1,0 +1,45 @@
+{
+  "category": "System Scaling (\u00a711.6)",
+  "prompts": [
+    {
+      "id": 15,
+      "name": "Assessment Question Bank Generator",
+      "trigger": "Batch: generate 50+ questions per level per dimension quarterly",
+      "user_prompt_template": "Generate {COUNT} assessment questions for the {DIMENSION} dimension at Level {LEVEL}. Difficulty: {DIFFICULTY}. Return questions as JSON array: [{question, options (if MC), answer, difficulty, dimension, skill_tested}]. Ensure variety \u2014 no two questions test the same exact concept.",
+      "variables": [
+        "COUNT",
+        "DIMENSION",
+        "LEVEL",
+        "DIFFICULTY"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Personalized Study Plan Generator",
+      "trigger": "After placement, after each assessment, or on demand (!plan)",
+      "user_prompt_template": "Generate a Personalized Study Plan for:\n\nName: {NAME}\nLevel: {LEVEL}\nWeek: {WEEK}\nTrack: {TRACK} (Core/Intensive)\nGoal: {GOAL}\nStrongest skill: {STRONGEST}\nWeakest skill: {WEAKEST}\nRecent scores: {SCORES}\n\nProvide: daily_schedule (7-task breakdown with times), priority_focus (which task to spend extra time on), weekly_target (specific measurable goal), resources_recommended (from \u00a77 content), adjustment_notes (what to change from default plan), motivation_message. Return JSON.",
+      "variables": [
+        "NAME",
+        "LEVEL",
+        "WEEK",
+        "TRACK",
+        "GOAL",
+        "STRONGEST",
+        "WEAKEST",
+        "SCORES"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Onboarding Sequence Messages",
+      "trigger": "When new member joins \u2014 8 messages over 48 hours",
+      "user_prompt_template": "Generate the Onboarding Message Sequence for a new {LEVEL} learner named {NAME} whose goal is {GOAL} and who chose the {TRACK} track. Native language: Arabic. Generate all 8 messages (one per onboarding step) with: step_number, send_at (hour offset from join), subject, message_text (bilingual for L0), action_required, button_or_link. Messages should be warm, clear, and reduce overwhelm. Return JSON array of 8 message objects.",
+      "variables": [
+        "LEVEL",
+        "NAME",
+        "GOAL",
+        "TRACK"
+      ]
+    }
+  ]
+}

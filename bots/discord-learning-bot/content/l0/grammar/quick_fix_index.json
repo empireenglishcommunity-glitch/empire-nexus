@@ -1,0 +1,32 @@
+{
+  "level": "L0",
+  "description": "Top 25 errors Arabic speakers make at Level 0, with instant fixes. Reference this when correcting student work.",
+  "errors": [
+    {"rank": 1, "error": "Missing verb 'to be'", "wrong": "I happy.", "correct": "I am happy.", "rule": "Adjectives need 'am/is/are' before them. Arabic drops it; English never does.", "frequency": "very_high"},
+    {"rank": 2, "error": "Verb before subject (Arabic VSO)", "wrong": "Speaks she English.", "correct": "She speaks English.", "rule": "English = SVO always. Subject FIRST.", "frequency": "very_high"},
+    {"rank": 3, "error": "Missing -s for he/she/it", "wrong": "He work every day.", "correct": "He works every day.", "rule": "He/She/It = verb + s. Always.", "frequency": "very_high"},
+    {"rank": 4, "error": "Using 'am/is' + main verb", "wrong": "I am go to work.", "correct": "I go to work.", "rule": "Don't combine am/is/are with main verbs. Just: subject + verb.", "frequency": "high"},
+    {"rank": 5, "error": "No article (a/an/the)", "wrong": "I have car.", "correct": "I have a car.", "rule": "Singular countable nouns need 'a/an' (first mention) or 'the' (specific).", "frequency": "high"},
+    {"rank": 6, "error": "'To' after can", "wrong": "I can to swim.", "correct": "I can swim.", "rule": "Can + base verb directly. Never 'can to'.", "frequency": "high"},
+    {"rank": 7, "error": "Double negative with 'no'", "wrong": "I no like fish.", "correct": "I don't like fish.", "rule": "Use don't/doesn't for verb negation. 'No' is only for nouns (no money).", "frequency": "high"},
+    {"rank": 8, "error": "-s after doesn't", "wrong": "She doesn't likes.", "correct": "She doesn't like.", "rule": "After doesn't = base form. The 's' moved to 'does'.", "frequency": "high"},
+    {"rank": 9, "error": "Wrong pronoun (no gender in Arabic 'they')", "wrong": "My mother, they cook.", "correct": "My mother, she cooks.", "rule": "One female = she. One male = he. Group = they.", "frequency": "medium"},
+    {"rank": 10, "error": "P/B confusion", "wrong": "I like bizza.", "correct": "I like pizza.", "rule": "P = lips closed, no voice, puff of air. B = lips closed, voice vibrates.", "frequency": "medium"},
+    {"rank": 11, "error": "Missing 'do' in questions", "wrong": "You like coffee?", "correct": "Do you like coffee?", "rule": "Yes/No questions need Do/Does at the start.", "frequency": "high"},
+    {"rank": 12, "error": "There is/are confusion", "wrong": "There is many people.", "correct": "There are many people.", "rule": "Singular = there is. Plural = there are.", "frequency": "medium"},
+    {"rank": 13, "error": "Pronoun + name redundancy", "wrong": "My father he works.", "correct": "My father works.", "rule": "Don't use both the noun AND the pronoun. Choose one.", "frequency": "medium"},
+    {"rank": 14, "error": "V/F confusion", "wrong": "I like to fersit my friend.", "correct": "I like to visit my friend.", "rule": "V = top teeth on lower lip + voice. F = same position, no voice.", "frequency": "medium"},
+    {"rank": 15, "error": "Word order in questions (WH)", "wrong": "Where you live?", "correct": "Where do you live?", "rule": "WH questions also need do/does: Where + do + subject + verb?", "frequency": "medium"},
+    {"rank": 16, "error": "Plural -s on adjectives", "wrong": "They are talls.", "correct": "They are tall.", "rule": "Adjectives NEVER get -s in English. Only nouns get plural.", "frequency": "medium"},
+    {"rank": 17, "error": "Was/were confusion", "wrong": "They was tired.", "correct": "They were tired.", "rule": "I/he/she/it = was. You/we/they = were.", "frequency": "medium"},
+    {"rank": 18, "error": "Using 'very' before verbs", "wrong": "I very like coffee.", "correct": "I like coffee very much. / I really like coffee.", "rule": "'Very' goes before adjectives (very good). Before verbs: use 'really' or 'a lot'.", "frequency": "low"},
+    {"rank": 19, "error": "th-sound → s/z/d", "wrong": "I sink so. (I think so.)", "correct": "I think so.", "rule": "/θ/ = tongue between teeth, blow air. Not 's' or 't'.", "frequency": "medium"},
+    {"rank": 20, "error": "Uncountable nouns + 'a'", "wrong": "I want a water.", "correct": "I want water. / I want a glass of water.", "rule": "Water, money, food, information = no 'a'. Use: some, a glass of, a piece of.", "frequency": "low"},
+    {"rank": 21, "error": "Missing subject (Arabic allows it)", "wrong": "Is good.", "correct": "It is good.", "rule": "English ALWAYS needs a subject. Even when Arabic implies it.", "frequency": "medium"},
+    {"rank": 22, "error": "Present for past events", "wrong": "Yesterday I go to the market.", "correct": "Yesterday I went to the market.", "rule": "Time words like 'yesterday' = past tense verbs.", "frequency": "low"},
+    {"rank": 23, "error": "Some/any confusion", "wrong": "I don't have some money.", "correct": "I don't have any money.", "rule": "Positive = some. Negative/question = any.", "frequency": "low"},
+    {"rank": 24, "error": "R/L confusion", "wrong": "I rove my family.", "correct": "I love my family.", "rule": "L = tongue touches roof of mouth behind teeth. R = tongue curls back, doesn't touch.", "frequency": "medium"},
+    {"rank": 25, "error": "Spelling of -ed pronunciation", "wrong": "work-ED (pronouncing the E)", "correct": "worked /workt/", "rule": "-ed after voiceless sounds = /t/. Only say /id/ after t or d (wanted, needed).", "frequency": "low"}
+  ],
+  "usage_note": "Use this index when reviewing student writing and speaking submissions. Reference by rank number in feedback: 'Error #3 — remember the -s rule for he/she/it.'"
+}

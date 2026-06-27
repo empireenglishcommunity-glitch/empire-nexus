@@ -1,0 +1,26 @@
+{
+  "category": "Accent Training (\u00a711 - Appendix B)",
+  "prompts": [
+    {
+      "id": 19,
+      "name": "Linked Speech Exercise",
+      "trigger": "Daily L1+ or L0 Week 6+",
+      "user_prompt_template": "Generate a Linked Speech Exercise for Level {LEVEL}, Week {WEEK}. Focus pattern: {PATTERN}. Create: 10 phrase pairs (separated vs linked version), 3 sentences with all words linked, 1 paragraph to shadow with linking marks. Return JSON: {phrases: [{separated, linked}], sentences: [], paragraph_annotated, focus_rule_explanation}.",
+      "variables": [
+        "LEVEL",
+        "WEEK",
+        "PATTERN"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Intonation Pattern Drill",
+      "trigger": "Daily, part of accent training",
+      "user_prompt_template": "Generate an Intonation Pattern Drill for Level {LEVEL}. Focus: {PATTERN_TYPE} (statement-falling/question-rising/list-pattern/emphasis). Create: 5 pairs showing the same words with different intonation and meaning, 3 dialogues where intonation changes meaning, practice instructions. Return JSON: {pairs: [{text, intonation, meaning}], dialogues: [], instructions, self_check}.",
+      "variables": [
+        "LEVEL",
+        "PATTERN_TYPE"
+      ]
+    }
+  ]
+}

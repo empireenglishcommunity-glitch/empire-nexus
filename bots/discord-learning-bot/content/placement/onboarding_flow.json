@@ -1,0 +1,142 @@
+{
+  "name": "48-Hour Onboarding Flow",
+  "section": "Blueprint §3.3",
+  "total_steps": 8,
+  "target": "90% of new members complete all 8 steps within 48 hours",
+  "principle": "First impression determines retention. Make Day 1 a QUICK WIN, not an operating system to learn.",
+
+  "gradual_task_introduction": {
+    "day_1_to_3": "3 tasks only: accent drill + speaking mission + community hello",
+    "day_4_to_7": "5 tasks: add vocabulary + writing",
+    "day_8_onwards": "Full 7 tasks (complete daily loop)",
+    "why": "Prevents overwhelm. First experience = quick win, not operating system to learn on top of a new language."
+  },
+
+  "steps": [
+    {
+      "step": 1,
+      "send_at_hour": 0,
+      "title": "Application Form",
+      "channel": "Google Form or Discord DM bot prompt",
+      "action_required": "Complete a short form",
+      "message_en": "Welcome! Before we place you in the right level, please answer these quick questions:\n\n1. What is your name?\n2. Why do you want to learn English? (work / travel / confidence / exam / other)\n3. How much time can you commit daily? (15 min / 30 min / 45 min / 60+ min)\n4. Have you studied English before? (never / a little / years but can't speak / intermediate)\n5. What is your biggest challenge with English?\n\nThis takes 2 minutes. Your answers help us build the perfect plan for YOU.",
+      "message_ar": "أهلاً! قبل ما نحدد مستواك، جاوب على هذي الأسئلة السريعة:\n\n١. ما اسمك؟\n٢. ليش تبي تتعلم إنجليزي؟ (عمل / سفر / ثقة / اختبار / غيره)\n٣. كم وقت تقدر تخصص يوميًا؟ (١٥ دقيقة / ٣٠ / ٤٥ / ٦٠+)\n٤. هل درست إنجليزي قبل؟ (أبدًا / شوي / سنوات بس ما أتكلم / متوسط)\n٥. إيش أكبر تحدي عندك بالإنجليزي؟\n\nيأخذ دقيقتين. إجاباتك تساعدنا نبني خطة مثالية لك.",
+      "completion_trigger": "Form submitted"
+    },
+    {
+      "step": 2,
+      "send_at_hour": 1,
+      "title": "Welcome Message + What to Expect",
+      "channel": "Discord DM from bot",
+      "action_required": "Read and react (acknowledge)",
+      "message_en": "🏛️ Welcome to Empire English, {NAME}!\n\nHere's what happens next:\n\n1️⃣ NOW: You'll take a short placement test (10-15 min)\n2️⃣ WITHIN 6 HOURS: You'll get your level + personalized plan\n3️⃣ WITHIN 12 HOURS: Your buddy will message you\n4️⃣ WITHIN 24 HOURS: Orientation voice session (30 min)\n5️⃣ TOMORROW: Your first day of tasks begins!\n\n📖 In the meantime, please read #rules and #roles-info.\n\nThis is NOT a course. It's a daily system. 45-60 minutes/day.\nThe system works when you work it. Consistency > perfection.\n\nReact with ✅ when you've read #rules.",
+      "message_ar": "🏛️ أهلاً فيك في Empire English يا {NAME}!\n\nهذا اللي بيصير:\n\n١️⃣ الحين: اختبار تحديد مستوى قصير (١٠-١٥ دقيقة)\n٢️⃣ خلال ٦ ساعات: بتحصل على مستواك + خطة مخصصة\n٣️⃣ خلال ١٢ ساعة: البدي (الرفيق) بيتواصل معك\n٤️⃣ خلال ٢٤ ساعة: جلسة توجيهية صوتية (٣٠ دقيقة)\n٥️⃣ بكرة: أول يوم مهام يبدأ!\n\n📖 بينما تنتظر: اقرأ #rules و #roles-info.\n\nهذا مو كورس. هذا نظام يومي. ٤٥-٦٠ دقيقة/يوم.\nالنظام يشتغل لمّا أنت تشتغل. الاستمرارية > الكمال.\n\nتفاعل بـ ✅ لمّا تقرأ القوانين.",
+      "completion_trigger": "Reaction received or 2 hours elapsed"
+    },
+    {
+      "step": 3,
+      "send_at_hour": 2,
+      "title": "Placement Assessment",
+      "channel": "Discord DM (bot-delivered) or voice call",
+      "action_required": "Complete placement test",
+      "pilot_version": {
+        "method": "Simplified: 7-question quiz (from Telegram bot) + 60-second voice recording + 5 written sentences",
+        "voice_prompt": "Record yourself speaking English for 60 seconds. Talk about: your name, where you're from, your family, and why you want to learn English. It's okay to make mistakes — just speak!",
+        "voice_prompt_ar": "سجّل نفسك تتكلم إنجليزي لمدة ٦٠ ثانية. تكلّم عن: اسمك، من وين أنت، عائلتك، وليش تبي تتعلم إنجليزي. عادي تغلط — المهم تتكلم!",
+        "writing_prompt": "Write 5 sentences in English about yourself. (name, country, job/school, family, goal)",
+        "writing_prompt_ar": "اكتب ٥ جمل بالإنجليزي عن نفسك. (اسم، بلد، عمل/دراسة، عائلة، هدف)"
+      },
+      "full_version": "Use the complete 45-minute diagnostic from module1-4 JSON files (Phase 2+)",
+      "completion_trigger": "Assessment submitted (voice recording + written sentences received)"
+    },
+    {
+      "step": 4,
+      "send_at_hour": 6,
+      "title": "Level Assignment + Study Plan",
+      "channel": "Discord DM from bot",
+      "action_required": "Read and acknowledge",
+      "message_template_en": "📊 Your Results are in, {NAME}!\n\n🎯 Your Level: **{LEVEL}** — {LEVEL_NAME}\n\nWhat this means:\n{LEVEL_DESCRIPTION}\n\n📋 Your Personalized Plan:\n• Track: {TRACK} ({DAILY_MINUTES} minutes/day)\n• Goal: {GOAL}\n• Focus areas: {FOCUS_AREAS}\n• Expected duration: {DURATION} weeks\n\n🗓️ Starting TOMORROW:\n• You'll receive 7 daily tasks in #{TASK_CHANNEL}\n• Start with just 3 tasks (Days 1-3), then build up\n• Your buddy will check in daily\n\n💪 You're not alone in this. The system + community support you.\n\nNext: your buddy will message you within a few hours!",
+      "message_template_ar": "📊 نتائجك جاهزة يا {NAME}!\n\n🎯 مستواك: **{LEVEL}** — {LEVEL_NAME_AR}\n\nإيش يعني هذا:\n{LEVEL_DESCRIPTION_AR}\n\n📋 خطتك المخصصة:\n• المسار: {TRACK} ({DAILY_MINUTES} دقيقة/يوم)\n• هدفك: {GOAL}\n• مجالات التركيز: {FOCUS_AREAS_AR}\n• المدة المتوقعة: {DURATION} أسبوع\n\n🗓️ يبدأ بكرة:\n• بتحصل ٧ مهام يومية في #{TASK_CHANNEL}\n• ابدأ بـ ٣ مهام فقط (الأيام ١-٣)، ثم تزيد\n• البدي بيتابع معك يوميًا\n\n💪 أنت مو لحالك. النظام + المجتمع يدعمونك.",
+      "completion_trigger": "Auto — sent after founder assigns level"
+    },
+    {
+      "step": 5,
+      "send_at_hour": 8,
+      "title": "Buddy Contact",
+      "channel": "Discord DM (buddy → new member)",
+      "action_required": "Respond to buddy",
+      "buddy_message_template": "Hey {NAME}! 👋\n\nI'm {BUDDY_NAME}, your onboarding buddy.\n\nMy job is to help you get started and answer any questions.\n\nA few things:\n• Tomorrow morning at 6AM you'll see your first tasks in #{TASK_CHANNEL}\n• Start with just 3 tasks (accent + speaking + community)\n• Don't worry about being perfect — just show up\n• Message me ANYTIME if you're confused or stuck\n\nQuick question: what time zone are you in? (so I know when you're awake)\n\nLooking forward to seeing you grow! 💪",
+      "buddy_message_template_ar": "أهلا {NAME}! 👋\n\nأنا {BUDDY_NAME}، رفيقك في البداية.\n\nشغلي أساعدك تبدأ وأجاوب أي أسئلة.\n\nأشياء مهمة:\n• بكرة الصبح ٦ بتشوف أول مهامك في #{TASK_CHANNEL}\n• ابدأ بـ ٣ مهام فقط (نطق + كلام + مجتمع)\n• لا تقلق عن الكمال — المهم تحضر\n• راسلني أي وقت لو تحتاج شي\n\nسؤال سريع: أنت بأي منطقة زمنية؟\n\nمتحمس أشوف تقدمك! 💪",
+      "pilot_note": "In pilot, founder is the buddy for all members.",
+      "completion_trigger": "New member responds to buddy"
+    },
+    {
+      "step": 6,
+      "send_at_hour": 12,
+      "title": "Orientation Voice Session",
+      "channel": "Scheduled Discord voice channel",
+      "action_required": "Attend 30-minute session",
+      "session_agenda": [
+        "5 min: Welcome + ice breaker (everyone says their name + goal in English)",
+        "10 min: How the system works (7 daily tasks, streak tracking, weekly assessment)",
+        "5 min: Discord tour (which channels to use, where to submit)",
+        "5 min: Common questions + fears ('What if I miss a day?' 'What if my English is terrible?')",
+        "5 min: First task demo (do a mini accent drill together live)"
+      ],
+      "session_agenda_ar": [
+        "٥ دقائق: ترحيب + كل واحد يقول اسمه وهدفه",
+        "١٠ دقائق: كيف يشتغل النظام",
+        "٥ دقائق: جولة في السيرفر",
+        "٥ دقائق: أسئلة ومخاوف شائعة",
+        "٥ دقائق: تجربة أول مهمة سوا"
+      ],
+      "key_messages": [
+        "Consistency > perfection. 15 minutes every day > 3 hours once a week.",
+        "It's okay to make mistakes — that's literally how you learn.",
+        "The community is here to support you, not judge you.",
+        "If you get stuck, message your buddy. Never suffer in silence."
+      ],
+      "completion_trigger": "Attended session (or watched recording if missed)"
+    },
+    {
+      "step": 7,
+      "send_at_hour": 24,
+      "title": "First Day of Tasks (Simplified)",
+      "channel": "#{LEVEL}-daily-tasks",
+      "action_required": "Complete 3 tasks (not 7!)",
+      "first_day_tasks": [
+        "Task 1: Accent drill (10 min) — practice today's target sounds",
+        "Task 2: Speaking mission (5 min) — record 30 seconds introducing yourself",
+        "Task 3: Community (5 min) — say hello in #introductions (one sentence in English)"
+      ],
+      "first_day_tasks_ar": [
+        "مهمة ١: تدريب نطق (١٠ دقائق) — تمرّن على أصوات اليوم",
+        "مهمة ٢: مهمة كلام (٥ دقائق) — سجّل ٣٠ ثانية تعرّف فيها عن نفسك",
+        "مهمة ٣: مجتمع (٥ دقائق) — قول أهلاً في #introductions (جملة وحدة بالإنجليزي)"
+      ],
+      "total_time": "20-25 minutes (intentionally short — quick win)",
+      "message_en": "🌅 DAY 1 — Your journey begins!\n\nToday is intentionally EASY. Just 3 tasks (~20 min total).\nThe full 7-task loop starts on Day 4. Today: quick wins.\n\n{TASKS}\n\nWhen done with each: type `!done accent` / `!done speaking` / `!done community`\n\nYou've got this! Your buddy {BUDDY} is watching for your first submission. 🏛️",
+      "completion_trigger": "At least 2 of 3 tasks submitted via !done"
+    },
+    {
+      "step": 8,
+      "send_at_hour": 36,
+      "title": "First Checkpoint",
+      "channel": "Discord DM (buddy → member)",
+      "action_required": "Brief check-in",
+      "buddy_checkpoint_message": "Hey {NAME}! 🎯\n\nHow was Day 1?\n\n{IF_COMPLETED}Great job! You did {COMPLETED_COUNT}/3 tasks. That's a fantastic start.\n{IF_NOT_COMPLETED}I noticed you haven't submitted yet — no pressure! Just checking if you need help with anything.\n\nQuick questions:\n1. Was anything confusing? (about the system, the tasks, Discord?)\n2. How did it feel? (easy/okay/hard/overwhelming?)\n3. Any questions?\n\nRemember: tomorrow adds 2 more tasks (vocabulary + writing). Still only ~40 minutes.\n\nFull 7-task loop starts Day 4. You're building the habit one step at a time. 💪",
+      "completion_trigger": "Member responds (any response = checkpoint complete)"
+    }
+  ],
+
+  "fail_safes": {
+    "stuck_at_step_1": "If no form submitted after 6 hours → founder DMs directly with simplified questions",
+    "stuck_at_step_3": "If no assessment after 12 hours → founder offers voice call placement (5 min)",
+    "stuck_at_step_5": "If buddy gets no response after 24 hours → founder reaches out personally",
+    "stuck_at_step_7": "If no Day 1 tasks submitted → buddy sends encouraging message + offers to do first task together on voice",
+    "general": "If any step is stuck 24+ hours beyond schedule → personal founder outreach. The goal is never to lose someone to silence."
+  },
+
+  "success_metric": "≥8 of 10 pilot members complete all 8 steps within 48 hours",
+  "data_to_capture": ["Time per step", "Drop-off points", "Questions asked", "Buddy response time", "First submission quality"]
+}

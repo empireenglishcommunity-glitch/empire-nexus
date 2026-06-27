@@ -1,0 +1,79 @@
+{
+  "name": "Submission & Feedback Pipeline",
+  "section": "Blueprint §9 (operational flow)",
+  "description": "Defines how learner submissions flow through the system — from creation to scored feedback. This is the core value loop: learner produces → system evaluates → learner improves.",
+
+  "submission_types": {
+    "speaking_recording": {
+      "how_submitted": "Voice message in #speaking-feedback or #l0-showcase",
+      "detection": "Discord bot detects audio attachment in target channels",
+      "processing_pilot": "Founder listens + scores using Speaking Rubric (Appendix C). Sends feedback within 24h.",
+      "processing_scale": "1. Whisper API transcribes audio. 2. AI Speaking Evaluation prompt (#5) scores transcript. 3. Feedback DM sent automatically.",
+      "feedback_includes": ["Fluency score", "Grammar notes", "Pronunciation observation", "1 specific improvement", "Encouragement"],
+      "turnaround": "Pilot: within 24 hours. Scale: within 2 hours."
+    },
+    "writing_submission": {
+      "how_submitted": "Text message in #writing-feedback (minimum 30 characters)",
+      "detection": "Discord bot detects messages >30 chars in #writing-feedback",
+      "processing": "Immediate (automated). AI Writing Assessment prompt (#9) evaluates. Reply posted as thread.",
+      "feedback_includes": ["Overall score", "Grammar/vocab/organization/task scores", "Corrected version", "Top 3 errors with fixes", "One focus area"],
+      "turnaround": "Within 5 minutes (AI-powered, live from Day 1)"
+    },
+    "accent_recording": {
+      "how_submitted": "Voice message in #accent-feedback",
+      "detection": "Discord bot detects audio in #accent-feedback",
+      "processing_pilot": "Founder listens + provides phoneme-specific feedback.",
+      "processing_scale": "AI accent analysis prompt (#11) with Whisper transcription. Identifies specific phoneme errors.",
+      "feedback_includes": ["Overall accent impression", "Specific phonemes to work on", "Comparison to last submission", "Practice homework"],
+      "turnaround": "Pilot: within 48 hours. Scale: within 4 hours."
+    },
+    "task_completion": {
+      "how_submitted": "!done <task_id> command in #bot-commands or #daily-check-in",
+      "detection": "Bot command handler",
+      "processing": "Immediate. Logs to database. Updates streak. Awards points.",
+      "feedback_includes": ["Task logged confirmation", "Current streak", "Points earned", "Quick AI motivation message", "Tasks remaining today"],
+      "turnaround": "Instant (<1 second)"
+    }
+  },
+
+  "feedback_quality_standards": {
+    "always_lead_with_positive": "Every feedback message starts with what the learner did WELL. Never open with criticism.",
+    "max_3_corrections": "No more than 3 specific corrections per submission. More than 3 = overwhelming.",
+    "actionable": "Every correction must include: what was wrong, what is correct, and HOW to practice it.",
+    "level_appropriate_language": "Feedback for L0 uses simple English (+ Arabic summary). L2-L3 gets more technical terminology.",
+    "encouraging_close": "Always end with encouragement and a specific next step."
+  },
+
+  "data_flow": {
+    "step_1": "Learner submits (voice/text in appropriate channel)",
+    "step_2": "Bot detects submission (attachment type or text length)",
+    "step_3": "Bot logs to database (discord_id, date, task_type, content reference)",
+    "step_4": "AI processes (or queues for human review in pilot)",
+    "step_5": "Feedback generated (score + specific comments)",
+    "step_6": "Feedback delivered (reply to original message or DM)",
+    "step_7": "Score stored in Learning_Progress sheet/database",
+    "step_8": "Streak + points updated",
+    "step_9": "Weekly assessment references all submissions that week"
+  },
+
+  "human_in_the_loop": {
+    "pilot_phase": {
+      "founder_reviews": ["All speaking recordings", "All accent recordings", "Weekly assessment speaking/accent sections"],
+      "ai_handles": ["All writing (auto-evaluated)", "Task completion tracking", "Points/streaks", "Vocabulary/listening scoring (objective)"],
+      "founder_time_estimate": "10 members × 2 recordings/week × 3 min each = ~60 min/week"
+    },
+    "scale_phase": {
+      "ai_handles": "Everything (first pass)",
+      "human_reviews": ["Borderline advancement exam results (60-75% range)", "Any learner who requests human re-score", "Random 10% audit of AI scores", "All 'Critical' rating interventions"]
+    }
+  },
+
+  "notification_triggers": {
+    "on_submission": "Bot reacts with ⏳ (processing) then ✅ (feedback sent)",
+    "on_streak_milestone": "Bot posts celebration in #streak-tracker",
+    "on_all_7_tasks": "Bot posts congratulation with bonus points",
+    "on_score_drop": "Buddy notified if score drops 15+ points week-over-week",
+    "on_advancement_ready": "Bot DMs learner about exam eligibility",
+    "on_3_day_silence": "Buddy sends supportive check-in"
+  }
+}

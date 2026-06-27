@@ -1,0 +1,25 @@
+services:
+  challenge-bot:
+    build: .
+    container_name: empire-challenge-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Persist only the database and generated certificates
+      - bot-db:/app/data_persist
+      - bot-output:/app/output
+    environment:
+      - TZ=${TIMEZONE:-Asia/Dubai}
+    # No ports needed — the bot connects outbound to Discord
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  bot-db:
+    driver: local
+  bot-output:
+    driver: local

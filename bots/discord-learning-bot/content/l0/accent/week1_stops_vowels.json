@@ -1,0 +1,185 @@
+{
+  "level": "L0",
+  "week": 1,
+  "focus": "Stop consonants (/p/ /b/ /t/ /d/ /k/ /g/) + Basic vowels (/iː/ /ɪ/ /eɪ/ /æ/)",
+  "focus_ar": "الحروف الساكنة الانفجارية + حروف العلة الأساسية",
+  "arabic_challenge": "Arabic speakers often confuse /p/ and /b/ because Arabic has no /p/ sound. Also /ɪ/ (short i) and /iː/ (long ee) sound the same to Arabic ears.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/p/", "/b/"],
+      "isolation": {
+        "instructions": "Say each sound 10 times. Feel the difference:",
+        "instructions_ar": "انطق كل صوت ١٠ مرات. حس بالفرق:",
+        "p_description": "/p/ = lips closed → burst of air → NO voice (put hand in front of mouth — feel air puff)",
+        "b_description": "/b/ = lips closed → burst of air → WITH voice (put hand on throat — feel vibration)",
+        "practice": ["puh puh puh puh puh", "buh buh buh buh buh", "puh buh puh buh puh buh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pat", "bat"], "meaning": ["يربت", "خفاش/مضرب"]},
+        {"pair": ["pin", "bin"], "meaning": ["دبوس", "سلة"]},
+        {"pair": ["park", "bark"], "meaning": ["حديقة", "نباح"]},
+        {"pair": ["pig", "big"], "meaning": ["خنزير", "كبير"]},
+        {"pair": ["pull", "bull"], "meaning": ["يسحب", "ثور"]}
+      ],
+      "word_practice": ["pen", "paper", "people", "happy", "stop", "open", "apple", "up"],
+      "sentence_practice": [
+        "Please put the paper on the table.",
+        "My brother bought a big bag.",
+        "Pat has a pet. Bob has a bat."
+      ],
+      "record_this": "Pat put the pen in the paper bag. Bob bought a big blue ball.",
+      "self_check": "Can you feel the air puff on your hand for /p/ but NOT for /b/?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/t/", "/d/"],
+      "isolation": {
+        "instructions": "Touch tongue tip to the ridge behind your upper teeth. /t/ = no voice + air burst. /d/ = voice vibrates.",
+        "instructions_ar": "المس طرف لسانك بالحافة خلف أسنانك العلوية. /t/ = بدون صوت + هواء. /d/ = اهتزاز.",
+        "practice": ["tuh tuh tuh tuh tuh", "duh duh duh duh duh", "tuh duh tuh duh tuh duh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ten", "den"], "meaning": ["عشرة", "عرين"]},
+        {"pair": ["time", "dime"], "meaning": ["وقت", "عملة"]},
+        {"pair": ["town", "down"], "meaning": ["مدينة", "تحت"]},
+        {"pair": ["two", "do"], "meaning": ["اثنان", "يفعل"]},
+        {"pair": ["tear", "dear"], "meaning": ["يمزق", "عزيزي"]}
+      ],
+      "word_practice": ["today", "time", "table", "water", "study", "start", "student", "teacher"],
+      "sentence_practice": [
+        "Today is Tuesday. Time to study.",
+        "The teacher told ten students to sit down.",
+        "I don't have time to talk today."
+      ],
+      "record_this": "Today I study at the table. The teacher told us ten new words.",
+      "self_check": "Is your tongue touching behind your upper teeth (not your teeth themselves)?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/k/", "/g/"],
+      "isolation": {
+        "instructions": "Back of tongue touches soft palate (roof of mouth, far back). /k/ = no voice + air burst. /g/ = voice vibrates.",
+        "instructions_ar": "مؤخرة اللسان تلمس سقف الحلق (بعيد). /k/ = بدون صوت. /g/ = مع اهتزاز.",
+        "practice": ["kuh kuh kuh kuh kuh", "guh guh guh guh guh", "kuh guh kuh guh kuh guh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["came", "game"], "meaning": ["جاء", "لعبة"]},
+        {"pair": ["could", "good"], "meaning": ["يمكن", "جيد"]},
+        {"pair": ["cap", "gap"], "meaning": ["قبعة", "فجوة"]},
+        {"pair": ["class", "glass"], "meaning": ["صف", "زجاج"]},
+        {"pair": ["coat", "goat"], "meaning": ["معطف", "ماعز"]}
+      ],
+      "word_practice": ["come", "car", "coffee", "kitchen", "cook", "work", "go", "good", "give", "get"],
+      "sentence_practice": [
+        "Come to the kitchen. I can cook good food.",
+        "Go get a glass of cold water.",
+        "The class was great. The game was good."
+      ],
+      "record_this": "I came to class. The game was good. Can I get a cup of coffee?",
+      "self_check": "For /k/ and /g/, your tongue should NOT touch your teeth — it's far back in the mouth."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/iː/", "/ɪ/"],
+      "isolation": {
+        "instructions": "/iː/ (sheep) = long, lips spread wide, tongue high and forward. /ɪ/ (ship) = SHORT, lips relaxed, tongue slightly lower.",
+        "instructions_ar": "/iː/ = طويل، الشفاه مشدودة. /ɪ/ = قصير، الشفاه مسترخية. الفرق = الطول والشد.",
+        "practice": ["eeee (long, smile)", "ih ih ih (short, relaxed)", "ee-ih-ee-ih-ee-ih"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sheep", "ship"], "meaning": ["خروف", "سفينة"]},
+        {"pair": ["eat", "it"], "meaning": ["يأكل", "هو/هي (ضمير)"]},
+        {"pair": ["feet", "fit"], "meaning": ["أقدام", "مناسب"]},
+        {"pair": ["seat", "sit"], "meaning": ["مقعد", "يجلس"]},
+        {"pair": ["leave", "live"], "meaning": ["يغادر", "يعيش"]}
+      ],
+      "word_practice": {
+        "long_ee": ["see", "eat", "read", "street", "week", "people", "teacher", "need"],
+        "short_i": ["it", "is", "sit", "big", "six", "this", "live", "sister", "city"]
+      },
+      "sentence_practice": [
+        "I need to eat. Please sit here.",
+        "This city has big streets and nice people.",
+        "She will leave the ship and live in the city."
+      ],
+      "record_this": "I sit in my seat and eat. Please leave — I need to live here.",
+      "self_check": "For /iː/: are your lips spread in a smile? For /ɪ/: are they relaxed? Time yourself — /iː/ should be noticeably longer."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/eɪ/", "/æ/"],
+      "isolation": {
+        "instructions": "/eɪ/ (say, day) = starts at 'e' and glides to 'ee' — it's a MOVING sound. /æ/ (cat, bad) = mouth open wide, tongue flat and low.",
+        "instructions_ar": "/eɪ/ = صوت متحرك (من e إلى ee). /æ/ = الفم مفتوح واسع، اللسان مسطح.",
+        "practice": ["ay ay ay (like 'day')", "aaa aaa (mouth open wide, like at dentist)", "ay-aaa-ay-aaa"]
+      },
+      "minimal_pairs": [
+        {"pair": ["late", "lat"], "meaning": ["متأخر", "—"]},
+        {"pair": ["mate", "mat"], "meaning": ["صديق", "سجادة"]},
+        {"pair": ["pain", "pan"], "meaning": ["ألم", "مقلاة"]},
+        {"pair": ["main", "man"], "meaning": ["رئيسي", "رجل"]},
+        {"pair": ["take", "tack"], "meaning": ["يأخذ", "مسمار صغير"]}
+      ],
+      "word_practice": {
+        "ay_sound": ["name", "day", "say", "make", "take", "late", "place", "today"],
+        "a_sound": ["cat", "bad", "man", "hand", "happy", "family", "have", "can"]
+      },
+      "sentence_practice": [
+        "My name is Adam. I have a cat.",
+        "I can't be late today. Take my hand.",
+        "That man makes bad plans."
+      ],
+      "record_this": "My name is ___. Today is a bad day because I am late. Can you take my bag?",
+      "self_check": "For /eɪ/: does your mouth move (start open, close slightly)? For /æ/: is your mouth open wide like at the dentist?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["pat", "bat"], ["ten", "den"], ["came", "game"],
+        ["sheep", "ship"], ["eat", "it"], ["late", "cat"]
+      ],
+      "challenge_sentences": [
+        "Peter put ten cups on the kitchen table.",
+        "She can see the big ship from the city.",
+        "Take the cat — don't be late for class.",
+        "Good people eat good food every day."
+      ],
+      "record_this": "I practice my pronunciation every day. Today I can say these sounds better than yesterday. Pat, bat. Sheep, ship. Late, cat. I am getting better!",
+      "self_check": "Record yourself saying all 6 minimal pairs. Can YOU hear the difference in your own recording?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this passage. Listen back and check each sound.",
+        "passage": "Good morning. My name is ___. I am happy to be here today. I can see ten people in the big class. Please sit in your seat. The teacher is late but that is okay. I will eat my breakfast — bread and tea. This city is nice. I like it.",
+        "sounds_to_check": {
+          "/p/ vs /b/": "people, please, big, be, breakfast, bread",
+          "/t/ vs /d/": "today, ten, teacher, that, bread, good",
+          "/k/ vs /g/": "can, class, okay, good, morning",
+          "/iː/ vs /ɪ/": "see, seat, teacher, tea — is, in, sit, big, this, city, will, it",
+          "/eɪ/ vs /æ/": "name, late, okay — happy, am, can, that, class, breakfast"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All sounds clearly distinct. Minimal pairs easily distinguishable.",
+        "70_89": "Most sounds correct. 1-2 occasional confusions.",
+        "50_69": "Some sounds confused regularly (especially /p/-/b/ or /iː/-/ɪ/).",
+        "below_50": "Multiple sound confusions. Go back and practice days 1-5 again."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "/p/ does not exist in Arabic. Practice putting your hand in front of your mouth — /p/ has a strong air puff, /b/ does not.",
+      "The /iː/ vs /ɪ/ distinction is not meaning-bearing in Arabic. English uses length AND quality to distinguish them.",
+      "/æ/ (as in 'cat') is more open than any Arabic vowel. Think of opening your mouth at the dentist."
+    ],
+    "daily_time": "10-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. Compare Day 7 to Day 1."
+  }
+}

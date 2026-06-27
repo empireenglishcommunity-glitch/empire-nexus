@@ -1,0 +1,58 @@
+{
+  "module": 2,
+  "name": "Listening Comprehension Assessment",
+  "duration_minutes": 10,
+  "description": "Tests comprehension at three speeds: slow (80 WPM), natural (130 WPM), and rapid (160 WPM). 5 questions per speed = 15 total.",
+  "delivery": "Audio clips + multiple choice questions via Discord bot or web form",
+  "scoring": "Auto-scored (objective answers)",
+
+  "section_a_slow": {
+    "speed": "80 WPM",
+    "level_target": "L0-L1",
+    "clip_transcript": "Hello. My name is David. I am a teacher. I work at a school near my house. Every morning I wake up at six thirty. I eat breakfast with my family. Then I drive to school. I like my job because the students are friendly. After work, I come home and cook dinner. I usually go to bed at ten o'clock.",
+    "questions": [
+      {"id": "L1", "question": "What is David's job?", "options": ["Doctor", "Teacher", "Driver", "Cook"], "answer": "Teacher"},
+      {"id": "L2", "question": "What time does David wake up?", "options": ["5:30", "6:00", "6:30", "7:00"], "answer": "6:30"},
+      {"id": "L3", "question": "How does David go to school?", "options": ["Walk", "Bus", "Drive", "Bicycle"], "answer": "Drive"},
+      {"id": "L4", "question": "Why does David like his job?", "options": ["Good money", "Close to home", "Friendly students", "Short hours"], "answer": "Friendly students"},
+      {"id": "L5", "question": "What does David do after work?", "options": ["Exercise", "Cook dinner", "Watch TV", "Read books"], "answer": "Cook dinner"}
+    ]
+  },
+
+  "section_b_natural": {
+    "speed": "130 WPM",
+    "level_target": "L1-L2",
+    "clip_transcript": "I've been thinking about changing my daily routine recently. The problem is that I spend too much time on my phone in the morning instead of doing something productive. Last week I tried waking up thirty minutes earlier and going for a short walk. It was difficult at first, but by Thursday I actually started to enjoy it. I noticed that I felt more focused at work and had more energy in the afternoon. I'm going to keep this up and maybe add some reading time too.",
+    "questions": [
+      {"id": "L6", "question": "What is the speaker's problem?", "options": ["Too much phone time in morning", "Waking up too late", "Not enough exercise", "Working too hard"], "answer": "Too much phone time in morning"},
+      {"id": "L7", "question": "What did the speaker try last week?", "options": ["Reading a book", "Waking up earlier and walking", "Going to the gym", "Meditating"], "answer": "Waking up earlier and walking"},
+      {"id": "L8", "question": "When did the speaker start enjoying the new routine?", "options": ["Monday", "Wednesday", "Thursday", "Friday"], "answer": "Thursday"},
+      {"id": "L9", "question": "What effect did the change have?", "options": ["Better sleep", "More focus and energy", "Weight loss", "New friends"], "answer": "More focus and energy"},
+      {"id": "L10", "question": "What does the speaker plan to add?", "options": ["Cooking", "Swimming", "Reading time", "Meditation"], "answer": "Reading time"}
+    ]
+  },
+
+  "section_c_rapid": {
+    "speed": "160 WPM",
+    "level_target": "L2-L3",
+    "clip_transcript": "You know what's fascinating about the way languages evolve? It's that the changes aren't random — they follow patterns that linguists can actually predict to some degree. Take English for example. We've gone from a language with complex inflections, you know, case endings and verb conjugations similar to German, to one that relies heavily on word order and auxiliary verbs. And the thing is, this simplification happened because of contact with other languages, particularly during the Norman period when French and English speakers had to communicate with each other despite having very different grammatical systems.",
+    "questions": [
+      {"id": "L11", "question": "According to the speaker, language changes are:", "options": ["Completely random", "Predictable to some degree", "Always negative", "Impossible to study"], "answer": "Predictable to some degree"},
+      {"id": "L12", "question": "Old English was similar to which language?", "options": ["French", "Spanish", "German", "Arabic"], "answer": "German"},
+      {"id": "L13", "question": "What does modern English rely on instead of inflections?", "options": ["Tone", "Word order and auxiliary verbs", "Gender", "Honorifics"], "answer": "Word order and auxiliary verbs"},
+      {"id": "L14", "question": "What caused English to simplify?", "options": ["Technology", "Contact with other languages", "Government policy", "War"], "answer": "Contact with other languages"},
+      {"id": "L15", "question": "Which historical period is mentioned?", "options": ["Roman", "Viking", "Norman", "Industrial"], "answer": "Norman"}
+    ]
+  },
+
+  "scoring_rules": {
+    "total_questions": 15,
+    "score_calculation": "correct_answers / 15 × 100",
+    "level_mapping": {
+      "L0": "0-35% (0-5 correct, mostly section A)",
+      "L1": "36-60% (6-9 correct, sections A + some B)",
+      "L2": "61-80% (10-12 correct, sections A + B + some C)",
+      "L3": "81-100% (13-15 correct, all sections)"
+    }
+  }
+}

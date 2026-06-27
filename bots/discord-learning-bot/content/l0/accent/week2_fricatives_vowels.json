@@ -1,0 +1,177 @@
+{
+  "level": "L0",
+  "week": 2,
+  "focus": "Fricatives (/f/ /v/ /s/ /z/ /θ/ /ð/) + Vowels (/ɑː/ /oʊ/ /ʊ/ /uː/)",
+  "focus_ar": "الحروف الاحتكاكية + حروف العلة الخلفية",
+  "arabic_challenge": "/v/ does not exist in standard Arabic (substituted with /f/). /θ/ and /ð/ exist in Arabic but many dialects drop them. The /ʊ/ vs /uː/ distinction is not meaningful in Arabic.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/f/", "/v/"],
+      "isolation": {
+        "instructions": "Both: top teeth on lower lip. /f/ = air only, no voice. /v/ = same position + voice vibrates.",
+        "instructions_ar": "/f/ و /v/: الأسنان العلوية على الشفة السفلية. /f/ = هواء فقط. /v/ = نفس الوضع + اهتزاز.",
+        "practice": ["fff fff fff (continuous air)", "vvv vvv vvv (feel throat vibrate)", "f-v-f-v-f-v"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fan", "van"], "meaning": ["مروحة", "شاحنة"]},
+        {"pair": ["fine", "vine"], "meaning": ["جيد/بخير", "كرمة"]},
+        {"pair": ["ferry", "very"], "meaning": ["عبّارة", "جداً"]},
+        {"pair": ["feel", "veal"], "meaning": ["يشعر", "لحم عجل"]},
+        {"pair": ["safe", "save"], "meaning": ["آمن", "يحفظ/يوفّر"]}
+      ],
+      "word_practice": ["five", "very", "love", "live", "give", "have", "every", "favorite", "visit", "never"],
+      "sentence_practice": [
+        "I have five very good friends.",
+        "My favorite food is fish.",
+        "I never visit on Friday evenings."
+      ],
+      "record_this": "I have five friends. Every Friday we visit my favorite place. I love it very much.",
+      "self_check": "Put your hand on your throat: /f/ = no vibration. /v/ = vibration. Can you feel the difference?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/θ/", "/ð/"],
+      "isolation": {
+        "instructions": "Tongue tip between your teeth (sticks out slightly!). /θ/ (think) = air only. /ð/ (this) = voice vibrates. These exist in Arabic (ث and ذ) but many speakers drop them.",
+        "instructions_ar": "طرف اللسان بين الأسنان. /θ/ = مثل ث (ثلاثة). /ð/ = مثل ذ (ذلك). موجودين بالعربي!",
+        "practice": ["th-th-th (voiceless, like ث)", "dh-dh-dh (voiced, like ذ)", "think-this-think-this"]
+      },
+      "minimal_pairs": [
+        {"pair": ["think", "sink"], "meaning": ["يفكر", "حوض/يغرق"]},
+        {"pair": ["three", "tree"], "meaning": ["ثلاثة", "شجرة"]},
+        {"pair": ["thick", "tick"], "meaning": ["سميك", "علامة صح"]},
+        {"pair": ["there", "dare"], "meaning": ["هناك", "يتجرأ"]},
+        {"pair": ["they", "day"], "meaning": ["هم", "يوم"]}
+      ],
+      "word_practice": {
+        "voiceless_th": ["think", "three", "thank", "thing", "Thursday", "month", "both", "math"],
+        "voiced_th": ["this", "that", "the", "they", "there", "then", "other", "mother", "father", "brother", "weather", "together"]
+      },
+      "sentence_practice": [
+        "I think this is the third thing.",
+        "They went there together on Thursday.",
+        "My mother and father are both thankful."
+      ],
+      "record_this": "I think three things: this, that, and the other. My mother thanks them both.",
+      "self_check": "Is your tongue BETWEEN your teeth? If you can't see your tongue tip in a mirror, it's not far enough forward."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/s/", "/z/"],
+      "isolation": {
+        "instructions": "/s/ = tongue behind upper teeth (not between!), air flows through. /z/ = same position + voice.",
+        "instructions_ar": "/s/ = اللسان خلف الأسنان العلوية، هواء يمر. /z/ = نفس الوضع + اهتزاز.",
+        "practice": ["ssss (like a snake)", "zzzz (like a bee)", "s-z-s-z-s-z"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sip", "zip"], "meaning": ["يرشف", "سحّاب"]},
+        {"pair": ["seal", "zeal"], "meaning": ["ختم/فقمة", "حماس"]},
+        {"pair": ["bus", "buzz"], "meaning": ["حافلة", "طنين"]},
+        {"pair": ["price", "prize"], "meaning": ["سعر", "جائزة"]},
+        {"pair": ["ice", "eyes"], "meaning": ["ثلج", "عيون"]}
+      ],
+      "word_practice": ["six", "yes", "this", "is", "his", "has", "was", "because", "easy", "busy", "please", "close"],
+      "sentence_practice": [
+        "This is his sister. She is busy.",
+        "Six boys close their eyes.",
+        "Please, the price is easy to see."
+      ],
+      "record_this": "This is easy. His sister has six prizes. Please close your eyes because it is a surprise.",
+      "self_check": "Important: The letter 's' is sometimes pronounced /z/! Words like 'is, his, was, eyes, please' all use /z/ not /s/."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/ɑː/", "/oʊ/"],
+      "isolation": {
+        "instructions": "/ɑː/ (father, car) = mouth wide open, tongue low and back, like saying 'ahhh' at the doctor. /oʊ/ (go, no) = lips round, moves from 'o' to 'oo'.",
+        "instructions_ar": "/ɑː/ = الفم مفتوح واسع (مثل عند الدكتور: آآآ). /oʊ/ = الشفاه مدوّرة، يتحرك من o إلى oo.",
+        "practice": ["ahhh (mouth wide, relaxed)", "oh-oo oh-oo (lips round, moving)", "ah-oh-ah-oh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["not", "note"], "meaning": ["ليس", "ملاحظة"]},
+        {"pair": ["cot", "coat"], "meaning": ["سرير أطفال", "معطف"]},
+        {"pair": ["hot", "hope"], "meaning": ["حار", "أمل"]},
+        {"pair": ["got", "goat"], "meaning": ["حصل", "ماعز"]},
+        {"pair": ["top", "tope"], "meaning": ["قمة", "—"]}
+      ],
+      "word_practice": {
+        "ah_sound": ["father", "car", "heart", "start", "hard", "park", "hot", "not", "stop", "body"],
+        "oh_sound": ["go", "no", "home", "open", "close", "know", "show", "old", "cold", "both"]
+      },
+      "sentence_practice": [
+        "I know my father is not home.",
+        "Go to the car. It's not far from the park.",
+        "Both of us go home when it's cold."
+      ],
+      "record_this": "My father has an old car. I don't know if he is home. Go to the park — it's not far. I hope it's not too hot or cold.",
+      "self_check": "For /ɑː/: is your mouth as open as at the dentist? For /oʊ/: do your lips move from open-round to more closed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ʊ/", "/uː/"],
+      "isolation": {
+        "instructions": "/ʊ/ (book, good) = SHORT, lips slightly rounded, relaxed. /uː/ (food, too) = LONG, lips very rounded and pushed forward.",
+        "instructions_ar": "/ʊ/ = قصير، الشفاه مدوّرة قليلاً ومسترخية. /uː/ = طويل، الشفاه مدوّرة جداً ومدفوعة للأمام.",
+        "practice": ["uh uh uh (short, relaxed lips)", "oooo (long, lips pushed forward like a kiss)", "uh-oo-uh-oo"]
+      },
+      "minimal_pairs": [
+        {"pair": ["full", "fool"], "meaning": ["ممتلئ", "أحمق"]},
+        {"pair": ["pull", "pool"], "meaning": ["يسحب", "مسبح"]},
+        {"pair": ["look", "Luke"], "meaning": ["ينظر", "اسم"]},
+        {"pair": ["could", "cooed"], "meaning": ["يمكن", "هدل"]},
+        {"pair": ["foot", "food"], "meaning": ["قدم", "طعام"]}
+      ],
+      "word_practice": {
+        "short_oo": ["book", "good", "look", "cook", "foot", "put", "full", "could", "would", "should"],
+        "long_oo": ["food", "too", "school", "room", "soon", "moon", "cool", "blue", "true", "do"]
+      },
+      "sentence_practice": [
+        "The food is good. The cook should look.",
+        "Put the book in the room. It's too full.",
+        "I could go to school soon."
+      ],
+      "record_this": "I put the book on the table and look at the food. It's good. The room is full. I should go to school soon — it's too far to walk.",
+      "self_check": "For /ʊ/: short and relaxed (think 'book' — quick!). For /uː/: long and your lips push forward like blowing a candle."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["fan", "van"], ["think", "sink"], ["sip", "zip"],
+        ["full", "fool"], ["not", "note"], ["father", "further"]
+      ],
+      "challenge_sentences": [
+        "I think five of them live together.",
+        "My father never visits on Thursday.",
+        "The food is very good — not too hot.",
+        "This book is full of useful things.",
+        "They have three brothers and six sisters."
+      ],
+      "record_this": "I think this food is very good. My father has five books — they are full of very useful things. I never visit the school on Thursday because it is too far.",
+      "self_check": "Focus on: /v/ in 'very/visit/five', /θ/ in 'think/three/Thursday', /ð/ in 'this/they/together', and long vs short vowels."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "passage": "My father thinks this food is very good. He has five favorite things: his family, his car, good books, cold weather, and football on Thursday. Three of us go to school every day. The room is not very full — there is food for everyone. I am very thankful for everything.",
+        "sounds_to_check": {
+          "/f/ vs /v/": "five, favorite, very, football, everything, for, food, full, family",
+          "/θ/ vs /ð/": "thinks, this, three, Thursday, thankful — the, there, everything",
+          "/s/ vs /z/": "school, his, is, us, things",
+          "/ɑː/ vs /oʊ/": "father, car — go, cold, football",
+          "/ʊ/ vs /uː/": "good, books, football, full — food, school, room, too"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All fricatives distinct. Vowel lengths clearly different.",
+        "70_89": "Good overall. Occasional /f/-/v/ or vowel length confusion.",
+        "50_69": "/v/ still sounds like /f/ in some words. Vowel lengths unclear.",
+        "below_50": "Multiple confusions. Review days 1-5."
+      }
+    }
+  ]
+}

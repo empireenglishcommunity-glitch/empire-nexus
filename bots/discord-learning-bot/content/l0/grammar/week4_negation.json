@@ -1,0 +1,48 @@
+{
+  "id": "grammar_l0_w4",
+  "level": "L0",
+  "week": 4,
+  "pattern_name": "Negation (don't / doesn't)",
+  "pattern_name_ar": "النفي (لا أفعل / لا يفعل)",
+  "formula": "Subject + don't/doesn't + base verb",
+  "formula_visual": "[Subject] + [don't/doesn't] + [base verb]",
+  "when_to_use": "To say you do NOT do something, or someone does NOT do something.",
+  "when_to_use_ar": "لمّا تبي تقول إنك ما تسوي شي، أو شخص ما يسوي شي.",
+  "the_rule": {
+    "i_you_we_they": "don't + base verb → I don't like. We don't have. They don't know.",
+    "he_she_it": "doesn't + base verb → He doesn't work. She doesn't speak. It doesn't matter.",
+    "critical": "After don't/doesn't, the verb is ALWAYS base form. Never add -s after doesn't."
+  },
+  "examples": [
+    {"en": "I don't like fish.", "ar": "ما أحب السمك", "positive": "I like fish."},
+    {"en": "She doesn't speak French.", "ar": "هي ما تتكلم فرنسي", "positive": "She speaks French."},
+    {"en": "We don't have a car.", "ar": "ما عندنا سيارة", "positive": "We have a car."},
+    {"en": "He doesn't work on Friday.", "ar": "هو ما يشتغل يوم الجمعة", "positive": "He works on Friday."},
+    {"en": "They don't eat meat.", "ar": "هم ما يأكلون لحم", "positive": "They eat meat."}
+  ],
+  "common_errors": [
+    {"wrong": "I no like fish.", "correct": "I don't like fish.", "explanation": "English uses 'don't' — not just 'no'. 'No' is only for nouns: 'no money', 'no time'."},
+    {"wrong": "She doesn't likes.", "correct": "She doesn't like.", "explanation": "After doesn't, NEVER add -s. The -s is already in 'does'."},
+    {"wrong": "He don't work.", "correct": "He doesn't work.", "explanation": "He/She/It = doesn't (not don't)."},
+    {"wrong": "I am not like fish.", "correct": "I don't like fish.", "explanation": "Use 'am not' only with adjectives (I'm not happy). For verbs, use don't/doesn't."}
+  ],
+  "pronunciation_note": {
+    "dont": "don't = /dohnt/ — sounds like 'dOHnt' (the 'o' is long)",
+    "doesnt": "doesn't = /DUZ-uhnt/ — sounds like 'DUZent' (schwa in the second syllable)",
+    "tip": "In fast speech: 'I don't know' → 'I dunno' /ah DUH-noh/"
+  },
+  "practice_fill_blank": [
+    {"sentence": "I ___ (not/like) cold weather.", "answer": "don't like", "hint": "I = don't"},
+    {"sentence": "She ___ (not/eat) breakfast.", "answer": "doesn't eat", "hint": "She = doesn't + base verb"},
+    {"sentence": "We ___ (not/have) a big house.", "answer": "don't have", "hint": "We = don't"},
+    {"sentence": "He ___ (not/speak) Arabic.", "answer": "doesn't speak", "hint": "He = doesn't + base verb (no -s!)"},
+    {"sentence": "They ___ (not/know) my name.", "answer": "don't know", "hint": "They = don't"}
+  ],
+  "also_useful": {
+    "short_answers": ["Do you like coffee? → No, I don't.", "Does she work here? → No, she doesn't."],
+    "contractions": "do not = don't · does not = doesn't (always use the short form in speaking)"
+  },
+  "quick_rule": "I/you/we/they + DON'T + verb. He/she/it + DOESN'T + verb. After don't/doesn't = base form ALWAYS.",
+  "quick_rule_ar": "أنا/أنت/نحن/هم + DON'T + فعل. هو/هي + DOESN'T + فعل. بعد don't/doesn't = الشكل الأساسي دائماً.",
+  "connect_to_speaking": "Practice: 'I don't work on weekends. I don't eat fish. My brother doesn't live here. She doesn't speak English.' Natural negation is essential for real conversation."
+}

@@ -1,0 +1,75 @@
+{
+  "name": "Placement Scoring Algorithm",
+  "section": "Blueprint §3.2",
+  "description": "Determines level assignment from diagnostic assessment scores using majority-rules with speaking-priority tiebreaker.",
+
+  "level_thresholds": {
+    "speaking": {"L0": [0, 30], "L1": [31, 55], "L2": [56, 75], "L3": [76, 100]},
+    "listening": {"L0": [0, 35], "L1": [36, 60], "L2": [61, 80], "L3": [81, 100]},
+    "vocabulary": {"L0": [0, 400], "L1": [401, 1200], "L2": [1201, 2500], "L3": [2501, 5000]},
+    "grammar": {"L0": [0, 35], "L1": [36, 60], "L2": [61, 80], "L3": [81, 100]}
+  },
+
+  "algorithm": {
+    "step_1": "Score each of the 4 modules on a 0-100 scale (vocabulary scored as % of 5000-word ceiling)",
+    "step_2": "Map each module score to a level using the thresholds above",
+    "step_3": "Count the most frequent level across all 4 modules",
+    "step_4": "If tied: the SPEAKING score breaks the tie (strongest predictor of communicative competence)",
+    "step_5": "If any dimension is 20+ points higher than another, FLAG for human review",
+    "step_6": "Apply refinement: if 2 strongest dimensions are a full level above the majority, default to HIGHER placement on a 2-week trial"
+  },
+
+  "examples": [
+    {
+      "scenario": "A: Weak across the board",
+      "scores": {"speaking": 25, "listening": 30, "vocabulary": 300, "grammar": 28},
+      "mapped_levels": {"speaking": "L0", "listening": "L0", "vocabulary": "L0", "grammar": "L0"},
+      "result": "L0",
+      "flag": false
+    },
+    {
+      "scenario": "B: Strong listening/speaking, weak vocab/grammar",
+      "scores": {"speaking": 65, "listening": 70, "vocabulary": 1000, "grammar": 55},
+      "mapped_levels": {"speaking": "L2", "listening": "L2", "vocabulary": "L1", "grammar": "L1"},
+      "result": "L2 (refinement: 2 strongest at L2, trial placement at higher level)",
+      "flag": false
+    },
+    {
+      "scenario": "C: Uneven profile",
+      "scores": {"speaking": 70, "listening": 35, "vocabulary": 2800, "grammar": 40},
+      "mapped_levels": {"speaking": "L2", "listening": "L0", "vocabulary": "L3", "grammar": "L1"},
+      "result": "FLAG FOR REVIEW (20+ gap between dimensions, no clear majority)",
+      "flag": true
+    },
+    {
+      "scenario": "D: Solid intermediate",
+      "scores": {"speaking": 50, "listening": 55, "vocabulary": 1400, "grammar": 58},
+      "mapped_levels": {"speaking": "L1", "listening": "L1", "vocabulary": "L1", "grammar": "L1"},
+      "result": "L1",
+      "flag": false
+    }
+  ],
+
+  "post_placement_actions": {
+    "on_assignment": [
+      "DM learner with level result + personalized study plan",
+      "Assign Discord role (🌱 Level 0 / 💪 Level 1 / 🚀 Level 2 / 👑 Level 3)",
+      "Assign onboarding buddy",
+      "Schedule orientation voice session",
+      "Begin 48-hour onboarding flow"
+    ],
+    "on_flag": [
+      "Notify founder/moderator for manual review",
+      "Default to HIGHER of the two majority levels (on 2-week trial)",
+      "Schedule a 5-minute human placement check within 48 hours",
+      "Enable fast-track re-placement (can change level in first week)"
+    ],
+    "fast_track_replacement": "If a learner is clearly misplaced (bored or overwhelmed) in their first week, they can be moved immediately without waiting for an advancement exam."
+  },
+
+  "implementation_notes": {
+    "pilot_phase": "Founder assigns levels manually based on quick assessment. Full algorithm is for Phase 2+.",
+    "ai_scoring": "Speaking and accent modules require AI scoring (or human evaluation). Listening, vocabulary, and grammar are auto-scored (objective answers).",
+    "data_capture": "All placement results are stored for calibration. When enough data exists (50+ placements), validate the algorithm against actual learner performance at their assigned level."
+  }
+}

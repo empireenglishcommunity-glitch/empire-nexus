@@ -1,0 +1,70 @@
+{
+  "id": "grammar_l0_w5",
+  "level": "L0",
+  "week": 5,
+  "pattern_name": "Questions (Do you...? / Does he...? / How much...?)",
+  "pattern_name_ar": "الأسئلة (هل أنت...؟ / هل هو...؟ / كم...؟)",
+  "formula": "Do/Does + subject + base verb?",
+  "formula_visual": "[Do/Does] + [Subject] + [base verb] + ?",
+  "when_to_use": "To ask yes/no questions about habits, routines, or facts. Also: WH-questions (what, where, when, how).",
+  "when_to_use_ar": "لطرح أسئلة نعم/لا عن العادات والحقائق. وكذلك أسئلة: ماذا، أين، متى، كيف.",
+  "question_types": {
+    "yes_no": {
+      "formula": "Do/Does + subject + base verb?",
+      "examples": [
+        {"q": "Do you like coffee?", "a": "Yes, I do. / No, I don't."},
+        {"q": "Does she speak English?", "a": "Yes, she does. / No, she doesn't."},
+        {"q": "Do they live here?", "a": "Yes, they do. / No, they don't."}
+      ]
+    },
+    "what": {
+      "formula": "What + do/does + subject + verb?",
+      "examples": [
+        {"q": "What do you eat for breakfast?", "a": "I eat eggs and bread."},
+        {"q": "What does she do?", "a": "She works as a teacher."}
+      ]
+    },
+    "where": {
+      "formula": "Where + do/does + subject + verb?",
+      "examples": [
+        {"q": "Where do you live?", "a": "I live in Dubai."},
+        {"q": "Where does he work?", "a": "He works at a hospital."}
+      ]
+    },
+    "when": {
+      "formula": "When + do/does + subject + verb?",
+      "examples": [
+        {"q": "When do you wake up?", "a": "I wake up at 7."},
+        {"q": "When does the class start?", "a": "It starts at 9."}
+      ]
+    },
+    "how_much_many": {
+      "formula": "How much/many + noun + do/does + subject + verb?",
+      "examples": [
+        {"q": "How much does this cost?", "a": "It costs 20 dollars."},
+        {"q": "How many brothers do you have?", "a": "I have two brothers."}
+      ]
+    }
+  },
+  "common_errors": [
+    {"wrong": "You like coffee?", "correct": "Do you like coffee?", "explanation": "English yes/no questions NEED 'Do/Does' at the start (unlike Arabic which just uses tone)."},
+    {"wrong": "Does she likes?", "correct": "Does she like?", "explanation": "After 'does', verb = base form. No -s!"},
+    {"wrong": "Where you live?", "correct": "Where do you live?", "explanation": "WH-questions also need 'do/does' after the question word."},
+    {"wrong": "What means this?", "correct": "What does this mean?", "explanation": "Structure: What + does + subject + verb?"}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ you speak English?", "answer": "Do", "hint": "You = Do"},
+    {"sentence": "___ she live in Dubai?", "answer": "Does", "hint": "She = Does"},
+    {"sentence": "Where ___ they work?", "answer": "do", "hint": "They = do"},
+    {"sentence": "What ___ he eat for lunch?", "answer": "does", "hint": "He = does"},
+    {"sentence": "How much ___ this cost?", "answer": "does", "hint": "This = does (it)"}
+  ],
+  "intonation_note": {
+    "yes_no": "Voice goes UP ↗️ at the end: 'Do you LIKE it?' ↗️",
+    "wh": "Voice goes DOWN ↘️ at the end: 'Where do you LIVE?' ↘️",
+    "tip_ar": "أسئلة نعم/لا = الصوت يرتفع. أسئلة ماذا/أين = الصوت ينزل."
+  },
+  "quick_rule": "Start with Do (I/you/we/they) or Does (he/she/it). After do/does = base verb always. No -s!",
+  "quick_rule_ar": "ابدأ بـ Do (أنا/أنت/نحن/هم) أو Does (هو/هي). بعد do/does = الفعل الأساسي دائماً.",
+  "connect_to_speaking": "Questions are your #1 conversation tool. Practice: 'Do you live here? Where do you work? What do you like to eat?' — you can keep any conversation going with questions."
+}

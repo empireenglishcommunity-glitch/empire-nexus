@@ -1,0 +1,116 @@
+{
+  "level": "L0",
+  "section": "7.1",
+  "description": "Curated movie & clip library for Level 0 learners. Short, slow, visual content with clear speech. Each clip has a structured learning task — never passive watching.",
+  "content_rules": {
+    "max_duration": "3-5 minutes per clip",
+    "speed": "60-80 WPM (slow, clear speech)",
+    "method": "Watch with subtitles → pause & repeat → shadow 5 sentences",
+    "frequency": "1 clip per day as part of Listening task (Task 5)",
+    "never": "Never passive entertainment. Every clip has a task attached."
+  },
+  "weekly_clip_assignments": {
+    "week_1": {
+      "theme": "Greetings & Self-Introduction",
+      "clips": [
+        {"title": "English Greetings for Beginners", "source": "BBC Learning English", "url_search": "BBC Learning English greetings beginners", "duration": "3 min", "task": "Watch. List all greeting phrases. Repeat each 3 times."},
+        {"title": "How to Introduce Yourself in English", "source": "English with Lucy", "url_search": "English with Lucy introduce yourself beginner", "duration": "4 min", "task": "Watch. Write down the structure. Record your own introduction."},
+        {"title": "Pixar Short: 'Day & Night'", "source": "YouTube/Pixar", "url_search": "Pixar short Day and Night", "duration": "5 min", "task": "Watch without sound first. Describe what happens in 3 English sentences."},
+        {"title": "Basic English Conversation: Meeting Someone", "source": "EngVid", "url_search": "EngVid basic conversation meeting someone", "duration": "4 min", "task": "Watch. Write the dialogue. Practice with a partner or alone (both roles)."},
+        {"title": "Numbers 1-20 Song", "source": "English Singsing", "url_search": "English numbers 1-20 song slow", "duration": "2 min", "task": "Listen 3 times. Sing along. Write numbers 1-20 in words."},
+        {"title": "What's Your Name? Simple Dialogue", "source": "Easy English", "url_search": "Easy English what's your name dialogue", "duration": "3 min", "task": "Shadow the entire dialogue. Record yourself doing both roles."},
+        {"title": "Phonics: Short Vowel Sounds", "source": "Rachel's English", "url_search": "Rachel's English short vowel sounds beginners", "duration": "4 min", "task": "Watch. Practice each vowel sound. Record all 5 short vowels."}
+      ]
+    },
+    "week_2": {
+      "theme": "Numbers, Time & Days",
+      "clips": [
+        {"title": "Telling Time in English", "source": "BBC Learning English", "url_search": "BBC Learning English telling time", "duration": "4 min", "task": "Watch. Write 5 times you hear. Say what time it is NOW."},
+        {"title": "Days of the Week Song", "source": "English Singsing", "url_search": "days of the week song English slow", "duration": "2 min", "task": "Sing along 3 times. Write all 7 days without looking."},
+        {"title": "Daily Routine Vocabulary", "source": "English with Lucy", "url_search": "English with Lucy daily routine vocabulary beginner", "duration": "5 min", "task": "Watch. List 10 daily activities. Say what YOU do at each time."},
+        {"title": "Numbers 1-100: Listen and Repeat", "source": "EngVid", "url_search": "EngVid numbers 1-100 listen repeat", "duration": "4 min", "task": "Repeat every number. Then: random quiz yourself (what comes after 17? after 53?)"},
+        {"title": "Pixar Short: 'Geri's Game'", "source": "YouTube/Pixar", "url_search": "Pixar short Geri's Game", "duration": "4 min", "task": "Watch. Describe the old man: what does he look like? What is he doing?"},
+        {"title": "What Time Do You Wake Up? Conversation", "source": "Easy English", "url_search": "Easy English what time conversation beginner", "duration": "3 min", "task": "Shadow the conversation. Answer all questions about YOUR schedule."},
+        {"title": "Calendar Vocabulary: Months and Seasons", "source": "Rachel's English", "url_search": "Rachel's English months seasons pronunciation", "duration": "4 min", "task": "Watch. Say all 12 months. Note pronunciation differences from Arabic."}
+      ]
+    },
+    "week_3": {
+      "theme": "Family & People",
+      "clips": [
+        {"title": "Family Members Vocabulary", "source": "English with Lucy", "url_search": "English with Lucy family members vocabulary", "duration": "5 min", "task": "Watch. Draw your family tree. Label each person in English. Say 1 sentence about each."},
+        {"title": "Describing People: Appearance", "source": "BBC Learning English", "url_search": "BBC Learning English describing people appearance", "duration": "4 min", "task": "Watch. Describe 3 people you know using the adjectives from the video."},
+        {"title": "Pixar Short: 'Bao'", "source": "YouTube/Pixar", "url_search": "Pixar short Bao", "duration": "5 min", "task": "Watch. Describe the mother. How does she feel? (happy, sad, worried, proud) — use English."},
+        {"title": "My Family: Simple Conversation", "source": "Easy English", "url_search": "Easy English my family conversation beginner", "duration": "3 min", "task": "Shadow the conversation. Then record YOUR version: talk about YOUR family."},
+        {"title": "He/She: Third Person Practice", "source": "EngVid", "url_search": "EngVid he she third person present simple", "duration": "4 min", "task": "Watch. Write 5 sentences about a family member using he/she + verb-s."},
+        {"title": "Jobs and Occupations", "source": "English Singsing", "url_search": "English jobs occupations vocabulary beginner", "duration": "3 min", "task": "Watch. What does YOUR family do? Write: 'My father works as a ___."},
+        {"title": "Adjectives for People: Kind, Funny, Smart", "source": "Rachel's English", "url_search": "Rachel's English adjectives people pronunciation", "duration": "4 min", "task": "Watch. Choose 5 adjectives. Use each to describe someone you know."}
+      ]
+    },
+    "week_4": {
+      "theme": "Home & Daily Life",
+      "clips": [
+        {"title": "Rooms of the House", "source": "English with Lucy", "url_search": "English with Lucy rooms house vocabulary", "duration": "5 min", "task": "Watch. Name all rooms in YOUR house in English. Describe one room in 4 sentences."},
+        {"title": "My Morning Routine", "source": "Easy English", "url_search": "Easy English morning routine description", "duration": "3 min", "task": "Shadow. Then record YOUR morning routine using 'First, Then, After that, Finally.'"},
+        {"title": "Furniture & Objects at Home", "source": "BBC Learning English", "url_search": "BBC Learning English furniture home vocabulary", "duration": "4 min", "task": "Watch. List 10 objects in your bedroom. Say where each is (on, under, next to)."},
+        {"title": "Pixar Short: 'La Luna'", "source": "YouTube/Pixar", "url_search": "Pixar short La Luna", "duration": "5 min", "task": "Watch. Describe what happens using past tense: 'The boy went... He saw... They cleaned...'"},
+        {"title": "Prepositions of Place: In, On, Under", "source": "EngVid", "url_search": "EngVid prepositions place in on under beginner", "duration": "4 min", "task": "Watch. Look around your room. Say 5 sentences: 'The phone is on the table.'"},
+        {"title": "I Don't Like: Negative Sentences", "source": "English Singsing", "url_search": "English don't doesn't negative sentences beginner", "duration": "3 min", "task": "Watch. Write 5 things you DON'T like about your house/city."},
+        {"title": "Evening Routine Conversation", "source": "Rachel's English", "url_search": "Rachel's English evening routine connected speech", "duration": "4 min", "task": "Watch for connected speech. Shadow the parts about evening activities."}
+      ]
+    },
+    "week_5": {
+      "theme": "Food & Shopping",
+      "clips": [
+        {"title": "Food Vocabulary: Fruits & Vegetables", "source": "English with Lucy", "url_search": "English with Lucy food vocabulary fruits vegetables", "duration": "5 min", "task": "Watch. Write 10 foods you eat regularly. Say each with correct pronunciation."},
+        {"title": "At the Restaurant: Ordering Food", "source": "BBC Learning English", "url_search": "BBC Learning English ordering food restaurant", "duration": "4 min", "task": "Watch. Write the dialogue. Practice ordering YOUR favorite meal."},
+        {"title": "How Much Does It Cost?", "source": "Easy English", "url_search": "Easy English how much cost shopping", "duration": "3 min", "task": "Shadow the shopping conversation. Practice: 'How much is this? I'd like...'"},
+        {"title": "Pixar Short: 'Ratatouille Clip (kitchen)'", "source": "YouTube clips", "url_search": "Ratatouille kitchen scene simple English", "duration": "3 min", "task": "Watch. List all food/kitchen words you hear or see. Describe the scene."},
+        {"title": "Do You Like...? Food Questions", "source": "EngVid", "url_search": "EngVid do you like food questions beginner", "duration": "4 min", "task": "Watch. Answer 10 'Do you like...?' questions about food out loud."},
+        {"title": "Shopping Dialogue: At the Store", "source": "English Singsing", "url_search": "English shopping dialogue store beginner", "duration": "3 min", "task": "Shadow both roles. Then record yourself as the customer."},
+        {"title": "American Pronunciation: Food Words", "source": "Rachel's English", "url_search": "Rachel's English food words pronunciation", "duration": "4 min", "task": "Watch for: water (flap T!), vegetable (3 syllables), comfortable (3 not 4). Practice."}
+      ]
+    },
+    "week_6": {
+      "theme": "Places & Directions",
+      "clips": [
+        {"title": "Giving Directions in English", "source": "BBC Learning English", "url_search": "BBC Learning English giving directions", "duration": "4 min", "task": "Watch. Give directions from your home to the nearest shop (in English)."},
+        {"title": "Places in the City", "source": "English with Lucy", "url_search": "English with Lucy places city vocabulary", "duration": "5 min", "task": "Watch. List 10 places near your home. Use 'There is/are' for each."},
+        {"title": "Where Is the Bank? Conversation", "source": "Easy English", "url_search": "Easy English where is the bank directions", "duration": "3 min", "task": "Shadow. Practice asking for AND giving directions."},
+        {"title": "Pixar Short: 'Lifted'", "source": "YouTube/Pixar", "url_search": "Pixar short Lifted", "duration": "4 min", "task": "Watch. Describe WHERE things happen: 'The house is in a field. The ship is above...'"},
+        {"title": "Prepositions: Next to, Between, In front of", "source": "EngVid", "url_search": "EngVid prepositions next to between behind", "duration": "4 min", "task": "Watch. Describe your neighborhood using all prepositions from the video."},
+        {"title": "There Is / There Are in Context", "source": "English Singsing", "url_search": "English there is there are places", "duration": "3 min", "task": "Watch. Write 5 sentences about YOUR city using there is/are."},
+        {"title": "Map Reading & Directions", "source": "Rachel's English", "url_search": "Rachel's English directions pronunciation turn left right", "duration": "4 min", "task": "Watch. Practice: turn left, turn right, go straight, on the corner. Note linking."}
+      ]
+    },
+    "week_7": {
+      "theme": "Actions & Abilities",
+      "clips": [
+        {"title": "Can / Can't: Talking About Abilities", "source": "BBC Learning English", "url_search": "BBC Learning English can can't abilities", "duration": "4 min", "task": "Watch. List 5 things you CAN do and 5 you CAN'T. Say each out loud."},
+        {"title": "Action Verbs for Beginners", "source": "English with Lucy", "url_search": "English with Lucy action verbs vocabulary beginner", "duration": "5 min", "task": "Watch. Act out each verb while saying it. Record 5 actions."},
+        {"title": "Pixar Short: 'Partly Cloudy'", "source": "YouTube/Pixar", "url_search": "Pixar short Partly Cloudy", "duration": "5 min", "task": "Watch. Describe the actions: 'The cloud makes... The bird carries... He can...'"},
+        {"title": "Adverbs: Fast, Slowly, Carefully", "source": "Easy English", "url_search": "Easy English adverbs fast slowly carefully", "duration": "3 min", "task": "Watch. Use 5 adverbs to describe how you do things: 'I eat quickly. I walk slowly.'"},
+        {"title": "Sports and Activities", "source": "EngVid", "url_search": "EngVid sports activities vocabulary beginner", "duration": "4 min", "task": "Watch. Say which sports you can/can't do. 'I can swim but I can't play tennis.'"},
+        {"title": "Can/Can't Pronunciation Difference", "source": "Rachel's English", "url_search": "Rachel's English can can't pronunciation difference", "duration": "4 min", "task": "Critical! Watch multiple times. /kæn/ (weak) vs /kænt/ (strong). Practice both."},
+        {"title": "What Can You Do? Interview", "source": "English Singsing", "url_search": "English what can you do interview beginner", "duration": "3 min", "task": "Shadow the interview. Then answer all questions about YOUR abilities."}
+      ]
+    },
+    "week_8": {
+      "theme": "Feelings, Opinions & The Past",
+      "clips": [
+        {"title": "Feelings and Emotions Vocabulary", "source": "English with Lucy", "url_search": "English with Lucy feelings emotions vocabulary", "duration": "5 min", "task": "Watch. How do you feel TODAY? Use 3 emotion words from the video."},
+        {"title": "Was / Were: Talking About the Past", "source": "BBC Learning English", "url_search": "BBC Learning English was were past simple beginner", "duration": "4 min", "task": "Watch. Write 5 sentences about yesterday using was/were."},
+        {"title": "Pixar Short: 'One Man Band'", "source": "YouTube/Pixar", "url_search": "Pixar short One Man Band", "duration": "4 min", "task": "Watch. Describe what happened (past tense): 'The girl walked... She wanted... They played...'"},
+        {"title": "I Think / I Believe: Opinions", "source": "Easy English", "url_search": "Easy English giving opinions I think I believe beginner", "duration": "3 min", "task": "Watch. Give your opinion about 3 things: 'I think English is... I believe...'"},
+        {"title": "Regular Past Tense -ed Pronunciation", "source": "Rachel's English", "url_search": "Rachel's English -ed pronunciation past tense", "duration": "4 min", "task": "Critical! /t/ /d/ /ɪd/ — listen for the 3 different sounds. Practice 10 past verbs."},
+        {"title": "What Did You Do Yesterday?", "source": "EngVid", "url_search": "EngVid what did you do yesterday past simple", "duration": "4 min", "task": "Watch. Answer the question in a 45-second recording. Use past tense verbs."},
+        {"title": "Connected Speech: Going to → Gonna", "source": "Rachel's English", "url_search": "Rachel's English gonna wanna gotta connected speech", "duration": "4 min", "task": "FINAL CLIP! The gateway to natural speech. Practice all reductions. Record a natural-sounding paragraph using gonna, wanna, gotta."}
+      ]
+    }
+  },
+  "usage_instructions": {
+    "how_delivered": "One clip per day is referenced in the daily task post (Task 5: Listening). The learner finds the clip on YouTube using the search term provided.",
+    "why_not_direct_links": "YouTube URLs change frequently. Search terms are more durable. The learner practices finding English content independently — a skill they'll need forever.",
+    "progression": "Weeks 1-4: focus on vocabulary extraction + shadowing short phrases. Weeks 5-8: focus on comprehension questions + connected speech observation.",
+    "recording_tie_in": "After watching, the learner records themselves repeating 3-5 key sentences. This connects immersion (input) to production (output)."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "grammar_l0_w2",
+  "level": "L0",
+  "week": 2,
+  "pattern_name": "Present Simple (I / You / We / They)",
+  "pattern_name_ar": "المضارع البسيط (أنا / أنت / نحن / هم)",
+  "formula": "Subject + base verb (no change)",
+  "formula_visual": "[I/You/We/They] + [verb] + ...",
+  "when_to_use": "Use present simple for things you do regularly, habits, routines, facts, and things that are always true.",
+  "when_to_use_ar": "استخدم المضارع البسيط للأشياء اللي تسويها بشكل منتظم، العادات، الروتين، والحقائق.",
+  "why_arabic_speakers_struggle": "Arabic has a different verb conjugation system. In English present simple, the verb does NOT change for I/you/we/they — it stays in its base form.",
+  "examples": [
+    {"en": "I wake up at 7.", "ar": "أصحى الساعة ٧", "time_signal": "every day (implied)"},
+    {"en": "You speak English.", "ar": "أنت تتكلم إنجليزي", "time_signal": "always/generally"},
+    {"en": "We eat dinner at 8.", "ar": "نتعشى الساعة ٨", "time_signal": "every day"},
+    {"en": "They live in Dubai.", "ar": "هم يعيشون في دبي", "time_signal": "permanent/fact"},
+    {"en": "I study English every day.", "ar": "أدرس إنجليزي كل يوم", "time_signal": "every day"}
+  ],
+  "time_signals": ["every day", "always", "usually", "sometimes", "never", "often", "every morning", "every week"],
+  "common_errors": [
+    {"wrong": "I am wake up at 7.", "correct": "I wake up at 7.", "explanation": "Don't add 'am/is/are' before main verbs. Just: I + verb."},
+    {"wrong": "I waking up.", "correct": "I wake up.", "explanation": "Present simple = base form. No -ing for habits."},
+    {"wrong": "I am study every day.", "correct": "I study every day.", "explanation": "For habits, use the base verb alone. 'am' + verb = different tense."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (wake) up early.", "answer": "wake", "hint": "Base form — no change for I"},
+    {"sentence": "We ___ (eat) breakfast together.", "answer": "eat", "hint": "Base form — no change for we"},
+    {"sentence": "They ___ (live) in a big house.", "answer": "live", "hint": "Base form — no change for they"},
+    {"sentence": "You ___ (speak) Arabic and English.", "answer": "speak", "hint": "Base form — no change for you"},
+    {"sentence": "I ___ (go) to work every day.", "answer": "go", "hint": "Base form — no change for I"}
+  ],
+  "negative_form": {
+    "formula": "Subject + don't + base verb",
+    "examples": ["I don't like fish.", "We don't have a car.", "They don't speak French."],
+    "note": "don't = do not (always use don't in speaking)"
+  },
+  "question_form": {
+    "formula": "Do + subject + base verb?",
+    "examples": ["Do you like coffee?", "Do they live here?", "Do we have time?"],
+    "note": "Start with 'Do' for yes/no questions"
+  },
+  "quick_rule": "For I/you/we/they: just use the base verb. No changes. No -s. No -ing. No 'am/is'.",
+  "quick_rule_ar": "مع أنا/أنت/نحن/هم: استخدم الفعل بشكله الأساسي. بدون تغيير.",
+  "connect_to_speaking": "When describing your daily routine, every sentence uses this pattern: 'I wake up. I eat. I go. I study. I sleep.'"
+}

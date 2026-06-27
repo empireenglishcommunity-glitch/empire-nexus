@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Empire English Community",
+    "slug": "empire-english-community",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "empireenglish",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "backgroundColor": "#0A0A0B",
+    "splash": {
+      "backgroundColor": "#0A0A0B",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "dark"
+    },
+    "android": {
+      "userInterfaceStyle": "dark",
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}

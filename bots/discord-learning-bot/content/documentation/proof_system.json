@@ -1,0 +1,85 @@
+{
+  "name": "Documentation & Proof System",
+  "section": "Blueprint §10",
+  "description": "Captures evidence of transformation for: learner motivation (see your own progress), quality assurance (verify the system works), and marketing validation (testimonials with proof).",
+
+  "baseline_capture": {
+    "section": "§10.1",
+    "timing": "Day 1 of onboarding (Step 7)",
+    "what_to_capture": [
+      {"type": "speaking_baseline", "task": "Record 60 seconds: introduce yourself, talk about your family and daily routine.", "saved_as": "baseline_speaking_{member_id}_{date}.mp3"},
+      {"type": "reading_baseline", "task": "Read aloud: the standard passage from Module 1 placement (beginner level).", "saved_as": "baseline_reading_{member_id}_{date}.mp3"},
+      {"type": "writing_baseline", "task": "Write 5 sentences about yourself (no help, no translator).", "saved_as": "baseline_writing_{member_id}_{date}.txt"},
+      {"type": "accent_baseline", "task": "Read aloud: 10 target words containing this week's phonemes.", "saved_as": "baseline_accent_{member_id}_{date}.mp3"},
+      {"type": "self_assessment", "task": "Rate yourself 1-10 on: speaking confidence, listening ability, vocabulary, pronunciation, writing.", "saved_as": "baseline_selfeval_{member_id}_{date}.json"}
+    ],
+    "delivery_message": "🏛️ **BASELINE RECORDING — Day 1**\n\nBefore you begin, we need to capture where you are RIGHT NOW.\nIn 8 weeks, you'll compare these recordings to your progress. The difference will surprise you.\n\nPlease record:\n1. 📢 **60 seconds speaking**: Tell me your name, where you're from, your family, your daily routine, and your goal. (No script — just speak!)\n2. 📖 **Read aloud**: [provided passage]\n3. ✍️ **Write 5 sentences** about yourself\n\nSend all three here. This is for YOUR progress tracking — not graded!",
+    "storage": "Google Drive folder (founder-managed) or Discord DM archive. Never publicly shared without explicit consent."
+  },
+
+  "progress_recordings": {
+    "section": "§10.1 (Table 47)",
+    "schedule": [
+      {"timing": "Day 1 (Baseline)", "content": "Introduction, reading passage, writing sample, self-assessment", "comparison_to": "—"},
+      {"timing": "Day 30", "content": "Same intro + reading (different writing prompt)", "comparison_to": "Baseline → 30-day"},
+      {"timing": "Day 60", "content": "Same format as 30-day", "comparison_to": "Baseline → 60-day"},
+      {"timing": "Day 90", "content": "Same format + advancement speech if applicable", "comparison_to": "Baseline → 90-day"},
+      {"timing": "Level Complete", "content": "Full exit examination recordings", "comparison_to": "Baseline → advancement"},
+      {"timing": "Quarterly (L3)", "content": "Free speech, reading, writing", "comparison_to": "Last quarter"}
+    ],
+    "reminder_system": "n8n workflow or Discord bot reminds member to record at each milestone. Provides the exact same prompts as Day 1 for direct comparison.",
+    "comparison_delivery": "After each recording, bot sends the baseline recording BACK to the learner with: 'Listen to Day 1 you. Then listen to today. Notice the difference.'"
+  },
+
+  "recording_archive": {
+    "section": "§10.2",
+    "structure": {
+      "per_learner": "{member_id}/baseline/ + {member_id}/30day/ + {member_id}/60day/ + ...",
+      "searchable_by": ["Date", "Type (speaking/reading/writing)", "Topic", "Score"],
+      "access_rules": {
+        "learner": "Own recordings only",
+        "moderator": "Coaching access with audit logging",
+        "public": "Only with explicit opt-in consent (for marketing/testimonials)"
+      }
+    },
+    "implementation_pilot": "Store in dedicated Google Drive folder shared with founder. Discord messages also serve as archive (searchable by user).",
+    "implementation_scale": "Dedicated storage (Cloudflare R2 or S3) with metadata in database."
+  },
+
+  "transformation_story_capture": {
+    "section": "§10.3",
+    "when_captured": ["Level Advancement", "30-Day Streak achieved", "90-Day Progress milestone", "Mastery Certification (L3)"],
+    "story_format": {
+      "before": "Where were you before? What was your biggest struggle?",
+      "the_decision": "What made you start? What pushed you?",
+      "the_process": "What was your daily routine like? What was hardest?",
+      "the_breakthrough": "When did you first notice a difference? What moment?",
+      "after": "Where are you now? What can you do that you couldn't before?",
+      "the_proof": "Specific, measurable evidence (scores, duration, situations handled)",
+      "advice": "What would you tell someone who's thinking of starting?"
+    },
+    "collection_method": {
+      "pilot": "Founder interviews the learner (voice call, 10 min). Transcribes key quotes.",
+      "scale": "Bot sends structured prompts at milestones. Learner writes/records responses.",
+      "consent": "Explicit opt-in required before any story is shared publicly. Granular: 'Use my story?' + 'Use my name?' + 'Use my recording?'"
+    },
+    "usage": [
+      "Channel posts (C2 category — transformation stories)",
+      "Website testimonials (when launched)",
+      "Before/after comparison clips (marketing)",
+      "Internal quality validation (does the system actually produce results?)"
+    ]
+  },
+
+  "30_day_comparison_message": {
+    "template": "🎉 **30-DAY MILESTONE — {NAME}!**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nYou've been learning for 30 days. Let's see how far you've come.\n\n📢 **Task:** Record yourself again — same prompt as Day 1:\n\"Tell me your name, where you're from, your family, your daily routine, and your goal.\"\n→ Target: 60 seconds\n→ Send recording here\n\nAfter you record, I'll send you your Day 1 recording.\nListen to both back-to-back.\n\nThe difference? That's 30 days of consistency. 🏛️\n\n📊 Your numbers:\n• Tasks completed: {TASKS}\n• Current streak: {STREAK} days\n• Average score: {AVG_SCORE}\n• Vocabulary learned: ~{VOCAB_ESTIMATE} words\n• Speaking recordings submitted: {SPEAK_COUNT}\n\nYou're building something real. Keep going. 💪"
+  },
+
+  "data_privacy": {
+    "recordings_owned_by": "The learner (they can request deletion at any time)",
+    "default_sharing": "Private (never shared without explicit consent)",
+    "retention": "12 months after last activity, then archived. Permanently deleted on request.",
+    "consent_required_for": ["Sharing in channel as testimonial", "Using in marketing materials", "Sharing with other learners as example"],
+    "never_shared": "Without explicit, recorded consent"
+  }
+}

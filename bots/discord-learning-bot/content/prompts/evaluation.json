@@ -1,0 +1,27 @@
+{
+  "category": "Evaluation & Correction (§11.4)",
+  "prompts": [
+    {
+      "id": 10,
+      "name": "Weekly Progress Report Generator",
+      "description": "Generates a personalized weekly progress summary for each learner, highlighting wins, tracking score deltas, and recommending next-week focus.",
+      "trigger": "Automated: every Monday morning, DM to each active member",
+      "delivers_to": "Discord DM to learner",
+      "system_prompt": "You are a supportive learning coach for Empire English Community. Generate progress reports that celebrate wins first, identify growth areas second, and always end with encouragement. Use simple English for L0-L1 learners.",
+      "user_prompt_template": "Generate a Weekly Progress Report:\n\nLearner: {NAME}\nLevel: {LEVEL}\nWeek: {WEEK_NUMBER}\n\nThis week's data:\n- Tasks completed: {TASKS_COMPLETED} / {TOTAL_TASKS}\n- Current streak: {STREAK} days\n- Speaking submissions: {SPEAKING_COUNT}\n- Writing submissions: {WRITING_COUNT}\n- Voice lounge time: {VOICE_MINUTES} minutes\n- Assessment score: {ASSESSMENT_SCORE} (last week: {LAST_SCORE})\n- Strongest dimension: {STRONGEST}\n- Weakest dimension: {WEAKEST}\n\nProvide:\n1. headline: one-line summary (e.g., 'Great week! Consistency is paying off.')\n2. wins: 2-3 specific things to celebrate\n3. score_delta: improvement or decline since last week, with context\n4. consistency_note: comment on streak and completion rate\n5. community_highlight: note on participation\n6. next_week_focus: ONE specific thing to improve (actionable)\n7. milestone_progress: how close to level advancement (percentage estimate)\n8. encouragement: 1-2 sentences of genuine motivation\n\nReturn as JSON. Keep total output under 200 words.",
+      "variables": ["NAME", "LEVEL", "WEEK_NUMBER", "TASKS_COMPLETED", "TOTAL_TASKS", "STREAK", "SPEAKING_COUNT", "WRITING_COUNT", "VOICE_MINUTES", "ASSESSMENT_SCORE", "LAST_SCORE", "STRONGEST", "WEAKEST"],
+      "output_format": "JSON with all 8 fields"
+    },
+    {
+      "id": 11,
+      "name": "Accent Analysis Report",
+      "description": "Analyzes a learner's pronunciation based on their recordings and provides a detailed breakdown with specific homework.",
+      "trigger": "Monthly (or on demand via !accent command)",
+      "delivers_to": "DM to learner",
+      "system_prompt": "You are an American English pronunciation specialist for Arabic speakers. Provide detailed, actionable accent feedback. Be encouraging but honest. Reference specific phonemes and patterns.",
+      "user_prompt_template": "Generate an Accent Analysis Report:\n\nLearner: {NAME}\nLevel: {LEVEL}\nWeek: {WEEK}\nRecordings analyzed: {RECORDING_DESCRIPTIONS}\nPrevious accent score: {PREV_SCORE}\n\nBased on the recording descriptions, assess:\n1. overall_accent_score: 0-100\n2. phoneme_accuracy: which of the 44 phonemes are strong vs weak\n3. stress_patterns: correct word stress percentage estimate\n4. linking_observations: does the learner link words or speak word-by-word?\n5. rhythm_assessment: stress-timed (American) or syllable-timed (Arabic-influenced)?\n6. top_3_strengths: specific sounds/patterns done well\n7. top_3_priorities: specific sounds/patterns to focus on\n8. weekly_homework: 3 specific drills to practice this week (with example words)\n9. comparison_to_last: improvement since last analysis\n10. estimated_weeks_to_next_level: honest estimate\n\nReturn as JSON.",
+      "variables": ["NAME", "LEVEL", "WEEK", "RECORDING_DESCRIPTIONS", "PREV_SCORE"],
+      "output_format": "JSON with all 10 fields"
+    }
+  ]
+}

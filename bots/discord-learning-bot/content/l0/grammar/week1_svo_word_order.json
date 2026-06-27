@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l0_w1",
+  "level": "L0",
+  "week": 1,
+  "pattern_name": "Basic Word Order (SVO)",
+  "pattern_name_ar": "ترتيب الكلمات الأساسي",
+  "formula": "Subject + Verb + Object",
+  "formula_visual": "[WHO] + [DOES] + [WHAT]",
+  "when_to_use": "Every sentence in English follows this order. The person/thing comes first, the action comes second, the thing being acted on comes third.",
+  "when_to_use_ar": "كل جملة بالإنجليزي تتبع هذا الترتيب: الفاعل أولاً، ثم الفعل، ثم المفعول به.",
+  "why_arabic_speakers_struggle": "In Arabic, the verb often comes first (VSO). In English, the subject ALWAYS comes before the verb.",
+  "examples": [
+    {"en": "I like coffee.", "ar": "أنا أحب القهوة", "structure": "[I] + [like] + [coffee]"},
+    {"en": "She speaks English.", "ar": "هي تتكلم إنجليزي", "structure": "[She] + [speaks] + [English]"},
+    {"en": "We eat breakfast.", "ar": "نحن نأكل فطور", "structure": "[We] + [eat] + [breakfast]"},
+    {"en": "They live here.", "ar": "هم يعيشون هنا", "structure": "[They] + [live] + [here]"},
+    {"en": "He wants water.", "ar": "هو يريد ماء", "structure": "[He] + [wants] + [water]"}
+  ],
+  "common_errors": [
+    {"wrong": "Like I coffee.", "correct": "I like coffee.", "explanation": "Subject must come FIRST, not the verb."},
+    {"wrong": "Coffee I like.", "correct": "I like coffee.", "explanation": "Object comes LAST, not first."},
+    {"wrong": "Speaks she English.", "correct": "She speaks English.", "explanation": "In English, never start with the verb in a statement."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ eat lunch every day.", "answer": "I / We / They", "hint": "Who eats?"},
+    {"sentence": "She ___ English.", "answer": "speaks", "hint": "What does she do?"},
+    {"sentence": "I like ___.", "answer": "coffee / tea / food", "hint": "What do you like?"},
+    {"sentence": "___ want water.", "answer": "I / They / We", "hint": "Who wants?"},
+    {"sentence": "He ___ in Dubai.", "answer": "lives", "hint": "What does he do in Dubai?"}
+  ],
+  "quick_rule": "In English: SUBJECT first, VERB second, OBJECT third. Always. No exceptions for statements.",
+  "quick_rule_ar": "بالإنجليزي: الفاعل أولاً، الفعل ثانياً، المفعول ثالثاً. دائماً. بدون استثناء.",
+  "mnemonic": "SVO = Someone Very Obviously (Subject Verb Object)",
+  "connect_to_speaking": "When you speak, think: WHO am I talking about? WHAT do they do? WHAT is the object? Say it in that order."
+}

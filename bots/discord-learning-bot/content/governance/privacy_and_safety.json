@@ -1,0 +1,107 @@
+{
+  "name": "Data, Privacy, Safety & Governance Framework",
+  "section": "Blueprint §14",
+  "status": "Required before Phase 2. Lightweight version for pilot. Full version before scaling.",
+  "description": "Governs voice recording consent, data retention, minor safeguarding, community safety, and AI content governance.",
+
+  "data_collection_and_consent": {
+    "section": "§14.1",
+    "principle": "Explicit, informed consent before collecting voice/writing data. Consent is GRANULAR.",
+    "consent_types": {
+      "operational": {"description": "Using recordings for personal feedback", "default": "Granted at onboarding (required to use the system)", "withdrawal": "Can opt out — but cannot receive speaking feedback without it"},
+      "improvement": {"description": "Using recordings to improve AI scoring accuracy", "default": "Opt-in (asked separately)", "withdrawal": "Anytime, no penalty"},
+      "marketing": {"description": "Using recordings/stories for testimonials or marketing", "default": "Never assumed. Explicit opt-in at each use.", "withdrawal": "Anytime. Material removed within 7 days."}
+    },
+    "privacy_notice": {
+      "language": "Arabic (primary) + English",
+      "delivered_when": "Onboarding Step 1 (application form)",
+      "must_include": [
+        "What data is collected (voice recordings, written text, progress scores, Discord activity)",
+        "Why it's collected (provide feedback, track progress, improve the system)",
+        "Where it's stored (Google Drive/Discord servers — not shared externally)",
+        "Who can access it (learner: own data. Moderators: coaching access. Admin: all with audit log)",
+        "How long it's kept (12 months after last activity, then archived. Deleted on request)",
+        "How to delete (DM the bot '!delete-my-data' or contact founder directly)"
+      ],
+      "template_ar": "سياسة الخصوصية — Empire English Community\n\n📋 ماذا نجمع:\n• تسجيلاتك الصوتية (للتقييم والتعليقات)\n• كتاباتك (للتصحيح)\n• درجاتك وتقدمك\n• نشاطك في Discord\n\n🎯 لماذا:\n• لنعطيك تعليقات مخصصة\n• لنتابع تقدمك\n• لنحسّن النظام\n\n🔒 من يشوف بياناتك:\n• أنت: كل بياناتك\n• المشرفون: للتوجيه فقط\n• ما نشارك بياناتك مع أي طرف خارجي أبدًا\n\n⏰ كم نحتفظ فيها:\n• ١٢ شهر بعد آخر نشاط\n• تقدر تطلب الحذف أي وقت\n\n❌ حذف البيانات:\n• أرسل !delete-my-data\n• أو تواصل مع المؤسس مباشرة\n• نحذف خلال ٧ أيام\n\n✅ بالاستمرار، أنت توافق على جمع البيانات التشغيلية (المطلوبة لعمل النظام).\nالاستخدامات الأخرى (تسويق، تحسين AI) — نطلب إذنك بشكل منفصل."
+    }
+  },
+
+  "retention_and_deletion": {
+    "section": "§14.2",
+    "retention_period": "12 months after last activity",
+    "after_retention": "Data archived (not actively accessible). Permanently deleted after 24 months.",
+    "deletion_on_request": {
+      "how": "!delete-my-data command OR direct DM to founder",
+      "timeline": "Within 7 days",
+      "what_gets_deleted": "All recordings, writing submissions, progress data, personal info from CRM",
+      "what_remains": "Anonymous, aggregated statistics only (no personally identifiable data)"
+    },
+    "right_to_access": "Learner can request export of all their data at any time (!export-my-data)",
+    "role_scoped_access": {
+      "learner": "Own data only",
+      "buddy": "Onboarding progress of assigned buddy (no recordings)",
+      "moderator": "Teaching-relevant data (scores, submissions for coaching). Audit-logged.",
+      "admin": "All data. Least-privilege principle. Audit-logged."
+    }
+  },
+
+  "minor_safeguarding": {
+    "section": "§14.4",
+    "minimum_age": 16,
+    "enforcement": "Self-declared at onboarding (application form). Under-16 requires parental consent form.",
+    "parental_consent": {
+      "required_for": "Members aged 13-15 (consistent with Discord ToS)",
+      "form_includes": "Parent/guardian name, relationship, contact, explicit permission for voice recording + community participation",
+      "restrictions_for_minors": ["No public showcase (recordings not shared in channels)", "Restricted DMs (buddy only, not random members)", "Enhanced moderation in their channels"]
+    },
+    "note": "For the pilot (9 adults), this section is documented but not yet actively enforced. Must be operational before Phase 2 (public intake)."
+  },
+
+  "community_safety": {
+    "section": "§14.5",
+    "code_of_conduct": {
+      "summary": "Be respectful. Be supportive. Be honest. No harassment. No hate speech. No sharing others' recordings without consent.",
+      "full_version_location": "#rules channel (already posted)",
+      "reporting": "DM @Moderator or @Founder with description of the issue. Optionally: screenshot/recording of the violation.",
+      "response_time": "Within 4 hours during active hours. Within 12 hours otherwise."
+    },
+    "escalation_for_safety_violations": {
+      "distinct_from": "English-only enforcement (§8.3) — those are learning rules. These are SAFETY rules.",
+      "level_1": {"violation": "Minor disrespect or off-topic disruption", "action": "DM warning from moderator", "record": "Logged in #mod-actions"},
+      "level_2": {"violation": "Repeated disrespect after warning", "action": "24-hour mute + formal warning", "record": "Logged + noted in member profile"},
+      "level_3": {"violation": "Harassment, bullying, or making someone unsafe", "action": "Immediate ban pending review", "record": "Full documentation + founder review within 24h"},
+      "level_4": {"violation": "Hate speech, threats, or illegal content", "action": "Permanent ban. No appeal.", "record": "Documented. Reported to Discord Trust & Safety if applicable."}
+    },
+    "voice_lounge_safety": {
+      "moderator_coverage": "At least one moderator/ambassador should be present during scheduled voice sessions. Unscheduled sessions are unmoderated (community self-regulates).",
+      "recording_consent": "Voice lounges are NOT recorded by default. Any recording requires explicit announcement + opt-out opportunity.",
+      "safe_exit": "Members can leave any voice session at any time without explanation. No pressure to stay."
+    }
+  },
+
+  "ai_content_governance": {
+    "section": "§14.6",
+    "human_review": {
+      "pilot": "Founder spot-checks 20% of AI-generated content before delivery (daily tasks, cheat sheets)",
+      "scale": "Spot-check reduced to 5% once quality validated over 4+ weeks",
+      "trigger_for_full_review": "Any learner report of incorrect/inappropriate AI content"
+    },
+    "learner_feedback_path": {
+      "how": "React with ❌ on any AI-generated content OR type !report-content",
+      "what_happens": "Content flagged for human review. Learner receives acknowledgment within 4 hours.",
+      "never": "A learner should never feel 'stuck' with AI content they believe is wrong."
+    },
+    "bias_and_fairness": {
+      "risk": "AI accent scoring may be biased against specific L1 backgrounds (e.g., scoring Arabic-accented English lower than Chinese-accented English for the same intelligibility level).",
+      "mitigation": "Rater-agreement study before AI scores gate advancement (§11 refinement). Regular audit of score distributions across L1 backgrounds.",
+      "human_override": "Any learner can request human re-scoring of AI-evaluated work. This is a RIGHT, not a privilege."
+    }
+  },
+
+  "implementation_timeline": {
+    "pilot_minimum": ["Privacy notice delivered at onboarding", "Basic code of conduct in #rules", "Founder manually handles any safety issues", "Data stored in founder-managed Google Drive"],
+    "phase_2_required": ["Full consent form (granular)", "Automated deletion pipeline (!delete-my-data)", "Minor safeguarding if accepting under-18s", "Moderator training on escalation protocol", "AI bias audit initiated"],
+    "phase_3_required": ["GDPR compliance if EU learners", "Regional data law mapping", "External DPA with AI providers", "Quarterly bias/fairness review"]
+  }
+}

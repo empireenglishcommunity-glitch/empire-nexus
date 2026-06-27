@@ -1,0 +1,70 @@
+{
+  "name": "Progress Metrics Dashboard",
+  "section": "Blueprint §9.4",
+  "description": "Per-learner dashboard showing all tracked metrics. Delivered via !progress command and included in weekly/monthly reports.",
+
+  "metrics_tracked": {
+    "identity": {
+      "level": "Current level (L0/L1/L2/L3)",
+      "track": "Core or Intensive",
+      "week_number": "Which week since joining",
+      "goal": "Personal learning goal"
+    },
+    "scores": {
+      "overall_current": "Latest weekly assessment overall score",
+      "overall_trend": "Last 4 weekly scores (trend direction)",
+      "dimension_radar": "6-dimension scores for radar visualization",
+      "best_score_ever": "Highest overall score achieved"
+    },
+    "consistency": {
+      "current_streak": "Days with at least 1 task completed",
+      "longest_streak": "All-time best streak",
+      "completion_rate_7d": "Tasks completed / total tasks × 100 (last 7 days)",
+      "completion_rate_30d": "Same but 30-day window",
+      "days_active": "Total days with activity since joining",
+      "days_missed": "Total days with zero activity"
+    },
+    "production": {
+      "speaking_recordings": "Total speaking submissions",
+      "writing_submissions": "Total writing submissions",
+      "total_speaking_minutes": "Estimated total speaking time produced",
+      "total_words_written": "Estimated total words written",
+      "voice_lounge_hours": "Total time in voice channels"
+    },
+    "community": {
+      "messages_sent": "Total messages in community channels",
+      "peer_feedback_given": "Times they provided feedback to others",
+      "reactions_received": "Total reactions on their posts",
+      "buddy_interactions": "Check-ins with buddy"
+    },
+    "gamification": {
+      "total_points": "Lifetime points earned",
+      "rank_position": "Position on leaderboard",
+      "badges_earned": "List of achievement badges"
+    },
+    "advancement": {
+      "readiness_percentage": "Estimated readiness for exit exam",
+      "criteria_met": "Which advancement criteria currently pass",
+      "criteria_remaining": "Which still need work",
+      "estimated_weeks_remaining": "AI estimate of time to advancement"
+    }
+  },
+
+  "display_format_discord": {
+    "command": "!progress",
+    "output": "**{NAME}'s Progress Dashboard**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n{LEVEL_EMOJI} Level: **{LEVEL}** — {LEVEL_NAME}\n📅 Week: **{WEEK}** | Track: {TRACK}\n🎯 Goal: {GOAL}\n\n📊 **Latest Score: {SCORE}/100** ({RATING})\n   Trend: {TREND_ARROW} (last 4 weeks: {W1}→{W2}→{W3}→{W4})\n\n🔥 **Streak: {STREAK}** days (best: {BEST})\n📈 Completion: **{RATE}%** (7-day)\n🎙️ Speaking subs: {SPEAKING} | ✍️ Writing: {WRITING}\n💬 Voice lounge: {VOICE}h | Messages: {MSGS}\n🏆 Points: **{POINTS}** | Rank: #{RANK}\n\n📋 **Advancement: {READINESS}% ready**\n{CRITERIA_STATUS}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    "anonymous_comparison": "Compared to others at your level: top {PERCENTILE}% in {STRONGEST_DIMENSION}."
+  },
+
+  "data_sources": {
+    "from_database": ["streak", "points", "submissions count", "voice time", "messages"],
+    "from_assessments_table": ["weekly scores", "dimension scores", "rating"],
+    "calculated_at_request": ["readiness percentage", "trend direction", "rank position", "completion rate"]
+  },
+
+  "visualization_future": {
+    "web_dashboard": "Phase 3+ — dedicated web page with charts, radar, trend lines",
+    "mobile_view": "Phase 4 — in-app dashboard",
+    "current": "Text-based via Discord bot command (!progress)"
+  }
+}

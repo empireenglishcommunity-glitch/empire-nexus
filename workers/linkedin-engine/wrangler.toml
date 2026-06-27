@@ -1,0 +1,35 @@
+# Cloudflare Workers config for the LinkedIn Content Engine (Phase 1)
+# Deploy via CLI:  npx wrangler deploy
+# (Or skip the CLI entirely and paste worker.js into the Cloudflare dashboard — see SETUP.md)
+
+name = "linkedin-engine"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+
+# --- KV namespace (stores drafts, topic rotation, approved queue) ---
+# Create it once:  npx wrangler kv namespace create KV
+# then paste the returned id below.
+[[kv_namespaces]]
+binding = "KV"
+id = "PUT_YOUR_KV_NAMESPACE_ID_HERE"
+
+# --- Workers AI (Phase 2: image generation). Free quota (~230 images/day). ---
+[ai]
+binding = "AI"
+
+# --- Daily cron: generate + deliver one draft to Telegram ---
+# "0 5 * * *" = 05:00 UTC daily (07:00 Cairo / 09:00 Dubai). Adjust as you like.
+[triggers]
+crons = ["0 5 * * *"]
+
+# --- Non-secret defaults can live here; SECRETS must be set separately ---
+# Set secrets (never commit them):
+#   npx wrangler secret put TELEGRAM_TOKEN
+#   npx wrangler secret put ADMIN_CHAT_ID
+#   npx wrangler secret put GEMINI_API_KEY
+#   npx wrangler secret put GROQ_API_KEY            # optional (fallback LLM)
+#   npx wrangler secret put CAROUSEL_WEBAPP_URL     # optional (Phase 3)
+#   npx wrangler secret put CAROUSEL_TOKEN          # optional (Phase 3)
+#   npx wrangler secret put PUBLISH_WEBHOOK_URL     # optional (Phase 4)
+[vars]
+# (intentionally empty — use secrets for tokens/keys)

@@ -1,0 +1,63 @@
+{
+  "module": 3,
+  "name": "Vocabulary Size Assessment",
+  "duration_minutes": 10,
+  "description": "40 multiple-choice questions testing word recognition across frequency bands. Uses Vocabulary Size Test methodology — words from the most common 5,000.",
+  "delivery": "Text-based MCQ via Discord bot or web form",
+  "scoring": "Auto-scored. Each correct answer ≈ 125 words of estimated vocabulary size.",
+  "methodology": "Questions progress from high-frequency (top 500) to low-frequency (3000-5000). Learner's score estimates total vocabulary size.",
+
+  "questions": [
+    {"id": "V1", "band": "1-500", "word": "happy", "sentence": "She is very ___.", "options": ["fast", "happy", "heavy", "hungry"], "answer": "happy"},
+    {"id": "V2", "band": "1-500", "word": "work", "sentence": "I ___ every day.", "options": ["work", "walk", "wash", "want"], "answer": "work"},
+    {"id": "V3", "band": "1-500", "word": "food", "sentence": "We need to buy some ___.", "options": ["foot", "food", "floor", "four"], "answer": "food"},
+    {"id": "V4", "band": "1-500", "word": "help", "sentence": "Can you ___ me please?", "options": ["help", "hear", "hope", "hurt"], "answer": "help"},
+    {"id": "V5", "band": "1-500", "word": "water", "sentence": "I want a glass of ___.", "options": ["winter", "water", "weather", "window"], "answer": "water"},
+    {"id": "V6", "band": "500-1000", "word": "kitchen", "sentence": "She is cooking in the ___.", "options": ["garden", "kitchen", "bedroom", "bathroom"], "answer": "kitchen"},
+    {"id": "V7", "band": "500-1000", "word": "beautiful", "sentence": "The sunset is ___.", "options": ["beautiful", "careful", "powerful", "wonderful"], "answer": "beautiful"},
+    {"id": "V8", "band": "500-1000", "word": "explain", "sentence": "Can you ___ this to me?", "options": ["explore", "explain", "expect", "express"], "answer": "explain"},
+    {"id": "V9", "band": "500-1000", "word": "decide", "sentence": "I need to ___ what to do.", "options": ["describe", "decide", "deliver", "develop"], "answer": "decide"},
+    {"id": "V10", "band": "500-1000", "word": "improve", "sentence": "I want to ___ my English.", "options": ["improve", "import", "impress", "include"], "answer": "improve"},
+    {"id": "V11", "band": "1000-1500", "word": "schedule", "sentence": "Let me check my ___.", "options": ["schedule", "school", "science", "scissors"], "answer": "schedule"},
+    {"id": "V12", "band": "1000-1500", "word": "opportunity", "sentence": "This is a great ___ for you.", "options": ["operation", "opportunity", "opinion", "opposite"], "answer": "opportunity"},
+    {"id": "V13", "band": "1000-1500", "word": "achieve", "sentence": "She worked hard to ___ her goals.", "options": ["achieve", "avoid", "arrange", "attach"], "answer": "achieve"},
+    {"id": "V14", "band": "1000-1500", "word": "experience", "sentence": "He has a lot of ___ in teaching.", "options": ["experiment", "experience", "expression", "expectation"], "answer": "experience"},
+    {"id": "V15", "band": "1000-1500", "word": "environment", "sentence": "We must protect the ___.", "options": ["entertainment", "environment", "equipment", "employment"], "answer": "environment"},
+    {"id": "V16", "band": "1500-2000", "word": "perspective", "sentence": "I'd like to hear your ___ on this issue.", "options": ["performance", "permission", "perspective", "prediction"], "answer": "perspective"},
+    {"id": "V17", "band": "1500-2000", "word": "negotiate", "sentence": "They need to ___ a better deal.", "options": ["navigate", "negotiate", "nominate", "neutralize"], "answer": "negotiate"},
+    {"id": "V18", "band": "1500-2000", "word": "consequence", "sentence": "Every action has a ___.", "options": ["conference", "confidence", "consequence", "conscience"], "answer": "consequence"},
+    {"id": "V19", "band": "1500-2000", "word": "substantial", "sentence": "There was a ___ increase in sales.", "options": ["suitable", "sufficient", "substantial", "suspicious"], "answer": "substantial"},
+    {"id": "V20", "band": "1500-2000", "word": "acknowledge", "sentence": "He refused to ___ his mistake.", "options": ["accomplish", "accumulate", "acknowledge", "accommodate"], "answer": "acknowledge"},
+    {"id": "V21", "band": "2000-2500", "word": "resilient", "sentence": "She's very ___ — she always bounces back from problems.", "options": ["reluctant", "resilient", "relevant", "religious"], "answer": "resilient"},
+    {"id": "V22", "band": "2000-2500", "word": "compromise", "sentence": "We need to find a ___.", "options": ["competition", "complement", "compromise", "complication"], "answer": "compromise"},
+    {"id": "V23", "band": "2000-2500", "word": "inevitable", "sentence": "Change is ___.", "options": ["incredible", "inevitable", "invisible", "individual"], "answer": "inevitable"},
+    {"id": "V24", "band": "2000-2500", "word": "ambiguous", "sentence": "His answer was very ___.", "options": ["ambitious", "ambiguous", "abundant", "abstract"], "answer": "ambiguous"},
+    {"id": "V25", "band": "2000-2500", "word": "deteriorate", "sentence": "The situation began to ___.", "options": ["determine", "deteriorate", "demonstrate", "distinguish"], "answer": "deteriorate"},
+    {"id": "V26", "band": "2500-3000", "word": "eloquent", "sentence": "She gave an ___ speech.", "options": ["elegant", "eloquent", "elaborate", "efficient"], "answer": "eloquent"},
+    {"id": "V27", "band": "2500-3000", "word": "meticulous", "sentence": "He is very ___ about details.", "options": ["mysterious", "meticulous", "malicious", "miraculous"], "answer": "meticulous"},
+    {"id": "V28", "band": "2500-3000", "word": "plausible", "sentence": "That sounds like a ___ explanation.", "options": ["pleasant", "plausible", "previous", "precious"], "answer": "plausible"},
+    {"id": "V29", "band": "2500-3000", "word": "pragmatic", "sentence": "We need a more ___ approach.", "options": ["problematic", "pragmatic", "prolific", "prominent"], "answer": "pragmatic"},
+    {"id": "V30", "band": "2500-3000", "word": "scrutinize", "sentence": "The committee will ___ every detail.", "options": ["sacrifice", "scrutinize", "stimulate", "speculate"], "answer": "scrutinize"},
+    {"id": "V31", "band": "3000-4000", "word": "conundrum", "sentence": "This is quite a ___.", "options": ["consensus", "conundrum", "correlation", "curriculum"], "answer": "conundrum"},
+    {"id": "V32", "band": "3000-4000", "word": "juxtapose", "sentence": "The artist likes to ___ light and dark.", "options": ["justify", "juxtapose", "jeopardize", "juggle"], "answer": "juxtapose"},
+    {"id": "V33", "band": "3000-4000", "word": "ubiquitous", "sentence": "Smartphones have become ___.", "options": ["unanimous", "ubiquitous", "unprecedented", "unambiguous"], "answer": "ubiquitous"},
+    {"id": "V34", "band": "3000-4000", "word": "ephemeral", "sentence": "Beauty is ___.", "options": ["empirical", "ephemeral", "equivocal", "existential"], "answer": "ephemeral"},
+    {"id": "V35", "band": "3000-4000", "word": "surreptitious", "sentence": "He made a ___ exit.", "options": ["spontaneous", "simultaneous", "surreptitious", "superfluous"], "answer": "surreptitious"},
+    {"id": "V36", "band": "4000-5000", "word": "obsequious", "sentence": "His ___ behavior annoyed everyone.", "options": ["obstinate", "obsequious", "ostentatious", "omniscient"], "answer": "obsequious"},
+    {"id": "V37", "band": "4000-5000", "word": "magnanimous", "sentence": "She was ___ in victory.", "options": ["magnificent", "magnanimous", "meticulous", "malevolent"], "answer": "magnanimous"},
+    {"id": "V38", "band": "4000-5000", "word": "perfunctory", "sentence": "He gave a ___ nod.", "options": ["perpetual", "perfunctory", "pejorative", "presumptuous"], "answer": "perfunctory"},
+    {"id": "V39", "band": "4000-5000", "word": "recalcitrant", "sentence": "The ___ student refused to cooperate.", "options": ["redundant", "recalcitrant", "reprehensible", "reminiscent"], "answer": "recalcitrant"},
+    {"id": "V40", "band": "4000-5000", "word": "perspicacious", "sentence": "A ___ observer would notice the difference.", "options": ["pessimistic", "perspicacious", "presumptuous", "problematic"], "answer": "perspicacious"}
+  ],
+
+  "scoring_rules": {
+    "vocab_size_estimate": "correct_answers × 125 (each question represents ~125 words in that band)",
+    "level_mapping": {
+      "L0": "0-400 estimated words (0-3 correct from top bands)",
+      "L1": "401-1200 estimated words (4-9 correct)",
+      "L2": "1201-2500 estimated words (10-20 correct)",
+      "L3": "2501+ estimated words (21-40 correct)"
+    },
+    "note": "Questions get progressively harder. Most L0 learners will get V1-V5 correct and stop. This is by design."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "category": "Material Generation (§11.5)",
+  "prompts": [
+    {
+      "id": 12,
+      "name": "Leveled Reading Passage Generator",
+      "description": "Generates a reading passage at the appropriate level with comprehension questions and vocabulary highlights.",
+      "trigger": "2x per week, or on demand",
+      "delivers_to": "#cheat-sheets or daily tasks",
+      "system_prompt": "You are creating reading passages for Arabic-speaking English learners. Passages must use ONLY vocabulary appropriate for the specified level. Content should be interesting, culturally appropriate, and teach something useful.",
+      "user_prompt_template": "Generate a Leveled Reading Passage:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTopic: {TOPIC}\nWord count: {WORD_COUNT}\nTarget vocabulary: {VOCAB_WORDS}\n\nProvide:\n1. title: passage title\n2. passage: the reading text (using only level-appropriate vocabulary)\n3. word_count: actual count\n4. new_words: [{word, meaning_ar, context_in_passage}] — max 5\n5. comprehension_questions: 5 questions (3 literal, 2 inference)\n6. discussion_prompt: one question for voice lounge discussion\n7. writing_extension: a related writing task\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "TOPIC", "WORD_COUNT", "VOCAB_WORDS"],
+      "output_format": "JSON with passage, questions, vocabulary, extensions"
+    },
+    {
+      "id": 13,
+      "name": "Conversation Starter Pack",
+      "description": "Generates conversation starters for voice lounge sessions — topics, questions, and phrases to use.",
+      "trigger": "Daily at voice lounge schedule times",
+      "delivers_to": "#events or voice lounge text chat",
+      "system_prompt": "You are creating conversation prompts for English learners at various levels. Topics should be engaging, culturally inclusive, and generate real discussion. Include 'rescue phrases' learners can use if they get stuck.",
+      "user_prompt_template": "Generate a Conversation Starter Pack:\n\nLevel: {LEVEL}\nSession type: {SESSION_TYPE}\nTheme: {THEME}\n\nProvide:\n1. topic: main discussion topic\n2. warm_up_question: easy opening question everyone can answer\n3. main_questions: 5 discussion questions (progressive difficulty)\n4. useful_phrases: 8 phrases learners should try to use [{phrase, when_to_use}]\n5. rescue_phrases: 5 phrases for when you get stuck ('How do you say...?', 'Can you repeat?')\n6. vocabulary_to_practice: 5 words related to the topic\n7. wrap_up: closing question ('What was the most interesting thing someone said?')\n\nReturn as JSON.",
+      "variables": ["LEVEL", "SESSION_TYPE", "THEME"],
+      "output_format": "JSON with all 7 fields"
+    },
+    {
+      "id": 14,
+      "name": "Shadowing Audio Script Generator",
+      "description": "Generates annotated scripts for shadowing practice with stress marks, linking indicators, and pause points.",
+      "trigger": "Daily as part of Task 3 (Shadowing)",
+      "delivers_to": "Daily task delivery",
+      "system_prompt": "You are creating shadowing scripts for American English practice. Annotate the text to show WHERE to stress, WHERE to link, WHERE to pause. The learner will read this while listening to audio and match the native pattern.",
+      "user_prompt_template": "Generate a Shadowing Script:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTopic: {TOPIC}\nTarget WPM: {WPM}\nDuration: {SECONDS} seconds\n\nProvide:\n1. plain_text: the passage without annotations\n2. annotated_text: same passage with [STRESS] [LINK] [PAUSE] [REDUCE] markers\n3. word_count: verify matches WPM × duration\n4. key_patterns: 3 pronunciation patterns to notice in this passage\n5. shadow_instructions: specific instructions for this passage\n6. focus_sentence: one sentence to repeat 10 times (the hardest)\n\nAnnotation guide:\n- CAPS = stressed syllable (e.g., 'I THINK it's IMportant')\n- _ = linking (e.g., 'turn_it_off')\n- | = pause point\n- (reduced) = word said in reduced form (e.g., 'to(tuh)', 'and(n)')\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "TOPIC", "WPM", "SECONDS"],
+      "output_format": "JSON with plain_text, annotated_text, patterns, instructions"
+    },
+    {
+      "id": 24,
+      "name": "Writing Prompt Generator",
+      "description": "Generates level-appropriate writing prompts with structure guidance and vocabulary suggestions.",
+      "trigger": "Daily as part of Task 6 (Writing)",
+      "delivers_to": "Daily task delivery",
+      "system_prompt": "You are creating writing prompts for Arabic-speaking English learners. Prompts should be engaging, personally relevant, and achievable at the specified level. Always include structural guidance.",
+      "user_prompt_template": "Generate a Writing Prompt:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nGrammar focus: {GRAMMAR}\nVocabulary theme: {THEME}\nTarget length: {SENTENCES} sentences\n\nProvide:\n1. prompt_en: the writing task in English\n2. prompt_ar: Arabic translation (for L0)\n3. structure_guide: sentence-by-sentence guide (e.g., 'Sentence 1: introduce topic. Sentence 2: give detail...')\n4. useful_vocabulary: 8 words to try using\n5. grammar_reminder: the grammar pattern to practice in this writing\n6. example_opening: one possible first sentence (as inspiration, not to copy)\n7. submission_note: 'Post in #writing-feedback for AI correction'\n\nReturn as JSON.",
+      "variables": ["LEVEL", "WEEK", "GRAMMAR", "THEME", "SENTENCES"],
+      "output_format": "JSON with all 7 fields"
+    }
+  ]
+}

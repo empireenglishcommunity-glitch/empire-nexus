@@ -1,0 +1,46 @@
+{
+  "id": "grammar_l0_w7",
+  "level": "L0",
+  "week": 7,
+  "pattern_name": "Can / Can't (Ability & Permission)",
+  "pattern_name_ar": "أقدر / ما أقدر (القدرة والإذن)",
+  "formula": "Subject + can/can't + base verb",
+  "formula_visual": "[Subject] + [can/can't] + [base verb]",
+  "when_to_use": "To talk about ability (what you are able to do) or permission (what is allowed).",
+  "when_to_use_ar": "للتحدث عن القدرة (إيش تقدر تسوي) أو الإذن (إيش مسموح).",
+  "the_rule": {
+    "positive": "Subject + can + base verb (NEVER add -s, NEVER add 'to')",
+    "negative": "Subject + can't + base verb",
+    "question": "Can + subject + base verb?",
+    "critical": "Can is the same for ALL subjects: I can, he can, she can, they can — NO changes."
+  },
+  "examples": [
+    {"en": "I can speak Arabic.", "ar": "أقدر أتكلم عربي"},
+    {"en": "She can cook well.", "ar": "هي تقدر تطبخ زين"},
+    {"en": "I can't swim.", "ar": "ما أقدر أسبح"},
+    {"en": "He can't drive yet.", "ar": "هو ما يقدر يسوق لسّا"},
+    {"en": "Can you help me?", "ar": "تقدر تساعدني؟"}
+  ],
+  "pronunciation_note": {
+    "can_positive": "In positive sentences, 'can' is WEAK: /kən/ — sounds like 'kun' (short, unstressed)",
+    "can_negative": "In negative, 'can't' is STRONG: /kænt/ — sounds like 'KANT' (long, stressed)",
+    "tip": "This is how native speakers hear the difference: the vowel sound, not the 't'.",
+    "tip_ar": "الفرق: can = ضعيفة وسريعة (كَن). can't = قوية وواضحة (كَانت)."
+  },
+  "common_errors": [
+    {"wrong": "I can to swim.", "correct": "I can swim.", "explanation": "NEVER put 'to' after can. Always: can + base verb directly."},
+    {"wrong": "She cans cook.", "correct": "She can cook.", "explanation": "Can NEVER gets -s. It stays the same for everyone."},
+    {"wrong": "He can not drive.", "correct": "He can't drive.", "explanation": "Use 'can't' (one word). 'Cannot' is formal writing only."},
+    {"wrong": "Can he speaks?", "correct": "Can he speak?", "explanation": "After can = base verb. No -s, no -ing."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (can/swim) but I ___ (can't/run) fast.", "answer": "can swim, can't run"},
+    {"sentence": "___ you speak English?", "answer": "Can", "hint": "Question: Can + subject + verb"},
+    {"sentence": "She ___ (can/cook) very well.", "answer": "can cook"},
+    {"sentence": "They ___ (can't/come) today.", "answer": "can't come"},
+    {"sentence": "My brother ___ (can/drive) but I ___.", "answer": "can drive, can't"}
+  ],
+  "quick_rule": "can + base verb. can't + base verb. Same for ALL subjects. Never add -s, never add 'to'.",
+  "quick_rule_ar": "can + فعل أساسي. can't + فعل أساسي. نفس الشي لكل الضمائر. بدون s، بدون to.",
+  "connect_to_speaking": "Talk about yourself: 'I can speak Arabic. I can cook. I can't swim yet. I can't speak English fast — but I'm learning!'"
+}

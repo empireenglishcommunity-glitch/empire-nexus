@@ -1,0 +1,50 @@
+{
+  "category": "Cheat Sheets & Reference (§11.1)",
+  "prompts": [
+    {
+      "id": 1,
+      "name": "Weekly Vocabulary Cheat Sheet",
+      "description": "Generates a one-page vocabulary reference for the week's theme. Includes definitions, pronunciation, examples, collocations, and common mistakes.",
+      "trigger": "Automated: every Sunday for the upcoming week",
+      "delivers_to": "#cheat-sheets channel",
+      "system_prompt": "You are the AI content engine for Empire English Community — a system-driven English learning program for Arabic speakers focused on American pronunciation. Generate clear, concise, learner-friendly vocabulary references.",
+      "user_prompt_template": "Generate a Weekly Vocabulary Cheat Sheet for:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nTheme: {THEME}\nWord count: {WORD_COUNT} words\nLearner's first language: Arabic\n\nFor each word provide:\n1. word (English)\n2. pronunciation (simplified phonetic — NOT full IPA)\n3. arabic (Arabic translation)\n4. part_of_speech\n5. example_sentence (using only level-appropriate vocabulary)\n6. collocation (common word pair)\n7. common_mistake (error Arabic speakers make with this word)\n\nGroup words by day (8 per day for L0, 10 for L1+).\nMark words with sounds that don't exist in Arabic with ⚠️.\nOrder: concrete nouns first, then verbs, then adjectives/adverbs.\n\nReturn as a JSON array of word objects.",
+      "variables": ["LEVEL", "WEEK", "THEME", "WORD_COUNT"],
+      "output_format": "JSON array of word objects with: word, pronunciation, arabic, part_of_speech, example_sentence, collocation, common_mistake",
+      "example_call": {"LEVEL": "L0", "WEEK": 3, "THEME": "Family & People", "WORD_COUNT": 56}
+    },
+    {
+      "id": 2,
+      "name": "Grammar Pattern Card Generator",
+      "description": "Generates a grammar pattern card explaining one grammatical structure with formula, examples, errors, and practice.",
+      "trigger": "Automated: Thursday of each week (Day 4 — after 3 days of using the pattern)",
+      "delivers_to": "#cheat-sheets channel",
+      "system_prompt": "You are a grammar teaching assistant for Arabic-speaking English learners. Explain grammar through PATTERNS and EXAMPLES, not rules. Show the formula visually. Include Arabic translation for Level 0.",
+      "user_prompt_template": "Generate a Grammar Pattern Card:\n\nLevel: {LEVEL}\nWeek: {WEEK}\nPattern: {PATTERN}\nLearner L1: Arabic\n\nProvide:\n1. pattern_name (English)\n2. pattern_name_ar (Arabic)\n3. formula (visual: Subject + verb-s + object)\n4. when_to_use (1-2 sentences)\n5. when_to_use_ar (Arabic)\n6. examples (5 clear examples with Arabic translations)\n7. common_errors (3 mistakes Arabic speakers make, with wrong → correct)\n8. practice_fill_blank (5 fill-in-the-blank exercises)\n9. negative_form (if applicable)\n10. question_form (if applicable)\n11. quick_rule (one-sentence summary)\n12. quick_rule_ar (Arabic)\n\nReturn as JSON object.",
+      "variables": ["LEVEL", "WEEK", "PATTERN"],
+      "output_format": "JSON object with all 12 fields"
+    },
+    {
+      "id": 3,
+      "name": "Personal Error Log Cheat Sheet",
+      "description": "Generates a personalized cheat sheet based on a learner's specific recurring errors. Top 5 errors with fixes and one focus area.",
+      "trigger": "On demand: after weekly assessment, or when learner types !errors",
+      "delivers_to": "DM to learner",
+      "system_prompt": "You are a supportive English coach. Review this learner's recent errors and create a personalized, encouraging cheat sheet. Focus on the TOP 3-5 errors only — don't overwhelm.",
+      "user_prompt_template": "Generate a Personal Error Log for:\n\nLearner: {NAME}\nLevel: {LEVEL}\nRecent errors (from last 7 days of writing/speaking submissions):\n{ERROR_LIST}\n\nCreate a cheat sheet with:\n1. top_5_errors: [{error, wrong_example, correct_example, quick_fix, practice_sentence}]\n2. one_focus_this_week: the single most impactful error to eliminate\n3. encouragement: a short motivational message acknowledging progress\n4. pattern_noticed: what underlying rule the learner hasn't internalized yet\n\nKeep it SHORT — one page maximum. Use simple English for L0-L1.",
+      "variables": ["NAME", "LEVEL", "ERROR_LIST"],
+      "output_format": "JSON with top_5_errors array, one_focus_this_week, encouragement, pattern_noticed"
+    },
+    {
+      "id": 25,
+      "name": "Grammar Error Explanation",
+      "description": "Explains a specific grammar error with why it's wrong, why Arabic speakers make it, and how to fix it permanently.",
+      "trigger": "On demand: when AI evaluates writing and finds a recurring error pattern",
+      "delivers_to": "Inline with writing feedback",
+      "system_prompt": "You are a patient grammar tutor for Arabic speakers learning English. Explain errors in simple language (never use linguistics jargon). Always connect to Arabic to show WHY the error happens.",
+      "user_prompt_template": "Explain this grammar error:\n\nError: {ERROR_SENTENCE}\nCorrect: {CORRECT_SENTENCE}\nLearner level: {LEVEL}\nLearner L1: Arabic\n\nProvide:\n1. what_went_wrong: simple explanation (1-2 sentences)\n2. why_arabic_speakers_do_this: connection to Arabic grammar/thinking\n3. the_rule: the English rule, stated simply\n4. visual_formula: pattern the learner can memorize\n5. more_examples: 3 correct examples using the same rule\n6. practice: 2 sentences for the learner to fix themselves\n7. memory_tip: a mnemonic or trick to remember\n\nUse simple English (the learner is level {LEVEL}).",
+      "variables": ["ERROR_SENTENCE", "CORRECT_SENTENCE", "LEVEL"],
+      "output_format": "JSON with all 7 fields"
+    }
+  ]
+}
