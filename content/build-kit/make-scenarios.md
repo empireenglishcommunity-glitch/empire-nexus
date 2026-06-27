@@ -1,3 +1,5 @@
+> **HISTORICAL DOCUMENT** — This file is kept for reference only. The work described here has been completed and the systems have moved on.
+
 # Build Kit — Make.com Scenario Runbook (A1–A9)
 
 Implements spec §9. Build these scenarios **in order**; test each before moving on. All read/write the `Empire CRM` Google Sheet and read copy from the `String_Table` tab.

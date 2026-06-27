@@ -1,5 +1,5 @@
 /**
- * Empire English — Smart Sales Bot (v11) — Cloudflare Workers
+ * Empire English — Smart Sales Bot (v13) — Cloudflare Workers
  * Guided buttons + Arabic-clean copy + Payment approval gate
  * (crypto & bank transfer are escalated to YOU to send personally)
  * + Auto-Learn + Memory + Daily reminders + Invoice capture + Subscribe confirm + Feedback.

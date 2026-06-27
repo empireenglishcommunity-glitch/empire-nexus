@@ -1,3 +1,5 @@
+> **HISTORICAL DOCUMENT** — This file is kept for reference only. The work described here has been completed and the systems have moved on.
+
 # Phase 0 — Patch #001: Three Bug Fixes
 
 **Date:** June 2026  

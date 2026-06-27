@@ -1,34 +1,25 @@
 """
 Deploy n8n-MCP Server to Hetzner
-Run from: C:\Users\97150\macal_pc\ (or anywhere)
+Run from any machine with SSH access to the server.
 Usage: python deploy_mcp.py
+
+Prerequisites:
+  - SSH key configured for root@77.42.43.250
+  - .env file on server at /opt/n8n-mcp/.env with N8N_API_URL and N8N_API_KEY
 """
 import subprocess
 import sys
 import time
+import os
 
 SERVER = "root@77.42.43.250"
-KEY = r"C:\Users\97150\.ssh\id_ed25519"
+# Auto-detect SSH key location (Linux/Mac or Windows)
+KEY = os.path.expanduser("~/.ssh/id_ed25519")
 REMOTE_DIR = "/opt/n8n-mcp"
 
-COMPOSE_CONTENT = '''version: '3.8'
-services:
-  n8n-mcp:
-    image: ghcr.io/czlonkowski/n8n-mcp:latest
-    container_name: empire-n8n-mcp
-    restart: unless-stopped
-    environment:
-      N8N_API_URL: https://bot.empireenglish.online/api/v1
-      N8N_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODExZjBlMC0xYzIyLTQ4MmEtOTk5ZC0wZThlYzVkZDk3YjkiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiMTE2NGM3ODUtZTlmMy00MWQwLWE0MzctZDg3MjFlMzAyMGUyIiwiaWF0IjoxNzgyMzkyNDA5fQ.FyfkFGAdV7kCOdMUUk_lab2PnDzSKbmAzSVK-TJVgfw
-      MCP_TRANSPORT: http
-      MCP_HTTP_PORT: "3001"
-      MCP_HTTP_HOST: 0.0.0.0
-      NODE_ENV: production
-      LOG_LEVEL: info
-    ports:
-      - 127.0.0.1:3001:3001
-    deploy:
-      resources:
+# NOTE: The actual docker-compose.yml is in the repository at
+# infrastructure/n8n-mcp/docker-compose.yml. This script deploys it.
+# Secrets (N8N_API_KEY) are in .env on the server, NOT in this file.
         limits:
           memory: 512M
           cpus: "0.5"
