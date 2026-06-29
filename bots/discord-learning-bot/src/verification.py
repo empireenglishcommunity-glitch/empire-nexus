@@ -30,7 +30,7 @@ logger = logging.getLogger("empire-bot.verify")
 
 # In-memory cache: {discord_id: last_done_timestamp}
 _last_done_time: dict[str, datetime.datetime] = {}
-COOLDOWN_SECONDS = 300  # 5 minutes
+COOLDOWN_SECONDS = 60  # 1 minute
 
 # Voice tracking: {discord_id: {"join_time": datetime, "total_minutes": float}}
 _voice_sessions: dict[str, dict] = {}
@@ -108,11 +108,11 @@ async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[
     cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=2)
 
     async for msg in channel.history(limit=50, after=cutoff):
-        if msg.author.id == member.id and len(msg.content) >= 20:
+        if msg.author.id == member.id and len(msg.content) >= 10:
             return True, ""
 
     return False, (
-        f"لازم تكتب 20 حرف على الأقل في `#{channel_name}` الأول.\n"
+        f"لازم تكتب 10 حروف على الأقل في `#{channel_name}` الأول.\n"
         f"اكتب تمرين الكتابة هناك، وبعدين ارجع اكتب `!done writing`"
     )
 

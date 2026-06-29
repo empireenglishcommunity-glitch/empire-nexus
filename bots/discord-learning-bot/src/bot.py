@@ -531,17 +531,32 @@ async def cmd_done(ctx, task: str = None):
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
         return
 
-    # Format response
-    bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
-    msg = (
-        f"{result['feedback']}\n\n"
-        f"[{bar}] {result['tasks_today']}/7 today\n"
-        f"🔥 Streak: **{result['streak']}** days | +{result['points']} points"
-    )
-    if result["tasks_today"] == 7:
-        msg += "\n\n🎉 **ALL 7 TASKS COMPLETE!** Bonus points earned!"
+    # Format response — Arabic for L0, English for higher
+    member_data = database.get_member(str(ctx.author.id))
+    level = member_data.get("level", "L0") if member_data else "L0"
+
+    if level == "L0":
+        msg = features.get_done_response_ar(task, result)
+    else:
+        bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
+        msg = (
+            f"{result['feedback']}\n\n"
+            f"[{bar}] {result['tasks_today']}/7 today\n"
+            f"🔥 Streak: **{result['streak']}** days | +{result['points']} points"
+        )
+        if result["tasks_today"] == 7:
+            msg += "\n\n🎉 **ALL 7 TASKS COMPLETE!** Bonus points earned!"
 
     await ctx.send(msg)
+
+    # PUBLIC CELEBRATION: all 7 tasks done
+    if result["tasks_today"] == 7 and isinstance(ctx.author, discord.Member):
+        await features.celebrate_completion(ctx.guild, ctx.author.display_name, result["streak"])
+
+    # STREAK MILESTONE celebration
+    if result["streak"] in config.STREAK_BONUS_POINTS and isinstance(ctx.author, discord.Member):
+        bonus = config.STREAK_BONUS_POINTS[result["streak"]]
+        await features.celebrate_streak_milestone(ctx.guild, ctx.author.display_name, result["streak"], bonus)
 
 
 @bot.command(name="progress")
@@ -696,6 +711,7 @@ async def cmd_help(ctx):
         "**Learning:**\n"
         "`!join <goal>` — Register and set your goal\n"
         "`!done <task>` — Mark a task done (with verification)\n"
+        "`!today` — See your remaining tasks for today\n"
         "`!progress` — Your full progress dashboard\n"
         "`!streak` — Your streak details\n"
         "`!level` — Your level info and advancement requirements\n"
@@ -736,6 +752,13 @@ async def on_message(message: discord.Message):
     # Don't respond to bot's own messages
     if message.author.bot:
         return
+
+    # Handle exam DM submissions
+    if isinstance(message.channel, discord.DMChannel):
+        if features.has_pending_exam(str(message.author.id)):
+            handled = await features.handle_exam_dm(message)
+            if handled:
+                return
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
@@ -826,12 +849,26 @@ async def on_message(message: discord.Message):
 async def cmd_exam(ctx):
     """Request the level advancement exam."""
     await features.handle_exam_request(ctx, bot)
+    # If eligible, start DM collection
+    member = database.get_member(str(ctx.author.id))
+    if member:
+        level_info = config.LEVELS.get(member["level"], config.LEVELS["L0"])
+        week = database.member_week_number(str(ctx.author.id))
+        min_weeks = level_info.get("duration_weeks")
+        if min_weeks and week >= min_weeks[0]:
+            await features.start_exam_collection(ctx.author)
 
 
 @bot.command(name="delete")
 async def cmd_delete(ctx):
     """Request deletion of all your data."""
     await features.handle_delete_request(ctx, bot)
+
+
+@bot.command(name="today")
+async def cmd_today(ctx):
+    """Show your remaining tasks for today."""
+    await features.show_today(ctx)
 
 
 @bot.command(name="confirm-delete")

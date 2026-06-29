@@ -798,3 +798,280 @@ def format_shadowing_resources(level: str) -> str:
         lines.append(f"• [{r['title']}]({r['url']}) — Speed: {r['speed']}")
     lines.append("\n*Pick any clip (30-60 sec). Listen → Shadow 3x → Record #3.*")
     return "\n".join(lines)
+
+
+
+# ============================================================
+#  19. !TODAY COMMAND (personal remaining tasks)
+# ============================================================
+
+async def show_today(ctx):
+    """Show what tasks remain for today with time estimate."""
+    member = database.get_member(str(ctx.author.id))
+    if not member:
+        await ctx.send("مش مسجل. اكتب `!join` الأول.")
+        return
+
+    completed = database.tasks_completed_today(str(ctx.author.id))
+    allowed = get_allowed_tasks_for_member(str(ctx.author.id))
+    week = database.member_week_number(str(ctx.author.id))
+
+    lines = [f"📅 **مهامك النهاردة — Week {week}**", "━━━━━━━━━━━━━━━━━━━━━━━━", ""]
+
+    total_min = 0
+    for task in config.DAILY_TASKS:
+        tid = task["id"]
+        if tid not in allowed:
+            continue
+        if tid in completed:
+            lines.append(f"  ✅ ~~{task['emoji']} {task['name_ar']}~~")
+        else:
+            mins = 10 if member.get("level", "L0") == "L0" else 15
+            total_min += mins
+            lines.append(f"  ⬜ {task['emoji']} {task['name_ar']} — `!done {tid}`")
+
+    lines.append("")
+    done_count = len([t for t in allowed if t in completed])
+    total_count = len(allowed)
+    bar = "█" * done_count + "░" * (total_count - done_count)
+
+    lines.append(f"[{bar}] {done_count}/{total_count}")
+
+    if total_min > 0:
+        lines.append(f"⏱️ الوقت المتبقي: ~{total_min} دقيقة")
+    else:
+        lines.append("🎉 **خلصت كل مهام النهاردة! أحسنت!**")
+
+    await ctx.send("\n".join(lines))
+
+
+# ============================================================
+#  20. ARABIC BOT RESPONSES FOR L0
+# ============================================================
+
+def get_done_response_ar(task_id: str, result: dict) -> str:
+    """Generate Arabic !done response for L0 students."""
+    task_names_ar = {
+        "accent": "تدريب النطق",
+        "vocab": "المفردات",
+        "shadow": "المحاكاة",
+        "speaking": "مهمة الكلام",
+        "listening": "الاستماع",
+        "writing": "الكتابة",
+        "community": "المشاركة المجتمعية",
+    }
+    task_name = task_names_ar.get(task_id, task_id)
+    bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
+
+    msg = f"✅ **{task_name}** — أحسنت! 👏\n\n"
+    msg += f"[{bar}] {result['tasks_today']}/7 النهاردة\n"
+    msg += f"🔥 Streak: **{result['streak']}** يوم | +{result['points']} نقطة"
+
+    if result["tasks_today"] == 7:
+        msg += "\n\n🎉 **خلصت الـ 7 مهام! بونص إضافي!** 🏛️"
+
+    return msg
+
+
+# ============================================================
+#  21. PUBLIC CELEBRATION (all 7 tasks done)
+# ============================================================
+
+async def celebrate_completion(guild: discord.Guild, member_name: str, streak: int):
+    """Post celebration in #daily-check-in when someone completes all 7 tasks."""
+    channel = discord.utils.get(guild.text_channels, name="daily-check-in")
+    if not channel:
+        return
+    try:
+        await channel.send(
+            f"🎉 **{member_name}** خلّص كل الـ 7 مهام النهاردة! 🔥 Streak: {streak} days\n"
+            f"*Keep it up!* 🏛️"
+        )
+    except:
+        pass
+
+
+async def celebrate_streak_milestone(guild: discord.Guild, member_name: str, days: int, bonus: int):
+    """Post streak milestone celebration in #announcements."""
+    channel = discord.utils.get(guild.text_channels, name="announcements")
+    if not channel:
+        channel = discord.utils.get(guild.text_channels, name="daily-check-in")
+    if not channel:
+        return
+    try:
+        await channel.send(
+            f"🔥🔥🔥 **{member_name}** وصل **{days} يوم streak!** (+{bonus} bonus points)\n"
+            f"*Consistency is the key to fluency.* 🏛️"
+        )
+    except:
+        pass
+
+
+# ============================================================
+#  22. VOICE SESSION SCHEDULE
+# ============================================================
+
+VOICE_SCHEDULE = """🔊 **جدول الجلسات الصوتية — Voice Sessions**
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 **كل يوم أحد - خميس | Sunday - Thursday**
+🕗 **الساعة 8:00 مساءً (توقيت دبي)**
+📍 **المكان:** `l0-voice-1`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+**القواعد:**
+• مايك مطلوب (كاميرا اختيارية)
+• إنجليزي فقط
+• أقل مدة: 10 دقايق
+• متكلمش أكتر من دقيقتين متواصل (اسمع غيرك)
+
+**مش لازم تكون perfect!** الهدف إنك تتكلم.
+حتى لو جملة واحدة — ده أحسن من سكوت. 🏛️
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*Voice sessions count as `!done community`*"""
+
+
+# ============================================================
+#  23. AUDIO/VIDEO RESOURCES FOR DAILY TASKS
+# ============================================================
+
+# Curated YouTube clips for L0 shadowing and listening (slow, clear, beginner)
+L0_DAILY_CLIPS = {
+    1: {  # Week 1: Greetings
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy English Conversations (A1) - Greetings",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=n4NVPg2kHv4",
+        "accent_title": "Rachel's English - P vs B sounds",
+    },
+    2: {  # Week 2: Numbers & Time
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Numbers & Time",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=9GSLRI7kf3s",
+        "accent_title": "Rachel's English - TH sounds (think/this)",
+    },
+    3: {  # Week 3: Family
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Family",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=jPBGasJ7gxI",
+        "accent_title": "Rachel's English - The Schwa Sound",
+    },
+    4: {  # Week 4: Home & Daily Life
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Daily Life",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=V2MlOv7_lRs",
+        "accent_title": "Rachel's English - R vs L",
+    },
+    5: {  # Week 5: Food & Shopping
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Shopping",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=lEOsHCdKnvU",
+        "accent_title": "Rachel's English - American R",
+    },
+    6: {  # Week 6: Places & Directions
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Directions",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=Hfv4MTo3rCY",
+        "accent_title": "Rachel's English - Word Stress",
+    },
+    7: {  # Week 7: Actions
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Actions",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=pxlkUDiXJfI",
+        "accent_title": "Rachel's English - Multi-syllable Stress",
+    },
+    8: {  # Week 8: Feelings
+        "shadowing": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "shadowing_title": "Easy Conversations - Feelings",
+        "listening": "https://www.youtube.com/watch?v=oolFQSzyHSg",
+        "accent_model": "https://www.youtube.com/watch?v=dFOOQ59FXDo",
+        "accent_title": "Rachel's English - Connected Speech",
+    },
+}
+
+
+def get_daily_clip_links(week: int) -> dict:
+    """Get audio/video clip links for a specific week."""
+    return L0_DAILY_CLIPS.get(week, L0_DAILY_CLIPS[1])
+
+
+# ============================================================
+#  24. DM-BASED EXAM COLLECTION
+# ============================================================
+
+# Pending exams: {discord_id: {"stage": "speaking"|"writing"|"waiting", ...}}
+_pending_exams: dict = {}
+
+
+async def start_exam_collection(member: discord.Member):
+    """Start collecting exam submissions via DM."""
+    _pending_exams[str(member.id)] = {"stage": "speaking", "speaking": None, "writing": None}
+    try:
+        await member.send(
+            f"📋 **امتحان الترقية — الجزء 1: Speaking**\n\n"
+            f"سجّل نفسك وانت بتتكلم عن هذا الموضوع:\n\n"
+            f"**\"Introduce yourself, talk about your daily routine, and what you learned.\"**\n\n"
+            f"⏱️ المدة: 60 ثانية على الأقل\n"
+            f"🎙️ **ابعت التسجيل هنا (في هذه المحادثة)**"
+        )
+    except discord.Forbidden:
+        pass
+
+
+async def handle_exam_dm(message: discord.Message) -> bool:
+    """Handle exam submission in DM. Returns True if message was an exam submission."""
+    discord_id = str(message.author.id)
+    if discord_id not in _pending_exams:
+        return False
+
+    exam = _pending_exams[discord_id]
+
+    if exam["stage"] == "speaking":
+        # Check for audio attachment
+        if message.attachments:
+            exam["speaking"] = message.attachments[0].url
+            exam["stage"] = "writing"
+            await message.channel.send(
+                f"✅ **تم استلام التسجيل!**\n\n"
+                f"📋 **الجزء 2: Writing**\n\n"
+                f"اكتب فقرة (7 جمل على الأقل) عن:\n\n"
+                f"**\"Describe your daily routine from morning to evening.\"**\n\n"
+                f"✍️ **اكتب هنا:**"
+            )
+            return True
+        else:
+            await message.channel.send("🎙️ ابعت تسجيل صوتي (audio file) مش نص.")
+            return True
+
+    elif exam["stage"] == "writing":
+        if len(message.content) >= 30:
+            exam["writing"] = message.content
+            exam["stage"] = "waiting"
+            await message.channel.send(
+                f"✅ **تم استلام الكتابة!**\n\n"
+                f"📊 الامتحان بتاعك هيتراجع خلال 48 ساعة.\n"
+                f"هتوصلك النتيجة هنا في DM.\n\n"
+                f"*Good luck! 🏛️*"
+            )
+            # Notify founder
+            # (handled in bot.py via the guild)
+            return True
+        else:
+            await message.channel.send("✍️ محتاج 7 جمل على الأقل. حاول تاني.")
+            return True
+
+    return False
+
+
+def has_pending_exam(discord_id: str) -> bool:
+    """Check if user has a pending exam submission."""
+    return discord_id in _pending_exams and _pending_exams[discord_id]["stage"] != "waiting"
