@@ -699,14 +699,14 @@ async def on_message(message: discord.Message):
 @bot.command(name="status")
 @commands.has_permissions(manage_guild=True)
 async def cmd_status(ctx):
-    """Bot and system status."""
+    """Bot and system status (sent via DM to admin)."""
     member_count = database.member_count()
     today_subs = database.total_submissions_today()
     active_levels = {}
     for lvl in ["L0", "L1", "L2", "L3"]:
         active_levels[lvl] = len(database.members_at_level(lvl))
 
-    await ctx.send(
+    msg = (
         f"**🤖 Empire English Bot Status**\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"Version: **{config.BOT_VERSION}**\n"
@@ -722,6 +722,11 @@ async def cmd_status(ctx):
         f"Timezone: {config.TIMEZONE}\n"
         f"Task delivery: {config.DAILY_TASK_HOUR}:00"
     )
+    try:
+        await ctx.author.send(msg)
+        await ctx.send("📩 Status sent to your DMs.", delete_after=5)
+    except discord.Forbidden:
+        await ctx.send(msg)
 
 
 @bot.command(name="setlevel")
@@ -761,7 +766,7 @@ async def cmd_announce(ctx, *, message: str = ""):
 @bot.command(name="members")
 @commands.has_permissions(manage_guild=True)
 async def cmd_members(ctx):
-    """List all registered members with their levels."""
+    """List all registered members with their levels (sent via DM)."""
     members = database.all_active_members()
     if not members:
         await ctx.send("No registered members yet.")
@@ -773,7 +778,11 @@ async def cmd_members(ctx):
         lines.append(f"{lvl['emoji']} {m['discord_name']} — {m['level']} | {m['total_points']} pts {streak_str}")
     if len(members) > 20:
         lines.append(f"\n... and {len(members) - 20} more")
-    await ctx.send("\n".join(lines))
+    try:
+        await ctx.author.send("\n".join(lines))
+        await ctx.send("📩 Members list sent to your DMs.", delete_after=5)
+    except discord.Forbidden:
+        await ctx.send("\n".join(lines))
 
 
 
