@@ -26,6 +26,7 @@ Admin:
   !announce <msg>      Broadcast to announcements
   !members             List all members with levels
 """
+import asyncio
 import datetime
 import logging
 import discord
@@ -117,17 +118,81 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member: discord.Member):
-    """Auto-register new members and send welcome DM."""
+    """Auto-register new members and send welcome DM with full manual."""
     database.register_member(str(member.id), member.display_name)
     try:
+        # Message 1: Welcome + First Steps
         await member.send(
-            f"🏛️ Welcome to Empire English Community, {member.display_name}!\n\n"
-            f"You'll be placed at your level within 12 hours.\n"
-            f"In the meantime, check out #welcome and #rules.\n\n"
-            f"Type `!help` in #bot-commands to see all available commands."
+            f"🏛️ **أهلًا بيك في Empire English Community, {member.display_name}!**\n\n"
+            f"ده مش كورس عادي. ده **نظام تعلّم يومي** هيخليك تتكلم إنجليزي بلهجة أمريكية صح.\n\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            f"🚀 **أول 5 دقايق — ابدأ من هنا:**\n\n"
+            f"1️⃣ اقرأ قناة `#rules` واقبل القوانين\n"
+            f"2️⃣ روح `#bot-commands` واكتب:\n"
+            f"```!join هدفي أتكلم إنجليزي بطلاقة```\n"
+            f"3️⃣ كل يوم الساعة 6 الصبح — شوف `#l0-daily-tasks`\n"
+            f"4️⃣ بعد ما تخلص المهمة اكتب: `!done accent`\n"
+            f"5️⃣ شوف تقدمك: `!progress`"
+        )
+        await asyncio.sleep(2)
+
+        # Message 2: Daily Tasks + Commands
+        await member.send(
+            f"📅 **الروتين اليومي (7 مهام — 45 دقيقة بس):**\n\n"
+            f"🎯 تدريب النطق — `!done accent`\n"
+            f"📖 مفردات جديدة — `!done vocab`\n"
+            f"🎧 المحاكاة (Shadowing) — `!done shadow`\n"
+            f"🎙️ مهمة الكلام — `!done speaking`\n"
+            f"👂 تمرين الاستماع — `!done listening`\n"
+            f"✍️ تمرين الكتابة — `!done writing`\n"
+            f"💬 مشاركة مجتمعية — `!done community`\n\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            f"📋 **أوامر مهمة:**\n"
+            f"`!progress` — تقدمك ونقاطك\n"
+            f"`!streak` — الاستمرارية\n"
+            f"`!level` — مستواك الحالي\n"
+            f"`!top` — لوحة المتصدرين\n"
+            f"`!help` — كل الأوامر"
+        )
+        await asyncio.sleep(2)
+
+        # Message 3: Levels + Points
+        await member.send(
+            f"🏆 **نظام المستويات:**\n\n"
+            f"🌱 **Level 0** — مبتدئ (8-12 أسبوع)\n"
+            f"   الهدف: تعريف نفسك في 60 ثانية\n\n"
+            f"💪 **Level 1** — النجاة (10-14 أسبوع)\n"
+            f"   الهدف: مونولوج 2 دقيقة بدون تحضير\n\n"
+            f"🚀 **Level 2** — التواصل (12-16 أسبوع)\n"
+            f"   الهدف: عرض 5 دقايق عن أي موضوع\n\n"
+            f"👑 **Level 3** — الطلاقة (مستمر)\n"
+            f"   كلام طبيعي بلهجة أمريكية\n\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            f"🔥 **النقاط:** كل مهمة = 15 نقطة | الـ 7 مهام = +100 بونص\n"
+            f"🔥 **Streaks:** 7 أيام = +200 | 30 يوم = +1000 | 100 يوم = +5000"
+        )
+        await asyncio.sleep(2)
+
+        # Message 4: Channel Guide
+        await member.send(
+            f"🗺️ **خريطة القنوات المهمة:**\n\n"
+            f"⭐ `#bot-commands` — اكتب كل الأوامر هنا\n"
+            f"⭐ `#l0-daily-tasks` — المهام اليومية (6 صباحًا)\n"
+            f"📝 `#l0-text-practice` — تمارين الكتابة\n"
+            f"🎙️ `#l0-showcase` — شارك تسجيلاتك\n"
+            f"❓ `#l0-questions` — أسئلة (عربي مسموح هنا)\n"
+            f"🔊 `l0-voice-1` — غرفة صوتية للتمرين\n"
+            f"💬 `#general-chat` — دردشة إنجليزي\n"
+            f"📖 `#daily-word` — كلمة اليوم\n"
+            f"🎙️ `#speaking-feedback` — ارفع تسجيل ← AI يرد عليك\n"
+            f"📊 `#daily-check-in` — سجل خطتك كل صباح\n\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            f"🏛️ **خلاصة:** ادخل كل يوم. اعمل الـ 7 مهام. اكتب `!done`. بس كده.\n"
+            f"النظام هيعمل الباقي. 💪\n\n"
+            f"*System over instructor. Common Sense First.* 🏛️"
         )
     except discord.Forbidden:
-        pass  # DMs disabled
+        pass  # DMs disabled by user
 
 
 @bot.event
