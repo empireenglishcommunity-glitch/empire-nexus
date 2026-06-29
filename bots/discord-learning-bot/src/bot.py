@@ -107,6 +107,11 @@ def _find_channel(guild: discord.Guild, name: str):
 @bot.event
 async def on_ready():
     database.init_db()
+    # Load curriculum data from JSON files
+    from . import curriculum
+    curriculum.load_all()
+    cstats = curriculum.stats()
+    logger.info(f"Curriculum: {cstats['total_vocabulary']} words, {cstats['total_speaking_missions']} speaking, {cstats['accent_weeks']} accent weeks")
     logger.info(f"Bot online: {bot.user} | v{config.BOT_VERSION} | {len(bot.guilds)} server(s)")
     if not daily_task_post.is_running():
         daily_task_post.start()

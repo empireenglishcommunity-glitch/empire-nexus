@@ -211,12 +211,23 @@ VOCAB_QUIZ_BANK = {
 
 def generate_vocab_quiz(discord_id: str) -> tuple[str, str, str]:
     """Generate a vocab quiz question. Returns (question_text, correct_answer, word)."""
+    from . import curriculum
+
     member = database.get_member(discord_id)
     week = database.member_week_number(discord_id) if member else 1
     week = min(8, max(1, week))
 
-    words = VOCAB_QUIZ_BANK.get(week, VOCAB_QUIZ_BANK[1])
-    word, arabic = random.choice(words)
+    # Pull from curated curriculum data (56 words/week + previous weeks)
+    quiz_words = curriculum.get_quiz_words(week, count=20)
+
+    if quiz_words:
+        word_obj = random.choice(quiz_words)
+        word = word_obj.get("word", "hello")
+        arabic = word_obj.get("arabic", "مرحبا")
+    else:
+        # Fallback to hardcoded bank if curriculum not loaded
+        words = VOCAB_QUIZ_BANK.get(week, VOCAB_QUIZ_BANK[1])
+        word, arabic = random.choice(words)
 
     # Randomly choose direction: EN→AR or AR→EN
     if random.random() < 0.5:

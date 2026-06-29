@@ -49,85 +49,120 @@ def current_week_for_member(discord_id: str) -> int:
 async def generate_daily_tasks(level: str, week: int) -> dict:
     """Generate all 7 daily tasks for a given level and week.
 
-    Returns a dict with task content ready to post:
-    {
-        "date": "2026-06-26",
-        "day_name": "Thursday",
-        "level": "L0",
-        "week": 3,
-        "tasks": [
-            {"id": "accent", "title": "...", "content": "...", "duration_min": 10},
-            ...
-        ]
-    }
+    Uses curated curriculum data from data/l0_week*.json and content/l0/
+    with AI as enhancement (not primary source).
+
+    Returns a dict with task content ready to post.
     """
+    from . import curriculum
+
     day_name = current_day_name()
     date = today_str()
-    vocab_theme = config.VOCAB_THEMES.get(week, "General")
-    mission_type = config.SPEAKING_MISSION_TYPES.get(day_name, "free_talk")
-    phoneme_info = config.PHONEME_WEEKS.get(week, config.PHONEME_WEEKS[1])
+    day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(day_name) if day_name in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
+
+    # Load curated content for today
+    daily = curriculum.get_daily_content(week, day_name, day_index)
+    vocab_theme = daily["theme"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
 
     tasks = []
 
-    # Task 1: Accent/Phoneme Drill
-    accent_drill = await ai_engine.generate_accent_drill(level, week)
+    # Task 1: Accent/Phoneme Drill (from curriculum data)
+    accent_drill = daily.get("accent_drill")
     if accent_drill:
+        # Use curated accent drill
+        content_lines = [f"**This week:** {daily['accent_focus']}"]
+        if accent_drill.get("target_sounds"):
+            content_lines.append(f"**Sounds:** {', '.join(accent_drill['target_sounds'])}")
+        if accent_drill.get("minimal_pairs"):
+            pairs = " | ".join(f"{p['pair'][0]} / {p['pair'][1]}" for p in accent_drill["minimal_pairs"][:4])
+            content_lines.append(f"**Minimal pairs:** {pairs}")
+        if accent_drill.get("word_practice"):
+            content_lines.append(f"**Practice words:** {', '.join(accent_drill['word_practice'][:6])}")
+        if accent_drill.get("record_this"):
+            content_lines.append(f"\n**Record this:** \"{accent_drill['record_this']}\"")
+        content_lines.append(f"\n🎙️ Record and post in #l{level[1]}-showcase")
+
         tasks.append({
             "id": "accent",
-            "title": f"🎯 Accent Drill — {phoneme_info['focus']}",
-            "content": _format_accent_drill(accent_drill),
+            "title": f"🎯 Accent Drill — {daily['accent_focus']}",
+            "content": "\n".join(content_lines),
             "duration_min": 10 if level == "L0" else 20,
         })
     else:
-        tasks.append(_fallback_accent_task(level, week, phoneme_info))
+        # Fallback to AI-generated
+        accent_result = await ai_engine.generate_accent_drill(level, week)
+        if accent_result:
+            tasks.append({
+                "id": "accent",
+                "title": f"🎯 Accent Drill",
+                "content": _format_accent_drill(accent_result),
+                "duration_min": 10,
+            })
+        else:
+            tasks.append(_fallback_accent_task(level, week, config.PHONEME_WEEKS.get(week, config.PHONEME_WEEKS[1])))
 
-    # Task 2: Vocabulary
-    tasks.append({
-        "id": "vocab",
-        "title": f"📖 Vocabulary — {vocab_theme}",
-        "content": (
-            f"**Theme:** {vocab_theme}\n"
-            f"Learn today's 8 new words. For each word:\n"
-            f"1. See definition + Arabic meaning\n"
-            f"2. Listen to pronunciation\n"
-            f"3. Say it in your own sentence (record yourself)\n"
-            f"4. Review yesterday's words\n\n"
-            f"📋 Check #cheat-sheets for this week's vocabulary list."
-        ),
-        "duration_min": 10 if level == "L0" else 20,
-    })
+    # Task 2: Vocabulary (from curriculum — 8 words for today)
+    today_vocab = daily.get("vocabulary", [])
+    if today_vocab:
+        word_lines = []
+        for w in today_vocab:
+            word_lines.append(f"**{w['word']}** ({w['pronunciation']}) — {w['arabic']}")
+        tasks.append({
+            "id": "vocab",
+            "title": f"📖 Vocabulary — {vocab_theme}",
+            "content": (
+                f"**Today's 8 words:**\n" +
+                "\n".join(word_lines) +
+                f"\n\n**How to study:**\n"
+                f"1. Read each word + Arabic meaning\n"
+                f"2. Say it in your own sentence\n"
+                f"3. Review yesterday's words\n\n"
+                f"📋 Full list in #cheat-sheets"
+            ),
+            "duration_min": 10 if level == "L0" else 20,
+        })
+    else:
+        tasks.append({
+            "id": "vocab",
+            "title": f"📖 Vocabulary — {vocab_theme}",
+            "content": f"Learn today's 8 new words from the {vocab_theme} theme.\nCheck #cheat-sheets for the full list.",
+            "duration_min": 10,
+        })
 
     # Task 3: Shadowing
     tasks.append({
         "id": "shadow",
         "title": "🎧 Shadowing Practice",
         "content": (
-            f"**Method:** {'Blind Shadowing' if level == 'L0' and week <= 4 else 'Text-Aided Shadowing'}\n"
             f"**Speed:** {'60-80 WPM (slow)' if level == 'L0' else '100-120 WPM'}\n\n"
-            f"1. Listen to the clip once (understand the gist)\n"
+            f"1. Listen to a short clip once (understand the gist)\n"
             f"2. Listen + read the transcript\n"
             f"3. Shadow 3 times (speak along, match rhythm)\n"
-            f"4. Record attempt #3\n"
+            f"4. Record attempt #3 (minimum 30 seconds)\n"
             f"5. Note 2 words where you differed most\n\n"
-            f"🎧 Clip for today: check #resources or use any clip at your level."
+            f"🎙️ Upload recording in #l{level[1]}-showcase"
         ),
         "duration_min": 10 if level == "L0" else 20,
     })
 
-    # Task 4: Speaking Mission (AI-generated)
-    speaking = await ai_engine.generate_speaking_mission(
-        level, week, day_name, mission_type, vocab_theme
-    )
+    # Task 4: Speaking Mission (from curriculum data)
+    speaking = daily.get("speaking_mission")
     if speaking:
+        target_sec = speaking.get("target_seconds", level_info["speaking_target_seconds"])
         tasks.append({
             "id": "speaking",
-            "title": f"🎙️ Speaking Mission — {speaking.get('mission_title', mission_type)}",
-            "content": _format_speaking_mission(speaking, level),
+            "title": f"🎙️ Speaking Mission — {speaking.get('type', 'free_talk').replace('_', ' ').title()}",
+            "content": (
+                f"**Task:** {speaking['prompt']}\n\n"
+                f"⏱️ Target: {target_sec} seconds\n"
+                f"🎙️ Record and post in #l{level[1]}-showcase"
+            ),
             "duration_min": 10 if level == "L0" else 25,
         })
     else:
-        tasks.append(_fallback_speaking_task(level, mission_type))
+        # Fallback
+        tasks.append(_fallback_speaking_task(level, config.SPEAKING_MISSION_TYPES.get(day_name, "free_talk")))
 
     # Task 5: Listening
     tasks.append({
@@ -139,13 +174,15 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             f"2. Answer comprehension questions\n"
             f"3. Identify 2 new words from the clip\n"
             f"4. Repeat 1 sentence verbatim\n\n"
-            f"📋 Check #resources for recommended clips at your level."
+            f"📋 Check #resources for clips at your level."
         ),
         "duration_min": 8 if level == "L0" else 20,
     })
 
-    # Task 6: Writing
-    writing_prompt = _get_writing_prompt(level, week, day_name)
+    # Task 6: Writing (from curriculum data)
+    writing_prompt = daily.get("writing_prompt")
+    if not writing_prompt:
+        writing_prompt = _get_writing_prompt(level, week, day_name)
     tasks.append({
         "id": "writing",
         "title": "✍️ Writing Practice",
@@ -153,7 +190,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             f"**Prompt:** {writing_prompt}\n\n"
             f"{'Write 4-5 sentences.' if level == 'L0' else 'Write a paragraph (100+ words).'}\n"
             f"No translator! Do your best.\n\n"
-            f"📝 Post in #l{level[1]}-text-practice or #writing-feedback for AI correction."
+            f"📝 Post in #l{level[1]}-text-practice"
         ),
         "duration_min": 7 if level == "L0" else 20,
     })
@@ -164,7 +201,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "title": "💬 Community Participation",
         "content": (
             f"Choose one:\n"
-            f"• Join #voice-lounge for 10+ minutes of English conversation\n"
+            f"• Join voice lounge for 10+ minutes\n"
             f"• Reply to someone in #general-chat (in English)\n"
             f"• Give feedback on a recording in #speaking-feedback\n"
             f"• Post in #daily-word (use today's word in a sentence)\n\n"
