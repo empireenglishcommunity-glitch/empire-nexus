@@ -63,8 +63,8 @@ def _zone():
 
 def _level_role_name(level: str) -> str:
     """Get the Discord role name for a level."""
-    role_map = {"L0": "🌱 Level 0", "L1": "💪 Level 1", "L2": "🚀 Level 2", "L3": "👑 Level 3"}
-    return role_map.get(level, "🌱 Level 0")
+    role_map = {"L0": "\U0001f331 Level 0 | \u0645\u0628\u062a\u062f\u0626", "L1": "\U0001f4aa Level 1 | \u0645\u062a\u0642\u062f\u0645", "L2": "\U0001f680 Level 2 | \u0645\u062a\u0648\u0627\u0635\u0644", "L3": "\U0001f451 Level 3 | \u0637\u0644\u064a\u0642"}
+    return role_map.get(level, "\U0001f331 Level 0 | \u0645\u0628\u062a\u062f\u0626")
 
 
 async def _get_or_create_role(guild: discord.Guild, role_name: str) -> discord.Role:
