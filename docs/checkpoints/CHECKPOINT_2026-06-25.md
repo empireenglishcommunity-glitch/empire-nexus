@@ -21,7 +21,7 @@ Major implementation session. The bot, infrastructure, and automation systems we
 - Docker container running on Hetzner (`empire-n8n-mcp`)
 - HTTP mode (port 3000)
 - Exposed via Cloudflare Tunnel at `https://mcp.empireenglish.online`
-- Auth token: `EmpireMCP2026SecureToken`
+- Auth token: `<REDACTED — see rotation note in Key Configurations table>`
 - Enables AI agents to build/modify/manage n8n workflows remotely
 - Successfully used to fix workflows and create new ones during this session
 
@@ -74,7 +74,7 @@ Major implementation session. The bot, infrastructure, and automation systems we
 | Sheet GID (subscribers) | `421473979` |
 | Sheet GID (events) | `1549846062` |
 | MCP Server | `https://mcp.empireenglish.online` |
-| MCP Auth Token | `EmpireMCP2026SecureToken` |
+| MCP Auth Token | `<REDACTED — rotate on the n8n-MCP container config, set as env var>` |
 | Cal.com URL | `https://cal.com/empireenglish/level-call` |
 | n8n API Key | (stored in n8n, referenced by MCP server) |
 | Telegram Chat ID (founder) | `8355378781` |
