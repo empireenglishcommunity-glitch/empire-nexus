@@ -32,7 +32,7 @@ import logging
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, tasks as task_engine, ai_engine, verification, features
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -695,7 +695,20 @@ async def cmd_level(ctx):
 
 @bot.command(name="week")
 async def cmd_week(ctx):
-    """View this week's curriculum focus (phonemes, vocab theme, etc.)."""
+    """View this week's curriculum focus (phonemes, vocab theme, etc.).
+
+    BUG FIX (2026-07-11): this command previously read the member's level
+    into a variable but never actually used it — it always pulled from
+    config.PHONEME_WEEKS / config.VOCAB_THEMES, two hardcoded, L0-only
+    dictionaries that predate the per-level curriculum.py system. An L1/L2/L3
+    member running !week was silently shown L0's phoneme focus and vocab
+    theme (e.g. "schwa" + "Family & People", L0's actual week 3 content),
+    even though real, correct L1-L3 content already existed and loads fine
+    for every other command. Found via live Discord testing after deploying
+    the L1-L3 content fix — !week itself was never re-pointed at
+    curriculum.py. Now uses the same level-aware functions as everywhere
+    else (get_accent_focus, get_accent_focus_ar, get_theme, get_grammar_pattern).
+    """
     member = database.get_member(str(ctx.author.id))
     if not member:
         await ctx.send("Not registered. Use `!join` first.")
@@ -703,19 +716,30 @@ async def cmd_week(ctx):
 
     week = database.member_week_number(str(ctx.author.id))
     level = member["level"]
-    phoneme_info = config.PHONEME_WEEKS.get(week, config.PHONEME_WEEKS.get(1, {}))
-    vocab_theme = config.VOCAB_THEMES.get(week, "General")
 
-    msg = (
-        f"📅 **Week {week} Focus**\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🎯 Phonemes: {phoneme_info.get('focus', 'Review')}\n"
-        f"   Vowels: {', '.join(phoneme_info.get('vowels', []))}\n"
-        f"   Consonants: {', '.join(phoneme_info.get('consonants', []))}\n"
-        f"📖 Vocabulary theme: **{vocab_theme}**\n"
+    focus = curriculum.get_accent_focus(week, level)
+    focus_ar = curriculum.get_accent_focus_ar(week, level)
+    vocab_theme = curriculum.get_theme(week, level)
+    grammar = curriculum.get_grammar_pattern(week, level)
+    grammar_name = grammar.get("pattern_name") if grammar else None
+
+    lines = [
+        f"📅 **Week {week} Focus** ({level})",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    ]
+    if focus:
+        lines.append(f"🎯 Accent focus: {focus}")
+        if focus_ar:
+            lines.append(f"   {focus_ar}")
+    else:
+        lines.append("🎯 Accent focus: content for this week is being finalized — check back soon.")
+    lines.append(f"📖 Vocabulary theme: **{vocab_theme}**")
+    if grammar_name:
+        lines.append(f"📝 Grammar pattern: **{grammar_name}**")
+    lines.append(
         f"🎙️ Speaking mission type: {config.SPEAKING_MISSION_TYPES.get(task_engine.current_day_name(), 'free_talk')}"
     )
-    await ctx.send(msg)
+    await ctx.send("\n".join(lines))
 
 
 @bot.command(name="help")
