@@ -37,6 +37,22 @@ def current_day_name() -> str:
     return _now().strftime("%A")
 
 
+def bl(en: str, ar: str) -> str:
+    """Bilingual instructional line helper: 'English / Arabic', always
+    shown together, matching the same approach used on the practice
+    platform (empire-practice's generate.py bl()). Applied only to fixed
+    instructional chrome (numbered steps, section labels, footer text)
+    that repeats every single day for every student -- NOT to per-week
+    curriculum content (writing prompts, speaking missions, accent drill
+    target sentences), which is a separate, much larger content project
+    left for a future session if wanted.
+
+    Arabic uses the same informal/colloquial register already present in
+    the curriculum's instructions_ar fields (content/l0/accent/*.json),
+    not formal MSA, for consistency with what students already see."""
+    return f"{en} / {ar}"
+
+
 def current_week_for_member(discord_id: str) -> int:
     """Which week of the program a member is in."""
     return database.member_week_number(discord_id)
@@ -74,12 +90,12 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
     accent_drill = daily.get("accent_drill")
     if accent_drill:
         # Use curated accent drill
-        content_lines = [f"**This week:** {daily['accent_focus']}"]
+        content_lines = [f"**{bl('This week', 'الأسبوع ده')}:** {daily['accent_focus']}"]
         if accent_drill.get("target_sounds"):
-            content_lines.append(f"**Sounds:** {', '.join(accent_drill['target_sounds'])}")
+            content_lines.append(f"**{bl('Sounds', 'الأصوات')}:** {', '.join(accent_drill['target_sounds'])}")
         if accent_drill.get("minimal_pairs"):
             pairs = " | ".join(f"{p['pair'][0]} / {p['pair'][1]}" for p in accent_drill["minimal_pairs"][:4])
-            content_lines.append(f"**Minimal pairs:** {pairs}")
+            content_lines.append(f"**{bl('Minimal pairs', 'أزواج التمييز')}:** {pairs}")
         word_practice = accent_drill.get("word_practice")
         if word_practice:
             # word_practice is sometimes a flat list, sometimes a dict of
@@ -94,13 +110,14 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             else:
                 flat_words = word_practice
             if flat_words:
-                content_lines.append(f"**Practice words:** {', '.join(flat_words[:6])}")
+                content_lines.append(f"**{bl('Practice words', 'كلمات للتمرين')}:** {', '.join(flat_words[:6])}")
         if accent_drill.get("record_this"):
-            content_lines.append(f"\n**Record this:** \"{accent_drill['record_this']}\"")
-        content_lines.append(f"\n🎙️ Record and post in #l{level[1]}-showcase")
+            record_this_label = bl("Record this", "سجل ده")
+            content_lines.append(f"\n**{record_this_label}:** \"{accent_drill['record_this']}\"")
+        content_lines.append(f"\n🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase")
         practice_url = curriculum.practice_platform_task_url("accent", week, day_index, level)
         if practice_url:
-            content_lines.append(f"🌐 Practice online (audio + drill): {practice_url}")
+            content_lines.append(f"🌐 {bl('Practice online (audio + drill)', 'اتمرن أونلاين (صوت + تدريب)')}: {practice_url}")
 
         tasks.append({
             "id": "accent",
@@ -129,26 +146,35 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             word_lines.append(f"**{w['word']}** ({w['pronunciation']}) — {w['arabic']}")
         vocab_practice_url = curriculum.practice_platform_task_url("vocab", week, day_index, level)
         vocab_link_line = f"\n🌐 Practice with flashcards: {vocab_practice_url}" if vocab_practice_url else ""
+        today_words_label = bl("Today's 8 words", "كلمات اليوم")
+        review_yesterday_label = bl("Review yesterday's words", "راجع كلمات إمبارح")
         tasks.append({
             "id": "vocab",
             "title": f"📖 Vocabulary — {vocab_theme}",
             "content": (
-                f"**Today's 8 words:**\n" +
+                f"**{today_words_label}:**\n" +
                 "\n".join(word_lines) +
-                f"\n\n**How to study:**\n"
-                f"1. Read each word + Arabic meaning\n"
-                f"2. Say it in your own sentence\n"
-                f"3. Review yesterday's words\n"
+                f"\n\n**{bl('How to study', 'طريقة الحفظ')}:**\n"
+                f"1. {bl('Read each word + Arabic meaning', 'اقرأ كل كلمة مع معناها بالعربي')}\n"
+                f"2. {bl('Say it in your own sentence', 'قولها في جملة من عندك')}\n"
+                f"3. {review_yesterday_label}\n"
                 f"{vocab_link_line}\n\n"
-                f"📋 Full list in #cheat-sheets"
+                f"📋 {bl('Full list in', 'القائمة كاملة في')} #cheat-sheets"
             ),
             "duration_min": 10 if level == "L0" else 20,
         })
     else:
+        learn_words_label = bl(
+            f"Learn today's 8 new words from the {vocab_theme} theme.",
+            f"احفظ ٨ كلمات جديدة النهاردة من موضوع {vocab_theme}.",
+        )
         tasks.append({
             "id": "vocab",
             "title": f"📖 Vocabulary — {vocab_theme}",
-            "content": f"Learn today's 8 new words from the {vocab_theme} theme.\nCheck #cheat-sheets for the full list.",
+            "content": (
+                f"{learn_words_label}\n"
+                f"{bl('Check', 'شوف')} #cheat-sheets {bl('for the full list.', 'عشان القائمة كاملة.')}"
+            ),
             "duration_min": 10,
         })
 
@@ -159,14 +185,14 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "id": "shadow",
         "title": "🎧 Shadowing Practice",
         "content": (
-            f"**Speed:** {'60-80 WPM (slow)' if level == 'L0' else '100-120 WPM'}\n\n"
+            f"**{bl('Speed', 'السرعة')}:** {'60-80 WPM (slow)' if level == 'L0' else '100-120 WPM'}\n\n"
             f"{shadow_link_line}"
-            f"1. Listen to a short clip once (understand the gist)\n"
-            f"2. Listen + read the transcript\n"
-            f"3. Shadow 3 times (speak along, match rhythm)\n"
-            f"4. Record attempt #3 (minimum 30 seconds)\n"
-            f"5. Note 2 words where you differed most\n\n"
-            f"🎙️ Upload recording in #l{level[1]}-showcase"
+            f"1. {bl('Listen to a short clip once (understand the gist)', 'اسمع الكليب مرة واحدة (افهم المعنى العام)')}\n"
+            f"2. {bl('Listen + read the transcript', 'اسمع + اقرأ النص')}\n"
+            f"3. {bl('Shadow 3 times (speak along, match rhythm)', 'كرر معاه ٣ مرات (اتكلم في نفس الوقت، بنفس الريتم)')}\n"
+            f"4. {bl('Record attempt #3 (minimum 30 seconds)', 'سجل المحاولة الثالثة (٣٠ ثانية على الأقل)')}\n"
+            f"5. {bl('Note 2 words where you differed most', 'لاحظ كلمتين اختلفت فيهم عن الأصل')}\n\n"
+            f"🎙️ {bl('Upload recording in', 'رفع التسجيل في')} #l{level[1]}-showcase"
         ),
         "duration_min": 10 if level == "L0" else 20,
     })
@@ -179,9 +205,9 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             "id": "speaking",
             "title": f"🎙️ Speaking Mission — {speaking.get('type', 'free_talk').replace('_', ' ').title()}",
             "content": (
-                f"**Task:** {speaking['prompt']}\n\n"
-                f"⏱️ Target: {target_sec} seconds\n"
-                f"🎙️ Record and post in #l{level[1]}-showcase"
+                f"**{bl('Task', 'المهمة')}:** {speaking['prompt']}\n\n"
+                f"⏱️ {bl('Target', 'الهدف')}: {target_sec} {bl('seconds', 'ثانية')}\n"
+                f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase"
             ),
             "duration_min": 10 if level == "L0" else 25,
         })
@@ -196,13 +222,13 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "id": "listening",
         "title": "👂 Listening Exercise",
         "content": (
-            f"**Target speed:** {'60-80 WPM' if level == 'L0' else '100-120 WPM'}\n\n"
+            f"**{bl('Target speed', 'السرعة المستهدفة')}:** {'60-80 WPM' if level == 'L0' else '100-120 WPM'}\n\n"
             f"{listening_link_line}"
-            f"1. Listen to a short clip (2-3 times if needed)\n"
-            f"2. Answer comprehension questions\n"
-            f"3. Identify 2 new words from the clip\n"
-            f"4. Repeat 1 sentence verbatim\n\n"
-            f"📋 Check #resources for clips at your level."
+            f"1. {bl('Listen to a short clip (2-3 times if needed)', 'اسمع الكليب (٢-٣ مرات لو احتجت)')}\n"
+            f"2. {bl('Answer comprehension questions', 'جاوب على أسئلة الفهم')}\n"
+            f"3. {bl('Identify 2 new words from the clip', 'حدد كلمتين جديدة من الكليب')}\n"
+            f"4. {bl('Repeat 1 sentence verbatim', 'كرر جملة واحدة زي ما هي بالحرف')}\n\n"
+            f"📋 {bl('Check', 'شوف')} #resources {bl('for clips at your level.', 'عشان كليبات مستواك.')}"
         ),
         "duration_min": 8 if level == "L0" else 20,
     })
@@ -215,25 +241,29 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "id": "writing",
         "title": "✍️ Writing Practice",
         "content": (
-            f"**Prompt:** {writing_prompt}\n\n"
-            f"{'Write 4-5 sentences.' if level == 'L0' else 'Write a paragraph (100+ words).'}\n"
-            f"No translator! Do your best.\n\n"
-            f"📝 Post in #l{level[1]}-text-practice"
+            f"**{bl('Prompt', 'المطلوب')}:** {writing_prompt}\n\n"
+            f"{bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')}\n"
+            f"{bl('No translator! Do your best.', 'من غير مترجم! اعمل قد ما تقدر.')}\n\n"
+            f"📝 {bl('Post in', 'حط في')} #l{level[1]}-text-practice"
         ),
         "duration_min": 7 if level == "L0" else 20,
     })
 
     # Task 7: Community
+    daily_word_label = bl(
+        "Post in #daily-word (use today's word in a sentence)",
+        "حط في #daily-word (استخدم كلمة اليوم في جملة)",
+    )
     tasks.append({
         "id": "community",
         "title": "💬 Community Participation",
         "content": (
-            f"Choose one:\n"
-            f"• Join voice lounge for 10+ minutes\n"
-            f"• Reply to someone in #general-chat (in English)\n"
-            f"• Give feedback on a recording in #speaking-feedback\n"
-            f"• Post in #daily-word (use today's word in a sentence)\n\n"
-            f"🏛️ The community grows when YOU participate."
+            f"{bl('Choose one', 'اختار حاجة واحدة')}:\n"
+            f"• {bl('Join voice lounge for 10+ minutes', 'دخل الفويس ١٠ دقايق على الأقل')}\n"
+            f"• {bl('Reply to someone in #general-chat (in English)', 'رد على حد في #general-chat (بالإنجليزي)')}\n"
+            f"• {bl('Give feedback on a recording in #speaking-feedback', 'اكتب رأيك على تسجيل في #speaking-feedback')}\n"
+            f"• {daily_word_label}\n\n"
+            f"🏛️ {bl('The community grows when YOU participate.', 'المجتمع بيكبر لما إنت تشارك.')}"
         ),
         "duration_min": 5 if level == "L0" else 15,
     })
@@ -261,17 +291,18 @@ def _format_accent_drill(drill: dict) -> str:
         lines.append(f"📋 {drill['instructions_ar']}")
         lines.append("")
     if drill.get("phonemes"):
-        lines.append(f"**Sounds:** {', '.join(drill['phonemes'])}")
+        lines.append(f"**{bl('Sounds', 'الأصوات')}:** {', '.join(drill['phonemes'])}")
     if drill.get("minimal_pairs"):
         pairs = " | ".join(f"{a} / {b}" for a, b in drill["minimal_pairs"][:4])
-        lines.append(f"**Minimal pairs:** {pairs}")
+        lines.append(f"**{bl('Minimal pairs', 'أزواج التمييز')}:** {pairs}")
     if drill.get("words"):
-        lines.append(f"**Practice words:** {', '.join(drill['words'][:6])}")
+        lines.append(f"**{bl('Practice words', 'كلمات للتمرين')}:** {', '.join(drill['words'][:6])}")
     if drill.get("sentences"):
+        say_label = bl("Say", "قول")
         for s in drill["sentences"][:2]:
-            lines.append(f"**Say:** \"{s}\"")
+            lines.append(f"**{say_label}:** \"{s}\"")
     lines.append("")
-    lines.append("🎙️ Record yourself saying the sentences. Post in #l0-showcase.")
+    lines.append(bl("🎙️ Record yourself saying the sentences. Post in #l0-showcase.", "سجل نفسك بتقول الجمل. حط التسجيل في #l0-showcase."))
     return "\n".join(lines)
 
 
@@ -284,34 +315,35 @@ def _format_speaking_mission(mission: dict, level: str) -> str:
     lines.append(mission.get("instructions_en", "Complete the speaking task."))
     lines.append("")
     if mission.get("guiding_questions"):
-        lines.append("**Guiding questions:**")
+        lines.append(f"**{bl('Guiding questions', 'أسئلة توجيهية')}:**")
         for q in mission["guiding_questions"][:3]:
             lines.append(f"  • {q}")
         lines.append("")
     duration = mission.get("target_duration_seconds", 60)
-    lines.append(f"⏱️ Target: {duration} seconds")
+    lines.append(f"⏱️ {bl('Target', 'الهدف')}: {duration} {bl('seconds', 'ثانية')}")
     if mission.get("target_phrases"):
-        lines.append(f"💡 Try to use: {', '.join(mission['target_phrases'][:3])}")
+        lines.append(f"💡 {bl('Try to use', 'حاول تستخدم')}: {', '.join(mission['target_phrases'][:3])}")
     if mission.get("phoneme_focus"):
-        lines.append(f"🎯 Pronunciation focus: {mission['phoneme_focus']}")
+        lines.append(f"🎯 {bl('Pronunciation focus', 'التركيز على النطق')}: {mission['phoneme_focus']}")
     lines.append("")
-    lines.append(f"🎙️ Record and post in #l{level[1]}-showcase")
+    lines.append(f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase")
     return "\n".join(lines)
 
 
 def _fallback_accent_task(level: str, week: int, phoneme_info: dict) -> dict:
     """Fallback accent task if AI generation fails."""
+    week_sounds_label = bl("This week's sounds", "أصوات الأسبوع ده")
     return {
         "id": "accent",
         "title": f"🎯 Accent Drill — {phoneme_info['focus']}",
         "content": (
-            f"**This week's sounds:** {', '.join(phoneme_info['vowels'][:2])} + "
+            f"**{week_sounds_label}:** {', '.join(phoneme_info['vowels'][:2])} + "
             f"{', '.join(phoneme_info['consonants'][:3])}\n\n"
-            f"1. Say each sound 10 times in isolation\n"
-            f"2. Practice with words that contain these sounds\n"
-            f"3. Say a sentence using these sounds\n"
-            f"4. Record yourself and compare\n\n"
-            f"🎙️ Post your recording in #l{level[1]}-showcase"
+            f"1. {bl('Say each sound 10 times in isolation', 'انطق كل صوت ١٠ مرات لوحده')}\n"
+            f"2. {bl('Practice with words that contain these sounds', 'اتمرن بكلمات فيها الأصوات دي')}\n"
+            f"3. {bl('Say a sentence using these sounds', 'قول جملة فيها الأصوات دي')}\n"
+            f"4. {bl('Record yourself and compare', 'سجل نفسك وقارن')}\n\n"
+            f"🎙️ {bl('Post your recording in', 'حط التسجيل في')} #l{level[1]}-showcase"
         ),
         "duration_min": 10,
     }
@@ -332,9 +364,9 @@ def _fallback_speaking_task(level: str, mission_type: str) -> dict:
         "id": "speaking",
         "title": f"🎙️ Speaking Mission",
         "content": (
-            f"**Task:** {prompts.get(mission_type, prompts['free_talk'])}\n\n"
-            f"⏱️ Target: {'45' if level == 'L0' else '90'} seconds\n"
-            f"🎙️ Record and post in #l{level[1]}-showcase"
+            f"**{bl('Task', 'المهمة')}:** {prompts.get(mission_type, prompts['free_talk'])}\n\n"
+            f"⏱️ {bl('Target', 'الهدف')}: {'45' if level == 'L0' else '90'} {bl('seconds', 'ثانية')}\n"
+            f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase"
         ),
         "duration_min": 10,
     }
@@ -409,18 +441,19 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
         if task_data["day_name"] in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
     day_menu_url = curriculum.practice_platform_day_url(task_data["week"], day_index, level)
 
+    exercises_online_label = bl("Today's exercises online", "تمارين اليوم أونلاين")
     header = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"📅 **DAY — {task_data['day_name']}, Week {task_data['week']}**",
+        f"📅 **{bl('DAY', 'اليوم')} — {task_data['day_name']}, {bl('Week', 'أسبوع')} {task_data['week']}**",
         f"🏛️ EMPIRE ENGLISH — {level_info['emoji']} {level_info['name']}",
-        f"🌐 Today's exercises online: {day_menu_url}",
+        f"🌐 {exercises_online_label}: {day_menu_url}",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
     footer = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"⏱️ **Total:** ~{task_data['total_minutes']} min ({level_info['name']} Core track)",
-        "✅ When done: type `!done` in #daily-check-in",
+        f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')} ({level_info['name']} Core track)",
+        f"✅ {bl('When done: type', 'لما تخلص: اكتب')} `!done` {bl('in', 'في')} #daily-check-in",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
