@@ -4,51 +4,92 @@
   "theme": "Cultural Nuances",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Discourse Markers",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "small talk", "pronunciation": "smawl tawk", "arabic": "حديث عابر/كلام عادي", "pos": "noun phrase"},
+    {"word": "faux pas", "pronunciation": "foh pah", "arabic": "خطأ اجتماعي محرج", "pos": "noun (French loanword)"},
+    {"word": "unspoken rule", "pronunciation": "un-SPOH-kən rool", "arabic": "قاعدة ضمنية غير معلنة", "pos": "noun phrase"},
+    {"word": "read between the lines", "pronunciation": "reed bi-TWEEN thə lynz", "arabic": "يفهم المعنى الضمني", "pos": "idiom"},
+    {"word": "cultural sensitivity", "pronunciation": "KUL-chər-əl sen-si-TIV-ə-tee", "arabic": "حساسية ثقافية", "pos": "noun phrase"},
+    {"word": "high-context culture", "pronunciation": "hy-KON-tekst KUL-chər", "arabic": "ثقافة عالية السياق (ضمنية)", "pos": "noun phrase"},
+    {"word": "low-context culture", "pronunciation": "loh-KON-tekst KUL-chər", "arabic": "ثقافة منخفضة السياق (مباشرة)", "pos": "noun phrase"},
+    {"word": "indirect communication", "pronunciation": "in-di-REKT kə-myoo-ni-KAY-shən", "arabic": "تواصل غير مباشر", "pos": "noun phrase"},
+    {"word": "saving face", "pronunciation": "SAY-ving fays", "arabic": "الحفاظ على كرامة/سمعة", "pos": "idiom"},
+    {"word": "personal space", "pronunciation": "PUR-sə-nəl spays", "arabic": "المساحة الشخصية", "pos": "noun phrase"},
+    {"word": "code-switching", "pronunciation": "kohd-SWICH-ing", "arabic": "التبديل بين أنماط لغوية/ثقافية", "pos": "noun"},
+    {"word": "hierarchy (social)", "pronunciation": "HY-ər-ar-kee", "arabic": "تسلسل هرمي اجتماعي", "pos": "noun"},
+    {"word": "assimilation", "pronunciation": "ə-sim-ə-LAY-shən", "arabic": "استيعاب/انصهار ثقافي", "pos": "noun"},
+    {"word": "acculturation", "pronunciation": "ə-kul-chə-RAY-shən", "arabic": "التكيف الثقافي التدريجي", "pos": "noun"},
+    {"word": "double standard", "pronunciation": "DUB-əl STAN-dərd", "arabic": "معيار مزدوج", "pos": "noun phrase"},
+    {"word": "cultural relativism", "pronunciation": "KUL-chər-əl REL-ə-tiv-iz-əm", "arabic": "النسبية الثقافية", "pos": "noun phrase"},
+    {"word": "ethnocentrism", "pronunciation": "eth-noh-SEN-triz-əm", "arabic": "التمركز حول الذات العرقية", "pos": "noun"},
+    {"word": "generational gap", "pronunciation": "jen-ə-RAY-shə-nəl gap", "arabic": "الفجوة بين الأجيال", "pos": "noun phrase"},
+    {"word": "hospitality norms", "pronunciation": "hos-pi-TAL-ə-tee normz", "arabic": "معايير الضيافة", "pos": "noun phrase"},
+    {"word": "polite fiction", "pronunciation": "pə-LYT FIK-shən", "arabic": "كذبة لطيفة اجتماعيًا مقبولة", "pos": "noun phrase"},
+    {"word": "collectivist culture", "pronunciation": "kə-LEK-ti-vist KUL-chər", "arabic": "ثقافة جماعية", "pos": "noun phrase"},
+    {"word": "individualist culture", "pronunciation": "in-də-VIJ-oo-ə-list KUL-chər", "arabic": "ثقافة فردية", "pos": "noun phrase"},
+    {"word": "small talk taboo", "pronunciation": "smawl tawk tə-BOO", "arabic": "محظور في الحديث العابر", "pos": "noun phrase"},
+    {"word": "nonverbal cue", "pronunciation": "non-VUR-bəl kyoo", "arabic": "إشارة غير لفظية", "pos": "noun phrase"},
+    {"word": "cultural fluency", "pronunciation": "KUL-chər-əl FLOO-ən-see", "arabic": "الطلاقة الثقافية/الفهم العميق", "pos": "noun phrase"},
+    {"word": "loaded gesture", "pronunciation": "LOH-did JES-chər", "arabic": "إيماءة ذات معنى ثقافي محدد", "pos": "noun phrase"},
+    {"word": "melting pot", "pronunciation": "MEL-ting pot", "arabic": "بوتقة انصهار ثقافي", "pos": "idiom"},
+    {"word": "cultural appropriation", "pronunciation": "KUL-chər-əl ə-proh-pree-AY-shən", "arabic": "الاستملاك الثقافي", "pos": "noun phrase"},
+    {"word": "diplomatic tact", "pronunciation": "dip-lə-MAT-ik takt", "arabic": "لباقة دبلوماسية", "pos": "noun phrase"},
+    {"word": "reading the room", "pronunciation": "REE-ding thə room", "arabic": "قراءة مزاج الحضور", "pos": "idiom"},
+    {"word": "cultural fabric", "pronunciation": "KUL-chər-əl FAB-rik", "arabic": "النسيج الثقافي", "pos": "noun phrase"},
+    {"word": "stereotype threat", "pronunciation": "STER-ee-oh-typ thret", "arabic": "تهديد القولبة النمطية", "pos": "noun phrase"},
+    {"word": "cross-cultural friction", "pronunciation": "kraws-KUL-chər-əl FRIK-shən", "arabic": "احتكاك بين الثقافات", "pos": "noun phrase"},
+    {"word": "custom clash", "pronunciation": "KUS-təm klash", "arabic": "تعارض تقاليد", "pos": "noun phrase"},
+    {"word": "implicit bias", "pronunciation": "im-PLIS-it BY-əs", "arabic": "تحيز ضمني/غير واعٍ", "pos": "noun phrase"},
+    {"word": "cultural competence", "pronunciation": "KUL-chər-əl KOM-pə-təns", "arabic": "الكفاءة الثقافية", "pos": "noun phrase"},
+    {"word": "diaspora", "pronunciation": "dy-AS-pər-ə", "arabic": "شتات", "pos": "noun"},
+    {"word": "third-culture kid", "pronunciation": "thurd-KUL-chər kid", "arabic": "طفل الثقافة الثالثة (نشأ بين ثقافات)", "pos": "noun phrase"},
+    {"word": "cultural translation", "pronunciation": "KUL-chər-əl trans-LAY-shən", "arabic": "ترجمة ثقافية (لا لغوية فقط)", "pos": "noun phrase"},
+    {"word": "unspoken expectation", "pronunciation": "un-SPOH-kən ek-spek-TAY-shən", "arabic": "توقع ضمني غير معلن", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Give a 5-minute TED-style talk on 'The unspoken rules I had to learn moving between cultures' (real or hypothetical), using specific examples.",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Structured debate with rebuttals: 'Cultural assimilation benefits immigrants more than preserving one's original culture, or the opposite.' Present your case, then respond to a counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Record a 5-minute podcast segment comparing high-context and low-context communication styles, with a real example of a misunderstanding this difference could cause.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Teach a beginner-level student one concrete example of an 'unspoken rule' or faux pas from American culture that surprises newcomers, and why it exists.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Respond to this unexpected prompt: describe, in real time, how you would tactfully handle a cross-cultural misunderstanding at a dinner party (invented scenario).",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Find a short clip (30-60 seconds) of someone discussing cultural differences (a podcast, interview, or video essay). Mimic their tone, pacing, and thoughtful, measured delivery.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Cultural Nuances)",
-      "target_seconds": 300
+      "prompt": "Speak naturally for 5+ minutes about a real cross-cultural experience you've had (travel, moving, meeting people from elsewhere), using this week's vocabulary naturally.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on cultural nuances (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in cultural nuances.",
-    "Compose a formal report with recommendations about cultural nuances.",
-    "Write a creative piece (story/poem) inspired by cultural nuances.",
-    "Draft an opinion column for a newspaper about cultural nuances.",
-    "Write a comparison essay using academic vocabulary about cultural nuances.",
-    "Write freely about cultural nuances — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing whether cultural sensitivity training is genuinely effective or largely performative.",
+    "Write a critical analysis of how high-context versus low-context communication styles can cause real misunderstandings in international workplaces.",
+    "Compose a formal report with recommendations for helping newcomers adapt to unspoken social rules in a new country or workplace.",
+    "Write a creative short story about a character navigating an awkward cross-cultural misunderstanding, using humor or empathy.",
+    "Draft an opinion column about whether cultural appropriation concerns have gone too far, not far enough, or are about right.",
+    "Write a comparison essay contrasting hospitality norms or social etiquette between your own culture and another culture you know well.",
+    "Write freely about a personal experience of cultural friction or cultural learning — focus on style, not just content."
   ]
 }

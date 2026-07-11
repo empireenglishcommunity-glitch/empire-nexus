@@ -138,15 +138,17 @@ async def send_weekly_feedback_survey(guild: discord.Guild):
 
 def get_spaced_repetition_words(discord_id: str, count: int = 5) -> list[dict]:
     """Get words from previous weeks for review (spaced repetition).
-    Returns words from week-1, week-2, and week-3 for review.
+    Returns words from week-1, week-2, and week-3 for review, at the
+    member's OWN level (previously this defaulted to "L0" for everyone).
     """
     member = database.get_member(discord_id)
     if not member:
         return []
+    level = member["level"]
     week = database.member_week_number(discord_id)
     review_words = []
     for prev_week in range(max(1, week - 3), week):
-        words = curriculum.get_vocabulary_for_week(prev_week)
+        words = curriculum.get_vocabulary_for_week(prev_week, level)
         if words:
             review_words.extend(random.sample(words, min(3, len(words))))
     return review_words[:count]
@@ -211,9 +213,13 @@ async def send_weekly_progress_report(guild: discord.Guild):
 #  6. GRAMMAR PATTERN CARD (Day 4 of each week)
 # ============================================================
 
-def format_grammar_card(week: int) -> str:
-    """Format the grammar pattern card for posting in #cheat-sheets."""
-    grammar = curriculum.get_grammar_pattern(week)
+def format_grammar_card(week: int, level: str = "L0") -> str:
+    """Format the grammar pattern card for posting in #cheat-sheets.
+    Returns "" if this level has no grammar content authored yet — the
+    caller (bot.py's grammar_card_delivery task) is expected to skip
+    posting for that level rather than post an empty/broken card.
+    """
+    grammar = curriculum.get_grammar_pattern(week, level)
     if not grammar:
         return ""
 
@@ -296,9 +302,17 @@ async def handle_exam_request(ctx, bot):
         )
         return
 
-    # Check last attempt (max 1 per month)
+    # Check last attempt (max 1 per month, and never while one is still
+    # awaiting admin review — previously this check was unreachable
+    # because nothing ever wrote a row to advancement_exams).
     last_attempt = database.last_advancement_attempt(str(ctx.author.id))
     if last_attempt:
+        if last_attempt.get("status") == "pending":
+            await ctx.send(
+                f"⏳ عندك امتحان قيد المراجعة بالفعل.\n"
+                f"هتوصلك النتيجة في DM خلال 48 ساعة."
+            )
+            return
         last_date = datetime.datetime.fromisoformat(last_attempt["attempted_at"])
         days_since = (datetime.datetime.now() - last_date).days
         if days_since < 30:
@@ -1013,8 +1027,24 @@ _pending_exams: dict = {}
 
 
 async def start_exam_collection(member: discord.Member):
-    """Start collecting exam submissions via DM."""
-    _pending_exams[str(member.id)] = {"stage": "speaking", "speaking": None, "writing": None}
+    """Start collecting exam submissions via DM.
+
+    NOTE: _pending_exams is intentionally still in-memory — it only tracks
+    "which DM stage is this student on" (speaking vs writing), which is
+    fine to lose on a bot restart (the student just re-runs !exam). What
+    is NOT safe to keep in-memory is the actual submission content once
+    collection completes — that is persisted to the database in
+    handle_exam_dm() below via database.create_pending_exam().
+    """
+    from . import database
+    m = database.get_member(str(member.id))
+    from_level = m["level"] if m else "L0"
+    to_level = {"L0": "L1", "L1": "L2", "L2": "L3"}.get(from_level, "L1")
+
+    _pending_exams[str(member.id)] = {
+        "stage": "speaking", "speaking": None, "writing": None,
+        "from_level": from_level, "to_level": to_level,
+    }
     try:
         await member.send(
             f"📋 **امتحان الترقية — الجزء 1: Speaking**\n\n"
@@ -1029,6 +1059,7 @@ async def start_exam_collection(member: discord.Member):
 
 async def handle_exam_dm(message: discord.Message) -> bool:
     """Handle exam submission in DM. Returns True if message was an exam submission."""
+    from . import database
     discord_id = str(message.author.id)
     if discord_id not in _pending_exams:
         return False
@@ -1056,14 +1087,40 @@ async def handle_exam_dm(message: discord.Message) -> bool:
         if len(message.content) >= 30:
             exam["writing"] = message.content
             exam["stage"] = "waiting"
+
+            # Persist to the database NOW — this is the fix for the exam
+            # flow's dead end. Previously the submission only ever lived
+            # in this in-memory dict: nothing wrote it to the database,
+            # so (a) the 30-day cooldown never actually engaged because
+            # last_advancement_attempt() always saw zero rows, (b) no
+            # admin was ever notified, and (c) a bot restart would lose
+            # the submission with no trace.
+            exam_id = database.create_pending_exam(
+                discord_id,
+                exam["from_level"],
+                exam["to_level"],
+                speaking_recording_url=exam["speaking"] or "",
+                writing_submission=exam["writing"] or "",
+            )
+
             await message.channel.send(
                 f"✅ **تم استلام الكتابة!**\n\n"
                 f"📊 الامتحان بتاعك هيتراجع خلال 48 ساعة.\n"
                 f"هتوصلك النتيجة هنا في DM.\n\n"
                 f"*Good luck! 🏛️*"
             )
-            # Notify founder
-            # (handled in bot.py via the guild)
+
+            # Notify admins there's a real, actionable review pending —
+            # previously this was a comment saying "handled in bot.py"
+            # that pointed at code which did not exist anywhere.
+            await notify_admins_of_pending_exam(
+                message.author, exam_id, exam["from_level"], exam["to_level"],
+                exam["speaking"] or "", exam["writing"] or "",
+            )
+
+            # Clear the in-memory DM-stage tracker — the durable record
+            # now lives in the database as the source of truth.
+            del _pending_exams[discord_id]
             return True
         else:
             await message.channel.send("✍️ محتاج 7 جمل على الأقل. حاول تاني.")
@@ -1072,6 +1129,33 @@ async def handle_exam_dm(message: discord.Message) -> bool:
     return False
 
 
+async def notify_admins_of_pending_exam(student: discord.User, exam_id: int,
+                                        from_level: str, to_level: str,
+                                        speaking_url: str, writing_text: str):
+    """DM every admin (guild members with manage_guild permission) that an
+    advancement exam is ready for review, with a direct link to the
+    recording and the writing sample, plus the exact command to resolve it.
+    """
+    guild = student.mutual_guilds[0] if getattr(student, "mutual_guilds", None) else None
+    if not guild:
+        return
+    admins = [m for m in guild.members if m.guild_permissions.manage_guild and not m.bot]
+    summary = (
+        f"📋 **Advancement Exam Ready for Review** (#{exam_id})\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"Student: **{student.display_name}** ({from_level} → {to_level})\n\n"
+        f"🎙️ Speaking recording: {speaking_url or '(none)'}\n\n"
+        f"✍️ Writing sample:\n> {writing_text[:800]}\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"To resolve: `!examresult {exam_id} pass` or `!examresult {exam_id} fail`"
+    )
+    for admin in admins:
+        try:
+            await admin.send(summary)
+        except discord.Forbidden:
+            pass
+
+
 def has_pending_exam(discord_id: str) -> bool:
-    """Check if user has a pending exam submission."""
+    """Check if user is mid-DM-collection (speaking/writing stage)."""
     return discord_id in _pending_exams and _pending_exams[discord_id]["stage"] != "waiting"

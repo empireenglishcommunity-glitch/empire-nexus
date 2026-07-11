@@ -4,51 +4,91 @@
   "theme": "Idioms & Expressions",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Cleft Sentences (It is... that/who)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "hit the nail on the head", "pronunciation": "hit thə nayl on thə hed", "arabic": "يصيب كبد الحقيقة", "pos": "idiom"},
+    {"word": "beat around the bush", "pronunciation": "beet ə-rownd thə bush", "arabic": "يماطل/يتحدث بشكل غير مباشر", "pos": "idiom"},
+    {"word": "bite the bullet", "pronunciation": "byt thə BUL-it", "arabic": "يتحمل موقفًا صعبًا بشجاعة", "pos": "idiom"},
+    {"word": "cut corners", "pronunciation": "kut KOR-nərz", "arabic": "يقلل الجهد/التكلفة على حساب الجودة", "pos": "idiom"},
+    {"word": "get the ball rolling", "pronunciation": "get thə bawl ROH-ling", "arabic": "يبدأ شيئًا/يحرك الأمور", "pos": "idiom"},
+    {"word": "once in a blue moon", "pronunciation": "wuns in ə bloo moon", "arabic": "نادرًا جدًا", "pos": "idiom"},
+    {"word": "the last straw", "pronunciation": "thə last straw", "arabic": "القشة التي قصمت ظهر البعير", "pos": "idiom"},
+    {"word": "under the weather", "pronunciation": "UN-dər thə WETH-ər", "arabic": "متوعك صحيًا", "pos": "idiom"},
+    {"word": "burn the midnight oil", "pronunciation": "burn thə MID-nyt oyl", "arabic": "يسهر للعمل/الدراسة", "pos": "idiom"},
+    {"word": "throw in the towel", "pronunciation": "throh in thə TOW-əl", "arabic": "يستسلم", "pos": "idiom"},
+    {"word": "on thin ice", "pronunciation": "on thin ys", "arabic": "في موقف خطير/محفوف بالمخاطر", "pos": "idiom"},
+    {"word": "spill the beans", "pronunciation": "spil thə beenz", "arabic": "يكشف سرًا", "pos": "idiom"},
+    {"word": "hit the ground running", "pronunciation": "hit thə grownd RUN-ing", "arabic": "يبدأ بقوة وحماس فوري", "pos": "idiom"},
+    {"word": "let the cat out of the bag", "pronunciation": "let thə kat owt əv thə bag", "arabic": "يكشف سرًا بالخطأ", "pos": "idiom"},
+    {"word": "call it a day", "pronunciation": "kawl it ə day", "arabic": "ينهي العمل لهذا اليوم", "pos": "idiom"},
+    {"word": "a piece of cake", "pronunciation": "ə pees əv kayk", "arabic": "أمر سهل جدًا", "pos": "idiom"},
+    {"word": "break the ice", "pronunciation": "brayk thə ys", "arabic": "يكسر حاجز الحرج الأولي", "pos": "idiom"},
+    {"word": "get cold feet", "pronunciation": "get kohld feet", "arabic": "يتراجع بسبب الخوف/التوتر", "pos": "idiom"},
+    {"word": "in the same boat", "pronunciation": "in thə saym boht", "arabic": "في نفس الموقف/المشكلة", "pos": "idiom"},
+    {"word": "jump the gun", "pronunciation": "jump thə gun", "arabic": "يتسرع قبل الوقت المناسب", "pos": "idiom"},
+    {"word": "keep it under wraps", "pronunciation": "keep it UN-dər raps", "arabic": "يحتفظ بشيء سريًا", "pos": "idiom"},
+    {"word": "miss the boat", "pronunciation": "mis thə boht", "arabic": "يفوت فرصة", "pos": "idiom"},
+    {"word": "on the same page", "pronunciation": "on thə saym payj", "arabic": "متفقون/على فهم مشترك", "pos": "idiom"},
+    {"word": "pull strings", "pronunciation": "pul stringz", "arabic": "يستخدم نفوذًا/معارف للحصول على شيء", "pos": "idiom"},
+    {"word": "see eye to eye", "pronunciation": "see y tə y", "arabic": "يتفقون تمامًا", "pos": "idiom"},
+    {"word": "speak of the devil", "pronunciation": "speek əv thə DEV-əl", "arabic": "الحديث عن شخص يظهر فجأة (كأنه سمعنا)", "pos": "idiom"},
+    {"word": "steal someone's thunder", "pronunciation": "steel SUM-wunz THUN-dər", "arabic": "يسرق الأضواء/الفضل من شخص آخر", "pos": "idiom"},
+    {"word": "the ball is in your court", "pronunciation": "thə bawl iz in yər kort", "arabic": "القرار بيدك الآن", "pos": "idiom"},
+    {"word": "wrap your head around", "pronunciation": "rap yər hed ə-ROWND", "arabic": "يفهم شيئًا معقدًا", "pos": "idiom"},
+    {"word": "actions speak louder than words", "pronunciation": "AK-shənz speek LOW-dər than wurdz", "arabic": "الأفعال أبلغ من الأقوال", "pos": "proverb"},
+    {"word": "don't count your chickens", "pronunciation": "dohnt kownt yər CHIK-ənz", "arabic": "لا تحسب النتيجة قبل حدوثها", "pos": "proverb (shortened)"},
+    {"word": "curiosity killed the cat", "pronunciation": "kyoor-ee-OS-ə-tee kild thə kat", "arabic": "حذار من التطفل الزائد", "pos": "proverb"},
+    {"word": "every cloud has a silver lining", "pronunciation": "EV-ree klowd haz ə SIL-vər LY-ning", "arabic": "لكل أزمة جانب إيجابي", "pos": "proverb"},
+    {"word": "don't judge a book by its cover", "pronunciation": "dohnt juj ə book by its KUV-ər", "arabic": "لا تحكم على شيء من مظهره", "pos": "proverb"},
+    {"word": "figure of speech", "pronunciation": "FIG-yər əv speech", "arabic": "تعبير مجازي/بلاغي", "pos": "noun phrase"},
+    {"word": "colloquial", "pronunciation": "kə-LOH-kwee-əl", "arabic": "عامي/غير رسمي", "pos": "adjective"},
+    {"word": "figurative language", "pronunciation": "FIG-yər-ə-tiv LANG-gwij", "arabic": "لغة مجازية", "pos": "noun phrase"},
+    {"word": "idiomatic expression", "pronunciation": "id-ee-ə-MAT-ik ik-SPRESH-ən", "arabic": "تعبير اصطلاحي", "pos": "noun phrase"},
+    {"word": "second nature", "pronunciation": "SEK-ənd NAY-chər", "arabic": "طبيعة ثانية/أمر تلقائي", "pos": "idiom"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Idioms & Expressions)",
+      "prompt": "Give a 5-minute TED-style talk on 'Why idioms reveal the hidden logic of a culture.' Use at least 4 idioms from this week naturally within your talk.",
       "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Idioms & Expressions)",
+      "prompt": "Structured debate with rebuttals: 'Non-native speakers should focus on idioms early, or idioms are a distraction from core fluency.' Take a side, present your case, then respond to an imagined counter-argument.",
       "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Idioms & Expressions)",
+      "prompt": "Record a 5-minute podcast segment explaining your 3 favorite English idioms, their literal origins (real or your best guess), and how you personally remember them.",
       "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Idioms & Expressions)",
+      "prompt": "Teach a beginner-level student one idiom from this week — explain its literal meaning, its actual meaning, and give 2 example situations where it fits.",
       "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Idioms & Expressions)",
+      "prompt": "Respond to this unexpected prompt: 'Tell a 3-minute story about a difficult decision, using at least 3 idioms from this week naturally within the story.'",
       "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Idioms & Expressions)",
+      "prompt": "Find a short clip (30-60 seconds) of a native speaker using an idiom naturally in conversation. Mimic their exact rhythm, intonation, and pronunciation as closely as possible.",
       "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Idioms & Expressions)",
+      "prompt": "Speak naturally for 5+ minutes about any topic of your choice, deliberately weaving in at least 5 idioms from this week without making it feel forced or scripted.",
       "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on idioms & expressions (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in idioms & expressions.",
-    "Compose a formal report with recommendations about idioms & expressions.",
-    "Write a creative piece (story/poem) inspired by idioms & expressions.",
-    "Draft an opinion column for a newspaper about idioms & expressions.",
-    "Write a comparison essay using academic vocabulary about idioms & expressions.",
-    "Write freely about idioms & expressions — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing whether idioms should be taught earlier or later in language learning.",
+    "Write a critical analysis of how idioms reflect cultural values, using at least 3 specific English idioms as evidence.",
+    "Compose a formal report with recommendations for how an English course could better teach idiomatic expressions.",
+    "Write a creative short story (or poem) where the title and central theme are both built around a single English idiom.",
+    "Draft an opinion column for a newspaper about whether idiomatic fluency is overrated or essential for advanced English learners.",
+    "Write a comparison essay contrasting an idiom from your native language with its closest (often imperfect) English equivalent.",
+    "Write freely about a personal experience where you misunderstood or successfully used an English idiom — focus on style, not just content."
   ]
 }

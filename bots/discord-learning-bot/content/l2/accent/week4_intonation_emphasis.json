@@ -1,0 +1,149 @@
+{
+  "level": "L2",
+  "week": 4,
+  "focus": "Intonation for Emphasis & Contrast — Pitch Patterns That Carry Meaning",
+  "focus_ar": "التنغيم للتوضيح والتناقض — أنماط نبرة الصوت التي تحمل معنى",
+  "arabic_challenge": "Beyond word stress (L1 Week 1), native English speakers use PITCH MOVEMENT (rising and falling tone across a phrase) to signal emphasis, contrast, sarcasm, and correction — often without changing a single word. Arabic intonation exists but maps meaning differently, so Arabic-accented English sometimes sounds flat or emotionally mismatched even when grammar and word stress are both correct.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["contrastive emphasis: shifting stress to correct or contrast information"],
+      "isolation": {
+        "instructions": "When correcting or contrasting a specific piece of information, native speakers shift extra pitch and stress onto exactly that word — even a normally unstressed word.",
+        "instructions_ar": "لما تصحح أو تناقض معلومة معينة، المتكلم الأصلي بينقل نبر ونبرة صوت زيادة بالضبط على هذه الكلمة — حتى لو كانت كلمة عادةً بدون نبر.",
+        "practice": ["I said BLUE, not green. (contrast on 'blue')", "SHE did it, not him. (contrast on 'she')", "I meant TODAY, not tomorrow. (contrast on 'today')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I said BLUE, not green. (contrastive stress)", "I said blue, not green. (flat, no emphasis)"], "meaning": ["قلت أزرق مش أخضر", "—"]}
+      ],
+      "word_practice": ["BLUE, not green", "SHE did it", "TODAY, not tomorrow", "I meant HER, not him"],
+      "sentence_practice": [
+        "I said BLUE, not green — please listen carefully.",
+        "SHE did it, not him — get your facts straight.",
+        "I meant TODAY, not tomorrow, when I made the plan."
+      ],
+      "record_this": "I said BLUE, not green — SHE did it, not him — and I meant TODAY, not tomorrow!",
+      "self_check": "Did the contrasted word clearly stand out with extra pitch and stress, more than in normal, neutral speech?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["rising intonation for genuine surprise or disbelief"],
+      "isolation": {
+        "instructions": "A sharp rise in pitch on a key word signals surprise, disbelief, or genuine question — even on a statement that isn't grammatically a question.",
+        "instructions_ar": "ارتفاع حاد في نبرة الصوت على كلمة معينة بيدل على استغراب أو عدم تصديق أو سؤال حقيقي — حتى لو الجملة نحويًا مش سؤال.",
+        "practice": ["You did WHAT? (rising, surprised)", "She said WHAT? (rising, disbelief)", "Really? (sharp rise)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["You did WHAT? (rising, genuine shock)", "You did what. (flat, unconvincing)"], "meaning": ["عملت إيه؟!", "—"]}
+      ],
+      "word_practice": ["You did WHAT?", "She said WHAT?", "Really?", "No WAY!"],
+      "sentence_practice": [
+        "You did WHAT? I can't believe it!",
+        "She said WHAT? That's shocking!",
+        "Really? No WAY that's true!"
+      ],
+      "record_this": "You did WHAT? I can't believe it! She said WHAT? That's shocking — really? No WAY!",
+      "self_check": "Did your pitch genuinely rise sharply on the key word, conveying real surprise, not a flat reading?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["falling intonation for confident, final statements"],
+      "isolation": {
+        "instructions": "A strong, falling pitch at the end of a statement signals confidence and finality — useful for presentations, debates, and firm opinions.",
+        "instructions_ar": "نبرة صوت منخفضة قوية في نهاية الجملة بتدل على ثقة وحسم — مفيدة في العروض التقديمية والنقاشات والآراء القوية.",
+        "practice": ["This is the right decision. (firm, falling)", "I strongly believe this is true. (firm, falling)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["This is the right decision. (falling, confident)", "This is the right decision? (rising, unsure)"], "meaning": ["ده القرار الصحيح", "—"]}
+      ],
+      "word_practice": ["This is the right decision", "I strongly believe this", "This is the final answer"],
+      "sentence_practice": [
+        "This is the right decision, and I strongly believe it.",
+        "This is the final answer — there's no doubt.",
+        "I strongly believe this is the right decision."
+      ],
+      "record_this": "This is the right decision, and I strongly believe it — this is the final answer, there's no doubt.",
+      "self_check": "Did your pitch fall confidently at the end of each statement, rather than trailing off unsurely or rising into a question?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["intonation in debate: emphasis to strengthen an argument"],
+      "isolation": {
+        "instructions": "In debate-style speech (common in L2's speaking missions), strategic emphasis on key argument words makes your position sound more persuasive.",
+        "instructions_ar": "في الكلام على شكل نقاش (شائع في مهام الكلام في المستوى الثاني)، التركيز الاستراتيجي على كلمات الحجة الأساسية بيخلي موقفك أكتر إقناعًا.",
+        "practice": ["This is EXACTLY why we need change. (emphasis on 'exactly')", "The evidence CLEARLY shows this. (emphasis on 'clearly')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["This is EXACTLY why (emphatic, persuasive)", "This is exactly why (flat, weak)"], "meaning": ["هذا هو بالضبط سبب", "—"]}
+      ],
+      "word_practice": ["EXACTLY why", "CLEARLY shows", "The FACT is", "MUST consider"],
+      "sentence_practice": [
+        "This is EXACTLY why we need change.",
+        "The evidence CLEARLY shows this is true.",
+        "The FACT is, we MUST consider all options."
+      ],
+      "record_this": "This is EXACTLY why we need change — the evidence CLEARLY shows this is true, and the FACT is, we MUST consider all options.",
+      "self_check": "In an argumentative tone, did your emphasis land forcefully on the key persuasive words?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["combining emphasis, surprise, and confident intonation in spontaneous speech"],
+      "isolation": {
+        "instructions": "Practice a spontaneous 30-45 second speech (agree or disagree with a statement) that naturally requires all three intonation patterns from this week.",
+        "instructions_ar": "تدرب على كلام عفوي لمدة ٣٠-٤٥ ثانية (توافق أو ترفض تصريح) بيحتاج طبيعيًا الأنماط الثلاثة من هذا الأسبوع.",
+        "practice": ["Respond to: 'Working from home is always better than working in an office.' Agree or disagree, with genuine emphasis and conviction."]
+      },
+      "minimal_pairs": [
+        {"pair": ["spontaneous speech with natural intonation variety", "spontaneous speech, flat/monotone"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your response)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: respond to the working-from-home statement for 30-45 seconds, using contrastive, surprised, and confident intonation naturally.)",
+      "self_check": "Did your pitch vary naturally and meaningfully, or did it stay flat throughout your response?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: contrastive emphasis, rising surprise, falling confidence, debate emphasis, spontaneous variety",
+      "type": "review",
+      "mixed_pairs": [
+        ["I said BLUE, not green (contrast)", "You did WHAT? (surprise)"], ["This is the right decision (confident)", "This is EXACTLY why (debate emphasis)"]
+      ],
+      "challenge_sentences": [
+        "You did WHAT? I said BLUE, not green — this is EXACTLY why I don't trust that plan!",
+        "SHE did it, not him — and this is the right decision, no doubt about it!",
+        "Really? The evidence CLEARLY shows this is the final answer — I strongly believe it!"
+      ],
+      "record_this": "You did WHAT? I said BLUE, not green — this is EXACTLY why I don't trust that plan! SHE did it, not him — and this is the right decision, no doubt about it!",
+      "self_check": "This passage requires switching between 3 different intonation patterns quickly. Did each one come through distinctly?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 60-second spontaneous mini-debate defending a position, naturally using contrastive emphasis, surprise (if reacting to a counter-argument), and confident falling intonation for your conclusion.",
+        "passage": "(Free speech: argue for or against 'Social media should have a minimum age requirement of 16.' Include at least one correction/contrast, and end with a confident, falling-intonation conclusion.)",
+        "sounds_to_check": {
+          "contrastive emphasis": "check for natural corrections/contrasts",
+          "rising intonation (if reacting)": "check if used appropriately",
+          "falling confident conclusion": "check the final sentence"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Intonation patterns used naturally and appropriately throughout, clearly conveying emphasis, contrast, and confidence.",
+        "70_89": "Most patterns present; a few moments of flat, unvaried pitch.",
+        "50_69": "Patterns present only in drilled sentences, largely flat in spontaneous speech.",
+        "below_50": "Consistently flat/monotone delivery — go back and repeat Days 1-4, exaggerating the pitch changes at first."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week builds on L1's basic intonation patterns (statements falling, questions rising) by adding DELIBERATE, MEANINGFUL pitch shifts that native speakers use constantly in real conversation and argument.",
+      "It's fine — even encouraged — to exaggerate these patterns at first. Native speakers' real intonation range is often wider than learners expect; underdoing it is a more common error than overdoing it.",
+      "This directly supports L2's frequent debate and presentation-style speaking missions, where flat intonation makes even a well-argued point sound unconvincing."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7's spontaneous speech — compare your pitch variety here to your L1 recordings to track genuine growth in expressiveness."
+  }
+}

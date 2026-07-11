@@ -4,51 +4,92 @@
   "theme": "Travel & Adventure",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Third Conditional (if I had done...)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "itinerary", "pronunciation": "y-TIN-ə-rer-ee", "arabic": "خط سير الرحلة", "pos": "noun"},
+    {"word": "destination", "pronunciation": "des-tə-NAY-shən", "arabic": "وجهة", "pos": "noun"},
+    {"word": "backpacking", "pronunciation": "BAK-pak-ing", "arabic": "السفر بحقيبة ظهر", "pos": "noun"},
+    {"word": "excursion", "pronunciation": "ik-SKUR-zhən", "arabic": "نزهة/رحلة قصيرة", "pos": "noun"},
+    {"word": "accommodation", "pronunciation": "ə-kom-ə-DAY-shən", "arabic": "إقامة/سكن", "pos": "noun"},
+    {"word": "landmark", "pronunciation": "LAND-mark", "arabic": "معلم بارز", "pos": "noun"},
+    {"word": "off the beaten path", "pronunciation": "awf thə BEE-tən path", "arabic": "بعيدًا عن الطرق المعتادة", "pos": "idiom"},
+    {"word": "wanderlust", "pronunciation": "WAHN-dər-lust", "arabic": "شغف الترحال", "pos": "noun"},
+    {"word": "layover", "pronunciation": "LAY-oh-vər", "arabic": "توقف بين الرحلات", "pos": "noun"},
+    {"word": "customs (airport)", "pronunciation": "KUS-təmz", "arabic": "الجمارك", "pos": "noun"},
+    {"word": "visa", "pronunciation": "VEE-zə", "arabic": "تأشيرة", "pos": "noun"},
+    {"word": "expedition", "pronunciation": "ek-spə-DISH-ən", "arabic": "رحلة استكشافية", "pos": "noun"},
+    {"word": "hostel", "pronunciation": "HOS-təl", "arabic": "بيت شباب/نزل اقتصادي", "pos": "noun"},
+    {"word": "souvenir", "pronunciation": "soo-və-NEER", "arabic": "تذكار", "pos": "noun"},
+    {"word": "culture shock", "pronunciation": "KUL-chər shok", "arabic": "صدمة ثقافية", "pos": "noun phrase"},
+    {"word": "remote (location)", "pronunciation": "ri-MOHT", "arabic": "بعيد/منعزل", "pos": "adjective"},
+    {"word": "scenic", "pronunciation": "SEE-nik", "arabic": "ذو منظر طبيعي جميل", "pos": "adjective"},
+    {"word": "adventurous", "pronunciation": "ad-VEN-chər-əs", "arabic": "محب للمغامرة", "pos": "adjective"},
+    {"word": "budget travel", "pronunciation": "BUJ-it TRAV-əl", "arabic": "سفر اقتصادي", "pos": "noun phrase"},
+    {"word": "immerse (in culture)", "pronunciation": "i-MURS", "arabic": "ينغمس (في الثقافة)", "pos": "verb"},
+    {"word": "jet lag", "pronunciation": "jet lag", "arabic": "اضطراب فارق التوقيت", "pos": "noun phrase"},
+    {"word": "guided tour", "pronunciation": "GY-did toor", "arabic": "جولة بمرشد", "pos": "noun phrase"},
+    {"word": "local cuisine", "pronunciation": "LOH-kəl kwi-ZEEN", "arabic": "المطبخ المحلي", "pos": "noun phrase"},
+    {"word": "hidden gem", "pronunciation": "HID-ən jem", "arabic": "كنز خفي/مكان غير معروف", "pos": "idiom"},
+    {"word": "road trip", "pronunciation": "rohd trip", "arabic": "رحلة بالسيارة", "pos": "noun phrase"},
+    {"word": "solo travel", "pronunciation": "SOH-loh TRAV-əl", "arabic": "سفر منفرد", "pos": "noun phrase"},
+    {"word": "overpriced", "pronunciation": "oh-vər-PRYSD", "arabic": "مبالغ في السعر", "pos": "adjective"},
+    {"word": "authentic experience", "pronunciation": "aw-THEN-tik ik-SPEER-ee-əns", "arabic": "تجربة حقيقية", "pos": "noun phrase"},
+    {"word": "getaway", "pronunciation": "GET-ə-way", "arabic": "رحلة هروب قصيرة", "pos": "noun"},
+    {"word": "explore", "pronunciation": "ik-SPLOR", "arabic": "يستكشف", "pos": "verb"},
+    {"word": "border crossing", "pronunciation": "BOR-dər KROS-ing", "arabic": "عبور حدود", "pos": "noun phrase"},
+    {"word": "currency exchange", "pronunciation": "KUR-ən-see eks-CHAYNJ", "arabic": "صرف العملة", "pos": "noun phrase"},
+    {"word": "travel companion", "pronunciation": "TRAV-əl kəm-PAN-yən", "arabic": "رفيق سفر", "pos": "noun phrase"},
+    {"word": "spontaneous (trip)", "pronunciation": "spon-TAY-nee-əs", "arabic": "عفوي/غير مخطط له", "pos": "adjective"},
+    {"word": "off-season", "pronunciation": "awf-SEE-zən", "arabic": "الموسم غير السياحي", "pos": "noun/adjective"},
+    {"word": "trek", "pronunciation": "trek", "arabic": "رحلة سير طويلة", "pos": "noun/verb"},
+    {"word": "sightseeing", "pronunciation": "SYT-see-ing", "arabic": "التجول لمشاهدة المعالم", "pos": "noun"},
+    {"word": "connecting flight", "pronunciation": "kə-NEK-ting flyt", "arabic": "رحلة طيران متصلة", "pos": "noun phrase"},
+    {"word": "packing list", "pronunciation": "PAK-ing list", "arabic": "قائمة أشياء السفر", "pos": "noun phrase"},
+    {"word": "travel budget", "pronunciation": "TRAV-əl BUJ-it", "arabic": "موازنة السفر", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Debate: 'Solo travel is more rewarding than traveling with others.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Give a 3-minute presentation about your dream destination — why you want to go, what you'd do there, and what makes it special.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Analyze why some travelers prefer guided tours while others prefer to explore independently. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Tell a detailed story about a trip that didn't go as planned — what happened, and how did you handle it?",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Imagine you're a travel blogger being interviewed. Answer: What's the most memorable place you've visited? What's one travel mistake beginners make? What's your best travel tip?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Summarize a travel video, article, or someone's story about a trip they took, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Travel & Adventure)",
-      "target_seconds": 250
+      "prompt": "Discuss freely for 4 minutes: is it better to visit many places briefly, or fewer places deeply? Why?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of travel & adventure.",
-    "Analyze the impact of travel & adventure on daily life.",
-    "Compare how travel & adventure differs between two countries.",
-    "Write a formal email about travel & adventure.",
-    "Describe a personal experience related to travel & adventure (200+ words).",
-    "What changes would you make regarding travel & adventure? Explain why.",
-    "Summarize an article about travel & adventure in your own words."
+    "Write an essay (150+ words) arguing whether budget travel or luxury travel gives a more meaningful experience.",
+    "Analyze how tourism affects both the economy and the culture of a popular destination.",
+    "Compare traveling within your own country versus traveling abroad.",
+    "Write a formal email to a hotel or hostel asking about accommodation for an upcoming trip.",
+    "Describe a personal travel experience that taught you something unexpected about yourself or the world (200+ words).",
+    "What changes would you make to how tourism is managed in a place you know well? Explain at least 2 specific ideas.",
+    "Summarize a travel guide or article about a specific destination, in under 150 words."
   ]
 }

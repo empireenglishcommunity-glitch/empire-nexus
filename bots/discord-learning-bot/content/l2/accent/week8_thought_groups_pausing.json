@@ -1,0 +1,150 @@
+{
+  "level": "L2",
+  "week": 8,
+  "focus": "Thought Groups & Strategic Pausing — Chunking Speech for Clarity",
+  "focus_ar": "مجموعات الفكر والتوقف الاستراتيجي — تقسيم الكلام لمجموعات من أجل الوضوح",
+  "arabic_challenge": "Fluent English speakers don't speak in one continuous stream, nor word-by-word — they break long sentences into 'thought groups' (meaningful chunks, usually 3-7 words), with a brief pause and slight pitch reset between groups. Arabic speakers learning English sometimes either pause too often (breaking fluency and thought groups incorrectly, often at grammatically awkward points) or not enough (running long, complex sentences together without any breathing/thinking room for the listener), both of which reduce clarity even when grammar is correct.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["identifying natural thought-group boundaries"],
+      "isolation": {
+        "instructions": "A long sentence should be broken into thought groups at natural grammatical boundaries — after an introductory phrase, before/after a relative clause, between listed items, or at a conjunction joining two full ideas.",
+        "instructions_ar": "الجملة الطويلة لازم تنقسم لمجموعات فكرية عند حدود نحوية طبيعية — بعد عبارة استهلالية، قبل/بعد جملة صلة، بين عناصر قائمة، أو عند أداة ربط بين فكرتين كاملتين.",
+        "practice": ["After a long day at work, | I like to relax | and watch a movie.", "The book, | which I bought last week, | is really interesting."]
+      },
+      "minimal_pairs": [
+        {"pair": ["After a long day at work, | I like to relax. (correct grouping)", "After a long. Day at work I like. To relax. (wrong, arbitrary pauses)"], "meaning": ["بعد يوم طويل في العمل، بحب أرتاح", "—"]}
+      ],
+      "word_practice": ["After a long day at work", "I like to relax", "which I bought last week"],
+      "sentence_practice": [
+        "After a long day at work, | I like to relax and watch a movie.",
+        "The book, | which I bought last week, | is really interesting.",
+        "When I have free time, | I usually read | or go for a walk."
+      ],
+      "record_this": "After a long day at work, I like to relax and watch a movie — the book, which I bought last week, is really interesting, and when I have free time, I usually read or go for a walk.",
+      "self_check": "Did your pauses fall at meaningful grammatical boundaries (marked with | above), rather than randomly or not at all?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["pausing before and after relative/subordinate clauses"],
+      "isolation": {
+        "instructions": "Non-defining relative clauses (set off by commas) and long subordinate clauses typically get a brief pause on both sides, setting them apart as extra information.",
+        "instructions_ar": "جمل الصلة غير التعريفية (بين فواصل) والجمل التابعة الطويلة عادة بتاخد وقفة قصيرة من الجانبين، بتفصلها كمعلومة إضافية.",
+        "practice": ["My brother, | who lives in Canada, | is visiting soon.", "Because it was raining, | we decided to stay home."]
+      },
+      "minimal_pairs": [
+        {"pair": ["My brother, | who lives in Canada, | is visiting. (correct pausing)", "My brother who lives in Canada is visiting. (no pause, less clear for a long clause)"], "meaning": ["أخويا اللي عايش في كندا جاي زيارة", "—"]}
+      ],
+      "word_practice": ["My brother, who lives in Canada,", "Because it was raining,", "The company, which was founded in 1990,"],
+      "sentence_practice": [
+        "My brother, who lives in Canada, is visiting soon.",
+        "Because it was raining, we decided to stay home.",
+        "The company, which was founded in 1990, is very successful."
+      ],
+      "record_this": "My brother, who lives in Canada, is visiting soon — because it was raining last time, we decided to stay home, but the company, which was founded in 1990, is doing well.",
+      "self_check": "Did you pause naturally around the non-defining/subordinate clauses, clearly setting them apart?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["pausing in lists and multi-part explanations"],
+      "isolation": {
+        "instructions": "When listing multiple points or steps (common in analysis and presentation speaking missions), a brief pause after each item helps the listener track your structure.",
+        "instructions_ar": "لما تسرد نقاط أو خطوات متعددة (شائع في مهام التحليل والعرض التقديمي)، وقفة قصيرة بعد كل عنصر بتساعد السامع يتابع تنظيمك.",
+        "practice": ["There are three reasons: | first, | the cost; | second, | the time; | and third, | the risk."]
+      },
+      "minimal_pairs": [
+        {"pair": ["first, ... second, ... third, ... (paced, clear structure)", "firstsecondthird (rushed, unclear structure)"], "meaning": ["أولاً، ثانياً، ثالثاً", "—"]}
+      ],
+      "word_practice": ["first,", "second,", "and third,", "there are three reasons:"],
+      "sentence_practice": [
+        "There are three reasons: first, the cost; second, the time; and third, the risk.",
+        "My plan has two parts: first, research; second, action.",
+        "I'll explain this in steps: first, the problem; then, the solution."
+      ],
+      "record_this": "There are three reasons for this: first, the cost; second, the time; and third, the risk — my plan has two parts, first research, then action.",
+      "self_check": "In this list-heavy passage, did your pauses clearly mark each new point, making the structure easy to follow?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["avoiding OVER-pausing (a common overcorrection)"],
+      "isolation": {
+        "instructions": "Some learners, once aware of thought groups, start pausing too much, breaking fluency. Practice keeping short, tightly-connected phrases together as ONE thought group, without unnecessary breaks.",
+        "instructions_ar": "بعض المتعلمين، لما يعرفوا عن مجموعات الفكر، بيبدأوا يتوقفوا كتير، وده بيكسر الانسيابية. تدرب على خلي العبارات القصيرة المتصلة مع بعض كمجموعة فكرية واحدة، بدون وقفات غير ضرورية.",
+        "practice": ["I want to go to the store. (ONE thought group, no internal pause needed)", "NOT: I want. To go. To the store. (over-paused, unnatural)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I want to go to the store. (one smooth group)", "I want. To go. To the store. (over-paused, choppy)"], "meaning": ["عايز أروح المحل", "—"]}
+      ],
+      "word_practice": ["I want to go to the store", "She likes to read books", "We need to finish this today"],
+      "sentence_practice": [
+        "I want to go to the store before it closes.",
+        "She likes to read books in her free time.",
+        "We need to finish this today, no matter what."
+      ],
+      "record_this": "I want to go to the store before it closes — she likes to read books in her free time, and we need to finish this today, no matter what.",
+      "self_check": "Did you avoid unnecessary mid-clause pauses, keeping each short, tightly connected idea as ONE smooth group?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["thought groups in spontaneous analytical speech"],
+      "isolation": {
+        "instructions": "Apply correct thought-grouping in a spontaneous 45-60 second analysis, since L2's analysis-type speaking missions require clear, well-paced structure.",
+        "instructions_ar": "طبّق التجميع الفكري الصحيح في تحليل عفوي لمدة ٤٥-٦٠ ثانية، لأن مهام الكلام التحليلية في المستوى الثاني تحتاج بنية واضحة وموزونة.",
+        "practice": ["Analyze, out loud and unscripted: 'Why do people procrastinate?' — use clear thought groups and pauses to structure your answer."]
+      },
+      "minimal_pairs": [
+        {"pair": ["well-structured spontaneous analysis with clear pausing", "rushed or over-paused spontaneous analysis"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your analysis)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: analyze why people procrastinate for 45-60 seconds, using clear thought groups.)",
+      "self_check": "Listen back — could a listener easily follow your structure because of well-placed pauses, or did it feel rushed/choppy?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: natural boundaries, clause pausing, list pausing, avoiding over-pausing, spontaneous structure",
+      "type": "review",
+      "mixed_pairs": [
+        ["After a long day at work, | I like to relax. (correct)", "I want. To go. (over-paused, wrong)"]
+      ],
+      "challenge_sentences": [
+        "After a long day at work, | which is often exhausting, | I like to relax, | read a book, | or watch a movie.",
+        "There are three reasons for this decision: | first, | the cost; | second, | the time; | and third, | my own comfort.",
+        "My brother, | who lives in Canada, | told me that | because of the weather, | he's staying home this weekend."
+      ],
+      "record_this": "After a long day at work, which is often exhausting, I like to relax, read a book, or watch a movie — there are three reasons for this: first, the cost; second, the time; and third, my own comfort.",
+      "self_check": "This is a demanding multi-clause passage. Did your pausing clearly reflect its grammatical structure throughout?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 60-second spontaneous explanation of a process or decision you've made recently, using clear, well-placed thought groups.",
+        "passage": "(Free speech: explain a decision or process — e.g., how you chose your current job, or how you plan your week — using clear thought groups and pauses to structure your explanation.)",
+        "sounds_to_check": {
+          "natural boundary pausing": "check throughout",
+          "clause pausing": "check for any relative/subordinate clauses used",
+          "list pausing (if applicable)": "check if you listed steps or reasons",
+          "avoiding over-pausing": "check that short phrases stayed connected"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Thought groups clearly and naturally structured throughout, making the explanation easy to follow without sounding choppy.",
+        "70_89": "Mostly clear structure; 1-2 moments of either rushing or over-pausing.",
+        "50_69": "Structure present but inconsistent — some parts clear, others rushed or choppy.",
+        "below_50": "Either no discernible pausing structure, or excessive over-pausing throughout — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Thought grouping is one of the most impactful fluency skills for L2's longer, more complex speaking missions (presentations, analysis, debates) — it's often what separates 'understandable' from 'genuinely fluent-sounding' speech.",
+      "This skill connects directly to grammar: relative clauses (Week 6), conditionals (Weeks 5, 7, 8), and connectors all create natural thought-group boundaries — good grammar knowledge actually helps you pause correctly.",
+      "If you're unsure where to pause, try this: read the sentence and mark every comma and clause boundary FIRST, then practice pausing exactly there before adding speed."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7's spontaneous speech — these become useful benchmarks for how naturally structured your unscripted speech has become."
+  }
+}

@@ -4,51 +4,92 @@
   "theme": "Art & Creativity",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Wish/If only",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "masterpiece", "pronunciation": "MAS-tər-pees", "arabic": "تحفة فنية", "pos": "noun"},
+    {"word": "aesthetic", "pronunciation": "es-THET-ik", "arabic": "جمالي", "pos": "adjective"},
+    {"word": "abstract (art)", "pronunciation": "AB-strakt", "arabic": "تجريدي", "pos": "adjective"},
+    {"word": "inspiration", "pronunciation": "in-spə-RAY-shən", "arabic": "إلهام", "pos": "noun"},
+    {"word": "creativity", "pronunciation": "kree-ay-TIV-ə-tee", "arabic": "إبداع", "pos": "noun"},
+    {"word": "exhibit", "pronunciation": "ig-ZIB-it", "arabic": "معرض/يعرض", "pos": "noun/verb"},
+    {"word": "sculpture", "pronunciation": "SKULP-chər", "arabic": "منحوتة", "pos": "noun"},
+    {"word": "interpretation", "pronunciation": "in-tur-pri-TAY-shən", "arabic": "تفسير", "pos": "noun"},
+    {"word": "contemporary", "pronunciation": "kən-TEM-pə-rer-ee", "arabic": "معاصر", "pos": "adjective"},
+    {"word": "medium (art)", "pronunciation": "MEE-dee-əm", "arabic": "وسيط فني (خامة)", "pos": "noun"},
+    {"word": "critique", "pronunciation": "kri-TEEK", "arabic": "نقد فني", "pos": "noun/verb"},
+    {"word": "self-expression", "pronunciation": "self-ik-SPRESH-ən", "arabic": "التعبير عن الذات", "pos": "noun"},
+    {"word": "improvise", "pronunciation": "IM-prə-vyz", "arabic": "يبتكر/يرتجل", "pos": "verb"},
+    {"word": "avant-garde", "pronunciation": "ah-vahnt-GARD", "arabic": "طليعي/تجريبي", "pos": "adjective"},
+    {"word": "muse", "pronunciation": "myooz", "arabic": "مصدر إلهام", "pos": "noun"},
+    {"word": "craftsmanship", "pronunciation": "KRAFTS-mən-ship", "arabic": "حرفية/مهارة صنع", "pos": "noun"},
+    {"word": "gallery", "pronunciation": "GAL-ə-ree", "arabic": "صالة عرض", "pos": "noun"},
+    {"word": "symbolism (art)", "pronunciation": "SIM-bə-liz-əm", "arabic": "رمزية فنية", "pos": "noun"},
+    {"word": "composition (art)", "pronunciation": "kom-pə-ZISH-ən", "arabic": "تكوين فني", "pos": "noun"},
+    {"word": "originality", "pronunciation": "ə-rij-ə-NAL-ə-tee", "arabic": "أصالة", "pos": "noun"},
+    {"word": "artistic vision", "pronunciation": "ar-TIS-tik VIZH-ən", "arabic": "رؤية فنية", "pos": "noun phrase"},
+    {"word": "installation (art)", "pronunciation": "in-stə-LAY-shən", "arabic": "فن تجهيزي", "pos": "noun"},
+    {"word": "portray", "pronunciation": "por-TRAY", "arabic": "يصوّر/يجسد", "pos": "verb"},
+    {"word": "narrative (in art)", "pronunciation": "NAR-ə-tiv", "arabic": "سرد/حبكة", "pos": "noun"},
+    {"word": "genre", "pronunciation": "ZHAHN-rə", "arabic": "نوع فني", "pos": "noun"},
+    {"word": "curator", "pronunciation": "kyoo-RAY-tər", "arabic": "أمين/منظم معرض", "pos": "noun"},
+    {"word": "vivid", "pronunciation": "VIV-id", "arabic": "زاهي/واضح", "pos": "adjective"},
+    {"word": "provocative (art)", "pronunciation": "prə-VOK-ə-tiv", "arabic": "مثير للجدل/محفز فكري", "pos": "adjective"},
+    {"word": "artistic freedom", "pronunciation": "ar-TIS-tik FREE-dəm", "arabic": "حرية فنية", "pos": "noun phrase"},
+    {"word": "self-taught", "pronunciation": "self-tawt", "arabic": "متعلم ذاتيًا", "pos": "adjective"},
+    {"word": "improvisation", "pronunciation": "im-prov-ə-ZAY-shən", "arabic": "ارتجال", "pos": "noun"},
+    {"word": "portfolio", "pronunciation": "port-FOH-lee-oh", "arabic": "ملف أعمال", "pos": "noun"},
+    {"word": "craft (verb)", "pronunciation": "kraft", "arabic": "يصنع بحرفية", "pos": "verb"},
+    {"word": "commission (art)", "pronunciation": "kə-MISH-ən", "arabic": "تكليف بعمل فني", "pos": "noun/verb"},
+    {"word": "brushstroke", "pronunciation": "BRUSH-strohk", "arabic": "لمسة فرشاة", "pos": "noun"},
+    {"word": "subjective (opinion)", "pronunciation": "səb-JEK-tiv", "arabic": "ذاتي/شخصي", "pos": "adjective"},
+    {"word": "artistic expression", "pronunciation": "ar-TIS-tik ik-SPRESH-ən", "arabic": "تعبير فني", "pos": "noun phrase"},
+    {"word": "renowned (artist)", "pronunciation": "ri-NOWND", "arabic": "مشهور/معروف", "pos": "adjective"},
+    {"word": "medium of choice", "pronunciation": "MEE-dee-əm əv choys", "arabic": "الوسيط الفني المفضل", "pos": "noun phrase"},
+    {"word": "creative block", "pronunciation": "kree-AY-tiv blok", "arabic": "جمود إبداعي", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Debate: 'Anyone can be an artist, or true artistic talent is something you're born with.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Give a 3-minute presentation about an artist, song, movie, or piece of art that has influenced you personally.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Analyze why some art becomes famous while equally skilled work stays unknown. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Tell a detailed story about a creative project you worked on (art, music, writing, or anything else) and how it turned out.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Imagine you're an artist being interviewed about your work. Answer: What inspires your art? What's the hardest part of being creative for a living? What advice would you give a beginner?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Summarize a piece of art, film, or music you recently experienced, in under 2 minutes, including your own reaction to it.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Art & Creativity)",
-      "target_seconds": 260
+      "prompt": "Discuss freely for 4 minutes: should art always have a clear meaning, or is it okay for art to be confusing or open to interpretation?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of art & creativity.",
-    "Analyze the impact of art & creativity on daily life.",
-    "Compare how art & creativity differs between two countries.",
-    "Write a formal email about art & creativity.",
-    "Describe a personal experience related to art & creativity (200+ words).",
-    "What changes would you make regarding art & creativity? Explain why.",
-    "Summarize an article about art & creativity in your own words."
+    "Write an essay (150+ words) arguing whether art should be funded by governments or left entirely to the private market.",
+    "Analyze how a specific art form (music, film, painting, etc.) reflects the society that created it.",
+    "Compare traditional and digital art forms — their advantages and limitations.",
+    "Write a formal email to a gallery or venue proposing an exhibition of your own or someone else's work.",
+    "Describe a personal creative experience — making, performing, or deeply experiencing art (200+ words).",
+    "What changes would you make to how art and creativity are supported in schools? Explain at least 2 specific ideas.",
+    "Summarize a review or critique of a film, album, or exhibition in your own words, in under 150 words."
   ]
 }

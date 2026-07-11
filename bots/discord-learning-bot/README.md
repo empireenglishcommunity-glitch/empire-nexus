@@ -8,9 +8,10 @@
 - **AI-powered feedback** on writing submissions (Gemini + Groq fallback)
 - **Streak tracking** with gamification (points, leaderboards, bonuses)
 - **Weekly assessments** with scored dimensions
-- **Level progression** (L0 → L1 → L2 → L3) with advancement exams
+- **Level progression** (L0 → L1 → L2 → L3) with advancement exams — submissions persist to the database and admins are notified via DM to resolve with `!examresult`
 - **Automatic server setup** (roles, channels, permissions via setup script)
 - **Arabic-first** instruction with bilingual support
+- **Full 38-week curriculum** across all 4 levels (vocabulary, speaking, writing, accent drills, grammar cards) — see `data/README.md` for the exact word/lesson counts per level
 
 ## Quick Start
 
@@ -40,22 +41,29 @@ docker compose logs -f
 | `!streaks` | Streak leaderboard |
 | `!help` | Show all commands |
 
-**Admin:** `!status` `!setlevel @user L#` `!announce <msg>` `!members`
+**Admin:** `!status` `!setlevel @user L#` `!announce <msg>` `!members` `!examqueue` `!examresult <id> pass|fail`
 
 ## Architecture
 
 ```
 src/
-├── bot.py        ← Discord bot (commands, events, scheduled tasks)
-├── config.py     ← All settings from .env
-├── database.py   ← SQLite persistence (members, streaks, assessments)
-├── tasks.py      ← Task generation, formatting, delivery
-└── ai_engine.py  ← Gemini/Groq API calls, evaluation, generation
+├── bot.py          ← Discord bot (commands, events, scheduled tasks)
+├── config.py       ← All settings from .env
+├── database.py     ← SQLite persistence (members, streaks, assessments, advancement exams)
+├── curriculum.py   ← Loads + serves per-level vocabulary/accent/grammar content (see data/README.md)
+├── tasks.py        ← Task generation, formatting, delivery
+├── verification.py ← Anti-cheat: proof-of-work gates, cooldowns, vocab/listening quizzes
+├── features.py     ← Buddy system, surveys, reports, exam DM collection, at-risk outreach
+└── ai_engine.py    ← Gemini/Groq API calls, evaluation, generation
 
-content/          ← AI prompt library (25 prompts) + curriculum data
-data/             ← L0 weeks 1-8 (vocabulary, speaking, writing)
-scripts/          ← setup_server.py (auto-configures Discord server)
+content/            ← AI prompt library (25 prompts) + per-level accent/grammar drill content
+                      (content/{l0,l1,l2,l3}/{accent,grammar}/weekN_*.json)
+data/               ← Per-level vocabulary/speaking/writing content, ALL 4 levels, 38 weeks total
+                      (see data/README.md for exact counts and the content pipeline explained)
+scripts/            ← setup_server.py (auto-configures Discord server)
 ```
+
+> **Content status:** all 4 levels (L0-L3, 38 weeks) have real, verified curriculum content as of 2026-07-11. See `data/README.md` for the full breakdown and history of what was previously missing/templated.
 
 ## Deployment
 

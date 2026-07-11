@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w1",
+  "level": "L3",
+  "week": 1,
+  "pattern_name": "Cleft Sentences (It is... that/who)",
+  "pattern_name_ar": "الجمل المنقسمة (It is... that/who)",
+  "formula": "It + is/was + [FOCUSED ELEMENT] + that/who + [REST OF CLAUSE]",
+  "formula_visual": "It + is/was + [WHAT YOU WANT TO EMPHASIZE] + that/who + [everything else]",
+  "when_to_use": "Use cleft sentences to place strong, deliberate emphasis on one specific part of a sentence — splitting a normal sentence into two parts to highlight exactly what matters most, common in formal writing, argumentation, and correcting misunderstandings.",
+  "when_to_use_ar": "استخدم الجمل المنقسمة لوضع تأكيد قوي ومتعمد على جزء معين من الجملة — بتقسيم الجملة العادية لجزئين لتوضيح بالضبط أهم نقطة، شائع في الكتابة الرسمية والحجج وتصحيح سوء الفهم.",
+  "why_arabic_speakers_struggle": "This is a purely stylistic, emphasis-driven structure with no strict grammatical necessity — the plain sentence is always grammatically correct too, so learners at this level sometimes underuse cleft sentences (not realizing when native writers/speakers reach for this tool) or misplace which element goes in the emphasized slot, changing the intended meaning.",
+  "examples": [
+    {"en": "It was John who broke the vase, not Mary. (emphasizing WHO)", "ar": "جون هو اللي كسر المزهرية، مش ماري (تأكيد على مين)", "structure": "[It was] + [John] + [who broke the vase], [not Mary]"},
+    {"en": "It's the environment that we should worry about most. (emphasizing WHAT)", "ar": "البيئة هي أكتر حاجة المفروض نقلق عليها (تأكيد على أنهي موضوع)", "structure": "[It's] + [the environment] + [that we should worry about most]"},
+    {"en": "It was yesterday that I finally understood the problem. (emphasizing WHEN)", "ar": "إمبارح هو اليوم اللي فهمت فيه المشكلة أخيرًا (تأكيد على متى)", "structure": "[It was] + [yesterday] + [that I finally understood the problem]"},
+    {"en": "It's not the money that matters, it's the principle.", "ar": "مش الفلوس اللي مهمة، المبدأ هو المهم (تناقض مؤكد)", "structure": "[It's not] + [the money] + [that matters], [it's] + [the principle]"},
+    {"en": "It was in Paris that they first met.", "ar": "باريس هي المكان اللي اتقابلوا فيه لأول مرة (تأكيد على فين)", "structure": "[It was] + [in Paris] + [that they first met]"}
+  ],
+  "common_errors": [
+    {"wrong": "It was John broke the vase.", "correct": "It was John who broke the vase.", "explanation": "The connector 'that' or 'who' (for people) is required between the emphasized element and the rest of the clause — it cannot be dropped in a cleft sentence."},
+    {"wrong": "It is the environment which we should worry about.", "correct": "It is the environment that we should worry about.", "explanation": "In this specific cleft structure, 'that' is the standard connector, even for things — 'which' sounds unusual here, unlike in relative clauses."},
+    {"wrong": "John was who broke the vase.", "correct": "It was John who broke the vase.", "explanation": "The cleft structure must start with 'It was/is', not the emphasized noun itself — that's what distinguishes it from a normal sentence."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ Sarah ___ solved the problem, not her teammate.", "answer": "It was ... who", "hint": "Emphasizing WHO — a person."},
+    {"sentence": "___ the deadline ___ worries me the most, not the workload.", "answer": "It's ... that", "hint": "Emphasizing WHAT."},
+    {"sentence": "___ last year ___ everything changed for our company.", "answer": "It was ... that", "hint": "Emphasizing WHEN."},
+    {"sentence": "___ not the price ___ bothers me, it's the quality.", "answer": "It's ... that", "hint": "Emphasizing WHAT, in a contrast structure."},
+    {"sentence": "___ in this very room ___ the decision was made.", "answer": "It was ... that", "hint": "Emphasizing WHERE."}
+  ],
+  "quick_rule": "It + is/was + [the ONE thing you want to emphasize] + that/who + [the rest]. Use 'who' only for people; 'that' works for everything else, including in most people-focused cleft sentences too.",
+  "quick_rule_ar": "It + is/was + [الحاجة اللي عايز تأكد عليها] + that/who + [باقي الجملة].",
+  "mnemonic": "CLEFT = the sentence is 'CLEFT' (split) in two, just to spotlight ONE piece of it.",
+  "connect_to_speaking": "Practice with your buddy: correct a (playful, invented) misunderstanding using a cleft sentence — e.g., 'It was ME who finished the project, not him' — feel how much stronger the emphasis is compared to the plain version."
+}

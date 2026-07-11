@@ -4,51 +4,92 @@
   "theme": "Professional Communication",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Ellipsis & Substitution",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "circle back", "pronunciation": "SUR-kəl bak", "arabic": "يرجع لموضوع لاحقًا", "pos": "phrasal verb"},
+    {"word": "touch base", "pronunciation": "tuch bays", "arabic": "يتواصل بسرعة للتحديث", "pos": "idiom"},
+    {"word": "bandwidth (capacity)", "pronunciation": "BAND-width", "arabic": "القدرة الاستيعابية/الوقت المتاح", "pos": "noun"},
+    {"word": "low-hanging fruit", "pronunciation": "loh-HANG-ing froot", "arabic": "المهام السهلة سريعة النتيجة", "pos": "idiom"},
+    {"word": "move the needle", "pronunciation": "moov thə NEE-dəl", "arabic": "يحقق تقدمًا ملموسًا", "pos": "idiom"},
+    {"word": "on the same page", "pronunciation": "on thə saym payj", "arabic": "متفقون/على فهم مشترك", "pos": "idiom"},
+    {"word": "deliverable", "pronunciation": "di-LIV-ər-ə-bəl", "arabic": "مُخرَج/نتيجة قابلة للتسليم", "pos": "noun"},
+    {"word": "stakeholder", "pronunciation": "STAYK-hohl-dər", "arabic": "أصحاب المصلحة", "pos": "noun"},
+    {"word": "actionable", "pronunciation": "AK-shə-nə-bəl", "arabic": "قابل للتنفيذ", "pos": "adjective"},
+    {"word": "streamline", "pronunciation": "STREEM-lyn", "arabic": "يُبسّط/يُحسّن كفاءة", "pos": "verb"},
+    {"word": "loop someone in", "pronunciation": "loop SUM-wun in", "arabic": "يُدخل شخصًا في التواصل", "pos": "phrasal verb"},
+    {"word": "take it offline", "pronunciation": "tayk it AWF-lyn", "arabic": "يناقش الموضوع خارج الاجتماع", "pos": "idiom"},
+    {"word": "align on", "pronunciation": "ə-LYN on", "arabic": "يتفق على/يتوافق حول", "pos": "verb phrase"},
+    {"word": "escalate", "pronunciation": "ES-kə-layt", "arabic": "يصعّد (مشكلة)", "pos": "verb"},
+    {"word": "due diligence", "pronunciation": "doo DIL-ə-jəns", "arabic": "بذل العناية اللازمة/الفحص الدقيق", "pos": "noun phrase"},
+    {"word": "value proposition", "pronunciation": "VAL-yoo prop-ə-ZISH-ən", "arabic": "عرض القيمة", "pos": "noun phrase"},
+    {"word": "synergy", "pronunciation": "SIN-ər-jee", "arabic": "تآزر/تكامل", "pos": "noun"},
+    {"word": "pain point", "pronunciation": "payn poynt", "arabic": "نقطة ألم/مشكلة رئيسية للعميل", "pos": "noun phrase"},
+    {"word": "onboard (someone)", "pronunciation": "ON-bord", "arabic": "يُدمج موظفًا/عميلًا جديدًا", "pos": "verb"},
+    {"word": "bottom line", "pronunciation": "BOT-əm lyn", "arabic": "الخلاصة/صافي الربح", "pos": "idiom"},
+    {"word": "ballpark figure", "pronunciation": "BAWL-park FIG-yər", "arabic": "رقم تقريبي", "pos": "idiom"},
+    {"word": "bring to the table", "pronunciation": "bring tə thə TAY-bəl", "arabic": "يقدم/يساهم بشيء", "pos": "idiom"},
+    {"word": "win-win", "pronunciation": "win-win", "arabic": "مربح للطرفين", "pos": "adjective/noun"},
+    {"word": "corporate jargon", "pronunciation": "KOR-pə-rət JAR-gən", "arabic": "لغة الشركات المتخصصة", "pos": "noun phrase"},
+    {"word": "proactive", "pronunciation": "proh-AK-tiv", "arabic": "استباقي", "pos": "adjective"},
+    {"word": "leverage (verb)", "pronunciation": "LEV-ər-ij", "arabic": "يستفيد/يستغل (موردًا)", "pos": "verb"},
+    {"word": "circle the wagons", "pronunciation": "SUR-kəl thə WAG-ənz", "arabic": "يتحدون في وجه أزمة", "pos": "idiom"},
+    {"word": "get buy-in", "pronunciation": "get BY-in", "arabic": "يحصل على موافقة/دعم", "pos": "idiom"},
+    {"word": "hit the ground running", "pronunciation": "hit thə grownd RUN-ing", "arabic": "يبدأ بقوة فورًا", "pos": "idiom"},
+    {"word": "action item", "pronunciation": "AK-shən Y-təm", "arabic": "بند إجراء/مهمة محددة", "pos": "noun phrase"},
+    {"word": "peel back the layers", "pronunciation": "peel bak thə LAY-ərz", "arabic": "يتعمق أكثر في تحليل قضية", "pos": "idiom"},
+    {"word": "quick win", "pronunciation": "kwik win", "arabic": "نجاح سريع وسهل", "pos": "noun phrase"},
+    {"word": "elevator pitch", "pronunciation": "EL-ə-vay-tər pich", "arabic": "عرض تقديمي مختصر وسريع", "pos": "noun phrase"},
+    {"word": "reach out", "pronunciation": "reech owt", "arabic": "يتواصل مع شخص", "pos": "phrasal verb"},
+    {"word": "follow up", "pronunciation": "FOL-oh up", "arabic": "يتابع موضوعًا سابقًا", "pos": "phrasal verb"},
+    {"word": "wear many hats", "pronunciation": "wair MEN-ee hats", "arabic": "يقوم بأدوار متعددة", "pos": "idiom"},
+    {"word": "run it up the flagpole", "pronunciation": "run it up thə FLAG-pohl", "arabic": "يقترح فكرة لاختبار ردود الفعل", "pos": "idiom"},
+    {"word": "corporate ladder", "pronunciation": "KOR-pə-rət LAD-ər", "arabic": "السلم الوظيفي", "pos": "noun phrase"},
+    {"word": "cross-functional", "pronunciation": "kraws-FUNK-shə-nəl", "arabic": "متعدد الوظائف/الأقسام", "pos": "adjective"},
+    {"word": "table the discussion", "pronunciation": "TAY-bəl thə dis-KUSH-ən", "arabic": "يؤجل النقاش", "pos": "idiom"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Give a 5-minute TED-style talk on 'The hidden problems with corporate jargon' — is it useful shorthand, or does it obscure clear communication?",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Structured debate with rebuttals: 'Corporate jargon improves workplace efficiency, or it creates unnecessary confusion and exclusion.' Present your case, then respond to a counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Record a 5-minute podcast segment role-playing a project status update meeting, naturally using at least 6 professional expressions from this week.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Teach a beginner-level professional 3 common workplace idioms (e.g., 'touch base', 'circle back', 'low-hanging fruit') with clear example sentences for each.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Respond to this unexpected prompt: deliver an impromptu 'elevator pitch' (60-90 seconds) for a business idea, product, or even yourself as a job candidate.",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Find a short clip (30-60 seconds) of a business presentation, interview, or professional podcast. Mimic the speaker's professional register, pacing, and confident delivery.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Professional Communication)",
-      "target_seconds": 280
+      "prompt": "Speak naturally for 5+ minutes role-playing any professional scenario of your choice (a negotiation, a performance review, a client call), using this week's vocabulary naturally.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on professional communication (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in professional communication.",
-    "Compose a formal report with recommendations about professional communication.",
-    "Write a creative piece (story/poem) inspired by professional communication.",
-    "Draft an opinion column for a newspaper about professional communication.",
-    "Write a comparison essay using academic vocabulary about professional communication.",
-    "Write freely about professional communication — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing for or against the increasing use of corporate jargon in modern workplaces.",
+    "Write a critical analysis of how professional communication styles differ between cultures you're familiar with.",
+    "Compose a formal report with recommendations for improving communication within a hypothetical team or department.",
+    "Write a creative piece (story or satire) that pokes fun at excessive corporate jargon in a realistic office setting.",
+    "Draft an opinion column for a business publication about whether remote work has changed professional communication for better or worse.",
+    "Write a comparison essay using professional vocabulary contrasting formal written communication (email/reports) with informal workplace chat (Slack/Teams messages).",
+    "Write freely about a real or imagined professional communication challenge you've faced — focus on style, not just content."
   ]
 }

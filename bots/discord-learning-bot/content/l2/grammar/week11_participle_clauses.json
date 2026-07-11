@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w11",
+  "level": "L2",
+  "week": 11,
+  "pattern_name": "Participle Clauses (having done, being done)",
+  "pattern_name_ar": "جمل اسم الفعل (having done, being done)",
+  "formula": "Having + Past Participle, Subject + Verb  |  Being + Past Participle, Subject + Verb",
+  "formula_visual": "[Having/Being + PARTICIPLE, background action], + [MAIN CLAUSE, foreground action]",
+  "when_to_use": "Use participle clauses to combine two related ideas into one smoother, more sophisticated sentence, replacing a longer clause with 'after', 'because', or 'since'. 'Having + past participle' shows a completed action BEFORE the main action; 'Being + past participle' shows a passive, ongoing state/reason.",
+  "when_to_use_ar": "استخدم جمل اسم الفعل لدمج فكرتين مرتبطتين في جملة واحدة أكثر تطورًا، بديل عن جملة أطول بـ after أو because أو since. having + التصريف الثالث بتدل على فعل اكتمل قبل الفعل الأساسي؛ being + التصريف الثالث بتدل على حالة مجهولة/سبب مستمر.",
+  "why_arabic_speakers_struggle": "This is a compressed, formal written/spoken structure with no direct one-to-one Arabic equivalent — learners often either avoid it entirely (defaulting to longer 'after I did X, I...' constructions) or misapply it by using the wrong participle form (having vs. being) for the intended meaning, since choosing correctly requires recognizing whether the background clause is active-completed or passive-ongoing.",
+  "examples": [
+    {"en": "Having finished the report, she left the office. (= After she had finished the report, she left.)", "ar": "بعد ما خلصت التقرير، مشيت من المكتب (فعل مكتمل قبل الفعل الرئيسي)", "structure": "[Having finished the report], + [she left the office]"},
+    {"en": "Being new to the city, he asked for directions often. (= Because he was new to the city, he asked for directions often.)", "ar": "لأنه غريب على المدينة، كان بيسأل عن الاتجاهات كتير (حالة/سبب مستمر)", "structure": "[Being new to the city], + [he asked for directions often]"},
+    {"en": "Having studied the data carefully, the researchers reached a clear conclusion.", "ar": "بعد ما درسوا البيانات بعناية، الباحثين وصلوا لنتيجة واضحة", "structure": "[Having studied the data carefully], + [the researchers reached a clear conclusion]"},
+    {"en": "Being unaware of the rule, she accidentally broke it.", "ar": "لأنها ماكانتش عارفة بالقاعدة، كسرتها بالغلط", "structure": "[Being unaware of the rule], + [she accidentally broke it]"},
+    {"en": "Having lost his passport, he couldn't board the flight.", "ar": "بعد ما فقد جوازه، ماقدرش يركب الطيارة", "structure": "[Having lost his passport], + [he couldn't board the flight]"}
+  ],
+  "common_errors": [
+    {"wrong": "Having finish the report, she left.", "correct": "Having finished the report, she left.", "explanation": "'Having' must be followed by a PAST PARTICIPLE ('finished'), not the base form ('finish')."},
+    {"wrong": "Being lost his passport, he couldn't board.", "correct": "Having lost his passport, he couldn't board.", "explanation": "'lost' describes a completed ACTIVE action (he lost it) — this needs 'having', not 'being' (which is for passive/state meanings)."},
+    {"wrong": "Having new to the city, he asked for directions.", "correct": "Being new to the city, he asked for directions.", "explanation": "'new to the city' is a STATE/description, not a completed action — this needs 'being', not 'having'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ (finish) his homework, he watched TV.", "answer": "Having finished", "hint": "Completed active action before the main action."},
+    {"sentence": "___ (unfamiliar) with the software, she asked for help.", "answer": "Being unfamiliar", "hint": "A state/description, not a completed action."},
+    {"sentence": "___ (study) hard all year, she felt confident about the exam.", "answer": "Having studied", "hint": "Completed active action leading to the main clause."},
+    {"sentence": "___ (invite) to the event, they felt honored.", "answer": "Being invited", "hint": "Passive state — they received an action, they didn't do it."},
+    {"sentence": "___ (already/eat) dinner, he wasn't hungry for dessert.", "answer": "Having already eaten", "hint": "Completed active action before the main clause."}
+  ],
+  "quick_rule": "HAVING + past participle = an ACTIVE, completed action that happened BEFORE the main clause. BEING + past participle = a PASSIVE state or ongoing reason/description. Choose based on whether the subject DID something (having) or something was DONE TO/describes them (being).",
+  "quick_rule_ar": "HAVING + التصريف الثالث = فعل نشط اكتمل قبل الجملة الرئيسية. BEING + التصريف الثالث = حالة مجهولة أو سبب مستمر.",
+  "mnemonic": "HAVING = 'I HAD already DONE this before...' BEING = 'I currently AM in this state/condition...'",
+  "connect_to_speaking": "Practice with your buddy: describe 2 real events from your week using participle clauses — one with 'Having...' (something you completed first) and one with 'Being...' (a state or situation that explains your next action)."
+}

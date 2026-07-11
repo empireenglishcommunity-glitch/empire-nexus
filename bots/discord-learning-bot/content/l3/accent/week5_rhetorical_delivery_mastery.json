@@ -1,0 +1,142 @@
+{
+  "level": "L3",
+  "week": 5,
+  "focus": "Rhetorical Delivery Mastery — Voice, Pacing, and Dramatic Timing for Persuasion",
+  "focus_ar": "إتقان الأداء الخطابي — الصوت والتوقيت والإيقاع الدرامي للإقناع",
+  "arabic_challenge": "You've built emphasis and intonation skills across L2 (Weeks 4, 9). L3's Rhetoric & Persuasion theme demands the next level: combining pitch, pacing, strategic silence, and vocal energy shifts into full RHETORICAL DELIVERY — the difference between reciting persuasive content correctly and actually moving an audience. This is a performance skill layered on top of correct pronunciation, not a new phoneme or grammar mechanic.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["strategic silence: the dramatic pause before a key statement"],
+      "isolation": {
+        "instructions": "A deliberate 1-2 second silence right before your most important point creates anticipation and makes the following words land with more weight than continuous speech ever could.",
+        "instructions_ar": "صمت متعمد لمدة ١-٢ ثانية قبل أهم نقطة بيصنع توقعًا وبيخلي الكلام اللي بعده يأثر أكتر من الكلام المتواصل.",
+        "practice": ["And the answer is... [PAUSE] ...simple. (dramatic pause before the punchline)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["And the answer is... [pause] ...simple. (dramatic)", "And the answer is simple. (flat, no pause)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["And the answer is... [pause] ...simple.", "There is only one truth... [pause] ...and it's this."],
+      "sentence_practice": [
+        "And the answer is... [pause] ...simple.",
+        "There is only one truth... [pause] ...and it's this.",
+        "We have one choice left... [pause] ...to act now."
+      ],
+      "record_this": "And the answer is... [pause] ...simple. There is only one truth... [pause] ...and it's this: we have one choice left... [pause] ...to act now.",
+      "self_check": "Did the silence feel deliberate and controlled, not like an awkward hesitation or filler-word gap?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["vocal energy shift: building from calm to powerful"],
+      "isolation": {
+        "instructions": "Great persuasive speech often starts calm/measured and deliberately builds vocal energy and volume toward a powerful climax — practice this controlled escalation.",
+        "instructions_ar": "الكلام الإقناعي العظيم غالبًا بيبدأ هادئ/موزون وبيبني الطاقة الصوتية والصوت بشكل متعمد نحو قمة قوية — تدرب على التصاعد المتحكم فيه ده.",
+        "practice": ["(calm) We've faced challenges before. (building) We've overcome them before. (powerful) And we WILL overcome this one too!"]
+      },
+      "minimal_pairs": [
+        {"pair": ["controlled escalation (calm to powerful)", "flat energy throughout"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(calm) We've faced challenges before.", "(building) We've overcome them before.", "(powerful) we WILL overcome this too!"],
+      "sentence_practice": [
+        "(calm) We've faced challenges before. (building) We've overcome them before. (powerful) And we WILL overcome this one too!"
+      ],
+      "record_this": "(Deliver with genuine escalating energy) We've faced challenges before. We've overcome them before. And we WILL overcome this one too!",
+      "self_check": "Did your vocal energy genuinely, audibly build across the three stages, or did it stay flat?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["pacing variation: slowing down for gravity, speeding up for excitement"],
+      "isolation": {
+        "instructions": "Deliberately vary your speaking RATE — slow down noticeably for serious/weighty points, speed up for excited/energetic points — matching pace to emotional content.",
+        "instructions_ar": "غيّر سرعة كلامك بشكل متعمد — ابطئ بشكل واضح للنقاط الجادة/الثقيلة، وسرّع للنقاط المتحمسة/النشيطة — بما يتناسب مع المحتوى العاطفي.",
+        "practice": ["(slow, grave) This... is... serious. (fast, excited) But there's so much we can do about it, so many options, so much hope!"]
+      },
+      "minimal_pairs": [
+        {"pair": ["deliberate pace variation matching content", "constant, unvaried pace"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(slow) This is serious.", "(fast) so much we can do, so many options, so much hope!"],
+      "sentence_practice": [
+        "(slow, grave) This... is... serious. (fast, excited) But there's so much we can do about it, so many options, so much hope!"
+      ],
+      "record_this": "(Deliver with genuine pace contrast) This... is... serious. But there's so much we can do about it, so many options, so much hope!",
+      "self_check": "Was the pace contrast between the slow and fast sections clearly, deliberately different?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["combining silence, energy-build, and pacing in a full persuasive passage"],
+      "isolation": {
+        "instructions": "Combine all 3 techniques from this week in one continuous persuasive passage — this is genuinely demanding, performance-level delivery.",
+        "instructions_ar": "دمج الثلاث تقنيات من هذا الأسبوع في مقطع إقناعي متصل واحد — ده أداء تمثيلي صعب وحقيقي.",
+        "practice": ["Deliver a short persuasive passage using strategic pauses, energy escalation, AND pacing variation together."]
+      },
+      "minimal_pairs": [
+        {"pair": ["all 3 techniques combined effectively", "flat delivery, no technique applied"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses full sentence practice below)"],
+      "sentence_practice": [
+        "(slow) This... is... our moment. [pause] (building energy, faster) We've waited, we've prepared, we've hoped — and now [pause] ...it's here!"
+      ],
+      "record_this": "This... is... our moment. We've waited, we've prepared, we've hoped — and now, it's here!",
+      "self_check": "Did all 3 techniques (pause, energy build, pacing) work together, or did adding all of them at once cause you to lose control of any single one?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["fully spontaneous persuasive delivery with rhetorical technique"],
+      "isolation": {
+        "instructions": "Deliver a completely spontaneous 60-90 second persuasive speech on a real topic you care about, naturally applying this week's delivery techniques without a script.",
+        "instructions_ar": "قدم خطاب إقناعي عفوي كامل لمدة ٦٠-٩٠ ثانية عن موضوع حقيقي تهتم به، وطبّق تقنيات الأداء هذا الأسبوع بشكل طبيعي بدون نص.",
+        "practice": ["Choose a real topic you genuinely believe in and persuade an imagined audience, unscripted."]
+      },
+      "minimal_pairs": [
+        {"pair": ["spontaneous speech with natural rhetorical delivery", "spontaneous speech, flat delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your topic)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: 60-90 seconds, a real topic you care about, delivered persuasively and unscripted.)",
+      "self_check": "Did any of this week's techniques emerge naturally, without you consciously planning them in advance?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: strategic silence, energy escalation, pacing variation, full combination, spontaneous application",
+      "type": "review",
+      "mixed_pairs": [
+        ["dramatic pause before punchline", "calm-to-powerful energy build"], ["slow-grave vs. fast-excited pacing", "all 3 combined"]
+      ],
+      "challenge_sentences": [
+        "(slow) This... is... our moment. [pause] (building) We've waited, we've prepared — and now [pause] ...it's here! (fast, excited) So much to do, so much hope, so little time to waste!",
+        "There is only one truth... [pause] ...and it's this: (building energy) we've faced challenges before, we've overcome them before, and we WILL overcome this one too!"
+      ],
+      "record_this": "This... is... our moment. We've waited, we've prepared — and now, it's here! So much to do, so much hope, so little time to waste!",
+      "self_check": "Score your combined delivery mastery across pause, energy, and pacing in this demanding passage."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Rhetorical Delivery Mastery Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 90-second spontaneous persuasive speech on any real topic, applying strategic pausing, vocal energy escalation, and pacing variation naturally.",
+        "passage": "(Free speech: 90 seconds, a genuine persuasive speech on a real topic, fully spontaneous.)",
+        "sounds_to_check": {
+          "strategic silence": "check for at least one deliberate dramatic pause",
+          "energy escalation": "check for a genuine build in vocal energy",
+          "pacing variation": "check for deliberate speed changes matching content"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 3 rhetorical delivery techniques used naturally and effectively — this sounds like genuine, moving persuasive speech, not a recitation.",
+        "70_89": "Most techniques present; delivery is engaging with minor gaps in polish.",
+        "50_69": "Techniques present but mechanical/forced rather than natural.",
+        "below_50": "Flat, unvaried delivery throughout — go back and repeat Days 1-4, deliberately exaggerating each technique first."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week is a performance/delivery skill, distinct from pure phonetics — it draws on everything you've built (stress, intonation, pacing awareness) and applies it toward genuine persuasive impact.",
+      "These are the same techniques professional speakers, politicians, and performers train for years — approach this week with patience; genuine command of vocal delivery takes ongoing practice beyond just this week.",
+      "This directly supports the blueprint's emphasis on rhetoric (this week's grammar and vocabulary theme) — delivery technique and persuasive language structure reinforce each other."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — these are strong candidates for the L3 mentorship/leadership channels, where you may be coaching lower-level students on speaking confidence."
+  }
+}

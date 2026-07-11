@@ -1,0 +1,158 @@
+{
+  "level": "L1",
+  "week": 3,
+  "focus": "Consonant-to-Vowel Linking — Joining Words Smoothly",
+  "focus_ar": "ربط الساكن بالمتحرك — وصل الكلمات بسلاسة",
+  "arabic_challenge": "Arabic speakers often pronounce each word as a separate, complete unit with a small pause or glottal reset between words. Natural English speech instead links a word ending in a consonant directly onto the next word if it starts with a vowel, so the two words blend into what sounds like one longer word. Skipping this linking is one of the biggest reasons careful, grammatically-correct English can still sound choppy and non-native.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["consonant + vowel linking across word boundaries"],
+      "isolation": {
+        "instructions": "When a word ends in a consonant sound and the next word starts with a vowel sound, native speakers slide the consonant onto the front of the next word — no pause, no reset.",
+        "instructions_ar": "لما كلمة تنتهي بصوت ساكن والكلمة اللي بعدها تبدأ بصوت متحرك، المتكلم الأصلي بيسحب الصوت الساكن لأول الكلمة اللي بعدها — بدون وقفة.",
+        "practice": ["pick up → pi-KUP", "an apple → a-NAPPLE", "turn it off → tur-NI-TOFF"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pick up (linked)", "pick. Up. (choppy, unnatural)"], "meaning": ["يلقط/يرفع", "—"]},
+        {"pair": ["an apple (linked)", "a napple (what it sounds like — normal!)"], "meaning": ["تفاحة", "—"]},
+        {"pair": ["look at", "loo-KAT"], "meaning": ["ينظر إلى", "—"]}
+      ],
+      "word_practice": ["pick up", "look at", "turn off", "an apple", "an hour", "get up", "put it"],
+      "sentence_practice": [
+        "Pick up an apple and look at it.",
+        "Turn off the light in an hour.",
+        "Get up and put it on the table."
+      ],
+      "record_this": "Pick up an apple, look at it, and put it in an hour — then turn off the light and get up.",
+      "self_check": "Say 'an apple' fast — does it sound almost like 'a napple'? That's exactly right. That's the sound native speakers actually produce."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["linking with final /s/, /z/, /f/, /v/"],
+      "isolation": {
+        "instructions": "Fricative sounds (/s/ /z/ /f/ /v/) link especially smoothly onto a following vowel because they can be held and stretched right into the next sound.",
+        "instructions_ar": "الأصوات الاحتكاكية (/s/ /z/ /f/ /v/) بتترابط بسلاسة جدًا مع الحرف المتحرك اللي بعدها لأنها ممكن تمتد وتوصل مباشرة للصوت اللي بعدها.",
+        "practice": ["this is easy → thi-SI-ZEE-zy", "of us → o-VUS", "give it → gi-VIT"]
+      },
+      "minimal_pairs": [
+        {"pair": ["this is (linked)", "this. Is. (choppy)"], "meaning": ["هذا هو", "—"]},
+        {"pair": ["give it (linked)", "give. It. (choppy)"], "meaning": ["أعطيه", "—"]}
+      ],
+      "word_practice": ["this is", "of us", "give it", "have a", "love it", "as usual"],
+      "sentence_practice": [
+        "This is easy — give it to one of us.",
+        "I love it, as usual — have a seat.",
+        "Have a look, this is of use to you."
+      ],
+      "record_this": "This is easy — give it to one of us, and have a seat, because as usual, I love it.",
+      "self_check": "Can you feel the /s/, /z/, /f/, or /v/ sound stretch smoothly into the vowel that follows, with zero gap?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["linking with final stops /t/, /d/, /k/, /g/, /p/, /b/"],
+      "isolation": {
+        "instructions": "Stop consonants also link onto a following vowel — the small burst of air that normally ends the sound instead gets 'released' into the next word's vowel.",
+        "instructions_ar": "الأصوات الانفجارية كذلك بتترابط مع الحرف المتحرك اللي بعدها — نفس الهواء اللي عادة بيختم الصوت بيتحرر جوه الكلمة اللي بعدها.",
+        "practice": ["stop it → sto-PIT", "big idea → bi-GIDEA", "not at all → no-TA-TALL"]
+      },
+      "minimal_pairs": [
+        {"pair": ["stop it (linked)", "stop. It. (choppy)"], "meaning": ["أوقفه", "—"]},
+        {"pair": ["big idea (linked)", "big. Idea. (choppy)"], "meaning": ["فكرة كبيرة", "—"]}
+      ],
+      "word_practice": ["stop it", "big idea", "not at all", "black and white", "look up", "took a"],
+      "sentence_practice": [
+        "Stop it — that's not at all a big idea.",
+        "Look up in black and white — took a picture.",
+        "It's a big idea, not at all bad."
+      ],
+      "record_this": "Stop it — that's a big idea, not at all bad. Look up, took a picture, in black and white.",
+      "self_check": "Are the stop consonants releasing smoothly into the next vowel, rather than fully stopping with silence before the next word?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["linking practice: short phrases at speed"],
+      "isolation": {
+        "instructions": "Today, combine everything from Days 1-3 in short, common phrases you'll use every day in conversation.",
+        "instructions_ar": "النهارده هنجمع كل حاجة من الأيام ١-٣ في جُمل قصيرة شائعة هتستخدمها كل يوم في المحادثة.",
+        "practice": ["what about it → wha-tabou-tit", "come on in → co-mo-nin", "wait a minute → wai-ta-minute"]
+      },
+      "minimal_pairs": [
+        {"pair": ["come on in (linked)", "come. On. In. (choppy)"], "meaning": ["اتفضل/ادخل", "—"]},
+        {"pair": ["wait a minute (linked)", "wait. A. Minute. (choppy)"], "meaning": ["استنى لحظة", "—"]}
+      ],
+      "word_practice": ["what about it", "come on in", "wait a minute", "hang on a second", "check it out"],
+      "sentence_practice": [
+        "Come on in and wait a minute — check it out!",
+        "What about it? Hang on a second.",
+        "Wait a minute, come on in and check it out."
+      ],
+      "record_this": "Come on in, wait a minute — what about it? Hang on a second and check it out.",
+      "self_check": "Time yourself saying these phrases. Linked, natural speech should take LESS time than saying each word separately with pauses."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["linking in full conversational sentences"],
+      "isolation": {
+        "instructions": "Apply linking across an entire natural sentence, not just short phrases — this is the real test of whether the skill has become automatic.",
+        "instructions_ar": "طبّق الربط على جملة طبيعية كاملة، مش بس عبارات قصيرة — ده الاختبار الحقيقي لو المهارة بقت تلقائية.",
+        "practice": ["I picked up an apple and ate it all up.", "Turn off the light and give it a rest.", "Look at us — we made it out okay."]
+      },
+      "minimal_pairs": [
+        {"pair": ["made it out (linked, natural)", "made. It. Out. (choppy, unnatural)"], "meaning": ["خرجنا منها", "—"]}
+      ],
+      "word_practice": ["picked up an apple", "ate it all up", "turn off the light", "give it a rest", "made it out"],
+      "sentence_practice": [
+        "I picked up an apple and ate it all up.",
+        "Turn off the light and give it a rest.",
+        "Look at us — we made it out okay."
+      ],
+      "record_this": "I picked up an apple, ate it all up, turned off the light, and gave it a rest — look at us, we made it out okay.",
+      "self_check": "Does this whole sentence flow as connected 'chunks' of sound rather than a list of separate words?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: consonant+vowel linking with fricatives, stops, short phrases, full sentences",
+      "type": "review",
+      "mixed_pairs": [
+        ["an apple", "pick up"], ["this is", "give it"], ["stop it", "big idea"], ["come on in", "wait a minute"]
+      ],
+      "challenge_sentences": [
+        "Pick up an apple, give it a look, and check it out — not at all a big idea, but come on in anyway.",
+        "This is easy — turn off the light, wait a minute, and look at us now.",
+        "Stop it, have a seat, and get up in an hour — that's all of it."
+      ],
+      "record_this": "Come on in, have a seat — pick up an apple, give it a look, and wait a minute. This is easy, not at all a big idea, but check it out anyway.",
+      "self_check": "Read the passage naturally. Underline (on paper) every place a consonant links into a following vowel. You should find at least 8 in this short passage."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage at a natural pace, focusing on linking every consonant-ending word into the next vowel-starting word.",
+        "passage": "Every evening, I pick up an apple on my way home and eat it all up before dinner. It's not at all a big idea, but it helps me relax. Come on in, have a seat, and give it a try yourself — turn off your phone for an hour and just enjoy a quiet moment. Look at us now, we made it out of a busy day okay.",
+        "sounds_to_check": {
+          "consonant+vowel linking (stops)": "pick up, eat it, not at all, big idea, made it, out of",
+          "consonant+vowel linking (fricatives)": "give it, us now",
+          "linking in short phrases": "come on in, have a seat, turn off, an hour"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Consistent, natural linking across the whole passage; sentences flow in connected chunks rather than isolated words.",
+        "70_89": "Linking present in most places; a few words still pronounced with unnatural pauses.",
+        "50_69": "Linking only in drilled/memorized phrases, not applied to new combinations.",
+        "below_50": "Words pronounced separately throughout — go back and repeat Days 1-5, focusing on fricatives and stops separately first."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is blueprint Rule 1 of connected speech — the foundation for everything else in linking (Rules 2 and 3 come in later weeks).",
+      "If you're not sure whether to link two words, try saying the phrase FAST 3 times in a row — the natural link usually emerges on its own once you stop consciously controlling each word.",
+      "Don't worry about linking EVERY possible pair at first — prioritize very common phrases (pick up, look at, an apple) since you'll use these constantly."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, aim for smooth, connected chunks rather than word-by-word delivery."
+  }
+}

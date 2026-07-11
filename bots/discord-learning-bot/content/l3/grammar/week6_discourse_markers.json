@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w6",
+  "level": "L3",
+  "week": 6,
+  "pattern_name": "Discourse Markers",
+  "pattern_name_ar": "أدوات تنظيم الخطاب (Discourse Markers)",
+  "formula": "Discourse Marker + [clause] — signals structure, attitude, or relationship between ideas in real time",
+  "formula_visual": "[MARKER: well/anyway/actually/I mean/you know] + [ongoing spoken thought]",
+  "when_to_use": "Use discourse markers to manage the flow of spontaneous speech in real time — signaling a topic shift (anyway, so), a correction (actually, I mean), a shared understanding (you know), or a thoughtful pause (well). These are essential for natural-sounding spontaneous conversation, distinct from the formal Advanced Connectors of L2 Week 10.",
+  "when_to_use_ar": "استخدم أدوات تنظيم الخطاب لإدارة تدفق الكلام العفوي في الوقت الحقيقي — تغيير موضوع، تصحيح، فهم مشترك، أو وقفة تفكير. أساسية للمحادثة العفوية الطبيعية.",
+  "why_arabic_speakers_struggle": "Advanced learners who've focused heavily on formal grammar accuracy sometimes speak in overly complete, 'textbook-perfect' sentences without any discourse markers at all, which paradoxically sounds LESS natural and more foreign than speech with well-placed markers — native speakers use these constantly, and their complete absence is itself a marker of non-native speech.",
+  "examples": [
+    {"en": "Well, I think we should reconsider the plan. ('well' = thoughtful pause/softening before an opinion)", "ar": "طيب، أظن لازم نعيد النظر في الخطة (بداية تفكير/تخفيف)", "structure": "[Well], + [I think we should reconsider the plan]"},
+    {"en": "Anyway, back to what I was saying... ('anyway' = returning to topic after a digression)", "ar": "على أي حال، بالنسبة لما كنت أقوله... (رجوع للموضوع)", "structure": "[Anyway], + [back to what I was saying]"},
+    {"en": "Actually, that's not quite right. ('actually' = gentle correction)", "ar": "في الحقيقة، ده مش دقيق تمامًا (تصحيح لطيف)", "structure": "[Actually], + [that's not quite right]"},
+    {"en": "I mean, it's complicated, you know? ('I mean' = clarifying/rephrasing, 'you know' = seeking shared understanding)", "ar": "يعني، الموضوع معقد، تعرف؟ (توضيح وفهم مشترك)", "structure": "[I mean], + [it's complicated], + [you know]?"},
+    {"en": "So, anyway, that's basically what happened. ('so...anyway' = wrapping up a story)", "ar": "فبالتالي، على أي حال، ده أساسًا اللي حصل (إنهاء قصة)", "structure": "[So], + [anyway], + [that's basically what happened]"}
+  ],
+  "common_errors": [
+    {"wrong": "(overusing discourse markers) Well, so, actually, I mean, you know, anyway, it's complicated.", "correct": "Well, it's complicated, you know?", "explanation": "Discourse markers should feel natural and purposeful, not stacked together randomly — overuse sounds just as unnatural as complete absence."},
+    {"wrong": "Using 'actually' to mean 'currently' or 'now' (a false-friend error from some other languages).", "correct": "Right now, I'm working on a report. (NOT 'Actually, I'm working on a report' if you just mean 'currently')", "explanation": "In English, 'actually' specifically signals correction or surprising truth, NOT simply 'at this moment' — this is a common false-friend confusion."},
+    {"wrong": "Using formal connectors (furthermore, nevertheless) in casual spontaneous conversation.", "correct": "Anyway, so, I mean, well — for casual speech. Save 'furthermore/nevertheless' for formal writing/presentations.", "explanation": "Discourse markers (casual, spoken) and Advanced Connectors (formal, written — L2 Week 10) serve similar structural purposes but belong to very different registers — mixing them creates a mismatched, oddly formal-casual tone."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___, I think we should just try a different approach.", "answer": "Well", "hint": "Thoughtful pause before an opinion."},
+    {"sentence": "___, back to what I was originally saying...", "answer": "Anyway", "hint": "Returning to topic after a digression."},
+    {"sentence": "___, that's not exactly what I meant.", "answer": "I mean / Actually", "hint": "Clarification or gentle correction."},
+    {"sentence": "It's a bit complicated, ___?", "answer": "you know", "hint": "Seeking shared understanding/agreement."},
+    {"sentence": "___, that's basically the whole story.", "answer": "So, anyway", "hint": "Wrapping up a narrative."}
+  ],
+  "quick_rule": "Discourse markers (well, anyway, actually, I mean, you know) are for CASUAL, SPOKEN, spontaneous speech — they manage real-time thought and social connection. Use them naturally but not excessively; complete absence sounds as foreign as overuse.",
+  "quick_rule_ar": "أدوات تنظيم الخطاب للكلام العفوي الطبيعي — استخدمها بشكل طبيعي بدون إفراط.",
+  "mnemonic": "DISCOURSE markers keep your spoken DISCOURSE (conversation) flowing naturally in real time — think of them as social/mental traffic signals, not formal grammar.",
+  "connect_to_speaking": "Practice with your buddy: tell a short, spontaneous story about your day, deliberately noticing (afterward, on playback) how many natural discourse markers you used without planning them — that count reveals how automatic this skill already is."
+}

@@ -1,0 +1,148 @@
+{
+  "level": "L3",
+  "week": 6,
+  "focus": "Cross-Cultural Register Mastery — Adapting Tone, Directness, and Formality",
+  "focus_ar": "إتقان السجل بين الثقافات — تكييف النبرة والمباشرة والرسمية",
+  "arabic_challenge": "This week's Cultural Nuances theme requires an accent/delivery skill distinct from phonetics: the ability to consciously shift your TONE, DIRECTNESS, and FORMALITY to match different cultural and social contexts within English itself — American directness in a business setting, warmth in casual social settings, and appropriate formality with elders/authority — while maintaining the same underlying pronunciation accuracy across all registers.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["shifting between direct American business tone and warmer social tone"],
+      "isolation": {
+        "instructions": "American English business culture often values direct, efficient communication, while casual social settings favor warmer, more expressive delivery — practice consciously shifting between the two with the SAME content.",
+        "instructions_ar": "ثقافة الأعمال الأمريكية غالبًا بتقدّر التواصل المباشر والفعال، بينما المواقف الاجتماعية العادية بتفضل أداء أدفى وأكثر تعبيرًا — تدرب على التبديل المتعمد بين الاتنين بنفس المحتوى.",
+        "practice": ["Business: 'I need this report by Friday.' (direct, flat, efficient)", "Social: 'Hey, could you maybe get that report to me by Friday? No rush, but that'd be great!' (warmer, softer, more expressive)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["business register (direct, efficient)", "social register (warm, expressive)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["I need this by Friday.", "Could you maybe get that to me by Friday?"],
+      "sentence_practice": [
+        "(business) I need this report by Friday.",
+        "(social) Hey, could you maybe get that report to me by Friday? No rush, but that'd be great!"
+      ],
+      "record_this": "(Deliver both versions back to back, clearly shifting tone) I need this report by Friday. — Hey, could you maybe get that report to me by Friday? No rush, but that'd be great!",
+      "self_check": "Did your PITCH, WARMTH, and PACE genuinely shift between the two registers, or did they sound identical except for the words?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["formal/respectful register for authority or elder figures"],
+      "isolation": {
+        "instructions": "Practice a more formal, measured, respectful delivery style appropriate for speaking with authority figures, elders, or in formal ceremonies — often slower, more careful, with softer volume than casual peer speech.",
+        "instructions_ar": "تدرب على أداء أكثر رسمية وتوازنًا واحترامًا مناسب للتحدث مع شخصيات ذات سلطة أو كبار السن أو في المناسبات الرسمية — غالبًا أبطأ وأكثر حرصًا.",
+        "practice": ["I would be grateful for your guidance on this matter, sir/madam. (formal, respectful register)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["formal, respectful register (slower, measured)", "casual peer register (faster, relaxed)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["I would be grateful for your guidance", "if you don't mind my asking", "with all due respect"],
+      "sentence_practice": [
+        "I would be grateful for your guidance on this matter, sir.",
+        "If you don't mind my asking, could you clarify this point?",
+        "With all due respect, I have a different perspective to offer."
+      ],
+      "record_this": "I would be grateful for your guidance on this matter — if you don't mind my asking, with all due respect, could you clarify this point?",
+      "self_check": "Did your delivery feel appropriately measured and respectful, distinct from your casual conversational pace?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["small talk register: warm, low-stakes, socially binding delivery"],
+      "isolation": {
+        "instructions": "American small talk (weather, weekend plans, casual compliments) has its own light, warm, low-commitment delivery style — practice this specific social register.",
+        "instructions_ar": "الحديث العابر الأمريكي (الطقس، خطط نهاية الأسبوع) له أسلوب أداء خاص خفيف ودافئ وقليل الالتزام — تدرب على هذا السجل الاجتماعي المحدد.",
+        "practice": ["Oh hey, how's it going? Crazy weather we're having, huh? (light, warm, casual small talk)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["small talk register (light, warm)", "business register (flat, direct)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["how's it going?", "crazy weather, huh?", "any big plans this weekend?"],
+      "sentence_practice": [
+        "Oh hey, how's it going? Crazy weather we're having, huh?",
+        "Any big plans this weekend?",
+        "So good to see you! It's been a while, right?"
+      ],
+      "record_this": "Oh hey, how's it going? Crazy weather we're having, huh? Any big plans this weekend? So good to see you!",
+      "self_check": "Did this sound genuinely warm and socially easy, distinct from your more formal/business registers?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["rapid register-switching within a single conversation"],
+      "isolation": {
+        "instructions": "Real conversations often require switching registers within seconds — from small talk into business, or from formal into casual. Practice this rapid switching.",
+        "instructions_ar": "المحادثات الحقيقية غالبًا بتحتاج تبديل سجل في ثواني — من حديث عابر لمهني، أو من رسمي لعادي. تدرب على هذا التبديل السريع.",
+        "practice": ["Small talk → business: 'Hey, how's it going? — So, about that report, I need it by Friday.'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["smooth, natural register switch", "jarring, unnatural register switch"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["Hey, how's it going?", "So, about that report..."],
+      "sentence_practice": [
+        "Hey, how's it going? So, about that report, I need it by Friday.",
+        "Crazy weather, huh? Anyway, could you clarify this point for me?",
+        "Good to see you! With that said, I do need your guidance on this matter."
+      ],
+      "record_this": "Hey, how's it going? So, about that report, I need it by Friday — and by the way, I'd be grateful for your guidance on this too.",
+      "self_check": "Did the transition between registers feel smooth and natural, the way real conversations actually flow?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["spontaneous multi-register conversation simulation"],
+      "isolation": {
+        "instructions": "Simulate a realistic 60-90 second conversation that naturally requires at least 2 different registers (e.g., greeting someone casually, then discussing something more formal).",
+        "instructions_ar": "حاكي محادثة واقعية لمدة ٦٠-٩٠ ثانية تحتاج طبيعيًا سجلين مختلفين على الأقل (زي تحية عادية، وبعدين مناقشة أكثر رسمية).",
+        "practice": ["Simulate a realistic scenario: greeting a colleague, then transitioning into a work discussion."]
+      },
+      "minimal_pairs": [
+        {"pair": ["natural multi-register conversation", "single flat register throughout"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your scenario)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: simulate a realistic 60-90 second conversation involving at least 2 register shifts.)",
+      "self_check": "Did the register shifts feel natural and socially appropriate, not forced or robotic?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: business register, formal/respectful register, small talk register, rapid switching, spontaneous multi-register speech",
+      "type": "review",
+      "mixed_pairs": [
+        ["I need this by Friday. (business)", "I would be grateful for your guidance. (formal)"], ["Crazy weather, huh? (small talk)", "rapid register switch"]
+      ],
+      "challenge_sentences": [
+        "Hey, how's it going? Crazy weather, huh? So, about that report — I need it by Friday, and I'd be grateful for your guidance on it.",
+        "With all due respect, I have a different view — but hey, good to see you too! Any big plans this weekend?",
+        "I would be grateful for your guidance, sir — anyway, how's it going otherwise? Crazy week, right?"
+      ],
+      "record_this": "Hey, how's it going? Crazy weather, huh? So, about that report — I need it by Friday, and I'd be grateful for your guidance on it.",
+      "self_check": "Did you correctly and naturally shift between all 3 registers within this single combined passage?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Cross-Cultural Register Mastery Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 90-second spontaneous scenario requiring you to naturally use at least 3 different registers (business/direct, formal/respectful, casual/warm small talk).",
+        "passage": "(Free speech: simulate any realistic scenario — e.g., a workday morning — that naturally moves through greeting, small talk, and a more formal/business exchange.)",
+        "sounds_to_check": {
+          "business/direct register": "check for appropriate directness and efficiency",
+          "formal/respectful register": "check for measured pace and respectful tone",
+          "small talk/casual register": "check for genuine warmth and social ease"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 3 registers produced naturally and distinctly, with smooth, socially appropriate transitions between them.",
+        "70_89": "Most registers present and mostly distinct; occasional blending or unclear transitions.",
+        "50_69": "Registers attempted but sound similar to each other — limited genuine tonal variation.",
+        "below_50": "Single flat register used throughout regardless of context — go back and repeat Days 1-4, deliberately exaggerating each register's distinct qualities first."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is fundamentally a sociolinguistic/pragmatic skill, distinct from pure phonetics — it's about WHEN and HOW to deploy your (already strong) pronunciation skills differently depending on social context.",
+      "Register-switching mistakes (being too formal in casual settings, or too casual in formal ones) are often more socially noticeable to native speakers than minor accent features — this is a high-value fluency skill for real-world integration.",
+      "This connects to L3 Week 4's professional communication vocabulary and previews Week 8's final register-switching grammar focus."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — these multi-register recordings are valuable for peer feedback specifically on social/cultural appropriateness, not just pronunciation accuracy."
+  }
+}

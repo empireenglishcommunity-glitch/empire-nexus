@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w2",
+  "level": "L2",
+  "week": 2,
+  "pattern_name": "Past Continuous (was doing)",
+  "pattern_name_ar": "الماضي المستمر",
+  "formula": "Subject + was/were + Verb-ing",
+  "formula_visual": "[WHO] + was/were + [ACTION]-ing (when/while + interrupting event)",
+  "when_to_use": "Use Past Continuous for an action IN PROGRESS at a specific past moment, often interrupted by a shorter Past Simple action, or for two parallel ongoing past actions happening at the same time.",
+  "when_to_use_ar": "استخدم الماضي المستمر لفعل كان مستمر في لحظة معينة من الماضي، غالبًا مقاطَع بفعل أقصر (ماضي بسيط)، أو لفعلين مستمرين متوازيين بيحصلوا في نفس الوقت.",
+  "why_arabic_speakers_struggle": "Learners often use Past Simple for both the ongoing background action and the interrupting action, losing the important distinction between 'what was already happening' (continuous, background) and 'what happened suddenly' (simple, foreground) — a distinction that changes which event the listener understands as the main point.",
+  "examples": [
+    {"en": "I was cooking dinner when she called.", "ar": "كنت باعمل عشا لما هي اتصلت", "structure": "[I] + [was cooking] + [dinner] + [when] + [she called]"},
+    {"en": "They were watching a movie while we were studying.", "ar": "هما كانوا بيشوفوا فيلم وإحنا كنا بنذاكر (فعلين متوازيين)", "structure": "[They] + [were watching] + [a movie] + [while] + [we were studying]"},
+    {"en": "What were you doing at 8 PM last night?", "ar": "كنت بتعمل إيه الساعة ٨ إمبارح بالليل؟", "structure": "[What] + [were you doing] + [at 8 PM last night]"},
+    {"en": "She was walking home when it started to rain.", "ar": "هي كانت رايحة البيت لما بدأت تنزل شتا", "structure": "[She] + [was walking] + [home] + [when] + [it started to rain]"},
+    {"en": "We were talking about you right before you arrived.", "ar": "كنا بنتكلم عنك قبل ما توصل بالضبط", "structure": "[We] + [were talking] + [about you] + [right before] + [you arrived]"}
+  ],
+  "common_errors": [
+    {"wrong": "I cooked dinner when she called.", "correct": "I was cooking dinner when she called.", "explanation": "The background/ongoing action (cooking) needs Past Continuous — using Past Simple here loses the sense that cooking was already in progress when the call interrupted it."},
+    {"wrong": "While I was studying, he called me, and I was answering.", "correct": "While I was studying, he called me, and I answered.", "explanation": "The short, completed interrupting/reacting action ('answered') should be Past Simple, not Past Continuous — only the ongoing background action takes -ing."},
+    {"wrong": "She was walk home when it started to rain.", "correct": "She was walking home when it started to rain.", "explanation": "Past Continuous always needs -ing on the main verb — 'was walk' is missing it."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (sleep) when the earthquake happened.", "answer": "was sleeping", "hint": "Ongoing background action, interrupted by a sudden event."},
+    {"sentence": "While she ___ (drive), he ___ (text) on his phone.", "answer": "was driving / was texting", "hint": "Two parallel ongoing actions at the same time."},
+    {"sentence": "What ___ you ___ (do) this time yesterday?", "answer": "were ... doing", "hint": "Asking about an action in progress at a specific past moment."},
+    {"sentence": "He ___ (leave) the house when I ___ (arrive).", "answer": "was leaving / arrived", "hint": "Ongoing action interrupted by a shorter, completed action."},
+    {"sentence": "They ___ (not/listen) when the teacher explained the rule.", "answer": "weren't listening", "hint": "Negative ongoing background action."}
+  ],
+  "quick_rule": "The LONGER, background action (already happening) = Past Continuous (was/were + -ing). The SHORTER, interrupting or reacting action = Past Simple. Time markers: when, while, at [specific time] + last night/yesterday.",
+  "quick_rule_ar": "الفعل الأطول (الخلفية المستمرة) = ماضي مستمر. الفعل الأقصر (المقاطع) = ماضي بسيط.",
+  "mnemonic": "-ING = 'In progress, Not-yet-done, Going on' when something ELSE suddenly happened.",
+  "connect_to_speaking": "Practice with your buddy: tell a short story about a moment something unexpected interrupted you — describe what you WERE doing (Past Continuous) and what suddenly happened (Past Simple)."
+}

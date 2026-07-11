@@ -1,0 +1,143 @@
+{
+  "level": "L3",
+  "week": 1,
+  "focus": "Micro-Phonetics Refinement — Flap T Mastery at Full Native Speed",
+  "focus_ar": "تحسين الصوتيات الدقيقة — إتقان الفلاب T بالسرعة الطبيعية الكاملة",
+  "arabic_challenge": "You learned the flap T/D mechanic in L1 Week 2. At L3, the goal shifts from 'can I produce this sound' to 'is this sound perfectly automatic, even in unfamiliar words, complex clusters, and truly spontaneous, emotionally-charged speech (debates, humor, storytelling).' Per blueprint Table 11, this week targets Silver/Gold-tier precision — the difference between 'clearly practiced' and 'invisible, unnoticed as an accent feature at all.'",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["flap T in unfamiliar, never-drilled words"],
+      "isolation": {
+        "instructions": "Test your flap T on words you've never specifically drilled — true mastery means the rule applies automatically to ANY qualifying word, not just memorized examples.",
+        "instructions_ar": "اختبر الفلاب T بتاعك على كلمات ماتدربتش عليها أبدًا — الإتقان الحقيقي يعني القاعدة بتنطبق تلقائيًا على أي كلمة مؤهلة، مش بس الأمثلة المحفوظة.",
+        "practice": ["totally, meditate, capital, satellite, latitude, vital (all flap T, likely unfamiliar)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["totally (flap, new word, automatic)", "totally (full T, effortful)"], "meaning": ["كليًا", "—"]}
+      ],
+      "word_practice": ["totally", "meditate", "capital", "satellite", "latitude", "vital"],
+      "sentence_practice": [
+        "It's totally vital to meditate about the capital's latitude.",
+        "The satellite orbits at a vital, totally specific latitude.",
+        "Meditate on the capital's totally vital importance."
+      ],
+      "record_this": "It's totally vital to meditate about the capital's latitude and the satellite orbiting it.",
+      "self_check": "Did the flap apply automatically to these unfamiliar words, without you consciously planning it?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["flap T under emotional/debate pressure"],
+      "isolation": {
+        "instructions": "Test whether the flap survives when you're emotionally engaged — angry, excited, or passionately arguing — since genuine emotion often disrupts careful articulation habits.",
+        "instructions_ar": "اختبر لو الفلاب بيفضل موجود وانت متأثر عاطفيًا — غاضب، متحمس، أو بتجادل بحماس — لأن الانفعال الحقيقي غالبًا بيعطل عادات النطق الحذرة.",
+        "practice": ["Deliver an emotionally passionate 30-second rant about a minor annoyance, watching for flap T throughout."]
+      },
+      "minimal_pairs": [
+        {"pair": ["flap T surviving under real emotion", "flap T lost under emotional pressure"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your rant)"],
+      "sentence_practice": ["(No fixed sentences — emotional free-speech drill.)"],
+      "record_this": "(Free speech: a passionate 30-second rant about a minor daily annoyance, e.g., slow wifi or bad traffic.)",
+      "self_check": "Did the flap T survive even when your focus was on the emotion/content, not the pronunciation?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["flap T in complex consonant environments"],
+      "isolation": {
+        "instructions": "Test flap T in words with additional nearby consonant complexity, which can sometimes disrupt the smooth tongue-tap motion.",
+        "instructions_ar": "اختبر الفلاب T في كلمات فيها تعقيد ساكن إضافي قريب، ده ممكن يعطل حركة طرقة اللسان السلسة أحيانًا.",
+        "practice": ["instantly, constantly, distinctly, quantity (T near other consonant clusters)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["instantly (flap survives complexity)", "instantly (flap lost to complexity)"], "meaning": ["فورًا", "—"]}
+      ],
+      "word_practice": ["instantly", "constantly", "distinctly", "quantity"],
+      "sentence_practice": [
+        "I instantly and distinctly remember the quantity constantly changing.",
+        "Constantly and instantly, the quantity was distinctly different.",
+        "The distinctly large quantity changed constantly, almost instantly."
+      ],
+      "record_this": "I instantly and distinctly remember the quantity constantly changing — it was a distinctly large amount.",
+      "self_check": "Did the flap hold up even with the extra consonant complexity surrounding it?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["flap T integrated with humor/sarcasm delivery (thematic tie-in)"],
+      "isolation": {
+        "instructions": "Apply flap T naturally while delivering a sarcastic or humorous remark (this week's vocabulary theme), since comedic timing often speeds up delivery in ways that test automaticity.",
+        "instructions_ar": "طبّق الفلاب T بشكل طبيعي وانت بتقدم تعليق ساخر أو فكاهي (موضوع مفردات هذا الأسبوع)، لأن التوقيت الكوميدي غالبًا بيسرّع الأداء بطرق تختبر التلقائية.",
+        "practice": ["Oh, TOTALLY, that's a GREAT idea. (sarcastic, flap on 'totally')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Oh, TOTALLY (sarcastic, flap intact)", "Oh, TOTALLY (sarcastic, flap lost)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["totally", "definitely", "absolutely"],
+      "sentence_practice": [
+        "Oh, TOTALLY, that's a GREAT idea. (sarcastic)",
+        "Definitely, I TOTALLY believe that. (sarcastic)",
+        "Absolutely, that's TOTALLY reasonable. (sarcastic)"
+      ],
+      "record_this": "Oh, TOTALLY, that's a GREAT idea — definitely, I TOTALLY believe that, absolutely.",
+      "self_check": "Did the flap survive the exaggerated, playful delivery required for effective sarcasm?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["flap T in fully spontaneous, unscripted 60-second speech"],
+      "isolation": {
+        "instructions": "The ultimate test: 60 seconds of completely spontaneous speech on any topic, with zero preparation, checking whether flap T remains fully automatic.",
+        "instructions_ar": "الاختبار النهائي: ٦٠ ثانية كلام عفوي كامل عن أي موضوع، بدون تحضير، لفحص لو الفلاب T فضل تلقائي بالكامل.",
+        "practice": ["Speak spontaneously about literally anything for 60 seconds."]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully automatic flap in spontaneous speech", "flap lost without conscious effort"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: 60 seconds, completely unplanned, any topic.)",
+      "self_check": "Count how many flap-T opportunities appeared in your speech, and what percentage you executed correctly WITHOUT thinking about it."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: unfamiliar words, emotional pressure, consonant complexity, humor integration, full spontaneity",
+      "type": "review",
+      "mixed_pairs": [
+        ["totally (unfamiliar/automatic)", "instantly (complex cluster)"], ["TOTALLY (sarcastic)", "spontaneous 60-second speech"]
+      ],
+      "challenge_sentences": [
+        "It's totally vital to instantly and distinctly remember the satellite's latitude — oh, TOTALLY, that's a great idea, definitely.",
+        "The capital's quantity constantly changed, and it was distinctly, totally unexpected.",
+        "Meditate on the vital importance, instantly and constantly, of a totally different latitude."
+      ],
+      "record_this": "It's totally vital to instantly and distinctly remember the satellite's latitude — oh, TOTALLY, that's a great idea, definitely!",
+      "self_check": "This is a demanding review passage combining all 5 days' challenges. Score your flap-T consistency honestly."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Micro-Phonetics Precision Checkpoint (Flap T)",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record 60-90 seconds of spontaneous speech on any topic. Then, separately, have a native-speed conversation (real or imagined roleplay) reacting with genuine emotion/humor at least twice.",
+        "passage": "(Free speech: 60-90 seconds on any topic, PLUS a brief emotional/humorous reaction moment within it.)",
+        "sounds_to_check": {
+          "flap T automaticity": "check throughout for consistency without conscious effort"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "(Gold/Platinum tier) Flap T is completely invisible as an 'effort' — indistinguishable from unconscious native production, even under emotion and in unfamiliar words.",
+        "70_89": "(Silver tier) Flap T holds up in almost all contexts; very rare lapses under high emotional pressure.",
+        "50_69": "Flap T reliable in calm, familiar speech but noticeably drops under emotional pressure or with new vocabulary.",
+        "below_50": "Flap T still requires conscious effort — return to L1 Week 2 for foundational review."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week reframes a skill you already have (flap T from L1) through the lens of Blueprint Table 11's Mastery Tiers — the goal now is invisibility, not just correctness.",
+      "Testing a skill under emotional pressure and with unfamiliar vocabulary is the real test of whether it has become truly automatic (procedural memory) versus still being consciously monitored (declarative knowledge).",
+      "This same refinement approach (Days 1-5 structure) will repeat for other L1/L2 skills across L3's remaining weeks — dark L, schwa, and vowel reduction each get similar deep-mastery treatment."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — save these as your first L3 mastery-tier benchmark recordings."
+  }
+}

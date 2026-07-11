@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w3",
+  "level": "L1",
+  "week": 3,
+  "pattern_name": "Future — will vs. going to",
+  "pattern_name_ar": "المستقبل — will مقابل going to",
+  "formula": "Subject + will + Verb  |  Subject + am/is/are + going to + Verb",
+  "formula_visual": "[WHO] + will + [ACTION]   OR   [WHO] + am/is/are + going to + [ACTION]",
+  "when_to_use": "Use 'will' for quick decisions, promises, predictions without evidence, and offers. Use 'going to' for plans already decided before now, and for predictions WITH visible evidence.",
+  "when_to_use_ar": "استخدم will للقرارات السريعة، الوعود، التوقعات بدون دليل، والعروض. استخدم going to للخطط المقررة من قبل، والتوقعات اللي عندها دليل واضح.",
+  "why_arabic_speakers_struggle": "Arabic often uses a single future marker (سـ / سوف) for all future meanings, so learners frequently pick one English form (usually 'will') and use it everywhere, missing the planned-vs-spontaneous distinction that changes meaning in English.",
+  "examples": [
+    {"en": "I will help you carry that bag. (spontaneous offer)", "ar": "هساعدك تشيل الشنطة دي (عرض فوري)", "structure": "[I] + [will] + [help you carry that bag]"},
+    {"en": "I'm going to visit my family next month. (planned before now)", "ar": "هزور عيلتي الشهر الجاي (خطة مسبقة)", "structure": "[I'm] + [going to] + [visit my family] + [next month]"},
+    {"en": "Look at those clouds — it's going to rain. (evidence now)", "ar": "شوف السحاب ده — هتنزل شتا (دليل حالي)", "structure": "[It's] + [going to] + [rain]"},
+    {"en": "I think it will rain tomorrow. (prediction, no evidence, just opinion)", "ar": "أظن هتنزل شتا بكرة (توقع بدون دليل)", "structure": "[It] + [will] + [rain] + [tomorrow]"},
+    {"en": "She will call you when she arrives. (promise/prediction)", "ar": "هي هتتصل بيك لما توصل (وعد/توقع)", "structure": "[She] + [will] + [call you] + [when she arrives]"}
+  ],
+  "common_errors": [
+    {"wrong": "Look at those clouds, it will rain.", "correct": "Look at those clouds, it's going to rain.", "explanation": "When you have visible evidence RIGHT NOW (dark clouds), use 'going to', not 'will'."},
+    {"wrong": "I going to help you.", "correct": "I'm going to help you. / I will help you.", "explanation": "'going to' always needs the verb 'be' (am/is/are) before it — it cannot stand alone."},
+    {"wrong": "I will visit my family next month, I decided last week.", "correct": "I'm going to visit my family next month, I decided last week.", "explanation": "A plan decided BEFORE the moment of speaking uses 'going to', not 'will'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (will/going to) help you right now — no problem!", "answer": "will", "hint": "Spontaneous offer, decided this second."},
+    {"sentence": "We ___ already decided — we ___ travel next summer.", "answer": "'re going to / are going to", "hint": "A plan made before now."},
+    {"sentence": "Look at his face — he ___ cry.", "answer": "'s going to / is going to", "hint": "Visible evidence right now."},
+    {"sentence": "I think she ___ enjoy the party.", "answer": "will", "hint": "Opinion/prediction, no direct evidence."},
+    {"sentence": "Don't worry, I ___ call you tomorrow.", "answer": "will", "hint": "A promise made in the moment."}
+  ],
+  "quick_rule": "Evidence NOW or a plan made BEFORE now → going to. Decision made THIS SECOND, promise, or opinion-based prediction → will.",
+  "quick_rule_ar": "دليل حالي أو خطة من قبل → going to. قرار في اللحظة، وعد، أو توقع بدون دليل → will.",
+  "mnemonic": "GOING TO = 'I already have a plan going.' WILL = 'I decide it will happen, right now, on the spot.'",
+  "connect_to_speaking": "Practice with your buddy: tell them one thing you're 'going to' do this weekend (already planned) and one thing you 'will' do for them right now if they ask (a spontaneous offer). Notice how different the two situations feel."
+}

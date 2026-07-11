@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w5",
+  "level": "L3",
+  "week": 5,
+  "pattern_name": "Fronting & Emphasis",
+  "pattern_name_ar": "التقديم والتأكيد (Fronting)",
+  "formula": "[Emphasized element] + [rest of the clause, sometimes with adjusted word order]",
+  "formula_visual": "[NORMALLY-LATER ELEMENT] moved to the FRONT of the sentence, for emphasis",
+  "when_to_use": "Use fronting to move an object, complement, or adverbial phrase to the FRONT of a sentence (out of its normal position) for dramatic or rhetorical emphasis — common in persuasive speech, storytelling, and formal writing, closely related to Week 12's Inversion from L2 but broader in scope.",
+  "when_to_use_ar": "استخدم التقديم لنقل مفعول به أو مكمل أو عبارة ظرفية لبداية الجملة (خارج موضعها الطبيعي) للتأكيد الدرامي أو البلاغي — شائع في الخطابة والقص والكتابة الرسمية.",
+  "why_arabic_speakers_struggle": "Advanced learners have internalized standard SVO word order so thoroughly that deliberately breaking it for rhetorical effect can feel 'wrong' even when it's a legitimate, native, stylistic choice — recognizing WHEN fronting is appropriate (for real emphasis) versus when it just sounds like a grammar mistake requires refined judgment, not a fixed rule.",
+  "examples": [
+    {"en": "Never before have I seen such courage. (adverbial fronting + inversion)", "ar": "أبدًا ما شفت شجاعة زي كده", "structure": "[Never before] + [have I seen] + [such courage]"},
+    {"en": "That, I cannot accept. (object fronting)", "ar": "هذا، لا يمكنني تقبله (تأكيد على 'ذلك')", "structure": "[That], + [I cannot accept]"},
+    {"en": "Happy she was not, despite the good news. (complement fronting)", "ar": "سعيدة لم تكن، رغم الأخبار الجيدة (تأكيد على الحالة)", "structure": "[Happy] + [she was not], [despite the good news]"},
+    {"en": "Down came the rain, harder than ever. (adverbial + inverted verb-subject for dramatic effect)", "ar": "نزلت المطر بشدة، أقوى من أي وقت", "structure": "[Down] + [came the rain], [harder than ever]"},
+    {"en": "Little did they know what awaited them. (fixed emphatic fronting expression)", "ar": "لم يكونوا يعلمون ما ينتظرهم (تعبير تأكيدي ثابت)", "structure": "[Little did they know] + [what awaited them]"}
+  ],
+  "common_errors": [
+    {"wrong": "Never before I have seen such courage.", "correct": "Never before have I seen such courage.", "explanation": "When a negative/limiting adverbial is fronted, the auxiliary must invert with the subject ('have I'), just like L2's Inversion rule — fronting and inversion often work together."},
+    {"wrong": "That I cannot to accept.", "correct": "That, I cannot accept.", "explanation": "After fronting an object, the main clause still follows normal grammar rules — no extra 'to' is needed before 'accept' here."},
+    {"wrong": "Down the rain came.", "correct": "Down came the rain.", "explanation": "This specific dramatic-fronting pattern (direction/place adverb + inverted verb-subject) requires the verb before the subject — 'came the rain', not 'the rain came', for the emphatic literary effect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Rarely ___ (I/encounter) such dedication in my career.", "answer": "have I encountered", "hint": "Fronted adverbial + inverted auxiliary."},
+    {"sentence": "That decision, ___ (I/never/regret).", "answer": "I have never regretted / I've never regretted", "hint": "Fronted object, normal word order follows."},
+    {"sentence": "Out ___ (run) the children, laughing loudly.", "answer": "ran", "hint": "Dramatic fronting: adverb + inverted verb-subject."},
+    {"sentence": "So confident ___ (be/she) that no one dared question her.", "answer": "was she", "hint": "Fronted complement + inversion."},
+    {"sentence": "Little ___ (we/know) how much things would change.", "answer": "did we know", "hint": "Fixed emphatic fronting expression."}
+  ],
+  "quick_rule": "Fronting moves any element (object, complement, adverbial) to sentence-start for emphasis, often triggering inversion (auxiliary-before-subject) when the fronted element is negative/limiting or a place/direction adverb in dramatic narrative style. Reserve this for genuine rhetorical impact, not everyday neutral speech.",
+  "quick_rule_ar": "التقديم بينقل أي عنصر لبداية الجملة للتأكيد، وغالبًا بيحفز القلب (الفعل المساعد قبل الفاعل).",
+  "mnemonic": "FRONTING = 'put it up FRONT' when it's the single most important thing you want the listener to notice first.",
+  "connect_to_speaking": "Practice with your buddy: tell a short dramatic story (real or invented) using at least 2 fronted structures for emphasis — notice how it immediately makes your storytelling sound more literary and impactful."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w1",
+  "level": "L1",
+  "week": 1,
+  "pattern_name": "Past Simple — Regular Verbs (-ed)",
+  "pattern_name_ar": "الماضي البسيط — الأفعال المنتظمة",
+  "formula": "Subject + Verb-ed (+ Object)",
+  "formula_visual": "[WHO] + [ACTION]-ed + [WHAT] (yesterday / last week / ago)",
+  "when_to_use": "Use the Past Simple to talk about a completed action at a specific, finished time in the past. Add -ed to the base verb for regular verbs.",
+  "when_to_use_ar": "استخدم الماضي البسيط للحديث عن فعل مكتمل في وقت محدد وانتهى في الماضي. أضف -ed للفعل الأساسي للأفعال المنتظمة.",
+  "why_arabic_speakers_struggle": "Arabic marks past tense through the verb's internal pattern (like a template the verb fills), not by adding a fixed suffix. Learners often forget to add -ed consistently, especially in speech, because their first language doesn't require a fixed extra sound at the end of every past verb.",
+  "examples": [
+    {"en": "I worked yesterday.", "ar": "عملت إمبارح", "structure": "[I] + [work-ed] + (yesterday)"},
+    {"en": "She studied for the exam.", "ar": "هي ذاكرت للامتحان", "structure": "[She] + [study-ed] + [for the exam]"},
+    {"en": "They watched a movie last night.", "ar": "هم شافوا فيلم إمبارح بالليل", "structure": "[They] + [watch-ed] + [a movie] + (last night)"},
+    {"en": "We walked to the market.", "ar": "احنا مشينا للسوق", "structure": "[We] + [walk-ed] + [to the market]"},
+    {"en": "He cleaned his room.", "ar": "هو نظف غرفته", "structure": "[He] + [clean-ed] + [his room]"}
+  ],
+  "common_errors": [
+    {"wrong": "I work yesterday.", "correct": "I worked yesterday.", "explanation": "You must add -ed for a completed past action — the base verb form alone is not enough, even with a clear past time word like 'yesterday'."},
+    {"wrong": "She studyed for the exam.", "correct": "She studied for the exam.", "explanation": "When a verb ends in a consonant + y, change the y to i before adding -ed: study → studied, try → tried, cry → cried."},
+    {"wrong": "He stoped the car.", "correct": "He stopped the car.", "explanation": "Short verbs ending in one vowel + one consonant DOUBLE the final consonant before -ed: stop → stopped, plan → planned."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (work) at the office yesterday.", "answer": "worked", "hint": "Regular verb, just add -ed."},
+    {"sentence": "She ___ (study) English last year.", "answer": "studied", "hint": "Consonant + y → change y to i, add -ed."},
+    {"sentence": "They ___ (watch) a good movie.", "answer": "watched", "hint": "Regular verb, just add -ed."},
+    {"sentence": "He ___ (stop) at the red light.", "answer": "stopped", "hint": "Short vowel + one consonant → double the consonant."},
+    {"sentence": "We ___ (clean) the whole house.", "answer": "cleaned", "hint": "Regular verb, just add -ed."}
+  ],
+  "quick_rule": "Regular past = verb + -ed. Watch three spelling patterns: consonant+y→ied (study→studied), short vowel+consonant→double it (stop→stopped), verb ending in e→just add d (like→liked).",
+  "quick_rule_ar": "الماضي المنتظم = الفعل + -ed. لاحظ ٣ حالات إملائية: ساكن+y تتحول لـ ied، حرف علة قصير+ساكن يتضاعف الساكن، الفعل اللي بينتهي بـ e تضيف d فقط.",
+  "mnemonic": "-ED = Every Day is Done (once you add -ed, the action is finished and in the past).",
+  "connect_to_speaking": "When telling a story about yesterday or last week, every completed action needs its -ed ending — even if you say it quickly. Native speakers often reduce the sound of -ed (it can sound like /t/, /d/, or /ɪd/ depending on the verb), but it is never silent. Practice: tell your buddy 3 things you did yesterday, one sentence each."
+}

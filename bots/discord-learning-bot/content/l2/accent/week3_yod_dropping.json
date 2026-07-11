@@ -1,0 +1,154 @@
+{
+  "level": "L2",
+  "week": 3,
+  "focus": "Yod-Dropping — Losing the /j/ Glide After Alveolar Consonants",
+  "focus_ar": "حذف صوت الـ Yod — فقدان الصوت الانتقالي /j/ بعد الأصوات اللثوية",
+  "arabic_challenge": "In words like 'new', 'tune', and 'suit', American English typically DROPS the /j/ glide (the 'y' sound) that appears after alveolar consonants (/t/ /d/ /n/ /s/ /l/), producing 'noo' instead of 'nyoo'. Many British English speakers and dictionaries KEEP this glide, which can confuse learners exposed to mixed audio sources. Arabic speakers, hearing the glide clearly represented in spelling or British-influenced media, often keep it, which sounds distinctly non-American.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["yod-dropping after /n/, /t/, /d/"],
+      "isolation": {
+        "instructions": "After /n/, /t/, and /d/, American English drops the /j/ glide before /uː/ — the word sounds like it starts directly with the vowel, not with a 'y' sound first.",
+        "instructions_ar": "بعد /n/ و/t/ و/d/، الإنجليزية الأمريكية بتحذف صوت /j/ قبل /uː/ — الكلمة بتبان كأنها بتبدأ مباشرة بالحرف المتحرك، بدون صوت y الأول.",
+        "practice": ["new → NOO (not NYOO)", "tune → TOON (not TYOON)", "duke → DOOK (not DYOOK)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["new (American: noo)", "new (British-influenced: nyoo)"], "meaning": ["جديد", "—"]},
+        {"pair": ["tune (American: toon)", "tune (British-influenced: tyoon)"], "meaning": ["لحن/يضبط", "—"]}
+      ],
+      "word_practice": ["new", "tune", "duke", "news", "student", "duty", "nuclear"],
+      "sentence_practice": [
+        "The student read the news about the new tune.",
+        "It's my duty to report the nuclear news.",
+        "The new duke changed his tune about the news."
+      ],
+      "record_this": "The student read the news about the new tune — it's my duty to report the nuclear news, and the new duke changed his tune.",
+      "self_check": "Say 'new' — does it start directly with the vowel sound (NOO), with no 'y' glide before it?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["yod-dropping after /s/, /l/"],
+      "isolation": {
+        "instructions": "The same dropping happens after /s/ and /l/ in words like 'suit' and 'lure' — no /j/ glide before the /uː/ vowel.",
+        "instructions_ar": "نفس الحذف بيحصل بعد /s/ و/l/ في كلمات زي suit وlure — بدون صوت /j/ قبل حرف العلة /uː/.",
+        "practice": ["suit → SOOT (not SYOOT)", "lure → LOOR (not LYOOR)", "resume → ri-ZOOM (not ri-ZYOOM)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["suit (American: soot)", "suit (British-influenced: syoot)"], "meaning": ["بدلة", "—"]}
+      ],
+      "word_practice": ["suit", "lure", "resume", "suitable", "illuminate", "salute"],
+      "sentence_practice": [
+        "That suit is suitable for the interview — bring your resume.",
+        "The lure of a new job made him salute the offer.",
+        "It's suitable to illuminate the resume with a good suit."
+      ],
+      "record_this": "That suit is suitable for the interview — bring your resume, and the lure of a new job made him salute the offer.",
+      "self_check": "For 'suit' and 'resume', is the vowel produced directly, with no 'y' glide sneaking in first?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["contrast: where yod-dropping does NOT apply"],
+      "isolation": {
+        "instructions": "Yod-dropping is specific to alveolar consonants before /uː/. It does NOT apply after other consonants (like /m/, /f/, /k/) — words like 'music', 'few', and 'cute' KEEP their /j/ glide in American English too.",
+        "instructions_ar": "حذف الـ yod محدد بالأصوات اللثوية قبل /uː/. مبينطبقش بعد أصوات تانية زي /m/ و/f/ و/k/ — كلمات زي music وfew وcute بتحافظ على صوت /j/ في الإنجليزية الأمريكية كمان.",
+        "practice": ["music (KEEPS /j/: MYOO-zik) vs. new (DROPS /j/: NOO)", "few (KEEPS /j/: FYOO) vs. tune (DROPS /j/: TOON)", "cute (KEEPS /j/: KYOOT) vs. duke (DROPS /j/: DOOK)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["music (keeps /j/)", "new (drops /j/)"], "meaning": ["موسيقى", "جديد"]},
+        {"pair": ["few (keeps /j/)", "tune (drops /j/)"], "meaning": ["قليل", "لحن"]}
+      ],
+      "word_practice": ["music", "new", "few", "tune", "cute", "duke", "cure", "student"],
+      "sentence_practice": [
+        "The music was new, and it took only a few minutes to tune.",
+        "That cute duke found a cure for his student's problem.",
+        "A few new songs and cute music made a great tune."
+      ],
+      "record_this": "The music was new, and it took only a few minutes to tune — that cute duke found a cure for his student's problem with a few new songs.",
+      "self_check": "Could you correctly identify which words keep the /j/ glide (music, few, cute) versus which drop it (new, tune, duke)?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["yod-dropping in professional/academic vocabulary"],
+      "isolation": {
+        "instructions": "This pattern is especially common in professional and academic words you'll use often in L2's more advanced vocabulary (news, student, duty, nuclear, resume, institute).",
+        "instructions_ar": "هذا النمط شائع جدًا في الكلمات المهنية والأكاديمية اللي هتستخدمها كتير في مفردات المستوى الثاني الأكثر تقدمًا.",
+        "practice": ["institute → IN-sti-toot", "constitute → KON-sti-toot", "opportunity → op-ər-TOO-nə-tee"]
+      },
+      "minimal_pairs": [
+        {"pair": ["institute (American, dropped)", "institute (British-influenced, kept)"], "meaning": ["معهد", "—"]}
+      ],
+      "word_practice": ["institute", "constitute", "opportunity", "student", "duty", "news"],
+      "sentence_practice": [
+        "The institute gave the student a great opportunity.",
+        "It's your duty to constitute a fair report on the news.",
+        "This opportunity at the institute is news to the student."
+      ],
+      "record_this": "The institute gave the student a great opportunity — it's your duty to constitute a fair report on the news, and this is news to the student.",
+      "self_check": "In these more academic words, did the yod-dropping pattern hold consistently?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["yod-dropping at natural conversational and presentation speed"],
+      "isolation": {
+        "instructions": "Apply this pattern in a mock presentation-style delivery, since L2's speaking missions frequently involve presentations and analysis.",
+        "instructions_ar": "طبّق هذا النمط في أسلوب عرض تقديمي تجريبي، لأن مهام الكلام في المستوى الثاني غالبًا بتتضمن عروض تقديمية وتحليل.",
+        "practice": ["Deliver the Day 4 sentences as if presenting to a group."]
+      },
+      "minimal_pairs": [
+        {"pair": ["presentation-style delivery (fast, confident)", "hesitant, careful delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["institute", "opportunity", "student", "new", "tune", "resume"],
+      "sentence_practice": [
+        "This new opportunity at the institute is exactly what the student needs.",
+        "I'd like to present the news about our new institute today.",
+        "Let me tune my resume to fit this new opportunity."
+      ],
+      "record_this": "This new opportunity at the institute is exactly what the student needs — I'd like to present the news about our new institute today, and tune my resume to fit it.",
+      "self_check": "In a confident, presentation-style delivery, did yod-dropping remain natural and correct?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: yod-dropping after n/t/d/s/l, contrast with yod-keeping words, professional vocabulary, presentation speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["new (drop)", "music (keep)"], ["tune (drop)", "few (keep)"], ["suit (drop)", "cute (keep)"]
+      ],
+      "challenge_sentences": [
+        "The new student at the institute found a great opportunity, but it took a few minutes to tune his resume for the news interview.",
+        "That cute duke's music was new, and it took only a few minutes for the suit to constitute a real opportunity.",
+        "It's my duty to present the news about the new institute — a few students found it cute and full of opportunity."
+      ],
+      "record_this": "The new student at the institute found a great opportunity, but it took a few minutes to tune his resume for the news interview — that cute duke's new music made it worth the duty.",
+      "self_check": "Mark every yod-dropped word and every yod-kept word in this passage. Did you apply the rule correctly and consistently?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage at natural presentation speed, correctly distinguishing yod-dropped and yod-kept words.",
+        "passage": "As a new student at this institute, I've had a few great opportunities already. My duty this week was to tune up my resume and present the latest news about our research. It's a cute coincidence, but the music program here is new too, and a few students told me it's one of the best in the country. I truly believe this institute constitutes a unique opportunity for anyone who wants a fresh start.",
+        "sounds_to_check": {
+          "yod-dropped (after n/t/d/s/l)": "new (x3), student, institute (x2), tune, duty, constitutes",
+          "yod-kept (after other consonants)": "few (x2), music, unique, opportunities/opportunity"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Yod-dropping correctly and consistently applied where required, correctly kept elsewhere, at natural presentation speed.",
+        "70_89": "Mostly correct; a few incorrect drops or kept glides.",
+        "50_69": "Inconsistent — correct only in heavily drilled words.",
+        "below_50": "Glide kept everywhere (British-influenced pattern throughout) or dropped everywhere incorrectly — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is Blueprint Table 19's explicit L2 Week 3 assignment (Yod-Dropping).",
+      "If you've learned English primarily from British sources (BBC, some textbooks), you may have been TAUGHT to keep this glide — that's not wrong for British English, but it will sound consistently non-American here, since this program targets American accent mastery.",
+      "The rule applies specifically to alveolar consonants (/t/ /d/ /n/ /s/ /l/) before /uː/ — it does not apply universally, so Day 3's contrast drill is essential, not optional."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, this pattern should apply automatically in academic/professional vocabulary you'll use throughout L2."
+  }
+}

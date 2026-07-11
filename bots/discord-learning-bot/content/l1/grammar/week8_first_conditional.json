@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w8",
+  "level": "L1",
+  "week": 8,
+  "pattern_name": "First Conditional (if + will)",
+  "pattern_name_ar": "الشرط الأول (if + will)",
+  "formula": "If + Subject + Present Simple, Subject + will + Verb",
+  "formula_visual": "If + [CONDITION, present tense], + [RESULT, will + base verb]",
+  "when_to_use": "Use the First Conditional to talk about a real, likely possibility in the future and its probable result. The 'if' clause uses Present Simple (NOT 'will'), and the result clause uses 'will'.",
+  "when_to_use_ar": "استخدم الشرط الأول للحديث عن احتمال حقيقي ومرجح في المستقبل ونتيجته المتوقعة. جملة if بتستخدم المضارع البسيط، وجملة النتيجة بتستخدم will.",
+  "why_arabic_speakers_struggle": "The most common error is putting 'will' in BOTH halves of the sentence ('If it will rain, I will stay home'), because it feels logical to mark future time twice. English marks the future only ONCE, in the result clause — the 'if' clause stays in present tense even though it clearly refers to the future.",
+  "examples": [
+    {"en": "If it rains, I will stay home.", "ar": "لو نزلت شتا، هقعد في البيت", "structure": "[If] + [it rains] + [I will stay home]"},
+    {"en": "If you study hard, you will pass the exam.", "ar": "لو ذاكرت كويس، هتنجح في الامتحان", "structure": "[If] + [you study hard] + [you will pass the exam]"},
+    {"en": "If she calls, I will tell her the news.", "ar": "لو اتصلت، هقولها الخبر", "structure": "[If] + [she calls] + [I will tell her the news]"},
+    {"en": "We will miss the bus if we don't hurry.", "ar": "هنفوت الأتوبيس لو ما استعجلنا", "structure": "[We will miss the bus] + [if] + [we don't hurry]"},
+    {"en": "If they don't finish on time, the boss will be angry.", "ar": "لو ما خلصوش في الوقت، المدير هيتغاظ", "structure": "[If] + [they don't finish on time] + [the boss will be angry]"}
+  ],
+  "common_errors": [
+    {"wrong": "If it will rain, I will stay home.", "correct": "If it rains, I will stay home.", "explanation": "The 'if' clause uses Present Simple, never 'will' — the future is only marked once, in the result clause."},
+    {"wrong": "If you will study hard, you will pass.", "correct": "If you study hard, you will pass.", "explanation": "Same rule — drop 'will' from the if-clause entirely."},
+    {"wrong": "If it rains, I stay home.", "correct": "If it rains, I will stay home.", "explanation": "The RESULT clause needs 'will' to show a real future consequence — leaving it out turns this into a general habit statement instead (a different meaning)."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If she ___ (call) me, I ___ (tell) her the plan.", "answer": "calls / will tell", "hint": "If-clause: present simple. Result: will."},
+    {"sentence": "If it ___ (be) sunny tomorrow, we ___ (go) to the beach.", "answer": "is / will go", "hint": "If-clause: present simple (be→is). Result: will."},
+    {"sentence": "You ___ (be) late if you ___ (not/leave) now.", "answer": "will be / don't leave", "hint": "Result clause first this time — same rule applies regardless of order."},
+    {"sentence": "If they ___ (not/finish), the boss ___ (be) upset.", "answer": "don't finish / will be", "hint": "Negative if-clause still uses present simple, not 'will'."},
+    {"sentence": "I ___ (help) you if you ___ (need) it.", "answer": "will help / need", "hint": "Result clause: will. If-clause: present simple."}
+  ],
+  "quick_rule": "The word 'will' appears ONLY ONCE per sentence — always in the result clause, never in the 'if' clause. The 'if' clause always uses Present Simple, even though the whole sentence is about the future.",
+  "quick_rule_ar": "كلمة will بتظهر مرة واحدة بس في الجملة — في جملة النتيجة دايمًا، مش في جملة if. جملة if بتستخدم المضارع البسيط دايمًا.",
+  "mnemonic": "IF = 'Is it Future?' — yes, but only say WILL once, in the result. The condition itself just uses the plain present.",
+  "connect_to_speaking": "Practice with your buddy: make 3 real predictions about this week using 'If... , I will...' — for example, weather plans, work deadlines, or weekend activities. Check each other for the double-will mistake."
+}

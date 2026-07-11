@@ -1,0 +1,155 @@
+{
+  "level": "L2",
+  "week": 5,
+  "focus": "Dark L — The Velarized [ɫ] at Syllable End",
+  "focus_ar": "صوت الـ L الغامق — الصوت المفخم في نهاية المقطع",
+  "arabic_challenge": "English has two distinct versions of the letter 'l': a 'light L' (tongue tip touching the ridge, similar to Arabic ل) used at the START of a syllable, and a 'dark L' [ɫ] used at the END of a syllable, where the back of the tongue raises toward the soft palate, giving it a heavier, almost 'oo'-like quality. Arabic speakers typically use only the light L in all positions, which makes words like 'feel' or 'ball' sound noticeably non-native.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["dark L [ɫ] at the end of a syllable/word"],
+      "isolation": {
+        "instructions": "When 'l' ends a word or syllable, the back of your tongue should rise toward the soft palate while the tip still touches behind your teeth — this gives the sound a heavier, darker quality compared to light L.",
+        "instructions_ar": "لما l تكون في نهاية كلمة أو مقطع، مؤخرة لسانك لازم ترتفع لسقف الحلق الرخو مع إن طرف اللسان لسه بيلمس خلف الأسنان — ده بيعطي صوت أثقل وأغمق مقارنة بالـ L الخفيفة.",
+        "practice": ["feel → FEE-ɫ (dark, heavy ending)", "ball → BAW-ɫ (dark, heavy ending)", "cool → COO-ɫ (dark, heavy ending)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["feel (dark L, correct)", "feel (light L throughout, foreign)"], "meaning": ["يشعر", "—"]},
+        {"pair": ["ball (dark L, correct)", "ball (light L throughout, foreign)"], "meaning": ["كرة", "—"]}
+      ],
+      "word_practice": ["feel", "ball", "cool", "fall", "tall", "school", "well", "full"],
+      "sentence_practice": [
+        "I feel cool after the tall school bell rang.",
+        "The ball fell well past the full pool.",
+        "It's a tall, cool school with a big ball field."
+      ],
+      "record_this": "I feel cool after the tall school bell rang — the ball fell well past the full pool near the tall, cool school.",
+      "self_check": "Can you feel the BACK of your tongue rising for the final L, giving it a heavier quality than a light L?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["contrast: light L (syllable start) vs. dark L (syllable end)"],
+      "isolation": {
+        "instructions": "Practice words that contain BOTH a light L and a dark L, to feel the physical difference between the two within a single word.",
+        "instructions_ar": "تدرب على كلمات فيها الاتنين — L خفيفة وL غامقة — عشان تحس بالفرق الجسدي بين الاتنين جوه كلمة واحدة.",
+        "practice": ["little → LIT (light L start-ish) + -tle (dark L end)", "level → LEV (light L) + -el (dark L)", "local → LOH (light L) + -cal (dark L)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["little (light + dark L)", "little (light L only throughout, foreign)"], "meaning": ["صغير", "—"]},
+        {"pair": ["level (light + dark L)", "level (light L only throughout, foreign)"], "meaning": ["مستوى", "—"]}
+      ],
+      "word_practice": ["little", "level", "local", "lovely", "likely", "loyal"],
+      "sentence_practice": [
+        "The little local shop is lovely and likely loyal to customers.",
+        "This level of loyal, lovely service is likely local.",
+        "A likely local level of little, lovely charm."
+      ],
+      "record_this": "The little local shop is lovely and likely loyal to its customers — this level of service is a likely, local, lovely charm.",
+      "self_check": "In each word, did you correctly use a LIGHT L at the start and a DARK L at the end, feeling the physical shift within the same word?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["dark L in consonant clusters (-lk, -lt, -lp, -lm)"],
+      "isolation": {
+        "instructions": "Dark L also appears before another final consonant in clusters like -lk, -lt, -lp, -lm — the darkness of the L affects how the whole cluster sounds.",
+        "instructions_ar": "الـ L الغامقة كمان بتظهر قبل صوت ساكن آخر في نهاية الكلمة زي -lk و-lt و-lp و-lm — غمقان الـ L بيأثر على شكل الصوت الكامل.",
+        "practice": ["milk → MI-ɫk", "help → HE-ɫp", "film → FI-ɫm", "salt → SAW-ɫt"]
+      },
+      "minimal_pairs": [
+        {"pair": ["milk (dark L)", "milk (light L, foreign)"], "meaning": ["لبن", "—"]},
+        {"pair": ["help (dark L)", "help (light L, foreign)"], "meaning": ["مساعدة", "—"]}
+      ],
+      "word_practice": ["milk", "help", "film", "salt", "belt", "result", "adult"],
+      "sentence_practice": [
+        "Please help me find the milk and salt.",
+        "The film's result was worth it for every adult.",
+        "I need help with my belt and this film."
+      ],
+      "record_this": "Please help me find the milk and salt — the film's result was worth it for every adult who needed a belt fix.",
+      "self_check": "In these consonant clusters, did the dark L quality carry through even with another consonant sound right after it?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["dark L in longer, more academic vocabulary"],
+      "isolation": {
+        "instructions": "Apply dark L correctly in longer L2-level vocabulary words that end or have syllables ending in L.",
+        "instructions_ar": "طبّق الـ L الغامقة بشكل صحيح في كلمات أطول من مستوى المفردات في المستوى الثاني اللي بتنتهي أو فيها مقاطع بتنتهي بـ L.",
+        "practice": ["political → pə-LIT-i-kəɫ", "cultural → KUL-chər-əɫ", "global → GLOH-bəɫ", "moral → MOR-əɫ"]
+      },
+      "minimal_pairs": [
+        {"pair": ["political (dark L ending)", "political (light L throughout, foreign)"], "meaning": ["سياسي", "—"]}
+      ],
+      "word_practice": ["political", "cultural", "global", "moral", "natural", "social", "typical"],
+      "sentence_practice": [
+        "This is a typical political and cultural issue globally.",
+        "The natural, moral, and social effects are typical of this global event.",
+        "A cultural, moral debate about political and social issues."
+      ],
+      "record_this": "This is a typical political and cultural issue globally — the natural, moral, and social effects matter for everyone.",
+      "self_check": "In these longer, more advanced words, did the final dark L hold up consistently?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["dark L at debate/presentation speed"],
+      "isolation": {
+        "instructions": "Apply this pattern while delivering an argumentative or analytical statement, matching L2's frequent debate-style speaking missions.",
+        "instructions_ar": "طبّق النمط ده وانت بتقدم تصريح جدلي أو تحليلي، بما يتماشى مع مهام الكلام المتكررة على شكل نقاش في المستوى الثاني.",
+        "practice": ["Deliver Day 4's sentences with confident, debate-style emphasis."]
+      },
+      "minimal_pairs": [
+        {"pair": ["debate-style delivery with correct dark L", "careful, slow delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["political", "cultural", "global", "moral", "social"],
+      "sentence_practice": [
+        "This political and cultural issue is a global problem, not just a local one.",
+        "The moral and social responsibility falls on all of us globally.",
+        "A typical political debate about cultural and social values."
+      ],
+      "record_this": "This political and cultural issue is a global problem — the moral and social responsibility falls on all of us, not just locally.",
+      "self_check": "At debate speed and with confident delivery, did the dark L quality survive on every relevant word?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: dark L at word-end, light-vs-dark contrast, dark L in clusters, academic vocabulary, debate speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["feel (dark)", "little (light+dark)"], ["milk (dark, cluster)", "political (dark, academic)"]
+      ],
+      "challenge_sentences": [
+        "I feel the political and cultural level of this global issue is a moral and social problem.",
+        "Help me understand the local, typical result of this cultural, political debate.",
+        "The little, local school has a global, cultural, and moral impact on all of us."
+      ],
+      "record_this": "I feel the political and cultural level of this global issue is a moral and social problem — help me understand the local, typical result of this debate.",
+      "self_check": "This passage has many L sounds in different positions. Did you correctly distinguish light vs. dark L throughout?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, correctly distinguishing light L (syllable-start) from dark L (syllable-end) throughout.",
+        "passage": "I truly feel that global political and cultural issues deserve a local, practical solution. Little steps, like a lovely local school program, can have a real, natural impact on social and moral values. The level of loyal community support will likely determine the final result — and I believe a full, well-planned effort could help solve this typical, but important, problem.",
+        "sounds_to_check": {
+          "dark L (syllable-end)": "feel, global, political, cultural, local, level, final, result, full, well",
+          "light L (syllable-start)": "little, lovely, local, likely, loyal"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Light and dark L correctly and consistently distinguished throughout, even in words containing both.",
+        "70_89": "Mostly correct; occasional light-L-only pronunciation on dark-L words.",
+        "50_69": "Dark L present only in drilled, isolated words.",
+        "below_50": "Light L used throughout regardless of position — go back and repeat Days 1-4, focusing on the tongue-back-raising motion."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is Blueprint Table 19's explicit L2 Week 5 assignment (Dark L).",
+      "A helpful trick: try saying an 'oo' sound right before the L at the end of a word (fee-OOL for 'feel') to feel the tongue-back-raising motion, then gradually reduce the exaggerated 'oo' until it's just a natural dark L quality.",
+      "This sound, once mastered, immediately makes words like 'cool', 'well', 'girl', and 'world' — extremely common English words — sound significantly more native."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare with your L0/L1 recordings of similar words — this should sound like a clear accent upgrade."
+  }
+}

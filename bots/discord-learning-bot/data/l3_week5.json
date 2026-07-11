@@ -4,51 +4,92 @@
   "theme": "Rhetoric & Persuasion",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Fronting & Emphasis",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "ethos", "pronunciation": "EE-thos", "arabic": "الاستدلال بالمصداقية/الأخلاق", "pos": "noun (rhetoric)"},
+    {"word": "pathos", "pronunciation": "PAY-thos", "arabic": "الاستدلال العاطفي", "pos": "noun (rhetoric)"},
+    {"word": "logos", "pronunciation": "LOH-gos", "arabic": "الاستدلال المنطقي", "pos": "noun (rhetoric)"},
+    {"word": "rhetorical question", "pronunciation": "ri-TOR-i-kəl KWES-chən", "arabic": "سؤال بلاغي لا يحتاج إجابة", "pos": "noun phrase"},
+    {"word": "anecdote", "pronunciation": "AN-ik-doht", "arabic": "قصة قصيرة/حادثة توضيحية", "pos": "noun"},
+    {"word": "hyperbole", "pronunciation": "hy-PUR-bə-lee", "arabic": "مبالغة بلاغية", "pos": "noun"},
+    {"word": "persuasive", "pronunciation": "pər-SWAY-siv", "arabic": "مقنِع", "pos": "adjective"},
+    {"word": "compelling", "pronunciation": "kəm-PEL-ing", "arabic": "مقنع/جذاب بقوة", "pos": "adjective"},
+    {"word": "call to action", "pronunciation": "kawl tə AK-shən", "arabic": "دعوة للتحرك", "pos": "noun phrase"},
+    {"word": "underscore (verb)", "pronunciation": "UN-dər-skor", "arabic": "يؤكد/يبرز", "pos": "verb"},
+    {"word": "resonate", "pronunciation": "REZ-ə-nayt", "arabic": "يجد صدى/يترك أثرًا", "pos": "verb"},
+    {"word": "appeal to emotion", "pronunciation": "ə-PEEL tə i-MOH-shən", "arabic": "استغلال العاطفة للإقناع", "pos": "noun phrase"},
+    {"word": "slippery slope", "pronunciation": "SLIP-ə-ree slohp", "arabic": "مغالطة المنحدر الزلق", "pos": "noun phrase (fallacy)"},
+    {"word": "straw man argument", "pronunciation": "straw man AR-gyə-mənt", "arabic": "مغالطة رجل القش", "pos": "noun phrase (fallacy)"},
+    {"word": "loaded language", "pronunciation": "LOH-did LANG-gwij", "arabic": "لغة مُحمّلة بإيحاء", "pos": "noun phrase"},
+    {"word": "bandwagon effect", "pronunciation": "BAND-wag-ən i-FEKT", "arabic": "أثر الانحياز للأكثرية", "pos": "noun phrase (fallacy)"},
+    {"word": "rebut", "pronunciation": "ri-BUT", "arabic": "يرد/يفنّد", "pos": "verb"},
+    {"word": "concede a point", "pronunciation": "kən-SEED ə poynt", "arabic": "يسلّم بنقطة الخصم", "pos": "idiom"},
+    {"word": "eloquent", "pronunciation": "EL-ə-kwənt", "arabic": "بليغ/فصيح", "pos": "adjective"},
+    {"word": "articulate (adjective)", "pronunciation": "ar-TIK-yə-lət", "arabic": "قادر على التعبير بوضوح", "pos": "adjective"},
+    {"word": "sway (opinion)", "pronunciation": "sway", "arabic": "يؤثر على/يغيّر رأيًا", "pos": "verb"},
+    {"word": "galvanize", "pronunciation": "GAL-və-nyz", "arabic": "يحفز/يحرّك للعمل", "pos": "verb"},
+    {"word": "credibility", "pronunciation": "kred-ə-BIL-ə-tee", "arabic": "مصداقية", "pos": "noun"},
+    {"word": "fallacy", "pronunciation": "FAL-ə-see", "arabic": "مغالطة منطقية", "pos": "noun"},
+    {"word": "ad hominem", "pronunciation": "ad HOM-i-nem", "arabic": "مغالطة الهجوم على الشخص", "pos": "noun phrase (fallacy)"},
+    {"word": "false dichotomy", "pronunciation": "fawls dy-KOT-ə-mee", "arabic": "مغالطة الثنائية الزائفة", "pos": "noun phrase (fallacy)"},
+    {"word": "cite evidence", "pronunciation": "syt EV-ə-dəns", "arabic": "يستشهد بدليل", "pos": "verb phrase"},
+    {"word": "tone of conviction", "pronunciation": "tohn əv kən-VIK-shən", "arabic": "نبرة الاقتناع/الثقة", "pos": "noun phrase"},
+    {"word": "framing (an issue)", "pronunciation": "FRAY-ming", "arabic": "صياغة/تأطير قضية", "pos": "noun/verb"},
+    {"word": "rousing speech", "pronunciation": "ROW-zing speech", "arabic": "خطاب حماسي محفّز", "pos": "noun phrase"},
+    {"word": "counter-persuasion", "pronunciation": "KOWN-tər-pər-SWAY-zhən", "arabic": "إقناع مضاد", "pos": "noun phrase"},
+    {"word": "vested interest", "pronunciation": "VES-tid IN-trest", "arabic": "مصلحة شخصية مباشرة", "pos": "noun phrase"},
+    {"word": "spin (a narrative)", "pronunciation": "spin", "arabic": "يصيغ رواية بشكل منحاز", "pos": "verb"},
+    {"word": "impassioned plea", "pronunciation": "im-PASH-ənd plee", "arabic": "نداء عاطفي قوي", "pos": "noun phrase"},
+    {"word": "sound bite", "pronunciation": "sownd byt", "arabic": "عبارة قصيرة مؤثرة للإعلام", "pos": "noun phrase"},
+    {"word": "rhetorical device", "pronunciation": "ri-TOR-i-kəl di-VYS", "arabic": "أداة بلاغية", "pos": "noun phrase"},
+    {"word": "moral high ground", "pronunciation": "MOR-əl hy grownd", "arabic": "الموقف الأخلاقي الأسمى", "pos": "idiom"},
+    {"word": "win over (an audience)", "pronunciation": "win OH-vər", "arabic": "يستقطب/يقنع الجمهور", "pos": "phrasal verb"},
+    {"word": "double down", "pronunciation": "DUB-əl down", "arabic": "يتشبث بموقفه رغم الاعتراضات", "pos": "idiom"},
+    {"word": "strike a chord", "pronunciation": "stryk ə kord", "arabic": "يلامس شعورًا مشتركًا", "pos": "idiom"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Give a 5-minute TED-style talk that deliberately uses ethos, pathos, AND logos, and be ready to identify each technique afterward.",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Structured debate with rebuttals on a topic of your choice. This week, deliberately identify and name any logical fallacy your opponent (real or imagined) might use, and rebut it directly.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Record a 5-minute podcast segment analyzing a persuasive speech or advertisement you've seen, identifying its rhetorical techniques and any fallacies used.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Teach a beginner-level student the difference between ethos, pathos, and logos with one clear, simple example of each.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Respond to this unexpected prompt: deliver an impassioned, 2-minute persuasive plea for an unusual or silly cause (e.g., 'why pineapple belongs on pizza'), using real rhetorical techniques seriously.",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Find a short clip (30-60 seconds) of a famous persuasive speech (political, motivational, or a TED talk). Mimic the speaker's tone of conviction, pacing, and emphasis.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Rhetoric & Persuasion)",
-      "target_seconds": 290
+      "prompt": "Speak naturally for 5+ minutes persuading someone (real or imagined) of a genuine opinion you hold, using at least 2 rhetorical devices from this week naturally.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on rhetoric & persuasion (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in rhetoric & persuasion.",
-    "Compose a formal report with recommendations about rhetoric & persuasion.",
-    "Write a creative piece (story/poem) inspired by rhetoric & persuasion.",
-    "Draft an opinion column for a newspaper about rhetoric & persuasion.",
-    "Write a comparison essay using academic vocabulary about rhetoric & persuasion.",
-    "Write freely about rhetoric & persuasion — focus on style, not just content."
+    "Write a persuasive essay (300+ words, deliberately using ethos, pathos, and logos) on a topic you feel strongly about.",
+    "Write a critical analysis identifying the rhetorical techniques and any logical fallacies in a real speech, ad, or opinion article.",
+    "Compose a formal report with recommendations for how a company or organization could communicate more persuasively and ethically.",
+    "Write a creative piece (a satirical speech or dialogue) that exaggerates a common logical fallacy for comedic effect.",
+    "Draft an opinion column that deliberately uses strong rhetorical framing to argue a controversial-but-safe topic (e.g., a hobby or food debate).",
+    "Write a comparison essay contrasting a purely logical (logos-based) argument with a purely emotional (pathos-based) argument on the same topic.",
+    "Write freely about a time you were persuaded (or failed to be persuaded) by a rhetorical technique — focus on style, not just content."
   ]
 }

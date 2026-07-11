@@ -1,0 +1,146 @@
+{
+  "level": "L3",
+  "week": 4,
+  "focus": "Micro-Phonetics Refinement — General Vowel Reduction & Overall Fluency Integration",
+  "focus_ar": "تحسين الصوتيات الدقيقة — تخفيض حروف العلة العامة ودمج الطلاقة الشاملة",
+  "arabic_challenge": "This week completes the Table 10/§5.6 micro-phonetics refinement cycle (flap T Week 1, dark L Week 2, schwa Week 3) with a general vowel-reduction and full-fluency integration focus — testing whether ALL your accumulated skills (from L0 through L3) work together seamlessly in professional communication contexts (this week's vocabulary theme), the most demanding real-world register you'll regularly need.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["vowel reduction across professional/business vocabulary"],
+      "isolation": {
+        "instructions": "Professional vocabulary (circle back, touch base, bandwidth) often has multiple reducible vowels in casual business speech — practice applying full reduction naturally.",
+        "instructions_ar": "مفردات مهنية زي circle back و touch base غالبًا فيها حروف علة قابلة للتخفيض في الكلام التجاري العادي — تدرب على تطبيق التخفيض الكامل بشكل طبيعي.",
+        "practice": ["circle back → SUR-kəl bak", "touch base → tuch bays", "bandwidth → BAND-width"]
+      },
+      "minimal_pairs": [
+        {"pair": ["circle back (natural reduction)", "circle back (over-articulated, foreign)"], "meaning": ["يرجع لموضوع لاحقًا", "—"]}
+      ],
+      "word_practice": ["circle back", "touch base", "bandwidth", "streamline", "deliverable"],
+      "sentence_practice": [
+        "Let's circle back and touch base about our bandwidth this week.",
+        "We need to streamline this deliverable by Friday.",
+        "I'll touch base once we circle back on the bandwidth issue."
+      ],
+      "record_this": "Let's circle back and touch base about our bandwidth — we need to streamline this deliverable by Friday.",
+      "self_check": "Did professional vocabulary reduce as naturally as everyday vocabulary you've practiced since earlier levels?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["full-fluency integration: all connected-speech skills in a business role-play"],
+      "isolation": {
+        "instructions": "Role-play a realistic business meeting scenario, deliberately checking for flap T, dark L, schwa, linking, and reduction all working together.",
+        "instructions_ar": "مثّل سيناريو اجتماع عمل واقعي، وتأكد بشكل متعمد من الفلاب T والـ L الغامقة والشوا والربط والتخفيض كلهم شغالين مع بعض.",
+        "practice": ["Deliver a mock status update: 'I wanted to touch base and circle back on the deliverable timeline.'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully integrated professional delivery", "careful, foreign-sounding delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses full sentence practice below)"],
+      "sentence_practice": [
+        "I wanted to touch base and circle back on the deliverable timeline.",
+        "Let's align on the action items before we escalate this further.",
+        "We should get buy-in from stakeholders before moving forward."
+      ],
+      "record_this": "I wanted to touch base and circle back on the deliverable timeline — let's align on the action items before we escalate this further.",
+      "self_check": "Did all your accumulated connected-speech skills work together naturally in this professional context?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["vowel reduction and fluency under professional pressure (negotiation simulation)"],
+      "isolation": {
+        "instructions": "Test fluency under simulated pressure — a negotiation or a slightly tense professional exchange, since real professional communication often happens under some pressure.",
+        "instructions_ar": "اختبر الطلاقة تحت ضغط محاكى — مفاوضة أو تبادل مهني فيه شوية توتر، لأن التواصل المهني الحقيقي غالبًا بيحصل تحت ضغط.",
+        "practice": ["Simulate: 'I understand your position, but I need to push back on this deadline.'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fluent delivery under simulated pressure", "fluency breaking down under pressure"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["push back", "understand your position", "escalate", "deliverable"],
+      "sentence_practice": [
+        "I understand your position, but I need to push back on this deadline.",
+        "Let's escalate this if we can't align on the deliverable.",
+        "I hear you, but the bandwidth just isn't there this week."
+      ],
+      "record_this": "I understand your position, but I need to push back on this deadline — let's escalate this if we can't align.",
+      "self_check": "Under the simulated pressure of a negotiation tone, did your fluency and connected speech hold up?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["comprehensive fluency check: cold-reading a professional document aloud"],
+      "isolation": {
+        "instructions": "Read a real, unfamiliar professional document (an email, article, or report) aloud cold, checking for overall fluency and natural connected speech throughout.",
+        "instructions_ar": "اقرأ مستند مهني حقيقي وغير مألوف (إيميل أو مقال أو تقرير) بصوت عالي وبدون تحضير، وتأكد من الطلاقة الشاملة والكلام المتصل الطبيعي.",
+        "practice": ["Find and read aloud a real professional email or short report you have access to."]
+      },
+      "minimal_pairs": [
+        {"pair": ["confident cold-reading with full connected speech", "hesitant, choppy cold-reading"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen document)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen professional text.)"],
+      "record_this": "(Read a real, unfamiliar professional document aloud, cold, with no preparation.)",
+      "self_check": "Across this real, unrehearsed text, which specific skills (from any level) felt weakest? Note them for personal review."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full spontaneous professional communication (mock interview or pitch)"],
+      "isolation": {
+        "instructions": "Deliver a spontaneous 60-90 second mock job interview answer or elevator pitch, integrating every accumulated fluency skill under realistic professional stakes.",
+        "instructions_ar": "قدم إجابة عفوية لمقابلة عمل تجريبية أو عرض مصعد لمدة ٦٠-٩٠ ثانية، ودمج كل مهارات الطلاقة المتراكمة تحت ضغط مهني واقعي.",
+        "practice": ["Answer, unscripted: 'Tell me about yourself and why you'd be a good fit for this role.'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["confident, fluent spontaneous professional answer", "hesitant, less fluent spontaneous answer"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your answer)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: answer 'Tell me about yourself' as if in a real job interview, for 60-90 seconds.)",
+      "self_check": "Under real interview-style pressure, did your full accumulated skill set (flap T, dark L, schwa, linking, reduction, intonation) come through naturally?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: professional vocabulary reduction, role-play integration, negotiation pressure, cold-reading, mock interview",
+      "type": "review",
+      "mixed_pairs": [
+        ["circle back (reduced)", "touch base (role-play)"], ["push back (pressure)", "mock interview (full integration)"]
+      ],
+      "challenge_sentences": [
+        "I wanted to touch base and circle back — I understand your position, but I need to push back on this deadline given our bandwidth.",
+        "Let's align on the action items, streamline the deliverable, and escalate only if we can't get buy-in.",
+        "Tell me about yourself — well, I'd say I'm someone who likes to get the ball rolling and always tries to move the needle."
+      ],
+      "record_this": "I wanted to touch base and circle back — I understand your position, but given our bandwidth, I need to push back on this deadline.",
+      "self_check": "This is a comprehensive professional-context review. Score your overall fluency integration across this passage."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Micro-Phonetics Refinement Completion Checkpoint (All Skills Integrated)",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 90-second spontaneous mock professional scenario of your choice (interview, negotiation, or presentation), integrating every skill refined across L3 Weeks 1-4.",
+        "passage": "(Free speech: 90 seconds, a realistic professional scenario of your choice, fully spontaneous.)",
+        "sounds_to_check": {
+          "flap T (Wk1 refinement)": "check throughout",
+          "dark L (Wk2 refinement)": "check throughout",
+          "schwa/academic vocabulary (Wk3 refinement)": "check if relevant vocabulary appears",
+          "general vowel reduction/professional fluency (Wk4)": "check throughout"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "(Gold/Platinum tier) All refined skills work together seamlessly under real professional pressure and spontaneity — this is genuinely native-level fluency.",
+        "70_89": "(Silver tier) Strong overall integration; minor lapses under the highest-pressure moments.",
+        "50_69": "Individual skills solid but integration under pressure still requires conscious effort.",
+        "below_50": "Return to the specific weak skill's earlier-level material (L1/L2) for targeted review before continuing."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week completes the 4-week Micro-Phonetics Refinement cycle (Table 10/§5.6) — you have now specifically stress-tested flap T, dark L, schwa, and general fluency each under unfamiliar vocabulary, emotional/comedic pressure, and full spontaneity.",
+      "Professional communication is often cited as the register where non-native speakers feel the most self-conscious — that's exactly why this week's integration test uses it as the capstone context.",
+      "From here, L3 Weeks 5-8 shift focus from phonetic refinement to broader native-like fluency patterns: rhetoric, cultural nuance, advanced connected speech theory, and finally full mastery integration."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — this Day 7 recording is a genuine Table 11 mastery-tier benchmark, worth comparing against your very first L0 recordings for a full-journey perspective."
+  }
+}

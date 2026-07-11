@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w5",
+  "level": "L2",
+  "week": 5,
+  "pattern_name": "Second Conditional (if I were...)",
+  "pattern_name_ar": "الشرط الثاني (لو كنت...)",
+  "formula": "If + Subject + Past Simple, Subject + would + Verb",
+  "formula_visual": "If + [UNREAL/UNLIKELY PRESENT CONDITION, past tense], + [HYPOTHETICAL RESULT, would + base verb]",
+  "when_to_use": "Use the Second Conditional to talk about UNREAL, HYPOTHETICAL, or UNLIKELY situations in the present or future — things that aren't true now and probably won't happen, or pure imagination. The 'if' clause uses Past Simple (not to talk about the past, but to signal 'unreal').",
+  "when_to_use_ar": "استخدم الشرط الثاني للمواقف غير الحقيقية أو الافتراضية أو غير المرجحة في الحاضر أو المستقبل. جملة if بتستخدم الماضي البسيط (مش للحديث عن الماضي، بل لتدل على 'غير حقيقي').",
+  "why_arabic_speakers_struggle": "Learners often confuse First Conditional (real possibility) with Second Conditional (unreal/hypothetical) because both translate similarly with لو in casual Arabic. The key signal in English is grammatical: Second Conditional's Past Simple in the if-clause doesn't mean past time here — it's a special 'unreal' marker, which is a genuinely unusual grammar concept worth focused attention.",
+  "examples": [
+    {"en": "If I were rich, I would travel the world.", "ar": "لو كنت غني، كنت سافرت العالم (خيال/غير حقيقي)", "structure": "[If] + [I were rich] + [I would travel the world]"},
+    {"en": "If she had more time, she would learn a new language.", "ar": "لو كان عندها وقت أكتر، كانت تعلمت لغة جديدة", "structure": "[If] + [she had more time] + [she would learn a new language]"},
+    {"en": "What would you do if you won the lottery?", "ar": "هتعمل إيه لو فزت باليانصيب؟ (افتراض غير محتمل)", "structure": "[What would you do] + [if] + [you won the lottery]"},
+    {"en": "If I were you, I wouldn't do that.", "ar": "لو كنت مكانك، ما كنتش عملت ده (نصيحة عبر افتراض)", "structure": "[If] + [I were you] + [I wouldn't do that]"},
+    {"en": "We would help more people if we had a bigger budget.", "ar": "كنا هنساعد أكتر لو كانت عندنا ميزانية أكبر", "structure": "[We would help more people] + [if] + [we had a bigger budget]"}
+  ],
+  "common_errors": [
+    {"wrong": "If I will be rich, I would travel.", "correct": "If I were rich, I would travel.", "explanation": "The if-clause needs Past Simple (unreal marker), not 'will' — this signals a hypothetical, not a real future possibility (which would be First Conditional)."},
+    {"wrong": "If I was you, I wouldn't do that.", "correct": "If I were you, I wouldn't do that. (formal/traditional rule)", "explanation": "In formal/traditional grammar, 'were' is used for ALL subjects in the Second Conditional's if-clause with 'be' (including I/he/she/it) — though 'was' is increasingly accepted in casual speech, 'were' remains the standard, especially in this exact fixed expression."},
+    {"wrong": "If I were rich, I will travel the world.", "correct": "If I were rich, I would travel the world.", "explanation": "The result clause needs 'would', not 'will' — mixing First and Second Conditional forms creates a grammatically inconsistent sentence."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If I ___ (have) more free time, I ___ (learn) to paint.", "answer": "had / would learn", "hint": "Unreal present condition + hypothetical result."},
+    {"sentence": "What ___ you ___ (do) if you ___ (see) a ghost?", "answer": "would ... do / saw", "hint": "Hypothetical question about an unlikely event."},
+    {"sentence": "If she ___ (be) taller, she ___ (play) basketball professionally.", "answer": "were / would play", "hint": "Unreal, unlikely-to-change condition."},
+    {"sentence": "I ___ (help) you if I ___ (know) how.", "answer": "would help / knew", "hint": "Hypothetical inability."},
+    {"sentence": "If they ___ (not/live) so far away, we ___ (visit) more often.", "answer": "didn't live / would visit", "hint": "Negative unreal condition."}
+  ],
+  "quick_rule": "Second Conditional = UNREAL or UNLIKELY situations now/in the future. If-clause: Past Simple (as an 'unreal' marker, not real past time). Result clause: would + base verb. Use 'were' for all subjects with 'be' in formal contexts.",
+  "quick_rule_ar": "الشرط الثاني = مواقف غير حقيقية أو غير محتملة. جملة if: ماضٍ بسيط (كعلامة على 'غير حقيقي'). جملة النتيجة: would + الفعل الأساسي.",
+  "mnemonic": "SECOND Conditional = a SECOND, imaginary world that ISN'T real (unlike First Conditional's real possibility).",
+  "connect_to_speaking": "Practice with your buddy: ask and answer 3 'If you were...' hypothetical questions (e.g., 'If you were president, what would you change?') — this is also a common style of L2 speaking mission prompt."
+}

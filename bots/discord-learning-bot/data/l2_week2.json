@@ -4,51 +4,92 @@
   "theme": "Environment & Nature",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Past Continuous (was doing)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "ecosystem", "pronunciation": "EE-koh-sis-təm", "arabic": "نظام بيئي", "pos": "noun"},
+    {"word": "sustainable", "pronunciation": "sə-STAY-nə-bəl", "arabic": "مستدام", "pos": "adjective"},
+    {"word": "pollution", "pronunciation": "pə-LOO-shən", "arabic": "تلوث", "pos": "noun"},
+    {"word": "climate change", "pronunciation": "KLY-mət chaynj", "arabic": "تغير المناخ", "pos": "noun phrase"},
+    {"word": "renewable", "pronunciation": "ri-NOO-ə-bəl", "arabic": "متجدد", "pos": "adjective"},
+    {"word": "deforestation", "pronunciation": "dee-for-ə-STAY-shən", "arabic": "إزالة الغابات", "pos": "noun"},
+    {"word": "endangered", "pronunciation": "en-DAYN-jərd", "arabic": "مهدد بالانقراض", "pos": "adjective"},
+    {"word": "extinction", "pronunciation": "ik-STINK-shən", "arabic": "انقراض", "pos": "noun"},
+    {"word": "conservation", "pronunciation": "kon-sər-VAY-shən", "arabic": "حفظ الطبيعة", "pos": "noun"},
+    {"word": "biodiversity", "pronunciation": "by-oh-dy-VUR-sə-tee", "arabic": "التنوع الحيوي", "pos": "noun"},
+    {"word": "emissions", "pronunciation": "i-MISH-ənz", "arabic": "انبعاثات", "pos": "noun"},
+    {"word": "carbon footprint", "pronunciation": "KAR-bən FOOT-print", "arabic": "الأثر الكربوني", "pos": "noun phrase"},
+    {"word": "drought", "pronunciation": "drowt", "arabic": "جفاف", "pos": "noun"},
+    {"word": "wildlife", "pronunciation": "WYLD-lyf", "arabic": "حياة برية", "pos": "noun"},
+    {"word": "habitat", "pronunciation": "HAB-i-tat", "arabic": "بيئة/موطن", "pos": "noun"},
+    {"word": "recycle", "pronunciation": "ree-SY-kəl", "arabic": "يعيد التدوير", "pos": "verb"},
+    {"word": "greenhouse gas", "pronunciation": "GREEN-hows gas", "arabic": "غاز الاحتباس الحراري", "pos": "noun phrase"},
+    {"word": "solar energy", "pronunciation": "SOH-lər EN-ər-jee", "arabic": "طاقة شمسية", "pos": "noun phrase"},
+    {"word": "erosion", "pronunciation": "i-ROH-zhən", "arabic": "تعرية/انجراف", "pos": "noun"},
+    {"word": "contaminate", "pronunciation": "kən-TAM-ə-nayt", "arabic": "يلوث", "pos": "verb"},
+    {"word": "toxic", "pronunciation": "TOK-sik", "arabic": "سام", "pos": "adjective"},
+    {"word": "preserve", "pronunciation": "pri-ZURV", "arabic": "يحافظ على", "pos": "verb"},
+    {"word": "resource", "pronunciation": "REE-sors", "arabic": "مورد", "pos": "noun"},
+    {"word": "species", "pronunciation": "SPEE-sheez", "arabic": "نوع (كائن)", "pos": "noun"},
+    {"word": "vegetation", "pronunciation": "vej-ə-TAY-shən", "arabic": "غطاء نباتي", "pos": "noun"},
+    {"word": "glacier", "pronunciation": "GLAY-shər", "arabic": "نهر جليدي", "pos": "noun"},
+    {"word": "sea level", "pronunciation": "SEE LEV-əl", "arabic": "مستوى سطح البحر", "pos": "noun phrase"},
+    {"word": "natural disaster", "pronunciation": "NACH-ə-rəl di-ZAS-tər", "arabic": "كارثة طبيعية", "pos": "noun phrase"},
+    {"word": "awareness", "pronunciation": "ə-WAIR-nəs", "arabic": "وعي", "pos": "noun"},
+    {"word": "consumption", "pronunciation": "kən-SUMP-shən", "arabic": "استهلاك", "pos": "noun"},
+    {"word": "waste", "pronunciation": "wayst", "arabic": "نفايات/هدر", "pos": "noun"},
+    {"word": "landfill", "pronunciation": "LAND-fil", "arabic": "مدفن نفايات", "pos": "noun"},
+    {"word": "organic", "pronunciation": "or-GAN-ik", "arabic": "عضوي", "pos": "adjective"},
+    {"word": "fossil fuel", "pronunciation": "FOS-əl FYOO-əl", "arabic": "وقود أحفوري", "pos": "noun phrase"},
+    {"word": "urgent", "pronunciation": "UR-jənt", "arabic": "عاجل/ملح", "pos": "adjective"},
+    {"word": "restore", "pronunciation": "ri-STOR", "arabic": "يستعيد/يرمم", "pos": "verb"},
+    {"word": "vulnerable", "pronunciation": "VUL-nər-ə-bəl", "arabic": "معرض للخطر", "pos": "adjective"},
+    {"word": "initiative", "pronunciation": "i-NISH-ə-tiv", "arabic": "مبادرة", "pos": "noun"},
+    {"word": "regulation", "pronunciation": "reg-yə-LAY-shən", "arabic": "لائحة تنظيمية", "pos": "noun"},
+    {"word": "activist", "pronunciation": "AK-tə-vist", "arabic": "نشط بيئي", "pos": "noun"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Debate: 'Individuals can make a real difference on climate change, or only governments and big companies can.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Give a 3-minute presentation about an environmental problem in your country and one possible solution.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Analyze why recycling programs succeed in some places and fail in others. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Tell a detailed story about a time you experienced extreme weather or a natural disaster (or one you learned about).",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Imagine you're an environmental activist being interviewed. Answer: Why did you become an activist? What's the biggest challenge you face? What's one win you're proud of?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Summarize a documentary, article, or video you've seen about nature or the environment, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Environment & Nature)",
-      "target_seconds": 200
+      "prompt": "Discuss freely for 4 minutes: what's one change you personally could make to live more sustainably, and what's stopping you from doing it already?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of environment & nature.",
-    "Analyze the impact of environment & nature on daily life.",
-    "Compare how environment & nature differs between two countries.",
-    "Write a formal email about environment & nature.",
-    "Describe a personal experience related to environment & nature (200+ words).",
-    "What changes would you make regarding environment & nature? Explain why.",
-    "Summarize an article about environment & nature in your own words."
+    "Write an essay (150+ words) arguing whether individuals or governments bear more responsibility for solving climate change.",
+    "Analyze the impact of plastic waste on ocean ecosystems, using at least 2 specific effects.",
+    "Compare environmental awareness and habits between your parents' generation and your own.",
+    "Write a formal email to a local official proposing one environmental policy for your city.",
+    "Describe a personal experience with nature that changed how you think about the environment (200+ words).",
+    "What changes would you make to reduce waste in your daily life? Explain at least 2 specific changes and why they would help.",
+    "Summarize an article or video about a specific environmental issue in your own words, in under 150 words."
   ]
 }

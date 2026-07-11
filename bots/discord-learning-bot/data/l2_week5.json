@@ -4,51 +4,92 @@
   "theme": "Science & Innovation",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Second Conditional (if I were...)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "hypothesis", "pronunciation": "hy-POTH-ə-sis", "arabic": "فرضية", "pos": "noun"},
+    {"word": "experiment", "pronunciation": "ik-SPER-ə-mənt", "arabic": "تجربة", "pos": "noun"},
+    {"word": "innovation", "pronunciation": "in-ə-VAY-shən", "arabic": "ابتكار", "pos": "noun"},
+    {"word": "breakthrough", "pronunciation": "BRAYK-throo", "arabic": "اختراق/إنجاز علمي", "pos": "noun"},
+    {"word": "artificial intelligence", "pronunciation": "ar-tə-FISH-əl in-TEL-ə-jəns", "arabic": "الذكاء الاصطناعي", "pos": "noun phrase"},
+    {"word": "algorithm", "pronunciation": "AL-gə-rith-əm", "arabic": "خوارزمية", "pos": "noun"},
+    {"word": "genetic", "pronunciation": "jə-NET-ik", "arabic": "جيني/وراثي", "pos": "adjective"},
+    {"word": "vaccine", "pronunciation": "vak-SEEN", "arabic": "لقاح", "pos": "noun"},
+    {"word": "research", "pronunciation": "ri-SURCH", "arabic": "بحث علمي", "pos": "noun/verb"},
+    {"word": "evidence", "pronunciation": "EV-ə-dəns", "arabic": "دليل/إثبات", "pos": "noun"},
+    {"word": "theory", "pronunciation": "THEER-ee", "arabic": "نظرية", "pos": "noun"},
+    {"word": "data", "pronunciation": "DAY-tə", "arabic": "بيانات", "pos": "noun"},
+    {"word": "prototype", "pronunciation": "PROH-tə-typ", "arabic": "نموذج أولي", "pos": "noun"},
+    {"word": "quantum", "pronunciation": "KWAN-təm", "arabic": "كمّي", "pos": "adjective"},
+    {"word": "biotechnology", "pronunciation": "by-oh-tek-NOL-ə-jee", "arabic": "التقنية الحيوية", "pos": "noun"},
+    {"word": "sustainable technology", "pronunciation": "sə-STAY-nə-bəl tek-NOL-ə-jee", "arabic": "تقنية مستدامة", "pos": "noun phrase"},
+    {"word": "discovery", "pronunciation": "dis-KUV-ə-ree", "arabic": "اكتشاف", "pos": "noun"},
+    {"word": "peer review", "pronunciation": "peer ri-VYOO", "arabic": "مراجعة علمية من الأقران", "pos": "noun phrase"},
+    {"word": "clinical trial", "pronunciation": "KLIN-i-kəl TRY-əl", "arabic": "تجربة سريرية", "pos": "noun phrase"},
+    {"word": "ethics (of science)", "pronunciation": "ETH-iks", "arabic": "أخلاقيات (العلم)", "pos": "noun"},
+    {"word": "automation", "pronunciation": "aw-tə-MAY-shən", "arabic": "أتمتة", "pos": "noun"},
+    {"word": "robotics", "pronunciation": "roh-BOT-iks", "arabic": "علم الروبوتات", "pos": "noun"},
+    {"word": "simulation", "pronunciation": "sim-yə-LAY-shən", "arabic": "محاكاة", "pos": "noun"},
+    {"word": "nanotechnology", "pronunciation": "nan-oh-tek-NOL-ə-jee", "arabic": "تقنية النانو", "pos": "noun"},
+    {"word": "sustainability", "pronunciation": "sə-stay-nə-BIL-ə-tee", "arabic": "الاستدامة", "pos": "noun"},
+    {"word": "renewable resources", "pronunciation": "ri-NOO-ə-bəl REE-sor-siz", "arabic": "موارد متجددة", "pos": "noun phrase"},
+    {"word": "gene editing", "pronunciation": "jeen ED-i-ting", "arabic": "تحرير جيني", "pos": "noun phrase"},
+    {"word": "space exploration", "pronunciation": "spays ek-splə-RAY-shən", "arabic": "استكشاف الفضاء", "pos": "noun phrase"},
+    {"word": "artificial", "pronunciation": "ar-tə-FISH-əl", "arabic": "مصطنع/صناعي", "pos": "adjective"},
+    {"word": "cutting-edge", "pronunciation": "KUT-ing ej", "arabic": "متطور جدًا/رائد", "pos": "adjective"},
+    {"word": "disruptive (technology)", "pronunciation": "dis-RUP-tiv", "arabic": "مُحدِث لتغيير جذري", "pos": "adjective"},
+    {"word": "sample size", "pronunciation": "SAM-pəl syz", "arabic": "حجم العينة", "pos": "noun phrase"},
+    {"word": "correlation", "pronunciation": "kor-ə-LAY-shən", "arabic": "ارتباط (علمي)", "pos": "noun"},
+    {"word": "causation", "pronunciation": "kaw-ZAY-shən", "arabic": "سببية", "pos": "noun"},
+    {"word": "funding", "pronunciation": "FUN-ding", "arabic": "تمويل", "pos": "noun"},
+    {"word": "implication (of research)", "pronunciation": "im-pli-KAY-shən", "arabic": "دلالة/أثر (نتيجة بحث)", "pos": "noun"},
+    {"word": "skeptical", "pronunciation": "SKEP-ti-kəl", "arabic": "متشكك", "pos": "adjective"},
+    {"word": "peer-reviewed", "pronunciation": "peer ri-VYOOD", "arabic": "مُراجَع من الأقران", "pos": "adjective"},
+    {"word": "artificial limb", "pronunciation": "ar-tə-FISH-əl lim", "arabic": "طرف صناعي", "pos": "noun phrase"},
+    {"word": "scientific method", "pronunciation": "sy-ən-TIF-ik METH-əd", "arabic": "المنهج العلمي", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Debate: 'Artificial intelligence will do more good than harm for humanity.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Give a 3-minute presentation about a scientific breakthrough or piece of technology that fascinates you.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Analyze why some scientific discoveries take decades to become widely accepted. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Tell a detailed story about a time technology surprised you, helped you, or frustrated you.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Imagine you're a scientist being interviewed about your research. Answer: What are you researching? Why does it matter? What's the biggest obstacle you face?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Summarize a science article or documentary you've seen, in under 2 minutes, focusing on the main discovery and its significance.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Science & Innovation)",
-      "target_seconds": 230
+      "prompt": "Discuss freely for 4 minutes: if you could fund any single area of scientific research, what would it be and why?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of science & innovation.",
-    "Analyze the impact of science & innovation on daily life.",
-    "Compare how science & innovation differs between two countries.",
-    "Write a formal email about science & innovation.",
-    "Describe a personal experience related to science & innovation (200+ words).",
-    "What changes would you make regarding science & innovation? Explain why.",
-    "Summarize an article about science & innovation in your own words."
+    "Write an essay (150+ words) arguing whether AI development should be slowed down or accelerated.",
+    "Analyze how a specific technology (choose one) has changed everyday life in the last 10 years.",
+    "Compare the risks and benefits of genetic engineering in medicine.",
+    "Write a formal email proposing a research project to a university or funding organization.",
+    "Describe a personal experience where science or technology directly impacted your life (200+ words).",
+    "What changes would you make to how science is taught in schools? Explain at least 2 specific ideas.",
+    "Summarize a scientific discovery or study in your own words, in under 150 words, avoiding overly technical language."
   ]
 }

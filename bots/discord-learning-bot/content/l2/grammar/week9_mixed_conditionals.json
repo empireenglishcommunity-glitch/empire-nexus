@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w9",
+  "level": "L2",
+  "week": 9,
+  "pattern_name": "Mixed Conditionals",
+  "pattern_name_ar": "الشروط المختلطة",
+  "formula": "If + Past Perfect (past condition), Subject + would + base verb (present result) — OR the reverse combination",
+  "formula_visual": "If + [PAST unreal condition] + [PRESENT unreal result] — mixing Third and Second Conditional time frames in one sentence",
+  "when_to_use": "Use Mixed Conditionals when a hypothetical PAST condition has a hypothetical PRESENT result (most common), or when a hypothetical PRESENT/general condition would have affected a PAST result. These connect two different time frames within one imaginative sentence.",
+  "when_to_use_ar": "استخدم الشروط المختلطة لما شرط افتراضي ماضٍ له نتيجة افتراضية حاضرة (الأكثر شيوعًا)، أو لما شرط حاضر/عام كان سيؤثر على نتيجة ماضية. دول بيربطوا زمنين مختلفين في جملة واحدة.",
+  "why_arabic_speakers_struggle": "Having just learned Second (present-unreal) and Third (past-unreal) Conditionals as separate, fixed patterns, learners often assume conditionals must always match tenses within themselves, and are surprised that native speakers frequently and correctly MIX time frames when the real-world logic calls for it — this requires flexible application of the concepts rather than memorizing one rigid formula.",
+  "examples": [
+    {"en": "If I had studied medicine, I would be a doctor now. (past condition → present result)", "ar": "لو كنت درست طب، كنت هأكون دكتور دلوقتي (شرط ماضٍ، نتيجة حاضرة)", "structure": "[If] + [I had studied medicine] (past unreal) + [I would be a doctor now] (present unreal result)"},
+    {"en": "If she were more organized, she wouldn't have missed the deadline. (present/general condition → past result)", "ar": "لو كانت أكتر تنظيمًا، ما كانت فوتت الميعاد (صفة عامة، نتيجة ماضية)", "structure": "[If] + [she were more organized] (present unreal) + [she wouldn't have missed the deadline] (past unreal result)"},
+    {"en": "If I hadn't taken that job, I wouldn't be living here now.", "ar": "لو ماكنتش خدت الوظيفة دي، ما كنتش عايش هنا دلوقتي", "structure": "[If] + [I hadn't taken that job] (past unreal) + [I wouldn't be living here now] (present unreal result)"},
+    {"en": "If he were more careful, he wouldn't have broken it.", "ar": "لو كان أكتر حرصًا، ما كانش كسرها", "structure": "[If] + [he were more careful] (present unreal, general trait) + [he wouldn't have broken it] (past unreal result)"},
+    {"en": "If we had left earlier, we would be there by now.", "ar": "لو كنا خرجنا بدري، كنا هنكون هناك دلوقتي", "structure": "[If] + [we had left earlier] (past unreal) + [we would be there by now] (present unreal result)"}
+  ],
+  "common_errors": [
+    {"wrong": "If I had studied medicine, I would have been a doctor now.", "correct": "If I had studied medicine, I would be a doctor now.", "explanation": "Since the RESULT is about NOW (present), use 'would be', not 'would have been' — mixing in 'have' here incorrectly makes the result sound like it's also about the past."},
+    {"wrong": "If she was more organized, she wouldn't miss the deadline. [meant as a PAST missed deadline]", "correct": "If she were more organized, she wouldn't have missed the deadline.", "explanation": "Since the missed deadline is a specific PAST event, the result needs 'wouldn't have missed', not just 'wouldn't miss'."},
+    {"wrong": "If I hadn't taken that job, I wouldn't have lived here now.", "correct": "If I hadn't taken that job, I wouldn't be living here now.", "explanation": "'now' signals a present result — use 'would(n't) be living', not the past form 'would have lived'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If I ___ (not/miss) the flight, I ___ (be) home right now. [past condition, present result]", "answer": "hadn't missed / would be", "hint": "Past unreal condition, present unreal result."},
+    {"sentence": "If he ___ (be) taller, he ___ (make) the team back then. [general trait, past result]", "answer": "were / would have made", "hint": "Present/general unreal condition, past unreal result."},
+    {"sentence": "If she ___ (study) abroad, she ___ (speak) three languages now.", "answer": "had studied / would speak", "hint": "Past condition, present result."},
+    {"sentence": "If they ___ (be) more careful, the accident ___ (not/happen).", "answer": "were / wouldn't have happened", "hint": "General trait, past result."},
+    {"sentence": "If I ___ (save) money earlier, I ___ (have) enough for a house now.", "answer": "had saved / would have", "hint": "Past condition, present result."}
+  ],
+  "quick_rule": "Identify the TIME FRAME of the condition and the TIME FRAME of the result SEPARATELY — they don't have to match. Past condition = had + past participle. Present result = would + base verb. Present/general condition = were/Past Simple. Past result = would have + past participle.",
+  "quick_rule_ar": "حدد الزمن الخاص بالشرط والزمن الخاص بالنتيجة بشكل منفصل — مش لازم يتطابقوا.",
+  "mnemonic": "MIXED Conditionals = a PAST decision echoing into your PRESENT life, or a PRESENT trait that already shaped your PAST — real life rarely stays in one neat time frame, and neither does this grammar.",
+  "connect_to_speaking": "Practice with your buddy: describe one real decision from your past that still affects your present life today, using a Mixed Conditional to express it (e.g., 'If I hadn't moved here, I wouldn't know you now')."
+}

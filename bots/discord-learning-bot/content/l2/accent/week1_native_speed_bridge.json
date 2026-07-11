@@ -1,0 +1,149 @@
+{
+  "level": "L2",
+  "week": 1,
+  "focus": "Native-Speed Connected Speech Bridge — L1 Skills at Full Conversational Speed",
+  "focus_ar": "جسر الكلام المتصل بالسرعة الطبيعية — مهارات المستوى الأول بسرعة المحادثة الكاملة",
+  "arabic_challenge": "You mastered 8 connected-speech skills in L1 (stress, flap T/D, 3 linking types, glottal stop T, dropped H, schwa). L2 does not introduce entirely new mechanics this week — instead, it demands that all of them survive at TRUE native conversational speed, including in unscripted, spontaneous contexts like debates. This is often where learners regress under pressure, reverting to slower, more careful (but less natural) speech.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["L1 review at 1.25x speed: stress + schwa"],
+      "isolation": {
+        "instructions": "Take a familiar L1 stress/schwa sentence and practice it at 1.25x your normal speaking speed, without losing the stress-schwa contrast.",
+        "instructions_ar": "خد جملة نبر/شوا مألوفة من المستوى الأول وتدرب عليها بسرعة ١.٢٥ من سرعتك العادية، بدون ما تخسر التباين بين النبر والشوا.",
+        "practice": ["about the camera (faster)", "the teacher is away again (faster)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["about (fast, still schwa)", "about (fast, full vowel — regression)"], "meaning": ["حوالي", "—"]}
+      ],
+      "word_practice": ["about", "camera", "teacher", "again", "certain"],
+      "sentence_practice": [
+        "About the camera, the teacher is certain again.",
+        "It doesn't matter — I'm certain about the camera.",
+        "The teacher is away again, about a camera issue."
+      ],
+      "record_this": "About the camera, the teacher is certain again — it doesn't matter, she's away because of a camera issue.",
+      "self_check": "At this faster speed, did your schwa reduction survive, or did pressure push you back toward full vowels?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["L1 review at speed: flap T/D + glottal stop T"],
+      "isolation": {
+        "instructions": "Practice flap and glottal-stop words at debate-speed delivery — the speed you'd actually use arguing a point persuasively.",
+        "instructions_ar": "تدرب على كلمات الفلاب والوقفة الحنجرية بسرعة النقاش — السرعة اللي هتستخدمها فعلاً وانت بتجادل في نقطة.",
+        "practice": ["water, better, button, mountain — at debate pace"]
+      },
+      "minimal_pairs": [
+        {"pair": ["water (flap, fast)", "button (glottal stop, fast)"], "meaning": ["ماء", "زرار"]}
+      ],
+      "word_practice": ["water", "better", "button", "mountain", "certain", "matter"],
+      "sentence_practice": [
+        "It's better water, and that's certain, no matter what!",
+        "Press the button — the mountain view matters more!",
+        "Better water, certain matter, important button, no mountain!"
+      ],
+      "record_this": "It's better water, and that's certain, no matter what! Press the button — the mountain view matters more than you think!",
+      "self_check": "In an argumentative, emphatic tone (like a debate), did the flap and glottal stop still come through clearly?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["L1 review at speed: all 3 linking types combined"],
+      "isolation": {
+        "instructions": "Combine consonant-vowel, vowel-vowel, and consonant-consonant linking in a single fast passage, as you'd need to in a real 3-minute presentation.",
+        "instructions_ar": "دمج الأنواع الثلاثة للربط في مقطع سريع واحد، زي ما تحتاج فعلاً في عرض تقديمي حقيقي لمدة ٣ دقايق.",
+        "practice": ["pick up an apple, big game water — at presentation pace"]
+      },
+      "minimal_pairs": [
+        {"pair": ["all linking types combined, fast", "all linking types combined, slow"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["pick up", "an apple", "big game", "go out", "some milk"],
+      "sentence_practice": [
+        "Pick up an apple and go out for a big game.",
+        "Some milk and an apple make a big, good breakfast.",
+        "Go out, pick up some milk, and enjoy the big game."
+      ],
+      "record_this": "Pick up an apple and go out for a big game — some milk and an apple make a big, good breakfast before you go.",
+      "self_check": "At presentation speed, did all 3 linking types survive together, or did one type break down under the combined pressure?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["L1 review at speed: dropped H in fast dialogue"],
+      "isolation": {
+        "instructions": "Practice dropped-H patterns in fast, back-and-forth conversational exchanges, as you'd need in an interview-style speaking mission.",
+        "instructions_ar": "تدرب على أنماط حذف H في تبادلات محادثة سريعة، زي ما تحتاج في مهمة كلام على شكل مقابلة.",
+        "practice": ["tell him, ask her — at interview pace"]
+      },
+      "minimal_pairs": [
+        {"pair": ["tell him (dropped H, fast interview pace)", "tell him (full H, careful/slow)"], "meaning": ["قوله", "—"]}
+      ],
+      "word_practice": ["tell him", "ask her", "I have been", "she has gone"],
+      "sentence_practice": [
+        "Did you tell him? I asked her already!",
+        "I have been waiting — has she gone yet?",
+        "Tell him now, ask her later — I have been patient enough!"
+      ],
+      "record_this": "Did you tell him? I asked her already! I have been waiting — has she gone yet? Tell him now, ask her later!",
+      "self_check": "In a fast, energetic interview-style exchange, did the dropped H remain natural, or did nervousness bring back full H sounds?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full L1 skill integration at true native conversational speed"],
+      "isolation": {
+        "instructions": "Combine ALL 8 L1 skills in one passage at true native speed — the speed a native speaker would use without any special effort to slow down for a learner.",
+        "instructions_ar": "دمج كل الـ ٨ مهارات من المستوى الأول في مقطع واحد بسرعة الكلام الطبيعية الحقيقية — السرعة اللي متكلم أصلي هيستخدمها بدون أي مجهود خاص للتبطيء من أجل متعلم.",
+        "practice": ["Full-speed reading of a complex sentence with stress, schwa, flap, glottal stop, all linking types, and dropped H"]
+      },
+      "minimal_pairs": [
+        {"pair": ["full native speed", "learner-adjusted slower speed"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(all L1 vocabulary from the review days)"],
+      "sentence_practice": [
+        "About an hour ago, I picked up an apple, told him about the big game near the mountain, and I'm certain it's better water than the city has."
+      ],
+      "record_this": "About an hour ago, I picked up an apple, told him about the big game near the mountain, and I'm certain it's better water than the city has — press the button, ask her, and go out again!",
+      "self_check": "Time this recording. Is it close to true native conversational speed (not a careful, slowed 'classroom' pace)?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: all 8 L1 skills combined at native conversational speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["water (flap, fast)", "button (glottal stop, fast)"], ["pick up (linked, fast)", "tell him (dropped H, fast)"]
+      ],
+      "challenge_sentences": [
+        "About an hour ago, my big brother picked up an apple, told him about the mountain, and I'm certain it's better water than the city has — no matter what!",
+        "Did you ask her about the button? I have been certain about it, and it doesn't matter — go out and see for yourself!",
+        "Press the button, ask her, and I'll tell him — it's a big deal, and I'm certain we made it out okay!"
+      ],
+      "record_this": "About an hour ago, my big brother picked up an apple, told him about the mountain, and I'm certain it's better water than the city has. Did you ask her about the button? It doesn't matter — go out, press it, and I'll tell him we made it out okay!",
+      "self_check": "This is a demanding, fast passage. Score yourself on whether all 8 L1 features survived the speed increase."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: L2 Entry Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record 45-60 seconds of spontaneous speech (no script) debating a simple topic of your choice, at natural conversational speed, as practice for L2's frequent debate-style speaking missions.",
+        "passage": "(Free speech: pick a simple debate topic — e.g. 'city life vs. country life' — and argue for one side for 45-60 seconds.)",
+        "sounds_to_check": {
+          "all 8 L1 features at speed": "stress+schwa, flap T/D, glottal stop T, 3 linking types, dropped H — check throughout"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 8 features survive intact at true native debate/conversation speed, without conscious slowing down.",
+        "70_89": "Most features survive; 1-2 regress slightly under the pressure of spontaneous, fast argumentation.",
+        "50_69": "Noticeable slowdown or feature loss when speaking spontaneously versus reading a script.",
+        "below_50": "Return to L1 Weeks 1-9 review before continuing — L2's pace will be consistently demanding."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week is a bridge, not new content — its entire purpose is stress-testing your L1 skills under L2's higher demands (debates, presentations, faster native-speed listening).",
+      "It's normal to feel your L1 skills 'wobble' under speed and spontaneity pressure at first — this is exactly the gap L2 training exists to close.",
+      "If Day 7's spontaneous debate scored low, that's valuable, specific information — you now know pressure (not the mechanics themselves) is your current bottleneck."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 7's spontaneous debate — this becomes your L2 accent baseline, useful for comparison at Week 12's final assessment."
+  }
+}

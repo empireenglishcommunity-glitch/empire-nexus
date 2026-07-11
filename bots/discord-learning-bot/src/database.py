@@ -30,7 +30,30 @@ def init_db():
     """Create all tables if they don't exist. Safe to call on every startup."""
     conn = _connect()
     conn.executescript(_SCHEMA)
+    _migrate(conn)
     conn.close()
+
+
+def _migrate(conn: sqlite3.Connection):
+    """Apply idempotent, additive schema migrations for existing databases.
+
+    CREATE TABLE IF NOT EXISTS does not add new columns to a table that
+    already exists (e.g. on the live server's database file). Each
+    migration below is safe to run every startup: it only adds a column
+    if that column is not already present.
+    """
+    existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(advancement_exams)")}
+    migrations = [
+        ("status", "TEXT NOT NULL DEFAULT 'pending'"),
+        ("speaking_recording_url", "TEXT DEFAULT ''"),
+        ("writing_submission", "TEXT DEFAULT ''"),
+        ("resolved_at", "TEXT DEFAULT NULL"),
+        ("resolved_by", "TEXT DEFAULT ''"),
+    ]
+    for col_name, col_def in migrations:
+        if col_name not in existing_cols:
+            conn.execute(f"ALTER TABLE advancement_exams ADD COLUMN {col_name} {col_def}")
+    conn.commit()
 
 
 _SCHEMA = """
@@ -104,6 +127,15 @@ CREATE TABLE IF NOT EXISTS advancement_exams (
     writing_score   REAL DEFAULT NULL,
     passed          INTEGER NOT NULL DEFAULT 0,
     notes           TEXT DEFAULT '',
+    -- Added to close the "!exam dead-end" gap: a row is now created the
+    -- moment DM collection completes (status='pending'), so the 30-day
+    -- cooldown actually works, the submission survives a bot restart,
+    -- and an admin has something concrete to review and resolve.
+    status                  TEXT NOT NULL DEFAULT 'pending',  -- pending | passed | failed
+    speaking_recording_url  TEXT DEFAULT '',
+    writing_submission      TEXT DEFAULT '',
+    resolved_at             TEXT DEFAULT NULL,
+    resolved_by             TEXT DEFAULT '',
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 
@@ -435,26 +467,56 @@ def get_latest_assessment(discord_id: str) -> Optional[dict]:
 
 def log_advancement_attempt(discord_id: str, from_level: str, to_level: str,
                             scores: dict, passed: bool, notes: str = ""):
-    """Log an advancement exam attempt."""
+    """Log a fully-resolved advancement exam attempt (scores known up front).
+    Kept for any future auto-scored (non-DM-collection) exam path.
+    """
     conn = _connect()
     conn.execute(
         """INSERT INTO advancement_exams
            (discord_id, from_level, to_level, speaking_score, listening_score,
-            vocabulary_score, accent_score, writing_score, passed, notes)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            vocabulary_score, accent_score, writing_score, passed, notes, status, resolved_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
         (
             discord_id, from_level, to_level,
             scores.get("speaking"), scores.get("listening"),
             scores.get("vocabulary"), scores.get("accent"),
             scores.get("writing"), 1 if passed else 0, notes,
+            "passed" if passed else "failed",
         ),
     )
     conn.commit()
     conn.close()
 
 
+def create_pending_exam(discord_id: str, from_level: str, to_level: str,
+                        speaking_recording_url: str = "", writing_submission: str = "") -> int:
+    """Create a 'pending' advancement exam row once DM collection completes.
+
+    This is what makes the 30-day cooldown (last_advancement_attempt) and
+    the exam-review admin flow actually work — previously NOTHING ever
+    wrote to this table, so every !exam request looked like a first
+    attempt forever, and submitted recordings/writing were never saved
+    anywhere durable (they lived only in an in-memory dict that a bot
+    restart would silently wipe).
+
+    Returns the new row's id.
+    """
+    conn = _connect()
+    cur = conn.execute(
+        """INSERT INTO advancement_exams
+           (discord_id, from_level, to_level, speaking_recording_url,
+            writing_submission, status)
+           VALUES (?, ?, ?, ?, ?, 'pending')""",
+        (discord_id, from_level, to_level, speaking_recording_url, writing_submission),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
 def last_advancement_attempt(discord_id: str) -> Optional[dict]:
-    """Get the most recent advancement exam attempt."""
+    """Get the most recent advancement exam attempt (any status)."""
     conn = _connect()
     row = conn.execute(
         "SELECT * FROM advancement_exams WHERE discord_id=? ORDER BY attempted_at DESC LIMIT 1",
@@ -462,6 +524,42 @@ def last_advancement_attempt(discord_id: str) -> Optional[dict]:
     ).fetchone()
     conn.close()
     return dict(row) if row else None
+
+
+def pending_exams() -> list[dict]:
+    """Get all advancement exams awaiting admin review, oldest first."""
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT e.*, m.discord_name FROM advancement_exams e
+           LEFT JOIN members m ON m.discord_id = e.discord_id
+           WHERE e.status='pending' ORDER BY e.attempted_at ASC"""
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_exam_by_id(exam_id: int) -> Optional[dict]:
+    """Get a single advancement exam row by its id."""
+    conn = _connect()
+    row = conn.execute("SELECT * FROM advancement_exams WHERE id=?", (exam_id,)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def resolve_exam(exam_id: int, passed: bool, resolved_by: str, notes: str = ""):
+    """Mark a pending exam as passed/failed. Does NOT change the member's
+    level itself — the caller is responsible for calling set_level() on
+    pass, so the decision to promote is always an explicit, visible step.
+    """
+    conn = _connect()
+    conn.execute(
+        """UPDATE advancement_exams
+           SET status=?, passed=?, notes=?, resolved_by=?, resolved_at=datetime('now')
+           WHERE id=?""",
+        ("passed" if passed else "failed", 1 if passed else 0, notes, resolved_by, exam_id),
+    )
+    conn.commit()
+    conn.close()
 
 
 # ============================================================

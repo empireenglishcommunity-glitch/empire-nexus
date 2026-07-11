@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w8",
+  "level": "L2",
+  "week": 8,
+  "pattern_name": "Wish / If only",
+  "pattern_name_ar": "wish / if only (أتمنى لو)",
+  "formula": "I wish/If only + Subject + Past Simple (present wish) OR + had + Past Participle (past regret)",
+  "formula_visual": "I wish/If only + [PAST SIMPLE, for present regret] OR + [had + past participle, for past regret]",
+  "when_to_use": "Use 'wish'/'if only' to express regret or a strong desire for something to be different. Use Past Simple for regret about the PRESENT situation, and 'had + past participle' for regret about something in the PAST. 'If only' is more emphatic/emotional than 'wish'.",
+  "when_to_use_ar": "استخدم wish/if only للتعبير عن ندم أو رغبة قوية في اختلاف شيء. استخدم الماضي البسيط للندم على الحاضر، وhad + التصريف الثالث للندم على الماضي. if only أقوى وأكثر عاطفية من wish.",
+  "why_arabic_speakers_struggle": "This uses the same 'unreal past tense = present meaning' logic as Second Conditional (already tricky), PLUS an additional past-regret layer using Past Perfect — two layers of unusual tense-meaning mismatch stacked together, which takes deliberate practice to internalize rather than translate literally from Arabic's more direct وليت / أتمنى لو constructions.",
+  "examples": [
+    {"en": "I wish I spoke French. (present regret — I don't speak French now)", "ar": "أتمنى إني كنت بتكلم فرنساوي (ندم على الحاضر)", "structure": "[I wish] + [I spoke French]"},
+    {"en": "If only I had more time today. (present regret, emphatic)", "ar": "ليت عندي وقت أكتر النهاردة", "structure": "[If only] + [I had more time today]"},
+    {"en": "I wish I had studied medicine. (past regret — a past decision I regret now)", "ar": "أتمنى إني كنت درست طب (ندم على قرار ماضٍ)", "structure": "[I wish] + [I had studied medicine]"},
+    {"en": "If only she had told me sooner! (past regret, emphatic)", "ar": "ليتها كانت قالت لي بدري!", "structure": "[If only] + [she had told me sooner]"},
+    {"en": "He wishes he hadn't said that. (past regret, negative)", "ar": "هو نادم إنه قال ده", "structure": "[He wishes] + [he hadn't said that]"}
+  ],
+  "common_errors": [
+    {"wrong": "I wish I speak French.", "correct": "I wish I spoke French.", "explanation": "'wish' about the present needs Past Simple (the 'unreal' marker), not the actual present tense."},
+    {"wrong": "I wish I studied medicine. [meant as a past regret]", "correct": "I wish I had studied medicine.", "explanation": "Regret about a PAST decision needs 'had + past participle' (like Third Conditional), not just Past Simple, which would suggest present regret instead."},
+    {"wrong": "If only I will have more time.", "correct": "If only I had more time.", "explanation": "'if only' follows the same unreal-tense rules as 'wish' — never use 'will' directly after it."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I wish I ___ (have) a bigger house. [present regret]", "answer": "had", "hint": "Past Simple for present wish."},
+    {"sentence": "If only I ___ (know) about this earlier! [past regret]", "answer": "had known", "hint": "Past Perfect for past regret."},
+    {"sentence": "She wishes she ___ (not/say) that to him. [past regret]", "answer": "hadn't said", "hint": "Negative past regret."},
+    {"sentence": "I wish it ___ (not/rain) right now. [present wish]", "answer": "weren't/wasn't raining", "hint": "Present situation wish, continuous form."},
+    {"sentence": "If only we ___ (leave) earlier yesterday! [past regret]", "answer": "had left", "hint": "Past Perfect for past regret."}
+  ],
+  "quick_rule": "Wish/if only about NOW = Past Simple. Wish/if only about a PAST decision/event = had + past participle. 'If only' carries more emotional weight than plain 'wish' but follows identical grammar rules.",
+  "quick_rule_ar": "wish/if only عن الحاضر = ماضٍ بسيط. wish/if only عن قرار/حدث ماضٍ = had + التصريف الثالث.",
+  "mnemonic": "WISH steps back ONE tense for NOW-regret, and TWO steps back (had + participle) for THEN-regret — the further back in time the regret, the further back the grammar goes.",
+  "connect_to_speaking": "Practice with your buddy: share one wish about your life right now ('I wish I...') and one regret about a past decision ('I wish I had...' or 'If only I had...') — notice the different tense forms required for each."
+}

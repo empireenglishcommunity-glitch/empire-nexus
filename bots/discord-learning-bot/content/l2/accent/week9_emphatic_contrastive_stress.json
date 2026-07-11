@@ -1,0 +1,150 @@
+{
+  "level": "L2",
+  "week": 9,
+  "focus": "Emphatic & Contrastive Stress in Extended Argumentation",
+  "focus_ar": "النبر التوضيحي والتناقضي في الحجج الموسعة",
+  "arabic_challenge": "Week 4 introduced basic contrastive stress on single words. This week extends that skill into full, extended arguments — the kind needed for L2's debate and analysis missions on complex topics (politics, ethics, society). Native speakers strategically stress key argument words ACROSS multiple sentences to build a persuasive throughline, not just within one isolated sentence. Arabic-accented English sometimes applies emphasis inconsistently across a longer argument, weakening its persuasive impact even when the logic is sound.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["building emphasis across multiple connected sentences"],
+      "isolation": {
+        "instructions": "In an extended argument, choose 2-3 KEY words across your whole argument (not just one sentence) and consistently emphasize them each time they reappear, creating a persuasive thread.",
+        "instructions_ar": "في حجة موسعة، اختار ٢-٣ كلمات أساسية في كل الحجة (مش بس جملة واحدة) وأكد عليها بثبات كل ما تتكرر، عشان تعمل خيط إقناعي متصل.",
+        "practice": ["EVIDENCE shows this works. This EVIDENCE is clear. We cannot ignore this EVIDENCE. (consistent emphasis on 'evidence' throughout)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["consistent emphasis on 'evidence' (persuasive)", "inconsistent/no emphasis (weak)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["EVIDENCE", "this EVIDENCE", "cannot ignore this EVIDENCE"],
+      "sentence_practice": [
+        "The EVIDENCE shows this policy works.",
+        "This EVIDENCE is clear and undeniable.",
+        "We cannot ignore this EVIDENCE any longer."
+      ],
+      "record_this": "The EVIDENCE shows this policy works. This EVIDENCE is clear and undeniable. We cannot ignore this EVIDENCE any longer.",
+      "self_check": "Did you consistently emphasize your chosen key word every time it appeared, building a clear persuasive thread?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["contrastive stress to dismantle a counter-argument"],
+      "isolation": {
+        "instructions": "When addressing an opposing view, native speakers often stress the CONTRASTING word heavily to highlight exactly where they disagree.",
+        "instructions_ar": "لما تتعامل مع رأي معارض، المتكلم الأصلي غالبًا بيأكد بقوة على الكلمة المتناقضة عشان يوضح بالضبط فين نقطة الاختلاف.",
+        "practice": ["Some say it's EXPENSIVE. But it's actually an INVESTMENT. (contrast between 'expensive' and 'investment')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it's EXPENSIVE... it's an INVESTMENT (clear contrast)", "flat delivery, no contrast highlighted"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["EXPENSIVE", "an INVESTMENT", "NOT a cost", "an OPPORTUNITY"],
+      "sentence_practice": [
+        "Some say it's EXPENSIVE, but it's actually an INVESTMENT.",
+        "This is NOT a cost — it's an OPPORTUNITY.",
+        "People call it a RISK, but I call it a CHANCE."
+      ],
+      "record_this": "Some say it's EXPENSIVE, but it's actually an INVESTMENT — this is NOT a cost, it's an OPPORTUNITY, and people call it a RISK, but I call it a CHANCE.",
+      "self_check": "Did the contrasting pairs (expensive/investment, cost/opportunity, risk/chance) stand out clearly against each other?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["escalating emphasis for a climactic conclusion"],
+      "isolation": {
+        "instructions": "Strong arguments often build intensity toward the final, most important point — practice gradually increasing your vocal emphasis and pace toward a strong concluding statement.",
+        "instructions_ar": "الحجج القوية غالبًا بتبني كثافة نحو النقطة الأخيرة الأهم — تدرب على زيادة تدريجية في التأكيد الصوتي والسرعة نحو تصريح ختامي قوي.",
+        "practice": ["This matters. This REALLY matters. This is why we MUST act NOW. (escalating intensity)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["escalating intensity toward a climax (persuasive)", "flat, unchanging intensity (weak)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["This matters", "This REALLY matters", "we MUST act NOW"],
+      "sentence_practice": [
+        "This matters.",
+        "This REALLY matters.",
+        "This is why we MUST act NOW."
+      ],
+      "record_this": "This matters. This REALLY matters. This is why we MUST act NOW — there is no time left to wait.",
+      "self_check": "Did your intensity genuinely build sentence by sentence, landing hardest on the final call to action?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["emphasis combined with thought-group pausing (integration with Week 8)"],
+      "isolation": {
+        "instructions": "Combine this week's emphasis skills with last week's thought-group pausing — a well-placed pause right before your most emphasized word makes it land even harder.",
+        "instructions_ar": "دمج مهارات التأكيد هذا الأسبوع مع وقفات مجموعات الفكر من الأسبوع اللي فات — وقفة موضوعة بعناية قبل كلمتك الأكثر تأكيدًا بتخليها تأثر أكتر.",
+        "practice": ["And the result? | ABSOLUTE failure. (pause before the emphasized word)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pause + emphasis (strong impact)", "no pause before emphasis (weaker impact)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["And the result?", "| ABSOLUTE failure", "| EXACTLY right"],
+      "sentence_practice": [
+        "And the result? | ABSOLUTE failure.",
+        "The answer is | EXACTLY right.",
+        "What we need is | REAL change."
+      ],
+      "record_this": "And the result? ABSOLUTE failure. The answer is EXACTLY right — what we need now is REAL change.",
+      "self_check": "Did the pause right before your key word make the emphasis land with more impact?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full extended argument with integrated emphasis techniques"],
+      "isolation": {
+        "instructions": "Deliver a spontaneous 60-second persuasive argument on a topic of your choice, integrating consistent key-word emphasis, contrastive stress, escalating intensity, and strategic pausing.",
+        "instructions_ar": "قدم حجة إقناعية عفوية لمدة ٦٠ ثانية عن موضوع من اختيارك، بدمج التأكيد المتسق على الكلمة الأساسية، والنبر التناقضي، والكثافة المتصاعدة، والتوقف الاستراتيجي.",
+        "practice": ["Choose a simple persuasive topic and argue for it using all 4 techniques from this week."]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully integrated persuasive delivery", "flat, unemphasized delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your argument)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: deliver a 60-second persuasive argument, using consistent emphasis, contrast, escalation, and pausing.)",
+      "self_check": "Did all 4 techniques appear naturally in your spontaneous argument, working together persuasively?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: consistent key-word emphasis, contrastive stress, escalating intensity, pause+emphasis combination",
+      "type": "review",
+      "mixed_pairs": [
+        ["EVIDENCE (consistent)", "EXPENSIVE... INVESTMENT (contrast)"], ["This REALLY matters (escalation)", "the result? | ABSOLUTE failure (pause+emphasis)"]
+      ],
+      "challenge_sentences": [
+        "The EVIDENCE is clear. Some call it EXPENSIVE, but I call it an INVESTMENT — and the result? | REAL, lasting change.",
+        "This matters. This REALLY matters. The EVIDENCE proves it, and the answer is | EXACTLY what we need.",
+        "People call it a RISK, but I call it an OPPORTUNITY — this EVIDENCE is why we MUST act NOW."
+      ],
+      "record_this": "The EVIDENCE is clear. Some call it EXPENSIVE, but I call it an INVESTMENT — and the result? REAL, lasting change. This matters. This REALLY matters.",
+      "self_check": "This passage combines all 4 techniques. Did each one come through distinctly and persuasively?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 60-90 second persuasive speech defending a position on a topic that matters to you, integrating all of this week's emphasis techniques naturally.",
+        "passage": "(Free speech: choose a real topic you care about and deliver a persuasive 60-90 second argument, using consistent key-word emphasis, contrastive stress against a counter-argument, escalating intensity, and strategic pause+emphasis for your conclusion.)",
+        "sounds_to_check": {
+          "consistent key-word emphasis": "check throughout for a repeated, emphasized key term",
+          "contrastive stress": "check for at least one clear contrast against an opposing view",
+          "escalating intensity": "check if the delivery builds toward the conclusion",
+          "pause + emphasis": "check the final concluding statement"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 4 techniques used naturally and effectively, producing a genuinely persuasive-sounding argument.",
+        "70_89": "Most techniques present; delivery is fairly persuasive with minor gaps.",
+        "50_69": "Techniques present but inconsistent; argument sounds informative rather than persuasive.",
+        "below_50": "Flat, unemphasized delivery throughout — go back and repeat Days 1-4, deliberately exaggerating each technique."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week is the culmination of L2's intonation/stress work (Weeks 4, 6, 8, 9) — it's where all those individual skills combine into genuinely persuasive, native-sounding argumentation.",
+      "This directly supports the blueprint's Table 8 'Debate Club' voice lounge sessions and L2's frequent debate-style speaking missions.",
+      "Native speakers vary these techniques by context — a courtroom lawyer, a political speech, and a casual argument with a friend all use different intensities of the same underlying tools. Practice matching your intensity to your actual context."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7's spontaneous persuasive speech — these are strong candidates for peer feedback in your Level 2 debate voice lounge."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w8",
+  "level": "L3",
+  "week": 8,
+  "pattern_name": "Register & Formality Switching",
+  "pattern_name_ar": "تبديل السجل والرسمية",
+  "formula": "Same underlying meaning + [Formal vocabulary/structure] OR [Casual vocabulary/structure], chosen deliberately for context",
+  "formula_visual": "[FORMAL: 'I would appreciate your prompt response.'] ←→ [CASUAL: 'Let me know soon, yeah?'] — same request, different register",
+  "when_to_use": "Consciously choose vocabulary, grammar complexity, contractions, and idiom density to match the social/professional register required — formal writing avoids contractions and phrasal verbs in favor of Latinate vocabulary; casual speech embraces contractions, phrasal verbs, and idioms. Mastery means fluently choosing, not defaulting to one register everywhere.",
+  "when_to_use_ar": "اختار بشكل متعمد المفردات وتعقيد القواعد والاختصارات وكثافة التعبيرات الاصطلاحية بما يناسب السجل الاجتماعي/المهني المطلوب — الكتابة الرسمية بتتجنب الاختصارات والأفعال المركبة لصالح مفردات لاتينية، والكلام العادي بيرحب بالاختصارات والتعبيرات الاصطلاحية.",
+  "why_arabic_speakers_struggle": "By this point, learners have strong grammatical accuracy but may still default to a SINGLE preferred register (often the more formal one, since it's usually taught first and most explicitly) — genuine mastery requires being equally comfortable and correct in casual, idiomatic registers too, actively choosing based on context rather than habit.",
+  "examples": [
+    {"en": "FORMAL: I would like to request an extension on the deadline. CASUAL: Any chance I could get a bit more time?", "ar": "رسمي: أرغب في طلب تمديد للموعد النهائي. عادي: في فرصة أخد وقت أكتر؟", "structure": "Same request, formal Latinate structure vs. casual phrasal/idiomatic structure"},
+    {"en": "FORMAL: The meeting has been postponed until further notice. CASUAL: The meeting's off for now — we'll let you know.", "ar": "رسمي: تم تأجيل الاجتماع حتى إشعار آخر. عادي: الاجتماع مؤجل دلوقتي — هنعرّفك", "structure": "Same information, formal passive vs. casual contracted/active structure"},
+    {"en": "FORMAL: I regret to inform you that your application was unsuccessful. CASUAL: Sorry, but it didn't work out this time.", "ar": "رسمي: يؤسفني إخبارك بأن طلبك لم يُقبل. عادي: معلش، بس ماجتش هذه المرة", "structure": "Same news, formal indirect structure vs. casual direct structure"},
+    {"en": "FORMAL: Please do not hesitate to contact me should you require further assistance. CASUAL: Just hit me up if you need anything else.", "ar": "رسمي: لا تتردد في التواصل معي إذا احتجت مساعدة إضافية. عادي: بس قولي لو احتجت حاجة", "structure": "Same offer, formal conditional structure vs. casual idiomatic structure"},
+    {"en": "FORMAL: We appreciate your patience during this transition. CASUAL: Thanks for hanging in there while we sort this out.", "ar": "رسمي: نقدّر صبركم خلال هذا الانتقال. عادي: شكرًا لصبرك لحد ما نحل الموضوع", "structure": "Same sentiment, formal abstract noun vs. casual idiomatic phrase"}
+  ],
+  "common_errors": [
+    {"wrong": "(In a formal cover letter) Hey, just wanted to say I'd be super stoked to work here!", "correct": "I would be delighted to join your team.", "explanation": "Casual idioms ('super stoked') and greeting styles ('Hey') are inappropriate in formal written contexts like cover letters — register mismatch undermines credibility even with perfect grammar."},
+    {"wrong": "(Texting a close friend) I would greatly appreciate it if you could inform me of your availability.", "correct": "Hey, when are you free?", "explanation": "Overly formal language in casual contexts (texting a friend) can sound cold, distant, or even sarcastic — it's a register mismatch in the opposite direction."},
+    {"wrong": "Mixing registers within the same message inconsistently: 'I would like to request that you hit me up ASAP.'", "correct": "Choose one register consistently: either 'I would like to request that you contact me as soon as possible' (formal) or 'Hit me up ASAP' (casual).", "explanation": "Mixing formal structures with casual slang within the same sentence/message creates an inconsistent, slightly jarring tone."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Formal: 'I am writing to ___ my resignation.' Casual: 'Just wanted to let you know I'm ___.'", "answer": "submit / quitting", "hint": "Same message, different register vocabulary."},
+    {"sentence": "Formal: 'Please find attached the requested ___.' Casual: 'Here's that ___ you asked for!'", "answer": "documentation / thing/file", "hint": "Same content, formal vs. casual noun choice."},
+    {"sentence": "Formal: 'We regret any inconvenience this may have ___.' Casual: 'Sorry for any hassle this ___.'", "answer": "caused / caused", "hint": "Same apology, formal vs. casual phrasing style."},
+    {"sentence": "Formal: 'I would be grateful if you could ___ this matter promptly.' Casual: 'Could you ___ this soon?'", "answer": "address / handle/sort out", "hint": "Same request, formal vs. casual verb choice."},
+    {"sentence": "Formal: 'Kindly ___ me at your earliest convenience.' Casual: '___ me whenever!'", "answer": "contact / text/call/message", "hint": "Same instruction, formal vs. casual verb."}
+  ],
+  "quick_rule": "Identify your AUDIENCE and CONTEXT first, then consistently choose EITHER formal (Latinate vocabulary, no contractions, indirect phrasing, passive voice) OR casual (phrasal verbs, contractions, idioms, direct phrasing) — never mix mid-message, and match the register the situation genuinely requires, not just your habitual default.",
+  "quick_rule_ar": "حدد جمهورك وسياقك الأول، وبعدين اختار سجل واحد بثبات — رسمي أو عادي — ومتخلطهمش في نفس الرسالة.",
+  "mnemonic": "REGISTER = like a thermostat setting — you consciously choose the temperature (formality level) that fits the room (context), not just whatever feels automatic.",
+  "connect_to_speaking": "Practice with your buddy: take one real message you need to send (an email, a text, a request) and draft it TWICE — once fully formal, once fully casual — then discuss which one actually fits the real situation better and why."
+}

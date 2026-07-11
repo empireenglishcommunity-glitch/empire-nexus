@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w2",
+  "level": "L3",
+  "week": 2,
+  "pattern_name": "Subjunctive (I suggest he go)",
+  "pattern_name_ar": "صيغة الحث (Subjunctive)",
+  "formula": "Subject + suggest/recommend/insist/demand + that + Subject + [BASE VERB, no -s, no tense change]",
+  "formula_visual": "[VERB OF PERSUASION/DEMAND] + that + [SUBJECT] + [BASE VERB — same for he/she/it too]",
+  "when_to_use": "Use the Subjunctive after verbs of suggestion, demand, insistence, or recommendation (suggest, recommend, insist, demand, propose, require) — the verb in the 'that' clause stays in its BASE form regardless of subject or tense, which is grammatically unusual and easy to 'correct' by mistake.",
+  "when_to_use_ar": "استخدم صيغة الحث بعد أفعال الاقتراح أو الطلب أو الإصرار (suggest, recommend, insist, demand) — الفعل في جملة that بيفضل في صورته الأساسية بدون تغيير حسب الفاعل أو الزمن.",
+  "why_arabic_speakers_struggle": "This is one of the few places English deliberately breaks its own normal subject-verb agreement rule (he/she/it + verb-s), and advanced learners — who've spent years correctly adding -s for third person — often 'auto-correct' the subjunctive back to normal agreement, since it looks like an error by every other rule they know.",
+  "examples": [
+    {"en": "I suggest that he go to the doctor.", "ar": "أقترح إنه يروح الدكتور (لاحظ: go مش goes)", "structure": "[I suggest] + [that] + [he] + [go] (base form, NOT 'goes')"},
+    {"en": "The committee recommends that the policy be reviewed.", "ar": "اللجنة توصي بمراجعة السياسة (be مش is)", "structure": "[The committee recommends] + [that] + [the policy] + [be reviewed] (base 'be', NOT 'is')"},
+    {"en": "She insisted that he apologize immediately.", "ar": "هي أصرت إنه يعتذر فورًا (apologize مش apologized، حتى لو الجملة الرئيسية ماضي)", "structure": "[She insisted] + [that] + [he] + [apologize] (base form, even though 'insisted' is past tense)"},
+    {"en": "It is essential that everyone arrive on time.", "ar": "من الضروري إن كل الناس توصل في الوقت (arrive مش arrives)", "structure": "[It is essential] + [that] + [everyone] + [arrive] (base form)"},
+    {"en": "They demanded that the report be submitted by Friday.", "ar": "طلبوا تسليم التقرير يوم الجمعة", "structure": "[They demanded] + [that] + [the report] + [be submitted] (base form, passive)"}
+  ],
+  "common_errors": [
+    {"wrong": "I suggest that he goes to the doctor.", "correct": "I suggest that he go to the doctor.", "explanation": "This is the classic subjunctive error — even with 'he' (which normally takes -s), the subjunctive verb stays in its BASE form with no -s."},
+    {"wrong": "She insisted that he apologized immediately.", "correct": "She insisted that he apologize immediately.", "explanation": "Even though 'insisted' is past tense, the subjunctive clause does NOT backshift like Reported Speech — it stays in the base form regardless of the main verb's tense."},
+    {"wrong": "It is essential that everyone arrives on time.", "correct": "It is essential that everyone arrive on time.", "explanation": "'It is essential/important/necessary that...' triggers the same subjunctive base-form rule as suggest/recommend/insist/demand."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I recommend that she ___ (study) harder for the exam.", "answer": "study", "hint": "Base form, no -s despite 'she'."},
+    {"sentence": "The doctor insists that the patient ___ (rest) for a week.", "answer": "rest", "hint": "Base form, no -s."},
+    {"sentence": "It is important that he ___ (be) on time tomorrow.", "answer": "be", "hint": "Base form of 'be', not 'is'."},
+    {"sentence": "They demanded that the workers ___ (receive) fair pay.", "answer": "receive", "hint": "Base form, no -s."},
+    {"sentence": "The manager suggested that we ___ (not/be) late again.", "answer": "not be", "hint": "Negative subjunctive: 'not' + base form."}
+  ],
+  "quick_rule": "After suggest/recommend/insist/demand/propose/require, or 'It is essential/important/vital that...', the verb in the 'that' clause is ALWAYS the base form — no -s, no tense change, no exceptions, regardless of subject or the main verb's tense.",
+  "quick_rule_ar": "بعد suggest/recommend/insist/demand، الفعل في جملة that دايمًا في صورته الأساسية — بدون -s وبدون تغيير زمن.",
+  "mnemonic": "SUBJUNCTIVE = a special 'SUB-rule' that quietly ignores the usual SUBJECT-verb agreement rule you know so well.",
+  "connect_to_speaking": "Practice with your buddy: give 3 pieces of strong advice using 'I suggest/recommend/insist that...' — consciously resist the urge to add -s, since your instinct after years of English will fight you on this."
+}

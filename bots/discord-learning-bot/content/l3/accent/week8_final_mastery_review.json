@@ -1,0 +1,155 @@
+{
+  "level": "L3",
+  "week": 8,
+  "focus": "Final Mastery Review — Comprehensive Integration of All Levels (L0-L3)",
+  "focus_ar": "المراجعة النهائية للإتقان — دمج شامل لكل المستويات من الصفر إلى الثالث",
+  "arabic_challenge": "This is the capstone week of the entire Empire English Community curriculum. Per blueprint §2.4 and Table 11, Level 3 has no further 'advancement' — it is the mastery destination, with quarterly Mastery Certification (Silver/Gold/Platinum tiers) as the ongoing goal beyond this point. This week reviews and integrates every phonetic, connected-speech, and fluency skill built since Level 0, producing your definitive mastery-tier benchmark recording.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": "Review: L0 foundations (44 phonemes) + L1 connected speech (stress, flap, linking, glottal stop, dropped H, schwa)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit your earliest L0 recordings if you saved them, then your L1 Week 10 mock exam recording. Notice the full arc of growth from isolated phonemes to connected, natural L1 speech.",
+        "instructions_ar": "راجع أقدم تسجيلات المستوى الصفر لو حفظتها، وبعدين تسجيل امتحان المستوى الأول التجريبي في الأسبوع العاشر. لاحظ المسار الكامل من الفونيمات المنفردة للكلام المتصل الطبيعي.",
+        "practice": ["water, button, tell him, about the camera, pick up an apple — full L1 review at native speed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["L1 skills at full L3-level automaticity", "L1 skills as first learned, more effortful"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["water", "button", "tell him", "about the camera", "pick up an apple"],
+      "sentence_practice": [
+        "About an hour ago, I picked up an apple and told him about the camera near the button.",
+        "It doesn't matter — water, better, certain, mountain, all still automatic.",
+        "Tell him, ask her — this all feels effortless now."
+      ],
+      "record_this": "About an hour ago, I picked up an apple and told him about the camera near the button — it doesn't matter, this all feels effortless now.",
+      "self_check": "Do L0/L1 skills now feel like an unconscious foundation, rather than something you actively think about?"
+    },
+    {
+      "day": 2,
+      "target_sounds": "Review: L2 advanced connected speech (yod-dropping, dark L, NG-coalescence, reduction, intonation, thought groups)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit L2's more advanced connected-speech skills, checking that they remain as automatic as your L1 foundations.",
+        "instructions_ar": "راجع مهارات الكلام المتصل الأكثر تقدمًا في المستوى الثاني، وتأكد إنها فضلت تلقائية زي أساسيات المستوى الأول.",
+        "practice": ["new, tune, political, thinking, shoulda, EVIDENCE — full L2 review at native speed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["L2 skills at full automaticity", "L2 skills as first learned"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["new", "tune", "political", "thinking", "shoulda", "EVIDENCE"],
+      "sentence_practice": [
+        "The new tune felt political, and I was thinking I shoulda mentioned the EVIDENCE.",
+        "Not only is this global, but the EVIDENCE, having been reviewed, is also clear.",
+        "This is gonna be great, isn't it? I shoulda known that already."
+      ],
+      "record_this": "The new tune felt political — I was thinking I shoulda mentioned the EVIDENCE, since it's gonna be great, isn't it?",
+      "self_check": "Are all of L2's more demanding features still holding up alongside your L1 foundation and this week's L3 refinements?"
+    },
+    {
+      "day": 3,
+      "target_sounds": "Review: L3 micro-phonetics refinement (flap T mastery, dark L mastery, schwa mastery, vowel reduction/fluency)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit L3 Weeks 1-4's mastery-tier refinement work, checking for continued automaticity under pressure.",
+        "instructions_ar": "راجع شغل التحسين بمستوى الإتقان من الأسبوع ١-٤ في المستوى الثالث، وتأكد من استمرار التلقائية تحت الضغط.",
+        "practice": ["totally, colossal, methodology, circle back — L3 refinement review at native speed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["L3 refinement skills fully automatic", "L3 refinement skills requiring effort"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["totally", "colossal", "methodology", "circle back"],
+      "sentence_practice": [
+        "It's totally vital to corroborate this colossal methodology.",
+        "Let's circle back and touch base on the bandwidth.",
+        "This methodology should substantiate our totally colossal claim."
+      ],
+      "record_this": "It's totally vital to corroborate this colossal methodology — let's circle back and touch base on the bandwidth.",
+      "self_check": "Do these L3-refined skills feel as automatic as your original L1/L2 foundations now?"
+    },
+    {
+      "day": 4,
+      "target_sounds": "Review: L3 fluency patterns (rhetorical delivery, cross-cultural register, discourse markers, shadowing)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit L3 Weeks 5-7's broader fluency skills — rhetorical delivery timing, register-switching, and advanced shadowing.",
+        "instructions_ar": "راجع مهارات الطلاقة الأوسع من الأسبوع ٥-٧ في المستوى الثالث — توقيت الأداء الخطابي، تبديل السجل، والمحاكاة المتقدمة.",
+        "practice": ["This... is... our moment. — Hey, how's it going? — Well, anyway, I mean, you know?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["rhetorical/register skills fully integrated", "rhetorical/register skills requiring conscious effort"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["This... is... our moment.", "Hey, how's it going?", "Well, anyway, I mean, you know?"],
+      "sentence_practice": [
+        "This... is... our moment. [pause] We've waited, we've prepared.",
+        "Hey, how's it going? So, about that report...",
+        "Well, anyway, I mean, it's complicated, you know?"
+      ],
+      "record_this": "This... is... our moment. Hey, how's it going? Well, anyway, I mean, it's complicated, you know?",
+      "self_check": "Do rhetorical delivery, register-switching, and discourse markers feel like natural tools you reach for, not effortful techniques?"
+    },
+    {
+      "day": 5,
+      "target_sounds": "Full mock Mastery Certification assessment (per blueprint Table 11)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Simulate the blueprint's quarterly Mastery Certification assessment: deliver a 10-15 minute continuous speech (Gold tier target per Table 11) on a substantial topic, integrating everything from L0 through L3.",
+        "instructions_ar": "حاكي تقييم شهادة الإتقان الفصلية من الخطة: قدم كلام متواصل لمدة ١٠-١٥ دقيقة (هدف الفئة الذهبية) عن موضوع جوهري، ودمج كل حاجة من الصفر للثالث.",
+        "practice": ["Choose a substantial topic (a cause you care about, a life philosophy, a detailed personal story) and speak continuously for as close to 10 minutes as you can manage."]
+      },
+      "minimal_pairs": [
+        {"pair": ["sustained 10+ minute fluent speech", "shorter speech with more hesitation/breaks"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your topic)"],
+      "sentence_practice": ["(No fixed sentences — extended free speech day.)"],
+      "record_this": "(Free speech: 10-15 minutes continuous, on a substantial topic of your choice — this mirrors Table 11's Gold-tier '10 min continuous' target.)",
+      "self_check": "Could you sustain natural, connected speech for this extended duration without significant breakdown in fluency or accuracy?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Comprehensive Review: all skills from L0 through L3 combined in one extended passage",
+      "type": "review",
+      "mixed_pairs": [
+        ["water (L1)", "political (L2)"], ["totally (L3 refinement)", "This... is... our moment. (L3 delivery)"]
+      ],
+      "challenge_sentences": [
+        "About an hour ago, I picked up an apple and told him about the camera near the button — it doesn't matter, this all feels totally effortless now.",
+        "The new tune felt political, and I was thinking I shoulda mentioned the EVIDENCE — it's totally vital to corroborate this colossal methodology.",
+        "This... is... our moment. Hey, how's it going? Well, anyway, I mean, it's complicated, you know — but we've waited, we've prepared, and now it's here!"
+      ],
+      "record_this": "About an hour ago, I picked up an apple and told him about the camera near the button — this all feels totally effortless now. This... is... our moment. Hey, how's it going? Well, anyway, we've waited, we've prepared, and now it's here!",
+      "self_check": "This passage deliberately combines vocabulary and structures from every single level. Score your overall command across the ENTIRE curriculum."
+    },
+    {
+      "day": 7,
+      "target_sounds": "FINAL Self-Assessment: Empire English Community Curriculum Completion Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is your official curriculum completion checkpoint. Record a substantial, spontaneous 5-10 minute speech reflecting on your entire journey from Level 0 to Level 3, using this as your definitive mastery-tier benchmark recording per blueprint Table 11.",
+        "passage": "(Free speech: 5-10 minutes, spontaneous, reflecting on your full learning journey — what you started with, what was hardest, what changed, and what's next.)",
+        "sounds_to_check": {
+          "L0 phoneme foundations": "check for basic sound accuracy throughout",
+          "L1 connected speech": "check stress, flap, linking, dropped H, schwa",
+          "L2 advanced connected speech": "check yod-dropping, dark L, NG-coalescence, intonation, thought groups",
+          "L3 refinement + fluency": "check automaticity under spontaneity, rhetorical delivery, register awareness"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "(Platinum tier, Table 11) Sustained, sophisticated, natural speech for 15+ minutes with minimal accent detectable even in short interactions — the full curriculum's skills operate invisibly and automatically together.",
+        "70_89": "(Gold tier, Table 11) Strong, natural speech for 10+ minutes; accent rarely detected in short interactions; all major skills well-integrated.",
+        "50_69": "(Silver tier, Table 11) Solid 5+ minute continuous speech; accent occasionally detected but high overall intelligibility.",
+        "below_50": "Continue targeted practice on specific weak areas identified across this week's Day 1-4 reviews — return to the relevant level's material for focused reinforcement."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Per blueprint §2.4, Level 3 has no further 'level advancement' — from here, your path is the quarterly Mastery Certification (Silver/Gold/Platinum, Table 11), community leadership/mentorship (Table 40's Mentorship Ladder), and continued self-directed refinement.",
+      "The blueprint's own honest framing (§2.4 Refinement) is worth remembering: true native-indistinguishable accent is a rare, exceptional outcome for adult learners, not a standard promise. Measurable intelligibility, fluency, and confidence — which you have now demonstrably built — are the real, attainable, and valuable achievement.",
+      "Consider using your Day 7 recording as a 'before' comparison for future Mastery Certification attempts, and as a potential contribution to the community's Documentation & Proof System (blueprint §10) if you're comfortable sharing your transformation story."
+    ],
+    "daily_time": "25-30 minutes this week (Day 5's extended speech will take longer)",
+    "recording_requirement": "Record Day 5, Day 6, and especially Day 7 — preserve these permanently as your definitive curriculum-completion benchmark, comparable against your very first Level 0 Week 1 recording for a complete before/after transformation record."
+  }
+}

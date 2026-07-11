@@ -1,0 +1,157 @@
+{
+  "level": "L1",
+  "week": 5,
+  "focus": "Vowel-to-Vowel Linking — Inserting /w/ or /j/ Glides",
+  "focus_ar": "ربط المتحرك بالمتحرك — إدخال أصوات انتقالية /w/ أو /j/",
+  "arabic_challenge": "When a word ending in a vowel sound is followed by a word starting with a vowel sound, Arabic often uses a glottal stop or brief pause between them (much like starting a new word cleanly with a hamza). English instead glides smoothly from one vowel into the next using a tiny inserted /w/ or /j/ sound, with no pause or throat closure at all.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/w/ glide inserted between rounded vowels"],
+      "isolation": {
+        "instructions": "When the FIRST word ends in a rounded vowel sound (like /oʊ/ in 'go' or /uː/ in 'you'), a tiny /w/ glide naturally appears to connect it to the next word's vowel.",
+        "instructions_ar": "لما الكلمة الأولى تنتهي بصوت متحرك مدور الشفاه (زي /oʊ/ في go أو /uː/ في you)، بيظهر صوت /w/ صغير تلقائيًا يوصلها بالحرف المتحرك في الكلمة اللي بعدها.",
+        "practice": ["go out → go-WOUT", "who is → who-WIZ", "do it → do-WIT"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go out (glided)", "go. Out. (choppy, glottal reset)"], "meaning": ["يخرج", "—"]},
+        {"pair": ["who is (glided)", "who. Is. (choppy)"], "meaning": ["من هو", "—"]},
+        {"pair": ["do it (glided)", "do. It. (choppy)"], "meaning": ["افعله", "—"]}
+      ],
+      "word_practice": ["go out", "who is", "do it", "too easy", "blue eyes", "go away"],
+      "sentence_practice": [
+        "Let's go out — who is coming with us?",
+        "Do it now, it's too easy to wait.",
+        "Go away — I have blue eyes, not you."
+      ],
+      "record_this": "Let's go out — who is coming? Do it now, it's too easy, so go away and let me finish with my blue eyes on the clock.",
+      "self_check": "Say 'go out' fast — do you feel a tiny /w/ sound sneaking in between the two words, almost like 'go-wout'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/j/ glide inserted between spread vowels"],
+      "isolation": {
+        "instructions": "When the FIRST word ends in a spread, front vowel sound (like /iː/ in 'she' or /eɪ/ in 'day'), a tiny /j/ glide (like the 'y' in 'yes') naturally appears to connect it to the next vowel.",
+        "instructions_ar": "لما الكلمة الأولى تنتهي بصوت متحرك أمامي ممدود (زي /iː/ في she أو /eɪ/ في day)، بيظهر صوت /j/ صغير (زي y في yes) يوصلها بالحرف المتحرك اللي بعده.",
+        "practice": ["she asked → she-YASKED", "I am → I-YAM", "day off → day-YOFF"]
+      },
+      "minimal_pairs": [
+        {"pair": ["she asked (glided)", "she. Asked. (choppy)"], "meaning": ["هي سألت", "—"]},
+        {"pair": ["I am (glided)", "I. Am. (choppy)"], "meaning": ["أنا", "—"]},
+        {"pair": ["day off (glided)", "day. Off. (choppy)"], "meaning": ["يوم راحة", "—"]}
+      ],
+      "word_practice": ["she asked", "I am", "day off", "we are", "the office", "my aunt"],
+      "sentence_practice": [
+        "She asked if I am taking a day off.",
+        "We are going to the office with my aunt.",
+        "I am not sure she asked the right question."
+      ],
+      "record_this": "She asked if I am taking a day off, but we are going to the office with my aunt anyway.",
+      "self_check": "Say 'I am' fast — do you hear a light /j/ sound connecting them, almost like 'I-yam'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["contrast: /w/ glide vs. /j/ glide, choosing correctly"],
+      "isolation": {
+        "instructions": "The glide you insert depends ENTIRELY on the vowel sound at the end of the FIRST word — rounded vowels (oo, oh) pull in /w/; spread vowels (ee, ay) pull in /j/. Today, practice choosing correctly.",
+        "instructions_ar": "الصوت الانتقالي اللي هتضيفه بيعتمد كليًا على صوت المتحرك في نهاية الكلمة الأولى — المتحركات المدورة بتسحب /w/، والمتحركات الممدودة بتسحب /j/.",
+        "practice": ["go out (w) vs. she asked (j)", "who is (w) vs. day off (j)", "too easy (w) vs. I am (j)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go out (w-glide)", "she asked (j-glide)"], "meaning": ["يخرج", "هي سألت"]},
+        {"pair": ["who is (w-glide)", "day off (j-glide)"], "meaning": ["من هو", "يوم راحة"]}
+      ],
+      "word_practice": ["go out", "she asked", "who is", "day off", "too easy", "I am", "blue eyes", "we are"],
+      "sentence_practice": [
+        "She asked if we are going out today.",
+        "Who is taking a day off? I am!",
+        "It's too easy — go out and see for yourself."
+      ],
+      "record_this": "She asked who is going out today — I am taking a day off, and it's too easy to just go out and enjoy my blue eyes in the sun.",
+      "self_check": "For each linked pair in this sentence, could you correctly identify whether it needed a /w/ or a /j/ glide before saying it?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["vowel-vowel linking across a full phrase"],
+      "isolation": {
+        "instructions": "Combine multiple vowel-to-vowel links in a row to build fluency in longer stretches of connected speech.",
+        "instructions_ar": "دمج أكتر من ربط متحرك-بمتحرك ورا بعض لبناء انسيابية في مقاطع أطول من الكلام المتصل.",
+        "practice": ["Go away, I am busy → go-WAway, I-YAM busy", "She asked who is here → she-YASKED who-WIZ here"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go away, I am busy (fully glided)", "go. away. I. am. busy. (choppy)"], "meaning": ["اذهب، أنا مشغول", "—"]}
+      ],
+      "word_practice": ["go away", "I am busy", "she asked who", "who is here", "too old", "the umbrella"],
+      "sentence_practice": [
+        "Go away, I am busy right now.",
+        "She asked who is here at the office.",
+        "It's too old, and I am too easy to please anyway."
+      ],
+      "record_this": "Go away, I am busy — she asked who is here, but it's too old a question, and I am too easy to please anyway.",
+      "self_check": "In this sentence, count every vowel-to-vowel link — did you correctly glide each one without pausing?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["vowel-vowel linking at natural conversational speed"],
+      "isolation": {
+        "instructions": "As with the consonant linking from Week 3, this only sounds natural at real conversational speed — practice building speed without losing the glide.",
+        "instructions_ar": "زي ربط الساكن من الأسبوع ٣، ده بيبان طبيعي بس في سرعة كلام حقيقية — تدرب على زيادة السرعة بدون خسارة صوت الانتقال.",
+        "practice": ["Slow: go...out (still glided, just slower)", "Normal: go out", "Fast: 'Just go out already!'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["just go out already (fast, glided)", "just. go. out. already. (slow, choppy)"], "meaning": ["اخرج بس خلاص", "—"]}
+      ],
+      "word_practice": ["go out", "she asked", "who is", "I am", "day off", "too easy", "we are"],
+      "sentence_practice": [
+        "Just go out already — who is stopping you?",
+        "I am too easy to please, she asked me today.",
+        "We are taking a day off, and it's too easy to enjoy."
+      ],
+      "record_this": "Just go out already — who is stopping you? I am too easy to please, and we are taking a day off because it's too easy to enjoy.",
+      "self_check": "Record this 3 times, increasing speed. Did your /w/ and /j/ glides survive at full conversational speed?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: /w/ glide, /j/ glide, choosing correctly, phrase-level linking, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["go out", "she asked"], ["who is", "day off"], ["too easy", "I am"], ["blue eyes", "we are"]
+      ],
+      "challenge_sentences": [
+        "She asked who is going out today, and I am too easy to say no.",
+        "Go away — we are taking a day off, and it's too easy to enjoy the blue eyes of the sky.",
+        "Who is here? I am! Go out and see for yourself, it's too easy."
+      ],
+      "record_this": "She asked who is going out today. I am too easy to say no — go away, we are taking a day off, and it's too easy to enjoy the blue sky.",
+      "self_check": "Mark every vowel-to-vowel link in this passage as either /w/ or /j/. Did you use each type correctly and consistently?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, paying attention to /w/ and /j/ glides between vowel-ending and vowel-starting words.",
+        "passage": "She asked if I am free to go out today, and I am! Who is coming with us? We are meeting my aunt at the office first, then we'll go away to the lake — it's too easy to say no to a day off like this. The blue sky and blue eyes of summer make everything feel new again.",
+        "sounds_to_check": {
+          "/w/ glide (rounded vowel endings)": "go out, who is, too easy, go away, blue eyes",
+          "/j/ glide (spread vowel endings)": "she asked, I am (x2), day off, the office, my aunt"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Correct glide (w or j) consistently chosen and inserted naturally at conversational speed throughout the whole passage.",
+        "70_89": "Mostly correct; occasional wrong glide choice or a missed link under pressure.",
+        "50_69": "Glides present in drilled words only, inconsistent in new combinations.",
+        "below_50": "Glottal-stop/pause style delivery between vowels throughout — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is blueprint Rule 2 of connected speech, building directly on Week 3's Rule 1 (consonant-to-vowel linking).",
+      "The glide is NOT something you consciously insert like an extra sound — it emerges naturally from your mouth's shape as it moves from one vowel to the next. Focus on NOT pausing, and the glide often appears automatically.",
+      "If you catch yourself inserting a glottal stop /ʔ/ instead of a glide, that's the Arabic habit surfacing — consciously relax your throat and let the vowels flow into each other."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, listen for zero glottal stops between vowel-vowel word boundaries."
+  }
+}

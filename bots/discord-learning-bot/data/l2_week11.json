@@ -4,51 +4,92 @@
   "theme": "Media & Journalism",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Participle Clauses (having done, being done)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "outlet (media)", "pronunciation": "OWT-let", "arabic": "منصة إخبارية/إعلامية", "pos": "noun"},
+    {"word": "censorship", "pronunciation": "SEN-sər-ship", "arabic": "رقابة/حجب", "pos": "noun"},
+    {"word": "freedom of the press", "pronunciation": "FREE-dəm əv thə pres", "arabic": "حرية الصحافة", "pos": "noun phrase"},
+    {"word": "tabloid", "pronunciation": "TAB-loyd", "arabic": "صحيفة صفراء/إثارية", "pos": "noun"},
+    {"word": "sensationalism", "pronunciation": "sen-SAY-shə-nə-liz-əm", "arabic": "إثارة صحفية مبالغ فيها", "pos": "noun"},
+    {"word": "fact-check", "pronunciation": "fakt-chek", "arabic": "تحقق من الحقائق", "pos": "verb/noun"},
+    {"word": "media literacy", "pronunciation": "MEE-dee-ə LIT-ər-ə-see", "arabic": "الوعي الإعلامي", "pos": "noun phrase"},
+    {"word": "click bait", "pronunciation": "klik bayt", "arabic": "عنوان مضلل لجلب النقرات", "pos": "noun"},
+    {"word": "influencer", "pronunciation": "IN-floo-əns-ər", "arabic": "مؤثر (على السوشيال ميديا)", "pos": "noun"},
+    {"word": "algorithm-driven", "pronunciation": "AL-gə-rith-əm DRIV-ən", "arabic": "موجّه بالخوارزميات", "pos": "adjective"},
+    {"word": "op-ed", "pronunciation": "op-ed", "arabic": "مقال رأي", "pos": "noun"},
+    {"word": "anonymous source", "pronunciation": "ə-NON-ə-məs sors", "arabic": "مصدر مجهول", "pos": "noun phrase"},
+    {"word": "publish", "pronunciation": "PUB-lish", "arabic": "ينشر", "pos": "verb"},
+    {"word": "circulation (newspaper)", "pronunciation": "sur-kyə-LAY-shən", "arabic": "توزيع (صحيفة)", "pos": "noun"},
+    {"word": "media outlet", "pronunciation": "MEE-dee-ə OWT-let", "arabic": "منصة إعلامية", "pos": "noun phrase"},
+    {"word": "propagate (information)", "pronunciation": "PROP-ə-gayt", "arabic": "ينشر/يوسّع (معلومة)", "pos": "verb"},
+    {"word": "viral (content)", "pronunciation": "VY-rəl", "arabic": "منتشر بسرعة (محتوى)", "pos": "adjective"},
+    {"word": "user-generated content", "pronunciation": "YOO-zər-JEN-ə-ray-tid KON-tent", "arabic": "محتوى من المستخدمين", "pos": "noun phrase"},
+    {"word": "editorial bias", "pronunciation": "ed-i-TOR-ee-əl BY-əs", "arabic": "تحيز تحريري", "pos": "noun phrase"},
+    {"word": "investigative journalism", "pronunciation": "in-VES-ti-gə-tiv JUR-nə-liz-əm", "arabic": "صحافة تحقيقية", "pos": "noun phrase"},
+    {"word": "echo chamber", "pronunciation": "EK-oh CHAYM-bər", "arabic": "غرفة الصدى/بيئة فكرية مغلقة", "pos": "noun phrase"},
+    {"word": "disinformation", "pronunciation": "dis-in-fər-MAY-shən", "arabic": "تضليل إعلامي متعمد", "pos": "noun"},
+    {"word": "media outlet ownership", "pronunciation": "MEE-dee-ə OWT-let OH-nər-ship", "arabic": "ملكية وسائل الإعلام", "pos": "noun phrase"},
+    {"word": "narrative (media)", "pronunciation": "NAR-ə-tiv", "arabic": "سردية إعلامية", "pos": "noun"},
+    {"word": "subscription-based", "pronunciation": "səb-SKRIP-shən bayst", "arabic": "قائم على الاشتراك", "pos": "adjective"},
+    {"word": "paywall", "pronunciation": "PAY-wawl", "arabic": "حاجز دفع (لقراءة المحتوى)", "pos": "noun"},
+    {"word": "credibility", "pronunciation": "kred-ə-BIL-ə-tee", "arabic": "مصداقية", "pos": "noun"},
+    {"word": "algorithmic feed", "pronunciation": "al-gə-RITH-mik feed", "arabic": "خلاصة موجهة بخوارزمية", "pos": "noun phrase"},
+    {"word": "public relations", "pronunciation": "PUB-lik ri-LAY-shənz", "arabic": "علاقات عامة", "pos": "noun phrase"},
+    {"word": "self-published", "pronunciation": "self-PUB-lisht", "arabic": "منشور بشكل مستقل/ذاتي", "pos": "adjective"},
+    {"word": "gatekeeper (media)", "pronunciation": "GAYT-kee-pər", "arabic": "حارس بوابة (إعلامي)", "pos": "noun"},
+    {"word": "mainstream media", "pronunciation": "MAYN-streem MEE-dee-ə", "arabic": "الإعلام السائد/الرسمي", "pos": "noun phrase"},
+    {"word": "alternative media", "pronunciation": "awl-TUR-nə-tiv MEE-dee-ə", "arabic": "إعلام بديل", "pos": "noun phrase"},
+    {"word": "media consumption", "pronunciation": "MEE-dee-ə kən-SUMP-shən", "arabic": "استهلاك إعلامي", "pos": "noun phrase"},
+    {"word": "retract (a statement)", "pronunciation": "ri-TRAKT", "arabic": "يتراجع عن (تصريح)", "pos": "verb"},
+    {"word": "leaked footage", "pronunciation": "leekt FOOT-ij", "arabic": "لقطات مسربة", "pos": "noun phrase"},
+    {"word": "media outlet credibility", "pronunciation": "MEE-dee-ə OWT-let kred-ə-BIL-ə-tee", "arabic": "مصداقية المنصة الإعلامية", "pos": "noun phrase"},
+    {"word": "spin (a story)", "pronunciation": "spin", "arabic": "يقدّم قصة بشكل منحاز", "pos": "verb"},
+    {"word": "whistleblower", "pronunciation": "WIS-əl-bloh-ər", "arabic": "مُبلّغ عن مخالفات", "pos": "noun"},
+    {"word": "journalistic integrity", "pronunciation": "jur-nə-LIS-tik in-TEG-rə-tee", "arabic": "النزاهة الصحفية", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Debate: 'Social media influencers should be held to the same standards as professional journalists.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Give a 3-minute presentation about how you personally decide whether a news source is trustworthy.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Analyze why clickbait headlines are so effective, and what harm (if any) they cause. Discuss at least 2 points.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Tell a detailed story about a time you believed something from the media that later turned out to be false or exaggerated.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Imagine you're an investigative journalist being interviewed. Answer: What story are you most proud of covering? What risks does investigative journalism involve? Why does this work matter?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Summarize a media controversy or journalism-related story you've heard about, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Media & Journalism)",
-      "target_seconds": 290
+      "prompt": "Discuss freely for 4 minutes: has social media made journalism better, worse, or just different? Explain your view.",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of media & journalism.",
-    "Analyze the impact of media & journalism on daily life.",
-    "Compare how media & journalism differs between two countries.",
-    "Write a formal email about media & journalism.",
-    "Describe a personal experience related to media & journalism (200+ words).",
-    "What changes would you make regarding media & journalism? Explain why.",
-    "Summarize an article about media & journalism in your own words."
+    "Write an essay (150+ words) arguing whether social media companies should be responsible for the content people post.",
+    "Analyze how the ownership of a media outlet (who owns it, who funds it) might affect what it reports.",
+    "Compare traditional newspapers with online news sources in terms of reliability and speed.",
+    "Write a formal email to a news outlet pointing out what you believe is an error or bias in one of their articles.",
+    "Describe a personal experience of encountering misinformation and how you figured out it wasn't true (200+ words).",
+    "What changes would you make to how news is regulated or verified online? Explain at least 2 specific ideas.",
+    "Summarize a media literacy tip or fact-checking method in your own words, in under 150 words."
   ]
 }

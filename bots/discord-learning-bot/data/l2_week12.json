@@ -4,51 +4,91 @@
   "theme": "Future & Technology",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Inversion (Not only... but also)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "automation", "pronunciation": "aw-tə-MAY-shən", "arabic": "أتمتة", "pos": "noun"},
+    {"word": "singularity (tech)", "pronunciation": "sing-gyə-LAR-ə-tee", "arabic": "التفرد التقني", "pos": "noun"},
+    {"word": "virtual reality", "pronunciation": "VUR-choo-əl ree-AL-ə-tee", "arabic": "الواقع الافتراضي", "pos": "noun phrase"},
+    {"word": "augmented reality", "pronunciation": "awg-MEN-tid ree-AL-ə-tee", "arabic": "الواقع المعزز", "pos": "noun phrase"},
+    {"word": "self-driving", "pronunciation": "self-DRY-ving", "arabic": "ذاتي القيادة", "pos": "adjective"},
+    {"word": "obsolete", "pronunciation": "ob-sə-LEET", "arabic": "بائد/عفا عليه الزمن", "pos": "adjective"},
+    {"word": "digital divide", "pronunciation": "DIJ-i-təl di-VYD", "arabic": "الفجوة الرقمية", "pos": "noun phrase"},
+    {"word": "cybersecurity", "pronunciation": "SY-bər-si-kyoor-ə-tee", "arabic": "الأمن السيبراني", "pos": "noun"},
+    {"word": "data privacy", "pronunciation": "DAY-tə PRY-və-see", "arabic": "خصوصية البيانات", "pos": "noun phrase"},
+    {"word": "wearable technology", "pronunciation": "WAIR-ə-bəl tek-NOL-ə-jee", "arabic": "تقنية قابلة للارتداء", "pos": "noun phrase"},
+    {"word": "futuristic", "pronunciation": "fyoo-chə-RIS-tik", "arabic": "مستقبلي", "pos": "adjective"},
+    {"word": "workforce displacement", "pronunciation": "WURK-fors dis-PLAYS-mənt", "arabic": "إزاحة القوى العاملة", "pos": "noun phrase"},
+    {"word": "smart city", "pronunciation": "smart SIT-ee", "arabic": "مدينة ذكية", "pos": "noun phrase"},
+    {"word": "renewable innovation", "pronunciation": "ri-NOO-ə-bəl in-ə-VAY-shən", "arabic": "ابتكار متجدد", "pos": "noun phrase"},
+    {"word": "biometric", "pronunciation": "by-oh-MET-rik", "arabic": "حيوي القياس", "pos": "adjective"},
+    {"word": "algorithm bias", "pronunciation": "AL-gə-rith-əm BY-əs", "arabic": "تحيز الخوارزمية", "pos": "noun phrase"},
+    {"word": "next-generation", "pronunciation": "nekst-JEN-ə-ray-shən", "arabic": "من الجيل القادم", "pos": "adjective"},
+    {"word": "adaptability", "pronunciation": "ə-dap-tə-BIL-ə-tee", "arabic": "قابلية التكيف", "pos": "noun"},
+    {"word": "technological unemployment", "pronunciation": "tek-nə-LOJ-i-kəl un-em-PLOY-mənt", "arabic": "البطالة التقنية", "pos": "noun phrase"},
+    {"word": "exponential growth", "pronunciation": "ek-spə-NEN-shəl grohth", "arabic": "نمو متسارع", "pos": "noun phrase"},
+    {"word": "digital transformation", "pronunciation": "DIJ-i-təl trans-fər-MAY-shən", "arabic": "التحول الرقمي", "pos": "noun phrase"},
+    {"word": "ethical AI", "pronunciation": "ETH-i-kəl ay-ay", "arabic": "الذكاء الاصطناعي الأخلاقي", "pos": "noun phrase"},
+    {"word": "innovation hub", "pronunciation": "in-ə-VAY-shən hub", "arabic": "مركز ابتكار", "pos": "noun phrase"},
+    {"word": "connectivity", "pronunciation": "kə-nek-TIV-ə-tee", "arabic": "قابلية الاتصال", "pos": "noun"},
+    {"word": "predictive technology", "pronunciation": "pri-DIK-tiv tek-NOL-ə-jee", "arabic": "تقنية تنبؤية", "pos": "noun phrase"},
+    {"word": "foreseeable future", "pronunciation": "for-SEE-ə-bəl FYOO-chər", "arabic": "المستقبل القريب المتوقع", "pos": "noun phrase"},
+    {"word": "reshape (industries)", "pronunciation": "ree-SHAYP", "arabic": "يعيد تشكيل (صناعات)", "pos": "verb"},
+    {"word": "biotech breakthrough", "pronunciation": "BY-oh-tek BRAYK-throo", "arabic": "اختراق في التقنية الحيوية", "pos": "noun phrase"},
+    {"word": "sustainable innovation", "pronunciation": "sə-STAY-nə-bəl in-ə-VAY-shən", "arabic": "ابتكار مستدام", "pos": "noun phrase"},
+    {"word": "quantum computing", "pronunciation": "KWAN-təm kəm-PYOO-ting", "arabic": "الحوسبة الكمّية", "pos": "noun phrase"},
+    {"word": "ripple effect", "pronunciation": "RIP-əl i-FEKT", "arabic": "تأثير متسلسل", "pos": "noun phrase"},
+    {"word": "cutting-edge research", "pronunciation": "KUT-ing-ej ri-SURCH", "arabic": "بحث متطور جدًا", "pos": "noun phrase"},
+    {"word": "future-proof", "pronunciation": "FYOO-chər proof", "arabic": "مضمون على المدى البعيد", "pos": "adjective"},
+    {"word": "digital footprint", "pronunciation": "DIJ-i-təl FOOT-print", "arabic": "الأثر الرقمي", "pos": "noun phrase"},
+    {"word": "AI-driven", "pronunciation": "ay-ay-DRIV-ən", "arabic": "مدفوع بالذكاء الاصطناعي", "pos": "adjective"},
+    {"word": "revolutionize", "pronunciation": "rev-ə-LOO-shə-nyz", "arabic": "يحدث ثورة/يغير جذريًا", "pos": "verb"},
+    {"word": "long-term implications", "pronunciation": "long-turm im-pli-KAY-shənz", "arabic": "تداعيات بعيدة المدى", "pos": "noun phrase"},
+    {"word": "adaptive learning", "pronunciation": "ə-DAP-tiv LUR-ning", "arabic": "تعلم تكيفي", "pos": "noun phrase"},
+    {"word": "next frontier", "pronunciation": "nekst frun-TEER", "arabic": "الحدود القادمة/المجال الجديد", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Debate: 'Automation and AI will create more jobs than they destroy.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Give a 3-minute presentation predicting what daily life will look like in 20 years, focusing on one specific area (work, home, transportation, etc.).",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Analyze the risks and benefits of relying more heavily on AI in decision-making (healthcare, hiring, justice, etc.). Discuss at least 2 points.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Tell a detailed story about a piece of technology that changed how you live, work, or communicate.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Imagine you're a futurist being interviewed about upcoming technology. Answer: What technology will have the biggest impact in the next decade? What worries you about it? What excites you about it?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Summarize an article or video about an emerging technology, in under 2 minutes, including your own opinion on it.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Future & Technology)",
-      "target_seconds": 300
+      "prompt": "Discuss freely for 4 minutes: is there a piece of technology you deliberately avoid using, or wish existed but doesn't yet? Explain.",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of future & technology.",
-    "Analyze the impact of future & technology on daily life.",
-    "Compare how future & technology differs between two countries.",
-    "Write a formal email about future & technology.",
-    "Describe a personal experience related to future & technology (200+ words).",
-    "What changes would you make regarding future & technology? Explain why.",
-    "Summarize an article about future & technology in your own words."
+    "Write an essay (150+ words) arguing whether society is moving toward technology too quickly or not quickly enough.",
+    "Analyze how a specific emerging technology (AI, VR, biotech, etc. — choose one) might change one industry within the next decade.",
+    "Compare life today with life 20 years ago in terms of technology's role in daily routines.",
+    "Write a formal email proposing a new technology-based solution to a problem in your community.",
+    "Describe a personal experience adapting to a new piece of technology, easily or with difficulty (200+ words).",
+    "What changes would you make to how technology is regulated to protect people's privacy and jobs? Explain at least 2 specific ideas.",
+    "Summarize an article about a future technology trend in your own words, in under 150 words."
   ]
 }

@@ -1,0 +1,158 @@
+{
+  "level": "L1",
+  "week": 8,
+  "focus": "Schwa Usage — The Reduced Vowel of Unstressed Syllables",
+  "focus_ar": "استخدام صوت الشوا — حرف العلة المختصر في المقاطع بدون نبر",
+  "arabic_challenge": "The schwa /ə/ is the single most common sound in English, appearing in nearly every unstressed syllable — but Arabic vowels keep a much fuller, more distinct quality even when unstressed. Arabic speakers tend to pronounce the full written vowel value in unstressed syllables ('about' as ah-BOUT with a clear 'ah', instead of the correct ə-BOUT with a mumbled schwa), which makes multi-syllable words sound over-articulated and non-native.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["schwa /ə/ in the first syllable of common words"],
+      "isolation": {
+        "instructions": "In many common words, the first, unstressed syllable reduces almost to nothing — just a quick, neutral /ə/ sound, not a full vowel.",
+        "instructions_ar": "في كتير من الكلمات الشائعة، المقطع الأول بدون النبر بيختصر لحد ما يقرب من الصفر — صوت شوا سريع ومحايد، مش حرف علة كامل.",
+        "practice": ["about → ə-BOUT (not ah-BOUT)", "again → ə-GAIN (not ah-GAIN)", "along → ə-LONG (not ah-LONG)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["about (schwa, correct)", "ah-BOUT (full vowel, sounds foreign)"], "meaning": ["حوالي", "—"]},
+        {"pair": ["again (schwa, correct)", "ah-GAIN (full vowel, sounds foreign)"], "meaning": ["مرة تانية", "—"]}
+      ],
+      "word_practice": ["about", "again", "along", "around", "away", "above", "alone"],
+      "sentence_practice": [
+        "Tell me about your trip again.",
+        "We walked along and around the park.",
+        "She went away and stayed alone above the shop."
+      ],
+      "record_this": "Tell me about your trip again — we walked along and around the park, and then she went away, alone, above the shop.",
+      "self_check": "Say 'about' — is your first syllable quick and neutral (schwa), or a full, clear 'ah' sound? Aim for quick and neutral."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["schwa /ə/ in the -er, -or, -ar endings"],
+      "isolation": {
+        "instructions": "Endings like -er, -or, and unstressed -ar almost always reduce to schwa + light r-coloring, never a full, clear vowel.",
+        "instructions_ar": "النهايات زي -er و -or و -ar بدون نبر غالبًا بتختصر لصوت شوا + لمسة خفيفة من الـ r، مش حرف علة كامل وواضح.",
+        "practice": ["teacher → teach-ər", "doctor → doc-tər", "sugar → sug-ər"]
+      },
+      "minimal_pairs": [
+        {"pair": ["teacher (schwa ending, correct)", "teach-OR (over-pronounced, foreign)"], "meaning": ["معلم", "—"]},
+        {"pair": ["doctor (schwa ending, correct)", "doc-TOR (over-pronounced, foreign)"], "meaning": ["دكتور", "—"]}
+      ],
+      "word_practice": ["teacher", "doctor", "sugar", "water", "better", "actor", "color", "matter"],
+      "sentence_practice": [
+        "My teacher is also a doctor.",
+        "The water needs a little sugar, no matter the color.",
+        "The actor was better than his brother."
+      ],
+      "record_this": "My teacher is also a doctor — the water needs a little sugar, no matter the color, because the actor was better than his brother.",
+      "self_check": "For every -er/-or/-ar ending here, did you reduce it to a light schwa+r sound rather than a full, stressed vowel?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["schwa /ə/ in function words: a, the, of, for, to"],
+      "isolation": {
+        "instructions": "As practiced back in Week 1, the vowels in unstressed function words are almost always schwa. This week, connect that pattern explicitly to the schwa symbol itself.",
+        "instructions_ar": "زي ما تدربنا في الأسبوع الأول، حروف العلة في الكلمات الوظيفية بدون نبر غالبًا بتكون شوا. النهارده هنربط الرابط ده بشكل مباشر برمز الشوا نفسه.",
+        "practice": ["a book → ə book", "the man → thə man (before consonants)", "of course → əv course"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a book (schwa)", "AY book (full vowel, only for emphasis)"], "meaning": ["كتاب", "—"]},
+        {"pair": ["the man (schwa, before consonant)", "thee man (full vowel, before vowel sound — different rule)"], "meaning": ["الرجل", "—"]}
+      ],
+      "word_practice": ["a", "the", "of", "for", "to", "than", "as"],
+      "sentence_practice": [
+        "I need a book for the class.",
+        "She is taller than her brother, as I said.",
+        "This is one of the best gifts of all."
+      ],
+      "record_this": "I need a book for the class — she is taller than her brother, as I said, and this is one of the best gifts of all.",
+      "self_check": "Are the function-word vowels reduced to schwa consistently, connecting back to what you practiced in Week 1?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["schwa /ə/ in multi-syllable content words (medial position)"],
+      "isolation": {
+        "instructions": "Schwa also appears INSIDE longer content words, in whichever syllables are not stressed — even nouns and adjectives have schwa syllables mixed with their stressed ones.",
+        "instructions_ar": "الشوا كمان بتظهر داخل الكلمات المحتوى الطويلة، في أي مقطع بدون نبر — حتى الأسماء والصفات فيها مقاطع شوا مختلطة مع المقاطع المنبورة.",
+        "practice": ["camera → CAM-ər-ə (two schwas!)", "chocolate → CHOC-lət", "family → FAM-ə-lee"]
+      },
+      "minimal_pairs": [
+        {"pair": ["camera (with schwas, correct, natural)", "CA-ME-RA (every syllable full, foreign)"], "meaning": ["كاميرا", "—"]},
+        {"pair": ["chocolate (schwa, correct)", "CHO-CO-LATE (every syllable full, foreign)"], "meaning": ["شوكولاتة", "—"]}
+      ],
+      "word_practice": ["camera", "chocolate", "family", "vegetable", "comfortable", "different"],
+      "sentence_practice": [
+        "My family loves chocolate and vegetables.",
+        "This camera is comfortable and different from mine.",
+        "Bring the camera — my family wants a photo."
+      ],
+      "record_this": "My family loves chocolate and vegetables — this camera is comfortable and different from mine, so bring it for a family photo.",
+      "self_check": "For 'camera', 'chocolate', and 'family', did you correctly reduce the unstressed syllables rather than fully pronouncing every one?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["schwa /ə/ at natural conversational speed"],
+      "isolation": {
+        "instructions": "Bring together all four schwa patterns from this week (first-syllable, -er/-or endings, function words, medial content-word syllables) at natural speaking speed.",
+        "instructions_ar": "جمّع كل أنماط الشوا الأربعة من الأسبوع ده (المقطع الأول، نهايات -er/-or، الكلمات الوظيفية، مقاطع وسط الكلمة) بسرعة كلام طبيعية.",
+        "practice": ["Slow: ə-bout the teach-ər and the cam-ər-ə", "Normal speed", "Fast, natural conversation speed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["tell me about the teacher and the camera (natural, all schwas reduced)", "over-articulated version (foreign-sounding)"], "meaning": ["قوليّ عن المعلم والكاميرا", "—"]}
+      ],
+      "word_practice": ["about", "teacher", "camera", "family", "again", "doctor", "chocolate"],
+      "sentence_practice": [
+        "Tell me about the teacher and the camera again.",
+        "My family's doctor loves chocolate, as I said before.",
+        "The camera is a gift for the family, about time too!"
+      ],
+      "record_this": "Tell me about the teacher and the camera again — my family's doctor loves chocolate, as I said, and the camera is a gift for the family, about time too!",
+      "self_check": "Record 3 times at increasing speed. Are the schwa syllables consistently light and quick, even under speed pressure?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: schwa in first syllables, -er/-or endings, function words, medial content-word syllables, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["about", "ah-BOUT (wrong)"], ["teacher", "teach-OR (wrong)"], ["a book", "AY book (wrong, unless emphatic)"], ["camera", "CA-ME-RA (wrong)"]
+      ],
+      "challenge_sentences": [
+        "About a family camera, my teacher and the doctor talked again for a moment.",
+        "The chocolate is comfortable — I mean, the sofa is comfortable, and the chocolate is different, as I said before.",
+        "Tell the teacher about the vegetable garden and the family photo."
+      ],
+      "record_this": "About a family camera, my teacher and the doctor talked again — the chocolate was different, the sofa was comfortable, and I told the teacher about the vegetable garden and the family photo.",
+      "self_check": "Underline every schwa in this passage on paper. This week's passage should have well over 15 — did you reduce most of them naturally?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, reducing every unstressed syllable to schwa where appropriate.",
+        "passage": "About a month ago, my family bought a new camera for our vacation. My teacher told us again about the difference between a comfortable trip and a difficult one, so we planned around the schedule of a local doctor who knows the area. We brought chocolate and vegetables for the family, and everyone had a wonderful time together, again and again.",
+        "sounds_to_check": {
+          "schwa in first syllable": "about, again",
+          "schwa in -er/-or endings": "teacher, doctor",
+          "schwa in function words": "a (x3), for, of",
+          "schwa in medial content-word syllables": "family (x2), camera, comfortable, vegetables, difference, difficult, wonderful"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Schwa consistently and naturally used across all four contexts throughout the passage at conversational speed.",
+        "70_89": "Mostly correct; a few over-articulated vowels in less common words.",
+        "50_69": "Schwa present in drilled words only, full vowels used elsewhere.",
+        "below_50": "Full, clear vowels used in nearly every syllable — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The schwa is not 'lazy' or 'sloppy' pronunciation — it is the CORRECT, expected sound in unstressed syllables, and using a full vowel instead is what actually sounds unusual to native ears.",
+      "This week ties together everything from Weeks 1-7: stress (Week 1), word reduction (Week 1), and now the specific vowel quality (schwa) that fills those unstressed slots.",
+      "If you're unsure whether a syllable should be schwa, ask: is this syllable STRESSED? If no, it's very likely a schwa candidate."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, this should be one of your most natural-sounding recordings of the whole level — schwa mastery is a major fluency milestone."
+  }
+}

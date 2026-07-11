@@ -60,8 +60,11 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
     date = today_str()
     day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(day_name) if day_name in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
 
-    # Load curated content for today
-    daily = curriculum.get_daily_content(week, day_name, day_index)
+    # Load curated content for today (level MUST be threaded through here —
+    # previously this silently defaulted to "L0" for every level, which
+    # meant L1/L2/L3 members were served Level-0 vocabulary, speaking
+    # missions, and writing prompts every single day).
+    daily = curriculum.get_daily_content(week, day_name, day_index, level)
     vocab_theme = daily["theme"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
 

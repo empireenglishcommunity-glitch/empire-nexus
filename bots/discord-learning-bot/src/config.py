@@ -36,9 +36,14 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 # ============================================================
 GOOGLE_SERVICE_ACCOUNT_EMAIL = os.getenv("GOOGLE_SERVICE_ACCOUNT_EMAIL", "")
 GOOGLE_PRIVATE_KEY = os.getenv("GOOGLE_PRIVATE_KEY", "").replace("\\n", "\n")
-SHEET_ID = os.getenv("SHEET_ID", "13fJFzyeTMYHFKj2YDEy620fHfznbFvhTieqD8N1KUCg")
-SHEET_GID_SUBSCRIBERS = int(os.getenv("SHEET_GID_SUBSCRIBERS", "421473979"))
-SHEET_GID_EVENTS = int(os.getenv("SHEET_GID_EVENTS", "1549846062"))
+# No production Sheet ID as a source-code default — a real identifier should
+# only ever live in the deployed .env file, never in a fallback baked into
+# the codebase (found during the 2026-07-11 security sweep; not a credential
+# by itself, but this pattern is exactly how real secrets end up committed
+# by accident later). Configure via SHEET_ID in .env.
+SHEET_ID = os.getenv("SHEET_ID", "")
+SHEET_GID_SUBSCRIBERS = int(os.getenv("SHEET_GID_SUBSCRIBERS", "0") or "0")
+SHEET_GID_EVENTS = int(os.getenv("SHEET_GID_EVENTS", "0") or "0")
 
 # ============================================================
 #  SCHEDULING

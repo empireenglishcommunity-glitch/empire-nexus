@@ -1029,6 +1029,16 @@ These refinements **preserve V1** (no redesign, no V2). They apply the recommend
 
 > **Scope guardrail:** competency-based advancement criteria, the "system over instructor" philosophy, accent-from-day-one, and the unified daily loop are **unchanged** — these are the system's protected strengths.
 
+### Changelog — Discord Learning Bot Content Completion & Advancement-Exam Fix (July 2026)
+
+This entry documents an **implementation-level** update, not a design change to the blueprint itself. It records that the Discord Learning Bot (the primary implementation of this blueprint's Layer 3 Community Engine) was audited against this document and brought into alignment with it.
+
+- **H — Full curriculum implementation, L0-L3 (38 weeks):** Table 2's four-level structure, Table 19's sound-pattern schedule, and §5.3/§5.4's connected-speech rules are now fully implemented in code and content, not just specified in this document. L0 was already complete. L1 (10 weeks) and L2 (12 weeks) accent and grammar drills were written from scratch, explicitly citing the Table 19 week assignments where the blueprint specifies one (e.g., Flap T/D → L1 Wk2, Yod-Dropping → L2 Wk3, Dark L → L2 Wk5, NG-Coalescence → L2 Wk7) and reasoned extrapolation elsewhere, documented inline in each week's content file. L2 and L3 vocabulary, speaking missions, and writing prompts — previously empty or mechanically templated despite being marked complete in an earlier commit — were rewritten as real, level-appropriate content. L3's accent content is grounded in Table 10/§5.6 (Micro-Phonetics Refinement) and Table 11 (Mastery Tiers), since Table 19 does not assign new phonemes past L2 — consistent with this blueprint's own framing of Level 3 as a refinement/mastery destination (§2.4), not a level with further phoneme instruction.
+- **I — Advancement-exam pipeline closed (§9.3):** The Live Speaking/Accent DM-collection flow behind the bot's `!exam` command previously had no path to reach a human reviewer or update a learner's level — submissions were held only in transient memory and lost on restart. This is now fixed: submissions persist durably, admins are notified automatically, and a `!examresult` command resolves the exam and, on pass, triggers the automatic role/level update this document's Table 45 describes ("passing triggers automatic role upgrade").
+- **J — Content-loading correctness:** A filename-based content-loading bug (affecting any level with 10+ weeks) was found and fixed as part of this work — not a blueprint change, but noted here since it directly affected whether Tables 2/19's per-level, per-week content assignments were actually honored by the running system.
+
+> **Scope guardrail (reaffirmed):** As with the June 2026 refinements above, this update changes **implementation**, not design. No table, rule, or philosophy in this blueprint was altered — this entry exists to keep the document's own changelog complete as the system it describes gets built out.
+
 ---
 
 *Source: `Empire_English_System_Blueprint_v1.0.pdf` — converted to Markdown.*
