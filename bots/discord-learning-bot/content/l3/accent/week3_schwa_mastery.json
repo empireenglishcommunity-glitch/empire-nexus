@@ -1,0 +1,144 @@
+{
+  "level": "L3",
+  "week": 3,
+  "focus": "Micro-Phonetics Refinement — Schwa Mastery in Academic & Complex Vocabulary",
+  "focus_ar": "تحسين الصوتيات الدقيقة — إتقان الشوا في المفردات الأكاديمية والمعقدة",
+  "arabic_challenge": "You learned schwa foundations in L1 Week 8 and reduction/weak forms in L2 Week 2. This week, per Table 11's mastery-tier goals, tests schwa precision specifically in the longer, more complex academic vocabulary this week's theme demands (methodology, corroborate, substantiate) — words where MULTIPLE syllables compete for schwa treatment, requiring precise judgment about which syllable is truly stressed.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["schwa in multi-syllable academic words (2+ schwa syllables)"],
+      "isolation": {
+        "instructions": "Academic vocabulary often has 2 or more schwa syllables in a single word — practice identifying and correctly reducing ALL of them, not just the most obvious one.",
+        "instructions_ar": "المفردات الأكاديمية غالبًا فيها مقطعين شوا أو أكتر في كلمة واحدة — تدرب على تحديد وتخفيض كل المقاطع دي، مش بس الأوضح.",
+        "practice": ["methodology → mə-thə-DOL-ə-jee (3 schwas!)", "corroborate → kə-ROB-ə-rayt (2 schwas)", "substantiate → səb-STAN-shee-ayt (1 clear schwa, careful of the rest)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["methodology (3 correctly reduced schwas)", "methodology (fully pronounced, foreign)"], "meaning": ["منهجية", "—"]}
+      ],
+      "word_practice": ["methodology", "corroborate", "substantiate", "epistemology", "delineate"],
+      "sentence_practice": [
+        "The methodology needs to corroborate and substantiate the claim.",
+        "Epistemology helps delineate what we can truly know.",
+        "This methodology should substantiate and corroborate the epistemology."
+      ],
+      "record_this": "The methodology needs to corroborate and substantiate the claim — epistemology helps delineate what we can truly know.",
+      "self_check": "In 'methodology', did you correctly identify and reduce ALL 3 non-stressed syllables to schwa, not just one?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["identifying primary stress correctly in unfamiliar academic words"],
+      "isolation": {
+        "instructions": "Before you can apply schwa correctly, you must first correctly identify which syllable carries the PRIMARY stress — a common source of error in long, unfamiliar academic vocabulary.",
+        "instructions_ar": "قبل ما تطبق الشوا صح، لازم الأول تحدد صح أنهي مقطع عليه النبر الأساسي — مصدر شائع للخطأ في المفردات الأكاديمية الطويلة الغريبة.",
+        "practice": ["extrapolate → ik-STRAP-ə-layt (stress on 2nd syllable)", "juxtapose → juk-stə-POHZ (stress on last syllable)", "postulate → POS-chə-layt (stress on 1st syllable)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["extrapolate (correct stress placement)", "extrapolate (wrong stress placement)"], "meaning": ["يستنتج بالتعميم", "—"]}
+      ],
+      "word_practice": ["extrapolate", "juxtapose", "postulate", "delineate"],
+      "sentence_practice": [
+        "We extrapolate data to juxtapose two postulated theories.",
+        "The professor postulated a theory, then delineated its limits.",
+        "To extrapolate correctly, you must juxtapose the data carefully."
+      ],
+      "record_this": "We extrapolate data to juxtapose two postulated theories — the professor delineated its limits clearly.",
+      "self_check": "Could you correctly identify AND produce the primary stress on each word before applying schwa to the rest?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["schwa in academic vocabulary at natural presentation speed"],
+      "isolation": {
+        "instructions": "Apply multi-syllable schwa reduction while delivering an academic-style presentation, matching this week's TED-talk and podcast speaking missions.",
+        "instructions_ar": "طبّق تخفيض الشوا متعدد المقاطع وانت بتقدم عرض بأسلوب أكاديمي، بما يتماشى مع مهام العرض التقديمي والبودكاست هذا الأسبوع.",
+        "practice": ["Deliver Day 1's sentences as a confident academic presentation."]
+      },
+      "minimal_pairs": [
+        {"pair": ["presentation-style delivery with correct schwa", "careful, slow delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["methodology", "corroborate", "substantiate", "extrapolate"],
+      "sentence_practice": [
+        "Our methodology will corroborate and substantiate this extrapolated finding.",
+        "To substantiate this claim, we must corroborate our methodology.",
+        "This extrapolated data should corroborate our overall methodology."
+      ],
+      "record_this": "Our methodology will corroborate and substantiate this extrapolated finding, in line with established academic standards.",
+      "self_check": "At confident presentation speed, did all the schwa reductions remain correct and natural?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["schwa mastery test: reading genuinely unfamiliar academic text cold"],
+      "isolation": {
+        "instructions": "Find a genuinely unfamiliar academic paragraph (from an article, textbook, or online source) and read it aloud without preparation, applying schwa judgment in real time.",
+        "instructions_ar": "لاقي فقرة أكاديمية غير مألوفة فعلاً (من مقال أو كتاب أو مصدر أونلاين) واقراها بصوت عالي بدون تحضير، وطبّق حكم الشوا في الوقت الحقيقي.",
+        "practice": ["Read an unfamiliar academic paragraph cold, marking any words where you're unsure of stress/schwa placement afterward."]
+      },
+      "minimal_pairs": [
+        {"pair": ["confident cold-reading with good schwa judgment", "hesitant cold-reading, frequent errors"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen text)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen academic text.)"],
+      "record_this": "(Read an unfamiliar academic paragraph of your choice aloud, cold, with no preparation.)",
+      "self_check": "How many words did you have to guess at? Look up correct stress patterns for any words you were unsure about afterward."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["schwa mastery in fully spontaneous academic-style speech"],
+      "isolation": {
+        "instructions": "Deliver a spontaneous 45-60 second academic-style explanation of any topic, testing schwa automaticity in vocabulary you generate yourself, not read.",
+        "instructions_ar": "قدم شرح عفوي بأسلوب أكاديمي لمدة ٤٥-٦٠ ثانية عن أي موضوع، واختبر تلقائية الشوا في مفردات من إنتاجك الخاص، مش من نص مقروء.",
+        "practice": ["Explain, unscripted, a concept you understand well (from your studies, work, or a hobby) as if teaching it academically."]
+      },
+      "minimal_pairs": [
+        {"pair": ["spontaneous academic explanation with natural schwa", "spontaneous explanation with over-articulated vowels"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your explanation)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: explain a concept you know well, academically, for 45-60 seconds, unscripted.)",
+      "self_check": "In your own spontaneously-generated academic vocabulary, did schwa reduction still apply naturally?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: multi-schwa words, stress identification, presentation speed, cold-reading, spontaneous academic speech",
+      "type": "review",
+      "mixed_pairs": [
+        ["methodology (3 schwas)", "extrapolate (stress placement)"], ["corroborate (presentation speed)", "spontaneous academic explanation"]
+      ],
+      "challenge_sentences": [
+        "Our methodology will corroborate and substantiate this extrapolated, juxtaposed data, in line with established epistemology.",
+        "To postulate a theory, you must delineate its limits and substantiate it with corroborating evidence.",
+        "This methodology, extrapolated correctly, should corroborate and substantiate our overall epistemological approach."
+      ],
+      "record_this": "Our methodology will corroborate and substantiate this extrapolated, juxtaposed data, in line with established epistemology.",
+      "self_check": "This passage stacks multiple complex academic words. Did every schwa reduction remain correct throughout?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Micro-Phonetics Precision Checkpoint (Schwa in Academic Vocabulary)",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a 60-90 second spontaneous academic-style explanation of a topic of your choice, using at least 3 pieces of complex, multi-syllable vocabulary naturally.",
+        "passage": "(Free speech: explain any topic academically for 60-90 seconds, using naturally-occurring complex vocabulary.)",
+        "sounds_to_check": {
+          "multi-syllable schwa reduction": "check throughout for correct, consistent reduction",
+          "correct stress identification": "check that primary stress lands correctly on complex words"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "(Gold/Platinum tier) Schwa reduction fully automatic even in complex, multi-syllable, spontaneously-generated academic vocabulary.",
+        "70_89": "(Silver tier) Mostly correct; very rare errors in unfamiliar, complex words.",
+        "50_69": "Correct in familiar/drilled words; noticeable over-articulation in new complex vocabulary.",
+        "below_50": "Frequent over-articulation of complex academic words — return to L1 Week 8 for foundational review."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Academic and Latin-derived vocabulary (common in this week's theme) often has 3+ syllables with only ONE stressed — correctly identifying that one stressed syllable is the real challenge here, more than the schwa mechanic itself, which you already know.",
+      "When in doubt about a new academic word's stress, a good default guess for Latin-derived words is often the second-to-last or third-to-last syllable — though this is a guideline, not a strict rule, and checking a dictionary is always more reliable.",
+      "This connects to L2 Week 11's transcription/listening skills — being able to correctly HEAR where native speakers place stress in unfamiliar academic words is as valuable as producing it yourself."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — these spontaneous academic explanations are excellent material for peer/mentor feedback in L3's mentorship channels."
+  }
+}

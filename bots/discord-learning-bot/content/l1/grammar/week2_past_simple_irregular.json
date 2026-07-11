@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w2",
+  "level": "L1",
+  "week": 2,
+  "pattern_name": "Past Simple — Irregular Verbs",
+  "pattern_name_ar": "الماضي البسيط — الأفعال الشاذة",
+  "formula": "Subject + Verb (irregular past form) (+ Object)",
+  "formula_visual": "[WHO] + [CHANGED VERB FORM] + [WHAT] (yesterday / last week / ago)",
+  "when_to_use": "Many of English's most common verbs do NOT take -ed in the past — they change form completely (go→went, have→had, see→saw). These must be memorized individually; there is no spelling rule.",
+  "when_to_use_ar": "كتير من أكثر الأفعال الإنجليزية استخدامًا مش بتاخد -ed في الماضي — بتتغير شكلها بالكامل (go→went, have→had, see→saw). لازم تحفظها واحدة واحدة، مفيش قاعدة إملائية.",
+  "why_arabic_speakers_struggle": "Learners who just mastered the -ed rule in Week 1 often over-apply it here ('goed', 'haved', 'seed'), because it feels like a safe, learned pattern. Irregular verbs must be treated as separate vocabulary items to memorize, not as an extension of the -ed rule.",
+  "examples": [
+    {"en": "I went to the market yesterday.", "ar": "رحت السوق إمبارح", "structure": "[I] + [went] + [to the market] + (yesterday)"},
+    {"en": "She had a big breakfast.", "ar": "هي فطرت فطور كبير", "structure": "[She] + [had] + [a big breakfast]"},
+    {"en": "They saw a good movie.", "ar": "هم شافوا فيلم كويس", "structure": "[They] + [saw] + [a good movie]"},
+    {"en": "We ate at a new restaurant.", "ar": "احنا أكلنا في مطعم جديد", "structure": "[We] + [ate] + [at a new restaurant]"},
+    {"en": "He came home late.", "ar": "هو جه البيت متأخر", "structure": "[He] + [came] + [home] + [late]"}
+  ],
+  "common_errors": [
+    {"wrong": "I goed to the market.", "correct": "I went to the market.", "explanation": "'go' is irregular — it becomes 'went', never 'goed'. There is no -ed rule to apply here."},
+    {"wrong": "She haved a big breakfast.", "correct": "She had a big breakfast.", "explanation": "'have' is irregular — it becomes 'had'."},
+    {"wrong": "They seed a good movie.", "correct": "They saw a good movie.", "explanation": "'see' is irregular — it becomes 'saw', not 'seed'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (go) to work yesterday.", "answer": "went", "hint": "go → went (irregular, memorize it)."},
+    {"sentence": "She ___ (have) lunch with me.", "answer": "had", "hint": "have → had."},
+    {"sentence": "They ___ (see) us at the park.", "answer": "saw", "hint": "see → saw."},
+    {"sentence": "We ___ (eat) dinner together.", "answer": "ate", "hint": "eat → ate."},
+    {"sentence": "He ___ (come) home very late.", "answer": "came", "hint": "come → came."}
+  ],
+  "quick_rule": "There is no spelling shortcut for irregular verbs — the top 20 most common English verbs are almost all irregular (go, have, see, eat, come, do, make, take, get, know...). Learn 3-4 new ones per week alongside your regular vocabulary.",
+  "quick_rule_ar": "مفيش قاعدة إملائية للأفعال الشاذة — أكتر ٢٠ فعل استخدامًا في الإنجليزية أغلبهم شاذين. احفظ ٣-٤ أفعال جديدة كل أسبوع مع باقي مفرداتك.",
+  "mnemonic": "IRREGULAR = 'I Refuse to be REGULAR' — think of these verbs as rebels that broke the -ed rule on purpose.",
+  "connect_to_speaking": "When you tell a story about your day, you'll almost always need at least 2-3 irregular verbs (went, had, saw, ate, did). Practice: tell your buddy your full routine from yesterday using only irregular past verbs where needed — no 'goed' or 'haved' allowed!"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w3",
+  "level": "L2",
+  "week": 3,
+  "pattern_name": "Reported Speech (he said that...)",
+  "pattern_name_ar": "الكلام المنقول (قال إن...)",
+  "formula": "Subject + said/told + (that) + [Clause with tense shifted BACK one step]",
+  "formula_visual": "[REPORTER] + said + [ORIGINAL STATEMENT, tense shifted back]",
+  "when_to_use": "Use Reported Speech to relay what someone else said, without quoting them directly. When the reporting verb (said/told) is in the past, the tense inside the reported clause usually shifts back one step (Present Simple → Past Simple, Present Perfect → Past Perfect, etc.) — this is called 'backshifting'.",
+  "when_to_use_ar": "استخدم الكلام المنقول لنقل ما قاله شخص آخر بدون اقتباس مباشر. لما فعل النقل (said/told) في الماضي، الزمن جوه الجملة المنقولة بيرجع خطوة واحدة للخلف.",
+  "why_arabic_speakers_struggle": "Arabic reported speech doesn't require the same mandatory tense backshift — you can often report someone's exact words with the tense unchanged. English learners frequently keep the original tense ('She said she is tired' instead of 'She said she was tired'), which is grammatically incorrect in standard reported speech, even though the meaning is usually still understood.",
+  "examples": [
+    {"en": "Direct: 'I am tired.' → Reported: She said she was tired.", "ar": "قالت إنها تعبانة (تحول الزمن من الحاضر للماضي)", "structure": "[She said] + [she was tired] (was ← is, backshifted)"},
+    {"en": "Direct: 'I will call you.' → Reported: He said he would call me.", "ar": "قال إنه هيتصل بيا (will تتحول لـ would)", "structure": "[He said] + [he would call me] (would ← will)"},
+    {"en": "Direct: 'I have finished.' → Reported: She said she had finished.", "ar": "قالت إنها خلصت (المضارع التام يتحول لماضٍ تام)", "structure": "[She said] + [she had finished] (had finished ← have finished)"},
+    {"en": "Direct: 'I can help.' → Reported: He said he could help.", "ar": "قال إنه يقدر يساعد (can تتحول لـ could)", "structure": "[He said] + [he could help] (could ← can)"},
+    {"en": "Direct: 'Where do you live?' → Reported: She asked where I lived.", "ar": "سألت فين أنا عايش (سؤال منقول، الترتيب بيتحول لجملة عادية)", "structure": "[She asked] + [where I lived] (statement word order, not question order)"}
+  ],
+  "common_errors": [
+    {"wrong": "She said she is tired.", "correct": "She said she was tired.", "explanation": "When the reporting verb is past ('said'), the reported clause's tense must backshift — 'is' becomes 'was'."},
+    {"wrong": "He asked where do I live?", "correct": "He asked where I lived.", "explanation": "Reported questions use STATEMENT word order (subject before verb), not question word order, and lose the question mark."},
+    {"wrong": "She told that she was busy.", "correct": "She said that she was busy. / She told me that she was busy.", "explanation": "'tell' always needs a person as its object (told ME/HIM/HER) — 'say' does not need a person object."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Direct: 'I love this song.' → Reported: She said she ___ that song.", "answer": "loved", "hint": "Present Simple backshifts to Past Simple."},
+    {"sentence": "Direct: 'I am working.' → Reported: He said he ___ working.", "answer": "was", "hint": "Present Continuous backshifts to Past Continuous."},
+    {"sentence": "Direct: 'Are you coming?' → Reported: She asked if I ___ coming.", "answer": "was", "hint": "Reported yes/no question uses 'if', with backshifted tense."},
+    {"sentence": "Direct: 'I saw him yesterday.' → Reported: He said he ___ him the day before.", "answer": "had seen", "hint": "Past Simple backshifts to Past Perfect."},
+    {"sentence": "Direct: 'What is your name?' → Reported: He asked ___ ___.", "answer": "what my name was", "hint": "Statement word order, backshifted tense."}
+  ],
+  "quick_rule": "When the reporting verb is PAST (said/told/asked), backshift the tense ONE step back (Present→Past, Past→Past Perfect, will→would, can→could). Reported questions use statement word order and no question mark.",
+  "quick_rule_ar": "لما فعل النقل ماضي، رجّع الزمن خطوة واحدة للخلف. الأسئلة المنقولة بترتيب الجملة العادي وبدون علامة استفهام.",
+  "mnemonic": "BACKSHIFT = 'the clock moves BACK one step' every time you report what someone ELSE said in the past.",
+  "connect_to_speaking": "Practice with your buddy: interview each other with 3 questions, then report back to a third person (or record yourself) what your buddy said, applying the correct tense backshift each time."
+}

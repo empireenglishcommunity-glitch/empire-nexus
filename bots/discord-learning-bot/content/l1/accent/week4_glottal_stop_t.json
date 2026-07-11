@@ -1,0 +1,158 @@
+{
+  "level": "L1",
+  "week": 4,
+  "focus": "Glottal Stop T — Before Syllabic N",
+  "focus_ar": "الوقفة الحنجرية بديلة T — قبل صوت N المقطعي",
+  "arabic_challenge": "Arabic has a true glottal stop (hamza ء) as a full consonant, so the physical motion is not new — but Arabic speakers usually expect a glottal stop only where a hamza is written, and instead pronounce a full, released /t/ in words like 'mountain' or 'button'. Learning WHERE English secretly hides a glottal stop (specifically before a syllabic /n/) is the real challenge, not the sound itself.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/t/ → glottal stop [ʔ] before syllabic /n/"],
+      "isolation": {
+        "instructions": "When /t/ comes right before an 'n' sound that forms its own syllable (no vowel written between t and n, like in 'button' /bʌt-n/), Americans replace the /t/ with a quick closure of the vocal cords — a glottal stop — instead of releasing air through the tongue.",
+        "instructions_ar": "لما /t/ توصل بالضبط قبل صوت 'n' اللي بيشكل مقطع بمفرده (بدون حرف علة مكتوب بين الـ t والـ n، زي في button)، الأمريكان بيستبدلوا /t/ بقفلة سريعة في الحبال الصوتية بدل ما يسيبوا الهواء يخرج من اللسان.",
+        "practice": ["button → bu-[ʔ]n (throat catch, NOT bu-TUN)", "mountain → moun-[ʔ]n", "kitten → ki-[ʔ]n"]
+      },
+      "minimal_pairs": [
+        {"pair": ["button (glottal stop)", "button (full T, sounds foreign)"], "meaning": ["زرار", "—"]},
+        {"pair": ["mountain (glottal stop)", "mountain (full T, sounds foreign)"], "meaning": ["جبل", "—"]},
+        {"pair": ["written (glottal stop)", "kitten (glottal stop)"], "meaning": ["مكتوب", "قطة صغيرة"]}
+      ],
+      "word_practice": ["button", "mountain", "kitten", "written", "cotton", "important", "certain", "sentence"],
+      "sentence_practice": [
+        "Press the button on the mountain trail map.",
+        "It's important — the kitten's name is written down.",
+        "I'm certain about this cotton sentence."
+      ],
+      "record_this": "It's important — press the button, and I'm certain the kitten's name is written on a cotton sentence card, near the mountain.",
+      "self_check": "Put your hand on your throat. For 'button', do you feel a quick closing sensation instead of your tongue tapping? That closure IS the glottal stop."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["distinguishing glottal-stop words from flap-T words"],
+      "isolation": {
+        "instructions": "Not every /t/ before an 'n' gets a glottal stop — only when the n forms its OWN syllable with no vowel sound. Compare 'water' (has a vowel before the n-less ending, so it flaps) vs. 'button' (the n stands alone as a syllable, so it glottal-stops).",
+        "instructions_ar": "مش كل /t/ قبل n بتاخد وقفة حنجرية — بس لما الـ n تشكل مقطعها لوحدها بدون حرف علة. قارن water (فيه حرف علة، فبيتحول لفلاب) مع button (الـ n لوحدها كمقطع، فبتاخد وقفة حنجرية).",
+        "practice": ["water (flap — has a vowel 'er') vs. button (glottal stop — 'n' alone)", "better (flap) vs. mountain (glottal stop)", "matter (flap) vs. certain (glottal stop)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["water (flap)", "button (glottal stop)"], "meaning": ["ماء", "زرار"]},
+        {"pair": ["better (flap)", "mountain (glottal stop)"], "meaning": ["أفضل", "جبل"]},
+        {"pair": ["matter (flap)", "certain (glottal stop)"], "meaning": ["مهم", "متأكد"]}
+      ],
+      "word_practice": ["water", "button", "better", "mountain", "matter", "certain", "little", "written"],
+      "sentence_practice": [
+        "It doesn't matter — I'm certain the water is better here.",
+        "Press the little button near the mountain.",
+        "It's written that water tastes better up there."
+      ],
+      "record_this": "It doesn't matter — I'm certain the water is better near the mountain, and it's written on a little button by the trail.",
+      "self_check": "Go word by word: which mechanism did you use for each — a tongue flap or a throat closure? They should never be interchangeable."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["glottal stop in longer, multi-syllable words"],
+      "isolation": {
+        "instructions": "The glottal-stop-before-syllabic-n pattern applies just as strongly in longer, more advanced vocabulary — this rule doesn't change as words get more complex.",
+        "instructions_ar": "قاعدة الوقفة الحنجرية قبل الـ n المقطعية بتنطبق بقوة في الكلمات الأطول والأكثر تقدمًا — القاعدة مبتتغيرش مع تعقيد الكلمة.",
+        "practice": ["important → impor-[ʔ]nt", "continental → conti-nen-[ʔ]l (note: also affects some -tal endings)", "fountain → foun-[ʔ]n"]
+      },
+      "minimal_pairs": [
+        {"pair": ["important (glottal stop)", "important (full T, sounds foreign)"], "meaning": ["مهم", "—"]},
+        {"pair": ["fountain (glottal stop)", "fountain (full T, sounds foreign)"], "meaning": ["نافورة", "—"]}
+      ],
+      "word_practice": ["important", "fountain", "certain", "mountain", "curtain", "attention", "sentence"],
+      "sentence_practice": [
+        "Pay attention — it's important to see the fountain.",
+        "Draw the curtain near the mountain view.",
+        "I'm certain that sentence is important."
+      ],
+      "record_this": "Pay attention — it's important to draw the curtain, walk to the fountain, and be certain about every sentence near the mountain.",
+      "self_check": "Did the glottal stop hold up even in these longer, more complex words, or did a full /t/ sneak back in?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["glottal stop practice: minimal pair drilling for automaticity"],
+      "isolation": {
+        "instructions": "Rapid-fire practice switching between glottal-stop words and regular words to build automatic, unconscious control of the sound.",
+        "instructions_ar": "تمرين سريع للتبديل بين كلمات الوقفة الحنجرية والكلمات العادية لبناء تحكم تلقائي ولا شعوري في الصوت.",
+        "practice": ["button, water, button, water, mountain, matter, mountain, matter", "certain, better, certain, better"]
+      },
+      "minimal_pairs": [
+        {"pair": ["button, water", "alternate rapidly 5 times"], "meaning": ["زرار، ماء", "—"]},
+        {"pair": ["mountain, matter", "alternate rapidly 5 times"], "meaning": ["جبل، مهم", "—"]}
+      ],
+      "word_practice": ["button", "water", "mountain", "matter", "certain", "better", "kitten", "little"],
+      "sentence_practice": [
+        "The button on the water bottle is better than the mountain one.",
+        "I'm certain it doesn't matter — the little kitten is fine.",
+        "Better water, certain mountain, little button, big matter."
+      ],
+      "record_this": "The button on the water bottle matters — I'm certain the little kitten is better off near the mountain than in the city.",
+      "self_check": "Switching quickly between flap-T and glottal-stop-T words is hard at first. Did you keep them distinct, or did they start to blur together?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["glottal stop at natural conversational speed"],
+      "isolation": {
+        "instructions": "As with the flap last week, the glottal stop needs to survive at natural speaking speed, not just in slow, careful drills.",
+        "instructions_ar": "زي الفلاب الأسبوع اللي فات، الوقفة الحنجرية لازم تفضل موجودة في السرعة الطبيعية للكلام، مش بس في التمارين البطيئة.",
+        "practice": ["Slow: bu...tton (still glottal, just slower)", "Normal: button", "Fast: 'Press that button, quick!'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["press that button (fast, natural)", "press. that. button. (slow, choppy)"], "meaning": ["دوس الزرار ده", "—"]}
+      ],
+      "word_practice": ["button", "mountain", "certain", "important", "written", "fountain", "curtain"],
+      "sentence_practice": [
+        "Press that button — it's important, I'm certain!",
+        "The mountain, the fountain, the curtain — all written down.",
+        "It's certain and important — press the button now."
+      ],
+      "record_this": "It's certain and important — press that button now, near the fountain, under the mountain curtain, exactly as it's written.",
+      "self_check": "Record this sentence 3 times, increasing speed each time. Did the glottal stops survive, or did fast speech push you back toward a full /t/?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: glottal stop before syllabic n, contrast with flap T, longer words, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["button", "water"], ["mountain", "matter"], ["certain", "better"], ["important", "impor-TANT (wrong)"]
+      ],
+      "challenge_sentences": [
+        "It's certain and important — press the button near the mountain fountain, and it doesn't matter what's written on the curtain.",
+        "The little kitten pressed the button, and it's better than climbing the mountain.",
+        "I'm certain the water bottle's button is important — no matter what."
+      ],
+      "record_this": "It's certain and important: press the button near the mountain fountain. It doesn't matter what's written on the curtain — the little kitten already knows it's better.",
+      "self_check": "Mark on paper every glottal-stop word and every flap-T word in this passage. Did you keep the two mechanisms correctly separate throughout?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage at natural speed, paying close attention to glottal stops before syllabic 'n' vs. flaps between vowels.",
+        "passage": "It's important to know a mountain trail before you climb it. Press the button on your water bottle, draw back the curtain of morning fog, and walk toward the fountain at the base. I'm certain the view gets better with every step — the little kitten that lives near the visitor center is written about in every guidebook. No matter the weather, this mountain matters to everyone in the city.",
+        "sounds_to_check": {
+          "glottal stop (syllabic n)": "important, mountain (x3), button, certain, written",
+          "flap T (contrast, between vowels)": "water, better, city, matter, little"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Glottal stop consistently and correctly used before syllabic n; clearly distinct from flap-T words; holds up at natural speed.",
+        "70_89": "Correct most of the time; occasional confusion between glottal stop and flap in fast speech.",
+        "50_69": "Glottal stop present in isolated drilled words only, inconsistent in full sentences.",
+        "below_50": "Full, released /t/ used throughout instead of glottal stop — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "You already have the physical skill for this sound (hamza) — the challenge is purely learning the NEW rule for where English hides it (before syllabic n), not learning a new mouth movement.",
+      "Do not confuse this with last week's flap — flap happens between two VOWELS; glottal stop happens before syllabic N with no vowel written between t and n.",
+      "This pattern, plus last week's flap, together cover the two most common 'hidden' pronunciations of /t/ in American English — mastering both is worth more than months of vowel-only practice."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare against Week 2's flap recordings to confirm you can reliably switch between both mechanisms."
+  }
+}

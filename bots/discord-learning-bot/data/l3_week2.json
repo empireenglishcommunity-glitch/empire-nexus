@@ -4,51 +4,92 @@
   "theme": "Humor & Sarcasm",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Subjunctive (I suggest he go)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "deadpan", "pronunciation": "DED-pan", "arabic": "أسلوب هزلي بوجه جاد", "pos": "adjective"},
+    {"word": "wit", "pronunciation": "wit", "arabic": "ذكاء ساخر/بديهة", "pos": "noun"},
+    {"word": "banter", "pronunciation": "BAN-tər", "arabic": "مزاح خفيف/مشاكسة كلامية", "pos": "noun"},
+    {"word": "irony", "pronunciation": "Y-rə-nee", "arabic": "سخرية/مفارقة", "pos": "noun"},
+    {"word": "sarcastic", "pronunciation": "sar-KAS-tik", "arabic": "ساخر", "pos": "adjective"},
+    {"word": "self-deprecating", "pronunciation": "self-DEP-rə-kay-ting", "arabic": "ينتقد نفسه بشكل فكاهي", "pos": "adjective"},
+    {"word": "punchline", "pronunciation": "PUNCH-lyn", "arabic": "خاتمة النكتة/الجملة المفاجئة", "pos": "noun"},
+    {"word": "pun", "pronunciation": "pun", "arabic": "تلاعب لفظي", "pos": "noun"},
+    {"word": "witty", "pronunciation": "WIT-ee", "arabic": "بديهي وذكي في الرد", "pos": "adjective"},
+    {"word": "comic timing", "pronunciation": "KOM-ik TY-ming", "arabic": "توقيت الكوميديا", "pos": "noun phrase"},
+    {"word": "tongue-in-cheek", "pronunciation": "tung-in-cheek", "arabic": "بشكل غير جاد/ساخر بلطف", "pos": "adjective/idiom"},
+    {"word": "dry humor", "pronunciation": "dry HYOO-mər", "arabic": "فكاهة جافة/هادئة", "pos": "noun phrase"},
+    {"word": "roast (someone)", "pronunciation": "rohst", "arabic": "يسخر من شخص بشكل ودّي", "pos": "verb"},
+    {"word": "the joke's on you", "pronunciation": "thə johks on yoo", "arabic": "النكتة عليك (أنت الأضحوكة)", "pos": "idiom"},
+    {"word": "crack a joke", "pronunciation": "krak ə johk", "arabic": "يقول نكتة", "pos": "idiom"},
+    {"word": "sardonic", "pronunciation": "sar-DON-ik", "arabic": "ساخر بمرارة", "pos": "adjective"},
+    {"word": "farcical", "pronunciation": "FAR-si-kəl", "arabic": "هزلي بشكل مبالغ/عبثي", "pos": "adjective"},
+    {"word": "slapstick", "pronunciation": "SLAP-stik", "arabic": "كوميديا حركية مبالغ فيها", "pos": "noun"},
+    {"word": "quip", "pronunciation": "kwip", "arabic": "تعليق ذكي وسريع", "pos": "noun/verb"},
+    {"word": "satire", "pronunciation": "SAT-yr", "arabic": "سخرية أدبية/هجاء", "pos": "noun"},
+    {"word": "poker face", "pronunciation": "POH-kər fays", "arabic": "وجه بلا تعبير", "pos": "noun phrase"},
+    {"word": "cringe-worthy", "pronunciation": "krinj-WUR-thee", "arabic": "محرج/مثير للتقزز الخفيف", "pos": "adjective"},
+    {"word": "over the top", "pronunciation": "OH-vər thə top", "arabic": "مبالغ فيه", "pos": "idiom"},
+    {"word": "in on the joke", "pronunciation": "in on thə johk", "arabic": "يفهم النكتة/جزء منها", "pos": "idiom"},
+    {"word": "backhanded compliment", "pronunciation": "BAK-han-did KOM-pli-mənt", "arabic": "مجاملة ذات معنى مبطن سلبي", "pos": "noun phrase"},
+    {"word": "playful teasing", "pronunciation": "PLAY-fəl TEE-zing", "arabic": "مزاح ودّي", "pos": "noun phrase"},
+    {"word": "you're kidding", "pronunciation": "yər KID-ing", "arabic": "بتهزر؟!", "pos": "phrase"},
+    {"word": "read the room", "pronunciation": "reed thə room", "arabic": "يقرأ مزاج الحضور", "pos": "idiom"},
+    {"word": "corny (joke)", "pronunciation": "KOR-nee", "arabic": "ركيك/مبتذل (نكتة)", "pos": "adjective"},
+    {"word": "razor-sharp wit", "pronunciation": "RAY-zər-sharp wit", "arabic": "ذكاء لاذع وسريع", "pos": "noun phrase"},
+    {"word": "get the joke", "pronunciation": "get thə johk", "arabic": "يفهم النكتة", "pos": "idiom"},
+    {"word": "no offense, but...", "pronunciation": "noh ə-FENS but", "arabic": "من دون إهانة، بس...", "pos": "phrase"},
+    {"word": "just kidding", "pronunciation": "just KID-ing", "arabic": "كنت بهزر", "pos": "phrase"},
+    {"word": "hilarious", "pronunciation": "hi-LAIR-ee-əs", "arabic": "مضحك جدًا", "pos": "adjective"},
+    {"word": "comedic relief", "pronunciation": "kə-MEE-dik ri-LEEF", "arabic": "لحظة كوميدية مخففة للتوتر", "pos": "noun phrase"},
+    {"word": "loaded question", "pronunciation": "LOH-did KWES-chən", "arabic": "سؤال مُحمّل بمعنى ضمني", "pos": "noun phrase"},
+    {"word": "irony is lost on someone", "pronunciation": "Y-rə-nee iz lost on SUM-wun", "arabic": "السخرية لا يفهمها شخص", "pos": "idiom"},
+    {"word": "biting wit", "pronunciation": "BY-ting wit", "arabic": "ذكاء لاذع", "pos": "noun phrase"},
+    {"word": "comic relief character", "pronunciation": "KOM-ik ri-LEEF KAR-ik-tər", "arabic": "شخصية كوميدية مخففة", "pos": "noun phrase"},
+    {"word": "self-aware humor", "pronunciation": "self-ə-WAIR HYOO-mər", "arabic": "فكاهة واعية بذاتها", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Give a 5-minute TED-style talk on 'Why humor is one of the hardest things to translate between cultures.' Include at least one real example of a joke that doesn't translate well.",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Structured debate with rebuttals: 'Sarcasm is a sign of intelligence, or sarcasm is just unkind humor.' Take a side, present your case, then respond to an imagined counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Record a 5-minute podcast segment discussing the difference between dry humor, sarcasm, and self-deprecating humor, with an example of each from your own life.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Teach a beginner-level student how to recognize sarcasm in spoken English, using tone of voice as the main clue — give 2 example sentences that could be sincere OR sarcastic depending on delivery.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Respond to this unexpected prompt: deliver a 3-minute deadpan, self-deprecating story about a mistake you made, using dry humor throughout without ever visibly laughing yourself.",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Find a short clip (30-60 seconds) of a native comedian or podcast host delivering a joke or sarcastic remark. Mimic their exact comic timing, pauses, and pitch shifts.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Humor & Sarcasm)",
-      "target_seconds": 260
+      "prompt": "Speak naturally for 5+ minutes on any topic, deliberately including at least 2 genuine attempts at humor (a joke, a pun, or a witty observation) that feel natural, not forced.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on humor & sarcasm (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in humor & sarcasm.",
-    "Compose a formal report with recommendations about humor & sarcasm.",
-    "Write a creative piece (story/poem) inspired by humor & sarcasm.",
-    "Draft an opinion column for a newspaper about humor & sarcasm.",
-    "Write a comparison essay using academic vocabulary about humor & sarcasm.",
-    "Write freely about humor & sarcasm — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing whether humor should be taught as part of advanced language learning.",
+    "Write a critical analysis of how sarcasm functions differently in written text (where tone is invisible) versus spoken conversation.",
+    "Compose a formal report with recommendations for how comedy writers adapt jokes for international/multilingual audiences.",
+    "Write a short humorous story or comedic monologue built around a single central pun or running joke.",
+    "Draft an opinion column for a newspaper about whether internet culture has made sarcasm harder to detect in text-based communication.",
+    "Write a comparison essay contrasting a type of humor common in your native culture with a type of humor common in American English-speaking culture.",
+    "Write freely about a time humor or sarcasm was lost in translation for you (in either direction) — focus on style, not just content."
   ]
 }

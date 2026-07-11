@@ -4,51 +4,92 @@
   "theme": "Politics & Society",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Mixed Conditionals",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "democracy", "pronunciation": "di-MOK-rə-see", "arabic": "ديمقراطية", "pos": "noun"},
+    {"word": "legislation", "pronunciation": "lej-is-LAY-shən", "arabic": "تشريع", "pos": "noun"},
+    {"word": "citizen", "pronunciation": "SIT-ə-zən", "arabic": "مواطن", "pos": "noun"},
+    {"word": "inequality", "pronunciation": "in-i-KWOL-ə-tee", "arabic": "عدم مساواة", "pos": "noun"},
+    {"word": "policy", "pronunciation": "POL-ə-see", "arabic": "سياسة/قرار حكومي", "pos": "noun"},
+    {"word": "advocate (verb)", "pronunciation": "AD-və-kayt", "arabic": "يدافع عن/يناصر", "pos": "verb"},
+    {"word": "civil rights", "pronunciation": "SIV-əl ryts", "arabic": "الحقوق المدنية", "pos": "noun phrase"},
+    {"word": "governance", "pronunciation": "GUV-ər-nəns", "arabic": "حوكمة", "pos": "noun"},
+    {"word": "referendum", "pronunciation": "ref-ə-REN-dəm", "arabic": "استفتاء", "pos": "noun"},
+    {"word": "constituency", "pronunciation": "kən-STICH-oo-ən-see", "arabic": "دائرة انتخابية", "pos": "noun"},
+    {"word": "diplomacy", "pronunciation": "di-PLOH-mə-see", "arabic": "دبلوماسية", "pos": "noun"},
+    {"word": "sovereignty", "pronunciation": "SOV-rən-tee", "arabic": "سيادة", "pos": "noun"},
+    {"word": "activism", "pronunciation": "AK-tiv-iz-əm", "arabic": "نشاط مجتمعي/حراك", "pos": "noun"},
+    {"word": "corruption", "pronunciation": "kə-RUP-shən", "arabic": "فساد", "pos": "noun"},
+    {"word": "transparency", "pronunciation": "trans-PAR-ən-see", "arabic": "شفافية", "pos": "noun"},
+    {"word": "accountability", "pronunciation": "ə-kown-tə-BIL-ə-tee", "arabic": "مساءلة/مسؤولية", "pos": "noun"},
+    {"word": "welfare (social)", "pronunciation": "WEL-fair", "arabic": "رعاية اجتماعية", "pos": "noun"},
+    {"word": "minority group", "pronunciation": "my-NOR-ə-tee groop", "arabic": "مجموعة أقلية", "pos": "noun phrase"},
+    {"word": "propaganda", "pronunciation": "prop-ə-GAN-də", "arabic": "دعاية", "pos": "noun"},
+    {"word": "reform", "pronunciation": "ri-FORM", "arabic": "إصلاح", "pos": "noun/verb"},
+    {"word": "polarization", "pronunciation": "poh-lər-ə-ZAY-shən", "arabic": "استقطاب", "pos": "noun"},
+    {"word": "electorate", "pronunciation": "i-LEK-tər-it", "arabic": "الهيئة الانتخابية", "pos": "noun"},
+    {"word": "grassroots", "pronunciation": "GRAS-roots", "arabic": "قاعدي/على مستوى الشعب", "pos": "adjective"},
+    {"word": "legislature", "pronunciation": "LEJ-is-lay-chər", "arabic": "هيئة تشريعية", "pos": "noun"},
+    {"word": "human rights", "pronunciation": "HYOO-mən ryts", "arabic": "حقوق الإنسان", "pos": "noun phrase"},
+    {"word": "civic duty", "pronunciation": "SIV-ik DOO-tee", "arabic": "واجب مدني", "pos": "noun phrase"},
+    {"word": "authoritarian", "pronunciation": "aw-thor-i-TAIR-ee-ən", "arabic": "سلطوي/استبدادي", "pos": "adjective"},
+    {"word": "public opinion", "pronunciation": "PUB-lik ə-PIN-yən", "arabic": "الرأي العام", "pos": "noun phrase"},
+    {"word": "legislation (bill)", "pronunciation": "bil", "arabic": "مشروع قانون", "pos": "noun"},
+    {"word": "social justice", "pronunciation": "SOH-shəl JUS-tis", "arabic": "العدالة الاجتماعية", "pos": "noun phrase"},
+    {"word": "coalition", "pronunciation": "koh-ə-LISH-ən", "arabic": "تحالف", "pos": "noun"},
+    {"word": "policy reform", "pronunciation": "POL-ə-see ri-FORM", "arabic": "إصلاح سياسي", "pos": "noun phrase"},
+    {"word": "consensus", "pronunciation": "kən-SEN-səs", "arabic": "توافق في الرأي", "pos": "noun"},
+    {"word": "marginalized", "pronunciation": "MAR-jə-nə-lyzd", "arabic": "مهمش", "pos": "adjective"},
+    {"word": "lobby (political)", "pronunciation": "LOB-ee", "arabic": "جماعة ضغط/يمارس ضغطًا", "pos": "noun/verb"},
+    {"word": "referendum result", "pronunciation": "ref-ə-REN-dəm ri-ZULT", "arabic": "نتيجة استفتاء", "pos": "noun phrase"},
+    {"word": "civil liberties", "pronunciation": "SIV-əl LIB-ər-teez", "arabic": "الحريات المدنية", "pos": "noun phrase"},
+    {"word": "public discourse", "pronunciation": "PUB-lik DIS-kors", "arabic": "الخطاب العام", "pos": "noun phrase"},
+    {"word": "policy maker", "pronunciation": "POL-ə-see MAY-kər", "arabic": "صانع سياسات", "pos": "noun phrase"},
+    {"word": "electoral system", "pronunciation": "i-LEK-tər-əl SIS-təm", "arabic": "نظام انتخابي", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Debate: 'Voting should be mandatory for all citizens.' Argue for ONE side with 2 examples or reasons.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Give a 3-minute presentation about a social issue you care about and one policy change that could help address it.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Analyze why political polarization has increased in many countries. Discuss at least 2 contributing factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Tell a detailed story about a time you or someone you know was affected by a government policy or social issue.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Imagine you're a community activist being interviewed. Answer: What issue are you fighting for? What's your biggest challenge? What change have you already achieved?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Summarize a news story about a political or social issue you've followed, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Politics & Society)",
-      "target_seconds": 270
+      "prompt": "Discuss freely for 4 minutes: should young people have more influence over political decisions that will affect their future?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of politics & society.",
-    "Analyze the impact of politics & society on daily life.",
-    "Compare how politics & society differs between two countries.",
-    "Write a formal email about politics & society.",
-    "Describe a personal experience related to politics & society (200+ words).",
-    "What changes would you make regarding politics & society? Explain why.",
-    "Summarize an article about politics & society in your own words."
+    "Write an essay (150+ words) arguing whether governments should prioritize economic growth or social equality.",
+    "Analyze how a specific social issue (inequality, corruption, discrimination — choose one) affects your society.",
+    "Compare two different approaches to solving the same social problem in two countries you know about.",
+    "Write a formal email to a local representative expressing your opinion on a current policy issue.",
+    "Describe a personal experience where you became aware of a social or political issue for the first time (200+ words).",
+    "What changes would you make to how your country's government operates? Explain at least 2 specific ideas.",
+    "Summarize a political or social news story in your own words, in under 150 words, staying neutral and factual."
   ]
 }

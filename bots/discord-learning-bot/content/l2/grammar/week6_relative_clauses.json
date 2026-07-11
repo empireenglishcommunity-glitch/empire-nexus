@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w6",
+  "level": "L2",
+  "week": 6,
+  "pattern_name": "Relative Clauses (who/which/that)",
+  "pattern_name_ar": "جمل الصلة (who/which/that)",
+  "formula": "Noun + who/which/that + Clause",
+  "formula_visual": "[NOUN] + who (people) / which (things) / that (people or things) + [extra information about the noun]",
+  "when_to_use": "Use relative clauses to add information about a noun without starting a new sentence. 'Who' refers to people, 'which' refers to things, and 'that' can refer to either (common in informal speech and DEFINING/essential clauses).",
+  "when_to_use_ar": "استخدم جمل الصلة لإضافة معلومة عن اسم بدون بدء جملة جديدة. who للأشخاص، which للأشياء، that للاتنين (شائعة في الكلام العادي والجمل التعريفية الأساسية).",
+  "why_arabic_speakers_struggle": "Arabic relative clauses use الذي/التي/اللي, which don't map one-to-one onto who/which/that by grammatical category (person vs. thing) — Arabic's system is more driven by gender/number agreement. Learners often use 'which' for people or 'who' for things, and frequently forget to drop the relative pronoun in casual object-relative clauses where English allows it ('the book I read' vs. always saying 'the book that I read').",
+  "examples": [
+    {"en": "The woman who called you is my sister.", "ar": "الست اللي اتصلت بيك أختي", "structure": "[The woman] + [who called you] + [is my sister]"},
+    {"en": "This is the book which changed my life.", "ar": "ده الكتاب اللي غير حياتي", "structure": "[This is the book] + [which changed my life]"},
+    {"en": "The restaurant that we visited was amazing.", "ar": "المطعم اللي زرناه كان رائع", "structure": "[The restaurant] + [that we visited] + [was amazing]"},
+    {"en": "The book (that) I read last week was excellent.", "ar": "الكتاب اللي قريته الأسبوع اللي فات كان ممتاز (that ممكن تُحذف هنا)", "structure": "[The book] + [(that) I read last week] + [was excellent] — 'that' optional here since it's the object of the clause"},
+    {"en": "My brother, who lives in Canada, is visiting next month.", "ar": "أخويا، اللي عايش في كندا، جاي زيارة الشهر الجاي (معلومة إضافية غير أساسية، بين فواصل)", "structure": "[My brother], [who lives in Canada], [is visiting next month] — non-defining, adds extra (non-essential) info"}
+  ],
+  "common_errors": [
+    {"wrong": "The woman which called you is my sister.", "correct": "The woman who called you is my sister.", "explanation": "'which' refers to things, not people — use 'who' (or 'that') for a person."},
+    {"wrong": "This is the book who I read.", "correct": "This is the book that/which I read.", "explanation": "'who' refers to people, not things — use 'which' or 'that' for a book."},
+    {"wrong": "My brother, that lives in Canada, is visiting.", "correct": "My brother, who lives in Canada, is visiting.", "explanation": "'that' is not used in non-defining clauses (the ones set off by commas, adding extra non-essential information) — only 'who'/'which' are used there."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The man ___ won the award is my colleague.", "answer": "who", "hint": "Refers to a person."},
+    {"sentence": "The car ___ I bought last year broke down.", "answer": "which/that", "hint": "Refers to a thing."},
+    {"sentence": "My sister, ___ is a doctor, lives in London.", "answer": "who", "hint": "Non-defining clause (comma) about a person."},
+    {"sentence": "This is the movie ___ everyone is talking about.", "answer": "that/which", "hint": "Refers to a thing, defining clause."},
+    {"sentence": "The company, ___ was founded in 1990, is very successful.", "answer": "which", "hint": "Non-defining clause about a thing — 'that' is not allowed here."}
+  ],
+  "quick_rule": "WHO = people. WHICH = things. THAT = either, but ONLY in defining (essential, no-comma) clauses — never after a comma. When the relative pronoun is the OBJECT of its clause, it can often be dropped entirely in casual speech.",
+  "quick_rule_ar": "WHO للأشخاص. WHICH للأشياء. THAT للاتنين بس في الجمل التعريفية الأساسية (بدون فاصلة).",
+  "mnemonic": "WHO = people you know WHO they are. WHICH one of these THINGS? THAT can replace either one, but never after a comma pause.",
+  "connect_to_speaking": "Practice with your buddy: describe 3 people or things important to you using relative clauses (e.g., 'My best friend, who I've known for 10 years, ...' or 'The city that I grew up in ...')."
+}

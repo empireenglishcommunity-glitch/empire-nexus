@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w7",
+  "level": "L3",
+  "week": 7,
+  "pattern_name": "Complex Noun Phrases",
+  "pattern_name_ar": "الجمل الاسمية المعقدة",
+  "formula": "[Determiner] + [Pre-modifiers] + [HEAD NOUN] + [Post-modifiers: relative clause / prepositional phrase / participle phrase]",
+  "formula_visual": "[the] + [three groundbreaking] + [studies] + [published last year] + [that challenged the field's core assumptions]",
+  "when_to_use": "Use complex, heavily-modified noun phrases to pack dense, precise information into academic, professional, and sophisticated spoken/written English — a hallmark of advanced fluency is comfortably building and parsing noun phrases with multiple layers of modification, rather than breaking every idea into separate simple sentences.",
+  "when_to_use_ar": "استخدم الجمل الاسمية المعقدة بطبقات تعديل متعددة لحزم معلومات دقيقة ومكثفة في الإنجليزية الأكاديمية والمهنية المتقدمة — علامة الطلاقة المتقدمة هي الراحة في بناء وفهم جمل اسمية معقدة، مش تقسيم كل فكرة لجملة بسيطة منفصلة.",
+  "why_arabic_speakers_struggle": "Even advanced learners often instinctively break complex noun phrases into multiple short sentences for safety/clarity ('There were three studies. They were published last year. They challenged the field's assumptions.'), which is grammatically fine but sounds notably less sophisticated than the single, dense, natively-structured version — building comfort with stacking modifiers requires deliberate practice, not just grammatical knowledge.",
+  "examples": [
+    {"en": "The three groundbreaking studies published last year that challenged the field's core assumptions have sparked intense debate.", "ar": "الدراسات الثلاث الرائدة المنشورة العام الماضي واللي تحدّت الافتراضات الأساسية للمجال أثارت نقاشًا مكثفًا", "structure": "[The three groundbreaking studies] + [published last year] + [that challenged the field's core assumptions] + [have sparked intense debate]"},
+    {"en": "A deeply flawed but widely cited report from the 1990s continues to influence policy today.", "ar": "تقرير معيب بعمق بس مُستشهد به على نطاق واسع من التسعينات لسه بيأثر على السياسة اليوم", "structure": "[A deeply flawed but widely cited report] + [from the 1990s] + [continues to influence policy today]"},
+    {"en": "The candidate whose qualifications everyone questioned ultimately proved to be the strongest choice.", "ar": "المرشح اللي الكل شكك في مؤهلاته ثبت أخيرًا إنه أقوى اختيار", "structure": "[The candidate] + [whose qualifications everyone questioned] + [ultimately proved to be the strongest choice]"},
+    {"en": "Nearly all of the previously unpublished data collected during the study's final phase remains under review.", "ar": "تقريبًا كل البيانات اللي ماكانت منشورة قبل كده واللي جُمعت خلال المرحلة الأخيرة للدراسة لسه تحت المراجعة", "structure": "[Nearly all of the previously unpublished data] + [collected during the study's final phase] + [remains under review]"},
+    {"en": "This is exactly the kind of carefully-reasoned, evidence-based argument I was hoping to hear.", "ar": "دي بالضبط نوعية الحجة المدروسة بعناية والمبنية على الأدلة اللي كنت أتمنى أسمعها", "structure": "[This is exactly the kind of] + [carefully-reasoned, evidence-based argument] + [I was hoping to hear]"}
+  ],
+  "common_errors": [
+    {"wrong": "The three groundbreaking studies that published last year and that challenged...", "correct": "The three groundbreaking studies published last year that challenged...", "explanation": "A reduced (participle) relative clause ('published last year', from 'that were published last year') is more natural and native-sounding than a full relative clause here — over-using full relative clauses when reduction is possible sounds clunky."},
+    {"wrong": "This is exactly kind of argument I was hoping to hear.", "correct": "This is exactly the kind of argument I was hoping to hear.", "explanation": "The determiner 'the' cannot be dropped before 'kind of' — complex noun phrases still need correct basic determiner usage even with multiple layers of modification."},
+    {"wrong": "The candidate who's qualifications everyone questioned...", "correct": "The candidate whose qualifications everyone questioned...", "explanation": "'whose' (possessive relative pronoun) is needed here, not 'who's' (contraction of 'who is') — a common spelling confusion even at advanced levels."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The report ___ (submit) last week ___ (raise) several concerns.", "answer": "submitted / raised", "hint": "Reduced participle clause + main verb."},
+    {"sentence": "This is exactly the ___ of solution I was looking for.", "answer": "kind/type/sort", "hint": "Common 'the kind of' complex noun phrase pattern."},
+    {"sentence": "The employee ___ performance impressed everyone got the promotion.", "answer": "whose", "hint": "Possessive relative pronoun."},
+    {"sentence": "Nearly all of the data ___ (collect) so far remains unpublished.", "answer": "collected", "hint": "Reduced participle clause."},
+    {"sentence": "A widely ___ (cite) but deeply flawed study continues to influence the debate.", "answer": "cited", "hint": "Participle as pre-modifier."}
+  ],
+  "quick_rule": "Layer modifiers before AND after the head noun: [determiner] + [adjectives] + [HEAD NOUN] + [reduced participle clause] + [full relative clause, if needed]. Prefer reduced participle clauses (published last year) over full relative clauses (that were published last year) when possible — it's more native-sounding.",
+  "quick_rule_ar": "رتّب المعدّلات قبل وبعد الاسم الأساسي. فضّل الجمل المختصرة على الجمل الكاملة لما يكون ذلك ممكنًا.",
+  "mnemonic": "COMPLEX noun phrases let you pack a COMPLEX idea into one confident package, instead of unpacking it into three separate, choppier sentences.",
+  "connect_to_speaking": "Practice with your buddy: describe something complex (a person, an idea, a plan) using ONE single, richly-modified noun phrase sentence, then try describing the SAME thing using 3 separate simple sentences — notice the difference in sophistication and flow."
+}

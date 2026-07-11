@@ -1,0 +1,150 @@
+{
+  "level": "L2",
+  "week": 2,
+  "focus": "Reduction & Weak Forms — Advanced Function-Word Compression",
+  "focus_ar": "التخفيض والصيغ الضعيفة — ضغط متقدم للكلمات الوظيفية",
+  "arabic_challenge": "L1 taught you that function words reduce to schwa. L2's Reduction & Weak Forms goes further: entire function words (and, to, of, for, have, has) develop specific, predictable REDUCED SPELLINGS in fast native speech that go beyond a simple schwa vowel change — they lose whole sounds. Arabic speakers who've mastered schwa still often keep every consonant in these words, which is the next barrier to sounding fully native.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'and' → /ən/ or /n/"],
+      "isolation": {
+        "instructions": "In fast connected speech, 'and' frequently loses its final /d/ entirely and reduces to just /ən/ or even a bare /n/ sound attached to the surrounding words.",
+        "instructions_ar": "في الكلام السريع المتصل، and غالبًا بتخسر صوت /d/ في الآخر تمامًا وبتختصر لـ /ən/ أو حتى مجرد /n/ ملتصقة بالكلام المحيط.",
+        "practice": ["fish and chips → fish-ən-chips", "rock and roll → rock-ən-roll", "bread and butter → bread-ən-butter"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fish and chips (reduced 'n')", "fish. And. Chips. (full, careful 'and')"], "meaning": ["سمك وبطاطس", "—"]}
+      ],
+      "word_practice": ["fish and chips", "rock and roll", "bread and butter", "salt and pepper", "up and down"],
+      "sentence_practice": [
+        "I like fish and chips with salt and pepper.",
+        "We danced to rock and roll, up and down all night.",
+        "Bread and butter, salt and pepper — simple and good."
+      ],
+      "record_this": "I like fish and chips with salt and pepper — we danced to rock and roll, up and down, with bread and butter after.",
+      "self_check": "Did 'and' shrink to a light /ən/ or /n/ throughout, rather than a full, clear 'and'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'have/has' → /əv/ /əz/ in auxiliary position"],
+      "isolation": {
+        "instructions": "Building on L1's dropped-H pattern, the auxiliary 'have' often reduces further to just /əv/ (sounding like 'of'), and 'has' to /əz/, in fast native speech.",
+        "instructions_ar": "بناء على نمط حذف H من المستوى الأول، فعل المساعدة have غالبًا بيختصر أكتر لـ /əv/ (بيبان كإنه of)، وhas لـ /əz/، في الكلام السريع.",
+        "practice": ["I could have gone → I could-əv gone", "she should have known → she should-əv known"]
+      },
+      "minimal_pairs": [
+        {"pair": ["could have (reduced to could-əv)", "could. Have. (full, careful)"], "meaning": ["كان ممكن", "—"]}
+      ],
+      "word_practice": ["could have", "should have", "would have", "might have", "must have"],
+      "sentence_practice": [
+        "I could have gone, but I should have called first.",
+        "She would have known if she must have asked.",
+        "We might have missed it — you should have told me."
+      ],
+      "record_this": "I could have gone, but I should have called first — she would have known if she must have asked, and we might have missed it.",
+      "self_check": "Did 'have' after modal verbs (could/should/would/might/must) reduce to a quick /əv/ sound, almost like 'of'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'to' → /tə/ and 'for' → /fər/ in rapid speech"],
+      "isolation": {
+        "instructions": "Building on L1's schwa work, 'to' and 'for' compress even further in truly fast native speech, almost disappearing into the surrounding words.",
+        "instructions_ar": "بناء على شغل الشوا من المستوى الأول، to و for بتنضغط أكتر في الكلام الطبيعي السريع جدًا، وبتكاد تختفي وسط الكلمات المحيطة.",
+        "practice": ["going to → gonna (in very casual speech)", "want to → wanna (in very casual speech)", "waiting for → waitin' fər"]
+      },
+      "minimal_pairs": [
+        {"pair": ["going to (casual: gonna)", "going to (careful, formal)"], "meaning": ["هروح", "—"]},
+        {"pair": ["want to (casual: wanna)", "want to (careful, formal)"], "meaning": ["عايز", "—"]}
+      ],
+      "word_practice": ["going to", "want to", "waiting for", "looking for", "have to"],
+      "sentence_practice": [
+        "I'm going to the store — do you want to come?",
+        "I've been waiting for you and looking for my keys.",
+        "I have to go, but I want to stay a bit longer."
+      ],
+      "record_this": "I'm going to the store — do you want to come? I've been waiting for you and looking for my keys, but I have to go soon.",
+      "self_check": "Note: 'gonna'/'wanna' are very casual — appropriate for informal conversation, not formal presentations. Can you distinguish when each register is appropriate?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["reduction chains: multiple weak forms in one phrase"],
+      "isolation": {
+        "instructions": "Real native speech often stacks several reduced forms in a row. Practice recognizing and producing these reduction chains.",
+        "instructions_ar": "الكلام الطبيعي الحقيقي غالبًا بيجمع أكتر من صيغة مخففة ورا بعض. تدرب على تمييز وإنتاج سلاسل التخفيض دي.",
+        "practice": ["I should have gone to the store for some milk and bread → multiple reductions stacked"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully reduced chain (natural)", "fully pronounced chain (over-careful)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["should have gone to", "waiting for and looking for", "have to go and get"],
+      "sentence_practice": [
+        "I should have gone to the store for some milk and bread.",
+        "I've been waiting for you and looking for my keys and my phone.",
+        "We have to go and get some fish and chips for dinner."
+      ],
+      "record_this": "I should have gone to the store for some milk and bread — I've been waiting for you and looking for my keys and my phone, so we have to go and get some fish and chips for dinner.",
+      "self_check": "How many separate reduced forms can you identify in this one sentence? Aim for at least 5."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["reduction at natural, unrehearsed speaking speed"],
+      "isolation": {
+        "instructions": "Test whether these advanced reductions survive when you're speaking without a script, under the pressure of thinking of your own words.",
+        "instructions_ar": "اختبر لو التخفيضات المتقدمة دي بتفضل موجودة وانت بتتكلم بدون نص، تحت ضغط التفكير في كلماتك الخاصة.",
+        "practice": ["Speak spontaneously for 30 seconds about your weekend plans, using natural reductions."]
+      },
+      "minimal_pairs": [
+        {"pair": ["spontaneous speech with natural reductions", "spontaneous speech with over-careful pronunciation"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your own weekend plans)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: describe your weekend plans for 30 seconds, using natural reduced forms where appropriate.)",
+      "self_check": "Listen back — did reductions appear naturally without you planning them, or only when you consciously tried?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: 'and' reduction, 'have/has' reduction, 'to/for' reduction, reduction chains, spontaneous speech",
+      "type": "review",
+      "mixed_pairs": [
+        ["fish and chips", "could have gone"], ["going to (gonna)", "waiting for"]
+      ],
+      "challenge_sentences": [
+        "I should have gone to the store for some fish and chips, and I would have if I hadn't been waiting for you.",
+        "We're going to need some bread and butter — do you want to come and get some for us?",
+        "I could have told you, but I was looking for my keys and waiting for the bus."
+      ],
+      "record_this": "I should have gone to the store for some fish and chips, and I would have if I hadn't been waiting for you — we're going to need some bread and butter, so do you want to come and get some?",
+      "self_check": "Mark every reduced function word in this passage. How many distinct reduction types (and/have/to/for) appear?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, applying advanced reduction patterns throughout.",
+        "passage": "I should have gone to the store yesterday for some fish and chips, but I was waiting for a call and looking for my keys. My friend and I were going to meet for coffee, and we would have talked about bread and butter recipes, but I must have forgotten the time. I have to go and get milk and eggs now — do you want to come with me?",
+        "sounds_to_check": {
+          "'and' reduction": "fish and chips, my friend and I, bread and butter, milk and eggs",
+          "'have/has' reduction (modal + have)": "should have, would have, must have",
+          "'to/for' reduction": "going to, waiting for, looking for, have to"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All reduction types applied naturally and consistently at conversational speed.",
+        "70_89": "Most reductions present; a few full pronunciations under stress.",
+        "50_69": "Reductions present in drilled phrases only, inconsistent in new combinations.",
+        "below_50": "Full, careful pronunciation throughout — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week directly extends L1's schwa and dropped-H work — think of it as those same principles applied even more aggressively to a specific set of extremely common function words.",
+      "'Gonna' and 'wanna' are correct and natural in casual speech, but should NOT be used in formal presentations, essays, or the advancement exam's formal sections — know when each register applies.",
+      "This is Blueprint §5.3 Rule 4 (Reduction & Weak Forms), explicitly assigned to L2 Week 2 — the final piece of the connected-speech linking framework started in L1."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare your fluency here to your L1 Week 8 (schwa) recording — this should sound like a natural evolution of that skill."
+  }
+}

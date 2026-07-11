@@ -8,6 +8,7 @@ This module bridges Phase 2 (curated content) with Phase 3 (bot delivery).
 """
 import json
 import logging
+import re
 import datetime
 from pathlib import Path
 from typing import Optional
@@ -22,21 +23,53 @@ logger = logging.getLogger("empire-bot.curriculum")
 DATA_DIR = config.BASE_DIR / "data"
 CONTENT_DIR = config.BASE_DIR / "content"
 
+# Number of curriculum weeks defined per level (single source of truth —
+# used for loading, clamping, and quiz/spaced-repetition lookback windows).
+# Any module that needs "how many weeks does this level have" must import
+# this constant / call max_week_for_level() rather than hardcoding it,
+# so L0/L1/L2/L3 never silently drift out of sync again.
+LEVEL_WEEK_COUNTS = {"L0": 8, "L1": 10, "L2": 12, "L3": 8}
+
+
+def max_week_for_level(level: str) -> int:
+    """Number of curriculum weeks defined for a level (defaults to L0's 8)."""
+    return LEVEL_WEEK_COUNTS.get(level, LEVEL_WEEK_COUNTS["L0"])
+
+
+_WEEK_NUM_RE = re.compile(r"^week(\d+)")
+
+
+def _parse_week_number(filename: str) -> Optional[int]:
+    """Extract the week number from a content filename like 'week10_foo.json'.
+
+    Content files were previously assigned a week number purely by their
+    ALPHABETICAL sort position (enumerate(sorted(glob(...)), 1)) rather than
+    by parsing the actual number in the filename. This is silently wrong for
+    any level with 10+ weeks: Python string-sorts "week10" before "week2",
+    so week10's content would be loaded and stored under key 2, and week2's
+    content under some other wrong key. L0 never hit this bug (only 8 weeks,
+    all single-digit), but L1 (10 weeks) and L2 (12 weeks) would have been
+    silently corrupted. Parsing the number directly from the filename makes
+    the mapping correct regardless of file count or sort order.
+    """
+    match = _WEEK_NUM_RE.match(filename)
+    return int(match.group(1)) if match else None
+
+
 # ============================================================
 #  CACHE (loaded once at startup)
 # ============================================================
-_weekly_data: dict = {}  # {1: {...}, 2: {...}, ...}
-_accent_data: dict = {}  # {1: {...}, 2: {...}, ...}
-_grammar_data: dict = {}  # {1: {...}, 2: {...}, ...}
+_weekly_data: dict = {}   # {"L0_1": {...}, "L1_3": {...}, ...}
+_accent_data: dict = {}   # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
+_grammar_data: dict = {}  # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 
 
 def load_all():
     """Load all curriculum data from JSON files. Call once at bot startup."""
     global _weekly_data, _accent_data, _grammar_data
 
-    # Load weekly data for ALL levels (L0-L3)
-    level_weeks = {"L0": 8, "L1": 10, "L2": 12, "L3": 8}
-    for level, max_week in level_weeks.items():
+    # Load weekly data (vocab/speaking/writing) for ALL levels (L0-L3)
+    for level, max_week in LEVEL_WEEK_COUNTS.items():
         for week in range(1, max_week + 1):
             path = DATA_DIR / f"{level.lower()}_week{week}.json"
             if path.exists():
@@ -54,32 +87,51 @@ def load_all():
     l3_count = sum(1 for k in _weekly_data if k.startswith("L3_"))
     logger.info(f"Weekly data: L0={l0_count}, L1={l1_count}, L2={l2_count}, L3={l3_count}")
 
-    # Load accent drills (L0 only for now)
-    accent_dir = CONTENT_DIR / "l0" / "accent"
-    if accent_dir.exists():
-        accent_files = sorted(accent_dir.glob("week*.json"))
-        for i, path in enumerate(accent_files, 1):
-            try:
-                with open(path, encoding="utf-8") as f:
-                    _accent_data[i] = json.load(f)
-            except Exception as e:
-                logger.error(f"Failed to load {path}: {e}")
-        logger.info(f"Loaded {len(_accent_data)} accent drill files")
+    # Load accent drills and grammar patterns PER LEVEL.
+    # Only content/l0/{accent,grammar}/ exist today — L1-L3 folders are
+    # intentionally absent until that curriculum content is written.
+    # A missing folder is NOT an error: it correctly results in an empty
+    # dict for that level, which get_accent_drill()/get_grammar_pattern()
+    # treat as "not available yet" rather than silently falling back to L0.
+    for level in LEVEL_WEEK_COUNTS:
+        level_lower = level.lower()
+        _accent_data[level] = {}
+        accent_dir = CONTENT_DIR / level_lower / "accent"
+        if accent_dir.exists():
+            for path in accent_dir.glob("week*.json"):
+                week_num = _parse_week_number(path.name)
+                if week_num is None:
+                    logger.warning(f"Skipping {path}: filename doesn't start with 'weekN'")
+                    continue
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        _accent_data[level][week_num] = json.load(f)
+                except Exception as e:
+                    logger.error(f"Failed to load {path}: {e}")
 
-    # Load grammar patterns (L0 only for now)
-    grammar_dir = CONTENT_DIR / "l0" / "grammar"
-    if grammar_dir.exists():
-        grammar_files = sorted([f for f in grammar_dir.glob("week*.json")])
-        for i, path in enumerate(grammar_files, 1):
-            try:
-                with open(path, encoding="utf-8") as f:
-                    _grammar_data[i] = json.load(f)
-            except Exception as e:
-                logger.error(f"Failed to load {path}: {e}")
-        logger.info(f"Loaded {len(_grammar_data)} grammar pattern files")
+        _grammar_data[level] = {}
+        grammar_dir = CONTENT_DIR / level_lower / "grammar"
+        if grammar_dir.exists():
+            for path in grammar_dir.glob("week*.json"):
+                week_num = _parse_week_number(path.name)
+                if week_num is None:
+                    logger.warning(f"Skipping {path}: filename doesn't start with 'weekN'")
+                    continue
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        _grammar_data[level][week_num] = json.load(f)
+                except Exception as e:
+                    logger.error(f"Failed to load {path}: {e}")
+
+        logger.info(
+            f"{level}: {len(_accent_data[level])} accent week(s), "
+            f"{len(_grammar_data[level])} grammar week(s) loaded"
+        )
 
     total_vocab = sum(len(w.get("vocabulary", [])) for w in _weekly_data.values())
-    logger.info(f"Curriculum loaded: {len(_weekly_data)} total weeks, {total_vocab} vocab words, {len(_accent_data)} accent, {len(_grammar_data)} grammar")
+    total_accent = sum(len(v) for v in _accent_data.values())
+    total_grammar = sum(len(v) for v in _grammar_data.values())
+    logger.info(f"Curriculum loaded: {len(_weekly_data)} total weeks, {total_vocab} vocab words, {total_accent} accent weeks, {total_grammar} grammar weeks")
 
 
 # ============================================================
@@ -155,29 +207,55 @@ def get_writing_prompt(week: int, day_index: int, level: str = "L0") -> Optional
 #  ACCENT DRILLS
 # ============================================================
 
-def get_accent_drill(week: int, day_index: int) -> Optional[dict]:
-    """Get the accent drill for a specific week and day (0-indexed).
-    Returns the daily drill dict from content/l0/accent/weekX.json.
+def has_accent_content(level: str) -> bool:
+    """Whether any accent drill content has been authored for this level."""
+    return bool(_accent_data.get(level))
+
+
+def get_accent_drill(week: int, day_index: int, level: str = "L0") -> Optional[dict]:
+    """Get the accent drill for a specific level, week, and day (0-indexed).
+
+    Returns the daily drill dict from content/{level}/accent/weekX.json,
+    or None if this level has no accent content authored yet — callers
+    MUST handle None explicitly (e.g. an honest "coming soon" message)
+    rather than assuming any level's drill is interchangeable with L0's.
     """
-    week = min(8, max(1, week))
-    data = _accent_data.get(week, {})
+    level_data = _accent_data.get(level)
+    if not level_data:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    data = level_data.get(week, {})
     daily_drills = data.get("daily_drills", [])
     if isinstance(daily_drills, list) and day_index < len(daily_drills):
         return daily_drills[day_index]
     return None
 
 
-def get_accent_focus(week: int) -> str:
-    """Get this week's accent focus description."""
-    week = min(8, max(1, week))
-    data = _accent_data.get(week, {})
-    return data.get("focus", config.PHONEME_WEEKS.get(week, {}).get("focus", "Review"))
+def get_accent_focus(week: int, level: str = "L0") -> Optional[str]:
+    """Get this week's accent focus description for a level.
+    Returns None if this level has no accent content authored yet.
+    """
+    week_clamped = min(max_week_for_level(level), max(1, week))
+    level_data = _accent_data.get(level) or {}
+    focus = level_data.get(week_clamped, {}).get("focus")
+    if focus:
+        return focus
+    # L0 additionally has a hardcoded phoneme schedule fallback in
+    # config.py (used before any JSON content existed). Preserve that
+    # behavior for L0 only — L1-L3 have no such fallback table, so
+    # "no content" must surface as None, not a fabricated guess.
+    if level == "L0":
+        return config.PHONEME_WEEKS.get(week_clamped, {}).get("focus")
+    return None
 
 
-def get_accent_focus_ar(week: int) -> str:
-    """Get this week's accent focus in Arabic."""
-    week = min(8, max(1, week))
-    data = _accent_data.get(week, {})
+def get_accent_focus_ar(week: int, level: str = "L0") -> str:
+    """Get this week's accent focus in Arabic for a level (empty string if none)."""
+    level_data = _accent_data.get(level)
+    if not level_data:
+        return ""
+    week = min(max_week_for_level(level), max(1, week))
+    data = level_data.get(week, {})
     return data.get("focus_ar", "")
 
 
@@ -185,12 +263,22 @@ def get_accent_focus_ar(week: int) -> str:
 #  GRAMMAR PATTERNS
 # ============================================================
 
-def get_grammar_pattern(week: int) -> Optional[dict]:
-    """Get the grammar pattern card for a specific week.
-    Returns full grammar pattern dict with formula, examples, practice, etc.
+def has_grammar_content(level: str) -> bool:
+    """Whether any grammar pattern content has been authored for this level."""
+    return bool(_grammar_data.get(level))
+
+
+def get_grammar_pattern(week: int, level: str = "L0") -> Optional[dict]:
+    """Get the grammar pattern card for a specific level and week.
+
+    Returns full grammar pattern dict with formula, examples, practice, etc.,
+    or None if this level has no grammar content authored yet.
     """
-    week = min(8, max(1, week))
-    return _grammar_data.get(week)
+    level_data = _grammar_data.get(level)
+    if not level_data:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    return level_data.get(week)
 
 
 # ============================================================
@@ -204,9 +292,9 @@ def get_daily_content(week: int, day_name: str, day_index: int, level: str = "L0
     vocab = get_vocabulary_for_day(week, day_index, level)
     speaking = get_speaking_mission(week, day_name, level)
     writing = get_writing_prompt(week, day_index, level)
-    accent = get_accent_drill(week, day_index)
-    accent_focus = get_accent_focus(week)
-    grammar = get_grammar_pattern(week)
+    accent = get_accent_drill(week, day_index, level)
+    accent_focus = get_accent_focus(week, level)
+    grammar = get_grammar_pattern(week, level)
 
     key = f"{level}_{week}"
     theme = _weekly_data.get(key, {}).get("theme", config.VOCAB_THEMES.get(week, "General"))
@@ -253,11 +341,20 @@ def stats() -> dict:
         len(w.get("writing_prompts", [])) if isinstance(w.get("writing_prompts"), list) else 0
         for w in _weekly_data.values()
     )
+    # _accent_data / _grammar_data are keyed {level: {week: {...}}}, so sum
+    # the per-level week counts rather than counting the levels themselves.
+    total_accent_weeks = sum(len(v) for v in _accent_data.values())
+    total_grammar_weeks = sum(len(v) for v in _grammar_data.values())
+    accent_levels_covered = sorted(lvl for lvl, v in _accent_data.items() if v)
+    grammar_levels_covered = sorted(lvl for lvl, v in _grammar_data.items() if v)
+
     return {
         "weeks_loaded": len(_weekly_data),
         "total_vocabulary": total_vocab,
         "total_speaking_missions": total_speaking,
         "total_writing_prompts": total_writing,
-        "accent_weeks": len(_accent_data),
-        "grammar_patterns": len(_grammar_data),
+        "accent_weeks": total_accent_weeks,
+        "grammar_patterns": total_grammar_weeks,
+        "accent_levels_covered": accent_levels_covered,
+        "grammar_levels_covered": grammar_levels_covered,
     }

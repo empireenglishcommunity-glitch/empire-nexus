@@ -1,0 +1,154 @@
+{
+  "level": "L2",
+  "week": 7,
+  "focus": "NG-Coalescence — Merging /n/ + /k/ or /g/ into /ŋ/",
+  "focus_ar": "اندماج NG — دمج /n/ + /k/ أو /g/ في صوت /ŋ/",
+  "arabic_challenge": "In words like 'think' and 'finger', the /n/ sound before /k/ or /g/ merges into a single nasal sound /ŋ/ (the 'ng' sound, as in 'sing') produced at the back of the mouth — it does NOT stay as a separate, front-of-mouth /n/ followed by a distinct /k//g/. Arabic speakers, influenced by spelling (which shows 'n' and 'k'/'g' as separate letters), often keep them fully separate, producing an extra, non-native-sounding /n/ before the /k/ or /g/.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/n/ + /k/ → /ŋk/ merged sound"],
+      "isolation": {
+        "instructions": "Before /k/, the /n/ sound is produced at the BACK of the mouth (like the 'ng' in 'sing'), not the front — they blend into one continuous back-of-mouth motion, not two separate sounds.",
+        "instructions_ar": "قبل /k/، صوت /n/ بينطق من مؤخرة الفم (زي ng في sing)، مش من قدام — بيندمجوا في حركة واحدة متصلة من مؤخرة الفم، مش صوتين منفصلين.",
+        "practice": ["think → thi-ŊK (not thi-N-K)", "bank → ba-ŊK", "thank → tha-ŊK"]
+      },
+      "minimal_pairs": [
+        {"pair": ["think (merged ŋk, correct)", "think (separated n+k, foreign)"], "meaning": ["يفكر", "—"]},
+        {"pair": ["bank (merged ŋk, correct)", "bank (separated n+k, foreign)"], "meaning": ["بنك", "—"]}
+      ],
+      "word_practice": ["think", "bank", "thank", "sink", "drink", "uncle", "junk", "pink"],
+      "sentence_practice": [
+        "I think the bank needs a pink sink.",
+        "Thank you for the drink — I'll sink into this chair.",
+        "My uncle threw away the junk near the bank."
+      ],
+      "record_this": "I think the bank needs a pink sink — thank you for the drink, I'll sink into this chair while my uncle sorts through the junk.",
+      "self_check": "Does the /n/ before /k/ feel like it's produced at the BACK of your mouth, blending smoothly into the /k/, rather than a separate front-of-mouth /n/?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/n/ + /g/ → /ŋg/ merged sound"],
+      "isolation": {
+        "instructions": "The same back-of-mouth merging happens before /g/ in words like 'finger' and 'angle' — the /n/ and /g/ blend into one continuous motion.",
+        "instructions_ar": "نفس الدمج من مؤخرة الفم بيحصل قبل /g/ في كلمات زي finger وangle — الـ /n/ و/g/ بيندمجوا في حركة واحدة متصلة.",
+        "practice": ["finger → fi-ŊGər", "angle → a-ŊGəl", "single → si-ŊGəl"]
+      },
+      "minimal_pairs": [
+        {"pair": ["finger (merged ŋg, correct)", "finger (separated n+g, foreign)"], "meaning": ["إصبع", "—"]}
+      ],
+      "word_practice": ["finger", "angle", "single", "England", "language", "hunger"],
+      "sentence_practice": [
+        "My finger points at a single angle.",
+        "England has an interesting language and history.",
+        "Hunger made him point his finger at the food."
+      ],
+      "record_this": "My finger points at a single angle — England has an interesting language, and hunger made him point at the food.",
+      "self_check": "For 'finger' and 'angle', is the transition from /n/ to /g/ smooth and back-of-mouth, not choppy or front-of-mouth?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["contrast: NG-coalescence vs. genuinely separate /n/+/k/ across word boundaries"],
+      "isolation": {
+        "instructions": "NG-coalescence happens WITHIN a single word or morpheme. When 'n' and 'k'/'g' belong to two SEPARATE words, they do NOT merge this way — they stay as a genuinely separate /n/ followed by /k/ or /g/.",
+        "instructions_ar": "دمج NG بيحصل جوه كلمة واحدة أو جزء صرفي واحد. لما n وk/g يكونوا في كلمتين منفصلتين، ما بيندمجوش كده — بيفضلوا /n/ منفصلة متبوعة بـ /k/ أو /g/.",
+        "practice": ["think (one word, merged ŋk) vs. one cat (two words, separate n+k)", "finger (one word, merged ŋg) vs. one goat (two words, separate n+g)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["think (merged, one word)", "one cat (separate, two words)"], "meaning": ["يفكر", "قطة واحدة"]}
+      ],
+      "word_practice": ["think", "one cat", "finger", "one goat", "bank", "one kite"],
+      "sentence_practice": [
+        "I think one cat is enough for our bank of pets.",
+        "My finger points at one goat near the fence.",
+        "I saw one kite while I sat by the bank."
+      ],
+      "record_this": "I think one cat is enough — my finger points at one goat near the bank, where I also saw one kite.",
+      "self_check": "Could you correctly distinguish the merged NG sound (within a word) from a genuinely separate n+k/g (across two words)?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["NG-coalescence in academic and everyday high-frequency vocabulary"],
+      "isolation": {
+        "instructions": "This pattern appears in extremely common vocabulary you'll use constantly — practice it in a wider range of everyday words.",
+        "instructions_ar": "هذا النمط بيظهر في مفردات شائعة جدًا هتستخدمها كتير — تدرب عليه في نطاق أوسع من الكلمات اليومية.",
+        "practice": ["thanks, banking, thinking, drinking, English, singer, longer, stronger"]
+      },
+      "minimal_pairs": [
+        {"pair": ["thinking (merged ŋk)", "thinking (separated, foreign)"], "meaning": ["يفكر (مستمر)", "—"]}
+      ],
+      "word_practice": ["thanks", "banking", "thinking", "drinking", "English", "singer", "longer", "stronger"],
+      "sentence_practice": [
+        "Thanks for thinking about the English banking system.",
+        "The singer is getting stronger and longer with practice.",
+        "I'm thinking about drinking less and banking more."
+      ],
+      "record_this": "Thanks for thinking about the English banking system — the singer is getting stronger and longer with practice, and I'm thinking about drinking less.",
+      "self_check": "In this wider vocabulary set, did the NG-coalescence pattern hold consistently across all the words?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["NG-coalescence at debate/analysis speed"],
+      "isolation": {
+        "instructions": "Apply this pattern while delivering an analytical statement, since 'thinking', 'banking' and similar words appear often in L2's analysis-style speaking missions.",
+        "instructions_ar": "طبّق النمط ده وانت بتقدم تصريح تحليلي، لأن كلمات زي thinking وbanking بتظهر كتير في مهام الكلام التحليلية في المستوى الثاني.",
+        "practice": ["Deliver Day 4's sentences in an analytical, presentation-style tone."]
+      },
+      "minimal_pairs": [
+        {"pair": ["analytical delivery with correct NG-coalescence", "careful, slow delivery"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["thinking", "banking", "English", "stronger", "longer"],
+      "sentence_practice": [
+        "When thinking analytically about English banking, we see stronger, longer-term trends.",
+        "I'm thinking the singer's stronger performance shows longer preparation.",
+        "Thanks to thinking clearly, our banking strategy is stronger."
+      ],
+      "record_this": "When thinking analytically about English banking, we see stronger, longer-term trends — thanks to clear thinking, our strategy is stronger.",
+      "self_check": "At analytical/presentation speed, did the NG-coalescence pattern remain natural and consistent?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: NG-coalescence with /k/, with /g/, contrast with cross-word separation, wider vocabulary, presentation speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["think (merged)", "one cat (separate)"], ["finger (merged)", "one goat (separate)"], ["banking", "stronger"]
+      ],
+      "challenge_sentences": [
+        "I think one cat and one goat are enough — my finger points at the bank, where I'm thinking about English banking.",
+        "Thanks for thinking about the singer's stronger, longer performance near the bank.",
+        "One kite, one cat, and my finger all point toward the English bank I'm thinking about."
+      ],
+      "record_this": "I think one cat and one goat are enough — my finger points at the bank, where I'm thinking about English banking and a singer's stronger, longer performance.",
+      "self_check": "Mark every merged NG sound and every genuinely separate n+k/g across word boundaries. Did you distinguish them correctly?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, correctly merging NG-coalescence within words while keeping genuinely separate n+k/g across word boundaries.",
+        "passage": "I'm thinking about my banking habits these days. Thanks to some careful thinking, I've realized that drinking less coffee and saving more could make my finances stronger. My uncle, a singer with a strong voice, told me that one small change, like one cup less a day, can add up over a longer period. English financial habits are interesting to think about, and I hope my thinking leads to a stronger, longer-term plan.",
+        "sounds_to_check": {
+          "NG-coalescence with /k/": "thinking (x3), banking, drinking, thanks",
+          "NG-coalescence with /g/": "stronger (x2), finger (implied context), longer (x2)",
+          "cross-word separation (contrast)": "one small, one cup"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "NG-coalescence correctly and consistently merged within words, correctly kept separate across word boundaries, at natural speed.",
+        "70_89": "Mostly correct; occasional over-separation within a word.",
+        "50_69": "Merging present only in heavily drilled words.",
+        "below_50": "Consistent separation of n+k/g throughout — go back and repeat Days 1-4, focusing on the back-of-mouth tongue position."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is Blueprint Table 19's explicit L2 Week 7 assignment (NG-coalescence).",
+      "A useful trick: practice the standalone 'ng' sound in 'sing' first (hum it, feeling the back-of-mouth nasal resonance), then attach a /k/ or /g/ right after that same tongue position, without moving your tongue forward first.",
+      "This completes the trio of L2 phoneme-merging patterns (Yod-dropping Week 3, Dark L Week 5, NG-coalescence Week 7) that Table 19 assigns specifically to this level."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, this should feel like a natural extension of your growing back-of-mouth articulation control (also used in Week 5's Dark L)."
+  }
+}

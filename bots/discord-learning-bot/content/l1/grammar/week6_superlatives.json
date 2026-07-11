@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w6",
+  "level": "L1",
+  "week": 6,
+  "pattern_name": "Superlatives (the biggest, the most)",
+  "pattern_name_ar": "صيغ التفضيل المطلق (الأكبر، الأكثر)",
+  "formula": "Subject + is/are + the + Adjective-est  |  Subject + is/are + the most + Adjective",
+  "formula_visual": "[THING] + is + the + [ADJ]-est / the most + [ADJ] (in the group/world/family)",
+  "when_to_use": "Use superlatives to compare THREE OR MORE things and identify the one at the extreme (highest or lowest) of a quality. Always use 'the' before a superlative. Short adjectives add -est; longer adjectives use 'the most'.",
+  "when_to_use_ar": "استخدم صيغ التفضيل المطلق لمقارنة ثلاثة أشياء أو أكتر وتحديد اللي في القمة (الأعلى أو الأقل) في صفة معينة. استخدم the قبل صيغة التفضيل دايمًا.",
+  "why_arabic_speakers_struggle": "Learners who just learned comparatives last week often try to reuse '-er + than' patterns for group comparisons ('the biggest than all'), or forget the required article 'the', which is grammatically mandatory before every English superlative and has no direct one-to-one equivalent trigger in Arabic superlative structures.",
+  "examples": [
+    {"en": "This is the biggest city in the country.", "ar": "دي أكبر مدينة في البلد", "structure": "[This] + [is] + [the biggest] + [city] + [in the country]"},
+    {"en": "She is the tallest person in her family.", "ar": "هي أطول شخص في عيلتها", "structure": "[She] + [is] + [the tallest] + [person] + [in her family]"},
+    {"en": "This is the most expensive restaurant in town.", "ar": "ده أغلى مطعم في المدينة", "structure": "[This] + [is] + [the most expensive] + [restaurant] + [in town]"},
+    {"en": "He is the most interesting person I know.", "ar": "هو أكتر شخص أعرفه تشويقًا", "structure": "[He] + [is] + [the most interesting] + [person] + [I know]"},
+    {"en": "This was the worst day of my life.", "ar": "ده كان أسوأ يوم في حياتي", "structure": "[This] + [was] + [the worst] + [day] + [of my life]"}
+  ],
+  "common_errors": [
+    {"wrong": "This is biggest city.", "correct": "This is the biggest city.", "explanation": "The article 'the' is mandatory before a superlative — it can never be dropped in English."},
+    {"wrong": "This is the more expensive restaurant in town.", "correct": "This is the most expensive restaurant in town.", "explanation": "For 3+ things, long adjectives need 'the MOST', not 'the more' (which mixes comparative and superlative forms)."},
+    {"wrong": "She is the most tall person here.", "correct": "She is the tallest person here.", "explanation": "'tall' is short (1 syllable) — it takes -est, not 'the most'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "This is ___ (good) restaurant in the city.", "answer": "the best", "hint": "'good' is irregular → best."},
+    {"sentence": "He is ___ (funny) person in our group.", "answer": "the funniest", "hint": "2 syllables ending in y → change y to i, add -est."},
+    {"sentence": "That was ___ (boring) movie I have ever seen.", "answer": "the most boring", "hint": "3+ syllables → 'the most'."},
+    {"sentence": "This is ___ (small) phone in the store.", "answer": "the smallest", "hint": "1 syllable → add -est."},
+    {"sentence": "She is ___ (intelligent) student in the class.", "answer": "the most intelligent", "hint": "3+ syllables → 'the most'."}
+  ],
+  "quick_rule": "ALWAYS use 'the' before a superlative — no exceptions. Short adjectives → the + adj-est. Long adjectives → the most + adj. Irregular: good→the best, bad→the worst, far→the farthest/furthest.",
+  "quick_rule_ar": "استخدم the دايمًا قبل صيغة التفضيل — بدون استثناء. الصفات القصيرة → the + adj-est. الصفات الطويلة → the most + adj.",
+  "mnemonic": "SUPERLATIVE = 'the SUPER one' — there's only ONE super winner, so it always needs 'THE' to point at that single one.",
+  "connect_to_speaking": "Practice with your buddy: name the best restaurant, the worst movie, and the most interesting person you know, using full superlative sentences each time — never drop 'the'."
+}

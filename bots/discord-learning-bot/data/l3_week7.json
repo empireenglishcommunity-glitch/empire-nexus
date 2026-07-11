@@ -4,51 +4,91 @@
   "theme": "Advanced Pronunciation (Connected Speech)",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Complex Noun Phrases",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "assimilation (phonetics)", "pronunciation": "ə-sim-ə-LAY-shən", "arabic": "التماثل الصوتي", "pos": "noun"},
+    {"word": "elision", "pronunciation": "i-LIZH-ən", "arabic": "حذف صوتي", "pos": "noun"},
+    {"word": "connected speech", "pronunciation": "kə-NEK-tid speech", "arabic": "الكلام المتصل", "pos": "noun phrase"},
+    {"word": "prosody", "pronunciation": "PROS-ə-dee", "arabic": "العروض/موسيقى الكلام", "pos": "noun"},
+    {"word": "cadence", "pronunciation": "KAY-dəns", "arabic": "وقع/نغمة الكلام", "pos": "noun"},
+    {"word": "articulation", "pronunciation": "ar-tik-yə-LAY-shən", "arabic": "وضوح النطق", "pos": "noun"},
+    {"word": "vowel reduction", "pronunciation": "VOW-əl ri-DUK-shən", "arabic": "تخفيض حرف العلة", "pos": "noun phrase"},
+    {"word": "intrusive R", "pronunciation": "in-TROO-siv ar", "arabic": "صوت R دخيل", "pos": "noun phrase"},
+    {"word": "juncture", "pronunciation": "JUNK-chər", "arabic": "نقطة الوصل بين الكلمات", "pos": "noun"},
+    {"word": "phonetic drift", "pronunciation": "fə-NET-ik drift", "arabic": "انزلاق صوتي تدريجي", "pos": "noun phrase"},
+    {"word": "suprasegmental", "pronunciation": "soo-prə-seg-MEN-təl", "arabic": "فوق مقطعي (نبر/تنغيم)", "pos": "adjective"},
+    {"word": "isochrony", "pronunciation": "y-SOK-rə-nee", "arabic": "التوقيت المتساوي (ريتم الكلام)", "pos": "noun"},
+    {"word": "coarticulation", "pronunciation": "koh-ar-tik-yə-LAY-shən", "arabic": "التلازم النطقي", "pos": "noun"},
+    {"word": "articulatory setting", "pronunciation": "ar-TIK-yə-lə-tor-ee SET-ing", "arabic": "الوضعية النطقية الأساسية", "pos": "noun phrase"},
+    {"word": "speech register", "pronunciation": "speech REJ-is-tər", "arabic": "مستوى/سجل الكلام", "pos": "noun phrase"},
+    {"word": "pitch contour", "pronunciation": "pich KON-toor", "arabic": "منحنى النبرة الصوتية", "pos": "noun phrase"},
+    {"word": "syllable-timed", "pronunciation": "SIL-ə-bəl-tymd", "arabic": "متوقت بالمقطع (كالعربية)", "pos": "adjective"},
+    {"word": "stress-timed", "pronunciation": "stres-tymd", "arabic": "متوقت بالنبر (كالإنجليزية)", "pos": "adjective"},
+    {"word": "phonation", "pronunciation": "foh-NAY-shən", "arabic": "الإصدار الصوتي/التصويت", "pos": "noun"},
+    {"word": "resonance (voice)", "pronunciation": "REZ-ə-nəns", "arabic": "رنين الصوت", "pos": "noun"},
+    {"word": "diction", "pronunciation": "DIK-shən", "arabic": "طريقة النطق/اختيار الكلمات", "pos": "noun"},
+    {"word": "enunciate", "pronunciation": "i-NUN-see-ayt", "arabic": "ينطق بوضوح", "pos": "verb"},
+    {"word": "muscle memory (speech)", "pronunciation": "MUS-əl MEM-ə-ree", "arabic": "الذاكرة العضلية (للنطق)", "pos": "noun phrase"},
+    {"word": "native-like fluency", "pronunciation": "NAY-tiv-lyk FLOO-ən-see", "arabic": "طلاقة شبه أصلية", "pos": "noun phrase"},
+    {"word": "phonemic awareness", "pronunciation": "fə-NEE-mik ə-WAIR-nəs", "arabic": "الوعي الصوتي بالفونيمات", "pos": "noun phrase"},
+    {"word": "supra-segmental features", "pronunciation": "soo-prə-seg-MEN-təl FEE-chərz", "arabic": "خصائص فوق مقطعية", "pos": "noun phrase"},
+    {"word": "prominence (linguistic)", "pronunciation": "PROM-ə-nəns", "arabic": "البروز الصوتي/النبري", "pos": "noun"},
+    {"word": "boundary tone", "pronunciation": "BOWN-dree tohn", "arabic": "نغمة الحد الفاصل بين الجمل", "pos": "noun phrase"},
+    {"word": "accent reduction", "pronunciation": "AK-sent ri-DUK-shən", "arabic": "تقليص اللكنة", "pos": "noun phrase"},
+    {"word": "target sound", "pronunciation": "TAR-git sownd", "arabic": "الصوت المستهدف بالتدريب", "pos": "noun phrase"},
+    {"word": "minimal pair contrast", "pronunciation": "MIN-ə-məl pair KON-trast", "arabic": "تباين الزوج الأدنى", "pos": "noun phrase"},
+    {"word": "supra-articulatory control", "pronunciation": "soo-prə-ar-TIK-yə-lə-tor-ee kən-TROHL", "arabic": "التحكم النطقي المتقدم", "pos": "noun phrase"},
+    {"word": "speech shadowing", "pronunciation": "speech SHAD-oh-ing", "arabic": "محاكاة الكلام", "pos": "noun phrase"},
+    {"word": "auditory discrimination", "pronunciation": "AW-di-tor-ee dis-krim-ə-NAY-shən", "arabic": "التمييز السمعي", "pos": "noun phrase"},
+    {"word": "vocal tract", "pronunciation": "VOH-kəl trakt", "arabic": "القناة الصوتية", "pos": "noun phrase"},
+    {"word": "acoustic cue", "pronunciation": "ə-KOO-stik kyoo", "arabic": "إشارة صوتية سمعية", "pos": "noun phrase"},
+    {"word": "connected discourse", "pronunciation": "kə-NEK-tid DIS-kors", "arabic": "خطاب متصل", "pos": "noun phrase"},
+    {"word": "fine-tune (pronunciation)", "pronunciation": "fyn-toon", "arabic": "يُحسّن بدقة (النطق)", "pos": "verb"},
+    {"word": "phonological process", "pronunciation": "foh-nə-LOJ-i-kəl PROS-es", "arabic": "عملية صوتية", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Give a 5-minute TED-style talk on 'What I've learned about my own accent journey', reflecting on your progress from Level 0 to now.",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Structured debate with rebuttals: 'Eliminating a foreign accent should be a goal for advanced learners, or accents are a natural, acceptable part of identity.' Present your case, then respond to a counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Record a 5-minute podcast segment explaining, in your own words, 3 specific connected-speech features you've mastered (e.g., flap T, linking, schwa) and how they changed your spoken English.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Teach a Level 0 or Level 1 student one connected-speech feature you now consider automatic, breaking it down the way it was first taught to you.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Respond to this unexpected prompt: read an unfamiliar short passage aloud cold (no preparation), then immediately self-critique your own connected speech.",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Find a challenging short clip (30-60 seconds) of very fast, natural native speech (a comedian, fast talker, or auctioneer-style speech). Attempt to mimic it as closely as possible.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Advanced Pronunciation (Connected Speech))",
-      "target_seconds": 310
+      "prompt": "Speak naturally for 5+ minutes on any topic, at your fastest comfortable natural speed, applying every connected-speech skill you've built since Level 0.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on advanced pronunciation (connected speech) (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in advanced pronunciation (connected speech).",
-    "Compose a formal report with recommendations about advanced pronunciation (connected speech).",
-    "Write a creative piece (story/poem) inspired by advanced pronunciation (connected speech).",
-    "Draft an opinion column for a newspaper about advanced pronunciation (connected speech).",
-    "Write a comparison essay using academic vocabulary about advanced pronunciation (connected speech).",
-    "Write freely about advanced pronunciation (connected speech) — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing whether native-like pronunciation should be a required goal for advanced language learners.",
+    "Write a critical analysis of your own accent journey, identifying which specific connected-speech features were hardest for you and why.",
+    "Compose a formal report with recommendations for how future students at your level could learn connected speech more efficiently.",
+    "Write a creative piece (story or poem) that plays with the sounds and rhythms of English itself as its central theme.",
+    "Draft an opinion column about whether accent-reduction training reinforces harmful ideas about which accents are 'correct.'",
+    "Write a comparison essay contrasting your native language's rhythm/stress system with English's stress-timed rhythm.",
+    "Write freely about the moment you first felt genuinely fluent, or a moment you didn't — focus on style, not just content."
   ]
 }

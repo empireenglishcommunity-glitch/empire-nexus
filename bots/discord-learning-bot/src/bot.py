@@ -370,26 +370,41 @@ async def monday_progress_report():
 
 @tasks.loop(time=datetime.time(hour=config.DAILY_TASK_HOUR, minute=30, tzinfo=_zone()))
 async def grammar_card_delivery():
-    """Post grammar pattern card on Day 4 of each week (Wednesday)."""
+    """Post grammar pattern card on Day 4 of each week (Wednesday).
+
+    Previously this only ever checked L0 members, so L1/L2/L3 students
+    never received a grammar card regardless of content availability.
+    Now loops over every level, same pattern as daily_task_post(), and
+    silently skips a level if it has no grammar content authored yet
+    (format_grammar_card returns "" in that case).
+    """
     if _now().weekday() != 2:  # 2 = Wednesday
         return
     guild = bot.get_guild(config.GUILD_ID)
     if not guild:
         return
 
-    # Get current week and post grammar card
-    members = database.members_at_level("L0")
-    if members:
+    channel = discord.utils.get(guild.text_channels, name="cheat-sheets")
+    if not channel:
+        logger.warning("grammar_card_delivery: #cheat-sheets channel not found")
+        return
+
+    for level_key in ["L0", "L1", "L2", "L3"]:
+        members = database.members_at_level(level_key)
+        if not members:
+            continue
+
         week = database.member_week_number(members[0]["discord_id"])
-        card = features.format_grammar_card(week)
-        if card:
-            channel = discord.utils.get(guild.text_channels, name="cheat-sheets")
-            if channel:
-                try:
-                    await channel.send(card)
-                    logger.info(f"Grammar card posted for week {week}")
-                except:
-                    pass
+        card = features.format_grammar_card(week, level_key)
+        if not card:
+            logger.info(f"No grammar card content for {level_key} week {week} — skipped")
+            continue
+
+        try:
+            await channel.send(card)
+            logger.info(f"Grammar card posted for {level_key} week {week}")
+        except discord.HTTPException as e:
+            logger.error(f"Failed to post grammar card for {level_key}: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
@@ -734,7 +749,9 @@ async def cmd_help(ctx):
         "`!members` — List all members\n"
         "`!orient <date/time>` — Send orientation invite\n"
         "`!recruit ar/en` — Get recruitment message template\n"
-        "`!resources L0/L1/L2/L3` — Post shadowing resources\n\n"
+        "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
+        "`!examqueue` — List advancement exams awaiting review\n"
+        "`!examresult <id> pass/fail` — Resolve an exam (auto-promotes on pass)\n\n"
         "**Account:**\n"
         "`!delete` — Request deletion of all your data\n"
         "`!exam` — Request level advancement exam\n"
@@ -857,6 +874,88 @@ async def cmd_exam(ctx):
         min_weeks = level_info.get("duration_weeks")
         if min_weeks and week >= min_weeks[0]:
             await features.start_exam_collection(ctx.author)
+
+
+@bot.command(name="examresult")
+@commands.has_permissions(manage_guild=True)
+async def cmd_examresult(ctx, exam_id: int = None, result: str = None):
+    """Resolve a pending advancement exam. Usage: !examresult <id> pass|fail
+
+    Closes the loop that !exam previously left open: on 'pass' this
+    actually calls database.set_level() and reassigns the Discord role
+    (the same promotion logic !setlevel uses), then DMs the student.
+    On 'fail' it DMs constructive next steps. Either way the exam row
+    moves out of 'pending', which also releases the 30-day cooldown.
+    """
+    if exam_id is None or result not in ("pass", "fail"):
+        await ctx.send("Usage: `!examresult <id> pass` or `!examresult <id> fail`")
+        return
+
+    exam = database.get_exam_by_id(exam_id)
+    if not exam:
+        await ctx.send(f"❌ No exam found with id `{exam_id}`.")
+        return
+    if exam["status"] != "pending":
+        await ctx.send(f"⚠️ Exam #{exam_id} was already resolved as **{exam['status']}**.")
+        return
+
+    passed = result == "pass"
+    database.resolve_exam(exam_id, passed, resolved_by=str(ctx.author.id))
+
+    student = ctx.guild.get_member(int(exam["discord_id"]))
+
+    if passed:
+        database.set_level(exam["discord_id"], exam["to_level"])
+        if student:
+            await _assign_level_role(student, exam["to_level"])
+        level_info = config.LEVELS.get(exam["to_level"], config.LEVELS["L0"])
+        await ctx.send(
+            f"✅ Exam #{exam_id}: **{exam['discord_id']}** passed → promoted to "
+            f"**{exam['to_level']}** ({level_info['name']})"
+        )
+        if student:
+            try:
+                await student.send(
+                    f"🎉 **مبروك! نجحت في امتحان الترقية!**\n\n"
+                    f"انت دلوقتي في **{exam['to_level']} — {level_info['name']}** {level_info['emoji']}\n\n"
+                    f"استمر! 🏛️"
+                )
+            except discord.Forbidden:
+                pass
+    else:
+        await ctx.send(f"📋 Exam #{exam_id}: **{exam['discord_id']}** marked as failed. Stays at {exam['from_level']}.")
+        if student:
+            try:
+                await student.send(
+                    f"📋 **نتيجة امتحان الترقية**\n\n"
+                    f"لسه مش وقتها. استمر في التمرين وحاول تاني بعد شهر.\n"
+                    f"ابعت `#support` لو عايز تفاصيل أكتر عن نقاط التحسين.\n\n"
+                    f"احنا معاك. 🏛️"
+                )
+            except discord.Forbidden:
+                pass
+
+
+@bot.command(name="examqueue")
+@commands.has_permissions(manage_guild=True)
+async def cmd_examqueue(ctx):
+    """List all advancement exams awaiting review."""
+    rows = database.pending_exams()
+    if not rows:
+        await ctx.send("✅ No exams pending review.")
+        return
+    lines = [f"📋 **Pending Exams ({len(rows)})**\n"]
+    for r in rows:
+        lines.append(
+            f"#{r['id']} — {r.get('discord_name') or r['discord_id']} "
+            f"({r['from_level']} → {r['to_level']}) — submitted {r['attempted_at']}"
+        )
+    lines.append("\nResolve with `!examresult <id> pass` or `!examresult <id> fail`")
+    try:
+        await ctx.author.send("\n".join(lines))
+        await ctx.send("📩 Exam queue sent to your DMs.", delete_after=5)
+    except discord.Forbidden:
+        await ctx.send("\n".join(lines))
 
 
 @bot.command(name="delete")

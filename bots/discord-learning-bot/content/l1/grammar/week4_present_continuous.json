@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w4",
+  "level": "L1",
+  "week": 4,
+  "pattern_name": "Present Continuous (I am doing)",
+  "pattern_name_ar": "المضارع المستمر",
+  "formula": "Subject + am/is/are + Verb-ing (+ Object)",
+  "formula_visual": "[WHO] + am/is/are + [ACTION]-ing + [WHAT] (right now / these days)",
+  "when_to_use": "Use the Present Continuous for actions happening right now, at this exact moment, or temporary ongoing situations happening around the present time (this week, these days).",
+  "when_to_use_ar": "استخدم المضارع المستمر للأفعال اللي بتحصل دلوقتي في هذه اللحظة، أو المواقف المؤقتة اللي بتحصل حوالين الوقت الحالي (الأسبوع ده، هذه الأيام).",
+  "why_arabic_speakers_struggle": "Learners often confuse this with the Present Simple (I work vs. I am working) because both can describe present-time actions in Arabic without a strict grammatical distinction. English requires choosing: habitual/general truth (Present Simple) vs. happening right now or temporarily (Present Continuous).",
+  "examples": [
+    {"en": "I am studying right now.", "ar": "بدرس دلوقتي", "structure": "[I] + [am] + [studying] + [right now]"},
+    {"en": "She is traveling this week.", "ar": "هي بتسافر الأسبوع ده", "structure": "[She] + [is] + [traveling] + [this week]"},
+    {"en": "They are working on a new project.", "ar": "هما بيشتغلوا على مشروع جديد", "structure": "[They] + [are] + [working] + [on a new project]"},
+    {"en": "We are living with my parents these days.", "ar": "احنا عايشين مع والدي هذه الأيام", "structure": "[We] + [are] + [living] + [with my parents] + [these days]"},
+    {"en": "He is calling you right now — pick up!", "ar": "هو بيتصل بيك دلوقتي — رد!", "structure": "[He] + [is] + [calling you] + [right now]"}
+  ],
+  "common_errors": [
+    {"wrong": "I am work right now.", "correct": "I am working right now.", "explanation": "The main verb must have -ing added; 'am/is/are' alone is not enough."},
+    {"wrong": "I work right now.", "correct": "I am working right now.", "explanation": "'right now' signals an action happening at THIS moment, which requires Present Continuous, not Present Simple."},
+    {"wrong": "I am knowing the answer.", "correct": "I know the answer.", "explanation": "State/stative verbs (know, like, love, want, believe, need) almost never take -ing — they describe a permanent mental state, not an ongoing action."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Look! It ___ (rain) outside right now.", "answer": "'s raining / is raining", "hint": "Happening at this exact moment."},
+    {"sentence": "I ___ (study) English these days.", "answer": "'m studying / am studying", "hint": "Temporary ongoing situation around now."},
+    {"sentence": "She ___ (not/listen) to me right now.", "answer": "isn't listening / is not listening", "hint": "Negative, happening right now."},
+    {"sentence": "We ___ (need) more time. [careful — state verb!]", "answer": "need", "hint": "'need' is a state verb — use Present Simple, not -ing."},
+    {"sentence": "They ___ (build) a new house this year.", "answer": "'re building / are building", "hint": "Ongoing situation around the present time period."}
+  ],
+  "quick_rule": "Present Continuous = happening RIGHT NOW or a temporary situation around now (this week/year). NEVER use -ing with state verbs (know, like, want, need, love, believe, understand) — those stay in Present Simple even when talking about now.",
+  "quick_rule_ar": "المضارع المستمر = بيحصل دلوقتي أو موقف مؤقت حوالين الوقت الحالي. أبدًا متستخدمش -ing مع أفعال الحالة (know, like, want, need).",
+  "mnemonic": "-ING = 'It's happening, In progress Now, Going on.'",
+  "connect_to_speaking": "Practice: look around you right now and describe 3 things happening — 'The fan is spinning', 'My neighbor is talking loudly', 'I am practicing English.' This forces real-time use of the tense, not memorized examples."
+}

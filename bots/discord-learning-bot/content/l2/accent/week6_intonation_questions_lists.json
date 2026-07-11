@@ -1,0 +1,152 @@
+{
+  "level": "L2",
+  "week": 6,
+  "focus": "Rising & Falling Intonation — Questions, Lists, and Tag Questions",
+  "focus_ar": "التنغيم الصاعد والنازل — الأسئلة والقوائم والأسئلة الذيلية",
+  "arabic_challenge": "English intonation follows specific, largely fixed patterns for different sentence types: yes/no questions rise, WH-questions fall, items in a list rise except the last one, and tag questions can rise or fall depending on genuine intent. Arabic intonation for questions and lists follows different pitch conventions, so applying English's specific patterns incorrectly can make speech sound uncertain, aggressive, or simply foreign, even with perfect grammar.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["yes/no questions: rising intonation"],
+      "isolation": {
+        "instructions": "Yes/no questions (answerable with 'yes' or 'no') rise in pitch at the end — this is one of English's most consistent intonation rules.",
+        "instructions_ar": "أسئلة نعم/لا (اللي ممكن تُجاب بـ نعم أو لا) بترتفع نبرتها في الآخر — دي من أثبت قواعد التنغيم في الإنجليزية.",
+        "practice": ["Are you coming? (rising)", "Did you finish? (rising)", "Can you help me? (rising)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Are you coming? (rising, correct)", "Are you coming. (falling, sounds like a statement)"], "meaning": ["هتيجي؟", "—"]}
+      ],
+      "word_practice": ["Are you coming?", "Did you finish?", "Can you help me?", "Is this correct?"],
+      "sentence_practice": [
+        "Are you coming to the party tonight?",
+        "Did you finish the report? Can you help me review it?",
+        "Is this correct, or should I change it?"
+      ],
+      "record_this": "Are you coming to the party tonight? Did you finish the report? Can you help me review it? Is this correct?",
+      "self_check": "Did your pitch clearly rise at the end of each yes/no question?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["WH-questions: falling intonation"],
+      "isolation": {
+        "instructions": "WH-questions (who, what, when, where, why, how) typically FALL in pitch at the end — the opposite of yes/no questions.",
+        "instructions_ar": "أسئلة الاستفهام (who, what, when, where, why, how) عادة بتنخفض نبرتها في الآخر — عكس أسئلة نعم/لا.",
+        "practice": ["What time is it? (falling)", "Where do you live? (falling)", "Why did you leave? (falling)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["What time is it? (falling, correct)", "What time is it? (rising, sounds overly surprised/uncertain)"], "meaning": ["الساعة كام؟", "—"]}
+      ],
+      "word_practice": ["What time is it?", "Where do you live?", "Why did you leave?", "How does this work?"],
+      "sentence_practice": [
+        "What time is it, and where do you live?",
+        "Why did you leave early? How does this work?",
+        "What time is it? Where do you live? Why did you leave?"
+      ],
+      "record_this": "What time is it, and where do you live? Why did you leave early, and how does this work?",
+      "self_check": "Did your pitch fall at the end of each WH-question, rather than rising like a yes/no question?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["listing intonation: rise on each item except the last"],
+      "isolation": {
+        "instructions": "When listing multiple items, each item rises slightly in pitch EXCEPT the final item, which falls — this pattern signals to the listener exactly when the list is complete.",
+        "instructions_ar": "لما تسرد عناصر متعددة، كل عنصر بيرتفع شوية في النبرة إلا العنصر الأخير اللي بينخفض — ده بيدل للسامع بالضبط إن القائمة خلصت.",
+        "practice": ["I need apples↗, bananas↗, and oranges↘. (rise, rise, fall)", "We visited Paris↗, Rome↗, and Berlin↘."]
+      },
+      "minimal_pairs": [
+        {"pair": ["apples, bananas, and oranges. (correct list pattern)", "apples. bananas. and oranges. (flat, choppy, no list signal)"], "meaning": ["تفاح وموز وبرتقال", "—"]}
+      ],
+      "word_practice": ["apples, bananas, and oranges", "Paris, Rome, and Berlin", "reading, writing, and speaking"],
+      "sentence_practice": [
+        "I need apples, bananas, and oranges from the store.",
+        "We visited Paris, Rome, and Berlin last summer.",
+        "This course covers reading, writing, and speaking."
+      ],
+      "record_this": "I need apples, bananas, and oranges from the store — we also visited Paris, Rome, and Berlin, focusing on reading, writing, and speaking.",
+      "self_check": "Did each item before the last one rise slightly, with only the final item falling to signal completion?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["tag questions: rising (genuine question) vs. falling (seeking agreement)"],
+      "isolation": {
+        "instructions": "Tag questions ('..., isn't it?', '..., don't you?') can rise (a genuine question, unsure of the answer) or fall (confirming something you already believe, seeking agreement).",
+        "instructions_ar": "الأسئلة الذيلية ممكن ترتفع (سؤال حقيقي، غير متأكد من الإجابة) أو تنخفض (تأكيد لشيء تعتقده بالفعل، طلب موافقة).",
+        "practice": ["It's cold today, isn't it? (rising = genuine uncertainty)", "You're coming, aren't you? (falling = confident, expects 'yes')"]
+      },
+      "minimal_pairs": [
+        {"pair": ["isn't it? (rising, genuinely unsure)", "isn't it? (falling, confirming/expecting agreement)"], "meaning": ["صح؟", "—"]}
+      ],
+      "word_practice": ["isn't it?", "aren't you?", "don't you?", "won't they?"],
+      "sentence_practice": [
+        "It's cold today, isn't it? (genuinely unsure, rising)",
+        "You're coming to the party, aren't you? (confident, falling)",
+        "They won't be late, will they? (uncertain, rising)"
+      ],
+      "record_this": "It's cold today, isn't it? You're coming to the party, aren't you? They won't be late, will they?",
+      "self_check": "Could you correctly choose rising (uncertain) vs. falling (confident) intonation depending on the intended meaning?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["combining question, list, and tag intonation in natural speech"],
+      "isolation": {
+        "instructions": "Practice a natural passage combining all patterns from this week — yes/no questions, WH-questions, lists, and tag questions.",
+        "instructions_ar": "تدرب على مقطع طبيعي يجمع كل الأنماط من هذا الأسبوع — أسئلة نعم/لا، أسئلة استفهام، قوائم، وأسئلة ذيلية.",
+        "practice": ["Deliver a natural conversational passage combining all 4 patterns."]
+      },
+      "minimal_pairs": [
+        {"pair": ["natural passage with all 4 intonation patterns correct", "flat delivery ignoring all patterns"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses full sentence practice below)"],
+      "sentence_practice": [
+        "Are you free this weekend? What are your plans? I need to buy apples, bananas, and oranges — you'll come with me, won't you?"
+      ],
+      "record_this": "Are you free this weekend? What are your plans? I need to buy apples, bananas, and oranges — you'll come with me, won't you?",
+      "self_check": "In this combined passage, did each sentence type get its correct, distinct intonation pattern?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: yes/no rising, WH-question falling, list intonation, tag question rising/falling contrast",
+      "type": "review",
+      "mixed_pairs": [
+        ["Are you coming? (rising)", "What time is it? (falling)"], ["apples, bananas, and oranges (list)", "isn't it? (tag, rising or falling)"]
+      ],
+      "challenge_sentences": [
+        "Are you coming to the party? What time should I arrive, and should I bring apples, bananas, or oranges?",
+        "It's a great party, isn't it? Where is it, and who's coming?",
+        "You're bringing snacks, aren't you? What kind — chips, cookies, or fruit?"
+      ],
+      "record_this": "Are you coming to the party? What time should I arrive, and should I bring apples, bananas, or oranges? It's going to be great, isn't it?",
+      "self_check": "This passage mixes all 4 patterns. Did you correctly apply a different, appropriate intonation shape to each sentence type?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, applying the correct intonation pattern to each question type, list, and tag question.",
+        "passage": "Are you free this weekend? I'm planning a trip, and I need to buy some snacks, drinks, and maps before we go. Where should we go, and how long should we stay? It's going to be a fun trip, isn't it? You're definitely coming, aren't you? What time works best for you — morning, afternoon, or evening?",
+        "sounds_to_check": {
+          "yes/no questions (rising)": "Are you free this weekend?, You're definitely coming, aren't you? (as a confident tag)",
+          "WH-questions (falling)": "Where should we go?, How long should we stay?, What time works best for you?",
+          "list intonation": "snacks, drinks, and maps / morning, afternoon, or evening",
+          "tag question": "isn't it? (uncertain-leaning, rising), aren't you? (confident, falling)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 4 intonation patterns correctly and naturally applied throughout, with appropriate rising/falling choices for tag questions.",
+        "70_89": "Mostly correct; 1-2 pattern confusions (e.g., WH-question rising instead of falling).",
+        "50_69": "Patterns applied inconsistently, correct only in heavily drilled sentences.",
+        "below_50": "Largely flat intonation regardless of sentence type — go back and repeat Days 1-4 with exaggerated pitch practice."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week extends Blueprint §5.4's intonation patterns (first introduced conceptually in earlier levels) into concrete, practiced rules for questions, lists, and tags.",
+      "The list intonation pattern (rise-rise-fall) is subtle but appears constantly in spoken English — mastering it makes your speech sound noticeably more fluent and native, since it signals sentence structure without extra words.",
+      "For tag questions, when in doubt, default to FALLING (confident, seeking agreement) — it's the more common pattern in casual conversation."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare against Week 4's emphasis/contrast intonation work — together these form a comprehensive L2 intonation skill set."
+  }
+}

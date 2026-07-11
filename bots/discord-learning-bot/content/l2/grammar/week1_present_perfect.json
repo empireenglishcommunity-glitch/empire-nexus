@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w1",
+  "level": "L2",
+  "week": 1,
+  "pattern_name": "Present Perfect (have done)",
+  "pattern_name_ar": "المضارع التام",
+  "formula": "Subject + have/has + Past Participle",
+  "formula_visual": "[WHO] + have/has + [VERB-3rd form] (ever/never/already/yet/for/since)",
+  "when_to_use": "Use the Present Perfect for past actions with a connection to NOW: an experience with no specific time given, a recent action with present relevance, or a situation continuing from the past until now.",
+  "when_to_use_ar": "استخدم المضارع التام للأفعال الماضية المرتبطة بالحاضر: خبرة بدون وقت محدد، فعل حديث له أهمية الآن، أو موقف مستمر من الماضي للحاضر.",
+  "why_arabic_speakers_struggle": "Arabic has no direct grammatical equivalent to this exact 'past-but-connected-to-now' concept — it's usually expressed with context or time words rather than a distinct verb form. Learners often default to Past Simple for everything, missing the deliberate ambiguity of time that Present Perfect signals (the WHEN doesn't matter — the fact or its present relevance does).",
+  "examples": [
+    {"en": "I have visited Paris three times.", "ar": "زرت باريس ثلات مرات (خبرة، الوقت غير محدد)", "structure": "[I] + [have visited] + [Paris] + [three times]"},
+    {"en": "She has just finished her homework.", "ar": "هي خلصت واجبها لسه (فعل حديث، أهمية للحاضر)", "structure": "[She] + [has just finished] + [her homework]"},
+    {"en": "We have lived here for ten years.", "ar": "احنا عايشين هنا من عشر سنين (مستمر من الماضي للحاضر)", "structure": "[We] + [have lived] + [here] + [for ten years]"},
+    {"en": "Have you ever tried sushi?", "ar": "جربت السوشي قبل كده؟ (سؤال عن خبرة)", "structure": "[Have] + [you] + [ever tried] + [sushi]"},
+    {"en": "He hasn't called me yet.", "ar": "هو لسه ما اتصلش بيا (متوقع، لسه محصلش)", "structure": "[He] + [hasn't called me] + [yet]"}
+  ],
+  "common_errors": [
+    {"wrong": "I have visited Paris last year.", "correct": "I visited Paris last year.", "explanation": "Present Perfect can NEVER be used with a specific past time word (last year, yesterday, in 2020) — those require Past Simple instead."},
+    {"wrong": "I am living here since 2015.", "correct": "I have lived here since 2015. / I've been living here since 2015.", "explanation": "A situation continuing from the past to now with 'since' or 'for' requires Present Perfect (or Present Perfect Continuous), not Present Continuous."},
+    {"wrong": "She has go to the market.", "correct": "She has gone to the market.", "explanation": "The verb after have/has must be the past participle (3rd form) — 'gone', not the base form 'go'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (never/try) Ethiopian food.", "answer": "have never tried", "hint": "Experience, no specific time — Present Perfect."},
+    {"sentence": "She ___ (live) in this city since 2018.", "answer": "has lived", "hint": "Continuing from past to now with 'since'."},
+    {"sentence": "We ___ (visit) Rome last summer. [careful — has a specific time!]", "answer": "visited", "hint": "Specific past time word 'last summer' → Past Simple, not Present Perfect."},
+    {"sentence": "___ you ever (be) to Japan?", "answer": "Have ... been", "hint": "Asking about lifetime experience."},
+    {"sentence": "He ___ (already/finish) the report.", "answer": "has already finished", "hint": "Recent action, relevant to now."}
+  ],
+  "quick_rule": "Present Perfect = connects the past to NOW. Never combine it with a specific past time (yesterday, in 2020, last week) — those need Past Simple. Signal words: ever, never, already, yet, just, for, since.",
+  "quick_rule_ar": "المضارع التام بيربط الماضي بالحاضر. متستخدمهوش مع وقت ماضي محدد.",
+  "mnemonic": "PRESENT Perfect = the PAST still matters in the PRESENT.",
+  "connect_to_speaking": "Practice with your buddy: share 3 life experiences using 'I have...' (with no specific date), then share 1 specific memory using Past Simple (with a clear date/time) — feel the grammatical difference in real conversation."
+}

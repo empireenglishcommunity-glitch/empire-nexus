@@ -1,0 +1,156 @@
+{
+  "level": "L1",
+  "week": 7,
+  "focus": "Consonant-to-Consonant Linking — Holding Shared Consonants",
+  "focus_ar": "ربط الساكن بالساكن — إمساك الأصوات الساكنة المشتركة",
+  "arabic_challenge": "Arabic speakers typically release each consonant fully and separately, even when the same or a similar consonant sound appears at the end of one word and the start of the next. In natural English, when two words meet with the same (or very similar) consonant sound, speakers hold that consonant ONCE, for a beat longer, rather than pronouncing it twice with a gap in between.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["identical consonant linking: hold, don't double"],
+      "isolation": {
+        "instructions": "When a word ends in the same consonant sound that starts the next word, native speakers hold that single sound slightly longer instead of pronouncing it twice with a gap.",
+        "instructions_ar": "لما كلمة تنتهي بنفس الصوت الساكن اللي تبدأ به الكلمة اللي بعدها، المتكلم الأصلي بيمسك الصوت الواحد ده لفترة أطول شوية بدل ما ينطقه مرتين بفجوة بينهم.",
+        "practice": ["big game → bi-g:game (one held /g/, not big. game.)", "some milk → so-m:milk", "black coffee → blac-k:coffee"]
+      },
+      "minimal_pairs": [
+        {"pair": ["big game (held, one sound)", "big. Game. (doubled, choppy)"], "meaning": ["لعبة كبيرة", "—"]},
+        {"pair": ["some milk (held, one sound)", "some. Milk. (doubled, choppy)"], "meaning": ["شوية لبن", "—"]}
+      ],
+      "word_practice": ["big game", "some milk", "black coffee", "good day", "stop please", "red door"],
+      "sentence_practice": [
+        "It's a big game — have some milk and black coffee first.",
+        "Good day! Stop, please — that red door is closed.",
+        "Some milk, a big game, and black coffee: a perfect morning."
+      ],
+      "record_this": "Good day! It's a big game today — have some milk and black coffee before you stop at that red door.",
+      "self_check": "Say 'big game' — did you produce ONE longer /g/ sound, or two separate /g/ sounds with a tiny gap? Aim for one held sound."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["similar (not identical) consonant linking"],
+      "isolation": {
+        "instructions": "This also happens with consonants that are similar in place of articulation but not identical, like /t/ meeting /d/ — the two blend into a single, held closure rather than two separate releases.",
+        "instructions_ar": "ده كمان بيحصل مع أصوات ساكنة متشابهة في مكان النطق بس مش متطابقة، زي /t/ لما تقابل /d/ — الاتنين بيندمجوا في قفلة واحدة ممسوكة بدل ما يتنطقوا لوحدهم مرتين.",
+        "practice": ["what time → wha-t:time", "good time → goo-d:time", "big deal → bi-g:deal"]
+      },
+      "minimal_pairs": [
+        {"pair": ["what time (held closure)", "what. Time. (doubled release)"], "meaning": ["أنهي وقت", "—"]},
+        {"pair": ["good time (held closure)", "good. Time. (doubled release)"], "meaning": ["وقت حلو", "—"]}
+      ],
+      "word_practice": ["what time", "good time", "big deal", "that time", "right there", "last time"],
+      "sentence_practice": [
+        "What time is it? We had a good time.",
+        "It's a big deal — I saw it right there last time.",
+        "That time, we had a really good time."
+      ],
+      "record_this": "What time is it? Last time, we had a good time right there — it's a big deal, that time especially.",
+      "self_check": "For /t/ meeting /d/ (or similar pairs), is there one smooth held closure, or two separate, choppy stops?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["consonant-to-consonant linking with nasal sounds"],
+      "isolation": {
+        "instructions": "The same held-consonant principle applies to nasal sounds (/m/ /n/) meeting the same or a similar nasal at a word boundary.",
+        "instructions_ar": "نفس مبدأ الإمساك بالساكن بينطبق على الأصوات الأنفية (/m/ /n/) لما تقابل نفس الصوت أو صوت مشابه عند حدود الكلمات.",
+        "practice": ["ten nights → te-n:nights", "some more → so-m:more", "one number → on-e number (vowel between, no link needed here — contrast!)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ten nights (held /n/)", "ten. Nights. (doubled)"], "meaning": ["عشر ليالي", "—"]},
+        {"pair": ["some more (held /m/)", "some. More. (doubled)"], "meaning": ["أكتر شوية", "—"]}
+      ],
+      "word_practice": ["ten nights", "some more", "in November", "one minute", "green need"],
+      "sentence_practice": [
+        "We stayed ten nights and wanted some more.",
+        "In November, give me one minute to think.",
+        "I need some more time, ten nights isn't enough."
+      ],
+      "record_this": "We stayed ten nights in November and wanted some more — just give me one minute, ten nights isn't enough.",
+      "self_check": "For 'ten nights' and 'some more', did the nasal sound hold as one longer sound rather than two short, separate ones?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["consonant-to-consonant linking in common phrases"],
+      "isolation": {
+        "instructions": "Practice this pattern in the specific everyday phrases where it appears most often in real conversation.",
+        "instructions_ar": "تدرب على هذا النمط في العبارات اليومية المحددة اللي بيظهر فيها كتير في المحادثة الحقيقية.",
+        "practice": ["that time → tha-t:time", "next Tuesday → nex-t Tuesday (also connects to consonant clusters)", "big brother → bi-g:brother (not fully identical, but held similarly)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["that time (held)", "that. Time. (doubled)"], "meaning": ["ذلك الوقت", "—"]}
+      ],
+      "word_practice": ["that time", "next Tuesday", "big brother", "some snacks", "good grief", "black board"],
+      "sentence_practice": [
+        "That time, next Tuesday, my big brother is coming.",
+        "Bring some snacks — good grief, that's a lot!",
+        "Write it on the black board next Tuesday."
+      ],
+      "record_this": "That time, next Tuesday, my big brother is bringing some snacks — good grief, write it on the black board so we remember!",
+      "self_check": "In these common phrases, is the shared/similar consonant held smoothly, without becoming two separate hits?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["consonant-to-consonant linking at natural speed"],
+      "isolation": {
+        "instructions": "As with all connected-speech features this level, this needs to survive real conversational speed, not just careful, slow drilling.",
+        "instructions_ar": "زي كل ميزات الكلام المتصل في هذا المستوى، ده لازم يفضل موجود في سرعة المحادثة الحقيقية، مش بس في التمرين البطيء الحذر.",
+        "practice": ["Slow: big...game (still held, just slower)", "Normal: big game", "Fast: 'What a big game that was!'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["what a big game that was (fast, natural)", "what. a. big. game. that. was. (slow, choppy)"], "meaning": ["يا له من مباراة كبيرة", "—"]}
+      ],
+      "word_practice": ["big game", "some milk", "what time", "ten nights", "that time", "next Tuesday"],
+      "sentence_practice": [
+        "What a big game that was! What time did it end?",
+        "Some milk, ten nights, that time — I remember it all.",
+        "Next Tuesday's big game will be even better."
+      ],
+      "record_this": "What a big game that was! What time did it end? I remember some milk, ten nights, that time — next Tuesday's game will be even better.",
+      "self_check": "Record this 3 times at increasing speed. Did every held-consonant link survive, or did some split back into two separate sounds?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: identical consonant holding, similar consonant blending, nasal linking, common phrases, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["big game", "big. game."], ["some milk", "what time"], ["ten nights", "next Tuesday"], ["that time", "good time"]
+      ],
+      "challenge_sentences": [
+        "What a big game — some milk and black coffee made it a good time, that time especially.",
+        "Ten nights in November, next Tuesday's game, and my big brother bringing some snacks — good grief!",
+        "What time is it? That time, we had a really good time with some more milk."
+      ],
+      "record_this": "What a big game! Some milk and black coffee made it a good time. Ten nights in November, next Tuesday's game, and my big brother bringing some snacks — good grief, what a time that was.",
+      "self_check": "Circle every place two words meet with the same or similar consonant. Did you hold each one as a single smooth sound throughout?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, holding shared/similar consonants at word boundaries rather than doubling them.",
+        "passage": "What a big game that was last Tuesday! We had some milk and black coffee before it started, and my big brother stayed ten nights just to watch it live. What time does the next one start? Good grief, I need some more coffee — that time flew by so fast, and next Tuesday's rematch will be an even bigger deal.",
+        "sounds_to_check": {
+          "identical consonant holding": "big game, some milk, good grief",
+          "similar consonant blending": "what time, that time, good day",
+          "nasal linking": "ten nights, some more"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Consonant-to-consonant links consistently held as single sounds, not doubled, at natural conversational speed throughout.",
+        "70_89": "Mostly correct; a few doubled consonants under stress or in less-practiced combinations.",
+        "50_69": "Linking present in drilled phrases only, inconsistent elsewhere.",
+        "below_50": "Consonants doubled/separated throughout — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This is blueprint Rule 3 of connected speech, completing the three linking rules alongside Week 3 (consonant-to-vowel) and Week 5 (vowel-to-vowel).",
+      "This pattern is subtle but adds up — mastering all three linking rules together (Weeks 3, 5, 7) is what makes speech sound like connected chunks instead of a string of separate words.",
+      "If two consonants are hard to blend, slow down first and exaggerate the HOLD (make it noticeably longer), then gradually speed up while keeping that single held sound."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare against Weeks 3 and 5 recordings — all three linking types should now work together smoothly."
+  }
+}

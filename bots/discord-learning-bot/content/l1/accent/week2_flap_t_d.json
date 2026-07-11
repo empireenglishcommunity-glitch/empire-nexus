@@ -1,0 +1,162 @@
+{
+  "level": "L1",
+  "week": 2,
+  "focus": "Flap T and Flap D — American 'Tapped' Consonants Between Vowels",
+  "focus_ar": "صوت الفلاب T و D — الصوت الأمريكي 'المطروق' بين حرفين متحركين",
+  "arabic_challenge": "Arabic /t/ and /d/ are always pronounced fully and clearly, wherever they appear. In American English, when /t/ or /d/ falls between two vowel sounds (and the second vowel is unstressed), it becomes a quick tongue-tap called a flap [ɾ] — very close to a Spanish/Arabic light 'r' sound. Saying a full, hard /t/ in 'water' or 'butter' is one of the clearest markers of a non-native American accent.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/t/ → flap [ɾ] between vowels"],
+      "isolation": {
+        "instructions": "When /t/ sits between two vowels and the syllable after it is unstressed, American speakers tap the tongue tip quickly against the ridge — much softer and faster than a full /t/. It sounds almost like a fast /d/ or light Arabic ر.",
+        "instructions_ar": "لما /t/ تقع بين حرفين متحركين والمقطع اللي بعدها بدون نبر، المتكلم الأمريكي بيطرق طرف لسانه بسرعة — صوت أخف وأسرع من /t/ الكاملة. قريب من صوت راء عربي خفيف.",
+        "practice": ["water → WA-ɾer (NOT wa-TER)", "better → BE-ɾer", "city → CI-ɾy"]
+      },
+      "minimal_pairs": [
+        {"pair": ["water (flapped)", "water (full T, sounds foreign)"], "meaning": ["ماء", "—"]},
+        {"pair": ["butter (flapped)", "butter (full T, sounds foreign)"], "meaning": ["زبدة", "—"]},
+        {"pair": ["writer", "rider"], "meaning": ["كاتب", "راكب/سائق"]},
+        {"pair": ["latter", "ladder"], "meaning": ["الأخير", "سلم"]}
+      ],
+      "word_practice": ["water", "better", "butter", "city", "party", "little", "pretty", "matter"],
+      "sentence_practice": [
+        "I need a little water for the party.",
+        "That's better butter than the city store has.",
+        "It doesn't matter — she's a pretty writer."
+      ],
+      "record_this": "I bought some butter and water at the party in the city — it's a pretty little place.",
+      "self_check": "Say 'water' twice: once with a hard, clear /t/, once flapped. The flapped version should feel faster and softer — almost lazy. That lazy version is the natural American sound."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/d/ → flap [ɾ] between vowels"],
+      "isolation": {
+        "instructions": "The same flap happens with /d/ between vowels — it merges with the /t/ flap sound, which is why 'writer' and 'rider' can sound almost identical in fast American speech (the vowel length is the only real difference).",
+        "instructions_ar": "نفس صوت الفلاب بيحصل مع /d/ بين حرفين متحركين — بيتشابه مع فلاب /t/، وده سبب إن writer و rider ممكن يتشابهوا في الكلام السريع (طول حرف العلة هو الفرق الحقيقي).",
+        "practice": ["ladder → LA-ɾer", "rider → RI-ɾer", "wedding → WE-ɾing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ladder", "latter"], "meaning": ["سلم", "الأخير"]},
+        {"pair": ["muddy", "*mutty (not a real word — used to feel the contrast)"], "meaning": ["موحل", "—"]},
+        {"pair": ["wedding", "wetting"], "meaning": ["زفاف", "يبلل"]}
+      ],
+      "word_practice": ["ladder", "wedding", "muddy", "study", "ready", "buddy", "body", "shoulder"],
+      "sentence_practice": [
+        "My buddy is ready for the wedding.",
+        "The ladder was muddy after I climbed it.",
+        "I study every day until my shoulder hurts."
+      ],
+      "record_this": "My buddy is ready to study for the wedding — his body is muddy from climbing that old ladder.",
+      "self_check": "Are you tapping your tongue quickly for both /t/ and /d/ in these words, rather than making a hard stop? If it sounds soft and fast, you've got it."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["flap T/D across word boundaries"],
+      "isolation": {
+        "instructions": "The flap doesn't only happen inside one word — it also happens when a word ending in /t/ or /d/ is followed by a word starting with a vowel, in connected speech.",
+        "instructions_ar": "الفلاب ما بيحصلش فقط داخل كلمة واحدة — بيحصل كمان لما كلمة تنتهي بـ /t/ أو /d/ وبعدها كلمة تبدأ بحرف متحرك، في الكلام المتصل.",
+        "practice": ["get up → ge-ɾup", "put it → pu-ɾit", "what about → wha-ɾabout"]
+      },
+      "minimal_pairs": [
+        {"pair": ["get up (flapped, connected)", "get up (choppy, separated)"], "meaning": ["استيقظ / انهض", "—"]},
+        {"pair": ["put it (flapped)", "put it (choppy)"], "meaning": ["ضعه", "—"]}
+      ],
+      "word_practice": ["get up", "put it", "what about", "not at all", "a lot of", "shut up"],
+      "sentence_practice": [
+        "What about getting up early to put it away?",
+        "There's a lot of work — not at all easy today.",
+        "Get up! We're going to be late."
+      ],
+      "record_this": "What about getting up early? There's a lot of work, and not at all of it is easy — but get up anyway.",
+      "self_check": "Do 'get up' and 'put it' flow as ONE smooth sound rather than two separate, choppy words?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["contrast: flap T vs. glottal stop preview (before nasal N)"],
+      "isolation": {
+        "instructions": "Not every /t/ becomes a flap. Before a syllabic /n/ (like in 'button' or 'mountain'), Americans usually use a GLOTTAL STOP instead — a brief closure in the throat — which you'll study in depth next week. Today, just notice the difference: flap = tongue tap; glottal stop = throat catch.",
+        "instructions_ar": "ماكل /t/ بتتحول لفلاب. قبل صوت /n/ المقطعي (زي في button أو mountain)، الأمريكان بيستخدموا وقفة حنجرية بديل — قفلة سريعة في الحلق — هتدرسها بالتفصيل الأسبوع الجاي. النهارده بس لاحظ الفرق.",
+        "practice": ["water (flap) vs. button (glottal stop)", "better (flap) vs. mountain (glottal stop)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["water (flap)", "button (glottal stop — preview)"], "meaning": ["ماء", "زرار"]},
+        {"pair": ["better (flap)", "mountain (glottal stop — preview)"], "meaning": ["أفضل", "جبل"]}
+      ],
+      "word_practice": ["water", "button", "better", "mountain", "little", "kitten", "matter", "written"],
+      "sentence_practice": [
+        "Press the button for more water.",
+        "The little kitten climbed the mountain.",
+        "It's better, no matter what's written."
+      ],
+      "record_this": "Press the button, drink some water, and climb the little mountain — no matter what is written, it's better than staying home.",
+      "self_check": "Can you feel your throat catch briefly for 'button' and 'mountain', while your tongue just taps lightly for 'water' and 'better'? These are two different mechanisms — don't mix them up."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["flap T/D in fast, natural sentences"],
+      "isolation": {
+        "instructions": "Today, focus on speed. The flap only sounds natural at normal-to-fast conversational speed. Practice building up from slow to natural pace without losing the flap.",
+        "instructions_ar": "النهارده الفوكس على السرعة. الفلاب بيبان طبيعي بس في سرعة كلام عادية لسريعة. تدرب من البطيء للسريع بدون ما تخسر صوت الفلاب.",
+        "practice": ["Slow: wa...ter (still flapped, just slower)", "Normal: water", "Fast: 'waɾer, gimme some!'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a lot of water (fast, flapped, connected)", "a lot of water (slow, choppy)"], "meaning": ["كتير من الماء", "—"]}
+      ],
+      "word_practice": ["water", "better", "butter", "city", "little", "ladder", "study", "matter"],
+      "sentence_practice": [
+        "I need a little bit of water, and it doesn't matter what city.",
+        "She's a better writer than her buddy, no matter what.",
+        "Study a little every day, and it gets a lot better."
+      ],
+      "record_this": "It doesn't matter what city — a little water and butter make everything better, and studying a little every day gets you a lot further.",
+      "self_check": "Record this sentence 3 times, each faster than the last. Did the flap survive at full speed, or did it turn back into a hard /t/ under pressure? Keep practicing until it holds."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: flap T, flap D, cross-word flapping, flap vs. glottal-stop contrast, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["water", "butter"], ["ladder", "latter"], ["writer", "rider"],
+        ["get up", "put it"], ["water (flap)", "button (glottal stop)"]
+      ],
+      "challenge_sentences": [
+        "My buddy the writer is ready to study a little better every day.",
+        "Get up and put a lot of water and butter on the table in the city.",
+        "It doesn't matter — the ladder is muddy, but it's better than the mountain."
+      ],
+      "record_this": "Every day my buddy studies a little better. He's a writer who likes to get up early, put water and butter on the table, and climb a muddy ladder — better than the mountain, no matter what.",
+      "self_check": "Listen back for every flapped /t/ and /d/ — count them. This week's passage should have at least 10. Did you flap most of them naturally?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage at a natural, comfortable conversational speed — not slow, not rushed.",
+        "passage": "Every Saturday, my buddy and I get up early and go to the city to study at a little cafe. The water there is better than at home, and the butter on the bread is amazing. Last week, a writer sat next to us — he was working on a book about a mountain village. It doesn't matter what day it is; a little coffee and a lot of conversation always make it a good morning.",
+        "sounds_to_check": {
+          "flap T (between vowels)": "water, better, little, city, matter, writer",
+          "flap D (between vowels)": "buddy",
+          "cross-word flap": "get up",
+          "glottal stop (contrast, not flap)": "mountain"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Flap consistently used between vowels and across word boundaries at natural speed; glottal stop correctly used for 'mountain' instead.",
+        "70_89": "Flap present most of the time; occasional hard /t/ under stress or at slower speed.",
+        "50_69": "Flap inconsistent — present in isolated word drills but lost in full sentences.",
+        "below_50": "Full, hard /t/ and /d/ throughout — go back and repeat Days 1-5, focusing on speed."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The flap sound is genuinely close to a light Arabic ر — use that similarity as a shortcut rather than trying to learn a totally foreign sound.",
+      "This is one of the single highest-impact accent features for sounding natural in American English. Prioritize it even over some vowel work if you're short on time this week.",
+      "Do not flap /t/ or /d/ at the START of a word or a stressed syllable ('table', 'today') — only between vowels where the SECOND vowel is unstressed."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, your flaps should sound automatic, not deliberate."
+  }
+}

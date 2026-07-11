@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w3",
+  "level": "L3",
+  "week": 3,
+  "pattern_name": "Advanced Passive (have something done)",
+  "pattern_name_ar": "المجهول المتقدم (have something done)",
+  "formula": "Subject + have/get + Object + Past Participle",
+  "formula_visual": "[SUBJECT] + have/get + [THING] + [PAST PARTICIPLE] — someone else performs the action FOR the subject",
+  "when_to_use": "Use 'have/get something done' when the subject ARRANGES for someone else to perform a service or action for them — the subject doesn't do it themselves, they cause it to be done. Extremely common for services: haircuts, repairs, deliveries.",
+  "when_to_use_ar": "استخدم have/get something done لما الفاعل بيرتب لشخص آخر يقوم بخدمة أو فعل بدلاً منه — الفاعل مش هو اللي بيعمل الفعل، هو بس بيرتب حصوله. شائع جدًا مع الخدمات.",
+  "why_arabic_speakers_struggle": "Learners at this level already understand basic passive voice (L2 Week 4), but this specific causative-passive hybrid structure has no simple direct equivalent — learners often default to a longer, more explicit construction ('I asked someone to cut my hair') instead of the compressed, idiomatic 'I had my hair cut', which sounds noticeably more natural and native.",
+  "examples": [
+    {"en": "I had my hair cut yesterday. (someone else cut it, for me)", "ar": "قصيت شعري إمبارح (حد تاني قصه ليّا)", "structure": "[I had] + [my hair] + [cut] + [yesterday]"},
+    {"en": "We're getting our house painted next week.", "ar": "هنخلي بيتنا يتلون الأسبوع الجاي", "structure": "[We're getting] + [our house] + [painted] + [next week]"},
+    {"en": "She had her car repaired at the local garage.", "ar": "خلّت عربيتها تتصلح في الجراج المحلي", "structure": "[She had] + [her car] + [repaired] + [at the local garage]"},
+    {"en": "He's having his teeth checked tomorrow.", "ar": "هيروح يفحص سنانه بكرة (عند الدكتور)", "structure": "[He's having] + [his teeth] + [checked] + [tomorrow]"},
+    {"en": "They had their photos taken professionally.", "ar": "خلوا صورهم تُصوَّر بشكل محترف", "structure": "[They had] + [their photos] + [taken] + [professionally]"}
+  ],
+  "common_errors": [
+    {"wrong": "I had cut my hair yesterday. [meant as causative, not Past Perfect]", "correct": "I had my hair cut yesterday.", "explanation": "The object ('my hair') must come BETWEEN 'had' and the past participle ('cut') — putting them in the wrong order accidentally creates a Past Perfect meaning ('I had already cut my hair before something else') instead of the intended causative meaning."},
+    {"wrong": "I had my hair to cut.", "correct": "I had my hair cut.", "explanation": "The verb after the object must be the PAST PARTICIPLE ('cut'), not an infinitive ('to cut')."},
+    {"wrong": "She had her car repair.", "correct": "She had her car repaired.", "explanation": "The verb must be the past participle form ('repaired'), not the base form ('repair')."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I need to have my phone ___ (fix) — the screen is broken.", "answer": "fixed", "hint": "Past participle, someone else does the fixing."},
+    {"sentence": "We're getting our kitchen ___ (renovate) next month.", "answer": "renovated", "hint": "Past participle, causative structure."},
+    {"sentence": "He had his suit ___ (tailor) for the wedding.", "answer": "tailored", "hint": "Past participle."},
+    {"sentence": "Did you have your resume ___ (review) by a professional?", "answer": "reviewed", "hint": "Past participle."},
+    {"sentence": "She's having her nails ___ (do) before the event.", "answer": "done", "hint": "Past participle of 'do'."}
+  ],
+  "quick_rule": "have/get + [THING] + [PAST PARTICIPLE] = someone else does it FOR the subject, arranged by them. Word order matters: the thing/object goes BEFORE the past participle, never after 'to'.",
+  "quick_rule_ar": "have/get + [الشيء] + [التصريف الثالث] = حد تاني بيعمل الفعل بدل الفاعل، بترتيب منه.",
+  "mnemonic": "HAVE something DONE = 'I didn't do it myself, but I made it HAPPEN, DONE by someone else.'",
+  "connect_to_speaking": "Practice with your buddy: describe 3 real services you've had done recently (a haircut, a repair, a delivery) using this exact structure, noticing how much more natural it sounds than the longer alternative."
+}

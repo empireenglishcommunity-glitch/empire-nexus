@@ -4,51 +4,92 @@
   "theme": "Culture & Traditions",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Reported Speech (he said that...)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "heritage", "pronunciation": "HER-i-tij", "arabic": "تراث", "pos": "noun"},
+    {"word": "custom", "pronunciation": "KUS-təm", "arabic": "عرف/تقليد", "pos": "noun"},
+    {"word": "ritual", "pronunciation": "RICH-oo-əl", "arabic": "طقس/شعيرة", "pos": "noun"},
+    {"word": "generation", "pronunciation": "jen-ə-RAY-shən", "arabic": "جيل", "pos": "noun"},
+    {"word": "ancestor", "pronunciation": "AN-ses-tər", "arabic": "سلف/جد", "pos": "noun"},
+    {"word": "identity", "pronunciation": "y-DEN-tə-tee", "arabic": "هوية", "pos": "noun"},
+    {"word": "diversity", "pronunciation": "di-VUR-sə-tee", "arabic": "تنوع", "pos": "noun"},
+    {"word": "assimilate", "pronunciation": "ə-SIM-ə-layt", "arabic": "يستوعب/يذوب في", "pos": "verb"},
+    {"word": "preserve (culture)", "pronunciation": "pri-ZURV", "arabic": "يحافظ على (التراث)", "pos": "verb"},
+    {"word": "folklore", "pronunciation": "FOHK-lor", "arabic": "فلكلور/تراث شعبي", "pos": "noun"},
+    {"word": "cuisine", "pronunciation": "kwi-ZEEN", "arabic": "مطبخ/طعام", "pos": "noun"},
+    {"word": "ceremony", "pronunciation": "SER-ə-moh-nee", "arabic": "احتفال/طقس رسمي", "pos": "noun"},
+    {"word": "festival", "pronunciation": "FES-tə-vəl", "arabic": "مهرجان", "pos": "noun"},
+    {"word": "superstition", "pronunciation": "soo-pər-STISH-ən", "arabic": "خرافة", "pos": "noun"},
+    {"word": "social norms", "pronunciation": "SOH-shəl normz", "arabic": "قيم ومعايير اجتماعية", "pos": "noun phrase"},
+    {"word": "etiquette", "pronunciation": "ET-i-ket", "arabic": "آداب السلوك", "pos": "noun"},
+    {"word": "hospitality", "pronunciation": "hos-pi-TAL-ə-tee", "arabic": "كرم الضيافة", "pos": "noun"},
+    {"word": "taboo", "pronunciation": "tə-BOO", "arabic": "محرم اجتماعيًا", "pos": "noun/adjective"},
+    {"word": "multicultural", "pronunciation": "mul-tee-KUL-chər-əl", "arabic": "متعدد الثقافات", "pos": "adjective"},
+    {"word": "stereotype", "pronunciation": "STER-ee-oh-typ", "arabic": "قولبة/فكرة نمطية", "pos": "noun"},
+    {"word": "integration", "pronunciation": "in-tə-GRAY-shən", "arabic": "دمج/تكامل اجتماعي", "pos": "noun"},
+    {"word": "dialect", "pronunciation": "DY-ə-lekt", "arabic": "لهجة", "pos": "noun"},
+    {"word": "symbolism", "pronunciation": "SIM-bə-liz-əm", "arabic": "رمزية", "pos": "noun"},
+    {"word": "colonial", "pronunciation": "kə-LOH-nee-əl", "arabic": "استعماري", "pos": "adjective"},
+    {"word": "indigenous", "pronunciation": "in-DIJ-ə-nəs", "arabic": "أصلي/سكان أصليون", "pos": "adjective"},
+    {"word": "adapt", "pronunciation": "ə-DAPT", "arabic": "يتكيف", "pos": "verb"},
+    {"word": "cultural exchange", "pronunciation": "KUL-chər-əl eks-CHAYNJ", "arabic": "تبادل ثقافي", "pos": "noun phrase"},
+    {"word": "belief system", "pronunciation": "bi-LEEF SIS-təm", "arabic": "نظام عقائدي", "pos": "noun phrase"},
+    {"word": "custom-made", "pronunciation": "KUS-təm mayd", "arabic": "مصنوع خصيصًا", "pos": "adjective"},
+    {"word": "artisan", "pronunciation": "AR-tə-zən", "arabic": "حرفي", "pos": "noun"},
+    {"word": "legacy", "pronunciation": "LEG-ə-see", "arabic": "تراث/إرث", "pos": "noun"},
+    {"word": "symbolic", "pronunciation": "sim-BOL-ik", "arabic": "رمزي", "pos": "adjective"},
+    {"word": "communal", "pronunciation": "kə-MYOO-nəl", "arabic": "جماعي/مشترك", "pos": "adjective"},
+    {"word": "authentic", "pronunciation": "aw-THEN-tik", "arabic": "أصيل/حقيقي", "pos": "adjective"},
+    {"word": "tradition-bound", "pronunciation": "trə-DISH-ən bownd", "arabic": "متمسك بالتقاليد", "pos": "adjective"},
+    {"word": "modernize", "pronunciation": "MOD-ər-nyz", "arabic": "يحدّث", "pos": "verb"},
+    {"word": "coexist", "pronunciation": "koh-eg-ZIST", "arabic": "يتعايش", "pos": "verb"},
+    {"word": "folk tale", "pronunciation": "FOHK tayl", "arabic": "حكاية شعبية", "pos": "noun phrase"},
+    {"word": "customary", "pronunciation": "KUS-təm-er-ee", "arabic": "معتاد/تقليدي", "pos": "adjective"},
+    {"word": "cultural shock", "pronunciation": "KUL-chər-əl shok", "arabic": "صدمة ثقافية", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Debate: 'Globalization is destroying local cultures.' Argue for ONE side with 2 examples from your own experience or knowledge.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Give a 3-minute presentation about a tradition or custom from your culture that outsiders often misunderstand.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Analyze why some traditions disappear over generations while others survive. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Tell a detailed story about a festival or ceremony you attended that was meaningful to you.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Imagine you're being interviewed about growing up between two cultures. Answer: What was the hardest part? What did you gain from it? What advice would you give others in that situation?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Summarize a documentary, article, or story you've encountered about a different culture, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Culture & Traditions)",
-      "target_seconds": 210
+      "prompt": "Discuss freely for 4 minutes: is it possible to fully understand a culture you weren't raised in? Why or why not?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of culture & traditions.",
-    "Analyze the impact of culture & traditions on daily life.",
-    "Compare how culture & traditions differs between two countries.",
-    "Write a formal email about culture & traditions.",
-    "Describe a personal experience related to culture & traditions (200+ words).",
-    "What changes would you make regarding culture & traditions? Explain why.",
-    "Summarize an article about culture & traditions in your own words."
+    "Write an essay (150+ words) arguing whether preserving traditions or modernizing society should be the higher priority.",
+    "Analyze how globalization has changed a specific tradition or custom in your own country.",
+    "Compare a wedding, festival, or ceremony from your culture with one from a different culture you know about.",
+    "Write a formal email to a cultural exchange program explaining why you want to participate and what you hope to learn.",
+    "Describe a personal experience of cultural shock or cultural misunderstanding (200+ words).",
+    "What changes would you make to how your culture's traditions are passed to the next generation? Explain at least 2 specific ideas.",
+    "Summarize an article or story about a cultural tradition from a country other than your own, in under 150 words."
   ]
 }

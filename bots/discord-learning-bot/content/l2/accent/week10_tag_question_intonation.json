@@ -1,0 +1,148 @@
+{
+  "level": "L2",
+  "week": 10,
+  "focus": "Tag-Question Intonation — Precision Practice for Nuanced Social Meaning",
+  "focus_ar": "تنغيم الأسئلة الذيلية — تدريب دقيق للمعنى الاجتماعي الدقيق",
+  "arabic_challenge": "Week 6 introduced the basic rising/falling contrast for tag questions. This week goes deeper into the social nuance: the SAME tag question can express genuine curiosity, gentle confirmation-seeking, sarcasm, or mild challenge, depending entirely on subtle intonation shifts. Blueprint §5.4 explicitly separates 'confirming' (falling) from 'genuine' (rising) tag questions — mastering the finer gradations between them is a mark of advanced fluency.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["falling tag: confident confirmation (near-certain of the answer)"],
+      "isolation": {
+        "instructions": "A falling tag question signals you're almost certain of the answer and are simply inviting agreement — this is the most common tag pattern in casual conversation.",
+        "instructions_ar": "السؤال الذيلي المنخفض بيدل إنك متأكد تقريبًا من الإجابة وبس بتطلب موافقة — ده النمط الأكثر شيوعًا في المحادثة العادية.",
+        "practice": ["Nice weather today, isn't it? (falling — obviously true, just chatting)", "You're a doctor, aren't you? (falling — fairly confident guess)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["isn't it? (falling, confident)", "isn't it? (rising, genuinely unsure)"], "meaning": ["صح؟", "—"]}
+      ],
+      "word_practice": ["isn't it?", "aren't you?", "don't you think?"],
+      "sentence_practice": [
+        "Nice weather today, isn't it?",
+        "You're a doctor, aren't you?",
+        "This is a great restaurant, don't you think?"
+      ],
+      "record_this": "Nice weather today, isn't it? You're a doctor, aren't you? This is a great restaurant, don't you think?",
+      "self_check": "Did your pitch fall confidently at the end, matching a near-certain, casual social comment?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["rising tag: genuine uncertainty (real question)"],
+      "isolation": {
+        "instructions": "A rising tag question signals genuine uncertainty — you actually don't know the answer and are truly asking.",
+        "instructions_ar": "السؤال الذيلي المرتفع بيدل على شك حقيقي — انت فعلاً ما تعرفش الإجابة وبتسأل بجدية.",
+        "practice": ["You haven't seen my keys, have you? (rising — genuinely hoping/unsure)", "This flight isn't delayed, is it? (rising — genuinely worried/unsure)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["have you? (rising, genuinely unsure)", "have you? (falling, rhetorical/confident)"], "meaning": ["صح؟ (بالفعل غير متأكد)", "—"]}
+      ],
+      "word_practice": ["have you?", "is it?", "did they?"],
+      "sentence_practice": [
+        "You haven't seen my keys, have you?",
+        "This flight isn't delayed, is it?",
+        "They didn't cancel the meeting, did they?"
+      ],
+      "record_this": "You haven't seen my keys, have you? This flight isn't delayed, is it? They didn't cancel the meeting, did they?",
+      "self_check": "Did your pitch genuinely rise, conveying real uncertainty and concern, not a flat or confident tone?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["sarcastic/challenging tag: exaggerated falling with sharp emphasis"],
+      "isolation": {
+        "instructions": "A sharply falling tag, often with heavy emphasis on the main statement, can signal sarcasm or a mild challenge — this requires careful, context-appropriate use.",
+        "instructions_ar": "سؤال ذيلي بانخفاض حاد، غالبًا مع تأكيد قوي على التصريح الأساسي، ممكن يدل على سخرية أو تحدٍ خفيف — ده يحتاج استخدام حذر ومناسب للسياق.",
+        "practice": ["Oh, you're an EXPERT, aren't you? (sharp fall, sarcastic)", "You KNEW that already, didn't you? (sharp fall, mild challenge)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["you're an EXPERT, aren't you? (sarcastic, sharp fall)", "you're an expert, aren't you? (neutral, genuine confirmation)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["aren't you?", "didn't you?", "wasn't it?"],
+      "sentence_practice": [
+        "Oh, you're an EXPERT, aren't you?",
+        "You KNEW that already, didn't you?",
+        "That was YOUR idea, wasn't it?"
+      ],
+      "record_this": "Oh, you're an EXPERT, aren't you? You KNEW that already, didn't you? That was YOUR idea, wasn't it?",
+      "self_check": "Caution: this tone can sound rude if misused. Did you clearly distinguish this sharp, sarcastic pattern from the neutral confirming tag in Day 1?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["contrasting all 3 patterns side by side"],
+      "isolation": {
+        "instructions": "Practice the SAME tag question phrase with all 3 different intonations (confident-falling, genuinely-uncertain-rising, sarcastic-sharp-falling) to feel the full range.",
+        "instructions_ar": "تدرب على نفس عبارة السؤال الذيلي بالثلاث تنغيمات المختلفة عشان تحس بالمدى الكامل.",
+        "practice": ["You're coming, aren't you? (confident)", "You're coming, aren't you? (genuinely unsure)", "You're coming, aren't you? (sarcastic, doubting them)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["You're coming, aren't you? (confident)", "You're coming, aren't you? (sarcastic)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["aren't you? (x3 different tones)"],
+      "sentence_practice": [
+        "You're coming, aren't you? (say this 3 different ways)",
+        "This is fine, isn't it? (say this 3 different ways)"
+      ],
+      "record_this": "You're coming, aren't you? (confident version) — You're coming, aren't you? (genuinely unsure version) — You're coming, aren't you? (sarcastic version).",
+      "self_check": "Could you produce all 3 clearly distinct versions of the exact same words, purely through intonation?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["tag questions in spontaneous social conversation"],
+      "isolation": {
+        "instructions": "Practice a spontaneous 30-45 second casual conversation with your buddy (or imagined), naturally using at least 2 different tag question intonations appropriately.",
+        "instructions_ar": "تدرب على محادثة عفوية عادية لمدة ٣٠-٤٥ ثانية مع صاحبك (أو متخيل)، باستخدام طبيعي لنمطين مختلفين على الأقل من تنغيم السؤال الذيلي بشكل مناسب.",
+        "practice": ["Have a casual conversation touching on weather, plans, or opinions, using natural tag questions."]
+      },
+      "minimal_pairs": [
+        {"pair": ["natural conversation with appropriate tag intonation", "conversation with flat/inappropriate tag intonation"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your conversation)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: casual conversation using at least 2 different tag question intonations naturally.)",
+      "self_check": "Did the tag questions' intonation match your actual intended meaning in each case?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: confident-falling, genuine-rising, sarcastic-sharp, side-by-side contrast, spontaneous use",
+      "type": "review",
+      "mixed_pairs": [
+        ["isn't it? (confident)", "have you? (genuine)"], ["aren't you? (sarcastic)", "aren't you? (confident, contrast)"]
+      ],
+      "challenge_sentences": [
+        "Nice weather, isn't it? You haven't seen my umbrella, have you? Oh, you're an EXPERT on weather now, aren't you?",
+        "This is a good plan, don't you think? You're not worried, are you? You KNEW this all along, didn't you?",
+        "That's a great idea, isn't it? You didn't forget, did you? Oh, you're SO organized, aren't you?"
+      ],
+      "record_this": "Nice weather, isn't it? You haven't seen my umbrella, have you? Oh, you're an EXPERT on weather now, aren't you?",
+      "self_check": "Did each tag question in this passage correctly convey its intended tone — casual, genuine, or sarcastic?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a short natural dialogue (both sides, played by you) using at least 3 tag questions with clearly different, appropriate intonations.",
+        "passage": "(Create a short imagined dialogue between two friends discussing weekend plans, using at least one confident-falling tag, one genuinely-uncertain-rising tag, and optionally one sarcastic tag if it fits naturally.)",
+        "sounds_to_check": {
+          "confident falling tag": "check for a casual, confirming tag",
+          "genuine rising tag": "check for a real question/uncertainty tag",
+          "sarcastic/challenging tag (optional)": "check if used, that it's clearly distinct from the others"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All tag intonation types produced clearly, correctly, and appropriately for their intended social meaning.",
+        "70_89": "Most patterns correct; occasional ambiguity between confident and genuine tags.",
+        "50_69": "Tags produced with a single, flat intonation regardless of intended meaning.",
+        "below_50": "Tag questions avoided or consistently misapplied — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week refines Week 6's basic tag-question introduction into genuinely nuanced, socially-aware usage — this is advanced, native-level precision work.",
+      "Use the sarcastic pattern (Day 3) sparingly and only once you're confident about the social context — misjudged sarcasm can create unintended offense.",
+      "This is one of the clearest markers of near-native fluency: the ability to convey different social meanings through pitch alone, with identical words."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — these spontaneous/dialogue recordings are excellent material for peer feedback on social nuance in the Level 2 community channels."
+  }
+}

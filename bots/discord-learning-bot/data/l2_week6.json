@@ -4,51 +4,92 @@
   "theme": "Psychology & Behavior",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Relative Clauses (who/which/that)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "behavior", "pronunciation": "bi-HAYV-yər", "arabic": "سلوك", "pos": "noun"},
+    {"word": "motivation", "pronunciation": "moh-tə-VAY-shən", "arabic": "دافع", "pos": "noun"},
+    {"word": "self-esteem", "pronunciation": "self-i-STEEM", "arabic": "تقدير الذات", "pos": "noun"},
+    {"word": "anxiety", "pronunciation": "ang-ZY-ə-tee", "arabic": "قلق", "pos": "noun"},
+    {"word": "perception", "pronunciation": "pər-SEP-shən", "arabic": "إدراك/تصور", "pos": "noun"},
+    {"word": "subconscious", "pronunciation": "sub-KON-shəs", "arabic": "اللاوعي", "pos": "noun/adjective"},
+    {"word": "habit", "pronunciation": "HAB-it", "arabic": "عادة", "pos": "noun"},
+    {"word": "trigger", "pronunciation": "TRIG-ər", "arabic": "محفز/مسبب", "pos": "noun/verb"},
+    {"word": "coping mechanism", "pronunciation": "KOH-ping MEK-ə-niz-əm", "arabic": "آلية تعامل نفسي", "pos": "noun phrase"},
+    {"word": "empathy", "pronunciation": "EM-pə-thee", "arabic": "تعاطف", "pos": "noun"},
+    {"word": "resilience", "pronunciation": "ri-ZIL-yəns", "arabic": "مرونة نفسية/صمود", "pos": "noun"},
+    {"word": "burnout", "pronunciation": "BURN-owt", "arabic": "الإنهاك النفسي", "pos": "noun"},
+    {"word": "mindset", "pronunciation": "MYND-set", "arabic": "طريقة تفكير/عقلية", "pos": "noun"},
+    {"word": "peer pressure", "pronunciation": "peer PRESH-ər", "arabic": "ضغط الأصدقاء/الأقران", "pos": "noun phrase"},
+    {"word": "self-awareness", "pronunciation": "self-ə-WAIR-nəs", "arabic": "الوعي الذاتي", "pos": "noun"},
+    {"word": "cognitive", "pronunciation": "KOG-nə-tiv", "arabic": "معرفي/إدراكي", "pos": "adjective"},
+    {"word": "instinct", "pronunciation": "IN-stinkt", "arabic": "غريزة", "pos": "noun"},
+    {"word": "insecurity", "pronunciation": "in-si-KYOOR-ə-tee", "arabic": "شعور بعدم الأمان", "pos": "noun"},
+    {"word": "validate (feelings)", "pronunciation": "VAL-i-dayt", "arabic": "يتحقق من صحة/يقدّر (شعورًا)", "pos": "verb"},
+    {"word": "manipulate", "pronunciation": "mə-NIP-yə-layt", "arabic": "يتلاعب", "pos": "verb"},
+    {"word": "assertive", "pronunciation": "ə-SUR-tiv", "arabic": "حازم/واثق", "pos": "adjective"},
+    {"word": "introvert", "pronunciation": "IN-troh-vurt", "arabic": "منطوٍ/داخلي", "pos": "noun"},
+    {"word": "extrovert", "pronunciation": "EK-stroh-vurt", "arabic": "منفتح اجتماعيًا", "pos": "noun"},
+    {"word": "denial", "pronunciation": "di-NY-əl", "arabic": "إنكار", "pos": "noun"},
+    {"word": "projection (psychology)", "pronunciation": "prə-JEK-shən", "arabic": "تسليط (نفسي)", "pos": "noun"},
+    {"word": "attachment style", "pronunciation": "ə-TACH-mənt styl", "arabic": "نمط التعلق", "pos": "noun phrase"},
+    {"word": "gaslighting", "pronunciation": "GAS-ly-ting", "arabic": "التضليل النفسي/التلاعب بالحقيقة", "pos": "noun"},
+    {"word": "trauma", "pronunciation": "TRAW-mə", "arabic": "صدمة نفسية", "pos": "noun"},
+    {"word": "boundaries (emotional)", "pronunciation": "BOWN-də-reez", "arabic": "حدود (شخصية/عاطفية)", "pos": "noun"},
+    {"word": "validate", "pronunciation": "VAL-i-dayt", "arabic": "يصدّق/يقرّ بصحة", "pos": "verb"},
+    {"word": "overthink", "pronunciation": "oh-vər-THINK", "arabic": "يفكر بشكل مفرط", "pos": "verb"},
+    {"word": "rationalize", "pronunciation": "RASH-ə-nə-lyz", "arabic": "يبرر منطقيًا", "pos": "verb"},
+    {"word": "impulsive", "pronunciation": "im-PUL-siv", "arabic": "متسرع/متهور", "pos": "adjective"},
+    {"word": "conditioning (behavioral)", "pronunciation": "kən-DISH-ə-ning", "arabic": "تكييف سلوكي", "pos": "noun"},
+    {"word": "self-sabotage", "pronunciation": "self-SAB-ə-tahj", "arabic": "تخريب الذات", "pos": "noun"},
+    {"word": "perspective", "pronunciation": "pər-SPEK-tiv", "arabic": "منظور", "pos": "noun"},
+    {"word": "reflect (on oneself)", "pronunciation": "ri-FLEKT", "arabic": "يتأمل/يفكر بعمق", "pos": "verb"},
+    {"word": "cope with", "pronunciation": "kohp with", "arabic": "يتعامل مع/يتحمل", "pos": "verb phrase"},
+    {"word": "vulnerability", "pronunciation": "vul-nər-ə-BIL-ə-tee", "arabic": "الهشاشة/التعرض للأذى", "pos": "noun"},
+    {"word": "well-being", "pronunciation": "wel-BEE-ing", "arabic": "الرفاهية النفسية", "pos": "noun"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Debate: 'Social media does more harm than good to mental health.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Give a 3-minute presentation about a habit you've tried to build or break, and what you learned about your own psychology.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Analyze why peer pressure is so powerful, especially among young people. Discuss at least 2 psychological reasons.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Tell a detailed story about a time you overcame anxiety, fear, or self-doubt to do something important.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Imagine you're a psychologist being interviewed about stress management. Answer: What are common signs of burnout? What's one simple coping strategy? When should someone seek professional help?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Summarize an article, video, or podcast episode about psychology or mental health that you've encountered, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Psychology & Behavior)",
-      "target_seconds": 240
+      "prompt": "Discuss freely for 4 minutes: how much of our personality is shaped by upbringing versus our own choices?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of psychology & behavior.",
-    "Analyze the impact of psychology & behavior on daily life.",
-    "Compare how psychology & behavior differs between two countries.",
-    "Write a formal email about psychology & behavior.",
-    "Describe a personal experience related to psychology & behavior (200+ words).",
-    "What changes would you make regarding psychology & behavior? Explain why.",
-    "Summarize an article about psychology & behavior in your own words."
+    "Write an essay (150+ words) arguing whether social media does more harm or good to young people's mental health.",
+    "Analyze how childhood experiences can shape adult behavior, using at least 2 specific examples.",
+    "Compare healthy and unhealthy ways people cope with stress.",
+    "Write a formal email to a school counselor describing a challenge a student might face and asking for advice.",
+    "Describe a personal experience that changed how you understand yourself or your emotions (200+ words).",
+    "What changes would you make to how mental health is discussed in your community? Explain at least 2 specific ideas.",
+    "Summarize an article about a psychological concept (like motivation, habits, or resilience) in your own words, in under 150 words."
   ]
 }

@@ -4,51 +4,92 @@
   "theme": "Business & Economy",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Passive Voice (it was done)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "revenue", "pronunciation": "REV-ə-noo", "arabic": "إيرادات", "pos": "noun"},
+    {"word": "profit", "pronunciation": "PROF-it", "arabic": "ربح", "pos": "noun"},
+    {"word": "investment", "pronunciation": "in-VEST-mənt", "arabic": "استثمار", "pos": "noun"},
+    {"word": "entrepreneur", "pronunciation": "ahn-trə-prə-NUR", "arabic": "رائد أعمال", "pos": "noun"},
+    {"word": "negotiate", "pronunciation": "ni-GOH-shee-ayt", "arabic": "يتفاوض", "pos": "verb"},
+    {"word": "merger", "pronunciation": "MUR-jər", "arabic": "دمج شركات", "pos": "noun"},
+    {"word": "shareholder", "pronunciation": "SHAIR-hohl-dər", "arabic": "حامل أسهم", "pos": "noun"},
+    {"word": "startup", "pronunciation": "START-up", "arabic": "شركة ناشئة", "pos": "noun"},
+    {"word": "budget", "pronunciation": "BUJ-it", "arabic": "موازنة/ميزانية", "pos": "noun"},
+    {"word": "supply and demand", "pronunciation": "sə-PLY and di-MAND", "arabic": "العرض والطلب", "pos": "noun phrase"},
+    {"word": "competitive", "pronunciation": "kəm-PET-ə-tiv", "arabic": "تنافسي", "pos": "adjective"},
+    {"word": "recession", "pronunciation": "ri-SESH-ən", "arabic": "ركود اقتصادي", "pos": "noun"},
+    {"word": "stock market", "pronunciation": "stok MAR-kit", "arabic": "سوق الأسهم", "pos": "noun phrase"},
+    {"word": "consumer", "pronunciation": "kən-SOO-mər", "arabic": "مستهلك", "pos": "noun"},
+    {"word": "trade deficit", "pronunciation": "trayd DEF-ə-sit", "arabic": "عجز تجاري", "pos": "noun phrase"},
+    {"word": "outsource", "pronunciation": "OWT-sors", "arabic": "يستعين بمصادر خارجية", "pos": "verb"},
+    {"word": "asset", "pronunciation": "AS-et", "arabic": "أصل (مالي)", "pos": "noun"},
+    {"word": "liability", "pronunciation": "ly-ə-BIL-ə-tee", "arabic": "التزام مالي/خصم", "pos": "noun"},
+    {"word": "monopoly", "pronunciation": "mə-NOP-ə-lee", "arabic": "احتكار", "pos": "noun"},
+    {"word": "subsidiary", "pronunciation": "səb-SID-ee-er-ee", "arabic": "شركة تابعة", "pos": "noun"},
+    {"word": "revenue stream", "pronunciation": "REV-ə-noo streem", "arabic": "مصدر دخل", "pos": "noun phrase"},
+    {"word": "bankruptcy", "pronunciation": "BANK-rupt-see", "arabic": "إفلاس", "pos": "noun"},
+    {"word": "efficiency", "pronunciation": "i-FISH-ən-see", "arabic": "كفاءة", "pos": "noun"},
+    {"word": "productivity", "pronunciation": "proh-duk-TIV-ə-tee", "arabic": "إنتاجية", "pos": "noun"},
+    {"word": "leverage", "pronunciation": "LEV-ər-ij", "arabic": "استغلال (موارد/ميزة)", "pos": "verb/noun"},
+    {"word": "diversify", "pronunciation": "dy-VUR-sə-fy", "arabic": "يوسع/ينوّع", "pos": "verb"},
+    {"word": "stakeholder", "pronunciation": "STAYK-hohl-dər", "arabic": "أصحاب المصلحة", "pos": "noun"},
+    {"word": "overhead costs", "pronunciation": "OH-vər-hed kawsts", "arabic": "التكاليف الثابتة", "pos": "noun phrase"},
+    {"word": "audit", "pronunciation": "AW-dit", "arabic": "تدقيق حسابي", "pos": "noun/verb"},
+    {"word": "commodity", "pronunciation": "kə-MOD-ə-tee", "arabic": "سلعة", "pos": "noun"},
+    {"word": "venture capital", "pronunciation": "VEN-chər KAP-ə-təl", "arabic": "رأس مال جريء", "pos": "noun phrase"},
+    {"word": "regulate", "pronunciation": "REG-yə-layt", "arabic": "ينظم", "pos": "verb"},
+    {"word": "tariff", "pronunciation": "TAR-if", "arabic": "تعريفة جمركية", "pos": "noun"},
+    {"word": "GDP", "pronunciation": "jee-dee-PEE", "arabic": "الناتج المحلي الإجمالي", "pos": "noun (abbreviation)"},
+    {"word": "consumer confidence", "pronunciation": "kən-SOO-mər KON-fə-dəns", "arabic": "ثقة المستهلك", "pos": "noun phrase"},
+    {"word": "layoff", "pronunciation": "LAY-awf", "arabic": "تسريح موظفين", "pos": "noun"},
+    {"word": "workforce", "pronunciation": "WURK-fors", "arabic": "قوة عاملة", "pos": "noun"},
+    {"word": "sustainable growth", "pronunciation": "sə-STAY-nə-bəl grohth", "arabic": "نمو مستدام", "pos": "noun phrase"},
+    {"word": "brand loyalty", "pronunciation": "brand LOY-əl-tee", "arabic": "ولاء للعلامة التجارية", "pos": "noun phrase"},
+    {"word": "market share", "pronunciation": "MAR-kit shair", "arabic": "حصة سوقية", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Debate: 'Large companies do more good than harm for local economies.' Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Give a 3-minute presentation pitching a business idea — what problem it solves, who it's for, and how it makes money.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Analyze why some startups succeed while most fail. Discuss at least 2 factors.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Tell a detailed story about a financial decision (good or bad) you made and what you learned from it.",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Imagine you're an entrepreneur being interviewed about your business. Answer: What inspired the idea? What was your biggest setback? What's next for the company?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Summarize a news story about a company or economic event you've read about, in under 2 minutes.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Business & Economy)",
-      "target_seconds": 220
+      "prompt": "Discuss freely for 4 minutes: is it better to work for a big company or start your own business? Why?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of business & economy.",
-    "Analyze the impact of business & economy on daily life.",
-    "Compare how business & economy differs between two countries.",
-    "Write a formal email about business & economy.",
-    "Describe a personal experience related to business & economy (200+ words).",
-    "What changes would you make regarding business & economy? Explain why.",
-    "Summarize an article about business & economy in your own words."
+    "Write an essay (150+ words) arguing whether governments should regulate big businesses more or less.",
+    "Analyze the economic impact of remote work on cities and local businesses.",
+    "Compare working for a large corporation versus working for a small startup.",
+    "Write a formal email pitching a business idea to a potential investor.",
+    "Describe a personal experience related to money, work, or business that taught you something important (200+ words).",
+    "What changes would you make to how businesses in your country operate? Explain at least 2 specific changes and why.",
+    "Summarize a business or economic news article in your own words, in under 150 words."
   ]
 }

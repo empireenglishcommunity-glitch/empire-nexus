@@ -1,0 +1,135 @@
+{
+  "level": "L3",
+  "week": 7,
+  "focus": "Native-Speed Shadowing at Full Complexity — Blueprint Phase 5 (Advanced)",
+  "focus_ar": "المحاكاة بالسرعة الطبيعية في أعقد مستوى — المرحلة الخامسة المتقدمة من الخطة",
+  "arabic_challenge": "L2 Week 11 trained you in Blueprint Phase 3/4 shadowing and transcription. This week advances to Phase 5 — per §5.5, shadowing WITHOUT text, matching emotion/speed/tone, using genuinely advanced sources (stand-up comedy, unscripted interviews, fast dialogue). This week's Advanced Pronunciation theme makes this the natural home for the blueprint's most demanding shadowing tier.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["shadowing without text: matching rhythm from audio alone"],
+      "isolation": {
+        "instructions": "Choose a 20-30 second clip of natural native speech. Listen 2-3 times WITHOUT any transcript, then shadow it purely by ear, matching rhythm and pace as closely as possible.",
+        "instructions_ar": "اختار مقطع صوتي طبيعي ٢٠-٣٠ ثانية. استمع ٢-٣ مرات بدون أي نص مكتوب، وبعدين حاكيه بالسمع فقط، وطابق الإيقاع والسرعة بأقرب شكل ممكن.",
+        "practice": ["Find a short clip of unscripted native speech (interview, vlog, podcast). Shadow it by ear only, no text."]
+      },
+      "minimal_pairs": [
+        {"pair": ["shadowing accurately by ear alone", "shadowing with significant rhythm mismatch"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Shadow a 20-30 second unscripted native clip by ear only, no transcript.)",
+      "self_check": "Without the crutch of text, how closely did your shadowed rhythm match the original?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["matching emotional tone in shadowing"],
+      "isolation": {
+        "instructions": "Choose a clip with clear emotional content (excitement, frustration, humor) and shadow not just the sounds, but the emotional coloring of the delivery.",
+        "instructions_ar": "اختار مقطع فيه محتوى عاطفي واضح (حماس، إحباط، فكاهة) وحاكي مش بس الأصوات، لكن التلوين العاطفي للأداء.",
+        "practice": ["Find a clip with clear emotion (a comedian, an excited reaction video, a passionate interview). Shadow the emotion, not just the words."]
+      },
+      "minimal_pairs": [
+        {"pair": ["shadowing that captures the emotional tone", "shadowing that is emotionally flat"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Shadow an emotionally expressive native clip, matching the emotional tone as well as the sounds.)",
+      "self_check": "Did your shadowed version capture the FEELING of the original, not just the correct sounds?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["shadowing fast, dense native dialogue (comedy/banter style)"],
+      "isolation": {
+        "instructions": "Choose a clip of fast, overlapping, or dense native dialogue (sitcom banter, comedy podcast) — this week's Humor & Sarcasm-adjacent theme makes this especially relevant.",
+        "instructions_ar": "اختار مقطع حوار طبيعي سريع ومكثف (مسلسل كوميدي، بودكاست فكاهي) — موضوع الفكاهة هذا الأسبوع بيخلي ده مهم بشكل خاص.",
+        "practice": ["Find a fast comedic dialogue clip. Shadow it at full speed, even if imperfect at first."]
+      },
+      "minimal_pairs": [
+        {"pair": ["shadowing fast dialogue at genuine speed", "slowing down to compensate"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Shadow a fast, comedic native dialogue clip at full original speed.)",
+      "self_check": "Did you resist the urge to secretly slow down, keeping pace with the genuinely fast original?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["repeated shadowing for progressive refinement (Blueprint 'shadow 5x' best practice)"],
+      "isolation": {
+        "instructions": "Per Blueprint §5.5's best practices, shadow the SAME 30-60 second clip 5 times, recording only the 5th attempt — notice how much closer to the original your 5th attempt sounds compared to your 1st.",
+        "instructions_ar": "بحسب أفضل ممارسات §٥.٥ من الخطة، حاكي نفس المقطع ٣٠-٦٠ ثانية ٥ مرات، وسجل بس المحاولة الخامسة — لاحظ قد إيه محاولتك الخامسة أقرب للأصل من الأولى.",
+        "practice": ["Choose one clip. Shadow it 5 full times without recording, then record attempt #5."]
+      },
+      "minimal_pairs": [
+        {"pair": ["5th attempt (refined, closer to native)", "1st attempt (rougher, further from native)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Record your 5th shadowing attempt of a chosen clip, after 4 unrecorded practice rounds.)",
+      "self_check": "If you could compare attempt 1 to attempt 5, would the improvement be clearly audible?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full Phase 5 shadowing: no text, matching emotion + speed + tone together"],
+      "isolation": {
+        "instructions": "Combine everything from this week: choose a fast, emotionally expressive, unscripted clip and shadow it without text, matching emotion, speed, and tone simultaneously — the complete Blueprint Phase 5 standard.",
+        "instructions_ar": "دمج كل حاجة من هذا الأسبوع: اختار مقطع سريع ومعبّر عاطفيًا وغير مكتوب، وحاكيه بدون نص، بمطابقة العاطفة والسرعة والنبرة كلهم مع بعض.",
+        "practice": ["Choose your most challenging clip yet (fast, emotional, unscripted) and attempt full Phase 5 shadowing."]
+      },
+      "minimal_pairs": [
+        {"pair": ["full Phase 5 shadowing achieved", "partial shadowing, missing emotion or speed"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Attempt full Phase 5 shadowing — no text, matching emotion, speed, and tone — on your most challenging clip yet.)",
+      "self_check": "How close did you get to the full standard: text-free, emotionally accurate, at genuine native speed?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: text-free shadowing, emotional matching, fast dialogue, repeated refinement, full Phase 5 combination",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit your favorite or most successful clip from Days 1-5 and attempt one final, best-effort shadowing pass.",
+        "instructions_ar": "راجع المقطع المفضل أو الأنجح من الأيام ١-٥ وحاول تمرير محاكاة أخيرة بأفضل مجهود.",
+        "practice": ["Choose your best clip from this week and shadow it one final time, applying everything learned."]
+      },
+      "minimal_pairs": [
+        {"pair": ["final best-effort shadowing pass", "earlier, rougher attempts"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Final review shadowing pass on your best/favorite clip from this week.)",
+      "self_check": "Comparing this to your Day 1 attempt, is there a clear, audible improvement in naturalness and accuracy?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Advanced Shadowing Mastery Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Select a genuinely new, unfamiliar, fast, emotionally-expressive native clip and attempt full Phase 5 shadowing (no text, matching emotion/speed/tone) as your final checkpoint for this skill.",
+        "passage": "(Choose a new, unfamiliar native-speed audio clip — ideally comedic or emotionally expressive, 20-40 seconds. Shadow it fully, without text.)",
+        "sounds_to_check": {
+          "text-free accuracy": "check how closely rhythm and words match without reading",
+          "emotional matching": "check if tone/emotion is captured, not just sounds",
+          "speed matching": "check if pace matches the original without artificial slowing"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Full Phase 5 standard achieved on unfamiliar material — text-free, emotionally accurate, at genuine native speed.",
+        "70_89": "Strong shadowing with minor gaps in emotional nuance or occasional speed compensation.",
+        "50_69": "Rhythm/words mostly correct but emotional tone or speed noticeably different from source.",
+        "below_50": "Return to L2 Week 11's Phase 3/4 (text-supported) shadowing for further foundational practice before attempting Phase 5 again."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week implements Blueprint §5.5's Phase 5 — the final, most demanding shadowing tier, explicitly described as 'shadow without text, matching emotion/tone' using sources like stand-up comedy and fast dialogue.",
+      "Choosing your own clips (rather than pre-selected drill sentences) is intentional at this level — real-world listening comprehension and mimicry skill must transfer to material you've never specifically prepared for.",
+      "This is one of the last purely mechanical/technical accent skills in the curriculum — Week 8 shifts to a comprehensive, integrative final review."
+    ],
+    "daily_time": "25-30 minutes this week (includes finding/preparing audio clips daily)",
+    "recording_requirement": "Record Day 5, Day 6, and Day 7 — keep all three as evidence of your advanced shadowing capability, useful for L3 mentorship activities where you may guide other students through this same process."
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "level": "L1",
+  "week": 1,
+  "focus": "Word Stress Foundations — Content Words vs. Function Words",
+  "focus_ar": "أساسيات نبر الكلمة — الكلمات المحتوى مقابل الكلمات الوظيفية",
+  "arabic_challenge": "Arabic gives roughly equal weight to most syllables (syllable-timed rhythm). English is stress-timed: content words (nouns, verbs, adjectives) are stressed and function words (articles, prepositions, pronouns, auxiliary verbs) are squashed and reduced. Arabic speakers often stress every word equally, which makes English sound robotic and can genuinely reduce intelligibility, since native listeners use stress patterns to parse sentences.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["word stress: 2-syllable nouns vs. verbs"],
+      "isolation": {
+        "instructions": "Many English words change meaning based on WHICH syllable is stressed. Nouns often stress the FIRST syllable; the same word as a verb often stresses the SECOND.",
+        "instructions_ar": "كلمات كتير بتتغير معناها حسب المقطع اللي عليه النبر. الاسم غالبًا النبر على المقطع الأول، والفعل على المقطع الثاني.",
+        "practice": ["REcord (noun) vs. reCORD (verb)", "PREsent (noun) vs. preSENT (verb)", "OBject (noun) vs. obJECT (verb)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["REcord", "reCORD"], "meaning": ["تسجيل (اسم)", "يسجل (فعل)"]},
+        {"pair": ["PREsent", "preSENT"], "meaning": ["هدية/حاضر (اسم)", "يقدّم (فعل)"]},
+        {"pair": ["OBject", "obJECT"], "meaning": ["جسم/شيء (اسم)", "يعترض (فعل)"]},
+        {"pair": ["PROject", "proJECT"], "meaning": ["مشروع (اسم)", "يخطط/يعرض (فعل)"]},
+        {"pair": ["CONtract", "conTRACT"], "meaning": ["عقد (اسم)", "يتقلص (فعل)"]}
+      ],
+      "word_practice": ["REcord", "reCORD", "PREsent", "preSENT", "PROject", "proJECT", "OBject", "obJECT"],
+      "sentence_practice": [
+        "I bought a new REcord at the store.",
+        "Please reCORD this meeting for me.",
+        "I have a PREsent for you.",
+        "I will preSENT my project tomorrow."
+      ],
+      "record_this": "I will PREsent my PROject, and then I will reCORD the meeting on my new REcord player.",
+      "self_check": "Did you clearly hear the stress MOVE between the noun and verb forms? Native listeners use this shift to tell them which meaning you intend."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["function word reduction: articles and prepositions"],
+      "isolation": {
+        "instructions": "Function words (a, the, to, of, for, and) are almost never stressed in natural speech. They shrink and their vowel often reduces to schwa /ə/.",
+        "instructions_ar": "الكلمات الوظيفية (a, the, to, of, for) نادرًا ما يكون عليها نبر في الكلام الطبيعي. صوتها بيصغر وحرف العلة فيها بيتحول لصوت الشوا /ə/.",
+        "practice": ["a book → /ə book/, NOT /ay book/", "to school → /tə school/, NOT /too school/", "of course → /əv course/, NOT /ov course/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a (weak /ə/)", "a (strong /eɪ/, only for emphasis)"], "meaning": ["أداة تنكير عادية", "للتوضيح فقط"]},
+        {"pair": ["to (weak /tə/)", "two (strong /tuː/)"], "meaning": ["حرف جر", "الرقم اثنين"]},
+        {"pair": ["for (weak /fər/)", "four (strong /fɔːr/)"], "meaning": ["حرف جر", "الرقم أربعة"]}
+      ],
+      "word_practice": ["a", "the", "to", "of", "for", "and", "at", "in"],
+      "sentence_practice": [
+        "I want to go to the store.",
+        "This is a book for you.",
+        "She works at a school in the city."
+      ],
+      "record_this": "I want to go to the store to buy a present for my friend.",
+      "self_check": "Count the words in the sentence above. Now count how many you actually STRESSED. It should be far fewer than the total — 'want', 'go', 'store', 'buy', 'present', 'friend' get the weight; everything else shrinks."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["sentence stress: the content-word rule"],
+      "isolation": {
+        "instructions": "In any English sentence, nouns, main verbs, adjectives, and adverbs carry the stress. Pronouns, auxiliary verbs, articles, prepositions, and conjunctions do not (unless emphasized for contrast).",
+        "instructions_ar": "في أي جملة إنجليزية، الأسماء والأفعال الرئيسية والصفات والظروف بيكون عليها النبر. الضمائر وأفعال المساعدة وأدوات التنكير وحروف الجر عادة بدون نبر.",
+        "practice": ["I WANT some COFFEE.", "She CAN'T FIND her KEYS.", "We're GOING to the PARTY."]
+      },
+      "minimal_pairs": [
+        {"pair": ["I CAN go (neutral)", "I CAN'T go (contrast)"], "meaning": ["أقدر أروح", "ما أقدرش أروح"]},
+        {"pair": ["He IS my brother (neutral, weak 'is')", "He IS my brother (emphatic — really is)"], "meaning": ["هو أخويا", "هو فعلاً أخويا"]}
+      ],
+      "word_practice": ["want", "coffee", "can't", "find", "keys", "going", "party", "brother"],
+      "sentence_practice": [
+        "I WANT some COFFEE this MORNING.",
+        "She CAN'T FIND her KEYS anyWHERE.",
+        "We're GOING to a PARTY toNIGHT."
+      ],
+      "record_this": "I want some coffee this morning because I can't find my keys anywhere, and we're going to a party tonight.",
+      "self_check": "Tap your hand on the table for each stressed word only. The rhythm should feel even and musical, like a drumbeat — not word-by-word."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["multi-syllable noun stress patterns"],
+      "isolation": {
+        "instructions": "Most 2-syllable nouns and adjectives stress the FIRST syllable. This is the default pattern — useful as a starting guess for unfamiliar words.",
+        "instructions_ar": "أغلب الأسماء والصفات المكونة من مقطعين بيكون النبر على المقطع الأول. قاعدة عامة مفيدة للكلمات الجديدة.",
+        "practice": ["TAble", "WINdow", "HAPpy", "BEAUtiful (3 syllables, still first)", "YELlow"]
+      },
+      "minimal_pairs": [
+        {"pair": ["TAble", "taBLE (wrong)"], "meaning": ["طاولة", "—"]},
+        {"pair": ["HAPpy", "hapPY (wrong)"], "meaning": ["سعيد", "—"]},
+        {"pair": ["WINdow", "winDOW (wrong)"], "meaning": ["شباك", "—"]}
+      ],
+      "word_practice": ["TAble", "WINdow", "HAPpy", "YELlow", "KITchen", "GARden", "MORNing", "EVEning"],
+      "sentence_practice": [
+        "Put the flowers on the TAble near the WINdow.",
+        "She is HAPpy every MORNing in the GARden.",
+        "The KITchen has a YELlow door."
+      ],
+      "record_this": "Every MORNing, I open the WINdow in my KITchen and feel HAPpy looking at the YELlow flowers in the GARden.",
+      "self_check": "Did every 2-syllable word above land its stress on syllable ONE? Go back and check any that felt flat."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["compound noun stress (first word stressed)"],
+      "isolation": {
+        "instructions": "Compound nouns (two words acting as one) usually stress the FIRST word strongly and the second word weakly. This is different from an adjective + noun phrase, where both words can carry stress.",
+        "instructions_ar": "الأسماء المركبة (كلمتين بيتصرفوا كاسم واحد) بيكون النبر القوي على الكلمة الأولى والضعيف على الثانية. ده مختلف عن صفة + اسم اللي ممكن الاتنين ياخدوا نبر.",
+        "practice": ["GREENhouse (a building for plants) vs. GREEN HOUSE (a house that is green)", "BLACKboard vs. BLACK BOARD", "a WHITE HOUSE vs. the WHITE HOUSE (the president's home)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["GREENhouse (compound)", "green HOUSE (phrase)"], "meaning": ["بيت زجاجي للنباتات", "بيت لونه أخضر"]},
+        {"pair": ["BLACKbird (compound)", "black BIRD (phrase)"], "meaning": ["نوع من الطيور", "طير لونه أسود"]}
+      ],
+      "word_practice": ["GREENhouse", "BLACKboard", "BEDroom", "CLASSroom", "TOOTHbrush", "SUNglasses"],
+      "sentence_practice": [
+        "The teacher wrote on the BLACKboard in the CLASSroom.",
+        "I forgot my TOOTHbrush and my SUNglasses.",
+        "My BEDroom window looks at the GREENhouse."
+      ],
+      "record_this": "In my BEDroom, I keep my TOOTHbrush and SUNglasses near the CLASSroom door, not far from the old GREENhouse.",
+      "self_check": "For compound nouns, is your stress clearly HEAVIER on word one than word two? That imbalance is the signal that tells listeners 'this is one concept, not two separate words.'"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: verb-noun stress shift, function word reduction, content-word rhythm, default 2-syllable stress, compound nouns",
+      "type": "review",
+      "mixed_pairs": [
+        ["REcord", "reCORD"], ["a (weak)", "a (strong)"], ["TAble", "taBLE (wrong)"],
+        ["GREENhouse", "green HOUSE"], ["PREsent", "preSENT"]
+      ],
+      "challenge_sentences": [
+        "I need to preSENT the PREsent I bought for the PARty.",
+        "She's HAPpy to reCORD a new REcord in her BEDroom studio.",
+        "We PROject the numbers will drop, so the new PROject failed."
+      ],
+      "record_this": "Every week I try to record my progress. My record shows I present my project better each time I present it — and that makes me happy.",
+      "self_check": "Read the sentence above OUT LOUD and mark, on paper, every word you stressed. Compare it to which words are content words (nouns/verbs/adjectives) — they should match almost exactly."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this passage naturally at a comfortable pace. Listen back and check your stress pattern against the guide below.",
+        "passage": "Every morning, I present my daily plan to my team. I object when people don't prepare, because a good project needs a good record of what happened before. Yesterday, my present for my brother was a record player — an old one, but he was happy to receive it in his bedroom.",
+        "sounds_to_check": {
+          "noun/verb stress shift": "present (x2 as noun/verb), object (as verb here), project, record (x2)",
+          "function word reduction": "to, my, a, of, in, his, but, he, was",
+          "content-word rhythm": "morning, plan, team, prepare, good, needed, happened, brother, old, happy, receive, bedroom",
+          "compound/first-syllable stress": "bedroom, morning, happy, project, present"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Stress consistently lands on content words; function words are clearly reduced; noun/verb pairs shift correctly.",
+        "70_89": "Mostly correct; occasional flat/even stress on a sentence or a missed noun/verb shift.",
+        "50_69": "Frequent equal-stress delivery; function words often over-pronounced.",
+        "below_50": "Syllable-timed delivery throughout (every word roughly equal weight) — go back and repeat Days 1-5."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Arabic word stress is largely predictable from syllable weight and doesn't shift a word's category the way English noun/verb pairs do (record vs. record). Expect to consciously memorize these shifts — they don't transfer automatically.",
+      "Resist the urge to fully pronounce every vowel in function words. A reduced 'to' /tə/ is not lazy speech — it is what makes English rhythm sound natural rather than robotic.",
+      "This week is the FOUNDATION for the rest of L1's accent training. Weeks 2-8 each add ONE specific connected-speech feature (flap T, linking, glottal stops, schwa) on TOP of the stress patterns practiced here."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, compare it to Day 1 — your rhythm should sound noticeably less 'word-by-word' and more connected."
+  }
+}

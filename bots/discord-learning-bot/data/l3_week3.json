@@ -4,51 +4,92 @@
   "theme": "Academic Writing",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Advanced Passive (have something done)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "thesis statement", "pronunciation": "THEE-sis STAYT-mənt", "arabic": "جملة الطرح الأساسية", "pos": "noun phrase"},
+    {"word": "methodology", "pronunciation": "meth-ə-DOL-ə-jee", "arabic": "منهجية", "pos": "noun"},
+    {"word": "empirical", "pronunciation": "em-PEER-i-kəl", "arabic": "تجريبي/قائم على الملاحظة", "pos": "adjective"},
+    {"word": "corroborate", "pronunciation": "kə-ROB-ə-rayt", "arabic": "يعزز/يؤكد", "pos": "verb"},
+    {"word": "substantiate", "pronunciation": "səb-STAN-shee-ayt", "arabic": "يثبت بالدليل", "pos": "verb"},
+    {"word": "citation", "pronunciation": "sy-TAY-shən", "arabic": "استشهاد مرجعي", "pos": "noun"},
+    {"word": "plagiarism", "pronunciation": "PLAY-jə-riz-əm", "arabic": "انتحال أدبي/سرقة علمية", "pos": "noun"},
+    {"word": "literature review", "pronunciation": "LIT-ər-ə-choor ri-VYOO", "arabic": "مراجعة أدبية/مسح مرجعي", "pos": "noun phrase"},
+    {"word": "peer-reviewed", "pronunciation": "peer-ri-VYOOD", "arabic": "مُراجَع من الأقران", "pos": "adjective"},
+    {"word": "abstract (paper)", "pronunciation": "AB-strakt", "arabic": "ملخص بحثي", "pos": "noun"},
+    {"word": "synthesize", "pronunciation": "SIN-thə-syz", "arabic": "يدمج/يركّب (أفكار)", "pos": "verb"},
+    {"word": "coherent argument", "pronunciation": "koh-HEER-ənt AR-gyə-mənt", "arabic": "حجة متماسكة", "pos": "noun phrase"},
+    {"word": "counterargument", "pronunciation": "KOWN-tər-ar-gyə-mənt", "arabic": "حجة مضادة", "pos": "noun"},
+    {"word": "rebuttal", "pronunciation": "ri-BUT-əl", "arabic": "رد/تفنيد", "pos": "noun"},
+    {"word": "qualitative", "pronunciation": "KWOL-ə-tay-tiv", "arabic": "نوعي (بحث)", "pos": "adjective"},
+    {"word": "quantitative", "pronunciation": "KWON-ti-tay-tiv", "arabic": "كمّي (بحث)", "pos": "adjective"},
+    {"word": "hypothesis", "pronunciation": "hy-POTH-ə-sis", "arabic": "فرضية", "pos": "noun"},
+    {"word": "conclusive", "pronunciation": "kən-KLOO-siv", "arabic": "قاطع/حاسم", "pos": "adjective"},
+    {"word": "ambiguous", "pronunciation": "am-BIG-yoo-əs", "arabic": "غامض/ملتبس", "pos": "adjective"},
+    {"word": "nuanced", "pronunciation": "NOO-ahnst", "arabic": "دقيق/متعدد الجوانب", "pos": "adjective"},
+    {"word": "scholarly", "pronunciation": "SKOL-ər-lee", "arabic": "أكاديمي/بحثي", "pos": "adjective"},
+    {"word": "paraphrase", "pronunciation": "PAR-ə-frayz", "arabic": "إعادة صياغة", "pos": "verb"},
+    {"word": "bibliography", "pronunciation": "bib-lee-OG-rə-fee", "arabic": "قائمة مراجع", "pos": "noun"},
+    {"word": "critical analysis", "pronunciation": "KRIT-i-kəl ə-NAL-ə-sis", "arabic": "تحليل نقدي", "pos": "noun phrase"},
+    {"word": "underlying assumption", "pronunciation": "un-dər-LY-ing ə-SUMP-shən", "arabic": "افتراض ضمني", "pos": "noun phrase"},
+    {"word": "postulate", "pronunciation": "POS-chə-layt", "arabic": "يفترض/يطرح كأساس", "pos": "verb"},
+    {"word": "delineate", "pronunciation": "di-LIN-ee-ayt", "arabic": "يوضح بالتفصيل", "pos": "verb"},
+    {"word": "juxtapose", "pronunciation": "juk-stə-POHZ", "arabic": "يضع بجانب للمقارنة", "pos": "verb"},
+    {"word": "extrapolate", "pronunciation": "ik-STRAP-ə-layt", "arabic": "يستنتج بالتعميم", "pos": "verb"},
+    {"word": "epistemology", "pronunciation": "i-pis-tə-MOL-ə-jee", "arabic": "نظرية المعرفة", "pos": "noun"},
+    {"word": "dissertation", "pronunciation": "dis-ər-TAY-shən", "arabic": "رسالة دكتوراه/أطروحة", "pos": "noun"},
+    {"word": "peer critique", "pronunciation": "peer kri-TEEK", "arabic": "نقد من الأقران", "pos": "noun phrase"},
+    {"word": "academic integrity", "pronunciation": "ak-ə-DEM-ik in-TEG-rə-tee", "arabic": "النزاهة الأكاديمية", "pos": "noun phrase"},
+    {"word": "in accordance with", "pronunciation": "in ə-KOR-dəns with", "arabic": "بما يتوافق مع", "pos": "phrase"},
+    {"word": "notwithstanding", "pronunciation": "not-with-STAN-ding", "arabic": "على الرغم من", "pos": "preposition (formal)"},
+    {"word": "aforementioned", "pronunciation": "ə-FOR-men-shənd", "arabic": "المذكور سابقًا", "pos": "adjective (formal)"},
+    {"word": "germane", "pronunciation": "jər-MAYN", "arabic": "ذو صلة/مناسب", "pos": "adjective"},
+    {"word": "salient point", "pronunciation": "SAY-lee-ənt poynt", "arabic": "نقطة بارزة/جوهرية", "pos": "noun phrase"},
+    {"word": "corpus (of research)", "pronunciation": "KOR-pəs", "arabic": "مجموعة نصوص/بيانات بحثية", "pos": "noun"},
+    {"word": "peer consensus", "pronunciation": "peer kən-SEN-səs", "arabic": "توافق الأقران", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Give a 5-minute TED-style talk presenting a research finding (real or hypothetical) as if to an academic conference audience, using formal academic vocabulary.",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Structured debate with rebuttals: 'Qualitative research is more valuable than quantitative research, or the reverse.' Present your case with academic framing, then respond to a counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Record a 5-minute podcast segment summarizing and critically analyzing a study or article you've read, identifying its methodology and one limitation.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Teach a beginner-level student the difference between paraphrasing and plagiarism, with a clear example of each.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Respond to this unexpected prompt: defend a hypothesis on the spot, using at least one piece of 'empirical evidence' (real or invented for practice) to substantiate it.",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Find a short clip (30-60 seconds) of an academic lecture or conference talk. Mimic the speaker's formal register, pacing, and pronunciation of academic vocabulary.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Academic Writing)",
-      "target_seconds": 270
+      "prompt": "Speak naturally for 5+ minutes presenting your own critical analysis of any topic, using at least 5 pieces of academic vocabulary from this week naturally.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on academic writing (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in academic writing.",
-    "Compose a formal report with recommendations about academic writing.",
-    "Write a creative piece (story/poem) inspired by academic writing.",
-    "Draft an opinion column for a newspaper about academic writing.",
-    "Write a comparison essay using academic vocabulary about academic writing.",
-    "Write freely about academic writing — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing for a specific research methodology's superiority in a field of your choice.",
+    "Write a critical analysis of a study, article, or book, identifying its underlying assumptions and evaluating its evidence.",
+    "Compose a formal report with recommendations based on a hypothetical set of findings in a field you're interested in.",
+    "Write a creative piece (story or poem) that explores the tension between empirical evidence and personal belief.",
+    "Draft an opinion column for an academic newsletter about the importance (or overemphasis) of citations and peer review.",
+    "Write a comparison essay using academic vocabulary contrasting two theories, methods, or schools of thought in any field.",
+    "Write freely about your own experience with academic writing — focus on style, not just content."
   ]
 }

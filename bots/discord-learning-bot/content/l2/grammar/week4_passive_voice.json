@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w4",
+  "level": "L2",
+  "week": 4,
+  "pattern_name": "Passive Voice (it was done)",
+  "pattern_name_ar": "صيغة المجهول",
+  "formula": "Subject (receiver) + be + Past Participle (+ by + agent)",
+  "formula_visual": "[THING/PERSON RECEIVING ACTION] + is/was/has been + [VERB-3rd form] (+ by + [DOER, optional])",
+  "when_to_use": "Use Passive Voice when the ACTION or the RECEIVER of the action is more important than who did it, when the doer is unknown/obvious/irrelevant, or in formal/academic/news writing where objectivity is valued.",
+  "when_to_use_ar": "استخدم صيغة المجهول لما الفعل أو المستقبل للفعل أهم من مين عمله، أو لما الفاعل غير معروف/واضح/غير مهم، أو في الكتابة الرسمية/الأكاديمية/الإخبارية.",
+  "why_arabic_speakers_struggle": "Arabic has its own passive-like structures (المبني للمجهول) but with different verb-pattern mechanics, so learners sometimes either avoid English passive voice entirely (overusing 'someone did X') or misplace the 'by' agent, forgetting it's optional and often omitted when the doer isn't important.",
+  "examples": [
+    {"en": "The bridge was built in 1990.", "ar": "الكوبري بُني في ١٩٩٠ (مين بناه غير مهم)", "structure": "[The bridge] + [was built] + [in 1990]"},
+    {"en": "This song was written by a famous composer.", "ar": "الأغنية دي كتبها ملحن مشهور (الفاعل مذكور بـ by)", "structure": "[This song] + [was written] + [by a famous composer]"},
+    {"en": "Mistakes were made during the process.", "ar": "حصلت أخطاء خلال العملية (تجنب لوم مباشر — استخدام شائع)", "structure": "[Mistakes] + [were made] + [during the process]"},
+    {"en": "The report has been reviewed by three experts.", "ar": "التقرير راجعه ثلات خبراء", "structure": "[The report] + [has been reviewed] + [by three experts]"},
+    {"en": "New laws are being discussed this week.", "ar": "بيتم مناقشة قوانين جديدة الأسبوع ده (مستمر + مجهول)", "structure": "[New laws] + [are being discussed] + [this week]"}
+  ],
+  "common_errors": [
+    {"wrong": "The bridge built in 1990.", "correct": "The bridge was built in 1990.", "explanation": "Passive voice always needs a form of 'be' before the past participle — 'built' alone, without 'was', is incomplete."},
+    {"wrong": "This song was write by a composer.", "correct": "This song was written by a composer.", "explanation": "The verb after 'be' in passive voice must be the past participle (3rd form) — 'written', not the base form 'write'."},
+    {"wrong": "The report was reviewed by someone.", "correct": "The report was reviewed. (drop 'by someone' if the doer isn't specific/important)", "explanation": "If the agent is vague or unimportant, it's more natural to simply omit 'by + agent' entirely rather than using a vague filler like 'by someone'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The email ___ (send) yesterday.", "answer": "was sent", "hint": "Simple past passive."},
+    {"sentence": "This book ___ (translate) into 20 languages.", "answer": "has been translated", "hint": "Present perfect passive."},
+    {"sentence": "The problem ___ (currently/investigate).", "answer": "is currently being investigated", "hint": "Present continuous passive."},
+    {"sentence": "The decision ___ (make) by the committee last week.", "answer": "was made", "hint": "Simple past passive, with agent specified."},
+    {"sentence": "These products ___ (not/test) on animals.", "answer": "are not tested", "hint": "Negative present simple passive."}
+  ],
+  "quick_rule": "Passive = be (in the correct tense) + past participle. Add 'by + agent' ONLY if who did it matters; otherwise, leave it out entirely. Passive is common in news, science, and formal writing — overusing it in casual conversation can sound stiff.",
+  "quick_rule_ar": "المجهول = be + التصريف الثالث. أضف by + الفاعل بس لو مهم مين عمل الفعل.",
+  "mnemonic": "PASSIVE = the RECEIVER takes the front seat; the DOER moves to the back (or disappears entirely).",
+  "connect_to_speaking": "Practice with your buddy: describe 3 well-known facts or historical events using passive voice (e.g., 'The pyramids were built...', 'This song was recorded...') — notice how it shifts focus away from the doer."
+}

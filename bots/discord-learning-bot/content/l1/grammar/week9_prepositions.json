@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w9",
+  "level": "L1",
+  "week": 9,
+  "pattern_name": "Prepositions of Time and Place (in, on, at)",
+  "pattern_name_ar": "حروف الجر الزمانية والمكانية (in, on, at)",
+  "formula": "Subject + Verb + Preposition + Time/Place noun",
+  "formula_visual": "[ACTION] + at/on/in + [SPECIFIC TIME OR PLACE]",
+  "when_to_use": "Use 'at' for precise points (exact times, specific locations like an address or building). Use 'on' for specific days/dates and surfaces. Use 'in' for longer time periods (months, years, seasons) and enclosed/larger spaces.",
+  "when_to_use_ar": "استخدم at للنقاط الدقيقة (وقت محدد، مكان محدد). استخدم on لأيام/تواريخ محددة وللأسطح. استخدم in للفترات الزمنية الأطول (شهور، سنين، فصول) والأماكن المغلقة/الكبيرة.",
+  "why_arabic_speakers_struggle": "Arabic often uses a single preposition (في) to cover many of the time/place meanings that English splits across at/on/in, so learners frequently default to 'in' for everything, or mix up which preposition pairs with which size of time unit.",
+  "examples": [
+    {"en": "I wake up at 6 AM.", "ar": "أصحى الساعة ٦ الصبح", "structure": "[I] + [wake up] + [at] + [6 AM] — exact time"},
+    {"en": "We have a meeting on Monday.", "ar": "عندنا اجتماع يوم الإتنين", "structure": "[We have a meeting] + [on] + [Monday] — specific day"},
+    {"en": "She was born in 1995.", "ar": "هي مولودة في ١٩٩٥", "structure": "[She was born] + [in] + [1995] — year"},
+    {"en": "I live at 45 Main Street.", "ar": "أنا عايش في العنوان ٤٥ شارع مين", "structure": "[I live] + [at] + [45 Main Street] — exact address"},
+    {"en": "The keys are on the table, in the kitchen.", "ar": "المفاتيح على الطرابيزة، في المطبخ", "structure": "[The keys are] + [on] + [the table] + [in] + [the kitchen] — surface vs. enclosed space"}
+  ],
+  "common_errors": [
+    {"wrong": "I wake up in 6 AM.", "correct": "I wake up at 6 AM.", "explanation": "A specific clock time always uses 'at', never 'in'."},
+    {"wrong": "We have a meeting at Monday.", "correct": "We have a meeting on Monday.", "explanation": "Days of the week use 'on', not 'at' (at is reserved for exact times, not whole days)."},
+    {"wrong": "She was born on 1995.", "correct": "She was born in 1995.", "explanation": "Years, months, and seasons use 'in', not 'on' — 'on' is for specific days/dates only."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The class starts ___ 9 o'clock.", "answer": "at", "hint": "Exact clock time → at."},
+    {"sentence": "My birthday is ___ July.", "answer": "in", "hint": "Month → in."},
+    {"sentence": "I'll see you ___ Friday.", "answer": "on", "hint": "Day of the week → on."},
+    {"sentence": "He works ___ a big company ___ the city center.", "answer": "at / in", "hint": "'at' for a specific workplace, 'in' for a general area."},
+    {"sentence": "Put the book ___ the shelf, ___ the living room.", "answer": "on / in", "hint": "'on' for a surface, 'in' for an enclosed room."}
+  ],
+  "quick_rule": "AT = exact point (time or place). ON = specific day/date, or a surface. IN = longer time period (month/year/season) or enclosed/larger space. Zoom out from smallest (at) to biggest (in): at 6 PM → on Monday → in July → in 2026.",
+  "quick_rule_ar": "AT = نقطة دقيقة. ON = يوم/تاريخ محدد، أو سطح. IN = فترة زمنية أطول أو مساحة مغلقة/كبيرة.",
+  "mnemonic": "Think of ZOOMING OUT: AT a point → ON a day → IN a bigger period. Same logic for place: AT an address → ON a street → IN a city.",
+  "connect_to_speaking": "Practice with your buddy: describe your weekly schedule using all three prepositions correctly — one sentence with 'at' (exact time), one with 'on' (a day), and one with 'in' (a month or season)."
+}

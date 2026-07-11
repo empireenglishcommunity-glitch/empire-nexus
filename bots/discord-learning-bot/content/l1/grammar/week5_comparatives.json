@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w5",
+  "level": "L1",
+  "week": 5,
+  "pattern_name": "Comparatives (bigger, more expensive)",
+  "pattern_name_ar": "صيغ المقارنة (أكبر، أغلى)",
+  "formula": "Subject + is/are + Adjective-er + than + Object  |  Subject + is/are + more + Adjective + than + Object",
+  "formula_visual": "[THING A] + is + [ADJ]-er/more [ADJ] + than + [THING B]",
+  "when_to_use": "Use comparatives to compare exactly TWO things. Short adjectives (1 syllable, most 2-syllable) add -er. Longer adjectives (2+ syllables, especially ending in -ful, -ing, -ous) use 'more' before the adjective instead.",
+  "when_to_use_ar": "استخدم صيغ المقارنة لمقارنة شيئين بالضبط. الصفات القصيرة (مقطع واحد، أغلب المقاطع الاتنين) بتضيف -er. الصفات الأطول بتستخدم more قبل الصفة.",
+  "why_arabic_speakers_struggle": "Arabic comparative forms (أكبر من، أغلى من) follow a single consistent pattern regardless of word length. English splits into two different strategies based on syllable count, and learners often either add -er to long words ('expensiver') or 'more' to short words ('more big') incorrectly.",
+  "examples": [
+    {"en": "This car is bigger than that one.", "ar": "العربية دي أكبر من التانية", "structure": "[This car] + [is] + [bigger] + [than] + [that one]"},
+    {"en": "She is taller than her brother.", "ar": "هي أطول من أخوها", "structure": "[She] + [is] + [taller] + [than] + [her brother]"},
+    {"en": "This phone is more expensive than that one.", "ar": "الموبايل ده أغلى من التاني", "structure": "[This phone] + [is] + [more expensive] + [than] + [that one]"},
+    {"en": "My job is more interesting than my old one.", "ar": "شغلي أكتر تشويقًا من القديم", "structure": "[My job] + [is] + [more interesting] + [than] + [my old one]"},
+    {"en": "He runs faster than me.", "ar": "هو بيجري أسرع مني", "structure": "[He] + [runs] + [faster] + [than] + [me]"}
+  ],
+  "common_errors": [
+    {"wrong": "This phone is expensiver than that one.", "correct": "This phone is more expensive than that one.", "explanation": "'expensive' has 3 syllables — it needs 'more', not the -er ending."},
+    {"wrong": "She is more tall than her brother.", "correct": "She is taller than her brother.", "explanation": "'tall' is a short, 1-syllable adjective — it takes -er, not 'more'."},
+    {"wrong": "This is more good than that.", "correct": "This is better than that.", "explanation": "'good' is irregular — its comparative is 'better', not 'more good'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "This bag is ___ (heavy) than mine.", "answer": "heavier", "hint": "2 syllables ending in y → change y to i, add -er."},
+    {"sentence": "That movie was ___ (interesting) than the last one.", "answer": "more interesting", "hint": "3+ syllables → use 'more'."},
+    {"sentence": "My brother is ___ (old) than me.", "answer": "older", "hint": "1 syllable → add -er."},
+    {"sentence": "This restaurant is ___ (good) than that one.", "answer": "better", "hint": "'good' is irregular → better."},
+    {"sentence": "The new phone is ___ (small) than the old one.", "answer": "smaller", "hint": "1 syllable → add -er."}
+  ],
+  "quick_rule": "1 syllable or 2-syllable ending in -y → add -er (and change y to i if needed). 2+ syllables (especially -ful/-ing/-ous endings) → use 'more' + adjective. Irregular: good→better, bad→worse, far→farther/further.",
+  "quick_rule_ar": "مقطع واحد أو مقطعين بينتهوا بـ y → أضف -er. مقطعين فأكتر → استخدم more + الصفة. الشواذ: good→better, bad→worse.",
+  "mnemonic": "SHORT words get a SHORT ending (-er). LONG words need MORE help (the word 'more').",
+  "connect_to_speaking": "Practice with your buddy: compare two cities, two foods, or two jobs you know well, using at least 3 different comparative sentences. Mix short and long adjectives on purpose to practice both patterns."
+}

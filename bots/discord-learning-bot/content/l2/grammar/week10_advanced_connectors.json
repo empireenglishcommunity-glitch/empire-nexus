@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w10",
+  "level": "L2",
+  "week": 10,
+  "pattern_name": "Advanced Connectors (nevertheless, furthermore)",
+  "pattern_name_ar": "أدوات الربط المتقدمة (nevertheless, furthermore)",
+  "formula": "Sentence 1. + Advanced Connector, + Sentence 2.",
+  "formula_visual": "[IDEA A]. + However/Nevertheless/Furthermore/Therefore/Moreover, + [IDEA B].",
+  "when_to_use": "Use advanced connectors to link ideas formally across separate sentences (unlike L1's because/so/but, which often join clauses within one sentence). These signal precise logical relationships: contrast (however, nevertheless), addition (furthermore, moreover), and consequence (therefore, consequently) — essential for L2's essays and formal presentations.",
+  "when_to_use_ar": "استخدم أدوات الربط المتقدمة لربط أفكار بشكل رسمي بين جمل منفصلة. دول بيدلوا على علاقات منطقية دقيقة: تناقض، إضافة، نتيجة — ضرورية لمقالات وعروض المستوى الثاني الرسمية.",
+  "why_arabic_speakers_struggle": "Learners often treat all these connectors as interchangeable synonyms for 'but' or 'so', missing subtle distinctions — 'nevertheless' implies contrast DESPITE an acknowledged point (stronger concession than 'however'), while 'furthermore'/'moreover' specifically ADD supporting evidence rather than simply continuing a list. Using the wrong one can make formal writing sound imprecise even when each word is technically correct-ish.",
+  "examples": [
+    {"en": "The plan is expensive. However, it will save money long-term.", "ar": "الخطة مكلفة. مع ذلك، هتوفر فلوس على المدى الطويل (تناقض بسيط)", "structure": "[The plan is expensive]. + [However], + [it will save money long-term]"},
+    {"en": "The evidence is strong. Nevertheless, some people remain skeptical.", "ar": "الدليل قوي. رغم ذلك، لسه في ناس متشككة (تناقض أقوى، مع تسليم بالنقطة الأولى)", "structure": "[The evidence is strong]. + [Nevertheless], + [some people remain skeptical]"},
+    {"en": "The project is on schedule. Furthermore, it's under budget.", "ar": "المشروع في الوقت. علاوة على ذلك، تحت الميزانية (إضافة نقطة داعمة)", "structure": "[The project is on schedule]. + [Furthermore], + [it's under budget]"},
+    {"en": "He didn't study. Consequently, he failed the exam.", "ar": "هو ماذاكرش. بالتالي، فشل في الامتحان (نتيجة مباشرة)", "structure": "[He didn't study]. + [Consequently], + [he failed the exam]"},
+    {"en": "The results were unexpected. Moreover, they contradicted our hypothesis.", "ar": "النتائج كانت غير متوقعة. علاوة على ذلك، ناقضت فرضيتنا (إضافة نقطة داعمة أقوى)", "structure": "[The results were unexpected]. + [Moreover], + [they contradicted our hypothesis]"}
+  ],
+  "common_errors": [
+    {"wrong": "The plan is expensive, however it will save money.", "correct": "The plan is expensive. However, it will save money. / The plan is expensive; however, it will save money.", "explanation": "Advanced connectors like 'however' typically need a period or semicolon before them (they connect two independent sentences), not just a comma like 'but' does."},
+    {"wrong": "It's raining. Furthermore, I forgot my umbrella. [meant as simple contrast]", "correct": "It's raining. However, I forgot my umbrella.", "explanation": "'Furthermore' signals ADDITION of a supporting point, not contrast — this sentence needed a contrast connector instead."},
+    {"wrong": "He is smart. Nevertheless, he studies hard.", "correct": "He is smart, and he also studies hard. / Furthermore, he studies hard.", "explanation": "'Nevertheless' signals contrast/concession — but being smart and studying hard aren't contradictory ideas, so this needs an addition connector, not a contrast one."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The report is complete. ___, it needs a final review.", "answer": "However / Nevertheless", "hint": "Signals contrast — completion doesn't guarantee readiness."},
+    {"sentence": "Sales increased this quarter. ___, customer satisfaction improved too.", "answer": "Furthermore / Moreover", "hint": "Signals an additional supporting point."},
+    {"sentence": "The bridge was poorly maintained. ___, it eventually collapsed.", "answer": "Consequently / Therefore", "hint": "Signals a direct result/consequence."},
+    {"sentence": "The team lost the game. ___, they remained confident about next season.", "answer": "Nevertheless", "hint": "Strong contrast despite an acknowledged setback."},
+    {"sentence": "The medicine is effective. ___, it has some mild side effects.", "answer": "However", "hint": "Simple, direct contrast."}
+  ],
+  "quick_rule": "CONTRAST: however (mild), nevertheless (strong, despite). ADDITION: furthermore, moreover (adds a supporting point). CONSEQUENCE: therefore, consequently (direct result). These need a period/semicolon before them, not just a comma.",
+  "quick_rule_ar": "تناقض: however (خفيف)، nevertheless (قوي). إضافة: furthermore، moreover. نتيجة: therefore، consequently.",
+  "mnemonic": "ADVANCED connectors = ADVANCED punctuation rules too (period/semicolon before, comma after) — they're a step up from L1's simple but/so.",
+  "connect_to_speaking": "Practice with your buddy: state one fact about yourself, then correctly continue with 'however', 'furthermore', or 'therefore' depending on whether your next sentence contrasts, adds to, or results from the first."
+}

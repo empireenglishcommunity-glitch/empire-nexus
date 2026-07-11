@@ -1,0 +1,156 @@
+{
+  "level": "L1",
+  "week": 6,
+  "focus": "Dropped H — Function Words in Connected Speech",
+  "focus_ar": "حذف صوت H — الكلمات الوظيفية في الكلام المتصل",
+  "arabic_challenge": "Arabic /h/ (ه) is always pronounced clearly and fully, in every position. In natural American English, the /h/ in unstressed function words — especially pronouns and auxiliary verbs like 'him', 'her', 'his', 'have', 'had' — is very often dropped completely in the middle of a sentence, while it stays fully pronounced at the start of a sentence or when stressed for emphasis.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["dropped /h/ in pronouns: him, her, his"],
+      "isolation": {
+        "instructions": "When 'him', 'her', or 'his' appears in the middle of a sentence and is unstressed, the /h/ often disappears, and the word links smoothly onto the word before it instead.",
+        "instructions_ar": "لما him أو her أو his تظهر في وسط الجملة وبدون نبر، صوت الـ /h/ غالبًا بيختفي، والكلمة بتترابط بسلاسة مع الكلمة اللي قبلها.",
+        "practice": ["tell him → tell-'im", "ask her → ask-'er", "give him → give-'im"]
+      },
+      "minimal_pairs": [
+        {"pair": ["tell him (h dropped, natural)", "tell. Him. (h kept, sounds overly careful)"], "meaning": ["قوله", "—"]},
+        {"pair": ["ask her (h dropped, natural)", "ask. Her. (h kept, sounds overly careful)"], "meaning": ["اسألها", "—"]}
+      ],
+      "word_practice": ["tell him", "ask her", "give him", "call her", "with him", "for her"],
+      "sentence_practice": [
+        "Tell him to call her right away.",
+        "Give him the book, and ask her too.",
+        "I went with him, not for her."
+      ],
+      "record_this": "Tell him to call her, give him the book, and ask her too — I went with him, not for her.",
+      "self_check": "Say 'tell him' fast — did the /h/ disappear, so it sounds closer to 'tell-im'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["dropped /h/ in auxiliary verbs: have, has, had"],
+      "isolation": {
+        "instructions": "In fast, unstressed speech, the auxiliary verbs 'have', 'has', and 'had' (when used as helping verbs, not main verbs) often lose their /h/, especially after a pronoun.",
+        "instructions_ar": "في الكلام السريع بدون نبر، أفعال المساعدة have و has و had (لما تستخدم كأفعال مساعدة، مش كأفعال أساسية) غالبًا بتخسر صوت الـ /h/، خصوصًا بعد ضمير.",
+        "practice": ["I have been → I-əv been", "she has gone → she-əz gone", "we had left → we-əd left"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I have been (h dropped, natural)", "I. Have. Been. (h kept, careful)"], "meaning": ["كنت", "—"]},
+        {"pair": ["she has gone (h dropped)", "she. Has. Gone. (h kept)"], "meaning": ["هي راحت", "—"]}
+      ],
+      "word_practice": ["I have been", "she has gone", "we had left", "you have seen", "he has told", "they had known"],
+      "sentence_practice": [
+        "I have been waiting since she has gone.",
+        "We had left before you have seen it.",
+        "He has told them what they had known."
+      ],
+      "record_this": "I have been waiting since she has gone — we had left before you have seen it, and he has told them what they had known.",
+      "self_check": "Do the auxiliary verbs (have/has/had) shrink and lose their /h/ when they're not the main focus of the sentence?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["contrast: when /h/ IS pronounced (sentence-start, stress, main verb)"],
+      "isolation": {
+        "instructions": "The /h/ stays FULLY pronounced when: (1) the word starts a sentence, (2) the word is stressed for emphasis or contrast, or (3) 'have/has/had' is used as a MAIN verb meaning 'possess', not as an auxiliary.",
+        "instructions_ar": "صوت الـ /h/ بيفضل كامل لما: (١) الكلمة تبدأ الجملة، (٢) الكلمة عليها نبر للتوضيح، (٣) have/has/had مستخدمة كفعل أساسي بمعنى 'يملك'، مش كمساعد.",
+        "practice": ["Him? He didn't do it. (sentence-start, full H)", "I told HER, not him. (stressed for contrast, full H)", "I have a car. (main verb = possess, full H)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Tell him. (dropped H, mid-sentence)", "Him? Never. (full H, sentence-start)"], "meaning": ["قوله", "هو؟ أبدًا"]},
+        {"pair": ["I have been there. (dropped H, auxiliary)", "I have a car. (full H, main verb = own)"], "meaning": ["كنت هناك", "معايا عربية"]}
+      ],
+      "word_practice": ["Him", "Her", "I have a car", "I have been there", "HER, not him"],
+      "sentence_practice": [
+        "Him? He never called her.",
+        "I have a car, but I have been walking lately.",
+        "I told HER the news, not him."
+      ],
+      "record_this": "Him? He never called her. I have a car, but I have been walking lately — and I told HER the news, not him.",
+      "self_check": "Can you identify, for each 'him/her/have' in this sentence, WHY the h stayed or dropped — position, stress, or main-verb meaning?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["dropped H in full conversational phrases"],
+      "isolation": {
+        "instructions": "Combine dropped-H pronouns and auxiliaries in natural, flowing phrases you'll use constantly in daily conversation.",
+        "instructions_ar": "دمج ضمائر وأفعال مساعدة بدون H في عبارات طبيعية متصلة هتستخدمها كتير في المحادثة اليومية.",
+        "practice": ["Did you tell him? → Did-you-tell-'im?", "Has she left? → Has-she-left? (her own H stays since it's the auxiliary itself, not after it)", "Could you ask her? → Could-you-ask-'er?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["did you tell him (h dropped)", "did. you. tell. him. (choppy)"], "meaning": ["هل قولتله", "—"]}
+      ],
+      "word_practice": ["did you tell him", "could you ask her", "should have known", "would have called", "give him a call"],
+      "sentence_practice": [
+        "Did you tell him? Could you ask her too?",
+        "I should have known, and I would have called him.",
+        "Give him a call, and tell her the plan."
+      ],
+      "record_this": "Did you tell him? Could you ask her too? I should have known, and I would have called him and given her a call about the plan.",
+      "self_check": "Are the pronoun H's disappearing naturally in these connected phrases, without you having to think hard about it?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["dropped H at natural conversational speed"],
+      "isolation": {
+        "instructions": "Push these patterns to full natural speed, the way you'd actually speak with a friend.",
+        "instructions_ar": "خد الأنماط دي لسرعة الكلام الطبيعية، بالطريقة اللي هتتكلم بيها فعلاً مع صاحبك.",
+        "practice": ["Slow: tell...him (H still dropping, just slower)", "Normal: tell him", "Fast: 'Just tell him already!'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["just tell him already (fast, natural)", "just. tell. him. already. (slow, choppy)"], "meaning": ["قوله بس خلاص", "—"]}
+      ],
+      "word_practice": ["tell him", "ask her", "I have been", "she has gone", "did you tell him"],
+      "sentence_practice": [
+        "Just tell him already, and ask her too!",
+        "I have been busy, and she has gone home.",
+        "Did you tell him? I would have called her myself."
+      ],
+      "record_this": "Just tell him already! I have been busy, and she has gone home — did you ask her, or would you have called him yourself?",
+      "self_check": "Record 3 times at increasing speed. Did the dropped H's hold up, or did full /h/ sounds creep back in under pressure?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: dropped H in pronouns, dropped H in auxiliaries, full-H contrast rules, connected phrases, natural speed",
+      "type": "review",
+      "mixed_pairs": [
+        ["tell him", "Him? Never."], ["I have been", "I have a car"], ["ask her", "I told HER"]
+      ],
+      "challenge_sentences": [
+        "Him? I never told him — but I have been meaning to ask her about it.",
+        "She has gone, and I would have called him if I have had the time.",
+        "Did you give him the news, or should I have told her myself?"
+      ],
+      "record_this": "Him? I never told him. I have been meaning to ask her, but she has gone already — did you give him the news, or should I have told her myself?",
+      "self_check": "For every 'him/her/have/has/had' in this passage, mark whether the H dropped or stayed, and explain why in one word (position/stress/meaning)."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage naturally, applying dropped-H rules to pronouns and auxiliaries, while keeping full H at sentence-starts and for emphasis.",
+        "passage": "Him? He never called her back. I told him to ask her about the meeting, but he has been too busy. She has gone to the office already, and I would have joined her if I have had more time. Did you tell him the schedule changed? I have a feeling he hasn't heard yet — could you give him a call and ask her to wait?",
+        "sounds_to_check": {
+          "dropped H (pronouns, mid-sentence)": "told him, ask her, give him a call, ask her to wait",
+          "dropped H (auxiliaries)": "has been, has gone, would have, have had",
+          "full H (sentence-start / stress / main verb)": "Him? (sentence start), I have a feeling (main verb = possess)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Correct H-dropping in pronouns and auxiliaries throughout; full H correctly preserved at sentence-start, under stress, and for main-verb 'have'.",
+        "70_89": "Mostly correct; a few missed drops or an incorrect full-H kept where it should drop.",
+        "50_69": "Inconsistent — H dropping only in heavily drilled phrases.",
+        "below_50": "Full /h/ pronounced everywhere — go back and repeat Days 1-4."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week's pattern is the OPPOSITE instinct from your first language: instead of always pronouncing ه clearly, you're learning to selectively DROP it in specific, predictable grammatical positions.",
+      "The rule is about GRAMMATICAL ROLE, not the letter itself: pronouns and auxiliary verbs drop H when unstressed; content words and sentence-initial position keep it.",
+      "This connects directly to Week 1's stress patterns — dropped H almost always happens on UNSTRESSED function words, which is the same category of word that gets reduced in general."
+    ],
+    "daily_time": "15-20 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record the 'record_this' sentence every day. By Day 7, the dropped-H pattern should feel automatic on pronouns, not a special effort."
+  }
+}

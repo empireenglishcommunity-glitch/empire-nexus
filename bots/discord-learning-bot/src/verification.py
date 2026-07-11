@@ -214,18 +214,22 @@ def generate_vocab_quiz(discord_id: str) -> tuple[str, str, str]:
     from . import curriculum
 
     member = database.get_member(discord_id)
+    level = member["level"] if member else "L0"
     week = database.member_week_number(discord_id) if member else 1
-    week = min(8, max(1, week))
+    week = min(curriculum.max_week_for_level(level), max(1, week))
 
-    # Pull from curated curriculum data (56 words/week + previous weeks)
-    quiz_words = curriculum.get_quiz_words(week, count=20)
+    # Pull from curated curriculum data (this level's vocab + previous weeks).
+    # Previously this always read "week" against L0's data regardless of the
+    # member's real level, so L1-L3 members were quizzed on L0 vocabulary.
+    quiz_words = curriculum.get_quiz_words(week, count=20, level=level)
 
     if quiz_words:
         word_obj = random.choice(quiz_words)
         word = word_obj.get("word", "hello")
         arabic = word_obj.get("arabic", "مرحبا")
     else:
-        # Fallback to hardcoded bank if curriculum not loaded
+        # Fallback to hardcoded L0 bank only if curriculum has nothing for
+        # this level/week (e.g. curriculum not loaded, or truly no data).
         words = VOCAB_QUIZ_BANK.get(week, VOCAB_QUIZ_BANK[1])
         word, arabic = random.choice(words)
 

@@ -1,0 +1,161 @@
+{
+  "level": "L1",
+  "week": 10,
+  "focus": "Final Review + Advancement Exam Preparation — All L1 Accent Skills",
+  "focus_ar": "المراجعة النهائية + التحضير لامتحان الترقية — كل مهارات النطق في المستوى الأول",
+  "arabic_challenge": "You've spent 9 weeks building 8 distinct connected-speech skills on top of Level 0's phoneme foundation. This final week mirrors L0's own Week 8 self-assessment structure: no new material, just rigorous, honest review — because the L1→L2 advancement exam's Accent section (blueprint §9.3, Table 45) specifically tests a read passage PLUS spontaneous speech, exactly like this week's Day 7.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": "Review Weeks 1-2: word stress + schwa foundations, flap T/D",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit your Week 1 and Week 2 recordings before doing today's drill. Notice how much more automatic these feel now compared to 9 weeks ago.",
+        "instructions_ar": "راجع تسجيلات الأسبوع ١ و٢ قبل تمرين النهارده. لاحظ قد إيه دي بقت تلقائية أكتر مقارنة بـ ٩ أسابيع فاتت.",
+        "practice": ["REcord / reCORD", "water, better, butter (flap)", "content-word stress patterns"]
+      },
+      "minimal_pairs": [
+        {"pair": ["water (flap, now automatic)", "water (careful, first-week effort)"], "meaning": ["ماء", "—"]}
+      ],
+      "word_practice": ["water", "better", "REcord", "reCORD", "city", "matter"],
+      "sentence_practice": [
+        "It doesn't matter — the water here is better.",
+        "I'll reCORD a new REcord this city has never heard.",
+        "Better water, better city, better matter."
+      ],
+      "record_this": "It doesn't matter — the water here is better, and I'll record a new record this city has never heard.",
+      "self_check": "Compare today's recording to your actual Week 1/2 recordings if you saved them. Is there a clear improvement in ease and speed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": "Review Weeks 3-4: consonant-vowel linking, glottal stop T",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 3 and 4 patterns — linking across word boundaries and the glottal stop before syllabic n.",
+        "instructions_ar": "راجع أنماط الأسبوع ٣ و٤ — الربط بين حدود الكلمات والوقفة الحنجرية قبل الـ n المقطعية.",
+        "practice": ["pick up, look at, an apple", "button, mountain, certain"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pick up an apple (linked)", "button (glottal stop)"], "meaning": ["يرفع تفاحة", "زرار"]}
+      ],
+      "word_practice": ["pick up", "an apple", "button", "mountain", "certain", "look at"],
+      "sentence_practice": [
+        "Pick up an apple and look at the mountain.",
+        "Press the button — I'm certain it's important.",
+        "Look at an apple near the mountain button."
+      ],
+      "record_this": "Pick up an apple and look at the mountain — press the button, I'm certain it's important.",
+      "self_check": "Are linking and glottal stop both still distinct and correct when reviewed together after a week's gap?"
+    },
+    {
+      "day": 3,
+      "target_sounds": "Review Weeks 5-6: vowel-vowel linking, dropped H",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 5 and 6 patterns — glide insertion between vowels and dropped H in pronouns/auxiliaries.",
+        "instructions_ar": "راجع أنماط الأسبوع ٥ و٦ — إدخال الصوت الانتقالي بين حروف العلة وحذف H في الضمائر وأفعال المساعدة.",
+        "practice": ["go out, she asked, I am", "tell him, ask her, I have been"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go out (w-glide)", "tell him (dropped H)"], "meaning": ["يخرج", "قوله"]}
+      ],
+      "word_practice": ["go out", "she asked", "tell him", "ask her", "I have been"],
+      "sentence_practice": [
+        "Go out and tell him I have been waiting.",
+        "She asked me to ask her again.",
+        "I have been meaning to go out and ask her."
+      ],
+      "record_this": "Go out and tell him I have been waiting — she asked me to ask her again, but I have been busy.",
+      "self_check": "Do the glides and dropped-H patterns both still come through naturally after the gap?"
+    },
+    {
+      "day": 4,
+      "target_sounds": "Review Weeks 7-8: consonant-consonant linking, schwa",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 7 and 8 patterns — held consonants at word boundaries and schwa in unstressed syllables.",
+        "instructions_ar": "راجع أنماط الأسبوع ٧ و٨ — إمساك الأصوات الساكنة عند حدود الكلمات وصوت الشوا في المقاطع بدون نبر.",
+        "practice": ["big game, some milk", "about, camera, teacher"]
+      },
+      "minimal_pairs": [
+        {"pair": ["big game (held consonant)", "about (schwa)"], "meaning": ["لعبة كبيرة", "حوالي"]}
+      ],
+      "word_practice": ["big game", "some milk", "about", "camera", "teacher", "family"],
+      "sentence_practice": [
+        "It's a big game — tell me about the family camera.",
+        "Some milk and a teacher's advice about the family.",
+        "About the big game, my teacher gave some milk to the family."
+      ],
+      "record_this": "It's a big game — tell me about the family camera. Some milk and a teacher's advice about the family made it a good day.",
+      "self_check": "Are held consonants and reduced schwa syllables both holding up together in this final combined review?"
+    },
+    {
+      "day": 5,
+      "target_sounds": "Full mock advancement-exam accent section (read passage + spontaneous speech)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Simulate the real L1→L2 advancement exam Accent section exactly as described in the blueprint: read a passage aloud, then speak spontaneously for a similar duration. This is your dress rehearsal.",
+        "instructions_ar": "حاكي قسم النطق في امتحان الترقية L1→L2 بالضبط زي ما هو موصوف في الخطة: اقرأ فقرة بصوت عالي، وبعدين اتكلم بعفوية لمدة مماثلة. ده بروفة نهائية.",
+        "practice": ["Part A: read the Day 6 review passage below aloud.", "Part B: speak for 60 seconds, unscripted, about your goals for Level 2."]
+      },
+      "minimal_pairs": [
+        {"pair": ["read passage (Part A)", "spontaneous speech (Part B)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses full sentence practice below)"],
+      "sentence_practice": [
+        "Part A — read aloud: 'About an hour ago, my big brother asked her about the mountain trip.'",
+        "Part B — speak freely: 'Talk about why you want to reach Level 2, and what you're most proud of from Level 1.'"
+      ],
+      "record_this": "(Record both Part A — reading — and Part B — spontaneous speech — as two separate clips.)",
+      "self_check": "Compare your Part A (read) fluency to your Part B (spontaneous) fluency. A gap here is normal — but the smaller the gap, the more ready you are for the real exam."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Comprehensive Review: all 8 L1 accent features combined",
+      "type": "review",
+      "mixed_pairs": [
+        ["water", "button"], ["pick up", "tell him"], ["go out", "big game"], ["about", "camera"]
+      ],
+      "challenge_sentences": [
+        "About an hour ago, I picked up an apple, told him about the big game, and asked her about the mountain.",
+        "It doesn't matter — the water here is better, and my family's camera captured a good moment.",
+        "Go out, press the button, and tell him I have been certain about this big deal."
+      ],
+      "record_this": "About an hour ago, I picked up an apple, told him about the big game, and asked her about the mountain — it doesn't matter, the water here is better, and my family's camera captured a good moment. Go out, press the button, and tell him I have been certain about this big deal.",
+      "self_check": "This is the longest, most demanding passage in all of L1. Score yourself using L0's Day-7 scoring bands (90-100 / 70-89 / 50-69 / below 50) across all 8 features combined."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Final Self-Assessment — L1 Accent Completion Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is your official L1 accent completion checkpoint. Record yourself reading the passage below, then record 60-90 seconds of spontaneous speech about your Level 1 journey overall.",
+        "passage": "About ten weeks ago, I started Level 1 as a beginner in connected speech. My teacher and I have been working on the water-and-butter flap, the button-and-mountain glottal stop, and linking words like pick up an apple and go out. I have also learned to tell him and ask her naturally, dropping the h, and to say about and camera with a proper schwa instead of a full vowel. It's a big deal, and I'm certain I'm better prepared for Level 2 now than I was before.",
+        "sounds_to_check": {
+          "word stress + schwa (Wk1, Wk8)": "about, teacher, camera, better, certain",
+          "flap T/D (Wk2)": "water, butter, better",
+          "C-V linking (Wk3)": "pick up, an apple, go out",
+          "glottal stop T (Wk4)": "button, mountain",
+          "V-V linking (Wk5)": "go out",
+          "dropped H (Wk6)": "tell him, ask her",
+          "C-C linking (Wk7)": "big deal"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 8 features present and mostly automatic in both the read passage and spontaneous speech. Ready for the L1\u2192L2 advancement exam's accent section.",
+        "70_89": "Most features present in the read passage; some inconsistency in spontaneous speech. Continue practicing before the exam.",
+        "50_69": "Features present individually but not yet integrated — recommend repeating Week 9's integration drills before attempting the exam.",
+        "below_50": "Significant gaps remain — recommend repeating the specific weak weeks (identify from Day 1-4 reviews) before requesting the advancement exam."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week deliberately mirrors L0's Week 8 structure (self-assessment + extended practice) — the format should feel familiar from your very first level.",
+      "The Day 5 mock exam is the most important drill this week — it directly previews the real advancement exam format described in the blueprint's Table 45 (Live Speaking + Accent Evaluation sections).",
+      "If your Day 7 score is below 70, it is completely reasonable to spend an extra week reviewing before requesting `!exam` — the system rewards genuine readiness over speed."
+    ],
+    "daily_time": "20-25 minutes this week (review + mock exam recording)",
+    "recording_requirement": "Record Day 5 (mock exam) and Day 7 (final assessment) and keep both — they are useful evidence of your progress and can be compared against your future L2 recordings."
+  }
+}

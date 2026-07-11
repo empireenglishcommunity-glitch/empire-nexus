@@ -4,51 +4,92 @@
   "theme": "Philosophy & Ethics",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Advanced Connectors (nevertheless, furthermore)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "morality", "pronunciation": "mə-RAL-ə-tee", "arabic": "أخلاقية/مبادئ أخلاقية", "pos": "noun"},
+    {"word": "ethical dilemma", "pronunciation": "ETH-i-kəl di-LEM-ə", "arabic": "معضلة أخلاقية", "pos": "noun phrase"},
+    {"word": "virtue", "pronunciation": "VUR-choo", "arabic": "فضيلة", "pos": "noun"},
+    {"word": "existence", "pronunciation": "ig-ZIS-təns", "arabic": "وجود", "pos": "noun"},
+    {"word": "consciousness", "pronunciation": "KON-shəs-nəs", "arabic": "وعي", "pos": "noun"},
+    {"word": "free will", "pronunciation": "free wil", "arabic": "الإرادة الحرة", "pos": "noun phrase"},
+    {"word": "determinism", "pronunciation": "di-TUR-mə-niz-əm", "arabic": "الحتمية", "pos": "noun"},
+    {"word": "rationalism", "pronunciation": "RASH-ə-nə-liz-əm", "arabic": "عقلانية", "pos": "noun"},
+    {"word": "utilitarian", "pronunciation": "yoo-til-i-TAIR-ee-ən", "arabic": "نفعي/يقيّم بحسب المنفعة", "pos": "adjective"},
+    {"word": "integrity", "pronunciation": "in-TEG-rə-tee", "arabic": "نزاهة/سلامة أخلاقية", "pos": "noun"},
+    {"word": "justify", "pronunciation": "JUS-tə-fy", "arabic": "يبرر", "pos": "verb"},
+    {"word": "perspective (philosophical)", "pronunciation": "pər-SPEK-tiv", "arabic": "منظور فكري", "pos": "noun"},
+    {"word": "moral compass", "pronunciation": "MOR-əl KUM-pəs", "arabic": "البوصلة الأخلاقية", "pos": "noun phrase"},
+    {"word": "hypocrisy", "pronunciation": "hi-POK-rə-see", "arabic": "نفاق", "pos": "noun"},
+    {"word": "integrity of purpose", "pronunciation": "in-TEG-rə-tee əv PUR-pəs", "arabic": "نزاهة الهدف", "pos": "noun phrase"},
+    {"word": "existential", "pronunciation": "eg-zis-TEN-shəl", "arabic": "وجودي", "pos": "adjective"},
+    {"word": "meaning of life", "pronunciation": "MEE-ning əv lyf", "arabic": "معنى الحياة", "pos": "noun phrase"},
+    {"word": "moral relativism", "pronunciation": "MOR-əl REL-ə-tiv-iz-əm", "arabic": "النسبية الأخلاقية", "pos": "noun phrase"},
+    {"word": "conscience", "pronunciation": "KON-shəns", "arabic": "الضمير", "pos": "noun"},
+    {"word": "principle", "pronunciation": "PRIN-sə-pəl", "arabic": "مبدأ", "pos": "noun"},
+    {"word": "logical fallacy", "pronunciation": "LOJ-i-kəl FAL-ə-see", "arabic": "مغالطة منطقية", "pos": "noun phrase"},
+    {"word": "objectivity", "pronunciation": "ob-jek-TIV-ə-tee", "arabic": "موضوعية", "pos": "noun"},
+    {"word": "self-interest", "pronunciation": "self-IN-tər-est", "arabic": "المصلحة الشخصية", "pos": "noun"},
+    {"word": "greater good", "pronunciation": "GRAY-tər good", "arabic": "الصالح العام", "pos": "noun phrase"},
+    {"word": "moral obligation", "pronunciation": "MOR-əl ob-li-GAY-shən", "arabic": "التزام أخلاقي", "pos": "noun phrase"},
+    {"word": "philosophical argument", "pronunciation": "fil-ə-SOF-i-kəl AR-gyə-mənt", "arabic": "حجة فكرية", "pos": "noun phrase"},
+    {"word": "reasoning", "pronunciation": "REE-zə-ning", "arabic": "تفكير منطقي", "pos": "noun"},
+    {"word": "assumption", "pronunciation": "ə-SUMP-shən", "arabic": "افتراض", "pos": "noun"},
+    {"word": "ethical standard", "pronunciation": "ETH-i-kəl STAN-dərd", "arabic": "معيار أخلاقي", "pos": "noun phrase"},
+    {"word": "paradox", "pronunciation": "PAR-ə-doks", "arabic": "مفارقة", "pos": "noun"},
+    {"word": "worldview", "pronunciation": "WURLD-vyoo", "arabic": "رؤية للعالم/فلسفة حياة", "pos": "noun"},
+    {"word": "moral high ground", "pronunciation": "MOR-əl hy grownd", "arabic": "الموقف الأخلاقي الأسمى", "pos": "idiom"},
+    {"word": "philosophical debate", "pronunciation": "fil-ə-SOF-i-kəl di-BAYT", "arabic": "نقاش فلسفي", "pos": "noun phrase"},
+    {"word": "hypothetical", "pronunciation": "hy-pə-THET-i-kəl", "arabic": "افتراضي", "pos": "adjective"},
+    {"word": "value system", "pronunciation": "VAL-yoo SIS-təm", "arabic": "نظام قيمي", "pos": "noun phrase"},
+    {"word": "self-reflection", "pronunciation": "self-ri-FLEK-shən", "arabic": "تأمل ذاتي", "pos": "noun"},
+    {"word": "moral judgment", "pronunciation": "MOR-əl JUJ-mənt", "arabic": "حكم أخلاقي", "pos": "noun phrase"},
+    {"word": "greater purpose", "pronunciation": "GRAY-tər PUR-pəs", "arabic": "غاية أكبر", "pos": "noun phrase"},
+    {"word": "contradiction", "pronunciation": "kon-trə-DIK-shən", "arabic": "تناقض", "pos": "noun"},
+    {"word": "nuance", "pronunciation": "NOO-ahns", "arabic": "دقة/تفصيل خفي", "pos": "noun"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Debate: 'The ends justify the means' — is it ever acceptable to do something wrong for a good outcome? Argue for ONE side with 2 examples.",
+      "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Give a 3-minute presentation about a personal principle or value you refuse to compromise on, and why.",
+      "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Analyze why different cultures sometimes have very different ideas of what's 'right' and 'wrong'. Discuss at least 2 possible explanations.",
+      "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Tell a detailed story about a time you faced a difficult ethical decision — what did you choose, and would you choose the same again?",
+      "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Imagine you're a philosopher being interviewed about the meaning of a good life. Answer: What makes a life 'good' or 'meaningful'? Is happiness the ultimate goal? What's one common misconception about ethics?",
+      "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Summarize a philosophical idea, article, or discussion you've encountered, in under 2 minutes, in plain language.",
+      "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Philosophy & Ethics)",
-      "target_seconds": 280
+      "prompt": "Discuss freely for 4 minutes: is it possible to be a completely objective, unbiased person? Why or why not?",
+      "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of philosophy & ethics.",
-    "Analyze the impact of philosophy & ethics on daily life.",
-    "Compare how philosophy & ethics differs between two countries.",
-    "Write a formal email about philosophy & ethics.",
-    "Describe a personal experience related to philosophy & ethics (200+ words).",
-    "What changes would you make regarding philosophy & ethics? Explain why.",
-    "Summarize an article about philosophy & ethics in your own words."
+    "Write an essay (150+ words) arguing whether morality is universal or relative to each culture.",
+    "Analyze a well-known ethical dilemma (real or hypothetical) and explain what you would do and why.",
+    "Compare two different philosophical approaches to happiness (for example, pleasure-seeking versus purpose-seeking).",
+    "Write a formal email to a philosophy professor or public thinker asking a genuine question about ethics.",
+    "Describe a personal experience that made you rethink your own values or beliefs (200+ words).",
+    "What changes would you make to how ethics is taught or discussed in schools? Explain at least 2 specific ideas.",
+    "Summarize a philosophical concept or argument in your own words, in under 150 words, using a concrete example to explain it."
   ]
 }

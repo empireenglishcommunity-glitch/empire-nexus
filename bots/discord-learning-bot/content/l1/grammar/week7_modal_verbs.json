@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w7",
+  "level": "L1",
+  "week": 7,
+  "pattern_name": "Modal Verbs (should, must, have to)",
+  "pattern_name_ar": "الأفعال الناقصة (should, must, have to)",
+  "formula": "Subject + modal + Verb (base form, no -s, no -ed, no to)",
+  "formula_visual": "[WHO] + should/must/have to + [ACTION] (base form)",
+  "when_to_use": "Use 'should' for advice/recommendations, 'must' for strong obligation or logical certainty, and 'have to' for external obligation or necessity (rules, requirements from outside yourself).",
+  "when_to_use_ar": "استخدم should للنصيحة، must للالتزام القوي أو التأكد المنطقي، و have to للالتزام الخارجي أو الضرورة (قواعد أو متطلبات من مصدر خارجي).",
+  "why_arabic_speakers_struggle": "Learners often use these three interchangeably as generic 'should/must' translations, missing the real distinction: 'should' is much softer than 'must'/'have to', and 'must' (internal obligation/certainty) is subtly different from 'have to' (external rule) even though both translate similarly.",
+  "examples": [
+    {"en": "You should drink more water.", "ar": "يفضل تشرب مياه أكتر (نصيحة)", "structure": "[You] + [should] + [drink] + [more water]"},
+    {"en": "I must finish this today — it's my own deadline.", "ar": "لازم أخلص ده النهاردة (التزام شخصي/قوي)", "structure": "[I] + [must] + [finish] + [this] + [today]"},
+    {"en": "I have to wear a uniform at work — it's the rule.", "ar": "لازم البس يونيفورم في الشغل (قاعدة خارجية)", "structure": "[I] + [have to] + [wear] + [a uniform] + [at work]"},
+    {"en": "She must be tired — she worked all night.", "ar": "لازم تكون متعبة (استنتاج منطقي)", "structure": "[She] + [must be] + [tired]"},
+    {"en": "We have to leave by 8 AM to catch the flight.", "ar": "لازم نمشي الساعة ٨ الصبح عشان الطيارة (ضرورة خارجية)", "structure": "[We] + [have to] + [leave] + [by 8 AM]"}
+  ],
+  "common_errors": [
+    {"wrong": "You must to drink water.", "correct": "You must drink water.", "explanation": "Modal verbs (should, must, can, will) are NEVER followed by 'to' — only 'have to' includes 'to' as part of its own fixed phrase."},
+    {"wrong": "She musts finish the report.", "correct": "She must finish the report.", "explanation": "Modal verbs never take -s, even with he/she/it — they stay in one unchanging form."},
+    {"wrong": "I have to be tired — I worked all night. (meant as a guess)", "correct": "I must be tired — I worked all night.", "explanation": "A logical conclusion/guess about a state uses 'must', not 'have to' (which is about obligation, not deduction)."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "You ___ see a doctor if you feel sick. (advice)", "answer": "should", "hint": "Gentle recommendation."},
+    {"sentence": "I ___ wear a helmet — it's the law. (external rule)", "answer": "have to", "hint": "Obligation from an outside rule."},
+    {"sentence": "He's not answering — he ___ be asleep. (logical guess)", "answer": "must", "hint": "Strong logical conclusion."},
+    {"sentence": "We ___ finish this project by Friday — my boss said so. (external requirement)", "answer": "have to", "hint": "Someone else's rule/deadline."},
+    {"sentence": "You ___ try that new restaurant — it's amazing! (recommendation)", "answer": "should", "hint": "Friendly suggestion, not a rule."}
+  ],
+  "quick_rule": "SHOULD = soft advice. MUST = strong personal obligation OR a confident guess/deduction. HAVE TO = obligation coming from an outside rule, person, or requirement. None of the three modal forms (should/must) ever take -s or 'to' afterward.",
+  "quick_rule_ar": "SHOULD = نصيحة خفيفة. MUST = التزام شخصي قوي أو استنتاج واثق. HAVE TO = التزام من قاعدة أو شخص خارجي.",
+  "mnemonic": "SHOULD is a soft SHOULDer tap (gentle). MUST is a MUST-do, no excuses. HAVE TO means someone else's rule made you HAVE to.",
+  "connect_to_speaking": "Practice with your buddy: give one piece of advice (should), state one strong personal commitment (must), and describe one rule at your job/school (have to) — say all three out loud in full sentences."
+}

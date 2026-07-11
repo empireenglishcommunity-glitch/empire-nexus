@@ -1,0 +1,143 @@
+{
+  "level": "L3",
+  "week": 2,
+  "focus": "Micro-Phonetics Refinement — Dark L Mastery Across All Contexts",
+  "focus_ar": "تحسين الصوتيات الدقيقة — إتقان الـ L الغامقة في كل السياقات",
+  "arabic_challenge": "You learned dark L in L2 Week 5. This week refines it to Silver/Gold-tier precision (Table 11) — ensuring the tongue-back-raising motion for syllable-final L survives in unfamiliar vocabulary, humor/sarcasm delivery, complex consonant clusters, emotional speech, and fully spontaneous conversation, matching this week's Humor & Sarcasm vocabulary theme.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["dark L in unfamiliar, never-drilled words"],
+      "isolation": {
+        "instructions": "Test dark L on words you've likely never specifically drilled before.",
+        "instructions_ar": "اختبر الـ L الغامقة على كلمات محتمل ماتدربتش عليها قبل كده.",
+        "practice": ["colossal, plausible, dismissal, principal, animal, universal (dark L at syllable end)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["colossal (dark L, new word)", "colossal (light L throughout, effortful)"], "meaning": ["ضخم", "—"]}
+      ],
+      "word_practice": ["colossal", "plausible", "dismissal", "principal", "animal", "universal"],
+      "sentence_practice": [
+        "It's a colossal, plausible reason for the dismissal.",
+        "The principal made a universal rule about every animal.",
+        "A plausible, colossal, universal animal instinct."
+      ],
+      "record_this": "It's a colossal, plausible reason for the dismissal — the principal made a universal rule about every animal.",
+      "self_check": "Did dark L apply automatically to these unfamiliar words at syllable-end?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["dark L in sarcastic/humorous delivery (thematic tie-in)"],
+      "isolation": {
+        "instructions": "Apply dark L while delivering sarcastic remarks, since exaggerated comedic delivery sometimes disrupts subtle articulatory habits.",
+        "instructions_ar": "طبّق الـ L الغامقة وانت بتقدم تعليقات ساخرة، لأن الأداء الكوميدي المبالغ فيه ممكن يعطل عادات نطقية دقيقة أحيانًا.",
+        "practice": ["Oh, TOTALLY brilliant! (sarcastic, dark L on 'total')", "What a FEEL-good story. (sarcastic emphasis)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["brilliant (sarcastic, dark L intact)", "brilliant (sarcastic, dark L lost)"], "meaning": ["رائع", "—"]}
+      ],
+      "word_practice": ["brilliant", "feel-good", "beautiful", "wonderful"],
+      "sentence_practice": [
+        "Oh, TOTALLY brilliant! What a FEEL-good story.",
+        "Wonderful, just wonderful — how beautiful!",
+        "Brilliant, absolutely brilliant, a truly beautiful mess."
+      ],
+      "record_this": "Oh, TOTALLY brilliant! What a FEEL-good, beautiful, wonderful story — just wonderful.",
+      "self_check": "Did the dark L quality survive the exaggerated, sarcastic emphasis?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["dark L in complex consonant clusters"],
+      "isolation": {
+        "instructions": "Test dark L before another final consonant, in more advanced vocabulary than L2's practice set.",
+        "instructions_ar": "اختبر الـ L الغامقة قبل صوت ساكن نهائي آخر، في مفردات أكثر تقدمًا من مجموعة تمارين المستوى الثاني.",
+        "practice": ["pulse, results, adults, insults (dark L + cluster)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pulse (dark L + cluster, correct)", "pulse (light L, foreign)"], "meaning": ["نبض", "—"]}
+      ],
+      "word_practice": ["pulse", "results", "adults", "insults"],
+      "sentence_practice": [
+        "The results showed adults' pulse rates rising after insults.",
+        "Adults felt insults affected their pulse and results.",
+        "The pulse quickened after the results and the insults."
+      ],
+      "record_this": "The results showed adults' pulse rates rising after insults — the pulse quickened noticeably.",
+      "self_check": "Did dark L hold up in these more complex final-consonant clusters?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["dark L under genuine emotional/reactive speech"],
+      "isolation": {
+        "instructions": "Test dark L while reacting with genuine surprise or amusement to something (real or imagined), since authentic reactions can disrupt careful articulation.",
+        "instructions_ar": "اختبر الـ L الغامقة وانت بترد بمفاجأة أو تسلية حقيقية على شيء، لأن ردود الفعل الحقيقية ممكن تعطل النطق الحذر.",
+        "practice": ["React genuinely (out loud) to something you find funny or surprising, watching for dark L in your reaction words."]
+      },
+      "minimal_pairs": [
+        {"pair": ["genuine reaction with dark L intact", "genuine reaction with dark L lost"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice based on your reaction)"],
+      "sentence_practice": ["(No fixed sentences — genuine reaction drill.)"],
+      "record_this": "(Free speech: react genuinely and out loud to something funny or surprising you recall or imagine.)",
+      "self_check": "In your authentic reaction, did dark L survive on any relevant words?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["dark L in fully spontaneous 60-second speech"],
+      "isolation": {
+        "instructions": "The ultimate test: 60 seconds of spontaneous speech, checking dark L automaticity throughout.",
+        "instructions_ar": "الاختبار النهائي: ٦٠ ثانية كلام عفوي، لفحص تلقائية الـ L الغامقة بالكامل.",
+        "practice": ["Speak spontaneously about anything for 60 seconds, ideally including some personal/emotional content."]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully automatic dark L in spontaneous speech", "dark L lost without conscious effort"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice)"],
+      "sentence_practice": ["(No fixed sentences — free speech day.)"],
+      "record_this": "(Free speech: 60 seconds, unplanned, any topic.)",
+      "self_check": "What percentage of dark-L opportunities did you execute correctly without conscious effort?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: unfamiliar words, sarcasm delivery, consonant clusters, genuine emotion, full spontaneity",
+      "type": "review",
+      "mixed_pairs": [
+        ["colossal (unfamiliar)", "brilliant (sarcastic)"], ["pulse (cluster)", "spontaneous 60-second speech"]
+      ],
+      "challenge_sentences": [
+        "It's a colossal, plausible reason — oh, TOTALLY brilliant, what a feel-good, beautiful, wonderful, universal animal instinct!",
+        "The principal's pulse quickened after the results and the insults — a truly wonderful, beautiful mess.",
+        "Brilliant, absolutely brilliant — the adults' results were colossal and universal."
+      ],
+      "record_this": "It's a colossal, plausible reason — oh, TOTALLY brilliant, what a feel-good, beautiful, wonderful story! The principal's pulse quickened after the results.",
+      "self_check": "Score your dark-L consistency across this demanding combined-challenge passage."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment: Micro-Phonetics Precision Checkpoint (Dark L)",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record 60-90 seconds of spontaneous speech including at least one genuine humorous or sarcastic moment.",
+        "passage": "(Free speech: 60-90 seconds on any topic, including a genuine attempt at humor or sarcasm.)",
+        "sounds_to_check": {
+          "dark L automaticity": "check throughout for consistency without conscious effort"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "(Gold/Platinum tier) Dark L completely automatic and invisible, even under sarcasm and genuine emotion.",
+        "70_89": "(Silver tier) Dark L holds up in nearly all contexts; rare lapses under pressure.",
+        "50_69": "Dark L reliable in calm speech but drops under emotional/comedic pressure.",
+        "below_50": "Dark L still requires conscious effort — return to L2 Week 5 for foundational review."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Following the same Table 11 mastery-tier refinement structure as Week 1's flap T, this week deep-refines dark L instead.",
+      "Comedy and sarcasm are genuinely useful stress-tests for pronunciation mastery, because they require you to focus your attention entirely on timing and delivery, not on the sounds themselves — mastery reveals itself when the sounds survive despite not being the focus.",
+      "This same Days 1-5 refinement structure continues for schwa (Week 3) and vowel reduction/general fluency (Week 4)."
+    ],
+    "daily_time": "20-25 minutes depending on Core/Intensive track",
+    "recording_requirement": "Record Day 5 and Day 7 — compare to Week 1's flap-T mastery recordings to track overall Table 11 tier progress."
+  }
+}

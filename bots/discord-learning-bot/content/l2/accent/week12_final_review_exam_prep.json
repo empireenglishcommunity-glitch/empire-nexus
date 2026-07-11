@@ -1,0 +1,160 @@
+{
+  "level": "L2",
+  "week": 12,
+  "focus": "Final Review + Advancement Exam Preparation — All L2 Accent Skills",
+  "focus_ar": "المراجعة النهائية + التحضير لامتحان الترقية — كل مهارات النطق في المستوى الثاني",
+  "arabic_challenge": "You've spent 11 weeks building on your L1 foundation: native-speed L1 review (Wk1), reduction/weak forms (Wk2), yod-dropping (Wk3), emphasis/contrast intonation (Wk4), dark L (Wk5), question/list/tag intonation (Wk6), NG-coalescence (Wk7), thought groups (Wk8), emphatic argumentation (Wk9), advanced tag nuance (Wk10), and native-speed shadowing/transcription (Wk11). This final week mirrors L1's own Week 10 structure: no new material, just rigorous, honest review and mock-exam preparation for the L2→L3 advancement exam.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": "Review Weeks 1-3: native-speed L1 integration, reduction/weak forms, yod-dropping",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit your Week 1-3 recordings before today's drill, noting how much more automatic these advanced patterns feel now.",
+        "instructions_ar": "راجع تسجيلات الأسبوع ١-٣ قبل تمرين النهارده، ولاحظ قد إيه الأنماط المتقدمة دي بقت تلقائية أكتر دلوقتي.",
+        "practice": ["fish and chips, could have gone, new/tune/duke — at natural speed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["new (yod-dropped, now automatic)", "new (careful, first-week effort)"], "meaning": ["جديد", "—"]}
+      ],
+      "word_practice": ["fish and chips", "could have gone", "new", "tune", "duke"],
+      "sentence_practice": [
+        "I could have gone for fish and chips, but I chose a new tune instead.",
+        "The new duke should have tuned his approach to the news.",
+        "Fish and chips, a new tune, and I could have gone earlier."
+      ],
+      "record_this": "I could have gone for fish and chips, but I chose a new tune instead — the new duke should have tuned his approach to the news.",
+      "self_check": "Compare today's fluency to your actual Week 1-3 recordings. Is the improvement clear?"
+    },
+    {
+      "day": 2,
+      "target_sounds": "Review Weeks 4-6: emphasis/contrast, dark L, question/list/tag intonation",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 4-6 patterns — contrastive emphasis, dark L at syllable-end, and the question/list/tag intonation system.",
+        "instructions_ar": "راجع أنماط الأسبوع ٤-٦ — النبر التناقضي، الـ L الغامقة، ونظام تنغيم الأسئلة والقوائم والأسئلة الذيلية.",
+        "practice": ["I said BLUE, not green. Feel cool, political, global. Are you coming? What time is it?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["BLUE (contrastive emphasis)", "political (dark L)"], "meaning": ["أزرق", "سياسي"]}
+      ],
+      "word_practice": ["I said BLUE, not green", "political", "global", "Are you coming?", "What time is it?"],
+      "sentence_practice": [
+        "I said BLUE, not green — is this political and global issue clear to you?",
+        "Are you coming? What time is it, and what's the political impact globally?",
+        "This is a global, political issue — I said BLUE, not green, isn't it clear?"
+      ],
+      "record_this": "I said BLUE, not green — is this political and global issue clear to you? Are you coming, and what time is it?",
+      "self_check": "Are contrastive emphasis, dark L, and the question/tag intonation patterns all still distinct and correct after the review gap?"
+    },
+    {
+      "day": 3,
+      "target_sounds": "Review Weeks 7-9: NG-coalescence, thought groups, emphatic argumentation",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 7-9 patterns — the merged NG sound, strategic pausing for thought groups, and building persuasive emphasis across an argument.",
+        "instructions_ar": "راجع أنماط الأسبوع ٧-٩ — صوت NG المدمج، التوقف الاستراتيجي لمجموعات الفكر، وبناء تأكيد إقناعي عبر الحجة.",
+        "practice": ["think, banking, finger — After a long day, | I like to relax. — The EVIDENCE is clear."]
+      },
+      "minimal_pairs": [
+        {"pair": ["think (NG-coalescence)", "After a long day, | I like to relax. (thought group)"], "meaning": ["يفكر", "—"]}
+      ],
+      "word_practice": ["think", "banking", "finger", "the EVIDENCE"],
+      "sentence_practice": [
+        "I think the EVIDENCE, | after a long day of banking research, | is clear.",
+        "My finger points to the EVIDENCE — | this REALLY matters.",
+        "Thinking about banking, | the EVIDENCE shows real, | lasting change."
+      ],
+      "record_this": "I think the EVIDENCE, after a long day of banking research, is clear — my finger points to it, and this REALLY matters.",
+      "self_check": "Did NG-coalescence, thought-group pausing, and emphatic argumentation all combine naturally in this review passage?"
+    },
+    {
+      "day": 4,
+      "target_sounds": "Review Weeks 10-11: advanced tag-question nuance, native-speed shadowing/transcription",
+      "type": "review",
+      "isolation": {
+        "instructions": "Revisit Week 10-11 patterns — the finer social nuances of tag questions, and your listen-transcribe-shadow skill for natural reduced speech.",
+        "instructions_ar": "راجع أنماط الأسبوع ١٠-١١ — الفروق الاجتماعية الدقيقة في الأسئلة الذيلية، ومهارة الاستماع-التفريغ-المحاكاة للكلام المخفف الطبيعي.",
+        "practice": ["Nice weather, isn't it? (confident) — You haven't seen my keys, have you? (genuine) — I shoulda called her."]
+      },
+      "minimal_pairs": [
+        {"pair": ["isn't it? (confident tag)", "I shoulda called her (transcribed reduction)"], "meaning": ["صح؟", "—"]}
+      ],
+      "word_practice": ["isn't it?", "have you?", "shoulda", "gonna"],
+      "sentence_practice": [
+        "Nice weather, isn't it? You haven't seen my keys, have you?",
+        "I shoulda called her — didja hear the news?",
+        "This is gonna be great, isn't it? I shoulda known that already."
+      ],
+      "record_this": "Nice weather, isn't it? You haven't seen my keys, have you? I shoulda called her — this is gonna be great, isn't it?",
+      "self_check": "Could you correctly distinguish tag-question tones AND naturally produce reduced forms in the same passage?"
+    },
+    {
+      "day": 5,
+      "target_sounds": "Full mock advancement-exam accent section (read passage + spontaneous debate)",
+      "type": "review",
+      "isolation": {
+        "instructions": "Simulate the real L2→L3 advancement exam Accent and Speaking sections: read a passage aloud, then deliver a spontaneous 60-90 second persuasive argument, per blueprint Table 45.",
+        "instructions_ar": "حاكي قسمي النطق والكلام في امتحان الترقية L2→L3 الحقيقي: اقرأ فقرة بصوت عالي، وبعدين قدم حجة إقناعية عفوية لمدة ٦٠-٩٠ ثانية.",
+        "practice": ["Part A: read the Day 6 review passage below aloud.", "Part B: deliver a spontaneous persuasive argument on a topic of your choice for the L2→L3 exam's speaking section."]
+      },
+      "minimal_pairs": [
+        {"pair": ["read passage (Part A)", "spontaneous persuasive speech (Part B)"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses full sentence practice below)"],
+      "sentence_practice": [
+        "Part A — read aloud: 'Not only is this a global issue, but it's also deeply political — the EVIDENCE, having been reviewed by experts, is clear.'",
+        "Part B — speak freely: 'Argue for or against a position of your choice for 60-90 seconds, using this level's accent and argumentation skills.'"
+      ],
+      "record_this": "(Record both Part A — reading — and Part B — spontaneous persuasive speech — as two separate clips.)",
+      "self_check": "Compare your Part A (read) fluency to your Part B (spontaneous) fluency. How close is the gap now, compared to your L1 Week 10 mock exam?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Comprehensive Review: all 11 L2 accent features combined",
+      "type": "review",
+      "mixed_pairs": [
+        ["new (yod-dropped)", "political (dark L)"], ["think (NG)", "EVIDENCE (emphasis)"], ["isn't it? (tag)", "shoulda (reduction)"]
+      ],
+      "challenge_sentences": [
+        "Not only is this a global, political issue, but the EVIDENCE, having been reviewed carefully, is also clear — didja think about the new banking policy?",
+        "I shoulda known this feels political and global — after a long day of thinking, | the EVIDENCE REALLY matters, isn't it obvious?",
+        "Having studied the data, | I think the finger of blame points to policy, | not people — this REALLY matters, doesn't it?"
+      ],
+      "record_this": "Not only is this a global, political issue, but the EVIDENCE, having been reviewed carefully, is also clear — after a long day of thinking, this REALLY matters, isn't it obvious?",
+      "self_check": "This is the longest, most demanding passage in all of L2. Score yourself using L1's Day-7 scoring bands across all 11 features combined."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Final Self-Assessment — L2 Accent Completion Checkpoint",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is your official L2 accent completion checkpoint. Record yourself reading the passage below, then record 60-90 seconds of spontaneous persuasive speech about your Level 2 journey overall.",
+        "passage": "Not only have I grown as a speaker over these twelve weeks, but I've also learned to think and argue with real confidence in English. Having studied reduction, dark L, and even the tricky NG sound, I feel prepared for whatever comes next. Rarely have I worked this hard on anything, and the EVIDENCE — my own recordings from week one compared to now — REALLY shows it. This is gonna be a great foundation for Level 3, isn't it?",
+        "sounds_to_check": {
+          "yod-dropping / reduction (Wk2-3)": "gonna, having",
+          "dark L (Wk5)": "feel, political (implied), REALLY (implied context), foundation, Level",
+          "NG-coalescence (Wk7)": "thinking (implied context)",
+          "emphasis/contrast (Wk4, Wk9)": "REALLY shows it, EVIDENCE",
+          "inversion (Wk12 grammar, spoken naturally)": "Not only have I grown..., Rarely have I worked...",
+          "tag question (Wk6, Wk10)": "isn't it?"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 11 L2 features present and mostly automatic in both the read passage and spontaneous speech. Ready for the L2\u2192L3 advancement exam's accent and speaking sections.",
+        "70_89": "Most features present in the read passage; some inconsistency in spontaneous speech. Continue practicing before the exam.",
+        "50_69": "Features present individually but not yet fully integrated — recommend repeating Week 9's emphasis integration and Week 11's shadowing drills before attempting the exam.",
+        "below_50": "Significant gaps remain — recommend repeating the specific weak weeks (identify from Day 1-4 reviews) before requesting the advancement exam."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week deliberately mirrors L1's Week 10 structure (self-assessment + mock exam) — by now this format should feel like a familiar, trusted checkpoint ritual.",
+      "The Day 5 mock exam previews the real L2\u2192L3 advancement exam format from blueprint Table 45 — Live Speaking (debate/persuasion) and Accent Evaluation sections specifically.",
+      "You have now completed the full blueprint-assigned L2 phoneme/connected-speech curriculum (Table 19's yod-dropping, dark L, NG-coalescence, plus §5.3's reduction and §5.4's intonation) — Level 3 will focus on refinement and native-like flow rather than new mechanics."
+    ],
+    "daily_time": "25-30 minutes this week (review + mock exam recording)",
+    "recording_requirement": "Record Day 5 (mock exam) and Day 7 (final assessment) and keep both — compare them against your L1 Week 10 recordings to see your full L1-to-L2 growth arc."
+  }
+}

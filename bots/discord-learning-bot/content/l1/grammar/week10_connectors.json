@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l1_w10",
+  "level": "L1",
+  "week": 10,
+  "pattern_name": "Connectors (because, so, but, although)",
+  "pattern_name_ar": "أدوات الربط (because, so, but, although)",
+  "formula": "Clause 1 + connector + Clause 2",
+  "formula_visual": "[IDEA A] + because/so/but/although + [IDEA B]",
+  "when_to_use": "Use 'because' to give a REASON, 'so' to give a RESULT, 'but' to show CONTRAST, and 'although' to show an UNEXPECTED contrast within one sentence (similar to 'but', but grammatically different — 'although' starts a clause, it doesn't sit between two independent clauses the way 'but' does).",
+  "when_to_use_ar": "استخدم because لسبب، so لنتيجة، but لتناقض، although لتناقض غير متوقع (شبه but بس مختلف نحويًا).",
+  "why_arabic_speakers_struggle": "Learners often confuse the DIRECTION of because/so — 'because' points backward to the reason, 'so' points forward to the result, and mixing them up reverses the logic of the sentence. 'Although' is also often used exactly like 'but' at the start of a sentence, missing that 'although' typically attaches to one clause while 'but' joins two separate clauses.",
+  "examples": [
+    {"en": "I stayed home because I was sick.", "ar": "قعدت في البيت لأني كنت تعبان", "structure": "[Result] + [because] + [Reason]"},
+    {"en": "I was sick, so I stayed home.", "ar": "كنت تعبان، فقعدت في البيت", "structure": "[Reason] + [so] + [Result]"},
+    {"en": "I wanted to go out, but it was raining.", "ar": "كنت عايز أخرج، بس كانت الدنيا بتشتي", "structure": "[Idea A] + [but] + [contrasting Idea B]"},
+    {"en": "Although it was raining, I went out anyway.", "ar": "مع إن الدنيا كانت بتشتي، خرجت برضه", "structure": "[Although] + [unexpected condition], + [Main idea]"},
+    {"en": "She passed the exam, although she didn't study much.", "ar": "هي نجحت في الامتحان، مع إنها ماذاكرتش كتير", "structure": "[Main idea], + [although] + [unexpected condition]"}
+  ],
+  "common_errors": [
+    {"wrong": "I stayed home so I was sick.", "correct": "I stayed home because I was sick. / I was sick, so I stayed home.", "explanation": "'so' points to a RESULT, not a reason — using it here reverses the logic. The reason (being sick) must come with 'because' or come FIRST, followed by 'so'."},
+    {"wrong": "Although it was raining, but I went out.", "correct": "Although it was raining, I went out. / It was raining, but I went out.", "explanation": "'although' and 'but' should not be used together in the same sentence — choose one connector, not both."},
+    {"wrong": "I was tired because I went to sleep early.", "correct": "I was tired, so I went to sleep early. / I went to sleep early because I was tired.", "explanation": "Check the logic direction: being tired is the REASON for sleeping early, not the other way around — the connector must point the right direction."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I couldn't sleep ___ the noise outside.", "answer": "because of", "hint": "Giving a reason (note: 'because of' + noun, vs. 'because' + full clause)."},
+    {"sentence": "It was very cold, ___ we stayed inside.", "answer": "so", "hint": "Result of the cold weather."},
+    {"sentence": "I like coffee, ___ my brother prefers tea.", "answer": "but", "hint": "Simple contrast between two people."},
+    {"sentence": "___ he was very tired, he finished the report.", "answer": "Although", "hint": "Unexpected contrast — starts the sentence, attaches to one clause."},
+    {"sentence": "She missed the bus ___ she woke up late.", "answer": "because", "hint": "Giving the reason for missing the bus."}
+  ],
+  "quick_rule": "BECAUSE points backward to a REASON. SO points forward to a RESULT. BUT joins two contrasting complete ideas. ALTHOUGH introduces an unexpected condition and can start the sentence — never combine 'although' and 'but' in the same sentence.",
+  "quick_rule_ar": "BECAUSE بيرجع للسبب. SO بيتقدم للنتيجة. BUT بيربط فكرتين متناقضتين. ALTHOUGH بيقدم شرط غير متوقع.",
+  "mnemonic": "beCAUSE = the CAUSE (reason) comes with it. SO = 'and SO, this happened' (result follows). BUT/ALTHOUGH = 'here comes a TWIST.'",
+  "connect_to_speaking": "Practice with your buddy: tell one short story about your week using all four connectors — one 'because', one 'so', one 'but', and one 'although' — in four different sentences. This is also useful preparation for the L0→L1 advancement exam's speaking section, which rewards varied sentence connectors."
+}

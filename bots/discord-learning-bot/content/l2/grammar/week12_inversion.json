@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w12",
+  "level": "L2",
+  "week": 12,
+  "pattern_name": "Inversion (Not only... but also)",
+  "pattern_name_ar": "التقديم والتأخير (Not only... but also)",
+  "formula": "Not only + auxiliary + Subject + Verb, but + Subject + also + Verb",
+  "formula_visual": "Not only + [AUX] + [SUBJECT] + [VERB], + but + [SUBJECT] + also + [VERB]",
+  "when_to_use": "Use inversion after certain negative/limiting expressions (Not only, Never, Rarely, Seldom, Hardly) placed at the START of a sentence for emphasis — this flips the normal subject-verb order to auxiliary-subject-verb, similar to question word order, purely for dramatic/formal effect.",
+  "when_to_use_ar": "استخدم التقديم والتأخير بعد تعبيرات سلبية/تقييدية معينة (Not only, Never, Rarely) في بداية الجملة للتوضيح — ده بيقلب ترتيب الفاعل والفعل العادي، شبه ترتيب السؤال، لتأثير دراماتيكي/رسمي.",
+  "why_arabic_speakers_struggle": "This is one of the most counter-intuitive English structures for any learner — inverting word order purely for emphasis, with no direct question meaning, has no close Arabic equivalent. Learners often either avoid these emphatic structures entirely or forget to invert, keeping normal subject-verb order after 'Not only' at the start of a sentence, which is grammatically incorrect in this specific formal construction.",
+  "examples": [
+    {"en": "Not only did she finish early, but she also helped others.", "ar": "لم تخلص بس بدري، لكنها كمان ساعدت غيرها (تأكيد قوي)", "structure": "[Not only] + [did she finish early], + [but] + [she also helped others]"},
+    {"en": "Never have I seen such dedication.", "ar": "أبدًا ما شفت التزام زي ده", "structure": "[Never] + [have I seen] + [such dedication]"},
+    {"en": "Rarely do we get such an opportunity.", "ar": "بالكاد بيجينا فرصة زي كده", "structure": "[Rarely] + [do we get] + [such an opportunity]"},
+    {"en": "Not only is this policy expensive, but it's also ineffective.", "ar": "هذه السياسة ليست مكلفة بس، بل غير فعالة كمان", "structure": "[Not only] + [is this policy expensive], + [but] + [it's also ineffective]"},
+    {"en": "Hardly had we arrived when the show started.", "ar": "بالكاد وصلنا لما العرض بدأ", "structure": "[Hardly] + [had we arrived] + [when the show started]"}
+  ],
+  "common_errors": [
+    {"wrong": "Not only she finished early, but she also helped.", "correct": "Not only did she finish early, but she also helped.", "explanation": "After 'Not only' at the start of a sentence, you MUST invert to auxiliary-subject-verb order ('did she finish'), not normal subject-verb order ('she finished')."},
+    {"wrong": "Never I have seen such dedication.", "correct": "Never have I seen such dedication.", "explanation": "The auxiliary ('have') must come BEFORE the subject ('I') after 'Never' at the sentence start — that's the whole point of inversion."},
+    {"wrong": "Not only is this policy expensive, but also it's ineffective.", "correct": "Not only is this policy expensive, but it's also ineffective.", "explanation": "'also' typically goes right before the main verb/adjective ('it's also ineffective'), not immediately after 'but'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Not only ___ (be) the trip expensive, but it was also exhausting.", "answer": "was", "hint": "Invert: was + the trip."},
+    {"sentence": "Never ___ (I/see) such a beautiful sunset.", "answer": "have I seen", "hint": "Invert: have + I + seen."},
+    {"sentence": "Rarely ___ (we/have) the chance to travel together.", "answer": "do we have", "hint": "Invert: do + we + have."},
+    {"sentence": "Not only ___ (she/study) hard, but she also worked part-time.", "answer": "did she study", "hint": "Invert: did + she + study."},
+    {"sentence": "Hardly ___ (he/arrive) when the phone rang.", "answer": "had he arrived", "hint": "Invert: had + he + arrived."}
+  ],
+  "quick_rule": "After Not only / Never / Rarely / Seldom / Hardly at the START of a sentence, INVERT to auxiliary-subject-verb order (like a question, but it's still a statement). This is formal/emphatic — reserve it for writing, presentations, and persuasive speech, not every-day casual chat.",
+  "quick_rule_ar": "بعد Not only / Never / Rarely في بداية الجملة، اقلب الترتيب لـ فعل مساعد + فاعل + فعل.",
+  "mnemonic": "INVERSION = 'flip it like a question' for dramatic emphasis, even though it's really a statement.",
+  "connect_to_speaking": "Practice with your buddy: describe one impressive personal achievement using 'Not only... but also...' inversion — this is an excellent structure for L2's presentation and debate speaking missions, adding formal, persuasive weight to your point."
+}

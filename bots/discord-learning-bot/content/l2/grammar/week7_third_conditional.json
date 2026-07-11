@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l2_w7",
+  "level": "L2",
+  "week": 7,
+  "pattern_name": "Third Conditional (if I had done...)",
+  "pattern_name_ar": "الشرط الثالث (لو كنت عملت...)",
+  "formula": "If + Subject + had + Past Participle, Subject + would have + Past Participle",
+  "formula_visual": "If + [IMPOSSIBLE PAST CONDITION, Past Perfect], + [IMAGINED PAST RESULT, would have + past participle]",
+  "when_to_use": "Use the Third Conditional to talk about an IMPOSSIBLE, unchangeable past situation — imagining how a different past action would have led to a different past result. Both the condition and its result are already finished and cannot be changed; this is purely imaginative regret, relief, or reflection.",
+  "when_to_use_ar": "استخدم الشرط الثالث للحديث عن موقف مستحيل في الماضي ما ممكن تغييره — تخيل إن فعل ماضٍ مختلف كان يؤدي لنتيجة ماضية مختلفة. الشرط والنتيجة الاتنين خلصوا وما ممكن تغييرهم.",
+  "why_arabic_speakers_struggle": "This is grammatically the most complex conditional (Past Perfect + would have + past participle), and learners often either simplify it into Second Conditional forms (losing the 'impossible past' meaning) or make participle errors, since it requires stacking two different perfect-aspect forms correctly in one sentence.",
+  "examples": [
+    {"en": "If I had studied harder, I would have passed the exam.", "ar": "لو كنت ذاكرت أكتر، كنت نجحت في الامتحان (الامتحان خلص، محصلش)", "structure": "[If] + [I had studied harder] + [I would have passed the exam]"},
+    {"en": "She wouldn't have missed the flight if she had left earlier.", "ar": "كانت ما فوتتش الطيارة لو كانت خرجت بدري", "structure": "[She wouldn't have missed the flight] + [if] + [she had left earlier]"},
+    {"en": "If they had known about the traffic, they would have taken a different route.", "ar": "لو كانوا عارفين عن الزحمة، كانوا اخدوا طريق تاني", "structure": "[If] + [they had known about the traffic] + [they would have taken a different route]"},
+    {"en": "I would have called you if I had had your number.", "ar": "كنت اتصلت بيك لو كان عندي رقمك", "structure": "[I would have called you] + [if] + [I had had your number]"},
+    {"en": "What would you have done if you had been in my position?", "ar": "كنت هتعمل إيه لو كنت في موقفي؟ (سؤال افتراضي عن الماضي)", "structure": "[What would you have done] + [if] + [you had been in my position]"}
+  ],
+  "common_errors": [
+    {"wrong": "If I studied harder, I would have passed.", "correct": "If I had studied harder, I would have passed.", "explanation": "The if-clause needs Past Perfect ('had studied'), not Past Simple — Past Simple alone signals Second Conditional (unreal present), not Third Conditional (impossible past)."},
+    {"wrong": "If I had studied harder, I would pass.", "correct": "If I had studied harder, I would have passed.", "explanation": "The result clause needs 'would have + past participle', not just 'would + base verb' — that combination belongs to Second Conditional instead."},
+    {"wrong": "I would have call you.", "correct": "I would have called you.", "explanation": "After 'would have', the verb must be a past participle ('called'), not the base form ('call')."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If she ___ (arrive) on time, she ___ (not/miss) the meeting.", "answer": "had arrived / wouldn't have missed", "hint": "Impossible past condition + imagined past result."},
+    {"sentence": "We ___ (win) the game if we ___ (practice) more.", "answer": "would have won / had practiced", "hint": "Result clause first this time — same rule applies."},
+    {"sentence": "If I ___ (know) about the sale, I ___ (buy) more.", "answer": "had known / would have bought", "hint": "Regret about a missed past opportunity."},
+    {"sentence": "He ___ (be) upset if he ___ (find out) the truth.", "answer": "would have been / had found out", "hint": "Hypothetical past emotional reaction."},
+    {"sentence": "If they ___ (not/help) us, we ___ (fail) the project.", "answer": "hadn't helped / would have failed", "hint": "Negative impossible past condition."}
+  ],
+  "quick_rule": "Third Conditional = IMPOSSIBLE past, already finished, can't be changed. If-clause: had + past participle (Past Perfect). Result clause: would have + past participle. This is regret/reflection about the unchangeable past, not a real possibility.",
+  "quick_rule_ar": "الشرط الثالث = ماضٍ مستحيل، انتهى، وما ممكن تغييره. جملة if: had + التصريف الثالث. جملة النتيجة: would have + التصريف الثالث.",
+  "mnemonic": "THIRD Conditional = the THIRD time you replay the past in your head, wishing it went differently — but it's over.",
+  "connect_to_speaking": "Practice with your buddy: share one thing you regret NOT doing and one thing you're glad you DID do, using Third Conditional for the regret ('If I had...') and explaining the real outcome afterward."
+}

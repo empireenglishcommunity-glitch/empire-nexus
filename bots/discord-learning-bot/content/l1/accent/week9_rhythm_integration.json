@@ -1,0 +1,152 @@
+{
+  "level": "L1",
+  "week": 9,
+  "focus": "Sentence Stress & Rhythm Integration — Combining All L1 Connected-Speech Skills",
+  "focus_ar": "دمج نبر الجملة والإيقاع — تجميع كل مهارات الكلام المتصل في المستوى الأول",
+  "arabic_challenge": "By this week, you have learned five separate connected-speech skills: word stress (Wk1), flap T/D (Wk2), C-to-V linking (Wk3), glottal stop T (Wk4), V-to-V linking (Wk5), dropped H (Wk6), C-to-C linking (Wk7), and schwa (Wk8). The real challenge now is not learning something new, but making all of these run AUTOMATICALLY and SIMULTANEOUSLY in normal, unrehearsed speech — which is a different skill from executing each one in isolation.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["integration: word stress + schwa reduction together"],
+      "isolation": {
+        "instructions": "Practice sentences where correct word stress AND correct schwa reduction must happen together — if you get the stress right but pronounce the unstressed vowels fully, it still sounds foreign.",
+        "instructions_ar": "تدرب على جمل لازم فيها النبر الصحيح وتخفيض الشوا الصحيح يحصلوا مع بعض — لو ضبطت النبر بس نطقت حروف العلة الباقية كاملة، برضه هيبان غريب.",
+        "practice": ["ə-BOUT the CAM-ər-ə (stress on caps, schwa elsewhere)", "the TEACH-ər is ə-WAY", "a-GAIN, I FOR-gət"]
+      },
+      "minimal_pairs": [
+        {"pair": ["about the camera (integrated, natural)", "AH-bout the CA-ME-RA (stress only, no schwa, still foreign)"], "meaning": ["عن الكاميرا", "—"]}
+      ],
+      "word_practice": ["about the camera", "the teacher is away", "again, I forgot", "a family photo"],
+      "sentence_practice": [
+        "About the camera, the teacher is away again.",
+        "I forgot a family photo again.",
+        "The teacher is away, so I forgot about the camera."
+      ],
+      "record_this": "About the camera — the teacher is away again, and I forgot a family photo, so I forgot about the whole thing.",
+      "self_check": "Are BOTH your stressed syllables strong/clear AND your unstressed syllables reduced to schwa, in the same sentence?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["integration: linking (all 3 types) + flap/glottal stop together"],
+      "isolation": {
+        "instructions": "Practice sentences combining consonant-vowel linking, vowel-vowel linking, consonant-consonant linking, AND the flap/glottal-stop T patterns — all in the same breath.",
+        "instructions_ar": "تدرب على جمل تجمع ربط الساكن بالمتحرك، والمتحرك بالمتحرك، والساكن بالساكن، مع أنماط الفلاب/الوقفة الحنجرية — كل ده في نفس الجملة.",
+        "practice": ["pick up the water bottle → linking + flap", "she asked about the mountain → V-V linking + glottal stop", "big city water → C-C linking + flap"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pick up the water bottle (all features combined)", "pick. up. the. water. bottle. (choppy, no features)"], "meaning": ["ارفع زجاجة الماء", "—"]}
+      ],
+      "word_practice": ["pick up the water", "she asked about the mountain", "big city water", "important button"],
+      "sentence_practice": [
+        "Pick up the water bottle near the big city fountain.",
+        "She asked about the mountain and the important button.",
+        "It's a big city, and the water is better there."
+      ],
+      "record_this": "Pick up the water bottle near the big city fountain — she asked about the mountain, and it's an important, better place to visit.",
+      "self_check": "Go phrase by phrase: did you correctly apply linking AND flap/glottal-stop in the same sentence without dropping one for the other?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["integration: dropped H + linking + stress in natural dialogue"],
+      "isolation": {
+        "instructions": "Simulate a short natural dialogue exchange, applying dropped H on pronouns, linking between words, and correct sentence stress all together.",
+        "instructions_ar": "حاكي محادثة طبيعية قصيرة، وطبّق حذف H على الضمائر، والربط بين الكلمات، والنبر الصحيح للجملة كل ده مع بعض.",
+        "practice": ["Did you tell him? → linking + dropped H", "I asked her about it → linking + dropped H + stress", "He should call her again → stress + schwa + dropped H"]
+      },
+      "minimal_pairs": [
+        {"pair": ["did you tell him about it (fully integrated)", "did. you. tell. him. about. it. (choppy, no integration)"], "meaning": ["قولتله عنها؟", "—"]}
+      ],
+      "word_practice": ["did you tell him", "I asked her about it", "he should call her again"],
+      "sentence_practice": [
+        "Did you tell him about it? I asked her already.",
+        "He should call her again — did you ask him?",
+        "I asked her about it, but he should tell him first."
+      ],
+      "record_this": "Did you tell him about it? I asked her already — he should call her again, but did you ask him first?",
+      "self_check": "In this quick dialogue-style passage, count how many of your 8 learned features (stress, flap, glottal stop, 3 linking types, dropped H, schwa) appear naturally."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["integration: full paragraph at moderate speed"],
+      "isolation": {
+        "instructions": "Read a full short paragraph, deliberately checking for all 8 features as you go, at a comfortable but not slow pace.",
+        "instructions_ar": "اقرأ فقرة قصيرة كاملة، وتأكد بشكل متعمد من كل الـ ٨ ميزات وانت بتقرأ، بسرعة مريحة بس مش بطيئة.",
+        "practice": ["Read the paragraph once slowly to plan each feature, then again at normal speed."]
+      },
+      "minimal_pairs": [
+        {"pair": ["fully integrated paragraph reading", "flat, word-by-word paragraph reading"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["about", "water", "button", "an apple", "big game", "tell him", "camera"],
+      "sentence_practice": [
+        "About an hour ago, I picked up an apple and some water near the big game.",
+        "Did you tell him the button on the camera is broken?",
+        "It's a big deal — ask her about the mountain trip again."
+      ],
+      "record_this": "About an hour ago, I picked up an apple and some water near the big game. Did you tell him the button on the camera is broken? It's a big deal — ask her about the mountain trip again.",
+      "self_check": "Listen back once for EACH feature separately (8 total passes if needed) — is every feature present at least once in this short passage?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["integration: spontaneous, unscripted mini-speech"],
+      "isolation": {
+        "instructions": "Today, do NOT read from a script. Speak spontaneously for 30-45 seconds about your day, then listen back and identify which of the 8 features appeared naturally without you planning them.",
+        "instructions_ar": "النهارده متقراش من نص. اتكلم بشكل عفوي لمدة ٣٠-٤٥ ثانية عن يومك، وبعدين استمع وحدد أي من الـ ٨ ميزات ظهرت طبيعي بدون تخطيط.",
+        "practice": ["Talk about: what you did today, your plans for tomorrow, or a recent conversation with a friend."]
+      },
+      "minimal_pairs": [
+        {"pair": ["spontaneous, natural-sounding speech", "spontaneous, choppy, first-language-influenced speech"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(free choice — use your own vocabulary from this week's theme)"],
+      "sentence_practice": [
+        "(No fixed sentences — this is a free-speech day.)"
+      ],
+      "record_this": "(Free speech: talk for 30-45 seconds about your day without a script.)",
+      "self_check": "Which of the 8 features appeared WITHOUT you consciously trying? Those are becoming automatic. Which ones didn't appear at all? Those need more Week 1-8 review."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: full integration of stress, flap, glottal stop, 3 linking types, dropped H, and schwa",
+      "type": "review",
+      "mixed_pairs": [
+        ["about the camera", "AH-bout the CA-ME-RA"], ["pick up the water", "pick. up. the. water."], ["tell him about it", "tell. him. about. it."]
+      ],
+      "challenge_sentences": [
+        "About an hour ago, my big brother asked her about the mountain trip — did you tell him the button on the camera broke?",
+        "Pick up the water bottle, ask about the big game, and tell him it's an important, better deal.",
+        "She should call him again — it doesn't matter, the city water tastes better than the mountain's."
+      ],
+      "record_this": "About an hour ago, my big brother asked her about the mountain trip — did you tell him the camera's button broke? Pick up the water, ask about the big game, and tell him it's a better, more important deal than the mountain's water.",
+      "self_check": "This is your most demanding integration passage yet. Go through it feature by feature (all 8) and self-score honestly using the L0 Day-7 style scoring guide."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice — Full L1 Accent Integration Check",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record 60-90 seconds of natural, semi-spontaneous speech about a topic of your choice (your week, a goal, a memory). This is a comprehensive checkpoint before Week 10's final review and the L0→L1 advancement exam's accent section.",
+        "passage": "(Semi-spontaneous — choose your own topic, but aim to naturally include: at least 3 stressed content words with reduced function words around them, at least 2 flap-T or glottal-stop-T words, at least 2 examples of any linking type, at least 1 dropped-H pronoun, and at least 3 schwa syllables.)",
+        "sounds_to_check": {
+          "stress + schwa integration": "check throughout",
+          "flap T / glottal stop T": "check throughout",
+          "all 3 linking types": "check throughout",
+          "dropped H": "check throughout"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All 8 features present and natural-sounding in spontaneous speech, without conscious effort.",
+        "70_89": "Most features present; 1-2 need conscious effort rather than being automatic yet.",
+        "50_69": "Features present only when reading a script, absent in spontaneous speech.",
+        "below_50": "Return to Weeks 1-8 and repeat the weakest 2-3 features individually before continuing."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week is intentionally a synthesis week, not a new-content week — real fluency comes from combining small skills, not from learning more new rules.",
+      "It's normal for integration to feel harder than any single week's drills — running 8 systems at once IS harder than running one at a time. This is expected, not a sign of failure.",
+      "Use Day 5's spontaneous speech recording as your honest baseline — scripted reading always looks better than free speech at this stage, and that gap will close with more real conversation practice."
+    ],
+    "daily_time": "20-25 minutes this week (longer due to integration practice and free-speech recording)",
+    "recording_requirement": "Record Day 5's spontaneous speech AND Day 7's assessment — compare them to see how much more natural free speech becomes with conscious practice."
+  }
+}

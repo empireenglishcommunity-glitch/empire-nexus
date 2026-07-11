@@ -4,51 +4,91 @@
   "theme": "Native-like Fluency Patterns",
   "phoneme_focus": "Native rhythm + reduction patterns",
   "grammar_pattern": "Register & Formality Switching",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "filler word", "pronunciation": "FIL-ər wurd", "arabic": "كلمة حشو (زي um, like)", "pos": "noun phrase"},
+    {"word": "hedge (verb)", "pronunciation": "hej", "arabic": "يخفف/يتحوط في التصريح", "pos": "verb"},
+    {"word": "discourse marker", "pronunciation": "DIS-kors MAR-kər", "arabic": "أداة تنظيم الخطاب", "pos": "noun phrase"},
+    {"word": "you know what I mean", "pronunciation": "yoo noh wut y meen", "arabic": "تعرف قصدي", "pos": "phrase"},
+    {"word": "at the end of the day", "pronunciation": "at thee end əv thə day", "arabic": "في نهاية المطاف", "pos": "idiom/discourse marker"},
+    {"word": "to be honest", "pronunciation": "tə bee ON-ist", "arabic": "بصراحة", "pos": "phrase"},
+    {"word": "long story short", "pronunciation": "long STOR-ee short", "arabic": "باختصار", "pos": "idiom"},
+    {"word": "code register", "pronunciation": "kohd REJ-is-tər", "arabic": "سجل لغوي (رسمي/عامي)", "pos": "noun phrase"},
+    {"word": "colloquialism", "pronunciation": "kə-LOH-kwee-əl-iz-əm", "arabic": "تعبير عامي", "pos": "noun"},
+    {"word": "formal register", "pronunciation": "FOR-məl REJ-is-tər", "arabic": "سجل رسمي", "pos": "noun phrase"},
+    {"word": "casual register", "pronunciation": "KAZH-oo-əl REJ-is-tər", "arabic": "سجل عامي/غير رسمي", "pos": "noun phrase"},
+    {"word": "verbal filler", "pronunciation": "VUR-bəl FIL-ər", "arabic": "حشو كلامي", "pos": "noun phrase"},
+    {"word": "small talk fluency", "pronunciation": "smawl tawk FLOO-ən-see", "arabic": "طلاقة الحديث العابر", "pos": "noun phrase"},
+    {"word": "conversational rhythm", "pronunciation": "kon-vər-SAY-shə-nəl RITH-əm", "arabic": "إيقاع الحوار الطبيعي", "pos": "noun phrase"},
+    {"word": "back-channeling", "pronunciation": "bak-CHAN-əl-ing", "arabic": "استجابة سمعية (uh-huh, right)", "pos": "noun"},
+    {"word": "turn-taking", "pronunciation": "turn-TAY-king", "arabic": "تبادل الدور في الحديث", "pos": "noun"},
+    {"word": "interject", "pronunciation": "in-tər-JEKT", "arabic": "يقاطع/يتدخل بتعليق", "pos": "verb"},
+    {"word": "conversational repair", "pronunciation": "kon-vər-SAY-shə-nəl ri-PAIR", "arabic": "إصلاح حواري (تصحيح فهم)", "pos": "noun phrase"},
+    {"word": "natural pause", "pronunciation": "NACH-ə-rəl pawz", "arabic": "توقف طبيعي", "pos": "noun phrase"},
+    {"word": "flow (of speech)", "pronunciation": "floh", "arabic": "انسيابية الكلام", "pos": "noun"},
+    {"word": "spontaneous speech", "pronunciation": "spon-TAY-nee-əs speech", "arabic": "كلام عفوي", "pos": "noun phrase"},
+    {"word": "idiomatic fluency", "pronunciation": "id-ee-ə-MAT-ik FLOO-ən-see", "arabic": "طلاقة اصطلاحية", "pos": "noun phrase"},
+    {"word": "native intuition", "pronunciation": "NAY-tiv in-too-ISH-ən", "arabic": "الحدس اللغوي الأصلي", "pos": "noun phrase"},
+    {"word": "sound like a native", "pronunciation": "sownd lyk ə NAY-tiv", "arabic": "يبدو كمتحدث أصلي", "pos": "idiom"},
+    {"word": "effortless communication", "pronunciation": "EF-ərt-ləs kə-myoo-ni-KAY-shən", "arabic": "تواصل بلا عناء", "pos": "noun phrase"},
+    {"word": "automaticity", "pronunciation": "aw-toh-mə-TIS-ə-tee", "arabic": "الأتمتة اللغوية (بلا تفكير)", "pos": "noun"},
+    {"word": "linguistic confidence", "pronunciation": "ling-GWIS-tik KON-fə-dəns", "arabic": "الثقة اللغوية", "pos": "noun phrase"},
+    {"word": "register shift", "pronunciation": "REJ-is-tər shift", "arabic": "تبديل السجل اللغوي", "pos": "noun phrase"},
+    {"word": "verbal agility", "pronunciation": "VUR-bəl ə-JIL-ə-tee", "arabic": "خفة/رشاقة كلامية", "pos": "noun phrase"},
+    {"word": "think in English", "pronunciation": "think in ING-glish", "arabic": "يفكر بالإنجليزية مباشرة", "pos": "verb phrase"},
+    {"word": "language plateau", "pronunciation": "LANG-gwij pla-TOH", "arabic": "مرحلة ثبات في التعلم", "pos": "noun phrase"},
+    {"word": "internalize (a pattern)", "pronunciation": "in-TUR-nə-lyz", "arabic": "يستوعب/يتمثّل نمطًا", "pos": "verb"},
+    {"word": "conversational filler", "pronunciation": "kon-vər-SAY-shə-nəl FIL-ər", "arabic": "حشو حواري", "pos": "noun phrase"},
+    {"word": "seamless transition", "pronunciation": "SEEM-ləs tran-ZISH-ən", "arabic": "انتقال سلس", "pos": "noun phrase"},
+    {"word": "communicative competence", "pronunciation": "kə-MYOO-ni-kə-tiv KOM-pə-təns", "arabic": "الكفاءة التواصلية الشاملة", "pos": "noun phrase"},
+    {"word": "on the fly", "pronunciation": "on thə fly", "arabic": "بشكل فوري/بلا تحضير", "pos": "idiom"},
+    {"word": "second-language automaticity", "pronunciation": "SEK-ənd-LANG-gwij aw-toh-mə-TIS-ə-tee", "arabic": "الأتمتة في اللغة الثانية", "pos": "noun phrase"},
+    {"word": "fluency milestone", "pronunciation": "FLOO-ən-see MYL-stohn", "arabic": "معلم في الطلاقة", "pos": "noun phrase"},
+    {"word": "mastery mindset", "pronunciation": "MAS-tər-ee MYND-set", "arabic": "عقلية الإتقان المستمر", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "TED_talk",
-      "prompt": "Give a 5-minute TED-style talk (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Give a 5-minute TED-style talk on 'What fluency actually means to me now, compared to when I started this journey.'",
+      "target_seconds": 250
     },
     "Sunday": {
       "type": "debate_advanced",
-      "prompt": "Structured debate with rebuttals (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Structured debate with rebuttals: 'True fluency requires sounding native, or fluency is about effective communication regardless of accent.' Present your case, then respond to a counter-argument.",
+      "target_seconds": 250
     },
     "Monday": {
       "type": "podcast",
-      "prompt": "Record a podcast segment (5 min) (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Record a 5-minute podcast segment reflecting on your entire learning journey from Level 0 to Level 3 — what surprised you, what was hardest, and what you're proudest of.",
+      "target_seconds": 250
     },
     "Tuesday": {
       "type": "teaching",
-      "prompt": "Teach a concept to a beginner (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Teach a Level 1 or Level 2 student the single most important lesson you've learned about achieving fluency, in your own words.",
+      "target_seconds": 250
     },
     "Wednesday": {
       "type": "improvisation",
-      "prompt": "Respond to unexpected prompts (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Respond to this unexpected prompt: switch registers on the spot — explain the same simple idea first very formally (as if to a professor), then very casually (as if to a close friend).",
+      "target_seconds": 250
     },
     "Thursday": {
       "type": "accent_mimicry",
-      "prompt": "Mimic a native speaker clip perfectly (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Choose your own favorite native-speaker clip from anything you've watched this month, and deliver your best, most natural mimicry of it yet.",
+      "target_seconds": 250
     },
     "Friday": {
       "type": "free_mastery",
-      "prompt": "Speak naturally for 5+ minutes on any topic (Topic: Native-like Fluency Patterns)",
-      "target_seconds": 320
+      "prompt": "Speak naturally for 5+ minutes on any topic — this is your final Level 3 free-speech checkpoint. Speak as your genuine, fluent self, without worrying about perfection.",
+      "target_seconds": 250
     }
   },
   "writing_prompts": [
-    "Write a persuasive essay on native-like fluency patterns (300+ words, use rhetorical devices).",
-    "Write a critical analysis of a trend in native-like fluency patterns.",
-    "Compose a formal report with recommendations about native-like fluency patterns.",
-    "Write a creative piece (story/poem) inspired by native-like fluency patterns.",
-    "Draft an opinion column for a newspaper about native-like fluency patterns.",
-    "Write a comparison essay using academic vocabulary about native-like fluency patterns.",
-    "Write freely about native-like fluency patterns — focus on style, not just content."
+    "Write a persuasive essay (300+ words, using rhetorical devices) arguing what 'fluency' should actually mean as a learning goal.",
+    "Write a critical analysis of your own growth from Level 0 to Level 3, using specific evidence (recordings, milestones, feedback) to support your reflection.",
+    "Compose a formal report with recommendations for the Empire English Community program itself, based on your full experience as a student.",
+    "Write a creative piece (story, essay, or poem) that captures what learning a new language at this level of depth has meant to you personally.",
+    "Draft an opinion column about whether 'native-like' should even be the goal of language learning, or if it's a flawed standard.",
+    "Write a comparison essay contrasting who you were as an English speaker at Level 0 with who you are now.",
+    "Write freely, in your own natural voice and style, about anything you want — this is your final Level 3 writing piece, a true test of your own voice in English."
   ]
 }

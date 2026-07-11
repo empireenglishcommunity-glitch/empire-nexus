@@ -1,0 +1,35 @@
+{
+  "id": "grammar_l3_w4",
+  "level": "L3",
+  "week": 4,
+  "pattern_name": "Ellipsis & Substitution",
+  "pattern_name_ar": "الحذف والاستبدال (Ellipsis & Substitution)",
+  "formula": "[Full clause], and Subject + auxiliary + too/either  |  [Full clause], and so + auxiliary + Subject",
+  "formula_visual": "Omit repeated words (ellipsis) or replace them with 'so/neither/one/do' (substitution) to avoid clunky repetition",
+  "when_to_use": "Use ellipsis to OMIT words that are clearly understood from context (avoiding repetition), and substitution to REPLACE repeated words with shorter placeholders (so, neither, one, do). Native speakers do this constantly in natural conversation and professional writing to sound less repetitive and more fluent.",
+  "when_to_use_ar": "استخدم الحذف لإسقاط كلمات مفهومة من السياق، والاستبدال لتعويض كلمات مكررة بكلمات أقصر (so, neither, one, do). المتكلم الأصلي بيعمل ده كتير لتجنب التكرار.",
+  "why_arabic_speakers_struggle": "Advanced learners often still write/speak with full, complete repetition ('She likes coffee and he likes coffee too' instead of 'She likes coffee, and so does he'), because their instinct is to be maximally clear rather than efficiently natural — native fluency actually requires DELIBERATELY dropping or substituting words the listener can easily infer.",
+  "examples": [
+    {"en": "She can speak French, and so can he. (substitution: 'so can he' replaces 'he can speak French too')", "ar": "هي تقدر تتكلم فرنساوي، وهو كذلك", "structure": "[She can speak French], + [and so can he]"},
+    {"en": "I haven't finished, and neither has she. (substitution for negative agreement)", "ar": "ماخلصتش، وهي كذلك ماخلصتش", "structure": "[I haven't finished], + [and neither has she]"},
+    {"en": "\"Are you coming?\" \"I'd love to.\" (ellipsis: 'to come' is dropped, understood from context)", "ar": "\"هتيجي؟\" \"أتمنى.\" (الفعل محذوف، مفهوم من السياق)", "structure": "[I'd love] + [to (come, omitted)]"},
+    {"en": "He ordered a coffee, and I ordered one too. ('one' substitutes for 'a coffee')", "ar": "هو طلب قهوة، وأنا طلبت واحدة كمان", "structure": "[He ordered a coffee], + [and I ordered one too]"},
+    {"en": "\"Who broke this?\" \"Not me.\" (ellipsis: 'It was not me who broke this' compressed dramatically)", "ar": "\"مين كسر ده؟\" \"مش أنا.\" (اختصار شديد)", "structure": "[It was] + [not me] (rest omitted, understood)"}
+  ],
+  "common_errors": [
+    {"wrong": "She can speak French, and so he can.", "correct": "She can speak French, and so can he.", "explanation": "In 'so' substitution for positive agreement, the auxiliary must come BEFORE the subject ('so can he'), inverted like a question — this is a fixed, memorized pattern."},
+    {"wrong": "I haven't finished, and she hasn't neither.", "correct": "I haven't finished, and neither has she. / ...and she hasn't either.", "explanation": "'neither' triggers inversion (neither + auxiliary + subject); 'either' does NOT invert and goes at the end of a normal negative clause — mixing the two patterns is a common error."},
+    {"wrong": "He ordered a coffee, and I ordered it too.", "correct": "He ordered a coffee, and I ordered one too.", "explanation": "'it' refers to the EXACT SAME specific item; 'one' refers to another item of the SAME TYPE — since you ordered your OWN coffee, not his exact cup, 'one' is correct."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "He enjoys hiking, and so ___ his sister.", "answer": "does", "hint": "Positive agreement, inverted auxiliary."},
+    {"sentence": "I don't like spicy food, and ___ does my brother.", "answer": "neither", "hint": "Negative agreement, inverted."},
+    {"sentence": "\"Can you help me?\" \"I'd be happy ___.\"", "answer": "to", "hint": "Ellipsis — 'to help you' is dropped after 'to'."},
+    {"sentence": "She bought a new laptop, and I bought ___ too. [a different laptop, same type]", "answer": "one", "hint": "Substitution for 'a new laptop', not the exact same item."},
+    {"sentence": "I haven't seen that movie, and he hasn't ___.", "answer": "either", "hint": "Negative agreement, no inversion, goes at the end."}
+  ],
+  "quick_rule": "SO + auxiliary + subject (inverted) = positive agreement. NEITHER + auxiliary + subject (inverted) = negative agreement. ...+ subject + auxiliary + EITHER (no inversion) = alternative negative agreement. ONE replaces a general/different item of the same type; IT replaces the exact same specific item.",
+  "quick_rule_ar": "SO + فعل مساعد + فاعل (مقلوب) = موافقة إيجابية. NEITHER + فعل مساعد + فاعل (مقلوب) = موافقة سلبية.",
+  "mnemonic": "ELLIPSIS = 'leave it out, they'll figure it out.' SUBSTITUTION = 'swap the repeat for a short stand-in.'",
+  "connect_to_speaking": "Practice with your buddy: state something true about yourself, then have them respond using 'so do I' / 'neither do I' / '...either', practicing the correct inversion pattern for each case."
+}

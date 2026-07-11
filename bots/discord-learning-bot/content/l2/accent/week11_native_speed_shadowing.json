@@ -1,0 +1,148 @@
+{
+  "level": "L2",
+  "week": 11,
+  "focus": "Native-Speed Shadowing & Transcription — Blueprint Phase 3/4 Methodology",
+  "focus_ar": "المحاكاة والتفريغ بالسرعة الطبيعية — منهجية المرحلة ٣/٤ من الخطة",
+  "arabic_challenge": "The blueprint's 5-Phase Shadowing Protocol (§5.5) assigns Phase 3 (Full-Speed shadowing while reading) to L1-L2, and Phase 4 (Transcription, then shadowing from your own transcription) specifically to L2. This week integrates that transcription methodology directly into accent training: you cannot accurately transcribe native-speed audio without first correctly perceiving the reductions, linking, and merged sounds you've spent 10 weeks learning to PRODUCE — this week trains you to also RECOGNIZE them by ear.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["transcription practice: identifying reduced forms by ear"],
+      "isolation": {
+        "instructions": "Listen to (or have a buddy/AI read) a short native-speed sentence containing several reduced forms, and try to transcribe EXACTLY what you hear, including the reductions — not the 'correct/formal' spelling.",
+        "instructions_ar": "استمع (أو خد صاحب/AI يقرا) جملة بسرعة طبيعية فيها صيغ مخففة، وحاول تفرغ بالضبط اللي سمعته، بما فيها التخفيضات — مش الإملاء الرسمي.",
+        "practice": ["Listen to: 'I shoulda called her.' → Transcribe what you actually hear (shoulda, not 'should have')", "Listen to: 'Whaddya want?' → Transcribe the reduced form you hear"]
+      },
+      "minimal_pairs": [
+        {"pair": ["transcribing the ACTUAL reduced sound heard", "transcribing the 'correct' formal spelling instead"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["shoulda", "coulda", "woulda", "gonna", "wanna", "gimme", "lemme"],
+      "sentence_practice": [
+        "I shoulda called her yesterday.",
+        "Whaddya want for dinner tonight?",
+        "Gimme a minute, and lemme think about it."
+      ],
+      "record_this": "I shoulda called her yesterday — whaddya want for dinner? Gimme a minute, and lemme think about it.",
+      "self_check": "Could you both PRODUCE these casual reduced forms AND accurately identify them by ear from someone else's speech?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["transcription practice: linking and flap in fast speech"],
+      "isolation": {
+        "instructions": "Practice transcribing a fast sentence containing L1's linking and flap patterns, marking exactly where words blend together as you hear them.",
+        "instructions_ar": "تدرب على تفريغ جملة سريعة فيها أنماط الربط والفلاب من المستوى الأول، وحدد بالضبط فين الكلمات بتندمج زي ما بتسمعها.",
+        "practice": ["Listen to: 'Pick up an apple and gimme some water.' → Mark every linking point and flap you hear."]
+      },
+      "minimal_pairs": [
+        {"pair": ["accurately marking all linking/flap points", "missing several linking/flap points"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["pick up an apple", "gimme some water", "button on the machine"],
+      "sentence_practice": [
+        "Pick up an apple and gimme some water.",
+        "Press the button on the machine, would ya?",
+        "I need a little water and an apple, thanks."
+      ],
+      "record_this": "Pick up an apple and gimme some water — press the button on the machine, would ya?",
+      "self_check": "When listening back to a recording of this sentence, could you identify every linking and flap point accurately?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["shadowing from your own transcription (Blueprint Phase 4)"],
+      "isolation": {
+        "instructions": "Take your transcription from Day 1 or 2, and now SHADOW it — read it aloud simultaneously with the original audio, matching the reduced pronunciation exactly as you transcribed it.",
+        "instructions_ar": "خد التفريغ بتاعك من يوم ١ أو ٢، ودلوقتي حاكيه — اقراه بصوت عالي في نفس وقت الصوت الأصلي، مطابقًا النطق المخفف بالضبط زي ما فرغته.",
+        "practice": ["Shadow: 'I shoulda called her yesterday' — matching rhythm, reduction, and speed exactly."]
+      },
+      "minimal_pairs": [
+        {"pair": ["shadowing that matches the original's reduction and speed", "shadowing that reverts to full, careful pronunciation"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(uses Day 1/2 transcriptions)"],
+      "sentence_practice": [
+        "I shoulda called her yesterday.",
+        "Whaddya want for dinner tonight?",
+        "Pick up an apple and gimme some water."
+      ],
+      "record_this": "(Shadow your own Day 1/2 transcriptions, matching the original audio's speed and reduction exactly.)",
+      "self_check": "Did your shadowed version match the original's actual sound, not a 'corrected', more formal pronunciation?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["transcription of a longer, natural conversational exchange"],
+      "isolation": {
+        "instructions": "Practice transcribing a longer, more natural back-and-forth exchange (2-3 sentences), which combines multiple reduction/linking types at once.",
+        "instructions_ar": "تدرب على تفريغ تبادل حواري أطول وأكثر طبيعية (٢-٣ جمل)، اللي بيجمع أكتر من نوع تخفيض/ربط في نفس الوقت.",
+        "practice": ["Listen to and transcribe: 'Didja finish? — Yeah, I shoulda done it sooner, but I got it done.'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["accurate full transcription of natural dialogue", "partial/formal-only transcription missing reductions"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["didja", "shoulda", "gotta", "kinda"],
+      "sentence_practice": [
+        "Didja finish the report? Yeah, I shoulda done it sooner.",
+        "I gotta go now — it's kinda late already.",
+        "Didja hear the news? Kinda surprising, right?"
+      ],
+      "record_this": "Didja finish the report? Yeah, I shoulda done it sooner. I gotta go now — it's kinda late already.",
+      "self_check": "Could you transcribe this natural exchange completely, capturing every reduced form accurately?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["listen-transcribe-shadow cycle with unfamiliar native audio"],
+      "isolation": {
+        "instructions": "Apply the full cycle (listen, transcribe, shadow) to a short clip of unfamiliar native-speed audio (a podcast clip, YouTube video, or similar), per blueprint §5.5's methodology.",
+        "instructions_ar": "طبّق الدورة الكاملة (استماع، تفريغ، محاكاة) على مقطع قصير من صوت طبيعي غير مألوف (بودكاست، فيديو يوتيوب، أو مشابه)، بحسب منهجية §٥.٥ من الخطة.",
+        "practice": ["Find a 20-30 second native-speed clip. Listen 3 times. Transcribe it, including reductions. Shadow your transcription while replaying the clip."]
+      },
+      "minimal_pairs": [
+        {"pair": ["full cycle applied to unfamiliar audio", "skipping transcription and only shadowing"], "meaning": ["—", "—"]}
+      ],
+      "word_practice": ["(depends on your chosen clip)"],
+      "sentence_practice": ["(No fixed sentences — uses your own chosen audio clip.)"],
+      "record_this": "(Shadow your transcription of a real, unfamiliar native-speed audio clip.)",
+      "self_check": "How accurate was your transcription compared to the actual audio? Where did you miss reductions or linking?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review: transcribing reductions, transcribing linking/flap, shadowing from transcription, natural dialogue, unfamiliar-audio cycle",
+      "type": "review",
+      "mixed_pairs": [
+        ["shoulda (heard and transcribed correctly)", "should have (missed the reduction)"], ["pick up an apple (linking identified)", "pick. up. an. apple. (linking missed)"]
+      ],
+      "challenge_sentences": [
+        "Didja finish? I shoulda called her, but I gotta go pick up an apple and gimme a minute first.",
+        "Whaddya want? I kinda need to press the button on the machine, would ya?",
+        "I shoulda known — didja hear the news? It's kinda surprising, gotta admit."
+      ],
+      "record_this": "Didja finish? I shoulda called her, but I gotta go pick up an apple and gimme a minute first — whaddya want, anyway?",
+      "self_check": "Could you transcribe this entire passage accurately by ear, then shadow it matching the natural, reduced pronunciation?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-Assessment + Extended Practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Complete a full listen-transcribe-shadow cycle on a new 20-30 second native-speed audio clip, then record your final shadowed version.",
+        "passage": "(Choose a new, unfamiliar native-speed audio clip of your choice — a podcast, interview, or video. Listen, transcribe including all reductions, then shadow it and record your shadowed version.)",
+        "sounds_to_check": {
+          "transcription accuracy": "check how many reductions/links were correctly identified",
+          "shadowing accuracy": "check if the shadowed delivery matches the original's speed and reduction"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Transcription captures nearly all reductions/linking accurately; shadowed delivery closely matches the original's natural speed and sound.",
+        "70_89": "Most reductions captured; shadowing is close but occasionally reverts to more formal pronunciation.",
+        "50_69": "Transcription captures only the most obvious reductions; shadowing is noticeably slower/more careful than the original.",
+        "below_50": "Transcription mostly uses 'correct' formal spelling, missing most reductions — go back and repeat Days 1-4 with simpler, shorter audio clips."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "This week directly implements Blueprint §5.5's Phase 3 (full-speed shadowing) and Phase 4 (transcription-based shadowing) methodology, explicitly assigned to L1-L2 and L2 respectively.",
+      "Transcribing casual reductions (shoulda, gonna, whaddya) is a DIFFERENT skill from producing them — many learners can say these forms but struggle to recognize them instantly in fast native speech. This week trains listening comprehension alongside production.",
+      "This is excellent preparation for L2's advancement exam Listening section (blueprint Table 45), which tests comprehension of natural, reduced native speech, not slow, careful pronunciation."
+    ],
+    "daily_time": "25-30 minutes this week (includes finding/preparing audio clips for Days 5 and 7)",
+    "recording_requirement": "Record Day 5 and Day 7's shadowed versions of real audio clips — save the transcriptions too, as evidence of listening comprehension progress."
+  }
+}

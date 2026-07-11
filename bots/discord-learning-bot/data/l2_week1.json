@@ -4,51 +4,93 @@
   "theme": "Current Events & News",
   "phoneme_focus": "Connected speech + intonation",
   "grammar_pattern": "Present Perfect (have done)",
-  "vocabulary": [],
+  "vocabulary": [
+    {"word": "headline", "pronunciation": "HED-line", "arabic": "عنوان رئيسي", "pos": "noun"},
+    {"word": "breaking news", "pronunciation": "BRAY-king nooz", "arabic": "أخبار عاجلة", "pos": "noun phrase"},
+    {"word": "source", "pronunciation": "sors", "arabic": "مصدر", "pos": "noun"},
+    {"word": "reliable", "pronunciation": "ri-LY-ə-bəl", "arabic": "موثوق", "pos": "adjective"},
+    {"word": "coverage", "pronunciation": "KUV-ər-ij", "arabic": "تغطية إخبارية", "pos": "noun"},
+    {"word": "journalist", "pronunciation": "JUR-nə-list", "arabic": "صحفي", "pos": "noun"},
+    {"word": "editorial", "pronunciation": "ed-i-TOR-ee-əl", "arabic": "افتتاحية", "pos": "noun"},
+    {"word": "controversy", "pronunciation": "KON-trə-vur-see", "arabic": "جدل", "pos": "noun"},
+    {"word": "impact", "pronunciation": "IM-pakt", "arabic": "تأثير", "pos": "noun"},
+    {"word": "impact", "pronunciation": "im-PAKT", "arabic": "يؤثر على", "pos": "verb"},
+    {"word": "outbreak", "pronunciation": "OWT-brayk", "arabic": "تفشي", "pos": "noun"},
+    {"word": "crisis", "pronunciation": "KRY-sis", "arabic": "أزمة", "pos": "noun"},
+    {"word": "policy", "pronunciation": "POL-ə-see", "arabic": "سياسة (قرار)", "pos": "noun"},
+    {"word": "govern", "pronunciation": "GUV-ərn", "arabic": "يحكم", "pos": "verb"},
+    {"word": "election", "pronunciation": "i-LEK-shən", "arabic": "انتخابات", "pos": "noun"},
+    {"word": "candidate", "pronunciation": "KAN-di-dayt", "arabic": "مرشح", "pos": "noun"},
+    {"word": "protest", "pronunciation": "PROH-test", "arabic": "احتجاج", "pos": "noun"},
+    {"word": "protest", "pronunciation": "prə-TEST", "arabic": "يحتج", "pos": "verb"},
+    {"word": "demonstration", "pronunciation": "dem-ən-STRAY-shən", "arabic": "مظاهرة", "pos": "noun"},
+    {"word": "economy", "pronunciation": "i-KON-ə-mee", "arabic": "اقتصاد", "pos": "noun"},
+    {"word": "inflation", "pronunciation": "in-FLAY-shən", "arabic": "تضخم", "pos": "noun"},
+    {"word": "unemployment", "pronunciation": "un-em-PLOY-mənt", "arabic": "بطالة", "pos": "noun"},
+    {"word": "statistics", "pronunciation": "stə-TIS-tiks", "arabic": "إحصائيات", "pos": "noun"},
+    {"word": "analyst", "pronunciation": "AN-ə-list", "arabic": "محلل", "pos": "noun"},
+    {"word": "verify", "pronunciation": "VER-ə-fy", "arabic": "يتحقق من", "pos": "verb"},
+    {"word": "misinformation", "pronunciation": "mis-in-fər-MAY-shən", "arabic": "معلومات مضللة", "pos": "noun"},
+    {"word": "credible", "pronunciation": "KRED-ə-bəl", "arabic": "ذو مصداقية", "pos": "adjective"},
+    {"word": "bias", "pronunciation": "BY-əs", "arabic": "تحيز", "pos": "noun"},
+    {"word": "objective", "pronunciation": "əb-JEK-tiv", "arabic": "موضوعي", "pos": "adjective"},
+    {"word": "headline news", "pronunciation": "HED-line nooz", "arabic": "الأخبار الرئيسية", "pos": "noun phrase"},
+    {"word": "correspondent", "pronunciation": "kor-ə-SPON-dənt", "arabic": "مراسل", "pos": "noun"},
+    {"word": "broadcast", "pronunciation": "BRAWD-kast", "arabic": "بث إخباري", "pos": "noun"},
+    {"word": "broadcast", "pronunciation": "brawd-KAST", "arabic": "يبث", "pos": "verb"},
+    {"word": "headline story", "pronunciation": "HED-line STOR-ee", "arabic": "القصة الرئيسية", "pos": "noun phrase"},
+    {"word": "press conference", "pronunciation": "pres KON-fər-əns", "arabic": "مؤتمر صحفي", "pos": "noun phrase"},
+    {"word": "leak", "pronunciation": "leek", "arabic": "تسريب معلومات", "pos": "noun"},
+    {"word": "leak", "pronunciation": "leek", "arabic": "يسرب", "pos": "verb"},
+    {"word": "scandal", "pronunciation": "SKAN-dəl", "arabic": "فضيحة", "pos": "noun"},
+    {"word": "investigate", "pronunciation": "in-VES-tə-gayt", "arabic": "يحقق في", "pos": "verb"},
+    {"word": "aftermath", "pronunciation": "AF-tər-math", "arabic": "تداعيات", "pos": "noun"},
+    {"word": "current affairs", "pronunciation": "KUR-ənt ə-FAIRZ", "arabic": "الشؤون الجارية", "pos": "noun phrase"}
+  ],
   "speaking_missions": {
     "Saturday": {
       "type": "debate",
-      "prompt": "Argue for or against a position (Topic: Current Events & News)",
+      "prompt": "Debate: 'Social media has made news reporting worse, not better.' Argue for ONE side, using at least 2 pieces of evidence or examples.",
       "target_seconds": 190
     },
     "Sunday": {
       "type": "presentation",
-      "prompt": "Give a 3-minute presentation (Topic: Current Events & News)",
+      "prompt": "Give a 3-minute presentation on a current news story you've followed recently. Cover: what happened, why it matters, and your opinion on it.",
       "target_seconds": 190
     },
     "Monday": {
       "type": "analysis",
-      "prompt": "Analyze a situation or problem (Topic: Current Events & News)",
+      "prompt": "Analyze why misinformation spreads so quickly online. Discuss at least 2 causes and 1 possible solution.",
       "target_seconds": 190
     },
     "Tuesday": {
       "type": "storytelling",
-      "prompt": "Tell a detailed story with emotions (Topic: Current Events & News)",
+      "prompt": "Tell a detailed story about a time you found out important news — how did you hear about it, and how did you feel?",
       "target_seconds": 190
     },
     "Wednesday": {
       "type": "interview",
-      "prompt": "Answer interview-style questions (Topic: Current Events & News)",
+      "prompt": "Imagine you're a journalist being interviewed about press freedom. Answer these questions: Why does press freedom matter? What happens when it's restricted? Give one real or imagined example.",
       "target_seconds": 190
     },
     "Thursday": {
       "type": "summary",
-      "prompt": "Summarize an article or video (Topic: Current Events & News)",
+      "prompt": "Summarize a news article or video you watched this week in your own words, in under 2 minutes, covering only the most important points.",
       "target_seconds": 190
     },
     "Friday": {
       "type": "free_discussion",
-      "prompt": "Discuss any topic for 4 minutes (Topic: Current Events & News)",
+      "prompt": "Discuss freely for 4 minutes: how has the way people consume news changed in your lifetime? Consider newspapers, TV, and social media.",
       "target_seconds": 190
     }
   },
   "writing_prompts": [
-    "Write an essay (150+ words) arguing for or against an aspect of current events & news.",
-    "Analyze the impact of current events & news on daily life.",
-    "Compare how current events & news differs between two countries.",
-    "Write a formal email about current events & news.",
-    "Describe a personal experience related to current events & news (200+ words).",
-    "What changes would you make regarding current events & news? Explain why.",
-    "Summarize an article about current events & news in your own words."
+    "Write an essay (150+ words) arguing whether social media has improved or damaged how people get news.",
+    "Analyze how a major news event affected daily life in your country or city.",
+    "Compare how the same news story is reported by two different sources you know (a local one and an international one).",
+    "Write a formal email to a friend explaining why you trust (or don't trust) a particular news source, and why.",
+    "Describe a personal experience related to hearing important breaking news (200+ words) — what were you doing, how did you find out, and how did you react?",
+    "What changes would you make to how news is reported today? Explain at least 2 specific changes and why they would help.",
+    "Summarize a news article about a current event in your own words, in under 150 words, without copying phrases from the original."
   ]
 }
