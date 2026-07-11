@@ -262,15 +262,22 @@ async def daily_task_post():
 
         # Generate tasks
         task_data = await task_engine.generate_daily_tasks(level_key, week)
-        message = task_engine.format_daily_post(task_data)
+        # Send as multiple messages if needed — a single combined string
+        # (the old format_daily_post() behavior) is frequently well over
+        # Discord's 2000-char message limit (up to ~3600 chars for L3),
+        # which previously made channel.send() raise discord.HTTPException
+        # on most days; that exception was only logged, so daily tasks were
+        # likely silently failing to post for most level/week combinations.
+        message_chunks = task_engine.format_daily_post_chunks(task_data)
 
         # Find the channel
         channel_name = f"l{level_key[1]}-daily-tasks"
         channel = _find_channel(guild, channel_name)
         if channel:
             try:
-                await channel.send(message)
-                logger.info(f"Posted daily tasks to #{channel_name} (week {week})")
+                for chunk in message_chunks:
+                    await channel.send(chunk)
+                logger.info(f"Posted daily tasks to #{channel_name} (week {week}, {len(message_chunks)} message(s))")
             except discord.HTTPException as e:
                 logger.error(f"Failed to post to #{channel_name}: {e}")
 
