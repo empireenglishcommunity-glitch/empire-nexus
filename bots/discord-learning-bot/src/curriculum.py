@@ -332,14 +332,28 @@ def get_daily_content(week: int, day_name: str, day_index: int, level: str = "L0
 #                (practice site), via day = day_index + 1
 # ============================================================
 
-# Bot task id -> practice site page filename. Only tasks that actually
-# have a matching generated page are listed here; speaking/writing/
-# community stay Discord-only by design (no fabricated links).
+# Bot task id -> practice site page slug (no file extension). Only tasks
+# that actually have a matching generated page are listed here;
+# speaking/writing/community stay Discord-only by design (no fabricated
+# links).
+#
+# NOTE: deliberately extensionless, not "accent.html" etc. Verified live
+# that requesting the .html-suffixed path on the custom domain
+# (practice.empireenglish.online) returns a genuine 404 (fresh,
+# cache-control: no-store, reproduced on multiple never-before-requested
+# paths), while the identical path WITHOUT the extension returns 200 on
+# every domain that serves this Cloudflare Pages project (the pages.dev
+# subdomain, the deployment-specific URL, and the custom domain alike).
+# Root cause appears to be custom-domain-specific request handling in
+# Cloudflare Pages (unconfirmed — could not fully diagnose without
+# zone-level API access, which this project's API token does not have).
+# Extensionless links are the verified-working form everywhere, so that
+# is what the bot must generate.
 _PRACTICE_PAGE_BY_TASK = {
-    "accent": "accent.html",
-    "vocab": "vocab.html",
-    "shadow": "shadowing.html",
-    "listening": "listening.html",
+    "accent": "accent",
+    "vocab": "vocab",
+    "shadow": "shadowing",
+    "listening": "listening",
 }
 
 
