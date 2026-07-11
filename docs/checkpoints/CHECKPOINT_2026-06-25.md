@@ -68,7 +68,7 @@ Major implementation session. The bot, infrastructure, and automation systems we
 
 | Item | Value |
 |------|-------|
-| Bot Token | `8938310982:AAFAXq5xDhY0XlpGw6ag6Xz6pI8aAM3f4Nk` |
+| Bot Token | `<REDACTED — stored as TELEGRAM_BOT_TOKEN env var, rotate via @BotFather>` |
 | Google Sheet ID | `13fJFzyeTMYHFKj2YDEy620fHfznbFvhTieqD8N1KUCg` |
 | Sheets Credential ID | `k6ND5geKqsYEj25I` (name: "Empire CRM", type: googleApi) |
 | Sheet GID (subscribers) | `421473979` |

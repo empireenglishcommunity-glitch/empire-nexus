@@ -25,7 +25,7 @@ You MUST update these placeholder values before activating:
   - Find it in the Google Sheet URL: `https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit`
 
 ### 2. Telegram credential
-- The HTTP Request nodes use the bot token via URL
+- The HTTP Request nodes use the bot token via the n8n expression `{{ $env.TELEGRAM_BOT_TOKEN }}` in the URL — set `TELEGRAM_BOT_TOKEN` as an environment variable on the n8n server (see `.env.example` in this folder). Never hardcode the token in the workflow JSON.
 - If you prefer, replace the HTTP Request nodes with the native Telegram node
 - Or ensure the credential reference `telegramApi` matches your saved credential name
 
