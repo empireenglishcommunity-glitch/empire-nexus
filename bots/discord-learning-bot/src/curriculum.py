@@ -315,6 +315,57 @@ def get_daily_content(week: int, day_name: str, day_index: int, level: str = "L0
 
 
 # ============================================================
+#  PRACTICE PLATFORM LINKS
+#
+# Maps a bot-side (level, week, day_index) task onto its exact page on
+# empireenglishcommunity-glitch/empire-practice, so daily task messages
+# can link students straight to the matching web exercise (with Kokoro
+# TTS audio + browser-TTS fallback) instead of leaving accent/shadowing/
+# listening/vocab as text-only Discord messages.
+#
+# Mapping is exact, not approximate:
+#   - level:     "L0".."L3"  ->  "l0".."l3"           (folder name)
+#   - week:      bot's week number == practice site's week number
+#                (both now share LEVEL_WEEK_COUNTS as the single source
+#                of truth: L0=8, L1=10, L2=12, L3=8 — verified identical)
+#   - day_index: 0=Saturday..6=Friday (bot)  ->  day1=Saturday..day7=Friday
+#                (practice site), via day = day_index + 1
+# ============================================================
+
+# Bot task id -> practice site page filename. Only tasks that actually
+# have a matching generated page are listed here; speaking/writing/
+# community stay Discord-only by design (no fabricated links).
+_PRACTICE_PAGE_BY_TASK = {
+    "accent": "accent.html",
+    "vocab": "vocab.html",
+    "shadow": "shadowing.html",
+    "listening": "listening.html",
+}
+
+
+def practice_platform_day_url(week: int, day_index: int, level: str = "L0") -> str:
+    """URL for the day's full exercise menu on the practice platform."""
+    week = min(max_week_for_level(level), max(1, week))
+    day = (day_index % 7) + 1
+    return f"{config.PRACTICE_PLATFORM_URL}/{level.lower()}/week{week}/day{day}/"
+
+
+def practice_platform_task_url(task_id: str, week: int, day_index: int, level: str = "L0") -> Optional[str]:
+    """URL for a specific task's page on the practice platform.
+
+    Returns None if this task has no corresponding practice-platform page
+    (speaking, writing, community) — callers must handle that, not
+    substitute the day-menu link as a stand-in.
+    """
+    page = _PRACTICE_PAGE_BY_TASK.get(task_id)
+    if not page:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    day = (day_index % 7) + 1
+    return f"{config.PRACTICE_PLATFORM_URL}/{level.lower()}/week{week}/day{day}/{page}"
+
+
+# ============================================================
 #  UTILITY
 # ============================================================
 

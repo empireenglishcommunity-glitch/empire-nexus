@@ -53,6 +53,18 @@ WEEKLY_ASSESSMENT_HOUR = int(os.getenv("WEEKLY_ASSESSMENT_HOUR", "10") or "10")
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Dubai")
 
 # ============================================================
+#  PRACTICE PLATFORM (empireenglishcommunity-glitch/empire-practice)
+# ============================================================
+# The web-based daily practice pages (accent drill, shadowing, listening,
+# vocab flashcards with Kokoro TTS audio) that mirror each day's curriculum
+# 1:1. Defaults to the live Cloudflare Pages URL, which works today.
+# Once practice.empireenglish.online's DNS/SSL is confirmed live, set
+# PRACTICE_PLATFORM_URL in .env to switch over — no code change needed.
+PRACTICE_PLATFORM_URL = os.getenv(
+    "PRACTICE_PLATFORM_URL", "https://empire-practice-8l0.pages.dev"
+).rstrip("/")
+
+# ============================================================
 #  TELEGRAM ALERTS (optional — lifecycle notifications)
 # ============================================================
 TELEGRAM_ALERT_TOKEN = os.getenv("TELEGRAM_ALERT_TOKEN", "")

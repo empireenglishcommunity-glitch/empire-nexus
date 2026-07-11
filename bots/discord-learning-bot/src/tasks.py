@@ -80,11 +80,27 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         if accent_drill.get("minimal_pairs"):
             pairs = " | ".join(f"{p['pair'][0]} / {p['pair'][1]}" for p in accent_drill["minimal_pairs"][:4])
             content_lines.append(f"**Minimal pairs:** {pairs}")
-        if accent_drill.get("word_practice"):
-            content_lines.append(f"**Practice words:** {', '.join(accent_drill['word_practice'][:6])}")
+        word_practice = accent_drill.get("word_practice")
+        if word_practice:
+            # word_practice is sometimes a flat list, sometimes a dict of
+            # named sublists (e.g. {"long_ee": [...], "short_i": [...]}) —
+            # found in 9 real drills across L0 weeks 1-4. The dict shape
+            # previously crashed this function entirely with
+            # "TypeError: unhashable type: 'slice'" on word_practice[:6],
+            # which means the bot would fail to post daily tasks at all
+            # for any member on one of those days. Flatten both shapes.
+            if isinstance(word_practice, dict):
+                flat_words = [w for sub in word_practice.values() if isinstance(sub, list) for w in sub]
+            else:
+                flat_words = word_practice
+            if flat_words:
+                content_lines.append(f"**Practice words:** {', '.join(flat_words[:6])}")
         if accent_drill.get("record_this"):
             content_lines.append(f"\n**Record this:** \"{accent_drill['record_this']}\"")
         content_lines.append(f"\n🎙️ Record and post in #l{level[1]}-showcase")
+        practice_url = curriculum.practice_platform_task_url("accent", week, day_index, level)
+        if practice_url:
+            content_lines.append(f"🌐 Practice online (audio + drill): {practice_url}")
 
         tasks.append({
             "id": "accent",
@@ -111,6 +127,8 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         word_lines = []
         for w in today_vocab:
             word_lines.append(f"**{w['word']}** ({w['pronunciation']}) — {w['arabic']}")
+        vocab_practice_url = curriculum.practice_platform_task_url("vocab", week, day_index, level)
+        vocab_link_line = f"\n🌐 Practice with flashcards: {vocab_practice_url}" if vocab_practice_url else ""
         tasks.append({
             "id": "vocab",
             "title": f"📖 Vocabulary — {vocab_theme}",
@@ -120,7 +138,8 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
                 f"\n\n**How to study:**\n"
                 f"1. Read each word + Arabic meaning\n"
                 f"2. Say it in your own sentence\n"
-                f"3. Review yesterday's words\n\n"
+                f"3. Review yesterday's words\n"
+                f"{vocab_link_line}\n\n"
                 f"📋 Full list in #cheat-sheets"
             ),
             "duration_min": 10 if level == "L0" else 20,
@@ -134,11 +153,14 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         })
 
     # Task 3: Shadowing
+    shadow_practice_url = curriculum.practice_platform_task_url("shadow", week, day_index, level)
+    shadow_link_line = f"🌐 Today's passage + studio audio: {shadow_practice_url}\n\n" if shadow_practice_url else ""
     tasks.append({
         "id": "shadow",
         "title": "🎧 Shadowing Practice",
         "content": (
             f"**Speed:** {'60-80 WPM (slow)' if level == 'L0' else '100-120 WPM'}\n\n"
+            f"{shadow_link_line}"
             f"1. Listen to a short clip once (understand the gist)\n"
             f"2. Listen + read the transcript\n"
             f"3. Shadow 3 times (speak along, match rhythm)\n"
@@ -168,11 +190,14 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         tasks.append(_fallback_speaking_task(level, config.SPEAKING_MISSION_TYPES.get(day_name, "free_talk")))
 
     # Task 5: Listening
+    listening_practice_url = curriculum.practice_platform_task_url("listening", week, day_index, level)
+    listening_link_line = f"🌐 Do it online (audio + auto-checked MCQ): {listening_practice_url}\n\n" if listening_practice_url else ""
     tasks.append({
         "id": "listening",
         "title": "👂 Listening Exercise",
         "content": (
             f"**Target speed:** {'60-80 WPM' if level == 'L0' else '100-120 WPM'}\n\n"
+            f"{listening_link_line}"
             f"1. Listen to a short clip (2-3 times if needed)\n"
             f"2. Answer comprehension questions\n"
             f"3. Identify 2 new words from the clip\n"
@@ -340,32 +365,96 @@ def _get_writing_prompt(level: str, week: int, day_name: str) -> str:
 #  TASK DELIVERY FORMATTING (Discord message)
 # ============================================================
 
+# Discord hard-caps a single message at 2000 characters (HTTP 400 /
+# discord.HTTPException, error 50035, if exceeded). Leave a safety margin
+# below that for formatting overhead.
+DISCORD_MESSAGE_LIMIT = 1900
+
+
 def format_daily_post(task_data: dict) -> str:
-    """Format the full daily task set into a Discord message."""
+    """Format the full daily task set into a single Discord message string.
+
+    RETAINED for any external caller that still wants one combined string
+    (e.g. logging, tests) — but do NOT send this directly to a Discord
+    channel. It is frequently well over Discord's 2000-character message
+    limit (measured: up to ~3600 chars for L3, and 37 of 38 real level/week
+    combinations exceed 2000 chars even before this session's practice-
+    platform links were added). Use format_daily_post_chunks() + send each
+    chunk separately when posting to Discord.
+    """
+    return "\n\n".join(format_daily_post_chunks(task_data))
+
+
+def format_daily_post_chunks(task_data: dict) -> list[str]:
+    """Format the daily task set into one or more Discord-message-safe chunks.
+
+    Each returned string is guaranteed to be under DISCORD_MESSAGE_LIMIT
+    characters. A single task is never split mid-content — chunks break
+    between tasks, so if any individual task's content alone exceeds the
+    limit (not currently the case, but not something to silently corrupt
+    if it changes), that task becomes its own chunk rather than being cut off.
+
+    Fixes a real bug found while testing this session's practice-platform
+    links: channel.send() with a message over 2000 chars raises
+    discord.HTTPException, which bot.py's daily_task_post() catches and
+    only logs — meaning daily tasks have likely been silently failing to
+    post to Discord for most level/week combinations already, independent
+    of anything added in this change.
+    """
+    from . import curriculum
+
     level = task_data["level"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
-    lines = [
+    day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(task_data["day_name"]) \
+        if task_data["day_name"] in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
+    day_menu_url = curriculum.practice_platform_day_url(task_data["week"], day_index, level)
+
+    header = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
         f"📅 **DAY — {task_data['day_name']}, Week {task_data['week']}**",
         f"🏛️ EMPIRE ENGLISH — {level_info['emoji']} {level_info['name']}",
+        f"🌐 Today's exercises online: {day_menu_url}",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        "",
-    ]
+    ])
 
-    for i, task in enumerate(task_data["tasks"], 1):
-        emoji = config.DAILY_TASKS[i - 1]["emoji"] if i <= len(config.DAILY_TASKS) else "📌"
-        lines.append(f"**{i}️⃣ {task['title']}** ({task['duration_min']} min)")
-        lines.append(task["content"])
-        lines.append("")
-
-    lines.extend([
+    footer = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
         f"⏱️ **Total:** ~{task_data['total_minutes']} min ({level_info['name']} Core track)",
         "✅ When done: type `!done` in #daily-check-in",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
-    return "\n".join(lines)
+    task_blocks = []
+    for i, task in enumerate(task_data["tasks"], 1):
+        block = f"**{i}️⃣ {task['title']}** ({task['duration_min']} min)\n{task['content']}"
+        task_blocks.append(block)
+
+    chunks = []
+    current = [header]
+    current_len = len(header)
+
+    def flush():
+        nonlocal current, current_len
+        if current:
+            chunks.append("\n\n".join(current))
+        current = []
+        current_len = 0
+
+    for block in task_blocks:
+        block_len = len(block)
+        if current_len + block_len + 2 > DISCORD_MESSAGE_LIMIT and current:
+            flush()
+        current.append(block)
+        current_len += block_len + 2
+
+    if current_len + len(footer) + 2 <= DISCORD_MESSAGE_LIMIT:
+        current.append(footer)
+        flush()
+    else:
+        flush()
+        chunks.append(footer)
+
+    return chunks
 
 
 def format_streak_update(discord_id: str, member_name: str) -> str:
