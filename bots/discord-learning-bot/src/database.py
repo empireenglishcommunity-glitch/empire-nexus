@@ -608,6 +608,54 @@ def total_submissions_today() -> int:
     return row["cnt"] if row else 0
 
 
+def days_since_active(member: dict) -> int:
+    """Whole days since a member's last_active_at, from a member dict
+    already fetched (e.g. via all_active_members()) — avoids a second
+    query per member when scanning the whole roster."""
+    last = datetime.datetime.fromisoformat(member["last_active_at"])
+    return (datetime.datetime.now() - last).days
+
+
+def declining_assessment_members() -> list[dict]:
+    """Members whose two most recent weekly assessments both exist and
+    the score dropped (most recent < previous) — a real trend, not just
+    a single bad week. Returns each member dict with two extra keys:
+    'latest_score' and 'previous_score'.
+
+    Deliberately a stricter/different signal from
+    features.check_at_risk_members() (which fires on any single
+    score < 70, regardless of trend) — this one is about knowing
+    someone is sliding even if they haven't crossed the at-risk
+    threshold yet.
+    """
+    conn = _connect()
+    rows = conn.execute(
+        """
+        SELECT a1.discord_id, a1.overall_score as latest_score,
+               a2.overall_score as previous_score
+        FROM assessments a1
+        JOIN assessments a2 ON a2.discord_id = a1.discord_id
+                            AND a2.week_number = a1.week_number - 1
+        WHERE a1.overall_score IS NOT NULL AND a2.overall_score IS NOT NULL
+          AND a1.overall_score < a2.overall_score
+          AND a1.week_number = (
+              SELECT MAX(week_number) FROM assessments a3
+              WHERE a3.discord_id = a1.discord_id
+          )
+        """
+    ).fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        m = get_member(r["discord_id"])
+        if m and m["status"] == "active":
+            m = dict(m)
+            m["latest_score"] = r["latest_score"]
+            m["previous_score"] = r["previous_score"]
+            result.append(m)
+    return result
+
+
 def inactive_members(days: int = 3) -> list[dict]:
     """Get members who haven't been active for N+ days."""
     cutoff = (datetime.datetime.now() - datetime.timedelta(days=days)).isoformat()
@@ -615,6 +663,31 @@ def inactive_members(days: int = 3) -> list[dict]:
     rows = conn.execute(
         "SELECT * FROM members WHERE status='active' AND last_active_at < ?",
         (cutoff,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def count_buddy_load(buddy_discord_id: str) -> int:
+    """Count how many active members currently have this person as their
+    buddy. Used by features.assign_buddy() to rotate new-member
+    assignments across all eligible buddies by current load, instead of
+    always assigning the same single person."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) as cnt FROM members WHERE status='active' AND buddy_id=?",
+        (buddy_discord_id,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def members_with_buddy(buddy_discord_id: str) -> list[dict]:
+    """Get all active members whose buddy is this person."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM members WHERE status='active' AND buddy_id=?",
+        (buddy_discord_id,),
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
