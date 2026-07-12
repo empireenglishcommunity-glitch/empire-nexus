@@ -13,25 +13,19 @@
 > `PROJECT_STATUS.md`, which predates that convention and has been stale
 > since. `PROJECT_STATUS.md` is kept only as historical record; do not
 > treat it as current without cross-checking Kiro-Master-Index first.
+>
+> **This repo's own `.kiro/steering/sync-protocol.md` is now superseded**
+> by the canonical version below — it had already drifted slightly out
+> of sync with `Claude`'s copy of the same rules before this
+> consolidation. Do not follow `sync-protocol.md`'s letter if it
+> conflicts with `AI-AGENT-PROTOCOL.md`.
 
-### `/start` Command
-At the start of every new session, clone/pull `Kiro-Master-Index` and read
-`SESSION_CONTINUITY.md` in full (most recent dated session section +
-the "⚠️ READ THIS FIRST" block) plus `README.md`'s session log and
-"Next Session Priorities" section, to restore full context. This repo's
-own `PROJECT_STATUS.md` is secondary/historical — cross-check, don't rely on it alone.
+### Session Commands (`/start`, `/status`, `/sync`, `/sync dry`, `/checkpoint`)
 
-### `/sync` Command
-When the user sends `/sync`, execute the full repository closing protocol:
-1. **Session Review** — identify all changes made during the session
-2. **Code Verification** — confirm modified code compiles, tests pass, no secrets/debug left
-3. **Documentation Sync** — add a new dated section to `Kiro-Master-Index/SESSION_CONTINUITY.md` and update its `README.md` (session log, decisions, next-session priorities tables). Open a PR against `Kiro-Master-Index`, same as any other change — never commit straight to its `main`.
-4. **Repository Cleanup** — remove orphaned files, check .gitignore, verify no untracked files
-5. **Commit & Push** — stage all changes, write descriptive commit message, push to branch
-6. **Final Report** — deliver summary with files changed, test results, doc updates, next steps
-
-### `/status` Command
-When the user sends `/status`, provide current repository state without making changes.
+The full protocol for all session commands is defined **once**, canonically,
+in `empireenglishcommunity-glitch/Kiro-Master-Index/.kiro/steering/AI-AGENT-PROTOCOL.md`.
+Read that file — do not follow this repo's own `sync-protocol.md`, which
+is kept only as historical record of the pre-consolidation rules.
 
 ---
 

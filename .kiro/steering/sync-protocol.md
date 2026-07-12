@@ -1,5 +1,12 @@
 # /sync — Repository Closing Protocol
 
+> **⚠️ SUPERSEDED 2026-07-12.** This file is kept only as historical
+> record. The current, canonical protocol lives in
+> `empireenglishcommunity-glitch/Kiro-Master-Index/.kiro/steering/AI-AGENT-PROTOCOL.md`
+> — follow that version, not this one. This file predates that
+> consolidation and had already drifted slightly from `Claude` repo's
+> copy of the same rules (the exact problem the consolidation fixes).
+
 ## Trigger
 When the user sends `/sync`, execute the full repository closing protocol below.
 
