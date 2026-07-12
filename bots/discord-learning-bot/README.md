@@ -69,6 +69,7 @@ content/            ← AI prompt library (25 prompts) + per-level accent/gramma
 data/               ← Per-level vocabulary/speaking/writing content, ALL 4 levels, 38 weeks total
                       (see data/README.md for exact counts and the content pipeline explained)
 scripts/            ← setup_server.py (auto-configures Discord server)
+                      backup.py (SQLite database backup + rotation)
 ```
 
 > **Content status:** all 4 levels (L0-L3, 38 weeks) have real, verified curriculum content as of 2026-07-11. See `data/README.md` for the full breakdown and history of what was previously missing/templated.
@@ -80,12 +81,32 @@ pip install -r requirements.txt -r requirements-dev.txt
 pytest tests/ -v
 ```
 
-259 tests covering config invariants, curriculum loading (including
+267 tests covering config invariants, curriculum loading (including
 regression tests for two real bugs already fixed: L1 vocabulary
 duplication and the practice-site day-split bug), the database layer,
-task generation/formatting, anti-cheat verification, and AI-engine JSON
-parsing. CI runs this automatically on every push/PR that touches this
-bot (see `.github/workflows/learning-bot-test.yml`).
+task generation/formatting, anti-cheat verification, AI-engine JSON
+parsing, and database backup + rotation. CI runs this automatically on
+every push/PR that touches this bot (see
+`.github/workflows/learning-bot-test.yml`).
+
+## Backups
+
+The database (`data_persist/empire_english.db` in the Docker volume, or
+`empire_english.db` locally) has no automated backup unless you set one
+up. `scripts/backup.py` creates timestamped copies and keeps the last
+14, deleting older ones:
+
+```bash
+# Run inside the container (sees the same Docker volume the bot uses):
+docker exec empire-english-bot python3 scripts/backup.py
+
+# Or via cron on the host, daily at 3 AM:
+0 3 * * * docker exec empire-english-bot python3 scripts/backup.py
+```
+
+Backups are written to `backups/` (gitignored), which is its own named
+Docker volume (`bot-backups`, separate from the database's `bot-data`
+volume) — so they survive a full container rebuild, not just a restart.
 
 ## Deployment
 
