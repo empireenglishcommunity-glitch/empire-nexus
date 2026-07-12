@@ -35,8 +35,8 @@ sudo usermod -aG docker $USER
 
 ### 2. Clone and configure
 ```bash
-git clone https://github.com/empireenglishcommunity-glitch/EEC-REPO.git
-cd EEC-REPO/bots/discord-challenge-bot
+git clone https://github.com/empireenglishcommunity-glitch/empire-nexus.git
+cd empire-nexus/bots/discord-challenge-bot
 cp .env.example .env
 nano .env   # Fill in your token, channel ID, etc.
 ```
@@ -104,9 +104,9 @@ After=network.target
 [Service]
 Type=simple
 User=youruser
-WorkingDirectory=/home/youruser/EEC-REPO/bots/discord-challenge-bot
-Environment=PATH=/home/youruser/EEC-REPO/bots/discord-challenge-bot/.venv/bin
-ExecStart=/home/youruser/EEC-REPO/bots/discord-challenge-bot/.venv/bin/python run.py
+WorkingDirectory=/home/youruser/empire-nexus/bots/discord-challenge-bot
+Environment=PATH=/home/youruser/empire-nexus/bots/discord-challenge-bot/.venv/bin
+ExecStart=/home/youruser/empire-nexus/bots/discord-challenge-bot/.venv/bin/python run.py
 Restart=always
 RestartSec=10
 
@@ -176,7 +176,7 @@ python scripts/backup.py
 
 ### Update the bot
 ```bash
-cd EEC-REPO/bots/discord-challenge-bot
+cd empire-nexus/bots/discord-challenge-bot
 git pull
 
 # If using Docker:

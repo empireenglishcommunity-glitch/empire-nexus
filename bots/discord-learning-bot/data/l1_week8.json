@@ -6,363 +6,345 @@
   "grammar_pattern": "First Conditional (if + will)",
   "vocabulary": [
     {
-      "word": "wake up",
-      "pronunciation": "WAYK up",
-      "arabic": "يستيقظ",
-      "pos": "verb"
-    },
-    {
-      "word": "brush",
-      "pronunciation": "BRUSH",
-      "arabic": "يفرش",
-      "pos": "verb"
-    },
-    {
-      "word": "shower",
-      "pronunciation": "SHOW-er",
-      "arabic": "دش/يستحم",
-      "pos": "noun/verb"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "ينتقل للعمل",
-      "pos": "verb"
-    },
-    {
-      "word": "routine",
-      "pronunciation": "roo-TEEN",
-      "arabic": "روتين",
+      "word": "store",
+      "pronunciation": "STOR",
+      "arabic": "محل",
       "pos": "noun"
     },
     {
-      "word": "schedule",
-      "pronunciation": "SKEJ-ool",
-      "arabic": "جدول",
+      "word": "mall",
+      "pronunciation": "MAWL",
+      "arabic": "مول",
       "pos": "noun"
     },
     {
-      "word": "alarm",
-      "pronunciation": "uh-LARM",
-      "arabic": "منبه",
+      "word": "market",
+      "pronunciation": "MAR-ket",
+      "arabic": "سوق",
       "pos": "noun"
     },
     {
-      "word": "habit",
-      "pronunciation": "HAB-it",
-      "arabic": "عادة",
+      "word": "price",
+      "pronunciation": "PRYS",
+      "arabic": "سعر",
       "pos": "noun"
     },
     {
-      "word": "exercise",
-      "pronunciation": "EK-ser-syz",
-      "arabic": "يتمرن/تمرين",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "breakfast",
-      "pronunciation": "BREK-fust",
-      "arabic": "فطور",
+      "word": "discount",
+      "pronunciation": "DIS-kownt",
+      "arabic": "تخفيض",
       "pos": "noun"
     },
     {
-      "word": "lunch",
-      "pronunciation": "LUNCH",
-      "arabic": "غداء",
+      "word": "sale",
+      "pronunciation": "SAYL",
+      "arabic": "تنزيلات",
       "pos": "noun"
     },
     {
-      "word": "dinner",
-      "pronunciation": "DIN-er",
-      "arabic": "عشاء",
+      "word": "receipt",
+      "pronunciation": "rih-SEET",
+      "arabic": "إيصال",
       "pos": "noun"
     },
     {
-      "word": "prepare",
-      "pronunciation": "prih-PAIR",
-      "arabic": "يحضّر",
-      "pos": "verb"
-    },
-    {
-      "word": "relax",
-      "pronunciation": "rih-LAKS",
-      "arabic": "يسترخي",
-      "pos": "verb"
-    },
-    {
-      "word": "evening",
-      "pronunciation": "EEV-ning",
-      "arabic": "مساء",
+      "word": "cash",
+      "pronunciation": "KASH",
+      "arabic": "فلوس/كاش",
       "pos": "noun"
     },
     {
-      "word": "midnight",
-      "pronunciation": "MID-nyt",
-      "arabic": "منتصف الليل",
+      "word": "credit card",
+      "pronunciation": "KRED-it KARD",
+      "arabic": "بطاقة ائتمان",
       "pos": "noun"
     },
     {
-      "word": "early",
-      "pronunciation": "ER-lee",
-      "arabic": "مبكر",
+      "word": "wallet",
+      "pronunciation": "WOL-et",
+      "arabic": "محفظة",
+      "pos": "noun"
+    },
+    {
+      "word": "change",
+      "pronunciation": "CHAYNJ",
+      "arabic": "فكة (باقي فلوس)",
+      "pos": "noun"
+    },
+    {
+      "word": "bill",
+      "pronunciation": "BIL",
+      "arabic": "فاتورة",
+      "pos": "noun"
+    },
+    {
+      "word": "cost",
+      "pronunciation": "KOST",
+      "arabic": "تكلفة",
+      "pos": "noun"
+    },
+    {
+      "word": "budget",
+      "pronunciation": "BUJ-et",
+      "arabic": "ميزانية",
+      "pos": "noun"
+    },
+    {
+      "word": "savings",
+      "pronunciation": "SAY-vingz",
+      "arabic": "مدخرات",
+      "pos": "noun"
+    },
+    {
+      "word": "debt",
+      "pronunciation": "DET",
+      "arabic": "دين",
+      "pos": "noun"
+    },
+    {
+      "word": "loan",
+      "pronunciation": "LOHN",
+      "arabic": "قرض",
+      "pos": "noun"
+    },
+    {
+      "word": "bank",
+      "pronunciation": "BANK",
+      "arabic": "بنك",
+      "pos": "noun"
+    },
+    {
+      "word": "account",
+      "pronunciation": "uh-KOWNT",
+      "arabic": "حساب بنكي",
+      "pos": "noun"
+    },
+    {
+      "word": "cashier",
+      "pronunciation": "ka-SHEER",
+      "arabic": "كاشير",
+      "pos": "noun"
+    },
+    {
+      "word": "customer",
+      "pronunciation": "KUS-tuh-mer",
+      "arabic": "زبون",
+      "pos": "noun"
+    },
+    {
+      "word": "brand",
+      "pronunciation": "BRAND",
+      "arabic": "ماركة",
+      "pos": "noun"
+    },
+    {
+      "word": "quality",
+      "pronunciation": "KWOL-ih-tee",
+      "arabic": "جودة",
+      "pos": "noun"
+    },
+    {
+      "word": "size",
+      "pronunciation": "SYZ",
+      "arabic": "مقاس",
+      "pos": "noun"
+    },
+    {
+      "word": "refund",
+      "pronunciation": "REE-fund",
+      "arabic": "استرجاع فلوس",
+      "pos": "noun"
+    },
+    {
+      "word": "exchange",
+      "pronunciation": "eks-CHAYNJ",
+      "arabic": "استبدال",
+      "pos": "noun"
+    },
+    {
+      "word": "warranty",
+      "pronunciation": "WOR-un-tee",
+      "arabic": "ضمان",
+      "pos": "noun"
+    },
+    {
+      "word": "delivery",
+      "pronunciation": "dih-LIV-uh-ree",
+      "arabic": "توصيل",
+      "pos": "noun"
+    },
+    {
+      "word": "order",
+      "pronunciation": "OR-der",
+      "arabic": "طلب",
+      "pos": "noun"
+    },
+    {
+      "word": "cart",
+      "pronunciation": "KART",
+      "arabic": "عربة تسوق",
+      "pos": "noun"
+    },
+    {
+      "word": "bargain",
+      "pronunciation": "BAR-gin",
+      "arabic": "صفقة/سعر مناسب",
+      "pos": "noun"
+    },
+    {
+      "word": "expensive",
+      "pronunciation": "ek-SPEN-siv",
+      "arabic": "غالي",
       "pos": "adjective"
     },
     {
-      "word": "late",
-      "pronunciation": "LAYT",
-      "arabic": "متأخر",
+      "word": "cheap",
+      "pronunciation": "CHEEP",
+      "arabic": "رخيص",
       "pos": "adjective"
     },
     {
-      "word": "usually",
-      "pronunciation": "YOO-zhoo-uh-lee",
-      "arabic": "عادةً",
-      "pos": "adverb"
-    },
-    {
-      "word": "sometimes",
-      "pronunciation": "SUM-tymz",
-      "arabic": "أحيانًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "always",
-      "pronunciation": "AWL-wayz",
-      "arabic": "دائمًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "never",
-      "pronunciation": "NEV-er",
-      "arabic": "أبدًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "often",
-      "pronunciation": "OFF-en",
-      "arabic": "غالبًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "rarely",
-      "pronunciation": "RAIR-lee",
-      "arabic": "نادرًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "weekday",
-      "pronunciation": "WEEK-day",
-      "arabic": "يوم عمل",
-      "pos": "noun"
-    },
-    {
-      "word": "weekend",
-      "pronunciation": "week-END",
-      "arabic": "عطلة نهاية الأسبوع",
-      "pos": "noun"
-    },
-    {
-      "word": "daily",
-      "pronunciation": "DAY-lee",
-      "arabic": "يومي",
+      "word": "affordable",
+      "pronunciation": "uh-FOR-duh-bul",
+      "arabic": "بسعر مناسب",
       "pos": "adjective"
     },
     {
-      "word": "nightly",
-      "pronunciation": "NYT-lee",
-      "arabic": "ليلي",
+      "word": "worth it",
+      "pronunciation": "WERTH it",
+      "arabic": "يستحق ثمنه",
       "pos": "adjective"
     },
     {
-      "word": "hurry",
-      "pronunciation": "HUR-ee",
-      "arabic": "يسرع",
-      "pos": "verb"
-    },
-    {
-      "word": "rush",
-      "pronunciation": "RUSH",
-      "arabic": "يندفع/ساعة ذروة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "organize",
-      "pronunciation": "OR-guh-nyz",
-      "arabic": "ينظّم",
-      "pos": "verb"
-    },
-    {
-      "word": "plan",
-      "pronunciation": "PLAN",
-      "arabic": "يخطط/خطة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "goal",
-      "pronunciation": "GOHL",
-      "arabic": "هدف",
-      "pos": "noun"
-    },
-    {
-      "word": "achieve",
-      "pronunciation": "uh-CHEEV",
-      "arabic": "يحقق",
-      "pos": "verb"
-    },
-    {
-      "word": "improve",
-      "pronunciation": "im-PROOV",
-      "arabic": "يتحسن",
-      "pos": "verb"
-    },
-    {
-      "word": "focus",
-      "pronunciation": "FOH-kus",
-      "arabic": "يركّز",
-      "pos": "verb"
-    },
-    {
-      "word": "energy",
-      "pronunciation": "EN-er-jee",
-      "arabic": "طاقة",
-      "pos": "noun"
-    },
-    {
-      "word": "tired",
-      "pronunciation": "TY-erd",
-      "arabic": "متعب",
+      "word": "on sale",
+      "pronunciation": "on SAYL",
+      "arabic": "معروض بتخفيض",
       "pos": "adjective"
     },
     {
-      "word": "awake",
-      "pronunciation": "uh-WAYK",
-      "arabic": "مستيقظ",
-      "pos": "adjective"
-    },
-    {
-      "word": "asleep",
-      "pronunciation": "uh-SLEEP",
-      "arabic": "نائم",
-      "pos": "adjective"
-    },
-    {
-      "word": "productive",
-      "pronunciation": "proh-DUK-tiv",
-      "arabic": "منتج",
-      "pos": "adjective"
-    },
-    {
-      "word": "lazy",
-      "pronunciation": "LAY-zee",
-      "arabic": "كسلان",
-      "pos": "adjective"
-    },
-    {
-      "word": "busy",
-      "pronunciation": "BIZ-ee",
-      "arabic": "مشغول",
-      "pos": "adjective"
-    },
-    {
-      "word": "free",
-      "pronunciation": "FREE",
-      "arabic": "فاضي/حر",
-      "pos": "adjective"
-    },
-    {
-      "word": "appointment",
-      "pronunciation": "uh-POINT-ment",
-      "arabic": "موعد",
-      "pos": "noun"
-    },
-    {
-      "word": "meeting",
-      "pronunciation": "MEE-ting",
-      "arabic": "اجتماع",
-      "pos": "noun"
-    },
-    {
-      "word": "task",
-      "pronunciation": "TASK",
-      "arabic": "مهمة",
-      "pos": "noun"
-    },
-    {
-      "word": "complete",
-      "pronunciation": "kum-PLEET",
-      "arabic": "يكمل",
+      "word": "buy",
+      "pronunciation": "BY",
+      "arabic": "يشتري",
       "pos": "verb"
     },
     {
-      "word": "finish",
-      "pronunciation": "FIN-ish",
-      "arabic": "ينهي",
+      "word": "sell",
+      "pronunciation": "SEL",
+      "arabic": "يبيع",
       "pos": "verb"
     },
     {
-      "word": "start",
-      "pronunciation": "START",
-      "arabic": "يبدأ",
+      "word": "pay",
+      "pronunciation": "PAY",
+      "arabic": "يدفع",
       "pos": "verb"
     },
     {
-      "word": "continue",
-      "pronunciation": "kun-TIN-yoo",
-      "arabic": "يستمر",
+      "word": "spend",
+      "pronunciation": "SPEND",
+      "arabic": "يصرف",
       "pos": "verb"
     },
     {
-      "word": "stop",
-      "pronunciation": "STOP",
-      "arabic": "يتوقف",
+      "word": "save",
+      "pronunciation": "SAYV",
+      "arabic": "يوفّر/يدّخر",
       "pos": "verb"
     },
     {
-      "word": "rest",
-      "pronunciation": "REST",
-      "arabic": "يرتاح/راحة",
-      "pos": "verb/noun"
+      "word": "borrow",
+      "pronunciation": "BOR-oh",
+      "arabic": "يستدين",
+      "pos": "verb"
     },
     {
-      "word": "nap",
-      "pronunciation": "NAP",
-      "arabic": "قيلولة",
+      "word": "lend",
+      "pronunciation": "LEND",
+      "arabic": "يسلّف",
+      "pos": "verb"
+    },
+    {
+      "word": "afford",
+      "pronunciation": "uh-FORD",
+      "arabic": "يقدر يدفع",
+      "pos": "verb"
+    },
+    {
+      "word": "bargain (verb)",
+      "pronunciation": "BAR-gin",
+      "arabic": "يفاوض على السعر",
+      "pos": "verb"
+    },
+    {
+      "word": "return",
+      "pronunciation": "rih-TERN",
+      "arabic": "يرجّع (سلعة)",
+      "pos": "verb"
+    },
+    {
+      "word": "compare",
+      "pronunciation": "kum-PAIR",
+      "arabic": "يقارن",
+      "pos": "verb"
+    },
+    {
+      "word": "choose",
+      "pronunciation": "CHOOZ",
+      "arabic": "يختار",
+      "pos": "verb"
+    },
+    {
+      "word": "try on",
+      "pronunciation": "TRY on",
+      "arabic": "يقيس (ملابس)",
+      "pos": "verb"
+    },
+    {
+      "word": "checkout",
+      "pronunciation": "CHEK-owt",
+      "arabic": "الدفع في المحل",
+      "pos": "verb"
+    },
+    {
+      "word": "withdraw",
+      "pronunciation": "with-DRAW",
+      "arabic": "يسحب (فلوس)",
+      "pos": "verb"
+    },
+    {
+      "word": "deposit",
+      "pronunciation": "dih-POZ-it",
+      "arabic": "يودّع (فلوس)",
+      "pos": "verb"
+    },
+    {
+      "word": "invest",
+      "pronunciation": "in-VEST",
+      "arabic": "يستثمر",
+      "pos": "verb"
+    },
+    {
+      "word": "owe",
+      "pronunciation": "OH",
+      "arabic": "يكون مديون",
+      "pos": "verb"
+    },
+    {
+      "word": "tax",
+      "pronunciation": "TAKS",
+      "arabic": "ضريبة",
       "pos": "noun"
     },
     {
-      "word": "chore",
-      "pronunciation": "CHOR",
-      "arabic": "عمل منزلي",
+      "word": "income",
+      "pronunciation": "IN-kum",
+      "arabic": "دخل",
       "pos": "noun"
     },
     {
-      "word": "housework",
-      "pronunciation": "HOWS-werk",
-      "arabic": "أعمال البيت",
-      "pos": "noun"
-    },
-    {
-      "word": "grocery",
-      "pronunciation": "GROH-ser-ee",
-      "arabic": "بقالة",
-      "pos": "noun"
-    },
-    {
-      "word": "errand",
-      "pronunciation": "AIR-und",
-      "arabic": "مشوار",
-      "pos": "noun"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "التنقل",
-      "pos": "noun"
-    },
-    {
-      "word": "traffic",
-      "pronunciation": "TRAF-ik",
-      "arabic": "حركة المرور",
+      "word": "shopping list",
+      "pronunciation": "SHOP-ing list",
+      "arabic": "قائمة تسوق",
       "pos": "noun"
     }
   ],

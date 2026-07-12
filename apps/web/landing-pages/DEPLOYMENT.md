@@ -5,7 +5,7 @@
 ### Steps:
 1. Log in to Cloudflare dashboard → Pages
 2. Click **"Create a project"** → **"Connect to Git"**
-3. Select the `empireenglishcommunity-glitch/EEC-REPO` repository
+3. Select the `empireenglishcommunity-glitch/empire-nexus` repository
 4. Configure build settings:
    - **Production branch:** `main`
    - **Build command:** (leave empty — static files, no build needed)
@@ -33,7 +33,7 @@ Since `empireenglish.online` is already on Cloudflare (from the Tunnel setup), a
    - Branch: `main`
    - Folder: `/apps/web/landing-pages`
 3. Click Save
-4. Pages will be live at: `https://empireenglishcommunity-glitch.github.io/EEC-REPO/`
+4. Pages will be live at: `https://empireenglishcommunity-glitch.github.io/empire-nexus/`
 
 ### Custom domain (GitHub Pages):
 1. In the Pages settings, add custom domain: `empireenglish.online`
