@@ -198,13 +198,25 @@ def get_member(discord_id: str) -> Optional[dict]:
 
 
 def update_member(discord_id: str, **fields):
-    """Update arbitrary fields on a member."""
+    """Update arbitrary fields on a member.
+
+    Auto-touches last_active_at to now UNLESS the caller explicitly passed
+    a value for it. Previously this unconditionally appended
+    ", last_active_at=datetime('now')" to the SQL regardless of what was
+    in `fields` -- if a caller ever passed last_active_at=... explicitly
+    (e.g. a backfill script, or an admin tool correcting a member's
+    activity timestamp), SQLite silently keeps the LAST assignment to a
+    column that's set twice in one UPDATE, so the explicit value was
+    always discarded in favor of "now" with no error or warning.
+    """
     if not fields:
         return
     sets = ", ".join(f"{k}=?" for k in fields)
     values = list(fields.values()) + [discord_id]
     conn = _connect()
-    conn.execute(f"UPDATE members SET {sets}, last_active_at=datetime('now') WHERE discord_id=?", values)
+    if "last_active_at" not in fields:
+        sets += ", last_active_at=datetime('now')"
+    conn.execute(f"UPDATE members SET {sets} WHERE discord_id=?", values)
     conn.commit()
     conn.close()
 
@@ -516,10 +528,16 @@ def create_pending_exam(discord_id: str, from_level: str, to_level: str,
 
 
 def last_advancement_attempt(discord_id: str) -> Optional[dict]:
-    """Get the most recent advancement exam attempt (any status)."""
+    """Get the most recent advancement exam attempt (any status).
+
+    Ties on attempted_at (SQLite's datetime('now') has only second-level
+    resolution, so two exams created within the same second are
+    indistinguishable by timestamp alone) are broken by id DESC, so the
+    row that was actually inserted last is always the one returned.
+    """
     conn = _connect()
     row = conn.execute(
-        "SELECT * FROM advancement_exams WHERE discord_id=? ORDER BY attempted_at DESC LIMIT 1",
+        "SELECT * FROM advancement_exams WHERE discord_id=? ORDER BY attempted_at DESC, id DESC LIMIT 1",
         (discord_id,),
     ).fetchone()
     conn.close()
