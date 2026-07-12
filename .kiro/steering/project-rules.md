@@ -8,11 +8,11 @@
 ## 0. Session Management Protocol
 
 > **⚠️ CORRECTED 2026-07-12:** the real, current source of truth for
-> project state is `empireenglishcommunity-glitch/Kiro-Master-Index`'s
+> project state is `empireenglishcommunity-glitch/empire-chronicle`'s
 > `SESSION_CONTINUITY.md` and `README.md` — NOT this repo's own
 > `PROJECT_STATUS.md`, which predates that convention and has been stale
 > since. `PROJECT_STATUS.md` is kept only as historical record; do not
-> treat it as current without cross-checking Kiro-Master-Index first.
+> treat it as current without cross-checking empire-chronicle first.
 >
 > **This repo's own `.kiro/steering/sync-protocol.md` is now superseded**
 > by the canonical version below — it had already drifted slightly out
@@ -23,7 +23,7 @@
 ### Session Commands (`/start`, `/status`, `/sync`, `/sync dry`, `/checkpoint`)
 
 The full protocol for all session commands is defined **once**, canonically,
-in `empireenglishcommunity-glitch/Kiro-Master-Index/.kiro/steering/AI-AGENT-PROTOCOL.md`.
+in `empireenglishcommunity-glitch/empire-chronicle/.kiro/steering/AI-AGENT-PROTOCOL.md`.
 Read that file — do not follow this repo's own `sync-protocol.md`, which
 is kept only as historical record of the pre-consolidation rules.
 
