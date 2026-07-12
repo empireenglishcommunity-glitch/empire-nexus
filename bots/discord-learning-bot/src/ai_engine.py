@@ -95,28 +95,55 @@ async def _call_llm(prompt: str, temperature: float = 0.8) -> Optional[str]:
 
 
 def _extract_json(text: str) -> Optional[dict]:
-    """Extract JSON from LLM response (handles code fences)."""
+    """Extract JSON from LLM response (handles code fences).
+
+    Handles both a top-level object ({...}) and a top-level array
+    ([...]) of objects -- generate_vocabulary_sheet()'s prompt
+    explicitly asks the LLM to "return ONLY a valid JSON array", so an
+    array response is a real, documented, expected shape here, not an
+    edge case.
+
+    Previously this searched for "{"/"}" unconditionally first, then
+    only tried "["/"]" in an except block using the ALREADY-TRUNCATED
+    text -- so for an array-of-objects response like
+    '[{"word": "a"}, {"word": "b"}]', the "{"/"}" search would slice
+    out `{"word": "a"}, {"word": "b"}` (first "{" to last "}"),
+    stripping away the outer "["/"]" before the array fallback ever got
+    a chance to see them, so parsing that (invalid, comma-joined,
+    unbracketed) substring as JSON always failed and the whole
+    function returned None for every array response.
+
+    Fixed by finding both candidate substrings (object-delimited and
+    array-delimited) against the ORIGINAL text, then trying whichever
+    one starts earlier first (the true outermost wrapper), falling
+    back to the other if that fails to parse.
+    """
     if not text:
         return None
     t = text.strip()
     t = t.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-    start = t.find("{")
-    end = t.rfind("}")
-    if start != -1 and end != -1 and end > start:
-        t = t[start:end + 1]
-    try:
-        return json.loads(t)
-    except json.JSONDecodeError:
-        # Try finding array
-        start = t.find("[")
-        end = t.rfind("]")
-        if start != -1 and end != -1:
-            try:
-                return json.loads(t[start:end + 1])
-            except json.JSONDecodeError:
-                pass
-        logger.warning(f"Failed to parse JSON from LLM response: {t[:200]}")
+    if not t:
         return None
+
+    obj_start, obj_end = t.find("{"), t.rfind("}")
+    arr_start, arr_end = t.find("["), t.rfind("]")
+
+    candidates = []
+    if obj_start != -1 and obj_end != -1 and obj_end > obj_start:
+        candidates.append((obj_start, t[obj_start:obj_end + 1]))
+    if arr_start != -1 and arr_end != -1 and arr_end > arr_start:
+        candidates.append((arr_start, t[arr_start:arr_end + 1]))
+
+    # Try whichever delimiter starts earliest in the text first.
+    candidates.sort(key=lambda c: c[0])
+    for _, candidate_text in candidates:
+        try:
+            return json.loads(candidate_text)
+        except json.JSONDecodeError:
+            continue
+
+    logger.warning(f"Failed to parse JSON from LLM response: {t[:200]}")
+    return None
 
 
 # ============================================================

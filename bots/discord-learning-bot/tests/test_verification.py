@@ -11,15 +11,9 @@ import datetime
 
 from src import verification
 
-
-def setup_function():
-    """Reset all module-level in-memory state before each test, since
-    verification.py uses plain module dicts (not the database) for
-    cooldowns, voice sessions, and pending quizzes."""
-    verification._last_done_time.clear()
-    verification._voice_sessions.clear()
-    verification._pending_quizzes.clear()
-    verification._pending_listening.clear()
+# Module-level state (cooldowns, voice sessions, pending quizzes) is reset
+# before every test by the autouse clear_module_level_state fixture in
+# conftest.py.
 
 
 # ============================================================

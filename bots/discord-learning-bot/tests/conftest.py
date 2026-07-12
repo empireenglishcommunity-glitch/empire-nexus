@@ -28,6 +28,21 @@ def temp_db(tmp_path, monkeypatch):
     yield db_file
 
 
+@pytest.fixture(autouse=True)
+def clear_module_level_state():
+    """features.py and verification.py both use plain module-level dicts
+    for in-memory session state (exam DM stages, quiz cooldowns, voice
+    sessions) rather than the database. Reset them before each test so
+    no state leaks between tests regardless of run order."""
+    from src import features, verification
+    features._pending_exams.clear()
+    verification._last_done_time.clear()
+    verification._voice_sessions.clear()
+    verification._pending_quizzes.clear()
+    verification._pending_listening.clear()
+    yield
+
+
 @pytest.fixture(scope="session", autouse=True)
 def load_curriculum():
     """Load the real curriculum data once for the whole test session.
