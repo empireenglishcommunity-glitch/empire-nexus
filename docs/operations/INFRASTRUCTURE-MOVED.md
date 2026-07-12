@@ -6,7 +6,7 @@ been split out into its own dedicated repository:
 
 **`empireenglishcommunity-glitch/empire-server-forge`**
 
-It was combined there with `Kiro-Master-Index`'s `server-cmdbot/`
+It was combined there with `empire-chronicle`'s `server-cmdbot/`
 (the admin Telegram bot), since server/infrastructure operations is a
 genuinely distinct concern from this repo's actual job (product code:
 bots, apps, workers) — it had only been living here as a subfolder by
