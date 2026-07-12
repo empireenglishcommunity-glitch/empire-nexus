@@ -6,364 +6,352 @@
   "grammar_pattern": "Modal verbs (should, must, have to)",
   "vocabulary": [
     {
-      "word": "wake up",
-      "pronunciation": "WAYK up",
-      "arabic": "يستيقظ",
+      "word": "phone",
+      "pronunciation": "FOHN",
+      "arabic": "تليفون",
+      "pos": "noun"
+    },
+    {
+      "word": "computer",
+      "pronunciation": "kum-PYOO-ter",
+      "arabic": "كمبيوتر",
+      "pos": "noun"
+    },
+    {
+      "word": "laptop",
+      "pronunciation": "LAP-top",
+      "arabic": "لابتوب",
+      "pos": "noun"
+    },
+    {
+      "word": "internet",
+      "pronunciation": "IN-ter-net",
+      "arabic": "إنترنت",
+      "pos": "noun"
+    },
+    {
+      "word": "wifi",
+      "pronunciation": "WY-fy",
+      "arabic": "واي فاي",
+      "pos": "noun"
+    },
+    {
+      "word": "network",
+      "pronunciation": "NET-werk",
+      "arabic": "شبكة",
+      "pos": "noun"
+    },
+    {
+      "word": "password",
+      "pronunciation": "PAS-werd",
+      "arabic": "كلمة سر",
+      "pos": "noun"
+    },
+    {
+      "word": "screen",
+      "pronunciation": "SKREEN",
+      "arabic": "شاشة",
+      "pos": "noun"
+    },
+    {
+      "word": "keyboard",
+      "pronunciation": "KEE-bord",
+      "arabic": "لوحة مفاتيح",
+      "pos": "noun"
+    },
+    {
+      "word": "battery",
+      "pronunciation": "BAT-uh-ree",
+      "arabic": "بطارية",
+      "pos": "noun"
+    },
+    {
+      "word": "charger",
+      "pronunciation": "CHAR-jer",
+      "arabic": "شاحن",
+      "pos": "noun"
+    },
+    {
+      "word": "app",
+      "pronunciation": "AP",
+      "arabic": "تطبيق",
+      "pos": "noun"
+    },
+    {
+      "word": "software",
+      "pronunciation": "SOFT-wair",
+      "arabic": "برنامج",
+      "pos": "noun"
+    },
+    {
+      "word": "website",
+      "pronunciation": "WEB-syt",
+      "arabic": "موقع إنترنت",
+      "pos": "noun"
+    },
+    {
+      "word": "email",
+      "pronunciation": "EE-mayl",
+      "arabic": "إيميل",
+      "pos": "noun"
+    },
+    {
+      "word": "message",
+      "pronunciation": "MES-ij",
+      "arabic": "رسالة",
+      "pos": "noun"
+    },
+    {
+      "word": "call",
+      "pronunciation": "KAWL",
+      "arabic": "مكالمة",
+      "pos": "noun"
+    },
+    {
+      "word": "video call",
+      "pronunciation": "VID-ee-oh KAWL",
+      "arabic": "مكالمة فيديو",
+      "pos": "noun"
+    },
+    {
+      "word": "camera",
+      "pronunciation": "KAM-ruh",
+      "arabic": "كاميرا",
+      "pos": "noun"
+    },
+    {
+      "word": "file",
+      "pronunciation": "FYL",
+      "arabic": "ملف",
+      "pos": "noun"
+    },
+    {
+      "word": "folder",
+      "pronunciation": "FOHL-der",
+      "arabic": "مجلد",
+      "pos": "noun"
+    },
+    {
+      "word": "account",
+      "pronunciation": "uh-KOWNT",
+      "arabic": "حساب (إلكتروني)",
+      "pos": "noun"
+    },
+    {
+      "word": "profile",
+      "pronunciation": "PROH-fyl",
+      "arabic": "الملف الشخصي",
+      "pos": "noun"
+    },
+    {
+      "word": "social media",
+      "pronunciation": "SOH-shul MEE-dee-uh",
+      "arabic": "وسائل التواصل",
+      "pos": "noun"
+    },
+    {
+      "word": "notification",
+      "pronunciation": "noh-tuh-fih-KAY-shun",
+      "arabic": "إشعار",
+      "pos": "noun"
+    },
+    {
+      "word": "update",
+      "pronunciation": "up-DAYT",
+      "arabic": "تحديث",
+      "pos": "noun"
+    },
+    {
+      "word": "virus",
+      "pronunciation": "VY-rus",
+      "arabic": "فيروس",
+      "pos": "noun"
+    },
+    {
+      "word": "device",
+      "pronunciation": "dih-VYS",
+      "arabic": "جهاز",
+      "pos": "noun"
+    },
+    {
+      "word": "cloud",
+      "pronunciation": "KLOWD",
+      "arabic": "التخزين السحابي",
+      "pos": "noun"
+    },
+    {
+      "word": "storage",
+      "pronunciation": "STOR-ij",
+      "arabic": "تخزين",
+      "pos": "noun"
+    },
+    {
+      "word": "signal",
+      "pronunciation": "SIG-nul",
+      "arabic": "إشارة",
+      "pos": "noun"
+    },
+    {
+      "word": "connect",
+      "pronunciation": "kuh-NEKT",
+      "arabic": "يوصّل/يربط",
       "pos": "verb"
     },
     {
-      "word": "brush",
-      "pronunciation": "BRUSH",
-      "arabic": "يفرش",
+      "word": "disconnect",
+      "pronunciation": "dis-kuh-NEKT",
+      "arabic": "يقطع الاتصال",
       "pos": "verb"
     },
     {
-      "word": "shower",
-      "pronunciation": "SHOW-er",
-      "arabic": "دش/يستحم",
-      "pos": "noun/verb"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "ينتقل للعمل",
+      "word": "install",
+      "pronunciation": "in-STAWL",
+      "arabic": "يثبّت (برنامج)",
       "pos": "verb"
     },
     {
-      "word": "routine",
-      "pronunciation": "roo-TEEN",
-      "arabic": "روتين",
-      "pos": "noun"
-    },
-    {
-      "word": "schedule",
-      "pronunciation": "SKEJ-ool",
-      "arabic": "جدول",
-      "pos": "noun"
-    },
-    {
-      "word": "alarm",
-      "pronunciation": "uh-LARM",
-      "arabic": "منبه",
-      "pos": "noun"
-    },
-    {
-      "word": "habit",
-      "pronunciation": "HAB-it",
-      "arabic": "عادة",
-      "pos": "noun"
-    },
-    {
-      "word": "exercise",
-      "pronunciation": "EK-ser-syz",
-      "arabic": "يتمرن/تمرين",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "breakfast",
-      "pronunciation": "BREK-fust",
-      "arabic": "فطور",
-      "pos": "noun"
-    },
-    {
-      "word": "lunch",
-      "pronunciation": "LUNCH",
-      "arabic": "غداء",
-      "pos": "noun"
-    },
-    {
-      "word": "dinner",
-      "pronunciation": "DIN-er",
-      "arabic": "عشاء",
-      "pos": "noun"
-    },
-    {
-      "word": "prepare",
-      "pronunciation": "prih-PAIR",
-      "arabic": "يحضّر",
+      "word": "delete",
+      "pronunciation": "dih-LEET",
+      "arabic": "يحذف",
       "pos": "verb"
     },
     {
-      "word": "relax",
-      "pronunciation": "rih-LAKS",
-      "arabic": "يسترخي",
+      "word": "save",
+      "pronunciation": "SAYV",
+      "arabic": "يحفظ",
       "pos": "verb"
     },
     {
-      "word": "evening",
-      "pronunciation": "EEV-ning",
-      "arabic": "مساء",
-      "pos": "noun"
+      "word": "upload",
+      "pronunciation": "UP-lohd",
+      "arabic": "يرفع (ملف)",
+      "pos": "verb"
     },
     {
-      "word": "midnight",
-      "pronunciation": "MID-nyt",
-      "arabic": "منتصف الليل",
-      "pos": "noun"
+      "word": "text",
+      "pronunciation": "TEKST",
+      "arabic": "يبعت رسالة",
+      "pos": "verb"
     },
     {
-      "word": "early",
-      "pronunciation": "ER-lee",
-      "arabic": "مبكر",
+      "word": "reply",
+      "pronunciation": "rih-PLY",
+      "arabic": "يرد",
+      "pos": "verb"
+    },
+    {
+      "word": "search",
+      "pronunciation": "SERCH",
+      "arabic": "يبحث",
+      "pos": "verb"
+    },
+    {
+      "word": "click",
+      "pronunciation": "KLIK",
+      "arabic": "يضغط (كليك)",
+      "pos": "verb"
+    },
+    {
+      "word": "type",
+      "pronunciation": "TYP",
+      "arabic": "يكتب على الكيبورد",
+      "pos": "verb"
+    },
+    {
+      "word": "log in",
+      "pronunciation": "LOG in",
+      "arabic": "يسجل دخول",
+      "pos": "verb"
+    },
+    {
+      "word": "log out",
+      "pronunciation": "LOG owt",
+      "arabic": "يسجل خروج",
+      "pos": "verb"
+    },
+    {
+      "word": "restart",
+      "pronunciation": "ree-START",
+      "arabic": "يعيد التشغيل",
+      "pos": "verb"
+    },
+    {
+      "word": "charge",
+      "pronunciation": "CHARJ",
+      "arabic": "يشحن (بطارية)",
+      "pos": "verb"
+    },
+    {
+      "word": "record",
+      "pronunciation": "rih-KORD",
+      "arabic": "يسجّل",
+      "pos": "verb"
+    },
+    {
+      "word": "share",
+      "pronunciation": "SHAIR",
+      "arabic": "يشارك",
+      "pos": "verb"
+    },
+    {
+      "word": "block",
+      "pronunciation": "BLOK",
+      "arabic": "يحظر",
+      "pos": "verb"
+    },
+    {
+      "word": "digital",
+      "pronunciation": "DIJ-ih-tul",
+      "arabic": "رقمي",
       "pos": "adjective"
     },
     {
-      "word": "late",
-      "pronunciation": "LAYT",
-      "arabic": "متأخر",
+      "word": "wireless",
+      "pronunciation": "WYR-les",
+      "arabic": "لاسلكي",
       "pos": "adjective"
     },
     {
-      "word": "usually",
-      "pronunciation": "YOO-zhoo-uh-lee",
-      "arabic": "عادةً",
-      "pos": "adverb"
-    },
-    {
-      "word": "sometimes",
-      "pronunciation": "SUM-tymz",
-      "arabic": "أحيانًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "always",
-      "pronunciation": "AWL-wayz",
-      "arabic": "دائمًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "never",
-      "pronunciation": "NEV-er",
-      "arabic": "أبدًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "often",
-      "pronunciation": "OFF-en",
-      "arabic": "غالبًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "rarely",
-      "pronunciation": "RAIR-lee",
-      "arabic": "نادرًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "weekday",
-      "pronunciation": "WEEK-day",
-      "arabic": "يوم عمل",
-      "pos": "noun"
-    },
-    {
-      "word": "weekend",
-      "pronunciation": "week-END",
-      "arabic": "عطلة نهاية الأسبوع",
-      "pos": "noun"
-    },
-    {
-      "word": "daily",
-      "pronunciation": "DAY-lee",
-      "arabic": "يومي",
+      "word": "online",
+      "pronunciation": "ON-lyn",
+      "arabic": "متصل بالإنترنت",
       "pos": "adjective"
     },
     {
-      "word": "nightly",
-      "pronunciation": "NYT-lee",
-      "arabic": "ليلي",
+      "word": "offline",
+      "pronunciation": "OFF-lyn",
+      "arabic": "غير متصل",
       "pos": "adjective"
     },
     {
-      "word": "hurry",
-      "pronunciation": "HUR-ee",
-      "arabic": "يسرع",
-      "pos": "verb"
-    },
-    {
-      "word": "rush",
-      "pronunciation": "RUSH",
-      "arabic": "يندفع/ساعة ذروة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "organize",
-      "pronunciation": "OR-guh-nyz",
-      "arabic": "ينظّم",
-      "pos": "verb"
-    },
-    {
-      "word": "plan",
-      "pronunciation": "PLAN",
-      "arabic": "يخطط/خطة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "goal",
-      "pronunciation": "GOHL",
-      "arabic": "هدف",
-      "pos": "noun"
-    },
-    {
-      "word": "achieve",
-      "pronunciation": "uh-CHEEV",
-      "arabic": "يحقق",
-      "pos": "verb"
-    },
-    {
-      "word": "improve",
-      "pronunciation": "im-PROOV",
-      "arabic": "يتحسن",
-      "pos": "verb"
-    },
-    {
-      "word": "focus",
-      "pronunciation": "FOH-kus",
-      "arabic": "يركّز",
-      "pos": "verb"
-    },
-    {
-      "word": "energy",
-      "pronunciation": "EN-er-jee",
-      "arabic": "طاقة",
-      "pos": "noun"
-    },
-    {
-      "word": "tired",
-      "pronunciation": "TY-erd",
-      "arabic": "متعب",
+      "word": "outdated",
+      "pronunciation": "owt-DAY-ted",
+      "arabic": "قديم/غير محدّث",
       "pos": "adjective"
     },
     {
-      "word": "awake",
-      "pronunciation": "uh-WAYK",
-      "arabic": "مستيقظ",
+      "word": "fast",
+      "pronunciation": "FAST",
+      "arabic": "سريع",
       "pos": "adjective"
     },
     {
-      "word": "asleep",
-      "pronunciation": "uh-SLEEP",
-      "arabic": "نائم",
+      "word": "slow",
+      "pronunciation": "SLOH",
+      "arabic": "بطيء",
       "pos": "adjective"
     },
     {
-      "word": "productive",
-      "pronunciation": "proh-DUK-tiv",
-      "arabic": "منتج",
+      "word": "smart",
+      "pronunciation": "SMART",
+      "arabic": "ذكي",
       "pos": "adjective"
     },
     {
-      "word": "lazy",
-      "pronunciation": "LAY-zee",
-      "arabic": "كسلان",
+      "word": "secure",
+      "pronunciation": "sih-KYOOR",
+      "arabic": "آمن",
       "pos": "adjective"
-    },
-    {
-      "word": "busy",
-      "pronunciation": "BIZ-ee",
-      "arabic": "مشغول",
-      "pos": "adjective"
-    },
-    {
-      "word": "free",
-      "pronunciation": "FREE",
-      "arabic": "فاضي/حر",
-      "pos": "adjective"
-    },
-    {
-      "word": "appointment",
-      "pronunciation": "uh-POINT-ment",
-      "arabic": "موعد",
-      "pos": "noun"
-    },
-    {
-      "word": "meeting",
-      "pronunciation": "MEE-ting",
-      "arabic": "اجتماع",
-      "pos": "noun"
-    },
-    {
-      "word": "task",
-      "pronunciation": "TASK",
-      "arabic": "مهمة",
-      "pos": "noun"
-    },
-    {
-      "word": "complete",
-      "pronunciation": "kum-PLEET",
-      "arabic": "يكمل",
-      "pos": "verb"
-    },
-    {
-      "word": "finish",
-      "pronunciation": "FIN-ish",
-      "arabic": "ينهي",
-      "pos": "verb"
-    },
-    {
-      "word": "start",
-      "pronunciation": "START",
-      "arabic": "يبدأ",
-      "pos": "verb"
-    },
-    {
-      "word": "continue",
-      "pronunciation": "kun-TIN-yoo",
-      "arabic": "يستمر",
-      "pos": "verb"
-    },
-    {
-      "word": "stop",
-      "pronunciation": "STOP",
-      "arabic": "يتوقف",
-      "pos": "verb"
-    },
-    {
-      "word": "rest",
-      "pronunciation": "REST",
-      "arabic": "يرتاح/راحة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "nap",
-      "pronunciation": "NAP",
-      "arabic": "قيلولة",
-      "pos": "noun"
-    },
-    {
-      "word": "chore",
-      "pronunciation": "CHOR",
-      "arabic": "عمل منزلي",
-      "pos": "noun"
-    },
-    {
-      "word": "housework",
-      "pronunciation": "HOWS-werk",
-      "arabic": "أعمال البيت",
-      "pos": "noun"
-    },
-    {
-      "word": "grocery",
-      "pronunciation": "GROH-ser-ee",
-      "arabic": "بقالة",
-      "pos": "noun"
-    },
-    {
-      "word": "errand",
-      "pronunciation": "AIR-und",
-      "arabic": "مشوار",
-      "pos": "noun"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "التنقل",
-      "pos": "noun"
-    },
-    {
-      "word": "traffic",
-      "pronunciation": "TRAF-ik",
-      "arabic": "حركة المرور",
-      "pos": "noun"
     }
   ],
   "speaking_missions": {

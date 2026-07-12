@@ -6,363 +6,351 @@
   "grammar_pattern": "Comparatives (bigger, more expensive)",
   "vocabulary": [
     {
-      "word": "wake up",
-      "pronunciation": "WAYK up",
-      "arabic": "يستيقظ",
+      "word": "job",
+      "pronunciation": "JOB",
+      "arabic": "وظيفة",
+      "pos": "noun"
+    },
+    {
+      "word": "career",
+      "pronunciation": "kuh-REER",
+      "arabic": "مسار مهني",
+      "pos": "noun"
+    },
+    {
+      "word": "office",
+      "pronunciation": "OF-is",
+      "arabic": "مكتب",
+      "pos": "noun"
+    },
+    {
+      "word": "employee",
+      "pronunciation": "em-PLOY-ee",
+      "arabic": "موظف",
+      "pos": "noun"
+    },
+    {
+      "word": "employer",
+      "pronunciation": "em-PLOY-er",
+      "arabic": "صاحب العمل",
+      "pos": "noun"
+    },
+    {
+      "word": "manager",
+      "pronunciation": "MAN-uh-jer",
+      "arabic": "مدير",
+      "pos": "noun"
+    },
+    {
+      "word": "colleague",
+      "pronunciation": "KOL-eeg",
+      "arabic": "زميل عمل",
+      "pos": "noun"
+    },
+    {
+      "word": "salary",
+      "pronunciation": "SAL-uh-ree",
+      "arabic": "راتب",
+      "pos": "noun"
+    },
+    {
+      "word": "raise",
+      "pronunciation": "RAYZ",
+      "arabic": "زيادة راتب",
+      "pos": "noun"
+    },
+    {
+      "word": "promotion",
+      "pronunciation": "pruh-MOH-shun",
+      "arabic": "ترقية",
+      "pos": "noun"
+    },
+    {
+      "word": "resume",
+      "pronunciation": "REZ-oo-may",
+      "arabic": "سيرة ذاتية",
+      "pos": "noun"
+    },
+    {
+      "word": "interview",
+      "pronunciation": "IN-ter-vyoo",
+      "arabic": "مقابلة عمل",
+      "pos": "noun"
+    },
+    {
+      "word": "application",
+      "pronunciation": "ap-lih-KAY-shun",
+      "arabic": "طلب توظيف",
+      "pos": "noun"
+    },
+    {
+      "word": "contract",
+      "pronunciation": "KON-trakt",
+      "arabic": "عقد",
+      "pos": "noun"
+    },
+    {
+      "word": "deadline",
+      "pronunciation": "DED-lyn",
+      "arabic": "موعد نهائي",
+      "pos": "noun"
+    },
+    {
+      "word": "project",
+      "pronunciation": "PROJ-ekt",
+      "arabic": "مشروع",
+      "pos": "noun"
+    },
+    {
+      "word": "client",
+      "pronunciation": "KLY-ent",
+      "arabic": "عميل",
+      "pos": "noun"
+    },
+    {
+      "word": "customer",
+      "pronunciation": "KUS-tuh-mer",
+      "arabic": "عميل/زبون",
+      "pos": "noun"
+    },
+    {
+      "word": "department",
+      "pronunciation": "dih-PART-ment",
+      "arabic": "قسم",
+      "pos": "noun"
+    },
+    {
+      "word": "team",
+      "pronunciation": "TEEM",
+      "arabic": "فريق",
+      "pos": "noun"
+    },
+    {
+      "word": "shift",
+      "pronunciation": "SHIFT",
+      "arabic": "شيفت/دوام",
+      "pos": "noun"
+    },
+    {
+      "word": "overtime",
+      "pronunciation": "OH-ver-tym",
+      "arabic": "وقت إضافي",
+      "pos": "noun"
+    },
+    {
+      "word": "vacation day",
+      "pronunciation": "vay-KAY-shun DAY",
+      "arabic": "يوم عطلة",
+      "pos": "noun"
+    },
+    {
+      "word": "sick leave",
+      "pronunciation": "SIK LEEV",
+      "arabic": "إجازة مرضية",
+      "pos": "noun"
+    },
+    {
+      "word": "benefits",
+      "pronunciation": "BEN-uh-fits",
+      "arabic": "مزايا وظيفية",
+      "pos": "noun"
+    },
+    {
+      "word": "skill",
+      "pronunciation": "SKIL",
+      "arabic": "مهارة",
+      "pos": "noun"
+    },
+    {
+      "word": "experience",
+      "pronunciation": "ek-SPEER-ee-ens",
+      "arabic": "خبرة",
+      "pos": "noun"
+    },
+    {
+      "word": "training",
+      "pronunciation": "TRAY-ning",
+      "arabic": "تدريب",
+      "pos": "noun"
+    },
+    {
+      "word": "boss",
+      "pronunciation": "BOSS",
+      "arabic": "رئيس في العمل",
+      "pos": "noun"
+    },
+    {
+      "word": "intern",
+      "pronunciation": "IN-tern",
+      "arabic": "متدرب",
+      "pos": "noun"
+    },
+    {
+      "word": "freelancer",
+      "pronunciation": "FREE-lan-ser",
+      "arabic": "مستقل (فريلانسر)",
+      "pos": "noun"
+    },
+    {
+      "word": "resign",
+      "pronunciation": "rih-ZYN",
+      "arabic": "يستقيل",
       "pos": "verb"
     },
     {
-      "word": "brush",
-      "pronunciation": "BRUSH",
-      "arabic": "يفرش",
+      "word": "hire",
+      "pronunciation": "HYR",
+      "arabic": "يوظّف",
       "pos": "verb"
     },
     {
-      "word": "shower",
-      "pronunciation": "SHOW-er",
-      "arabic": "دش/يستحم",
-      "pos": "noun/verb"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "ينتقل للعمل",
+      "word": "fire",
+      "pronunciation": "FYR",
+      "arabic": "يفصل من العمل",
       "pos": "verb"
     },
     {
-      "word": "routine",
-      "pronunciation": "roo-TEEN",
-      "arabic": "روتين",
-      "pos": "noun"
-    },
-    {
-      "word": "schedule",
-      "pronunciation": "SKEJ-ool",
-      "arabic": "جدول",
-      "pos": "noun"
-    },
-    {
-      "word": "alarm",
-      "pronunciation": "uh-LARM",
-      "arabic": "منبه",
-      "pos": "noun"
-    },
-    {
-      "word": "habit",
-      "pronunciation": "HAB-it",
-      "arabic": "عادة",
-      "pos": "noun"
-    },
-    {
-      "word": "exercise",
-      "pronunciation": "EK-ser-syz",
-      "arabic": "يتمرن/تمرين",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "breakfast",
-      "pronunciation": "BREK-fust",
-      "arabic": "فطور",
-      "pos": "noun"
-    },
-    {
-      "word": "lunch",
-      "pronunciation": "LUNCH",
-      "arabic": "غداء",
-      "pos": "noun"
-    },
-    {
-      "word": "dinner",
-      "pronunciation": "DIN-er",
-      "arabic": "عشاء",
-      "pos": "noun"
-    },
-    {
-      "word": "prepare",
-      "pronunciation": "prih-PAIR",
-      "arabic": "يحضّر",
+      "word": "apply",
+      "pronunciation": "uh-PLY",
+      "arabic": "يتقدّم لوظيفة",
       "pos": "verb"
     },
     {
-      "word": "relax",
-      "pronunciation": "rih-LAKS",
-      "arabic": "يسترخي",
+      "word": "negotiate",
+      "pronunciation": "nih-GOH-shee-ayt",
+      "arabic": "يتفاوض",
       "pos": "verb"
     },
     {
-      "word": "evening",
-      "pronunciation": "EEV-ning",
-      "arabic": "مساء",
-      "pos": "noun"
+      "word": "manage",
+      "pronunciation": "MAN-ij",
+      "arabic": "يدير",
+      "pos": "verb"
     },
     {
-      "word": "midnight",
-      "pronunciation": "MID-nyt",
-      "arabic": "منتصف الليل",
-      "pos": "noun"
+      "word": "supervise",
+      "pronunciation": "SOO-per-vyz",
+      "arabic": "يشرف على",
+      "pos": "verb"
     },
     {
-      "word": "early",
-      "pronunciation": "ER-lee",
-      "arabic": "مبكر",
+      "word": "cooperate",
+      "pronunciation": "koh-OP-uh-rayt",
+      "arabic": "يتعاون",
+      "pos": "verb"
+    },
+    {
+      "word": "report",
+      "pronunciation": "rih-PORT",
+      "arabic": "يقدّم تقرير",
+      "pos": "verb"
+    },
+    {
+      "word": "attend",
+      "pronunciation": "uh-TEND",
+      "arabic": "يحضر",
+      "pos": "verb"
+    },
+    {
+      "word": "delegate",
+      "pronunciation": "DEL-uh-gayt",
+      "arabic": "يفوّض",
+      "pos": "verb"
+    },
+    {
+      "word": "handle",
+      "pronunciation": "HAN-dul",
+      "arabic": "يتعامل مع",
+      "pos": "verb"
+    },
+    {
+      "word": "quit",
+      "pronunciation": "KWIT",
+      "arabic": "يترك العمل",
+      "pos": "verb"
+    },
+    {
+      "word": "retire",
+      "pronunciation": "rih-TYR",
+      "arabic": "يتقاعد",
+      "pos": "verb"
+    },
+    {
+      "word": "earn",
+      "pronunciation": "ERN",
+      "arabic": "يكسب",
+      "pos": "verb"
+    },
+    {
+      "word": "professional",
+      "pronunciation": "pruh-FESH-uh-nul",
+      "arabic": "محترف",
       "pos": "adjective"
     },
     {
-      "word": "late",
-      "pronunciation": "LAYT",
-      "arabic": "متأخر",
+      "word": "reliable",
+      "pronunciation": "rih-LY-uh-bul",
+      "arabic": "موثوق",
       "pos": "adjective"
     },
     {
-      "word": "usually",
-      "pronunciation": "YOO-zhoo-uh-lee",
-      "arabic": "عادةً",
-      "pos": "adverb"
-    },
-    {
-      "word": "sometimes",
-      "pronunciation": "SUM-tymz",
-      "arabic": "أحيانًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "always",
-      "pronunciation": "AWL-wayz",
-      "arabic": "دائمًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "never",
-      "pronunciation": "NEV-er",
-      "arabic": "أبدًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "often",
-      "pronunciation": "OFF-en",
-      "arabic": "غالبًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "rarely",
-      "pronunciation": "RAIR-lee",
-      "arabic": "نادرًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "weekday",
-      "pronunciation": "WEEK-day",
-      "arabic": "يوم عمل",
-      "pos": "noun"
-    },
-    {
-      "word": "weekend",
-      "pronunciation": "week-END",
-      "arabic": "عطلة نهاية الأسبوع",
-      "pos": "noun"
-    },
-    {
-      "word": "daily",
-      "pronunciation": "DAY-lee",
-      "arabic": "يومي",
+      "word": "punctual",
+      "pronunciation": "PUNK-choo-ul",
+      "arabic": "منضبط بالوقت",
       "pos": "adjective"
     },
     {
-      "word": "nightly",
-      "pronunciation": "NYT-lee",
-      "arabic": "ليلي",
+      "word": "qualified",
+      "pronunciation": "KWAL-uh-fyd",
+      "arabic": "مؤهّل",
       "pos": "adjective"
     },
     {
-      "word": "hurry",
-      "pronunciation": "HUR-ee",
-      "arabic": "يسرع",
-      "pos": "verb"
-    },
-    {
-      "word": "rush",
-      "pronunciation": "RUSH",
-      "arabic": "يندفع/ساعة ذروة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "organize",
-      "pronunciation": "OR-guh-nyz",
-      "arabic": "ينظّم",
-      "pos": "verb"
-    },
-    {
-      "word": "plan",
-      "pronunciation": "PLAN",
-      "arabic": "يخطط/خطة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "goal",
-      "pronunciation": "GOHL",
-      "arabic": "هدف",
-      "pos": "noun"
-    },
-    {
-      "word": "achieve",
-      "pronunciation": "uh-CHEEV",
-      "arabic": "يحقق",
-      "pos": "verb"
-    },
-    {
-      "word": "improve",
-      "pronunciation": "im-PROOV",
-      "arabic": "يتحسن",
-      "pos": "verb"
-    },
-    {
-      "word": "focus",
-      "pronunciation": "FOH-kus",
-      "arabic": "يركّز",
-      "pos": "verb"
-    },
-    {
-      "word": "energy",
-      "pronunciation": "EN-er-jee",
-      "arabic": "طاقة",
-      "pos": "noun"
-    },
-    {
-      "word": "tired",
-      "pronunciation": "TY-erd",
-      "arabic": "متعب",
+      "word": "efficient",
+      "pronunciation": "ih-FISH-ent",
+      "arabic": "كفء",
       "pos": "adjective"
     },
     {
-      "word": "awake",
-      "pronunciation": "uh-WAYK",
-      "arabic": "مستيقظ",
+      "word": "part-time",
+      "pronunciation": "part TYM",
+      "arabic": "دوام جزئي",
       "pos": "adjective"
     },
     {
-      "word": "asleep",
-      "pronunciation": "uh-SLEEP",
-      "arabic": "نائم",
+      "word": "full-time",
+      "pronunciation": "fool TYM",
+      "arabic": "دوام كامل",
       "pos": "adjective"
     },
     {
-      "word": "productive",
-      "pronunciation": "proh-DUK-tiv",
-      "arabic": "منتج",
+      "word": "remote",
+      "pronunciation": "rih-MOHT",
+      "arabic": "عن بعد",
       "pos": "adjective"
     },
     {
-      "word": "lazy",
-      "pronunciation": "LAY-zee",
-      "arabic": "كسلان",
+      "word": "unemployed",
+      "pronunciation": "un-em-PLOYD",
+      "arabic": "عاطل عن العمل",
       "pos": "adjective"
     },
     {
-      "word": "busy",
-      "pronunciation": "BIZ-ee",
-      "arabic": "مشغول",
+      "word": "stressful",
+      "pronunciation": "STRES-ful",
+      "arabic": "مليان ضغط",
       "pos": "adjective"
     },
     {
-      "word": "free",
-      "pronunciation": "FREE",
-      "arabic": "فاضي/حر",
+      "word": "flexible",
+      "pronunciation": "FLEK-suh-bul",
+      "arabic": "مرن",
       "pos": "adjective"
     },
     {
-      "word": "appointment",
-      "pronunciation": "uh-POINT-ment",
-      "arabic": "موعد",
-      "pos": "noun"
-    },
-    {
-      "word": "meeting",
-      "pronunciation": "MEE-ting",
-      "arabic": "اجتماع",
-      "pos": "noun"
-    },
-    {
-      "word": "task",
-      "pronunciation": "TASK",
-      "arabic": "مهمة",
-      "pos": "noun"
-    },
-    {
-      "word": "complete",
-      "pronunciation": "kum-PLEET",
-      "arabic": "يكمل",
-      "pos": "verb"
-    },
-    {
-      "word": "finish",
-      "pronunciation": "FIN-ish",
-      "arabic": "ينهي",
-      "pos": "verb"
-    },
-    {
-      "word": "start",
-      "pronunciation": "START",
-      "arabic": "يبدأ",
-      "pos": "verb"
-    },
-    {
-      "word": "continue",
-      "pronunciation": "kun-TIN-yoo",
-      "arabic": "يستمر",
-      "pos": "verb"
-    },
-    {
-      "word": "stop",
-      "pronunciation": "STOP",
-      "arabic": "يتوقف",
-      "pos": "verb"
-    },
-    {
-      "word": "rest",
-      "pronunciation": "REST",
-      "arabic": "يرتاح/راحة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "nap",
-      "pronunciation": "NAP",
-      "arabic": "قيلولة",
-      "pos": "noun"
-    },
-    {
-      "word": "chore",
-      "pronunciation": "CHOR",
-      "arabic": "عمل منزلي",
-      "pos": "noun"
-    },
-    {
-      "word": "housework",
-      "pronunciation": "HOWS-werk",
-      "arabic": "أعمال البيت",
-      "pos": "noun"
-    },
-    {
-      "word": "grocery",
-      "pronunciation": "GROH-ser-ee",
-      "arabic": "بقالة",
-      "pos": "noun"
-    },
-    {
-      "word": "errand",
-      "pronunciation": "AIR-und",
-      "arabic": "مشوار",
-      "pos": "noun"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "التنقل",
-      "pos": "noun"
-    },
-    {
-      "word": "traffic",
-      "pronunciation": "TRAF-ik",
-      "arabic": "حركة المرور",
+      "word": "workload",
+      "pronunciation": "WERK-lohd",
+      "arabic": "حجم العمل",
       "pos": "noun"
     }
   ],

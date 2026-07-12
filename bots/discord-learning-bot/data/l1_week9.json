@@ -6,364 +6,334 @@
   "grammar_pattern": "Prepositions of time and place",
   "vocabulary": [
     {
-      "word": "wake up",
-      "pronunciation": "WAYK up",
-      "arabic": "يستيقظ",
+      "word": "school",
+      "pronunciation": "SKOOL",
+      "arabic": "مدرسة",
+      "pos": "noun"
+    },
+    {
+      "word": "university",
+      "pronunciation": "yoo-nih-VER-sih-tee",
+      "arabic": "جامعة",
+      "pos": "noun"
+    },
+    {
+      "word": "student",
+      "pronunciation": "STOO-dent",
+      "arabic": "طالب",
+      "pos": "noun"
+    },
+    {
+      "word": "teacher",
+      "pronunciation": "TEE-cher",
+      "arabic": "معلم",
+      "pos": "noun"
+    },
+    {
+      "word": "professor",
+      "pronunciation": "pruh-FES-er",
+      "arabic": "أستاذ جامعي",
+      "pos": "noun"
+    },
+    {
+      "word": "classroom",
+      "pronunciation": "KLAS-room",
+      "arabic": "فصل دراسي",
+      "pos": "noun"
+    },
+    {
+      "word": "lesson",
+      "pronunciation": "LES-un",
+      "arabic": "درس",
+      "pos": "noun"
+    },
+    {
+      "word": "lecture",
+      "pronunciation": "LEK-cher",
+      "arabic": "محاضرة",
+      "pos": "noun"
+    },
+    {
+      "word": "subject",
+      "pronunciation": "SUB-jekt",
+      "arabic": "مادة دراسية",
+      "pos": "noun"
+    },
+    {
+      "word": "grade",
+      "pronunciation": "GRAYD",
+      "arabic": "درجة/تقييم",
+      "pos": "noun"
+    },
+    {
+      "word": "exam",
+      "pronunciation": "eg-ZAM",
+      "arabic": "امتحان",
+      "pos": "noun"
+    },
+    {
+      "word": "test",
+      "pronunciation": "TEST",
+      "arabic": "اختبار",
+      "pos": "noun"
+    },
+    {
+      "word": "homework",
+      "pronunciation": "HOHM-werk",
+      "arabic": "واجب منزلي",
+      "pos": "noun"
+    },
+    {
+      "word": "assignment",
+      "pronunciation": "uh-SYN-ment",
+      "arabic": "تكليف/مهمة",
+      "pos": "noun"
+    },
+    {
+      "word": "degree",
+      "pronunciation": "dih-GREE",
+      "arabic": "شهادة جامعية",
+      "pos": "noun"
+    },
+    {
+      "word": "diploma",
+      "pronunciation": "dih-PLOH-muh",
+      "arabic": "دبلومة",
+      "pos": "noun"
+    },
+    {
+      "word": "scholarship",
+      "pronunciation": "SKOL-er-ship",
+      "arabic": "منحة دراسية",
+      "pos": "noun"
+    },
+    {
+      "word": "tuition",
+      "pronunciation": "too-ISH-un",
+      "arabic": "مصاريف دراسية",
+      "pos": "noun"
+    },
+    {
+      "word": "library",
+      "pronunciation": "LY-brer-ee",
+      "arabic": "مكتبة",
+      "pos": "noun"
+    },
+    {
+      "word": "textbook",
+      "pronunciation": "TEKST-book",
+      "arabic": "كتاب دراسي",
+      "pos": "noun"
+    },
+    {
+      "word": "notebook",
+      "pronunciation": "NOHT-book",
+      "arabic": "دفتر",
+      "pos": "noun"
+    },
+    {
+      "word": "curriculum",
+      "pronunciation": "kuh-RIK-yuh-lum",
+      "arabic": "منهج دراسي",
+      "pos": "noun"
+    },
+    {
+      "word": "semester",
+      "pronunciation": "sih-MES-ter",
+      "arabic": "فصل دراسي (ترم)",
+      "pos": "noun"
+    },
+    {
+      "word": "major",
+      "pronunciation": "MAY-jer",
+      "arabic": "تخصص دراسي",
+      "pos": "noun"
+    },
+    {
+      "word": "classmate",
+      "pronunciation": "KLAS-mayt",
+      "arabic": "زميل دراسة",
+      "pos": "noun"
+    },
+    {
+      "word": "graduate",
+      "pronunciation": "GRAJ-oo-ut",
+      "arabic": "خريج",
+      "pos": "noun"
+    },
+    {
+      "word": "attendance",
+      "pronunciation": "uh-TEN-dens",
+      "arabic": "الحضور",
+      "pos": "noun"
+    },
+    {
+      "word": "knowledge",
+      "pronunciation": "NOL-ij",
+      "arabic": "معرفة",
+      "pos": "noun"
+    },
+    {
+      "word": "skill",
+      "pronunciation": "SKIL",
+      "arabic": "مهارة",
+      "pos": "noun"
+    },
+    {
+      "word": "mistake",
+      "pronunciation": "mih-STAYK",
+      "arabic": "غلطة",
+      "pos": "noun"
+    },
+    {
+      "word": "progress",
+      "pronunciation": "PROG-res",
+      "arabic": "تقدّم",
+      "pos": "noun"
+    },
+    {
+      "word": "study",
+      "pronunciation": "STUD-ee",
+      "arabic": "يذاكر",
       "pos": "verb"
     },
     {
-      "word": "brush",
-      "pronunciation": "BRUSH",
-      "arabic": "يفرش",
+      "word": "learn",
+      "pronunciation": "LERN",
+      "arabic": "يتعلم",
       "pos": "verb"
     },
     {
-      "word": "shower",
-      "pronunciation": "SHOW-er",
-      "arabic": "دش/يستحم",
-      "pos": "noun/verb"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "ينتقل للعمل",
+      "word": "teach",
+      "pronunciation": "TEECH",
+      "arabic": "يعلّم",
       "pos": "verb"
     },
     {
-      "word": "routine",
-      "pronunciation": "roo-TEEN",
-      "arabic": "روتين",
-      "pos": "noun"
-    },
-    {
-      "word": "schedule",
-      "pronunciation": "SKEJ-ool",
-      "arabic": "جدول",
-      "pos": "noun"
-    },
-    {
-      "word": "alarm",
-      "pronunciation": "uh-LARM",
-      "arabic": "منبه",
-      "pos": "noun"
-    },
-    {
-      "word": "habit",
-      "pronunciation": "HAB-it",
-      "arabic": "عادة",
-      "pos": "noun"
-    },
-    {
-      "word": "exercise",
-      "pronunciation": "EK-ser-syz",
-      "arabic": "يتمرن/تمرين",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "breakfast",
-      "pronunciation": "BREK-fust",
-      "arabic": "فطور",
-      "pos": "noun"
-    },
-    {
-      "word": "lunch",
-      "pronunciation": "LUNCH",
-      "arabic": "غداء",
-      "pos": "noun"
-    },
-    {
-      "word": "dinner",
-      "pronunciation": "DIN-er",
-      "arabic": "عشاء",
-      "pos": "noun"
-    },
-    {
-      "word": "prepare",
-      "pronunciation": "prih-PAIR",
-      "arabic": "يحضّر",
+      "word": "explain",
+      "pronunciation": "ek-SPLAYN",
+      "arabic": "يشرح",
       "pos": "verb"
     },
     {
-      "word": "relax",
-      "pronunciation": "rih-LAKS",
-      "arabic": "يسترخي",
+      "word": "understand",
+      "pronunciation": "un-der-STAND",
+      "arabic": "يفهم",
       "pos": "verb"
     },
     {
-      "word": "evening",
-      "pronunciation": "EEV-ning",
-      "arabic": "مساء",
-      "pos": "noun"
-    },
-    {
-      "word": "midnight",
-      "pronunciation": "MID-nyt",
-      "arabic": "منتصف الليل",
-      "pos": "noun"
-    },
-    {
-      "word": "early",
-      "pronunciation": "ER-lee",
-      "arabic": "مبكر",
-      "pos": "adjective"
-    },
-    {
-      "word": "late",
-      "pronunciation": "LAYT",
-      "arabic": "متأخر",
-      "pos": "adjective"
-    },
-    {
-      "word": "usually",
-      "pronunciation": "YOO-zhoo-uh-lee",
-      "arabic": "عادةً",
-      "pos": "adverb"
-    },
-    {
-      "word": "sometimes",
-      "pronunciation": "SUM-tymz",
-      "arabic": "أحيانًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "always",
-      "pronunciation": "AWL-wayz",
-      "arabic": "دائمًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "never",
-      "pronunciation": "NEV-er",
-      "arabic": "أبدًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "often",
-      "pronunciation": "OFF-en",
-      "arabic": "غالبًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "rarely",
-      "pronunciation": "RAIR-lee",
-      "arabic": "نادرًا",
-      "pos": "adverb"
-    },
-    {
-      "word": "weekday",
-      "pronunciation": "WEEK-day",
-      "arabic": "يوم عمل",
-      "pos": "noun"
-    },
-    {
-      "word": "weekend",
-      "pronunciation": "week-END",
-      "arabic": "عطلة نهاية الأسبوع",
-      "pos": "noun"
-    },
-    {
-      "word": "daily",
-      "pronunciation": "DAY-lee",
-      "arabic": "يومي",
-      "pos": "adjective"
-    },
-    {
-      "word": "nightly",
-      "pronunciation": "NYT-lee",
-      "arabic": "ليلي",
-      "pos": "adjective"
-    },
-    {
-      "word": "hurry",
-      "pronunciation": "HUR-ee",
-      "arabic": "يسرع",
+      "word": "memorize",
+      "pronunciation": "MEM-uh-ryz",
+      "arabic": "يحفظ (غيباً)",
       "pos": "verb"
     },
     {
-      "word": "rush",
-      "pronunciation": "RUSH",
-      "arabic": "يندفع/ساعة ذروة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "organize",
-      "pronunciation": "OR-guh-nyz",
-      "arabic": "ينظّم",
+      "word": "review",
+      "pronunciation": "rih-VYOO",
+      "arabic": "يراجع",
       "pos": "verb"
     },
     {
-      "word": "plan",
-      "pronunciation": "PLAN",
-      "arabic": "يخطط/خطة",
-      "pos": "verb/noun"
+      "word": "pass",
+      "pronunciation": "PAS",
+      "arabic": "ينجح",
+      "pos": "verb"
     },
     {
-      "word": "goal",
-      "pronunciation": "GOHL",
-      "arabic": "هدف",
-      "pos": "noun"
+      "word": "fail",
+      "pronunciation": "FAYL",
+      "arabic": "يفشل/يسقط",
+      "pos": "verb"
     },
     {
-      "word": "achieve",
-      "pronunciation": "uh-CHEEV",
-      "arabic": "يحقق",
+      "word": "graduate (verb)",
+      "pronunciation": "GRAJ-oo-ayt",
+      "arabic": "يتخرج",
+      "pos": "verb"
+    },
+    {
+      "word": "enroll",
+      "pronunciation": "en-ROHL",
+      "arabic": "يسجّل (في مدرسة)",
+      "pos": "verb"
+    },
+    {
+      "word": "submit",
+      "pronunciation": "sub-MIT",
+      "arabic": "يسلّم (واجب)",
+      "pos": "verb"
+    },
+    {
+      "word": "revise",
+      "pronunciation": "rih-VYZ",
+      "arabic": "يراجع/يعدّل",
+      "pos": "verb"
+    },
+    {
+      "word": "concentrate",
+      "pronunciation": "KON-sen-trayt",
+      "arabic": "يركّز",
+      "pos": "verb"
+    },
+    {
+      "word": "participate",
+      "pronunciation": "par-TIS-uh-payt",
+      "arabic": "يشارك",
       "pos": "verb"
     },
     {
       "word": "improve",
       "pronunciation": "im-PROOV",
-      "arabic": "يتحسن",
+      "arabic": "يتحسّن",
       "pos": "verb"
     },
     {
-      "word": "focus",
-      "pronunciation": "FOH-kus",
-      "arabic": "يركّز",
+      "word": "cheat",
+      "pronunciation": "CHEET",
+      "arabic": "يغش",
       "pos": "verb"
     },
     {
-      "word": "energy",
-      "pronunciation": "EN-er-jee",
-      "arabic": "طاقة",
-      "pos": "noun"
-    },
-    {
-      "word": "tired",
-      "pronunciation": "TY-erd",
-      "arabic": "متعب",
+      "word": "academic",
+      "pronunciation": "ak-uh-DEM-ik",
+      "arabic": "أكاديمي",
       "pos": "adjective"
     },
     {
-      "word": "awake",
-      "pronunciation": "uh-WAYK",
-      "arabic": "مستيقظ",
+      "word": "difficult",
+      "pronunciation": "DIF-ih-kult",
+      "arabic": "صعب",
       "pos": "adjective"
     },
     {
-      "word": "asleep",
-      "pronunciation": "uh-SLEEP",
-      "arabic": "نائم",
+      "word": "easy",
+      "pronunciation": "EE-zee",
+      "arabic": "سهل",
       "pos": "adjective"
     },
     {
-      "word": "productive",
-      "pronunciation": "proh-DUK-tiv",
-      "arabic": "منتج",
+      "word": "smart",
+      "pronunciation": "SMART",
+      "arabic": "شاطر/ذكي",
       "pos": "adjective"
     },
     {
-      "word": "lazy",
-      "pronunciation": "LAY-zee",
-      "arabic": "كسلان",
+      "word": "hardworking",
+      "pronunciation": "HARD-wer-king",
+      "arabic": "مجتهد",
       "pos": "adjective"
     },
     {
-      "word": "busy",
-      "pronunciation": "BIZ-ee",
-      "arabic": "مشغول",
+      "word": "curious",
+      "pronunciation": "KYOOR-ee-us",
+      "arabic": "متحمس للمعرفة",
       "pos": "adjective"
     },
     {
-      "word": "free",
-      "pronunciation": "FREE",
-      "arabic": "فاضي/حر",
+      "word": "confident",
+      "pronunciation": "KON-fih-dent",
+      "arabic": "واثق",
       "pos": "adjective"
-    },
-    {
-      "word": "appointment",
-      "pronunciation": "uh-POINT-ment",
-      "arabic": "موعد",
-      "pos": "noun"
-    },
-    {
-      "word": "meeting",
-      "pronunciation": "MEE-ting",
-      "arabic": "اجتماع",
-      "pos": "noun"
-    },
-    {
-      "word": "task",
-      "pronunciation": "TASK",
-      "arabic": "مهمة",
-      "pos": "noun"
-    },
-    {
-      "word": "complete",
-      "pronunciation": "kum-PLEET",
-      "arabic": "يكمل",
-      "pos": "verb"
-    },
-    {
-      "word": "finish",
-      "pronunciation": "FIN-ish",
-      "arabic": "ينهي",
-      "pos": "verb"
-    },
-    {
-      "word": "start",
-      "pronunciation": "START",
-      "arabic": "يبدأ",
-      "pos": "verb"
-    },
-    {
-      "word": "continue",
-      "pronunciation": "kun-TIN-yoo",
-      "arabic": "يستمر",
-      "pos": "verb"
-    },
-    {
-      "word": "stop",
-      "pronunciation": "STOP",
-      "arabic": "يتوقف",
-      "pos": "verb"
-    },
-    {
-      "word": "rest",
-      "pronunciation": "REST",
-      "arabic": "يرتاح/راحة",
-      "pos": "verb/noun"
-    },
-    {
-      "word": "nap",
-      "pronunciation": "NAP",
-      "arabic": "قيلولة",
-      "pos": "noun"
-    },
-    {
-      "word": "chore",
-      "pronunciation": "CHOR",
-      "arabic": "عمل منزلي",
-      "pos": "noun"
-    },
-    {
-      "word": "housework",
-      "pronunciation": "HOWS-werk",
-      "arabic": "أعمال البيت",
-      "pos": "noun"
-    },
-    {
-      "word": "grocery",
-      "pronunciation": "GROH-ser-ee",
-      "arabic": "بقالة",
-      "pos": "noun"
-    },
-    {
-      "word": "errand",
-      "pronunciation": "AIR-und",
-      "arabic": "مشوار",
-      "pos": "noun"
-    },
-    {
-      "word": "commute",
-      "pronunciation": "kuh-MYOOT",
-      "arabic": "التنقل",
-      "pos": "noun"
-    },
-    {
-      "word": "traffic",
-      "pronunciation": "TRAF-ik",
-      "arabic": "حركة المرور",
-      "pos": "noun"
     }
   ],
   "speaking_missions": {

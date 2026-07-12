@@ -129,6 +129,6 @@ Every fix above was tested by actually running `curriculum.load_all()` and asser
 ## Repository
 
 All code, content, documentation, and infrastructure live in this single repository:
-`empireenglishcommunity-glitch/EEC-REPO`
+`empireenglishcommunity-glitch/empire-nexus` (formerly named `EEC-REPO`)
 
 See [README.md](README.md) for the full structure map and [REPOSITORY_AUDIT.md](REPOSITORY_AUDIT.md) for the technical audit.
