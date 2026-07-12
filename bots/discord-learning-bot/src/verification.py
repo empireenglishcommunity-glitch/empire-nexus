@@ -13,14 +13,12 @@ Verification methods:
 - community:  Posted in #general-chat OR spent 10+ min in voice today
 """
 import datetime
-import asyncio
 import logging
 import random
-from typing import Optional
 
 import discord
 
-from . import config, database
+from . import database
 
 logger = logging.getLogger("empire-bot.verify")
 

@@ -8,7 +8,6 @@ and level advancement tracking described in the Learning System blueprint.
 """
 import sqlite3
 import datetime
-from pathlib import Path
 from typing import Optional
 
 from . import config

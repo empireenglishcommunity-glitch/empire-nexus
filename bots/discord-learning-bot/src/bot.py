@@ -160,54 +160,54 @@ async def on_member_join(member: discord.Member):
 
         # Message 2: Daily Tasks + Commands (with verification info)
         await member.send(
-            f"📅 **الروتين اليومي (7 مهام — 45 دقيقة بس):**\n\n"
-            f"🎯 تدريب النطق — سجل صوتك في `#l0-showcase` ← ثم `!done accent`\n"
-            f"📖 مفردات جديدة — `!done vocab` ← البوت هيسألك سؤال\n"
-            f"🎧 المحاكاة (Shadowing) — سجل 30 ثانية في `#l0-showcase` ← ثم `!done shadow`\n"
-            f"🎙️ مهمة الكلام — سجل صوتك في `#l0-showcase` ← ثم `!done speaking`\n"
-            f"👂 تمرين الاستماع — `!done listening` ← البوت هيسألك سؤال\n"
-            f"✍️ تمرين الكتابة — اكتب في `#l0-text-practice` ← ثم `!done writing`\n"
-            f"💬 مشاركة مجتمعية — اكتب في `#general-chat` أو ادخل voice 10 دقايق ← ثم `!done community`\n\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"⚠️ **مهم:** لازم تعمل المهمة الأول وبعدين تكتب `!done`\n"
-            f"البوت بيتأكد إنك فعلاً عملت المهمة قبل ما يديك النقاط."
+            "📅 **الروتين اليومي (7 مهام — 45 دقيقة بس):**\n\n"
+            "🎯 تدريب النطق — سجل صوتك في `#l0-showcase` ← ثم `!done accent`\n"
+            "📖 مفردات جديدة — `!done vocab` ← البوت هيسألك سؤال\n"
+            "🎧 المحاكاة (Shadowing) — سجل 30 ثانية في `#l0-showcase` ← ثم `!done shadow`\n"
+            "🎙️ مهمة الكلام — سجل صوتك في `#l0-showcase` ← ثم `!done speaking`\n"
+            "👂 تمرين الاستماع — `!done listening` ← البوت هيسألك سؤال\n"
+            "✍️ تمرين الكتابة — اكتب في `#l0-text-practice` ← ثم `!done writing`\n"
+            "💬 مشاركة مجتمعية — اكتب في `#general-chat` أو ادخل voice 10 دقايق ← ثم `!done community`\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "⚠️ **مهم:** لازم تعمل المهمة الأول وبعدين تكتب `!done`\n"
+            "البوت بيتأكد إنك فعلاً عملت المهمة قبل ما يديك النقاط."
         )
         await asyncio.sleep(2)
 
         # Message 3: Levels + Points
         await member.send(
-            f"🏆 **نظام المستويات:**\n\n"
-            f"🌱 **Level 0** — مبتدئ (8-12 أسبوع)\n"
-            f"   الهدف: تعريف نفسك في 60 ثانية\n\n"
-            f"💪 **Level 1** — النجاة (10-14 أسبوع)\n"
-            f"   الهدف: مونولوج 2 دقيقة بدون تحضير\n\n"
-            f"🚀 **Level 2** — التواصل (12-16 أسبوع)\n"
-            f"   الهدف: عرض 5 دقايق عن أي موضوع\n\n"
-            f"👑 **Level 3** — الطلاقة (مستمر)\n"
-            f"   كلام طبيعي بلهجة أمريكية\n\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"🔥 **النقاط:** كل مهمة = 15 نقطة | الـ 7 مهام = +100 بونص\n"
-            f"🔥 **Streaks:** 7 أيام = +200 | 30 يوم = +1000 | 100 يوم = +5000"
+            "🏆 **نظام المستويات:**\n\n"
+            "🌱 **Level 0** — مبتدئ (8-12 أسبوع)\n"
+            "   الهدف: تعريف نفسك في 60 ثانية\n\n"
+            "💪 **Level 1** — النجاة (10-14 أسبوع)\n"
+            "   الهدف: مونولوج 2 دقيقة بدون تحضير\n\n"
+            "🚀 **Level 2** — التواصل (12-16 أسبوع)\n"
+            "   الهدف: عرض 5 دقايق عن أي موضوع\n\n"
+            "👑 **Level 3** — الطلاقة (مستمر)\n"
+            "   كلام طبيعي بلهجة أمريكية\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "🔥 **النقاط:** كل مهمة = 15 نقطة | الـ 7 مهام = +100 بونص\n"
+            "🔥 **Streaks:** 7 أيام = +200 | 30 يوم = +1000 | 100 يوم = +5000"
         )
         await asyncio.sleep(2)
 
         # Message 4: Channel Guide
         await member.send(
-            f"🗺️ **خريطة القنوات المهمة:**\n\n"
-            f"⭐ `#bot-commands` — اكتب كل الأوامر هنا\n"
-            f"⭐ `#l0-daily-tasks` — المهام اليومية (6 صباحًا)\n"
-            f"📝 `#l0-text-practice` — تمارين الكتابة\n"
-            f"🎙️ `#l0-showcase` — شارك تسجيلاتك\n"
-            f"❓ `#l0-questions` — أسئلة (عربي مسموح هنا)\n"
-            f"🔊 `l0-voice-1` — غرفة صوتية للتمرين\n"
-            f"💬 `#general-chat` — دردشة إنجليزي\n"
-            f"📖 `#daily-word` — كلمة اليوم\n"
-            f"🎙️ `#speaking-feedback` — ارفع تسجيل ← AI يرد عليك\n"
-            f"📊 `#daily-check-in` — سجل خطتك كل صباح\n\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"🏛️ **خلاصة:** ادخل كل يوم. اعمل الـ 7 مهام. اكتب `!done`. بس كده.\n"
-            f"النظام هيعمل الباقي. 💪\n\n"
-            f"*System over instructor. Common Sense First.* 🏛️"
+            "🗺️ **خريطة القنوات المهمة:**\n\n"
+            "⭐ `#bot-commands` — اكتب كل الأوامر هنا\n"
+            "⭐ `#l0-daily-tasks` — المهام اليومية (6 صباحًا)\n"
+            "📝 `#l0-text-practice` — تمارين الكتابة\n"
+            "🎙️ `#l0-showcase` — شارك تسجيلاتك\n"
+            "❓ `#l0-questions` — أسئلة (عربي مسموح هنا)\n"
+            "🔊 `l0-voice-1` — غرفة صوتية للتمرين\n"
+            "💬 `#general-chat` — دردشة إنجليزي\n"
+            "📖 `#daily-word` — كلمة اليوم\n"
+            "🎙️ `#speaking-feedback` — ارفع تسجيل ← AI يرد عليك\n"
+            "📊 `#daily-check-in` — سجل خطتك كل صباح\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "🏛️ **خلاصة:** ادخل كل يوم. اعمل الـ 7 مهام. اكتب `!done`. بس كده.\n"
+            "النظام هيعمل الباقي. 💪\n\n"
+            "*System over instructor. Common Sense First.* 🏛️"
         )
     except discord.Forbidden:
         pass  # DMs disabled by user
@@ -300,7 +300,6 @@ async def weekly_assessment():
             continue
 
         week_num = database.member_week_number(member_data["discord_id"])
-        level = member_data["level"]
 
         try:
             await discord_member.send(
@@ -960,10 +959,10 @@ async def cmd_examresult(ctx, exam_id: int = None, result: str = None):
         if student:
             try:
                 await student.send(
-                    f"📋 **نتيجة امتحان الترقية**\n\n"
-                    f"لسه مش وقتها. استمر في التمرين وحاول تاني بعد شهر.\n"
-                    f"ابعت `#support` لو عايز تفاصيل أكتر عن نقاط التحسين.\n\n"
-                    f"احنا معاك. 🏛️"
+                    "📋 **نتيجة امتحان الترقية**\n\n"
+                    "لسه مش وقتها. استمر في التمرين وحاول تاني بعد شهر.\n"
+                    "ابعت `#support` لو عايز تفاصيل أكتر عن نقاط التحسين.\n\n"
+                    "احنا معاك. 🏛️"
                 )
             except discord.Forbidden:
                 pass
@@ -1055,7 +1054,7 @@ async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
         return
     level = level.upper()
     if level not in config.LEVELS:
-        await ctx.send(f"❌ Invalid level. Use: L0, L1, L2, L3")
+        await ctx.send("❌ Invalid level. Use: L0, L1, L2, L3")
         return
 
     database.set_level(str(member.id), level)
