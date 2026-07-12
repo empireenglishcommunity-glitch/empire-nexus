@@ -22,6 +22,7 @@ Commands:
 
 Admin:
   !status              Bot and system status
+  !attention           Ranked "who needs a human right now" report
   !setlevel @user L#   Set a member's level
   !announce <msg>      Broadcast to announcements
   !members             List all members with levels
@@ -775,6 +776,7 @@ async def cmd_help(ctx):
         "⏳ 5 min cooldown between each `!done`\n\n"
         "**Admin:**\n"
         "`!status` — Bot status\n"
+        "`!attention` — Ranked list of who needs a human right now (inactive, declining, pending exams, buddy load)\n"
         "`!setlevel @user L0/L1/L2/L3` — Set someone's level\n"
         "`!announce <message>` — Broadcast announcement\n"
         "`!members` — List all members\n"
@@ -1076,6 +1078,23 @@ async def cmd_announce(ctx, *, message: str = ""):
         await ctx.send(f"✅ Announcement sent to #{channel.name}")
     else:
         await ctx.send("❌ #announcements channel not found.")
+
+
+@bot.command(name="attention")
+@commands.has_permissions(manage_guild=True)
+async def cmd_attention(ctx):
+    """Ranked 'who needs a human right now' report: inactive members by
+    severity, declining assessment trends, pending exams, and buddy
+    load — combining signals that already exist across the bot into
+    one view instead of several separate commands. Read-only, sent via
+    DM (falls back to the channel if DMs are closed, same pattern as
+    !status/!members)."""
+    report = await features.build_attention_report(ctx.guild)
+    try:
+        await ctx.author.send(report)
+        await ctx.send("📩 Attention report sent to your DMs.", delete_after=5)
+    except discord.Forbidden:
+        await ctx.send(report)
 
 
 @bot.command(name="members")

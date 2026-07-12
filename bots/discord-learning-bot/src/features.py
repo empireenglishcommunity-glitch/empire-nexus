@@ -352,25 +352,68 @@ async def handle_exam_request(ctx, bot):
 #  8. BUDDY SYSTEM
 # ============================================================
 
-async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
-    """Assign an onboarding buddy to a new member.
-    For pilot: founder is the buddy. At scale: L1+ members.
+BUDDY_ELIGIBLE_ROLES = ["🏛️ Founder", "🛡️ Admin", "⚔️ Moderator", "🌟 سفير | Ambassador"]
+
+
+def _eligible_buddies(guild: discord.Guild) -> list[discord.Member]:
+    """Every non-bot member holding a buddy-eligible role, deduplicated.
+    A member with multiple eligible roles (e.g. Founder is also Admin)
+    is only counted once.
     """
-    # Find the founder
-    founder_role = discord.utils.get(guild.roles, name="🏛️ Founder")
-    if founder_role and founder_role.members:
-        buddy = founder_role.members[0]
-        # Notify buddy
-        try:
-            await buddy.send(
-                f"👋 عضو جديد انضم: **{new_member.display_name}**\n"
-                f"انت الـ buddy بتاعه. تواصل معاه خلال 12 ساعة."
-            )
-        except discord.Forbidden:
-            pass
-        # Store in database
-        database.update_member(str(new_member.id), buddy_id=str(buddy.id))
-        logger.info(f"Assigned buddy {buddy.display_name} to {new_member.display_name}")
+    seen: dict[int, discord.Member] = {}
+    for role_name in BUDDY_ELIGIBLE_ROLES:
+        role = discord.utils.get(guild.roles, name=role_name)
+        if not role:
+            continue
+        for m in role.members:
+            if not m.bot:
+                seen[m.id] = m
+    return list(seen.values())
+
+
+async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
+    """Assign an onboarding buddy to a new member, rotating across every
+    eligible buddy (Founder, Admin, Moderator, Ambassador) by current
+    load rather than always picking the same single person.
+
+    Previously this always picked founder_role.members[0] — literally
+    the same one person for every new member, forever, regardless of
+    how many other eligible people existed. That doesn't scale past a
+    handful of members and silently overloads whoever happens to be
+    role[0]. Fixed 2026-07-12, before any real students were invited,
+    specifically so the first real cohort gets a working rotation from
+    day one instead of a retrofit after buddies are already overloaded.
+
+    Falls back to the old single-founder behavior only if no eligible
+    buddy has ever been assigned anyone yet (cold start) or if the
+    eligible pool is empty (misconfigured server) — in the latter case,
+    no buddy is assigned and this is logged so an admin notices.
+    """
+    candidates = _eligible_buddies(guild)
+    if not candidates:
+        logger.warning(
+            f"No eligible buddy found for {new_member.display_name} — "
+            f"none of {BUDDY_ELIGIBLE_ROLES} have any members. No buddy assigned."
+        )
+        return
+
+    # Pick whoever currently has the fewest active buddy assignments.
+    loads = {m.id: database.count_buddy_load(str(m.id)) for m in candidates}
+    buddy = min(candidates, key=lambda m: loads[m.id])
+
+    try:
+        await buddy.send(
+            f"👋 عضو جديد انضم: **{new_member.display_name}**\n"
+            f"انت الـ buddy بتاعه. تواصل معاه خلال 12 ساعة.\n"
+            f"*(عندك دلوقتي {loads[buddy.id] + 1} من الأعضاء تحت مسؤوليتك)*"
+        )
+    except discord.Forbidden:
+        pass
+    database.update_member(str(new_member.id), buddy_id=str(buddy.id))
+    logger.info(
+        f"Assigned buddy {buddy.display_name} to {new_member.display_name} "
+        f"(buddy now has {loads[buddy.id] + 1} members)"
+    )
 
 
 # ============================================================
@@ -502,6 +545,95 @@ async def post_leaderboard(guild: discord.Guild):
         await channel.send("\n".join(lines))
     except:
         pass
+
+
+# ============================================================
+#  12a. ADMIN "NEEDS ATTENTION" DASHBOARD (!attention)
+# ============================================================
+# Ties together data that already exists across the bot (inactivity,
+# assessment trend, pending exams, buddy load) into a single ranked
+# view for the owner/admin, instead of requiring several separate
+# commands (!status, !members, !examqueue) to be checked manually.
+# Deliberately read-only -- this command never sends DMs to students or
+# changes any data, it only reports.
+
+async def build_attention_report(guild: discord.Guild) -> str:
+    """Build the !attention admin report: everyone who plausibly needs
+    a human to look at them right now, ranked most urgent first."""
+    lines = ["🔎 **Needs Attention — Empire English**", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"]
+
+    # --- 1. Pending advancement exams (already actionable via !examqueue,
+    #    surfaced here too so this command is a genuine one-stop view) ---
+    pending = database.pending_exams()
+    if pending:
+        lines.append(f"\n📋 **{len(pending)} exam(s) awaiting review:**")
+        for e in pending[:5]:
+            lines.append(f"  • #{e['id']} — {e.get('discord_name') or e['discord_id']} ({e['from_level']}→{e['to_level']})")
+        if len(pending) > 5:
+            lines.append(f"  ... and {len(pending) - 5} more (see `!examqueue`)")
+
+    # --- 2. Inactive members, bucketed by severity (2/3/5/7+ days) ---
+    # Reuses the same thresholds already defined in config, but actually
+    # surfaces all of them (the scheduled streak_update loop currently
+    # only ever acts on the 1-day bucket).
+    all_members = database.all_active_members()
+    buckets: dict[int, list[dict]] = {2: [], 3: [], 5: [], 7: []}
+    for m in all_members:
+        days = database.days_since_active(m)
+        if days >= 7:
+            buckets[7].append(m)
+        elif days >= 5:
+            buckets[5].append(m)
+        elif days >= 3:
+            buckets[3].append(m)
+        elif days >= 2:
+            buckets[2].append(m)
+
+    any_inactive = any(buckets.values())
+    if any_inactive:
+        lines.append(f"\n⏰ **Inactive members:**")
+        severity_labels = {
+            7: "🔴 7+ days (membership_pause territory)",
+            5: "🟠 5-6 days (needs a real conversation)",
+            3: "🟡 3-4 days (moderator check-in)",
+            2: "⚪ 2 days (buddy should reach out)",
+        }
+        for threshold in (7, 5, 3, 2):
+            members = buckets[threshold]
+            if not members:
+                continue
+            lines.append(f"  {severity_labels[threshold]}:")
+            for m in members[:8]:
+                buddy_note = ""
+                if m.get("buddy_id"):
+                    buddy = guild.get_member(int(m["buddy_id"]))
+                    buddy_note = f" (buddy: {buddy.display_name if buddy else '?'})"
+                lines.append(f"    • {m['discord_name']} — {database.days_since_active(m)}d inactive{buddy_note}")
+            if len(members) > 8:
+                lines.append(f"    ... and {len(members) - 8} more")
+
+    # --- 3. Declining assessment trend (two weeks in a row getting worse) ---
+    declining = database.declining_assessment_members()
+    if declining:
+        lines.append(f"\n📉 **{len(declining)} member(s) trending down (2 weeks in a row):**")
+        for m in declining[:8]:
+            lines.append(
+                f"  • {m['discord_name']} — {m['previous_score']:.0f}% → {m['latest_score']:.0f}%"
+            )
+
+    # --- 4. Buddy load summary (so overload is visible before it happens) ---
+    candidates = _eligible_buddies(guild)
+    if candidates:
+        loads = [(m, database.count_buddy_load(str(m.id))) for m in candidates]
+        loads.sort(key=lambda pair: pair[1], reverse=True)
+        lines.append(f"\n🤝 **Buddy load:**")
+        for m, load in loads:
+            lines.append(f"  • {m.display_name}: {load} member(s)")
+
+    if len(lines) == 2:  # only the header + separator got added
+        lines.append("\n✅ Nothing urgent right now.")
+
+    return "\n".join(lines)
 
 
 # ============================================================
