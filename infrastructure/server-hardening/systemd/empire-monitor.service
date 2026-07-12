@@ -1,9 +1,0 @@
-[Unit]
-Description=Empire Server Health Monitor
-After=network.target docker.service
-
-[Service]
-Type=oneshot
-ExecStart=/opt/monitor/watchdog.sh
-StandardOutput=journal
-StandardError=journal
