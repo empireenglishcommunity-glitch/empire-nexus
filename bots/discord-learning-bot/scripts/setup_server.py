@@ -154,10 +154,18 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 2: SYSTEM ──
+    # NOTE: @everyone can view+send here (not denied) — the bot's own
+    # on_member_join() welcome DM tells brand-new members to go to
+    # #bot-commands and type `!join <goal>` before they have any level
+    # role yet. If @everyone were denied here, that instruction would be
+    # impossible to follow. Reconciled 2026-07-12 to match what was
+    # actually live on the server (see fix_all_permissions.py in the
+    # Claude repo, which made this exact change directly against
+    # production because this script was stale/wrong on this point).
     {
         "name": "⚙️ الأوامر | SYSTEM",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND,
             "💪 Level 1 | متقدم": _VIEW_SEND,
             "🚀 Level 2 | متواصل": _VIEW_SEND,
@@ -174,10 +182,14 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 3: LEVEL 0 ZONE ──
+    # NOTE: @everyone can view+send+voice here too, for the same reason
+    # as SYSTEM above — a brand-new member (no level role yet) needs to
+    # be able to see l0-daily-tasks etc. immediately, matching the bot's
+    # actual working onboarding flow. Reconciled 2026-07-12.
     {
         "name": "🌱 المستوى 0 | LEVEL 0",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND_VOICE,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND_VOICE,
             "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
             "🚀 Level 2 | متواصل": _VIEW_ONLY,
@@ -260,10 +272,12 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 7: COMMUNITY (all members) ──
+    # NOTE: @everyone can view+send+voice here, same reasoning as SYSTEM
+    # and LEVEL 0 above. Reconciled 2026-07-12.
     {
         "name": "🌍 المجتمع | COMMUNITY",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND_VOICE,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND_VOICE,
             "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
             "🚀 Level 2 | متواصل": _VIEW_SEND_VOICE,
@@ -280,10 +294,12 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 8: ACCOUNTABILITY ──
+    # NOTE: @everyone can view+send here, same reasoning as SYSTEM
+    # above. Reconciled 2026-07-12.
     {
         "name": "📊 المتابعة | ACCOUNTABILITY",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND,
             "💪 Level 1 | متقدم": _VIEW_SEND,
             "🚀 Level 2 | متواصل": _VIEW_SEND,
@@ -299,10 +315,12 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 9: RESOURCES ──
+    # NOTE: @everyone can view+send here, same reasoning as SYSTEM
+    # above. Reconciled 2026-07-12.
     {
         "name": "📚 المصادر | RESOURCES",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND,
             "💪 Level 1 | متقدم": _VIEW_SEND,
             "🚀 Level 2 | متواصل": _VIEW_SEND,
@@ -318,10 +336,12 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 10: FEEDBACK ──
+    # NOTE: @everyone can view+send here, same reasoning as SYSTEM
+    # above. Reconciled 2026-07-12.
     {
         "name": "💬 التقييم | FEEDBACK",
         "overwrites": {
-            "@everyone": _DENY_ALL,
+            "@everyone": _VIEW_SEND,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND,
             "💪 Level 1 | متقدم": _VIEW_SEND,
             "🚀 Level 2 | متواصل": _VIEW_SEND,
