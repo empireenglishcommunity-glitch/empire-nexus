@@ -1,0 +1,38 @@
+name: discord-learning-bot tests
+
+# Run on any push or PR that touches the bot (or this workflow itself).
+on:
+  push:
+    paths:
+      - "bots/discord-learning-bot/**"
+      - ".github/workflows/learning-bot-test.yml"
+  pull_request:
+    paths:
+      - "bots/discord-learning-bot/**"
+      - ".github/workflows/learning-bot-test.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bots/discord-learning-bot
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Syntax check (all .py files compile)
+        run: python -m py_compile run.py && python -c "import src"
