@@ -7,20 +7,31 @@
 
 ## 0. Session Management Protocol
 
+> **⚠️ CORRECTED 2026-07-12:** the real, current source of truth for
+> project state is `empireenglishcommunity-glitch/Kiro-Master-Index`'s
+> `SESSION_CONTINUITY.md` and `README.md` — NOT this repo's own
+> `PROJECT_STATUS.md`, which predates that convention and has been stale
+> since. `PROJECT_STATUS.md` is kept only as historical record; do not
+> treat it as current without cross-checking Kiro-Master-Index first.
+
+### `/start` Command
+At the start of every new session, clone/pull `Kiro-Master-Index` and read
+`SESSION_CONTINUITY.md` in full (most recent dated session section +
+the "⚠️ READ THIS FIRST" block) plus `README.md`'s session log and
+"Next Session Priorities" section, to restore full context. This repo's
+own `PROJECT_STATUS.md` is secondary/historical — cross-check, don't rely on it alone.
+
 ### `/sync` Command
 When the user sends `/sync`, execute the full repository closing protocol:
 1. **Session Review** — identify all changes made during the session
 2. **Code Verification** — confirm modified code compiles, tests pass, no secrets/debug left
-3. **Documentation Sync** — update PROJECT_STATUS.md, docs/checkpoints/ as needed
+3. **Documentation Sync** — add a new dated section to `Kiro-Master-Index/SESSION_CONTINUITY.md` and update its `README.md` (session log, decisions, next-session priorities tables). Open a PR against `Kiro-Master-Index`, same as any other change — never commit straight to its `main`.
 4. **Repository Cleanup** — remove orphaned files, check .gitignore, verify no untracked files
 5. **Commit & Push** — stage all changes, write descriptive commit message, push to branch
 6. **Final Report** — deliver summary with files changed, test results, doc updates, next steps
 
 ### `/status` Command
 When the user sends `/status`, provide current repository state without making changes.
-
-### `/start` Command
-At the start of every new session, read this repo's README.md and PROJECT_STATUS.md to restore full context.
 
 ---
 
