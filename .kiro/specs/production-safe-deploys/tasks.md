@@ -138,6 +138,15 @@
 
 ## Phase 2 — Deploy tooling (bot)
 
+> **✅ PHASE 2 COMPLETE as of 2026-07-13.** The full backup → build →
+> tag → swap → health-check → rollback cycle is now real, scripted,
+> and proven end-to-end against the actual live server (not just
+> mocked tests) — including catching one real, if low-stakes,
+> bootstrapping quirk in task 2.5's own live run. This same run also
+> brought Phase 1's `!flag`/`!systemstatus` and this phase's own
+> heartbeat loop into production for the first time. Safe to move on
+> to Phase 3 (CI student-journey simulation) next.
+
 - [x] **2.1** Extend recovered `backup.py` with a `--tag <label>`
   argument (additive, don't break its existing default cron-friendly
   usage).
@@ -192,15 +201,50 @@
   restoring a DB backup during an automated rollback risks losing
   real student data written between the backup and the rollback.
   6 tests in `tests/test_rollback.py`.
-- [ ] **2.5** Test the FULL deploy → verify → rollback cycle for real on
+- [x] **2.5** Test the FULL deploy → verify → rollback cycle for real on
   the live server at least once, deliberately, before relying on it
   under pressure. (Good opportunity: use it to deploy Phase 1's
-  `!flag` command itself.) — **Blocked on fresh temporary SSH access**
-  to the live server (same one-time-keypair pattern used in Phase 0/1
-  sessions); this sandbox does not have `docker compose` at all
-  (confirmed via `which docker-compose` and `docker compose version`
-  both failing — only bare Podman-backed `docker` is present here), so
-  this task genuinely cannot be completed without the real server.
+  `!flag` command itself.)
+  — Done for real against `77.42.43.250` via temporary SSH access
+  (granted and later revoked, same pattern as Phase 0). The server was
+  6 commits behind (still at PR #46's merge, missing #47/#48/#49) —
+  `git pull` fast-forwarded cleanly to `eb26bd6`, so this deploy was
+  also the first time Phase 1's `!flag`/`!systemstatus` and Phase 2's
+  heartbeat loop actually reached the live container, not just `main`.
+  Ran `python3 scripts/deploy.py` for real: backup → build → tag
+  (`empire-english-bot:eb26bd6`) → swap → health check, all 4 checks
+  passed against the real bot (26 commands, 38/38 weeks, real Discord
+  gateway connection — confirmed "Bot online: Empire English
+  Bot#5980 | 1 server(s)" in the container logs — and a genuinely
+  fresh heartbeat, 0.0 min old). Then ran `python3 scripts/rollback.py
+  eb26bd6` for real: re-tag → `docker compose up -d` → health check,
+  confirmed healthy again (heartbeat 1.2 min old on the second check).
+  Also ran `scripts/rollback.py --list` and a direct `docker exec ...
+  health_check.py` spot-check independently of `deploy.py`/
+  `rollback.py`'s own internal calls, to confirm the script is safe to
+  run standalone as designed.
+  — **Real bootstrapping quirk found** (one-time only, not a recurring
+  bug): `deploy.py`'s Step 1 runs the pre-deploy backup via `docker
+  exec <container> ... backup.py --tag ...` against the
+  *currently-running* container, which on this very first Phase-2
+  deploy still had the pre-Phase-2 `backup.py` that has no `--tag`
+  support at all. `argparse` silently treated the literal string
+  `--tag` as the positional `backup_dir` argument, writing the backup
+  into a bogus `/app/--tag/` directory inside the *old* container's
+  own (non-persistent) filesystem instead of the real
+  `bot-backups` volume — that single redundant snapshot was lost when
+  the old container was destroyed on swap. Confirmed no real data was
+  actually at risk: the two most recent routine 3:10 AM cron backups
+  in the real `bot-backups` volume were untouched, and this can only
+  ever happen on the one deploy that introduces `--tag` itself — every
+  deploy from now on runs against a container that already understands
+  it. Documenting here rather than silently patching, since the fix
+  (if wanted) is really "run one untagged backup before ever running
+  the first `--tag`-using deploy", not a code change to `deploy.py`.
+  — Confirmed unaffected: the crontab's Phase 0 backup job is still
+  present and correctly pointed at the same container/path after the
+  swap; `!flag`/`!systemstatus` and the heartbeat loop are now live in
+  production for the first time.
 - [x] **2.6** Add image retention (keep last 5 tagged images, prune
   untagged dangling layers) — either in `deploy.sh` itself or as a
   separate scheduled cleanup, whichever is simpler to keep correct.
