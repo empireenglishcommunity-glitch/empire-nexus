@@ -2498,7 +2498,7 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
 
         lines = ["🚩 **Feature Flags — Empire English**", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ""]
 
-        for initiative_key in ("aegis", "bawaba", "nabd"):
+        for initiative_key in ("aegis", "bawaba", "nabd", "tatawwur"):
             if initiative_key not in groups:
                 continue
             emoji, name_upper, subtitle = INITIATIVES[initiative_key]
