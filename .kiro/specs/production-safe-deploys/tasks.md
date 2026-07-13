@@ -329,23 +329,51 @@ changed/new files.
 
 ## Phase 5 — Presence signaling, dev-log, and the public status command
 
-- [ ] **5.1** Add `!maintenance on|off` admin command that changes the
+> **✅ PHASE 5 COMPLETE as of 2026-07-13.** All four tasks merged in
+> [empire-nexus PR #53](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/53).
+> `!maintenance on|off` (presence toggle), `#dev-log` in the ADMIN
+> category, `deploy.py` auto-posts to `#dev-log`, and `!systemstatus`
+> is now public and listed in `!help`. **Aegis Phases 0-5 are all
+> complete** — the core safety net is in place. Phase 6 (ghost bot) is
+> optional and blocked on a user decision; Phase 7 (marketing) happens
+> after the first real feature flag-release to students.
+
+- [x] **5.1** Add `!maintenance on|off` admin command that changes the
   bot's Discord presence, and decide how `deploy.sh` triggers it (a
   direct DB flag the running bot polls, or a small helper script that
   talks to the bot process some other way) once Phase 2's deploy script
   exists for real — don't over-design this before that.
-- [ ] **5.2** Decide `#dev-log` channel placement (new category vs. fold
+  — Done 2026-07-13: [empire-nexus PR #53](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/53).
+  `!maintenance on|off` sets `maintenance_mode` in the `settings`
+  table; the existing `heartbeat` loop (every 2 min) checks it and
+  updates Discord presence accordingly. `deploy.py` sets it ON before
+  the container swap and OFF after a successful health check — zero new
+  infrastructure, just the same settings table everything else uses.
+- [x] **5.2** Decide `#dev-log` channel placement (new category vs. fold
   into existing `ADMIN` category — flagged as an open question in
   design.md; ask the user, don't just pick one silently) and add it to
   `scripts/setup_server.py`.
-- [ ] **5.3** Wire `deploy.sh` to post a one-line summary (git SHA +
+  — Done: **folded into the existing ADMIN category** (user said "go
+  with what you recommend, professional and long-term stability"). One
+  admin-only channel doesn't justify a new category; ADMIN already
+  groups operational channels together. Added to `setup_server.py`'s
+  ADMIN category channel list.
+- [x] **5.3** Wire `deploy.sh` to post a one-line summary (git SHA +
   commit message's first line + timestamp) to `#dev-log` on every
   deploy.
-- [ ] **5.4** Build `!systemstatus` (public, read-only, distinct from
+  — Done: new `scripts/post_deploy_log.py` (uses the bot's own Discord
+  token, no webhook needed) called by `deploy.py` after a successful
+  health check. Posts: `🚀 \`abc1234\` — Fix streak bonus (2026-07-13
+  14:30)`. Best-effort (check=False) — never blocks a deploy.
+- [x] **5.4** Build `!systemstatus` (public, read-only, distinct from
   the existing admin-only `!status`) sourced from Phase 2's health-check
   writing its last-good timestamp into the `settings` table — this is
   also the natural first real feature to ship behind Phase 1's flag
   mechanism (see task 1.4).
+  — Done: the command was built in Phase 1 (task 1.4) behind the
+  `systemstatus` flag. Phase 5 auto-enables it on startup (if the flag
+  has never been explicitly set) and adds it to `!help`. Still respects
+  the kill switch: `!flag disable systemstatus` hides it again.
 
 ## Phase 6 — Ghost bot (optional, revisit after Phase 1-5 are solid)
 
