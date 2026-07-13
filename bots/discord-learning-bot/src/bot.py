@@ -30,6 +30,8 @@ Admin:
 import asyncio
 import datetime
 import logging
+from typing import Optional
+
 import discord
 from discord.ext import commands, tasks
 
@@ -73,6 +75,86 @@ def _get_done_lock(discord_id: str) -> asyncio.Lock:
         lock = asyncio.Lock()
         _done_locks[discord_id] = lock
     return lock
+
+
+# ============================================================
+#  BAWABA (Phase B0): Arabic command aliases + number tasks
+# ============================================================
+# Maps Arabic command words to their English equivalents. The rewriting
+# happens in on_message BEFORE bot.process_commands() runs, so every
+# existing command handler works with Arabic input for free — no
+# per-command changes needed. Gated behind the 'bawaba_aliases' flag.
+
+ARABIC_COMMAND_ALIASES = {
+    "انضم": "join",
+    "تم": "done",
+    "خلص": "done",
+    "تقدم": "progress",
+    "مساعدة": "helpar",
+    "سلسلة": "streak",
+    "مستوى": "level",
+    "أسبوع": "week",
+    "تقييم": "assess",
+    "ترتيب": "top",
+    "سلسلات": "streaks",
+    "حالة": "systemstatus",
+    "صيانة": "maintenance",
+    "اليوم": "today",
+}
+
+# Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
+ARABIC_TASK_ALIASES = {
+    "نطق": "accent",
+    "مفردات": "vocab",
+    "محاكاة": "shadow",
+    "كلام": "speaking",
+    "استماع": "listening",
+    "كتابة": "writing",
+    "مجتمع": "community",
+}
+
+
+def _rewrite_arabic_command(content: str, prefix: str) -> Optional[str]:
+    """If the message starts with the bot prefix + an Arabic alias,
+    rewrite it to the English equivalent. Returns the rewritten string,
+    or None if no rewriting was needed.
+
+    Examples:
+      "!تم نطق"  → "!done accent"
+      "!تم 3"    → "!done 3"  (number kept as-is, handled by cmd_done)
+      "!انضم هدفي أتكلم" → "!join هدفي أتكلم"
+      "!مساعدة"  → "!help"
+      "!hello"   → None (not Arabic, no rewrite)
+    """
+    if not content.startswith(prefix):
+        return None
+
+    after_prefix = content[len(prefix):]
+    parts = after_prefix.split(None, 1)  # split on first whitespace
+    if not parts:
+        return None
+
+    cmd_word = parts[0]
+    rest = parts[1] if len(parts) > 1 else ""
+
+    # Check if the command word is an Arabic alias
+    english_cmd = ARABIC_COMMAND_ALIASES.get(cmd_word)
+    if english_cmd is None:
+        return None
+
+    # If the command is "done" and there's an argument, try to translate
+    # the task name from Arabic too
+    if english_cmd == "done" and rest:
+        task_arg = rest.split(None, 1)[0]
+        english_task = ARABIC_TASK_ALIASES.get(task_arg)
+        if english_task:
+            # Replace only the task argument, keep anything after it
+            remaining = rest.split(None, 1)
+            rest = english_task + ("" if len(remaining) < 2 else " " + remaining[1])
+
+    if rest:
+        return f"{prefix}{english_cmd} {rest}"
+    return f"{prefix}{english_cmd}"
 
 
 
@@ -981,6 +1063,51 @@ async def cmd_help(ctx):
     )
 
 
+@bot.command(name="helpar")
+async def cmd_helpar(ctx):
+    """Arabic help — shows all commands with Arabic explanations.
+
+    Bawaba Phase B0: triggered by !مساعدة (Arabic alias for help).
+    Shows the full command list with Arabic descriptions and emphasizes
+    the number-based shortcuts and Arabic aliases.
+    """
+    if not database.is_feature_enabled("bawaba_aliases"):
+        # If Bawaba isn't enabled, just show regular English help
+        await cmd_help(ctx)
+        return
+
+    await ctx.send(
+        "**🏛️ أوامر البوت — Empire English**\n\n"
+        "**📋 أوامر بالأرقام (الأسهل):**\n"
+        "`!1` — تم مهمة النطق\n"
+        "`!2` — تم مهمة المفردات\n"
+        "`!3` — تم مهمة المحاكاة\n"
+        "`!4` — تم مهمة الكلام\n"
+        "`!5` — تم مهمة الاستماع\n"
+        "`!6` — تم مهمة الكتابة\n"
+        "`!7` — تم مهمة المجتمع\n\n"
+        "**📋 أوامر بالعربي:**\n"
+        "`!انضم <هدفك>` — سجل نفسك وحط هدفك\n"
+        "`!تم` أو `!تم 1` — سجل إنك خلصت مهمة\n"
+        "`!تقدم` — شوف تقدمك\n"
+        "`!سلسلة` — شوف الـ streak بتاعك\n"
+        "`!مستوى` — معلومات عن مستواك\n"
+        "`!أسبوع` — محتوى الأسبوع ده\n"
+        "`!تقييم` — احسب تقييم الأسبوع\n"
+        "`!ترتيب` — لوحة النقاط\n"
+        "`!حالة` — حالة النظام\n"
+        "`!مساعدة` — الصفحة دي\n\n"
+        "**⚡ طريقة الاستخدام:**\n"
+        "1️⃣ كل يوم الساعة 6 الصبح هتلاقي مهام مرقمة 1-7\n"
+        "2️⃣ اعمل المهمة\n"
+        "3️⃣ اكتب رقمها: `!1` أو `!2` ... إلخ\n"
+        "4️⃣ البوت هيتأكد ويديك النقاط ✅\n\n"
+        "**🎯 أسماء المهام بالعربي (لو حبيت):**\n"
+        "`!تم نطق` | `!تم مفردات` | `!تم محاكاة` | `!تم كلام`\n"
+        "`!تم استماع` | `!تم كتابة` | `!تم مجتمع`\n\n"
+        "💡 *كل الأوامر بالإنجليزي لسه شغالة عادي: `!done accent` إلخ*"
+    )
+
 
 # ============================================================
 #  WRITING FEEDBACK (auto-detect submissions in #writing-feedback)
@@ -1002,6 +1129,22 @@ async def on_message(message: discord.Message):
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
+
+    # BAWABA (Phase B0): rewrite Arabic aliases to English commands
+    # before process_commands() sees them. Gated behind feature flag.
+    if message.content.startswith(config.BOT_PREFIX) and database.is_feature_enabled("bawaba_aliases"):
+        rewritten = _rewrite_arabic_command(message.content, config.BOT_PREFIX)
+        if rewritten is not None:
+            message.content = rewritten
+
+    # BAWABA (Phase B0): number-based task commands (!1 through !7)
+    # Rewrite "!1" to "!done accent", "!2" to "!done vocab", etc.
+    if message.content.startswith(config.BOT_PREFIX) and database.is_feature_enabled("bawaba_aliases"):
+        after_prefix = message.content[len(config.BOT_PREFIX):]
+        if after_prefix.strip() in ("1", "2", "3", "4", "5", "6", "7"):
+            task_num = int(after_prefix.strip())
+            task_id = config.DAILY_TASKS[task_num - 1]["id"]
+            message.content = f"{config.BOT_PREFIX}done {task_id}"
 
     # Process commands first
     await bot.process_commands(message)
