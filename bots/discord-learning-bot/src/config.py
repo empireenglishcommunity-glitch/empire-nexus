@@ -58,14 +58,12 @@ TIMEZONE = os.getenv("TIMEZONE", "Asia/Dubai")
 # The web-based daily practice pages (accent drill, shadowing, listening,
 # vocab flashcards with Kokoro TTS audio) that mirror each day's curriculum
 # 1:1. Defaults to the live Cloudflare Pages URL, which works today.
-# (Repo formerly named empire-practice; the Cloudflare Pages project/
-# subdomain below kept its original name across the repo rename, so this
-# default URL is still correct.)
-# Once practice.empireenglish.online's DNS/SSL is confirmed live, set
-# PRACTICE_PLATFORM_URL in .env to switch over — no code change needed.
 PRACTICE_PLATFORM_URL = os.getenv(
-    "PRACTICE_PLATFORM_URL", "https://empire-practice-8l0.pages.dev"
+    "PRACTICE_PLATFORM_URL", "https://practice.empireenglish.online"
 ).rstrip("/")
+
+# Sahel S6: API port for practice platform connection
+API_PORT = int(os.getenv("API_PORT", "8099") or "8099")
 
 # ============================================================
 #  BAWABA: ONBOARDING VIDEO (optional — YouTube link)

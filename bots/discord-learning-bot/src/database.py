@@ -253,6 +253,15 @@ CREATE TABLE IF NOT EXISTS conversation_sessions (
     prompt_id       TEXT DEFAULT '',
     created_at      TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Sahel Phase S6: personal link tokens for practice platform connection.
+CREATE TABLE IF NOT EXISTS link_tokens (
+    token           TEXT PRIMARY KEY,
+    discord_id      TEXT NOT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_link_tokens_member ON link_tokens(discord_id);
 """
 
 
@@ -1300,3 +1309,127 @@ def get_upcoming_sessions(level: str = None) -> list[dict]:
         ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+
+# ============================================================
+#  LINK TOKENS (Sahel S6 — practice platform connection)
+# ============================================================
+
+def create_link_token(discord_id: str) -> str:
+    """Generate a unique token for a member to connect the practice platform.
+    If the member already has a token, returns the existing one."""
+    import secrets
+    conn = _connect()
+    # Check if token already exists
+    existing = conn.execute(
+        "SELECT token FROM link_tokens WHERE discord_id=?", (discord_id,)
+    ).fetchone()
+    if existing:
+        conn.close()
+        return existing["token"]
+    # Generate new token
+    token = secrets.token_urlsafe(16)  # 22 chars, URL-safe
+    conn.execute(
+        "INSERT INTO link_tokens (token, discord_id) VALUES (?, ?)",
+        (token, discord_id),
+    )
+    conn.commit()
+    conn.close()
+    return token
+
+
+def get_member_by_token(token: str) -> dict | None:
+    """Look up a member by their link token. Returns member dict or None."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT m.* FROM members m JOIN link_tokens lt ON m.discord_id = lt.discord_id WHERE lt.token=?",
+        (token,),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def get_progress_for_token(token: str) -> dict | None:
+    """Get progress data for the practice platform given a link token."""
+    member = get_member_by_token(token)
+    if not member:
+        return None
+
+    discord_id = member["discord_id"]
+    today = datetime.date.today().isoformat()
+
+    # Get today's completed tasks
+    tasks_today = tasks_completed_today(discord_id)
+
+    # Get SRS due count
+    conn = _connect()
+    srs_due = conn.execute(
+        "SELECT COUNT(*) as cnt FROM vocab_srs WHERE discord_id=? AND next_review<=?",
+        (discord_id, today),
+    ).fetchone()
+    srs_due_count = srs_due["cnt"] if srs_due else 0
+
+    # Get due words for review
+    srs_words = conn.execute(
+        "SELECT word, ease_factor, interval_days, review_count FROM vocab_srs WHERE discord_id=? AND next_review<=? LIMIT 20",
+        (discord_id, today),
+    ).fetchall()
+    conn.close()
+
+    return {
+        "discord_id": discord_id,
+        "discord_name": member.get("discord_name", ""),
+        "level": member.get("level", "L0"),
+        "streak": member.get("current_streak", 0),
+        "longest_streak": member.get("longest_streak", 0),
+        "total_points": member.get("total_points", 0),
+        "tasks_today": tasks_today,
+        "tasks_today_count": len(tasks_today),
+        "srs_due": srs_due_count,
+        "srs_words": [dict(r) for r in srs_words],
+    }
+
+
+def record_srs_review(discord_id: str, word: str, score: int):
+    """Record an SRS review result. Score: 0-5 (SM-2 scale).
+    Updates ease_factor, interval, and next_review date."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM vocab_srs WHERE discord_id=? AND word=?",
+        (discord_id, word),
+    ).fetchone()
+    if not row:
+        conn.close()
+        return
+
+    ease = row["ease_factor"]
+    interval = row["interval_days"]
+    count = row["review_count"]
+
+    # SM-2 algorithm
+    if score >= 3:
+        if count == 0:
+            interval = 1
+        elif count == 1:
+            interval = 6
+        else:
+            interval = int(interval * ease)
+        count += 1
+    else:
+        count = 0
+        interval = 1
+
+    ease = ease + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02))
+    if ease < 1.3:
+        ease = 1.3
+
+    next_review = (datetime.date.today() + datetime.timedelta(days=interval)).isoformat()
+
+    conn.execute(
+        """UPDATE vocab_srs SET ease_factor=?, interval_days=?, next_review=?,
+           review_count=?, last_score=? WHERE discord_id=? AND word=?""",
+        (ease, interval, next_review, count, score, discord_id, word),
+    )
+    conn.commit()
+    conn.close()
