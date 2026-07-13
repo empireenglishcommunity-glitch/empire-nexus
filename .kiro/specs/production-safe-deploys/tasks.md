@@ -14,6 +14,11 @@
 
 ## Phase 0 — Recover stranded work (do this FIRST, before any new code)
 
+> **✅ PHASE 0 COMPLETE as of 2026-07-13.** All 3 tasks done and
+> verified live. Backups are now genuinely automated (daily 3:10 AM
+> cron on the server, not just a runnable-by-hand script). Safe to move
+> on to Phase 1 (feature flags + kill switch) next.
+
 - [x] **0.1** Recover the 2 stranded commits (`7f685f1`, `5829134`) from
   branch `test/ai-engine-and-features-coverage` that were never merged
   into `main` (see requirements.md's "real finding" section for full
@@ -32,12 +37,33 @@
   (learning-bot), 49/49 (challenge-bot, confirmed unaffected), ruff
   clean, py_compile clean, and `backup.py` run for real against a
   freshly created populated SQLite file (not just via pytest).
-- [ ] **0.2** Deploy the recovered `scripts/backup.py` to the server
+- [x] **0.2** Deploy the recovered `scripts/backup.py` to the server
   (`/opt/empire-english-bot`) and take one real backup by hand to
   confirm it works end-to-end against the real production database file
   (not just in CI against a temp DB). **Blocked on PR #46 being merged
   first** — do not attempt this against an unmerged branch.
-- [ ] **0.3** Update this spec's own `requirements.md`/`design.md` if
+  — Done 2026-07-13: pulled `main` (`b63bdec`) on `/opt/empire-english-bot-new`,
+  rebuilt the container (new `bot-backups` named volume from the recovered
+  `docker-compose.yml` change), confirmed clean startup (curriculum
+  loaded, bot online, zero errors). Ran `docker exec empire-english-bot
+  python3 scripts/backup.py` against the REAL production database —
+  confirmed the resulting backup file is a valid, queryable SQLite file
+  (8 tables, correct real member count) genuinely persisted in the named
+  Docker volume (`/var/lib/docker/volumes/empire-english-bot_bot-backups/_data`,
+  confirmed via `docker volume inspect` — not the container's ephemeral
+  layer, so it survives a full rebuild). **Also discovered and fixed a
+  real gap while doing this**: the server's crontab already had daily
+  3 AM backup jobs for n8n, the challenge-bot sibling, and the EMOS DB —
+  but NOT for discord-learning-bot, exactly the "Known follow-up NOT
+  addressed" flagged in the original stranded commit's own message.
+  Added `10 3 * * * cd /opt/empire-english-bot && docker exec
+  empire-english-bot python3 scripts/backup.py >> /var/log/learning-bot-backup.log 2>&1`
+  (staggered 10 min after the other jobs), then verified the exact cron
+  command works by running it manually and confirming the log file
+  and a second rotated backup both appeared correctly (2/14 kept).
+  Backups are now genuinely automated daily, not just "runnable by
+  hand" — closing this gap for real, not just on paper.
+- [x] **0.3** Update this spec's own `requirements.md`/`design.md` if
   anything about the recovered code differs from what was assumed when
   those documents were written (e.g. if `backup.py`'s actual interface
   doesn't match the `--tag` extension assumed in design.md — adjust the
