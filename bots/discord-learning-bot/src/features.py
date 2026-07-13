@@ -401,14 +401,39 @@ async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
     loads = {m.id: database.count_buddy_load(str(m.id)) for m in candidates}
     buddy = min(candidates, key=lambda m: loads[m.id])
 
-    try:
-        await buddy.send(
-            f"👋 عضو جديد انضم: **{new_member.display_name}**\n"
-            f"انت الـ buddy بتاعه. تواصل معاه خلال 12 ساعة.\n"
-            f"*(عندك دلوقتي {loads[buddy.id] + 1} من الأعضاء تحت مسؤوليتك)*"
-        )
-    except discord.Forbidden:
-        pass
+    # Bawaba B4: send a richer, more actionable buddy DM when the flag
+    # is enabled — tells the buddy WHO joined, WHAT their first task is
+    # today, and suggests sending a VOICE MESSAGE (not text) since the
+    # new student might not be able to read English yet.
+    if database.is_feature_enabled("bawaba_buddy_prompt"):
+        # Get today's first task for L0 (the new member's level)
+        first_task = config.DAILY_TASKS[0]  # accent drill (always first)
+        try:
+            await buddy.send(
+                f"👋 **عضو جديد انضم: {new_member.display_name}**\n"
+                f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                f"انت الـ buddy بتاعه. **ابعتله رسالة صوتية** بالعربي\n"
+                f"(اضغط مع الاستمرار على المايك في DM) وقوله:\n\n"
+                f"• أهلاً بيك، أنا هساعدك\n"
+                f"• أول مهمة ليك النهاردة: **{first_task['name_ar']}** ({first_task['name']})\n"
+                f"• لما تخلصها اكتب `!1` في #bot-commands\n"
+                f"• لو تايه اكتب `!مساعدة` أو كلمني\n\n"
+                f"💡 *ليه صوتية؟ ممكن يكون أول مرة يتعلم إنجليزي —\n"
+                f"رسالة صوتية بالعربي أسهل عليه من نص مكتوب.*\n\n"
+                f"📊 عندك دلوقتي **{loads[buddy.id] + 1}** عضو تحت مسؤوليتك."
+            )
+        except discord.Forbidden:
+            pass
+    else:
+        try:
+            await buddy.send(
+                f"👋 عضو جديد انضم: **{new_member.display_name}**\n"
+                f"انت الـ buddy بتاعه. تواصل معاه خلال 12 ساعة.\n"
+                f"*(عندك دلوقتي {loads[buddy.id] + 1} من الأعضاء تحت مسؤوليتك)*"
+            )
+        except discord.Forbidden:
+            pass
+
     database.update_member(str(new_member.id), buddy_id=str(buddy.id))
     logger.info(
         f"Assigned buddy {buddy.display_name} to {new_member.display_name} "
