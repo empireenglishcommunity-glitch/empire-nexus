@@ -218,41 +218,58 @@ def _find_channel(guild: discord.Guild, name: str):
 
 
 async def _send_onboarding_media(member: discord.Member):
-    """Bawaba B3: send pre-generated multimedia onboarding assets (journey
-    map infographic + Arabic audio clips) as DM attachments.
+    """Bawaba B3: send onboarding guide as clean Discord text messages +
+    human-recorded Arabic voice clips (if available).
 
-    Gracefully skips any files that don't exist yet (they need to be
-    generated on the server via scripts/onboarding/generate_*.py first).
+    Replaced the html2img PNG infographic (unreadable on mobile, low-res)
+    with native Discord formatting that's always crisp on any device.
+    Replaced Kokoro TTS (can't actually speak Arabic — just reads letter
+    names) with human-recorded voice clips from the founder.
+
+    Voice clips are optional: if the audio/ directory has MP3 files,
+    they're sent. If not (founder hasn't recorded them yet), the text
+    guide alone is sufficient — it's the primary onboarding path now.
     """
     from pathlib import Path
+
+    # --- Text-based journey map (replaces the PNG infographic) ---
+    try:
+        await member.send(
+            "🗺️ **رحلتك في 5 خطوات:**\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "1️⃣  **سجّل نفسك**\n"
+            "    └ اكتب `!انضم` أو اعمل ✅ على أي رسالة\n\n"
+            "2️⃣  **كل يوم الساعة 6 الصبح**\n"
+            "    └ هتلاقي 7 مهام مرقمة في قناة المهام\n\n"
+            "3️⃣  **اعمل المهمة**\n"
+            "    └ كل مهمة 10 دقايق: نطق، مفردات، استماع...\n\n"
+            "4️⃣  **سجّل إنك خلصت**\n"
+            "    └ اكتب رقم المهمة: `!1` أو `!2` ... إلخ\n\n"
+            "5️⃣  **شوف تقدمك يكبر 🔥**\n"
+            "    └ اكتب `!تقدم` — نقاطك هتزيد كل يوم\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            "💡 مش محتاج تعرف إنجليزي عشان تبدأ.\n"
+            "كل الأوامر شغالة بالعربي! اكتب `!مساعدة` لو تايه."
+        )
+        await asyncio.sleep(1)
+    except (discord.Forbidden, discord.HTTPException):
+        pass
+
+    # --- Human-recorded Arabic audio clips (if available) ---
     media_dir = Path(__file__).resolve().parent.parent / "scripts" / "onboarding"
-
-    # Send journey map infographic (if generated)
-    journey_map = media_dir / "images" / "journey_map.png"
-    if journey_map.exists():
-        try:
-            await member.send(
-                "🗺️ **خريطة رحلتك:**",
-                file=discord.File(str(journey_map), filename="journey_map.png"),
-            )
-            await asyncio.sleep(1)
-        except (discord.Forbidden, discord.HTTPException):
-            pass
-
-    # Send audio clips (if generated)
     audio_dir = media_dir / "audio"
     audio_files = sorted(audio_dir.glob("*.mp3")) if audio_dir.exists() else []
     if audio_files:
         try:
             await member.send(
-                "🎧 **اسمع الشرح بالعربي** (4 كليبات قصيرة):",
+                "🎧 **اسمع الشرح بالعربي:**",
                 files=[discord.File(str(f), filename=f.name) for f in audio_files[:4]],
             )
             await asyncio.sleep(1)
         except (discord.Forbidden, discord.HTTPException):
             pass
 
-    # Send video link (if configured)
+    # --- Video link (if configured) ---
     if config.ONBOARDING_VIDEO_URL:
         try:
             await member.send(
