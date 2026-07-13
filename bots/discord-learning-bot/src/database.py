@@ -1016,14 +1016,24 @@ def set_notification_pref(discord_id: str, key: str, value) -> bool:
 
 
 def log_notification(discord_id: str, notification_type: str, date: str):
-    """Record that a notification was sent (for duplicate prevention)."""
+    """Record that a notification was sent (for duplicate prevention).
+
+    Wrapped in try/except for the FK constraint — if somehow called for
+    a discord_id not in the members table (shouldn't happen in normal
+    flow since notification loops iterate all_active_members() first),
+    it silently skips rather than crashing the notification loop.
+    """
     conn = _connect()
-    conn.execute(
-        "INSERT INTO notification_log (discord_id, notification_type, date) VALUES (?, ?, ?)",
-        (discord_id, notification_type, date),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO notification_log (discord_id, notification_type, date) VALUES (?, ?, ?)",
+            (discord_id, notification_type, date),
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass  # FK constraint — member doesn't exist, skip silently
+    finally:
+        conn.close()
 
 
 def was_notification_sent(discord_id: str, notification_type: str, date: str) -> bool:
