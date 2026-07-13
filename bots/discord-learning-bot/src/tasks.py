@@ -521,12 +521,28 @@ async def process_submission(discord_id: str, member_name: str,
         database.add_points(discord_id, config.POINTS_ALL_TASKS, "all_7_tasks")
         points += config.POINTS_ALL_TASKS
 
-    # Check streak bonuses
+    # Check streak bonuses — award ONCE per threshold per day, not once
+    # per submission. Previously this fired on every !done call where
+    # current_streak was in STREAK_BONUS_POINTS, meaning all 7 submissions
+    # on the day the streak hits 7 each awarded 200 points (7 × 200 =
+    # 1400 total instead of 200 once). Fixed by checking if a points_log
+    # entry with this reason already exists for this member (streak
+    # bonuses are unique per threshold — you can't hit streak_7 twice
+    # without your streak resetting and rebuilding first, at which point
+    # you'd get streak_7 again legitimately on the next cycle).
     current_streak, _ = database.get_streak(discord_id)
     if current_streak in config.STREAK_BONUS_POINTS:
-        bonus = config.STREAK_BONUS_POINTS[current_streak]
-        database.add_points(discord_id, bonus, f"streak_{current_streak}")
-        points += bonus
+        reason = f"streak_{current_streak}"
+        conn = database._connect()
+        already_awarded = conn.execute(
+            "SELECT 1 FROM points_log WHERE discord_id=? AND reason=?",
+            (discord_id, reason),
+        ).fetchone()
+        conn.close()
+        if not already_awarded:
+            bonus = config.STREAK_BONUS_POINTS[current_streak]
+            database.add_points(discord_id, bonus, reason)
+            points += bonus
 
     # Generate quick feedback
     feedback = await ai_engine.quick_feedback(member_name, task_id)
