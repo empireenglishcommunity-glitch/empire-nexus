@@ -43,10 +43,10 @@ REGISTRY = [
     # ── TATAWWUR (system evolution) ──
     ("tatawwur_portfolio", "Voice progress portfolio (!portfolio / !صوتي)", "tatawwur", True),
     ("tatawwur_patterns", "Daily conversational patterns in tasks", "tatawwur", False),
-    ("tatawwur_srs", "Spaced repetition for vocabulary recall", "tatawwur", False),
-    ("tatawwur_milestones", "Ability milestones (!abilities / !قدراتي)", "tatawwur", False),
+    ("tatawwur_srs", "Spaced repetition for vocabulary recall", "tatawwur", True),
+    ("tatawwur_milestones", "Ability milestones (!abilities / !قدراتي)", "tatawwur", True),
     ("tatawwur_pronunciation", "AI pronunciation scoring (Groq Whisper)", "tatawwur", False),
-    ("tatawwur_conversations", "Structured conversation sessions", "tatawwur", False),
+    ("tatawwur_conversations", "Structured conversation sessions", "tatawwur", True),
     ("tatawwur_showcase", "Auto-post success stories", "tatawwur", False),
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
 ]
