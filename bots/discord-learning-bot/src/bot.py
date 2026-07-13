@@ -329,6 +329,8 @@ async def on_ready():
         midnight_voice_reset.start()
     if not heartbeat.is_running():
         heartbeat.start()
+    if not morning_kickstart.is_running():
+        morning_kickstart.start()
 
 
 @bot.event
@@ -639,6 +641,113 @@ async def daily_task_post():
                             break  # rate limited or no permission, stop trying
             except discord.HTTPException as e:
                 logger.error(f"Failed to post to #{channel_name}: {e}")
+
+
+@tasks.loop(time=datetime.time(hour=config.DAILY_TASK_HOUR, minute=5, tzinfo=_zone()))
+async def morning_kickstart():
+    """Nabd N1: Send personal morning kickstart DM to each active student.
+
+    Fires 5 minutes after the daily task post (6:05 AM). For each student:
+    - Skip if morning_dm preference is OFF
+    - Skip if already completed a task today (don't nag the active)
+    - Skip if quiet hours
+    - Skip if already sent today (prevent double-sends on restart)
+    - Build personal message: greeting, streak, first task, practice link
+    - Respect Bawaba B5 language phase
+    """
+    if not database.is_feature_enabled("nabd_morning"):
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    today = task_engine.today_str()
+    members = database.all_active_members()
+    sent = 0
+
+    for m in members:
+        discord_id = m["discord_id"]
+
+        # Check preferences
+        prefs = database.get_notification_prefs(discord_id)
+        if not prefs.get("morning_dm", 1):
+            continue
+
+        # Skip if quiet hours
+        if database.is_quiet_hours(discord_id):
+            continue
+
+        # Skip if already sent today
+        if database.was_notification_sent(discord_id, "morning_dm", today):
+            continue
+
+        # Skip if already completed a task today
+        completed = database.count_submissions_for_date(discord_id, today)
+        if completed > 0:
+            continue
+
+        # Get the member's Discord object
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        # Build personal message
+        streak = m.get("current_streak", 0)
+        week = database.member_week_number(discord_id)
+        allowed_tasks = features.get_allowed_tasks_for_member(discord_id)
+        first_task = next((t for t in config.DAILY_TASKS if t["id"] in allowed_tasks), config.DAILY_TASKS[0])
+
+        # Language phase (Bawaba B5)
+        phase = features.response_language(discord_id)
+
+        # Practice platform link
+        day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(task_engine.current_day_name()) if task_engine.current_day_name() in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
+        practice_url = curriculum.practice_platform_day_url(week, day_index, m.get("level", "L0"))
+
+        if phase == "arabic":
+            streak_text = f"\U0001f525 \u0633\u0644\u0633\u0644\u062a\u0643: **{streak}** \u064a\u0648\u0645" if streak > 0 else "\U0001f331 \u0627\u0628\u062f\u0623 \u0633\u0644\u0633\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \u0627\u0644\u0646\u0647\u0627\u0631\u062f\u0629!"
+            msg = (
+                f"\U0001f305 \u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631 **{m['discord_name']}**!\n\n"
+                f"\u0645\u0647\u0627\u0645\u0643 \u062c\u0627\u0647\u0632\u0629 \U0001f4cb\n"
+                f"{streak_text}\n\n"
+                f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629: **{first_task['name_ar']}** {first_task['emoji']}\n"
+                f"\U0001f310 \u0627\u062a\u0645\u0631\u0646 \u0623\u0648\u0646\u0644\u0627\u064a\u0646: {practice_url}\n\n"
+                f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 \U0001f4aa"
+            )
+        elif phase == "bilingual_ar":
+            streak_text = f"\U0001f525 \u0633\u0644\u0633\u0644\u0629 (Streak): **{streak}** \u064a\u0648\u0645" if streak > 0 else "\U0001f331 \u0627\u0628\u062f\u0623 \u0633\u0644\u0633\u0644\u0629 \u062c\u062f\u064a\u062f\u0629! (Start a new streak!)"
+            msg = (
+                f"\U0001f305 \u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631 **{m['discord_name']}**!\n\n"
+                f"\u0645\u0647\u0627\u0645\u0643 \u062c\u0627\u0647\u0632\u0629 (Tasks ready) \U0001f4cb\n"
+                f"{streak_text}\n\n"
+                f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629 (First task): **{first_task['name_ar']}** ({first_task['name']}) {first_task['emoji']}\n"
+                f"\U0001f310 Practice online: {practice_url}\n\n"
+                f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 (type `!1` when done) \U0001f4aa"
+            )
+        else:
+            streak_text = f"\U0001f525 Streak: **{streak}** days" if streak > 0 else "\U0001f331 Start a new streak today!"
+            msg = (
+                f"\U0001f305 Good morning **{m['discord_name']}**!\n\n"
+                f"Your tasks are ready \U0001f4cb\n"
+                f"{streak_text}\n\n"
+                f"First task: **{first_task['name']}** {first_task['emoji']}\n"
+                f"\U0001f310 Practice online: {practice_url}\n\n"
+                f"Type `!1` when done \U0001f4aa"
+            )
+
+        try:
+            await discord_member.send(msg)
+            database.log_notification(discord_id, "morning_dm", today)
+            sent += 1
+        except discord.Forbidden:
+            pass
+
+        # Rate limit: don't spam Discord's DM API
+        await asyncio.sleep(0.5)
+
+    if sent > 0:
+        logger.info(f"Nabd morning kickstart: sent to {sent} member(s)")
 
 
 @tasks.loop(time=datetime.time(hour=config.WEEKLY_ASSESSMENT_HOUR, tzinfo=_zone()))
