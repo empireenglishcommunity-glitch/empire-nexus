@@ -1572,6 +1572,9 @@ async def handle_tutorial_dm(message: discord.Message) -> bool:
             del _pending_tutorials[discord_id]
             logger.info(f"Bawaba B2: {message.author.display_name} completed tutorial quest (+15 pts)")
 
+            # Tatawwur T0: prompt for Day 1 benchmark recording
+            await prompt_day1_benchmark(message.author)
+
         return True
     else:
         # Didn't match — gentle nudge
@@ -1856,3 +1859,98 @@ async def send_social_proof(guild, completer_discord_id: str):
             database.log_notification(peer_id, "social_proof", today)
         except discord.Forbidden:
             pass
+
+
+
+# ============================================================
+#  30. TATAWWUR T0: VOICE PORTFOLIO INTEGRATION
+# ============================================================
+
+# The Day 1 benchmark sentence — same for every student (enables
+# fair comparison over time). Short enough for a beginner, long enough
+# to reveal pronunciation patterns.
+DAY1_BENCHMARK_SENTENCE = "Hello, my name is... I am learning English. I want to speak like a native speaker."
+DAY1_BENCHMARK_PROMPT_AR = (
+    "🎙️ **آخر خطوة — سجّل صوتك!**\n\n"
+    "ده أول تسجيل ليك — هنحفظه عشان بعد شهر تسمع نفسك وتشوف قد إيه اتحسنت.\n\n"
+    "**اقرأ الجملة دي بصوت عالي وابعت تسجيل صوتي:**\n\n"
+    f"```{DAY1_BENCHMARK_SENTENCE}```\n\n"
+    "💡 *مش لازم تكون مثالي — ده مجرد نقطة البداية.*\n"
+    "ابعت التسجيل هنا 👇"
+)
+
+
+async def handle_benchmark_recording(message) -> bool:
+    """Handle a voice recording submitted after the Day 1 benchmark prompt.
+
+    Called from on_message when a member in DM sends an attachment after
+    their tutorial is complete but no benchmark exists yet.
+    Returns True if the message was consumed as a benchmark submission.
+    """
+    if not database.is_feature_enabled("tatawwur_portfolio"):
+        return False
+
+    discord_id = str(message.author.id)
+
+    # Only handle if: in DM, has attachment, no day1 benchmark yet
+    if not isinstance(message.channel, discord.DMChannel):
+        return False
+    if not message.attachments:
+        return False
+    if database.has_day1_benchmark(discord_id):
+        return False
+
+    # Check if they were prompted (via a setting flag)
+    if database.get_setting(f"benchmark_prompted_{discord_id}", "") != "yes":
+        return False
+
+    # Save the recording
+    attachment = message.attachments[0]
+    member = database.get_member(discord_id)
+    level = member["level"] if member else "L0"
+    week = database.member_week_number(discord_id) if member else 1
+
+    database.save_voice_recording(
+        discord_id,
+        recording_url=attachment.url,
+        recording_type="benchmark_day1",
+        week=week,
+        level=level,
+        notes=DAY1_BENCHMARK_SENTENCE,
+    )
+
+    # Clear the prompt flag
+    database.set_setting(f"benchmark_prompted_{discord_id}", "done")
+
+    await message.channel.send(
+        "✅ **تم حفظ تسجيلك الأول!** 🎉\n\n"
+        "بعد 4 أسابيع هنطلب منك تسجل نفس الجملة تاني.\n"
+        "وقتها هتقدر تسمع الفرق بنفسك. 📈\n\n"
+        "اكتب `!صوتي` أو `!portfolio` في أي وقت عشان تشوف تسجيلاتك."
+    )
+
+    logger.info(f"Tatawwur T0: Day 1 benchmark saved for {message.author.display_name}")
+    return True
+
+
+async def prompt_day1_benchmark(member_or_user):
+    """Send the Day 1 benchmark prompt after tutorial completion.
+
+    Called from the tutorial quest completion handler. Sets a flag so
+    handle_benchmark_recording knows to accept the next audio DM.
+    """
+    if not database.is_feature_enabled("tatawwur_portfolio"):
+        return
+
+    discord_id = str(member_or_user.id)
+    if database.has_day1_benchmark(discord_id):
+        return  # already done
+
+    database.set_setting(f"benchmark_prompted_{discord_id}", "yes")
+
+    try:
+        import asyncio
+        await asyncio.sleep(2)
+        await member_or_user.send(DAY1_BENCHMARK_PROMPT_AR)
+    except discord.Forbidden:
+        pass

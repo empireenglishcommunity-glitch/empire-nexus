@@ -110,6 +110,7 @@ ARABIC_COMMAND_ALIASES = {
     "تعليم": "tutorial",
     "إشعارات": "notifications",
     "نبض": "pulse",
+    "صوتي": "portfolio",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -1724,6 +1725,11 @@ async def on_message(message: discord.Message):
             handled = await features.handle_tutorial_dm(message)
             if handled:
                 return
+        # Tatawwur T0: handle Day 1 benchmark recording submission
+        if message.attachments:
+            handled = await features.handle_benchmark_recording(message)
+            if handled:
+                return
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
@@ -2055,6 +2061,88 @@ async def cmd_notifications(ctx, setting: str = None, value: str = None):
 
     status = "✅ مفعّل" if db_value else "❌ متوقف"
     await ctx.send(f"🔔 {setting}: {status}")
+
+
+@bot.command(name="portfolio")
+async def cmd_portfolio(ctx):
+    """View your voice progress portfolio — hear your growth over time.
+
+    Tatawwur T0: shows all benchmark recordings chronologically with
+    dates, scores, and links. The "before and after" that proves the
+    system works.
+    """
+    if not database.is_feature_enabled("tatawwur_portfolio"):
+        return
+
+    discord_id = str(ctx.author.id)
+    recordings = database.get_voice_portfolio(discord_id)
+
+    if not recordings:
+        phase = features.response_language(discord_id)
+        if phase == "arabic":
+            await ctx.send(
+                "🎙️ **محفظة صوتك فاضية لسه.**\n\n"
+                "لما تبدأ تسجل صوتك في المهام اليومية، هتلاقي تسجيلاتك هنا.\n"
+                "هتقدر تسمع نفسك وانت بتتحسن مع الوقت! 📈"
+            )
+        else:
+            await ctx.send(
+                "🎙️ **Your voice portfolio is empty.**\n\n"
+                "As you complete speaking tasks, your recordings will appear here.\n"
+                "You'll be able to hear yourself improving over time! 📈"
+            )
+        return
+
+    member = database.get_member(discord_id)
+    name = member["discord_name"] if member else ctx.author.display_name
+
+    lines = [
+        f"🎙️ **{name}'s Voice Portfolio**",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"📊 Total recordings: **{len(recordings)}**",
+        "",
+    ]
+
+    # Show benchmarks first (the key "before/after" evidence)
+    benchmarks = [r for r in recordings if "benchmark" in r["recording_type"]]
+    if benchmarks:
+        lines.append("📍 **Benchmarks (hear your progress):**")
+        for r in benchmarks:
+            date = r["recorded_at"][:10]
+            score_text = f" — Score: {r['ai_score']:.0f}%" if r["ai_score"] else ""
+            type_label = "Day 1" if r["recording_type"] == "benchmark_day1" else f"Week {r['week'] or '?'}"
+            lines.append(f"  🎤 {type_label} ({date}){score_text}")
+            if r["recording_url"]:
+                lines.append(f"     🔗 {r['recording_url']}")
+        lines.append("")
+
+    # Recent daily recordings (last 5)
+    daily = [r for r in recordings if r["recording_type"] == "daily"]
+    if daily:
+        lines.append(f"🎯 **Recent recordings:** ({len(daily)} total)")
+        for r in daily[-5:]:
+            date = r["recorded_at"][:10]
+            score_text = f" — {r['ai_score']:.0f}%" if r["ai_score"] else ""
+            lines.append(f"  • {date} ({r['level']}){score_text}")
+
+    # Pronunciation trend (if enough data)
+    scored = [r for r in recordings if r["ai_score"] is not None]
+    if len(scored) >= 3:
+        first_score = scored[0]["ai_score"]
+        last_score = scored[-1]["ai_score"]
+        change = last_score - first_score
+        trend = "📈" if change > 0 else "📉" if change < 0 else "➡️"
+        lines.append(f"\n{trend} **Pronunciation trend:** {first_score:.0f}% → {last_score:.0f}% ({'+' if change > 0 else ''}{change:.0f}%)")
+
+    msg = "\n".join(lines)
+    if len(msg) > 1900:
+        try:
+            await ctx.author.send(msg)
+            await ctx.send("📩 Portfolio sent to your DMs!", delete_after=10)
+        except discord.Forbidden:
+            await ctx.send(msg[:1900] + "\n...")
+    else:
+        await ctx.send(msg)
 
 
 @bot.command(name="pulse")
