@@ -54,6 +54,105 @@ def get_allowed_tasks_for_member(discord_id: str) -> list[str]:
 
 
 # ============================================================
+#  1b. BAWABA B5: GRADUAL ENGLISH INJECTION
+# ============================================================
+# The bot interface IS the first English lesson. Response language
+# transitions automatically based on member's week number:
+#   Week 1:  "arabic"           — all bot responses in Arabic only
+#   Week 2-3: "bilingual_ar"    — Arabic first, English shown as learning
+#   Week 4+: "bilingual"        — current system (English + Arabic)
+
+def response_language(discord_id: str) -> str:
+    """Determine which language phase a member is in.
+
+    Returns: "arabic" | "bilingual_ar" | "bilingual"
+
+    Only applies when 'bawaba_gradual_english' flag is enabled.
+    When the flag is OFF, always returns "bilingual" (current behavior).
+    """
+    if not database.is_feature_enabled("bawaba_gradual_english"):
+        return "bilingual"
+
+    member = database.get_member(discord_id)
+    if not member:
+        return "bilingual"
+
+    week = database.member_week_number(discord_id)
+    if week <= 1:
+        return "arabic"
+    elif week <= 3:
+        return "bilingual_ar"
+    else:
+        return "bilingual"
+
+
+def bl_for_member(discord_id: str, en: str, ar: str) -> str:
+    """Bilingual text helper that respects the member's language phase.
+
+    - "arabic": shows Arabic only
+    - "bilingual_ar": shows Arabic first, then English in parentheses
+    - "bilingual": shows English + Arabic (current bl() behavior)
+
+    Use this instead of raw bl() in bot responses that are seen by
+    individual members (DMs, command responses). Scheduled posts to
+    channels (daily tasks, leaderboards) still use the standard bl()
+    since they're seen by all members at different phases.
+    """
+    phase = response_language(discord_id)
+    if phase == "arabic":
+        return ar
+    elif phase == "bilingual_ar":
+        return f"{ar} ({en})"
+    else:
+        return f"{en} / {ar}"
+
+
+def done_response_for_member(discord_id: str, task_id: str, result: dict) -> str:
+    """Generate the !done response message respecting the member's language phase.
+
+    Bawaba B5: week 1 students get full Arabic, week 2-3 get Arabic-first
+    bilingual, week 4+ get the current English+Arabic format.
+    """
+    phase = response_language(discord_id)
+
+    task_names_ar = {
+        "accent": "تدريب النطق",
+        "vocab": "المفردات",
+        "shadow": "المحاكاة",
+        "speaking": "مهمة الكلام",
+        "listening": "الاستماع",
+        "writing": "الكتابة",
+        "community": "المشاركة المجتمعية",
+    }
+    task_name_ar = task_names_ar.get(task_id, task_id)
+    bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
+
+    if phase == "arabic":
+        msg = f"✅ **{task_name_ar}** — أحسنت! 👏\n\n"
+        msg += f"[{bar}] {result['tasks_today']}/7 النهاردة\n"
+        msg += f"🔥 سلسلة: **{result['streak']}** يوم | +{result['points']} نقطة"
+        if result["tasks_today"] == 7:
+            msg += "\n\n🎉 **خلصت الـ 7 مهام! بونص إضافي!** 🏛️"
+    elif phase == "bilingual_ar":
+        msg = f"✅ **{task_name_ar}** ({task_id}) — أحسنت! 👏\n\n"
+        msg += f"[{bar}] {result['tasks_today']}/7 النهاردة (today)\n"
+        msg += f"🔥 سلسلة (Streak): **{result['streak']}** يوم | +{result['points']} نقطة (points)"
+        if result["tasks_today"] == 7:
+            msg += "\n\n🎉 **خلصت الـ 7 مهام! بونص إضافي!** (All 7 done! Bonus!) 🏛️"
+    else:
+        # Standard bilingual (week 4+)
+        msg = (
+            f"{result['feedback']}\n\n"
+            f"[{bar}] {result['tasks_today']}/7 today\n"
+            f"🔥 Streak: **{result['streak']}** days | +{result['points']} points"
+        )
+        if result["tasks_today"] == 7:
+            msg += "\n\n🎉 **ALL 7 TASKS COMPLETE!** Bonus points earned!"
+
+    return msg
+
+
+# ============================================================
 #  2. PRIVACY NOTICE
 # ============================================================
 

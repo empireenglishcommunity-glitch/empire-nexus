@@ -1,12 +1,8 @@
-"""Bawaba Phase B0 — Arabic command aliases + number-based task commands.
-
-Tests the rewriting logic that translates Arabic commands to English
-equivalents before bot.process_commands() sees them.
+"""Bawaba — Arabic command aliases, number-based task commands, and
+gradual English injection tests.
 """
-import pytest
-
-from src.bot import _rewrite_arabic_command, ARABIC_COMMAND_ALIASES, ARABIC_TASK_ALIASES
-from src import config
+from src.bot import _rewrite_arabic_command, ARABIC_TASK_ALIASES
+from src import config, database
 
 
 # ============================================================
@@ -132,3 +128,82 @@ def test_number_commands_map_to_correct_tasks():
     # The mapping happens in on_message (tested via integration), but
     # we verify the assumption this relies on: DAILY_TASKS order is fixed
     assert len(config.DAILY_TASKS) == 7
+
+
+
+# ============================================================
+#  BAWABA B5: GRADUAL ENGLISH INJECTION
+# ============================================================
+
+def test_response_language_returns_bilingual_when_flag_off():
+    """When bawaba_gradual_english flag is not set, always returns bilingual."""
+    from src.features import response_language
+    database.register_member("lang_test_user", "Test")
+    # Flag not set = disabled = bilingual
+    result = response_language("lang_test_user")
+    assert result == "bilingual"
+
+
+def test_response_language_arabic_for_week_1():
+    """Week 1 member gets 'arabic' phase."""
+    from src.features import response_language
+    database.register_member("lang_w1", "Week1")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    # Member just joined = week 1
+    result = response_language("lang_w1")
+    assert result == "arabic"
+
+
+def test_response_language_bilingual_ar_for_week_2():
+    """Week 2-3 member gets 'bilingual_ar' phase."""
+    from src.features import response_language
+    from unittest.mock import patch
+    database.register_member("lang_w2", "Week2")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    with patch.object(database, "member_week_number", return_value=2):
+        result = response_language("lang_w2")
+    assert result == "bilingual_ar"
+
+
+def test_response_language_bilingual_for_week_4_plus():
+    """Week 4+ member gets 'bilingual' phase (current behavior)."""
+    from src.features import response_language
+    from unittest.mock import patch
+    database.register_member("lang_w4", "Week4")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    with patch.object(database, "member_week_number", return_value=5):
+        result = response_language("lang_w4")
+    assert result == "bilingual"
+
+
+def test_bl_for_member_arabic_phase():
+    """bl_for_member in 'arabic' phase shows only Arabic."""
+    from src.features import bl_for_member
+    database.register_member("bl_test_ar", "ArabicUser")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    # Week 1 = arabic phase
+    result = bl_for_member("bl_test_ar", "Done", "تم")
+    assert result == "تم"
+    assert "Done" not in result
+
+
+def test_bl_for_member_bilingual_ar_phase():
+    """bl_for_member in 'bilingual_ar' phase shows Arabic first with English in parens."""
+    from src.features import bl_for_member
+    from unittest.mock import patch
+    database.register_member("bl_test_biar", "BiArUser")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    with patch.object(database, "member_week_number", return_value=3):
+        result = bl_for_member("bl_test_biar", "Done", "تم")
+    assert result == "تم (Done)"
+
+
+def test_bl_for_member_bilingual_phase():
+    """bl_for_member in 'bilingual' phase shows English / Arabic."""
+    from src.features import bl_for_member
+    from unittest.mock import patch
+    database.register_member("bl_test_bi", "BiUser")
+    database.set_feature_flag("bawaba_gradual_english", enabled=True)
+    with patch.object(database, "member_week_number", return_value=6):
+        result = bl_for_member("bl_test_bi", "Done", "تم")
+    assert result == "Done / تم"
