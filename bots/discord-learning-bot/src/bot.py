@@ -134,6 +134,16 @@ def _find_channel(guild: discord.Guild, name: str):
 @bot.event
 async def on_ready():
     database.init_db()
+    # Ensure the 'systemstatus' flag is enabled by default (Aegis Phase 5:
+    # this was initially gated during development; now it's public).
+    # Only sets it if it has never been touched — respects any admin's
+    # explicit !flag disable systemstatus.
+    from src.database import _connect
+    conn = _connect()
+    row = conn.execute("SELECT name FROM feature_flags WHERE name='systemstatus'").fetchone()
+    conn.close()
+    if row is None:
+        database.set_feature_flag("systemstatus", enabled=True, updated_by="on_ready_default")
     # Load curriculum data from JSON files
     from . import curriculum
     curriculum.load_all()
@@ -446,7 +456,8 @@ async def grammar_card_delivery():
 
 @tasks.loop(minutes=2)
 async def heartbeat():
-    """Write a live timestamp to the settings table every 2 minutes.
+    """Write a live timestamp to the settings table every 2 minutes, and
+    update the bot's Discord presence to reflect maintenance mode.
 
     Aegis Phase 2 (production-safe-deploys spec): scripts/health_check.py
     runs as an EXTERNAL process (invoked via `docker exec` from
@@ -463,8 +474,31 @@ async def heartbeat():
     deploy (per deploy.sh's `sleep 5` before checking) will always see a
     fresh value if the bot is actually healthy, without being so
     frequent it adds meaningful load.
+
+    Aegis Phase 5: also checks the 'maintenance_mode' setting and
+    updates the bot's Discord presence accordingly. This means
+    deploy.py can set 'maintenance_mode=on' in the DB (via docker exec)
+    BEFORE restarting, and the bot will show the maintenance presence
+    within 2 minutes of coming back up. The !maintenance command also
+    sets this flag for manual use.
     """
     database.set_setting("last_heartbeat", datetime.datetime.now(_zone()).isoformat())
+
+    # Check maintenance mode and update presence
+    maintenance = database.get_setting("maintenance_mode", "off")
+    try:
+        if maintenance == "on":
+            await bot.change_presence(
+                activity=discord.Game(name="\U0001f527 Updating... / \u0628\u064a\u062a\u0645 \u0627\u0644\u062a\u062d\u062f\u064a\u062b"),
+                status=discord.Status.idle,
+            )
+        else:
+            await bot.change_presence(
+                activity=discord.Game(name="\U0001f3db\ufe0f Empire English | !help"),
+                status=discord.Status.online,
+            )
+    except Exception:
+        pass  # presence update is best-effort, never crash the heartbeat
 
 
 @tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=_zone()))
@@ -917,7 +951,8 @@ async def cmd_help(ctx):
         "`!week` — This week's curriculum focus\n"
         "`!assess` — Calculate this week's assessment score\n"
         "`!top` — Points leaderboard\n"
-        "`!streaks` — Streak leaderboard\n\n"
+        "`!streaks` — Streak leaderboard\n"
+        "`!systemstatus` — Check system health (public)\n\n"
         "**How `!done` works (verification):**\n"
         "🎯 `!done accent` — upload audio in #showcase first\n"
         "📖 `!done vocab` — bot asks you a word quiz\n"
@@ -938,7 +973,8 @@ async def cmd_help(ctx):
         "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
         "`!examqueue` — List advancement exams awaiting review\n"
         "`!examresult <id> pass/fail` — Resolve an exam (auto-promotes on pass)\n"
-        "`!flag list/enable/disable/beta` — Feature flag management\n\n"
+        "`!flag list/enable/disable/beta` — Feature flag management\n"
+        "`!maintenance on/off` — Toggle maintenance mode (deploy presence)\n\n"
         "**Account:**\n"
         "`!delete` — Request deletion of all your data\n"
         "`!exam` — Request level advancement exam\n"
@@ -1204,34 +1240,16 @@ async def cmd_status(ctx):
 async def cmd_systemstatus(ctx):
     """Public, read-only system health check — anyone can run this.
 
-    Deliberately NOT listed in !help yet: this command is dormant by
-    default (see the flag check below) until an admin explicitly runs
-    `!flag enable systemstatus`. Advertising it before then would create
-    exactly the "student runs a documented command and gets silent
-    nothing" problem this whole Aegis initiative exists to prevent (the
-    same class of gap found with the missing !assess command). Add it
-    to !help's Learning section in the same commit/session that
-    actually flips the flag on for everyone.
-
-    First real feature shipped behind Aegis's feature-flag mechanism
-    (see .kiro/specs/production-safe-deploys/, Phase 1 task 1.4), and
-    the "publicly viewable status artifact" from the design's Component
-    8 (reinforcing the professional/reliable brand for paying students,
-    without a new paid service). Distinct from the existing admin-only
-    !status: shows no admin-sensitive facts (no AI-key presence, no
-    per-level member breakdown), just "is the system healthy right now."
-
-    Gated behind the 'systemstatus' feature flag (default OFF for
-    everyone until explicitly enabled via !flag enable systemstatus) so
-    this can be deployed dormant and turned on deliberately, proving the
-    deploy-then-release mechanism actually works end-to-end with a real
-    feature, not just a test.
+    Aegis Phase 5: now enabled for everyone (previously gated behind the
+    'systemstatus' feature flag during Phase 1 development). Shows no
+    admin-sensitive facts (no AI-key presence, no per-level member
+    breakdown), just "is the system healthy right now" — reinforcing the
+    professional/reliable brand for paying students without a new paid
+    service. Distinct from the existing admin-only !status.
     """
     if not database.is_feature_enabled("systemstatus", str(ctx.author.id)):
-        return  # silently a no-op if the flag is off -- not an error,
-                # just "this feature doesn't exist yet" from the caller's
-                # point of view, matching the design's dormant-until-
-                # released model.
+        return  # still respects the kill switch if an admin explicitly
+                # disables it via !flag disable systemstatus
 
     checks = []
     all_ok = True
@@ -1353,6 +1371,49 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
         database.set_feature_flag(name, enabled=True, allowed_ids=allowed_ids, updated_by=str(ctx.author.id))
         names = ", ".join(m.display_name for m in members)
         await ctx.send(f"🟡 Flag `{name}` is now **ON for beta testers only**: {names}")
+
+
+@bot.command(name="maintenance")
+@commands.has_permissions(manage_guild=True)
+async def cmd_maintenance(ctx, mode: str = None):
+    """Toggle maintenance mode (changes bot presence during deploys).
+
+    Usage:
+      !maintenance on   — show "Updating..." presence (idle status)
+      !maintenance off  — restore normal presence (online status)
+      !maintenance      — show current state
+
+    Aegis Phase 5: deploy.py sets this flag automatically before a
+    deploy (via docker exec) so students see a deliberate "updating"
+    status rather than the bot just disappearing and reappearing. The
+    heartbeat loop (every 2 min) picks up the flag and updates presence.
+    This command lets an admin toggle it manually for longer maintenance
+    windows or testing.
+    """
+    if mode not in ("on", "off", None):
+        await ctx.send("Usage: `!maintenance on` or `!maintenance off`")
+        return
+
+    if mode is None:
+        current = database.get_setting("maintenance_mode", "off")
+        status_text = "\U0001f527 **Maintenance mode is ON**" if current == "on" else "\u2705 **Maintenance mode is OFF** (normal)"
+        await ctx.send(status_text)
+        return
+
+    database.set_setting("maintenance_mode", mode)
+
+    if mode == "on":
+        await bot.change_presence(
+            activity=discord.Game(name="\U0001f527 Updating... / \u0628\u064a\u062a\u0645 \u0627\u0644\u062a\u062d\u064a\u062b"),
+            status=discord.Status.idle,
+        )
+        await ctx.send("\U0001f527 Maintenance mode **ON** — bot presence updated to 'Updating...'")
+    else:
+        await bot.change_presence(
+            activity=discord.Game(name="\U0001f3db\ufe0f Empire English | !help"),
+            status=discord.Status.online,
+        )
+        await ctx.send("\u2705 Maintenance mode **OFF** — bot presence restored to normal.")
 
 
 @bot.command(name="announce")

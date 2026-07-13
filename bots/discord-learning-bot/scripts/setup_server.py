@@ -375,6 +375,7 @@ CATEGORIES_CONFIG = [
             {"name": "mod-actions", "type": "text", "topic": "سجل إجراءات الإدارة"},
             {"name": "member-notes", "type": "text", "topic": "ملاحظات على الأعضاء"},
             {"name": "bot-logs", "type": "text", "topic": "سجل أخطاء البوت"},
+            {"name": "dev-log", "type": "text", "topic": "Deploy log — auto-posted by deploy.py on every deploy (git SHA + summary + timestamp)"},
         ],
     },
 ]
