@@ -8,6 +8,10 @@ services:
     env_file: .env
     volumes:
       - bot-data:/app/data_persist
+      # Mounted separately from bot-data so `docker exec ... backup.py`
+      # writes backups somewhere that survives a full container rebuild
+      # (not just a restart), same as the database volume above.
+      - bot-backups:/app/backups
     mem_limit: 512m
     cpus: "0.5"
     logging:
@@ -18,3 +22,4 @@ services:
 
 volumes:
   bot-data:
+  bot-backups:

@@ -14,7 +14,6 @@ Features:
   - !announce <msg>        -> send announcement (mods)
   - !reset                 -> wipe all data (admin, with confirmation)
 """
-import os
 import datetime
 import logging
 import discord

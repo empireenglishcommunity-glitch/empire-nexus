@@ -1,7 +1,5 @@
 """Tests for src/config.py — configuration loading and static learning-system
 parameters (LEVELS, DAILY_TASKS, streak bonuses, etc.)."""
-import os
-
 from src import config
 
 
@@ -41,13 +39,13 @@ def test_l0_to_l2_have_advancement_score():
 def test_vocab_targets_increase_with_level():
     """Vocab target should strictly increase L0 < L1 < L2 < L3 — a level
     that isn't harder than the one before it would be a real design bug."""
-    targets = [config.LEVELS[l]["vocab_target"] for l in ("L0", "L1", "L2", "L3")]
+    targets = [config.LEVELS[lvl]["vocab_target"] for lvl in ("L0", "L1", "L2", "L3")]
     assert targets == sorted(targets)
     assert len(set(targets)) == len(targets)  # strictly increasing, no ties
 
 
 def test_speaking_targets_increase_with_level():
-    targets = [config.LEVELS[l]["speaking_target_seconds"] for l in ("L0", "L1", "L2", "L3")]
+    targets = [config.LEVELS[lvl]["speaking_target_seconds"] for lvl in ("L0", "L1", "L2", "L3")]
     assert targets == sorted(targets)
 
 

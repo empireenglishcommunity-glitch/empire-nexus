@@ -33,6 +33,7 @@ docker compose logs -f
 |---------|-------------|
 | `!join <goal>` | Register and set your learning goal |
 | `!done <task>` | Mark a task as completed |
+| `!today` | Show your remaining tasks for today |
 | `!progress` | View your progress dashboard |
 | `!streak` | View your streak info |
 | `!level` | Level info and advancement requirements |
@@ -40,9 +41,16 @@ docker compose logs -f
 | `!assess` | Calculate this week's assessment score |
 | `!top` | Points leaderboard |
 | `!streaks` | Streak leaderboard |
+| `!exam` | Request the level advancement exam (DM-collected speaking + writing) |
+| `!delete` / `!confirm-delete` | Request deletion of all your data |
 | `!help` | Show all commands |
 
-**Admin:** `!status` `!setlevel @user L#` `!announce <msg>` `!members` `!examqueue` `!examresult <id> pass|fail`
+**Admin:** `!status` · `!setlevel @user L#` · `!announce <msg>` · `!members` ·
+`!examqueue` · `!examresult <id> pass|fail` · `!attention` (ranked "who
+needs a human right now" dashboard: pending exams, inactive members by
+severity, declining assessment trends, buddy load) · `!orient <datetime>`
+(schedule an orientation session) · `!recruit ar|en` (post a recruitment
+message) · `!resources L0-3` (post level-appropriate resource links)
 
 ## Architecture
 
@@ -62,9 +70,44 @@ content/            ← AI prompt library (25 prompts) + per-level accent/gramma
 data/               ← Per-level vocabulary/speaking/writing content, ALL 4 levels, 38 weeks total
                       (see data/README.md for exact counts and the content pipeline explained)
 scripts/            ← setup_server.py (auto-configures Discord server)
+                      backup.py (SQLite database backup + rotation)
 ```
 
 > **Content status:** all 4 levels (L0-L3, 38 weeks) have real, verified curriculum content as of 2026-07-11. See `data/README.md` for the full breakdown and history of what was previously missing/templated.
+
+## Running the tests
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest tests/ -v
+```
+
+267 tests covering config invariants, curriculum loading (including
+regression tests for two real bugs already fixed: L1 vocabulary
+duplication and the practice-site day-split bug), the database layer,
+task generation/formatting, anti-cheat verification, AI-engine JSON
+parsing, and database backup + rotation. CI runs this automatically on
+every push/PR that touches this bot (see
+`.github/workflows/learning-bot-test.yml`).
+
+## Backups
+
+The database (`data_persist/empire_english.db` in the Docker volume, or
+`empire_english.db` locally) has no automated backup unless you set one
+up. `scripts/backup.py` creates timestamped copies and keeps the last
+14, deleting older ones:
+
+```bash
+# Run inside the container (sees the same Docker volume the bot uses):
+docker exec empire-english-bot python3 scripts/backup.py
+
+# Or via cron on the host, daily at 3 AM:
+0 3 * * * docker exec empire-english-bot python3 scripts/backup.py
+```
+
+Backups are written to `backups/` (gitignored), which is its own named
+Docker volume (`bot-backups`, separate from the database's `bot-data`
+volume) — so they survive a full container rebuild, not just a restart.
 
 ## Deployment
 

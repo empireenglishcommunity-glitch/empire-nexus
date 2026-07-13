@@ -41,6 +41,8 @@ def test_import_verification():
 
 def test_import_features():
     mod = importlib.import_module("src.features")
+    assert hasattr(mod, "assign_buddy")
+    assert hasattr(mod, "check_english_only")
 
 
 def test_import_ai_engine():

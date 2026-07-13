@@ -121,8 +121,8 @@ async def send_weekly_feedback_survey(guild: discord.Guild):
             continue
         try:
             await discord_member.send(
-                f"📋 **استبيان أسبوعي — Empire English**\n\n"
-                f"رأيك مهم! جاوب على الـ 3 أسئلة دول:\n\n" +
+                "📋 **استبيان أسبوعي — Empire English**\n\n"
+                "رأيك مهم! جاوب على الـ 3 أسئلة دول:\n\n" +
                 "\n\n".join(FEEDBACK_QUESTIONS) +
                 "\n\n*ابعت إجاباتك هنا (reply to this DM)*"
             )
@@ -225,20 +225,20 @@ def format_grammar_card(week: int, level: str = "L0") -> str:
 
     lines = [
         f"📖 **Grammar Pattern — Week {week}**",
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
         f"**{grammar.get('pattern_name', '')}**",
         f"*{grammar.get('pattern_name_ar', '')}*",
-        f"",
+        "",
         f"**Formula:** `{grammar.get('formula', '')}`",
         f"**Visual:** `{grammar.get('formula_visual', '')}`",
-        f"",
-        f"**When to use:**",
+        "",
+        "**When to use:**",
         f"{grammar.get('when_to_use', '')}",
-        f"",
-        f"**بالعربي:**",
+        "",
+        "**بالعربي:**",
         f"{grammar.get('when_to_use_ar', '')}",
-        f"",
+        "",
     ]
 
     examples = grammar.get("examples", [])
@@ -309,8 +309,8 @@ async def handle_exam_request(ctx, bot):
     if last_attempt:
         if last_attempt.get("status") == "pending":
             await ctx.send(
-                f"⏳ عندك امتحان قيد المراجعة بالفعل.\n"
-                f"هتوصلك النتيجة في DM خلال 48 ساعة."
+                "⏳ عندك امتحان قيد المراجعة بالفعل.\n"
+                "هتوصلك النتيجة في DM خلال 48 ساعة."
             )
             return
         last_date = datetime.datetime.fromisoformat(last_attempt["attempted_at"])
@@ -457,22 +457,22 @@ async def check_english_only(message: discord.Message) -> bool:
         if level == "L0" and week <= 4:
             try:
                 await message.reply(
-                    f"💡 English only in this channel! Try in English:\n"
-                    f"*You can ask Arabic questions in `#l0-questions`*",
+                    "💡 English only in this channel! Try in English:\n"
+                    "*You can ask Arabic questions in `#l0-questions`*",
                     delete_after=30,
                 )
-            except:
+            except Exception:
                 pass
             return True
         else:
             # Stronger enforcement for L0 week 5+ and higher levels
             try:
                 await message.reply(
-                    f"⚠️ **English only!** This channel is English-only.\n"
-                    f"*Arabic questions → `#l0-questions` or `#support`*",
+                    "⚠️ **English only!** This channel is English-only.\n"
+                    "*Arabic questions → `#l0-questions` or `#support`*",
                     delete_after=30,
                 )
-            except:
+            except Exception:
                 pass
             return True
 
@@ -513,7 +513,7 @@ async def post_streak_tracker(guild: discord.Guild):
 
     try:
         await channel.send("\n".join(lines))
-    except:
+    except Exception:
         pass
 
 
@@ -543,7 +543,7 @@ async def post_leaderboard(guild: discord.Guild):
 
     try:
         await channel.send("\n".join(lines))
-    except:
+    except Exception:
         pass
 
 
@@ -591,7 +591,7 @@ async def build_attention_report(guild: discord.Guild) -> str:
 
     any_inactive = any(buckets.values())
     if any_inactive:
-        lines.append(f"\n⏰ **Inactive members:**")
+        lines.append("\n⏰ **Inactive members:**")
         severity_labels = {
             7: "🔴 7+ days (membership_pause territory)",
             5: "🟠 5-6 days (needs a real conversation)",
@@ -692,7 +692,7 @@ async def check_at_risk_members(guild: discord.Guild):
                             f"⚠️ {m['discord_name']} at-risk (score: {score:.0f}%). "
                             f"Please check in with them."
                         )
-                    except:
+                    except Exception:
                         pass
 
 
@@ -710,14 +710,14 @@ async def handle_delete_request(ctx, bot):
 
     # Send confirmation
     await ctx.send(
-        f"⚠️ **طلب حذف بيانات**\n\n"
-        f"ده هيحذف كل بياناتك:\n"
-        f"• النقاط والمستوى\n"
-        f"• الاستمرارية (streak)\n"
-        f"• كل التقديمات السابقة\n"
-        f"• تقييماتك الأسبوعية\n\n"
-        f"**لتأكيد الحذف اكتب:** `!confirm-delete`\n"
-        f"*الحذف نهائي ومش ممكن يتراجع عنه.*"
+        "⚠️ **طلب حذف بيانات**\n\n"
+        "ده هيحذف كل بياناتك:\n"
+        "• النقاط والمستوى\n"
+        "• الاستمرارية (streak)\n"
+        "• كل التقديمات السابقة\n"
+        "• تقييماتك الأسبوعية\n\n"
+        "**لتأكيد الحذف اكتب:** `!confirm-delete`\n"
+        "*الحذف نهائي ومش ممكن يتراجع عنه.*"
     )
 
 
@@ -748,12 +748,12 @@ async def handle_confirm_delete(ctx, bot):
             if "Level" in role.name:
                 try:
                     await ctx.author.remove_roles(role)
-                except:
+                except Exception:
                     pass
 
     await ctx.send(
-        f"✅ **تم حذف كل بياناتك بنجاح.**\n"
-        f"لو حبيت ترجع في أي وقت: `!join`"
+        "✅ **تم حذف كل بياناتك بنجاح.**\n"
+        "لو حبيت ترجع في أي وقت: `!join`"
     )
     logger.info(f"Data deleted for {ctx.author.display_name} ({discord_id})")
 
@@ -764,7 +764,6 @@ async def handle_confirm_delete(ctx, bot):
 
 async def post_missed_day_reminders(guild: discord.Guild):
     """Post gentle reminders in #missed-day-report for members who missed yesterday."""
-    from . import tasks as task_engine
     import datetime as dt
 
     yesterday = (dt.date.today() - dt.timedelta(days=1)).isoformat()
@@ -783,7 +782,6 @@ async def post_missed_day_reminders(guild: discord.Guild):
         return
 
     # Post a gentle group reminder (not individual shaming)
-    names = ", ".join(m["discord_name"] for m in missed[:10])
     msg = (
         f"📋 **أمس — {len(missed)} members missed tasks**\n\n"
         f"لو فاتك يوم مفيش مشكلة — المهم ترجع النهاردة.\n"
@@ -792,7 +790,7 @@ async def post_missed_day_reminders(guild: discord.Guild):
     )
     try:
         await channel.send(msg)
-    except:
+    except Exception:
         pass
 
 
@@ -905,36 +903,6 @@ A daily system with community and American accent from day one.
 
 Completely free. 10 spots only.
 Interested? Reply "I'm in" 🏛️"""
-
-
-# ============================================================
-#  17. SPACED REPETITION IN DAILY TASKS
-# ============================================================
-
-def get_review_section_for_daily_post(level: str, week: int, day_index: int) -> str:
-    """Generate a 'Review Corner' section for the daily task post.
-    Includes 3-5 words from previous weeks for review.
-    """
-    review_words = get_spaced_repetition_words("placeholder_id", count=4)
-    if not review_words:
-        # Fallback: use curriculum directly
-        from . import curriculum
-        prev_week = max(1, week - 1)
-        all_prev = curriculum.get_vocabulary_for_week(prev_week, level)
-        if all_prev:
-            review_words = random.sample(all_prev, min(4, len(all_prev)))
-
-    if not review_words:
-        return ""
-
-    lines = ["", "🔄 **Review Corner** (من الأسابيع السابقة):", ""]
-    for w in review_words:
-        if isinstance(w, dict):
-            lines.append(f"  • **{w.get('word', '')}** — {w.get('arabic', '')} — Use it in a sentence!")
-        elif isinstance(w, tuple):
-            lines.append(f"  • **{w[0]}** — {w[1]} — Use it in a sentence!")
-
-    return "\n".join(lines)
 
 
 # ============================================================
@@ -1062,7 +1030,7 @@ async def celebrate_completion(guild: discord.Guild, member_name: str, streak: i
             f"🎉 **{member_name}** خلّص كل الـ 7 مهام النهاردة! 🔥 Streak: {streak} days\n"
             f"*Keep it up!* 🏛️"
         )
-    except:
+    except Exception:
         pass
 
 
@@ -1078,7 +1046,7 @@ async def celebrate_streak_milestone(guild: discord.Guild, member_name: str, day
             f"🔥🔥🔥 **{member_name}** وصل **{days} يوم streak!** (+{bonus} bonus points)\n"
             f"*Consistency is the key to fluency.* 🏛️"
         )
-    except:
+    except Exception:
         pass
 
 
@@ -1208,11 +1176,11 @@ async def start_exam_collection(member: discord.Member):
     }
     try:
         await member.send(
-            f"📋 **امتحان الترقية — الجزء 1: Speaking**\n\n"
-            f"سجّل نفسك وانت بتتكلم عن هذا الموضوع:\n\n"
-            f"**\"Introduce yourself, talk about your daily routine, and what you learned.\"**\n\n"
-            f"⏱️ المدة: 60 ثانية على الأقل\n"
-            f"🎙️ **ابعت التسجيل هنا (في هذه المحادثة)**"
+            "📋 **امتحان الترقية — الجزء 1: Speaking**\n\n"
+            "سجّل نفسك وانت بتتكلم عن هذا الموضوع:\n\n"
+            "**\"Introduce yourself, talk about your daily routine, and what you learned.\"**\n\n"
+            "⏱️ المدة: 60 ثانية على الأقل\n"
+            "🎙️ **ابعت التسجيل هنا (في هذه المحادثة)**"
         )
     except discord.Forbidden:
         pass
@@ -1233,11 +1201,11 @@ async def handle_exam_dm(message: discord.Message) -> bool:
             exam["speaking"] = message.attachments[0].url
             exam["stage"] = "writing"
             await message.channel.send(
-                f"✅ **تم استلام التسجيل!**\n\n"
-                f"📋 **الجزء 2: Writing**\n\n"
-                f"اكتب فقرة (7 جمل على الأقل) عن:\n\n"
-                f"**\"Describe your daily routine from morning to evening.\"**\n\n"
-                f"✍️ **اكتب هنا:**"
+                "✅ **تم استلام التسجيل!**\n\n"
+                "📋 **الجزء 2: Writing**\n\n"
+                "اكتب فقرة (7 جمل على الأقل) عن:\n\n"
+                "**\"Describe your daily routine from morning to evening.\"**\n\n"
+                "✍️ **اكتب هنا:**"
             )
             return True
         else:
@@ -1265,10 +1233,10 @@ async def handle_exam_dm(message: discord.Message) -> bool:
             )
 
             await message.channel.send(
-                f"✅ **تم استلام الكتابة!**\n\n"
-                f"📊 الامتحان بتاعك هيتراجع خلال 48 ساعة.\n"
-                f"هتوصلك النتيجة هنا في DM.\n\n"
-                f"*Good luck! 🏛️*"
+                "✅ **تم استلام الكتابة!**\n\n"
+                "📊 الامتحان بتاعك هيتراجع خلال 48 ساعة.\n"
+                "هتوصلك النتيجة هنا في DM.\n\n"
+                "*Good luck! 🏛️*"
             )
 
             # Notify admins there's a real, actionable review pending —
