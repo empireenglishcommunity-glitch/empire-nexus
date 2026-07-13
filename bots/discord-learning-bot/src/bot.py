@@ -107,6 +107,7 @@ ARABIC_COMMAND_ALIASES = {
     "حالة": "systemstatus",
     "صيانة": "maintenance",
     "اليوم": "today",
+    "تعليم": "tutorial",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -271,6 +272,22 @@ async def on_member_join(member: discord.Member):
     database.register_member(str(member.id), member.display_name)
     # Assign buddy
     await features.assign_buddy(member, member.guild)
+
+    # Bawaba B2: if the tutorial quest flag is enabled, start the
+    # interactive tutorial instead of the 4-message text wall.
+    if database.is_feature_enabled("bawaba_tutorial"):
+        try:
+            await member.send(
+                f"🏛️ **أهلًا بيك في Empire English, {member.display_name}!**\n\n"
+                f"ده نظام تعلّم يومي هيخليك تتكلم إنجليزي.\n"
+                f"خلينا نبدأ بـ 5 خطوات سريعة (دقيقتين بس) 👇"
+            )
+            await asyncio.sleep(1)
+            await features.start_tutorial(member)
+        except discord.Forbidden:
+            pass
+        return
+
     try:
         # Message 1: Welcome + First Steps
         await member.send(
@@ -1269,6 +1286,11 @@ async def on_message(message: discord.Message):
             handled = await features.handle_exam_dm(message)
             if handled:
                 return
+        # Bawaba B2: handle tutorial quest DM responses
+        if features.has_pending_tutorial(str(message.author.id)):
+            handled = await features.handle_tutorial_dm(message)
+            if handled:
+                return
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
@@ -1477,6 +1499,24 @@ async def cmd_delete(ctx):
 async def cmd_today(ctx):
     """Show your remaining tasks for today."""
     await features.show_today(ctx)
+
+
+@bot.command(name="tutorial")
+async def cmd_tutorial(ctx):
+    """Start (or restart) the interactive onboarding tutorial.
+
+    Bawaba B2: the same 5-step DM quest that new members get on join.
+    Useful for existing members who want to learn the Arabic commands,
+    or for testing. Gated behind 'bawaba_tutorial' flag.
+    """
+    if not database.is_feature_enabled("bawaba_tutorial"):
+        await ctx.send("هذه الميزة مش متاحة حالياً.")
+        return
+    try:
+        await features.start_tutorial(ctx.author)
+        await ctx.send("📩 شوف الـ DMs — بدأنا رحلة التعريف! 🏛️", delete_after=10)
+    except discord.Forbidden:
+        await ctx.send("❌ مقدرش أبعتلك DM. افتح الرسائل الخاصة.")
 
 
 @bot.command(name="confirm-delete")
