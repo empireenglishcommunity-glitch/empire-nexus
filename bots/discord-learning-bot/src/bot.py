@@ -1571,6 +1571,37 @@ async def cmd_tutorial(ctx):
         await ctx.send("❌ مقدرش أبعتلك DM. افتح الرسائل الخاصة.")
 
 
+@bot.command(name="testwelcome")
+@commands.has_permissions(manage_guild=True)
+async def cmd_testwelcome(ctx):
+    """(Admin) Simulate the full new-member welcome flow on yourself.
+
+    Sends the same DM sequence a brand-new member would get: greeting,
+    multimedia assets (journey map + audio clips + video link), and the
+    tutorial quest. Useful for testing B3 without needing to rejoin.
+    """
+    try:
+        await ctx.author.send(
+            f"🏛️ **أهلًا بيك في Empire English, {ctx.author.display_name}!**\n\n"
+            f"ده نظام تعلّم يومي هيخليك تتكلم إنجليزي.\n"
+            f"خلينا نبدأ بـ 5 خطوات سريعة (دقيقتين بس) 👇"
+        )
+
+        # Send multimedia assets
+        if database.is_feature_enabled("bawaba_multimedia"):
+            await _send_onboarding_media(ctx.author)
+
+        await asyncio.sleep(1)
+
+        # Start tutorial
+        if database.is_feature_enabled("bawaba_tutorial"):
+            await features.start_tutorial(ctx.author)
+
+        await ctx.send("📩 Welcome flow sent to your DMs!", delete_after=10)
+    except discord.Forbidden:
+        await ctx.send("❌ Can't DM you. Enable DMs from server members.")
+
+
 @bot.command(name="confirm-delete")
 async def cmd_confirm_delete(ctx):
     """Confirm data deletion."""
