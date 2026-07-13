@@ -1,0 +1,47 @@
+# Ghost Bot — Aegis Phase 6 (production-safe-deploys spec)
+#
+# A second instance of the same bot source code, running with a DIFFERENT
+# Discord bot token and a SEPARATE database file. Lives in the same real
+# production guild but is restricted (via Discord's own channel permission
+# overwrites) to only see a hidden, admin-only channel category.
+#
+# Purpose: test new features against the real guild's role hierarchy and
+# channel structure, with a real (synthetic) "test student" account running
+# commands, without any risk to real students — because it's a completely
+# separate bot identity with its own database.
+#
+# Usage:
+#   cd /opt/empire-english-bot
+#   docker compose -f docker-compose.ghost.yml up -d --build
+#   docker compose -f docker-compose.ghost.yml logs -f
+#   docker compose -f docker-compose.ghost.yml down
+#
+# The ghost bot uses the SAME Dockerfile/source as the production bot —
+# no fork, no duplicate code. Only the .env file (token + DB path) differs.
+#
+# IMPORTANT: The ghost bot's command prefix is set to "?" (not "!") in
+# .env.ghost so commands don't collide with the production bot in the
+# same guild. A "test student" types ?join, ?done accent, etc.
+
+name: empire-ghost-bot
+
+services:
+  empire-ghost-bot:
+    build: .
+    container_name: empire-ghost-bot
+    restart: unless-stopped
+    env_file: .env.ghost
+    volumes:
+      - ghost-data:/app/data_persist
+      - ghost-backups:/app/backups
+    mem_limit: 256m
+    cpus: "0.25"
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+volumes:
+  ghost-data:
+  ghost-backups:

@@ -378,6 +378,30 @@ CATEGORIES_CONFIG = [
             {"name": "dev-log", "type": "text", "topic": "Deploy log — auto-posted by deploy.py on every deploy (git SHA + summary + timestamp)"},
         ],
     },
+    # ── Category 12: GHOST BOT TESTING (hidden, admin-only) ──
+    # Aegis Phase 6: a separate category where the ghost bot operates.
+    # The ghost bot can only see THIS category (via Discord permission
+    # overwrites on its own role). Real students never see this category
+    # at all, and the production bot ignores it (different token/identity).
+    {
+        "name": "👻 Ghost Testing",
+        "overwrites": {
+            "@everyone": _DENY_ALL,
+            "🌱 Level 0 | مبتدئ": _DENY_ALL,
+            "💪 Level 1 | متقدم": _DENY_ALL,
+            "🚀 Level 2 | متواصل": _DENY_ALL,
+            "👑 Level 3 | طليق": _DENY_ALL,
+            "🌟 سفير | Ambassador": _DENY_ALL,
+            "⚔️ Moderator": _VIEW_SEND,
+            "🛡️ Admin": _VIEW_SEND,
+            "bot": _BOT_FULL,
+        },
+        "channels": [
+            {"name": "ghost-commands", "type": "text", "topic": "Ghost bot testing — use ? prefix (e.g. ?join, ?done accent)"},
+            {"name": "ghost-showcase", "type": "text", "topic": "Upload test audio/text here for ghost bot verification"},
+            {"name": "ghost-writing", "type": "text", "topic": "Ghost bot writing feedback testing"},
+        ],
+    },
 ]
 
 

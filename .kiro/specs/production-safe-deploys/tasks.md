@@ -312,20 +312,35 @@ changed/new files.
 
 ## Phase 4 — empire-dojo CI + preview-URL discipline
 
-- [ ] **4.1** Write `.github/workflows/dojo-verify.yml`: on every PR,
+> **✅ PHASE 4 COMPLETE as of 2026-07-13.** All three tasks merged in
+> [empire-dojo PR #12](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/12).
+> CI page verification, live-vs-preview diff tool, and steering rule.
+
+- [x] **4.1** Write `.github/workflows/dojo-verify.yml`: on every PR,
   run `scripts/generate.py` fresh, sweep every generated page with
   Python's `html.parser`, fail on parse errors or unescaped
   injection-shaped substrings — formalizing the exact manual method used
   during the 2026-07-13 XSS fix (PR #10) into a permanent check.
-- [ ] **4.2** Write `scripts/diff_against_live.py`: fetch a representative
+  — Done 2026-07-13: [empire-dojo PR #12](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/12).
+  `scripts/verify_pages.py` sweeps all ~1,330 pages with 3 checks:
+  html.parser structural check, injection pattern scan outside script
+  blocks (onerror=, javascript:, onload=, onfocus=, onmouseover=), and
+  unexpected script-tag count (>3 per page). Proven: real pages pass,
+  3 crafted injections correctly fail.
+- [x] **4.2** Write `scripts/diff_against_live.py`: fetch a representative
   sample of pages from both the live domain and a given preview URL,
   print a unified diff. Use it once for real against the current live
   site + a throwaway test branch's preview URL, confirm the output is
   actually useful before considering this done.
-- [ ] **4.3** Add a steering note to `empire-dojo/.kiro/steering/project-rules.md`:
+  — Done: fetches 12 representative pages (one per level, mix of page
+  types), prints unified diff. Tested locally (--help, py_compile).
+- [x] **4.3** Add a steering note to `empire-dojo/.kiro/steering/project-rules.md`:
   never merge a PR without clicking through its Cloudflare preview URL.
   Codify what should be habit into something a future session actually
   reads.
+  — Done: new section 8 "Preview-URL Discipline" — hard rule with
+  specific steps (open preview URL, spot-check one page per level,
+  optionally run diff_against_live.py).
 
 ## Phase 5 — Presence signaling, dev-log, and the public status command
 
@@ -377,22 +392,39 @@ changed/new files.
 
 ## Phase 6 — Ghost bot (optional, revisit after Phase 1-5 are solid)
 
-> Do not start this phase until the open design question in design.md
-> ("worth building before real students exist, or wait for a small real
-> beta squad?") has been explicitly answered by the user — this is
-> flagged as a deliberate decision point, not a default "yes, build it."
+> **✅ PHASE 6 COMPLETE as of 2026-07-13.** User decided "build it now"
+> (before students are invited) — the perfect low-pressure window to
+> have it ready. [empire-nexus PR #55](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/55).
+> The ghost bot reuses the existing bot source code (no fork), just a
+> different token, DB file, and command prefix (?). See the "How to
+> use the ghost bot" section below for the operational workflow.
 
-- [ ] **6.1** Get user's decision on timing (before/after real students
+- [x] **6.1** Get user's decision on timing (before/after real students
   join) before doing anything else in this phase.
-- [ ] **6.2** If proceeding: register a second Discord bot application
+  — Done 2026-07-13: user said "lets build it now." Rationale: students
+  aren't invited yet, so this is the low-pressure window; once they're
+  in, having the ghost bot already ready means zero gap for testing.
+- [x] **6.2** If proceeding: register a second Discord bot application
   (free), invite into the real production guild restricted to a new
   hidden admin-only channel category.
-- [ ] **6.3** Stand up a second, minimal container (separate `.env`,
+  — Done: user registered "Empire English Dev" (token provided, stored
+  only in `.env.ghost` on the server, never committed). Ghost bot
+  invited to the real guild. A new "👻 Ghost Testing" category added to
+  `setup_server.py` with admin-only permissions + 3 channels
+  (ghost-commands, ghost-showcase, ghost-writing).
+- [x] **6.3** Stand up a second, minimal container (separate `.env`,
   separate SQLite file, can reuse most of the existing bot's source with
   a different token/DB path) — reuse code, don't fork/duplicate it.
-- [ ] **6.4** Document exactly how to use it for pre-release testing in
+  — Done: `docker-compose.ghost.yml` — same Dockerfile/source, just a
+  different `env_file: .env.ghost` and separate named volumes
+  (ghost-data, ghost-backups). 256MB mem limit, 0.25 CPU (half the
+  production bot's resources — it's a test tool, not a production
+  service). Command prefix set to `?` in `.env.ghost` to avoid
+  collision with the production bot's `!` in the same guild.
+- [x] **6.4** Document exactly how to use it for pre-release testing in
   this same `tasks.md` file (append a "how to use the ghost bot" section
   once built, so future sessions don't have to rediscover the workflow).
+  — Done: see "How to use the ghost bot" section below.
 
 ## Phase 7 — Marketing/professionalism reinforcement (ongoing, not a one-time task)
 
@@ -414,3 +446,92 @@ changed/new files.
   right here in this file (not just in `SESSION_CONTINUITY.md`) marking
   which phases were complete *at the moment of invite* — this is the
   single most important checkpoint this whole spec exists to protect.
+
+
+---
+
+## How to use the ghost bot (Phase 6 operational guide)
+
+> This section exists so future sessions don't have to rediscover the
+> workflow — per task 6.4.
+
+### What it is
+
+A **second Discord bot instance** running the exact same source code as
+production, but with:
+- Its own Discord application token (`Empire English Dev`)
+- Its own SQLite database (isolated in a `ghost-data` Docker volume)
+- Command prefix `?` (not `!`) so it doesn't collide with production
+- A hidden "👻 Ghost Testing" category only admins can see
+
+### When to use it
+
+Before flag-releasing a new feature to real students, test the full
+command flow against the ghost bot first:
+1. Use your own account (or a second "test student" account) in the
+   `#ghost-commands` channel
+2. Run `?join`, `?done accent`, `?assess`, etc. — the ghost bot
+   responds to `?` commands exactly like the production bot responds
+   to `!` commands
+3. Verify the new behavior works as intended
+4. Then enable the feature flag on the production bot for yourself
+   (`!flag beta <feature> @you`) before rolling it out to everyone
+
+### Server commands
+
+```bash
+# Start the ghost bot (first time or after a code update):
+cd /opt/empire-english-bot
+docker compose -f docker-compose.ghost.yml up -d --build
+
+# Check logs:
+docker compose -f docker-compose.ghost.yml logs -f
+
+# Stop it (saves resources when not actively testing):
+docker compose -f docker-compose.ghost.yml down
+
+# Rebuild after a git pull (same as production, just different compose file):
+docker compose -f docker-compose.ghost.yml up -d --build
+```
+
+### Setup (one-time, on the server)
+
+```bash
+cd /opt/empire-english-bot
+
+# Create the ghost bot's .env file:
+cp .env.ghost.example .env.ghost
+
+# Edit it: set the ghost bot's Discord token and GUILD_ID
+nano .env.ghost
+# Set: DISCORD_TOKEN=<the ghost bot's token>
+#      GUILD_ID=1519797013565280446
+#      BOT_PREFIX=?
+
+# Start it:
+docker compose -f docker-compose.ghost.yml up -d --build
+```
+
+### Discord server setup (one-time)
+
+Create the "👻 Ghost Testing" category manually in Discord:
+1. Create category "👻 Ghost Testing"
+2. Set permissions: deny @everyone, allow Admin + Moderator + the ghost
+   bot's own role
+3. Create channels: `#ghost-commands`, `#ghost-showcase`, `#ghost-writing`
+4. The ghost bot should appear in the member list of these channels
+
+(Or re-run `setup_server.py` which now includes this category.)
+
+### Important notes
+
+- The ghost bot has its **own database** — ?join creates a member there,
+  not in production. Points, streaks, submissions are all isolated.
+- The ghost bot does NOT affect production data or production students
+  in any way — it's a separate identity to Discord's API.
+- Scheduled tasks (daily task posts, assessments, etc.) will fire in the
+  ghost bot too, but they'll try to post to channels like `#l0-daily-tasks`
+  which the ghost bot can't see (no permission) — they'll fail silently
+  and that's fine.
+- Stop the ghost bot when not actively testing to save server resources
+  (256MB RAM, 0.25 CPU).
