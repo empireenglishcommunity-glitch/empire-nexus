@@ -440,6 +440,72 @@ def test_set_setting_upserts():
 
 
 # ============================================================
+#  FEATURE FLAGS (Aegis Phase 1)
+# ============================================================
+
+def test_feature_flag_never_set_is_disabled():
+    """A flag that has never been touched must fail closed, not open --
+    a typo'd flag name should never accidentally enable a feature for
+    everyone."""
+    assert database.is_feature_enabled("never_set") is False
+    assert database.is_feature_enabled("never_set", "u1") is False
+
+
+def test_feature_flag_enabled_with_empty_allowlist_is_everyone():
+    database.set_feature_flag("new_thing", enabled=True)
+    assert database.is_feature_enabled("new_thing") is True
+    assert database.is_feature_enabled("new_thing", "any_random_id") is True
+
+
+def test_feature_flag_enabled_with_allowlist_restricts_to_it():
+    database.set_feature_flag("new_thing", enabled=True, allowed_ids="u1,u2")
+    assert database.is_feature_enabled("new_thing", "u1") is True
+    assert database.is_feature_enabled("new_thing", "u2") is True
+    assert database.is_feature_enabled("new_thing", "u3") is False
+    # No discord_id given at all (e.g. a scheduled task with no single
+    # member context) must not be treated as "in the allowlist".
+    assert database.is_feature_enabled("new_thing") is False
+
+
+def test_feature_flag_disabled_blocks_everyone_including_allowlist():
+    database.set_feature_flag("new_thing", enabled=True, allowed_ids="u1")
+    database.set_feature_flag("new_thing", enabled=False)
+    assert database.is_feature_enabled("new_thing", "u1") is False
+    assert database.is_feature_enabled("new_thing") is False
+
+
+def test_feature_flag_disabling_clears_stale_allowlist():
+    """Disabling a flag that had an active beta allowlist, then
+    re-enabling it with no allowlist, must start from a clean 'everyone'
+    state -- not silently resurrect the old beta list."""
+    database.set_feature_flag("new_thing", enabled=True, allowed_ids="u1")
+    database.set_feature_flag("new_thing", enabled=False)
+    database.set_feature_flag("new_thing", enabled=True)
+    assert database.is_feature_enabled("new_thing", "u1") is True
+    assert database.is_feature_enabled("new_thing", "u99_never_in_any_allowlist") is True
+
+
+def test_feature_flag_upserts_not_duplicates():
+    database.set_feature_flag("thing", enabled=True)
+    database.set_feature_flag("thing", enabled=False)
+    flags = database.list_feature_flags()
+    assert len([f for f in flags if f["name"] == "thing"]) == 1
+
+
+def test_list_feature_flags_returns_all_ever_set():
+    database.set_feature_flag("flag_a", enabled=True, updated_by="admin1")
+    database.set_feature_flag("flag_b", enabled=False, updated_by="admin2")
+    names = {f["name"] for f in database.list_feature_flags()}
+    assert names == {"flag_a", "flag_b"}
+
+
+def test_feature_flag_updated_by_is_recorded():
+    database.set_feature_flag("thing", enabled=True, updated_by="123456")
+    flags = {f["name"]: f for f in database.list_feature_flags()}
+    assert flags["thing"]["updated_by"] == "123456"
+
+
+# ============================================================
 #  UTILITY / STATS
 # ============================================================
 

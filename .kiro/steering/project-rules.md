@@ -98,10 +98,10 @@ empire-english-community/
 | **SSH** | Key-only (`C:\Users\97150\.ssh\id_ed25519`). Password auth DISABLED. |
 | **n8n** | Docker at `/opt/n8n/`, pinned v2.26.8, bound to `127.0.0.1:5678` |
 | **Tunnel** | Cloudflare Named Tunnel → `bot.empireenglish.online` |
-| **Discord Learning Bot** | Docker at `/opt/empire-english-bot/` |
+| **Discord Learning Bot** | Docker at `/opt/empire-english-bot/` (symlink → `/opt/empire-english-bot-new/bots/discord-learning-bot`, a real git checkout) |
 | **Challenge Bot** | Docker at `/opt/empire-challenge/empire-challenge-bot/` |
 | **Monitoring** | Telegram watchdog (60s) + BetterStack (3min) |
-| **Backup** | Daily 3 AM, 14-day rotation |
+| **Backup** | n8n/EMOS: daily 3 AM. discord-challenge-bot: daily 3 AM. **discord-learning-bot: daily 3:10 AM** (`docker exec empire-english-bot python3 scripts/backup.py`, added 2026-07-13 — was a real gap for a long time, see `.kiro/specs/production-safe-deploys/tasks.md` Phase 0). All 14-day rotation. |
 
 **CRITICAL RULES:**
 - Never expose port 5678 to public (binding to 127.0.0.1 IS the enforcement)
@@ -136,6 +136,38 @@ empire-english-community/
 - Config via `.env` (python-dotenv) — never commit `.env`
 - Tests: `pytest` in `tests/` — must pass before deployment
 - Docker: `docker compose up -d --build` to deploy changes
+
+### Feature flags (discord-learning-bot — Aegis Phase 1)
+Any new risky or student-facing behavior added to `discord-learning-bot`
+should be wrapped behind a feature flag rather than going live the
+moment it's deployed. This decouples **deploy** (code reaches the
+server, dormant) from **release** (a real student actually sees the new
+behavior) — see `.kiro/specs/production-safe-deploys/design.md` for the
+full rationale. The convention, consistently:
+
+```python
+if database.is_feature_enabled("<flag_name>", str(ctx.author.id)):
+    ... new behavior ...
+else:
+    ... old behavior, or a no-op ...
+```
+
+- Admin-managed via `!flag list` / `!flag enable <name>` /
+  `!flag disable <name>` (the kill switch — instant, no redeploy, no
+  bot downtime) / `!flag beta <name> @user1 @user2` (test on yourself
+  or a trusted few before a full release).
+- Flags default to **disabled** if never explicitly set — fail closed,
+  never fail open.
+- If a flag-gated command is silently a no-op when its flag is off
+  (see `!systemstatus` for the pattern), do NOT list it in `!help`
+  until the flag has actually been turned on for everyone — advertising
+  a dormant command creates the exact "looks broken to a curious
+  student" problem this mechanism exists to prevent. Add the `!help`
+  entry in the same session/commit that flips the flag on.
+- Do not invent a second, different flagging pattern for a new
+  feature — reuse `database.is_feature_enabled()`/`set_feature_flag()`
+  every time, so `!flag list` stays the single place to see everything
+  that's dormant or in beta.
 
 ### General
 - Commit messages: `type(scope): description`

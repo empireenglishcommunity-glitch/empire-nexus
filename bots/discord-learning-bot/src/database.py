@@ -152,6 +152,20 @@ CREATE TABLE IF NOT EXISTS settings (
     value           TEXT NOT NULL
 );
 
+-- Aegis (production-safe-deploys spec) Phase 1: feature flags + kill
+-- switch. Lets new behavior merge and deploy dormant, get enabled for
+-- a specific allowlist first (test on yourself, then a trusted few),
+-- then everyone -- and lets a live feature be instantly disabled again
+-- with zero redeploy if it misbehaves. See
+-- .kiro/specs/production-safe-deploys/design.md's "Component 1".
+CREATE TABLE IF NOT EXISTS feature_flags (
+    name            TEXT PRIMARY KEY,
+    enabled         INTEGER NOT NULL DEFAULT 0,
+    allowed_ids     TEXT DEFAULT '',
+    updated_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_by      TEXT DEFAULT ''
+);
+
 CREATE INDEX IF NOT EXISTS idx_submissions_date ON daily_submissions(discord_id, date);
 CREATE INDEX IF NOT EXISTS idx_streaks_date ON streaks(discord_id, date);
 CREATE INDEX IF NOT EXISTS idx_assessments_member ON assessments(discord_id);
@@ -681,6 +695,69 @@ def set_setting(key: str, value: str):
     )
     conn.commit()
     conn.close()
+
+
+# ============================================================
+#  FEATURE FLAGS (Aegis Phase 1 — decouple deploy from release)
+# ============================================================
+
+def is_feature_enabled(name: str, discord_id: str = None) -> bool:
+    """Check if a feature flag is enabled for a given member.
+
+    A flag that has never been set at all is treated as disabled (fail
+    closed, not fail open — a typo'd flag name should never accidentally
+    turn a feature on for everyone). Once `enabled=1`:
+      - an empty `allowed_ids` means "on for everyone"
+      - a non-empty `allowed_ids` restricts it to that comma-separated
+        allowlist of discord_ids (the beta-squad case) — a discord_id
+        of None (no specific member context, e.g. a scheduled task) is
+        only ever treated as enabled if the allowlist is empty.
+    """
+    conn = _connect()
+    row = conn.execute("SELECT enabled, allowed_ids FROM feature_flags WHERE name=?", (name,)).fetchone()
+    conn.close()
+    if row is None or not row["enabled"]:
+        return False
+    allowed_ids = row["allowed_ids"] or ""
+    if not allowed_ids.strip():
+        return True
+    allowed_list = {a.strip() for a in allowed_ids.split(",") if a.strip()}
+    return discord_id is not None and str(discord_id) in allowed_list
+
+
+def set_feature_flag(name: str, enabled: bool, allowed_ids: str = "", updated_by: str = ""):
+    """Enable/disable a feature flag, optionally restricted to an
+    allowlist of comma-separated discord_ids. Upserts so the same
+    command works whether the flag has ever been touched before.
+
+    Passing allowed_ids="" while enabled=True means "on for everyone" —
+    the deliberate full-release case, not a mistake. Disabling a flag
+    that had an active allowlist also clears that allowlist, so a later
+    `!flag enable <name>` (with no allowlist) starts from a clean
+    "everyone" state rather than silently inheriting a stale beta list.
+    """
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO feature_flags (name, enabled, allowed_ids, updated_at, updated_by)
+           VALUES (?, ?, ?, datetime('now'), ?)
+           ON CONFLICT(name) DO UPDATE SET
+               enabled=excluded.enabled,
+               allowed_ids=excluded.allowed_ids,
+               updated_at=excluded.updated_at,
+               updated_by=excluded.updated_by""",
+        (name, 1 if enabled else 0, allowed_ids if enabled else "", updated_by),
+    )
+    conn.commit()
+    conn.close()
+
+
+def list_feature_flags() -> list[dict]:
+    """List all feature flags that have ever been set, most recently
+    updated first."""
+    conn = _connect()
+    rows = conn.execute("SELECT * FROM feature_flags ORDER BY updated_at DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 
 # ============================================================

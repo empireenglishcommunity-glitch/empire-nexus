@@ -912,7 +912,8 @@ async def cmd_help(ctx):
         "`!recruit ar/en` — Get recruitment message template\n"
         "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
         "`!examqueue` — List advancement exams awaiting review\n"
-        "`!examresult <id> pass/fail` — Resolve an exam (auto-promotes on pass)\n\n"
+        "`!examresult <id> pass/fail` — Resolve an exam (auto-promotes on pass)\n"
+        "`!flag list/enable/disable/beta` — Feature flag management\n\n"
         "**Account:**\n"
         "`!delete` — Request deletion of all your data\n"
         "`!exam` — Request level advancement exam\n"
@@ -1174,6 +1175,69 @@ async def cmd_status(ctx):
         await ctx.send(msg)
 
 
+@bot.command(name="systemstatus")
+async def cmd_systemstatus(ctx):
+    """Public, read-only system health check — anyone can run this.
+
+    Deliberately NOT listed in !help yet: this command is dormant by
+    default (see the flag check below) until an admin explicitly runs
+    `!flag enable systemstatus`. Advertising it before then would create
+    exactly the "student runs a documented command and gets silent
+    nothing" problem this whole Aegis initiative exists to prevent (the
+    same class of gap found with the missing !assess command). Add it
+    to !help's Learning section in the same commit/session that
+    actually flips the flag on for everyone.
+
+    First real feature shipped behind Aegis's feature-flag mechanism
+    (see .kiro/specs/production-safe-deploys/, Phase 1 task 1.4), and
+    the "publicly viewable status artifact" from the design's Component
+    8 (reinforcing the professional/reliable brand for paying students,
+    without a new paid service). Distinct from the existing admin-only
+    !status: shows no admin-sensitive facts (no AI-key presence, no
+    per-level member breakdown), just "is the system healthy right now."
+
+    Gated behind the 'systemstatus' feature flag (default OFF for
+    everyone until explicitly enabled via !flag enable systemstatus) so
+    this can be deployed dormant and turned on deliberately, proving the
+    deploy-then-release mechanism actually works end-to-end with a real
+    feature, not just a test.
+    """
+    if not database.is_feature_enabled("systemstatus", str(ctx.author.id)):
+        return  # silently a no-op if the flag is off -- not an error,
+                # just "this feature doesn't exist yet" from the caller's
+                # point of view, matching the design's dormant-until-
+                # released model.
+
+    checks = []
+    all_ok = True
+
+    try:
+        database.member_count()
+        checks.append("✅ Database")
+    except Exception:
+        checks.append("❌ Database")
+        all_ok = False
+
+    checks.append("✅ Discord connection" if bot.is_ready() else "❌ Discord connection")
+    all_ok = all_ok and bot.is_ready()
+
+    try:
+        weeks_loaded = curriculum.stats()["weeks_loaded"]
+        checks.append(f"✅ Curriculum ({weeks_loaded} weeks loaded)" if weeks_loaded == 38 else f"⚠️ Curriculum ({weeks_loaded}/38 weeks)")
+    except Exception:
+        checks.append("❌ Curriculum")
+        all_ok = False
+
+    database.set_setting("last_systemstatus_check", datetime.datetime.now().isoformat())
+
+    header = "✅ **All systems operational**" if all_ok else "⚠️ **Some systems need attention**"
+    await ctx.send(
+        f"{header}\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        + "\n".join(checks)
+    )
+
+
 @bot.command(name="setlevel")
 @commands.has_permissions(manage_guild=True)
 async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
@@ -1190,6 +1254,80 @@ async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
     await _assign_level_role(member, level)
     level_info = config.LEVELS[level]
     await ctx.send(f"✅ {member.display_name} is now **{level}** — {level_info['emoji']} {level_info['name']}")
+
+
+@bot.command(name="flag")
+@commands.has_permissions(manage_guild=True)
+async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.Member):
+    """Feature flag admin command — Aegis Phase 1 (production-safe deploys).
+
+    Usage:
+      !flag list                       — show every flag ever set
+      !flag enable <name>               — turn a feature on for EVERYONE
+      !flag disable <name>              — turn a feature off for everyone
+                                           (the kill switch: instant, no
+                                           redeploy, no downtime)
+      !flag beta <name> @user1 @user2   — turn a feature on ONLY for the
+                                           given members (test on
+                                           yourself or a trusted few
+                                           before a full release)
+
+    This decouples "deploy" (code reaches the server, dormant) from
+    "release" (a real student sees new behavior) — see
+    .kiro/specs/production-safe-deploys/design.md. New risky behavior
+    in other commands should be wrapped:
+        if database.is_feature_enabled("name", str(ctx.author.id)):
+            ... new behavior ...
+        else:
+            ... old behavior, or a no-op ...
+    """
+    if action not in ("list", "enable", "disable", "beta"):
+        await ctx.send(
+            "Usage:\n"
+            "`!flag list`\n"
+            "`!flag enable <name>`\n"
+            "`!flag disable <name>`\n"
+            "`!flag beta <name> @user1 @user2 ...`"
+        )
+        return
+
+    if action == "list":
+        flags = database.list_feature_flags()
+        if not flags:
+            await ctx.send("No feature flags have been set yet.")
+            return
+        # Capped the same way !attention's buddy-load section is (found
+        # via message-length stress testing that session) -- unlikely to
+        # matter at this bot's real scale, but cheap insurance against
+        # the same class of Discord 2000-char overflow bug.
+        lines = ["🚩 **Feature Flags:**"]
+        for f in flags[:20]:
+            state = "🟢 ON (everyone)" if f["enabled"] and not f["allowed_ids"] else \
+                    f"🟡 ON (beta: {f['allowed_ids']})" if f["enabled"] else "🔴 OFF"
+            lines.append(f"  `{f['name']}` — {state}")
+        if len(flags) > 20:
+            lines.append(f"  ... and {len(flags) - 20} more")
+        await ctx.send("\n".join(lines))
+        return
+
+    if not name:
+        await ctx.send(f"Usage: `!flag {action} <name>`" + (" @user1 @user2 ..." if action == "beta" else ""))
+        return
+
+    if action == "enable":
+        database.set_feature_flag(name, enabled=True, updated_by=str(ctx.author.id))
+        await ctx.send(f"🟢 Flag `{name}` is now **ON for everyone**.")
+    elif action == "disable":
+        database.set_feature_flag(name, enabled=False, updated_by=str(ctx.author.id))
+        await ctx.send(f"🔴 Flag `{name}` is now **OFF for everyone**.")
+    elif action == "beta":
+        if not members:
+            await ctx.send(f"Usage: `!flag beta {name} @user1 @user2 ...`")
+            return
+        allowed_ids = ",".join(str(m.id) for m in members)
+        database.set_feature_flag(name, enabled=True, allowed_ids=allowed_ids, updated_by=str(ctx.author.id))
+        names = ", ".join(m.display_name for m in members)
+        await ctx.send(f"🟡 Flag `{name}` is now **ON for beta testers only**: {names}")
 
 
 @bot.command(name="announce")
