@@ -32,13 +32,13 @@ REGISTRY = [
 
     # ── NABD (student notifications) ──
     ("nabd_preferences", "Notification settings command (!notifications / !إشعارات)", "nabd", True),
-    ("nabd_morning", "Morning kickstart DM (6:05 AM daily)", "nabd", False),
-    ("nabd_evening", "Evening incomplete reminder (8 PM)", "nabd", False),
-    ("nabd_streak_alert", "Streak-at-risk alert (9 PM)", "nabd", False),
-    ("nabd_celebrations", "Real-time milestone celebrations", "nabd", False),
-    ("nabd_weekly_summary", "Friday evening progress summary DM", "nabd", False),
-    ("nabd_absence_recovery", "Absence recovery ladder (day 2/3/5/7)", "nabd", False),
-    ("nabd_social_proof", "Opt-in peer activity notifications", "nabd", False),
+    ("nabd_morning", "Morning kickstart DM (6:05 AM daily)", "nabd", True),
+    ("nabd_evening", "Evening incomplete reminder (8 PM)", "nabd", True),
+    ("nabd_streak_alert", "Streak-at-risk alert (9 PM)", "nabd", True),
+    ("nabd_celebrations", "Real-time milestone celebrations", "nabd", True),
+    ("nabd_weekly_summary", "Friday evening progress summary DM", "nabd", True),
+    ("nabd_absence_recovery", "Absence recovery ladder (day 2/3/5/7)", "nabd", True),
+    ("nabd_social_proof", "Opt-in peer activity notifications", "nabd", True),
 ]
 
 # Initiative display names and emoji
@@ -54,7 +54,7 @@ def get_registry() -> list[tuple]:
     return REGISTRY
 
 
-def get_flag_info(name: str) -> dict | None:
+def get_flag_info(name: str):
     """Get info for a specific flag, or None if not registered."""
     for flag_name, description, initiative, default in REGISTRY:
         if flag_name == name:
