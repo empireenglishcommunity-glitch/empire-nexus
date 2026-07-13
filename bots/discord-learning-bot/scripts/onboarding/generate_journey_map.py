@@ -20,7 +20,7 @@ except ImportError:
     print("pip install requests")
     sys.exit(1)
 
-HTML2IMG_URL = os.environ.get("HTML2IMG_URL", "http://localhost:3200/screenshot")
+HTML2IMG_URL = os.environ.get("HTML2IMG_URL", "http://localhost:3200/convert")
 OUTPUT_DIR = Path(__file__).resolve().parent / "images"
 OUTPUT_DIR.mkdir(exist_ok=True)
 OUTPUT_PATH = OUTPUT_DIR / "journey_map.png"
