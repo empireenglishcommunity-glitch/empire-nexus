@@ -531,6 +531,7 @@ async def process_submission(discord_id: str, member_name: str,
     # without your streak resetting and rebuilding first, at which point
     # you'd get streak_7 again legitimately on the next cycle).
     current_streak, _ = database.get_streak(discord_id)
+    streak_bonus_awarded = False
     if current_streak in config.STREAK_BONUS_POINTS:
         reason = f"streak_{current_streak}"
         conn = database._connect()
@@ -543,9 +544,17 @@ async def process_submission(discord_id: str, member_name: str,
             bonus = config.STREAK_BONUS_POINTS[current_streak]
             database.add_points(discord_id, bonus, reason)
             points += bonus
+            streak_bonus_awarded = True
 
     # Generate quick feedback
     feedback = await ai_engine.quick_feedback(member_name, task_id)
+
+    # Detect milestones for Nabd N3 celebrations
+    milestones = []
+    if tasks_today == 7:
+        milestones.append(("all_7", {}))
+    if streak_bonus_awarded:
+        milestones.append(("streak", {"days": current_streak, "bonus": config.STREAK_BONUS_POINTS[current_streak]}))
 
     return {
         "new": True,
@@ -553,6 +562,7 @@ async def process_submission(discord_id: str, member_name: str,
         "streak": current_streak,
         "points": points,
         "feedback": feedback,
+        "milestones": milestones,
     }
 
 

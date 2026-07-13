@@ -109,6 +109,7 @@ ARABIC_COMMAND_ALIASES = {
     "اليوم": "today",
     "تعليم": "tutorial",
     "إشعارات": "notifications",
+    "نبض": "pulse",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -331,6 +332,14 @@ async def on_ready():
         heartbeat.start()
     if not morning_kickstart.is_running():
         morning_kickstart.start()
+    if not evening_reminder.is_running():
+        evening_reminder.start()
+    if not streak_at_risk.is_running():
+        streak_at_risk.start()
+    if not nabd_weekly_summary.is_running():
+        nabd_weekly_summary.start()
+    if not nabd_absence_check.is_running():
+        nabd_absence_check.start()
 
 
 @bot.event
@@ -750,6 +759,147 @@ async def morning_kickstart():
         logger.info(f"Nabd morning kickstart: sent to {sent} member(s)")
 
 
+@tasks.loop(time=datetime.time(hour=20, minute=0, tzinfo=_zone()))
+async def evening_reminder():
+    """Nabd N2: Evening incomplete reminder (8 PM).
+
+    Sends a personal DM to students who completed 1-6 tasks today
+    (partial — encourage them to finish). Students with 0 tasks are
+    handled by streak_at_risk instead. Students with 7 are done.
+    """
+    if not database.is_feature_enabled("nabd_evening"):
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    today = task_engine.today_str()
+    members = database.all_active_members()
+    sent = 0
+
+    for m in members:
+        discord_id = m["discord_id"]
+        prefs = database.get_notification_prefs(discord_id)
+        if not prefs.get("evening_dm", 1):
+            continue
+        if database.is_quiet_hours(discord_id):
+            continue
+        if database.was_notification_sent(discord_id, "evening_dm", today):
+            continue
+
+        completed_count = database.count_submissions_for_date(discord_id, today)
+        if completed_count == 0 or completed_count >= 7:
+            continue  # 0 = streak_at_risk handles it; 7 = all done
+
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        remaining = 7 - completed_count
+        # Find remaining task names
+        completed_ids = [s["task_id"] for s in database.get_submissions_for_date(discord_id, today)]
+        allowed = features.get_allowed_tasks_for_member(discord_id)
+        remaining_tasks = [t for t in config.DAILY_TASKS if t["id"] in allowed and t["id"] not in completed_ids]
+
+        phase = features.response_language(discord_id)
+        if phase == "arabic":
+            task_list = "\n".join(f"  • {t['name_ar']} (`!{i+1}`)" for i, t in enumerate(config.DAILY_TASKS) if t["id"] in [rt["id"] for rt in remaining_tasks])
+            msg = (
+                f"\u23f0 \u0639\u0646\u062f\u0643 **{remaining}** \u0645\u0647\u0627\u0645 \u0644\u0633\u0647 \u0627\u0644\u0646\u0647\u0627\u0631\u062f\u0629.\n\n"
+                f"\u0627\u0644\u0645\u062a\u0628\u0642\u064a:\n{task_list}\n\n"
+                f"\U0001f4a1 \u0623\u0633\u0631\u0639 \u0645\u0647\u0645\u0629: **\u0645\u0634\u0627\u0631\u0643\u0629 \u0645\u062c\u062a\u0645\u0639\u064a\u0629** \u2014 \u0627\u0643\u062a\u0628 \u062c\u0645\u0644\u0629 \u0641\u064a #general-chat \u0648\u0627\u0643\u062a\u0628 `!7`"
+            )
+        else:
+            task_list = "\n".join(f"  • {t['name']} (`!{config.DAILY_TASKS.index(t)+1}`)" for t in remaining_tasks[:5])
+            msg = (
+                f"\u23f0 You have **{remaining}** tasks remaining today.\n\n"
+                f"Remaining:\n{task_list}\n\n"
+                f"\U0001f4a1 Quickest: **Community** \u2014 type a sentence in #general-chat then `!7`"
+            )
+
+        try:
+            await discord_member.send(msg)
+            database.log_notification(discord_id, "evening_dm", today)
+            sent += 1
+        except discord.Forbidden:
+            pass
+        await asyncio.sleep(0.5)
+
+    if sent > 0:
+        logger.info(f"Nabd evening reminder: sent to {sent} member(s)")
+
+
+@tasks.loop(time=datetime.time(hour=21, minute=0, tzinfo=_zone()))
+async def streak_at_risk():
+    """Nabd N2: Streak-at-risk alert (9 PM).
+
+    Urgent DM to students with streak >= 3 who completed ZERO tasks today.
+    Their streak will break at midnight if they don't do at least one task.
+    """
+    if not database.is_feature_enabled("nabd_streak_alert"):
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    today = task_engine.today_str()
+    members = database.all_active_members()
+    sent = 0
+
+    for m in members:
+        discord_id = m["discord_id"]
+        streak = m.get("current_streak", 0)
+        if streak < 3:
+            continue
+
+        prefs = database.get_notification_prefs(discord_id)
+        if not prefs.get("streak_alert", 1):
+            continue
+        if database.is_quiet_hours(discord_id):
+            continue
+        if database.was_notification_sent(discord_id, "streak_alert", today):
+            continue
+
+        completed = database.count_submissions_for_date(discord_id, today)
+        if completed > 0:
+            continue  # streak is safe
+
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        phase = features.response_language(discord_id)
+        if phase == "arabic":
+            msg = (
+                f"\u26a0\ufe0f **\u0633\u0644\u0633\u0644\u062a\u0643 ({streak} \u064a\u0648\u0645) \u0647\u062a\u0646\u0643\u0633\u0631 \u0627\u0644\u0644\u064a\u0644\u0629!**\n\n"
+                f"\u0644\u0648 \u0639\u0645\u0644\u062a \u0645\u0647\u0645\u0629 \u0648\u0627\u062d\u062f\u0629 \u0628\u0633 \u0642\u0628\u0644 12 \u0627\u0644\u0644\u064a\u0644\u060c \u0647\u062a\u062d\u0627\u0641\u0638 \u0639\u0644\u064a\u0647\u0627.\n\n"
+                f"\U0001f4a1 \u0623\u0633\u0647\u0644 \u062d\u0627\u062c\u0629 \u062a\u0639\u0645\u0644\u0647\u0627 \u062f\u0644\u0648\u0642\u062a\u064a:\n"
+                f"\u0627\u0643\u062a\u0628 \u062c\u0645\u0644\u0629 \u0648\u0627\u062d\u062f\u0629 \u0641\u064a #general-chat \u0648\u0628\u0639\u062f\u064a\u0646 \u0627\u0643\u062a\u0628 `!7`\n\n"
+                f"\u0645\u0627 \u062a\u0636\u064a\u0639\u0634 **{streak} \u064a\u0648\u0645** \u0634\u063a\u0644! \U0001f525"
+            )
+        else:
+            msg = (
+                f"\u26a0\ufe0f **Your streak ({streak} days) will break tonight!**\n\n"
+                f"Complete just ONE task before midnight to save it.\n\n"
+                f"\U0001f4a1 Easiest thing to do right now:\n"
+                f"Type a sentence in #general-chat then type `!7`\n\n"
+                f"Don't lose **{streak} days** of work! \U0001f525"
+            )
+
+        try:
+            await discord_member.send(msg)
+            database.log_notification(discord_id, "streak_alert", today)
+            sent += 1
+        except discord.Forbidden:
+            pass
+        await asyncio.sleep(0.5)
+
+    if sent > 0:
+        logger.info(f"Nabd streak-at-risk: sent to {sent} member(s)")
+
+
 @tasks.loop(time=datetime.time(hour=config.WEEKLY_ASSESSMENT_HOUR, tzinfo=_zone()))
 async def weekly_assessment():
     """Send weekly assessment prompts every Sunday."""
@@ -983,6 +1133,91 @@ async def missed_day_report():
         await features.post_missed_day_reminders(guild)
 
 
+@tasks.loop(time=datetime.time(hour=20, minute=30, tzinfo=_zone()))
+async def nabd_weekly_summary():
+    """Nabd N4: Friday evening personal progress summary DM."""
+    if _now().weekday() != 4:  # 4 = Friday
+        return
+    if not database.is_feature_enabled("nabd_weekly_summary"):
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    today = task_engine.today_str()
+    members = database.all_active_members()
+
+    for m in members:
+        discord_id = m["discord_id"]
+        prefs = database.get_notification_prefs(discord_id)
+        if not prefs.get("weekly_summary", 1):
+            continue
+        if database.was_notification_sent(discord_id, "weekly_summary", today):
+            continue
+
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        # Calculate this week vs last week
+        completion = task_engine.calculate_completion_rate(discord_id, days=7)
+
+        streak = m.get("current_streak", 0)
+        phase = features.response_language(discord_id)
+
+        # Tier-based encouragement
+        if completion >= 80:
+            encourage_ar = "🌟 أداء ممتاز! استمر كده."
+            encourage_en = "🌟 Excellent performance! Keep it up."
+        elif completion >= 60:
+            encourage_ar = "💪 كويس! حاول تزود مهمة واحدة يوميًا."
+            encourage_en = "💪 Good! Try to add one more task per day."
+        elif completion >= 40:
+            encourage_ar = "⚠️ محتاج تلتزم أكتر — حتى 3 مهام يوميًا كافية."
+            encourage_en = "⚠️ Need more consistency — even 3 tasks/day is enough."
+        else:
+            encourage_ar = "❗ الأسبوع ده كان صعب. هل محتاج مساعدة؟ كلمنا في #support"
+            encourage_en = "❗ Tough week. Need help? Reach out in #support"
+
+        bar = "█" * int(completion / 10) + "░" * (10 - int(completion / 10))
+
+        if phase == "arabic":
+            msg = (
+                f"📊 **ملخص الأسبوع:**\n"
+                f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                f"📈 نسبة الإنجاز: [{bar}] **{completion}%**\n"
+                f"🔥 سلسلة: **{streak}** يوم\n"
+                f"🏆 النقاط: **{m['total_points']}**\n\n"
+                f"{encourage_ar}\n\n"
+                f"*النظام بيشتغل لما انت تشتغل.* 🏛️"
+            )
+        else:
+            msg = (
+                f"📊 **Weekly Summary:**\n"
+                f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                f"📈 Completion: [{bar}] **{completion}%**\n"
+                f"🔥 Streak: **{streak}** days\n"
+                f"🏆 Points: **{m['total_points']}**\n\n"
+                f"{encourage_en}\n\n"
+                f"*The system works when you work.* 🏛️"
+            )
+
+        try:
+            await discord_member.send(msg)
+            database.log_notification(discord_id, "weekly_summary", today)
+        except discord.Forbidden:
+            pass
+        await asyncio.sleep(0.5)
+
+
+@tasks.loop(time=datetime.time(hour=10, minute=0, tzinfo=_zone()))
+async def nabd_absence_check():
+    """Nabd N5: daily absence recovery check (10 AM)."""
+    guild = bot.get_guild(config.GUILD_ID)
+    if guild:
+        await features.check_absence_recovery(guild)
+
 
 # ============================================================
 #  MEMBER COMMANDS
@@ -1134,6 +1369,15 @@ async def cmd_done(ctx, task: str = None):
     if result["streak"] in config.STREAK_BONUS_POINTS and isinstance(ctx.author, discord.Member):
         bonus = config.STREAK_BONUS_POINTS[result["streak"]]
         await features.celebrate_streak_milestone(ctx.guild, ctx.author.display_name, result["streak"], bonus)
+
+    # Nabd N3: milestone celebrations (varied, personal DM + public)
+    if isinstance(ctx.author, discord.Member) and result.get("milestones"):
+        for milestone_type, kwargs in result["milestones"]:
+            await features.send_milestone_celebration(ctx.guild, str(ctx.author.id), milestone_type, **kwargs)
+
+    # Nabd N6: social proof (notify same-level peers who opted in)
+    if result["tasks_today"] == 7 and isinstance(ctx.author, discord.Member):
+        await features.send_social_proof(ctx.guild, str(ctx.author.id))
 
 
 @bot.command(name="progress")
@@ -1811,6 +2055,53 @@ async def cmd_notifications(ctx, setting: str = None, value: str = None):
 
     status = "✅ مفعّل" if db_value else "❌ متوقف"
     await ctx.send(f"🔔 {setting}: {status}")
+
+
+@bot.command(name="pulse")
+@commands.has_permissions(manage_guild=True)
+async def cmd_pulse(ctx):
+    """(Admin) Nabd N7: notification system stats.
+
+    Shows how many notifications were sent today, this week, and
+    which types are most active. Quick health check for the system.
+    """
+    from src.database import _connect
+    today = task_engine.today_str()
+
+    conn = _connect()
+    # Today's counts by type
+    today_stats = conn.execute(
+        "SELECT notification_type, COUNT(*) as cnt FROM notification_log WHERE date=? GROUP BY notification_type",
+        (today,),
+    ).fetchall()
+    # This week's total
+    week_start = (datetime.date.today() - datetime.timedelta(days=7)).isoformat()
+    week_total = conn.execute(
+        "SELECT COUNT(*) as cnt FROM notification_log WHERE date >= ?",
+        (week_start,),
+    ).fetchone()["cnt"]
+    # Total opted-out students (any preference set to 0)
+    opted_out = conn.execute(
+        "SELECT COUNT(DISTINCT discord_id) as cnt FROM notification_preferences WHERE morning_dm=0 OR evening_dm=0 OR streak_alert=0",
+    ).fetchone()["cnt"]
+    conn.close()
+
+    lines = [
+        "🔔 **Nabd — Notification Pulse**",
+        "━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+        f"**Today ({today}):**",
+    ]
+    if today_stats:
+        for row in today_stats:
+            lines.append(f"  • {row['notification_type']}: {row['cnt']} sent")
+    else:
+        lines.append("  (no notifications sent today)")
+
+    lines.append(f"\n**This week:** {week_total} total notifications")
+    lines.append(f"**Opted out (any type):** {opted_out} student(s)")
+
+    await ctx.send("\n".join(lines))
 
 
 @bot.command(name="poststart")
