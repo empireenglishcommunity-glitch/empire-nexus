@@ -14,7 +14,7 @@
 
 ## Phase 0 — Recover stranded work (do this FIRST, before any new code)
 
-- [ ] **0.1** Recover the 2 stranded commits (`7f685f1`, `5829134`) from
+- [x] **0.1** Recover the 2 stranded commits (`7f685f1`, `5829134`) from
   branch `test/ai-engine-and-features-coverage` that were never merged
   into `main` (see requirements.md's "real finding" section for full
   detail). Cherry-pick or rebase both onto current `main` in a fresh
@@ -23,16 +23,30 @@
   opening the PR. Open and merge the PR. **Do not silently skip this
   because it "already exists somewhere" — it does not exist in `main`,
   which is what actually runs.**
+  — Done 2026-07-13: [empire-nexus PR #46](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/46).
+  Both commits cherry-picked onto current `main` (post PR #44/#45).
+  One real merge conflict in `features.py` (this cleanup's bare-except
+  fix vs. PR #44's buddy-load cap on the same lines) resolved by
+  keeping PR #44's cap + applying the except-narrowing on top. Verified
+  against current `main`, not just re-applied blindly: 281/281 tests
+  (learning-bot), 49/49 (challenge-bot, confirmed unaffected), ruff
+  clean, py_compile clean, and `backup.py` run for real against a
+  freshly created populated SQLite file (not just via pytest).
 - [ ] **0.2** Deploy the recovered `scripts/backup.py` to the server
   (`/opt/empire-english-bot`) and take one real backup by hand to
   confirm it works end-to-end against the real production database file
-  (not just in CI against a temp DB).
+  (not just in CI against a temp DB). **Blocked on PR #46 being merged
+  first** — do not attempt this against an unmerged branch.
 - [ ] **0.3** Update this spec's own `requirements.md`/`design.md` if
   anything about the recovered code differs from what was assumed when
   those documents were written (e.g. if `backup.py`'s actual interface
   doesn't match the `--tag` extension assumed in design.md — adjust the
   design, don't force the code to match a doc written without seeing it
-  merged).
+  merged). Reviewed after PR #46: `backup.py`'s actual interface
+  (`backup(backup_dir: str = None)`, positional CLI arg for custom dir)
+  is a plain function+CLI, not yet accepting a `--tag` label — Phase
+  2.1 (extend with `--tag`) is still accurate as originally designed,
+  no design changes needed.
 
 ## Phase 1 — Feature flags + kill switch (bot)
 
