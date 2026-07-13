@@ -111,6 +111,9 @@ ARABIC_COMMAND_ALIASES = {
     "إشعارات": "notifications",
     "نبض": "pulse",
     "صوتي": "portfolio",
+    "كلماتي": "words",
+    "قدراتي": "abilities",
+    "محادثة": "conversation",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -2143,6 +2146,136 @@ async def cmd_portfolio(ctx):
             await ctx.send(msg[:1900] + "\n...")
     else:
         await ctx.send(msg)
+
+
+@bot.command(name="words")
+async def cmd_words(ctx):
+    """View your vocabulary strength — spaced repetition stats.
+
+    Tatawwur T2: shows how many words you know, how many are due for
+    review, and your overall vocabulary strength.
+    """
+    if not database.is_feature_enabled("tatawwur_srs"):
+        return
+
+    discord_id = str(ctx.author.id)
+    stats = database.get_srs_stats(discord_id)
+
+    if stats["total"] == 0:
+        await ctx.send(
+            "📖 **لسه مفيش كلمات في نظام التكرار.**\n\n"
+            "لما تخلص مهام المفردات (`!2` أو `!done vocab`)، الكلمات هتتضاف أوتوماتيك.\n"
+            "النظام هيراجعلك الكلمات القديمة عشان متنساهاش! 🧠"
+        )
+        return
+
+    mastered_bar = "█" * min(10, stats["mastered"] * 10 // max(stats["total"], 1)) + "░" * (10 - min(10, stats["mastered"] * 10 // max(stats["total"], 1)))
+
+    await ctx.send(
+        f"📖 **كلماتك — Vocabulary Strength**\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"📊 Total words: **{stats['total']}**\n"
+        f"✅ Mastered (30+ days): **{stats['mastered']}**\n"
+        f"📝 Learning: **{stats['learning']}**\n"
+        f"🔄 Due for review today: **{stats['due_today']}**\n\n"
+        f"Strength: [{mastered_bar}] {stats['mastered']}/{stats['total']}"
+    )
+
+
+@bot.command(name="abilities")
+async def cmd_abilities(ctx):
+    """View your ability milestones — what you CAN DO now.
+
+    Tatawwur T3: shows completed vs. pending milestones for your level.
+    These are concrete, testable challenges — not just points.
+    """
+    if not database.is_feature_enabled("tatawwur_milestones"):
+        return
+
+    import json
+    from pathlib import Path
+
+    discord_id = str(ctx.author.id)
+    member = database.get_member(discord_id)
+    if not member:
+        await ctx.send("مش مسجل. اكتب `!join` الأول.")
+        return
+
+    level = member["level"]
+    milestones_file = Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
+    if not milestones_file.exists():
+        await ctx.send("⚠️ Milestones data not found.")
+        return
+
+    with open(milestones_file, encoding="utf-8") as f:
+        all_milestones = json.load(f)
+
+    level_milestones = all_milestones.get(level, [])
+    if not level_milestones:
+        await ctx.send(f"⚠️ No milestones defined for {level} yet.")
+        return
+
+    completed_ids = database.get_completed_milestones(discord_id)
+
+    lines = [
+        f"🎯 **قدراتك — {level} Ability Milestones**",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+    ]
+
+    done_count = 0
+    for m in level_milestones:
+        if m["id"] in completed_ids:
+            lines.append(f"  ✅ ~~{m['name_ar']}~~ ({m['name']})")
+            done_count += 1
+        else:
+            lines.append(f"  ⬜ **{m['name_ar']}** ({m['name']})")
+            lines.append(f"     {m['description_ar']}")
+
+    lines.append(f"\n📊 {done_count}/{len(level_milestones)} completed")
+
+    if done_count == len(level_milestones):
+        lines.append("\n🏆 **خلصت كل milestones المستوى ده! جاهز للترقية!**")
+
+    await ctx.send("\n".join(lines))
+
+
+@bot.command(name="conversation")
+async def cmd_conversation(ctx):
+    """Sign up for a structured conversation session.
+
+    Tatawwur T5: weekly paired speaking practice with a same-level
+    partner. The bot matches you and provides conversation prompts.
+    """
+    if not database.is_feature_enabled("tatawwur_conversations"):
+        return
+
+    discord_id = str(ctx.author.id)
+    member = database.get_member(discord_id)
+    if not member:
+        await ctx.send("مش مسجل. اكتب `!join` الأول.")
+        return
+
+    level = member["level"]
+    sessions = database.get_upcoming_sessions(level)
+
+    if sessions:
+        s = sessions[0]
+        await ctx.send(
+            f"🗣️ **الجلسة الجاية:**\n"
+            f"📅 {s['scheduled_at']}\n"
+            f"📊 Level: {s['level']}\n"
+            f"👥 Participants: {len(s['participant_ids'].split(',')) if s['participant_ids'] else 0}\n\n"
+            f"انت مسجل بالفعل! هتوصلك رسالة قبل الجلسة بنص ساعة."
+        )
+    else:
+        await ctx.send(
+            "🗣️ **جلسات المحادثة**\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "مفيش جلسات مجدولة حالياً.\n"
+            "الجلسات بتكون أسبوعية — هيتم الإعلان عنها في #announcements.\n\n"
+            "💡 لحد ما تبدأ الجلسات، اتمرن مع الـ buddy بتاعك!"
+        )
 
 
 @bot.command(name="pulse")

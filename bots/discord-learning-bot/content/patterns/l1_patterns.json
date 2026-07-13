@@ -1,0 +1,30 @@
+{
+  "opinions_advanced": [
+    {"phrase": "I'm not entirely sure, but...", "when": "Hedging an opinion", "arabic": "مش متأكد 100% بس...", "example": "I'm not entirely sure, but I think the store closes at 9."},
+    {"phrase": "From what I can tell...", "when": "Based on observation", "arabic": "من اللي أنا شايفه...", "example": "From what I can tell, she's not happy with the plan."},
+    {"phrase": "To be honest...", "when": "Being direct/frank", "arabic": "بصراحة...", "example": "To be honest, I didn't enjoy the movie that much."},
+    {"phrase": "It depends on...", "when": "Giving a nuanced answer", "arabic": "بيعتمد على...", "example": "It depends on how much time you have."},
+    {"phrase": "I'd say...", "when": "Giving an estimate or opinion", "arabic": "هقول...", "example": "I'd say it takes about 30 minutes to get there."}
+  ],
+  "disagreement": [
+    {"phrase": "I see your point, but...", "when": "Polite disagreement", "arabic": "فاهم وجهة نظرك بس...", "example": "I see your point, but I think there's a better way."},
+    {"phrase": "That's true, however...", "when": "Acknowledging then disagreeing", "arabic": "ده صح بس...", "example": "That's true, however, it doesn't work for everyone."},
+    {"phrase": "I'm not so sure about that.", "when": "Gentle disagreement", "arabic": "مش متأكد من ده.", "example": "Hmm, I'm not so sure about that. Let me check."},
+    {"phrase": "Actually, I think...", "when": "Correcting politely", "arabic": "الحقيقة أنا فاكر...", "example": "Actually, I think the meeting is tomorrow, not today."},
+    {"phrase": "I respectfully disagree.", "when": "Formal disagreement", "arabic": "باحترام مش موافق.", "example": "I respectfully disagree. I think we need more time."}
+  ],
+  "storytelling": [
+    {"phrase": "So what happened was...", "when": "Starting a story", "arabic": "اللي حصل إن...", "example": "So what happened was, I missed the bus and had to walk."},
+    {"phrase": "You won't believe this, but...", "when": "Building suspense", "arabic": "مش هتصدق بس...", "example": "You won't believe this, but I ran into my old teacher."},
+    {"phrase": "Long story short...", "when": "Summarizing a long story", "arabic": "القصة باختصار...", "example": "Long story short, we ended up getting lost."},
+    {"phrase": "And then out of nowhere...", "when": "Introducing a surprise", "arabic": "وفجأة من غير مقدمات...", "example": "And then out of nowhere, it started raining."},
+    {"phrase": "The best part was...", "when": "Highlighting the climax", "arabic": "أحلى حاجة كانت...", "example": "The best part was when he said 'yes'!"}
+  ],
+  "daily_life": [
+    {"phrase": "I'm running late.", "when": "You're going to be late", "arabic": "أنا متأخر.", "example": "Sorry, I'm running late. I'll be there in 10 minutes."},
+    {"phrase": "I'll get back to you.", "when": "Need time to answer", "arabic": "هرد عليك.", "example": "Good question. Let me think about it. I'll get back to you."},
+    {"phrase": "It slipped my mind.", "when": "You forgot something", "arabic": "نسيت خالص.", "example": "Oh no, it slipped my mind! I was supposed to call her."},
+    {"phrase": "I could use some...", "when": "Expressing a need politely", "arabic": "محتاج شوية...", "example": "I could use some coffee right now."},
+    {"phrase": "That rings a bell.", "when": "Something sounds familiar", "arabic": "ده بيفكرني بحاجة.", "example": "That name rings a bell. Have we met before?"}
+  ]
+}
