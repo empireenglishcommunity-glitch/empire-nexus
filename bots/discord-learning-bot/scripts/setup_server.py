@@ -147,6 +147,7 @@ CATEGORIES_CONFIG = [
             "🛡️ Admin": _ow(send_messages=True),
         },
         "channels": [
+            {"name": "start-here", "type": "text", "topic": "ابدأ من هنا — أول مكان تروحله لما تدخل السيرفر 🏛️"},
             {"name": "welcome", "type": "text", "topic": "مرحبًا بيك في Empire English Community 🏛️"},
             {"name": "rules", "type": "text", "topic": "قوانين المجتمع — اقرأها واقبلها"},
             {"name": "roles-info", "type": "text", "topic": "إزاي المستويات شغالة وإزاي تترقى"},
