@@ -217,6 +217,53 @@ def _find_channel(guild: discord.Guild, name: str):
     return discord.utils.get(guild.text_channels, name=name)
 
 
+async def _send_onboarding_media(member: discord.Member):
+    """Bawaba B3: send pre-generated multimedia onboarding assets (journey
+    map infographic + Arabic audio clips) as DM attachments.
+
+    Gracefully skips any files that don't exist yet (they need to be
+    generated on the server via scripts/onboarding/generate_*.py first).
+    """
+    from pathlib import Path
+    media_dir = Path(__file__).resolve().parent.parent / "scripts" / "onboarding"
+
+    # Send journey map infographic (if generated)
+    journey_map = media_dir / "images" / "journey_map.png"
+    if journey_map.exists():
+        try:
+            await member.send(
+                "🗺️ **خريطة رحلتك:**",
+                file=discord.File(str(journey_map), filename="journey_map.png"),
+            )
+            await asyncio.sleep(1)
+        except (discord.Forbidden, discord.HTTPException):
+            pass
+
+    # Send audio clips (if generated)
+    audio_dir = media_dir / "audio"
+    audio_files = sorted(audio_dir.glob("*.mp3")) if audio_dir.exists() else []
+    if audio_files:
+        try:
+            await member.send(
+                "🎧 **اسمع الشرح بالعربي** (4 كليبات قصيرة):",
+                files=[discord.File(str(f), filename=f.name) for f in audio_files[:4]],
+            )
+            await asyncio.sleep(1)
+        except (discord.Forbidden, discord.HTTPException):
+            pass
+
+    # Send video link (if configured)
+    if config.ONBOARDING_VIDEO_URL:
+        try:
+            await member.send(
+                f"🎬 **فيديو شرح (3 دقايق):** {config.ONBOARDING_VIDEO_URL}\n"
+                f"*شوف الفيديو لو عايز تفهم أكتر بالتفصيل*"
+            )
+            await asyncio.sleep(1)
+        except (discord.Forbidden, discord.HTTPException):
+            pass
+
+
 # ============================================================
 #  BOT EVENTS
 # ============================================================
@@ -282,6 +329,11 @@ async def on_member_join(member: discord.Member):
                 f"ده نظام تعلّم يومي هيخليك تتكلم إنجليزي.\n"
                 f"خلينا نبدأ بـ 5 خطوات سريعة (دقيقتين بس) 👇"
             )
+
+            # Bawaba B3: send multimedia onboarding assets if available
+            if database.is_feature_enabled("bawaba_multimedia"):
+                await _send_onboarding_media(member)
+
             await asyncio.sleep(1)
             await features.start_tutorial(member)
         except discord.Forbidden:

@@ -68,6 +68,15 @@ PRACTICE_PLATFORM_URL = os.getenv(
 ).rstrip("/")
 
 # ============================================================
+#  BAWABA: ONBOARDING VIDEO (optional — YouTube link)
+# ============================================================
+# A 3-minute screen-recorded walkthrough of the Discord mobile app,
+# narrated in Arabic. Set in .env once recorded and uploaded.
+# The bot includes this link in the welcome DM when bawaba_multimedia
+# flag is enabled. Empty string = not yet recorded (gracefully skipped).
+ONBOARDING_VIDEO_URL = os.getenv("ONBOARDING_VIDEO_URL", "")
+
+# ============================================================
 #  TELEGRAM ALERTS (optional — lifecycle notifications)
 # ============================================================
 TELEGRAM_ALERT_TOKEN = os.getenv("TELEGRAM_ALERT_TOKEN", "")
