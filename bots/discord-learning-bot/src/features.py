@@ -1626,3 +1626,233 @@ START_HERE_MESSAGE = """🏛️ **ابدأ من هنا — Empire English**
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 *System over instructor. Common Sense First.* 🏛️"""
+
+
+
+# ============================================================
+#  27. NABD N3: REAL-TIME MILESTONE CELEBRATIONS
+# ============================================================
+
+_CELEBRATION_ALL_7 = [
+    "🎉🎉🎉 **{name}** خلّص كل الـ 7 مهام النهاردة! بطل حقيقي! 🏛️",
+    "🔥 **{name}** — السبع مهام تمام! ده مش عادي. استمر! 💪",
+    "🏆 **{name}** ما شاء الله! كل المهام النهاردة! فخر المجتمع. 🏛️",
+    "⭐ **{name}** خلّص كل حاجة! ده اللي بيفرق بين الناس والأبطال. 🔥",
+]
+
+_CELEBRATION_STREAK = [
+    "🔥🔥🔥 **{name}** وصل **{days} يوم** streak! ده إصرار حقيقي! (+{bonus} نقطة)",
+    "🏆 **{name}** — **{days} يوم** متواصل! مفيش حد يقدر يوقفك! (+{bonus} bonus)",
+    "⚡ **{name}** streak: **{days} أيام**! الاستمرارية هي سر الطلاقة. (+{bonus} pts)",
+]
+
+
+async def send_milestone_celebration(guild, discord_id: str, milestone_type: str, **kwargs):
+    """Nabd N3: send a celebration DM + optional public post.
+
+    Called from process_submission() when a milestone is detected.
+    milestone_type: 'all_7', 'streak', 'first_assessment'
+    """
+    if not database.is_feature_enabled("nabd_celebrations"):
+        return
+
+    prefs = database.get_notification_prefs(discord_id)
+    if not prefs.get("celebrations", 1):
+        return
+
+    member = guild.get_member(int(discord_id))
+    if not member:
+        return
+
+    m = database.get_member(discord_id)
+    name = m["discord_name"] if m else member.display_name
+
+    if milestone_type == "all_7":
+        msg = random.choice(_CELEBRATION_ALL_7).format(name=name)
+    elif milestone_type == "streak":
+        msg = random.choice(_CELEBRATION_STREAK).format(
+            name=name, days=kwargs.get("days", 0), bonus=kwargs.get("bonus", 0)
+        )
+    elif milestone_type == "first_assessment":
+        msg = f"📊 **{name}** — أول تقييم أسبوعي ليك! أحسنت إنك بدأت تقيّم نفسك. 🏛️"
+    else:
+        return
+
+    # Send DM
+    try:
+        await member.send(f"🏆 **مبروك!**\n\n{msg}")
+    except discord.Forbidden:
+        pass
+
+    # Public post in #daily-check-in (for all_7 and streak)
+    if milestone_type in ("all_7", "streak"):
+        channel = discord.utils.get(guild.text_channels, name="daily-check-in")
+        if channel:
+            try:
+                await channel.send(msg)
+            except discord.HTTPException:
+                pass
+
+
+# ============================================================
+#  28. NABD N5: ABSENCE RECOVERY LADDER
+# ============================================================
+
+async def check_absence_recovery(guild):
+    """Nabd N5: check each member's absence level and send appropriate outreach.
+
+    Called from a daily loop. Escalates:
+      Day 2: bot DM (gentle)
+      Day 3: buddy prompt
+      Day 5: comeback mini-task DM
+      Day 7+: final DM (already in !attention)
+    """
+    if not database.is_feature_enabled("nabd_absence_recovery"):
+        return
+
+    from . import tasks as task_engine
+    today = task_engine.today_str()
+    members = database.all_active_members()
+
+    for m in members:
+        discord_id = m["discord_id"]
+        days_inactive = database.days_since_active(m)
+
+        if days_inactive < 2:
+            continue
+
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        phase = response_language(discord_id)
+
+        # Day 2: gentle bot DM
+        if days_inactive >= 2 and not database.was_notification_sent(discord_id, "absence_day2", today):
+            if database.was_notification_sent(discord_id, "absence_day2", (datetime.date.today() - datetime.timedelta(days=1)).isoformat()):
+                continue  # already sent yesterday for this absence streak
+            if phase == "arabic":
+                msg = "👋 **مفتقدينك!**\n\nحتى مهمة واحدة النهاردة أحسن من لا شيء.\nاكتب `!1` وابدأ. 💪"
+            else:
+                msg = "👋 **We miss you!**\n\nEven one task today is better than none.\nType `!1` to start. 💪"
+            try:
+                await discord_member.send(msg)
+                database.log_notification(discord_id, "absence_day2", today)
+            except discord.Forbidden:
+                pass
+
+        # Day 3: buddy prompt
+        elif days_inactive >= 3 and not database.was_notification_sent(discord_id, "absence_day3", today):
+            buddy_id = m.get("buddy_id", "")
+            if buddy_id:
+                buddy = guild.get_member(int(buddy_id))
+                if buddy:
+                    try:
+                        await buddy.send(
+                            f"⚠️ **{m['discord_name']}** غايب من {days_inactive} أيام.\n"
+                            f"ابعتله رسالة صوتية وشجعه يرجع. 🙏"
+                        )
+                    except discord.Forbidden:
+                        pass
+            database.log_notification(discord_id, "absence_day3", today)
+
+        # Day 5: comeback mini-task
+        elif days_inactive >= 5 and not database.was_notification_sent(discord_id, "absence_day5", today):
+            if phase == "arabic":
+                msg = (
+                    "🌟 **مهمة رجوع سريعة (دقيقتين بس):**\n\n"
+                    "اكتب جملة واحدة بالإنجليزي في `#general-chat`\n"
+                    "ثم اكتب `!7`\n\n"
+                    "كده بس! ده بيحسبلك مهمة ✅ وبيحافظ على نشاطك.\n"
+                    "مش لازم تكون مثالي — المهم ترجع. 🏛️"
+                )
+            else:
+                msg = (
+                    "🌟 **Quick comeback task (2 minutes):**\n\n"
+                    "Type one English sentence in `#general-chat`\n"
+                    "Then type `!7`\n\n"
+                    "That's it! It counts as a task ✅ and keeps you active.\n"
+                    "You don't have to be perfect — just come back. 🏛️"
+                )
+            try:
+                await discord_member.send(msg)
+                database.log_notification(discord_id, "absence_day5", today)
+            except discord.Forbidden:
+                pass
+
+        # Day 7+: final DM
+        elif days_inactive >= 7 and not database.was_notification_sent(discord_id, "absence_day7", today):
+            if phase == "arabic":
+                msg = (
+                    "💬 **مرحبًا {name}**\n\n"
+                    "غبت عنا أسبوع كامل. كل حاجة لسه في مكانها — مستواك، نقاطك، كل شيء.\n"
+                    "لو محتاج مساعدة أو عايز تتكلم، كلمنا في `#support`.\n\n"
+                    "لو عايز ترجع — اكتب `!1` وابدأ من جديد. 🏛️"
+                ).format(name=m["discord_name"])
+            else:
+                msg = (
+                    "💬 **Hey {name}**\n\n"
+                    "It's been a full week. Everything is still here — your level, your points, everything.\n"
+                    "If you need help or want to talk, reach out in `#support`.\n\n"
+                    "To come back — just type `!1` and start fresh. 🏛️"
+                ).format(name=m["discord_name"])
+            try:
+                await discord_member.send(msg)
+                database.log_notification(discord_id, "absence_day7", today)
+            except discord.Forbidden:
+                pass
+
+
+# ============================================================
+#  29. NABD N6: SOCIAL PROOF (opt-in)
+# ============================================================
+
+async def send_social_proof(guild, completer_discord_id: str):
+    """Nabd N6: notify same-level peers (who opted in) that someone
+    completed all 7 tasks. Max 1 per peer per day."""
+    if not database.is_feature_enabled("nabd_social_proof"):
+        return
+
+    from . import tasks as task_engine
+    today = task_engine.today_str()
+
+    completer = database.get_member(completer_discord_id)
+    if not completer:
+        return
+
+    level = completer["level"]
+    peers = database.members_at_level(level)
+
+    for peer in peers:
+        peer_id = peer["discord_id"]
+        if peer_id == completer_discord_id:
+            continue  # don't notify yourself
+
+        prefs = database.get_notification_prefs(peer_id)
+        if not prefs.get("social_proof", 0):
+            continue  # opted out (default OFF)
+
+        if database.was_notification_sent(peer_id, "social_proof", today):
+            continue  # max 1 per day
+
+        # Skip if they already finished all tasks
+        peer_completed = database.count_submissions_for_date(peer_id, today)
+        if peer_completed >= 7:
+            continue
+
+        peer_member = guild.get_member(int(peer_id))
+        if not peer_member:
+            continue
+
+        phase = response_language(peer_id)
+        name = completer["discord_name"]
+        if phase == "arabic":
+            msg = f"👥 زميلك **{name}** خلّص كل مهامه النهاردة — يلا كمّل! 💪"
+        else:
+            msg = f"👥 Your peer **{name}** completed all tasks today — keep going! 💪"
+
+        try:
+            await peer_member.send(msg)
+            database.log_notification(peer_id, "social_proof", today)
+        except discord.Forbidden:
+            pass
