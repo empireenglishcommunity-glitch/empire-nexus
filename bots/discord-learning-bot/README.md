@@ -37,6 +37,7 @@ docker compose logs -f
 | `!streak` | View your streak info |
 | `!level` | Level info and advancement requirements |
 | `!week` | This week's curriculum focus |
+| `!assess` | Calculate this week's assessment score |
 | `!top` | Points leaderboard |
 | `!streaks` | Streak leaderboard |
 | `!help` | Show all commands |

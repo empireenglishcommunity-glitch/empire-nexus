@@ -265,3 +265,79 @@ async def test_process_submission_all_seven_awards_bonus():
     # 7 tasks * POINTS_PER_TASK + POINTS_ALL_TASKS bonus on the 7th
     expected_min = 7 * config.POINTS_PER_TASK + config.POINTS_ALL_TASKS
     assert total_awarded >= expected_min
+
+
+# ============================================================
+#  WEEKLY ASSESSMENT SCORING (build_weekly_assessment)
+# ============================================================
+# Backs the !assess command (bot.py::cmd_assess), which never existed
+# until it was added alongside these tests -- found via adversarial-input
+# stress testing on database.save_assessment(), which had zero production
+# callers despite weekly_assessment()'s DM and !help both telling members
+# to run `!assess`.
+
+def test_build_weekly_assessment_zero_when_nothing_submitted():
+    database.register_member("u1", "Alice")
+    result = tasks.build_weekly_assessment("u1")
+    assert result["overall"] == 0.0
+    assert result["rating"] == "Critical"
+    assert result["submitted_tasks"] == []
+    for dim_id in ("speaking", "listening", "vocabulary", "accent", "writing", "completion"):
+        assert result["scores"][dim_id] == 0.0
+
+
+def test_build_weekly_assessment_verified_tasks_score_full_marks():
+    database.register_member("u1", "Alice")
+    today = tasks.today_str()
+    for task_id in ("speaking", "listening", "vocab", "accent"):
+        database.log_submission("u1", today, task_id)
+
+    result = tasks.build_weekly_assessment("u1")
+    assert result["scores"]["speaking"] == 100.0
+    assert result["scores"]["listening"] == 100.0
+    assert result["scores"]["vocabulary"] == 100.0
+    assert result["scores"]["accent"] == 100.0
+    assert set(result["submitted_tasks"]) == {"speaking", "listening", "vocab", "accent"}
+
+
+def test_build_weekly_assessment_uses_latest_writing_score():
+    database.register_member("u1", "Alice")
+    today = tasks.today_str()
+    database.log_submission("u1", today, "writing", content="draft 1", score=40.0)
+
+    result = tasks.build_weekly_assessment("u1")
+    assert result["scores"]["writing"] == 40.0
+    assert "writing" in result["submitted_tasks"]
+
+
+def test_build_weekly_assessment_writing_without_score_counts_as_zero():
+    """A writing submission logged without an AI score (e.g. evaluate_writing()
+    failed/returned None) should not crash and should not silently count as
+    a passing score -- but the submission itself DID happen (the row
+    exists), so it still shows up in submitted_tasks; only the score is 0."""
+    database.register_member("u1", "Alice")
+    today = tasks.today_str()
+    database.log_submission("u1", today, "writing", content="draft", score=None)
+
+    result = tasks.build_weekly_assessment("u1")
+    assert result["scores"]["writing"] == 0.0
+    assert "writing" in result["submitted_tasks"]
+
+
+def test_build_weekly_assessment_unregistered_member_does_not_crash():
+    """No member row at all (never joined) -- should degrade to an
+    all-zero assessment rather than raising, matching the codebase's
+    established defensive-degradation pattern elsewhere."""
+    result = tasks.build_weekly_assessment("never_joined")
+    assert result["overall"] == 0.0
+    assert result["submitted_tasks"] == []
+
+
+def test_build_weekly_assessment_ignores_submissions_outside_window():
+    database.register_member("u1", "Alice")
+    old_date = (datetime.date.today() - datetime.timedelta(days=30)).isoformat()
+    database.log_submission("u1", old_date, "speaking")
+
+    result = tasks.build_weekly_assessment("u1", days=7)
+    assert result["scores"]["speaking"] == 0.0
+    assert "speaking" not in result["submitted_tasks"]

@@ -288,7 +288,22 @@ def get_grammar_pattern(week: int, level: str = "L0") -> Optional[dict]:
 def get_daily_content(week: int, day_name: str, day_index: int, level: str = "L0") -> dict:
     """Get all curriculum content for a specific day.
     Returns a dict with all 7 tasks pre-populated from curated data.
+
+    Clamps week to max_week_for_level() up front. get_accent_drill(),
+    get_accent_focus(), and get_grammar_pattern() already did this
+    clamping internally, but get_vocabulary_for_day()/get_speaking_mission()/
+    get_writing_prompt() did not -- found via boundary-condition stress
+    testing. config.LEVELS' own duration_weeks range for L0 is (8, 12),
+    but curated content only exists for 8 weeks (LEVEL_WEEK_COUNTS), so any
+    member still normally progressing in weeks 9-12 (not stuck, not
+    failing -- simply within the level's own declared expected range) got
+    real repeated week-8 accent/grammar content but a generic, non-curated
+    "learn today's 8 new words" filler for vocab/speaking/writing instead
+    of week 8's real curated content repeating like everything else does.
+    Clamping once here, consistently, before any sub-lookup fixes that
+    asymmetry for all six task types at once.
     """
+    week = min(max_week_for_level(level), max(1, week))
     vocab = get_vocabulary_for_day(week, day_index, level)
     speaking = get_speaking_mission(week, day_name, level)
     writing = get_writing_prompt(week, day_index, level)

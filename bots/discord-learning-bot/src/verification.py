@@ -263,7 +263,13 @@ def check_vocab_answer(discord_id: str, user_answer: str) -> tuple[bool, str]:
         del _pending_quizzes[discord_id]
         return False, "الوقت انتهى! اكتب `!done vocab` تاني."
 
-    user_clean = user_answer.lower().strip()
+    # Defensive: treat a non-string answer (e.g. None) as empty rather than
+    # crashing with AttributeError on .lower(). Not reachable from bot.py's
+    # real on_message handler today (discord.py's message.content is always
+    # a str), but this is a public function and a bare AttributeError deep
+    # in message handling is worth guarding against regardless -- found via
+    # adversarial input stress testing.
+    user_clean = (user_answer or "").lower().strip()
     correct = quiz["answer"]
     alternatives = quiz.get("alternatives", [correct])
 
@@ -332,7 +338,9 @@ def check_listening_answer(discord_id: str, user_answer: str) -> tuple[bool, str
         del _pending_listening[discord_id]
         return False, "الوقت انتهى! اكتب `!done listening` تاني."
 
-    user_clean = user_answer.lower().strip()
+    # Defensive: same rationale as check_vocab_answer() above -- guard
+    # against a non-string answer instead of raising AttributeError.
+    user_clean = (user_answer or "").lower().strip()
     is_correct = user_clean == quiz["answer"] or user_clean in quiz["alternatives"]
 
     del _pending_listening[discord_id]

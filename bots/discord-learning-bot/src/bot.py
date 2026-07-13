@@ -17,7 +17,7 @@ Commands:
   !streaks             Leaderboard (streaks)
   !level               View your level info and advancement progress
   !week                View this week's curriculum focus
-  !assess              Request this week's assessment (if Sunday)
+  !assess              Calculate this week's assessment score
   !help                Show all commands
 
 Admin:
@@ -47,6 +47,32 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix=config.BOT_PREFIX, intents=intents, help_command=None)
+
+# Per-user locks for !done's cooldown check. Found via rapid-fire/
+# concurrency stress testing: verification.check_cooldown() and
+# record_done_time() are separated by genuine async work (verify_task()'s
+# real channel.history() Discord API calls), so two !done invocations
+# for the SAME user fired close together (double-click, client retry, a
+# duplicate gateway event) could both read "cooldown not active" before
+# either one records -- letting a user submit two DIFFERENT tasks
+# within what's supposed to be one 5-minute-spaced window. Confirmed via
+# a 2-way asyncio.gather() race simulation. Not a data-integrity or
+# double-points bug (log_submission()'s UNIQUE(discord_id, date, task_id)
+# constraint already makes the SAME task un-double-submittable regardless
+# -- confirmed separately), just a minor anti-spam-pacing bypass -- but
+# real and reachable, so worth closing properly rather than leaving as a
+# known gap. A lock per discord_id (not a single global lock) means this
+# only ever serializes a user against their OWN concurrent !done calls,
+# never against other members'.
+_done_locks: dict[str, asyncio.Lock] = {}
+
+
+def _get_done_lock(discord_id: str) -> asyncio.Lock:
+    lock = _done_locks.get(discord_id)
+    if lock is None:
+        lock = asyncio.Lock()
+        _done_locks[discord_id] = lock
+    return lock
 
 
 
@@ -134,6 +160,8 @@ async def on_ready():
         at_risk_check.start()
     if not missed_day_report.is_running():
         missed_day_report.start()
+    if not midnight_voice_reset.is_running():
+        midnight_voice_reset.start()
 
 
 @bot.event
@@ -415,6 +443,25 @@ async def grammar_card_delivery():
             logger.error(f"Failed to post grammar card for {level_key}: {e}")
 
 
+@tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=_zone()))
+async def midnight_voice_reset():
+    """Reset today's voice-channel-minute tracking at midnight.
+
+    verification.get_voice_minutes_today() is what the !done community
+    check calls to decide whether someone spent 10+ minutes in voice
+    "today" -- but nothing was ever calling reset_daily_voice() to clear
+    the tracking dict at day boundaries. That made _voice_sessions a
+    lifetime running total instead of a daily one: any member who ever
+    accumulated 10+ voice minutes, on any single day, would pass the
+    !done community voice check every day forever after, with zero
+    actual voice activity on later days -- a real anti-cheat bypass, not
+    just an unbounded-memory-growth concern. Found via a stress test
+    that simulated two "days" of voice activity across a fake midnight
+    boundary with no reset in between.
+    """
+    verification.reset_daily_voice()
+
+
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
 async def daily_streak_post():
     """Post streak tracker summary every evening."""
@@ -459,6 +506,19 @@ async def missed_day_report():
 @bot.command(name="join")
 async def cmd_join(ctx, *, goal: str = ""):
     """Register as a community member."""
+    # Found via message-length stress testing: a real Discord message is
+    # itself capped at 2000 chars, so "!join <goal>" already lets a user
+    # supply a goal up to ~1994 chars -- long enough that this command's
+    # own welcome response (which echoes the goal back) exceeds Discord's
+    # 2000-char send limit on its own. on_command_error() catches the
+    # resulting discord.HTTPException so the bot doesn't crash, but the
+    # member's registration silently succeeds while their confirmation
+    # message fails, leaving them unsure !join even worked. !progress
+    # also echoes this same goal, so capping here (at input time) protects
+    # both display sites at once. 200 chars is generous for a genuine
+    # short personal goal statement while leaving no realistic path back
+    # over the limit.
+    goal = goal[:200]
     is_new = database.register_member(str(ctx.author.id), ctx.author.display_name, goal=goal)
     if is_new:
         # Assign Level 0 role
@@ -516,39 +576,44 @@ async def cmd_done(ctx, task: str = None):
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
         return
 
-    # TIME GATE: 5 min cooldown between !done commands
-    allowed, remaining_secs = verification.check_cooldown(str(ctx.author.id))
-    if not allowed:
-        mins = remaining_secs // 60
-        secs = remaining_secs % 60
-        await ctx.send(f"⏳ استنى {mins}:{secs:02d} قبل ما تسجل مهمة تانية.\n(5 دقايق بين كل `!done`)")
-        return
-
-    # VOCAB: Two-step quiz flow
-    if task == "vocab":
-        question, answer, word = verification.generate_vocab_quiz(str(ctx.author.id))
-        await ctx.send(f"📖 **اختبار مفردات:**\n\n{question}\n\n*اكتب إجابتك هنا:*")
-        return  # Answer handled in on_message
-
-    # LISTENING: Two-step quiz flow
-    if task == "listening":
-        prompt, answer = verification.generate_listening_quiz(str(ctx.author.id))
-        await ctx.send(prompt)
-        return  # Answer handled in on_message
-
-    # OTHER TASKS: Verify proof exists
-    if isinstance(ctx.author, discord.Member):
-        passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
-        if not passed:
-            await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
+    # Serialize this user's own !done attempts (see _get_done_lock's
+    # docstring above) so the cooldown check below and record_done_time()
+    # further down can't both pass for two near-simultaneous invocations
+    # racing across the real async Discord API work in between them.
+    async with _get_done_lock(str(ctx.author.id)):
+        # TIME GATE: 5 min cooldown between !done commands
+        allowed, remaining_secs = verification.check_cooldown(str(ctx.author.id))
+        if not allowed:
+            mins = remaining_secs // 60
+            secs = remaining_secs % 60
+            await ctx.send(f"⏳ استنى {mins}:{secs:02d} قبل ما تسجل مهمة تانية.\n(5 دقايق بين كل `!done`)")
             return
 
-    # PASSED VERIFICATION — process the submission
-    verification.record_done_time(str(ctx.author.id))
+        # VOCAB: Two-step quiz flow
+        if task == "vocab":
+            question, answer, word = verification.generate_vocab_quiz(str(ctx.author.id))
+            await ctx.send(f"📖 **اختبار مفردات:**\n\n{question}\n\n*اكتب إجابتك هنا:*")
+            return  # Answer handled in on_message
 
-    result = await task_engine.process_submission(
-        str(ctx.author.id), ctx.author.display_name, task
-    )
+        # LISTENING: Two-step quiz flow
+        if task == "listening":
+            prompt, answer = verification.generate_listening_quiz(str(ctx.author.id))
+            await ctx.send(prompt)
+            return  # Answer handled in on_message
+
+        # OTHER TASKS: Verify proof exists
+        if isinstance(ctx.author, discord.Member):
+            passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
+            if not passed:
+                await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
+                return
+
+        # PASSED VERIFICATION — process the submission
+        verification.record_done_time(str(ctx.author.id))
+
+        result = await task_engine.process_submission(
+            str(ctx.author.id), ctx.author.display_name, task
+        )
 
     if not result["new"]:
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
@@ -750,6 +815,69 @@ async def cmd_week(ctx):
     await ctx.send("\n".join(lines))
 
 
+@bot.command(name="assess")
+async def cmd_assess(ctx):
+    """Calculate and save this week's assessment score.
+
+    This command never existed until now, even though weekly_assessment()'s
+    Sunday DM explicitly instructs every member to run `!assess` when done,
+    and !help/the module docstring both documented it — found via
+    adversarial-input stress testing on database.save_assessment(), which
+    turned out to have zero production callers anywhere in the bot. As a
+    result !progress's "Last assessment" line and !attention's
+    declining-assessment-trend detection always silently showed
+    "No assessment yet" / never fired in any real deployment.
+
+    Scores each config.ASSESSMENT_DIMENSIONS entry from real data already
+    on record this week (see task_engine.build_weekly_assessment's
+    docstring for exactly how) — this does not ask the member anything or
+    call the AI a second time, it just totals up what verification.py and
+    the #writing-feedback pipeline already confirmed. Awards
+    POINTS_ASSESSMENT once per week (re-running !assess later the same
+    week refreshes the stored score, e.g. after a late writing submission,
+    without double-awarding points).
+    """
+    member = database.get_member(str(ctx.author.id))
+    if not member:
+        await ctx.send("Not registered. Use `!join` first.")
+        return
+
+    week = database.member_week_number(str(ctx.author.id))
+    already_assessed = database.get_assessment_for_week(str(ctx.author.id), week) is not None
+
+    result = task_engine.build_weekly_assessment(str(ctx.author.id))
+    database.save_assessment(
+        str(ctx.author.id), week, result["scores"], result["overall"], result["rating"],
+    )
+
+    if not already_assessed:
+        database.add_points(str(ctx.author.id), config.POINTS_ASSESSMENT, "weekly_assessment")
+
+    dim_lines = []
+    for dim in config.ASSESSMENT_DIMENSIONS:
+        score = result["scores"].get(dim["id"], 0)
+        dim_lines.append(f"  {dim['name']}: **{score:.0f}%**")
+
+    missing = [
+        t for t in ("speaking", "listening", "vocab", "accent", "writing")
+        if t not in result["submitted_tasks"]
+    ]
+    missing_note = (
+        f"\n⚠️ Not completed this week: {', '.join(f'`{t}`' for t in missing)}"
+        if missing else "\n✅ All assessment tasks completed this week!"
+    )
+    bonus_note = f"\n🏆 +{config.POINTS_ASSESSMENT} assessment points!" if not already_assessed else ""
+
+    await ctx.send(
+        f"📊 **Week {week} Assessment — {ctx.author.display_name}**\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        + "\n".join(dim_lines) +
+        f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"**Overall: {result['overall']:.0f}% — {result['rating']}**"
+        f"{missing_note}{bonus_note}"
+    )
+
+
 @bot.command(name="help")
 async def cmd_help(ctx):
     """Show all available commands."""
@@ -763,6 +891,7 @@ async def cmd_help(ctx):
         "`!streak` — Your streak details\n"
         "`!level` — Your level info and advancement requirements\n"
         "`!week` — This week's curriculum focus\n"
+        "`!assess` — Calculate this week's assessment score\n"
         "`!top` — Points leaderboard\n"
         "`!streaks` — Streak leaderboard\n\n"
         "**How `!done` works (verification):**\n"
@@ -1071,6 +1200,20 @@ async def cmd_announce(ctx, *, message: str = ""):
     if not message:
         await ctx.send("Usage: `!announce <your message>`")
         return
+    # Found via message-length stress testing: a real Discord message is
+    # itself capped at 2000 chars, so !announce's own header
+    # ("📢 **Announcement**\n\n") pushes a max-length message over
+    # Discord's 2000-char send limit on its own. Unlike !join's goal
+    # (fixed by truncating -- a short personal statement losing its tail
+    # is harmless), an announcement's exact wording matters, so reject
+    # with a clear message instead of silently cutting it off, same
+    # approach as this session's !orient fix.
+    if len(message) > 1950:
+        await ctx.send(
+            f"❌ That's too long ({len(message)} chars). Keep it under 1950 characters "
+            f"so it fits in a single message."
+        )
+        return
     guild = ctx.guild
     channel = _find_channel(guild, "announcements")
     if channel:
@@ -1130,6 +1273,17 @@ async def cmd_orient(ctx, *, date_time: str = ""):
     """Send orientation invite to all members. Usage: !orient Saturday 7PM"""
     if not date_time:
         await ctx.send("Usage: `!orient Saturday 7PM Dubai time`")
+        return
+    # ORIENTATION_TEMPLATE is ~523 chars empty; Discord's hard 2000-char
+    # message limit leaves roughly 1477 chars of headroom. Reject early
+    # with a clear message instead of relying solely on
+    # send_orientation_invite()'s per-member try/except (found via
+    # adversarial-input stress testing -- see features.py for details).
+    if len(date_time) > 1000:
+        await ctx.send(
+            f"❌ That's too long ({len(date_time)} chars). Keep it under 1000 characters "
+            f"so the invite fits in a single DM."
+        )
         return
     guild = ctx.guild
     sent = await features.send_orientation_invite(guild, date_time)

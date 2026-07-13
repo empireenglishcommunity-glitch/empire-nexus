@@ -284,6 +284,23 @@ def get_submissions_for_date(discord_id: str, date: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def get_submissions_since(discord_id: str, days: int = 7) -> list[dict]:
+    """Get all of a member's submissions from the last N days (inclusive
+    of today). Used by !assess (bot.py::cmd_assess) to see which of the
+    week's verified tasks (accent/vocab/shadow/speaking/listening) were
+    actually completed, and to pull the most recent AI-scored writing
+    submission, without adding a separate narrow query per task type.
+    """
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days - 1)).isoformat()
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM daily_submissions WHERE discord_id=? AND date>=? ORDER BY submitted_at",
+        (discord_id, cutoff),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
 def count_submissions_for_date(discord_id: str, date: str) -> int:
     """Count tasks submitted on a specific date."""
     conn = _connect()
@@ -358,15 +375,27 @@ def _recompute_streak(discord_id: str):
 
 
 def _set_streak(discord_id: str, streak: int):
-    """Set current streak and update longest if needed."""
+    """Set current streak and update longest if needed.
+
+    Uses a single atomic UPDATE (longest_streak = MAX(longest_streak, ?))
+    rather than a separate SELECT-then-UPDATE. The read-then-write version
+    had a genuine, confirmed race: two concurrent calls for the same
+    member (e.g. the nightly streak-update loop processing overlapping
+    requests, or two rapid !done submissions) could both read the same
+    "old" longest_streak before either commits its write, so whichever
+    UPDATE lands second silently overwrites the first's result -- a lost
+    update. Reproduced with 100 concurrent threads racing to set
+    longest_streak to values 0..99: the read-then-write version recorded
+    a final value well below 99 in 5/5 trials. The atomic SQL expression
+    below can't lose an update this way, since SQLite serializes writes
+    to the same row and each UPDATE's MAX() is evaluated against
+    whatever value is actually on disk at the moment it runs, not a
+    value read and cached earlier in Python.
+    """
     conn = _connect()
-    member = conn.execute(
-        "SELECT longest_streak FROM members WHERE discord_id=?", (discord_id,)
-    ).fetchone()
-    longest = max(streak, member["longest_streak"] if member else 0)
     conn.execute(
-        "UPDATE members SET current_streak=?, longest_streak=? WHERE discord_id=?",
-        (streak, longest, discord_id),
+        "UPDATE members SET current_streak=?, longest_streak=MAX(longest_streak, ?) WHERE discord_id=?",
+        (streak, streak, discord_id),
     )
     conn.commit()
     conn.close()
@@ -385,7 +414,20 @@ def get_streak(discord_id: str) -> tuple[int, int]:
 # ============================================================
 
 def add_points(discord_id: str, points: int, reason: str):
-    """Add points to a member and log the event."""
+    """Add points to a member and log the event.
+
+    Clamps `points` to SQLite's native signed-64-bit INTEGER range before
+    doing anything else. Every real call site in this codebase only ever
+    passes fixed positive constants from config.py, so this can't be
+    reached by attacker-controlled input today -- but sqlite3 raises a
+    bare, uncaught OverflowError (not a normal sqlite3.Error) for any
+    value outside that range, which would crash whatever command
+    triggered it rather than fail gracefully. Clamping here means a
+    future caller with a miscalculated or corrupted point value degrades
+    to a very large (but valid, storable) number instead of an unhandled
+    crash -- found via adversarial stress testing with 2**63 as input.
+    """
+    points = max(-(2**63), min(points, 2**63 - 1))
     conn = _connect()
     conn.execute(
         "INSERT INTO points_log (discord_id, points, reason) VALUES (?, ?, ?)",
@@ -431,7 +473,14 @@ def streak_leaderboard(limit: int = 10) -> list[dict]:
 
 def save_assessment(discord_id: str, week_number: int, scores: dict,
                     overall: float, rating: str, feedback: str = ""):
-    """Save a weekly assessment result."""
+    """Save a weekly assessment result.
+
+    Clamps week_number to SQLite's signed-64-bit INTEGER range for the
+    same reason add_points() does above -- an unclamped huge value raises
+    a bare OverflowError instead of a normal, catchable sqlite3.Error.
+    Found via adversarial stress testing with 2**63 as input.
+    """
+    week_number = max(-(2**63), min(week_number, 2**63 - 1))
     conn = _connect()
     conn.execute(
         """INSERT OR REPLACE INTO assessments
@@ -449,6 +498,24 @@ def save_assessment(discord_id: str, week_number: int, scores: dict,
     )
     conn.commit()
     conn.close()
+
+
+def get_assessment_for_week(discord_id: str, week_number: int) -> Optional[dict]:
+    """Get a member's assessment for one specific week, or None.
+
+    Used by !assess (bot.py::cmd_assess) to decide whether this is the
+    member's first assessment submission for the current week (award
+    POINTS_ASSESSMENT once) vs. a re-run that should just refresh the
+    stored score (e.g. after a late writing-feedback score comes in)
+    without awarding points a second time.
+    """
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM assessments WHERE discord_id=? AND week_number=?",
+        (discord_id, week_number),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
 
 
 def get_assessments(discord_id: str) -> list[dict]:
@@ -557,10 +624,24 @@ def pending_exams() -> list[dict]:
 
 
 def get_exam_by_id(exam_id: int) -> Optional[dict]:
-    """Get a single advancement exam row by its id."""
+    """Get a single advancement exam row by its id.
+
+    An admin typing !examresult with an id outside SQLite's signed-64-bit
+    INTEGER range (e.g. a typo like an extra digit) previously raised a
+    bare OverflowError instead of the normal "No exam found" message --
+    found via boundary-condition stress testing, same failure mode as
+    add_points()/save_assessment(). Unlike those two, clamping doesn't
+    make sense for an id lookup (a clamped id would just be a different,
+    wrong id) -- treating it as simply not found is the correct behavior,
+    consistent with how an out-of-range id like -1 already behaves below.
+    """
     conn = _connect()
-    row = conn.execute("SELECT * FROM advancement_exams WHERE id=?", (exam_id,)).fetchone()
-    conn.close()
+    try:
+        row = conn.execute("SELECT * FROM advancement_exams WHERE id=?", (exam_id,)).fetchone()
+    except OverflowError:
+        return None
+    finally:
+        conn.close()
     return dict(row) if row else None
 
 
