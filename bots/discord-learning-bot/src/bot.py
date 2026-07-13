@@ -1872,22 +1872,46 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
         return
 
     if action == "list":
-        flags = database.list_feature_flags()
-        if not flags:
-            await ctx.send("No feature flags have been set yet.")
-            return
-        # Capped the same way !attention's buddy-load section is (found
-        # via message-length stress testing that session) -- unlikely to
-        # matter at this bot's real scale, but cheap insurance against
-        # the same class of Discord 2000-char overflow bug.
-        lines = ["🚩 **Feature Flags:**"]
-        for f in flags[:20]:
-            state = "🟢 ON (everyone)" if f["enabled"] and not f["allowed_ids"] else \
-                    f"🟡 ON (beta: {f['allowed_ids']})" if f["enabled"] else "🔴 OFF"
-            lines.append(f"  `{f['name']}` — {state}")
-        if len(flags) > 20:
-            lines.append(f"  ... and {len(flags) - 20} more")
-        await ctx.send("\n".join(lines))
+        from .flag_registry import get_flags_by_initiative, INITIATIVES
+        groups = get_flags_by_initiative()
+
+        lines = ["🚩 **Feature Flags — Empire English**", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ""]
+
+        for initiative_key in ("aegis", "bawaba", "nabd"):
+            if initiative_key not in groups:
+                continue
+            emoji, name_upper, subtitle = INITIATIVES[initiative_key]
+            lines.append(f"{emoji} **{name_upper}** ({subtitle}):")
+            for flag_name, description, _ in groups[initiative_key]:
+                # Check actual DB state
+                enabled = database.is_feature_enabled(flag_name)
+                state = "🟢" if enabled else "🔴"
+                lines.append(f"  {state} `{flag_name}` — {description}")
+            lines.append("")
+
+        # Show any DB flags NOT in the registry (manually created)
+        db_flags = database.list_feature_flags()
+        registered_names = {f[0] for group in groups.values() for f in group}
+        unregistered = [f for f in db_flags if f["name"] not in registered_names]
+        if unregistered:
+            lines.append("❓ **Unregistered (created manually):**")
+            for f in unregistered[:10]:
+                state = "🟢" if f["enabled"] else "🔴"
+                lines.append(f"  {state} `{f['name']}`")
+
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("Toggle: `!flag enable/disable <name>`")
+
+        # Discord 2000-char limit — send as DM if too long
+        msg = "\n".join(lines)
+        if len(msg) > 1900:
+            try:
+                await ctx.author.send(msg)
+                await ctx.send("📩 Flag list sent to your DMs.", delete_after=5)
+            except discord.Forbidden:
+                await ctx.send(msg[:1900] + "\n... (truncated)")
+        else:
+            await ctx.send(msg)
         return
 
     if not name:
