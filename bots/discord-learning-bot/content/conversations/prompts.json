@@ -1,0 +1,19 @@
+{
+  "L0": [
+    {"id": "l0_intro", "prompt": "Introduce yourself to your partner. Say your name, age, where you live, and one hobby.", "prompt_ar": "عرّف نفسك لشريكك. قول اسمك وعمرك وفين ساكن وهواية واحدة.", "duration_min": 10, "tips": ["It's okay to pause and think", "Use simple sentences", "If stuck, say 'How about you?'"]},
+    {"id": "l0_food", "prompt": "Talk about your favorite food. What is it? Why do you like it? How often do you eat it?", "prompt_ar": "اتكلم عن أكلتك المفضلة. إيه هي؟ ليه بتحبها؟ بتاكلها كل قد إيه؟", "duration_min": 10, "tips": ["Describe the taste: sweet, spicy, salty", "Say when you usually eat it", "Ask your partner about their favorite"]},
+    {"id": "l0_family", "prompt": "Tell your partner about your family. How many people? What do they do?", "prompt_ar": "احكي لشريكك عن عيلتك. كام واحد؟ بيعملوا إيه؟", "duration_min": 10, "tips": ["Use: brother, sister, mother, father", "Say their jobs or what they study", "Ask: 'Do you have any brothers or sisters?'"]},
+    {"id": "l0_weekend", "prompt": "What do you usually do on weekends? What did you do last weekend?", "prompt_ar": "بتعمل إيه عادة في الويكند؟ عملت إيه الويكند اللي فات؟", "duration_min": 10, "tips": ["Use past tense: I went, I watched, I played", "Mention at least 3 activities", "Ask your partner the same question"]}
+  ],
+  "L1": [
+    {"id": "l1_dream_job", "prompt": "Describe your dream job. What would you do? Why? What skills do you need?", "prompt_ar": "وصّف شغل أحلامك. هتعمل إيه؟ ليه؟ محتاج إيه مهارات؟", "duration_min": 15, "tips": ["Use: I would like to..., I'm interested in...", "Explain why this job appeals to you", "Discuss what you're doing to get there"]},
+    {"id": "l1_travel", "prompt": "If you could travel anywhere, where would you go? Why? What would you do there?", "prompt_ar": "لو تقدر تسافر أي مكان، هتروح فين؟ ليه؟ هتعمل إيه هناك؟", "duration_min": 15, "tips": ["Use conditional: I would visit..., I'd love to...", "Describe the place", "Ask your partner where they'd go"]},
+    {"id": "l1_problem_solving", "prompt": "Your partner describes a problem. Give them advice. Then switch roles.", "prompt_ar": "شريكك هيحكيلك مشكلة. اديله نصيحة. وبعدين بدّلوا.", "duration_min": 15, "tips": ["Use: You should..., Have you tried...?, Maybe you could...", "Ask follow-up questions", "Be supportive: That sounds tough, I understand"]},
+    {"id": "l1_compare", "prompt": "Compare two things (city vs. village, morning vs. night, online vs. in-person). Discuss which is better.", "prompt_ar": "قارن بين حاجتين (مدينة vs قرية، صبح vs ليل). ناقش إيه أحسن.", "duration_min": 15, "tips": ["Use comparatives: bigger, more interesting, easier", "Give reasons for your preference", "Use: On the other hand..., However..."]}
+  ],
+  "L2": [
+    {"id": "l2_debate_social", "prompt": "Debate: 'Social media does more harm than good.' One person argues FOR, one AGAINST.", "prompt_ar": "ناقش: 'السوشيال ميديا ضررها أكتر من نفعها.' واحد يقول أيوه وواحد يقول لأ.", "duration_min": 20, "tips": ["Use: I strongly believe..., On the contrary..., While that may be true...", "Give examples and evidence", "Acknowledge the other side before disagreeing"]},
+    {"id": "l2_news_discuss", "prompt": "Each partner finds one recent news story. Summarize it for your partner, then discuss your opinions.", "prompt_ar": "كل واحد يجيب خبر. لخّصه لشريكك، وبعدين ناقشوا رأيكم.", "duration_min": 20, "tips": ["Use: According to..., The article says..., What I think is...", "Ask: What's your take on this?", "Agree or disagree with reasons"]},
+    {"id": "l2_hypothetical", "prompt": "If you could change one thing about the world, what would it be? Why? How?", "prompt_ar": "لو تقدر تغير حاجة واحدة في العالم، هتغير إيه؟ ليه؟ إزاي؟", "duration_min": 20, "tips": ["Use conditionals: If I could..., I would..., This would lead to...", "Think big — environment, education, health", "Challenge your partner's idea constructively"]}
+  ]
+}

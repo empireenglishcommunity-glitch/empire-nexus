@@ -1,0 +1,37 @@
+{
+  "greetings": [
+    {"phrase": "How's it going?", "when": "Casual greeting (friends)", "arabic": "إيه الأخبار؟", "example": "Hey Ahmed! How's it going? — Pretty good, thanks!"},
+    {"phrase": "What's up?", "when": "Very casual greeting", "arabic": "إيه الجديد؟", "example": "What's up, man? — Not much, just studying."},
+    {"phrase": "Nice to meet you!", "when": "Meeting someone new", "arabic": "تشرفت بمعرفتك!", "example": "I'm Sara. Nice to meet you! — Nice to meet you too!"},
+    {"phrase": "How are you doing?", "when": "Polite greeting", "arabic": "إزيك؟ / عامل إيه؟", "example": "Hey, how are you doing? — I'm doing great, thanks!"},
+    {"phrase": "Good to see you!", "when": "Seeing someone again", "arabic": "حلو إني شفتك!", "example": "Good to see you! It's been a while."}
+  ],
+  "opinions": [
+    {"phrase": "I think...", "when": "Sharing your opinion politely", "arabic": "أنا فاكر / في رأيي...", "example": "I think English is easier than people say."},
+    {"phrase": "In my opinion...", "when": "Formal opinion", "arabic": "من وجهة نظري...", "example": "In my opinion, practice is more important than grammar."},
+    {"phrase": "If you ask me...", "when": "When giving unsolicited advice", "arabic": "لو سألتني...", "example": "If you ask me, you should start with listening."},
+    {"phrase": "I feel like...", "when": "Expressing a feeling/impression", "arabic": "حاسس إن...", "example": "I feel like my accent is getting better."},
+    {"phrase": "The way I see it...", "when": "Presenting your perspective", "arabic": "من الطريقة اللي أنا شايفها...", "example": "The way I see it, consistency beats intensity."}
+  ],
+  "reactions": [
+    {"phrase": "That makes sense!", "when": "Understanding someone's point", "arabic": "ده منطقي!", "example": "Oh, that makes sense! I didn't think of it that way."},
+    {"phrase": "No way!", "when": "Surprise/disbelief", "arabic": "مش معقول!", "example": "You learned English in 6 months? No way!"},
+    {"phrase": "I had no idea!", "when": "Learning something new", "arabic": "مكنتش أعرف!", "example": "Really? I had no idea that's how you say it."},
+    {"phrase": "That's awesome!", "when": "Positive reaction", "arabic": "ده حاجة جامدة!", "example": "You passed the exam? That's awesome!"},
+    {"phrase": "Are you serious?", "when": "Surprise (can be positive or negative)", "arabic": "انت بتتكلم جد؟", "example": "You got the job? Are you serious? Congratulations!"}
+  ],
+  "clarifying": [
+    {"phrase": "What do you mean?", "when": "Asking for explanation", "arabic": "قصدك إيه؟", "example": "Sorry, what do you mean by that?"},
+    {"phrase": "Could you say that again?", "when": "Didn't hear clearly", "arabic": "ممكن تعيد تاني؟", "example": "Could you say that again? I didn't catch it."},
+    {"phrase": "In other words...", "when": "Rephrasing something", "arabic": "يعني بمعنى تاني...", "example": "In other words, you want me to start over?"},
+    {"phrase": "Let me make sure I understand...", "when": "Confirming understanding", "arabic": "خليني أتأكد إني فاهم...", "example": "Let me make sure I understand — you want the blue one?"},
+    {"phrase": "Sorry, I didn't catch that.", "when": "Polite way to ask for repetition", "arabic": "آسف، مسمعتش كويس.", "example": "Sorry, I didn't catch that. Could you speak a bit slower?"}
+  ],
+  "transitions": [
+    {"phrase": "By the way...", "when": "Changing the topic casually", "arabic": "على فكرة...", "example": "By the way, have you seen the new movie?"},
+    {"phrase": "Speaking of which...", "when": "Connecting to what was just said", "arabic": "وإحنا بنتكلم عن كده...", "example": "Speaking of which, I need to buy groceries too."},
+    {"phrase": "Anyway...", "when": "Getting back to the main point", "arabic": "المهم...", "example": "Anyway, what I was trying to say is..."},
+    {"phrase": "So basically...", "when": "Summarizing", "arabic": "يعني باختصار...", "example": "So basically, you need to practice every day."},
+    {"phrase": "The thing is...", "when": "Explaining a complication", "arabic": "الموضوع إن...", "example": "The thing is, I don't have enough time."}
+  ]
+}

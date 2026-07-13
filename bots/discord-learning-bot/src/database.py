@@ -214,6 +214,45 @@ CREATE TABLE IF NOT EXISTS voice_portfolio (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_voice_portfolio ON voice_portfolio(discord_id, recording_type);
+
+-- Tatawwur Phase T2: spaced repetition for vocabulary recall (SM-2 algorithm).
+CREATE TABLE IF NOT EXISTS vocab_srs (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    word            TEXT NOT NULL,
+    ease_factor     REAL NOT NULL DEFAULT 2.5,
+    interval_days   INTEGER NOT NULL DEFAULT 1,
+    next_review     TEXT NOT NULL DEFAULT (date('now', '+1 day')),
+    review_count    INTEGER NOT NULL DEFAULT 0,
+    last_score      INTEGER NOT NULL DEFAULT 0,
+    added_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id),
+    UNIQUE(discord_id, word)
+);
+CREATE INDEX IF NOT EXISTS idx_vocab_srs_review ON vocab_srs(discord_id, next_review);
+
+-- Tatawwur Phase T3: ability milestones tracking.
+CREATE TABLE IF NOT EXISTS ability_milestones (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    milestone_id    TEXT NOT NULL,
+    completed_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    evidence_url    TEXT DEFAULT '',
+    level           TEXT NOT NULL DEFAULT 'L0',
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id),
+    UNIQUE(discord_id, milestone_id)
+);
+
+-- Tatawwur Phase T5: conversation session tracking.
+CREATE TABLE IF NOT EXISTS conversation_sessions (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    scheduled_at    TEXT NOT NULL,
+    level           TEXT NOT NULL DEFAULT 'L0',
+    status          TEXT NOT NULL DEFAULT 'scheduled',
+    participant_ids TEXT DEFAULT '',
+    prompt_id       TEXT DEFAULT '',
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 
@@ -1100,3 +1139,154 @@ def has_day1_benchmark(discord_id: str) -> bool:
     ).fetchone()
     conn.close()
     return row is not None
+
+
+
+# ============================================================
+#  SPACED REPETITION (Tatawwur Phase T2)
+# ============================================================
+
+def add_word_to_srs(discord_id: str, word: str):
+    """Add a word to the SRS queue (idempotent — skips if exists)."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT INTO vocab_srs (discord_id, word) VALUES (?, ?)",
+            (discord_id, word),
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass  # already in SRS
+    finally:
+        conn.close()
+
+
+def get_due_reviews(discord_id: str, limit: int = 3) -> list[dict]:
+    """Get words due for review today (next_review <= today)."""
+    today = datetime.date.today().isoformat()
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM vocab_srs WHERE discord_id=? AND next_review<=? ORDER BY next_review ASC LIMIT ?",
+        (discord_id, today, limit),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def record_review_result(discord_id: str, word: str, quality: int):
+    """Record a review result using SM-2 algorithm.
+
+    quality: 0-5 (0-2 = forgot, 3 = hard, 4 = good, 5 = easy)
+    """
+    conn = _connect()
+    row = conn.execute(
+        "SELECT ease_factor, interval_days, review_count FROM vocab_srs WHERE discord_id=? AND word=?",
+        (discord_id, word),
+    ).fetchone()
+    if not row:
+        conn.close()
+        return
+
+    ef = row["ease_factor"]
+    interval = row["interval_days"]
+    count = row["review_count"]
+
+    # SM-2 algorithm
+    if quality < 3:
+        # Failed — reset interval
+        interval = 1
+    else:
+        if count == 0:
+            interval = 1
+        elif count == 1:
+            interval = 6
+        else:
+            interval = int(interval * ef)
+        # Update ease factor
+        ef = ef + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
+        ef = max(1.3, ef)
+
+    next_review = (datetime.date.today() + datetime.timedelta(days=interval)).isoformat()
+
+    conn.execute(
+        """UPDATE vocab_srs SET ease_factor=?, interval_days=?, next_review=?,
+           review_count=?, last_score=? WHERE discord_id=? AND word=?""",
+        (ef, interval, next_review, count + 1, quality, discord_id, word),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_srs_stats(discord_id: str) -> dict:
+    """Get vocab SRS statistics for a member."""
+    today = datetime.date.today().isoformat()
+    conn = _connect()
+    total = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=?", (discord_id,)).fetchone()["c"]
+    due = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=? AND next_review<=?", (discord_id, today)).fetchone()["c"]
+    mastered = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=? AND interval_days>=30", (discord_id,)).fetchone()["c"]
+    conn.close()
+    return {"total": total, "due_today": due, "mastered": mastered, "learning": total - mastered}
+
+
+# ============================================================
+#  ABILITY MILESTONES (Tatawwur Phase T3)
+# ============================================================
+
+def complete_milestone(discord_id: str, milestone_id: str, evidence_url: str = "", level: str = "L0") -> bool:
+    """Mark a milestone as completed. Returns True if newly completed."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT INTO ability_milestones (discord_id, milestone_id, evidence_url, level) VALUES (?, ?, ?, ?)",
+            (discord_id, milestone_id, evidence_url, level),
+        )
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False  # already completed
+    finally:
+        conn.close()
+
+
+def get_completed_milestones(discord_id: str) -> list[str]:
+    """Get list of milestone_ids this member has completed."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT milestone_id FROM ability_milestones WHERE discord_id=?",
+        (discord_id,),
+    ).fetchall()
+    conn.close()
+    return [r["milestone_id"] for r in rows]
+
+
+# ============================================================
+#  CONVERSATION SESSIONS (Tatawwur Phase T5)
+# ============================================================
+
+def create_conversation_session(scheduled_at: str, level: str, participant_ids: str, prompt_id: str = "") -> int:
+    """Create a scheduled conversation session. Returns the new id."""
+    conn = _connect()
+    cur = conn.execute(
+        "INSERT INTO conversation_sessions (scheduled_at, level, participant_ids, prompt_id) VALUES (?, ?, ?, ?)",
+        (scheduled_at, level, participant_ids, prompt_id),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def get_upcoming_sessions(level: str = None) -> list[dict]:
+    """Get upcoming conversation sessions (status='scheduled')."""
+    conn = _connect()
+    if level:
+        rows = conn.execute(
+            "SELECT * FROM conversation_sessions WHERE status='scheduled' AND level=? ORDER BY scheduled_at",
+            (level,),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT * FROM conversation_sessions WHERE status='scheduled' ORDER BY scheduled_at"
+        ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
