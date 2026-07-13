@@ -270,19 +270,45 @@ changed/new files.
 
 ## Phase 3 — CI: student-journey simulation (bot)
 
-- [ ] **3.1** Write `tests/test_student_journey.py` per design.md's
+> **✅ PHASE 3 COMPLETE as of 2026-07-13.** The "student journey"
+> simulation test is merged ([empire-nexus PR #51](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/51)),
+> runs in the existing CI workflow with zero changes, and has been
+> proven to catch real regressions via a synthetic-bug test. Test suite:
+> 313 → 318. Safe to move on to Phase 4 (empire-dojo CI) next.
+
+- [x] **3.1** Write `tests/test_student_journey.py` per design.md's
   Component 4 — one scripted end-to-end scenario (join → 8 days of
   tasks crossing a streak-bonus threshold → `!assess` → full exam flow
   to a level change), asserting final invariants (points, streaks,
   submission counts) match hand-computed expected values.
-- [ ] **3.2** Confirm it runs in the existing
+  — Done 2026-07-13: [empire-nexus PR #51](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/51).
+  5 tests covering the full journey (join → 8 days × 7 tasks →
+  7-day streak bonus → !assess → exam → level change L0→L1).
+  Hand-computed invariants: total_points=3090, longest_streak=8,
+  56 submissions across 8 days, 72 points_log entries.
+  Notable finding documented in the test: STREAK_BONUS_POINTS[7]=200
+  currently fires once per task submission on the day streak hits 7
+  (7 × 200 = 1400 total, not 200 once per day) — asserted as-is for
+  regression detection, flagged to user as a possible latent over-award.
+- [x] **3.2** Confirm it runs in the existing
   `.github/workflows/learning-bot-test.yml` CI workflow with no changes
   needed to that workflow file (it should just pick up the new test file
   automatically) — verify this is actually true, don't assume.
-- [ ] **3.3** Intentionally introduce one synthetic bug (e.g. break the
+  — Done: the workflow runs `python -m pytest tests/ -v --tb=short`
+  which auto-discovers any `test_*.py` file. No workflow changes made.
+  pytest-asyncio (required by the 2 async tests) is already in
+  requirements-dev.txt. The strict asyncio mode is handled by explicit
+  `@pytest.mark.asyncio` markers on both async test functions.
+- [x] **3.3** Intentionally introduce one synthetic bug (e.g. break the
   streak-bonus threshold check) in a throwaway local branch and confirm
   this test actually catches it and fails CI, before trusting it as a
   real guardrail. Revert the synthetic bug afterward, obviously.
+  — Done: zeroed the streak bonus payout in process_submission
+  (`bonus = 0` instead of `config.STREAK_BONUS_POINTS[current_streak]`).
+  Result: test_full_student_journey immediately failed ("Expected
+  total_points=3090, got 1690") and test_streak_bonus_fires_exactly_at_
+  threshold also failed ("Day 6→7 delta: expected 1605, got 205").
+  Both pinpoint exactly what broke. Reverted cleanly afterward.
 
 ## Phase 4 — empire-dojo CI + preview-URL discipline
 
