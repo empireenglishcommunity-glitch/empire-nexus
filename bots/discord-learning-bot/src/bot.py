@@ -108,6 +108,7 @@ ARABIC_COMMAND_ALIASES = {
     "صيانة": "maintenance",
     "اليوم": "today",
     "تعليم": "tutorial",
+    "إشعارات": "notifications",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -1632,6 +1633,75 @@ async def cmd_testwelcome(ctx):
         await ctx.send("📩 Welcome flow sent to your DMs!", delete_after=10)
     except discord.Forbidden:
         await ctx.send("❌ Can't DM you. Enable DMs from server members.")
+
+
+@bot.command(name="notifications")
+async def cmd_notifications(ctx, setting: str = None, value: str = None):
+    """View or change your notification preferences.
+
+    Nabd Phase N0: students control their notification experience.
+    Usage:
+      !notifications          — show current settings
+      !notifications morning off  — disable morning DM
+      !notifications streak on    — enable streak alerts
+      !إشعارات               — same (Arabic alias)
+
+    Valid settings: morning, evening, streak, celebrations, social, weekly
+    """
+    if not database.is_feature_enabled("nabd_preferences"):
+        return
+
+    discord_id = str(ctx.author.id)
+    prefs = database.get_notification_prefs(discord_id)
+
+    if setting is None:
+        # Show current preferences
+        def on_off(v):
+            return "✅ مفعّل" if v else "❌ متوقف"
+
+        await ctx.send(
+            "🔔 **إعدادات الإشعارات:**\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            f"🌅 رسالة الصباح (morning): {on_off(prefs['morning_dm'])}\n"
+            f"⏰ تذكير المساء (evening): {on_off(prefs['evening_dm'])}\n"
+            f"🔥 تنبيه الـ streak (streak): {on_off(prefs['streak_alert'])}\n"
+            f"🏆 احتفالات (celebrations): {on_off(prefs['celebrations'])}\n"
+            f"👥 نشاط الزملاء (social): {on_off(prefs['social_proof'])}\n"
+            f"📊 ملخص أسبوعي (weekly): {on_off(prefs['weekly_summary'])}\n"
+            f"🌙 ساعات الهدوء: {prefs['quiet_start']} - {prefs['quiet_end']}\n\n"
+            "**لتغيير إعداد:**\n"
+            "`!notifications morning off` — أوقف رسالة الصباح\n"
+            "`!notifications social on` — فعّل نشاط الزملاء"
+        )
+        return
+
+    # Map short names to DB column names
+    key_map = {
+        "morning": "morning_dm",
+        "evening": "evening_dm",
+        "streak": "streak_alert",
+        "celebrations": "celebrations",
+        "social": "social_proof",
+        "weekly": "weekly_summary",
+    }
+
+    if setting not in key_map:
+        await ctx.send(
+            f"❌ إعداد مش موجود: `{setting}`\n"
+            f"الإعدادات المتاحة: morning, evening, streak, celebrations, social, weekly"
+        )
+        return
+
+    if value not in ("on", "off"):
+        await ctx.send("Usage: `!notifications <setting> on/off`")
+        return
+
+    db_key = key_map[setting]
+    db_value = 1 if value == "on" else 0
+    database.set_notification_pref(discord_id, db_key, db_value)
+
+    status = "✅ مفعّل" if db_value else "❌ متوقف"
+    await ctx.send(f"🔔 {setting}: {status}")
 
 
 @bot.command(name="poststart")

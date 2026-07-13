@@ -170,6 +170,32 @@ CREATE INDEX IF NOT EXISTS idx_submissions_date ON daily_submissions(discord_id,
 CREATE INDEX IF NOT EXISTS idx_streaks_date ON streaks(discord_id, date);
 CREATE INDEX IF NOT EXISTS idx_assessments_member ON assessments(discord_id);
 CREATE INDEX IF NOT EXISTS idx_points_member ON points_log(discord_id);
+
+-- Nabd (student-notifications spec) Phase N0: notification preferences
+-- and log tables. Enables personal, time-aware, opt-out-able notifications.
+CREATE TABLE IF NOT EXISTS notification_preferences (
+    discord_id      TEXT PRIMARY KEY,
+    morning_dm      INTEGER NOT NULL DEFAULT 1,
+    evening_dm      INTEGER NOT NULL DEFAULT 1,
+    streak_alert    INTEGER NOT NULL DEFAULT 1,
+    celebrations    INTEGER NOT NULL DEFAULT 1,
+    social_proof    INTEGER NOT NULL DEFAULT 0,
+    weekly_summary  INTEGER NOT NULL DEFAULT 1,
+    quiet_start     TEXT DEFAULT '23:00',
+    quiet_end       TEXT DEFAULT '05:00',
+    updated_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
+CREATE TABLE IF NOT EXISTS notification_log (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    notification_type TEXT NOT NULL,
+    date            TEXT NOT NULL,
+    sent_at         TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_notif_log ON notification_log(discord_id, notification_type, date);
 """
 
 
@@ -876,3 +902,107 @@ def member_week_number(discord_id: str) -> int:
     joined = datetime.datetime.fromisoformat(member["joined_at"])
     days = (datetime.datetime.now() - joined).days
     return max(1, (days // 7) + 1)
+
+
+
+# ============================================================
+#  NOTIFICATIONS (Nabd Phase N0 — preferences + logging)
+# ============================================================
+
+def get_notification_prefs(discord_id: str) -> dict:
+    """Get a member's notification preferences, or defaults if never set."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM notification_preferences WHERE discord_id=?",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    # Return defaults (matching the CREATE TABLE defaults)
+    return {
+        "discord_id": discord_id,
+        "morning_dm": 1,
+        "evening_dm": 1,
+        "streak_alert": 1,
+        "celebrations": 1,
+        "social_proof": 0,
+        "weekly_summary": 1,
+        "quiet_start": "23:00",
+        "quiet_end": "05:00",
+    }
+
+
+def set_notification_pref(discord_id: str, key: str, value) -> bool:
+    """Set a single notification preference. Returns True if successful.
+
+    Valid keys: morning_dm, evening_dm, streak_alert, celebrations,
+    social_proof, weekly_summary, quiet_start, quiet_end.
+    """
+    valid_keys = {
+        "morning_dm", "evening_dm", "streak_alert", "celebrations",
+        "social_proof", "weekly_summary", "quiet_start", "quiet_end",
+    }
+    if key not in valid_keys:
+        return False
+    conn = _connect()
+    # Upsert the preferences row
+    conn.execute(
+        """INSERT INTO notification_preferences (discord_id, {key})
+           VALUES (?, ?)
+           ON CONFLICT(discord_id) DO UPDATE SET {key}=excluded.{key}, updated_at=datetime('now')""".format(key=key),
+        (discord_id, value),
+    )
+    conn.commit()
+    conn.close()
+    return True
+
+
+def log_notification(discord_id: str, notification_type: str, date: str):
+    """Record that a notification was sent (for duplicate prevention)."""
+    conn = _connect()
+    conn.execute(
+        "INSERT INTO notification_log (discord_id, notification_type, date) VALUES (?, ?, ?)",
+        (discord_id, notification_type, date),
+    )
+    conn.commit()
+    conn.close()
+
+
+def was_notification_sent(discord_id: str, notification_type: str, date: str) -> bool:
+    """Check if a specific notification type was already sent to this
+    member for this date. Used to prevent double-sends."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT 1 FROM notification_log WHERE discord_id=? AND notification_type=? AND date=?",
+        (discord_id, notification_type, date),
+    ).fetchone()
+    conn.close()
+    return row is not None
+
+
+def is_quiet_hours(discord_id: str) -> bool:
+    """Check if the current time is within this member's quiet hours.
+
+    Uses config.TIMEZONE for the current time (all students are in the
+    same region for now). Quiet hours wrap around midnight: e.g.
+    quiet_start=23:00, quiet_end=05:00 means 11 PM to 5 AM is quiet.
+    """
+    prefs = get_notification_prefs(discord_id)
+    quiet_start = prefs.get("quiet_start", "23:00")
+    quiet_end = prefs.get("quiet_end", "05:00")
+
+    try:
+        from zoneinfo import ZoneInfo
+        now = datetime.datetime.now(ZoneInfo(config.TIMEZONE)).time()
+    except Exception:
+        now = datetime.datetime.now().time()
+
+    start = datetime.time.fromisoformat(quiet_start)
+    end = datetime.time.fromisoformat(quiet_end)
+
+    # Handle wrap-around midnight (e.g. 23:00 to 05:00)
+    if start <= end:
+        return start <= now <= end
+    else:
+        return now >= start or now <= end
