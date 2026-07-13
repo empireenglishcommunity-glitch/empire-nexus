@@ -7,4 +7,5 @@ venv/
 *.db
 output/
 data_persist/
+backups/
 .DS_Store

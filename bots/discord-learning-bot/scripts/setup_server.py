@@ -709,13 +709,13 @@ class ServerSetup(discord.Client):
     async def _verify(self, guild: discord.Guild):
         """Print verification summary with channel IDs."""
         guild = self.get_guild(self.target_guild_id)
-        print(f"\n  📊 Server State:")
+        print("\n  📊 Server State:")
         print(f"     Roles: {len(guild.roles)}")
         print(f"     Categories: {len(guild.categories)}")
         print(f"     Text channels: {len(guild.text_channels)}")
         print(f"     Voice channels: {len(guild.voice_channels)}")
 
-        print(f"\n  🔑 Role Hierarchy:")
+        print("\n  🔑 Role Hierarchy:")
         for role in reversed(guild.roles):
             if role.name == "@everyone":
                 continue
@@ -723,7 +723,7 @@ class ServerSetup(discord.Client):
             print(f"     {marker} {role.name} (pos {role.position})")
 
         # Print key channel IDs for n8n webhook configuration
-        print(f"\n  📌 KEY CHANNEL IDs (for n8n/webhook config):")
+        print("\n  📌 KEY CHANNEL IDs (for n8n/webhook config):")
         key_channels = [
             "l0-daily-tasks", "l1-daily-tasks", "l2-daily-tasks", "l3-daily-tasks",
             "cheat-sheets", "leaderboard", "streak-tracker", "daily-word",
@@ -746,7 +746,7 @@ class ServerSetup(discord.Client):
         else:
             print("\n  ⚠️  Bot CANNOT assign level roles — fix hierarchy manually")
 
-        print(f"\n  🔗 Server Invite: create one in Server Settings → Invites")
+        print("\n  🔗 Server Invite: create one in Server Settings → Invites")
 
 
 # ============================================================
