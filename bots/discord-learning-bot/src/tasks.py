@@ -8,7 +8,6 @@ to generate and post content at the configured times.
 """
 import datetime
 import logging
-from typing import Optional
 
 from . import config, database, ai_engine
 
@@ -131,7 +130,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         if accent_result:
             tasks.append({
                 "id": "accent",
-                "title": f"🎯 Accent Drill",
+                "title": "🎯 Accent Drill",
                 "content": _format_accent_drill(accent_result),
                 "duration_min": 10,
             })
@@ -212,7 +211,14 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             "duration_min": 10 if level == "L0" else 25,
         })
     else:
-        # Fallback
+        # Fallback to a static prompt. Unlike the accent-drill task above,
+        # this does NOT try ai_engine.generate_speaking_mission() first --
+        # curated speaking_missions data exists for all 38 real weeks (see
+        # test_every_week_has_all_seven_speaking_missions), so this branch
+        # is not currently reachable in production. Noting the asymmetry
+        # here rather than silently "fixing" it, since wiring in an extra
+        # AI call changes real behavior and isn't something this cleanup
+        # pass was asked to do.
         tasks.append(_fallback_speaking_task(level, config.SPEAKING_MISSION_TYPES.get(day_name, "free_talk")))
 
     # Task 5: Listening
@@ -306,30 +312,6 @@ def _format_accent_drill(drill: dict) -> str:
     return "\n".join(lines)
 
 
-def _format_speaking_mission(mission: dict, level: str) -> str:
-    """Format an AI-generated speaking mission into readable text."""
-    lines = []
-    if level == "L0" and mission.get("instructions_ar"):
-        lines.append(f"📋 {mission['instructions_ar']}")
-        lines.append("")
-    lines.append(mission.get("instructions_en", "Complete the speaking task."))
-    lines.append("")
-    if mission.get("guiding_questions"):
-        lines.append(f"**{bl('Guiding questions', 'أسئلة توجيهية')}:**")
-        for q in mission["guiding_questions"][:3]:
-            lines.append(f"  • {q}")
-        lines.append("")
-    duration = mission.get("target_duration_seconds", 60)
-    lines.append(f"⏱️ {bl('Target', 'الهدف')}: {duration} {bl('seconds', 'ثانية')}")
-    if mission.get("target_phrases"):
-        lines.append(f"💡 {bl('Try to use', 'حاول تستخدم')}: {', '.join(mission['target_phrases'][:3])}")
-    if mission.get("phoneme_focus"):
-        lines.append(f"🎯 {bl('Pronunciation focus', 'التركيز على النطق')}: {mission['phoneme_focus']}")
-    lines.append("")
-    lines.append(f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase")
-    return "\n".join(lines)
-
-
 def _fallback_accent_task(level: str, week: int, phoneme_info: dict) -> dict:
     """Fallback accent task if AI generation fails."""
     week_sounds_label = bl("This week's sounds", "أصوات الأسبوع ده")
@@ -362,7 +344,7 @@ def _fallback_speaking_task(level: str, mission_type: str) -> dict:
     }
     return {
         "id": "speaking",
-        "title": f"🎙️ Speaking Mission",
+        "title": "🎙️ Speaking Mission",
         "content": (
             f"**{bl('Task', 'المهمة')}:** {prompts.get(mission_type, prompts['free_talk'])}\n\n"
             f"⏱️ {bl('Target', 'الهدف')}: {'45' if level == 'L0' else '90'} {bl('seconds', 'ثانية')}\n"

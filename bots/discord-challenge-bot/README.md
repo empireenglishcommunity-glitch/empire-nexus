@@ -28,6 +28,12 @@ streaks, AI motivation, ranks, a leaderboard, and PDF certificates.
 - `!cert` — your PDF certificate
 - `!recap <week>` — AI weekly summary (mods only)
 - `!guide` — list all commands
+- `!version` — bot version, Python/discord.py version info
+
+**Admin/mod only:** `!status` (bot + challenge status summary), `!setday <1-30>`
+(override the current challenge day), `!announce <message>` (post to the
+challenge channel), `!reset` (⚠️ destructive — wipes all participant data,
+requires reaction confirmation)
 
 ---
 
@@ -69,6 +75,17 @@ I built and tested all the code. These 4 steps need your own accounts/keys
 2. Paste your token, channel ID, Groq key, and set the post hour/timezone.
 
 ---
+
+## 🧪 Running the tests
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest tests/ -v
+```
+
+49 tests covering the challenge data, database, config, AI coach fallback,
+and certificate generation. CI runs this automatically on every push/PR
+that touches this bot (see `.github/workflows/challenge-bot-test.yml`).
 
 ## ▶️ Run it (free options)
 

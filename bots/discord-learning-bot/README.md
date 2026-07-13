@@ -33,6 +33,7 @@ docker compose logs -f
 |---------|-------------|
 | `!join <goal>` | Register and set your learning goal |
 | `!done <task>` | Mark a task as completed |
+| `!today` | Show your remaining tasks for today |
 | `!progress` | View your progress dashboard |
 | `!streak` | View your streak info |
 | `!level` | Level info and advancement requirements |
@@ -40,9 +41,16 @@ docker compose logs -f
 | `!assess` | Calculate this week's assessment score |
 | `!top` | Points leaderboard |
 | `!streaks` | Streak leaderboard |
+| `!exam` | Request the level advancement exam (DM-collected speaking + writing) |
+| `!delete` / `!confirm-delete` | Request deletion of all your data |
 | `!help` | Show all commands |
 
-**Admin:** `!status` `!setlevel @user L#` `!announce <msg>` `!members` `!examqueue` `!examresult <id> pass|fail`
+**Admin:** `!status` · `!setlevel @user L#` · `!announce <msg>` · `!members` ·
+`!examqueue` · `!examresult <id> pass|fail` · `!attention` (ranked "who
+needs a human right now" dashboard: pending exams, inactive members by
+severity, declining assessment trends, buddy load) · `!orient <datetime>`
+(schedule an orientation session) · `!recruit ar|en` (post a recruitment
+message) · `!resources L0-3` (post level-appropriate resource links)
 
 ## Architecture
 
@@ -65,6 +73,20 @@ scripts/            ← setup_server.py (auto-configures Discord server)
 ```
 
 > **Content status:** all 4 levels (L0-L3, 38 weeks) have real, verified curriculum content as of 2026-07-11. See `data/README.md` for the full breakdown and history of what was previously missing/templated.
+
+## Running the tests
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest tests/ -v
+```
+
+259 tests covering config invariants, curriculum loading (including
+regression tests for two real bugs already fixed: L1 vocabulary
+duplication and the practice-site day-split bug), the database layer,
+task generation/formatting, anti-cheat verification, and AI-engine JSON
+parsing. CI runs this automatically on every push/PR that touches this
+bot (see `.github/workflows/learning-bot-test.yml`).
 
 ## Deployment
 

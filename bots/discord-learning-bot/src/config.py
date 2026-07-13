@@ -53,11 +53,14 @@ WEEKLY_ASSESSMENT_HOUR = int(os.getenv("WEEKLY_ASSESSMENT_HOUR", "10") or "10")
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Dubai")
 
 # ============================================================
-#  PRACTICE PLATFORM (empireenglishcommunity-glitch/empire-practice)
+#  PRACTICE PLATFORM (empireenglishcommunity-glitch/empire-dojo)
 # ============================================================
 # The web-based daily practice pages (accent drill, shadowing, listening,
 # vocab flashcards with Kokoro TTS audio) that mirror each day's curriculum
 # 1:1. Defaults to the live Cloudflare Pages URL, which works today.
+# (Repo formerly named empire-practice; the Cloudflare Pages project/
+# subdomain below kept its original name across the repo rename, so this
+# default URL is still correct.)
 # Once practice.empireenglish.online's DNS/SSL is confirmed live, set
 # PRACTICE_PLATFORM_URL in .env to switch over — no code change needed.
 PRACTICE_PLATFORM_URL = os.getenv(
