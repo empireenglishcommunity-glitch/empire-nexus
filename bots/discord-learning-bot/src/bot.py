@@ -988,21 +988,25 @@ async def cmd_done(ctx, task: str = None):
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
         return
 
-    # Format response — Arabic for L0, English for higher
-    member_data = database.get_member(str(ctx.author.id))
-    level = member_data.get("level", "L0") if member_data else "L0"
-
-    if level == "L0":
-        msg = features.get_done_response_ar(task, result)
+    # Format response — Bawaba B5: language adapts to member's week
+    # (arabic → bilingual_ar → bilingual). Falls back to the old
+    # L0-Arabic / higher-English split when the flag is OFF.
+    if database.is_feature_enabled("bawaba_gradual_english"):
+        msg = features.done_response_for_member(str(ctx.author.id), task, result)
     else:
-        bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
-        msg = (
-            f"{result['feedback']}\n\n"
-            f"[{bar}] {result['tasks_today']}/7 today\n"
-            f"🔥 Streak: **{result['streak']}** days | +{result['points']} points"
-        )
-        if result["tasks_today"] == 7:
-            msg += "\n\n🎉 **ALL 7 TASKS COMPLETE!** Bonus points earned!"
+        member_data = database.get_member(str(ctx.author.id))
+        level = member_data.get("level", "L0") if member_data else "L0"
+        if level == "L0":
+            msg = features.get_done_response_ar(task, result)
+        else:
+            bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
+            msg = (
+                f"{result['feedback']}\n\n"
+                f"[{bar}] {result['tasks_today']}/7 today\n"
+                f"🔥 Streak: **{result['streak']}** days | +{result['points']} points"
+            )
+            if result["tasks_today"] == 7:
+                msg += "\n\n🎉 **ALL 7 TASKS COMPLETE!** Bonus points earned!"
 
     await ctx.send(msg)
 
