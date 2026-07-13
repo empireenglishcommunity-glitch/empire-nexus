@@ -6,6 +6,8 @@ services:
     container_name: empire-english-bot
     restart: unless-stopped
     env_file: .env
+    ports:
+      - "8099:8099"
     volumes:
       - bot-data:/app/data_persist
       # Mounted separately from bot-data so `docker exec ... backup.py`

@@ -344,6 +344,9 @@ async def on_ready():
         nabd_weekly_summary.start()
     if not nabd_absence_check.is_running():
         nabd_absence_check.start()
+    # Sahel S6: start the API server for practice platform connection
+    from . import api_server
+    await api_server.start_api_server(port=8099)
 
 
 @bot.event
@@ -2727,6 +2730,48 @@ async def cmd_resources(ctx, level: str = "L0"):
 
 # ============================================================
 #  ENTRY POINT
+# ============================================================
+#  SAHEL S6: !link COMMAND (practice platform connection)
+# ============================================================
+
+@bot.command(name="link")
+async def cmd_link(ctx):
+    """Generate a personal URL token and DM it to the user.
+    This token connects their practice platform to their Discord progress."""
+    discord_id = str(ctx.author.id)
+
+    # Must be registered
+    member = database.get_member(discord_id)
+    if not member:
+        await ctx.send("❌ You need to register first. Type `!join` or react ✅ to any message.")
+        return
+
+    # Generate or retrieve existing token
+    token = database.create_link_token(discord_id)
+    platform_url = config.PRACTICE_PLATFORM_URL
+
+    # DM the token to the user (never in public channels)
+    try:
+        await ctx.author.send(
+            f"🔗 **ربط حسابك بمنصة التمرين**\n\n"
+            f"الرابط الشخصي بتاعك:\n"
+            f"```\n{platform_url}?token={token}\n```\n\n"
+            f"**أو** افتح المنصة واضغط \"Connect to Discord\" والصق:\n"
+            f"```\n{token}\n```\n\n"
+            f"⚠️ **ماتشاركش الرابط ده مع حد — ده خاص بيك.**\n"
+            f"لو محتاج رابط جديد، اكتب `!link` تاني."
+        )
+        await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
+    except discord.Forbidden:
+        await ctx.send("❌ I can't DM you. Enable DMs from server members and try again.")
+
+
+# Add Arabic alias
+ARABIC_COMMAND_ALIASES["ربط"] = "link"
+
+
+# ============================================================
+#  RUN
 # ============================================================
 
 def run():
