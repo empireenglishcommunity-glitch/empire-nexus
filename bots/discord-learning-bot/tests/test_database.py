@@ -137,8 +137,18 @@ def test_tasks_completed_today():
 # ============================================================
 
 def test_update_streak_sets_current_streak():
+    """Found via load/scale testing (unrelated change, discovered while
+    running the full suite): this test hardcoded a literal past date
+    ("2026-07-12") instead of computing it relative to today, like every
+    other streak test in this file already does. _recompute_streak()
+    compares the stored date against datetime.date.today(), so this was
+    a ticking time bomb -- it passed for as long as "today" happened to
+    still be 2026-07-12, then started failing the moment the real clock
+    moved to 2026-07-13, with zero code change. Confirmed by reproducing
+    the failure with this session's other changes fully stashed out."""
     database.register_member("u1", "Alice")
-    database.update_streak("u1", "2026-07-12", 5)
+    today = datetime.date.today().isoformat()
+    database.update_streak("u1", today, 5)
     current, longest = database.get_streak("u1")
     assert current == 1
     assert longest == 1
@@ -275,6 +285,51 @@ def test_get_latest_assessment_none_when_no_assessments():
     assert database.get_latest_assessment("u1") is None
 
 
+def test_get_assessment_for_week_returns_matching_week_only():
+    database.register_member("u1", "Alice")
+    database.save_assessment("u1", 1, {}, overall=60, rating="At Risk")
+    database.save_assessment("u1", 2, {}, overall=80, rating="Strong")
+    assert database.get_assessment_for_week("u1", 1)["overall_score"] == 60
+    assert database.get_assessment_for_week("u1", 2)["overall_score"] == 80
+    assert database.get_assessment_for_week("u1", 3) is None
+
+
+def test_save_assessment_clamps_huge_week_number_instead_of_crashing():
+    """Found via adversarial-input stress testing: sqlite3 raises a bare
+    OverflowError (not a catchable sqlite3.Error) for ints outside
+    signed-64-bit range, same class of bug as add_points()."""
+    database.register_member("u1", "Alice")
+    database.save_assessment("u1", 2**63, {}, overall=50, rating="Critical")
+    database.save_assessment("u1", -(2**63) - 100, {}, overall=50, rating="Critical")
+    # Both clamp to valid (if extreme) values rather than raising.
+    assert len(database.get_assessments("u1")) == 2
+
+
+# ============================================================
+#  SUBMISSIONS SINCE (get_submissions_since)
+# ============================================================
+
+def test_get_submissions_since_includes_today():
+    database.register_member("u1", "Alice")
+    database.log_submission("u1", datetime.date.today().isoformat(), "speaking")
+    subs = database.get_submissions_since("u1", days=7)
+    assert len(subs) == 1
+    assert subs[0]["task_id"] == "speaking"
+
+
+def test_get_submissions_since_excludes_outside_window():
+    database.register_member("u1", "Alice")
+    old_date = (datetime.date.today() - datetime.timedelta(days=10)).isoformat()
+    database.log_submission("u1", old_date, "speaking")
+    subs = database.get_submissions_since("u1", days=7)
+    assert subs == []
+
+
+def test_get_submissions_since_empty_for_new_member():
+    database.register_member("u1", "Alice")
+    assert database.get_submissions_since("u1", days=7) == []
+
+
 def test_declining_assessment_members():
     database.register_member("u1", "Alice")
     database.save_assessment("u1", 1, {}, overall=90, rating="Excellent")
@@ -355,6 +410,14 @@ def test_resolve_exam_does_not_change_member_level():
 
 def test_get_exam_by_id_not_found_returns_none():
     assert database.get_exam_by_id(99999) is None
+
+
+def test_get_exam_by_id_handles_out_of_range_int_without_crashing():
+    """Found via boundary-condition stress testing: an admin typo like
+    !examresult 9223372036854775808 pass (one extra digit) previously
+    raised a bare OverflowError instead of the normal "not found" path."""
+    assert database.get_exam_by_id(2**63) is None
+    assert database.get_exam_by_id(-(2**63) - 1) is None
 
 
 # ============================================================

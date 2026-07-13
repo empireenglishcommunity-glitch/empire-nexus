@@ -626,9 +626,22 @@ async def build_attention_report(guild: discord.Guild) -> str:
     if candidates:
         loads = [(m, database.count_buddy_load(str(m.id))) for m in candidates]
         loads.sort(key=lambda pair: pair[1], reverse=True)
-        lines.append(f"\n🤝 **Buddy load:**")
-        for m, load in loads:
+        lines.append("\n🤝 **Buddy load:**")
+        # Found via load/scale testing: this section had no cap at all,
+        # unlike every other section in this report (all use [:5]/[:8]).
+        # At ~50+ eligible buddies (a plausible staff size for a growing
+        # community, not just a synthetic extreme) the combined report
+        # exceeds Discord's 2000-char message limit, and cmd_attention
+        # only catches discord.Forbidden -- so ctx.author.send(report)
+        # would raise discord.HTTPException uncaught. Same failure mode
+        # already found and fixed for !orient's send_orientation_invite()
+        # this session; capping here the same way the other sections
+        # already do is simpler and more consistent than adding chunking
+        # just for this one command.
+        for m, load in loads[:15]:
             lines.append(f"  • {m.display_name}: {load} member(s)")
+        if len(loads) > 15:
+            lines.append(f"  ... and {len(loads) - 15} more")
 
     if len(lines) == 2:  # only the header + separator got added
         lines.append("\n✅ Nothing urgent right now.")
@@ -813,7 +826,23 @@ ORIENTATION_TEMPLATE = """🏛️ **جلسة التعريف — Empire English C
 
 
 async def send_orientation_invite(guild: discord.Guild, date_time_str: str):
-    """Send orientation session invite to all members who haven't attended yet."""
+    """Send orientation session invite to all members who haven't attended yet.
+
+    Only caught discord.Forbidden before. Found via adversarial-input
+    stress testing: !orient's admin-supplied date_time_str is inserted
+    into ORIENTATION_TEMPLATE with no length check, and Discord hard-caps
+    a single message at 2000 chars (raises discord.HTTPException, not
+    Forbidden, if exceeded -- same failure mode tasks.py already
+    documents fixing for daily_task_post(), just missed here). A
+    date_time_str over ~1477 chars pushed the FIRST member's send() over
+    the limit, which raised uncaught, aborted the whole loop, and left
+    every remaining member with no invite at all -- silently, since the
+    admin just sees cmd_orient's generic "An error occurred" with no clue
+    how many (if any) actually went out. cmd_orient now also rejects an
+    over-length date_time_str up front (see bot.py) so this is defense in
+    depth, not the only guard.
+    """
+    message = ORIENTATION_TEMPLATE.format(date_time=date_time_str)
     members = database.all_active_members()
     sent = 0
     for m in members:
@@ -821,9 +850,9 @@ async def send_orientation_invite(guild: discord.Guild, date_time_str: str):
         if not discord_member:
             continue
         try:
-            await discord_member.send(ORIENTATION_TEMPLATE.format(date_time=date_time_str))
+            await discord_member.send(message)
             sent += 1
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
     logger.info(f"Orientation invite sent to {sent} members")
     return sent

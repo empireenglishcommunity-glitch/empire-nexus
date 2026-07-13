@@ -423,6 +423,25 @@ async def test_attention_report_shows_buddy_load():
     assert "Member1" in report or "1 member(s)" in report
 
 
+@pytest.mark.asyncio
+async def test_attention_report_buddy_load_section_stays_under_discord_limit():
+    """Found via load/scale testing: the buddy-load section had no cap,
+    unlike every other section in this report -- at ~50+ eligible
+    buddies (a plausible staff size for a growing community) the combined
+    report exceeded Discord's 2000-char message limit, which
+    cmd_attention (only catches discord.Forbidden, not
+    discord.HTTPException) would have let crash uncaught. Confirm the
+    report stays well under the limit even with a large buddy pool."""
+    buddies = [_make_member(f"staff{i}") for i in range(200)]
+    guild = MagicMock()
+    guild.roles = [_make_role("🏛️ Founder", buddies)]
+
+    report = await features.build_attention_report(guild)
+    assert len(report) < 2000
+    assert "... and" in report
+    assert "more" in report
+
+
 # ============================================================
 #  12. AT-RISK MEMBER OUTREACH
 # ============================================================

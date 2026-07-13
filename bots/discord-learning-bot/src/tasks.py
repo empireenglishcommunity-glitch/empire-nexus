@@ -616,3 +616,59 @@ def score_to_rating(score: float) -> str:
         return "At Risk"
     else:
         return "Critical"
+
+
+def build_weekly_assessment(discord_id: str, days: int = 7) -> dict:
+    """Compute this week's assessment scores from real, already-verified
+    data -- no new AI call, no self-reported numbers.
+
+    bot.py's weekly_assessment DM tells members to submit speaking,
+    writing, and vocabulary work and then run `!assess`, but `!assess`
+    itself never existed as a command (found via adversarial-input
+    stress testing on database.save_assessment(), which turned out to
+    have zero production callers anywhere in the bot). This is the
+    scoring logic that command was always missing.
+
+    Dimension scores (matching config.ASSESSMENT_DIMENSIONS' ids):
+      - speaking / listening / vocabulary / accent: each 100 if the
+        member has a *verified* `!done <task>` submission logged in the
+        last `days` days, else 0. These four tasks are gated by
+        verification.verify_task()/check_vocab_answer()/
+        check_listening_answer() before database.log_submission() is
+        ever called, so "a row exists" already means "passed
+        verification this week" -- there's no separate quality score to
+        pull for them anywhere in this codebase.
+      - writing: the most recent writing submission's AI-evaluated
+        score from ai_engine.evaluate_writing() (via the
+        #writing-feedback auto-eval pipeline, bot.py's on_message), or 0
+        if no writing was submitted this week.
+      - completion: calculate_completion_rate() over the same window,
+        reusing the existing tested helper rather than recomputing it.
+
+    Returns dict with: scores (dict), overall (float), rating (str),
+    submitted_tasks (list[str] actually found this week).
+    """
+    submissions = database.get_submissions_since(discord_id, days=days)
+    submitted_task_ids = {s["task_id"] for s in submissions}
+
+    verified_binary_tasks = {"speaking", "listening", "vocab", "accent"}
+    scores = {
+        "speaking": 100.0 if "speaking" in submitted_task_ids else 0.0,
+        "listening": 100.0 if "listening" in submitted_task_ids else 0.0,
+        "vocabulary": 100.0 if "vocab" in submitted_task_ids else 0.0,
+        "accent": 100.0 if "accent" in submitted_task_ids else 0.0,
+        "completion": calculate_completion_rate(discord_id, days=days),
+    }
+
+    writing_subs = [s for s in submissions if s["task_id"] == "writing" and s["score"] is not None]
+    scores["writing"] = writing_subs[-1]["score"] if writing_subs else 0.0
+
+    overall = calculate_overall_score(scores)
+    rating = score_to_rating(overall)
+
+    return {
+        "scores": scores,
+        "overall": overall,
+        "rating": rating,
+        "submitted_tasks": sorted(submitted_task_ids & (verified_binary_tasks | {"writing"})),
+    }

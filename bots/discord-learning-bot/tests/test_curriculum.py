@@ -271,6 +271,33 @@ def test_get_daily_content_threads_level_through_correctly():
     assert l0_daily["vocabulary"] != l1_daily["vocabulary"]
 
 
+def test_get_daily_content_clamps_vocab_speaking_writing_past_max_week():
+    """Found via boundary-condition stress testing: get_accent_drill()/
+    get_accent_focus()/get_grammar_pattern() already clamped week
+    internally, but get_vocabulary_for_day()/get_speaking_mission()/
+    get_writing_prompt() did not -- so a member still within their
+    level's own declared duration_weeks range (config.LEVELS' L0 says
+    (8, 12), but curated content only covers 8 weeks) got real repeated
+    week-8 accent/grammar content but generic non-curated filler for
+    vocab/speaking/writing instead of week 8 repeating like everything
+    else. Confirm week 15 for L0 (max week 8) now returns identical
+    task content to week 8 itself, for every task type."""
+    week_8 = curriculum.get_daily_content(8, "Saturday", 0, "L0")
+    week_15 = curriculum.get_daily_content(15, "Saturday", 0, "L0")
+    assert week_15["vocabulary"] == week_8["vocabulary"]
+    assert week_15["vocabulary"] != []
+    assert week_15["speaking_mission"] == week_8["speaking_mission"]
+    assert week_15["speaking_mission"] is not None
+    assert week_15["writing_prompt"] == week_8["writing_prompt"]
+    assert week_15["writing_prompt"] is not None
+    # The returned "week" key itself is clamped too (it's what theme/
+    # grammar-name lookups key off of internally) -- callers that want to
+    # display the member's REAL week number (e.g. bot.py's daily task
+    # post header) already use their own separate, unclamped
+    # member_week_number() value for that, not this dict's "week" key.
+    assert week_15["week"] == 8
+
+
 # ============================================================
 #  PRACTICE PLATFORM URL BUILDERS
 # ============================================================
