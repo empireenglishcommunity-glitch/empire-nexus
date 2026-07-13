@@ -76,29 +76,65 @@
 
 ## Phase 1 — Feature flags + kill switch (bot)
 
-- [ ] **1.1** Add `feature_flags` table + migration to `database.py`
+> **✅ PHASE 1 COMPLETE as of 2026-07-13.** The centerpiece of the whole
+> Aegis design (decoupling deploy from release) is now real, tested,
+> and proven end-to-end with a genuine feature (`!systemstatus`), not
+> just unit tests. Test suite: 281 → 289. Safe to move on to Phase 2
+> (deploy tooling) next, which will build directly on this.
+
+- [x] **1.1** Add `feature_flags` table + migration to `database.py`
   (idempotent `ALTER`/`CREATE IF NOT EXISTS`, matching this file's
   existing migration pattern in `_migrate()`).
-- [ ] **1.2** Add `is_feature_enabled()`, `set_feature_flag()`,
+  — Done: added to `_SCHEMA` as a plain `CREATE TABLE IF NOT EXISTS`
+  (no `_migrate()` ALTER needed since it's a brand-new table, not a new
+  column on an existing one — consistent with how `settings`/other
+  whole-new-tables were added previously).
+- [x] **1.2** Add `is_feature_enabled()`, `set_feature_flag()`,
   `list_feature_flags()` to `database.py`, with real unit tests
   (including: flag doesn't exist yet → treated as disabled; enabled with
   empty allowlist → everyone; enabled with a populated allowlist →
   restricted; disabling an enabled flag with an active allowlist clears
   it correctly).
-- [ ] **1.3** Add `!flag` admin command to `bot.py` (`list` / `enable` /
+  — Done: 8 new tests in `test_database.py`, all passing, covering
+  exactly those cases plus upsert-not-duplicate and `updated_by`
+  tracking.
+- [x] **1.3** Add `!flag` admin command to `bot.py` (`list` / `enable` /
   `disable` / `beta @user...` subcommands), reusing the existing
   `manage_guild` permission-check pattern. Message-length-safe (apply
   the same defensive pattern already used for `!orient`/`!announce` if
   `!flag list` could ever exceed 2000 chars — unlikely at this scale,
   but check, don't assume).
-- [ ] **1.4** Write and merge one real, low-stakes feature behind a flag
+  — Done: string-subcommand style (`action` param), matching this
+  codebase's existing convention of no `@bot.group()` usage anywhere
+  else. `!flag list` capped to the first 20 flags with a "...and N
+  more" tail, same pattern as `!attention`'s buddy-load section.
+- [x] **1.4** Write and merge one real, low-stakes feature behind a flag
   end-to-end (a good candidate: the "publicly viewable status artifact"
   from Component 8, `!systemstatus` — see Phase 5) to prove the whole
   mechanism works with a real example, not just tests.
-- [ ] **1.5** Document the flag-usage convention (the `if
+  — Done: `!systemstatus` implemented, gated behind the `systemstatus`
+  flag (defaults OFF). Verified live via direct simulation: calling it
+  before the flag is enabled produces a genuine no-op (0 messages
+  sent); after `!flag enable systemstatus`, it correctly reports real
+  facts (database reachable, Discord connected, "38 weeks loaded"
+  matching what was verified live on the server in Phase 0). Command
+  count confirmed via direct bot-object introspection: 26 registered
+  (`!flag` + `!systemstatus`), up from 24. Deliberately NOT added to
+  `!help` yet (see the command's own docstring) — advertising a
+  command that's silently a no-op until an admin flips its flag would
+  recreate exactly the "documented but doesn't work" problem the
+  missing `!assess` command was. Add the `!help` entry in the same
+  session that actually enables it for everyone.
+- [x] **1.5** Document the flag-usage convention (the `if
   database.is_feature_enabled(...)` wrapping pattern) in
   `.kiro/steering/project-rules.md` so future sessions use it
   consistently rather than reinventing a different pattern per feature.
+  — Done: new "Feature flags" subsection under Discord Bots code
+  conventions, including the no-`!help`-entry-until-released rule
+  above and an explicit "don't invent a second flagging pattern" note.
+  Also updated the server infrastructure table's Backup row to reflect
+  Phase 0's real cron addition (was stale, said 14-day rotation with no
+  mention of discord-learning-bot at all).
 
 ## Phase 2 — Deploy tooling (bot)
 
