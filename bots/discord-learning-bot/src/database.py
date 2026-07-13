@@ -196,6 +196,24 @@ CREATE TABLE IF NOT EXISTS notification_log (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_notif_log ON notification_log(discord_id, notification_type, date);
+
+-- Tatawwur (system-evolution spec) Phase T0: voice progress portfolio.
+-- Stores benchmark recordings and daily accent recordings over time,
+-- enabling students to HEAR their own transformation.
+CREATE TABLE IF NOT EXISTS voice_portfolio (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    recorded_at     TEXT NOT NULL DEFAULT (datetime('now')),
+    recording_url   TEXT NOT NULL,
+    recording_type  TEXT NOT NULL DEFAULT 'daily',
+    week            INTEGER DEFAULT NULL,
+    level           TEXT DEFAULT '',
+    duration_seconds REAL DEFAULT NULL,
+    ai_score        REAL DEFAULT NULL,
+    notes           TEXT DEFAULT '',
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_voice_portfolio ON voice_portfolio(discord_id, recording_type);
 """
 
 
@@ -1006,3 +1024,79 @@ def is_quiet_hours(discord_id: str) -> bool:
         return start <= now <= end
     else:
         return now >= start or now <= end
+
+
+
+# ============================================================
+#  VOICE PORTFOLIO (Tatawwur Phase T0 — hear your growth)
+# ============================================================
+
+def save_voice_recording(discord_id: str, recording_url: str,
+                         recording_type: str = "daily",
+                         week: int = None, level: str = "",
+                         duration_seconds: float = None,
+                         ai_score: float = None, notes: str = "") -> int:
+    """Save a voice recording to the portfolio. Returns the new row's id.
+
+    recording_type: 'benchmark_day1', 'benchmark_periodic', 'daily',
+                    'assessment', 'milestone'
+    """
+    conn = _connect()
+    cur = conn.execute(
+        """INSERT INTO voice_portfolio
+           (discord_id, recording_url, recording_type, week, level,
+            duration_seconds, ai_score, notes)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        (discord_id, recording_url, recording_type, week, level,
+         duration_seconds, ai_score, notes),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def get_voice_portfolio(discord_id: str) -> list[dict]:
+    """Get all recordings for a member, oldest first."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM voice_portfolio WHERE discord_id=? ORDER BY recorded_at ASC",
+        (discord_id,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_voice_benchmarks(discord_id: str) -> list[dict]:
+    """Get only benchmark recordings (day 1 + periodic), for progress comparison."""
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT * FROM voice_portfolio
+           WHERE discord_id=? AND recording_type LIKE 'benchmark%'
+           ORDER BY recorded_at ASC""",
+        (discord_id,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def count_voice_recordings(discord_id: str) -> int:
+    """Count total recordings in portfolio."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) as cnt FROM voice_portfolio WHERE discord_id=?",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def has_day1_benchmark(discord_id: str) -> bool:
+    """Check if this member already has a Day 1 benchmark recording."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT 1 FROM voice_portfolio WHERE discord_id=? AND recording_type='benchmark_day1'",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    return row is not None
