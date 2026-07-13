@@ -137,6 +137,66 @@ def test_backup_rotation_deletes_oldest_first(isolate_backup_paths):
     assert os.path.basename(newest_seed) in remaining
 
 
+# ============================================================
+#  --tag ARGUMENT (Aegis Phase 2 — pre-deploy snapshots)
+# ============================================================
+
+def test_backup_with_tag_embeds_it_in_filename(isolate_backup_paths):
+    fake_db, _ = isolate_backup_paths
+    _make_fake_db(fake_db)
+
+    result_path = backup_module.backup(tag="pre-deploy-a1b2c3d")
+
+    assert "pre-deploy-a1b2c3d" in os.path.basename(result_path)
+
+
+def test_backup_without_tag_has_no_tag_in_filename():
+    """Regression guard: adding --tag must not change the default,
+    untagged filename shape that the existing daily cron job already
+    depends on."""
+    import re
+    fake_db_name = "empire_english_20260713_120000.db"
+    assert re.fullmatch(r"empire_english_\d{8}_\d{6}\.db", fake_db_name)
+
+
+def test_backup_tag_is_sanitized_to_filesystem_safe_characters(isolate_backup_paths):
+    """A git SHA or label should never contain path-unsafe characters in
+    practice, but this must not blindly trust the caller -- sanitize
+    defensively rather than let a stray '/' or space corrupt the backup
+    directory structure."""
+    fake_db, _ = isolate_backup_paths
+    _make_fake_db(fake_db)
+
+    result_path = backup_module.backup(tag="weird tag/with../unsafe chars!")
+
+    filename = os.path.basename(result_path)
+    assert "/" not in filename  # no path traversal survived into the filename
+    assert " " not in filename  # spaces stripped too, not just slashes
+    assert os.path.exists(result_path)  # still wrote successfully somewhere sane
+
+
+def test_backup_tagged_and_untagged_share_the_same_rotation_pool(isolate_backup_paths):
+    """Tagged (pre-deploy) and untagged (routine cron) backups are
+    deliberately rotated together, not in separate pools -- a pre-deploy
+    snapshot is meant to make a same-day rollback possible, not to live
+    forever untouched by rotation."""
+    fake_db, fake_backup_dir = isolate_backup_paths
+    _make_fake_db(fake_db)
+    os.makedirs(fake_backup_dir, exist_ok=True)
+
+    for i in range(backup_module.MAX_BACKUPS):
+        ts = f"202603{(i % 28) + 1:02d}_{i:02d}0000"
+        with open(os.path.join(fake_backup_dir, f"empire_english_{ts}.db"), "wb") as f:
+            f.write(b"x")
+
+    # A tagged backup on top of an already-full rotation pool must still
+    # trigger rotation, treating it as just one more backup in the pool.
+    backup_module.backup(tag="pre-deploy-xyz")
+
+    remaining = glob.glob(os.path.join(str(fake_backup_dir), "empire_english_*.db"))
+    assert len(remaining) == backup_module.MAX_BACKUPS
+
+
 def test_backup_uses_config_db_path_not_a_hardcoded_path(monkeypatch):
     """Regression guard: this script must derive its database path from
     src/config.py's DB_PATH (the bot's own, tested path-resolution
