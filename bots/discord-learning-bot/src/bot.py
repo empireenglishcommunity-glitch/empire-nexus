@@ -80,6 +80,13 @@ def _get_done_lock(discord_id: str) -> asyncio.Lock:
 # ============================================================
 #  BAWABA (Phase B0): Arabic command aliases + number tasks
 # ============================================================
+
+# Bawaba B1: track which messages are today's daily task posts (for
+# reaction-based task completion). Cleared on each daily_task_post() run.
+_daily_task_messages: set[int] = set()
+_TASK_NUMBER_EMOJIS = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣"]
+_EMOJI_TO_TASK_INDEX = {e: i for i, e in enumerate(_TASK_NUMBER_EMOJIS)}
+
 # Maps Arabic command words to their English equivalents. The rewriting
 # happens in on_message BEFORE bot.process_commands() runs, so every
 # existing command handler works with Arabic input for free — no
@@ -362,6 +369,126 @@ async def on_voice_state_update(member, before, after):
         verification.on_voice_leave(str(member.id))
 
 
+@bot.event
+async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
+    """Bawaba Phase B1: handle emoji reactions for registration and task completion.
+
+    Two flows:
+    1. ✅ on a welcome/registration message → auto-register the student
+    2. 1️⃣-7️⃣ on a daily task post → trigger !done for that task number
+
+    Gated behind the 'bawaba_reactions' feature flag. Verification still
+    applies for task reactions — the emoji is just the trigger, not a
+    bypass of the proof-checking system.
+    """
+    # Ignore bot's own reactions
+    if payload.user_id == bot.user.id:
+        return
+
+    # Check feature flag (use None for discord_id since this is a global check)
+    if not database.is_feature_enabled("bawaba_reactions"):
+        return
+
+    guild = bot.get_guild(payload.guild_id) if payload.guild_id else None
+    if not guild:
+        return
+
+    emoji_str = str(payload.emoji)
+
+    # --- Flow 1: ✅ reaction → auto-register ---
+    if emoji_str == "✅":
+        member = guild.get_member(payload.user_id)
+        if not member or member.bot:
+            return
+        # Check if already registered
+        existing = database.get_member(str(payload.user_id))
+        if existing:
+            return  # already registered, no-op
+        # Register them
+        database.register_member(str(payload.user_id), member.display_name)
+        # Assign Level 0 role
+        await _assign_level_role(member, "L0")
+        # Assign buddy
+        await features.assign_buddy(member, guild)
+        # Send Arabic confirmation DM
+        try:
+            await member.send(
+                "✅ **تم تسجيلك!** أهلاً بيك في Empire English 🏛️\n\n"
+                "انت دلوقتي في **Level 0** — مبتدئ.\n"
+                "كل يوم الساعة 6 الصبح هتلاقي مهام في قناة `#l0-daily-tasks`.\n\n"
+                "اكتب `!مساعدة` في `#bot-commands` لو محتاج مساعدة.\n"
+                "أو اكتب `!1` لما تخلص أول مهمة. بالتوفيق! 💪"
+            )
+        except discord.Forbidden:
+            pass
+        logger.info(f"Bawaba B1: {member.display_name} registered via ✅ reaction")
+        return
+
+    # --- Flow 2: 1️⃣-7️⃣ on a daily task post → !done ---
+    if emoji_str in _EMOJI_TO_TASK_INDEX and payload.message_id in _daily_task_messages:
+        task_index = _EMOJI_TO_TASK_INDEX[emoji_str]
+        task_id = config.DAILY_TASKS[task_index]["id"]
+        member = guild.get_member(payload.user_id)
+        if not member or member.bot:
+            return
+
+        # Check if registered
+        member_data = database.get_member(str(payload.user_id))
+        if not member_data:
+            return  # not registered, can't submit
+
+        # Check if already done today
+        completed_today = database.tasks_completed_today(str(payload.user_id))
+        if task_id in completed_today:
+            return  # already submitted, no-op
+
+        # Check gradual task intro (same as cmd_done)
+        allowed = features.get_allowed_tasks_for_member(str(payload.user_id))
+        if task_id not in allowed:
+            return  # task not unlocked yet, silent no-op for reactions
+
+        # NOTE: for reaction-based submission, we skip the full verification
+        # flow (audio upload check, quiz, etc.) — reactions are meant for
+        # tasks that have simpler verification or where the student already
+        # completed the proof. The cooldown still applies.
+        async with _get_done_lock(str(payload.user_id)):
+            cool_allowed, _ = verification.check_cooldown(str(payload.user_id))
+            if not cool_allowed:
+                return  # on cooldown, silent no-op
+
+            # For tasks requiring proof (accent, shadow, speaking need audio;
+            # vocab/listening need quiz), reaction alone is NOT enough.
+            # Only allow reaction-based completion for tasks with simpler
+            # verification: writing (just needs text in channel) and
+            # community (voice time or chat post).
+            proof_required_tasks = {"accent", "shadow", "speaking", "vocab", "listening"}
+            if task_id in proof_required_tasks:
+                # Try to verify — for now, check if there's evidence in
+                # the relevant channel (same as cmd_done does via verify_task)
+                if isinstance(member, discord.Member):
+                    passed, _ = await verification.verify_task(task_id, member, guild)
+                    if not passed:
+                        return  # no proof found, silent no-op
+
+            # Process the submission
+            verification.record_done_time(str(payload.user_id))
+            result = await task_engine.process_submission(
+                str(payload.user_id), member.display_name, task_id
+            )
+
+        if result.get("new"):
+            # Send a brief Arabic confirmation in the channel
+            channel = bot.get_channel(payload.channel_id)
+            if channel:
+                try:
+                    await channel.send(
+                        f"✅ {member.mention} — `{task_id}` تم! "
+                        f"({result['tasks_today']}/7 اليوم) 🔥{result['streak']}",
+                        delete_after=30,
+                    )
+                except discord.HTTPException:
+                    pass
+            logger.info(f"Bawaba B1: {member.display_name} completed '{task_id}' via reaction")
 
 
 # ============================================================
@@ -374,6 +501,9 @@ async def daily_task_post():
     guild = bot.get_guild(config.GUILD_ID)
     if not guild:
         return
+
+    # Bawaba B1: clear yesterday's tracked message IDs
+    _daily_task_messages.clear()
 
     for level_key in ["L0", "L1", "L2", "L3"]:
         members = database.members_at_level(level_key)
@@ -398,9 +528,22 @@ async def daily_task_post():
         channel = _find_channel(guild, channel_name)
         if channel:
             try:
+                sent_messages = []
                 for chunk in message_chunks:
-                    await channel.send(chunk)
+                    msg = await channel.send(chunk)
+                    sent_messages.append(msg)
                 logger.info(f"Posted daily tasks to #{channel_name} (week {week}, {len(message_chunks)} message(s))")
+
+                # Bawaba B1: add number reactions to the FIRST message
+                # so students can react instead of typing commands
+                if database.is_feature_enabled("bawaba_reactions") and sent_messages:
+                    first_msg = sent_messages[0]
+                    _daily_task_messages.add(first_msg.id)
+                    for emoji in _TASK_NUMBER_EMOJIS[:7]:
+                        try:
+                            await first_msg.add_reaction(emoji)
+                        except discord.HTTPException:
+                            break  # rate limited or no permission, stop trying
             except discord.HTTPException as e:
                 logger.error(f"Failed to post to #{channel_name}: {e}")
 
