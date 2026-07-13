@@ -162,6 +162,8 @@ async def on_ready():
         missed_day_report.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
+    if not heartbeat.is_running():
+        heartbeat.start()
 
 
 @bot.event
@@ -440,6 +442,29 @@ async def grammar_card_delivery():
             logger.info(f"Grammar card posted for {level_key} week {week}")
         except discord.HTTPException as e:
             logger.error(f"Failed to post grammar card for {level_key}: {e}")
+
+
+@tasks.loop(minutes=2)
+async def heartbeat():
+    """Write a live timestamp to the settings table every 2 minutes.
+
+    Aegis Phase 2 (production-safe-deploys spec): scripts/health_check.py
+    runs as an EXTERNAL process (invoked via `docker exec` from
+    deploy.sh, or run standalone by an admin), so it has no way to call
+    bot.is_ready() directly on the actual running gateway connection --
+    that's only meaningful from inside this same process. This loop is
+    the bridge: as long as it's still firing, the bot's event loop is
+    genuinely alive and connected (a crashed or disconnected bot stops
+    firing loops entirely), and health_check.py can check "was this
+    updated recently" from outside without needing any new
+    infrastructure -- just the same settings table this bot already
+    treats as its single source of runtime truth everywhere else.
+    2 minutes is frequent enough that a health check run right after a
+    deploy (per deploy.sh's `sleep 5` before checking) will always see a
+    fresh value if the bot is actually healthy, without being so
+    frequent it adds meaningful load.
+    """
+    database.set_setting("last_heartbeat", datetime.datetime.now(_zone()).isoformat())
 
 
 @tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=_zone()))

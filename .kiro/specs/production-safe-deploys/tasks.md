@@ -138,27 +138,91 @@
 
 ## Phase 2 — Deploy tooling (bot)
 
-- [ ] **2.1** Extend recovered `backup.py` with a `--tag <label>`
+- [x] **2.1** Extend recovered `backup.py` with a `--tag <label>`
   argument (additive, don't break its existing default cron-friendly
   usage).
-- [ ] **2.2** Write `scripts/health_check.py` per design.md's Component
+  — Done: added via `argparse`, sanitizes the label to filesystem-safe
+  characters before use, and shares ONE rotation pool with untagged
+  backups (deliberate — a pre-deploy snapshot isn't meant to live
+  forever, just long enough to make a same-day rollback possible).
+  Verified with real subprocess CLI calls (not just importing the
+  function directly), including the untagged default path still
+  working unchanged. 4 new tests added to `test_backup.py`.
+- [x] **2.2** Write `scripts/health_check.py` per design.md's Component
   3 (curriculum-loaded check, command-count check, DB reachability,
   gateway-connected check). Exit code 0/non-zero. Callable standalone
   for manual use, not just from the deploy script.
-- [ ] **2.3** Write `scripts/deploy.sh` (or `.py`) wrapping: pre-deploy
+  — Done: 4 checks — DB reachable, curriculum 38/38 weeks
+  (`EXPECTED_WEEKS`), ≥`MIN_EXPECTED_COMMANDS` (24, comment flags to
+  bump deliberately as real commands are added — currently 26
+  registered after Phase 1) commands registered, and heartbeat
+  freshness (≤5 min, via the new `heartbeat` loop below). Real bug
+  found and fixed while building this: `check_heartbeat()` crashed
+  with an unhandled `sqlite3.OperationalError` on a partially
+  initialized DB (no `settings` table yet) — wrapped in try/except so
+  a fresh/mid-migration DB reports "unhealthy", not a stack trace.
+  9 tests in `tests/test_health_check.py`.
+  — Also added to `src/bot.py`: a `heartbeat` `@tasks.loop(minutes=2)`
+  writing `last_heartbeat` into the `settings` table, wired into
+  `on_ready()` — this is what makes `check_heartbeat()` possible at
+  all, bridging an external process to the bot's internal
+  gateway-connected state without any new infrastructure. Confirmed
+  live (not just by reading discord.py's docs) that `Loop.start()`
+  fires an initial iteration immediately, not after the first
+  2-minute interval.
+- [x] **2.3** Write `scripts/deploy.sh` (or `.py`) wrapping: pre-deploy
   tagged backup → build → tag image with git SHA → swap container →
   health check → fail loudly with rollback instructions if unhealthy.
-- [ ] **2.4** Write `scripts/rollback.sh` (or `.py`): re-tag the previous
+  — Done as `scripts/deploy.py` (Python, per design.md's stated
+  preference for Python over bash where either works). Deliberately
+  does NOT auto-rollback on health-check failure — only prints
+  rollback instructions and exits 1, so an operator looks at *why*
+  it's unhealthy before blindly reverting. 5 tests in
+  `tests/test_deploy.py` (mocked `subprocess.run` — real Docker
+  behavior was verified manually first, see 2.6's note on the real bug
+  this caught).
+- [x] **2.4** Write `scripts/rollback.sh` (or `.py`): re-tag the previous
   image as `latest`, restart, and document (in the script's own
   docstring/comments, not a separate doc that can drift) the manual DB-
   restore step for when the database itself also needs reverting.
+  — Done as `scripts/rollback.py`. Re-tags the previous git-SHA-tagged
+  image as `:latest` and restarts, then runs `health_check.py`. The
+  DB-restore step is intentionally NOT automated — documented as
+  manual steps directly in the module docstring, since blindly
+  restoring a DB backup during an automated rollback risks losing
+  real student data written between the backup and the rollback.
+  6 tests in `tests/test_rollback.py`.
 - [ ] **2.5** Test the FULL deploy → verify → rollback cycle for real on
   the live server at least once, deliberately, before relying on it
   under pressure. (Good opportunity: use it to deploy Phase 1's
-  `!flag` command itself.)
-- [ ] **2.6** Add image retention (keep last 5 tagged images, prune
+  `!flag` command itself.) — **Blocked on fresh temporary SSH access**
+  to the live server (same one-time-keypair pattern used in Phase 0/1
+  sessions); this sandbox does not have `docker compose` at all
+  (confirmed via `which docker-compose` and `docker compose version`
+  both failing — only bare Podman-backed `docker` is present here), so
+  this task genuinely cannot be completed without the real server.
+- [x] **2.6** Add image retention (keep last 5 tagged images, prune
   untagged dangling layers) — either in `deploy.sh` itself or as a
   separate scheduled cleanup, whichever is simpler to keep correct.
+  — Done inside `deploy.py`'s success path only (`KEEP_TAGGED_IMAGES =
+  5`), per design.md's "whichever is simpler to keep correct" —
+  pruning after every successful deploy is simpler than a separate
+  scheduled job with its own failure modes. **Real bug found via live
+  Docker/Podman testing in this sandbox** (not caught by code review
+  alone): both `deploy.py`'s `prune_old_tagged_images()` and
+  `rollback.py`'s `list_tagged_images()` filtered on `"\tlatest" not
+  in line` against `docker images --format {{.Tag}}\t{{.CreatedAt}}`
+  output — but `.Tag` is the FIRST field, not the second, so the
+  `:latest` tag itself never actually matched that substring and
+  slipped through the "keep latest" filter, meaning `:latest` could be
+  pruned as if it were just another old tagged image. Fixed both by
+  explicitly splitting `tag, created_at = line.split("\t", 1)` and
+  checking `tag != "latest"`. A regression test for this exact bug is
+  in `tests/test_deploy.py`.
+
+**Test suite after Phase 2 (2.1-2.4, 2.6):** 313 passing (up from 289
+at Phase 1 close), `ruff check` clean, `py_compile` clean on all
+changed/new files.
 
 ## Phase 3 — CI: student-journey simulation (bot)
 
