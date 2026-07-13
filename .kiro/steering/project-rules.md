@@ -168,6 +168,16 @@ else:
   feature — reuse `database.is_feature_enabled()`/`set_feature_flag()`
   every time, so `!flag list` stays the single place to see everything
   that's dormant or in beta.
+- **Flag registry (`src/flag_registry.py`) MUST be updated in the SAME
+  commit that creates or enables a new flag.** Never as a separate PR
+  or afterthought. The registry is the source of truth for what flags
+  exist, what they do, and which initiative they belong to. When adding
+  a flag: add the REGISTRY entry with its name, description, initiative,
+  and default_enabled state in the same commit. When enabling a flag
+  that was previously default_enabled=False (e.g. after testing): update
+  the registry's default to True in the same commit. This ensures
+  `!flag list` always shows accurate descriptions and `default_enabled`
+  always reflects the intended production state.
 
 ### General
 - Commit messages: `type(scope): description`
