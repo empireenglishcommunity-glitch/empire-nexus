@@ -1288,3 +1288,174 @@ async def notify_admins_of_pending_exam(student: discord.User, exam_id: int,
 def has_pending_exam(discord_id: str) -> bool:
     """Check if user is mid-DM-collection (speaking/writing stage)."""
     return discord_id in _pending_exams and _pending_exams[discord_id]["stage"] != "waiting"
+
+
+
+# ============================================================
+#  25. BAWABA B2: INTERACTIVE TUTORIAL QUEST (onboarding by doing)
+# ============================================================
+
+# Pending tutorials: {discord_id: {"step": 1-5, "completed": False}}
+# Same in-memory pattern as _pending_exams — fine to lose on restart
+# (the student just sees the welcome DM again on next join, or can
+# trigger it via !tutorial).
+_pending_tutorials: dict = {}
+
+TUTORIAL_STEPS = {
+    1: {
+        "prompt": (
+            "🏛️ **أهلاً بيك! خلينا نبدأ رحلتك في 5 خطوات سريعة.**\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+            "**الخطوة 1:** اكتب الرقم `1` هنا\n"
+            "*(ده هيبقى نفس الطريقة اللي تسجل بيها إنك خلصت مهمة)*"
+        ),
+        "accept": lambda msg: msg.strip() in ("1", "١"),
+        "response": "✅ ممتاز! كده عرفت إزاي تكتب أمر. سهل صح؟ 🎉",
+    },
+    2: {
+        "prompt": (
+            "**الخطوة 2:** دلوقتي اكتب أول كلمة إنجليزي ليك:\n\n"
+            "```hello```\n"
+            "*(اكتبها زي ما هي)*"
+        ),
+        "accept": lambda msg: msg.strip().lower() in ("hello", "helo", "hllo"),
+        "response": "✅ **hello** — أول كلمة إنجليزي ليك! 🏆 ده بدايتك.",
+    },
+    3: {
+        "prompt": (
+            "**الخطوة 3:** اكتب `!تقدم` عشان تشوف لوحة التقدم بتاعتك\n\n"
+            "*(ده الأمر اللي بيوريك نقاطك وستريكك)*"
+        ),
+        "accept": lambda msg: msg.strip() in ("!تقدم", "!progress", "!تقدّم"),
+        "response": "✅ شفت؟ ده مكانك — هنا هتشوف نقاطك كل يوم وهي بتزيد 📊",
+    },
+    4: {
+        "prompt": (
+            "**الخطوة 4:** اكتب `!مساعدة` عشان تشوف كل الأوامر المتاحة\n\n"
+            "*(كلها بالعربي — مفيش إنجليزي مطلوب)*"
+        ),
+        "accept": lambda msg: msg.strip() in ("!مساعدة", "!helpar", "!help"),
+        "response": "✅ تمام! دلوقتي عندك كل الأوامر. بكرة الساعة 6 هتلاقي مهامك.",
+    },
+    5: {
+        "prompt": (
+            "**الخطوة 5 (الأخيرة):** اكتب `!1` — ده هيبقى نفس الأمر\n"
+            "اللي تكتبه بكرة لما تخلص أول مهمة.\n\n"
+            "*(ده مجرد تمرين — مش هيسجل مهمة فعلية)*"
+        ),
+        "accept": lambda msg: msg.strip() in ("!1", "!تم", "!تم 1", "!done", "!done accent"),
+        "response": None,  # handled specially (completion message)
+    },
+}
+
+TUTORIAL_COMPLETION_MSG = (
+    "🎉🎉🎉 **مبروك! خلصت رحلة التعريف!**\n\n"
+    "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    "🏆 **+15 نقطة** — أول نقاط ليك!\n\n"
+    "**ملخص اللي اتعلمته:**\n"
+    "• `!1` إلى `!7` — لتسجيل المهام اليومية\n"
+    "• `!تقدم` — لمتابعة نقاطك\n"
+    "• `!مساعدة` — لكل الأوامر بالعربي\n\n"
+    "**بكرة الساعة 6 الصبح:**\n"
+    "هتلاقي مهام مرقمة في `#l0-daily-tasks`.\n"
+    "اعمل المهمة → اكتب رقمها → خلاص! 🔥\n\n"
+    "*System over instructor. Common Sense First.* 🏛️"
+)
+
+
+async def start_tutorial(member_or_user):
+    """Start the interactive tutorial quest for a new member (DM-based).
+
+    Called from on_member_join (when bawaba_tutorial flag is enabled) or
+    from the reaction-based registration flow. Can also be triggered
+    manually via !tutorial for students who want to redo it.
+    """
+    discord_id = str(member_or_user.id)
+
+    # Don't restart if already in progress
+    if discord_id in _pending_tutorials:
+        return
+
+    _pending_tutorials[discord_id] = {"step": 1, "completed": False}
+
+    try:
+        await member_or_user.send(TUTORIAL_STEPS[1]["prompt"])
+    except discord.Forbidden:
+        # Can't DM — clean up
+        del _pending_tutorials[discord_id]
+
+
+def has_pending_tutorial(discord_id: str) -> bool:
+    """Check if user is mid-tutorial."""
+    return discord_id in _pending_tutorials and not _pending_tutorials[discord_id]["completed"]
+
+
+async def handle_tutorial_dm(message: discord.Message) -> bool:
+    """Handle tutorial step responses in DM. Returns True if the message
+    was consumed as a tutorial response (so other handlers skip it).
+
+    Design: each step checks if the student's input matches the expected
+    pattern (generous — accepts typos, Arabic numeral ١, etc.). On match,
+    sends the response + the next step's prompt. On mismatch, sends a
+    gentle Arabic nudge to try again. On the final step, awards points
+    and marks the tutorial complete.
+    """
+    discord_id = str(message.author.id)
+    if discord_id not in _pending_tutorials:
+        return False
+
+    tutorial = _pending_tutorials[discord_id]
+    if tutorial["completed"]:
+        return False
+
+    current_step = tutorial["step"]
+    step_data = TUTORIAL_STEPS.get(current_step)
+    if not step_data:
+        return False
+
+    # Check if the input matches this step's acceptance criteria
+    if step_data["accept"](message.content):
+        # Step passed!
+        if current_step < 5:
+            # Send response + next step prompt
+            response = step_data["response"]
+            next_step = current_step + 1
+            tutorial["step"] = next_step
+            try:
+                await message.channel.send(response)
+                import asyncio
+                await asyncio.sleep(1)
+                await message.channel.send(TUTORIAL_STEPS[next_step]["prompt"])
+            except discord.Forbidden:
+                pass
+        else:
+            # Final step — completion!
+            tutorial["completed"] = True
+            try:
+                await message.channel.send(TUTORIAL_COMPLETION_MSG)
+            except discord.Forbidden:
+                pass
+
+            # Award points (once only — check if they already got tutorial points)
+            from . import database
+            # Use a simple flag in settings to prevent double-award
+            already_done = database.get_setting(f"tutorial_done_{discord_id}", "")
+            if not already_done:
+                database.add_points(discord_id, config.POINTS_PER_TASK, "tutorial_quest")
+                database.set_setting(f"tutorial_done_{discord_id}", "yes")
+
+            # Clean up
+            del _pending_tutorials[discord_id]
+            logger.info(f"Bawaba B2: {message.author.display_name} completed tutorial quest (+15 pts)")
+
+        return True
+    else:
+        # Didn't match — gentle nudge
+        try:
+            await message.channel.send(
+                f"🔄 مش ده المطلوب. حاول تاني:\n\n"
+                f"{step_data['prompt'].split('**')[-2] if '**' in step_data['prompt'] else 'حاول تاني'}"
+            )
+        except (discord.Forbidden, IndexError):
+            pass
+        return True
