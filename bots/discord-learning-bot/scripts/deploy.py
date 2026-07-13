@@ -120,6 +120,14 @@ def deploy(skip_backup: bool = False) -> int:
     run(["docker", "tag", f"{IMAGE_NAME}:latest", f"{CONTAINER_NAME}:{git_sha}"])
 
     print("\n🔄 Step 4/5: Swapping container to the new image")
+    # Set maintenance mode BEFORE the swap so the bot shows "Updating..."
+    # during the few seconds of restart (picked up by the heartbeat loop
+    # within 2 minutes, or immediately if the bot's own on_ready fires)
+    run(
+        ["docker", "exec", CONTAINER_NAME, "python3", "-c",
+         "import sys; sys.path.insert(0,'.'); from src import database; database.init_db(); database.set_setting('maintenance_mode', 'on')"],
+        check=False,
+    )
     run(["docker", "compose", "up", "-d"])
 
     print("\n⏳ Waiting 5s for startup before health check...")
@@ -135,6 +143,21 @@ def deploy(skip_backup: bool = False) -> int:
     if health_result.returncode == 0:
         print(f"✅ Deploy successful: {git_sha}")
         prune_old_tagged_images()
+
+        # Turn off maintenance mode (if it was set before the deploy)
+        run(
+            ["docker", "exec", CONTAINER_NAME, "python3", "-c",
+             "import sys; sys.path.insert(0,'.'); from src import database; database.init_db(); database.set_setting('maintenance_mode', 'off')"],
+            check=False,
+        )
+
+        # Post to #dev-log (best-effort — never blocks a successful deploy)
+        print("\n📝 Posting to #dev-log...")
+        run(
+            ["docker", "exec", CONTAINER_NAME, "python3", "scripts/post_deploy_log.py",
+             "--sha", git_sha, "--message", commit_summary],
+            check=False,
+        )
         return 0
     else:
         print(f"❌ HEALTH CHECK FAILED after deploying {git_sha}.")
