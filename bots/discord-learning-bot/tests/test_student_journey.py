@@ -56,28 +56,10 @@ ALL_TASK_IDS = [t["id"] for t in config.DAILY_TASKS]  # 7 tasks
 POINTS_PER_DAY = len(ALL_TASK_IDS) * config.POINTS_PER_TASK + config.POINTS_ALL_TASKS
 assert POINTS_PER_DAY == 205, f"Expected 205, got {POINTS_PER_DAY} — config changed?"
 
-# The 7-day streak bonus fires exactly once during 8 days
+# The 7-day streak bonus fires exactly ONCE on the day the streak hits 7
+# (fixed: previously fired once per task submission = 7× total)
 STREAK_7_BONUS = config.STREAK_BONUS_POINTS[7]
 assert STREAK_7_BONUS == 200, f"Expected 200, got {STREAK_7_BONUS} — config changed?"
-
-# IMPORTANT: the streak bonus check in process_submission() fires on EVERY
-# task submission where current_streak is in STREAK_BONUS_POINTS — not just
-# the first submission that crosses the threshold. This means that on day 7,
-# after the first task brings the streak to 7, all 7 task submissions on
-# that day each award the bonus (7 * 200 = 1400 total). This is the real,
-# current behavior of the code as-shipped — whether it's intentional or a
-# latent over-award is a separate question (flagged below), but this test
-# asserts the ACTUAL invariants so it can catch regressions, not a
-# hypothetical "correct" version that doesn't match real code.
-#
-# NOTE FOR THE USER: this test revealed that STREAK_BONUS_POINTS[7]=200
-# is awarded 7 times on the day the streak hits 7 (once per !done, not
-# once per day). If that's unintended, the fix is a one-line guard in
-# process_submission: check points_log for an existing "streak_7" entry
-# today before awarding. Not fixing it in THIS PR (the test's job is to
-# catch regressions; changing scoring logic is a separate, user-approved
-# decision), but flagging it.
-STREAK_7_BONUS_TOTAL = STREAK_7_BONUS * len(ALL_TASK_IDS)  # 200 * 7 = 1400
 
 # Assessment bonus (first assessment of the week)
 ASSESSMENT_BONUS = config.POINTS_ASSESSMENT
@@ -85,11 +67,11 @@ assert ASSESSMENT_BONUS == 50, f"Expected 50, got {ASSESSMENT_BONUS} — config 
 
 # Grand total:
 #   Days 1-6: 6 * 205 = 1230 (no streak bonus — streaks 1-6 not in thresholds)
-#   Day 7: 205 base + 1400 streak bonus (7 submissions * 200 each) = 1605
+#   Day 7: 205 base + 200 streak bonus (once) = 405
 #   Day 8: 205 (streak=8, not a bonus threshold)
 #   Assessment: 50
-EXPECTED_TOTAL_POINTS = (DAYS_TO_SIMULATE * POINTS_PER_DAY) + STREAK_7_BONUS_TOTAL + ASSESSMENT_BONUS
-assert EXPECTED_TOTAL_POINTS == 3090, f"Expected 3090, got {EXPECTED_TOTAL_POINTS}"
+EXPECTED_TOTAL_POINTS = (DAYS_TO_SIMULATE * POINTS_PER_DAY) + STREAK_7_BONUS + ASSESSMENT_BONUS
+assert EXPECTED_TOTAL_POINTS == 1890, f"Expected 1890, got {EXPECTED_TOTAL_POINTS}"
 
 # Expected total submissions across all 8 days
 EXPECTED_TOTAL_SUBMISSIONS = DAYS_TO_SIMULATE * len(ALL_TASK_IDS)  # 8 * 7 = 56
@@ -335,7 +317,7 @@ async def test_full_student_journey():
     assert final_member["total_points"] == EXPECTED_TOTAL_POINTS, (
         f"Expected total_points={EXPECTED_TOTAL_POINTS}, got {final_member['total_points']}. "
         f"Breakdown: {DAYS_TO_SIMULATE}d * {POINTS_PER_DAY}/d = {DAYS_TO_SIMULATE * POINTS_PER_DAY}, "
-        f"+ streak bonus {STREAK_7_BONUS_TOTAL} (7 submissions * {STREAK_7_BONUS}), "
+        f"+ streak bonus {STREAK_7_BONUS} (once), "
         f"+ assessment {ASSESSMENT_BONUS}"
     )
 
@@ -355,9 +337,9 @@ async def test_full_student_journey():
     # Points log has the expected number of entries:
     #   8 days * 7 tasks = 56 task-point entries ("task:<id>")
     #   + 8 "all_7_tasks" bonus entries (one per day)
-    #   + 7 "streak_7" entries (one per task on day 7 — see NOTE above)
+    #   + 1 "streak_7" entry (once, on day 7)
     #   + 1 "weekly_assessment" entry
-    #   = 72 total
+    #   = 66 total
     conn = _connect()
     points_log_count = conn.execute(
         "SELECT COUNT(*) as cnt FROM points_log WHERE discord_id=?",
@@ -367,13 +349,13 @@ async def test_full_student_journey():
     expected_log_entries = (
         (DAYS_TO_SIMULATE * len(ALL_TASK_IDS))  # 56 task entries
         + DAYS_TO_SIMULATE                       # 8 all-7 bonuses
-        + len(ALL_TASK_IDS)                      # 7 streak_7 entries (one per task on day 7)
+        + 1                                      # 1 streak_7 entry (once!)
         + 1                                      # 1 weekly_assessment
     )
-    assert expected_log_entries == 72
+    assert expected_log_entries == 66
     assert points_log_count == expected_log_entries, (
         f"Expected {expected_log_entries} points_log entries, got {points_log_count}. "
-        f"(56 tasks + 8 all-7 bonuses + 7 streak_7 + 1 assessment)"
+        f"(56 tasks + 8 all-7 bonuses + 1 streak_7 + 1 assessment)"
     )
 
 
@@ -383,14 +365,8 @@ async def test_full_student_journey():
 
 @pytest.mark.asyncio
 async def test_streak_bonus_fires_exactly_at_threshold():
-    """Verify the 7-day streak bonus awards on day 7 (when streak reaches 7)
-    and does NOT re-award on day 8.
-
-    Current behavior (documented, not necessarily intentional — see the NOTE
-    in the constants section above): the bonus fires once per task submission
-    on a day where current_streak is in STREAK_BONUS_POINTS, so day 7 with
-    all 7 tasks gets 7 * 200 = 1400 total streak bonus. Day 8 (streak=8,
-    not a threshold) gets zero streak bonus.
+    """Verify the 7-day streak bonus awards ONCE on day 7 (when streak
+    reaches 7) and does NOT re-award on day 8.
     """
     database.register_member("streak_test_user", "Noor")
     start = datetime.date(2026, 8, 1)
@@ -407,11 +383,10 @@ async def test_streak_bonus_fires_exactly_at_threshold():
         m = database.get_member("streak_test_user")
         daily_points.append(m["total_points"])
 
-    # Day 7 should include the streak bonus (7 tasks * 200 each = 1400 extra)
-    # so day 7's delta from day 6 = 205 (base) + 1400 (bonus) = 1605
+    # Day 7 should include the streak bonus ONCE: 205 + 200 = 405
     day_6_to_7_delta = daily_points[6] - daily_points[5]
-    assert day_6_to_7_delta == POINTS_PER_DAY + STREAK_7_BONUS_TOTAL, (
-        f"Day 6→7 delta: expected {POINTS_PER_DAY + STREAK_7_BONUS_TOTAL}, got {day_6_to_7_delta}"
+    assert day_6_to_7_delta == POINTS_PER_DAY + STREAK_7_BONUS, (
+        f"Day 6→7 delta: expected {POINTS_PER_DAY + STREAK_7_BONUS}, got {day_6_to_7_delta}"
     )
 
     # Day 8 should NOT award any streak bonus (streak=8, not a threshold)
