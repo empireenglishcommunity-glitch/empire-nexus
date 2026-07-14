@@ -1864,6 +1864,24 @@ async def on_message(message: discord.Message):
             handled = await features.handle_benchmark_recording(message)
             if handled:
                 return
+        # Nour N0: handle non-command DMs as concierge conversation
+        if not message.content.startswith(config.BOT_PREFIX):
+            from . import nour_concierge
+            try:
+                await nour_concierge.handle_with_human_touch(message)
+            except Exception as e:
+                logger.error(f"Nour DM handler error: {e}")
+            return
+
+    # Nour N0: handle messages in #ask-nour channel
+    if hasattr(message.channel, 'name') and message.channel.name == "ask-nour":
+        if not message.content.startswith(config.BOT_PREFIX):
+            from . import nour_concierge
+            try:
+                await nour_concierge.handle_with_human_touch(message)
+            except Exception as e:
+                logger.error(f"Nour #ask-nour handler error: {e}")
+            return
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)

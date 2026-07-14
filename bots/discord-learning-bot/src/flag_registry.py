@@ -49,6 +49,11 @@ REGISTRY = [
     ("tatawwur_conversations", "Structured conversation sessions", "tatawwur", True),
     ("tatawwur_showcase", "Auto-post success stories to showcase channels", "tatawwur", True),
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
+
+    # ── NOUR (autonomous student concierge) ──
+    ("nour_concierge", "AI concierge handles DMs and #ask-nour questions", "nour", True),
+    ("nour_proactive", "Proactive outreach (anti-churn check-ins)", "nour", False),
+    ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),
 ]
 
 # Initiative display names and emoji
@@ -57,6 +62,7 @@ INITIATIVES = {
     "bawaba": ("🌍", "BAWABA", "zero-English onboarding"),
     "nabd": ("🔔", "NABD", "student notifications"),
     "tatawwur": ("🚀", "TATAWWUR", "system evolution"),
+    "nour": ("💬", "NOUR", "autonomous student concierge"),
 }
 
 
