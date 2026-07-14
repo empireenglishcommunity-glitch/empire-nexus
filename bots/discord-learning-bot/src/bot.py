@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -326,6 +326,8 @@ async def on_ready():
         missed_day_report.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
+    if not markaz_daily_digest.is_running():
+        markaz_daily_digest.start()
     if not heartbeat.is_running():
         heartbeat.start()
     if not morning_kickstart.is_running():
@@ -1083,6 +1085,59 @@ async def heartbeat():
             )
     except Exception:
         pass  # presence update is best-effort, never crash the heartbeat
+
+
+@tasks.loop(time=datetime.time(hour=7, minute=0, tzinfo=_zone()))
+async def markaz_daily_digest():
+    """Markaz Phase M1.1/M1.2 — morning Telegram digest (7 AM Dubai time).
+
+    Summarizes YESTERDAY's activity in one phone-readable message via
+    the Empire Ops bot: active students, tasks completed, new
+    registrations, streak milestones, Nour conversations, and pending
+    escalations. Gated behind 'markaz_daily_digest' so it can be
+    disabled instantly without a redeploy if it ever misbehaves.
+    """
+    if not database.is_feature_enabled("markaz_daily_digest"):
+        return
+
+    from . import nour_escalation
+
+    yesterday = (datetime.datetime.now(_zone()).date() - datetime.timedelta(days=1))
+    yesterday_str = yesterday.isoformat()
+    display_date = yesterday.strftime("%B %-d")
+
+    total_active = database.member_count()
+    active_yesterday = database.count_active_members_on(yesterday_str)
+    tasks_done = database.total_submissions_on_date(yesterday_str)
+    new_members = database.count_new_members_on(yesterday_str)
+    milestones = database.streak_milestones_on(yesterday_str)
+    nour_convos = database.count_nour_conversations_on(yesterday_str)
+    pending_escalations = len(nour_escalation._pending_escalations)
+
+    lines = [
+        f"📊 *Daily Digest — {ops_hub.escape_markdown(display_date)}*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        "",
+        f"👥 Active students: *{active_yesterday}/{total_active}*",
+        f"✅ Tasks completed: *{tasks_done}*",
+    ]
+    if milestones:
+        m_text = ", ".join(
+            f"{ops_hub.escape_markdown(m['discord_name'])} {m['days']}d" for m in milestones
+        )
+        lines.append(f"🔥 Streak milestones: {len(milestones)} \\({m_text}\\)")
+    else:
+        lines.append("🔥 Streak milestones: 0")
+    lines.append(f"🆕 New registrations: {new_members}")
+    lines.append(f"💬 Nour conversations: {nour_convos}")
+    lines.append(f"🚨 Pending escalations: {pending_escalations}")
+    lines.append("")
+    lines.append(
+        "*All systems healthy\\.* ✅" if pending_escalations == 0
+        else f"⚠️ *{pending_escalations} escalation\\(s\\) awaiting your reply\\.*"
+    )
+
+    await ops_hub.send_ops_message("\n".join(lines))
 
 
 @tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=_zone()))

@@ -24,32 +24,44 @@ SEVERITY_EMOJI = {
     "critical": "🚨",
 }
 
-# Characters that break Telegram's legacy Markdown parse_mode when they
-# appear unescaped inside arbitrary (e.g. student-typed) text. Discovered
-# while testing M0.5: a raw underscore/asterisk/backtick in the embedded
-# text causes a silent 400 "can't parse entities" — the same class of bug
-# as the Discord !flag list 2000-char overflow. Escape defensively so any
-# future caller embedding untrusted text never has to remember this.
-_MD_SPECIAL_CHARS = ["_", "*", "`", "["]
+# Markaz M0/M1 bug (found during live testing, confirmed against Telegram's
+# own API docs at core.telegram.org/bots/api#markdown-style): legacy
+# parse_mode="Markdown" does NOT reliably support escaping all its own
+# special characters — a backslash-escaped '*' (e.g. "Ahmed\*Test") still
+# raises a 400 "can't parse entities" even though '_' escapes fine. Verified
+# directly against the live Bot API. The docs are explicit that legacy
+# Markdown entities "must not be nested" and recommend MarkdownV2 instead.
+#
+# Fix: use MarkdownV2 everywhere, which has a complete, well-defined
+# escaping rule (straight from the Bot API docs' "MarkdownV2 style"
+# section): "In all other places characters '_', '*', '[', ']', '(', ')',
+# '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be
+# escaped with the preceding character '\'."
+PARSE_MODE = "MarkdownV2"
+_MD_SPECIAL_CHARS = list("_*[]()~`>#+-=|{}.!")
 
 
 def escape_markdown(text: str) -> str:
-    """Escape Telegram legacy-Markdown special characters in untrusted text.
+    """Escape Telegram MarkdownV2 special characters in untrusted text.
 
     Use this around any user-generated/dynamic substring (student names,
     student messages, error text) before embedding it in a message sent
-    with parse_mode="Markdown". Do NOT use it on the literal Markdown
-    formatting you write yourself (e.g. the *bold* titles/headers).
+    with parse_mode="MarkdownV2". Do NOT use it on the literal Markdown
+    formatting you write yourself (e.g. the *bold* titles/headers) —
+    those characters are meant to be parsed as formatting, not escaped.
     """
     if not text:
         return text
+    # Escape backslash first, so we don't double-escape the backslashes
+    # we're about to introduce for the other special characters.
+    text = text.replace("\\", "\\\\")
     for ch in _MD_SPECIAL_CHARS:
         text = text.replace(ch, f"\\{ch}")
     return text
 
 
 async def send_ops_message(text: str, reply_markup: Optional[dict] = None,
-                            parse_mode: str = "Markdown") -> Optional[dict]:
+                            parse_mode: str = PARSE_MODE) -> Optional[dict]:
     """Send a message to the owner via the Empire Ops bot.
 
     Returns the Telegram API 'result' dict on success (includes
@@ -106,7 +118,15 @@ async def send_ops_alert(title: str, body: str, severity: str = "info") -> Optio
 
     severity: one of "info", "success", "warning", "critical" — controls
     the leading emoji. Unknown severities fall back to "info".
+
+    title/body are treated as plain, untrusted free text and are escaped
+    automatically (MarkdownV2 requires escaping literal punctuation like
+    '.', '!', '-', '(', ')' even in text the caller writes themselves).
+    If a caller ever needs literal Markdown formatting *inside* body,
+    build the message with send_ops_message() directly instead.
     """
     emoji = SEVERITY_EMOJI.get(severity, SEVERITY_EMOJI["info"])
-    msg = f"{emoji} *{title}*\n━━━━━━━━━━━━━━━━━━━━\n\n{body}"
+    safe_title = escape_markdown(title)
+    safe_body = escape_markdown(body)
+    msg = f"{emoji} *{safe_title}*\n━━━━━━━━━━━━━━━━━━━━\n\n{safe_body}"
     return await send_ops_message(msg)

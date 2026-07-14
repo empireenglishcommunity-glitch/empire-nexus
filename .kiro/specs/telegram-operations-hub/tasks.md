@@ -41,16 +41,55 @@
   plain-text fallback path (confirmed with a deliberately unescaped
   test message).
 
-## Phase M1 — Daily Digest + Escalation Routing
+## Phase M1 — Daily Digest + Escalation Routing ✅ COMPLETE
 
-- [ ] **M1.1** Add `@tasks.loop` for daily digest (7 AM Dubai time).
+- [x] **M1.1** Add `@tasks.loop` for daily digest (7 AM Dubai time).
   Query: active members, total submissions, new joins, streaks, Nour
   conversations count, pending escalations.
-- [ ] **M1.2** Format digest as a clean phone-readable message with emojis.
-- [ ] **M1.3** Route ALL Nour escalations through ops bot (replace old
+  → `markaz_daily_digest()` in `bot.py`, gated behind the new
+  `markaz_daily_digest` feature flag. New `database.py` query helpers:
+  `count_active_members_on`, `total_submissions_on_date`,
+  `count_new_members_on`, `streak_milestones_on`,
+  `count_nour_conversations_on`. Verified live against a seeded test DB
+  (2 active students, 3 tasks, 1 streak milestone, 1 Nour conversation)
+  — digest matched exactly.
+- [x] **M1.2** Format digest as a clean phone-readable message with emojis.
+  → Matches the design.md example format exactly (active students,
+  tasks completed, streak milestones, new registrations, Nour
+  conversations, pending escalations, healthy/warning footer).
+- [x] **M1.3** Route ALL Nour escalations through ops bot (replace old
   TELEGRAM_ALERT_TOKEN usage in nour_escalation.py).
-- [ ] **M1.4** Include conversation history (last 3 messages) in
+  → `escalate_to_owner()` now sends via `ops_hub.send_ops_message()`
+  whenever `OPS_BOT_TOKEN`/`OPS_CHAT_ID` are set (which they are, as of
+  M0), with the old `TELEGRAM_ALERT_TOKEN` path kept only as a fallback
+  for environments where the ops bot isn't configured yet.
+- [x] **M1.4** Include conversation history (last 3 messages) in
   escalation alerts for full context.
+  → New `database.get_recent_conversation()` helper (public counterpart
+  of `nour_concierge._get_recent_conversation`). Escalation messages now
+  include a "📜 Recent conversation" section with the last 3 messages,
+  excluding the just-escalated message itself.
+
+**Real bug found and fixed during M1 live testing (important — read
+before touching Telegram message formatting again):** Telegram's legacy
+`parse_mode="Markdown"` does **not** reliably support escaping all its
+own special characters — a backslash-escaped `*` (e.g. `Ahmed\*Test`)
+still raises a 400 "can't parse entities" error even though `_` escapes
+fine. Confirmed directly against the live Bot API and cross-checked
+against Telegram's own docs, which explicitly recommend `MarkdownV2`
+over legacy `Markdown` for exactly this reason. Fixed by switching
+`ops_hub.py` (and `nour_escalation.py`'s legacy fallback path) to
+`MarkdownV2`, with a complete escaping rule for
+`_*[]()~\`>#+-=|{}.!` (per the official docs) rather than the old
+partial `_*\`[ ` list. Also had to escape literal punctuation in the
+bot's *own* message templates (parentheses, periods) since MarkdownV2
+requires that even for non-user-generated text. All three message
+paths (`send_ops_message`, `send_ops_alert`, escalation alerts, the
+daily digest) re-tested live afterward and now send correctly on the
+first attempt with zero fallback triggers — previously this relied on
+the M0 plain-text safety net to avoid losing the message, which worked
+but meant losing all bold/formatting on any message containing student
+text with special characters.
 
 ## Phase M2 — Reply Forwarding
 
