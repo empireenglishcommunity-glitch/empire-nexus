@@ -1405,6 +1405,35 @@ def get_progress_for_token(token: str) -> dict | None:
         "tasks_today_count": len(tasks_today),
         "srs_due": srs_due_count,
         "srs_words": [dict(r) for r in srs_words],
+        "pronunciation": _get_pronunciation_stats(discord_id),
+    }
+
+
+def _get_pronunciation_stats(discord_id: str) -> dict:
+    """Get pronunciation scoring stats for the API response (Dhaka' P2)."""
+    scores = get_recent_scores(discord_id, days=7)
+    if not scores:
+        return {"last_score": None, "average_7d": None, "trend": "no_data", "total_scored": 0}
+
+    last_score = scores[0]["score"]
+    avg = sum(s["score"] for s in scores) / len(scores)
+
+    # Trend: compare first half vs second half
+    if len(scores) >= 4:
+        recent_half = scores[:len(scores) // 2]
+        older_half = scores[len(scores) // 2:]
+        recent_avg = sum(s["score"] for s in recent_half) / len(recent_half)
+        older_avg = sum(s["score"] for s in older_half) / len(older_half)
+        diff = recent_avg - older_avg
+        trend = "improving" if diff > 5 else "declining" if diff < -5 else "stable"
+    else:
+        trend = "stable"
+
+    return {
+        "last_score": round(last_score, 1),
+        "average_7d": round(avg, 1),
+        "trend": trend,
+        "total_scored": len(scores),
     }
 
 

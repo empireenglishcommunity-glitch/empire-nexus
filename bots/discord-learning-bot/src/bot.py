@@ -1295,8 +1295,8 @@ async def _score_pronunciation(ctx, task_id: str):
         if task_id == "accent":
             expected_text = (daily.get("accent_drill") or {}).get("record_this", "")
         elif task_id == "shadow":
-            # Shadowing uses the primary passage text
-            from scripts.generate import normalize_drill  # Won't work — use curriculum directly
+            # Shadowing uses the same record_this text as accent (the sentence
+            # students practice saying — same source in generate.py's gen_shadowing)
             expected_text = (daily.get("accent_drill") or {}).get("record_this", "")
         else:
             expected_text = ""
@@ -2221,6 +2221,34 @@ async def cmd_portfolio(ctx):
             date = r["recorded_at"][:10]
             score_text = f" — {r['ai_score']:.0f}%" if r["ai_score"] else ""
             lines.append(f"  • {date} ({r['level']}){score_text}")
+
+    # Dhaka' P2: Pronunciation scores from AI scoring (last 7 days)
+    pronunciation_scores = database.get_recent_scores(discord_id, days=7)
+    if pronunciation_scores:
+        lines.append("")
+        lines.append(f"🎯 **AI Pronunciation Scores (last 7 days):**")
+        for ps in pronunciation_scores[:7]:
+            date = ps["date"]
+            task_label = "🎯 Accent" if ps["task_id"] == "accent" else "🎧 Shadow"
+            stars = "⭐" * int(ps["score"] / 20)
+            lines.append(f"  {task_label} {date} — {ps['score']:.0f}% {stars}")
+
+        # Trend calculation
+        if len(pronunciation_scores) >= 3:
+            recent_3 = [s["score"] for s in pronunciation_scores[:3]]
+            older_3 = [s["score"] for s in pronunciation_scores[-3:]]
+            recent_avg = sum(recent_3) / len(recent_3)
+            older_avg = sum(older_3) / len(older_3)
+            diff = recent_avg - older_avg
+            if diff > 5:
+                trend_arrow = "↑ improving"
+            elif diff < -5:
+                trend_arrow = "↓ needs attention"
+            else:
+                trend_arrow = "→ stable"
+            avg = sum(s["score"] for s in pronunciation_scores) / len(pronunciation_scores)
+            lines.append(f"  📊 Average: **{avg:.0f}%** | Trend: **{trend_arrow}**")
+        lines.append("")
 
     # Pronunciation trend (if enough data)
     scored = [r for r in recordings if r["ai_score"] is not None]
