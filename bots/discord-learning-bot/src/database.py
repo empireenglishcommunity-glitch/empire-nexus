@@ -319,6 +319,21 @@ CREATE TABLE IF NOT EXISTS pronunciation_scores (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_pronunciation_scores ON pronunciation_scores(discord_id, date);
+
+-- Markaz Phase M2: persistent escalation → discord_id mapping. Previously
+-- this lived only in an in-memory dict (nour_escalation._pending_escalations),
+-- which meant any escalation the owner hadn't yet replied to before a
+-- redeploy became permanently unmatchable (the reply would arrive with a
+-- telegram_message_id the fresh process had never seen). Persisting this
+-- means reply-forwarding survives restarts/deploys.
+CREATE TABLE IF NOT EXISTS pending_escalations (
+    telegram_message_id INTEGER PRIMARY KEY,
+    discord_id           TEXT NOT NULL,
+    student_name         TEXT NOT NULL DEFAULT '',
+    created_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    resolved             INTEGER NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_pending_escalations_discord ON pending_escalations(discord_id);
 """
 
 
@@ -1043,6 +1058,79 @@ def get_recent_conversation(discord_id: str, limit: int = 5) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in reversed(rows)]
+
+
+# ============================================================
+#  MARKAZ M2: PENDING ESCALATIONS (persistent reply-forwarding map)
+# ============================================================
+
+def record_pending_escalation(telegram_message_id: int, discord_id: str,
+                              student_name: str = "") -> None:
+    """Record a telegram_message_id → discord_id mapping so a later
+    owner reply (which only carries the replied-to message_id) can be
+    routed back to the right student, even across a bot restart."""
+    conn = _connect()
+    # try/finally on all four pending_escalations functions below:
+    # this table is written to from a long-running background poller
+    # (ops_poller.py) that never restarts on its own, so any leaked
+    # connection here compounds indefinitely rather than being cleared
+    # by a process restart soon after — worth the extra safety even
+    # though these specific statements don't hit a FOREIGN KEY (unlike
+    # the nour_conversations insert where this exact bug was found).
+    try:
+        conn.execute(
+            """INSERT OR REPLACE INTO pending_escalations
+               (telegram_message_id, discord_id, student_name, resolved)
+               VALUES (?, ?, ?, 0)""",
+            (telegram_message_id, discord_id, student_name),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_pending_escalation(telegram_message_id: int) -> Optional[dict]:
+    """Look up the discord_id for a given telegram_message_id, or None
+    if no unresolved escalation matches it."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            """SELECT * FROM pending_escalations
+               WHERE telegram_message_id=? AND resolved=0""",
+            (telegram_message_id,),
+        ).fetchone()
+    finally:
+        conn.close()
+    return dict(row) if row else None
+
+
+def resolve_pending_escalation(telegram_message_id: int) -> None:
+    """Mark an escalation as resolved after the owner's reply has been
+    forwarded, so it's no longer matched (also keeps the table from
+    growing unbounded in an unhelpful way — resolved rows are still
+    kept for history, just excluded from lookups)."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE pending_escalations SET resolved=1 WHERE telegram_message_id=?",
+            (telegram_message_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def count_pending_escalations() -> int:
+    """Count unresolved escalations awaiting an owner reply. Used by
+    the Markaz daily digest."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT COUNT(*) as cnt FROM pending_escalations WHERE resolved=0"
+        ).fetchone()
+    finally:
+        conn.close()
+    return row["cnt"] if row else 0
 
 
 def days_since_active(member: dict) -> int:
