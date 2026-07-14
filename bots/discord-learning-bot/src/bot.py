@@ -2709,9 +2709,11 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
 
         # Discord 2000-char limit — send as DM if too long
         msg = "\n".join(lines)
-        if len(msg) > 1900:
+        if len(msg) > 1800:
             try:
-                await ctx.author.send(msg)
+                await ctx.author.send(msg[:1900])
+                if len(msg) > 1900:
+                    await ctx.author.send(msg[1900:])
                 await ctx.send("📩 Flag list sent to your DMs.", delete_after=5)
             except discord.Forbidden:
                 await ctx.send(msg[:1900] + "\n... (truncated)")

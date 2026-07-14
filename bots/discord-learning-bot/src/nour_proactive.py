@@ -206,7 +206,7 @@ async def run_proactive_checks(bot: discord.Client):
                 if 20 <= hours_since_join <= 48:
                     # Joined 20-48h ago — check if they've done anything
                     tasks = database.tasks_completed_today(discord_id)
-                    total_submissions = len(database.get_submissions_last_n_days(discord_id, 7))
+                    total_submissions = len(database.get_submissions_since(discord_id, 7))
                     if total_submissions == 0:
                         outreach_type = "new_student"
                         context = f"Joined {hours_since_join:.0f}h ago, 0 tasks completed ever"
@@ -246,7 +246,7 @@ async def run_proactive_checks(bot: discord.Client):
             tasks_today = database.tasks_completed_today(discord_id)
             if len(tasks_today) == 7 and not _was_outreach_sent(discord_id, "first_milestone", today):
                 # Check if this is their FIRST ever 7/7 day
-                all_time_submissions = database.get_submissions_last_n_days(discord_id, 30)
+                all_time_submissions = database.get_submissions_since(discord_id, 30)
                 days_with_7 = {}
                 for s in all_time_submissions:
                     d = s.get("date", "")
