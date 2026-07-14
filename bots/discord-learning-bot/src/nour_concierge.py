@@ -7,6 +7,11 @@ a real, warm human team member.
 Nour speaks Egyptian Arabic (عامية), knows each student personally,
 responds in seconds, and only escalates truly complex issues.
 
+AI Provider Strategy:
+  1. Groq (Llama 3.3 70B) — PRIMARY (fast, reliable, good Arabic)
+  2. Gemini — FALLBACK (if Groq fails)
+  3. Template responses — LAST RESORT (never silence)
+
 Gated behind 'nour_concierge' feature flag.
 """
 import asyncio
@@ -16,9 +21,10 @@ import random
 from pathlib import Path
 from typing import Optional
 
+import aiohttp
 import discord
 
-from . import config, database, ai_engine
+from . import config, database
 
 logger = logging.getLogger("empire-bot.nour")
 
@@ -196,36 +202,119 @@ KNOWLEDGE BASE (use this to answer questions):
 
 
 # ============================================================
-#  RESPONSE GENERATION
+#  RESPONSE GENERATION (Groq primary → Gemini fallback → template)
 # ============================================================
 
-async def _generate_response(context: str, student_message: str, member: dict) -> Optional[str]:
-    """Generate Nour's response via Gemini."""
-    name = member.get("discord_name", "").split("#")[0]  # Remove discriminator
+async def _call_groq_chat(prompt: str, temperature: float = 0.7) -> Optional[str]:
+    """Call Groq API directly for Nour responses. Fast and reliable."""
+    if not config.GROQ_API_KEY:
+        return None
 
-    full_prompt = f"""{NOUR_SYSTEM_PROMPT}
-
-CONTEXT:
-{context}
-
-The student "{name}" just said: "{student_message}"
-
-Respond as Nour (2-5 sentences max, Egyptian Arabic, warm and helpful):"""
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {config.GROQ_API_KEY}",
+    }
+    payload = {
+        "model": config.GROQ_MODEL,  # llama-3.3-70b-versatile
+        "temperature": temperature,
+        "max_tokens": MAX_RESPONSE_TOKENS,
+        "messages": [
+            {"role": "system", "content": NOUR_SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+    }
 
     try:
-        response = await ai_engine._call_gemini(full_prompt, temperature=0.7)
-        if response:
-            # Clean up any markdown artifacts or system text
-            response = response.strip().strip('"').strip("'")
-            # Remove any "Nour:" prefix the model might add
-            if response.lower().startswith("nour:"):
-                response = response[5:].strip()
-            return response
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers,
+                                    timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Groq API error for Nour: {resp.status}")
+                    return None
+                data = await resp.json()
+                text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                return text.strip() if text else None
     except Exception as e:
-        logger.error(f"Nour response generation failed: {e}")
+        logger.error(f"Groq call failed for Nour: {e}")
+        return None
 
-    # Fallback: if Gemini fails, give a warm generic
-    return "تمام، خليني أشوف الموضوع ده وأرجعلك 😊"
+
+async def _call_gemini_chat(prompt: str, temperature: float = 0.7) -> Optional[str]:
+    """Fallback: call Gemini for Nour responses."""
+    if not config.GEMINI_API_KEY:
+        return None
+
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{config.GEMINI_MODEL}:generateContent?key={config.GEMINI_API_KEY}"
+    )
+    payload = {
+        "contents": [{"parts": [{"text": f"{NOUR_SYSTEM_PROMPT}\n\n{prompt}"}]}],
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": MAX_RESPONSE_TOKENS},
+    }
+
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload,
+                                    timeout=aiohttp.ClientTimeout(total=20)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Gemini API error for Nour: {resp.status}")
+                    return None
+                data = await resp.json()
+                text = (data.get("candidates", [{}])[0]
+                        .get("content", {}).get("parts", [{}])[0].get("text", ""))
+                return text.strip() if text else None
+    except Exception as e:
+        logger.error(f"Gemini call failed for Nour: {e}")
+        return None
+
+
+# Template fallback responses (never silence)
+_TEMPLATE_RESPONSES = [
+    "تمام، خليني أشوف الموضوع ده وأرجعلك 😊",
+    "سؤال حلو! خليني أسأل الفريق وأرجعلك بإجابة كاملة 👍",
+    "ماشي، هرد عليك في أقرب وقت 😊 لو محتاج حاجة تانية قولي",
+    "فاهمك 👍 خليني أتأكد من المعلومة وأرجعلك",
+]
+
+
+async def _generate_response(context: str, student_message: str, member: dict) -> Optional[str]:
+    """Generate Nour's response. Groq → Gemini → Template. Never returns None."""
+    name = member.get("discord_name", "").split("#")[0]
+
+    full_prompt = (
+        f"CONTEXT:\n{context}\n\n"
+        f"The student \"{name}\" just said: \"{student_message}\"\n\n"
+        f"Respond as Nour (2-5 sentences max, Egyptian Arabic, warm and helpful):"
+    )
+
+    # Try 1: Groq (fast, reliable)
+    response = await _call_groq_chat(full_prompt)
+    if response:
+        return _clean_response(response)
+
+    # Try 2: Gemini (fallback)
+    logger.info("Nour: Groq failed, trying Gemini fallback")
+    response = await _call_gemini_chat(full_prompt)
+    if response:
+        return _clean_response(response)
+
+    # Try 3: Template (never silence)
+    logger.warning("Nour: both AI providers failed, using template response")
+    return random.choice(_TEMPLATE_RESPONSES)
+
+
+def _clean_response(response: str) -> str:
+    """Clean up AI response artifacts."""
+    response = response.strip().strip('"').strip("'")
+    # Remove any "Nour:" prefix the model might add
+    if response.lower().startswith("nour:"):
+        response = response[5:].strip()
+    # Remove markdown code blocks if present
+    if response.startswith("```"):
+        response = response.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+    return response
 
 
 # ============================================================
