@@ -262,6 +262,23 @@ CREATE TABLE IF NOT EXISTS link_tokens (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_link_tokens_member ON link_tokens(discord_id);
+
+-- Dhaka' Phase P0: pronunciation scoring results.
+CREATE TABLE IF NOT EXISTS pronunciation_scores (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    date            TEXT NOT NULL,
+    task_id         TEXT NOT NULL,
+    score           REAL NOT NULL,
+    expected_text   TEXT NOT NULL,
+    transcript      TEXT NOT NULL,
+    missed_words    TEXT DEFAULT '',
+    feedback        TEXT DEFAULT '',
+    audio_url       TEXT DEFAULT '',
+    scored_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_pronunciation_scores ON pronunciation_scores(discord_id, date);
 """
 
 
@@ -1433,3 +1450,48 @@ def record_srs_review(discord_id: str, word: str, score: int):
     )
     conn.commit()
     conn.close()
+
+
+
+# ============================================================
+#  PRONUNCIATION SCORES (Dhaka' P0)
+# ============================================================
+
+def store_pronunciation_score(discord_id: str, date: str, task_id: str,
+                              score: float, expected_text: str, transcript: str,
+                              missed_words: str = "", feedback: str = "",
+                              audio_url: str = ""):
+    """Store a pronunciation scoring result."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO pronunciation_scores
+           (discord_id, date, task_id, score, expected_text, transcript,
+            missed_words, feedback, audio_url)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (discord_id, date, task_id, score, expected_text, transcript,
+         missed_words, feedback, audio_url),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_recent_scores(discord_id: str, days: int = 7) -> list[dict]:
+    """Get pronunciation scores from the last N days."""
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days - 1)).isoformat()
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT * FROM pronunciation_scores
+           WHERE discord_id=? AND date>=?
+           ORDER BY scored_at DESC""",
+        (discord_id, cutoff),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_pronunciation_average(discord_id: str, days: int = 7) -> float:
+    """Get average pronunciation score over last N days. Returns 0.0 if no data."""
+    scores = get_recent_scores(discord_id, days)
+    if not scores:
+        return 0.0
+    return sum(s["score"] for s in scores) / len(scores)

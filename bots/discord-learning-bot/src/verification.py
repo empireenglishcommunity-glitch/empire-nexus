@@ -15,6 +15,7 @@ Verification methods:
 import datetime
 import logging
 import random
+from typing import Optional
 
 import discord
 
@@ -391,3 +392,35 @@ async def verify_task(task_id: str, member: discord.Member,
 
     else:
         return True, ""  # Unknown task — allow (shouldn't happen)
+
+
+
+# ============================================================
+#  AUDIO URL RETRIEVAL (Dhaka' P1 — for pronunciation scoring)
+# ============================================================
+
+async def get_recent_audio_url(member: discord.Member, guild: discord.Guild,
+                               task_id: str) -> Optional[tuple[str, str]]:
+    """Find the most recent audio attachment URL from a member in their showcase channel.
+
+    Returns (url, filename) or None if not found. Used by the pronunciation
+    scorer to download the audio for transcription.
+    """
+    level = (database.get_member(str(member.id)) or {}).get("level", "L0")
+    channel_name = f"l{level[1]}-showcase"
+    channel = discord.utils.get(guild.text_channels, name=channel_name)
+
+    if not channel:
+        return None
+
+    cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=2)
+
+    async for msg in channel.history(limit=50, after=cutoff):
+        if msg.author.id == member.id and msg.attachments:
+            for att in msg.attachments:
+                if att.content_type and ("audio" in att.content_type or "video" in att.content_type):
+                    return (att.url, att.filename)
+                if att.filename.lower().endswith(('.mp3', '.m4a', '.wav', '.ogg', '.mp4', '.webm', '.mov', '.3gp', '.opus')):
+                    return (att.url, att.filename)
+
+    return None
