@@ -121,6 +121,17 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
     vocab_theme = daily["theme"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
 
+    # Dhaka' A1: adaptive difficulty adjustments
+    # (dormant until tatawwur_adaptive flag is enabled AND student has scores)
+    difficulty_adjustments = None
+    if database.is_feature_enabled("tatawwur_adaptive"):
+        from . import adaptive_engine
+        # generate_daily_tasks is called per-level (not per-member), so we
+        # can't personalize here. Difficulty affects the _scoring_ DM and
+        # the practice platform speed parameter, not the Discord task post.
+        # The task post stays the same for everyone at the same level.
+        difficulty_adjustments = None  # Per-member adjustment in P2/A1.2 only
+
     tasks = []
 
     # Task 1: Accent/Phoneme Drill (from curriculum data)
