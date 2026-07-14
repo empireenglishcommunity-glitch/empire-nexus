@@ -105,7 +105,10 @@ async def handle_message(message: discord.Message) -> Optional[str]:
         _store_conversation(discord_id, "student", text, intent="escalation")
         response = "خليني أسأل الفريق في الموضوع ده وأرجعلك في أقرب وقت 😊"
         _store_conversation(discord_id, "nour", response, intent="escalation")
-        # TODO: Phase N3 — send Telegram alert to owner
+        # N3: send Telegram alert to owner
+        from . import nour_escalation
+        name = member.get("discord_name", "").split("#")[0]
+        await nour_escalation.escalate_to_owner(discord_id, name, text)
         logger.info(f"Nour: escalated message from {discord_id}: {text[:50]}")
         return response
 

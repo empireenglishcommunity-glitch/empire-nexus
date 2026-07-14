@@ -1893,6 +1893,14 @@ async def on_message(message: discord.Message):
     # English-only detection (before processing commands)
     await features.check_english_only(message)
 
+    # Nour N4: Onboarding intelligence — catch confused new students
+    from . import nour_onboarding
+    try:
+        await nour_onboarding.check_wrong_channel(message)
+        await nour_onboarding.check_command_typo(message)
+    except Exception as e:
+        logger.error(f"Nour onboarding check error: {e}")
+
     # BAWABA (Phase B0): rewrite Arabic aliases to English commands
     # before process_commands() sees them. Gated behind feature flag.
     if message.content.startswith(config.BOT_PREFIX) and database.is_feature_enabled("bawaba_aliases"):
