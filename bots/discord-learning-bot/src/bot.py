@@ -338,6 +338,9 @@ async def on_ready():
         nabd_weekly_summary.start()
     if not nabd_absence_check.is_running():
         nabd_absence_check.start()
+    # Nour N2: proactive outreach (every 2 hours)
+    if not nour_proactive_check.is_running():
+        nour_proactive_check.start()
     # Sahel S6: start the API server for practice platform connection
     from . import api_server
     await api_server.start_api_server(port=8099)
@@ -1218,6 +1221,16 @@ async def nabd_absence_check():
     guild = bot.get_guild(config.GUILD_ID)
     if guild:
         await features.check_absence_recovery(guild)
+
+
+@tasks.loop(hours=2)
+async def nour_proactive_check():
+    """Nour N2: proactive outreach — check every 2 hours for students who need attention."""
+    from . import nour_proactive
+    try:
+        await nour_proactive.run_proactive_checks(bot)
+    except Exception as e:
+        logger.error(f"Nour proactive check error: {e}")
 
 
 # ============================================================

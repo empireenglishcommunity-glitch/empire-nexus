@@ -282,6 +282,17 @@ CREATE TABLE IF NOT EXISTS nour_conversations (
 );
 CREATE INDEX IF NOT EXISTS idx_nour_conversations ON nour_conversations(discord_id, created_at);
 
+-- Nour Phase N2: proactive outreach log (prevents double-sending).
+CREATE TABLE IF NOT EXISTS nour_outreach_log (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    outreach_type   TEXT NOT NULL,
+    date            TEXT NOT NULL,
+    sent_at         TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_nour_outreach ON nour_outreach_log(discord_id, outreach_type, date);
+
 -- Dhaka' Phase P0: pronunciation scoring results.
 CREATE TABLE IF NOT EXISTS pronunciation_scores (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
