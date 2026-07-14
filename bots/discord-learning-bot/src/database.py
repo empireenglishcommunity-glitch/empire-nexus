@@ -52,6 +52,12 @@ def _migrate(conn: sqlite3.Connection):
     for col_name, col_def in migrations:
         if col_name not in existing_cols:
             conn.execute(f"ALTER TABLE advancement_exams ADD COLUMN {col_name} {col_def}")
+
+    # Dhaka' A0: difficulty_level on members table
+    member_cols = {row["name"] for row in conn.execute("PRAGMA table_info(members)")}
+    if "difficulty_level" not in member_cols:
+        conn.execute("ALTER TABLE members ADD COLUMN difficulty_level INTEGER NOT NULL DEFAULT 2")
+
     conn.commit()
 
 

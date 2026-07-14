@@ -1342,6 +1342,34 @@ async def _score_pronunciation(ctx, task_id: str):
         except discord.Forbidden:
             pass  # DMs disabled
 
+        # A0.3: Check adaptive difficulty after scoring
+        from . import adaptive_engine
+        adjustment = adaptive_engine.check_and_adjust(discord_id)
+        if adjustment:
+            # A0.4: DM student about difficulty change
+            try:
+                if adjustment["direction"] == "up":
+                    msg = (
+                        f"📈 **Level Up! / مستواك ارتفع!**\n\n"
+                        f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
+                        f"Your average score ({adjustment['average']:.0f}%) shows you're ready "
+                        f"for more challenge. Tasks will be a bit harder now!\n\n"
+                        f"متوسط درجاتك ({adjustment['average']:.0f}%) بيقول إنك جاهز "
+                        f"لتحدي أكبر. المهام هتكون أصعب شوية! 💪"
+                    )
+                else:
+                    msg = (
+                        f"🌱 **Adjusting difficulty / بنعدّل المستوى**\n\n"
+                        f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
+                        f"No worries! We're giving you more practice time on the basics. "
+                        f"Everyone learns at their own pace.\n\n"
+                        f"متقلقش! بنديك وقت أكتر على الأساسيات. "
+                        f"كل واحد بيتعلم بسرعته. استمر! 🌟"
+                    )
+                await ctx.author.send(msg)
+            except discord.Forbidden:
+                pass
+
     except Exception as e:
         logger.error(f"Pronunciation scoring error for {ctx.author.id}/{task_id}: {e}")
 
@@ -1509,6 +1537,15 @@ async def cmd_progress(ctx):
         f"Today [{bar}] {len(completed_today)}/7\n"
         f"Track: {member['track']}"
     )
+
+    # Dhaka' A1.3: Show difficulty + pronunciation average
+    from . import adaptive_engine
+    difficulty = member.get("difficulty_level", 2)
+    diff_label = adaptive_engine.get_difficulty_label(difficulty)
+    diff_emoji = adaptive_engine.get_difficulty_emoji(difficulty)
+    pron_avg = database.get_pronunciation_average(str(ctx.author.id))
+    if pron_avg > 0:
+        msg += f"\n🎯 Pronunciation: **{pron_avg:.0f}%** | Difficulty: {diff_emoji} {diff_label}"
     await ctx.send(msg)
 
 
@@ -2850,6 +2887,53 @@ async def cmd_resources(ctx, level: str = "L0"):
 # ============================================================
 #  ENTRY POINT
 # ============================================================
+#  DHAKA' A2: !difficulty COMMAND
+# ============================================================
+
+@bot.command(name="difficulty")
+async def cmd_difficulty(ctx):
+    """View or reset your adaptive difficulty level."""
+    from . import adaptive_engine
+
+    discord_id = str(ctx.author.id)
+    member = database.get_member(discord_id)
+    if not member:
+        await ctx.send("You're not registered yet. Use `!join` to start.")
+        return
+
+    difficulty = member.get("difficulty_level", 2)
+    label = adaptive_engine.get_difficulty_label(difficulty)
+    emoji = adaptive_engine.get_difficulty_emoji(difficulty)
+    pron_avg = database.get_pronunciation_average(discord_id)
+
+    msg = (
+        f"🎯 **Difficulty Level / مستوى الصعوبة**\n\n"
+        f"{emoji} Current: **{label}**\n"
+    )
+    if pron_avg > 0:
+        msg += f"📊 Pronunciation average (7d): **{pron_avg:.0f}%**\n"
+    msg += (
+        f"\n📋 **How it works:**\n"
+        f"• Score 85%+ for 3 days → difficulty goes UP\n"
+        f"• Score 50% or below for 3 days → difficulty goes DOWN\n"
+        f"• Otherwise stays the same\n\n"
+        f"💡 To reset to Normal: `!difficulty reset`"
+    )
+    await ctx.send(msg)
+
+
+@bot.command(name="difficulty_reset")
+async def cmd_difficulty_reset(ctx):
+    """Reset difficulty to Normal."""
+    discord_id = str(ctx.author.id)
+    member = database.get_member(discord_id)
+    if not member:
+        return
+    database.update_member(discord_id, difficulty_level=2)
+    await ctx.send("✅ Difficulty reset to **Normal / عادي**.")
+
+
+# ============================================================
 #  SAHEL S6: !link COMMAND (practice platform connection)
 # ============================================================
 
@@ -2885,8 +2969,9 @@ async def cmd_link(ctx):
         await ctx.send("❌ I can't DM you. Enable DMs from server members and try again.")
 
 
-# Add Arabic alias
+# Add Arabic aliases
 ARABIC_COMMAND_ALIASES["ربط"] = "link"
+ARABIC_COMMAND_ALIASES["صعوبة"] = "difficulty"
 
 
 # ============================================================
