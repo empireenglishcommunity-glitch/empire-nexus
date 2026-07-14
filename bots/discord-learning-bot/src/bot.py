@@ -756,7 +756,7 @@ async def morning_kickstart():
             await discord_member.send(msg)
             database.log_notification(discord_id, "morning_dm", today)
             sent += 1
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
 
         # Rate limit: don't spam Discord's DM API
@@ -829,7 +829,7 @@ async def evening_reminder():
             await discord_member.send(msg)
             database.log_notification(discord_id, "evening_dm", today)
             sent += 1
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
         await asyncio.sleep(0.5)
 
@@ -899,7 +899,7 @@ async def streak_at_risk():
             await discord_member.send(msg)
             database.log_notification(discord_id, "streak_alert", today)
             sent += 1
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
         await asyncio.sleep(0.5)
 
@@ -940,7 +940,7 @@ async def weekly_assessment():
                 f"Use `!assess` when done to calculate your score.\n\n"
                 f"⏰ Due by: Sunday 11:59 PM"
             )
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
 
     logger.info(f"Weekly assessments sent to {len(members)} members")
@@ -964,7 +964,7 @@ async def streak_update():
                             f"👋 Hey {m['discord_name']}! We noticed you haven't been active. "
                             f"Even one task today keeps your streak alive. You got this! 🏛️"
                         )
-                    except discord.Forbidden:
+                    except (discord.Forbidden, discord.HTTPException):
                         pass
 
 
@@ -1213,7 +1213,7 @@ async def nabd_weekly_summary():
         try:
             await discord_member.send(msg)
             database.log_notification(discord_id, "weekly_summary", today)
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass
         await asyncio.sleep(0.5)
 
@@ -1339,7 +1339,7 @@ async def _score_pronunciation(ctx, task_id: str):
                     f"💬 {result.feedback_ar}"
                     + (f"\n\n🔑 **Focus on:** {', '.join(result.missed_words[:3])}" if result.missed_words else "")
                 )
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.HTTPException):
             pass  # DMs disabled
 
         # A0.3: Check adaptive difficulty after scoring
@@ -1367,7 +1367,7 @@ async def _score_pronunciation(ctx, task_id: str):
                         f"كل واحد بيتعلم بسرعته. استمر! 🌟"
                     )
                 await ctx.author.send(msg)
-            except discord.Forbidden:
+            except (discord.Forbidden, discord.HTTPException):
                 pass
 
     except Exception as e:
