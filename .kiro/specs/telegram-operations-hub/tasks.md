@@ -91,16 +91,69 @@ the M0 plain-text safety net to avoid losing the message, which worked
 but meant losing all bold/formatting on any message containing student
 text with special characters.
 
-## Phase M2 — Reply Forwarding
+## Phase M2 — Reply Forwarding ✅ COMPLETE
 
-- [ ] **M2.1** Implement Telegram polling loop (getUpdates) as a
+- [x] **M2.1** Implement Telegram polling loop (getUpdates) as a
   background task — checks every 5 seconds for new messages.
-- [ ] **M2.2** When owner replies to an escalation message: match
+  → Implemented in new `src/ops_poller.py`, started once from
+  `on_ready()` via `asyncio.create_task()` (self-guarded against
+  duplicate starts, checked both in `ops_poller._running` and in
+  `bot.py` via a `bot._ops_poller_started` flag). **Deviation from the
+  spec's "every 5 seconds":** used `getUpdates` long-polling
+  (`timeout=25`) instead of a tight 5-second poll loop — long-polling
+  is Telegram's own recommended approach (near-instant delivery, far
+  fewer wasted requests than polling every 5s with `timeout=0`), and
+  the offset is persisted via `database.get_setting`/`set_setting` so
+  a restart doesn't reprocess old updates or miss ones sent while the
+  bot was down.
+- [x] **M2.2** When owner replies to an escalation message: match
   reply_to_message_id → find discord_id → DM student as Nour.
-- [ ] **M2.3** After successful delivery: send confirmation
+  → New persistent `pending_escalations` table (replacing the old
+  in-memory-only dict, which would have lost every unresolved
+  escalation on a redeploy — a real gap, since a redeploy can land at
+  any time relative to when the owner replies). New
+  `nour_escalation.forward_reply_to_student()` delivers the DM and
+  records it in `nour_conversations` history.
+- [x] **M2.3** After successful delivery: send confirmation
   "✅ Delivered to [student name]" in Telegram.
-- [ ] **M2.4** If delivery fails (DMs disabled): notify owner
+  → `ops_poller._handle_escalation_reply()` calls
+  `ops_hub.send_ops_alert("Delivered", ...)` on success.
+- [x] **M2.4** If delivery fails (DMs disabled): notify owner
   "❌ Couldn't deliver — student has DMs off."
+  → Same handler sends a `severity="warning"` alert on failure, and
+  deliberately leaves the escalation unresolved (not marked resolved)
+  so it still shows up as pending in the next daily digest.
+
+**Two real bugs found and fixed during M2 live testing** (both only
+surfaced when testing with a member that had a missing/malformed DB
+row, not in the initial happy-path test — worth remembering):
+1. `forward_reply_to_student()` originally wrapped the Discord DM
+   *and* the conversation-history write in one try/except. A failure
+   in the history write alone (e.g. a `FOREIGN KEY constraint failed`)
+   was misreported as "delivery failed" even though the DM had already
+   been sent successfully. Fixed by separating them into two try
+   blocks — the DM send determines the return value; history storage
+   is now best-effort logging only.
+2. `_store_reply_in_history()` (and all four new `pending_escalations`
+   functions in `database.py`) used bare `conn.close()` after
+   `conn.execute()`/`conn.commit()` with no `try/finally`. When
+   `execute()` raised, `close()` was skipped entirely, leaking an open
+   connection with a dangling transaction that then locked the SQLite
+   file (`database is locked`) for the very next operation
+   (`resolve_pending_escalation()`, called moments later in the same
+   request). Fixed with `try/finally` around every new
+   `pending_escalations` function — this matters more than usual here
+   because `ops_poller` is a long-running background loop that never
+   restarts on its own, so a leaked connection compounds indefinitely
+   rather than clearing on the next process restart.
+
+Verified live end-to-end against the real @empire_ops_eec_bot and a
+real Telegram reply-to-message (not a synthetic payload): sent a real
+escalation, replied to it in Telegram, captured the real `getUpdates`
+payload, replayed it through `ops_poller._handle_update()` against a
+mock Discord bot/guild/member, and confirmed: DM "sent", conversation
+history stored, escalation marked resolved, and a real
+"✅ Delivered" confirmation alert delivered to the owner's Telegram.
 
 ## Phase M3 — Quick Actions (commands)
 

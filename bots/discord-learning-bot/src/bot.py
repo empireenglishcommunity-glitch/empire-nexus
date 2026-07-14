@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -328,6 +328,15 @@ async def on_ready():
         midnight_voice_reset.start()
     if not markaz_daily_digest.is_running():
         markaz_daily_digest.start()
+    # Markaz M2: start the Telegram reply-forwarding poller exactly
+    # once. on_ready() can fire more than once per process (e.g. after
+    # a gateway reconnect), so guard against starting a second parallel
+    # poller — ops_poller.poll_for_replies() also self-guards via
+    # ops_poller._running, but checking here too avoids even the
+    # log-noise of a rejected duplicate start attempt.
+    if not getattr(bot, "_ops_poller_started", False):
+        asyncio.create_task(ops_poller.poll_for_replies(bot))
+        bot._ops_poller_started = True
     if not heartbeat.is_running():
         heartbeat.start()
     if not morning_kickstart.is_running():
@@ -1100,8 +1109,6 @@ async def markaz_daily_digest():
     if not database.is_feature_enabled("markaz_daily_digest"):
         return
 
-    from . import nour_escalation
-
     yesterday = (datetime.datetime.now(_zone()).date() - datetime.timedelta(days=1))
     yesterday_str = yesterday.isoformat()
     display_date = yesterday.strftime("%B %-d")
@@ -1112,7 +1119,9 @@ async def markaz_daily_digest():
     new_members = database.count_new_members_on(yesterday_str)
     milestones = database.streak_milestones_on(yesterday_str)
     nour_convos = database.count_nour_conversations_on(yesterday_str)
-    pending_escalations = len(nour_escalation._pending_escalations)
+    # Markaz M2: now persisted in the DB (survives restarts), not an
+    # in-memory dict on the nour_escalation module.
+    pending_escalations = database.count_pending_escalations()
 
     lines = [
         f"📊 *Daily Digest — {ops_hub.escape_markdown(display_date)}*",
