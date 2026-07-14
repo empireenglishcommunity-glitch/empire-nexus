@@ -294,16 +294,10 @@ async def _send_onboarding_media(member: discord.Member):
 @bot.event
 async def on_ready():
     database.init_db()
-    # Ensure the 'systemstatus' flag is enabled by default (Aegis Phase 5:
-    # this was initially gated during development; now it's public).
-    # Only sets it if it has never been touched — respects any admin's
-    # explicit !flag disable systemstatus.
-    from src.database import _connect
-    conn = _connect()
-    row = conn.execute("SELECT name FROM feature_flags WHERE name='systemstatus'").fetchone()
-    conn.close()
-    if row is None:
-        database.set_feature_flag("systemstatus", enabled=True, updated_by="on_ready_default")
+    # Sync all flags from registry → database (auto-registers new flags on startup)
+    added = database.sync_flag_registry()
+    if added:
+        logger.info(f"Flag registry sync: {added} new flag(s) added to database")
     # Load curriculum data from JSON files
     from . import curriculum
     curriculum.load_all()
