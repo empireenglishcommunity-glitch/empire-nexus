@@ -1311,6 +1311,7 @@ async def _score_pronunciation(ctx, task_id: str):
             expected_text=expected_text,
             discord_id=discord_id,
             task_id=task_id,
+            level=level,
             filename=filename,
         )
 
@@ -1319,16 +1320,25 @@ async def _score_pronunciation(ctx, task_id: str):
             return
 
         # DM the student with their score
-        score_emoji = "🟢" if result.score >= 80 else "🟡" if result.score >= 60 else "🔴"
         try:
-            await ctx.author.send(
-                f"🎯 **Pronunciation Score / نتيجة النطق**\n\n"
-                f"{score_emoji} **{result.score:.0f}%**\n\n"
-                f"📝 You said: _{result.transcript}_\n"
-                f"🎯 Expected: _{result.expected_text}_\n\n"
-                f"💬 **{result.feedback_en}**\n"
-                f"💬 **{result.feedback_ar}**"
-            )
+            if result.is_beginner_grace:
+                # First 3 recordings: encouragement only, no number
+                await ctx.author.send(
+                    f"🎙️ **Recording received!**\n\n"
+                    f"💬 {result.feedback_en}\n"
+                    f"💬 {result.feedback_ar}\n\n"
+                    f"_Detailed scoring starts after your first 3 recordings._"
+                )
+            else:
+                score_emoji = "🟢" if result.score >= 80 else "🟡" if result.score >= 60 else "🟠"
+                stars = "⭐" * int(result.score / 20)  # 0-5 stars
+                await ctx.author.send(
+                    f"🎯 **Pronunciation Score** {stars}\n\n"
+                    f"{score_emoji} **{result.score:.0f}%**\n\n"
+                    f"💬 {result.feedback_en}\n"
+                    f"💬 {result.feedback_ar}"
+                    + (f"\n\n🔑 **Focus on:** {', '.join(result.missed_words[:3])}" if result.missed_words else "")
+                )
         except discord.Forbidden:
             pass  # DMs disabled
 
