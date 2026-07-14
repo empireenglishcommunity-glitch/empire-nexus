@@ -122,6 +122,11 @@ async def handle_message(message: discord.Message) -> Optional[str]:
     _store_conversation(discord_id, "student", text)
     _store_conversation(discord_id, "nour", response)
 
+    # N5.2: Extract and store memories from student's message (async, non-blocking)
+    import asyncio
+    from . import nour_personality
+    asyncio.create_task(nour_personality.extract_memories_from_conversation(discord_id, text))
+
     return response
 
 
@@ -161,6 +166,8 @@ async def handle_with_human_touch(message: discord.Message):
 
 def _build_context(discord_id: str, text: str, member: dict) -> str:
     """Build rich context string for Gemini prompt."""
+    from . import nour_personality
+
     # Student data
     level = member.get("level", "L0")
     streak = member.get("current_streak", 0)
@@ -184,6 +191,16 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
             for h in history
         ])
 
+    # N5.2: Student memories (persistent facts)
+    memories = nour_personality.get_memories(discord_id)
+    memories_text = "\n".join(f"- {m}" for m in memories) if memories else "(no stored memories yet)"
+
+    # N5.3: Time-of-day personality
+    time_personality = nour_personality.get_time_personality()
+
+    # N5.4: Cultural context
+    cultural_context = nour_personality.get_cultural_context()
+
     # Knowledge base (truncated to fit token limit)
     knowledge = _load_knowledge_base()
 
@@ -194,6 +211,13 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
 - Points: {points}
 - Tasks today: {tasks_done}/7 done ({', '.join(tasks_today) if tasks_today else 'none yet'})
 - Pronunciation average: {pron_avg:.0f}% (last 7 days)
+
+MEMORIES (things you know about this student):
+{memories_text}
+
+TIME/CULTURAL CONTEXT:
+{time_personality}
+{cultural_context}
 
 RECENT CONVERSATION:
 {history_text or '(first message)'}
