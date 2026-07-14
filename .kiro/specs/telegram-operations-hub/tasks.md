@@ -5,18 +5,41 @@
 
 ---
 
-## Phase M0 — Bot Setup + Core Messaging
+## Phase M0 — Bot Setup + Core Messaging ✅ COMPLETE
 
-- [ ] **M0.1** Create new Telegram bot via @BotFather (name: "Empire Ops",
+- [x] **M0.1** Create new Telegram bot via @BotFather (name: "Empire Ops",
   username: @EmpireOpsBot or similar). Get token.
-- [ ] **M0.2** Add `OPS_BOT_TOKEN` and `OPS_CHAT_ID` to config.py and .env.
-- [ ] **M0.3** Create `src/ops_hub.py` with:
+  → Created via Telethon-scripted @BotFather conversation (owner's personal
+  account, my.telegram.org api_id/api_hash). Bot: **Empire Ops**,
+  username **@empire_ops_eec_bot**, verified live via `getMe`. Telethon
+  session deleted immediately after creation — no persistent access kept.
+- [x] **M0.2** Add `OPS_BOT_TOKEN` and `OPS_CHAT_ID` to config.py and .env.
+  → Added to production `.env` on Hetzner (77.42.43.250) via `chattr -i/+i`
+  safe SSH key procedure. `OPS_CHAT_ID` captured from the owner's `/start`
+  message via `getUpdates` (chat_id 8924041557). Config vars added in
+  `config.py` alongside the existing `TELEGRAM_ALERT_*` block.
+- [x] **M0.3** Create `src/ops_hub.py` with:
   - `send_ops_message(text, reply_markup, parse_mode)` — core send function
   - `send_ops_alert(title, body, severity)` — formatted alert
   - Error handling: if Telegram API fails, log and skip (never crash bot)
-- [ ] **M0.4** Update `nour_escalation.py` to use OPS_BOT_TOKEN (with
+  → Also added `escape_markdown()` and an automatic plain-text retry
+  fallback after discovering (during M0.5 testing) that unescaped
+  Markdown special characters in dynamic/student text cause a silent
+  Telegram 400 "can't parse entities" error — same class of bug as the
+  Discord `!flag list` 2000-char overflow. Fixed proactively rather than
+  waiting for it to surface in production.
+- [x] **M0.4** Update `nour_escalation.py` to use OPS_BOT_TOKEN (with
   fallback to TELEGRAM_ALERT_TOKEN if OPS not configured yet).
-- [ ] **M0.5** Test: send a test message from the bot to verify delivery.
+  → `escalate_to_owner()` now resolves `token`/`chat_id` from
+  `OPS_BOT_TOKEN`/`OPS_CHAT_ID` first, falling back to the legacy
+  `TELEGRAM_ALERT_TOKEN`/`TELEGRAM_ALERT_CHAT_ID`. Student name/message/
+  context are now passed through `escape_markdown()` before being
+  embedded in the alert.
+- [x] **M0.5** Test: send a test message from the bot to verify delivery.
+  → Verified live: `send_ops_alert()` and `send_ops_message()` both
+  delivered successfully to the owner's Telegram, including the
+  plain-text fallback path (confirmed with a deliberately unescaped
+  test message).
 
 ## Phase M1 — Daily Digest + Escalation Routing
 

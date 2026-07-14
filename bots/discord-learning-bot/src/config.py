@@ -82,6 +82,16 @@ TELEGRAM_ALERT_TOKEN = os.getenv("TELEGRAM_ALERT_TOKEN", "")
 TELEGRAM_ALERT_CHAT_ID = os.getenv("TELEGRAM_ALERT_CHAT_ID", "")
 
 # ============================================================
+#  MARKAZ: TELEGRAM OPERATIONS HUB (dedicated ops bot — @empire_ops_eec_bot)
+# ============================================================
+# Separate from TELEGRAM_ALERT_TOKEN above (which was the shared
+# @EmpireEnglishBot). Empire Ops is a dedicated bot for owner-facing
+# operational messages only: escalations, digests, reports, quick
+# actions. See .kiro/specs/telegram-operations-hub/ for the full spec.
+OPS_BOT_TOKEN = os.getenv("OPS_BOT_TOKEN", "")
+OPS_CHAT_ID = os.getenv("OPS_CHAT_ID", "")  # Owner's private chat with the ops bot
+
+# ============================================================
 #  PATHS
 # ============================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
