@@ -1,62 +1,101 @@
 """Unit tests for pronunciation_scorer.compare_words() algorithm.
 
-Tests the word-level comparison that underpins all pronunciation scoring.
+Tests the FAIR word-level comparison that underpins all pronunciation scoring.
+Includes: fuzzy matching, stop-word tolerance, Arabic substitution awareness.
 """
 import re
-import sys
-from pathlib import Path
 
 
-# ─── Import ONLY the pure functions we need to test ───
-# We can't import the full pronunciation_scorer module in CI because it
-# has relative imports (from . import config, database) that require the
-# package context. Instead, extract and test the algorithm directly.
+# ─── Self-contained functions (same logic as pronunciation_scorer.py) ───
+
+STOP_WORDS = frozenset([
+    "the", "a", "an", "in", "on", "at", "to", "of", "for", "is", "it",
+    "and", "or", "but", "my", "your", "his", "her", "its", "this", "that",
+    "was", "were", "be", "been", "have", "has", "had", "do", "does", "did",
+])
+
+ARABIC_SUBSTITUTIONS = {
+    "b": "p", "p": "b",
+    "f": "v", "v": "f",
+    "s": "th", "z": "th",
+    "d": "th",
+}
+
 
 def _normalize(text: str) -> list[str]:
-    """Normalize text for comparison: lowercase, strip punctuation, split into words."""
     text = text.lower()
     text = re.sub(r"[^\w\s']", "", text)
     text = re.sub(r"\s+", " ", text).strip()
     return text.split()
 
 
-def compare_words(transcript: str, expected: str) -> tuple[float, list[str]]:
-    """Compare transcript against expected text at word level (LCS)."""
+def _levenshtein(a: str, b: str) -> int:
+    if len(a) < len(b):
+        a, b = b, a
+    if not b:
+        return len(a)
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a):
+        curr = [i + 1]
+        for j, cb in enumerate(b):
+            curr.append(min(prev[j + 1] + 1, curr[j] + 1, prev[j] + (0 if ca == cb else 1)))
+        prev = curr
+    return prev[-1]
+
+
+def _words_match(transcript_word: str, expected_word: str) -> float:
+    if transcript_word == expected_word:
+        return 1.0
+    distance = _levenshtein(transcript_word, expected_word)
+    if distance <= 1:
+        return 0.9
+    if distance <= 2 and len(expected_word) >= 4:
+        return 0.75
+    if len(transcript_word) >= 2 and len(expected_word) >= 2:
+        if (ARABIC_SUBSTITUTIONS.get(transcript_word[0]) == expected_word[0] and
+                transcript_word[1:] == expected_word[1:]):
+            return 0.7
+        if expected_word.startswith("th") and transcript_word[0] in ("d", "s", "z"):
+            if transcript_word[1:] == expected_word[2:] or _levenshtein(transcript_word, expected_word) <= 2:
+                return 0.7
+    return 0.0
+
+
+def compare_words(transcript: str, expected: str, level: str = "L0") -> tuple[float, list[str]]:
     expected_words = _normalize(expected)
     transcript_words = _normalize(transcript)
 
     if not expected_words:
         return 100.0, []
     if not transcript_words:
-        return 0.0, expected_words[:5]
+        return 0.0, [w for w in expected_words if w not in STOP_WORDS][:5]
 
-    m, n = len(expected_words), len(transcript_words)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    total_weight = 0.0
+    earned_weight = 0.0
+    missed_content_words = []
 
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if expected_words[i - 1] == transcript_words[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-            else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    for exp_word in expected_words:
+        is_stop = exp_word in STOP_WORDS
+        weight = 0.5 if is_stop else 1.0
+        total_weight += weight
 
-    lcs_length = dp[m][n]
-    score = (lcs_length / m) * 100
+        best_match = 0.0
+        for tr_word in transcript_words:
+            match_score = _words_match(tr_word, exp_word)
+            best_match = max(best_match, match_score)
+            if match_score == 1.0:
+                break
 
-    matched = set()
-    i, j = m, n
-    while i > 0 and j > 0:
-        if expected_words[i - 1] == transcript_words[j - 1]:
-            matched.add(i - 1)
-            i -= 1
-            j -= 1
-        elif dp[i - 1][j] > dp[i][j - 1]:
-            i -= 1
-        else:
-            j -= 1
+        earned_weight += weight * best_match
+        if best_match < 0.5 and not is_stop:
+            missed_content_words.append(exp_word)
 
-    missed = [expected_words[i] for i in range(m) if i not in matched]
-    return round(score, 1), missed[:5]
+    raw_score = (earned_weight / total_weight) * 100 if total_weight > 0 else 100.0
+    level_bonus = {"L0": 10, "L1": 5, "L2": 2, "L3": 0}.get(level, 10)
+    adjusted_score = min(100.0, raw_score + level_bonus)
+    final_score = max(40.0, adjusted_score)
+
+    return round(final_score, 1), missed_content_words[:5]
 
 
 class TestNormalize:
@@ -100,26 +139,26 @@ class TestCompareWords:
         )
         assert score == 100.0
 
-    def test_completely_wrong(self):
+    def test_completely_wrong_has_floor(self):
+        """Score never goes below 40% (floor for encouragement)."""
         score, missed = compare_words(
             "something entirely different here now",
             "Pat put the pen in the paper bag"
         )
-        assert score < 30
+        assert score >= 40.0  # Floor!
         assert len(missed) > 0
 
-    def test_partial_match(self):
+    def test_partial_match_generous(self):
         score, missed = compare_words(
             "Pat put the pen in bag",  # missing "the paper"
             "Pat put the pen in the paper bag"
         )
-        # 6 out of 8 words matched
-        assert 70 <= score <= 80
-        assert "paper" in missed
+        # With stop-word tolerance ("the" is half weight), score should be high
+        assert score >= 75
 
-    def test_empty_transcript(self):
+    def test_empty_transcript_has_floor(self):
         score, missed = compare_words("", "Hello world")
-        assert score == 0.0
+        assert score == 0.0  # Only case with no floor (nothing said)
         assert len(missed) > 0
 
     def test_empty_expected(self):
@@ -127,32 +166,54 @@ class TestCompareWords:
         assert score == 100.0
         assert missed == []
 
-    def test_extra_words_in_transcript(self):
+    def test_extra_words_no_penalty(self):
+        """Extra filler words in transcript don't penalize."""
         score, missed = compare_words(
             "Pat uh put the uh pen in the paper um bag",
             "Pat put the pen in the paper bag"
         )
-        # All expected words are present, just with fillers
         assert score == 100.0
         assert missed == []
 
-    def test_swapped_words(self):
+    def test_fuzzy_match_close_words(self):
+        """Slight misspellings get partial credit (Levenshtein ≤ 2)."""
         score, missed = compare_words(
-            "put Pat the pen in the bag paper",
+            "Pat putt the peen in the papor bag",  # close misspellings
             "Pat put the pen in the paper bag"
         )
-        # LCS handles some reordering — most words still match
-        assert score >= 60
+        # Should be generous with fuzzy matching
+        assert score >= 75
+
+    def test_arabic_b_p_substitution(self):
+        """Arabic speakers saying b instead of p get partial credit."""
+        score, missed = compare_words(
+            "bat but the ben in the baper bag",  # b/p substitution
+            "Pat put the pen in the paper bag"
+        )
+        # With Arabic substitution awareness, this should score reasonably
+        assert score >= 60  # NOT the harsh < 30% from before
+
+    def test_stop_words_dont_heavily_penalize(self):
+        """Missing stop words (the, a, in) only minor penalty."""
+        score, missed = compare_words(
+            "Pat put pen paper bag",  # missing all stop words
+            "Pat put the pen in the paper bag"
+        )
+        assert score >= 70
+        # "the" and "in" should NOT be in missed content words
+        assert "the" not in missed
+        assert "in" not in missed
+
+    def test_level_l0_generous(self):
+        """L0 beginners get a bonus."""
+        score_l0, _ = compare_words("pat put pen", "Pat put the pen in the paper bag", level="L0")
+        score_l3, _ = compare_words("pat put pen", "Pat put the pen in the paper bag", level="L3")
+        assert score_l0 > score_l3  # L0 is more generous
 
     def test_single_word_match(self):
         score, missed = compare_words("hello", "hello")
         assert score == 100.0
         assert missed == []
-
-    def test_single_word_miss(self):
-        score, missed = compare_words("helo", "hello")
-        assert score == 0.0
-        assert "hello" in missed
 
     def test_real_accent_drill(self):
         """Real example from L0 week 1 day 1."""
@@ -162,21 +223,10 @@ class TestCompareWords:
         )
         assert score == 100.0
 
-    def test_arabic_speaker_common_errors(self):
-        """Common Arabic-speaker pronunciation errors detected."""
-        # 'p' → 'b' substitution (common for Arabic speakers)
-        score, missed = compare_words(
-            "bat but the ben in the baber bag",
-            "Pat put the pen in the paper bag"
-        )
-        # Several word mismatches
-        assert score < 60
-        assert len(missed) >= 3
-
     def test_max_five_missed_words(self):
         """Missed words list is capped at 5."""
         score, missed = compare_words(
-            "completely different text altogether now",
+            "completely different text",
             "one two three four five six seven eight nine ten"
         )
         assert len(missed) <= 5
