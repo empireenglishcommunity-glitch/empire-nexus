@@ -1260,6 +1260,82 @@ async def cmd_join(ctx, *, goal: str = ""):
     await ctx.send(msg)
 
 
+async def _score_pronunciation(ctx, task_id: str):
+    """Dhaka' P1: background pronunciation scoring.
+
+    Downloads the student's audio, transcribes via Whisper, compares to
+    expected text, generates feedback, and DMs the student with results.
+    Runs as asyncio.create_task() — never blocks the main !done flow.
+    All errors are caught and logged (never crash the bot).
+    """
+    try:
+        from . import pronunciation_scorer, curriculum
+
+        discord_id = str(ctx.author.id)
+        member_data = database.get_member(discord_id)
+        if not member_data:
+            return
+
+        # Get the audio URL
+        audio_info = await verification.get_recent_audio_url(ctx.author, ctx.guild, task_id)
+        if not audio_info:
+            logger.info(f"Pronunciation scoring: no audio found for {discord_id}/{task_id}")
+            return
+        audio_url, filename = audio_info
+
+        # Get the expected text for this task
+        level = member_data.get("level", "L0")
+        week = database.member_week_number(discord_id)
+        day_name = task_engine.current_day_name()
+        day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(day_name) \
+            if day_name in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
+
+        daily = curriculum.get_daily_content(week, day_name, day_index, level)
+
+        if task_id == "accent":
+            expected_text = (daily.get("accent_drill") or {}).get("record_this", "")
+        elif task_id == "shadow":
+            # Shadowing uses the primary passage text
+            from scripts.generate import normalize_drill  # Won't work — use curriculum directly
+            expected_text = (daily.get("accent_drill") or {}).get("record_this", "")
+        else:
+            expected_text = ""
+
+        if not expected_text:
+            logger.info(f"Pronunciation scoring: no expected text for {discord_id}/{task_id} w{week}d{day_index}")
+            return
+
+        # Run the full scoring pipeline
+        result = await pronunciation_scorer.score_recording(
+            audio_url=audio_url,
+            expected_text=expected_text,
+            discord_id=discord_id,
+            task_id=task_id,
+            filename=filename,
+        )
+
+        if not result.success:
+            logger.warning(f"Pronunciation scoring failed for {discord_id}: {result.error}")
+            return
+
+        # DM the student with their score
+        score_emoji = "🟢" if result.score >= 80 else "🟡" if result.score >= 60 else "🔴"
+        try:
+            await ctx.author.send(
+                f"🎯 **Pronunciation Score / نتيجة النطق**\n\n"
+                f"{score_emoji} **{result.score:.0f}%**\n\n"
+                f"📝 You said: _{result.transcript}_\n"
+                f"🎯 Expected: _{result.expected_text}_\n\n"
+                f"💬 **{result.feedback_en}**\n"
+                f"💬 **{result.feedback_ar}**"
+            )
+        except discord.Forbidden:
+            pass  # DMs disabled
+
+    except Exception as e:
+        logger.error(f"Pronunciation scoring error for {ctx.author.id}/{task_id}: {e}")
+
+
 @bot.command(name="done")
 async def cmd_done(ctx, task: str = None):
     """Mark a task as completed (with verification). Usage: !done accent / !done speaking / etc."""
@@ -1385,6 +1461,11 @@ async def cmd_done(ctx, task: str = None):
     # Nabd N6: social proof (notify same-level peers who opted in)
     if result["tasks_today"] == 7 and isinstance(ctx.author, discord.Member):
         await features.send_social_proof(ctx.guild, str(ctx.author.id))
+
+    # Dhaka' P1: pronunciation scoring (async, non-blocking)
+    if task in ("accent", "shadow") and isinstance(ctx.author, discord.Member):
+        if database.is_feature_enabled("tatawwur_pronunciation"):
+            asyncio.create_task(_score_pronunciation(ctx, task))
 
 
 @bot.command(name="progress")
