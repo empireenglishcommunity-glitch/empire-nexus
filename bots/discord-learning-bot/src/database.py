@@ -269,6 +269,19 @@ CREATE TABLE IF NOT EXISTS link_tokens (
 );
 CREATE INDEX IF NOT EXISTS idx_link_tokens_member ON link_tokens(discord_id);
 
+-- Nour Phase N0: conversation memory for AI concierge.
+CREATE TABLE IF NOT EXISTS nour_conversations (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    role            TEXT NOT NULL,
+    message         TEXT NOT NULL,
+    intent          TEXT DEFAULT '',
+    confidence      REAL DEFAULT 1.0,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_nour_conversations ON nour_conversations(discord_id, created_at);
+
 -- Dhaka' Phase P0: pronunciation scoring results.
 CREATE TABLE IF NOT EXISTS pronunciation_scores (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
