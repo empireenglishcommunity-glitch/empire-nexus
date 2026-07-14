@@ -1173,6 +1173,48 @@ async def celebrate_streak_milestone(guild: discord.Guild, member_name: str, day
     except Exception:
         pass
 
+    # Tatawwur showcase: also post to level showcase channel
+    await _post_to_showcase(guild, member_name, days, bonus)
+
+
+async def _post_to_showcase(guild: discord.Guild, member_name: str, days: int, bonus: int):
+    """Tatawwur T6: auto-post success stories to showcase channels.
+
+    Gated behind the 'tatawwur_showcase' feature flag. Posts a
+    celebration card to the student's level showcase channel when
+    they hit a streak milestone (7/30/100 days).
+    """
+    from . import database as db
+    if not db.is_feature_enabled("tatawwur_showcase"):
+        return
+
+    # Try to find the member's level to post to the right channel
+    # (We only have member_name here, so try all showcase channels)
+    showcase_channels = [
+        discord.utils.get(guild.text_channels, name=f"l{i}-showcase")
+        for i in range(4)
+    ]
+
+    messages = {
+        7: f"🌟 **{member_name}** أكمل أسبوع كامل بدون انقطاع! 7 أيام streak 🔥\n*First week milestone — the hardest part is starting!* 💪",
+        14: f"⭐ **{member_name}** وصل أسبوعين متواصلين! 14 يوم 🔥🔥\n*Two weeks of daily practice — a real habit is forming!* 🏛️",
+        30: f"👑 **{member_name}** وصل شهر كامل! 30 يوم streak 🔥🔥🔥\n*One month of daily English — you're unstoppable!* 🏛️👑",
+        100: f"🏆 **{member_name}** وصل 100 يوم! Legend status! 🔥💯\n*100 days of daily practice. True dedication. True Empire.* 🏛️🏆👑",
+    }
+
+    msg = messages.get(days)
+    if not msg:
+        return
+
+    # Post to the first available showcase channel
+    for ch in showcase_channels:
+        if ch:
+            try:
+                await ch.send(msg)
+                return
+            except Exception:
+                continue
+
 
 # ============================================================
 #  22. VOICE SESSION SCHEDULE
