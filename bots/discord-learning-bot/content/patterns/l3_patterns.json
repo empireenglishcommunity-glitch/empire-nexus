@@ -1,0 +1,37 @@
+{
+  "diplomacy": [
+    {"phrase": "With all due respect...", "when": "Disagreeing with authority/seniority", "arabic": "مع كل احترامي...", "example": "With all due respect, I think we should reconsider this decision."},
+    {"phrase": "I appreciate your perspective, however...", "when": "Diplomatic pushback", "arabic": "مقدّر وجهة نظرك بس...", "example": "I appreciate your perspective, however, the timeline isn't realistic."},
+    {"phrase": "Perhaps we could find a middle ground.", "when": "Seeking compromise", "arabic": "يمكن نلاقي حل وسط.", "example": "We clearly disagree. Perhaps we could find a middle ground."},
+    {"phrase": "I'd rather not go into details, but...", "when": "Declining to elaborate politely", "arabic": "مش عايز أدخل في تفاصيل بس...", "example": "I'd rather not go into details, but it didn't go well."},
+    {"phrase": "Let's agree to disagree.", "when": "Ending a disagreement respectfully", "arabic": "كل واحد يحترم رأي التاني.", "example": "We've been going back and forth. Let's agree to disagree."}
+  ],
+  "nuance": [
+    {"phrase": "It's not that simple.", "when": "Pointing out complexity", "arabic": "الموضوع مش بالبساطة دي.", "example": "Just quit your job? It's not that simple — I have bills to pay."},
+    {"phrase": "There's more to it than meets the eye.", "when": "Hidden complexity/depth", "arabic": "فيه أكتر من اللي باين.", "example": "The situation looks simple, but there's more to it than meets the eye."},
+    {"phrase": "It's a double-edged sword.", "when": "Something with pros AND cons", "arabic": "سلاح ذو حدين.", "example": "Social media is a double-edged sword — great for connection, terrible for focus."},
+    {"phrase": "That's easier said than done.", "when": "Something sounds easy but isn't", "arabic": "الكلام أسهل من الفعل.", "example": "Just be confident? That's easier said than done."},
+    {"phrase": "I take your point, but let me push back a little.", "when": "Intellectual challenge", "arabic": "فاهم نقطتك بس خليني أعترض شوية.", "example": "I take your point, but let me push back a little — is that always true?"}
+  ],
+  "sophistication": [
+    {"phrase": "For what it's worth...", "when": "Offering opinion knowing it may not matter", "arabic": "لو رأيي يفرق...", "example": "For what it's worth, I think you made the right call."},
+    {"phrase": "I don't want to overstep, but...", "when": "Offering unsolicited advice carefully", "arabic": "مش عايز أتدخل بس...", "example": "I don't want to overstep, but have you talked to her about it?"},
+    {"phrase": "That speaks volumes.", "when": "An action reveals a lot", "arabic": "ده بيقول كتير.", "example": "He didn't even apologize. That speaks volumes."},
+    {"phrase": "I'll take that with a grain of salt.", "when": "Not fully believing something", "arabic": "مش هاخدها على محمل الجد.", "example": "He says it'll be ready tomorrow. I'll take that with a grain of salt."},
+    {"phrase": "Let's not get ahead of ourselves.", "when": "Cautioning against premature conclusions", "arabic": "مانستعجلش.", "example": "The results look good, but let's not get ahead of ourselves."}
+  ],
+  "leadership": [
+    {"phrase": "I'll take full responsibility.", "when": "Owning a mistake or outcome", "arabic": "أنا المسؤول بالكامل.", "example": "The project failed. I'll take full responsibility."},
+    {"phrase": "Let's take a step back and look at the big picture.", "when": "Gaining perspective", "arabic": "نرجع خطوة ونبص للصورة الكبيرة.", "example": "We're stuck in details. Let's take a step back and look at the big picture."},
+    {"phrase": "I'd like to hear everyone's input.", "when": "Inclusive decision-making", "arabic": "عايز أسمع رأي كل واحد.", "example": "Before we decide, I'd like to hear everyone's input."},
+    {"phrase": "What's the takeaway here?", "when": "Extracting lessons", "arabic": "إيه الدرس المستفاد هنا؟", "example": "OK, that didn't work. What's the takeaway here?"},
+    {"phrase": "I'm confident we can figure this out.", "when": "Inspiring confidence", "arabic": "واثق إننا نقدر نحل ده.", "example": "It's a tough problem, but I'm confident we can figure this out."}
+  ],
+  "cultural": [
+    {"phrase": "When in Rome, do as the Romans do.", "when": "Adapting to local customs", "arabic": "إذا كنت في روما افعل كما يفعل الرومان.", "example": "Everyone takes a siesta here. When in Rome, do as the Romans do."},
+    {"phrase": "Actions speak louder than words.", "when": "Judging by behavior, not promises", "arabic": "الأفعال أعلى صوتاً من الكلام.", "example": "He keeps saying he'll change. Well, actions speak louder than words."},
+    {"phrase": "You can't judge a book by its cover.", "when": "Appearances can be deceiving", "arabic": "ماتحكمش على الكتاب من غلافه.", "example": "The restaurant looks small, but you can't judge a book by its cover."},
+    {"phrase": "Every cloud has a silver lining.", "when": "Finding positive in negative", "arabic": "كل محنة فيها منحة.", "example": "I lost my job, but every cloud has a silver lining — I found a better one."},
+    {"phrase": "Rome wasn't built in a day.", "when": "Patience for long-term goals", "arabic": "روما ما اتبنتش في يوم.", "example": "Don't expect fluency in a month. Rome wasn't built in a day."}
+  ]
+}

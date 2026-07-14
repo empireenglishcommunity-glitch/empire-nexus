@@ -1,0 +1,37 @@
+{
+  "professional": [
+    {"phrase": "I'd like to follow up on...", "when": "Returning to a previous topic (work/email)", "arabic": "عايز أرجع لموضوع...", "example": "I'd like to follow up on the proposal we discussed last week."},
+    {"phrase": "Just to clarify...", "when": "Preventing misunderstanding at work", "arabic": "بس عشان أوضح...", "example": "Just to clarify, the deadline is Friday, not Thursday, right?"},
+    {"phrase": "I'll keep you posted.", "when": "Promising updates", "arabic": "هخليك على اطلاع.", "example": "We're still waiting for approval. I'll keep you posted."},
+    {"phrase": "Let's circle back to this.", "when": "Postponing a discussion professionally", "arabic": "نرجع لده بعدين.", "example": "Good point, but let's circle back to this after the break."},
+    {"phrase": "I'm on the same page.", "when": "Showing agreement/alignment", "arabic": "أنا متفق معاك.", "example": "Yes, I'm on the same page. Let's move forward with that plan."}
+  ],
+  "idioms": [
+    {"phrase": "It's not rocket science.", "when": "Something is easy to understand", "arabic": "مش حاجة صعبة.", "example": "Just follow the instructions. It's not rocket science."},
+    {"phrase": "Let's not beat around the bush.", "when": "Getting to the point directly", "arabic": "نخش في الموضوع على طول.", "example": "Let's not beat around the bush — are you interested or not?"},
+    {"phrase": "That's the last straw.", "when": "Final limit of patience", "arabic": "دي القشة اللي قصمت ظهر البعير.", "example": "He was late again. That's the last straw — I'm finding someone else."},
+    {"phrase": "We'll cross that bridge when we come to it.", "when": "Deal with problems later, not now", "arabic": "نحل المشكلة لما توصل.", "example": "What if it rains? — We'll cross that bridge when we come to it."},
+    {"phrase": "The ball is in your court.", "when": "It's the other person's turn to act", "arabic": "الكورة في ملعبك.", "example": "I've sent the offer. The ball is in your court now."}
+  ],
+  "persuasion": [
+    {"phrase": "Have you considered...?", "when": "Suggesting without pushing", "arabic": "فكرت في...؟", "example": "Have you considered applying for that scholarship?"},
+    {"phrase": "What if we tried...?", "when": "Proposing an alternative", "arabic": "إيه رأيك لو جربنا...؟", "example": "What if we tried a different approach this time?"},
+    {"phrase": "I can see why you'd think that, but...", "when": "Acknowledging before redirecting", "arabic": "فاهم ليه بتفكر كده بس...", "example": "I can see why you'd think that, but the data says otherwise."},
+    {"phrase": "Wouldn't it make more sense to...?", "when": "Logical suggestion", "arabic": "مش هيكون أحسن لو...؟", "example": "Wouldn't it make more sense to start earlier?"},
+    {"phrase": "Here's what I'd recommend.", "when": "Giving confident advice", "arabic": "اللي أنا هنصح بيه.", "example": "Here's what I'd recommend: take the online course first."}
+  ],
+  "emotions": [
+    {"phrase": "I'm over the moon!", "when": "Extremely happy", "arabic": "أنا فرحان جداً!", "example": "I got the job! I'm over the moon!"},
+    {"phrase": "I'm a bit under the weather.", "when": "Feeling slightly ill", "arabic": "تعبان شوية.", "example": "I'm a bit under the weather today. Can we reschedule?"},
+    {"phrase": "That really gets on my nerves.", "when": "Something annoys you", "arabic": "ده بيضايقني جداً.", "example": "When people are late, that really gets on my nerves."},
+    {"phrase": "I'm torn between...", "when": "Can't decide between two options", "arabic": "أنا محتار بين...", "example": "I'm torn between the blue one and the red one."},
+    {"phrase": "I couldn't care less.", "when": "Complete indifference", "arabic": "مالي فيه خالص.", "example": "Who wins the game? Honestly, I couldn't care less."}
+  ],
+  "academic": [
+    {"phrase": "To put it simply...", "when": "Simplifying a complex idea", "arabic": "ببساطة...", "example": "To put it simply, the economy is slowing down."},
+    {"phrase": "That raises an interesting point.", "when": "Acknowledging insight in discussion", "arabic": "ده بيفتح نقطة مهمة.", "example": "That raises an interesting point. Can you elaborate?"},
+    {"phrase": "Let me play devil's advocate.", "when": "Arguing the other side intentionally", "arabic": "خليني أجادل من الناحية التانية.", "example": "Let me play devil's advocate — what if we're wrong?"},
+    {"phrase": "In a nutshell...", "when": "Summarizing briefly", "arabic": "باختصار شديد...", "example": "In a nutshell, we need more data before deciding."},
+    {"phrase": "That's a fair point.", "when": "Conceding in a debate", "arabic": "ده كلام صح.", "example": "That's a fair point. I hadn't thought of it that way."}
+  ]
+}
