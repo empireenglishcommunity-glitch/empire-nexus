@@ -54,6 +54,9 @@ REGISTRY = [
     ("nour_concierge", "AI concierge handles DMs and #ask-nour questions", "nour", True),
     ("nour_proactive", "Proactive outreach (anti-churn check-ins)", "nour", False),
     ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),
+
+    # ── MARKAZ (Telegram operations hub) ──
+    ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),
 ]
 
 # Initiative display names and emoji
@@ -63,6 +66,7 @@ INITIATIVES = {
     "nabd": ("🔔", "NABD", "student notifications"),
     "tatawwur": ("🚀", "TATAWWUR", "system evolution"),
     "nour": ("💬", "NOUR", "autonomous student concierge"),
+    "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
 }
 
 

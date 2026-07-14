@@ -953,13 +953,96 @@ def member_count() -> int:
 
 def total_submissions_today() -> int:
     """Count all submissions across all members today."""
-    today = datetime.date.today().isoformat()
+    return total_submissions_on_date(datetime.date.today().isoformat())
+
+
+def total_submissions_on_date(date_str: str) -> int:
+    """Count all submissions across all members on a specific date
+    (YYYY-MM-DD). Generalized from total_submissions_today() for the
+    Markaz daily digest (Phase M1), which reports on *yesterday*."""
     conn = _connect()
     row = conn.execute(
-        "SELECT COUNT(*) as cnt FROM daily_submissions WHERE date=?", (today,)
+        "SELECT COUNT(*) as cnt FROM daily_submissions WHERE date=?", (date_str,)
     ).fetchone()
     conn.close()
     return row["cnt"] if row else 0
+
+
+def count_active_members_on(date_str: str) -> int:
+    """Count distinct members who submitted at least one task on a
+    specific date (YYYY-MM-DD). Used by the Markaz daily digest to
+    report "active students yesterday"."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(DISTINCT discord_id) as cnt FROM daily_submissions WHERE date=?",
+        (date_str,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def count_new_members_on(date_str: str) -> int:
+    """Count members who registered (joined_at) on a specific date
+    (YYYY-MM-DD). Used by the Markaz daily digest."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) as cnt FROM members WHERE date(joined_at)=?", (date_str,)
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def streak_milestones_on(date_str: str) -> list[dict]:
+    """Get streak-bonus milestones hit on a specific date (YYYY-MM-DD),
+    by reading the points_log rows written by tasks.py's streak-bonus
+    logic (reason='streak_<N>'). Returns [{"discord_name": ..., "days": N}].
+    Used by the Markaz daily digest."""
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT p.reason, m.discord_name FROM points_log p
+           JOIN members m ON m.discord_id = p.discord_id
+           WHERE date(p.logged_at)=? AND p.reason LIKE 'streak_%'""",
+        (date_str,),
+    ).fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        try:
+            days = int(r["reason"].split("_", 1)[1])
+        except (IndexError, ValueError):
+            continue
+        name = (r["discord_name"] or "").split("#")[0]
+        result.append({"discord_name": name, "days": days})
+    return result
+
+
+def count_nour_conversations_on(date_str: str) -> int:
+    """Count distinct students who exchanged at least one message with
+    Nour on a specific date (YYYY-MM-DD). Used by the Markaz daily digest."""
+    conn = _connect()
+    row = conn.execute(
+        """SELECT COUNT(DISTINCT discord_id) as cnt FROM nour_conversations
+           WHERE role='student' AND date(created_at)=?""",
+        (date_str,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def get_recent_conversation(discord_id: str, limit: int = 5) -> list[dict]:
+    """Get the last N Nour conversation messages for a student, oldest
+    first. Public counterpart of nour_concierge._get_recent_conversation
+    (same query) — used by nour_escalation.py (Markaz M1.4) to include
+    conversation history in escalation alerts without reaching into
+    nour_concierge's private helpers."""
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT role, message, created_at FROM nour_conversations
+           WHERE discord_id=? ORDER BY created_at DESC LIMIT ?""",
+        (discord_id, limit),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in reversed(rows)]
 
 
 def days_since_active(member: dict) -> int:
