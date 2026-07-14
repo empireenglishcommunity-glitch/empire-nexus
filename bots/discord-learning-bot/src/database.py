@@ -853,6 +853,36 @@ def is_feature_enabled(name: str, discord_id: str = None) -> bool:
     return discord_id is not None and str(discord_id) in allowed_list
 
 
+def sync_flag_registry():
+    """Auto-register all flags from flag_registry.py into the database.
+
+    Called on every bot startup. For each flag in the registry:
+    - If it doesn't exist in the DB → create it with its default_enabled value
+    - If it already exists → DON'T touch it (preserve manual enable/disable state)
+
+    This ensures !flag list always shows ALL flags, and new flags added to
+    the registry appear automatically on next restart without manual !flag enable.
+    """
+    from . import flag_registry
+    conn = _connect()
+    existing = {row["name"] for row in conn.execute("SELECT name FROM feature_flags").fetchall()}
+
+    added = 0
+    for name, description, initiative, default_enabled in flag_registry.REGISTRY:
+        if name not in existing:
+            conn.execute(
+                """INSERT INTO feature_flags (name, enabled, allowed_ids, updated_at, updated_by)
+                   VALUES (?, ?, '', datetime('now'), 'auto_sync')""",
+                (name, 1 if default_enabled else 0),
+            )
+            added += 1
+
+    if added:
+        conn.commit()
+    conn.close()
+    return added
+
+
 def set_feature_flag(name: str, enabled: bool, allowed_ids: str = "", updated_by: str = ""):
     """Enable/disable a feature flag, optionally restricted to an
     allowlist of comma-separated discord_ids. Upserts so the same
