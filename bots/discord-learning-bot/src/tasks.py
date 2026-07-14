@@ -7,11 +7,49 @@ This module is called by the bot's scheduled tasks (discord.ext.tasks)
 to generate and post content at the configured times.
 """
 import datetime
+import json
 import logging
+from pathlib import Path
 
 from . import config, database, ai_engine
 
 logger = logging.getLogger("empire-bot.tasks")
+
+
+def _load_daily_pattern(level: str, day_of_year: int) -> dict | None:
+    """Load today's conversational pattern for a level (Tatawwur T1 / Sahel S3).
+
+    Reads from content/patterns/{level}_patterns.json, round-robins through
+    all patterns based on day_of_year so each day gets a different one.
+    Returns None if no patterns file exists or feature is disabled.
+    """
+    if not database.is_feature_enabled("tatawwur_patterns"):
+        return None
+
+    patterns_file = config.BASE_DIR / "content" / "patterns" / f"{level.lower()}_patterns.json"
+    if not patterns_file.exists():
+        return None
+
+    try:
+        with open(patterns_file, encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+
+    # Flatten all categories interleaved (same logic as empire-dojo's generate.py)
+    flat = []
+    categories = list(data.keys())
+    max_per_cat = max((len(v) for v in data.values()), default=0)
+    for i in range(max_per_cat):
+        for cat in categories:
+            items = data[cat]
+            if i < len(items):
+                flat.append(items[i])
+
+    if not flat:
+        return None
+
+    return flat[day_of_year % len(flat)]
 
 # ============================================================
 #  TIME UTILITIES
@@ -276,6 +314,10 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
 
     total_min = sum(t["duration_min"] for t in tasks)
 
+    # Tatawwur T1 / Sahel S3: Daily conversational pattern
+    day_of_year = datetime.date.today().timetuple().tm_yday
+    pattern = _load_daily_pattern(level, day_of_year)
+
     return {
         "date": date,
         "day_name": day_name,
@@ -283,6 +325,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "week": week,
         "tasks": tasks,
         "total_minutes": total_min,
+        "daily_pattern": pattern,
     }
 
 
@@ -443,6 +486,19 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     for i, task in enumerate(task_data["tasks"], 1):
         block = f"**{i}️⃣ {task['title']}** ({task['duration_min']} min)\n{task['content']}"
         task_blocks.append(block)
+
+    # Add daily pattern card if available (Tatawwur T1 / Sahel S3)
+    pattern = task_data.get("daily_pattern")
+    if pattern:
+        pattern_label = bl("Today's Pattern", "نمط اليوم")
+        pattern_block = (
+            f"💬 **{pattern_label}**\n"
+            f"**\"{pattern['phrase']}\"**\n"
+            f"📍 {pattern['when']}\n"
+            f"🇪🇬 {pattern['arabic']}\n"
+            f"💡 _{pattern['example']}_"
+        )
+        task_blocks.append(pattern_block)
 
     chunks = []
     current = [header]
