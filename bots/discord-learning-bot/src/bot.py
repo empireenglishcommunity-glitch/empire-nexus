@@ -2707,16 +2707,21 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
         lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         lines.append("Toggle: `!flag enable/disable <name>`")
 
-        # Discord 2000-char limit — send as DM if too long
-        msg = "\n".join(lines)
-        if len(msg) > 1900:
-            try:
-                await ctx.author.send(msg)
-                await ctx.send("📩 Flag list sent to your DMs.", delete_after=5)
-            except discord.Forbidden:
-                await ctx.send(msg[:1900] + "\n... (truncated)")
-        else:
-            await ctx.send(msg)
+        # Smart chunking: split into Discord-safe messages (max 1900 chars each).
+        # Sends multiple messages to the SAME channel. Works for any number of flags.
+        chunks = []
+        current_chunk = ""
+        for line in lines:
+            if len(current_chunk) + len(line) + 1 > 1900:
+                chunks.append(current_chunk)
+                current_chunk = line
+            else:
+                current_chunk += ("\n" + line) if current_chunk else line
+        if current_chunk:
+            chunks.append(current_chunk)
+
+        for chunk in chunks:
+            await ctx.send(chunk)
         return
 
     if not name:
