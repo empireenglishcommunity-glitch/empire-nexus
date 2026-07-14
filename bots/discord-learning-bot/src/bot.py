@@ -341,6 +341,9 @@ async def on_ready():
     # Nour N2: proactive outreach (every 2 hours)
     if not nour_proactive_check.is_running():
         nour_proactive_check.start()
+    # Nour N5.1: weekly self-review (Sunday 10 AM)
+    if not nour_weekly_review.is_running():
+        nour_weekly_review.start()
     # Sahel S6: start the API server for practice platform connection
     from . import api_server
     await api_server.start_api_server(port=8099)
@@ -1231,6 +1234,18 @@ async def nour_proactive_check():
         await nour_proactive.run_proactive_checks(bot)
     except Exception as e:
         logger.error(f"Nour proactive check error: {e}")
+
+
+@tasks.loop(time=datetime.time(hour=10, minute=0, tzinfo=_zone()))
+async def nour_weekly_review():
+    """Nour N5.1: weekly self-review — runs every Sunday at 10 AM."""
+    if _now().weekday() != 6:  # 6 = Sunday
+        return
+    from . import nour_personality
+    try:
+        await nour_personality.run_weekly_review(bot)
+    except Exception as e:
+        logger.error(f"Nour weekly review error: {e}")
 
 
 # ============================================================
