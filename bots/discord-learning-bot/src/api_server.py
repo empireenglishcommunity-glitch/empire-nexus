@@ -1,13 +1,18 @@
-"""Empire English Bot — HTTP API (Sahel S6 + Wuslah W0).
+"""Empire English Bot — HTTP API (Sahel S6 + Wuslah W0-W5).
 
 Runs alongside the Discord bot on port 8099 (internal only).
 Provides progress data for the practice platform via link tokens.
 
 Endpoints:
-  GET  /api/progress?token=<token>     — returns JSON progress data (legacy)
-  GET  /api/dashboard?token=<token>    — full aggregated dashboard (Wuslah W0)
-  GET  /api/leaderboard?token=<token>  — top 10 + requester rank (Wuslah W0)
-  POST /api/srs-review                 — record SRS review result
+  GET  /api/progress?token=<token>         — returns JSON progress data (legacy)
+  GET  /api/progress-v2?token=<token>      — enhanced progress + adaptive fields (W3)
+  GET  /api/dashboard?token=<token>        — full aggregated dashboard (W0)
+  GET  /api/leaderboard?token=<token>      — top 10 + requester rank (W0)
+  GET  /api/nour-tips?token=<token>        — AI study tips or generic fallback (W4)
+  GET  /api/notifications?token=<token>    — notification preferences (W5)
+  POST /api/srs-review                     — record SRS review result
+  POST /api/complete-exercise              — web-to-Discord task confirmation (W2)
+  POST /api/notifications                  — update notification preferences (W5)
 """
 import json
 import logging
@@ -350,6 +355,314 @@ async def get_leaderboard(request: web.Request) -> web.Response:
         "your_points": member.get("total_points", 0),
         "your_name": (member.get("discord_name") or "?").split("#")[0],
     }, headers=_cors_headers())
+
+
+# ============================================================
+#  WUSLAH W2: POST /api/complete-exercise — cross-platform task confirmation
+# ============================================================
+
+@routes.post("/api/complete-exercise")
+async def post_complete_exercise(request: web.Request) -> web.Response:
+    """Record a web-based exercise completion in the bot's database.
+
+    Writes to daily_submissions exactly as !done does — the streak
+    engine, points, celebrations all fire on the next Discord event
+    that reads this data. The UNIQUE constraint on
+    (discord_id, date, task_id) prevents double-counting if the student
+    also runs !done on Discord for the same task.
+    """
+    try:
+        data = await request.json()
+    except (json.JSONDecodeError, Exception):
+        return web.json_response({"error": "invalid JSON"}, status=400)
+
+    token = data.get("token", "")
+    exercise_type = data.get("exercise_type", "")
+
+    if not token or not exercise_type:
+        return web.json_response({"error": "token and exercise_type required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    if not database.is_feature_enabled("wuslah_exercise_confirm"):
+        return web.json_response({"error": "exercise confirmation not enabled"}, status=503)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    # Validate exercise_type
+    valid_types = ["accent", "shadowing", "listening", "vocab", "writing", "grammar", "speaking"]
+    if exercise_type not in valid_types:
+        return web.json_response({"error": f"invalid exercise_type, must be one of: {', '.join(valid_types)}"}, status=400)
+
+    import datetime
+    discord_id = member["discord_id"]
+    today = datetime.date.today().isoformat()
+
+    # log_submission handles UNIQUE constraint (returns False if already exists)
+    added = database.log_submission(discord_id, today, exercise_type)
+
+    if added:
+        # Award points (same as !done: POINTS_PER_TASK)
+        from . import config
+        database.add_points(discord_id, config.POINTS_PER_TASK, f"web_{exercise_type}")
+        # Touch last_active
+        database.update_member(discord_id, last_active_at=datetime.datetime.now().isoformat())
+
+    # Return current tasks_today count
+    tasks_today = len(database.tasks_completed_today(discord_id))
+    _touch_token(token)
+
+    return web.json_response({
+        "ok": True,
+        "added": added,
+        "tasks_today": tasks_today,
+        "total_tasks": 7,
+    }, headers=_cors_headers())
+
+
+# ============================================================
+#  WUSLAH W3: Expanded /api/progress with adaptive fields
+# ============================================================
+# (Already handled by /api/dashboard which includes difficulty_level,
+#  days_since_active, and pronunciation data. The legacy /api/progress
+#  endpoint is left unchanged for backwards compatibility. The web JS
+#  in app.js uses ConnectedProgress which hits /api/progress — we add
+#  the adaptive fields there too so existing pages benefit.)
+
+@routes.get("/api/progress-v2")
+async def get_progress_v2(request: web.Request) -> web.Response:
+    """Enhanced progress endpoint with adaptive practice fields.
+
+    Extends the legacy /api/progress with: difficulty_level,
+    days_since_active, weak_phonemes, recommended_exercise, srs_due_count.
+    Used by app.js ConnectedProgress for adaptive behavior on practice pages.
+    """
+    token = request.query.get("token", "")
+    if not token:
+        return web.json_response({"error": "token required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    _touch_token(token)
+
+    import datetime
+    discord_id = member["discord_id"]
+    today = datetime.date.today().isoformat()
+
+    # Basic progress (same as legacy)
+    streak = member.get("current_streak", 0)
+    level = member.get("level", "L0")
+    tasks_today = len(database.tasks_completed_today(discord_id))
+
+    # Adaptive fields
+    difficulty_level = member.get("difficulty_level", 2)
+
+    # Days since active
+    last_active = member.get("last_active_at", "")
+    try:
+        last_dt = datetime.datetime.fromisoformat(last_active.replace("Z", ""))
+        days_since_active = (datetime.datetime.now() - last_dt).days
+    except (ValueError, TypeError, AttributeError):
+        days_since_active = 0
+
+    # SRS due count
+    conn = database._connect()
+    srs_due = conn.execute(
+        "SELECT COUNT(*) as cnt FROM vocab_srs WHERE discord_id=? AND next_review<=?",
+        (discord_id, today),
+    ).fetchone()["cnt"]
+
+    # Weak phonemes (phonemes scoring below 65% in last 7 days)
+    pron_scores = database.get_recent_scores(discord_id, days=7)
+    phoneme_scores = {}
+    for s in pron_scores:
+        tid = s.get("task_id", "")
+        if tid not in phoneme_scores:
+            phoneme_scores[tid] = []
+        phoneme_scores[tid].append(s["score"])
+    weak_phonemes = [tid for tid, scores in phoneme_scores.items()
+                     if sum(scores)/len(scores) < 65]
+
+    # Recommended exercise (simplest heuristic: what hasn't been done today)
+    today_subs = conn.execute(
+        "SELECT task_id FROM daily_submissions WHERE discord_id=? AND date=?",
+        (discord_id, today),
+    ).fetchall()
+    done_today = {r["task_id"] for r in today_subs}
+    conn.close()
+
+    exercise_priority = ["accent", "vocab", "shadowing", "listening", "writing", "grammar", "speaking"]
+    recommended = next((e for e in exercise_priority if e not in done_today), None)
+
+    return web.json_response({
+        "streak": streak,
+        "level": level,
+        "tasks_today": tasks_today,
+        "difficulty_level": difficulty_level,
+        "days_since_active": days_since_active,
+        "srs_due_count": srs_due,
+        "weak_phonemes": weak_phonemes[:3],
+        "recommended_exercise": recommended,
+    }, headers=_cors_headers())
+
+
+# ============================================================
+#  WUSLAH W4: /api/nour-tips — pre-generated study tips
+# ============================================================
+
+@routes.get("/api/nour-tips")
+async def get_nour_tips(request: web.Request) -> web.Response:
+    """Return AI-generated study tips for the student.
+
+    Tips are pre-generated weekly (by ops_monitoring's tip generation
+    task) and cached in the nour_study_tips table. This endpoint just
+    reads the cached result — zero AI cost per page load.
+
+    Falls back to generic level-appropriate tips if none are cached.
+    """
+    token = request.query.get("token", "")
+    if not token:
+        return web.json_response({"error": "token required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    _touch_token(token)
+    discord_id = member["discord_id"]
+    level = member.get("level", "L0")
+
+    # Try cached tips first
+    conn = database._connect()
+    tips_raw = conn.execute(
+        "SELECT tip_text, generated_at FROM nour_study_tips WHERE discord_id=? ORDER BY generated_at DESC LIMIT 3",
+        (discord_id,),
+    ).fetchall()
+    conn.close()
+
+    if tips_raw:
+        return web.json_response({
+            "tips": [r["tip_text"] for r in tips_raw],
+            "generated_at": tips_raw[0]["generated_at"],
+            "source": "personalized",
+        }, headers=_cors_headers())
+
+    # Fallback: generic level-appropriate tips
+    generic_tips = _generic_tips_for_level(level)
+    return web.json_response({
+        "tips": generic_tips,
+        "generated_at": None,
+        "source": "generic",
+    }, headers=_cors_headers())
+
+
+def _generic_tips_for_level(level: str) -> list[str]:
+    """Static fallback tips when AI-generated ones aren't available."""
+    tips = {
+        "L0": [
+            "Focus on daily accent drills — 5 minutes of practice builds muscle memory",
+            "Use the SRS flashcards before bed — sleep consolidates vocabulary",
+            "Record yourself and compare with the model — you'll hear the difference",
+        ],
+        "L1": [
+            "Shadow full sentences now, not just words — build natural rhythm",
+            "Try the dictation exercises — writing what you hear strengthens listening",
+            "Review your pronunciation scores — focus on any phoneme below 70%",
+        ],
+        "L2": [
+            "Practice speaking in complete paragraphs — fluency over perfection",
+            "Challenge yourself with the writing exercises — express original thoughts",
+            "Listen to the model audio at full speed — train your ear for natural pace",
+        ],
+        "L3": [
+            "Focus on nuance — intonation, emphasis, and emotional expression",
+            "Try explaining complex ideas in English without translating from Arabic",
+            "Record a 2-minute monologue weekly — track your confidence growth",
+        ],
+    }
+    return tips.get(level, tips["L0"])
+
+
+# ============================================================
+#  WUSLAH W5: /api/notifications — read/update preferences
+# ============================================================
+
+@routes.get("/api/notifications")
+async def get_notifications(request: web.Request) -> web.Response:
+    """Return current notification preferences for the student."""
+    token = request.query.get("token", "")
+    if not token:
+        return web.json_response({"error": "token required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    _touch_token(token)
+    prefs = database.get_notification_prefs(member["discord_id"])
+    return web.json_response(prefs, headers=_cors_headers())
+
+
+@routes.post("/api/notifications")
+async def post_notifications(request: web.Request) -> web.Response:
+    """Update notification preferences from the web dashboard."""
+    try:
+        data = await request.json()
+    except (json.JSONDecodeError, Exception):
+        return web.json_response({"error": "invalid JSON"}, status=400)
+
+    token = data.get("token", "")
+    if not token:
+        return web.json_response({"error": "token required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    discord_id = member["discord_id"]
+    _touch_token(token)
+
+    # Allowed fields to update
+    allowed_fields = {
+        "morning_dm", "evening_dm", "streak_alert",
+        "celebrations", "social_proof", "weekly_summary",
+    }
+
+    conn = database._connect()
+    try:
+        for key, value in data.items():
+            if key in allowed_fields:
+                # Coerce to int (0 or 1)
+                val = 1 if value else 0
+                conn.execute(
+                    f"""INSERT INTO notification_preferences (discord_id, {key})
+                        VALUES (?, ?)
+                        ON CONFLICT(discord_id) DO UPDATE SET {key}=excluded.{key}, updated_at=datetime('now')""",
+                    (discord_id, val),
+                )
+        conn.commit()
+    finally:
+        conn.close()
+
+    prefs = database.get_notification_prefs(discord_id)
+    return web.json_response({"ok": True, "preferences": prefs}, headers=_cors_headers())
 
 
 # ============================================================
