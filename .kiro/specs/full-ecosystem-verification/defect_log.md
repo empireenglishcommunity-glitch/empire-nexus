@@ -734,3 +734,126 @@ campaign, before H7's Go/No-Go sign-off.
 **Status:** 🟡 **DEFERRED** — confirmed via live device test + code read,
 not yet fixed, intentionally batched with D012/D013 for a single fix
 pass at the end of the campaign.
+
+
+
+---
+
+## D015 — Shadowing page's Stop button and Speed selector have zero effect on the real pre-generated audio (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.2 (manual mobile walkthrough with the owner, L0
+Day 1, Shadowing exercise, real iPhone Safari).
+**Severity:** Major. The passage's model audio plays correctly, but a
+student cannot stop it early or slow it down — both controls are
+silently non-functional.
+
+**What was observed:** Tapped "▶️ Play" — audio played correctly.
+Tapped "⏹️ Stop" — audio kept playing, nothing happened. Changed the
+Speed dropdown — no audible change in playback speed.
+
+**Root cause, confirmed via code read (`app.js` + `generate.py`):**
+This page has TWO entirely separate, non-communicating audio systems:
+1. **`KokoroAudio`** — plays real pre-generated MP3 clips via an
+   `Audio` element (confirmed live: `l0-w1-d1-shadow.mp3` etc. exist
+   and return HTTP 200). The Shadowing page's "▶️ Play" button calls
+   `KokoroAudio.play(id, passage)` — this is what actually played.
+2. **`TTS`** — the browser's `SpeechSynthesis` API (a completely
+   different, software voice fallback used only when an MP3 is
+   missing/fails to load).
+
+The page's "⏹️ Stop" button is wired to `TTS.stop()`, which only calls
+`speechSynthesis.cancel()` — it has ZERO effect on `KokoroAudio`'s
+actual `Audio` element that's playing the real MP3. Similarly, the
+Speed `<select>` is wired to `TTS.setRate(this.value)`, which only
+sets a rate value used by the `SpeechSynthesis` fallback — it never
+touches `KokoroAudio`'s `Audio.playbackRate`, and even if it did,
+`KokoroAudio.play()` doesn't accept or apply a live rate change to an
+already-playing `Audio` object at all.
+
+**Why this matters:** every level/week/day's Shadowing page uses this
+same generator function (`gen_shadowing()`), and per D014's Accent-
+page finding, `gen_accent()` likely has the same Play button (needs
+confirming — the Accent page tested first didn't have a Stop/Speed
+control visible in the walkthrough, only Shadowing does per
+`generate.py`'s markup). This is at minimum a Shadowing-page-wide gap
+across all 4 levels.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** wire the Stop button to `KokoroAudio.stop()` (which
+already exists and correctly pauses the current `Audio` AND calls
+`TTS.stop()` as a fallback — so simply changing the onclick handler
+from `TTS.stop()` to `KokoroAudio.stop()` may be sufficient). For
+Speed: either (a) have `KokoroAudio.play()` accept and apply a rate
+to the `Audio` element consistently, and have the speed selector call
+into `KokoroAudio` rather than `TTS` directly, or (b) restart
+playback from the current position at the new rate when changed
+mid-play. Needs a fresh live re-test after the fix to confirm both
+controls actually affect the real MP3 playback, not just the unused
+`SpeechSynthesis` fallback.
+
+**Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
+D012, D013, D014 for one fix-everything pass at the end of the Hisn
+campaign, before H7's Go/No-Go sign-off.
+
+**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
+read, not yet fixed, intentionally batched with other findings.
+
+---
+
+## D016 — "Done" checkbox gives zero visible feedback on the same page (silent no-op until reload/navigation) (Minor, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.2 (manual mobile walkthrough with the owner, L0
+Day 1, Shadowing exercise, real iPhone Safari).
+**Severity:** Minor — the underlying data write DOES work correctly
+(confirmed via code read), but the complete absence of visible
+feedback on the same page load creates genuine doubt for a student
+about whether their tap registered at all — exactly what the owner
+experienced ("clicked it but still showing nothing").
+
+**What was observed:** Checked the "Done ✅" checkbox on the
+Shadowing page. No visible change anywhere on the page — no
+highlight, no counter update, nothing.
+
+**Root cause, confirmed via code read (`app.js`):**
+- The checkbox's `onchange` handler calls ONLY
+  `Progress.markDone(level, week, day, type)`, which silently writes
+  a `localStorage` key (`empire_l0_w1_d1_shadowing = 'done'`) and
+  returns nothing — no DOM update of any kind.
+- The page DOES have a visible "✅ X/4" counter and progress bar
+  (`Gamification._renderProgressBar()`, part of the gamification bar
+  at the top of every exercise page) that would reflect this exact
+  change — but that function is called exactly ONCE, inside
+  `Gamification.init()` on `DOMContentLoaded` (confirmed: only one
+  call site in the entire file, at page-load time). The checkbox's
+  `onchange` handler never calls `_renderProgressBar()` again, so the
+  counter never updates in response to the checkbox on the SAME page
+  load — it would only reflect the change after a reload or
+  navigating to another page and back.
+- Net effect: the localStorage write genuinely happens (confirmed by
+  reading the code path directly), but there is no way for a student
+  to see visible confirmation without leaving and returning to the
+  page — functionally indistinguishable from "did nothing" in the
+  moment, exactly matching the owner's own description.
+
+**Scope:** Same `done-section` checkbox markup + `onchange` pattern is
+used identically on Accent, Shadowing, Listening, and Vocab pages
+(confirmed via `generate.py` — 4 near-identical `done-section` lines,
+one per exercise type) — this is a site-wide gap, not page-specific.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** have the checkbox's `onchange` handler also call
+`Gamification._renderProgressBar()` (and ideally
+`Gamification._checkDailyCompletion()`, so the confetti celebration
+can fire immediately when the 4th exercise is checked, rather than
+only on a future page load) immediately after `Progress.markDone()`,
+so the visible counter/progress bar updates instantly on the same
+page. Needs a fresh live re-test to confirm the counter visibly
+updates immediately after checking the box, on the same page load,
+without any reload.
+
+**Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
+D012, D013, D014, D015 for one fix-everything pass at the end of the
+Hisn campaign, before H7's Go/No-Go sign-off.
+
+**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
+read, not yet fixed, intentionally batched with other findings.
