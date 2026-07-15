@@ -1805,10 +1805,30 @@ the new required flag.
   loops will no longer start at all), but worth a manual cleanup for
   hygiene when Ghost Bot is next redeployed.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
-pull && docker compose up -d --build` for the main bot; separately
-rebuild Ghost Bot with the new `.env.ghost` flag set), then a live
-re-test of the exact original repro (bioroma leaves, rejoins via a
-fresh invite, confirm only ONE welcome-DM sequence arrives, from
-"Empire English Bot" only) before this can be marked ✅ Resolved.
+**Deployed (2026-07-15):** merged via [PR #148](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/148), confirmed
+landed on `main`. Deployed to production (`git pull && docker compose
+up -d --build`) — confirmed via `docker exec ... config.IS_GHOST_INSTANCE`
+returning `False` and the startup log showing all scheduled loops/API
+server starting normally, as expected for the real bot. Separately
+rebuilt Ghost Bot (`docker compose -f docker-compose.ghost.yml up -d
+--build`) after adding `IS_GHOST_INSTANCE=true` to `.env.ghost` (backed
+up the prior file first) — confirmed via the exact same config check
+returning `True`, AND via a startup log line proving the guard fired:
+`"IS_GHOST_INSTANCE=true: skipping all scheduled loops, ops poller,
+restart notification, and the API server"`. Also cleaned up
+`bioroma`'s leftover row from Ghost Bot's own database (from the
+original incident) before re-testing.
+
+**Live re-tested (2026-07-15), exact original repro:** generated a
+fresh invite, had the owner leave the guild with `bioroma` and rejoin
+live. Result: only ONE DM sequence arrived, from "Empire English Bot"
+only — clean, coherent, no stray image/audio attachments. Confirmed
+server-side, not just by the owner's report: Ghost Bot's database has
+ZERO rows for `bioroma` after the rejoin, Ghost Bot's logs show ZERO
+activity referencing `bioroma` around the join time, and only the
+production bot's logs show the buddy-assignment line for this join.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed to both
+containers, and live re-verified against the exact original repro,
+with server-side evidence (not just the owner's on-screen report)
+confirming Ghost Bot no longer reacts to real guild activity at all.

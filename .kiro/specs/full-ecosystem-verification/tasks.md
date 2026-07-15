@@ -942,14 +942,36 @@
 
 ## Phase H6 — Human Experience Walkthrough
 
-- [ ] **H6.1** Owner (and 1-2 trusted others if available) walks the
+- [~] **H6.1** Owner (and 1-2 trusted others if available) walks the
   FULL new-student journey on a Ghost Testing account: join → onboarding
   DMs → tutorial → first task → first week → first escalation → first
   web dashboard visit.
+  → **IN PROGRESS, live with the owner.** First real action (join,
+  using the `bioroma` Ghost Testing account against the real production
+  guild) immediately surfaced **D023 (Blocker)**: a second, internal
+  "Ghost Bot" (meant to be fully isolated for safe feature testing) was
+  ALSO firing on real guild joins, DMing the owner its own separate,
+  stale, uncoordinated welcome sequence at the same time as the real
+  bot's — see `defect_log.md` D023 for the full root-cause writeup.
+  Fixed (`IS_GHOST_INSTANCE` guard), merged, deployed to BOTH bot
+  containers, and live re-tested with the exact same repro (owner left
+  and rejoined `bioroma` again): confirmed only ONE welcome-DM sequence
+  now arrives, from the real bot only, verified both by the owner's
+  report AND server-side (Ghost Bot's DB/logs show zero activity for
+  the rejoin). D023 marked ✅ Resolved.
+  Onboarding DM content itself (5-step Arabic tutorial, `!1` to
+  advance) received cleanly on this second pass — continuing H6.1
+  onward (tutorial completion → first task → first week → first
+  escalation → first web dashboard visit) next.
 - [ ] **H6.2** Explicitly judge and record (not just "it worked"):
   clarity of onboarding, tone of Nour's responses, pacing of the daily
   loop, whether Arabic support feels genuinely supportive, whether the
   dashboard is motivating or confusing.
+  → Not yet formally judged — the FIRST pass's "not professional and
+  so confusing" reaction is now known to have been contaminated by
+  D023 (two bots' outputs interleaved), not necessarily a verdict on
+  the real bot's onboarding alone. Needs re-judging on the clean,
+  single-bot experience from the second pass onward.
 - [ ] **H6.3** Flag any point where a real zero-English beginner would
   likely get stuck or confused, even if the system technically worked.
 - [ ] **H6.4** Walk the escalation experience from the STUDENT's side
