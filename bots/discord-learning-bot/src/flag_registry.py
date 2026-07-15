@@ -57,6 +57,10 @@ REGISTRY = [
 
     # ── MARKAZ (Telegram operations hub) ──
     ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),
+    ("markaz_weekly_report", "Sunday weekly business report via Empire Ops bot (9 AM Dubai)", "markaz", True),
+    ("markaz_monthly_summary", "Monthly engagement/revenue summary (1st of month)", "markaz", True),
+    ("markaz_churn_alerts", "Churn risk alerts for silent high-value students", "markaz", True),
+    ("markaz_conversion_alerts", "Conversion-ready alerts when students hit 7-day streak", "markaz", True),
 ]
 
 # Initiative display names and emoji
