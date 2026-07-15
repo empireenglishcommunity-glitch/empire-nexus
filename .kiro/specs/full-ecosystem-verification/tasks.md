@@ -964,10 +964,31 @@
   → Started early, during H0.5's live verification (not yet H1) —
   `defect_log.md` created with 5 entries (D001-D005) already logged
   and resolved. Continues through H1-H6 as more findings surface.
-- [ ] **H7.2** Fix every Blocker and Major defect found.
-- [ ] **H7.3** Re-test every fixed defect against its original failing
+- [~] **H7.2** Fix every Blocker and Major defect found.
+  → **IN PROGRESS.** Per the owner's explicit suggestion to start
+  low-risk, fully-diagnosed engineering fixes ahead of H6 (which needs
+  the owner present): **D021 fixed** (escalation ladder reordered,
+  merged via [PR #142](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/142))
+  and **D022 fixed** (schedule collisions staggered, merged via
+  [PR #143](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/143)).
+  Both deployed to production and live-verified (see D021/D022 in
+  `defect_log.md`). **Still open**: D013, D014, D015, D016, D017
+  (all `empire-dojo` frontend — blocked on a fresh Cloudflare deploy
+  token from the owner, fixes can be written/verified without it but
+  deployment needs it), D012 and D020 (deferred to Masar, initiative
+  #11 — see `empire-nexus/.kiro/specs/masar/`, explicitly NOT being
+  fixed as quick patches here, per the owner's decision to build a
+  proper, durable solution instead — tracked as its own initiative,
+  sequenced after all other Hisn work + H6 + H7, but before student
+  invitations go out).
+- [~] **H7.3** Re-test every fixed defect against its original failing
   scenario — confirm the fix actually resolves it, not just "looks
   fixed."
+  → D021 and D022 both re-tested against their original failing
+  scenarios post-deploy (D021: full day 2/3/5/8 tier simulation
+  against the actual deployed code, 5/5 pass; D022: static schedule
+  re-extraction confirming no new collisions). Remaining fixes (D013-
+  D017) will each get the same treatment once written and deployed.
 - [ ] **H7.4** Produce the final Go/No-Go Checklist — one line per
   requirement (R1-R11 from requirements.md), each marked ✅ Verified /
   ⚠️ Deferred (with explicit reasoning) / ❌ Blocked.
