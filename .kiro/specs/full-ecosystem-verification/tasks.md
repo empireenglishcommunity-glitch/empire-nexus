@@ -375,9 +375,24 @@
   skip — full detail here specifically so a future review of this
   spec can see exactly what was and wasn't covered and why.
 
-  **Remaining for H2.2**: the lighter spot-check pass for L1, L2, L3
-  per the scoping decision above, plus a desktop pass. Not yet
-  complete.
+  **L1 spot-check started (session 17, real iPhone Safari).** Same
+  pattern of issues confirmed present, consistent with the scoping
+  decision's prediction (shared-component bugs affect every level
+  identically). **Important new data point**: the owner independently
+  tested the SAME recorder flow (D014) on a laptop/desktop browser and
+  confirmed playback AND download BOTH work correctly there — only
+  mobile Safari/iOS fails, and this held true across every page tested
+  so far, not just the original L0 finding. This is real cross-device
+  confirmation of D014's root-cause theory (desktop browsers natively
+  support `audio/webm`, so the hardcoded mime-type label happens to be
+  accurate there; Safari/iOS is the one major browser where it isn't)
+  — upgraded from "plausible via code read" to "confirmed via direct
+  comparison," recorded in `defect_log.md` D014's update.
+
+  **Remaining for H2.2**: finish the L1 spot-check (Listening/Vocab
+  quick pass), then L2, L3, plus a desktop pass (partially started via
+  the recorder cross-check above, needs a full pass on its own). Not
+  yet complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-

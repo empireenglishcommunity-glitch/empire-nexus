@@ -727,13 +727,34 @@ real Safari/iOS device after the fix (not just Chrome/desktop, since
 this is specifically a cross-browser format-support gap that a
 Chrome-only check would not catch).
 
+**CROSS-DEVICE CONFIRMATION (2026-07-15, same session, L1 spot-check
+pass):** the owner independently tested the identical recorder flow
+on a laptop/desktop browser and confirmed playback AND download BOTH
+work correctly there — only the phone (Safari/iOS) exhibits the
+failure, and this held true consistently across every level/page
+tested in this session, not just the original L0 Accent page.
+
+This is strong, real-world confirmation of the root cause theory
+above, not just a plausible code-reading guess: desktop browsers
+(Chrome/Firefox/Edge) DO natively support recording and playing back
+`audio/webm` — so the hardcoded `type: 'audio/webm'` label happens to
+be ACCURATE on those browsers, and playback/download work by what is
+effectively luck rather than correct, browser-aware handling. Safari/
+iOS is the one major browser that doesn't natively produce webm from
+`MediaRecorder`, which is exactly why it's the one place this breaks.
+This also confirms the bug is NOT isolated to one page/level — it is
+confirmed present everywhere the shared `Recorder`/`RecorderUI`
+component is used, on every mobile page tested so far, exactly as the
+"same shared component" scope note predicted.
+
 **Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
 D012 and D013 for one fix-everything pass at the end of the Hisn
 campaign, before H7's Go/No-Go sign-off.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live device test + code read,
-not yet fixed, intentionally batched with D012/D013 for a single fix
-pass at the end of the campaign.
+**Status:** 🟡 **DEFERRED** — confirmed via live device test on BOTH
+desktop (works) and mobile Safari (fails) + code read, not yet fixed,
+intentionally batched with D012/D013 for a single fix pass at the end
+of the campaign.
 
 
 
