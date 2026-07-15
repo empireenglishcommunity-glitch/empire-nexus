@@ -568,47 +568,44 @@
   `UNIQUE(discord_id, date, task_id)` constraint + shared
   `log_submission()` call path works exactly as designed. Ghost member
   fully cleaned up afterward (0 residual rows, verified).
-- [~] **H3.2** Trace 2 (Discord → Telegram → Discord): trigger a real
+- [x] **H3.2** Trace 2 (Discord → Telegram → Discord): trigger a real
   Nour escalation, confirm Telegram alert content, reply in Telegram,
   confirm student DM arrives "from Nour," confirm escalation resolved
   in DB.
-  → **EXECUTED LIVE with the owner — result INCONCLUSIVE, needs a
-  retry with a different test account.** Temporarily enabled the
-  `nour_escalation` flag (confirmed OFF in production beforehand,
-  restored to OFF immediately after — zero lasting config change),
-  triggered a real escalation for the "Empire Ghost" test account
-  (a genuine Discord snowflake with real guild presence, not a
-  synthetic ID). The owner received the REAL Telegram alert and
-  replied to it directly, as intended.
+  → **EXECUTED LIVE with the owner, TWICE — fully confirmed on retry.**
+  First attempt used "Empire Ghost" (a genuine Discord snowflake with
+  real guild presence): Telegram alert sent correctly, owner's reply
+  correctly matched to the pending escalation, but Discord itself
+  rejected the final DM delivery (`400`, error `50007`: "Cannot send
+  messages to this user") — a real Discord-side rejection, not a code
+  bug. The failure-handling path worked exactly as designed: did NOT
+  mark the escalation resolved, sent the owner an accurate "Delivery
+  failed" warning. Logged as **D018**, initially inconclusive (3 of 4
+  legs confirmed, the final delivery leg unverified).
 
-  **Confirmed working (3 of 4 legs)**: Telegram alert sent with
-  correct content ✅; owner's reply correctly matched to the specific
-  pending escalation via `reply_to_message` ✅; the failure-handling
-  path itself worked exactly as designed — did NOT mark the
-  escalation resolved on failure (correctly left `resolved=0`) and
-  sent the owner an accurate, actionable "Delivery failed" warning ✅.
+  **Retry, using "M.A.C.A.L EMPIRE" (a test account with a PROVEN
+  prior successful Nour delivery on record)**: same safe pattern
+  (temporarily enabled `nour_escalation`, confirmed OFF beforehand,
+  restored OFF after). Real Telegram alert sent; owner replied; owner
+  received **"✅ Delivered."** Independently verified against live
+  production logs (not just trusting the confirmation message):
+  `"forwarded owner reply to M.A.C.A.L EMPIRE"` in the bot's own logs;
+  `pending_escalations` row correctly flipped to `resolved=1` (vs. the
+  first attempt's correctly-preserved `resolved=0`); `nour_conversations`
+  shows the new reply logged with `role='nour'`, `intent='owner_reply'`
+  — distinguishable from this same member's own real prior Nour AI
+  conversation already on record from 2026-07-14.
 
-  **NOT confirmed (1 of 4 legs)**: Discord itself rejected the final
-  DM-to-student delivery with `400 (error code: 50007): Cannot send
-  messages to this user` — confirmed via live production logs at the
-  exact timestamp. This is a genuine Discord-side rejection, not
-  something the bot's code caused. Investigated whether "Empire
-  Ghost" specifically has DMs disabled (a supporting, non-conclusive
-  data point: this account has ZERO prior successful Nour messages in
-  `nour_conversations`, while the OTHER ghost account "M.A.C.A.L
-  EMPIRE" has 2) — but this could not be independently confirmed from
-  the sandbox without direct access to that account's own settings.
-
-  **This means the actual "does a reply reach a student" round-trip
-  remains UNVERIFIED** — only the send/match/fail-handling legs are
-  confirmed. Logged as **D018** (status: inconclusive, not a confirmed
-  defect) in `defect_log.md` with a clear recommended next step:
-  retry using "M.A.C.A.L EMPIRE" (proven prior successful delivery) or
-  a fresh account with confirmed-open DMs, to isolate whether the full
-  round-trip genuinely works when the target CAN receive DMs at all.
-  Test escalation row + temp script cleaned up from production
-  afterward (0 residual rows confirmed). **Task marked in-progress,
-  not complete — needs the retry to reach a real PASS/FAIL verdict.**
+  **All 4 legs of H3.2 now confirmed working end-to-end**: alert sent
+  ✅, reply matched ✅, delivery succeeds when the target CAN receive
+  DMs ✅, escalation correctly resolved ✅. The first attempt's failure
+  is now conclusively isolated to "Empire Ghost" specifically being
+  unreachable (not a code defect) — updated in `defect_log.md` D018,
+  now marked ✅ Resolved. No code fix needed; the pipeline itself is
+  correct. All test data (both attempts' escalation rows + the retry's
+  test conversation message) cleaned up from production, 0 residual
+  rows confirmed, real prior conversation history left untouched.
+  **H3.2 fully COMPLETE.**
 - [ ] **H3.3** Trace 3 (`!link` → Web): generate a token, connect on
   `/dash/`, confirm correct student's real data shows, confirm
   `last_used` updates on the token.

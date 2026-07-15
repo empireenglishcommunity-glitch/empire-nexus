@@ -1038,25 +1038,53 @@ of what this session's investigation can conclude):**
   send-alert, match-reply, and failure-handling legs are confirmed.
   The final "successful delivery" leg remains unverified.
 
-**Recommended next step (not yet done):** retry this exact trace using
-a DIFFERENT real test account with confirmed-open DMs — either
-"M.A.C.A.L EMPIRE" (which has a proven prior successful delivery on
-record) or a fresh Discord account the owner sets up specifically for
-this purpose with default/open DM settings confirmed. This would
-isolate whether the full round-trip genuinely works when the target
-account can receive DMs at all, completing the one leg this attempt
-could not confirm.
+**RETRY EXECUTED (2026-07-15, same session), CONCLUSIVE RESULT**:
+re-ran the identical trace using "M.A.C.A.L EMPIRE" (`discord_id`
+`1502586616131223662`), the account with a PROVEN prior successful
+Nour delivery already on record. Same safe pattern: temporarily
+enabled `nour_escalation` (confirmed OFF beforehand), restored OFF
+immediately after, regardless of outcome.
 
-**Severity of this entry itself:** Info/Major-if-retried-and-still-
-fails — logging this as a distinct entry rather than silently retrying
-immediately, per the campaign's transparency standard, since it's a
-real result from a real live test, not a non-event. If a retry with a
-DM-open account ALSO fails, that would upgrade this to a confirmed
-Major defect in the delivery path itself.
+- Real Telegram alert sent for "M.A.C.A.L EMPIRE" — owner received and
+  replied to it directly, same as the first attempt.
+- Owner's Telegram confirmation this time: **"✅ Delivered — Your
+  reply was delivered to M.A.C.A.L EMPIRE."**
+- **Independently verified against live production logs and DB state
+  (not just trusting the confirmation message)**:
+  ```
+  [INFO] empire-bot.ops_poller: ops_poller: forwarded owner reply to
+  M.A.C.A.L EMPIRE (1502586616131223662)
+  ```
+  `pending_escalations` row for this attempt: `resolved=1` (correctly
+  flipped from `0`→`1` on success, contrasting exactly with the first
+  attempt's correctly-preserved `resolved=0` on failure).
+  `nour_conversations` shows the new row: `role='nour'`,
+  `message='ok'`, `intent='owner_reply'`, `confidence=1.0` — the
+  owner's reply correctly logged as a distinct, tagged event, verified
+  distinguishable from this same member's own prior REAL Nour AI
+  conversation history already in that table (`id=3,4`, from
+  2026-07-14 — confirming this account is a genuinely active,
+  previously-exercised test account, not a fabricated one for this
+  test alone).
 
-**Status:** 🟡 **INCONCLUSIVE — needs a retry with a confirmed DM-open
-test account before H3.2 can be marked complete or a real defect
-confirmed.** Not added to the D012-D017 batch-fix list since there is
-nothing to fix yet — first need to determine if there's anything
-wrong with the CODE at all, versus this being a correct rejection of
-an unreachable test account.
+**CONCLUSION: all 4 legs of H3.2 are now confirmed working end-to-end.**
+The first attempt's failure was correctly isolated to "Empire Ghost"
+specifically being unreachable (consistent with the DMs-disabled/
+blocked-bot theory raised earlier) — NOT a defect in the escalation,
+matching, forwarding, or resolution-tracking code, all of which are
+now proven correct via two independent real-world outcomes (one
+correct failure-handling, one correct success-handling, using the
+exact same code path both times).
+
+**No code fix needed** — the pipeline itself is correct. Test data
+(the second attempt's `pending_escalations` row and its
+`nour_conversations` test message) cleaned up from production
+afterward; the first attempt's genuinely-still-open row was also
+cleaned up (correctly not touching that member's real prior
+conversation history in the process). 0 residual test rows confirmed.
+
+**Status:** ✅ **RESOLVED (via retry)** — the escalation/reply/forward/
+resolve pipeline is confirmed working correctly end-to-end. The
+original "Empire Ghost" failure was a real-world Discord-side
+rejection specific to that one test account (not a code defect) and
+requires no fix. H3.2 can now be marked complete.
