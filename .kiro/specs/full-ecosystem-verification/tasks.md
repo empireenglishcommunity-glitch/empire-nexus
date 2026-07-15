@@ -346,8 +346,38 @@
   component). 6 real defects found and logged (D012-D017), all
   deferred per the owner's batching decision.
 
-  **Remaining for H2.2**: the same 4-exercise walkthrough for L1, L2,
-  L3 (at least 1 day each), plus a desktop pass. Not yet complete.
+  **Explicit scoping decision for L1-L3 (owner, 2026-07-15, made
+  transparently, not a silent narrowing of the "test everything"
+  standard):** D014/D015/D016/D017 are all rooted in shared
+  JavaScript components (`Recorder`, `TTS`/`KokoroAudio`, the
+  `done-section` checkbox pattern) that `generate.py` uses IDENTICALLY
+  across every level — confirmed via code read, not assumed. There is
+  no plausible mechanism by which L1's Accent page would behave
+  differently from L0's on these exact interactions; they are the same
+  code, only fed different vocabulary/curriculum data. Re-running the
+  full multi-exercise deep-dive per level would only reconfirm already-
+  confirmed bugs, not find anything new on that axis.
+  However: this project's own history (`empire-dojo` PR #8, 2026-07-12)
+  shows level-specific CONTENT bugs are a real, precedented category
+  distinct from shared-component bugs — L2/L3's day-vocabulary-split
+  formula broke differently than L0/L1's due to a difference in vocab
+  density per level, invisible from L0/L1 testing alone. "Same code,
+  different data" is not automatically risk-free for content-level
+  surprises.
+  **Decision**: L1, L2, L3 get a LIGHTER spot-check pass (1 day, all 4
+  exercise types, but moving quickly — checking pages render, content
+  looks sane/correctly leveled, no NEW interaction bugs beyond the
+  already-confirmed shared ones) rather than the full deep-dive L0 got.
+  Already-confirmed shared-component bugs (D014-D017) are not
+  re-investigated in depth per level; only re-confirmed as "still
+  present, no different" or flagged if genuinely different for that
+  level. This is a deliberate, documented trade-off, not a silent
+  skip — full detail here specifically so a future review of this
+  spec can see exactly what was and wasn't covered and why.
+
+  **Remaining for H2.2**: the lighter spot-check pass for L1, L2, L3
+  per the scoping decision above, plus a desktop pass. Not yet
+  complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
