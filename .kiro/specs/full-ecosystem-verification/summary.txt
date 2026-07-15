@@ -1,7 +1,0 @@
-
---- SUMMARY (to stderr) ---
-Commands: 40
-Flags: 36
-Channels: 59
-API endpoints: 10
-Web pages: 1334
