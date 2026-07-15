@@ -1178,3 +1178,99 @@ alert mechanism works, making this unnecessary for Hisn's purposes.
 **Status:** ℹ️ **Info / no action needed** — corrects the scope of
 H4.1's threshold sub-check, confirms no other campaign result is
 affected, no app defect found or implied.
+
+---
+
+## D020 — Nour Study Tips: the actual weekly AI-generation task (W4.2) was never implemented; every real student silently gets only generic fallback tips, forever (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H4.3 (repeating the 3-state AI fallback matrix for
+pronunciation scoring, Nour study tips generation, and weekly
+self-review — while locating the actual tip-generation function to
+test its fallback chain).
+
+**Severity:** Major. Not a crash, not a broken endpoint — the API
+gracefully falls back exactly as designed. The real problem is that
+the feature this fallback exists FOR was never built: `wuslah_nour_tips`
+is a real, enabled-by-default feature flag, documented in
+`flag_registry.py`, `ecosystem-harmony/design.md`, and `api_server.py`'s
+own docstrings as "AI-generated weekly study tips" — but there is no
+code anywhere in the codebase that ever generates or stores a
+personalized tip. Every real student, forever, silently receives only
+the generic level-appropriate fallback tips, with zero indication to
+anyone (admin or student) that the "AI-generated" half of this
+feature doesn't exist.
+
+**What was searched (exhaustive, not a quick grep)**: every `.py` file
+under `bots/discord-learning-bot/src/` for any function that writes to
+`nour_study_tips`, any function name containing "tip," and the string
+`nour_study_tips` itself across the entire `empire-nexus` repo
+(excluding `.git`). Result:
+- `database.py`: defines the `CREATE TABLE nour_study_tips` schema
+  only — no INSERT statement anywhere in this file either.
+- `api_server.py`: reads FROM `nour_study_tips` in `get_dashboard()`
+  and `get_nour_tips()` — never writes to it. Its own code comment is
+  explicit and now confirmed INCORRECT: *"Tips are pre-generated
+  weekly (by ops_monitoring's tip generation task) and cached in the
+  nour_study_tips table."* — **no such task exists in
+  `ops_monitoring.py`** (confirmed: that file's only `async def`
+  functions are `track_groq_failure`, `notify_bot_restart`,
+  `notify_database_error`, `send_weekly_report`, `check_conversion_ready`,
+  `check_churn_risk`, `send_monthly_summary` — none of them touch
+  `nour_study_tips`).
+- **Zero rows exist in the live production `nour_study_tips` table**
+  (confirmed via direct query: `SELECT COUNT(*) FROM nour_study_tips`
+  → `0`) — not "hasn't run yet this week," genuinely never populated,
+  ever, since the table was created.
+
+**Root cause, confirmed via the source spec itself**
+(`ecosystem-harmony/tasks.md`, Phase W4): **W4.2 ("Implement weekly
+tip generation task") is the ONLY unchecked task in the entire W4
+phase** — W4.1 (table), W4.3 (endpoint), W4.4 (dashboard card), W4.5
+(feature flag), and W4.6 (generic fallback tip bank) were all built
+and are all confirmed working correctly (verified across H2.3's
+dashboard walkthrough and H2.6-H2.8's API testing). This is a
+genuinely half-shipped feature: every piece of "wrapper" scaffolding
+around the AI generation step was completed, but the actual core
+step — the thing the feature flag and the whole endpoint are NAMED
+for — was never written. `api_server.py`'s docstring describing a
+generation task that doesn't exist suggests this gap has been
+silently invisible even to whoever wrote that comment, likely written
+optimistically ahead of the implementation and never corrected once
+W4.2 was skipped.
+
+**Why H2.3/H2.6-H2.8 didn't catch this earlier**: both correctly
+verified the READ side and the FALLBACK path (empty table → generic
+tips shown, exactly as designed) — which is the CORRECT behavior for
+an empty table, whether that emptiness is "not generated yet this
+week" (benign, expected) or "will never be generated, ever" (this
+defect). Distinguishing those two required looking for the WRITE
+side, which only H4.3's specific focus on locating and fallback-
+testing the generation function surfaced.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** implement W4.2 for real — a scheduled `@tasks.loop`
+(Sunday 8 AM Dubai, before the weekly report, per the original spec's
+own timing note) that, for each active member, gathers pronunciation
+scores/SRS accuracy/streak/difficulty/conversation themes, calls the
+AI fallback chain (Groq → Gemini → skip, consistent with this
+codebase's other AI call sites) to generate exactly 3 tips (max 100
+chars each per the spec), and INSERTs them into `nour_study_tips`.
+Alternatively, if this feature is no longer a priority, the more
+honest fix might be to explicitly retire it (remove the flag, the
+"AI-generated" framing in the endpoint/dashboard, and rely solely on
+the generic tip bank on purpose) rather than leave a half-built
+feature silently masquerading as complete — a product decision for
+the owner, not purely a coding one.
+
+**Decision (owner, pending):** logged now for the owner's awareness
+and eventual batch decision alongside D012-D017, D019 — NOT yet
+discussed/decided given this was found mid-H4.3; flagging explicitly
+here that this one specifically needs the owner's product input (fix
+vs. retire), not just an engineering fix, unlike the other deferred
+items which already have agreed-upon fixes.
+
+**Status:** 🟡 **DEFERRED, NEEDS OWNER PRODUCT DECISION** — confirmed
+real via exhaustive code search + live DB query (0 rows, ever), not
+yet fixed. Recommend discussing fix-vs-retire with the owner before
+H7's batch pass, since this is the one deferred item that isn't
+purely "apply the agreed fix."

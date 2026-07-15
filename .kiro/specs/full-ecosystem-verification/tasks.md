@@ -657,8 +657,56 @@
   check is a pure control-flow test of the real function's return
   value, unaffected by the D019 process-isolation finding (no reliance
   on cross-call module state).
-- [ ] **H4.3** Repeat the 3-state fallback matrix for: pronunciation
+- [x] **H4.3** Repeat the 3-state fallback matrix for: pronunciation
   scoring, Nour study tips generation, weekly self-review.
+  → **DONE (session 17), fully automated, live in production.**
+  **Pronunciation scoring** (`pronunciation_scorer.generate_feedback()`):
+  confirmed via code read this is a single-provider (Gemini via
+  `ai_engine._call_llm`) + template fallback, not a 3-state Groq/Gemini/
+  template chain like Nour concierge — tested accordingly. Monkey-
+  patched `_call_llm` to fail: confirmed the real function returns a
+  non-empty, PERSONALIZED template (referencing the actual missed
+  word, not a generic string) in both English and Arabic. Also
+  confirmed the beginner-grace-period branch (no AI call at all,
+  always-encouragement) works correctly. **3/3 checks PASS.**
+  **Weekly self-review** (`nour_personality.run_weekly_review()`):
+  confirmed via code read this has NO template fallback at all, by
+  design (it's an internal owner-facing report, not student-facing —
+  silently returning `None` on failure is the correct, intended
+  behavior, unlike student-facing functions which must never go
+  silent). Simulated a Groq HTTP failure: confirmed the real function
+  returns `None` cleanly, no crash, no raw exception. **1/1 check
+  PASS.**
+  **Nour study tips generation — found D020 (Major, needs owner
+  product decision), not a pass/fail fallback test.** While locating
+  the actual generation function to test its fallback chain,
+  discovered via exhaustive code search (every `.py` file under
+  `bots/discord-learning-bot/src/` for any write to `nour_study_tips`
+  or any tip-generation function) that **W4.2 ("Implement weekly tip
+  generation task") was never actually built** — confirmed via the
+  ORIGINAL `ecosystem-harmony/tasks.md` spec itself, where W4.2 is the
+  ONLY unchecked task in the entire W4 phase; W4.1 (table), W4.3
+  (endpoint), W4.5 (flag), W4.6 (generic fallback bank) were all built
+  and already confirmed working (H2.3, H2.6-H2.8). `api_server.py`'s
+  own docstring claims tips are "pre-generated weekly by ops_monitoring's
+  tip generation task" — **no such task exists anywhere in
+  `ops_monitoring.py`** (confirmed: its only functions are
+  `track_groq_failure`, `notify_bot_restart`, `notify_database_error`,
+  `send_weekly_report`, `check_conversion_ready`, `check_churn_risk`,
+  `send_monthly_summary` — none touch this table). Confirmed live: the
+  production `nour_study_tips` table has **0 rows, ever** (not
+  "hasn't run this week yet" — genuinely never populated since the
+  table was created). Every real student, forever, silently gets only
+  the generic fallback tips, with the "AI-generated" framing on the
+  flag/endpoint/dashboard being inaccurate. This is a genuinely
+  half-shipped feature (all the wrapper scaffolding built, the actual
+  core step skipped) rather than a code bug — flagged as needing the
+  OWNER'S product input (implement W4.2 for real, vs. explicitly
+  retire the "AI-generated" framing and rely on the fallback bank on
+  purpose) rather than a pure engineering fix like D012-D017. Full
+  detail in `defect_log.md` D020. **This item is NOT part of the
+  already-agreed D012-D017 batch-fix plan** — needs a separate,
+  explicit owner decision before H7.
 - [ ] **H4.4** Directly invoke each Nabd notification function (morning
   kickstart, evening reminder, streak alert, weekly summary, absence
   recovery day 2/3/5/7) against a test member; review content for
