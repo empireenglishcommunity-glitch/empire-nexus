@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -328,6 +328,10 @@ async def on_ready():
         midnight_voice_reset.start()
     if not markaz_daily_digest.is_running():
         markaz_daily_digest.start()
+    if not markaz_weekly_report.is_running():
+        markaz_weekly_report.start()
+    if not markaz_monthly_summary.is_running():
+        markaz_monthly_summary.start()
     # Markaz M2: start the Telegram reply-forwarding poller exactly
     # once. on_ready() can fire more than once per process (e.g. after
     # a gateway reconnect), so guard against starting a second parallel
@@ -337,6 +341,11 @@ async def on_ready():
     if not getattr(bot, "_ops_poller_started", False):
         asyncio.create_task(ops_poller.poll_for_replies(bot))
         bot._ops_poller_started = True
+    # Markaz M5.1: send restart notification (only on first on_ready,
+    # not on gateway reconnects — same guard as the poller).
+    if not getattr(bot, "_restart_notified", False):
+        asyncio.create_task(ops_monitoring.notify_bot_restart())
+        bot._restart_notified = True
     if not heartbeat.is_running():
         heartbeat.start()
     if not morning_kickstart.is_running():
@@ -1147,6 +1156,29 @@ async def markaz_daily_digest():
     )
 
     await ops_hub.send_ops_message("\n".join(lines))
+    # M4.4: check for churn risk as part of the morning ops cycle
+    await ops_monitoring.check_churn_risk()
+
+
+@tasks.loop(time=datetime.time(hour=9, minute=0, tzinfo=_zone()))
+async def markaz_weekly_report():
+    """Markaz Phase M4.1/M4.2 — weekly business report (Sunday 9 AM Dubai).
+
+    Only fires on Sundays. Sends a comprehensive business dashboard to
+    the owner via the Empire Ops bot."""
+    now = datetime.datetime.now(_zone())
+    if now.weekday() != 6:  # 6 = Sunday
+        return
+    await ops_monitoring.send_weekly_report()
+
+
+@tasks.loop(time=datetime.time(hour=9, minute=30, tzinfo=_zone()))
+async def markaz_monthly_summary():
+    """Markaz Phase M4.5 — monthly summary (1st of month, 9:30 AM Dubai).
+
+    Only fires on the 1st. Sends engagement tiers and revenue potential
+    overview to the owner via the Empire Ops bot."""
+    await ops_monitoring.send_monthly_summary()
 
 
 @tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=_zone()))
@@ -1576,6 +1608,12 @@ async def cmd_done(ctx, task: str = None):
     if result["streak"] in config.STREAK_BONUS_POINTS and isinstance(ctx.author, discord.Member):
         bonus = config.STREAK_BONUS_POINTS[result["streak"]]
         await features.celebrate_streak_milestone(ctx.guild, ctx.author.display_name, result["streak"], bonus)
+
+    # Markaz M4.3: conversion-ready alert (first 7-day streak)
+    if result["streak"] >= 7 and isinstance(ctx.author, discord.Member):
+        asyncio.create_task(ops_monitoring.check_conversion_ready(
+            str(ctx.author.id), ctx.author.display_name, result["streak"]
+        ))
 
     # Nabd N3: milestone celebrations (varied, personal DM + public)
     if isinstance(ctx.author, discord.Member) and result.get("milestones"):

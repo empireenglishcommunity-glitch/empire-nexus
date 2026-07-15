@@ -258,12 +258,20 @@ async def _call_groq_chat(prompt: str, temperature: float = 0.7) -> Optional[str
                                     timeout=aiohttp.ClientTimeout(total=15)) as resp:
                 if resp.status != 200:
                     logger.warning(f"Groq API error for Nour: {resp.status}")
+                    # Markaz M5.2: track Groq failures for alerting
+                    from . import ops_monitoring
+                    import asyncio
+                    asyncio.create_task(ops_monitoring.track_groq_failure())
                     return None
                 data = await resp.json()
                 text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
                 return text.strip() if text else None
     except Exception as e:
         logger.error(f"Groq call failed for Nour: {e}")
+        # Markaz M5.2: track Groq failures for alerting
+        from . import ops_monitoring
+        import asyncio
+        asyncio.create_task(ops_monitoring.track_groq_failure())
         return None
 
 

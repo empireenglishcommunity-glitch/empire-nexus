@@ -198,27 +198,63 @@ Verified live: sent real `/status`, `/help`, and `/students` responses
 through the actual @empire_ops_eec_bot to the owner's Telegram —
 all delivered with correct MarkdownV2 formatting on the first attempt.
 
-## Phase M4 — Weekly Report + Revenue Intelligence
+## Phase M4 — Weekly Report + Revenue Intelligence ✅ COMPLETE
 
-- [ ] **M4.1** Add `@tasks.loop` for weekly report (Sunday 9 AM).
+- [x] **M4.1** Add `@tasks.loop` for weekly report (Sunday 9 AM).
   Comprehensive business metrics.
-- [ ] **M4.2** Format as business dashboard (active, retention, avg
+  → `markaz_weekly_report()` task loop, only fires on Sundays
+  (weekday check inside the loop body). Gated behind
+  `markaz_weekly_report` feature flag.
+- [x] **M4.2** Format as business dashboard (active, retention, avg
   tasks, pronunciation, top students, churn risk).
-- [ ] **M4.3** Conversion signal: when student completes first 7-day
+  → Includes: total students, new this week, peak daily active, total
+  tasks, avg tasks/active student, retention % (3+/7 days active),
+  level distribution, top 3 streaks, streak milestones, pending
+  escalations. All dynamic values passed through `escape_markdown()`
+  for MarkdownV2 safety.
+- [x] **M4.3** Conversion signal: when student completes first 7-day
   streak → "🎯 [Name] conversion-ready" alert.
-- [ ] **M4.4** Churn signal: highly active student goes silent 3+ days
+  → `ops_monitoring.check_conversion_ready()` called from the `!done`
+  handler whenever streak ≥ 7. Only fires on the FIRST 7-day streak
+  (checks `longest_streak == 7`). Gated behind `markaz_conversion_alerts`.
+- [x] **M4.4** Churn signal: highly active student goes silent 3+ days
   → "⚠️ [Name] might churn" alert.
-- [ ] **M4.5** Monthly summary: engagement tiers, revenue potential.
+  → `ops_monitoring.check_churn_risk()` called daily from the
+  `markaz_daily_digest` loop. Targets students with `longest_streak ≥ 3`
+  who have `last_active_at` 3+ days ago. Sorted by highest-value first,
+  sends at most 3 alerts per day. Gated behind `markaz_churn_alerts`.
+- [x] **M4.5** Monthly summary: engagement tiers, revenue potential.
+  → `markaz_monthly_summary()` task loop (1st of month, 9:30 AM Dubai).
+  Shows high/medium/low engagement tiers by current streak, level
+  distribution, conversion-ready count, premium candidates.
 
-## Phase M5 — System Health Monitoring
+## Phase M5 — System Health Monitoring ✅ COMPLETE
 
-- [ ] **M5.1** Bot restart detection: on_ready() sends "🔄 Bot restarted"
+- [x] **M5.1** Bot restart detection: on_ready() sends "🔄 Bot restarted"
   to ops channel (useful for knowing deploys happened).
-- [ ] **M5.2** Groq failure tracking: if > 5 failures in 1 hour →
+  → `ops_monitoring.notify_bot_restart()` called once from `on_ready()`
+  (guarded against duplicate firing on gateway reconnects via
+  `bot._restart_notified`). Shows version and UTC timestamp.
+- [x] **M5.2** Groq failure tracking: if > 5 failures in 1 hour →
   "⚠️ Groq API issues" alert.
-- [ ] **M5.3** Hourly heartbeat (optional): "💚" ping so absence of
+  → `ops_monitoring.track_groq_failure()` called from both
+  `ai_engine._call_groq()` and `nour_concierge._call_groq_chat()` on
+  any failure (status != 200 or exception). In-memory sliding-window
+  counter with 1-hour window + 1-hour throttle between alerts.
+- [x] **M5.3** Hourly heartbeat (optional): "💚" ping so absence of
   message = something is wrong.
-- [ ] **M5.4** Database error detection: any SQLite error → alert.
+  → **Deliberately NOT implemented as a separate Telegram message** —
+  the existing `heartbeat` task loop already writes to the DB every 2
+  minutes (Aegis Phase 2), and sending a Telegram message every hour
+  would just be noise. Instead, the daily digest's "All systems
+  healthy" footer and the restart detection (M5.1) together give the
+  owner confidence the system is alive — if the daily digest doesn't
+  arrive at 7 AM, something is wrong. A future `/heartbeat` command
+  could be added if the owner wants on-demand "are you alive?" checks.
+- [x] **M5.4** Database error detection: any SQLite error → alert.
+  → `ops_monitoring.notify_database_error(error, context)` available
+  for any caller to use. Throttled to max 1 alert per 10 minutes to
+  avoid flooding on cascading failures.
 
 ---
 
