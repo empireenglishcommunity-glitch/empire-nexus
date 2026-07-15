@@ -307,12 +307,45 @@ and (c) no OTHER merged-but-undeployed content is still missing —
 this defect was found by investigating ONE page; the full crawl (H2.1,
 not yet run to completion) is what will reveal the true full extent.
 
-**Status:** ❌ BLOCKED — needs a deploy (owner action or valid
-Cloudflare token), then full H2.1 re-run to confirm scope and closure.
-This is a genuine **Blocker per R12's severity definition** ("breaks
-core flow") — a headline Wuslah deliverable is currently unreachable
-by real students, which is exactly the class of issue this whole Hisn
-campaign exists to catch before invitations go out.
+**Resolution (2026-07-15):** Owner provided a fresh, verified-valid
+`CLOUDFLARE_API_TOKEN` (checked via `/user/tokens/verify` before use,
+confirmed `"status":"active"`, per this repo's own steering-doc
+discipline). Pulled the real, current `main` via
+`github_pull_repository` (confirmed still at `0f79829`, no newer
+merges missed), then ran the documented deploy command:
+```
+npx wrangler pages deploy site --project-name=empire-practice
+```
+Deploy succeeded (1607 total files, only 2 newly uploaded — matching
+the expected diff size for this one merge). Verified against the
+**preview URL first** (`https://f999bd9a.empire-practice-8l0.pages.dev/dash/`
+— confirmed real dashboard content, not the homepage fallback) before
+trusting the production custom domain, per this repo's own explicit
+"never trust exit 0 alone" discipline. Production domain
+(`practice.empireenglish.online`) needed ~20 seconds of CDN
+propagation delay before reflecting the new deploy — re-checked after
+waiting, confirmed correct.
+
+**Full-scope verification**: re-ran `page_crawler.py` across ALL 1,334
+pages post-deploy (not just the one page that surfaced this defect).
+**Result: 1334/1334 OK, 0 issues.** This confirms the deploy brought
+the live site fully back in sync with `main` — no other pages were
+silently missing or broken, this was the only gap.
+
+**Status:** ✅ RESOLVED (2026-07-15) — deployed, verified via preview
+URL + production domain + full 1,334-page crawl. This was a genuine
+**Blocker per R12's severity definition** ("breaks core flow") that
+would have meant real students couldn't see the Wuslah dashboard at
+all — caught and fixed before any invitation was sent, which is
+exactly what this campaign exists to do.
+
+**Standing lesson (added to the ecosystem's operational knowledge,
+alongside the earlier Markaz/Hetzner equivalent):** `empire-dojo` has
+no auto-deploy pipeline. After merging ANY PR to this repo's `main`,
+someone MUST manually run
+`npx wrangler pages deploy site --project-name=empire-practice`
+before the change is live. This should be added to the repo's PR
+checklist or steering docs to prevent recurrence.
 
 ---
 

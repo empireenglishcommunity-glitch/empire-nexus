@@ -212,9 +212,31 @@
 
 ## Phase H2 — Exhaustive Web + API Testing
 
-- [ ] **H2.1** Write and run the page crawler across all 1,334 practice
+- [x] **H2.1** Write and run the page crawler across all 1,334 practice
   pages: HTTP 200, no broken audio `src`, no broken internal links,
   expected exercise markup present, no console JS errors.
+  → Built `scripts/page_crawler.py`, testing the LIVE deployed site
+  (not just local files) — a stronger test since it validates what a
+  real student's browser actually receives. Found and fixed 2 bugs in
+  the crawler itself first (path resolution, false-positive marker
+  check on legitimate JS template literals — see D009), and had to
+  actively work around a real Cloudflare Pages platform behavior
+  (homepage-fallback-serves-200-for-any-missing-page) to make the
+  crawler trustworthy at all.
+
+  **That exact fix surfaced D008 (BLOCKER)**: `/dash/` — the Wuslah W1
+  student dashboard — was missing from the live site entirely,
+  because `empire-dojo` has no auto-deploy pipeline and nobody ran the
+  manual `wrangler pages deploy` step after PR #21 merged. Traced to
+  root cause via the real GitHub `main` branch (not a stale local
+  checkout), fixed live with a verified Cloudflare API token (deploy
+  command run, verified via preview URL + production domain), and
+  added a permanent steering-doc rule (`empire-dojo` PR #22) to
+  prevent recurrence.
+
+  **Full re-run post-fix: 1,334/1,334 pages OK, 0 issues.** Console JS
+  errors deferred to H2.2 (needs a real browser's dev console, not
+  available in this sandbox).
 - [ ] **H2.2** Manually walk through at least 1 full day (all 4
   exercise types) from EACH level (L0, L1, L2, L3) — 4 full days,
   16 exercise pages — on both desktop and a real mobile device.
