@@ -811,10 +811,52 @@
   Recommended for the same batch-fix pass as D012-D017/D020 (this one
   is a pure engineering fix, doesn't need a separate product decision
   like D020 does). All test data cleaned up, 0 residual rows.
-- [ ] **H4.5** Directly invoke each Markaz notification function (daily
+- [x] **H4.5** Directly invoke each Markaz notification function (daily
   digest, weekly report, monthly summary); review content the same way.
-- [ ] **H4.6** Static-check every `@tasks.loop(time=...)` decorator's
+  → **DONE (session 17), fully automated, live in production.**
+  Invoked all 3 real functions (`markaz_daily_digest`,
+  `ops_monitoring.send_weekly_report()`, `send_monthly_summary()`)
+  against real seeded data, capturing every message actually sent to
+  the real ops Telegram chat via a wrapper around the real
+  `send_ops_message()` (genuine Telegram API calls, real `message_id`s
+  returned — not mocked). `send_monthly_summary()`'s own internal
+  `day != 1` gate was correctly exercised (not bypassed) by patching
+  the module's own `datetime.datetime` import to simulate the 1st.
+  **Result: 0 issues found across all 3** — correct bilingual/numeric
+  content, correct MarkdownV2 escaping, correctly reflects seeded
+  data, no template leaks. Test member cleaned up, 0 residual rows.
+- [x] **H4.6** Static-check every `@tasks.loop(time=...)` decorator's
   configured hour/minute against the documented intended schedule.
+  → **DONE (session 17).** Extracted all 22 scheduled task decorators'
+  exact hour/minute directly from `bot.py`, grouped by identical clock
+  time, then read each colliding function's own internal day-of-week
+  guard (if any) and whether it DMs students individually vs. posts to
+  a shared channel vs. reports to the owner only — to separate real
+  same-instant-same-student overlaps from harmless "same clock time,
+  different actual days" false alarms.
+  **Found D022 (Minor, deferred)**: 2 real scheduling overlaps where a
+  single student could receive 2 separate DMs within the same instant:
+  (1) **Sunday 10:00** — `weekly_assessment()` (Sunday-only) and
+  `nabd_absence_check()` (no day guard, daily) both DM students
+  individually at the same time; a student who is both active-enough-
+  for-weekly-assessment AND absence-eligible would get both. (2)
+  **Friday 20:00** — `evening_reminder()` (daily, partial-completion
+  students) and `friday_feedback_survey()` (Friday-only, ALL active
+  members) both DM individually; a Friday student with 1-6 tasks done
+  gets both. All other same-clock-time groupings checked and confirmed
+  NOT real overlaps (different days, or one side is owner-facing/
+  channel-post rather than student DM). Full detail + proposed fix
+  (stagger the colliding times by a few minutes) in `defect_log.md`
+  D022. Recommended for the same batch-fix pass as D012-D017/D020/D021.
+
+  **H4 (AI Fallback Chains + Notification Content Audit) is now FULLY
+  COMPLETE** — all 6 sub-tasks done. Findings this phase: D019 (Info,
+  methodology), D020 (Major, needs product decision), D021 (Major,
+  pure engineering fix), D022 (Minor, pure engineering fix). All
+  content-correctness checks (H4.1-H4.5) passed clean; the 3 real
+  defects found (D020/D021/D022) are all in SCHEDULING/GENERATION
+  LOGIC, not in the message content itself, which was uniformly clean
+  across every function tested.
 
 ## Phase H5 — Multi-Student Load Simulation
 
