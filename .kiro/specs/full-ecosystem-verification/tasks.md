@@ -542,14 +542,51 @@
 
 ## Phase H3 — Cross-System Integration Traces
 
-- [ ] **H3.1** Trace 1 (Web → Discord): complete an exercise on the
+- [x] **H3.1** Trace 1 (Web → Discord): complete an exercise on the
   web, confirm `daily_submissions` row, confirm `!progress` reflects
   it, confirm dashboard re-fetch shows it, confirm no double-count if
   `!done` is also run for the same task.
+  → **DONE (session 17), fully automated, executed live in production.**
+  Wrote `h3_1_web_to_discord_trace.py`: creates a synthetic
+  `GHOST_TEST_` member (`900000020`), calls `database.log_submission()`
+  directly (the exact same underlying call `POST /api/complete-exercise`
+  makes — confirmed via code read of `api_server.py`), then verifies
+  the full downstream chain for real:
+  1. `daily_submissions` row created — confirmed via direct query. ✅
+  2. `!progress`'s REAL command callback (direct-invoke, same harness
+     pattern as H1.1) correctly reflects the new points/task. ✅
+  3. The dashboard's own query logic (`week_activity`'s
+     `daily_submissions` lookup) correctly includes the web-completed
+     task. ✅
+  4. Running `!done`'s real underlying function
+     (`tasks.process_submission()`) for the SAME task on the SAME day
+     correctly reports `new=False` (no double-count) — confirmed via
+     direct query that exactly ONE `daily_submissions` row exists
+     afterward, not two. ✅
+  **Result: 6/6 checks PASS.** The web↔Discord data flow is genuinely
+  correct end-to-end, not just correct-by-code-reading — the shared
+  `UNIQUE(discord_id, date, task_id)` constraint + shared
+  `log_submission()` call path works exactly as designed. Ghost member
+  fully cleaned up afterward (0 residual rows, verified).
 - [ ] **H3.2** Trace 2 (Discord → Telegram → Discord): trigger a real
   Nour escalation, confirm Telegram alert content, reply in Telegram,
   confirm student DM arrives "from Nour," confirm escalation resolved
   in DB.
+  → **PAUSED, not started — needs the owner actively participating,
+  unlike H3.1.** Unlike H3.1 (fully containable via DB/direct-callback
+  calls with zero real-world side effects), this trace has a genuine
+  live side effect: triggering it sends a REAL Telegram message to the
+  owner's ops chat, and completing the full round-trip requires the
+  owner to actually reply to that real Telegram message so the
+  DM-back-to-student leg can be verified. Also identified a real
+  candidate account for this: `Empire Ghost` (`discord_id`
+  `1526224028191162631`) — a genuine Discord snowflake with real guild
+  presence (unlike the synthetic 9-digit `GHOST_TEST_` IDs used
+  elsewhere, which cannot receive a real Discord DM since they don't
+  correspond to actual Discord accounts). Session paused here at the
+  owner's request before triggering any live alert — resume by doing
+  this trace together, interactively, when the owner is available to
+  watch for and reply to the real Telegram message.
 - [ ] **H3.3** Trace 3 (`!link` → Web): generate a token, connect on
   `/dash/`, confirm correct student's real data shows, confirm
   `last_used` updates on the token.
