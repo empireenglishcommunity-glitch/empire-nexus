@@ -769,14 +769,48 @@
   core step skipped) rather than a code bug — flagged as needing the
   OWNER'S product input (implement W4.2 for real, vs. explicitly
   retire the "AI-generated" framing and rely on the fallback bank on
-  purpose) rather than a pure engineering fix like D012-D017. Full
-  detail in `defect_log.md` D020. **This item is NOT part of the
-  already-agreed D012-D017 batch-fix plan** — needs a separate,
-  explicit owner decision before H7.
-- [ ] **H4.4** Directly invoke each Nabd notification function (morning
+  purpose) rather than a pure engineering fix like D012-D017.
+  **Owner decision (2026-07-15): confirmed non-priority** — real
+  students still get SOME tips today (the generic fallback bank), so
+  there's no broken experience, only a missing enhancement. Deferred
+  to the same end-of-campaign discussion as D012-D017/D019, to be
+  resolved together before H7's Go/No-Go. Full detail in
+  `defect_log.md` D020.
+- [x] **H4.4** Directly invoke each Nabd notification function (morning
   kickstart, evening reminder, streak alert, weekly summary, absence
   recovery day 2/3/5/7) against a test member; review content for
   grammar, Arabic/English mix correctness, no unrendered template vars.
+  → **DONE (session 17), fully automated, live in production.** Wrote
+  `h4_4_nabd_content_review.py`: invoked each REAL, unmodified task
+  function (`evening_reminder`, `streak_at_risk`, `nabd_weekly_summary`,
+  `check_absence_recovery`) with `bot.get_guild()`/`get_member()`
+  mocked to capture `.send()` calls (no real DMs sent), scanning every
+  captured message for unrendered `{template_vars}`, literal `"None"`
+  leaks, and empty strings.
+  **morning_kickstart**: already covered in H3.4, not re-run here.
+  **evening_reminder, streak_at_risk, nabd_weekly_summary**: all 3
+  **CONFIRMED CLEAN** — correct bilingual (Arabic shown, since the
+  test member defaults to that phase) content, no template leaks, no
+  grammar issues, correctly reflects seeded data (streak count, task
+  count, completion %).
+  **Found D021 (Major, deferred)** on `check_absence_recovery()`'s
+  4-tier escalation ladder (day 2/3/5/7+): tested all 4 tiers side by
+  side on fresh test data (not just reading the code) and discovered
+  the day-5 and day-7+ tiers produced the WRONG message — byte-for-
+  byte identical to the day-2 text, not their own documented content.
+  Root-caused: the function's `if/elif` chain checks `days_inactive >= 2`
+  FIRST, and since that condition (plus its own same-day-only "already
+  sent" guard) is trivially true for ANY absent member on ANY day, the
+  day-3/5/7 `elif` branches below it are structurally unreachable for
+  a continuously-absent member — dead code. A student absent for a
+  month would receive the identical "day 2" gentle nudge forever; the
+  buddy alert, comeback mini-task, and final "we still have your data"
+  message can never fire. This directly defeats the escalation
+  ladder's entire documented purpose. Full detail + proposed fix
+  (check highest threshold FIRST, not lowest) in `defect_log.md` D021.
+  Recommended for the same batch-fix pass as D012-D017/D020 (this one
+  is a pure engineering fix, doesn't need a separate product decision
+  like D020 does). All test data cleaned up, 0 residual rows.
 - [ ] **H4.5** Directly invoke each Markaz notification function (daily
   digest, weekly report, monthly summary); review content the same way.
 - [ ] **H4.6** Static-check every `@tasks.loop(time=...)` decorator's

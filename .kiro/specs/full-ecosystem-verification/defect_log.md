@@ -1262,15 +1262,133 @@ the generic tip bank on purpose) rather than leave a half-built
 feature silently masquerading as complete — a product decision for
 the owner, not purely a coding one.
 
-**Decision (owner, pending):** logged now for the owner's awareness
-and eventual batch decision alongside D012-D017, D019 — NOT yet
-discussed/decided given this was found mid-H4.3; flagging explicitly
-here that this one specifically needs the owner's product input (fix
-vs. retire), not just an engineering fix, unlike the other deferred
-items which already have agreed-upon fixes.
+**Decision (owner, 2026-07-15):** confirmed not a priority/blocker —
+real students still receive SOME tips today (the generic fallback
+bank), just not personalized AI-generated ones, so there is no broken
+student-facing experience right now, only a missing enhancement.
+Explicitly deferred to the same end-of-campaign discussion as
+D012-D017, D019 — the owner and this session will discuss the
+fix-vs-retire product decision together at that point, not separately
+or urgently.
 
-**Status:** 🟡 **DEFERRED, NEEDS OWNER PRODUCT DECISION** — confirmed
+**Status:** 🟡 **DEFERRED (owner-confirmed, non-priority)** — confirmed
 real via exhaustive code search + live DB query (0 rows, ever), not
-yet fixed. Recommend discussing fix-vs-retire with the owner before
-H7's batch pass, since this is the one deferred item that isn't
-purely "apply the agreed fix."
+yet fixed. Batched with D012-D017 for discussion + resolution before
+H7's Go/No-Go — this one specifically needs a product decision
+(implement W4.2 for real vs. retire the "AI-generated" framing) as
+part of that discussion, not just an engineering fix applied silently.
+
+
+
+---
+
+## D021 — Absence-recovery escalation ladder is structurally broken: days 3/5/7+ tiers are unreachable dead code, every absent student only ever gets the "day 2" message forever (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H4.4 (directly invoking each Nabd notification
+function against a test member and reviewing captured content for
+correctness — specifically while testing all 4 documented absence
+tiers side by side).
+
+**Severity:** Major. Not a crash — the function runs without error
+every time. The real problem is a genuine content/logic defect: the
+system's own documented 4-stage escalation ladder (gentle DM → buddy
+prompt → comeback mini-task → final DM) never actually escalates.
+Every student who goes quiet for 3, 5, 7, or 30 days receives the
+exact same "day 2" gentle nudge, forever — the buddy-alert, comeback-
+mini-task, and final "we still have your data" messages are dead code
+that can structurally never execute for a continuously-absent member.
+
+**What was observed:** Ran `check_absence_recovery()` (the real,
+unmodified function) against the same test member set to 2, 3, 5, and
+8 days inactive in turn. Expected 4 different message bodies (per the
+function's own docstring: "Day 2: bot DM (gentle) / Day 3: buddy
+prompt / Day 5: comeback mini-task DM / Day 7+: final DM"). Actual
+result: the day-3 test correctly triggered the buddy-prompt code path
+(confirmed separately, working), but **both the day-5 and day-7 test
+runs produced the IDENTICAL day-2 message text** — not their own
+documented tier's content at all.
+
+**Root cause, confirmed via careful read of `features.py`'s
+`check_absence_recovery()` control flow:**
+```python
+if days_inactive >= 2 and not database.was_notification_sent(discord_id, "absence_day2", today):
+    ...  # day 2 message
+elif days_inactive >= 3 and not database.was_notification_sent(discord_id, "absence_day3", today):
+    ...  # day 3 message
+elif days_inactive >= 5 and not database.was_notification_sent(discord_id, "absence_day5", today):
+    ...  # day 5 message
+elif days_inactive >= 7 and not database.was_notification_sent(discord_id, "absence_day7", today):
+    ...  # day 7+ message
+```
+This is an `if / elif / elif / elif` chain. `was_notification_sent(discord_id, "absence_day2", today)`
+only checks whether the DAY-2 notification specifically was sent
+TODAY — it has no awareness of days 3/5/7 at all, and `today` changes
+every single day this loop runs. For ANY member who is absent 3+ days,
+`days_inactive >= 2` is trivially always true, AND `absence_day2` was
+never sent *today* (today is always a new day) — so **the first `if`
+branch's condition is unconditionally true for every absent member on
+every day**, and because this is `elif` (not independent `if`
+statements), the day-3/5/7 branches below it can **never be reached
+by a member whose absence just keeps growing** — they are correctly
+reachable only in the impossible scenario where `days_inactive` is
+already >= 3/5/7 on the very day this function is first observing
+that member (which itself would only reach day-3+ if the loop had
+somehow skipped days 2 through the target day entirely, which it
+doesn't since it runs daily).
+
+**Confirmed empirically, not just theoretically**: the day-5 test
+member (a fresh member set to 5 days inactive, never previously
+processed by this function in this test run) produced the exact
+day-2 message text, byte for byte identical to the actual day-2 test's
+output. Same for the day-7+ test. Only day-3 (which was tested with a
+member whose `days_inactive` was exactly 3 — the SECOND `elif` branch,
+which the FIRST `if`'s own `absence_day2`-sent-today guard does not
+retroactively block since it's a different notification type checked
+against `today`) happened to route correctly in this specific test
+sequence — but this is fragile, not a real fix, and would not hold up
+across real multi-day absence patterns where `absence_day2` was
+already sent on an earlier day and thus "not sent today" is trivially
+true again on every later day too.
+
+**Why this matters for real students:** the entire POINT of an
+escalation ladder is that a student ignored for a week gets
+progressively more serious/different outreach than one who missed a
+single day. As written, a student absent for a month would receive
+the identical gentle "even one task today is better than none" DM
+every single day, forever — the buddy never gets alerted, the
+comeback mini-task never gets offered, and the "everything is still
+here, reach out to #support" final message never arrives. This
+silently defeats the feature's entire stated purpose.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** restructure the tier selection to pick the HIGHEST
+applicable tier first, independent of whether that day's specific
+notification type was already sent. For example:
+```python
+if days_inactive >= 7 and not was_sent(..., "absence_day7", today):
+    ...  # day 7+
+elif days_inactive >= 5 and not was_sent(..., "absence_day5", today):
+    ...  # day 5
+elif days_inactive >= 3 and not was_sent(..., "absence_day3", today):
+    ...  # day 3
+elif days_inactive >= 2 and not was_sent(..., "absence_day2", today):
+    ...  # day 2
+```
+(highest threshold checked FIRST, so a day-8 absence correctly lands
+in the day-7+ branch instead of falling into day-2's always-true
+condition) — or equivalently, compute the correct tier via a small
+helper function/lookup rather than a top-down `if/elif` chain ordered
+low-to-high. Requires a fresh re-test (repeating this exact H4.4
+methodology: simulate days 2/3/5/8 side by side, confirm 4 genuinely
+DIFFERENT message bodies) after the fix, not just a code read, per
+this campaign's own standing discipline.
+
+**Decision (owner, pending):** logged now, recommend batching with
+D012-D017/D020 for the end-of-campaign fix pass — this is a pure
+engineering fix (unlike D020), so it fits the existing batch plan
+without needing a separate product discussion.
+
+**Status:** 🟡 **DEFERRED** — confirmed via live, direct invocation of
+the real function across all 4 documented tiers (not a code-read
+guess), not yet fixed, recommended for the same batch-fix pass as
+D012-D017/D020.
