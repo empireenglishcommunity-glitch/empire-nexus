@@ -283,8 +283,26 @@
   the SAME render path as live data, with no distinct "offline" UI
   state (no banner/badge) — so the owner seeing no offline indicator
   is the expected pass result, not a gap. **H2.3 fully COMPLETE.**
-- [ ] **H2.4** Manually test `/review/` SRS page: due cards display,
+- [x] **H2.4** Manually test `/review/` SRS page: due cards display,
   review buttons work, results sync to the bot's `vocab_srs` table.
+  → **DONE (session 17, with the owner, interactively).** Using the
+  same `GHOST_TEST_ManualWalkthrough` member (`900000012`, still
+  connected from H2.3) with 2 correctly-due cards seeded
+  ("negotiate" overdue by 1 day, "resilient" due today) and 1
+  correctly NOT-due card ("ambiguous", due 3 days out).
+  **Due-card filtering: CONFIRMED CORRECT** — status bar showed
+  "2 cards due" (not 3), matching the seeded due-state exactly.
+  **Tap-to-reveal flow: CONFIRMED WORKING** — word displays, tap
+  reveals review-count/interval metadata + the 3 self-assessment
+  buttons (Forgot/Hard/Easy).
+  **End-to-end sync to `vocab_srs`: CONFIRMED WORKING, not just a
+  client-side illusion** — rated "negotiate" as Easy in the UI, then
+  independently queried the production DB directly: `review_count`
+  went 1→2, `last_score`=5 (matches "Easy"), `interval_days` went
+  1→6 and `ease_factor` went 2.5→2.6 (both correct SM-2 behavior for
+  an "Easy" rating), `next_review` correctly moved out to
+  `2026-07-21`. Card correctly advanced to 2/2 in the UI after rating.
+  **H2.4 fully COMPLETE, 0 issues found.**
 - [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
   Home Screen), confirm offline page (`offline.html`) shows when
   network is unavailable.
