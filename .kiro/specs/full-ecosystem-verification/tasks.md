@@ -972,10 +972,13 @@
   and **D022 fixed** (schedule collisions staggered, merged via
   [PR #143](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/143)).
   Both deployed to production and live-verified (see D021/D022 in
-  `defect_log.md`). **Still open**: D013, D014, D015, D016, D017
-  (all `empire-dojo` frontend — blocked on a fresh Cloudflare deploy
-  token from the owner, fixes can be written/verified without it but
-  deployment needs it), D012 and D020 (deferred to Masar, initiative
+  `defect_log.md`). **D013, D014, D015, D016, D017 now CODE FIXED AND
+  MERGED** via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23)
+  (merged 2026-07-15, content-verified landed on `main` by direct
+  grep, not just merge-status API). **Still blocked on DEPLOYMENT**:
+  needs a fresh Cloudflare API token from the owner (the previous one
+  is gone) to run `npx wrangler pages deploy site --project-name=
+  empire-practice`. D012 and D020 remain deferred to Masar (initiative
   #11 — see `empire-nexus/.kiro/specs/masar/`, explicitly NOT being
   fixed as quick patches here, per the owner's decision to build a
   proper, durable solution instead — tracked as its own initiative,
@@ -987,8 +990,15 @@
   → D021 and D022 both re-tested against their original failing
   scenarios post-deploy (D021: full day 2/3/5/8 tier simulation
   against the actual deployed code, 5/5 pass; D022: static schedule
-  re-extraction confirming no new collisions). Remaining fixes (D013-
-  D017) will each get the same treatment once written and deployed.
+  re-extraction confirming no new collisions). **D013-D017: code
+  fixed and merged, but NOT YET live re-tested** — that step requires
+  the deployment above to happen first (a code fix alone is not
+  trusted here per this campaign's own standing discipline). Once
+  deployed: re-run H2.5's offline test (D013), a real Safari/iOS
+  record→playback→download pass (D014), the Shadowing Stop/Speed
+  controls (D015), and the Done-checkbox same-page-feedback +
+  cross-navigation-persistence checks (D016/D017) — ideally on the
+  same devices/pages that originally found each one.
 - [ ] **H7.4** Produce the final Go/No-Go Checklist — one line per
   requirement (R1-R11 from requirements.md), each marked ✅ Verified /
   ⚠️ Deferred (with explicit reasoning) / ❌ Blocked.
