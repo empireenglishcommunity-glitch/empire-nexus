@@ -649,10 +649,19 @@ D012 and any other findings for one fix-everything pass at the end of
 the Hisn campaign, before H7's Go/No-Go sign-off. This entry is the
 record that guarantees it isn't forgotten in the meantime.
 
-**Status:** 🟡 **DEFERRED** — confirmed real via live device test + code
-read + live curl verification of the redirect, not yet fixed,
-intentionally batched with D012 for a single fix pass at the end of
-the campaign.
+**Fix applied (2026-07-15):** `sw.js`'s `OFFLINE_URL` const and its
+`PRECACHE` array entry changed from `/offline.html` to the
+extensionless `/offline`, matching the rest of the codebase's
+convention. Merged via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23)
+— confirmed landed on `main` by direct content grep (not just merge-
+status API), per this campaign's standing verification discipline.
+
+**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED.** Requires
+`npx wrangler pages deploy site --project-name=empire-practice`
+(needs a fresh Cloudflare API token from the owner — the previous one
+is gone) and a fresh live device re-test (install → airplane mode →
+visit uncached page → confirm the offline page itself renders,
+not a native browser error) before this can be marked fully Resolved.
 
 
 
@@ -751,10 +760,25 @@ component is used, on every mobile page tested so far, exactly as the
 D012 and D013 for one fix-everything pass at the end of the Hisn
 campaign, before H7's Go/No-Go sign-off.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live device test on BOTH
-desktop (works) and mobile Safari (fails) + code read, not yet fixed,
-intentionally batched with D012/D013 for a single fix pass at the end
-of the campaign.
+**Fix applied (2026-07-15):** added `Recorder._pickMimeType()`, which
+uses `MediaRecorder.isTypeSupported()` to pick a real supported mime
+type (checking `audio/mp4` first for Safari/iOS, then webm/ogg
+variants) at `start()` time, stores the actual negotiated type
+(`this.mediaRecorder.mimeType`), and uses that real type — not a
+hardcoded `'audio/webm'` — when constructing the `Blob` in `stop()`.
+Also fixed the download link's file extension to match the real type
+(e.g. `.m4a` instead of a hardcoded `.webm`) via a new
+`RecorderUI._extensionFor()` helper. Merged via `empire-dojo`
+[PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main` by direct content grep.
+
+**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR RE-TESTED ON
+A REAL SAFARI/iOS DEVICE.** The fix is verified by code
+inspection/logic (syntax-checked, traced against MediaRecorder's
+documented behavior) but per this campaign's standing discipline, a
+code fix alone is not sufficient — needs deployment (fresh Cloudflare
+token required) AND a fresh live re-test on the SAME iPhone that
+originally reproduced this, confirming both playback ("Listen to
+Yours") and download now work.
 
 
 
@@ -816,8 +840,29 @@ controls actually affect the real MP3 playback, not just the unused
 D012, D013, D014 for one fix-everything pass at the end of the Hisn
 campaign, before H7's Go/No-Go sign-off.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
-read, not yet fixed, intentionally batched with other findings.
+**Fix applied (2026-07-15):** rewired the Shadowing page's Stop button
+and Speed `<select>` (in `generate.py`'s `gen_shadowing()`) from
+`TTS.stop()`/`TTS.setRate()` to `KokoroAudio.stop()`/
+`KokoroAudio.setRate()`. Added a `setRate()` method to `KokoroAudio`
+in `app.js` that applies the rate live to the currently-playing
+`Audio` element's `playbackRate` AND remembers it for the next
+`play()` call; `stop()` already existed and correctly pauses the
+`Audio` element (plus calls `TTS.stop()` as a harmless fallback, in
+case the SpeechSynthesis path happened to be the one actually
+playing). Regenerated all 266 `shadowing.html` pages (one per level/
+week/day) via `scripts/generate.py` so the fix is in the committed
+HTML output, not just the generator source — diffed the regeneration
+and confirmed ONLY those 266 files changed, each with exactly the two
+rewired `onclick`/`onchange` attributes, no other page type affected.
+Merged via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main`
+(sampled `site/l0/week1/day1/shadowing.html` directly on `main`,
+shows `KokoroAudio.stop()`/`KokoroAudio.setRate()`).
+
+**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
+RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
+fresh live re-test confirming Stop actually halts the real MP3
+mid-playback and Speed actually changes its audible rate, on the same
+device/page that originally reproduced this.
 
 ---
 
@@ -876,8 +921,24 @@ without any reload.
 D012, D013, D014, D015 for one fix-everything pass at the end of the
 Hisn campaign, before H7's Go/No-Go sign-off.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
-read, not yet fixed, intentionally batched with other findings.
+**Fix applied (2026-07-15):** `Progress.markDone()` in `app.js` now
+re-runs `Gamification._renderProgressBar()` AND
+`Gamification._checkDailyCompletion()` immediately after writing to
+`localStorage` (guarded with a `typeof Gamification !== 'undefined'`
+check, though it's always defined by the time a checkbox can be
+clicked — `Gamification` is a `const` declared before
+`DOMContentLoaded`, and `markDone()` only runs from user interaction
+after the page has fully loaded). Fixed once, at the source
+(`markDone()` itself), rather than editing all 4 near-duplicate
+`done-section` `onchange` handlers in `generate.py` — so this applies
+uniformly to Accent/Shadowing/Listening/Vocab without needing a
+regeneration pass (confirmed no HTML markup changes were needed or
+made for this defect). Merged via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main`.
+
+**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
+RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
+fresh live re-test confirming the counter/progress bar visibly
+updates immediately on the same page load after checking "Done."
 
 
 
@@ -954,8 +1015,22 @@ load, AND reflects new state immediately on change.
 D012, D013, D014, D015, D016 for one fix-everything pass at the end
 of the Hisn campaign, before H7's Go/No-Go sign-off.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
-read, not yet fixed, intentionally batched with other findings.
+**Fix applied (2026-07-15):** added `Gamification._restoreDoneCheckbox()`,
+called from `Gamification.init()` alongside the existing
+`_renderProgressBar()`/`_checkDailyCompletion()` calls. It detects the
+current page's level/week/day from the URL (same regex pattern used
+elsewhere: `/\/(l\d)\/week(\d+)\/day(\d)/`), detects the exercise type
+from the URL's trailing path segment, and sets the `done-section`
+checkbox's `.checked` property from `Progress.isDone(...)` on every
+page load — combined with D016's fix, the checkbox now reflects prior
+state on load AND reflects new state immediately on change. Merged
+via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main`.
+
+**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
+RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
+fresh live re-test: mark an exercise done, navigate away, navigate
+back, confirm the checkbox is still checked (the exact repro steps
+the owner originally used to find this).
 
 
 
