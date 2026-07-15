@@ -1415,10 +1415,20 @@ since the real deployment path is a proper git commit → PR → merge →
 was only for pre-deploy verification of the fix's correctness.
 Test data cleaned up, 0 residual rows confirmed.
 
-**Status:** ✅ **FIX WRITTEN AND LIVE-VERIFIED**, pending PR merge +
-proper git-based deploy + one final post-deploy confirmation (same
-discipline as D010/D008 — a code fix isn't "done" until it's actually
-deployed and re-checked live, not just merged).
+**DEPLOYED AND POST-DEPLOY RE-VERIFIED (2026-07-15, same session)**:
+PR #142 merged; confirmed the server was still stale (at commit
+`15f487f`, far behind) before deploying — `git pull` fast-forwarded to
+`19c2f6f`, `docker compose up -d --build` rebuilt and restarted the
+container, confirmed healthy (Discord gateway connected, curriculum
+loaded, API listening). Re-ran the exact same day 2/3/5/8 verification
+against the ACTUAL deployed code this time (not a temporary swap) with
+4 fresh Ghost Testing members: **5/5 checks PASS** — all 4 tiers
+produce genuinely different, tier-correct content on the real,
+running production bot. Test data cleaned up, 0 residual rows.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and re-verified
+live against the actual deployed production code. No further action
+needed.
 
 
 
@@ -1543,8 +1553,16 @@ Sunday/Friday at the new times — this is a pure schedule-config change
 with no logic to exercise ahead of time; correctness is fully
 verifiable via the static method already used to find the bug.
 
-**Status:** ✅ **FIX WRITTEN AND STATICALLY RE-VERIFIED**, pending PR
-merge + deploy. A live confirmation that the new times fire correctly
-will naturally happen the first real Sunday/Friday after deploy — no
-special live pre-verification is possible or needed for a pure
-schedule-time change.
+**DEPLOYED (2026-07-15, same session, same deploy cycle as D021)**: PR
+#143 merged and deployed in the same `git pull` + rebuild as D021.
+Confirmed live on the deployed container via direct grep of the
+running code: both `nabd_absence_check` (`10:05`) and
+`friday_feedback_survey` (`20:05`) show the new, staggered times in
+the actually-deployed `/app/src/bot.py`.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, and deployed. A live
+confirmation that the new times fire correctly (vs. just being present
+in the file) will naturally happen the first real Sunday/Friday after
+this deploy — no special live pre-verification is possible or needed
+for a pure schedule-time change beyond confirming the deployed file
+itself, which is done.
