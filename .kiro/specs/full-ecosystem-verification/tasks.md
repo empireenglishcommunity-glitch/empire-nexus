@@ -254,9 +254,29 @@
   dashboard-specific markup). Console JS errors remain explicitly out
   of scope for this script (needs a real headless browser) — deferred
   to H2.2's manual walkthrough as originally planned.
-- [ ] **H2.2** Manually walk through at least 1 full day (all 4
+- [~] **H2.2** Manually walk through at least 1 full day (all 4
   exercise types) from EACH level (L0, L1, L2, L3) — 4 full days,
   16 exercise pages — on both desktop and a real mobile device.
+  → **IN PROGRESS (session 17, with the owner, real iPhone + Safari).**
+  L0 Day 1, Accent exercise tested first: page loaded correctly, all 4
+  exercise links present, model TTS audio played correctly, layout
+  looked correct on the small screen (no overlap/scroll issues).
+  **Found D014 (Major, deferred)**: the "Record Yourself" section's
+  playback ("Listen to Yours") was unresponsive and the "Download"
+  link produced no file. Root-caused via code read: `Recorder.stop()`
+  hardcodes the recorded blob's mime type as `audio/webm` with zero
+  `MediaRecorder.isTypeSupported()` feature detection anywhere in the
+  codebase, but Safari's `MediaRecorder` doesn't natively produce
+  webm — the mismatch between the declared and actual format plausibly
+  explains both the silent playback failure (`.play().catch(() => {})`
+  swallows the error with no visible feedback) and the broken download.
+  Same recorder component is used on Accent AND Shadowing pages across
+  all 4 levels — not a one-page issue. Full detail + proposed fix in
+  `defect_log.md` D014. Deferred per the owner's batching decision
+  (with D012/D013). **Remaining for H2.2**: Shadowing, Listening,
+  Vocab exercises for L0 Day 1 (still on the same day), then the same
+  4-exercise walkthrough for L1, L2, L3 (at least 1 day each), plus a
+  desktop pass. Not yet complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-

@@ -653,3 +653,84 @@ record that guarantees it isn't forgotten in the meantime.
 read + live curl verification of the redirect, not yet fixed,
 intentionally batched with D012 for a single fix pass at the end of
 the campaign.
+
+
+
+---
+
+## D014 — Recorder playback and download broken on Safari/iOS due to hardcoded `audio/webm` mime type (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.2 (manual day×level mobile walkthrough with the
+owner, L0 Day 1, Accent exercise, real iPhone + Safari).
+**Severity:** Major. Recording itself works (mic permission prompt
+appeared, presumably recorded audio), but BOTH ways of hearing it back
+are broken: the in-page "Listen to Yours" playback button was
+unresponsive, and the "Download" link produced no downloadable file.
+This affects the "Compare & Rate" self-assessment flow, a core piece
+of the accent/shadowing exercises across all 4 levels (same recorder
+component is reused everywhere per `generate.py`).
+
+**What was observed (on iPhone Safari):**
+- Recording started/stopped without visible error.
+- "Listen to Yours" button: unresponsive ("unclickable").
+- "Download" link: tapped, but nothing downloadable resulted.
+- Everything else on the page (layout, TTS model playback, page
+  structure) worked correctly on the small screen — this is isolated
+  specifically to the user's own recording, not the recorder UI
+  chrome or the page in general.
+
+**Root cause, confirmed via code read (`app.js`):**
+1. The `Recorder.stop()` function hardcodes the recorded blob's mime
+   type unconditionally: `new Blob(this.chunks, { type: 'audio/webm' })`
+   — regardless of what `MediaRecorder` on the actual device/browser
+   produced.
+2. **No `MediaRecorder.isTypeSupported()` check exists anywhere in
+   this codebase** — confirmed via search, zero matches. The code
+   assumes `audio/webm` is universally correct.
+3. Safari's `MediaRecorder` implementation does not natively record
+   webm — it uses its own supported format (commonly MP4/AAC-based)
+   under the hood. Forcibly labeling that data as `type: 'audio/webm'`
+   when constructing the `Blob` creates a blob whose actual byte
+   content doesn't match its declared MIME type.
+4. **This mismatch plausibly explains both symptoms independently**:
+   - `RecorderUI.playMine()` creates `new Audio(this.audioUrl)` from
+     this mislabeled blob and calls `.play().catch(() => {})` — the
+     `catch` silently swallows any decode/format error with zero
+     visible feedback, which matches exactly the "unclickable, nothing
+     happens" symptom described (the button IS wired correctly and
+     IS being clicked; the audio element is silently failing to
+     decode/play the mislabeled data).
+   - The `<a id="rec-download" download="...webm">` link's `href` is
+     set to the same mislabeled object URL — Safari's handling of
+     forced-download links for a blob whose declared type doesn't
+     match its real content is unreliable, consistent with "clicked
+     but nothing to download."
+5. Confirmed no Safari-specific handling, feature-detection, or
+   fallback mime type exists anywhere in `Recorder`/`RecorderUI`.
+
+**Scope:** This is the SAME recorder component (`Recorder`/`RecorderUI`
+in `app.js`, wired via `generate.py`'s `gen_accent()`/`gen_shadowing()`)
+used on the Accent AND Shadowing pages across all 4 levels (L0-L3,
+38 weeks) — not a one-page issue. Any Safari/iOS student using either
+exercise type would hit this.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** use `MediaRecorder.isTypeSupported()` to pick a real,
+supported mime type at record-start time (checking common candidates
+in order, e.g. `audio/webm`, `audio/mp4`, falling back to the
+browser's own default if none of the preferred types are supported),
+and construct the `Blob` with that ACTUAL type instead of a hardcoded
+one. The download filename extension should also be derived from the
+real type (e.g. `.mp4` instead of a hardcoded `.webm`) so downloaded
+files aren't mislabeled either. Requires a fresh live re-test on a
+real Safari/iOS device after the fix (not just Chrome/desktop, since
+this is specifically a cross-browser format-support gap that a
+Chrome-only check would not catch).
+
+**Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
+D012 and D013 for one fix-everything pass at the end of the Hisn
+campaign, before H7's Go/No-Go sign-off.
+
+**Status:** 🟡 **DEFERRED** — confirmed via live device test + code read,
+not yet fixed, intentionally batched with D012/D013 for a single fix
+pass at the end of the campaign.
