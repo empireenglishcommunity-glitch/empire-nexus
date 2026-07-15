@@ -257,7 +257,7 @@
 - [ ] **H2.2** Manually walk through at least 1 full day (all 4
   exercise types) from EACH level (L0, L1, L2, L3) — 4 full days,
   16 exercise pages — on both desktop and a real mobile device.
-- [~] **H2.3** Manually test `/dash/` end-to-end with a real linked
+- [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
   session, reload, confirm cached data shows).
@@ -275,8 +275,14 @@
   data-correctness issues. **Found D012** (Minor UX, deferred — see
   `defect_log.md`): the level badge and XP progress bar are two
   independent systems that can look disconnected to a real student.
-  **Still pending**: offline cache fallback test (disable network,
-  reload, confirm cached data shows) — not yet done.
+  **Offline cache fallback: CONFIRMED WORKING.** Owner disabled
+  network, reloaded `/dash/` — cached data rendered cleanly with zero
+  errors. Confirmed via code read (`dash/index.html`) that this is
+  correct-as-designed: on fetch failure it falls back to
+  `localStorage.getItem('empire_dash_cache')` and renders it through
+  the SAME render path as live data, with no distinct "offline" UI
+  state (no banner/badge) — so the owner seeing no offline indicator
+  is the expected pass result, not a gap. **H2.3 fully COMPLETE.**
 - [ ] **H2.4** Manually test `/review/` SRS page: due cards display,
   review buttons work, results sync to the bot's `vocab_srs` table.
 - [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
