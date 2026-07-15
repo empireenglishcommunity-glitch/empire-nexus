@@ -999,9 +999,14 @@ def _now():
 
 # --- Additional Scheduled Tasks (from blueprint Phase 4-6) ---
 
-@tasks.loop(time=datetime.time(hour=20, minute=0, tzinfo=_zone()))
+@tasks.loop(time=datetime.time(hour=20, minute=5, tzinfo=_zone()))
 async def friday_feedback_survey():
-    """Send weekly feedback survey every Friday evening."""
+    """Send weekly feedback survey every Friday evening (8:05 PM).
+
+    D022 fix (Hisn H4.6): staggered 5 minutes after evening_reminder
+    (also 20:00) to avoid sending 2 individual DMs to the same
+    partially-completed student within the same instant every Friday.
+    """
     if _now().weekday() != 4:  # 4 = Friday
         return
     guild = bot.get_guild(config.GUILD_ID)
@@ -1318,9 +1323,14 @@ async def nabd_weekly_summary():
         await asyncio.sleep(0.5)
 
 
-@tasks.loop(time=datetime.time(hour=10, minute=0, tzinfo=_zone()))
+@tasks.loop(time=datetime.time(hour=10, minute=5, tzinfo=_zone()))
 async def nabd_absence_check():
-    """Nabd N5: daily absence recovery check (10 AM)."""
+    """Nabd N5: daily absence recovery check (10:05 AM).
+
+    D022 fix (Hisn H4.6): staggered 5 minutes after weekly_assessment
+    (also 10:00 Sunday) to avoid sending 2 individual DMs to the same
+    student within the same instant every Sunday.
+    """
     guild = bot.get_guild(config.GUILD_ID)
     if guild:
         await features.check_absence_recovery(guild)
