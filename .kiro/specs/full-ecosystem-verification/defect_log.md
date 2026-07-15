@@ -857,3 +857,81 @@ Hisn campaign, before H7's Go/No-Go sign-off.
 
 **Status:** 🟡 **DEFERRED** — confirmed via live device test + code
 read, not yet fixed, intentionally batched with other findings.
+
+
+
+---
+
+## D017 — "Done" checkbox never restores its checked state on return visits; completion is invisible on every subsequent page load (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.2 (manual mobile walkthrough with the owner, L0
+Day 1, Listening exercise, real iPhone Safari).
+**Severity:** Major — distinct from, and worse than, D016. D016 was
+"no feedback on the SAME page load." This is "no feedback EVER, on
+ANY subsequent visit" — the checkbox always renders unchecked
+regardless of whether the exercise was genuinely already completed,
+for the entire life of the page.
+
+**What was observed:** Checked "Done" on the Listening exercise,
+navigated to the next exercise, then navigated back to Listening.
+The "Done" checkbox showed as UNCHECKED again, even though the owner
+had definitely checked it moments before. Owner's own words: "i
+donnt know how it works" — a real, justified loss of trust in whether
+the feature works at all.
+
+**Root cause, confirmed via code read (`generate.py` + `app.js`):**
+1. `generate.py` emits the checkbox with NO `checked` attribute, ever,
+   regardless of stored state:
+   `<input type="checkbox" class="checkbox" onchange="...">` — this
+   is a static, server/build-time-generated string with zero
+   awareness of what's in `localStorage` (which is a browser-only,
+   client-side store the Python generator script cannot see at build
+   time — this is expected and correct on its own).
+2. **The gap is client-side**: confirmed via full-file search of
+   `app.js` that `Progress.isDone()` is called in exactly TWO places
+   — `_renderProgressBar()` (the counter) and `_checkDailyCompletion()`
+   (the confetti trigger) — and NEVER to set a checkbox's `.checked`
+   property on page load. There is no code anywhere that reads
+   `localStorage` on `DOMContentLoaded` and syncs it back to the
+   `done-section` checkbox's visual state.
+3. **Net effect**: `markDone()` genuinely writes the completion record
+   correctly (confirmed in D016's investigation) and that data DOES
+   get correctly read elsewhere (the counter, the confetti trigger) —
+   but the checkbox itself is a one-way, write-only control with no
+   corresponding read-back. Every fresh page load renders it
+   unchecked from scratch, forever, even for an exercise completed
+   5 minutes or 5 weeks ago.
+
+**Relationship to D016:** these are two distinct, separately-real bugs
+in the same small feature:
+- D016 = the visible PROGRESS COUNTER doesn't update within the same
+  page load after checking the box (but does update on the next
+  full page load elsewhere, e.g. navigating to a different page and
+  back, since `_renderProgressBar()` re-runs on ITS OWN
+  `DOMContentLoaded`).
+- D017 = the CHECKBOX ITSELF never reflects prior completion on any
+  subsequent load of the SAME page, ever — a completely separate,
+  and more serious, gap. Fixing D016 alone would NOT fix this.
+
+**Why this matters for real students:** a student reviewing their own
+progress by re-visiting a day/exercise (entirely normal behavior) has
+no reliable visual way to tell if they already did it — undermines
+trust in the entire tracking system, exactly as the owner described.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** on `DOMContentLoaded` (or inside `Gamification.init()`,
+alongside the existing `_renderProgressBar()` call), detect the
+current page's level/week/day/type from the URL (the same regex
+pattern already used in `_renderProgressBar()`/`_checkDailyCompletion()`)
+and explicitly set the `done-section` checkbox's `.checked = true` if
+`Progress.isDone(...)` returns true for it. Combining this fix with
+D016's fix (re-render the counter on checkbox change) would make the
+whole feature consistent in both directions — reflects prior state on
+load, AND reflects new state immediately on change.
+
+**Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
+D012, D013, D014, D015, D016 for one fix-everything pass at the end
+of the Hisn campaign, before H7's Go/No-Go sign-off.
+
+**Status:** 🟡 **DEFERRED** — confirmed via live device test + code
+read, not yet fixed, intentionally batched with other findings.
