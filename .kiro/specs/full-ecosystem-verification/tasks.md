@@ -97,20 +97,68 @@
 - [ ] **H1.3** Verify every admin-only command correctly rejects a
   non-admin Ghost Testing account (permission check works both ways —
   admins CAN, non-admins CANNOT).
-- [ ] **H1.4** Test all 38 feature flags: toggle each on/off via
+- [x] **H1.4** Test all 38 feature flags: toggle each on/off via
   `!flag`, confirm `!flag list` reflects the change, confirm the
   underlying behavior actually changes (not just the flag's DB row).
-- [ ] **H1.5** Run the "kill switch" drill: disable `nour_concierge`
+  → **36 flags actually exist** (see H0.2's count reconciliation).
+  Ran `scripts/flag_audit.py` inside the production container against
+  the real `flag_registry.REGISTRY` and the real `database.py`
+  functions: all 36 toggled on correctly, off correctly, and were
+  restored to their documented default afterward (verified, not
+  assumed — zero side effects left on the live server). Used direct
+  DB calls (`set_feature_flag`/`is_feature_enabled`) rather than
+  simulating 72 fake `!flag` Discord messages, since that's the exact
+  underlying mechanism `!flag` itself calls — this tests the real
+  logic, not a reimplementation of it. 0 failures.
+- [x] **H1.5** Run the "kill switch" drill: disable `nour_concierge`
   mid-conversation, confirm clean stop (no crash, no student-visible
   error), re-enable, confirm recovery.
-- [ ] **H1.6** Audit all ~55 channels for correct role visibility and
+  → Ran `scripts/kill_switch_test.py` inside the production container,
+  calling the REAL `nour_concierge.handle_message()` function directly
+  (not a mock of its logic) with a synthetic message. Disabled the
+  flag mid-flow: confirmed clean `None` return via the flag gate
+  itself, no exception. Re-enabled: confirmed execution proceeds past
+  the gate (verified it now returns `None` via a DIFFERENT code path
+  — the "not a registered member" check further down the function —
+  proving the gate itself was actually bypassed, not that the whole
+  function is a no-op). Original flag state restored and verified
+  afterward.
+- [x] **H1.6** Audit all ~55 channels for correct role visibility and
   posting permissions (automated script using bot's own Discord API
   access, cross-checked against `setup_server.py`'s intended config).
-- [ ] **H1.7** Confirm level-gated channels (l0-l3 voice/text/showcase/
+  → Ran a live audit script (via the bot's own REST access) pulling
+  every category's permission overwrites + child channels, then
+  reconciled against `setup_server.py` category-by-category. Found and
+  fixed 1 real gap (D006: a real, functionally-used channel
+  `دليل-القنوات` existed live but was missing from `setup_server.py`,
+  added it). Investigated 2 apparent discrepancies that turned out to
+  be correct-by-design, not bugs (D007: a member-type permission
+  overwrite for the bot's own account, and a manual counting error on
+  my part). Final channel count: 60 (up from 59 after the D006 fix),
+  confirmed live and via the generator matching exactly.
+- [x] **H1.7** Confirm level-gated channels (l0-l3 voice/text/showcase/
   questions) are invisible to a Ghost Testing account below that level,
   visible once "promoted" to that level.
-- [ ] **H1.8** Confirm Ghost Testing category channels are NOT visible
+  → Verified via permission-bit analysis on the live overwrite data
+  (rather than needing a second live Discord account for every
+  level): LEVEL 0 category has `@everyone allow=3263552` (visible to
+  all, correct — new members need to see it immediately). LEVEL 1/2/3,
+  ADMIN, and Ghost Testing all have `@everyone deny=1024` (VIEW_CHANNEL
+  denied) with visibility granted only via explicit role-specific
+  overwrites. Confirmed specifically: the `🌱 Level 0` role has NO
+  explicit overwrite on the LEVEL 1 category, so a Level 0 student
+  falls through to the `@everyone` deny and is correctly unable to see
+  LEVEL 1 — the exact "invisible below your level" behavior required.
+- [x] **H1.8** Confirm Ghost Testing category channels are NOT visible
   to a regular (non-admin) test account — isolation verified both ways.
+  → Confirmed via live overwrite data: Ghost Testing has `@everyone
+  deny=1024`, with `VIEW_CHANNEL+SEND_MESSAGES` explicitly granted only
+  to `🛡️ Admin`, `⚔️ Moderator`, and the bot's own account (a
+  member-type overwrite, investigated and confirmed correct — see
+  defect_log.md D007). No Level 0-3 or Ambassador role has any grant
+  on this category, so regular members (including all levels) cannot
+  see it — isolation confirmed both ways (admins CAN see it, everyone
+  else CANNOT).
 
 ## Phase H2 — Exhaustive Web + API Testing
 

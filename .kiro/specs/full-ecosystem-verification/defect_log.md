@@ -103,3 +103,53 @@ cleanup pattern (9-digit IDs starting with '9'), so H0.6's cleanup SQL
 remains safe and will never touch these rows.
 **Action:** None required for Hisn. Noted here for awareness only.
 **Status:** ℹ️ No action needed
+
+
+
+---
+
+## D006 — WELCOME category's `دليل-القنوات` channel missing from setup_server.py (Minor)
+
+**Found during:** H1.6 (channel audit) — live query returned 6 channels
+in WELCOME, but `setup_server.py`'s config only defines 5.
+**Severity:** Minor — the channel itself works fine and is actively
+used (confirmed real content: a full Arabic channel-guide message
+posted by the bot, and `features.py`'s `ARABIC_ALLOWED_CHANNELS`
+explicitly references it by name). The gap is purely in
+`setup_server.py` not being a complete, accurate source of truth —
+re-running the script against a fresh server would silently omit this
+channel even though the rest of the codebase depends on it existing.
+**Root cause:** The channel was likely added manually (or via a
+one-off script, per the `fix_all_permissions.py` precedent already
+noted elsewhere in `setup_server.py`'s comments) directly against the
+live server, and `setup_server.py` was never updated to match.
+**Fix:** Added the channel definition to `setup_server.py`'s WELCOME
+category, matching its live topic exactly (`🗺️ خريطة كاملة لكل قنوات
+السيرفر بالعربي`).
+**Verified:** Re-ran `generate_test_matrix.py` post-fix — channel count
+increased from 59 to 60, matching the live server's actual channel
+count exactly.
+**Status:** ✅ Resolved (2026-07-15)
+
+---
+
+## D007 — Two "unmapped role" overwrites investigated, found to be correct (Info, no action)
+
+**Found during:** H1.6, while cross-referencing category permission
+overwrites against the guild's role list.
+**Severity:** Info only — both turned out to be correct, not bugs.
+1. Ghost Testing category's overwrite for ID `1519795406656110857`
+   didn't match any role in the guild's role list. Investigated via
+   the raw overwrite's `type` field (`type: 1` = member, not `type: 0`
+   = role) and a direct member lookup — resolved to the bot's OWN user
+   account (`Empire English Bot`), which needs a direct member-level
+   grant to post/respond in Ghost Testing regardless of role. Correct
+   by design.
+2. Manual eyeball count of "61 live channels" vs. the generator's "60"
+   was a counting error on my part (mis-reading a role-overwrite log
+   line as if it were a channel line), not an actual discrepancy —
+   both numbers were 60 once re-checked carefully.
+**Action:** None required. Logged for completeness, since a full
+verification pass should record what was checked and cleared, not
+just what was broken.
+**Status:** ℹ️ No action needed

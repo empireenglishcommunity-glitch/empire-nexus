@@ -1,6 +1,6 @@
 # Hisn Test Matrix (generated, do not hand-edit)
 
-Generated from the actual codebase. Counts: 40 commands, 36 flags, 59 channels, 10 API endpoints, 1334 web pages.
+Generated from the actual codebase. Counts: 40 commands, 36 flags, 60 channels, 10 API endpoints, 1334 web pages.
 
 ## Discord Commands
 
@@ -97,60 +97,61 @@ Generated from the actual codebase. Counts: 40 commands, 36 flags, 59 channels, 
 | 3 | 📋 أهلاً \| WELCOME | rules | text | ☐ | |
 | 4 | 📋 أهلاً \| WELCOME | roles-info | text | ☐ | |
 | 5 | 📋 أهلاً \| WELCOME | announcements | text | ☐ | |
-| 6 | ⚙️ الأوامر \| SYSTEM | bot-commands | text | ☐ | |
-| 7 | ⚙️ الأوامر \| SYSTEM | leaderboard | text | ☐ | |
-| 8 | ⚙️ الأوامر \| SYSTEM | support | text | ☐ | |
-| 9 | ⚙️ الأوامر \| SYSTEM | suggestions | text | ☐ | |
-| 10 | 🌱 المستوى 0 \| LEVEL 0 | l0-daily-tasks | text | ☐ | |
-| 11 | 🌱 المستوى 0 \| LEVEL 0 | l0-text-practice | text | ☐ | |
-| 12 | 🌱 المستوى 0 \| LEVEL 0 | l0-voice-1 | voice | ☐ | |
-| 13 | 🌱 المستوى 0 \| LEVEL 0 | l0-voice-2 | voice | ☐ | |
-| 14 | 🌱 المستوى 0 \| LEVEL 0 | l0-questions | text | ☐ | |
-| 15 | 🌱 المستوى 0 \| LEVEL 0 | l0-showcase | text | ☐ | |
-| 16 | 💪 المستوى 1 \| LEVEL 1 | l1-daily-tasks | text | ☐ | |
-| 17 | 💪 المستوى 1 \| LEVEL 1 | l1-text-practice | text | ☐ | |
-| 18 | 💪 المستوى 1 \| LEVEL 1 | l1-voice-1 | voice | ☐ | |
-| 19 | 💪 المستوى 1 \| LEVEL 1 | l1-voice-2 | voice | ☐ | |
-| 20 | 💪 المستوى 1 \| LEVEL 1 | l1-questions | text | ☐ | |
-| 21 | 💪 المستوى 1 \| LEVEL 1 | l1-showcase | text | ☐ | |
-| 22 | 🚀 المستوى 2 \| LEVEL 2 | l2-daily-tasks | text | ☐ | |
-| 23 | 🚀 المستوى 2 \| LEVEL 2 | l2-text-practice | text | ☐ | |
-| 24 | 🚀 المستوى 2 \| LEVEL 2 | l2-voice-1 | voice | ☐ | |
-| 25 | 🚀 المستوى 2 \| LEVEL 2 | l2-voice-2 | voice | ☐ | |
-| 26 | 🚀 المستوى 2 \| LEVEL 2 | l2-debate | voice | ☐ | |
-| 27 | 🚀 المستوى 2 \| LEVEL 2 | l2-questions | text | ☐ | |
-| 28 | 🚀 المستوى 2 \| LEVEL 2 | l2-showcase | text | ☐ | |
-| 29 | 👑 المستوى 3 \| LEVEL 3 | l3-daily-tasks | text | ☐ | |
-| 30 | 👑 المستوى 3 \| LEVEL 3 | l3-text-practice | text | ☐ | |
-| 31 | 👑 المستوى 3 \| LEVEL 3 | l3-voice-1 | voice | ☐ | |
-| 32 | 👑 المستوى 3 \| LEVEL 3 | l3-voice-2 | voice | ☐ | |
-| 33 | 👑 المستوى 3 \| LEVEL 3 | l3-debate | voice | ☐ | |
-| 34 | 👑 المستوى 3 \| LEVEL 3 | l3-mentorship | text | ☐ | |
-| 35 | 👑 المستوى 3 \| LEVEL 3 | l3-showcase | text | ☐ | |
-| 36 | 🌍 المجتمع \| COMMUNITY | general-chat | text | ☐ | |
-| 37 | 🌍 المجتمع \| COMMUNITY | introductions | text | ☐ | |
-| 38 | 🌍 المجتمع \| COMMUNITY | voice-lounge | voice | ☐ | |
-| 39 | 🌍 المجتمع \| COMMUNITY | events | text | ☐ | |
-| 40 | 🌍 المجتمع \| COMMUNITY | daily-word | text | ☐ | |
-| 41 | 📊 المتابعة \| ACCOUNTABILITY | daily-check-in | text | ☐ | |
-| 42 | 📊 المتابعة \| ACCOUNTABILITY | streak-tracker | text | ☐ | |
-| 43 | 📊 المتابعة \| ACCOUNTABILITY | weekly-goals | text | ☐ | |
-| 44 | 📚 المصادر \| RESOURCES | cheat-sheets | text | ☐ | |
-| 45 | 📚 المصادر \| RESOURCES | video-library | text | ☐ | |
-| 46 | 📚 المصادر \| RESOURCES | podcast-recs | text | ☐ | |
-| 47 | 📚 المصادر \| RESOURCES | book-club | text | ☐ | |
-| 48 | 💬 التقييم \| FEEDBACK | speaking-feedback | text | ☐ | |
-| 49 | 💬 التقييم \| FEEDBACK | writing-feedback | text | ☐ | |
-| 50 | 💬 التقييم \| FEEDBACK | accent-feedback | text | ☐ | |
-| 51 | 💬 التقييم \| FEEDBACK | grammar-qa | text | ☐ | |
-| 52 | 🔒 الإدارة \| ADMIN | admin-chat | text | ☐ | |
-| 53 | 🔒 الإدارة \| ADMIN | mod-actions | text | ☐ | |
-| 54 | 🔒 الإدارة \| ADMIN | member-notes | text | ☐ | |
-| 55 | 🔒 الإدارة \| ADMIN | bot-logs | text | ☐ | |
-| 56 | 🔒 الإدارة \| ADMIN | dev-log | text | ☐ | |
-| 57 | 👻 Ghost Testing | ghost-commands | text | ☐ | |
-| 58 | 👻 Ghost Testing | ghost-showcase | text | ☐ | |
-| 59 | 👻 Ghost Testing | ghost-writing | text | ☐ | |
+| 6 | 📋 أهلاً \| WELCOME | دليل-القنوات | text | ☐ | |
+| 7 | ⚙️ الأوامر \| SYSTEM | bot-commands | text | ☐ | |
+| 8 | ⚙️ الأوامر \| SYSTEM | leaderboard | text | ☐ | |
+| 9 | ⚙️ الأوامر \| SYSTEM | support | text | ☐ | |
+| 10 | ⚙️ الأوامر \| SYSTEM | suggestions | text | ☐ | |
+| 11 | 🌱 المستوى 0 \| LEVEL 0 | l0-daily-tasks | text | ☐ | |
+| 12 | 🌱 المستوى 0 \| LEVEL 0 | l0-text-practice | text | ☐ | |
+| 13 | 🌱 المستوى 0 \| LEVEL 0 | l0-voice-1 | voice | ☐ | |
+| 14 | 🌱 المستوى 0 \| LEVEL 0 | l0-voice-2 | voice | ☐ | |
+| 15 | 🌱 المستوى 0 \| LEVEL 0 | l0-questions | text | ☐ | |
+| 16 | 🌱 المستوى 0 \| LEVEL 0 | l0-showcase | text | ☐ | |
+| 17 | 💪 المستوى 1 \| LEVEL 1 | l1-daily-tasks | text | ☐ | |
+| 18 | 💪 المستوى 1 \| LEVEL 1 | l1-text-practice | text | ☐ | |
+| 19 | 💪 المستوى 1 \| LEVEL 1 | l1-voice-1 | voice | ☐ | |
+| 20 | 💪 المستوى 1 \| LEVEL 1 | l1-voice-2 | voice | ☐ | |
+| 21 | 💪 المستوى 1 \| LEVEL 1 | l1-questions | text | ☐ | |
+| 22 | 💪 المستوى 1 \| LEVEL 1 | l1-showcase | text | ☐ | |
+| 23 | 🚀 المستوى 2 \| LEVEL 2 | l2-daily-tasks | text | ☐ | |
+| 24 | 🚀 المستوى 2 \| LEVEL 2 | l2-text-practice | text | ☐ | |
+| 25 | 🚀 المستوى 2 \| LEVEL 2 | l2-voice-1 | voice | ☐ | |
+| 26 | 🚀 المستوى 2 \| LEVEL 2 | l2-voice-2 | voice | ☐ | |
+| 27 | 🚀 المستوى 2 \| LEVEL 2 | l2-debate | voice | ☐ | |
+| 28 | 🚀 المستوى 2 \| LEVEL 2 | l2-questions | text | ☐ | |
+| 29 | 🚀 المستوى 2 \| LEVEL 2 | l2-showcase | text | ☐ | |
+| 30 | 👑 المستوى 3 \| LEVEL 3 | l3-daily-tasks | text | ☐ | |
+| 31 | 👑 المستوى 3 \| LEVEL 3 | l3-text-practice | text | ☐ | |
+| 32 | 👑 المستوى 3 \| LEVEL 3 | l3-voice-1 | voice | ☐ | |
+| 33 | 👑 المستوى 3 \| LEVEL 3 | l3-voice-2 | voice | ☐ | |
+| 34 | 👑 المستوى 3 \| LEVEL 3 | l3-debate | voice | ☐ | |
+| 35 | 👑 المستوى 3 \| LEVEL 3 | l3-mentorship | text | ☐ | |
+| 36 | 👑 المستوى 3 \| LEVEL 3 | l3-showcase | text | ☐ | |
+| 37 | 🌍 المجتمع \| COMMUNITY | general-chat | text | ☐ | |
+| 38 | 🌍 المجتمع \| COMMUNITY | introductions | text | ☐ | |
+| 39 | 🌍 المجتمع \| COMMUNITY | voice-lounge | voice | ☐ | |
+| 40 | 🌍 المجتمع \| COMMUNITY | events | text | ☐ | |
+| 41 | 🌍 المجتمع \| COMMUNITY | daily-word | text | ☐ | |
+| 42 | 📊 المتابعة \| ACCOUNTABILITY | daily-check-in | text | ☐ | |
+| 43 | 📊 المتابعة \| ACCOUNTABILITY | streak-tracker | text | ☐ | |
+| 44 | 📊 المتابعة \| ACCOUNTABILITY | weekly-goals | text | ☐ | |
+| 45 | 📚 المصادر \| RESOURCES | cheat-sheets | text | ☐ | |
+| 46 | 📚 المصادر \| RESOURCES | video-library | text | ☐ | |
+| 47 | 📚 المصادر \| RESOURCES | podcast-recs | text | ☐ | |
+| 48 | 📚 المصادر \| RESOURCES | book-club | text | ☐ | |
+| 49 | 💬 التقييم \| FEEDBACK | speaking-feedback | text | ☐ | |
+| 50 | 💬 التقييم \| FEEDBACK | writing-feedback | text | ☐ | |
+| 51 | 💬 التقييم \| FEEDBACK | accent-feedback | text | ☐ | |
+| 52 | 💬 التقييم \| FEEDBACK | grammar-qa | text | ☐ | |
+| 53 | 🔒 الإدارة \| ADMIN | admin-chat | text | ☐ | |
+| 54 | 🔒 الإدارة \| ADMIN | mod-actions | text | ☐ | |
+| 55 | 🔒 الإدارة \| ADMIN | member-notes | text | ☐ | |
+| 56 | 🔒 الإدارة \| ADMIN | bot-logs | text | ☐ | |
+| 57 | 🔒 الإدارة \| ADMIN | dev-log | text | ☐ | |
+| 58 | 👻 Ghost Testing | ghost-commands | text | ☐ | |
+| 59 | 👻 Ghost Testing | ghost-showcase | text | ☐ | |
+| 60 | 👻 Ghost Testing | ghost-writing | text | ☐ | |
 
 ## API Endpoints
 
