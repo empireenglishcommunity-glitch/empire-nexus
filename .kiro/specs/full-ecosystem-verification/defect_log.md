@@ -1392,3 +1392,114 @@ without needing a separate product discussion.
 the real function across all 4 documented tiers (not a code-read
 guess), not yet fixed, recommended for the same batch-fix pass as
 D012-D017/D020.
+
+
+
+---
+
+## H4.5 — Markaz notification content review: EXECUTED, all clean (2026-07-15, session 17)
+
+Directly invoked the 3 real Markaz functions (`markaz_daily_digest`,
+`ops_monitoring.send_weekly_report()`, `ops_monitoring.send_monthly_summary()`)
+against real seeded data (1 test member with an 8-day streak, 2 tasks
+done today, among 4 other pre-existing real member rows). Captured
+every message actually sent to the real ops Telegram chat via a
+wrapper around the real `send_ops_message()` (not a mock — genuine
+Telegram API calls made, `message_id`s returned normally) and scanned
+each for unrendered `{template_vars}`, literal `"None"` leaks, and
+empty strings.
+
+**Result: 0 issues found across all 3 functions.**
+- `markaz_daily_digest`: correctly reflects active students, tasks
+  completed, new registrations, escalation count.
+- `send_weekly_report()`: correctly computed growth/engagement/
+  retention%/level distribution, correct MarkdownV2 escaping
+  throughout.
+- `send_monthly_summary()`: confirmed its own internal `if now.day != 1: return`
+  gate correctly requires simulating the 1st (tested via patching
+  `ops_monitoring`'s own `datetime.datetime` import, not bypassing the
+  gate) — once past the gate, correctly computed engagement tiers,
+  level distribution, and revenue-potential metrics, including
+  correctly labeling the previous month's name.
+
+Test member cleaned up afterward, 0 residual rows confirmed.
+
+**Status:** ✅ H4.5 complete, 0 defects found.
+
+---
+
+## D022 — Two real scheduling overlaps found: Sunday 10:00 (3 tasks) and Friday 20:00 (2 tasks) can send multiple DMs to the same student back-to-back (Minor, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H4.6 (static-checking every `@tasks.loop(time=...)`
+decorator's configured hour/minute against every other task's
+schedule, looking for same-instant collisions).
+
+**Severity:** Minor. Not a crash, not data corruption — `discord.py`'s
+`tasks.loop` runs each independently and `asyncio` interleaves them
+without conflict. The real issue is pure UX: a student could receive
+2-3 separate DMs within moments of each other, which reads as spammy/
+uncoordinated rather than a single well-organized outreach.
+
+**Method:** Extracted all 22 `@tasks.loop(time=...)` decorators'
+configured hour/minute directly from `bot.py` (regex/manual scan, not
+guessed), grouped by exact clock time, then read each colliding
+function's OWN internal day-of-week guard (if any) and whether it
+sends individual DMs vs. posts to a shared channel vs. is gated by a
+flag most students wouldn't have DMs for — to distinguish REAL
+same-instant, same-student overlaps from harmless "same clock time,
+different actual days" false alarms.
+
+**Collision 1 — Sunday 10:00, 3 tasks:**
+- `weekly_assessment()` — Sunday-only guard (`weekday()==6`), DMs
+  every active member individually.
+- `nabd_absence_check()` → `check_absence_recovery()` — **NO day
+  guard, runs every day** — DMs absence-tier-eligible members
+  individually (see D021 for that function's own separate bug).
+- `nour_weekly_review()` — Sunday-only guard, sends ONE report to the
+  OWNER's Telegram (not student DMs) — confirmed via code read this
+  does NOT contribute to student-facing overlap, only appeared to
+  collide on clock time.
+Real overlap: on any Sunday, an active member who is ALSO 2+ days
+absent would receive BOTH `weekly_assessment`'s DM AND
+`check_absence_recovery`'s DM at the same 10:00 slot — 2 individual
+DMs within the same instant. `nour_weekly_review` does not add to this
+(owner-facing, not student-facing).
+
+**Collision 2 — Friday 20:00, 2 tasks, both student-facing DMs:**
+- `evening_reminder()` — NO day guard (daily), DMs any student with
+  1-6 tasks done that day.
+- `friday_feedback_survey()` — Friday-only guard, DMs EVERY active
+  member individually (confirmed via `features.send_weekly_feedback_survey()`:
+  no partial-completion filter at all, unlike `evening_reminder`).
+Real overlap: any Friday, a student with 1-6 tasks done that day would
+receive BOTH the evening reminder AND the feedback survey DM at the
+same 20:00 slot.
+
+**Other same-clock-time groupings checked and confirmed NOT real
+overlaps** (different days, or not both student-facing):
+- `markaz_weekly_report` (Sun 9:00) + `at_risk_check` (Mon-only, 9:00)
+  — different days, never actually coincide.
+- `daily_task_post`/`morning_kickstart`/`grammar_card_delivery`
+  (6:00/6:05/6:30) — deliberately staggered by design, not a collision.
+- `markaz_daily_digest` (7:00) + `monday_progress_report`
+  (Monday-only, 7:00) — different scope (owner Telegram vs. Monday-only
+  student channel post), and different days for the student-facing one.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** stagger the colliding times by a few minutes each (e.g.
+move `nabd_absence_check` to 10:05, `friday_feedback_survey` to
+20:05), OR add a short `asyncio.sleep()`-based stagger inside one of
+each pair, OR (more robust) add a shared per-student "already sent N
+notifications in the last hour" throttle if this class of overlap is
+a recurring concern beyond just these two pairs. Needs a re-run of
+this same H4.6 static method after the fix to confirm no new
+collisions were introduced by whatever time was chosen.
+
+**Decision (owner, pending):** logged now, recommend batching with
+D012-D017/D020/D021 for the end-of-campaign fix pass — this is a pure
+scheduling/engineering fix, no product decision needed.
+
+**Status:** 🟡 **DEFERRED** — confirmed via exhaustive static extraction
+of all 22 scheduled task times + code read of each colliding
+function's day-guard and DM-vs-channel-post behavior, not yet fixed,
+recommended for the same batch-fix pass as D012-D017/D020/D021.
