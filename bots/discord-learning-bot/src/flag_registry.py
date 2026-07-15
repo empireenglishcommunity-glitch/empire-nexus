@@ -61,6 +61,9 @@ REGISTRY = [
     ("markaz_monthly_summary", "Monthly engagement/revenue summary (1st of month)", "markaz", True),
     ("markaz_churn_alerts", "Churn risk alerts for silent high-value students", "markaz", True),
     ("markaz_conversion_alerts", "Conversion-ready alerts when students hit 7-day streak", "markaz", True),
+
+    # ── WUSLAH (ecosystem harmony) ──
+    ("wuslah_dashboard_api", "Enable expanded /api/dashboard + /api/leaderboard endpoints", "wuslah", True),
 ]
 
 # Initiative display names and emoji
@@ -71,6 +74,7 @@ INITIATIVES = {
     "tatawwur": ("🚀", "TATAWWUR", "system evolution"),
     "nour": ("💬", "NOUR", "autonomous student concierge"),
     "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
+    "wuslah": ("🔗", "WUSLAH", "ecosystem harmony"),
 }
 
 

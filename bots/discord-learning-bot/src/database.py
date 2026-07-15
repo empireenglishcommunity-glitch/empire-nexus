@@ -58,6 +58,11 @@ def _migrate(conn: sqlite3.Connection):
     if "difficulty_level" not in member_cols:
         conn.execute("ALTER TABLE members ADD COLUMN difficulty_level INTEGER NOT NULL DEFAULT 2")
 
+    # Wuslah W0.4: last_used on link_tokens table (for token expiry)
+    lt_cols = {row["name"] for row in conn.execute("PRAGMA table_info(link_tokens)")}
+    if "last_used" not in lt_cols:
+        conn.execute("ALTER TABLE link_tokens ADD COLUMN last_used TEXT DEFAULT NULL")
+
     conn.commit()
 
 
@@ -265,6 +270,7 @@ CREATE TABLE IF NOT EXISTS link_tokens (
     token           TEXT PRIMARY KEY,
     discord_id      TEXT NOT NULL,
     created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    last_used       TEXT DEFAULT NULL,
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_link_tokens_member ON link_tokens(discord_id);
@@ -334,6 +340,17 @@ CREATE TABLE IF NOT EXISTS pending_escalations (
     resolved             INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_pending_escalations_discord ON pending_escalations(discord_id);
+
+-- Wuslah Phase W4: AI-generated study tips (pre-computed weekly).
+CREATE TABLE IF NOT EXISTS nour_study_tips (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    tip_text        TEXT NOT NULL,
+    generated_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    week            INTEGER NOT NULL,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_nour_tips ON nour_study_tips(discord_id, week);
 """
 
 
@@ -1765,3 +1782,31 @@ def get_pronunciation_average(discord_id: str, days: int = 7) -> float:
     if not scores:
         return 0.0
     return sum(s["score"] for s in scores) / len(scores)
+
+
+
+# ============================================================
+#  WUSLAH W0.4: TOKEN EXPIRY CLEANUP
+# ============================================================
+
+def cleanup_expired_tokens(days: int = 30) -> int:
+    """Remove link tokens that haven't been used in `days` days.
+
+    Called from a daily background task. Returns the number of tokens
+    removed. Tokens that have never been used (last_used is NULL) are
+    judged by their created_at date instead.
+    """
+    conn = _connect()
+    cutoff = (datetime.datetime.now() - datetime.timedelta(days=days)).isoformat()
+    try:
+        cur = conn.execute(
+            """DELETE FROM link_tokens
+               WHERE (last_used IS NOT NULL AND last_used < ?)
+                  OR (last_used IS NULL AND created_at < ?)""",
+            (cutoff, cutoff),
+        )
+        removed = cur.rowcount
+        conn.commit()
+    finally:
+        conn.close()
+    return removed

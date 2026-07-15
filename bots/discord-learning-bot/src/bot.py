@@ -1158,6 +1158,10 @@ async def markaz_daily_digest():
     await ops_hub.send_ops_message("\n".join(lines))
     # M4.4: check for churn risk as part of the morning ops cycle
     await ops_monitoring.check_churn_risk()
+    # Wuslah W0.4: clean up expired link tokens (daily housekeeping)
+    removed = database.cleanup_expired_tokens(days=30)
+    if removed > 0:
+        logger.info(f"Wuslah: cleaned up {removed} expired link token(s)")
 
 
 @tasks.loop(time=datetime.time(hour=9, minute=0, tzinfo=_zone()))

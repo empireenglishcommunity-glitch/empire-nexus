@@ -1,22 +1,41 @@
 # Tasks — Wuslah (وُصلة): Ecosystem Harmony
 
-## Phase W0 — Expanded Student API
+## Phase W0 — Expanded Student API ✅ COMPLETE
 
-- [ ] **W0.1** Add `/api/dashboard` endpoint — aggregates: streak,
+- [x] **W0.1** Add `/api/dashboard` endpoint — aggregates: streak,
   level, total_points, leaderboard_rank, pronunciation (14d scores,
   average, trend), milestones, assessments, difficulty_level,
   srs stats, week_activity (7d grid), level_progress, voice_portfolio
   (last 5). Single response, one DB query batch.
-- [ ] **W0.2** Add `/api/leaderboard` endpoint — top 10 by points +
+  → Implemented in `api_server.py`. Returns 17 fields covering the
+  full student data picture in a single API call. Verified live with
+  a seeded test DB: all fields populated correctly.
+- [x] **W0.2** Add `/api/leaderboard` endpoint — top 10 by points +
   requester's own rank/points.
-- [ ] **W0.3** Add rate limiting middleware (60 req/min per token,
+  → Returns `top[]`, `your_rank`, `your_points`, `your_name`. Rank
+  computed via a single COUNT query with a WHERE clause.
+- [x] **W0.3** Add rate limiting middleware (60 req/min per token,
   in-memory counter, 429 on excess).
-- [ ] **W0.4** Add token expiry cleanup — background task removes
+  → Sliding-window counter per token. Applied to ALL endpoints (both
+  new and existing). Request 61 within 60 seconds correctly returns
+  HTTP 429. Verified via automated burst test.
+- [x] **W0.4** Add token expiry cleanup — background task removes
   tokens with no API usage in 30 days.
-- [ ] **W0.5** Add `wuslah_dashboard_api` feature flag, gate all new
+  → New `last_used` column on `link_tokens` (with migration for
+  existing DBs). `cleanup_expired_tokens()` function removes tokens
+  where `last_used < 30 days ago` (or `created_at` if never used).
+  Called daily from the `markaz_daily_digest` loop. Verified: correctly
+  removes only expired tokens, keeps fresh ones.
+- [x] **W0.5** Add `wuslah_dashboard_api` feature flag, gate all new
   endpoints behind it.
-- [ ] **W0.6** Test: verify /api/dashboard returns correct data for a
+  → New flag in registry (initiative: WUSLAH 🔗, default ON). Both
+  `/api/dashboard` and `/api/leaderboard` return 503 when flag is OFF.
+- [x] **W0.6** Test: verify /api/dashboard returns correct data for a
   real student with history.
+  → Full integration test using `aiohttp.test_utils.TestClient`:
+  dashboard returns correct streak/level/pronunciation/SRS/difficulty,
+  leaderboard returns correct rank, rate limit triggers at 61 requests,
+  token expiry removes the right tokens.
 
 ## Phase W1 — Student Dashboard Page
 
