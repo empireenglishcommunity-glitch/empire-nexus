@@ -57,3 +57,4 @@ Thumbs.db
 
 # ── Binary assets ──
 *.docx
+.kiro/specs/full-ecosystem-verification/summary.txt
