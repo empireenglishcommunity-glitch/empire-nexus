@@ -304,6 +304,27 @@ async def on_ready():
     cstats = curriculum.stats()
     logger.info(f"Curriculum: {cstats['total_vocabulary']} words, {cstats['total_speaking_missions']} speaking, {cstats['accent_weeks']} accent weeks")
     logger.info(f"Bot online: {bot.user} | v{config.BOT_VERSION} | {len(bot.guilds)} server(s)")
+
+    # Hisn D023: none of these scheduled loops are channel-scoped -- most
+    # of them DM students directly (morning_kickstart, evening_reminder,
+    # streak_at_risk, nabd_weekly_summary, nabd_absence_check, the Nour
+    # loops), and even the channel-posting ones query the SAME real guild
+    # via config.GUILD_ID regardless of which bot instance is running.
+    # The ghost bot has its own separate database (confirmed live during
+    # H6: a real student who merely joined the guild once was auto-
+    # registered into the ghost bot's DB too, via the same on_member_join
+    # bug), so left unguarded, every one of these loops would keep
+    # targeting real students indefinitely -- not just once at join time.
+    # The ghost bot's own documented purpose (manually running commands
+    # against a synthetic test account to check behavior against the real
+    # guild's role/channel structure) never needed any scheduled loop or
+    # background task, so skip starting all of them entirely.
+    if config.IS_GHOST_INSTANCE:
+        logger.info("IS_GHOST_INSTANCE=true: skipping all scheduled loops, "
+                     "ops poller, restart notification, and the API server "
+                     "-- ghost bot only needs manual command invocation.")
+        return
+
     if not daily_task_post.is_running():
         daily_task_post.start()
     if not weekly_assessment.is_running():
@@ -372,6 +393,16 @@ async def on_ready():
 @bot.event
 async def on_member_join(member: discord.Member):
     """Auto-register new members and send welcome DM with full manual."""
+    # Hisn D023: on_member_join is a guild-wide event, not scoped to any
+    # channel -- it fires for EVERY bot instance connected to the guild,
+    # regardless of that instance's channel permissions. The ghost bot
+    # (Aegis Phase 6) shares this exact codebase and connects to the same
+    # real guild, so without this guard it DMs every real new member its
+    # own separate, uncoordinated welcome sequence alongside the real
+    # bot's -- confirmed live during Hisn H6 (two welcome-DM sequences
+    # landed in the same student's inbox from a single real join).
+    if config.IS_GHOST_INSTANCE:
+        return
     database.register_member(str(member.id), member.display_name)
     # Assign buddy
     await features.assign_buddy(member, member.guild)
@@ -514,6 +545,17 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
     """
     # Ignore bot's own reactions
     if payload.user_id == bot.user.id:
+        return
+
+    # Hisn D023: like on_member_join, reaction events are delivered to
+    # every bot instance connected to the guild that shares the message's
+    # channel visibility -- the ghost bot's registration flow (auto-register
+    # + welcome DM) has no reason to ever run for a real student's ✅
+    # reaction. Defense-in-depth alongside the channel-permission isolation
+    # (which on its own already blocks the ghost bot from most real
+    # channels, but explicit is safer than relying on that alone for a
+    # flow this consequential).
+    if config.IS_GHOST_INSTANCE:
         return
 
     # Check feature flag (use None for discord_id since this is a global check)

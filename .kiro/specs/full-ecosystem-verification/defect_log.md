@@ -1679,3 +1679,136 @@ in the file) will naturally happen the first real Sunday/Friday after
 this deploy — no special live pre-verification is possible or needed
 for a pure schedule-time change beyond confirming the deployed file
 itself, which is done.
+
+
+
+---
+
+## D023 — Ghost Bot is not actually isolated from real students: guild-wide events (join, DM, scheduled loops) fire for BOTH bot instances (Blocker)
+
+**Found during:** H6.1 (Human Experience Walkthrough — new-student join
+test, live, with the owner). This was the very first real-world action
+of H6: joining the production Discord guild with the `bioroma` Ghost
+Testing account via a fresh invite link, to observe the actual
+new-student experience end to end.
+
+**What happened:** The owner joined the real guild once. Two entirely
+separate DM conversations arrived — one from **"Empire English Bot"**
+(the real production bot) and one from **"Empire Ghost"** (the
+internal testing bot, `docker-compose.ghost.yml`, intended per its own
+header comment to be fully isolated "without any risk to real
+students," restricted via Discord channel permission overwrites to a
+hidden admin-only category). The owner's own words: "the onboarding is
+not professional and so confusing" — and specifically described
+getting "one image and one record I did not understand," which traced
+directly to Ghost Bot's (stale, outdated) onboarding media step.
+
+**Root cause:** channel permission overwrites only restrict
+channel-scoped activity (which channels a bot/member can see or post
+in). `on_member_join` is a guild-wide gateway event — Discord delivers
+it to every bot connected to the guild, regardless of that bot's
+channel permissions, because joining a guild isn't a channel-level
+action. Ghost Bot runs the exact same source code as the production
+bot (by design — "no fork, no duplicate code," per its own compose
+file), including the identical `on_member_join` handler, so it
+auto-registered the real join, assigned its own separate buddy, and
+sent its own full welcome-DM sequence — completely uncoordinated with
+the real bot's simultaneous welcome sequence.
+
+**Confirmed via direct investigation** (not just inferred from the
+symptom):
+1. `docker ps` on the production server shows `empire-ghost-bot`
+   running continuously (`Up 35 hours` at time of discovery) alongside
+   `empire-english-bot` — both connected to the same real
+   `GUILD_ID=1519797013565280446`.
+2. `docker exec empire-english-bot` and `docker exec empire-ghost-bot`
+   both show `bioroma`'s `discord_id` registered in their OWN,
+   SEPARATE `members` tables, both with `joined_at` timestamps from
+   the same real join event, and both with a `buddy_id` auto-assigned
+   (production: `M.A.C.A.L EMPIRE`; both processes ran
+   `features.assign_buddy` independently).
+3. `docker logs empire-ghost-bot` and `docker logs empire-english-bot`
+   both show `"Assigned buddy M.A.C.A.L EMPIRE to BioRoMa"` log lines
+   at matching timestamps — direct proof both `on_member_join` handlers
+   executed for the same real event.
+4. Diffing `src/bot.py` between the two containers (`docker exec ...
+   md5sum` showed different hashes; a full diff showed why) revealed
+   Ghost Bot is also running a **stale build**, dozens of commits
+   behind production — missing Nabd (morning/evening DMs, streak
+   alerts), Markaz (Telegram digests), Sahel's `!link`, Dhaka's
+   `!difficulty`, and using an OLD version of the onboarding-media step
+   that sends a PNG attachment + MP3 audio clips (the "image and
+   record" the owner couldn't parse), since replaced in production
+   with a cleaner text-only journey map.
+5. Ghost Bot's `.env.ghost` has `TELEGRAM_ALERT_CHAT_ID=` (blank) — so
+   its copy of `on_ready()`'s scheduled loops (which the current code
+   starts unconditionally) would either silently no-op or, worse,
+   throw on any Telegram-dependent path, while its DM-based loops
+   (`morning_kickstart`, `evening_reminder`, `streak_at_risk`, etc.)
+   would keep targeting `bioroma` — and any other real student who
+   ever joins while Ghost Bot is running — indefinitely, not just once
+   at join time, since `bioroma` is now a permanent row in Ghost Bot's
+   own database.
+6. Confirmed the production database also still carries two leftover
+   test-account rows from prior sessions — `M.A.C.A.L EMPIRE` and
+   `Empire Ghost` itself — both `status='active'`, meaning a real
+   student could theoretically get buddy-paired with one of these
+   non-real accounts. Flagged for the H7.6 DB cleanup pass (not fixed
+   in this entry — separate concern from the isolation bug itself).
+
+**Severity:** Blocker. Every one of the 16 real students would hit
+this exact double, contaminated onboarding on their first join — the
+single most important first impression of the entire system — for as
+long as Ghost Bot remains running unfixed. This is not a cosmetic
+issue; it directly caused the "unprofessional and confusing"
+impression H6 exists to catch.
+
+**Fix applied (2026-07-15):** added `IS_GHOST_INSTANCE` to
+`src/config.py` (reads `IS_GHOST_INSTANCE` env var, defaults `false`).
+Set `IS_GHOST_INSTANCE=true` in `.env.ghost` (and ONLY there — must
+stay unset/false in the real production `.env`). Guarded three places
+in `src/bot.py`:
+1. `on_member_join` — returns immediately if `IS_GHOST_INSTANCE`,
+   before registering the member, assigning a buddy, or sending any
+   DM.
+2. `on_raw_reaction_add`'s ✅-registration flow — same guard, as
+   defense-in-depth (this path is more channel-scoped already, but
+   explicit is safer than relying on permission overwrites alone for
+   a flow this consequential).
+3. `on_ready()` — added an early return (after logging bot-online)
+   before the block that starts ~20 scheduled loops, the ops poller,
+   and the restart notification, and before starting the practice-
+   platform API server. None of these are needed for Ghost Bot's
+   actual documented purpose (manually running commands against a
+   synthetic test account to check behavior against the real guild's
+   structure) — this closes the "loops keep targeting real students
+   indefinitely" risk described in point 5 above, not just the
+   join-time DM.
+
+Also updated `docker-compose.ghost.yml`'s header comment and
+`.env.ghost.example` to correct the outdated claim that channel
+permission overwrites alone provide full isolation, and to document
+the new required flag.
+
+**Not fixed in this entry (separate, tracked concerns):**
+- Ghost Bot's stale build (dozens of commits behind) — the owner
+  should redeploy Ghost Bot (`docker compose -f
+  docker-compose.ghost.yml up -d --build`) after this fix merges, to
+  pick up both this fix AND all the missing feature work. Not folded
+  into this defect since it's an operational redeploy step, not a code
+  defect.
+- The two leftover test-account rows in the production DB
+  (`M.A.C.A.L EMPIRE`, `Empire Ghost`) — flagged for H7.6's DB cleanup
+  pass.
+- `bioroma`'s row inside Ghost Bot's OWN database (from this incident)
+  — harmless once Ghost Bot is rebuilt with this fix (its scheduled
+  loops will no longer start at all), but worth a manual cleanup for
+  hygiene when Ghost Bot is next redeployed.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
+pull && docker compose up -d --build` for the main bot; separately
+rebuild Ghost Bot with the new `.env.ghost` flag set), then a live
+re-test of the exact original repro (bioroma leaves, rejoins via a
+fresh invite, confirm only ONE welcome-DM sequence arrives, from
+"Empire English Bot" only) before this can be marked ✅ Resolved.

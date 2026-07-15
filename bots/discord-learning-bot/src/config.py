@@ -17,6 +17,29 @@ BOT_NAME = "Empire English Community Bot"
 BOT_PREFIX = os.getenv("BOT_PREFIX", "!")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
+# Hisn D023: the Ghost Bot (Aegis Phase 6) is a second instance of this
+# exact same codebase, running in the SAME real production guild under a
+# separate token/prefix, intended to be fully isolated via Discord channel
+# permission overwrites (restricted to a hidden admin-only category).
+#
+# That isolation only covers channel-scoped activity. Guild-wide events --
+# on_member_join, DM-based flows, reaction-based registration -- are NOT
+# channel-scoped and fire for BOTH bot instances on every real event in the
+# guild, regardless of which channels either bot can see. Confirmed live
+# during Hisn H6: a real join by a Ghost Testing account triggered BOTH
+# bots' on_member_join handlers, resulting in two separate, uncoordinated
+# welcome-DM sequences landing in the same inbox (one of them from a stale
+# Ghost Bot build using an outdated onboarding flow) -- exactly the kind of
+# "unprofessional and confusing" first impression this is a Blocker for.
+#
+# Set IS_GHOST_INSTANCE=true in .env.ghost (and ONLY there -- must stay
+# unset/false in the real production .env) to let guild-wide event handlers
+# no-op for the ghost instance. The ghost bot's actual purpose (testing
+# command behavior against the real guild's role/channel structure via a
+# synthetic test account manually running commands) does not require it to
+# react to real member joins or DMs at all.
+IS_GHOST_INSTANCE = os.getenv("IS_GHOST_INSTANCE", "false").strip().lower() in ("1", "true", "yes")
+
 # ============================================================
 #  DISCORD
 # ============================================================
