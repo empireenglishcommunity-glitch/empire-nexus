@@ -212,8 +212,11 @@
 
 ## Phase H7 — Defect Resolution + Go/No-Go Sign-off
 
-- [ ] **H7.1** Maintain `defect_log.md` throughout H1-H6 (severity:
+- [~] **H7.1** Maintain `defect_log.md` throughout H1-H6 (severity:
   Blocker/Major/Minor/Info).
+  → Started early, during H0.5's live verification (not yet H1) —
+  `defect_log.md` created with 5 entries (D001-D005) already logged
+  and resolved. Continues through H1-H6 as more findings surface.
 - [ ] **H7.2** Fix every Blocker and Major defect found.
 - [ ] **H7.3** Re-test every fixed defect against its original failing
   scenario — confirm the fix actually resolves it, not just "looks
