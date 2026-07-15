@@ -400,12 +400,27 @@ lasting change to production config from the test itself.
 **Fix applied and verified**: added the missing 2-line
 `is_feature_enabled()` gate to both `get_progress_v2()` and
 `get_nour_tips()` in `api_server.py`, matching the exact pattern
-already used in `get_dashboard()`/`post_complete_exercise()`. Pending
-deploy + a second live re-test (toggle off → confirm 503 now) before
-final closure — see PR for this change.
-**Status:** ✅ CONFIRMED LIVE + FIX WRITTEN, pending deploy and
-post-deploy re-verification (toggle off → confirm 503) before this
-entry can be marked fully Resolved.
+already used in `get_dashboard()`/`post_complete_exercise()`. Shipped
+via [empire-nexus PR #120](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/120).
+
+**Deployed and post-deploy re-verified (2026-07-15, same session)**:
+after PR #120 merged, deployed to production (`git pull` + `docker
+compose up -d --build` on `77.42.43.250` — server was confirmed stale
+at the old commit `022c6f9` beforehand, fast-forwarded to `15f487f`
+after). Container confirmed healthy (Discord gateway connected,
+curriculum loaded, API server listening on 8099). Ran the full
+verification cycle again with a fresh `GHOST_TEST_` token:
+1. Baseline (flags ON, post-deploy code): both endpoints → HTTP 200. ✅
+2. Flags toggled OFF: `/api/nour-tips` → **HTTP 503**
+   `{"error": "study tips API not enabled"}`; `/api/progress-v2` →
+   **HTTP 503** `{"error": "adaptive progress API not enabled"}`.
+   **Fix confirmed working exactly as intended.** Control
+   (`/api/dashboard`, different flag) unaffected, still 200.
+3. Flags restored to `True`, re-confirmed both endpoints back to
+   HTTP 200 for real students.
+Ghost members cleaned up afterward, 0 residual rows confirmed.
+**Status:** ✅ **RESOLVED** — confirmed broken live, fixed, deployed,
+and re-verified live post-deploy. No further action needed.
 
 
 

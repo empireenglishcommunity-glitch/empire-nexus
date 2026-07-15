@@ -242,8 +242,11 @@
     kept responding normally (HTTP 200, full payloads), confirming the
     kill-switch gap flagged by the earlier code read. Fix applied
     (2-line `is_feature_enabled()` gate added to each function,
-    matching the existing pattern) — **pending deploy + post-deploy
-    re-verification**, see D010 in `defect_log.md`.
+    matching the existing pattern), merged via PR #120, **deployed to
+    production, and re-verified live post-deploy**: flags off now
+    correctly return HTTP 503 on both endpoints; flags restored and
+    re-confirmed HTTP 200 for real students. **D010 fully RESOLVED**,
+    see `defect_log.md`.
   - **D011 found+fixed** (test-tooling, not app): Cloudflare's WAF
     blocks the default Python `urllib` User-Agent (`error code: 1010`)
     before requests reach the app at all — caused the first run's 44
