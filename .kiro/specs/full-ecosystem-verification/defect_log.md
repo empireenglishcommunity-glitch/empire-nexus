@@ -574,3 +574,82 @@ guarantees that.
 **Status:** 🟡 **DEFERRED** — confirmed real, not yet fixed, intentionally
 batched with other findings for a single fix-everything pass at the
 end of the Hisn campaign (before H7's Go/No-Go sign-off).
+
+
+
+---
+
+## D013 — Service worker's offline fallback page is broken due to a `.html`-suffix redirect; violates the project's own documented URL convention (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.5 (manual PWA install + offline test with the
+owner, on a real mobile device — Safari on what showed the install
+prompt correctly and installed to the home screen without issue).
+**Severity:** Major. The PWA install itself works correctly (H2.5's
+first half: PASS). But the offline experience — the entire point of
+Sahel S4's PWA work — is broken for any page the student hasn't
+already visited while online: instead of a friendly offline page,
+the student sees the browser's own native "Safari cannot open this
+page" error.
+
+**What was observed:** Installed the PWA to the home screen (worked
+correctly), enabled Airplane Mode, then tapped into a page not yet
+visited/cached (an `accent` exercise page). Result: native browser
+error, not the intended `offline.html` fallback page.
+
+**Root cause, confirmed via code + live verification:**
+1. `sw.js` hardcodes `const OFFLINE_URL = '/offline.html';` and
+   includes `/offline.html` (with the `.html` suffix) in its
+   `PRECACHE` array.
+2. **This directly violates this project's own documented rule**,
+   written in `empire-dojo/.kiro/steering/project-rules.md` section
+   "Known quirk — extensionless URLs only": every internal link must
+   be extensionless, because `.html`-suffixed paths on
+   `practice.empireenglish.online`'s current Cloudflare zone always
+   308-redirect to their extensionless form. Confirmed live:
+   `curl -sI https://practice.empireenglish.online/offline.html` →
+   `HTTP/2 308`, `location: /offline`. Every OTHER precached asset
+   (`/`, `/css/empire.css`, `/js/app.js`, `/logo.png`, `/favicon.png`,
+   `/manifest.json`) returns a clean `200` with no redirect — `sw.js`
+   is the ONE place in the codebase that doesn't follow the site's own
+   documented convention.
+3. **Why this breaks the offline fallback specifically**: the
+   `install` event does `cache.addAll(PRECACHE)`, which includes the
+   redirecting `/offline.html` URL. Redirected responses have known,
+   documented quirks in the browser Cache API (especially on WebKit/
+   Safari) — the cached entry can end up keyed differently than the
+   literal string the fetch handler later looks up. The fetch
+   handler's offline fallback does `caches.match(OFFLINE_URL)` using
+   the literal string `/offline.html` — if precaching didn't store a
+   matching entry under that exact key (due to the redirect), this
+   lookup returns `undefined`, and `event.respondWith(undefined)`
+   results in exactly the native browser error the owner saw, instead
+   of any page at all.
+4. **Why H2.1's exhaustive 1,334-page crawl never caught this**:
+   `page_crawler.py` discovers pages from `empire-dojo/site/`'s file
+   structure using the documented extensionless convention — it never
+   constructs or tests a `.html`-suffixed URL, so the redirect on
+   `/offline.html` specifically was invisible to that fully-automated,
+   otherwise-exhaustive pass. This is exactly the kind of gap a real
+   human/mobile walkthrough exists to catch that scripted testing
+   structurally cannot — confirms H2.5's value even after H2.1 passed
+   1,334/1,334.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** change `sw.js`'s `OFFLINE_URL` constant and its entry in
+`PRECACHE` from `/offline.html` to the extensionless `/offline`,
+matching every other URL in the codebase. Requires re-deploying
+`empire-dojo` after the fix (the same manual `wrangler pages deploy`
+step documented for D008), and a fresh install/offline re-test on a
+real device to confirm the fallback page actually renders once fixed
+(a code fix alone should not be trusted here without live re-
+verification, per this campaign's own standing discipline).
+
+**Decision (owner, 2026-07-15):** Log now, defer the fix. Batch with
+D012 and any other findings for one fix-everything pass at the end of
+the Hisn campaign, before H7's Go/No-Go sign-off. This entry is the
+record that guarantees it isn't forgotten in the meantime.
+
+**Status:** 🟡 **DEFERRED** — confirmed real via live device test + code
+read + live curl verification of the redirect, not yet fixed,
+intentionally batched with D012 for a single fix pass at the end of
+the campaign.
