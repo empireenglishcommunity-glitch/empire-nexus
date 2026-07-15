@@ -212,9 +212,48 @@
 
 ## Phase H2 — Exhaustive Web + API Testing
 
-- [ ] **H2.1** Write and run the page crawler across all 1,334 practice
+- [x] **H2.1** Write and run the page crawler across all 1,334 practice
   pages: HTTP 200, no broken audio `src`, no broken internal links,
   expected exercise markup present, no console JS errors.
+  → Built `scripts/page_crawler.py`: discovers all pages from the
+  local `empire-dojo/site/` file structure, then validates each one
+  against the LIVE deployed site (not just the local repo), since the
+  whole point is to catch drift between what's committed and what's
+  actually being served. Key finding while building it: this site has
+  no custom `404.html`, so Cloudflare Pages serves the homepage with
+  HTTP 200 for ANY nonexistent path — a naive "status 200 = page
+  exists" check would silently pass on every missing page. Fixed by
+  comparing response bodies against a reference homepage fetch, not
+  just status codes.
+
+  **First real run (session 16) found + fixed D008 (BLOCKER)**: the
+  live practice site was serving a stale build — `/dash/` (the Wuslah
+  W1 dashboard, merged via [empire-dojo PR #21](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/21))
+  fell back to the homepage instead of rendering, and the homepage's
+  own new "📊 My Dashboard" link (added in the same PR) was also
+  missing live. Root cause: `empire-dojo` has no CI/CD auto-deploy —
+  deploy is a manual `wrangler pages deploy` step that was never run
+  after PR #21 merged. Fixed via a real `wrangler pages deploy` with a
+  verified Cloudflare token, and a steering-doc fix
+  ([empire-dojo PR #22](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/22))
+  making the post-merge deploy step an explicit, documented rule so
+  this class of gap can't silently recur. **This `tasks.md` checkbox
+  itself was never checked off before session 16 ran out of credits**
+  (D008's full writeup DOES already exist in `defect_log.md`, marked
+  `❌ BLOCKED` pending a deploy that, per the PR history, had actually
+  already happened) — this checkbox and D008's status are corrected
+  here in session 17 based on the real merged PRs (#21, #22) plus a
+  fresh live re-verification, not assumed from either document alone.
+
+  **Full exhaustive re-run (session 17, 2026-07-15)**: ran the crawler
+  against all 1,334 pages (no sampling) to confirm the current live
+  state fresh, rather than trusting the earlier session's unlogged
+  claim. **Result: 1,334/1,334 pages pass, 0 issues.** `/dash/`
+  confirmed live and serving real dashboard content (not the homepage
+  fallback — response body differs from the homepage's, contains
+  dashboard-specific markup). Console JS errors remain explicitly out
+  of scope for this script (needs a real headless browser) — deferred
+  to H2.2's manual walkthrough as originally planned.
 - [ ] **H2.2** Manually walk through at least 1 full day (all 4
   exercise types) from EACH level (L0, L1, L2, L3) — 4 full days,
   16 exercise pages — on both desktop and a real mobile device.
