@@ -350,3 +350,50 @@ set with H1's command_harness.py fixes).
    missing `/dash/` page).
 **Status:** ✅ Resolved (harness fixed and re-verified before the full
 1,334-page run).
+
+
+---
+
+## D010 — `/api/nour-tips` + `/api/progress-v2` may not respect their documented feature flags (Major, UNVERIFIED — needs live confirmation)
+
+**Found during:** H2.6 prep (code reading `api_server.py` while
+designing the adversarial API test script, before SSH access was
+available to test live).
+**Severity:** Major IF confirmed — this would be a real kill-switch
+gap: an admin disabling `wuslah_nour_tips` or `wuslah_adaptive` via
+`!flag` would believe the corresponding endpoint is now inert, but it
+would keep serving normally. This is exactly the class of thing Hisn
+exists to catch before real students are affected.
+**Evidence gathered so far (code-only, NOT yet live-verified):**
+- `ecosystem-harmony/design.md`'s feature flag table explicitly lists
+  `wuslah_nour_tips` → "Enable AI-generated weekly study tips" and
+  `wuslah_adaptive` → "Enable adaptive practice recommendations."
+- `flag_registry.py`'s `REGISTRY` entries carry the same descriptions:
+  `("wuslah_nour_tips", "Enable AI-generated weekly study tips (W4)", "wuslah", True)`,
+  `("wuslah_adaptive", "Enable adaptive practice recommendations on the web (W3)", "wuslah", True)`.
+- Reading `api_server.py`'s actual route handlers:
+  - `get_dashboard()` → calls `database.is_feature_enabled("wuslah_dashboard_api")` ✅
+  - `get_leaderboard()` → calls the same flag check ✅
+  - `post_complete_exercise()` → calls `database.is_feature_enabled("wuslah_exercise_confirm")` ✅
+  - `get_nour_tips()` → **no `is_feature_enabled()` call anywhere in
+    the function body.** Only checks token validity + rate limit.
+  - `get_progress_v2()` → **same — no `is_feature_enabled()` call.**
+**Not yet done (this is exactly what's blocked, see H2.6 above)**:
+live-toggling `wuslah_nour_tips`/`wuslah_adaptive` OFF via the real
+`!flag` command (or direct DB call) and confirming whether
+`/api/nour-tips`/`/api/progress-v2` keep responding normally (would
+CONFIRM the gap) or start returning a 503 (would mean there's a check
+happening somewhere this code-read missed — e.g. a decorator, a
+middleware layer, or a different code path not yet found).
+**Action for the next session**: the FIRST thing to do once SSH
+access is available (before running the rest of H2.6's adversarial
+matrix) — toggle both flags off, hit both endpoints, confirm the
+actual live behavior. If confirmed, the fix is a 2-line addition to
+each function (matching the exact pattern already used in
+`get_dashboard()`/`post_complete_exercise()`):
+```python
+if not database.is_feature_enabled("wuslah_nour_tips"):
+    return web.json_response({"error": "..."}, status=503)
+```
+**Status:** ⚠️ UNVERIFIED — flagged, not yet confirmed or fixed. Do
+NOT mark resolved until tested against the real live endpoint.

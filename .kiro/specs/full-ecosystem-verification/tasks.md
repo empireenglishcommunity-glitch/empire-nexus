@@ -227,10 +227,49 @@
 - [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
   Home Screen), confirm offline page (`offline.html`) shows when
   network is unavailable.
-- [ ] **H2.6** Test all 11 API endpoints with the full input matrix:
-  valid token, invalid token, missing token, malformed JSON, SQL-
-  injection-style strings, XSS-style strings, oversized payloads,
-  rapid-fire requests (rate limit trigger at 61 req/min).
+- [~] **H2.6** Test all 10 API endpoints (real count, see H0.2) with the
+  full input matrix: valid token, invalid token, missing token,
+  malformed JSON, SQL-injection-style strings, XSS-style strings,
+  oversized payloads, rapid-fire requests (rate limit trigger at
+  61 req/min).
+  → **IN PROGRESS, BLOCKED on SSH access — not yet executed.** All 3
+  scripts are written and committed (this PR):
+  - `scripts/setup_ghost_members.py` — run INSIDE the container first;
+    creates 2 synthetic `GHOST_TEST_` members (IDs `900000010`/`11`)
+    with real link tokens, so the adversarial test has genuine valid
+    tokens. Two members (not one) specifically to test H2.8's
+    cross-member data isolation.
+  - `scripts/api_adversarial_test.py` — run from OUTSIDE the container
+    (this sandbox or any machine), against the real public URL
+    `https://bot.empireenglish.online`. Takes the two tokens from
+    setup as argv. Covers the full input matrix above plus H2.7 (CORS)
+    and H2.8 (leak/cross-member checks) in the same pass, since all
+    three need the same live requests.
+  - `scripts/cleanup_ghost_members.py` — run INSIDE the container
+    after, FK-safe removal of the 2 test members.
+  **Blocker**: a fresh SSH keypair was generated this session
+  (`kiro-agent-hisn-h2-api-testing-20260713`) but the public key was
+  **never installed** on the Hetzner server — the user ran out of
+  credits before running the `chattr`/`echo`/`chattr` command. The
+  local private key material has since been deleted (see this
+  session's checkpoint in `empire-chronicle`) since it was never used
+  and has no value sitting unused. **A brand new session must generate
+  its own fresh keypair** and ask the owner to install it — do not
+  try to reuse any key referenced in past session notes.
+  **Real finding worth checking once unblocked** (not yet verified
+  live, flagged as a possible defect — see `defect_log.md` D010):
+  `/api/nour-tips` and `/api/progress-v2` are documented (in
+  `ecosystem-harmony/design.md`'s flag table and `flag_registry.py`'s
+  own flag description strings) as gated behind the
+  `wuslah_nour_tips`/`wuslah_adaptive` feature flags, but a code
+  reading of `api_server.py` shows NEITHER endpoint actually calls
+  `database.is_feature_enabled()` for those flags — unlike
+  `/api/dashboard`, `/api/leaderboard`, and `/api/complete-exercise`,
+  which all correctly check their respective flags. If confirmed live,
+  this means disabling `wuslah_nour_tips` or `wuslah_adaptive` via
+  `!flag` would have ZERO effect on these two endpoints — a real kill-
+  switch gap. Confirm this the moment SSH access is available, before
+  running the rest of H2.6's matrix.
 - [ ] **H2.7** Confirm CORS headers are correct when called from the
   real `practice.empireenglish.online` origin (not just `*` in theory).
 - [ ] **H2.8** Confirm no API error response leaks stack traces, file
