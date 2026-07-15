@@ -273,10 +273,39 @@
   Same recorder component is used on Accent AND Shadowing pages across
   all 4 levels — not a one-page issue. Full detail + proposed fix in
   `defect_log.md` D014. Deferred per the owner's batching decision
-  (with D012/D013). **Remaining for H2.2**: Shadowing, Listening,
-  Vocab exercises for L0 Day 1 (still on the same day), then the same
-  4-exercise walkthrough for L1, L2, L3 (at least 1 day each), plus a
-  desktop pass. Not yet complete.
+  (with D012/D013).
+
+  **L0 Day 1, Shadowing exercise tested next.** Passage displayed and
+  the real pre-generated model audio (`KokoroAudio`) played correctly.
+  **Found D015 (Major, deferred)**: the "⏹️ Stop" button and Speed
+  dropdown have ZERO effect on the actual playing audio. Root-caused:
+  this page has two entirely separate, non-communicating audio systems
+  — `KokoroAudio` (plays the real MP3, confirmed live) vs. `TTS` (the
+  browser's `SpeechSynthesis` fallback, only used if the MP3 is
+  missing). The Stop button and Speed selector are wired to `TTS.stop()`/
+  `TTS.setRate()` — neither touches `KokoroAudio`'s actual `Audio`
+  element that's really playing. Recorder playback/download: same
+  D014 issue confirmed consistent on this page too, as expected (same
+  shared component).
+  **Found D016 (Minor, deferred)**: the "Done ✅" checkbox produces
+  ZERO visible feedback on the same page load. Root-caused: the
+  checkbox's `onchange` only calls `Progress.markDone()`, which
+  silently writes to `localStorage` with no UI update; the page's
+  visible "✅ X/4" counter/progress bar (`Gamification._renderProgressBar()`)
+  is only ever called once, at page load — never re-triggered by the
+  checkbox — so checking it looks identical to doing nothing until a
+  reload/navigation. Confirmed via code read this is a genuine gap
+  (the underlying data DOES save correctly), not a display-only
+  illusion of one. Same `done-section` markup/pattern exists
+  identically on all 4 exercise types (Accent/Shadowing/Listening/
+  Vocab) — site-wide, not page-specific. Full detail + proposed fixes
+  for D015/D016 in `defect_log.md`. Both deferred per the owner's
+  batching decision (with D012/D013/D014).
+
+  **Remaining for H2.2**: Listening, Vocab exercises for L0 Day 1
+  (still on the same day), then the same 4-exercise walkthrough for
+  L1, L2, L3 (at least 1 day each), plus a desktop pass. Not yet
+  complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
