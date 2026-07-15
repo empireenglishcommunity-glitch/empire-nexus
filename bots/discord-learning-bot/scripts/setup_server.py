@@ -152,6 +152,17 @@ CATEGORIES_CONFIG = [
             {"name": "rules", "type": "text", "topic": "قوانين المجتمع — اقرأها واقبلها"},
             {"name": "roles-info", "type": "text", "topic": "إزاي المستويات شغالة وإزاي تترقى"},
             {"name": "announcements", "type": "text", "topic": "إعلانات رسمية وتحديثات"},
+            # Found live on the production server but missing from this
+            # script during Hisn's H1.6 channel audit (2026-07-15) — the
+            # channel is real and functionally used: features.py's
+            # ARABIC_ALLOWED_CHANNELS explicitly references it by name,
+            # and the bot has posted real content to it (a full Arabic
+            # channel map/guide). Added here so setup_server.py is once
+            # again a complete, accurate source of truth for the live
+            # server's structure — without this, re-running the script
+            # against a fresh server would silently omit a channel the
+            # rest of the codebase actually depends on.
+            {"name": "دليل-القنوات", "type": "text", "topic": "🗺️ خريطة كاملة لكل قنوات السيرفر بالعربي"},
         ],
     },
     # ── Category 2: SYSTEM ──
