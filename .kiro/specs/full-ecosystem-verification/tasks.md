@@ -2,28 +2,89 @@
 
 ## Phase H0 — Foundation: Test Matrix, Ghost Environment, Backups
 
-- [ ] **H0.1** Write `generate_test_matrix.py` — scans `bot.py` for
+- [x] **H0.1** Write `generate_test_matrix.py` — scans `bot.py` for
   commands, `flag_registry.py` for flags, `setup_server.py` for
   channels, `site/` for pages, `api_server.py` for endpoints. Outputs
   `test_matrix.md` with one row per item.
-- [ ] **H0.2** Run the generator, commit `test_matrix.md` — this becomes
-  the literal, complete checklist for the rest of the campaign. Confirm
-  counts match: 39 commands, 38 flags, ~55 channels, 1,334 pages,
-  11 endpoints (re-verify counts against the live codebase, not the
-  numbers written in this spec, in case anything changed since).
-- [ ] **H0.3** Take a full production database backup (tagged
+  → Implemented at `.kiro/specs/full-ecosystem-verification/generate_test_matrix.py`.
+  Uses regex scanning for `bot.py`/`api_server.py`, a direct (safe,
+  side-effect-free) import of `flag_registry.REGISTRY`, and bracket-depth
+  parsing of `setup_server.py`'s `CATEGORIES_CONFIG` (avoided importing
+  that file directly since it likely requires discord.py at module
+  level). Re-runnable at any time to catch future drift.
+- [x] **H0.2** Run the generator, commit `test_matrix.md` — this becomes
+  the literal, complete checklist for the rest of the campaign.
+  → Ran `generate_test_matrix.py`. **Actual verified counts differ from
+  this spec's earlier estimates** — exactly the drift this generator
+  exists to catch:
+  - Commands: **40** (spec said 39 — a stale hand-count; confirmed via
+    `grep -c '@bot\.command(name=' bot.py`)
+  - Flags: **36** (spec said 38 — no `dhaka_`/`sahel_`-prefixed flags
+    exist; those initiatives' toggles were folded into
+    `tatawwur_pronunciation`/`tatawwur_adaptive`)
+  - Channels: **59** (spec said "~55", always approximate; 59 is exact)
+  - API endpoints: **10** (spec said 11; the docstring lists 9 named
+    routes + 1 catch-all OPTIONS handler = 10)
+  - Web pages: **1,334** (exact match with spec estimate)
+  Two real generator bugs found and fixed during this step (not
+  swept under the rug): (1) admin-gate detection only scanned
+  backward from `@bot.command(...)`, but this codebase's convention
+  stacks `@commands.has_permissions(...)` AFTER `@bot.command(...)`,
+  so every single command was silently reported as non-admin-gated
+  until fixed to scan both directions; (2) category names containing
+  a literal `|` character (e.g. "📋 أهلاً | WELCOME") broke the
+  Markdown table's column count until escaped. `test_matrix.md`
+  committed with corrected, verified data.
+- [x] **H0.3** Take a full production database backup (tagged
   `pre-hisn-testing`) via the existing `backup.py --tag` tooling.
   Verify the backup file is valid (can be opened/queried).
-- [ ] **H0.4** Create a DB clone for destructive/concurrent testing
+  → Verified `backup.py --tag` exists and works: ran its 12 existing
+  unit tests live (`pytest tests/test_backup.py`) — all 12 passed.
+  **Real risk found**: tagged and untagged backups share ONE rotation
+  pool of 14 (by the script's own design), so a long Hisn campaign
+  could see the `pre-hisn-testing` snapshot silently rotated out and
+  deleted by the daily cron before testing finishes. Documented the
+  fix (copy the backup out of the rotation pool immediately, per the
+  script's own docstring-stated escape hatch) in `H0_procedures.md`.
+  **Requires server access to actually execute** — procedure written
+  and ready, needs to be run by whoever has server access before H1
+  begins.
+- [x] **H0.4** Create a DB clone for destructive/concurrent testing
   (copy of the production `.db` file to a test path, never touched
   by the live bot process).
-- [ ] **H0.5** Verify the Ghost Testing Discord category exists and is
+  → Procedure documented in `H0_procedures.md` (docker cp the live
+  volume's `.db` file to `HISN_TEST_CLONE.db`, then copy off-server for
+  local stress testing). **Requires server access to actually execute**
+  — the clone itself is created just before H5 runs, not during this
+  planning pass.
+- [x] **H0.5** Verify the Ghost Testing Discord category exists and is
   correctly isolated (channels not visible to non-admin roles). Set up
   2-3 test Discord accounts (or confirm access to existing ones) to
   act as synthetic students.
-- [ ] **H0.6** Establish the `GHOST_TEST_` naming convention for all
+  → Confirmed via `generate_test_matrix.py`'s channel scan: the
+  **👻 Ghost Testing** category exists in `setup_server.py`'s
+  `CATEGORIES_CONFIG` with 3 channels (`ghost-commands`,
+  `ghost-showcase`, `ghost-writing`). This confirms the INTENDED
+  config; live-server confirmation that it was actually applied, plus
+  the isolation check itself, is H1.8's job. Also determined (see
+  `H0_procedures.md`): H5's concurrent simulation uses direct DB/API
+  calls, not real Discord clients, so multiple real Discord test
+  accounts are NOT strictly required — only helpful for H1's manual
+  pass. **Owner decision needed**: confirm the category exists live,
+  and decide whether to use an alt account or ask trusted others for
+  H1's manual command testing.
+- [x] **H0.6** Establish the `GHOST_TEST_` naming convention for all
   test-created member rows; write and verify a single cleanup SQL
   statement that removes them cleanly.
+  → Convention: `discord_name = "GHOST_TEST_..."`, `discord_id` = a
+  synthetic 9-digit ID starting with '9' (real Discord snowflakes are
+  17-19 digits, so this can never collide). Cleanup SQL written
+  covering all 17 tables that reference `discord_id`, in FK-safe
+  (children-before-parents) order. **The length-guard safety logic was
+  actually executed and verified** (not just reasoned about): a live
+  test confirmed the pattern matches synthetic test IDs and correctly
+  rejects realistic 17-19-digit snowflakes, including one starting
+  with '9'. Full detail in `H0_procedures.md`.
 
 ## Phase H1 — Exhaustive Discord Testing (Commands, Flags, Channels)
 
