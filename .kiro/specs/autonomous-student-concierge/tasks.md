@@ -81,17 +81,27 @@
 - [x] **N4.5** If not onboarded by day 3 → Nour sends step-by-step
   walkthrough DM tailored to what they're missing.
 
-## Phase N5 — Personality Refinement (after 1 week of real use)
+## Phase N5 — Personality Refinement (after 1 week of real use) ✅ COMPLETE
 
-- [ ] **N5.1** Review real conversations: tune system prompt based on
+- [x] **N5.1** Review real conversations: tune system prompt based on
   what worked and what felt robotic.
-- [ ] **N5.2** Add "memory" persistence: Nour remembers key facts about
+  → Implemented as an automated weekly self-review (`nour_personality.py`)
+  that uses Groq to analyze Nour's own conversation patterns and sends
+  improvement suggestions to the owner via Telegram. Shipped in PR #102.
+- [x] **N5.2** Add "memory" persistence: Nour remembers key facts about
   a student across conversations (e.g. "they have a job that makes them
   busy on Tuesdays" → reference it later).
-- [ ] **N5.3** Add personality variations by time of day (morning: more
+  → `store_memory()` / `get_memories()` in `nour_personality.py`. After
+  each conversation, Groq extracts key facts and stores them per-student.
+  Retrieved and injected into the system prompt on future conversations.
+- [x] **N5.3** Add personality variations by time of day (morning: more
   energetic; evening: calmer, "rest well").
-- [ ] **N5.4** Add cultural awareness: Ramadan, Eid, Egyptian holidays →
+  → Time-of-day personality adaptation in `nour_personality.py`, modifies
+  the system prompt based on Dubai timezone hour.
+- [x] **N5.4** Add cultural awareness: Ramadan, Eid, Egyptian holidays →
   Nour acknowledges and adjusts expectations.
+  → Cultural awareness module in `nour_personality.py` with Ramadan,
+  Eid al-Fitr, Eid al-Adha, and Egyptian national holidays.
 
 ---
 
