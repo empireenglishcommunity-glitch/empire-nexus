@@ -302,10 +302,33 @@
   for D015/D016 in `defect_log.md`. Both deferred per the owner's
   batching decision (with D012/D013/D014).
 
-  **Remaining for H2.2**: Listening, Vocab exercises for L0 Day 1
-  (still on the same day), then the same 4-exercise walkthrough for
-  L1, L2, L3 (at least 1 day each), plus a desktop pass. Not yet
-  complete.
+  **L0 Day 1, Listening exercise tested next.** Audio played
+  correctly; the quiz/dictation mode was tried and correctly accepted
+  the answer with feedback — 0 issues found on the exercise mechanic
+  itself.
+  **Found D017 (Major, deferred)** on the "Done ✅" checkbox — a
+  DIFFERENT and more serious bug than D016, found by navigating away
+  and back: the checkbox NEVER restores its checked state on any
+  subsequent page load, even though the completion data itself is
+  genuinely saved correctly. Root-caused via code read: `generate.py`
+  emits the checkbox with no `checked` attribute (expected, since the
+  Python build script can't see browser `localStorage`), but critically
+  there is ALSO no client-side code anywhere in `app.js` that reads
+  `Progress.isDone(...)` on page load to set the checkbox's `.checked`
+  property back — `isDone()` is only ever used for the progress
+  counter and the confetti trigger, never for the checkbox itself. Net
+  effect: every fresh page load renders the checkbox unchecked from
+  scratch, forever, regardless of true completion state — the owner's
+  own words: "i donnt know how it works," a real, justified loss of
+  trust in the feature. Distinct from D016 (same page, same load —
+  D017 is ACROSS page loads, a separate root cause, would not be fixed
+  by D016's fix alone). Full detail + proposed fix in `defect_log.md`
+  D017. Deferred per the owner's batching decision (with D012/D013/
+  D014/D015/D016).
+
+  **Remaining for H2.2**: Vocab exercise for L0 Day 1 (still on the
+  same day), then the same 4-exercise walkthrough for L1, L2, L3 (at
+  least 1 day each), plus a desktop pass. Not yet complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
