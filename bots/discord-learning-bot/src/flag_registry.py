@@ -64,6 +64,9 @@ REGISTRY = [
 
     # ── WUSLAH (ecosystem harmony) ──
     ("wuslah_dashboard_api", "Enable expanded /api/dashboard + /api/leaderboard endpoints", "wuslah", True),
+    ("wuslah_exercise_confirm", "Enable web-to-Discord task confirmation via API", "wuslah", True),
+    ("wuslah_nour_tips", "Enable AI-generated weekly study tips (W4)", "wuslah", True),
+    ("wuslah_adaptive", "Enable adaptive practice recommendations on the web (W3)", "wuslah", True),
 ]
 
 # Initiative display names and emoji
