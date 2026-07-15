@@ -530,3 +530,47 @@ immediately after.
 fixed (pending deploy + post-deploy re-verification, tracked in D010's
 entry above). D011 (test-tooling UA block) found and resolved in the
 test script itself.
+
+
+
+---
+
+## D012 — Dashboard "level" badge and XP progress bar are two independent systems, may confuse students (Minor, UX, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H2.3 (manual dashboard walkthrough with the owner,
+using a `GHOST_TEST_` member with seeded data — 3-day streak, 90
+points, level L1, one milestone).
+**Severity:** Minor — not a bug, the code is working exactly as
+designed. Flagged as a real UX finding because a real student could
+plausibly experience genuine confusion from it.
+**What was observed:** The dashboard showed level badge `L1` alongside
+a progress bar reading "0% to L2" despite the member having real
+recent activity (3-day streak, 90 points, 6 tasks done this week).
+**Root cause (confirmed via code read, `api_server.py`'s
+`get_dashboard()`):** `level` (L0-L3, the curriculum level shown in
+the badge) and the XP progress bar are two structurally independent
+systems:
+- `level` is presumably set via `!setlevel` / assessment placement —
+  it does not derive from `total_points` at all.
+- The progress bar's "next level" math uses a SEPARATE points
+  threshold table: `{"L0": 0, "L1": 2000, "L2": 5000, "L3": 10000}`.
+  A member sitting at L1 with 90 points is 1,910 points away from the
+  bar's own "L2" threshold — the 0% display is mathematically correct
+  for that formula, it just isn't intuitively connected to how the
+  member actually reached L1 in the first place.
+**Why this matters for real students:** someone placed at L1 via
+assessment could realistically sit at "0% to L2" for many real days of
+consistent practice (2,000 points at a realistic ~100 pts/day pace is
+~3 weeks away), and may not understand why their "level" and the
+"next level" progress bar don't visibly correspond — worth
+considering either (a) relabeling the progress bar to make clear it
+tracks total XP toward a points-based milestone, separate from
+curriculum level, or (b) tying the two systems together more visibly.
+**Decision (owner, 2026-07-15):** Log now, defer the actual fix.
+Continue the rest of the Hisn walkthrough first, then address this
+alongside any other findings in one batch at the end — explicitly NOT
+to be forgotten in the meantime. This entry is the record that
+guarantees that.
+**Status:** 🟡 **DEFERRED** — confirmed real, not yet fixed, intentionally
+batched with other findings for a single fix-everything pass at the
+end of the Hisn campaign (before H7's Go/No-Go sign-off).
