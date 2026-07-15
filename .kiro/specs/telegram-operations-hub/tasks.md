@@ -155,18 +155,48 @@ mock Discord bot/guild/member, and confirmed: DM "sent", conversation
 history stored, escalation marked resolved, and a real
 "✅ Delivered" confirmation alert delivered to the owner's Telegram.
 
-## Phase M3 — Quick Actions (commands)
+## Phase M3 — Quick Actions (commands) ✅ COMPLETE
 
-- [ ] **M3.1** Implement command router in polling loop (detect /commands).
-- [ ] **M3.2** `/status` — bot uptime, API health, active student count,
+- [x] **M3.1** Implement command router in polling loop (detect /commands).
+  → Extended `ops_poller._handle_update()` to detect standalone (non-reply)
+  messages starting with `/` and dispatch them to a new `_handle_command()`
+  function, which delegates to `ops_commands.dispatch()`. Errors are caught
+  and reported back to the owner as a formatted error message rather than
+  crashing the poller.
+- [x] **M3.2** `/status` — bot uptime, API health, active student count,
   last error (if any).
-- [ ] **M3.3** `/students` — list active students with level + streak.
+  → Shows version, Discord connection, heartbeat, AI providers (Groq/Gemini),
+  registered students by level, today's submissions, and pending escalations.
+- [x] **M3.3** `/students` — list active students with level + streak.
   Paginated if > 10.
-- [ ] **M3.4** `/flag <name> on/off` — toggle feature flags from Telegram.
+  → Sorted by streak descending. Shows `name — level, 🔥Xd` per student.
+  Paginated with `/students 2` for page 2, page size 10.
+- [x] **M3.4** `/flag <name> on/off` — toggle feature flags from Telegram.
   Confirm with current state.
-- [ ] **M3.5** `/announce <message>` — post to Discord #announcements.
+  → `/flag` alone lists all flags with 🟢/🔴 state. `/flag <name>` shows
+  one flag's state. `/flag <name> on/off` toggles it. Accepts multiple
+  synonyms (on/enable/1/true, off/disable/0/false).
+- [x] **M3.5** `/announce <message>` — post to Discord #announcements.
   Confirm "✅ Posted to #announcements".
-- [ ] **M3.6** `/nour on/off` — quick toggle for nour_concierge flag.
+  → Validates message length (≤1950), finds #announcements channel, posts
+  with the same "📢 **Announcement**" header as `!announce`, confirms
+  delivery back to Telegram.
+- [x] **M3.6** `/nour on/off` — quick toggle for nour_concierge flag.
+  → Shortcut that wraps the `nour_concierge` flag. `/nour` shows state,
+  `/nour on/off` toggles.
+
+Also added `/help` — lists all available commands with descriptions.
+
+All commands use `ops_hub.escape_markdown()` for any dynamic text,
+respecting the MarkdownV2 rules established in M1. Responses are sent
+back to the owner's Telegram via `ops_hub.send_ops_message()`, reusing
+the plain-text fallback safety net from M0. New module:
+`src/ops_commands.py` — decorator-based registry pattern, cleanly
+separated from the polling/routing logic in `ops_poller.py`.
+
+Verified live: sent real `/status`, `/help`, and `/students` responses
+through the actual @empire_ops_eec_bot to the owner's Telegram —
+all delivered with correct MarkdownV2 formatting on the first attempt.
 
 ## Phase M4 — Weekly Report + Revenue Intelligence
 

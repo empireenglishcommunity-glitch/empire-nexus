@@ -24,7 +24,7 @@ import logging
 
 import aiohttp
 
-from . import config, database, ops_hub
+from . import config, database, ops_hub, ops_commands
 
 logger = logging.getLogger("empire-bot.ops_poller")
 
@@ -137,12 +137,30 @@ async def _handle_update(update: dict, bot) -> None:
 
     reply_to = message.get("reply_to_message")
     if not reply_to:
-        # Not a reply to anything — Phase M3 will handle standalone
-        # /commands here. For M2, only replies matter.
+        # Not a reply — check if it's a /command (Phase M3).
+        if text.startswith("/"):
+            await _handle_command(text, bot)
         return
 
     replied_msg_id = reply_to.get("message_id")
     await _handle_escalation_reply(replied_msg_id, text, bot)
+
+
+async def _handle_command(text: str, bot) -> None:
+    """Markaz M3 — dispatch a /command and send the response back to
+    the owner's Telegram chat. Never raises."""
+    try:
+        response = await ops_commands.dispatch(text, bot)
+        if response:
+            await ops_hub.send_ops_message(response)
+    except Exception as e:
+        logger.error(f"ops_poller: error handling command '{text[:50]}': {e}")
+        try:
+            await ops_hub.send_ops_message(
+                f"❌ Internal error processing command\\.\n\n`{ops_hub.escape_markdown(str(e)[:200])}`"
+            )
+        except Exception:
+            pass
 
 
 async def _handle_escalation_reply(replied_msg_id: int, reply_text: str, bot) -> None:
