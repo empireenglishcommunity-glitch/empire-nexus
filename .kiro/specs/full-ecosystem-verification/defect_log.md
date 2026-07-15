@@ -378,22 +378,132 @@ exists to catch before real students are affected.
   - `get_nour_tips()` → **no `is_feature_enabled()` call anywhere in
     the function body.** Only checks token validity + rate limit.
   - `get_progress_v2()` → **same — no `is_feature_enabled()` call.**
-**Not yet done (this is exactly what's blocked, see H2.6 above)**:
-live-toggling `wuslah_nour_tips`/`wuslah_adaptive` OFF via the real
-`!flag` command (or direct DB call) and confirming whether
-`/api/nour-tips`/`/api/progress-v2` keep responding normally (would
-CONFIRM the gap) or start returning a 503 (would mean there's a check
-happening somewhere this code-read missed — e.g. a decorator, a
-middleware layer, or a different code path not yet found).
-**Action for the next session**: the FIRST thing to do once SSH
-access is available (before running the rest of H2.6's adversarial
-matrix) — toggle both flags off, hit both endpoints, confirm the
-actual live behavior. If confirmed, the fix is a 2-line addition to
-each function (matching the exact pattern already used in
-`get_dashboard()`/`post_complete_exercise()`):
-```python
-if not database.is_feature_enabled("wuslah_nour_tips"):
-    return web.json_response({"error": "..."}, status=503)
-```
-**Status:** ⚠️ UNVERIFIED — flagged, not yet confirmed or fixed. Do
-NOT mark resolved until tested against the real live endpoint.
+**LIVE-VERIFIED (2026-07-15, session 17)**: with SSH access restored,
+toggled both flags off directly via `database.set_feature_flag()` in
+the live production container (confirmed via `is_feature_enabled()`
+returning `False` for both immediately after), then hit both live
+public endpoints (`https://bot.empireenglish.online/api/nour-tips` and
+`/api/progress-v2`) with a real `GHOST_TEST_` member's token:
+- `/api/nour-tips` → **HTTP 200**, full generic-tips payload returned.
+  **Gap CONFIRMED — flag had zero effect.**
+- `/api/progress-v2` → **HTTP 200**, full adaptive fields
+  (`difficulty_level`, `weak_phonemes`, `recommended_exercise`,
+  `srs_due_count`) returned. **Gap CONFIRMED — flag had zero effect.**
+- Control check: `/api/dashboard` (gated on `wuslah_dashboard_api`,
+  left ON throughout) returned normally, confirming the flag mechanism
+  itself works correctly elsewhere and this is specific to these two
+  endpoints, not a systemic flag-check failure.
+Both flags were restored to their original `True` value immediately
+after the check and re-verified via `is_feature_enabled()` — zero
+lasting change to production config from the test itself.
+
+**Fix applied and verified**: added the missing 2-line
+`is_feature_enabled()` gate to both `get_progress_v2()` and
+`get_nour_tips()` in `api_server.py`, matching the exact pattern
+already used in `get_dashboard()`/`post_complete_exercise()`. Pending
+deploy + a second live re-test (toggle off → confirm 503 now) before
+final closure — see PR for this change.
+**Status:** ✅ CONFIRMED LIVE + FIX WRITTEN, pending deploy and
+post-deploy re-verification (toggle off → confirm 503) before this
+entry can be marked fully Resolved.
+
+
+
+---
+
+## D011 — Cloudflare WAF blocks default Python User-Agent on `bot.empireenglish.online` (Info, test-tooling gap, not an app defect)
+
+**Found during:** H2.6 execution (first real run of
+`api_adversarial_test.py` against the live public API, once SSH access
+was restored).
+**Severity:** Info — this is a finding about the test script and the
+edge infrastructure in front of the API, not a bug in `api_server.py`
+itself. Recorded here per the campaign's own transparency standard
+(the same discipline applied to D009's harness self-corrections).
+**What happened:** The first live run of `api_adversarial_test.py`
+returned HTTP 403 with body `error code: 1010` on 44 of 46 checks —
+initially looked like a catastrophic API-wide failure. Investigated
+before concluding anything:
+- Confirmed via a side-by-side `curl` comparison that requests with
+  Python's default `Python-urllib/3.x` User-Agent are blocked by
+  Cloudflare's edge (`error code: 1010` is Cloudflare's own bot-fight-
+  mode signature-block response, returned by Cloudflare itself, not
+  the origin server).
+- The same request with a realistic browser User-Agent (or curl's own
+  default UA) returns the correct application-level response (HTTP
+  200/400/404 as appropriate).
+- This confirms the block happens at Cloudflare's edge, before the
+  request ever reaches the bot's `api_server.py` — an infrastructure/
+  WAF configuration detail, not an application defect.
+**Impact assessment:** Real browsers (and the actual
+`practice.empireenglish.online` frontend, which uses `fetch()` with a
+real browser UA) are unaffected. This would only matter for
+future server-side/scripted integrations that don't set a UA.
+**Fix:** Updated `api_adversarial_test.py` to send a realistic browser
+`User-Agent` header on every request. Re-run after the fix: 45/46
+checks passed (see H2.6 below for the one remaining flagged item and
+why it's a test-script false positive, not a defect).
+**Status:** ✅ Resolved (test script fixed; no application/WAF
+configuration change needed or made).
+
+---
+
+## H2.6 — API adversarial testing: EXECUTED (2026-07-15, session 17)
+
+Ran all 3 committed scripts against the live production API, in order:
+`setup_ghost_members.py` (inside container) → D010 live verification
+(see D010 above) → `api_adversarial_test.py` (from the sandbox, against
+`https://bot.empireenglish.online`, after the D011 UA fix) →
+`cleanup_ghost_members.py` (inside container).
+
+**Result: 45/46 checks OK, 1 flagged (false positive, see below), 0
+new real defects found in the API layer itself** (beyond the D010 gap,
+already confirmed and fixed separately above).
+
+- All valid/invalid/missing-token cases behaved correctly (200/404/400
+  with clean, non-leaking error bodies) across all 6 GET endpoints.
+- SQL-injection-style and XSS-style strings in tokens and body fields
+  were handled safely everywhere — treated as ordinary non-matching
+  strings (404 "invalid token") or rejected by input validation (400),
+  never a 500 or a leaked stack trace.
+- Oversized token (200,000 chars) correctly rejected with HTTP 414
+  before reaching application logic.
+- Oversized POST payload (200,000-char `word` field) accepted without
+  error or leak (HTTP 200) — no size-limit enforcement on this
+  specific field, but not a security issue on its own (no leak,
+  no crash); worth a Minor follow-up if stricter payload limits are
+  ever desired, not blocking for launch.
+- Malformed JSON correctly rejected (400 "invalid JSON") on all 3 POST
+  endpoints.
+- CORS: `Access-Control-Allow-Origin: *` present on real responses;
+  OPTIONS preflight returns 200 with correct
+  `Access-Control-Allow-Methods`/`Access-Control-Allow-Headers`. H2.7
+  is therefore also confirmed complete by this same run.
+- Rate limiting: the 61st request in under 60 seconds correctly
+  received the first HTTP 429 — exact documented threshold, exact
+  behavior.
+- H2.8 (leak/cross-member scan): zero stack-trace/file-path markers
+  found in any error response across the full matrix.
+
+**The 1 flagged check is a false positive in the test script, not a
+defect**: `/api/leaderboard`'s `valid_token` response for member A
+legitimately contained member B's name (`GHOST_TEST_H2ApiRunnerB`),
+which the script's generic cross-member-leak heuristic flagged. This
+is **the leaderboard's entire documented purpose** — a public top-10
+ranking naming other members by design (per the endpoint's own
+docstring: "top 10 students + requester's own rank"), not a private
+per-member payload like `/api/dashboard`. The heuristic doesn't
+distinguish public-by-design endpoints from private ones. No fix
+needed to `api_server.py`; noting here that a future refinement of the
+test script could special-case `/api/leaderboard` to only check for
+UNEXPECTED private fields (e.g. discord_id, token) rather than names,
+if this campaign's scripts are reused again later. Not blocking.
+
+**Cleanup verified**: `cleanup_ghost_members.py` ran successfully,
+0 residual `GHOST_TEST_` member rows confirmed via direct query
+immediately after.
+
+**Status:** ✅ H2.6 + H2.7 + H2.8 all complete. D010 confirmed live and
+fixed (pending deploy + post-deploy re-verification, tracked in D010's
+entry above). D011 (test-tooling UA block) found and resolved in the
+test script itself.

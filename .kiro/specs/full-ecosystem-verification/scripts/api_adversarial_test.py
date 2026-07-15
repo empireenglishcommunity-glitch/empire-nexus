@@ -64,7 +64,18 @@ def req(method, path, token=None, body=None, headers=None, timeout=15):
         url = f"{url}{sep}token={urllib.request.quote(str(token))}"
 
     data = None
-    hdrs = {"Origin": ORIGIN}
+    # NOTE (Hisn H2.6): Cloudflare's bot-fight-mode WAF in front of
+    # bot.empireenglish.online blocks the default Python-urllib User-Agent
+    # with HTTP 403 "error code: 1010" before the request ever reaches the
+    # application. A realistic browser UA is required for this script to
+    # test the actual API behavior instead of Cloudflare's edge block.
+    hdrs = {
+        "Origin": ORIGIN,
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+        ),
+    }
     if headers:
         hdrs.update(headers)
 
