@@ -124,6 +124,34 @@ The **👻 Ghost Testing** category exists with 3 channels:
 server (I do not have live Discord API access in this session to
 check it myself), and decide on (3)'s approach before H1 begins.
 
+### Update (2026-07-15) — live verification completed, 4 defects found + fixed
+
+Connected to the live Discord server via the bot's own REST API access
+(temporary SSH, since revoked). Confirmed:
+- Ghost Testing category exists live with all 3 intended channels
+  (`ghost-commands`, `ghost-showcase`, `ghost-writing`)
+- Isolation verified via raw permission-overwrite bits: the `@everyone`
+  role has `VIEW_CHANNEL` explicitly denied (`deny: 1024`) on this
+  category — regular members genuinely cannot see it
+
+While doing this, found and fixed 4 real defects (full detail in
+`defect_log.md`, entries D001-D004):
+- D001: LEVEL 2 category's emoji was corrupted (`→` instead of `🚀`)
+- D002: a second, empty, duplicate "LEVEL 2" category existed
+- D003: ACCOUNTABILITY and RESOURCES categories' emoji were corrupted
+  (`▪` instead of `📊`/`📚`)
+- D004: leftover default "Text Channels"/"Voice Channels" categories
+  (Discord's auto-created defaults, never cleaned up)
+
+All 4 fixed live via the Discord API (renames + deletions of empty/
+unused categories only — no real channel content or permissions
+touched) and re-verified post-fix. The live category list now matches
+`setup_server.py`'s intended 12-category design exactly.
+
+Also found (D005, info-only): the database already contains 4 real
+member rows from prior sessions' work, none of which conflict with the
+`GHOST_TEST_` cleanup pattern from H0.6.
+
 ---
 
 ## H0.6 — GHOST_TEST_ Naming Convention + Cleanup
