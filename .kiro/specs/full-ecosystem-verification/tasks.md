@@ -568,25 +568,47 @@
   `UNIQUE(discord_id, date, task_id)` constraint + shared
   `log_submission()` call path works exactly as designed. Ghost member
   fully cleaned up afterward (0 residual rows, verified).
-- [ ] **H3.2** Trace 2 (Discord → Telegram → Discord): trigger a real
+- [~] **H3.2** Trace 2 (Discord → Telegram → Discord): trigger a real
   Nour escalation, confirm Telegram alert content, reply in Telegram,
   confirm student DM arrives "from Nour," confirm escalation resolved
   in DB.
-  → **PAUSED, not started — needs the owner actively participating,
-  unlike H3.1.** Unlike H3.1 (fully containable via DB/direct-callback
-  calls with zero real-world side effects), this trace has a genuine
-  live side effect: triggering it sends a REAL Telegram message to the
-  owner's ops chat, and completing the full round-trip requires the
-  owner to actually reply to that real Telegram message so the
-  DM-back-to-student leg can be verified. Also identified a real
-  candidate account for this: `Empire Ghost` (`discord_id`
-  `1526224028191162631`) — a genuine Discord snowflake with real guild
-  presence (unlike the synthetic 9-digit `GHOST_TEST_` IDs used
-  elsewhere, which cannot receive a real Discord DM since they don't
-  correspond to actual Discord accounts). Session paused here at the
-  owner's request before triggering any live alert — resume by doing
-  this trace together, interactively, when the owner is available to
-  watch for and reply to the real Telegram message.
+  → **EXECUTED LIVE with the owner — result INCONCLUSIVE, needs a
+  retry with a different test account.** Temporarily enabled the
+  `nour_escalation` flag (confirmed OFF in production beforehand,
+  restored to OFF immediately after — zero lasting config change),
+  triggered a real escalation for the "Empire Ghost" test account
+  (a genuine Discord snowflake with real guild presence, not a
+  synthetic ID). The owner received the REAL Telegram alert and
+  replied to it directly, as intended.
+
+  **Confirmed working (3 of 4 legs)**: Telegram alert sent with
+  correct content ✅; owner's reply correctly matched to the specific
+  pending escalation via `reply_to_message` ✅; the failure-handling
+  path itself worked exactly as designed — did NOT mark the
+  escalation resolved on failure (correctly left `resolved=0`) and
+  sent the owner an accurate, actionable "Delivery failed" warning ✅.
+
+  **NOT confirmed (1 of 4 legs)**: Discord itself rejected the final
+  DM-to-student delivery with `400 (error code: 50007): Cannot send
+  messages to this user` — confirmed via live production logs at the
+  exact timestamp. This is a genuine Discord-side rejection, not
+  something the bot's code caused. Investigated whether "Empire
+  Ghost" specifically has DMs disabled (a supporting, non-conclusive
+  data point: this account has ZERO prior successful Nour messages in
+  `nour_conversations`, while the OTHER ghost account "M.A.C.A.L
+  EMPIRE" has 2) — but this could not be independently confirmed from
+  the sandbox without direct access to that account's own settings.
+
+  **This means the actual "does a reply reach a student" round-trip
+  remains UNVERIFIED** — only the send/match/fail-handling legs are
+  confirmed. Logged as **D018** (status: inconclusive, not a confirmed
+  defect) in `defect_log.md` with a clear recommended next step:
+  retry using "M.A.C.A.L EMPIRE" (proven prior successful delivery) or
+  a fresh account with confirmed-open DMs, to isolate whether the full
+  round-trip genuinely works when the target CAN receive DMs at all.
+  Test escalation row + temp script cleaned up from production
+  afterward (0 residual rows confirmed). **Task marked in-progress,
+  not complete — needs the retry to reach a real PASS/FAIL verdict.**
 - [ ] **H3.3** Trace 3 (`!link` → Web): generate a token, connect on
   `/dash/`, confirm correct student's real data shows, confirm
   `last_used` updates on the token.
