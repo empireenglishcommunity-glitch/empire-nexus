@@ -1262,15 +1262,18 @@ the generic tip bank on purpose) rather than leave a half-built
 feature silently masquerading as complete — a product decision for
 the owner, not purely a coding one.
 
-**Decision (owner, pending):** logged now for the owner's awareness
-and eventual batch decision alongside D012-D017, D019 — NOT yet
-discussed/decided given this was found mid-H4.3; flagging explicitly
-here that this one specifically needs the owner's product input (fix
-vs. retire), not just an engineering fix, unlike the other deferred
-items which already have agreed-upon fixes.
+**Decision (owner, 2026-07-15):** confirmed not a priority/blocker —
+real students still receive SOME tips today (the generic fallback
+bank), just not personalized AI-generated ones, so there is no broken
+student-facing experience right now, only a missing enhancement.
+Explicitly deferred to the same end-of-campaign discussion as
+D012-D017, D019 — the owner and this session will discuss the
+fix-vs-retire product decision together at that point, not separately
+or urgently.
 
-**Status:** 🟡 **DEFERRED, NEEDS OWNER PRODUCT DECISION** — confirmed
+**Status:** 🟡 **DEFERRED (owner-confirmed, non-priority)** — confirmed
 real via exhaustive code search + live DB query (0 rows, ever), not
-yet fixed. Recommend discussing fix-vs-retire with the owner before
-H7's batch pass, since this is the one deferred item that isn't
-purely "apply the agreed fix."
+yet fixed. Batched with D012-D017 for discussion + resolution before
+H7's Go/No-Go — this one specifically needs a product decision
+(implement W4.2 for real vs. retire the "AI-generated" framing) as
+part of that discussion, not just an engineering fix applied silently.

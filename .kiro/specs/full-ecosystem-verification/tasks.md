@@ -769,10 +769,13 @@
   core step skipped) rather than a code bug — flagged as needing the
   OWNER'S product input (implement W4.2 for real, vs. explicitly
   retire the "AI-generated" framing and rely on the fallback bank on
-  purpose) rather than a pure engineering fix like D012-D017. Full
-  detail in `defect_log.md` D020. **This item is NOT part of the
-  already-agreed D012-D017 batch-fix plan** — needs a separate,
-  explicit owner decision before H7.
+  purpose) rather than a pure engineering fix like D012-D017.
+  **Owner decision (2026-07-15): confirmed non-priority** — real
+  students still get SOME tips today (the generic fallback bank), so
+  there's no broken experience, only a missing enhancement. Deferred
+  to the same end-of-campaign discussion as D012-D017/D019, to be
+  resolved together before H7's Go/No-Go. Full detail in
+  `defect_log.md` D020.
 - [ ] **H4.4** Directly invoke each Nabd notification function (morning
   kickstart, evening reminder, streak alert, weekly summary, absence
   recovery day 2/3/5/7) against a test member; review content for
