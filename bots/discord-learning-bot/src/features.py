@@ -1772,34 +1772,39 @@ async def check_absence_recovery(guild):
 
         phase = response_language(discord_id)
 
-        # Day 2: gentle bot DM
-        if days_inactive >= 2 and not database.was_notification_sent(discord_id, "absence_day2", today):
-            if database.was_notification_sent(discord_id, "absence_day2", (datetime.date.today() - datetime.timedelta(days=1)).isoformat()):
-                continue  # already sent yesterday for this absence streak
+        # D021 fix (Hisn H4.4): tiers must be checked HIGHEST threshold
+        # FIRST. The original if/elif chain checked days_inactive >= 2
+        # first, and since that condition (plus its own same-day-only
+        # "already sent today" guard) is trivially true for ANY absent
+        # member on ANY day, the day-3/5/7 branches below it were
+        # structurally unreachable dead code for a continuously-absent
+        # member -- confirmed via live testing (H4.4): a member absent
+        # 5 or 8 days received the identical day-2 message every time,
+        # never their own tier's real content. Checking highest-first
+        # means a day-8 absence correctly lands in the day-7+ branch
+        # instead of falling into day-2's always-true condition.
+
+        # Day 7+: final DM
+        if days_inactive >= 7 and not database.was_notification_sent(discord_id, "absence_day7", today):
             if phase == "arabic":
-                msg = "👋 **مفتقدينك!**\n\nحتى مهمة واحدة النهاردة أحسن من لا شيء.\nاكتب `!1` وابدأ. 💪"
+                msg = (
+                    "💬 **مرحبًا {name}**\n\n"
+                    "غبت عنا أسبوع كامل. كل حاجة لسه في مكانها — مستواك، نقاطك، كل شيء.\n"
+                    "لو محتاج مساعدة أو عايز تتكلم، كلمنا في `#support`.\n\n"
+                    "لو عايز ترجع — اكتب `!1` وابدأ من جديد. 🏛️"
+                ).format(name=m["discord_name"])
             else:
-                msg = "👋 **We miss you!**\n\nEven one task today is better than none.\nType `!1` to start. 💪"
+                msg = (
+                    "💬 **Hey {name}**\n\n"
+                    "It's been a full week. Everything is still here — your level, your points, everything.\n"
+                    "If you need help or want to talk, reach out in `#support`.\n\n"
+                    "To come back — just type `!1` and start fresh. 🏛️"
+                ).format(name=m["discord_name"])
             try:
                 await discord_member.send(msg)
-                database.log_notification(discord_id, "absence_day2", today)
+                database.log_notification(discord_id, "absence_day7", today)
             except discord.Forbidden:
                 pass
-
-        # Day 3: buddy prompt
-        elif days_inactive >= 3 and not database.was_notification_sent(discord_id, "absence_day3", today):
-            buddy_id = m.get("buddy_id", "")
-            if buddy_id:
-                buddy = guild.get_member(int(buddy_id))
-                if buddy:
-                    try:
-                        await buddy.send(
-                            f"⚠️ **{m['discord_name']}** غايب من {days_inactive} أيام.\n"
-                            f"ابعتله رسالة صوتية وشجعه يرجع. 🙏"
-                        )
-                    except discord.Forbidden:
-                        pass
-            database.log_notification(discord_id, "absence_day3", today)
 
         # Day 5: comeback mini-task
         elif days_inactive >= 5 and not database.was_notification_sent(discord_id, "absence_day5", today):
@@ -1825,25 +1830,30 @@ async def check_absence_recovery(guild):
             except discord.Forbidden:
                 pass
 
-        # Day 7+: final DM
-        elif days_inactive >= 7 and not database.was_notification_sent(discord_id, "absence_day7", today):
+        # Day 3: buddy prompt
+        elif days_inactive >= 3 and not database.was_notification_sent(discord_id, "absence_day3", today):
+            buddy_id = m.get("buddy_id", "")
+            if buddy_id:
+                buddy = guild.get_member(int(buddy_id))
+                if buddy:
+                    try:
+                        await buddy.send(
+                            f"⚠️ **{m['discord_name']}** غايب من {days_inactive} أيام.\n"
+                            f"ابعتله رسالة صوتية وشجعه يرجع. 🙏"
+                        )
+                    except discord.Forbidden:
+                        pass
+            database.log_notification(discord_id, "absence_day3", today)
+
+        # Day 2: gentle bot DM
+        elif days_inactive >= 2 and not database.was_notification_sent(discord_id, "absence_day2", today):
             if phase == "arabic":
-                msg = (
-                    "💬 **مرحبًا {name}**\n\n"
-                    "غبت عنا أسبوع كامل. كل حاجة لسه في مكانها — مستواك، نقاطك، كل شيء.\n"
-                    "لو محتاج مساعدة أو عايز تتكلم، كلمنا في `#support`.\n\n"
-                    "لو عايز ترجع — اكتب `!1` وابدأ من جديد. 🏛️"
-                ).format(name=m["discord_name"])
+                msg = "👋 **مفتقدينك!**\n\nحتى مهمة واحدة النهاردة أحسن من لا شيء.\nاكتب `!1` وابدأ. 💪"
             else:
-                msg = (
-                    "💬 **Hey {name}**\n\n"
-                    "It's been a full week. Everything is still here — your level, your points, everything.\n"
-                    "If you need help or want to talk, reach out in `#support`.\n\n"
-                    "To come back — just type `!1` and start fresh. 🏛️"
-                ).format(name=m["discord_name"])
+                msg = "👋 **We miss you!**\n\nEven one task today is better than none.\nType `!1` to start. 💪"
             try:
                 await discord_member.send(msg)
-                database.log_notification(discord_id, "absence_day7", today)
+                database.log_notification(discord_id, "absence_day2", today)
             except discord.Forbidden:
                 pass
 

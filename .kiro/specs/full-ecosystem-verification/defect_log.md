@@ -1388,10 +1388,37 @@ D012-D017/D020 for the end-of-campaign fix pass — this is a pure
 engineering fix (unlike D020), so it fits the existing batch plan
 without needing a separate product discussion.
 
-**Status:** 🟡 **DEFERRED** — confirmed via live, direct invocation of
-the real function across all 4 documented tiers (not a code-read
-guess), not yet fixed, recommended for the same batch-fix pass as
-D012-D017/D020.
+**FIXED AND LIVE-VERIFIED (2026-07-15, H7 early-start batch, per the
+owner's own suggestion to begin low-risk engineering fixes ahead of
+H6):** Reordered `check_absence_recovery()`'s tier chain to check
+the HIGHEST threshold first (day 7+ → day 5 → day 3 → day 2),
+matching the proposed fix above exactly. Removed the now-duplicated
+old low-to-high branches. Confirmed the file compiles cleanly
+(`py_compile`).
+
+**Live re-verification, repeating H4.4's exact methodology** (not
+just a code read): temporarily swapped the fixed `features.py` into
+the running container (a `docker exec` test process only — confirmed
+via D019's own finding that this never touches the live bot's
+already-loaded module in memory) and re-ran the day 2/3/5/8 side-by-
+side simulation with 4 FRESH members (one per tier, avoiding H4.4's
+own test-design pitfall of reusing a member/key across tiers).
+**Result: 5/5 checks PASS** — all 4 tiers now produce genuinely
+different, tier-correct message content (day 2 gentle DM, day 3 buddy
+prompt, day 5 comeback mini-task, day 7+ final DM), confirmed by
+checking each captured message for its own tier's distinguishing text
+(e.g. day 5's message contains "رجوع سريعة", day 7's contains "أسبوع
+كامل"). Restored the original file on the server immediately after
+verification (confirmed via grep: 0 matches for the fix marker),
+since the real deployment path is a proper git commit → PR → merge →
+`git pull` + rebuild, not a direct file swap — this temporary swap
+was only for pre-deploy verification of the fix's correctness.
+Test data cleaned up, 0 residual rows confirmed.
+
+**Status:** ✅ **FIX WRITTEN AND LIVE-VERIFIED**, pending PR merge +
+proper git-based deploy + one final post-deploy confirmation (same
+discipline as D010/D008 — a code fix isn't "done" until it's actually
+deployed and re-checked live, not just merged).
 
 
 
