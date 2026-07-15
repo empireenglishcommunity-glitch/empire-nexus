@@ -1494,6 +1494,16 @@ TUTORIAL_STEPS = {
         ),
         "accept": lambda msg: msg.strip() in ("!تقدم", "!progress", "!تقدّم"),
         "response": "✅ شفت؟ ده مكانك — هنا هتشوف نقاطك كل يوم وهي بتزيد 📊",
+        # Hisn D024: this step CLAIMS to show the student their real
+        # progress card, but originally only sent the scripted "response"
+        # text above -- the actual !progress command never ran. Confirmed
+        # live during Hisn H6: the owner reported no real command output
+        # appeared, just the acknowledgment text. "invoke_real_command"
+        # tells handle_tutorial_dm to actually run the named real command
+        # (via the bot's own get_context()/invoke(), the same path
+        # process_commands() uses) so the student sees the SAME real
+        # progress card a command later gets, not a fake stand-in.
+        "invoke_real_command": "progress",
     },
     4: {
         "prompt": (
@@ -1502,6 +1512,9 @@ TUTORIAL_STEPS = {
         ),
         "accept": lambda msg: msg.strip() in ("!مساعدة", "!helpar", "!help"),
         "response": "✅ تمام! دلوقتي عندك كل الأوامر. بكرة الساعة 6 هتلاقي مهامك.",
+        # Hisn D024: same issue as step 3 -- "شوف كل الأوامر" (see all the
+        # commands) never actually showed the real command list.
+        "invoke_real_command": "helpar",
     },
     5: {
         "prompt": (
@@ -1588,7 +1601,38 @@ async def handle_tutorial_dm(message: discord.Message) -> bool:
             next_step = current_step + 1
             tutorial["step"] = next_step
             try:
-                await message.channel.send(response)
+                if response:
+                    await message.channel.send(response)
+                # Hisn D024: some steps (currently 3 and 4) claim to show
+                # the student a real command's output ("see your progress",
+                # "see all the commands") but this handler intercepts and
+                # consumes the DM before Discord's own command dispatcher
+                # (bot.process_commands()) ever sees it -- so without this,
+                # only the scripted acknowledgment above was ever sent, and
+                # the actual !progress / !helpar output never appeared.
+                # Confirmed live during Hisn H6.
+                #
+                # Fix: actually invoke the real command via the bot's own
+                # get_context()/invoke() -- the exact same mechanism
+                # process_commands() itself uses -- so the student sees the
+                # SAME real output a command later gets, not a stand-in.
+                # Lazy import: bot.py imports this module at startup, so a
+                # top-level import here would be circular.
+                real_command_name = step_data.get("invoke_real_command")
+                if real_command_name:
+                    from . import bot as bot_module
+                    command = bot_module.bot.get_command(real_command_name)
+                    if command is not None:
+                        ctx = await bot_module.bot.get_context(message)
+                        ctx.command = command
+                        try:
+                            await bot_module.bot.invoke(ctx)
+                        except Exception as e:
+                            logger.error(
+                                f"Bawaba B2 tutorial: failed to invoke real "
+                                f"command '{real_command_name}' at step "
+                                f"{current_step}: {e}"
+                            )
                 import asyncio
                 await asyncio.sleep(1)
                 await message.channel.send(TUTORIAL_STEPS[next_step]["prompt"])

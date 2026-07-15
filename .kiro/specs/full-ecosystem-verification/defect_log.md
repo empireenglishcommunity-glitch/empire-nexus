@@ -1805,10 +1805,105 @@ the new required flag.
   loops will no longer start at all), but worth a manual cleanup for
   hygiene when Ghost Bot is next redeployed.
 
+**Deployed (2026-07-15):** merged via [PR #148](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/148), confirmed
+landed on `main`. Deployed to production (`git pull && docker compose
+up -d --build`) — confirmed via `docker exec ... config.IS_GHOST_INSTANCE`
+returning `False` and the startup log showing all scheduled loops/API
+server starting normally, as expected for the real bot. Separately
+rebuilt Ghost Bot (`docker compose -f docker-compose.ghost.yml up -d
+--build`) after adding `IS_GHOST_INSTANCE=true` to `.env.ghost` (backed
+up the prior file first) — confirmed via the exact same config check
+returning `True`, AND via a startup log line proving the guard fired:
+`"IS_GHOST_INSTANCE=true: skipping all scheduled loops, ops poller,
+restart notification, and the API server"`. Also cleaned up
+`bioroma`'s leftover row from Ghost Bot's own database (from the
+original incident) before re-testing.
+
+**Live re-tested (2026-07-15), exact original repro:** generated a
+fresh invite, had the owner leave the guild with `bioroma` and rejoin
+live. Result: only ONE DM sequence arrived, from "Empire English Bot"
+only — clean, coherent, no stray image/audio attachments. Confirmed
+server-side, not just by the owner's report: Ghost Bot's database has
+ZERO rows for `bioroma` after the rejoin, Ghost Bot's logs show ZERO
+activity referencing `bioroma` around the join time, and only the
+production bot's logs show the buddy-assignment line for this join.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed to both
+containers, and live re-verified against the exact original repro,
+with server-side evidence (not just the owner's on-screen report)
+confirming Ghost Bot no longer reacts to real guild activity at all.
+
+
+
+---
+
+## D024 — Onboarding tutorial's "see your progress" / "see all commands" steps never actually run those commands (Major)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, continuing the new-student journey on the `bioroma` Ghost
+Testing account after D023's fix was deployed and verified clean.
+
+**What happened:** Walking through the 5-step DM tutorial, step 3
+prompts "type `!تقدم` to see your progress dashboard" and step 4
+prompts "type `!مساعدة` to see all available commands." The owner
+typed each command as instructed. Both times, only a short scripted
+acknowledgment appeared (e.g., "✅ شفت؟ ده مكانك..." / "✅ تمام! دلوقتي
+عندك كل الأوامر...") — the owner explicitly confirmed, when asked, that
+`!مساعدة` did NOT print out a real command list as a separate message.
+
+**Root cause:** `features.handle_tutorial_dm()` (Bawaba B2) intercepts
+every DM from a student mid-tutorial in `on_message`, BEFORE
+`bot.process_commands(message)` is ever reached (confirmed by direct
+code reading of `on_message`'s handler order in `bot.py`) — and returns
+`True` unconditionally on a match, which causes the calling code to
+`return` immediately, so `process_commands()` never runs for that
+message at all. `TUTORIAL_STEPS[3]` and `TUTORIAL_STEPS[4]` were
+designed as pure pattern-match-and-reply-with-canned-text steps: the
+input is checked against a fixed set of accepted strings, and on match,
+only the scripted `"response"` text is sent. The actual `!progress` and
+`!helpar` command bodies (`cmd_progress`, `cmd_helpar` in `bot.py`) were
+never invoked — the tutorial was teaching the STUDENT to type these
+commands while silently showing them fake, static text instead of the
+real thing they were told they'd see.
+
+Steps 1 ("type `1`"), 2 ("type `hello`"), and 5 ("type `!1`", explicitly
+commented `/* this is just an exercise -- won't record a real task */`)
+don't have this problem — they were never designed to show real output.
+Only steps 3 and 4 explicitly promise real functionality ("this is the
+command that shows your points/streak," "now you have all the
+commands") and silently fail to deliver it.
+
+**Severity:** Major, not Blocker — the tutorial still completes and
+the student isn't stuck, but every one of the 16 real students would
+be told twice, in as many minutes, "type this to see X" and shown
+nothing real, which quietly undermines trust in the system right at
+the first interaction, and means new students don't actually see their
+real (empty, day-one) progress card or the real full command list
+during the one moment onboarding is designed to teach them.
+
+**Fix applied (2026-07-15):** added an `"invoke_real_command"` key to
+`TUTORIAL_STEPS[3]` (`"progress"`) and `TUTORIAL_STEPS[4]`
+(`"helpar"`). `handle_tutorial_dm()` now, after sending the step's
+scripted acknowledgment, looks up the named real command via the bot's
+own `bot.get_command(name)`, builds a real `Context` via
+`bot.get_context(message)`, and calls `bot.invoke(ctx)` — the exact
+same mechanism `process_commands()` itself uses for a normal command
+message. This makes the tutorial's steps 3 and 4 produce the SAME real
+output (the student's actual, real progress card; the actual, real
+Arabic help list) that typing those commands normally would, not a
+stand-in. Verified via code review that neither `cmd_progress` nor
+`cmd_helpar` carries a cooldown or permission decorator that could
+interfere with this direct-invoke path (confirmed via `grep` — both are
+bare `@bot.command(name=...)` with no other decorators), and that this
+cannot cause a double-invocation (the calling code already returns
+immediately after `handle_tutorial_dm()` reports the message as
+handled, before `process_commands()` would otherwise run for the same
+message).
+
 **Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
 LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
-pull && docker compose up -d --build` for the main bot; separately
-rebuild Ghost Bot with the new `.env.ghost` flag set), then a live
-re-test of the exact original repro (bioroma leaves, rejoins via a
-fresh invite, confirm only ONE welcome-DM sequence arrives, from
-"Empire English Bot" only) before this can be marked ✅ Resolved.
+pull && docker compose up -d --build`), then a live re-test: have
+`bioroma` (or a fresh Ghost Testing account) go through the tutorial
+again and confirm steps 3 and 4 now show the REAL progress card and
+REAL help list, not just the scripted acknowledgment text, before this
+can be marked ✅ Resolved.
