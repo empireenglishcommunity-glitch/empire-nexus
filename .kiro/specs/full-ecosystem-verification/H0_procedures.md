@@ -89,6 +89,26 @@ The clone is **discarded** after H5 completes (H5.6) — it is never
 merged back into production; it exists purely to observe behavior
 under load.
 
+### Executed (2026-07-15, session 17)
+
+Ran the procedure above for real: `docker exec ... cp` inside the
+container, then `docker cp` out to the sandbox at
+`/projects/sandbox/.agents/hisn-testing/HISN_TEST_CLONE.db`. Verified
+the clone independently before trusting it: opened it with a fresh
+`sqlite3` connection, confirmed 22 tables and a member count of 4
+(matching H0.5's D005 finding of 4 pre-existing real member rows —
+consistent, not a coincidence). Server-side copies (`/tmp` and the
+in-container copy at `data_persist/`) were removed immediately after
+the sandbox copy was confirmed valid, so only one clone copy persists,
+in the sandbox. For H5's actual stress test run, a second copy of this
+same clone was placed inside the container at a clearly-distinct path
+(`/app/HISN_STRESS_TEST_CLONE.db`, never `data_persist/empire_english.db`)
+with `config.DB_PATH` monkey-patched to point at it before any
+`database.py` function was called — confirmed the real production file
+was never opened by the stress test script (see H5's own log output:
+"production empire_english.db was NEVER opened by this script"). That
+container-side copy was deleted after H5 completed (H5.6).
+
 ---
 
 ## H0.5 — Ghost Testing Environment Verification
