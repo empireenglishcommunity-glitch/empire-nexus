@@ -326,9 +326,28 @@
   D017. Deferred per the owner's batching decision (with D012/D013/
   D014/D015/D016).
 
-  **Remaining for H2.2**: Vocab exercise for L0 Day 1 (still on the
-  same day), then the same 4-exercise walkthrough for L1, L2, L3 (at
-  least 1 day each), plus a desktop pass. Not yet complete.
+  **L0 Day 1, Vocab exercise tested next — completes the L0 Day 1
+  pass.** Flashcards (tap to flip → Arabic meaning) confirmed working.
+  Quiz/typing mode confirmed working, accepted answers with correct
+  feedback. Layout, progress/streak bar, and navigation all correct on
+  mobile — the "Done" control here is visually rendered as an iOS-
+  style slide-switch rather than a square box, but confirmed via CSS
+  (`empire.css` `.done-section .checkbox`) this is the SAME
+  `<input type="checkbox">` element as every other exercise page —
+  just iOS Safari's native rendering of a checkbox with `accent-color`
+  styling, not a different component. D016/D017 apply here by the
+  same root cause; not re-logged separately. 0 NEW issues found on
+  Vocab specifically.
+
+  **L0 Day 1 (all 4 exercise types) now FULLY WALKED THROUGH on real
+  mobile.** Summary of this pass: Accent (D014), Shadowing (D015,
+  D016, D014 confirmed consistent), Listening (D017, exercise mechanic
+  itself clean), Vocab (0 new issues, D016/D017 apply by shared
+  component). 6 real defects found and logged (D012-D017), all
+  deferred per the owner's batching decision.
+
+  **Remaining for H2.2**: the same 4-exercise walkthrough for L1, L2,
+  L3 (at least 1 day each), plus a desktop pass. Not yet complete.
 - [x] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
