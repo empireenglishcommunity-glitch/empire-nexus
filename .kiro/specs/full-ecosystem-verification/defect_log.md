@@ -233,3 +233,120 @@ that would itself need its own verification).
 directly-testable commands; 4 commands' remaining sub-paths flagged for
 H6's live human walkthrough, consistent with the harness's own
 documented, upfront limitations (not a late excuse).
+
+
+
+---
+
+## D008 — Live practice platform is stale; multiple merged features never deployed (BLOCKER)
+
+**Found during:** H2.1 (page crawler), while investigating why `/dash/`
+(the Wuslah W1 student dashboard) returned the site's own homepage
+content instead of the dashboard.
+**Severity:** BLOCKER — this is not a code bug, it's a deployment gap,
+but its impact is severe: the entire Wuslah initiative's user-facing
+web deliverable (the student dashboard) does not exist for real
+students visiting the live site today, despite being fully built,
+tested, and merged.
+
+**Root cause, confirmed step by step:**
+1. `curl https://practice.empireenglish.online/dash/` returns the site
+   HOMEPAGE, not the dashboard page.
+2. Investigated whether this was a false positive from Cloudflare
+   Pages' 404-fallback behavior (confirmed separately that this site
+   has no custom `404.html`, so Cloudflare serves the homepage with
+   HTTP 200 for ANY nonexistent path — a real, if minor, finding on
+   its own, see the page_crawler.py fix for D009-adjacent handling).
+3. Ruled out "the page never existed": confirmed via
+   `github_pull_repository` (pulling the REAL, authoritative `main`
+   branch from GitHub, not trusting a possibly-stale local sandbox
+   checkout) that `site/dash/index.html` genuinely exists on
+   `origin/main` at commit `0f79829` ("Merge pull request #21 ...
+   wuslah/w1-student-dashboard").
+4. Confirmed the homepage's own new "📊 My Dashboard" link (added in
+   the same PR #21) is ALSO missing from the live site's homepage —
+   proving this isn't specific to one page, but that the live
+   deployment predates PR #21 (and likely other recent merges) entirely.
+5. Root cause: `empire-dojo` has **no CI/CD auto-deploy pipeline**.
+   `.github/workflows/dojo-verify.yml` only runs page-verification
+   checks on PRs — it does not deploy anything. Deployment is a fully
+   manual step (`npx wrangler pages deploy site --project-name=empire-practice`,
+   per this repo's own steering doc), and this step was evidently never
+   run after PR #21 (and possibly other recent PRs) merged.
+
+**This is the same root-cause CLASS of bug as the earlier Markaz
+"merged PR ≠ deployed PR" finding** (session context: the Hetzner bot
+server needed manual `git pull` + `docker compose up --build` after
+every merge) — except here for Cloudflare Pages, where the deploy
+step is `wrangler pages deploy`, not a git pull. **Both halves of this
+ecosystem (bot server AND practice platform) require a manual deploy
+step after merge, and both have now been caught silently drifting
+out of sync with `main` at least once.**
+
+**Fix (not yet executed — needs owner action or Cloudflare
+credentials):**
+```bash
+cd empire-dojo
+git checkout main && git pull   # ensure the true, current main is checked out
+npx wrangler pages deploy site --project-name=empire-practice
+```
+This requires a valid `CLOUDFLARE_API_TOKEN` (and account ID
+`8c2ca895bd4e579be07d2fa6c9fdba7e`, per this repo's steering doc). No
+such token was available/verifiable in this session — per the
+steering doc's OWN explicit warning ("always verify via
+`/user/tokens/verify` first, never assume a token is still active"),
+a stale token referenced in past session notes should not be assumed
+valid without checking. **Owner action needed**: either provide a
+verified-valid `CLOUDFLARE_API_TOKEN`, or run the deploy command
+directly.
+
+**Not yet verified (blocked on the fix above):** once deployed, MUST
+re-run `page_crawler.py` in full to confirm (a) `/dash/` now serves the
+real dashboard, (b) the homepage now shows the "📊 My Dashboard" link,
+and (c) no OTHER merged-but-undeployed content is still missing —
+this defect was found by investigating ONE page; the full crawl (H2.1,
+not yet run to completion) is what will reveal the true full extent.
+
+**Status:** ❌ BLOCKED — needs a deploy (owner action or valid
+Cloudflare token), then full H2.1 re-run to confirm scope and closure.
+This is a genuine **Blocker per R12's severity definition** ("breaks
+core flow") — a headline Wuslah deliverable is currently unreachable
+by real students, which is exactly the class of issue this whole Hisn
+campaign exists to catch before invitations go out.
+
+---
+
+## D009 — page_crawler.py's own false-positive bugs found and fixed (Info, harness self-correction)
+
+**Found during:** H2.1, while validating the crawler itself before
+trusting its output (same discipline as H1's command harness).
+**Severity:** Info — both are harness bugs, not site bugs, but
+recording them per the campaign's own transparency standard (harness
+bugs get logged too, not just swept away quietly, per the precedent
+set with H1's command_harness.py fixes).
+1. **Off-by-one path resolution**: the script's `SITE_DIR` calculation
+   had one `.parent` too few, causing it to look for `empire-dojo` one
+   directory level higher than its actual location. Found immediately
+   on first run (`ERROR: empire-dojo site dir not found`), fixed by
+   counting the actual directory depth precisely rather than guessing.
+2. **False "broken-render marker" on every page**: the site's own
+   legitimate JavaScript template literals (`` `${totalDone}/${totalPossible}` ``
+   inside `<script>` tags) were being flagged as broken/unrendered
+   template syntax, since the check searched the raw HTML including
+   script contents. Fixed by stripping `<script>...</script>` blocks
+   before running the marker check — confirmed via direct testing that
+   the homepage (which legitimately contains this exact pattern) now
+   passes cleanly, while a genuinely broken page would still be caught
+   (marker checks outside `<script>` blocks are unaffected).
+3. **Discovered and specifically handled Cloudflare Pages' 404-fallback
+   behavior** (serves the homepage with HTTP 200 for ANY nonexistent
+   path, since this site has no custom `404.html`) — this ISN'T a bug
+   in the crawler being fixed here, but a real platform behavior that
+   had to be actively worked around (via homepage-body comparison) for
+   the crawler to be trustworthy at all. Documented in the script's own
+   docstring/comments in detail. This same behavior is what surfaced
+   D008 above — without this fix, D008 would have been invisible (a
+   naive "HTTP 200 = page exists" check would have silently passed the
+   missing `/dash/` page).
+**Status:** ✅ Resolved (harness fixed and re-verified before the full
+1,334-page run).
