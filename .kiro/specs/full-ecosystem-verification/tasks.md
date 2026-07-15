@@ -52,11 +52,12 @@
 - [x] **H0.4** Create a DB clone for destructive/concurrent testing
   (copy of the production `.db` file to a test path, never touched
   by the live bot process).
-  → Procedure documented in `H0_procedures.md` (docker cp the live
-  volume's `.db` file to `HISN_TEST_CLONE.db`, then copy off-server for
-  local stress testing). **Requires server access to actually execute**
-  — the clone itself is created just before H5 runs, not during this
-  planning pass.
+  → **EXECUTED (session 17)**, immediately before H5. Procedure in
+  `H0_procedures.md`: `docker exec cp` inside the container, `docker cp`
+  out to the sandbox at `/projects/sandbox/.agents/hisn-testing/HISN_TEST_CLONE.db`.
+  Verified independently: 22 tables, 4 members (matching H0.5's D005
+  finding — consistent). Server-side copies removed after the sandbox
+  copy was confirmed valid; only one clone copy persists.
 - [x] **H0.5** Verify the Ghost Testing Discord category exists and is
   correctly isolated (channels not visible to non-admin roles). Set up
   2-3 test Discord accounts (or confirm access to existing ones) to
@@ -860,21 +861,84 @@
 
 ## Phase H5 — Multi-Student Load Simulation
 
-- [ ] **H5.1** Write `stress_test.py` — creates 20 synthetic
+- [x] **H5.1** Write `stress_test.py` — creates 20 synthetic
   `GHOST_TEST_` member rows in the DB CLONE (not production).
-- [ ] **H5.2** Simulate 20 concurrent `!join`-equivalent registrations;
+  → Wrote `h5_stress_test.py`. Uses REAL OS threads
+  (`concurrent.futures.ThreadPoolExecutor`), not `asyncio` coroutines
+  on a single event loop — a deliberate choice, since asyncio
+  coroutines never actually contend for the same SQLite file lock the
+  way real concurrent Discord command invocations do; genuine OS-level
+  threads do. `config.DB_PATH` monkey-patched to a container-side copy
+  of the H0.4 clone (`/app/HISN_STRESS_TEST_CLONE.db`) BEFORE importing
+  `database`, so every real `database.py` function call in this script
+  operates on the clone — confirmed via the script's own final log line
+  that the real production file was never opened. 20 members created,
+  confirmed present via direct query.
+- [x] **H5.2** Simulate 20 concurrent `!join`-equivalent registrations;
   confirm all 20 members created correctly, no lost writes.
-- [ ] **H5.3** Simulate 20 concurrent `!done`-equivalent submissions
+  → Ran 20 concurrent calls to the REAL `database.register_member()`
+  (re-registration, which is idempotent by the function's own design)
+  via a 20-worker thread pool. **2/2 checks PASS**: all 20 calls
+  completed without exception; exactly 20 members exist afterward (no
+  duplicate rows, no lost rows from concurrent writers).
+- [x] **H5.3** Simulate 20 concurrent `!done`-equivalent submissions
   for the SAME task/date; confirm no duplicate `daily_submissions` rows
   (UNIQUE constraint holds under real concurrency).
-- [ ] **H5.4** Simulate 20 concurrent `/api/dashboard` fetches; confirm
+  → Two sub-tests, both against the REAL `database.log_submission()`:
+  **H5.3a** (20 DIFFERENT members, same task/date, concurrent): **2/2
+  PASS** — no exceptions, all 20 correctly recorded as new. **H5.3b**
+  (20 THREADS racing on the IDENTICAL single member+date+task key —
+  the real concurrency test, not just "many members hitting one
+  table"): **3/3 PASS** — no exceptions, exactly ONE of the 20 racing
+  threads won (`added=True`), the other 19 correctly saw `added=False`,
+  and exactly one `daily_submissions` row exists for that key
+  afterward. **Caught and fixed a real bug in this test SCRIPT's own
+  design during this step** (not an app defect): the first run reused
+  a member/task/date key already claimed by H5.3a, making every H5.3b
+  thread trivially see `added=False` for the wrong reason (pre-existing
+  row, not a race outcome) — the "exactly one winner" check was
+  unfalsifiable as originally written. Fixed by using a genuinely
+  untouched key for the race test; re-run correctly showed 1 winner.
+  Confirms SQLite's `UNIQUE(discord_id, date, task_id)` constraint
+  genuinely holds under real concurrent writers, not just in theory.
+- [x] **H5.4** Simulate 20 concurrent `/api/dashboard` fetches; confirm
   no errors, no data corruption, reasonable response times.
-- [ ] **H5.5** Assert post-simulation invariants: every member's
+  → Ran 20 concurrent calls to the same underlying `database.py`
+  aggregate queries `get_dashboard()` itself runs (recent scores, tasks
+  completed today, leaderboard) via a 20-worker thread pool. **2/2
+  PASS**: 0 errors across all 20 concurrent reads; average response
+  time 0.29s under concurrent load (well under the 1.0s sanity
+  threshold), max 0.39s.
+- [x] **H5.5** Assert post-simulation invariants: every member's
   `total_points` equals `SUM(points_log.points)` for that member
   (catches the exact class of race condition previously fixed in
   `update_streak()`); leaderboard ranks are stable and correct.
-- [ ] **H5.6** Clean up: delete all `GHOST_TEST_` rows from the clone,
+  → **2/2 PASS**: `total_points == SUM(points_log.points)` held for
+  ALL 20 members with zero mismatches after the full concurrent load
+  above — confirms `add_points()`'s atomic `UPDATE ... SET
+  total_points = total_points + ?` (and, by the same principle,
+  `_set_streak()`'s previously-fixed atomic `MAX()` update, documented
+  in its own docstring as fixing a REAL, reproduced 5/5-trial race)
+  both genuinely hold under real concurrent load, not just
+  code-reading confidence. Leaderboard confirmed correctly sorted
+  descending by `total_points`.
+- [x] **H5.6** Clean up: delete all `GHOST_TEST_` rows from the clone,
   confirm the clone can be discarded without affecting production.
+  → All 20 test members + their cascaded rows removed from the CLONE
+  (`daily_submissions`, `points_log`, and 14 other tables), confirmed
+  via direct query: 0 residual members afterward. The container-side
+  clone copy (`HISN_STRESS_TEST_CLONE.db` + its WAL/SHM files) was then
+  deleted entirely — confirmed via `docker exec ... ls` finding zero
+  HISN-related files remaining in the container. **Production database
+  was never opened at any point during H5** — confirmed both by the
+  script's own explicit log statement and by the monkey-patched
+  `config.DB_PATH` being set before `database` was ever imported.
+
+  **H5 (Multi-Student Load Simulation) is now FULLY COMPLETE — 12/12
+  checks PASS, 0 defects found.** The concurrency-safety mechanisms
+  already in place (`UNIQUE` constraints, atomic `UPDATE` expressions)
+  genuinely hold under real concurrent load with real OS threads, not
+  just in isolated single-threaded testing.
 
 ## Phase H6 — Human Experience Walkthrough
 
