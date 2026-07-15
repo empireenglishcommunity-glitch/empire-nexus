@@ -257,10 +257,26 @@
 - [ ] **H2.2** Manually walk through at least 1 full day (all 4
   exercise types) from EACH level (L0, L1, L2, L3) — 4 full days,
   16 exercise pages — on both desktop and a real mobile device.
-- [ ] **H2.3** Manually test `/dash/` end-to-end with a real linked
+- [~] **H2.3** Manually test `/dash/` end-to-end with a real linked
   Ghost Testing student: connect flow, all dashboard sections render
   with real data, offline cache fallback works (disable network mid-
   session, reload, confirm cached data shows).
+  → **IN PROGRESS (session 17, with the owner, interactively).** Set up
+  a `GHOST_TEST_ManualWalkthrough` member (`900000012`) with realistic
+  seeded data (3-day streak, 90 pts, 1 milestone, 3 SRS words in mixed
+  due-states) via a one-off setup script, gave the owner the real
+  token to paste into the site's "Connect to Discord" box (confirmed:
+  no `?token=` URL shortcut exists, the real flow is paste-once via
+  localStorage, matching the actual `!link` DM flow real students get).
+  **Connect flow + full dashboard render: CONFIRMED WORKING.** Owner
+  walked through every section (streak/level, 7-day activity grid,
+  pronunciation empty-state, SRS stats, milestones grid, leaderboard)
+  and every value cross-checked exactly against the seeded data — 0
+  data-correctness issues. **Found D012** (Minor UX, deferred — see
+  `defect_log.md`): the level badge and XP progress bar are two
+  independent systems that can look disconnected to a real student.
+  **Still pending**: offline cache fallback test (disable network,
+  reload, confirm cached data shows) — not yet done.
 - [ ] **H2.4** Manually test `/review/` SRS page: due cards display,
   review buttons work, results sync to the bot's `vocab_srs` table.
 - [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
