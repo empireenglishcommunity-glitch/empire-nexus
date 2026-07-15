@@ -300,19 +300,27 @@ valid without checking. **Owner action needed**: either provide a
 verified-valid `CLOUDFLARE_API_TOKEN`, or run the deploy command
 directly.
 
-**Not yet verified (blocked on the fix above):** once deployed, MUST
-re-run `page_crawler.py` in full to confirm (a) `/dash/` now serves the
-real dashboard, (b) the homepage now shows the "📊 My Dashboard" link,
-and (c) no OTHER merged-but-undeployed content is still missing —
-this defect was found by investigating ONE page; the full crawl (H2.1,
-not yet run to completion) is what will reveal the true full extent.
+**DEPLOYED AND RESOLVED (session 16, confirmed fresh in session 17)**:
+the deploy was run (`wrangler pages deploy site --project-name=empire-practice`
+with a verified Cloudflare token), and the process-fix
+([empire-dojo PR #22](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/22))
+was merged, documenting the mandatory post-merge deploy step so this
+can't silently recur. **This resolution was not re-confirmed with a
+fresh live check before session 16 ran out of credits** — re-verified
+independently in session 17 (2026-07-15) rather than trusting the
+unclosed status:
+- `curl https://practice.empireenglish.online/dash/` → HTTP 200, body
+  confirmed DIFFERENT from the homepage body (contains real
+  dashboard-specific markup, not the Cloudflare 404-fallback) — the
+  real dashboard is live.
+- Homepage confirmed to contain the "My Dashboard" link.
+- Ran the FULL `page_crawler.py` exhaustively across all 1,334 pages
+  (no sampling): **1,334/1,334 pass, 0 issues.** Confirms no other
+  merged-but-undeployed content remains missing anywhere on the site.
 
-**Status:** ❌ BLOCKED — needs a deploy (owner action or valid
-Cloudflare token), then full H2.1 re-run to confirm scope and closure.
-This is a genuine **Blocker per R12's severity definition** ("breaks
-core flow") — a headline Wuslah deliverable is currently unreachable
-by real students, which is exactly the class of issue this whole Hisn
-campaign exists to catch before invitations go out.
+**Status:** ✅ **RESOLVED** — deploy confirmed live, full 1,334-page
+crawl confirms zero remaining scope, process-fix (PR #22) merged to
+prevent recurrence.
 
 ---
 
