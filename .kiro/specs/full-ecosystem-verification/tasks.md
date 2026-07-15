@@ -303,9 +303,36 @@
   an "Easy" rating), `next_review` correctly moved out to
   `2026-07-21`. Card correctly advanced to 2/2 in the UI after rating.
   **H2.4 fully COMPLETE, 0 issues found.**
-- [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
+- [~] **H2.5** Test PWA install flow on a real mobile device (Add to
   Home Screen), confirm offline page (`offline.html`) shows when
   network is unavailable.
+  → **DONE (session 17, with the owner, on a real mobile device,
+  Safari).** **PWA install: CONFIRMED WORKING** — "Add to Home Screen"
+  prompt appeared correctly, installed cleanly, icon appeared on the
+  home screen.
+  **Offline fallback: FAILED — found D013 (Major, deferred).** With
+  the PWA installed and opened from the home screen, enabled Airplane
+  Mode and navigated to an unvisited `accent` exercise page. Instead
+  of the intended `offline.html` fallback, Safari showed its own
+  native "Safari cannot open this page" error. Root-caused via code +
+  live verification: `sw.js` hardcodes `/offline.html` (WITH the
+  `.html` suffix), but the live site's Cloudflare zone 308-redirects
+  ALL `.html`-suffixed URLs to their extensionless form (confirmed via
+  `curl -sI` — this is a KNOWN, documented site behavior in
+  `empire-dojo`'s own steering doc, which every other file in the
+  codebase correctly follows except this one). The redirect breaks the
+  service worker's precaching of the offline page, so the fetch
+  handler's `caches.match(OFFLINE_URL)` fallback finds nothing and
+  the browser shows its native error instead of any page at all.
+  **This gap was invisible to H2.1's exhaustive 1,334-page crawl**,
+  since that crawler only tests extensionless URLs (the documented
+  convention) and never constructs a `.html`-suffixed request — a
+  real, concrete example of why the human/mobile H2.2-H2.5 pass is
+  necessary even after a fully-automated exhaustive scripted pass
+  reports 100% green. Full detail + proposed fix in `defect_log.md`
+  D013. **Fix deferred** per the owner's batching decision (with D012)
+  to one fix-everything pass before H7. Task marked in-progress, not
+  complete, since the offline behavior itself is currently broken.
 - [x] **H2.6** Test all 10 API endpoints (real count, see H0.2) with the
   full input matrix: valid token, invalid token, missing token,
   malformed JSON, SQL-injection-style strings, XSS-style strings,
