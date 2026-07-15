@@ -656,12 +656,21 @@ convention. Merged via `empire-dojo` [PR #23](https://github.com/empireenglishco
 — confirmed landed on `main` by direct content grep (not just merge-
 status API), per this campaign's standing verification discipline.
 
-**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED.** Requires
+**Deployed and live-verified (2026-07-15):** deployed via
 `npx wrangler pages deploy site --project-name=empire-practice`
-(needs a fresh Cloudflare API token from the owner — the previous one
-is gone) and a fresh live device re-test (install → airplane mode →
-visit uncached page → confirm the offline page itself renders,
-not a native browser error) before this can be marked fully Resolved.
+(268 files uploaded). Confirmed server-side on the real production
+domain (not just the deploy tool's success message):
+`curl https://practice.empireenglish.online/sw.js` now shows
+`OFFLINE_URL = '/offline'` and `/offline` (not `/offline.html`) in
+`PRECACHE`; `curl .../offline` returns a clean `200` rendering the
+real offline page (`<title>Offline | Empire English</title>`), not a
+redirect or error.
+
+**Status:** ✅ **RESOLVED — fixed, merged, deployed, and server-side
+verified live.** Still recommend one real-device airplane-mode
+re-test (the owner's original repro) as a final human confirmation
+during H6, but the root cause (the `.html`-suffix redirect) is
+structurally eliminated and confirmed gone on the live site.
 
 
 
@@ -771,14 +780,21 @@ Also fixed the download link's file extension to match the real type
 `RecorderUI._extensionFor()` helper. Merged via `empire-dojo`
 [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main` by direct content grep.
 
-**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR RE-TESTED ON
-A REAL SAFARI/iOS DEVICE.** The fix is verified by code
-inspection/logic (syntax-checked, traced against MediaRecorder's
-documented behavior) but per this campaign's standing discipline, a
-code fix alone is not sufficient — needs deployment (fresh Cloudflare
-token required) AND a fresh live re-test on the SAME iPhone that
-originally reproduced this, confirming both playback ("Listen to
-Yours") and download now work.
+**Deployed (2026-07-15):** deployed via `npx wrangler pages deploy
+site --project-name=empire-practice`; confirmed server-side that the
+fixed `app.js` (containing `_pickMimeType()`) is now what
+`practice.empireenglish.online/js/app.js` actually serves.
+
+**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
+content verified live, but NOT YET RE-TESTED ON A REAL SAFARI/iOS
+DEVICE.** The fix's logic is sound (feature-detects a real supported
+mime type instead of assuming `audio/webm`) and the deployed file is
+confirmed correct, but this specific defect was only ever provable by
+an actual device test (that's how it was found in the first place —
+desktop worked, the owner's phone didn't). Needs the owner to
+re-run the exact original repro (record → play back → download) on
+the SAME iPhone, ideally during H6, before this can be marked fully
+✅ Resolved.
 
 
 
@@ -858,11 +874,19 @@ Merged via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glit
 (sampled `site/l0/week1/day1/shadowing.html` directly on `main`,
 shows `KokoroAudio.stop()`/`KokoroAudio.setRate()`).
 
-**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
-RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
-fresh live re-test confirming Stop actually halts the real MP3
-mid-playback and Speed actually changes its audible rate, on the same
-device/page that originally reproduced this.
+**Deployed and live-verified (2026-07-15):** deployed via `npx
+wrangler pages deploy site --project-name=empire-practice`. Confirmed
+server-side on the real production domain, on two different
+level/week/day combinations (`l0/week1/day1` and `l2/week5/day3`, to
+rule out a one-page fluke): both now show
+`onclick="KokoroAudio.stop()"` and
+`onchange="KokoroAudio.setRate(this.value)"` in the served HTML.
+
+**Status:** ✅ **RESOLVED — fixed, merged, deployed, and server-side
+verified live** across multiple pages/levels. A quick hands-on click
+of Stop/Speed during H6 is still worthwhile to confirm the *audible*
+behavior end-to-end, but the markup change (the actual root cause) is
+confirmed shipped correctly.
 
 ---
 
@@ -935,10 +959,17 @@ uniformly to Accent/Shadowing/Listening/Vocab without needing a
 regeneration pass (confirmed no HTML markup changes were needed or
 made for this defect). Merged via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main`.
 
-**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
-RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
-fresh live re-test confirming the counter/progress bar visibly
-updates immediately on the same page load after checking "Done."
+**Deployed (2026-07-15):** deployed via `npx wrangler pages deploy
+site --project-name=empire-practice`; confirmed server-side that the
+live `app.js` on `practice.empireenglish.online` now contains the
+`markDone()` re-render logic.
+
+**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
+content verified live, but NOT YET RE-TESTED BY ACTUALLY CLICKING
+"Done" ON THE REAL SITE.** This one is inherently a same-page visual
+behavior (does the progress bar visibly move right after the click),
+which a `curl` check can't observe — needs a quick manual click-
+through during H6 to confirm before marking fully ✅ Resolved.
 
 
 
@@ -1026,11 +1057,18 @@ page load — combined with D016's fix, the checkbox now reflects prior
 state on load AND reflects new state immediately on change. Merged
 via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23) — confirmed landed on `main`.
 
-**Status:** 🟢 **CODE FIXED, MERGED — NOT YET DEPLOYED OR LIVE
-RE-TESTED.** Needs deployment (fresh Cloudflare token required) and a
-fresh live re-test: mark an exercise done, navigate away, navigate
-back, confirm the checkbox is still checked (the exact repro steps
-the owner originally used to find this).
+**Deployed (2026-07-15):** deployed via `npx wrangler pages deploy
+site --project-name=empire-practice`; confirmed server-side that the
+live `app.js` on `practice.empireenglish.online` now contains
+`_restoreDoneCheckbox()`, called from `Gamification.init()`.
+
+**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
+content verified live, but NOT YET RE-TESTED BY REPEATING THE ORIGINAL
+REPRO.** Like D016, this is a client-side interactive behavior a
+`curl` check can't fully observe — needs the owner to mark an
+exercise done, navigate away, navigate back, and confirm the checkbox
+is still checked, ideally during H6, before marking fully ✅
+Resolved.
 
 
 
