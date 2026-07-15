@@ -972,33 +972,37 @@
   and **D022 fixed** (schedule collisions staggered, merged via
   [PR #143](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/143)).
   Both deployed to production and live-verified (see D021/D022 in
-  `defect_log.md`). **D013, D014, D015, D016, D017 now CODE FIXED AND
-  MERGED** via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23)
-  (merged 2026-07-15, content-verified landed on `main` by direct
-  grep, not just merge-status API). **Still blocked on DEPLOYMENT**:
-  needs a fresh Cloudflare API token from the owner (the previous one
-  is gone) to run `npx wrangler pages deploy site --project-name=
-  empire-practice`. D012 and D020 remain deferred to Masar (initiative
-  #11 — see `empire-nexus/.kiro/specs/masar/`, explicitly NOT being
-  fixed as quick patches here, per the owner's decision to build a
-  proper, durable solution instead — tracked as its own initiative,
-  sequenced after all other Hisn work + H6 + H7, but before student
-  invitations go out).
+  `defect_log.md`). **D013-D017 now CODE FIXED, MERGED, AND DEPLOYED**
+  via `empire-dojo` [PR #23](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/23)
+  (merged 2026-07-15) + `npx wrangler pages deploy site
+  --project-name=empire-practice` (deployed 2026-07-15, using a fresh
+  token from the owner, 268 files uploaded). D012 and D020 remain
+  deferred to Masar (initiative #11 — see `empire-nexus/.kiro/specs/
+  masar/`, explicitly NOT being fixed as quick patches here, per the
+  owner's decision to build a proper, durable solution instead —
+  tracked as its own initiative, sequenced after all other Hisn work
+  + H6 + H7, but before student invitations go out).
 - [~] **H7.3** Re-test every fixed defect against its original failing
   scenario — confirm the fix actually resolves it, not just "looks
   fixed."
   → D021 and D022 both re-tested against their original failing
   scenarios post-deploy (D021: full day 2/3/5/8 tier simulation
   against the actual deployed code, 5/5 pass; D022: static schedule
-  re-extraction confirming no new collisions). **D013-D017: code
-  fixed and merged, but NOT YET live re-tested** — that step requires
-  the deployment above to happen first (a code fix alone is not
-  trusted here per this campaign's own standing discipline). Once
-  deployed: re-run H2.5's offline test (D013), a real Safari/iOS
-  record→playback→download pass (D014), the Shadowing Stop/Speed
-  controls (D015), and the Done-checkbox same-page-feedback +
-  cross-navigation-persistence checks (D016/D017) — ideally on the
-  same devices/pages that originally found each one.
+  re-extraction confirming no new collisions).
+  → **D013-D017: deployed and server-side content-verified live**
+  (curl'd `practice.empireenglish.online` directly, confirming each
+  fixed file/markup is what's actually served — not just trusting the
+  deploy tool's success message). **D013 and D015 marked fully ✅
+  Resolved** — both are structurally verifiable from the server side
+  alone (D013: `/offline` no longer `.html`-suffixed, offline page
+  renders 200; D015: markup on multiple pages/levels shows
+  `KokoroAudio.stop()`/`setRate()`). **D014, D016, D017 remain 🟡
+  (deployed + content-verified, not yet Resolved)** — these three are
+  inherently client-side interactive behaviors a `curl` check can't
+  fully observe (Safari MediaRecorder behavior, same-page progress-bar
+  re-render, checkbox state across navigation) and need a real
+  hands-on pass, ideally folded into H6's device walkthrough rather
+  than a separate re-test round.
 - [ ] **H7.4** Produce the final Go/No-Go Checklist — one line per
   requirement (R1-R11 from requirements.md), each marked ✅ Verified /
   ⚠️ Deferred (with explicit reasoning) / ❌ Blocked.
