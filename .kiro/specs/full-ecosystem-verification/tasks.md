@@ -227,53 +227,51 @@
 - [ ] **H2.5** Test PWA install flow on a real mobile device (Add to
   Home Screen), confirm offline page (`offline.html`) shows when
   network is unavailable.
-- [~] **H2.6** Test all 10 API endpoints (real count, see H0.2) with the
+- [x] **H2.6** Test all 10 API endpoints (real count, see H0.2) with the
   full input matrix: valid token, invalid token, missing token,
   malformed JSON, SQL-injection-style strings, XSS-style strings,
   oversized payloads, rapid-fire requests (rate limit trigger at
   61 req/min).
-  → **IN PROGRESS, BLOCKED on SSH access — not yet executed.** All 3
-  scripts are written and committed (this PR):
-  - `scripts/setup_ghost_members.py` — run INSIDE the container first;
-    creates 2 synthetic `GHOST_TEST_` members (IDs `900000010`/`11`)
-    with real link tokens, so the adversarial test has genuine valid
-    tokens. Two members (not one) specifically to test H2.8's
-    cross-member data isolation.
-  - `scripts/api_adversarial_test.py` — run from OUTSIDE the container
-    (this sandbox or any machine), against the real public URL
-    `https://bot.empireenglish.online`. Takes the two tokens from
-    setup as argv. Covers the full input matrix above plus H2.7 (CORS)
-    and H2.8 (leak/cross-member checks) in the same pass, since all
-    three need the same live requests.
-  - `scripts/cleanup_ghost_members.py` — run INSIDE the container
-    after, FK-safe removal of the 2 test members.
-  **Blocker**: a fresh SSH keypair was generated this session
-  (`kiro-agent-hisn-h2-api-testing-20260713`) but the public key was
-  **never installed** on the Hetzner server — the user ran out of
-  credits before running the `chattr`/`echo`/`chattr` command. The
-  local private key material has since been deleted (see this
-  session's checkpoint in `empire-chronicle`) since it was never used
-  and has no value sitting unused. **A brand new session must generate
-  its own fresh keypair** and ask the owner to install it — do not
-  try to reuse any key referenced in past session notes.
-  **Real finding worth checking once unblocked** (not yet verified
-  live, flagged as a possible defect — see `defect_log.md` D010):
-  `/api/nour-tips` and `/api/progress-v2` are documented (in
-  `ecosystem-harmony/design.md`'s flag table and `flag_registry.py`'s
-  own flag description strings) as gated behind the
-  `wuslah_nour_tips`/`wuslah_adaptive` feature flags, but a code
-  reading of `api_server.py` shows NEITHER endpoint actually calls
-  `database.is_feature_enabled()` for those flags — unlike
-  `/api/dashboard`, `/api/leaderboard`, and `/api/complete-exercise`,
-  which all correctly check their respective flags. If confirmed live,
-  this means disabling `wuslah_nour_tips` or `wuslah_adaptive` via
-  `!flag` would have ZERO effect on these two endpoints — a real kill-
-  switch gap. Confirm this the moment SSH access is available, before
-  running the rest of H2.6's matrix.
-- [ ] **H2.7** Confirm CORS headers are correct when called from the
+  → **EXECUTED 2026-07-15 (session 17)**, once a fresh SSH keypair was
+  generated and installed. Ran all 3 committed scripts in order:
+  `setup_ghost_members.py` → D010 live check (see below) →
+  `api_adversarial_test.py` → `cleanup_ghost_members.py`. **45/46
+  checks OK.** Full detail in `defect_log.md`'s H2.6 entry.
+  - **D010 CONFIRMED LIVE**: toggled `wuslah_nour_tips`/`wuslah_adaptive`
+    off directly in the production DB, hit both live endpoints — both
+    kept responding normally (HTTP 200, full payloads), confirming the
+    kill-switch gap flagged by the earlier code read. Fix applied
+    (2-line `is_feature_enabled()` gate added to each function,
+    matching the existing pattern) — **pending deploy + post-deploy
+    re-verification**, see D010 in `defect_log.md`.
+  - **D011 found+fixed** (test-tooling, not app): Cloudflare's WAF
+    blocks the default Python `urllib` User-Agent (`error code: 1010`)
+    before requests reach the app at all — caused the first run's 44
+    apparent "failures." Fixed by setting a realistic browser UA in
+    `api_adversarial_test.py`; re-run passed 45/46.
+  - The 1 remaining flagged check (`/api/leaderboard` "cross-member
+    leak") is a false positive in the test script's generic heuristic
+    — the leaderboard is a PUBLIC top-10 ranking by design, correctly
+    showing other members' names. Not a defect.
+  - Ghost members cleaned up and verified: 0 residual rows.
+- [x] **H2.7** Confirm CORS headers are correct when called from the
   real `practice.empireenglish.online` origin (not just `*` in theory).
-- [ ] **H2.8** Confirm no API error response leaks stack traces, file
+  → Confirmed as part of the same H2.6 run: `Access-Control-Allow-Origin: *`
+  present on real GET responses; OPTIONS preflight against
+  `/api/dashboard` with a real `Origin: https://practice.empireenglish.online`
+  header returns HTTP 200 with correct `Access-Control-Allow-Methods`
+  and `Access-Control-Allow-Headers`.
+- [x] **H2.8** Confirm no API error response leaks stack traces, file
   paths, or other students' data.
+  → Confirmed as part of the same H2.6 run: scanned every error
+  response body (invalid token, missing token, SQLi, malformed JSON,
+  oversized payloads) for stack-trace/file-path markers
+  (`Traceback`, `/app/`, `/src/`, `.py", line`, `sqlite3.*Error`) —
+  zero matches across the full matrix. Cross-member data isolation
+  confirmed on the one endpoint meant to be private per-member
+  (`/api/dashboard` never returned member B's data when queried with
+  member A's token); the leaderboard's intentional public listing is
+  correctly excluded from this concern (see H2.6 note above).
 
 ## Phase H3 — Cross-System Integration Traces
 

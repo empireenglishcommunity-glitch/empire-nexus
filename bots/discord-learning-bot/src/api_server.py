@@ -447,6 +447,9 @@ async def get_progress_v2(request: web.Request) -> web.Response:
     if not _check_rate_limit(token):
         return web.json_response({"error": "rate limit exceeded"}, status=429)
 
+    if not database.is_feature_enabled("wuslah_adaptive"):
+        return web.json_response({"error": "adaptive progress API not enabled"}, status=503)
+
     member = database.get_member_by_token(token)
     if not member:
         return web.json_response({"error": "invalid token"}, status=404)
@@ -534,6 +537,9 @@ async def get_nour_tips(request: web.Request) -> web.Response:
 
     if not _check_rate_limit(token):
         return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    if not database.is_feature_enabled("wuslah_nour_tips"):
+        return web.json_response({"error": "study tips API not enabled"}, status=503)
 
     member = database.get_member_by_token(token)
     if not member:
