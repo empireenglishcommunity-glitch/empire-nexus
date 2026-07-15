@@ -956,3 +956,107 @@ of the Hisn campaign, before H7's Go/No-Go sign-off.
 
 **Status:** 🟡 **DEFERRED** — confirmed via live device test + code
 read, not yet fixed, intentionally batched with other findings.
+
+
+
+---
+
+## D018 — H3.2 live trace: Discord DM delivery to test account failed (likely test-account limitation, NOT a confirmed app defect — but the failure-handling path itself is confirmed working correctly)
+
+**Found during:** H3.2 (Discord → Telegram → Discord Nour escalation
+trace, live, with the owner actively participating).
+
+**What was tested:** Temporarily enabled the `nour_escalation` flag
+(confirmed `False`/disabled in production beforehand, restored to
+`False` immediately after the test — zero lasting config change),
+then called `nour_escalation.escalate_to_owner()` for the "Empire
+Ghost" test account (`discord_id` `1526224028191162631` — a real
+Discord snowflake with genuine guild presence, not a synthetic
+`GHOST_TEST_` ID, since this trace needs a real Discord DM delivery
+at the end). A real Telegram alert was sent to the owner's ops chat;
+the owner replied to it directly, as intended.
+
+**What happened:** The owner received a **"⚠️ Delivery failed"**
+alert back on Telegram: "Couldn't deliver to Empire Ghost — they may
+have DMs off, left the server, or something else went wrong."
+
+**Root cause, confirmed via live production logs at the exact
+timestamp:**
+```
+[ERROR] empire-bot.nour.escalation: Nour escalation reply: failed to
+DM 1526224028191162631: 400 Bad Request (error code: 50007): Cannot
+send messages to this user
+[WARNING] empire-bot.ops_poller: ops_poller: failed to forward owner
+reply to Empire Ghost (1526224028191162631)
+```
+Discord's own API rejected the DM attempt with error 50007, which per
+Discord's own documented error codes means the target user has DMs
+disabled (server-wide or specifically for this server), has blocked
+the bot, or otherwise cannot receive bot DMs — this is a REAL,
+externally-imposed Discord-side restriction, not something the bot's
+code caused.
+
+**What this DOES confirm (high confidence, directly observed):**
+1. The Telegram alert was sent and received correctly, with correct
+   content (student name, level, streak, message, "reply to respond
+   as Nour" instructions).
+2. The owner's Telegram reply was correctly matched to the specific
+   pending escalation (`telegram_message_id=39`) via `reply_to_message`
+   — confirmed the row exists in `pending_escalations` for the right
+   `discord_id`.
+3. `forward_reply_to_student()` was correctly invoked for the right
+   member.
+4. **The failure-handling path itself worked exactly as designed**:
+   per `ops_poller.py`'s own documented M2.4 behavior, on a delivery
+   failure the escalation is deliberately NOT marked resolved
+   (confirmed via direct query: `resolved=0`, still pending) — so the
+   owner correctly sees it as outstanding rather than silently losing
+   track of it — and the owner correctly received the "Delivery
+   failed" warning with an actionable next step ("check Discord
+   directly"). This is a genuinely well-designed failure path, and it
+   fired correctly.
+
+**What remains genuinely UNCERTAIN (being explicit about the limits
+of what this session's investigation can conclude):**
+- Whether "Empire Ghost" specifically has DMs disabled (an account/
+  privacy-setting fact about this one test account) versus some other
+  cause (e.g. no longer a guild member, blocked the bot specifically)
+  could not be independently confirmed from the sandbox — doing so
+  would require direct access to that Discord account's own settings
+  or the Discord server's member list, neither of which this session
+  has direct access to.
+- A supporting, but not conclusive, data point: querying
+  `nour_conversations` for any prior successful Nour-to-student
+  message shows ZERO for "Empire Ghost" ever, while the OTHER ghost
+  account ("M.A.C.A.L EMPIRE") DOES have 2 prior successful messages
+  on record. This is consistent with "Empire Ghost" having DMs
+  disabled or otherwise unreachable as a standing account
+  characteristic (not something this test caused), but is not
+  definitive proof on its own.
+- **This means H3.2's actual round-trip (reply correctly delivered TO
+  a student) is NOT yet confirmed working end-to-end** — only the
+  send-alert, match-reply, and failure-handling legs are confirmed.
+  The final "successful delivery" leg remains unverified.
+
+**Recommended next step (not yet done):** retry this exact trace using
+a DIFFERENT real test account with confirmed-open DMs — either
+"M.A.C.A.L EMPIRE" (which has a proven prior successful delivery on
+record) or a fresh Discord account the owner sets up specifically for
+this purpose with default/open DM settings confirmed. This would
+isolate whether the full round-trip genuinely works when the target
+account can receive DMs at all, completing the one leg this attempt
+could not confirm.
+
+**Severity of this entry itself:** Info/Major-if-retried-and-still-
+fails — logging this as a distinct entry rather than silently retrying
+immediately, per the campaign's transparency standard, since it's a
+real result from a real live test, not a non-event. If a retry with a
+DM-open account ALSO fails, that would upgrade this to a confirmed
+Major defect in the delivery path itself.
+
+**Status:** 🟡 **INCONCLUSIVE — needs a retry with a confirmed DM-open
+test account before H3.2 can be marked complete or a real defect
+confirmed.** Not added to the D012-D017 batch-fix list since there is
+nothing to fix yet — first need to determine if there's anything
+wrong with the CODE at all, versus this being a correct rejection of
+an unreachable test account.
