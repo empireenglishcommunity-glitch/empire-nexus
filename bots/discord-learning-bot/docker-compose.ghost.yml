@@ -22,6 +22,17 @@
 # IMPORTANT: The ghost bot's command prefix is set to "?" (not "!") in
 # .env.ghost so commands don't collide with the production bot in the
 # same guild. A "test student" types ?join, ?done accent, etc.
+#
+# CORRECTION (Hisn D023, found during H6): channel permission overwrites
+# ONLY isolate channel-scoped activity. on_member_join, reaction-based
+# registration, and every scheduled background loop (morning/evening DMs,
+# streak alerts, daily digests, etc.) are guild-wide, not channel-scoped —
+# confirmed live that this bot's on_member_join fired on a REAL student's
+# join and DMed them directly, uncoordinated with the production bot's own
+# welcome DM. Channel permissions alone were never sufficient isolation
+# for this bot. .env.ghost MUST also set IS_GHOST_INSTANCE=true, which
+# makes these guild-wide/DM-based code paths no-op for this instance —
+# see src/config.py's IS_GHOST_INSTANCE comment for the full explanation.
 
 name: empire-ghost-bot
 
