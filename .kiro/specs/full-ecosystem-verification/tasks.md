@@ -684,12 +684,95 @@
 
 ## Phase H4 — AI Fallback Chains + Notification Content Audit
 
-- [ ] **H4.1** Simulate Groq-invalid/Gemini-valid: confirm Nour falls
+- [x] **H4.1** Simulate Groq-invalid/Gemini-valid: confirm Nour falls
   back to Gemini, confirm `track_groq_failure()` fires.
-- [ ] **H4.2** Simulate both-invalid: confirm Nour falls back to a
+  → **DONE (session 17), fully automated, live in production.** Wrote
+  `h4_1_2_ai_fallback_trace.py`: monkey-patched
+  `nour_concierge._call_groq_chat`/`_call_gemini_chat` (the underlying
+  network calls) to simulate Groq-fails/Gemini-succeeds, then called
+  the REAL, unmodified `nour_concierge._generate_response()` function.
+  **Confirmed: the real fallback control flow correctly returns
+  Gemini's text when Groq fails** (not a reimplementation — the actual
+  production function).
+  **Methodological finding (D019, Info, no app defect)**: a
+  sub-check attempted to also verify `track_groq_failure()`'s own
+  alert-throttling counter using the REAL function — but discovered
+  that `docker exec` test scripts run as a genuinely SEPARATE Python
+  process from the live bot (`python run.py`), confirmed via
+  `os.getpid()`/`os.getppid()` and `docker top`. Module-level, in-RAM
+  state (like `_groq_failures`, a plain list) is NOT shared across
+  processes, so mutating it via a `docker exec` script has zero effect
+  on the live bot's actual runtime counter. **This does NOT affect any
+  DB-backed test in this campaign** (re-examined and confirmed: H1.4,
+  H1.5, D010, H2.6-8, H3.1, H3.2, H3.3, H3.4 are all DB- or real-HTTP-
+  based, genuinely unaffected) — it only narrows THIS specific
+  threshold-counting sub-check. The underlying alert-SENDING mechanism
+  itself was independently confirmed working in H3.5 (real Telegram
+  `message_id`s returned), so this gap doesn't leave the alerting
+  capability itself unverified — just this one specific way of trying
+  to trigger it. Full detail in `defect_log.md` D019.
+- [x] **H4.2** Simulate both-invalid: confirm Nour falls back to a
   coherent template response (never an error message shown to student).
-- [ ] **H4.3** Repeat the 3-state fallback matrix for: pronunciation
+  → **DONE (session 17), fully automated, live in production**, same
+  script as H4.1. Monkey-patched BOTH `_call_groq_chat` and
+  `_call_gemini_chat` to fail, then called the REAL
+  `_generate_response()`. **Confirmed: never returns `None`, never
+  leaks raw error/exception text — correctly returns one of the 4
+  known Arabic template strings** (`_TEMPLATE_RESPONSES`), exactly
+  matching the function's documented "never silence" design. This
+  check is a pure control-flow test of the real function's return
+  value, unaffected by the D019 process-isolation finding (no reliance
+  on cross-call module state).
+- [x] **H4.3** Repeat the 3-state fallback matrix for: pronunciation
   scoring, Nour study tips generation, weekly self-review.
+  → **DONE (session 17), fully automated, live in production.**
+  **Pronunciation scoring** (`pronunciation_scorer.generate_feedback()`):
+  confirmed via code read this is a single-provider (Gemini via
+  `ai_engine._call_llm`) + template fallback, not a 3-state Groq/Gemini/
+  template chain like Nour concierge — tested accordingly. Monkey-
+  patched `_call_llm` to fail: confirmed the real function returns a
+  non-empty, PERSONALIZED template (referencing the actual missed
+  word, not a generic string) in both English and Arabic. Also
+  confirmed the beginner-grace-period branch (no AI call at all,
+  always-encouragement) works correctly. **3/3 checks PASS.**
+  **Weekly self-review** (`nour_personality.run_weekly_review()`):
+  confirmed via code read this has NO template fallback at all, by
+  design (it's an internal owner-facing report, not student-facing —
+  silently returning `None` on failure is the correct, intended
+  behavior, unlike student-facing functions which must never go
+  silent). Simulated a Groq HTTP failure: confirmed the real function
+  returns `None` cleanly, no crash, no raw exception. **1/1 check
+  PASS.**
+  **Nour study tips generation — found D020 (Major, needs owner
+  product decision), not a pass/fail fallback test.** While locating
+  the actual generation function to test its fallback chain,
+  discovered via exhaustive code search (every `.py` file under
+  `bots/discord-learning-bot/src/` for any write to `nour_study_tips`
+  or any tip-generation function) that **W4.2 ("Implement weekly tip
+  generation task") was never actually built** — confirmed via the
+  ORIGINAL `ecosystem-harmony/tasks.md` spec itself, where W4.2 is the
+  ONLY unchecked task in the entire W4 phase; W4.1 (table), W4.3
+  (endpoint), W4.5 (flag), W4.6 (generic fallback bank) were all built
+  and already confirmed working (H2.3, H2.6-H2.8). `api_server.py`'s
+  own docstring claims tips are "pre-generated weekly by ops_monitoring's
+  tip generation task" — **no such task exists anywhere in
+  `ops_monitoring.py`** (confirmed: its only functions are
+  `track_groq_failure`, `notify_bot_restart`, `notify_database_error`,
+  `send_weekly_report`, `check_conversion_ready`, `check_churn_risk`,
+  `send_monthly_summary` — none touch this table). Confirmed live: the
+  production `nour_study_tips` table has **0 rows, ever** (not
+  "hasn't run this week yet" — genuinely never populated since the
+  table was created). Every real student, forever, silently gets only
+  the generic fallback tips, with the "AI-generated" framing on the
+  flag/endpoint/dashboard being inaccurate. This is a genuinely
+  half-shipped feature (all the wrapper scaffolding built, the actual
+  core step skipped) rather than a code bug — flagged as needing the
+  OWNER'S product input (implement W4.2 for real, vs. explicitly
+  retire the "AI-generated" framing and rely on the fallback bank on
+  purpose) rather than a pure engineering fix like D012-D017. Full
+  detail in `defect_log.md` D020. **This item is NOT part of the
+  already-agreed D012-D017 batch-fix plan** — needs a separate,
+  explicit owner decision before H7.
 - [ ] **H4.4** Directly invoke each Nabd notification function (morning
   kickstart, evening reminder, streak alert, weekly summary, absence
   recovery day 2/3/5/7) against a test member; review content for

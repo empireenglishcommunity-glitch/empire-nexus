@@ -1088,3 +1088,189 @@ resolve pipeline is confirmed working correctly end-to-end. The
 original "Empire Ghost" failure was a real-world Discord-side
 rejection specific to that one test account (not a code defect) and
 requires no fix. H3.2 can now be marked complete.
+
+
+
+---
+
+## D019 — Methodological finding: `docker exec` test scripts run in a SEPARATE process from the live bot, so module-level (in-RAM) state is NOT actually shared (Info, corrects earlier session narrative, no app defect)
+
+**Found during:** H4.1 (AI fallback chain trace) — the real
+`ops_monitoring.track_groq_failure()` function was called 5 times
+(its own documented alert threshold) via a `docker exec` script, and
+the module's own throttle logic should have allowed a real Telegram
+alert to fire, but no alert was observed in the live bot's logs.
+
+**Investigation, and root cause confirmed via direct verification
+(not assumed):**
+- `docker top empire-english-bot` shows exactly ONE process running
+  in the container: `python run.py` (the real, live bot).
+- A `docker exec ... python3 <script>` invocation spawns a genuinely
+  SEPARATE Python process (confirmed via `os.getpid()`/`os.getppid()`
+  inside the exec'd script — different PID, PPID `0`, i.e. not a
+  child of the bot process at all) inside the same container's
+  filesystem/network namespace, but with its OWN separate Python
+  interpreter and memory space.
+- This means: any Python **module-level variable held only in RAM**
+  (e.g. `ops_monitoring._groq_failures`, a plain list;
+  `_groq_alert_sent_at`, a float) that a `docker exec` script reads or
+  mutates is a SEPARATE COPY, entirely disconnected from the live
+  bot's own in-memory copy of that same module. Mutating it via
+  `docker exec` has zero effect on the live bot's actual runtime state.
+
+**What this DOES NOT affect (confirmed unaffected, re-examined
+specifically because of this finding, not assumed safe)**: anything
+that reads/writes the **SQLite database file on disk** is genuinely
+shared correctly between the live bot process and any `docker exec`
+script, since both access the identical file via `database._connect()`
+(confirmed: `is_feature_enabled()`, `set_feature_flag()`, and every
+other `database.py` function does a fresh `_connect()` + query with
+zero module-level caching). This means the following EARLIER results
+in this campaign remain valid and are NOT retroactively in question:
+- H1.4 (flag toggling), H1.5 (kill switch drill) — both use
+  `database.is_feature_enabled()`/`set_feature_flag()`, DB-backed.
+- D010's live flag-toggle verification, H2.6-H2.8's adversarial API
+  testing — all DB- or real-HTTP-request-based.
+- H3.1, H3.3, H3.4 — all confirmed via direct DB queries and/or real
+  HTTP calls to the live public API, not module-level state.
+- H3.2's escalation trace — `pending_escalations`/`nour_conversations`
+  are DB tables; the ACTUAL Telegram/Discord API calls made by
+  `escalate_to_owner()`/`forward_reply_to_student()` (invoked directly
+  from the `docker exec` script) are real, independent HTTP calls to
+  Telegram's/Discord's own servers — genuinely real regardless of
+  which process made them. Fully valid.
+
+**What THIS DOES affect (re-examined and corrected)**: H4.1's specific
+sub-check of `track_groq_failure()`'s own alert-throttling behavior
+(a module-level `_groq_failures` list + `_groq_alert_sent_at` float,
+by design, since it's meant to persist across many real Groq call
+sites within one running process — not a bug in that design, just not
+exercisable via a separate process the way this test attempted it).
+The actual ALERT-SENDING mechanism itself (`ops_hub.send_ops_alert()`)
+was independently and correctly verified as genuinely working in H3.5
+(direct calls returned real Telegram `message_id`s) — so this doesn't
+cast doubt on whether alerts CAN be sent, only on whether THIS
+SPECIFIC sub-test actually exercised the live bot's real threshold-
+counting state.
+
+**Corrected understanding of H4.1's results**: the core fallback-chain
+logic test (Groq fails → Gemini succeeds → correct text returned) IS
+still valid, since `_generate_response()`'s control flow and return
+value are pure-function-like (no reliance on cross-call module state)
+and were exercised directly, in-process, within the SAME test script
+that also monkey-patched the underlying calls — there's no
+cross-process gap for THAT specific check. Only the THRESHOLD-COUNTING
+sub-check (H4.1b) is the part affected by this finding, and it has
+been re-scoped accordingly (see `tasks.md`).
+
+**Action taken:** documented this finding transparently rather than
+silently re-running with a workaround, per this campaign's own
+standard. For any FUTURE test that specifically needs to exercise the
+LIVE bot process's own module-level state (not just its DB-backed
+state), the correct approach would be to either (a) test the logic
+via a pure-function unit test that doesn't depend on the live
+process's specific state, as most of this campaign already correctly
+does, or (b) if genuinely necessary, coordinate a live test during a
+real, deliberate bot restart/observation window — not attempted here,
+since H3.5 already independently confirmed the underlying Telegram
+alert mechanism works, making this unnecessary for Hisn's purposes.
+
+**Status:** ℹ️ **Info / no action needed** — corrects the scope of
+H4.1's threshold sub-check, confirms no other campaign result is
+affected, no app defect found or implied.
+
+---
+
+## D020 — Nour Study Tips: the actual weekly AI-generation task (W4.2) was never implemented; every real student silently gets only generic fallback tips, forever (Major, DEFERRED — fix at end of Hisn with other findings)
+
+**Found during:** H4.3 (repeating the 3-state AI fallback matrix for
+pronunciation scoring, Nour study tips generation, and weekly
+self-review — while locating the actual tip-generation function to
+test its fallback chain).
+
+**Severity:** Major. Not a crash, not a broken endpoint — the API
+gracefully falls back exactly as designed. The real problem is that
+the feature this fallback exists FOR was never built: `wuslah_nour_tips`
+is a real, enabled-by-default feature flag, documented in
+`flag_registry.py`, `ecosystem-harmony/design.md`, and `api_server.py`'s
+own docstrings as "AI-generated weekly study tips" — but there is no
+code anywhere in the codebase that ever generates or stores a
+personalized tip. Every real student, forever, silently receives only
+the generic level-appropriate fallback tips, with zero indication to
+anyone (admin or student) that the "AI-generated" half of this
+feature doesn't exist.
+
+**What was searched (exhaustive, not a quick grep)**: every `.py` file
+under `bots/discord-learning-bot/src/` for any function that writes to
+`nour_study_tips`, any function name containing "tip," and the string
+`nour_study_tips` itself across the entire `empire-nexus` repo
+(excluding `.git`). Result:
+- `database.py`: defines the `CREATE TABLE nour_study_tips` schema
+  only — no INSERT statement anywhere in this file either.
+- `api_server.py`: reads FROM `nour_study_tips` in `get_dashboard()`
+  and `get_nour_tips()` — never writes to it. Its own code comment is
+  explicit and now confirmed INCORRECT: *"Tips are pre-generated
+  weekly (by ops_monitoring's tip generation task) and cached in the
+  nour_study_tips table."* — **no such task exists in
+  `ops_monitoring.py`** (confirmed: that file's only `async def`
+  functions are `track_groq_failure`, `notify_bot_restart`,
+  `notify_database_error`, `send_weekly_report`, `check_conversion_ready`,
+  `check_churn_risk`, `send_monthly_summary` — none of them touch
+  `nour_study_tips`).
+- **Zero rows exist in the live production `nour_study_tips` table**
+  (confirmed via direct query: `SELECT COUNT(*) FROM nour_study_tips`
+  → `0`) — not "hasn't run yet this week," genuinely never populated,
+  ever, since the table was created.
+
+**Root cause, confirmed via the source spec itself**
+(`ecosystem-harmony/tasks.md`, Phase W4): **W4.2 ("Implement weekly
+tip generation task") is the ONLY unchecked task in the entire W4
+phase** — W4.1 (table), W4.3 (endpoint), W4.4 (dashboard card), W4.5
+(feature flag), and W4.6 (generic fallback tip bank) were all built
+and are all confirmed working correctly (verified across H2.3's
+dashboard walkthrough and H2.6-H2.8's API testing). This is a
+genuinely half-shipped feature: every piece of "wrapper" scaffolding
+around the AI generation step was completed, but the actual core
+step — the thing the feature flag and the whole endpoint are NAMED
+for — was never written. `api_server.py`'s docstring describing a
+generation task that doesn't exist suggests this gap has been
+silently invisible even to whoever wrote that comment, likely written
+optimistically ahead of the implementation and never corrected once
+W4.2 was skipped.
+
+**Why H2.3/H2.6-H2.8 didn't catch this earlier**: both correctly
+verified the READ side and the FALLBACK path (empty table → generic
+tips shown, exactly as designed) — which is the CORRECT behavior for
+an empty table, whether that emptiness is "not generated yet this
+week" (benign, expected) or "will never be generated, ever" (this
+defect). Distinguishing those two required looking for the WRITE
+side, which only H4.3's specific focus on locating and fallback-
+testing the generation function surfaced.
+
+**Proposed fix (not yet applied, deferred per the owner's batching
+decision):** implement W4.2 for real — a scheduled `@tasks.loop`
+(Sunday 8 AM Dubai, before the weekly report, per the original spec's
+own timing note) that, for each active member, gathers pronunciation
+scores/SRS accuracy/streak/difficulty/conversation themes, calls the
+AI fallback chain (Groq → Gemini → skip, consistent with this
+codebase's other AI call sites) to generate exactly 3 tips (max 100
+chars each per the spec), and INSERTs them into `nour_study_tips`.
+Alternatively, if this feature is no longer a priority, the more
+honest fix might be to explicitly retire it (remove the flag, the
+"AI-generated" framing in the endpoint/dashboard, and rely solely on
+the generic tip bank on purpose) rather than leave a half-built
+feature silently masquerading as complete — a product decision for
+the owner, not purely a coding one.
+
+**Decision (owner, pending):** logged now for the owner's awareness
+and eventual batch decision alongside D012-D017, D019 — NOT yet
+discussed/decided given this was found mid-H4.3; flagging explicitly
+here that this one specifically needs the owner's product input (fix
+vs. retire), not just an engineering fix, unlike the other deferred
+items which already have agreed-upon fixes.
+
+**Status:** 🟡 **DEFERRED, NEEDS OWNER PRODUCT DECISION** — confirmed
+real via exhaustive code search + live DB query (0 rows, ever), not
+yet fixed. Recommend discussing fix-vs-retire with the owner before
+H7's batch pass, since this is the one deferred item that isn't
+purely "apply the agreed fix."
