@@ -1088,3 +1088,93 @@ resolve pipeline is confirmed working correctly end-to-end. The
 original "Empire Ghost" failure was a real-world Discord-side
 rejection specific to that one test account (not a code defect) and
 requires no fix. H3.2 can now be marked complete.
+
+
+
+---
+
+## D019 — Methodological finding: `docker exec` test scripts run in a SEPARATE process from the live bot, so module-level (in-RAM) state is NOT actually shared (Info, corrects earlier session narrative, no app defect)
+
+**Found during:** H4.1 (AI fallback chain trace) — the real
+`ops_monitoring.track_groq_failure()` function was called 5 times
+(its own documented alert threshold) via a `docker exec` script, and
+the module's own throttle logic should have allowed a real Telegram
+alert to fire, but no alert was observed in the live bot's logs.
+
+**Investigation, and root cause confirmed via direct verification
+(not assumed):**
+- `docker top empire-english-bot` shows exactly ONE process running
+  in the container: `python run.py` (the real, live bot).
+- A `docker exec ... python3 <script>` invocation spawns a genuinely
+  SEPARATE Python process (confirmed via `os.getpid()`/`os.getppid()`
+  inside the exec'd script — different PID, PPID `0`, i.e. not a
+  child of the bot process at all) inside the same container's
+  filesystem/network namespace, but with its OWN separate Python
+  interpreter and memory space.
+- This means: any Python **module-level variable held only in RAM**
+  (e.g. `ops_monitoring._groq_failures`, a plain list;
+  `_groq_alert_sent_at`, a float) that a `docker exec` script reads or
+  mutates is a SEPARATE COPY, entirely disconnected from the live
+  bot's own in-memory copy of that same module. Mutating it via
+  `docker exec` has zero effect on the live bot's actual runtime state.
+
+**What this DOES NOT affect (confirmed unaffected, re-examined
+specifically because of this finding, not assumed safe)**: anything
+that reads/writes the **SQLite database file on disk** is genuinely
+shared correctly between the live bot process and any `docker exec`
+script, since both access the identical file via `database._connect()`
+(confirmed: `is_feature_enabled()`, `set_feature_flag()`, and every
+other `database.py` function does a fresh `_connect()` + query with
+zero module-level caching). This means the following EARLIER results
+in this campaign remain valid and are NOT retroactively in question:
+- H1.4 (flag toggling), H1.5 (kill switch drill) — both use
+  `database.is_feature_enabled()`/`set_feature_flag()`, DB-backed.
+- D010's live flag-toggle verification, H2.6-H2.8's adversarial API
+  testing — all DB- or real-HTTP-request-based.
+- H3.1, H3.3, H3.4 — all confirmed via direct DB queries and/or real
+  HTTP calls to the live public API, not module-level state.
+- H3.2's escalation trace — `pending_escalations`/`nour_conversations`
+  are DB tables; the ACTUAL Telegram/Discord API calls made by
+  `escalate_to_owner()`/`forward_reply_to_student()` (invoked directly
+  from the `docker exec` script) are real, independent HTTP calls to
+  Telegram's/Discord's own servers — genuinely real regardless of
+  which process made them. Fully valid.
+
+**What THIS DOES affect (re-examined and corrected)**: H4.1's specific
+sub-check of `track_groq_failure()`'s own alert-throttling behavior
+(a module-level `_groq_failures` list + `_groq_alert_sent_at` float,
+by design, since it's meant to persist across many real Groq call
+sites within one running process — not a bug in that design, just not
+exercisable via a separate process the way this test attempted it).
+The actual ALERT-SENDING mechanism itself (`ops_hub.send_ops_alert()`)
+was independently and correctly verified as genuinely working in H3.5
+(direct calls returned real Telegram `message_id`s) — so this doesn't
+cast doubt on whether alerts CAN be sent, only on whether THIS
+SPECIFIC sub-test actually exercised the live bot's real threshold-
+counting state.
+
+**Corrected understanding of H4.1's results**: the core fallback-chain
+logic test (Groq fails → Gemini succeeds → correct text returned) IS
+still valid, since `_generate_response()`'s control flow and return
+value are pure-function-like (no reliance on cross-call module state)
+and were exercised directly, in-process, within the SAME test script
+that also monkey-patched the underlying calls — there's no
+cross-process gap for THAT specific check. Only the THRESHOLD-COUNTING
+sub-check (H4.1b) is the part affected by this finding, and it has
+been re-scoped accordingly (see `tasks.md`).
+
+**Action taken:** documented this finding transparently rather than
+silently re-running with a workaround, per this campaign's own
+standard. For any FUTURE test that specifically needs to exercise the
+LIVE bot process's own module-level state (not just its DB-backed
+state), the correct approach would be to either (a) test the logic
+via a pure-function unit test that doesn't depend on the live
+process's specific state, as most of this campaign already correctly
+does, or (b) if genuinely necessary, coordinate a live test during a
+real, deliberate bot restart/observation window — not attempted here,
+since H3.5 already independently confirmed the underlying Telegram
+alert mechanism works, making this unnecessary for Hisn's purposes.
+
+**Status:** ℹ️ **Info / no action needed** — corrects the scope of
+H4.1's threshold sub-check, confirms no other campaign result is
+affected, no app defect found or implied.

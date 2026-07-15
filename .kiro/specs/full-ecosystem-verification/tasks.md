@@ -618,10 +618,45 @@
 
 ## Phase H4 — AI Fallback Chains + Notification Content Audit
 
-- [ ] **H4.1** Simulate Groq-invalid/Gemini-valid: confirm Nour falls
+- [x] **H4.1** Simulate Groq-invalid/Gemini-valid: confirm Nour falls
   back to Gemini, confirm `track_groq_failure()` fires.
-- [ ] **H4.2** Simulate both-invalid: confirm Nour falls back to a
+  → **DONE (session 17), fully automated, live in production.** Wrote
+  `h4_1_2_ai_fallback_trace.py`: monkey-patched
+  `nour_concierge._call_groq_chat`/`_call_gemini_chat` (the underlying
+  network calls) to simulate Groq-fails/Gemini-succeeds, then called
+  the REAL, unmodified `nour_concierge._generate_response()` function.
+  **Confirmed: the real fallback control flow correctly returns
+  Gemini's text when Groq fails** (not a reimplementation — the actual
+  production function).
+  **Methodological finding (D019, Info, no app defect)**: a
+  sub-check attempted to also verify `track_groq_failure()`'s own
+  alert-throttling counter using the REAL function — but discovered
+  that `docker exec` test scripts run as a genuinely SEPARATE Python
+  process from the live bot (`python run.py`), confirmed via
+  `os.getpid()`/`os.getppid()` and `docker top`. Module-level, in-RAM
+  state (like `_groq_failures`, a plain list) is NOT shared across
+  processes, so mutating it via a `docker exec` script has zero effect
+  on the live bot's actual runtime counter. **This does NOT affect any
+  DB-backed test in this campaign** (re-examined and confirmed: H1.4,
+  H1.5, D010, H2.6-8, H3.1, H3.2, H3.3, H3.4 are all DB- or real-HTTP-
+  based, genuinely unaffected) — it only narrows THIS specific
+  threshold-counting sub-check. The underlying alert-SENDING mechanism
+  itself was independently confirmed working in H3.5 (real Telegram
+  `message_id`s returned), so this gap doesn't leave the alerting
+  capability itself unverified — just this one specific way of trying
+  to trigger it. Full detail in `defect_log.md` D019.
+- [x] **H4.2** Simulate both-invalid: confirm Nour falls back to a
   coherent template response (never an error message shown to student).
+  → **DONE (session 17), fully automated, live in production**, same
+  script as H4.1. Monkey-patched BOTH `_call_groq_chat` and
+  `_call_gemini_chat` to fail, then called the REAL
+  `_generate_response()`. **Confirmed: never returns `None`, never
+  leaks raw error/exception text — correctly returns one of the 4
+  known Arabic template strings** (`_TEMPLATE_RESPONSES`), exactly
+  matching the function's documented "never silence" design. This
+  check is a pure control-flow test of the real function's return
+  value, unaffected by the D019 process-isolation finding (no reliance
+  on cross-call module state).
 - [ ] **H4.3** Repeat the 3-state fallback matrix for: pronunciation
   scoring, Nour study tips generation, weekly self-review.
 - [ ] **H4.4** Directly invoke each Nabd notification function (morning
