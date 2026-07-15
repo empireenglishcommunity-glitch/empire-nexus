@@ -1526,7 +1526,25 @@ collisions were introduced by whatever time was chosen.
 D012-D017/D020/D021 for the end-of-campaign fix pass — this is a pure
 scheduling/engineering fix, no product decision needed.
 
-**Status:** 🟡 **DEFERRED** — confirmed via exhaustive static extraction
-of all 22 scheduled task times + code read of each colliding
-function's day-guard and DM-vs-channel-post behavior, not yet fixed,
-recommended for the same batch-fix pass as D012-D017/D020/D021.
+**FIXED (2026-07-15, H7 early-start batch)**: staggered both colliding
+pairs by 5 minutes each — `nabd_absence_check` moved from `10:00` to
+`10:05` (5 minutes after `weekly_assessment`'s `10:00`), and
+`friday_feedback_survey` moved from `20:00` to `20:05` (5 minutes
+after `evening_reminder`'s `20:00`). Confirmed the file compiles
+cleanly (`py_compile`), then re-ran H4.6's exact static-extraction
+method (regex-scanning every `@tasks.loop(time=...)` decorator, this
+time against the FIXED file) to confirm: (a) neither new time
+(`10:05`, `20:05`) collides with any OTHER scheduled task, and (b)
+the two previously-confirmed-harmless same-clock-time groupings
+(`7:00` Monday-only vs. daily Markaz digest; `9:00` Sunday-only vs.
+Monday-only) are unaffected and still correctly harmless. No live
+re-test possible for this specific fix without waiting for a real
+Sunday/Friday at the new times — this is a pure schedule-config change
+with no logic to exercise ahead of time; correctness is fully
+verifiable via the static method already used to find the bug.
+
+**Status:** ✅ **FIX WRITTEN AND STATICALLY RE-VERIFIED**, pending PR
+merge + deploy. A live confirmation that the new times fire correctly
+will naturally happen the first real Sunday/Friday after deploy — no
+special live pre-verification is possible or needed for a pure
+schedule-time change.
