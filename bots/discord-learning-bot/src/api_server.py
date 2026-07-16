@@ -18,6 +18,7 @@ import json
 import logging
 import time
 from collections import defaultdict
+from pathlib import Path
 
 from aiohttp import web
 
@@ -26,6 +27,54 @@ from . import database
 logger = logging.getLogger("empire-bot.api")
 
 routes = web.RouteTableDef()
+
+# ============================================================
+#  Hisn D036 fix: real milestone catalog for the dashboard
+# ============================================================
+
+_MILESTONES_FILE = Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
+_milestones_catalog_cache: list[dict] | None = None
+
+
+def _get_milestones_catalog() -> list[dict]:
+    """Flat list of every real milestone (id/name/name_ar/level) from
+    the single source of truth, `content/milestones/milestones.json` —
+    the SAME file `!markmilestone` and `narrative_engine.py` read from.
+
+    Hisn D036 fix: the dashboard's milestone grid previously used a
+    hardcoded, entirely fictional set of 12 IDs (`first_recording`,
+    `streak_7`, `level_l1`, etc.) with ZERO overlap with the real 15
+    milestone IDs used everywhere else in the system — meaning the
+    grid could never show an "achieved" badge for any milestone a
+    student actually completed, always showing every real milestone as
+    locked, for every student, forever. This function is the fix:
+    serve the real catalog so the frontend can render real IDs/names
+    instead of an invented list.
+
+    Cached in-memory after first load — this file changes rarely (a
+    curriculum content decision, not a per-request concern), same
+    caching pattern as `curriculum.py`'s own content loading.
+    """
+    global _milestones_catalog_cache
+    if _milestones_catalog_cache is not None:
+        return _milestones_catalog_cache
+    catalog: list[dict] = []
+    try:
+        if _MILESTONES_FILE.exists():
+            all_milestones = json.loads(_MILESTONES_FILE.read_text(encoding="utf-8"))
+            for level, items in all_milestones.items():
+                for m in items:
+                    catalog.append({
+                        "id": m.get("id"),
+                        "name": m.get("name"),
+                        "name_ar": m.get("name_ar"),
+                        "level": level,
+                    })
+    except (json.JSONDecodeError, OSError) as e:
+        logger.error(f"Failed to load milestones catalog: {e}")
+        catalog = []
+    _milestones_catalog_cache = catalog
+    return catalog
 
 # ============================================================
 #  RATE LIMITING (Wuslah W0.3 — 60 req/min per token)
@@ -182,6 +231,11 @@ async def get_dashboard(request: web.Request) -> web.Response:
         (discord_id,),
     ).fetchall()
     milestones = [{"id": r["milestone_id"], "completed_at": r["completed_at"], "level": r["level"]} for r in milestones_raw]
+    # Hisn D036 fix: also send the real milestone catalog (id/name/name_ar/level
+    # for all 15 real milestones), so the frontend can render real IDs and
+    # names instead of the previous hardcoded, entirely fictional 12-ID list
+    # that shared zero overlap with any real milestone_id.
+    milestones_catalog = _get_milestones_catalog()
 
     # --- Assessments (last 8 weeks) ---
     assessments_raw = conn.execute(
@@ -300,6 +354,7 @@ async def get_dashboard(request: web.Request) -> web.Response:
             "trend": pron_trend,
         },
         "milestones": milestones,
+        "milestones_catalog": milestones_catalog,
         "assessments": assessments,
         "srs": {
             "due_count": srs_due,
