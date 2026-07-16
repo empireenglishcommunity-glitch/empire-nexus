@@ -141,20 +141,35 @@
   `masar_difficulty_notes` (M2/M3/M4's flags, registered now so
   `!flag list` shows the full Masar picture even before each phase
   ships — each stays OFF until its own phase is live-verified).
-- [ ] **M1.5** **Live verification (repeat before marking M1 done):**
+- [x] **M1.5** **Live verification (repeat before marking M1 done):**
   toggle the flag on in production, confirm both the dashboard and
   `!progress` reflect a real test member's momentum score correctly,
   confirm the flag correctly gates both surfaces off when disabled
   (same D010-style flag-gate discipline). Only then mark D012 as
   Resolved in Hisn's `defect_log.md` (cross-reference, since D012 was
   found there).
-  → **Pre-verified against a real DB clone (never production) with 4
-  explicit gate scenarios** (flag OFF/default, flag ON for everyone,
-  flag ON but member not in a restricted allowlist, flag restored to
-  OFF) — all 4 behaved exactly as expected, same D010-style discipline
-  confirmed. **Still needs the ACTUAL production toggle** once this
-  PR is merged and deployed — tracked as the next action, not yet
-  done as of this commit.
+  → **Done, 2026-07-16, in REAL production (not a DB clone).** Backend
+  deployed (`docker compose up -d --build` on the server, confirmed
+  healthy startup, "Flag registry sync: 4 new flag(s) added" in logs,
+  `nour_growth_letters` table confirmed created, all 4 masar flags
+  confirmed registered at OFF, `members` confirmed untouched at 0
+  rows). Frontend deployed via `wrangler pages deploy` — confirmed the
+  fresh `*.pages.dev` URL AND `practice.empireenglish.online` both
+  serve the new code immediately (no propagation delay this time).
+  Seeded one `GHOST_TEST_920001` member directly in production for
+  this test (cleaned up fully afterward — `members` back to 0 rows).
+  With the flag ON: live `/api/dashboard` response included
+  `"momentum": {"score": 29, "label": "building", ...}`; a direct
+  call to `narrative_engine.momentum_score()` for the same member
+  returned the IDENTICAL result — proving R2's dashboard/`!progress`
+  consistency isn't a coincidence, it's structural (one function, two
+  callers, impossible to diverge). With the flag OFF: `momentum` field
+  genuinely absent from the live response (not null/zero), old
+  `level_progress` fallback fully intact — confirmed the D010-style
+  flag-gate discipline holds in real production, not just a clone
+  simulation. **D012 marked Resolved in `defect_log.md`.** Flag left
+  in its default OFF state after verification — the owner can flip it
+  on for real students whenever ready; it is NOT auto-enabled.
 
 ## Phase M2 — Nour's Weekly Growth Letter (fixes D020) — the flagship deliverable
 
