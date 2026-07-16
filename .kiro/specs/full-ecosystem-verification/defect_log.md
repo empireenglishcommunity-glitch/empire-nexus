@@ -2220,3 +2220,96 @@ re-verified through the real Discord flow with server-side
 confirmation that the quiz word is genuinely drawn from the student's
 actual current-day curriculum vocabulary, not the old disconnected
 hardcoded bank.
+
+
+
+---
+
+## D028 — One audio recording satisfies MULTIPLE task types (accent/speaking/shadow), defeating proof-of-work verification (Major)
+
+**Found during:** H6.1's Tier 1 daily-task walkthrough, live with the
+owner. Having already uploaded one recording to `#l0-showcase` for the
+shadowing task (and gotten `!done shadow` correctly verified and
+checked), the owner then ran `!done speaking` in `#bot-commands`
+WITHOUT uploading anything new — and it was accepted and checked
+immediately. The owner's own framing: *"what if a student did the
+same thing... I see this as a bug as it will show my system
+unprofessional."*
+
+**Root cause, confirmed via direct code reading:** `verify_audio()`
+(`verification.py`) is the shared verification function for THREE
+distinct task types — `accent`, `speaking`, and `shadow`
+(`verify_task()`'s dispatcher routes all three to the exact same
+function). It only ever asks "did this student post ANY audio-looking
+attachment in `#l0-showcase` within the last 2 hours?" — it has no
+concept of which specific message was already used, or for which
+task. So a single upload:
+- Satisfies all 3 audio-based task types in one shot (upload once,
+  run `!done accent`, `!done speaking`, `!done shadow` back-to-back —
+  each independently re-scans the same 2-hour window and finds the
+  same message every time).
+- Can be reused indefinitely within that 2-hour window, not just once
+  — there was no "already spent" marker of any kind, in-memory or
+  persisted.
+
+This directly undermines the entire point of proof-of-work
+verification for the 3 task types that were specifically designed to
+require real recorded effort — exactly the category of defect this
+system's `!done` verification exists to prevent (see D026, found
+earlier this same session, which closed an unrelated but
+thematically-adjacent gap in the same verification layer).
+
+**Severity: Major.** Not a crash, not blocking — the opposite problem:
+too *permissive*. Every one of the 16 real students could legitimately
+discover this by accident (as the owner did, simply by trying two
+different tasks close together) and get free, unverified credit for 2
+of their 3 daily audio tasks from a single real recording.
+
+**Fix applied (2026-07-16):** added a new persistent table,
+`consumed_proof_messages` (`message_id` as PRIMARY KEY, so a message
+consumed for ANY task can never satisfy a DIFFERENT task either — not
+just the same one twice), plus two new functions in `database.py`:
+`is_message_consumed(message_id)` and
+`consume_proof_message(message_id, discord_id, task_id)` (the latter
+race-safe via the PRIMARY KEY constraint + `IntegrityError` catch,
+mirroring the existing pattern already used by `log_submission()`
+elsewhere in this same file). `verify_audio()` now skips any message
+that `is_message_consumed()` reports as already used, and calls
+`consume_proof_message()` the instant it accepts a message as proof —
+so that exact message can never satisfy a second `!done` call, for
+this task or any other. Chosen as a persistent DB table rather than
+an in-memory set specifically because in-memory state doesn't survive
+a bot restart (confirmed relevant pattern from D019/tutorial-state
+investigations earlier this campaign) — a student's showcase history
+spans well beyond a single bot process lifetime.
+
+Also updated the rejection message shown when verification fails to
+explicitly explain the new requirement (a NEW recording per task,
+previously-used-for-another-task doesn't count) rather than leaving
+students confused about why a recording that clearly exists in the
+channel isn't being accepted.
+
+**Tested (2026-07-16), safely, before any deploy:** per this
+project's established `docker exec`-swap methodology (D019/D027) —
+backed up the container's live `database.py`/`verification.py`, copied
+in the fixed versions, called `database.init_db()` to create the new
+table, then directly exercised the new consume/check functions against
+synthetic message IDs: confirmed a message consumed for `shadow`
+correctly reports as already-consumed afterward, a SECOND consume
+attempt for `speaking` using the SAME message ID correctly returns
+`False` (blocked — reproducing exactly what should have stopped the
+owner's original repro), and a consume attempt using a genuinely
+DIFFERENT message ID for `speaking` correctly succeeds. Cleaned up the
+test rows and restored the container's original files afterward —
+this test never touched the live bot process or deployed anything.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED (via the real Discord flow).** The safe pre-deploy test
+above confirms the underlying database logic works correctly, but
+still needs: PR review/merge, deploy to production (`git pull &&
+docker compose up -d --build`), then a live re-test through the REAL
+Discord flow: upload one recording, run `!done shadow` (should pass),
+then immediately try `!done speaking` WITHOUT a new upload (should now
+be correctly REJECTED with the new "upload a new recording" message),
+then upload a genuinely new recording and confirm `!done speaking`
+now passes — before this can be marked ✅ Resolved.

@@ -122,7 +122,22 @@ async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[
 
 async def verify_audio(member: discord.Member, guild: discord.Guild,
                        task_id: str, min_duration_hint: int = 0) -> tuple[bool, str]:
-    """Check if member uploaded audio in #l0-showcase in last 2 hours."""
+    """Check if member uploaded audio in #l0-showcase in last 2 hours.
+
+    Hisn D028: this previously accepted ANY audio-looking attachment
+    from the student in the window, for accent/speaking/shadow alike,
+    with no memory of which specific message had already been used.
+    Confirmed live during Hisn H6: one recording uploaded once
+    satisfied !done shadow, then satisfied !done speaking too, with
+    zero new proof of work for the second task -- and would keep
+    satisfying any of the 3 audio task types repeatedly for the full
+    2-hour window. Now requires a message that has NOT already been
+    consumed as proof for this or any other task
+    (database.is_message_consumed()), and marks it consumed
+    (database.consume_proof_message()) the moment it's accepted --
+    so the same message can never satisfy a second !done call, for
+    this task or a different one.
+    """
     level = (database.get_member(str(member.id)) or {}).get("level", "L0")
     channel_name = f"l{level[1]}-showcase"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
@@ -134,20 +149,29 @@ async def verify_audio(member: discord.Member, guild: discord.Guild,
 
     async for msg in channel.history(limit=50, after=cutoff):
         if msg.author.id == member.id and msg.attachments:
+            if database.is_message_consumed(msg.id):
+                continue  # already used for this or another task — skip
             for att in msg.attachments:
                 # Check if it's an audio/video file
-                if att.content_type and ("audio" in att.content_type or "video" in att.content_type):
-                    return True, ""
-                # Check by extension
-                if att.filename.lower().endswith(('.mp3', '.m4a', '.wav', '.ogg', '.mp4', '.webm', '.mov', '.3gp', '.opus')):
-                    return True, ""
+                is_audio = (att.content_type and ("audio" in att.content_type or "video" in att.content_type)) or \
+                           att.filename.lower().endswith(('.mp3', '.m4a', '.wav', '.ogg', '.mp4', '.webm', '.mov', '.3gp', '.opus'))
+                if is_audio:
+                    if database.consume_proof_message(msg.id, str(member.id), task_id):
+                        return True, ""
+                    # Lost a race to another concurrent !done call consuming
+                    # this exact message — keep scanning for another one.
+                    break
 
     task_names = {"accent": "تدريب النطق", "speaking": "مهمة الكلام", "shadow": "تمرين المحاكاة"}
     task_name = task_names.get(task_id, task_id)
 
     return False, (
-        f"لازم ترفع تسجيل صوتي في `#{channel_name}` الأول.\n"
-        f"سجّل {task_name} وارفعه هناك، وبعدين ارجع اكتب `!done {task_id}`"
+        f"لازم ترفع تسجيل صوتي **جديد** في `#{channel_name}` لكل مهمة.\n"
+        f"(التسجيل اللي استخدمته قبل كده لمهمة تانية معدش يصلح تاني)\n\n"
+        f"سجّل {task_name} وارفعه هناك، وبعدين ارجع اكتب `!done {task_id}`\n\n"
+        f"*You need to upload a NEW recording in `#{channel_name}` for "
+        f"each task — a recording already used for another task can't "
+        f"be reused.*"
     )
 
 
