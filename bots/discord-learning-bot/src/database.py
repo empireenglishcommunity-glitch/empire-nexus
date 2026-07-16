@@ -351,6 +351,30 @@ CREATE TABLE IF NOT EXISTS nour_study_tips (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_nour_tips ON nour_study_tips(discord_id, week);
+
+-- Hisn D028: verify_audio() checks "did this student post ANY
+-- audio-looking attachment in #l0-showcase in the last 2 hours?" for
+-- accent, speaking, AND shadow alike, with no memory of which specific
+-- message was already used to satisfy which task. Confirmed live
+-- during Hisn H6: one recording uploaded once satisfied !done shadow,
+-- then satisfied !done speaking too, with zero new proof of work for
+-- the second task -- and would keep satisfying any of the 3 audio
+-- task types repeatedly for the full 2-hour window. This table
+-- persists (survives bot restarts, unlike an in-memory set) which
+-- specific Discord message IDs have already been consumed as proof
+-- for which specific task, so verify_audio() can require a NEW,
+-- not-yet-consumed message for each task type.
+-- message_id alone is the PRIMARY KEY (not composite with task_id):
+-- once a specific message has been consumed as proof for ANY task
+-- type, it must never satisfy a DIFFERENT task type either -- that's
+-- exactly the bug (one shadow recording also satisfying speaking).
+CREATE TABLE IF NOT EXISTS consumed_proof_messages (
+    message_id      TEXT PRIMARY KEY,
+    discord_id      TEXT NOT NULL,
+    task_id         TEXT NOT NULL,
+    consumed_at     TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_consumed_proof ON consumed_proof_messages(discord_id, task_id);
 """
 
 
@@ -436,6 +460,44 @@ def members_at_level(level: str) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+# ============================================================
+#  CONSUMED PROOF MESSAGES (Hisn D028 — prevents one recording from
+#  satisfying multiple audio-based task types)
+# ============================================================
+
+def is_message_consumed(message_id: str) -> bool:
+    """Check whether a specific Discord message has already been used
+    as proof-of-work for ANY task (not just the one being checked now)."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT 1 FROM consumed_proof_messages WHERE message_id=?",
+        (str(message_id),),
+    ).fetchone()
+    conn.close()
+    return row is not None
+
+
+def consume_proof_message(message_id: str, discord_id: str, task_id: str) -> bool:
+    """Mark a specific message as consumed for a task. Returns True if
+    newly consumed, False if it was already consumed (race-safe via the
+    message_id PRIMARY KEY -- a second concurrent attempt to consume the
+    same message_id will hit the same IntegrityError path log_submission
+    already relies on elsewhere in this file)."""
+    conn = _connect()
+    try:
+        conn.execute(
+            """INSERT INTO consumed_proof_messages (message_id, discord_id, task_id)
+               VALUES (?, ?, ?)""",
+            (str(message_id), discord_id, task_id),
+        )
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+    finally:
+        conn.close()
 
 
 # ============================================================
