@@ -2511,14 +2511,36 @@ the JS day-number computation agrees with the bot's Python
 equivalent for today's actual date (both independently computed
 "Thursday → day 6").
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** This is an `empire-dojo`-only change (no
-`empire-nexus`/bot changes needed this time — D029 already added
-everything the API needed to expose). Needs: PR review/merge in
-`empire-dojo`, deploy (`npx wrangler pages deploy site
---project-name=empire-practice`), then a live re-test: run `!link`
-again, click the DM'd URL directly, and confirm it now navigates
-straight to today's actual day page (not just the right week) — and
-separately, visiting the homepage normally afterward (not via a fresh
-link) shows today's card visually highlighted but does NOT
-auto-navigate away — before this can be marked ✅ Resolved.
+**Deployed (2026-07-16):** merged via `empire-dojo` [PR #25](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/25)
+(and this repo's docs-only [PR #162](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/162)),
+confirmed landed on `main`. Deployed via `npx wrangler pages deploy
+site --project-name=empire-practice` (3 files uploaded: `index.html`,
+`js/app.js`, `css/empire.css`). Hit a transient ~20-second Cloudflare
+CDN propagation lag on the custom domain immediately after deploy
+(the fresh `*.pages.dev` deployment URL served the correct file
+immediately; `practice.empireenglish.online` briefly still served the
+pre-deploy version despite `cf-cache-status: EXPIRED`) — resolved on
+its own without any action needed; confirmed all 3 files correct on
+the custom domain shortly after.
+
+**Live re-tested (2026-07-16), through the REAL Discord flow:** owner
+ran `!link` again and clicked the DM'd URL directly. Confirmed via
+screenshot: the auto-jump fired correctly, landing directly on
+`/l0/week3/day6/` ("Week 3 — Day 6") — the exact real level/week/day,
+skipping the picker entirely, exactly as designed for a fresh link
+click. Separately visiting the bare homepage afterward (no `?token=`
+in the URL — the token had already been consumed/stripped by the
+first visit) correctly did NOT auto-navigate away, and instead showed
+the "Choose Your Day" picker with **Thu/Day 6 visually highlighted**
+(confirmed both via the owner's own description — "Thu Day 6 is
+highlighted with a gold border and gold text" vs. the other 6 cards'
+"thin dark gray borders with faint gray text" — AND via Chrome
+DevTools' own breadcrumb trail showing the selected element as
+`a.today`, proving the class is genuinely applied to the correct
+card, not just visually similar).
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified through the real Discord flow, confirming both halves of
+the intended behavior: auto-jump on a fresh `!link` click, and
+today-highlighting (without forced navigation) on an ordinary
+homepage revisit.
