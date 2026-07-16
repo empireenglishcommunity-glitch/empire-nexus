@@ -3022,6 +3022,18 @@ NOT falsely flagged; whole-word matching (not substring) is enforced;
 case-insensitivity works. Full suite: 390/390 passing, zero
 regressions.
 
+**Deployed and live-verified in production** (2026-07-16, `main`
+merged through `723e01f`, confirmed via `git log --oneline -1` on the
+server for both `empire-english-bot` and `empire-ghost-bot`).
+Live-checked directly against the running production process: the
+real "cùng" repro is caught, legitimate French loanwords/names
+(café, José) and pure Arabic are correctly NOT flagged. Also ran 5
+real end-to-end generations through the actual
+`_generate_with_fallback()` pipeline (not just the guard functions in
+isolation) — all 5 passed both guards cleanly with realistic Nour-
+voiced Arabic output, confirming the wiring itself works in the live
+pipeline, not just in unit tests.
+
 **Related, separate, non-blocking config gap found during the same
 investigation:** the Ghost Bot's `.env.ghost` has empty
 `GROQ_API_KEY`/`GEMINI_API_KEY` values (confirmed via direct check on
