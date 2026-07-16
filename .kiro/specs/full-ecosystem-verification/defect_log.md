@@ -2017,13 +2017,23 @@ call sites:
   same function, so this fix is comprehensive, not just patching the
   one symptom that happened to be reported.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
-pull && docker compose up -d --build`), then a live re-test: have
-`bioroma` try `!done vocab` again, answer the quiz question in the
-SAME DM conversation (the exact original repro), and confirm it now
-registers correctly (points awarded, task marked done, no silent
-failure) before this can be marked ✅ Resolved.
+**Deployed and live-verified (2026-07-16):** merged via [PR #153](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/153),
+confirmed landed on `main`. Deployed to production (`git pull &&
+docker compose up -d --build`) — confirmed via `docker exec ... grep
+-c "getattr(message.channel"` returning `3` in the running container.
+Live re-tested: the owner retried the vocab quiz flow after deploy —
+answering correctly in `#bot-commands` now registers cleanly (see
+D027's live-verification note for the specific "play" example, same
+session, same underlying `on_message` code path). No further
+`AttributeError` crashes observed in production logs after deploy.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified. (Note: the original repro used answering in a DM, which
+is intentionally NOT a supported flow — see D026/D027's clarification
+that quiz answers are only accepted in `#bot-commands` by design. What
+this fix actually guarantees is that DMs no longer CRASH `on_message`
+for every student, regardless of what they're doing; the intended
+quiz-answer flow, in the intended channel, is confirmed working.)
 
 
 
@@ -2092,14 +2102,21 @@ to "PASSED VERIFICATION" without an actual check. When `ctx.author` IS
 a `Member` (the normal, intended path), behavior is completely
 unchanged: `verify_task()` still runs exactly as before.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
-pull && docker compose up -d --build`), then a live re-test: have
-`bioroma` try `!done accent` (or any of shadow/speaking/writing/
-community) via DM and confirm it's now correctly rejected with the new
-guidance message, AND try it again in a real server channel with
-actual proof posted to confirm the normal path still works unchanged,
-before this can be marked ✅ Resolved.
+**Deployed and live-verified (2026-07-16):** merged via [PR #153](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/153)
+(same PR as D025), confirmed landed on `main` and deployed. Owner
+live-tested the exact repro directly:
+1. `!done accent` via DM — bot correctly replied: *"❌ مينفعش تعمل
+   `!done accent` من الرسائل الخاصة (DM). لازم تكتبها في السيرفر..."*
+   (You can't do `!done accent` from a DM — type it in the server),
+   confirming the new rejection message fires correctly instead of the
+   old silent bypass.
+2. `!done accent` in both `#l0-daily-tasks` and `#bot-commands` (real
+   server channels) — owner confirmed: **"it worked in both"** — the
+   normal verified path is unchanged.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified against both halves of the original repro (DM correctly
+rejected; normal server-channel path unchanged and working).
 
 
 
