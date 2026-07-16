@@ -2176,13 +2176,28 @@ rejected a wrong answer showing the right one. Restored the container's
 original file afterward — this test never touched the live bot process
 or deployed anything.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED (via the real Discord flow).** The safe pre-deploy test
-above confirms the underlying logic works correctly, but per this
-campaign's standing discipline, still needs: PR review/merge, deploy
-to production (`git pull && docker compose up -d --build`), then a
-live re-test through the REAL Discord flow: `bioroma` visits today's
-practice-platform listening link, notes the word shown, then types
-`!done listening` in `#bot-commands` and confirms the SAME word (or at
-least a word from the same day's real list) appears in the Discord
-question, before this can be marked ✅ Resolved.
+**Deployed (2026-07-16):** merged via [PR #154](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/154), confirmed
+landed on `main` via direct grep. Deployed to production (`git pull &&
+docker compose up -d --build`) — confirmed via `docker exec ... grep
+-c "Hisn D027" /app/src/verification.py` returning `1` and a clean
+"Bot online" startup log.
+
+**Live re-tested (2026-07-16), through the REAL Discord flow:** the
+owner visited today's practice-platform listening link (Week 3, Day 6,
+"Family & People" theme) and separately typed `!done listening` in
+`#bot-commands`. The Discord question asked about the word **"play"**
+— confirmed server-side via direct query against `bioroma`'s real
+member row that "play" is genuinely the FIRST word in that exact
+level/week/day's real curriculum vocabulary list (`week3 day5 (L0)
+words: [('play', 'يلعب'), ('cook', 'يطبخ'), ('clean', 'ينظف'),
+('drive', 'يقود'), ...]`) — the same data source
+`get_vocabulary_for_day()` the practice platform itself uses. The
+bot's own reply text ("نفس كلمة اليوم اللي شفتها في صفحة الاستماع" —
+"the same word you saw today on the listening page") rendered
+correctly and matched reality.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified through the real Discord flow with server-side
+confirmation that the quiz word is genuinely drawn from the student's
+actual current-day curriculum vocabulary, not the old disconnected
+hardcoded bank.
