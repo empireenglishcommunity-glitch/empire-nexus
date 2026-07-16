@@ -2905,6 +2905,11 @@ message ID (`1527387035470659787`). Post-verification cleanup done:
 above (no `_has_unexpected_script()` guard on the older regular-chat
 AI chain) remains open and explicitly flagged, unchanged by this
 re-verification — still a known, non-blocking gap, not a silent one.
+PRs:
+[empire-nexus#176](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/176)
+(the fix),
+[empire-nexus#178](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/178)
+(deployment + live re-verification).
 
 
 
