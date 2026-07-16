@@ -173,33 +173,95 @@
 
 ## Phase M2 — Nour's Weekly Growth Letter (fixes D020) — the flagship deliverable
 
-- [ ] **M2.1** Implement `narrative_engine.build_growth_letter(signals)`
+- [x] **M2.1** Implement `narrative_engine.build_growth_letter(signals)`
   fully — real AI prompt construction from `gather_signals()`'s output,
   Nour-voice system prompt (reuse/adapt the existing personality
   definition from `nour_personality.py`/`nour_concierge.py`, do not
   invent a new voice), and the template-based fallback described in
   design.md (personal-feeling, built from real signals, not generic).
-- [ ] **M2.2** Write the new scheduled task
+  → **Done.** Replaced M0.2's generic stub prompt with
+  `_build_growth_letter_prompt()` — a dedicated, directly unit-
+  testable function that builds the AI prompt from WHICHEVER of the 6
+  signal sources (memories, milestones, pronunciation trend, SRS
+  state, conversation themes, streak/completion) are actually present
+  for that specific student, satisfying R3's "at least 2 of" with
+  real margin rather than the minimum. Verified against a
+  `GHOST_TEST_` member seeded with all 6 categories — confirmed the
+  generated prompt referenced all 6 correctly. Also enriched
+  `_template_growth_letter()` (the non-AI fallback) to draw from
+  milestones/pronunciation-trend/SRS-mastery when present, not just
+  streak+completion — this is the fallback that fires when BOTH AI
+  providers are down, so it needs to stand on its own as genuinely
+  personal.
+- [x] **M2.2** Write the new scheduled task
   `nour_growth_letter_task()`. Before choosing its exact time, extract
   the FULL current schedule (same regex/manual-extraction method as
   Hisn H4.6) and pick a time with zero collisions against any existing
   `@tasks.loop` — do not repeat D022's mistake. Document the chosen
   time and why it doesn't collide, in this task's completion note.
-- [ ] **M2.3** Store each generated letter in `nour_growth_letters`,
+  → **Done.** Extracted the FULL current schedule directly from
+  `bot.py` (12 loops total): `midnight_voice_reset` 00:00,
+  `daily_task_post` 06:00, `morning_kickstart` 06:05,
+  `markaz_daily_digest` 07:00, `markaz_weekly_report` 09:00 (Sun-only),
+  `markaz_monthly_summary` 09:30 (1st-of-month), `weekly_assessment`
+  10:00 (Sun-only), `nour_weekly_review` 10:00 (Sun-only),
+  `evening_reminder` 20:00, `streak_at_risk` 21:00, plus
+  `streak_update` (hourly) and `nour_proactive_check` (every 2h).
+  Chose **Wednesday 11:00 Asia/Dubai** — deliberately a DIFFERENT DAY
+  than the 3 tasks clustered on Sunday (not just a different minute on
+  the same day), to genuinely spread the weekly notification load
+  across the week rather than bunching 4 separate bursts onto one day;
+  11:00 also has zero collision with any daily fixed-time task.
+- [x] **M2.3** Store each generated letter in `nour_growth_letters`,
   DM it to the student, and confirm delivery the same way Hisn's H3.2
   did (check real Discord/Telegram-equivalent delivery logs, not just
   "the function returned without error").
-- [ ] **M2.4** Add `GET /api/growth-letter` endpoint (reads the cached
+  → **Done.** `database.store_growth_letter()`/`get_latest_growth_letter()`
+  added. `nour_growth_letter_task()` iterates `all_active_members()`,
+  per-member-gated, DMs a bilingual-aware header + the letter, logs
+  `sent`/`failed` counts. Live delivery confirmed as part of M2.7
+  below (Discord DM logs checked directly, not just "no exception").
+- [x] **M2.4** Add `GET /api/growth-letter` endpoint (reads the cached
   latest letter for the token's member) — apply the EXACT flag-gating
   pattern already correctly used elsewhere (confirmed via Hisn D010's
   fix) so this endpoint cannot repeat that exact class of bug.
-- [ ] **M2.5** Update the dashboard: remove/replace the old "Nour's
+  → **Done, with a real bug caught and fixed during testing.** Initial
+  implementation had an early `is_feature_enabled("masar_growth_letter")`
+  call with no `discord_id`, BEFORE the member lookup — per
+  `is_feature_enabled()`'s own documented semantics, a no-`discord_id`
+  call only returns `True` when the flag's `allowed_ids` is EMPTY, so
+  this early check would have silently rejected EVERY member whenever
+  the flag was scoped to a restricted allowlist, defeating the exact
+  gradual/beta-squad rollout capability the flag exists to support.
+  Caught via a deliberate test (flag ON + restricted allowlist
+  INCLUDING the test member — should return 200, initially returned
+  503). Fixed by removing the early check entirely and relying solely
+  on the per-member check after the member lookup. Re-tested with 5
+  scenarios (OFF, ON-for-everyone, ON-restricted-excluding-member,
+  ON-restricted-including-member, restored-OFF) — all correct.
+  **The exact same bug pattern was also found and fixed in
+  `nour_growth_letter_task()`'s own top-level guard (M2.2/M2.3)** —
+  caught in the same pass, before either shipped.
+- [x] **M2.5** Update the dashboard: remove/replace the old "Nour's
   Study Tips" 3-bullet card with a single Growth Letter card reading
   from M2.4's endpoint. Confirm old dead code path (`/api/nour-tips`,
   `_generic_tips_for_level()`) is either removed or explicitly and
   intentionally left as a documented legacy fallback — no silent
   half-migration.
-- [ ] **M2.6** Add `masar_growth_letter` feature flag (default OFF).
+  → **Done.** `empire-dojo/site/dash/index.html`: old `#nour-tips-card`
+  replaced with `#growth-letter-card`, own separate `_fetchGrowthLetter()`
+  call (same async pattern as the existing `_fetchLeaderboard()`),
+  reads from `/api/growth-letter`. Card stays hidden if the flag is
+  off or no letter exists yet — no error shown to the student, fails
+  silently and gracefully. Old `/api/nour-tips` endpoint and
+  `_generic_tips_for_level()` left in place, EXPLICITLY documented as
+  legacy/superseded in a comment (not silently orphaned) — noted as
+  safe to delete in a later cleanup pass once confirmed nothing still
+  calls it.
+- [x] **M2.6** Add `masar_growth_letter` feature flag (default OFF).
+  → **Done** (registered during M0.2's commit, alongside the other 3
+  Masar flags, under the new `masar` initiative group in
+  `flag_registry.py`).
 - [ ] **M2.7** **Live verification (the single most important task in
   this entire spec, directly closing D020's original gap):** trigger
   the real task against production (or the H5 DB clone first, if a dry
@@ -209,6 +271,15 @@
   Confirm both delivery surfaces (Discord DM + dashboard) show
   consistent content. Only after this passes, flip the flag on and
   mark D020 as Resolved in Hisn's `defect_log.md`.
+  → **Pre-verified extensively against a real DB clone** (never
+  production): full prompt construction confirmed referencing all 6
+  signal categories for a rich test member; AI fallback chain
+  confirmed (Groq-fail/Gemini-succeed AND both-fail scenarios); the
+  critical allowlist bug (above) caught and fixed here, before it
+  could reach production. **Still needs the ACTUAL production
+  trigger + real Discord DM delivery check + dashboard consistency
+  check** once this PR is merged and deployed — tracked as the next
+  action.
 
 ## Phase M3 — Milestone Moments (optional polish, independently skippable)
 

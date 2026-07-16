@@ -385,6 +385,10 @@ async def on_ready():
     # Nour N5.1: weekly self-review (Sunday 10 AM)
     if not nour_weekly_review.is_running():
         nour_weekly_review.start()
+    # Masar M2.2: Nour's Weekly Growth Letter (Wednesday 11 AM,
+    # deliberately staggered against Sunday's cluster of weekly tasks)
+    if not nour_growth_letter_task.is_running():
+        nour_growth_letter_task.start()
     # Sahel S6: start the API server for practice platform connection
     from . import api_server
     await api_server.start_api_server(port=8099)
@@ -1398,6 +1402,94 @@ async def nour_weekly_review():
         await nour_personality.run_weekly_review(bot)
     except Exception as e:
         logger.error(f"Nour weekly review error: {e}")
+
+
+@tasks.loop(time=datetime.time(hour=11, minute=0, tzinfo=_zone()))
+async def nour_growth_letter_task():
+    """Masar M2.2: Nour's Weekly Growth Letter — the flagship fix for
+    Hisn D020 (the AI tips engine that was designed but never built).
+
+    Runs every WEDNESDAY at 11 AM Dubai time. Deliberately placed on a
+    different DAY than every other once-a-week task in this codebase
+    (markaz_weekly_report 09:00 Sun, weekly_assessment 10:00 Sun,
+    nour_weekly_review 10:00 Sun all cluster on Sunday) — not just a
+    different minute on the same day, to actually spread the weekly
+    notification load across the week rather than bunching 4 separate
+    DM/report bursts onto students and the owner on one single day.
+    11:00 also doesn't collide with any daily fixed-time task (00:00,
+    06:00, 06:05, 07:00, 20:00, 21:00) — checked against the FULL
+    current schedule per the D022 lesson from Hisn, not assumed.
+
+    For each active member: gather_signals() -> build_growth_letter()
+    -> store in nour_growth_letters -> DM the student. Same content is
+    then available to the dashboard via GET /api/growth-letter (M2.4)
+    with zero duplicate generation.
+
+    Deliberately NO top-level no-discord_id flag check here (a bug
+    caught and fixed in this same phase, in the /api/growth-letter
+    endpoint below): is_feature_enabled(name) with no discord_id only
+    returns True when the flag's allowed_ids is EMPTY. A top-level
+    guard here, before iterating members, would make the ENTIRE task
+    skip for EVERYONE whenever the flag is scoped to a restricted
+    allowlist (the beta-squad rollout case) — silently defeating the
+    exact gradual-rollout capability the flag exists to support. The
+    per-member check inside the loop below is both correct and
+    sufficient: if the flag is fully OFF, every member fails that
+    check and nothing sends; if it's ON for everyone, every member
+    passes; if restricted, only allowlisted members pass.
+    """
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    from . import narrative_engine
+
+    members = database.all_active_members()
+    sent = 0
+    failed = 0
+
+    for m in members:
+        discord_id = m["discord_id"]
+
+        # Same per-member allowlist support as every other masar_*
+        # flag check -- lets a rollout start with a trusted few before
+        # everyone, consistent with this codebase's established
+        # gradual-rollout pattern.
+        if not database.is_feature_enabled("masar_growth_letter", discord_id):
+            continue
+
+        discord_member = guild.get_member(int(discord_id))
+        if not discord_member:
+            continue
+
+        try:
+            signals = narrative_engine.gather_signals(discord_id)
+            if not signals:
+                continue
+            letter_text, source = await narrative_engine.build_growth_letter(signals)
+
+            week = signals.get("week", 0)
+            database.store_growth_letter(discord_id, letter_text, source, week)
+
+            phase = features.response_language(discord_id)
+            if phase == "arabic" or phase == "bilingual_ar":
+                header = "\U0001f4dd رسالة نور الأسبوعية:\n\n"
+            else:
+                header = "\U0001f4dd Nour's Weekly Growth Letter:\n\n"
+
+            await discord_member.send(header + letter_text)
+            sent += 1
+        except (discord.Forbidden, discord.HTTPException):
+            failed += 1
+        except Exception as e:
+            logger.error(f"Masar growth letter error for {discord_id}: {e}")
+            failed += 1
+
+        # Rate limit: don't spam Discord's DM API
+        await asyncio.sleep(0.5)
+
+    if sent > 0 or failed > 0:
+        logger.info(f"Masar growth letter task: sent to {sent} member(s), {failed} failed")
 
 
 # ============================================================

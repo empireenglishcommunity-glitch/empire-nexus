@@ -1884,6 +1884,39 @@ def get_pronunciation_average(discord_id: str, days: int = 7) -> float:
     return sum(s["score"] for s in scores) / len(scores)
 
 
+# ============================================================
+#  MASAR M2.3: Nour's Weekly Growth Letter storage (fixes D020)
+# ============================================================
+
+def store_growth_letter(discord_id: str, letter_text: str, source: str, week: int) -> None:
+    """Store a generated growth letter. Called by nour_growth_letter_task()
+    once per student per week. `source` is 'ai' or 'template_fallback'
+    (per narrative_engine._generate_with_fallback()'s return contract),
+    stored so a future audit can see how often the fallback fired."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO nour_growth_letters (discord_id, letter_text, source, week)
+           VALUES (?, ?, ?, ?)""",
+        (discord_id, letter_text, source, week),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_latest_growth_letter(discord_id: str) -> dict | None:
+    """Get the most recently generated growth letter for a student, or
+    None if none exists yet. Read by GET /api/growth-letter (M2.4) --
+    zero AI cost per page load, same caching pattern as the old
+    nour_study_tips table this replaces."""
+    conn = _connect()
+    row = conn.execute(
+        """SELECT letter_text, source, generated_at, week FROM nour_growth_letters
+           WHERE discord_id=? ORDER BY generated_at DESC LIMIT 1""",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
 
 # ============================================================
 #  WUSLAH W0.4: TOKEN EXPIRY CLEANUP
