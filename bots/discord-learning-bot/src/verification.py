@@ -314,7 +314,77 @@ _pending_listening: dict[str, dict] = {}
 
 
 def generate_listening_quiz(discord_id: str) -> tuple[str, str]:
-    """Generate a listening comprehension question. Returns (full_prompt, answer)."""
+    """Generate a listening comprehension question. Returns (full_prompt, answer).
+
+    Hisn D027: this previously always pulled from LISTENING_QUESTIONS, a
+    hardcoded bank of 8 generic placeholder sentences ("My name is Sarah
+    and I live in Cairo") with zero connection to the student's actual
+    curriculum, level, or week. Confirmed live during Hisn H6: the
+    student clicks the practice-platform listening link (which shows a
+    real curriculum vocabulary word for TODAY's specific day, via
+    curriculum.get_vocabulary_for_day() -- see empire-dojo's
+    generate.py's gen_listening(), which is itself a vocabulary
+    meaning-matching quiz, not a distinct dialogue/comprehension
+    format), then comes back to Discord, types !done listening, and
+    gets an entirely unrelated question about a stranger named Sarah --
+    no shared word, no shared theme, no way to have "listened for" the
+    answer from anything they were just shown.
+
+    Fix: ground this in the SAME real per-day vocabulary the practice
+    platform already uses, via the exact same curriculum functions the
+    vocab quiz (generate_vocab_quiz, above) already calls -- so a
+    student who just did the listening page's word-meaning exercise for
+    "friend" now gets asked about "friend" here too, not "Cairo."
+    Mirrors generate_vocab_quiz's EN<->AR question shape (this bot has
+    no audio-clip-in-Discord capability, so "listening" here means
+    "hear it read via TTS/Kokoro on the practice platform, then
+    recall/confirm it here" -- consistent with how the practice
+    platform's own listening page already works, not a new invented
+    format). Falls back to the old hardcoded bank only if there's truly
+    no curriculum data available (e.g. curriculum not loaded) so this
+    never regresses to "no question at all."
+    """
+    from . import curriculum, tasks as task_engine
+
+    member = database.get_member(discord_id)
+    level = member["level"] if member else "L0"
+    week = database.member_week_number(discord_id) if member else 1
+    week = min(curriculum.max_week_for_level(level), max(1, week))
+
+    # Same day-index computation used elsewhere in this codebase for the
+    # practice-platform link (see tasks.py's generate_daily_tasks()) --
+    # NOT a new convention invented here, so "today's words" means the
+    # exact same "today" the link the student already clicked pointed at.
+    day_name = task_engine.current_day_name()
+    week_days = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    day_index = week_days.index(day_name) if day_name in week_days else 0
+
+    day_words = curriculum.get_vocabulary_for_day(week, day_index, level)
+    quiz_words = day_words or curriculum.get_quiz_words(week, count=20, level=level)
+
+    if quiz_words:
+        word_obj = random.choice(quiz_words)
+        word = word_obj.get("word", "hello")
+        arabic = word_obj.get("arabic", "مرحبا")
+        if random.random() < 0.5:
+            question = f"ما معنى كلمة **{word}** بالعربي؟\n\n*(نفس كلمة اليوم اللي شفتها في صفحة الاستماع)*"
+            answer = arabic
+            alternatives = [arabic.lower(), word.lower()]
+        else:
+            question = f"ما الكلمة الإنجليزية لـ **{arabic}**؟\n\n*(نفس كلمة اليوم اللي شفتها في صفحة الاستماع)*"
+            answer = word
+            alternatives = [word.lower(), arabic.lower()]
+        prompt = f"👂 **اختبار استماع:**\n\n{question}\n\n*اكتب إجابتك هنا:*"
+
+        _pending_listening[discord_id] = {
+            "answer": answer.lower(),
+            "alternatives": alternatives,
+            "expires": datetime.datetime.now() + datetime.timedelta(minutes=5),
+        }
+        return prompt, answer
+
+    # Fallback: no curriculum data available at all for this level/week —
+    # use the old generic bank rather than showing no question.
     q = random.choice(LISTENING_QUESTIONS)
 
     _pending_listening[discord_id] = {
