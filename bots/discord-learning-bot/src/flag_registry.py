@@ -67,6 +67,12 @@ REGISTRY = [
     ("wuslah_exercise_confirm", "Enable web-to-Discord task confirmation via API", "wuslah", True),
     ("wuslah_nour_tips", "Enable AI-generated weekly study tips (W4)", "wuslah", True),
     ("wuslah_adaptive", "Enable adaptive practice recommendations on the web (W3)", "wuslah", True),
+
+    # ── MASAR (personal growth narrative) ──
+    ("masar_momentum_score", "Momentum Score on dashboard + !progress (replaces XP bar, fixes D012)", "masar", False),
+    ("masar_growth_letter", "Nour's Weekly Growth Letter (task + API + dashboard card, fixes D020)", "masar", False),
+    ("masar_milestone_moments", "Personalized milestone unlock DMs", "masar", False),
+    ("masar_difficulty_notes", "Adaptive difficulty change transparency DMs", "masar", False),
 ]
 
 # Initiative display names and emoji
@@ -78,6 +84,7 @@ INITIATIVES = {
     "nour": ("💬", "NOUR", "autonomous student concierge"),
     "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
     "wuslah": ("🔗", "WUSLAH", "ecosystem harmony"),
+    "masar": ("🧭", "MASAR", "personal growth narrative"),
 }
 
 

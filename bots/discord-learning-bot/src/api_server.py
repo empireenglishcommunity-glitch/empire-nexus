@@ -271,6 +271,19 @@ async def get_dashboard(request: web.Request) -> web.Response:
     except (ValueError, TypeError, AttributeError):
         days_since_active = 0
 
+    # --- Masar M1.2: Momentum Score (fixes Hisn D012) ---
+    # Only included when the flag is enabled for this specific member
+    # (per-member allowlist supported, same as every other flag check
+    # in this codebase). Omitted entirely when disabled -- NOT sent as
+    # null/zero -- so the frontend's existing fallback to the old XP
+    # bar behavior needs no special-casing and this is a safe,
+    # instantly-revertible addition (D010's flag-gating lesson: gate
+    # the DATA, not just a display toggle client-side).
+    momentum = None
+    if database.is_feature_enabled("masar_momentum_score", discord_id):
+        from . import narrative_engine
+        momentum = narrative_engine.momentum_score(discord_id)
+
     dashboard = {
         "discord_id": discord_id,
         "discord_name": member.get("discord_name", "").split("#")[0],
@@ -303,6 +316,8 @@ async def get_dashboard(request: web.Request) -> web.Response:
         "voice_portfolio": voice_portfolio,
         "nour_tips": nour_tips,
     }
+    if momentum is not None:
+        dashboard["momentum"] = momentum
 
     return web.json_response(dashboard, headers=_cors_headers())
 

@@ -342,6 +342,14 @@ CREATE TABLE IF NOT EXISTS pending_escalations (
 CREATE INDEX IF NOT EXISTS idx_pending_escalations_discord ON pending_escalations(discord_id);
 
 -- Wuslah Phase W4: AI-generated study tips (pre-computed weekly).
+-- SUPERSEDED by Masar Phase M2's nour_growth_letters table below --
+-- W4.2 (the actual generation task) was designed but never built, so
+-- every real student silently received only the generic fallback
+-- tips (Hisn D020). Left in place, inert, rather than dropped, per
+-- Masar design.md's own note that the migration choice is decided at
+-- implementation time -- this way any code still reading it (the old
+-- /api/nour-tips endpoint, until M2.5 replaces its dashboard card)
+-- keeps working exactly as before with zero behavior change.
 CREATE TABLE IF NOT EXISTS nour_study_tips (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     discord_id      TEXT NOT NULL,
@@ -351,6 +359,24 @@ CREATE TABLE IF NOT EXISTS nour_study_tips (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_nour_tips ON nour_study_tips(discord_id, week);
+
+-- Masar Phase M0.4 / M2: Nour's Weekly Growth Letter cache. Fixes
+-- Hisn D020 by replacing nour_study_tips above with a real, verified
+-- generation path (narrative_engine.build_growth_letter()) --
+-- generated once per week per student by nour_growth_letter_task()
+-- (M2.2), cached here so the dashboard's /api/growth-letter (M2.4)
+-- serves it with zero extra AI cost per page load, same pattern as
+-- the old nour_study_tips table it replaces.
+CREATE TABLE IF NOT EXISTS nour_growth_letters (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    letter_text     TEXT NOT NULL,
+    source          TEXT NOT NULL DEFAULT 'ai',  -- 'ai' or 'template_fallback'
+    generated_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    week            INTEGER NOT NULL,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_growth_letters ON nour_growth_letters(discord_id, week);
 
 -- Hisn D028: verify_audio() checks "did this student post ANY
 -- audio-looking attachment in #l0-showcase in the last 2 hours?" for
