@@ -1173,7 +1173,58 @@
   stamp: every line had traceable evidence, D012/D020 were flagged
   again as the only 2 known open items (both already knowingly
   deferred to Masar, not new information). **Proceeding to H7.6.**
-- [ ] **H7.6** Restore/clean the database to its pre-testing state
+- [x] **H7.6** Restore/clean the database to its pre-testing state
   (remove all `GHOST_TEST_` data from production if any leaked there
   despite Component 1's isolation design — verify zero leakage as part
   of this step).
+  → **Done, 2026-07-16.** Took a full DB backup snapshot first
+  (`/app/backups/pre_h7.6_cleanup_20260716_161627.db` on the server)
+  before any deletes, per standard safety practice this campaign.
+  Reviewed the production `members` table (only 4 rows total) with
+  the owner before touching anything:
+  - `Empire Ghost` (`1526224028191162631`) and `M.A.C.A.L EMPIRE`
+    (`1502586616131223662`) — confirmed via `defect_log.md` and the
+    H3.2 test scripts these were real (non-synthetic) Discord test
+    accounts used specifically for the H3.2 Nour-escalation
+    round-trip trace, since that trace needed genuine DM delivery
+    which synthetic `GHOST_TEST_` IDs can't receive. Their job was
+    done — H3.2 fully verified and closed. Owner confirmed: delete.
+  - `Mai Mohamed` (`1511799969932116079`) — flagged to the owner
+    because her `buddy_id` pointed at `M.A.C.A.L EMPIRE` and her name
+    didn't look like an obvious test account. Owner clarified she is
+    not yet a real invited student and will be added later via proper
+    invitation — confirmed: delete now, invite fresh later.
+  - `BioRoMa` (`1125721441174822953`, the owner's personal Ghost
+    Testing account used throughout H6's live walkthrough) — owner
+    chose **Option A (full wipe)** over keeping it as a regression
+    fixture, to keep the production DB 100% clean before real
+    students join.
+  Executed a full-footprint deletion (all 19 tables checked via
+  `discord_id`/`member_id`/`user_id`/`student_id` columns, not just
+  `members`) for all 4 accounts, clearing dangling `buddy_id`
+  references first. Before/after row counts confirmed:
+  `mai: 14→0`, `ghost: 1→0`, `macal: 10→0`, `bioroma: 59→0`.
+  **`members` table is now at 0 rows** — a completely clean slate for
+  the 16 real students. Ran a database-wide scan for the literal
+  string `GHOST_TEST_` across every table/column: **zero matches** —
+  confirms Component 1's ghost-account isolation design never leaked
+  synthetic test data into production, and this cleanup pass closes
+  the loop on the real (non-synthetic) test accounts too. Verified
+  the bot container stayed healthy throughout (no crash, no WAL/SHM
+  corruption, logs clean) — the cleanup was a live in-place DB edit
+  while the bot was running, not a redeploy.
+  Two other pre-launch decisions closed out alongside this:
+  - `nour_escalation` feature flag: owner decided to leave it **ON**
+    for launch (it's how Nour hands off to a human when needed).
+  - Ghost Bot (`empire-ghost-bot` container): decided to **keep it
+    running permanently** post-launch — confirmed negligible resource
+    cost (~41MB RAM on a box with 2.2GB available) and it's now safely
+    isolated from real production events per D023's fix, so it stays
+    up as a standing, safe way to test against prod without ever
+    touching real student data again.
+  **This closes the Hisn (full-ecosystem-verification) spec. H7.6 was
+  the last task. All 12 requirements verified (see
+  `go_no_go_checklist.md`), owner sign-off recorded at H7.5. Next:
+  Tier 3 — Masar (`empire-nexus/.kiro/specs/masar/`), to be built
+  slowly and unhurried per the owner's explicit standing instruction,
+  before Tier 4 (inviting the 16 real students).**
