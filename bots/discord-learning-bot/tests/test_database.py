@@ -58,6 +58,43 @@ def test_set_level():
     assert database.get_member("u1")["level"] == "L1"
 
 
+# ============================================================
+#  NOTIFICATION LOG / THROTTLING (Masar M4, R5)
+# ============================================================
+
+def test_was_notification_sent_within_false_when_never_sent():
+    database.register_member("u1", "Alice")
+    assert database.was_notification_sent_within("u1", "difficulty_change", days=7) is False
+
+
+def test_was_notification_sent_within_true_for_recent_send():
+    database.register_member("u1", "Alice")
+    today = datetime.date.today().isoformat()
+    database.log_notification("u1", "difficulty_change", today)
+    assert database.was_notification_sent_within("u1", "difficulty_change", days=7) is True
+
+
+def test_was_notification_sent_within_false_once_outside_window():
+    database.register_member("u1", "Alice")
+    old_date = (datetime.date.today() - datetime.timedelta(days=10)).isoformat()
+    database.log_notification("u1", "difficulty_change", old_date)
+    assert database.was_notification_sent_within("u1", "difficulty_change", days=7) is False
+
+
+def test_was_notification_sent_within_boundary_is_inclusive():
+    database.register_member("u1", "Alice")
+    exactly_7_days_ago = (datetime.date.today() - datetime.timedelta(days=7)).isoformat()
+    database.log_notification("u1", "difficulty_change", exactly_7_days_ago)
+    assert database.was_notification_sent_within("u1", "difficulty_change", days=7) is True
+
+
+def test_was_notification_sent_within_only_matches_same_type():
+    database.register_member("u1", "Alice")
+    today = datetime.date.today().isoformat()
+    database.log_notification("u1", "streak_alert", today)
+    assert database.was_notification_sent_within("u1", "difficulty_change", days=7) is False
+
+
 def test_all_active_members_excludes_inactive():
     database.register_member("u1", "Alice")
     database.register_member("u2", "Bob")

@@ -1650,29 +1650,68 @@ async def _score_pronunciation(ctx, task_id: str):
         from . import adaptive_engine
         adjustment = adaptive_engine.check_and_adjust(discord_id)
         if adjustment:
-            # A0.4: DM student about difficulty change
-            try:
-                if adjustment["direction"] == "up":
-                    msg = (
-                        f"📈 **Level Up! / مستواك ارتفع!**\n\n"
-                        f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
-                        f"Your average score ({adjustment['average']:.0f}%) shows you're ready "
-                        f"for more challenge. Tasks will be a bit harder now!\n\n"
-                        f"متوسط درجاتك ({adjustment['average']:.0f}%) بيقول إنك جاهز "
-                        f"لتحدي أكبر. المهام هتكون أصعب شوية! 💪"
-                    )
+            # A0.4 / Masar M4 (R5, fixes the D012/D020-style transparency
+            # gap for adaptive difficulty): when masar_difficulty_notes is
+            # enabled AND this member hasn't received a difficulty_change
+            # notification in the last 7 days (throttle — the ADJUSTMENT
+            # itself is never throttled, only the notification, per R5's
+            # anti-spam acceptance criterion), send Nour's own voiced,
+            # gender-aware, direction-positive note via narrative_engine
+            # instead of the old hardcoded bilingual message below. When
+            # the flag is off, the original A0.4 message is preserved
+            # unchanged — no regression of this already-shipped Tatawwur
+            # behavior for members not opted into Masar's new surface.
+            sent_narrative_note = False
+            if database.is_feature_enabled("masar_difficulty_notes", discord_id):
+                if not database.was_notification_sent_within(discord_id, "difficulty_change", days=7):
+                    try:
+                        from . import narrative_engine
+                        signals = narrative_engine.gather_signals(discord_id)
+                        message, _source = await narrative_engine.build_difficulty_note(
+                            discord_id, adjustment["direction"], signals,
+                        )
+                        await ctx.author.send(message)
+                        database.log_notification(
+                            discord_id, "difficulty_change",
+                            datetime.date.today().isoformat(),
+                        )
+                        sent_narrative_note = True
+                    except (discord.Forbidden, discord.HTTPException):
+                        sent_narrative_note = True  # DMs disabled — don't fall through to the old message either
+                    except Exception as e:
+                        logger.error(f"Masar difficulty note error for {discord_id}: {e}")
                 else:
-                    msg = (
-                        f"🌱 **Adjusting difficulty / بنعدّل المستوى**\n\n"
-                        f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
-                        f"No worries! We're giving you more practice time on the basics. "
-                        f"Everyone learns at their own pace.\n\n"
-                        f"متقلقش! بنديك وقت أكتر على الأساسيات. "
-                        f"كل واحد بيتعلم بسرعته. استمر! 🌟"
-                    )
-                await ctx.author.send(msg)
-            except (discord.Forbidden, discord.HTTPException):
-                pass
+                    # Throttled: an adjustment still happened (see check_and_adjust
+                    # above, unaffected by this throttle), just no NEW notification
+                    # this time — same "adjustment always applies, notification may
+                    # not" split R5 requires.
+                    sent_narrative_note = True
+
+            if not sent_narrative_note:
+                # A0.4 (pre-Masar, original behavior — sent when the flag is
+                # off, so nothing regresses for members not on the new flag).
+                try:
+                    if adjustment["direction"] == "up":
+                        msg = (
+                            f"📈 **Level Up! / مستواك ارتفع!**\n\n"
+                            f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
+                            f"Your average score ({adjustment['average']:.0f}%) shows you're ready "
+                            f"for more challenge. Tasks will be a bit harder now!\n\n"
+                            f"متوسط درجاتك ({adjustment['average']:.0f}%) بيقول إنك جاهز "
+                            f"لتحدي أكبر. المهام هتكون أصعب شوية! 💪"
+                        )
+                    else:
+                        msg = (
+                            f"🌱 **Adjusting difficulty / بنعدّل المستوى**\n\n"
+                            f"{adjustment['emoji']} Your difficulty is now: **{adjustment['label']}**\n\n"
+                            f"No worries! We're giving you more practice time on the basics. "
+                            f"Everyone learns at their own pace.\n\n"
+                            f"متقلقش! بنديك وقت أكتر على الأساسيات. "
+                            f"كل واحد بيتعلم بسرعته. استمر! 🌟"
+                        )
+                    await ctx.author.send(msg)
+                except (discord.Forbidden, discord.HTTPException):
+                    pass
 
     except Exception as e:
         logger.error(f"Pronunciation scoring error for {ctx.author.id}/{task_id}: {e}")
