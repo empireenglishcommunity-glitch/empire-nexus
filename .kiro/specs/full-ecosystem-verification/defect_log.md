@@ -2947,9 +2947,74 @@ just exercised.
 in `check_and_adjust()` — one-line change, no behavior change for the
 "globally on/off" cases, only for the allowlist-scoped case.
 
-**Status:** 🟡 **Fix identified live during M4.4's testing, being
-applied now in the same session** (see the commit that introduces this
-defect_log entry). Full live re-verification (repeat the exact same
-Ghost Bot UP-direction test that surfaced this, confirm a real
-adjustment now fires) still pending — tracked as part of M4.4's
-remaining work, not yet marked resolved here until that re-run passes.
+**Status:** ✅ **RESOLVED.** Fix merged
+([empire-nexus#180](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/180)),
+deployed to both production and the Ghost Bot (`721927a`, confirmed
+via `git log` on the server), and live re-verified on the Ghost Bot:
+re-ran the exact same UP-direction scenario that originally surfaced
+this defect (allowlist-scoped `tatawwur_adaptive`, 7 scores at 90%) —
+`check_and_adjust()` now correctly returns a real adjustment
+(`2→3, avg=90.0%`) instead of `None`. Ghost Bot test data (member,
+scores, notification log) fully cleaned up afterward; both flags reset
+to OFF with `allowed_ids` cleared.
+
+---
+
+## D035 — `_has_unexpected_script()`'s blocklist misses Vietnamese words that use ONLY shared Latin-1 diacritics (no Vietnamese-specific character), letting a real foreign-language leak through undetected (Minor, follow-up to D033)
+
+**Found during:** Masar M4.4's live-verification (2026-07-16), while
+generating several `build_difficulty_note()` "up"-direction messages
+directly against production's real Groq key (the Ghost Bot's own
+`.env.ghost` has empty `GROQ_API_KEY`/`GEMINI_API_KEY` values — a
+separate, narrow, non-blocking config gap, noted below, not fixed as
+part of this defect). One AI response read: `"...يلا GhostTestSynthetic
+نكمل cùng بعض، هنتعلم أكتر وأكتر!"` — `"cùng"` is Vietnamese for
+"together," a real foreign-language leak of the exact class D033's
+guard was built to catch, but it was NOT flagged.
+
+**Root cause:** `_has_unexpected_script()`'s blocklist range for
+Vietnamese is `(0x1E00, 0x1EFF)` (Latin Extended Additional — the
+block containing Vietnamese-SPECIFIC precomposed characters like `đ`,
+`ệ`, `ạ`). `"cùng"` uses `ù` (U+00F9), which lives in the ordinary
+Latin-1 Supplement block (`0x00C0`-`0x00FF`) — the SAME block used by
+legitimate French/Portuguese/Italian/Spanish accented letters (café,
+naïve, señor) and, per the guard's own design comment, deliberately
+NOT blocked, to avoid false-positiving on real, legitimate accented
+text. D033's original repro (`"đặc"`) happened to use characters
+squarely inside the blocked range, so that specific fix worked, but
+the underlying bug class ("Groq can hallucinate a short, common
+foreign word using only shared-alphabet characters") is broader than
+the blocklist covers, and probably can't be fully closed by any
+character-range blocklist alone — a genuinely reliable fix would need
+either a language-identification pass (adds latency/cost and a new
+external dependency) or a curated list of common non-Arabic/English
+words to reject (a maintenance burden, and still incomplete by
+nature).
+
+**Status:** 🟡 **Found and characterized, NOT fixed.** Deliberately
+not patched narrowly in this session — a narrow blocklist addition
+(e.g. blocking all of Latin-1 Supplement) would immediately
+false-positive on legitimate French/Portuguese loanwords or accented
+names, which is worse than the current gap. **Flagging for an explicit
+product decision from the owner**: is a language-identification
+library (e.g. `langdetect`, `lingua`) an acceptable new dependency to
+add reliability here, or is the current guard (which DOES catch the
+larger, more visually-obvious foreign-script leaks like D033's
+original CJK/Vietnamese-diacritic/Cyrillic repro) considered
+"good enough" given AI hallucinations of this specific shared-alphabet
+sub-class appear to be rare in practice (1 occurrence observed across
+roughly a dozen+ AI generations sampled across D033's and M4's
+combined live-verification sessions)? Not blocking M4 or D033's own
+closure — both remain independently resolved.
+
+**Related, separate, non-blocking config gap found during the same
+investigation:** the Ghost Bot's `.env.ghost` has empty
+`GROQ_API_KEY`/`GEMINI_API_KEY` values (confirmed via direct check on
+the server), meaning the Ghost Bot has never actually exercised real
+AI generation for ANY Masar feature to date (M2, M3, or M4) — every
+Ghost Bot test this whole campaign silently used the template
+fallback path only, never the AI path, without anyone noticing until
+now. Not fixed here (deciding whether to share production's keys with
+the Ghost Bot, or issue it separate ones, is a credentials/quota
+decision for the owner, not a code fix) — flagged explicitly, not
+silently left broken.

@@ -409,19 +409,39 @@
 - [x] **M4.3** `masar_difficulty_notes` feature flag was already
   registered in `flag_registry.py` (default OFF) since M0 — confirmed
   present, no change needed.
-- [x] **M4.4 (partial — DB-clone test)** 5 new unit tests added for
-  `was_notification_sent_within()` (never sent, recent send, outside
-  window, exact-boundary inclusive, type-specificity) — all pass, plus
-  the full existing 364-test suite re-run with zero regressions (369
-  total passing). **Still needed before M4 can be marked fully done:
-  a real live-verification pass (per this whole campaign's own
-  standing discipline — code-reviewed is not the same as live-
-  verified) forcing a real difficulty change for a Ghost Testing
-  member in BOTH directions, confirming the delivered DM is correctly
-  masculine/feminine/neutral per D033's gender guard, positively
-  framed per direction, and that the 7-day throttle genuinely
-  suppresses a second notification on a real second adjustment within
-  the window** — tracked as the immediate next step, not yet done.
+- [x] **M4.4 — done, live-verified on the Ghost Bot (deliberately NOT
+  production, since this needed injecting fake pronunciation scores —
+  more invasive than any prior Masar phase's testing; the Ghost Bot's
+  own fully separate DB/token made this zero-risk to real students).**
+  5 new unit tests for `was_notification_sent_within()` (never sent,
+  recent, outside window, exact-boundary inclusive, type-specific);
+  full suite 369/369 passing at that point. **Live-verification itself
+  surfaced a real bug (D034: `check_and_adjust()` wasn't passing
+  `discord_id` to the flag check, silently no-op'ing the whole feature
+  for any allowlist-scoped rollout) — found, logged, fixed, tested (5
+  new tests in `tests/test_adaptive_engine.py`, 2 confirmed to
+  genuinely fail without the fix), merged
+  ([empire-nexus#180](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/180)),
+  deployed to both production and the Ghost Bot, then the SAME
+  Ghost Bot scenario re-run and confirmed fixed.** After the fix: UP
+  direction confirmed (`2→3`, correct "ready for more" framing,
+  🔴 emoji); DOWN direction confirmed separately (`2→1`, correct
+  "smart step, not a setback" framing, 🟢 emoji, explicit
+  non-penalty language); the 7-day throttle confirmed genuinely
+  suppressing a second notification on a real second adjustment
+  within the window (adjustment itself still applied both times — only
+  the notification was suppressed, per R5's exact split). **A second,
+  separate, minor gap was also found and documented (D035, NOT fixed
+  — needs an owner product decision, not blocking): the D033 guard's
+  blocklist misses a foreign word using ONLY shared Latin-1 diacritics
+  (`"cùng"`), as opposed to Vietnamese-specific characters; also
+  discovered the Ghost Bot's `.env.ghost` has empty AI keys, so all
+  Ghost Bot testing to date has silently used template fallback only,
+  never the real AI path** — both noted in `defect_log.md`'s D035
+  entry, explicitly flagged rather than silently left broken. Ghost
+  Bot test data (member, scores, notification log) fully cleaned up
+  afterward; both flags reset to OFF with `allowed_ids` cleared.
+  **M4 is now fully closed.**
 
 ## Phase M5 — Final Integration Verification + Documentation
 
