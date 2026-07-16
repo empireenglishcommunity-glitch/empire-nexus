@@ -1413,12 +1413,54 @@ D012-D017, D019 — the owner and this session will discuss the
 fix-vs-retire product decision together at that point, not separately
 or urgently.
 
-**Status:** 🟡 **DEFERRED (owner-confirmed, non-priority)** — confirmed
-real via exhaustive code search + live DB query (0 rows, ever), not
-yet fixed. Batched with D012-D017 for discussion + resolution before
-H7's Go/No-Go — this one specifically needs a product decision
-(implement W4.2 for real vs. retire the "AI-generated" framing) as
-part of that discussion, not just an engineering fix applied silently.
+**Status:** ✅ **RESOLVED (2026-07-16, via Masar M2 — Nour's Weekly
+Growth Letter).** Per the owner's own later decision (documented in
+`.kiro/specs/masar/requirements.md`), the product-decision fork this
+defect explicitly needed (implement W4.2 for real vs. retire the
+"AI-generated" framing) was resolved in favor of building it for
+real — and treating it as one instance of a bigger pattern (alongside
+D012) rather than a narrow patch, via the Masar (مسار) initiative.
+The actual fix: `nour_growth_letter_task()` (a new weekly
+`@tasks.loop`, Wednesday 11:00 Asia/Dubai — deliberately spread away
+from the existing Sunday cluster of weekly tasks) genuinely gathers
+per-student signals (`narrative_engine.gather_signals()`: memories,
+milestones, pronunciation trend, SRS mastery, conversation themes,
+streak/completion) and calls the SAME proven Groq→Gemini→template
+fallback chain used elsewhere in this codebase
+(`narrative_engine.build_growth_letter()`) to generate a real,
+personal weekly letter — replacing `nour_study_tips`/`/api/nour-tips`
+entirely (left in place, inert, explicitly documented as legacy, not
+silently orphaned).
+**A real bug was caught and fixed during this phase's own testing,
+before it ever reached production:** both the new scheduled task and
+the new `/api/growth-letter` endpoint initially had an early
+`is_feature_enabled("masar_growth_letter")` check with no
+`discord_id` — which would have silently broken a restricted-
+allowlist (beta-squad) rollout for everyone, including allowlisted
+members. Caught via a deliberate test, fixed in both places before
+merge.
+Live-verified in PRODUCTION on 2026-07-16 using the owner's own real
+`bioroma` Ghost Testing Discord account (not a synthetic ID — this
+verification specifically needed genuine Discord DM delivery, same
+reasoning as Hisn H3.2): seeded rich real-shaped test data (4-day
+streak, a milestone, an improving pronunciation trend, a stored
+memory), flag scoped ONLY to this one account via the allowlist,
+generated a real letter (`source: "ai"`, not the fallback) that
+genuinely referenced this student's actual streak ("4 أيام متتالية")
+and actual pronunciation average ("68%") — not generic filler —
+delivered it as a real Discord DM via the bot's own API (confirmed
+via a real message ID), and confirmed the dashboard's
+`/api/growth-letter` returned the byte-identical letter text,
+structurally guaranteeing the two surfaces can't diverge (same cached
+row, same as M1's dashboard/`!progress` guarantee). **Owner
+personally confirmed receiving the DM** ("i got the message") — the
+one part of this verification that couldn't be checked from the
+agent side alone. Test data fully cleaned up afterward (`members`
+back to 0 rows), flag restored to default OFF. See
+`.kiro/specs/masar/tasks.md`'s M2 phase for the full implementation
+record. PRs:
+[empire-nexus#173](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/173),
+[empire-dojo#27](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/27).
 
 
 
