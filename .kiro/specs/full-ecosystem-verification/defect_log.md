@@ -2430,3 +2430,95 @@ site --project-name=empire-practice`), then a live re-test: run
 and confirm the homepage now shows the owner's REAL level (L0) and
 REAL week (3) immediately, with no manual "Connect Discord" step
 needed — before this can be marked ✅ Resolved.
+
+
+
+---
+
+## D030 — Practice-platform homepage's day picker has no "today" awareness; student must manually calculate which of 7 generic day cards to pick (Minor, UX)
+
+**Found during:** H6.1's dashboard-visit walkthrough, live with the
+owner, immediately after D029's fix landed and correctly jumped the
+homepage to the student's real level/week. The owner's own framing:
+*"as per my knowledge with the ecosystem, the daily tasks is synced
+with the days and weeks so how do I know as a student when I open the
+link which day... why not make it more easy... when I open the link
+[it] takes me straight to the week and day so I just go through the
+tasks."*
+
+**What was observed:** with D029 fixed, the homepage correctly landed
+on the right level/week, but the "Choose Your Day" grid still showed 7
+generic, visually-identical day cards (Sat/Day 1 through Fri/Day 7)
+with zero indication of which one corresponds to the actual current
+date. A student would have to independently work out "today is
+Thursday, which in this system's Sat-start week numbering is Day 6"
+themselves — even though the rest of the ecosystem (the bot's daily
+task post, `!week`) already computes and uses exactly this information
+every single day.
+
+**Root cause, confirmed via direct code reading:** `index.html`'s
+`renderDays()` function generates the 7 day cards purely by loop index
+(`for (let d = 1; d <= 7; d++)`), with no reference to the real
+current date anywhere — confirmed via `grep` finding zero matches for
+any today/current-date logic in the file before this fix.
+
+**Severity: Minor, UX** — not a correctness bug (every link/card still
+points to the right place once clicked, and verification/points are
+entirely server-side and unaffected), but a real friction point for
+exactly the kind of new, possibly zero-English-confidence student this
+whole platform is designed for.
+
+**Fix applied (2026-07-16):**
+1. Added `todaysDayNumber()` to `index.html`, computing "today" using
+   the EXACT SAME `Sat=1..Fri=7` convention already used everywhere
+   else in this ecosystem (the bot's `daily_task_post`/`!week`/the
+   link-generator all share this ordering — not a new convention
+   invented here).
+2. `renderDays()` now adds a `.today` CSS class (new rule in
+   `empire.css`: a gold glow/border + small dot indicator, layers
+   correctly alongside the existing `.done` green styling if a day is
+   both) to whichever card matches, so a student can see at a glance
+   which card is today's — without forcing any navigation.
+3. **Per the owner's specific suggestion**, added an auto-jump: when
+   arriving via a FRESH `!link` click specifically (tracked via a new
+   `ConnectedProgress._connectedFromUrlThisLoad` flag in `app.js`,
+   passed through the existing `empire:progress-loaded` event from
+   D029's fix as `data.fromUrlThisLoad`), the homepage now navigates
+   straight to `{level}/week{week}/day{today}/` automatically —
+   skipping the picker entirely for the specific case `!link` exists
+   to serve ("let me just get to today's tasks"). Deliberately NOT
+   triggered on an ordinary homepage revisit with an already-saved
+   token (e.g. browsing back later to check a previous week) — only a
+   fresh link click force-navigates; a returning visit still lands on
+   the (now today-highlighted) picker so browsing other days/weeks
+   isn't disrupted.
+
+**Known, accepted limitation (not a defect, noted for completeness):**
+`todaysDayNumber()` uses the student's own device/browser timezone
+(`new Date().getDay()`), NOT the bot's configured `Asia/Dubai`
+timezone (`tasks.py`'s `_now()`) — this is a client-side static site
+with no server-side "current time" to query. For students in or near
+that timezone this will normally agree with Discord's own daily task
+post, but could theoretically disagree for a short window near
+midnight for a student in a very different timezone. Acceptable for a
+"helps find today faster" UX nicety that doesn't touch verification or
+points (both entirely server-side and already correct); documented
+here rather than silently assumed away.
+
+**Tested:** `node --check` on `app.js` and a `new Function()` parse
+of `index.html`'s inline script both pass cleanly. Manually verified
+the JS day-number computation agrees with the bot's Python
+equivalent for today's actual date (both independently computed
+"Thursday → day 6").
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** This is an `empire-dojo`-only change (no
+`empire-nexus`/bot changes needed this time — D029 already added
+everything the API needed to expose). Needs: PR review/merge in
+`empire-dojo`, deploy (`npx wrangler pages deploy site
+--project-name=empire-practice`), then a live re-test: run `!link`
+again, click the DM'd URL directly, and confirm it now navigates
+straight to today's actual day page (not just the right week) — and
+separately, visiting the homepage normally afterward (not via a fresh
+link) shows today's card visually highlighted but does NOT
+auto-navigate away — before this can be marked ✅ Resolved.
