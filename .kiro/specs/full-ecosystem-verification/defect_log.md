@@ -2618,3 +2618,85 @@ it now"*) AND the setup script corrected so a future full rebuild
 creates `#ask-nour` with the right permissions from the start, closing
 both the immediate symptom and the underlying process gap that let it
 happen in the first place.
+
+
+
+---
+
+## D032 — Owner's escalation reply arrives as a bare, unframed DM with no indication it's "from Nour" (Minor, UX)
+
+**Found during:** H6.4's escalation walkthrough, live with the owner,
+immediately after confirming the full escalation loop mechanically
+worked end-to-end (student message → Telegram alert → owner reply →
+delivered DM). When asked to confirm the DM "looked like it came from
+Nour," the owner reported: *"it did not look like it came from my
+personal account or my personal telegram, but i did not get the
+answer in the same #ask nour channel i got in another chat empire
+english bot chat."*
+
+**Two separate things were confirmed here, one working as designed,
+one a real gap:**
+1. The reply correctly arrives via DM (NOT back in `#ask-nour`) and
+   correctly does NOT look like it's from the owner's personal
+   account/Telegram — both intended, working exactly as designed
+   (`forward_reply_to_student()`'s whole purpose is to deliver a
+   private, human-reviewed answer directly to the student, attributed
+   to the bot's own Discord identity, never exposing the owner's real
+   identity).
+2. **The DM itself has zero framing indicating it's "from Nour"**
+   specifically — confirmed via code read: `forward_reply_to_student()`
+   sent `reply_text` completely raw, via
+   `discord_member.send(reply_text)`, no prefix, no signature. The
+   Telegram prompt itself explicitly says "Reply to this message to
+   respond **as Nour**," but nothing in the actual delivered DM ever
+   signals that to the student. It arrives from the same "Empire
+   English Bot" Discord account that sends every other kind of
+   notification (task confirmations, tutorial steps, `!link` tokens),
+   with no distinguishing text at all.
+
+**Why this matters:** Nour's NORMAL replies (inside `#ask-nour`) don't
+need a "from Nour" label, because they're a visible, in-context
+continuation of a conversation the student is already having with
+Nour in that channel — the channel itself provides the context. An
+escalation reply, by contrast, arrives as a completely fresh DM with
+zero surrounding conversation, so there's nothing establishing who's
+"speaking." The owner's own confusion when checking their own test
+reply is a direct, first-hand demonstration of exactly this gap — if
+the person who WROTE the reply couldn't immediately tell it was
+attributed to Nour, a real student certainly couldn't either.
+
+**Severity: Minor, UX** — the reply is still delivered correctly and
+the student still gets real help; this is about clarity of
+attribution, not function.
+
+**Fix applied (2026-07-16):** added a short bilingual framing prefix
+to `forward_reply_to_student()`, chosen based on the student's actual
+language phase (`features.response_language()` — the exact same
+function already used elsewhere in this codebase for bilingual
+framing decisions, not a new mechanism): `"💬 **رد من نور:**"` (Arabic
+phase), `"💬 **رد من نور (reply from Nour):**"` (bilingual_ar phase), or
+`"💬 **A reply from Nour:**"` (bilingual/English phase) — followed by
+the owner's actual reply text unchanged. The RAW `reply_text` (without
+the framing prefix) is still what gets stored in `nour_conversations`
+via `_store_reply_in_history()` — deliberately unchanged, since the
+framing is presentation-only for this one DM and shouldn't pollute
+conversation history that later gets fed back into Gemini prompts as
+context.
+
+**Tested (2026-07-16), safely, before any deploy:** per this
+project's established `docker exec`-swap methodology (D019/D027/D028)
+— backed up the container's live `nour_escalation.py`, swapped in the
+fixed version, then directly called `features.response_language()`
+against `bioroma`'s real member row and confirmed it correctly
+resolves to `bilingual_ar`, producing the expected framed output:
+`"💬 **رد من نور (reply from Nour):**\n\nThanks for asking!..."`.
+Restored the container's original file afterward — this test never
+touched the live bot process or deployed anything.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED (via the real Discord flow).** Needs: PR review/merge,
+deploy to production (`git pull && docker compose up -d --build`),
+then a live re-test: re-run H6.4's exact repro (trigger a new
+escalation, reply from Telegram) and confirm the DM `bioroma` receives
+now includes the "A reply from Nour" framing before the actual answer
+— before this can be marked ✅ Resolved.

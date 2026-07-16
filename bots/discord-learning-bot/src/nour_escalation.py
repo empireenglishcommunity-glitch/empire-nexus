@@ -153,8 +153,33 @@ async def forward_reply_to_student(discord_id: str, reply_text: str, bot) -> boo
         logger.warning(f"Nour escalation reply: member {discord_id} not found in guild")
         return False
 
+    # Hisn D032: this used to send the owner's raw Telegram reply text
+    # completely unframed -- the Telegram prompt itself says "Reply to
+    # this message to respond AS Nour", but nothing in the actual
+    # delivered DM signals that at all. It arrives from the same
+    # "Empire English Bot" account as every other notification, with no
+    # prefix/signature, so a student has no way to tell this reply is
+    # any different from a generic bot message -- confirmed live during
+    # Hisn H6.4: the owner themselves, receiving their own test reply,
+    # said it "did not look like it came from... Nour". Nour's NORMAL
+    # replies (in #ask-nour) don't need a prefix because they're a
+    # visible continuation of a conversation the student is already
+    # having with Nour in that channel -- but this DM has zero
+    # surrounding context, since it's a fresh conversation. Added a
+    # short bilingual framing line (matching this project's existing
+    # bilingual-by-default convention, see features.response_language())
+    # so a student immediately knows who's speaking to them.
+    from . import features
+    phase = features.response_language(discord_id)
+    if phase == "arabic":
+        framed_reply = f"💬 **رد من نور:**\n\n{reply_text}"
+    elif phase == "bilingual_ar":
+        framed_reply = f"💬 **رد من نور (reply from Nour):**\n\n{reply_text}"
+    else:
+        framed_reply = f"💬 **A reply from Nour:**\n\n{reply_text}"
+
     try:
-        await discord_member.send(reply_text)
+        await discord_member.send(framed_reply)
     except discord.Forbidden:
         logger.warning(f"Nour escalation reply: DMs disabled for {discord_id}")
         return False
