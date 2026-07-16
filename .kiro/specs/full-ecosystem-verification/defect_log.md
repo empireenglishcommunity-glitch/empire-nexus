@@ -2996,21 +2996,31 @@ external dependency) or a curated list of common non-Arabic/English
 words to reject (a maintenance burden, and still incomplete by
 nature).
 
-**Status:** 🟡 **Found and characterized, NOT fixed.** Deliberately
-not patched narrowly in this session — a narrow blocklist addition
-(e.g. blocking all of Latin-1 Supplement) would immediately
-false-positive on legitimate French/Portuguese loanwords or accented
-names, which is worse than the current gap. **Flagging for an explicit
-product decision from the owner**: is a language-identification
-library (e.g. `langdetect`, `lingua`) an acceptable new dependency to
-add reliability here, or is the current guard (which DOES catch the
-larger, more visually-obvious foreign-script leaks like D033's
-original CJK/Vietnamese-diacritic/Cyrillic repro) considered
-"good enough" given AI hallucinations of this specific shared-alphabet
-sub-class appear to be rare in practice (1 occurrence observed across
-roughly a dozen+ AI generations sampled across D033's and M4's
-combined live-verification sessions)? Not blocking M4 or D033's own
-closure — both remain independently resolved.
+**Status:** ✅ **RESOLVED.** Owner chose Option B (curated word
+blocklist) over Option A (add a language-detection dependency like
+`langdetect`/`lingua`) or Option C (accept the gap as-is) — no new
+dependency, no added latency, pragmatic given this sub-class of leak
+is rare in practice. Fix: new `_BLOCKED_FOREIGN_WORDS` set (currently
+seeded with `cùng`, `đặc`, and ~20 other common short Vietnamese
+words) + `_has_blocked_foreign_word()` — whole-word, case-insensitive
+matching (NOT a substring check, to avoid ever flagging a blocked
+word merely appearing inside a longer legitimate word). Wired into
+`_generate_with_fallback()` alongside `_has_unexpected_script()` at
+all 3 checkpoints (Groq response, Gemini response) — a match is
+treated as a FAILED generation, same discipline as D033. Deliberately
+a SMALL, curated list of actually-observed words, not a broad
+"reject all Latin-1 accented text" rule (confirmed via tests: legitimate
+French/Portuguese loanwords and names like "café"/"José" are correctly
+NOT flagged). Explicitly documented as inherently incomplete by nature
+— expected to grow over time as new hallucinated words are caught
+live, same limitation acknowledged when the owner chose this option.
+12 new tests (`tests/test_narrative_engine.py`, previously zero test
+coverage for either guard function) confirm: the real M4 repro
+("cùng") is now caught; D033's original repro ("đặc") is still caught
+by both guards (defense in depth); legitimate accented loanwords are
+NOT falsely flagged; whole-word matching (not substring) is enforced;
+case-insensitivity works. Full suite: 390/390 passing, zero
+regressions.
 
 **Related, separate, non-blocking config gap found during the same
 investigation:** the Ghost Bot's `.env.ghost` has empty

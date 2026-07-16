@@ -337,6 +337,47 @@ def _has_unexpected_script(text: str) -> bool:
     return False
 
 
+# Masar D035 fix (follow-up to D033): a curated blocklist of common
+# short foreign words that use ONLY shared Latin-1/ASCII characters —
+# these can't be caught by _UNEXPECTED_SCRIPT_RANGES above, since they
+# don't contain any character exclusive to a non-Latin/Vietnamese-
+# specific script. Found live during Masar M4's testing: a Groq
+# response contained "cùng" (Vietnamese for "together"), which uses
+# only `ù` (U+00F9, ordinary Latin-1 Supplement — the SAME block used
+# by legitimate French/Portuguese/Spanish accented words and names),
+# so the existing guard missed it entirely.
+#
+# Deliberately a SMALL, curated list of actual words observed (or
+# closely related to words observed) hallucinating into Nour's output,
+# NOT a broad "reject all Latin-1 accented text" rule — that would
+# false-positive on legitimate loanwords/names (café, naïve, José,
+# etc.). This list is expected to grow over time as new hallucinated
+# words are caught live; it is inherently incomplete by nature (see
+# D035's defect_log.md entry for the full tradeoff discussion), but is
+# a real, low-cost improvement over having nothing at all for this
+# sub-class of leak.
+_BLOCKED_FOREIGN_WORDS = {
+    # Vietnamese words actually observed (or closely related to
+    # observed) leaking into AI output during D033/D035's live testing:
+    "đặc", "cùng", "được", "của", "không", "người", "những", "với",
+    "này", "đã", "sẽ", "và", "là", "có", "một", "các", "để", "khi",
+    "làm", "rất", "cũng", "còn", "nào", "vì", "nếu", "nên",
+}
+
+
+def _has_blocked_foreign_word(text: str) -> bool:
+    """True if `text` contains any whole word from `_BLOCKED_FOREIGN_WORDS`
+    (case-insensitive, word-boundary matched — not a substring check,
+    to avoid ever flagging a blocked word that merely appears inside a
+    longer legitimate word). See `_BLOCKED_FOREIGN_WORDS`'s comment for
+    why this exists as a separate, narrower check from
+    `_has_unexpected_script()` above.
+    """
+    import re
+    words = re.findall(r"[^\s\d.,!?;:()\"'،؟]+", text.lower())
+    return any(w in _BLOCKED_FOREIGN_WORDS for w in words)
+
+
 async def _generate_with_fallback(system_prompt: str, user_prompt: str,
                                    template_fallback_fn) -> tuple[str, str]:
     """Shared 3-tier fallback used by every build_* function below.
@@ -361,24 +402,35 @@ async def _generate_with_fallback(system_prompt: str, user_prompt: str,
     recur in nour_concierge's regular chat responses too, but fixing
     that call site is out of this defect's immediate scope -- flagged
     separately in defect_log.md.
+
+    Masar D035 fix: ALSO reject a response containing a known blocked
+    foreign word (see _has_blocked_foreign_word()) -- catches the
+    narrower sub-class _has_unexpected_script() can't, where the
+    hallucinated word uses only shared Latin-1 characters (e.g.
+    "cùng").
     """
+    def _is_bad(t: str) -> bool:
+        return _has_unexpected_script(t) or _has_blocked_foreign_word(t)
+
     text = await _call_groq(system_prompt, user_prompt)
-    if text and not _has_unexpected_script(text):
+    if text and not _is_bad(text):
         return _clean_ai_text(text), "ai"
     if text:
         logger.warning(
             "narrative_engine: Groq response contained an unexpected "
-            "script, discarding and trying Gemini fallback"
+            "script or blocked foreign word, discarding and trying "
+            "Gemini fallback"
         )
 
     logger.info("narrative_engine: Groq failed, trying Gemini fallback")
     text = await _call_gemini(system_prompt, user_prompt)
-    if text and not _has_unexpected_script(text):
+    if text and not _is_bad(text):
         return _clean_ai_text(text), "ai"
     if text:
         logger.warning(
-            "narrative_engine: Gemini response ALSO contained an unexpected "
-            "script, discarding and using template fallback"
+            "narrative_engine: Gemini response ALSO contained an "
+            "unexpected script or blocked foreign word, discarding and "
+            "using template fallback"
         )
 
     logger.warning("narrative_engine: both AI providers failed, using template fallback")
