@@ -262,7 +262,7 @@
   → **Done** (registered during M0.2's commit, alongside the other 3
   Masar flags, under the new `masar` initiative group in
   `flag_registry.py`).
-- [ ] **M2.7** **Live verification (the single most important task in
+- [x] **M2.7** **Live verification (the single most important task in
   this entire spec, directly closing D020's original gap):** trigger
   the real task against production (or the H5 DB clone first, if a dry
   run is preferred), inspect the resulting letter for a REAL student
@@ -271,15 +271,24 @@
   Confirm both delivery surfaces (Discord DM + dashboard) show
   consistent content. Only after this passes, flip the flag on and
   mark D020 as Resolved in Hisn's `defect_log.md`.
-  → **Pre-verified extensively against a real DB clone** (never
-  production): full prompt construction confirmed referencing all 6
-  signal categories for a rich test member; AI fallback chain
-  confirmed (Groq-fail/Gemini-succeed AND both-fail scenarios); the
-  critical allowlist bug (above) caught and fixed here, before it
-  could reach production. **Still needs the ACTUAL production
-  trigger + real Discord DM delivery check + dashboard consistency
-  check** once this PR is merged and deployed — tracked as the next
-  action.
+  → **Done, 2026-07-16, in REAL production, using the owner's own real
+  `bioroma` Ghost Testing Discord account** (a synthetic `GHOST_TEST_`
+  ID cannot receive a real Discord DM — same reasoning as Hisn H3.2).
+  Backend + frontend both deployed and confirmed live first. Seeded
+  rich, real-shaped test data directly in production (4-day streak, a
+  milestone, an improving pronunciation trend, a stored memory),
+  scoped the flag to ONLY this one account via the allowlist (proving
+  the beta-squad rollout path the M2.4 bug fix protects). Generated a
+  REAL AI letter (`source: "ai"`) that genuinely referenced this
+  student's actual 4-day streak and actual 68% pronunciation average —
+  not generic filler. Delivered as a real Discord DM via the bot's own
+  REST API (confirmed via a real returned message ID) and confirmed
+  `/api/growth-letter` returned the byte-identical text — same
+  structural dashboard/DM consistency guarantee as M1's. **Owner
+  personally confirmed receipt** ("i got the message") — the one part
+  of this verification an agent cannot check unilaterally. Test data
+  fully cleaned up (`members` back to 0 rows), flag restored to
+  default OFF. **D020 marked Resolved in `defect_log.md`.**
 
 ## Phase M3 — Milestone Moments (optional polish, independently skippable)
 
