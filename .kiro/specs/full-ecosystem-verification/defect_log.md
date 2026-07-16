@@ -2024,3 +2024,79 @@ pull && docker compose up -d --build`), then a live re-test: have
 SAME DM conversation (the exact original repro), and confirm it now
 registers correctly (points awarded, task marked done, no silent
 failure) before this can be marked ✅ Resolved.
+
+
+
+---
+
+## D026 — `!done accent`/`shadow`/`speaking`/`writing`/`community` from a DM silently bypasses ALL verification, awarding points for zero proof of work (Major)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, while investigating whether D025's DM-crash bug also affected
+task types other than vocab/listening (the owner explicitly asked
+this before merging/testing D025's fix — good instinct, since it
+surfaced a second, arguably worse issue in the same investigation).
+
+**What would have happened:** unlike vocab/listening (which use a
+two-step "post the quiz, wait for a DM reply" flow — D025's bug),
+accent/shadow/speaking/writing/community are one-step: `!done <task>`
+immediately checks whether the student already posted proof (a
+recording or text) in the right channel within the last 2 hours, via
+`verification.verify_task()`, which searches `ctx.guild`'s channel
+history. This means these 5 task types were NEVER at risk of D025's
+specific `AttributeError` crash (confirmed by tracing `verify_task()`
+and its 3 helpers — none read `channel.name` unsafely).
+
+However, tracing `cmd_done()`'s actual call site revealed a DIFFERENT,
+arguably more serious problem:
+
+```python
+if isinstance(ctx.author, discord.Member):
+    passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
+    if not passed:
+        await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
+        return
+# PASSED VERIFICATION — process the submission
+```
+
+In a DM, `ctx.author` is a `discord.User`, not a `discord.Member`
+(Discord's own distinction: a `Member` only exists in the context of a
+specific guild). So `isinstance(ctx.author, discord.Member)` is
+`False` in a DM, the entire verification block is skipped, and
+execution falls straight through to "PASSED VERIFICATION" — awarding
+full points and marking the task done with **zero check that the
+student actually did anything**. This is not a crash and produces no
+error in the logs — the bot would have replied with a completely
+normal-looking success message, making it invisible without
+specifically tracing this code path (found via code reading, not a
+live repro, since this wasn't the specific complaint that started the
+investigation).
+
+**Severity: Major, not Blocker.** Doesn't break the student
+experience (a student attempting this from DM would have their task
+marked done successfully, no error shown) — the risk is entirely on
+the INTEGRITY side: any student who realizes `!done accent` works from
+DM without actually doing the accent drill gets free points with no
+proof required, undermining the point of proof-of-work verification
+for exactly the 5 task types that have real submission checks. Given
+this system is about to onboard 16 real students, closing this before
+they arrive (rather than after someone discovers it) is the right
+call.
+
+**Fix applied (2026-07-15):** replaced the silent-skip `if
+isinstance(...)` guard with an explicit rejection: if `ctx.author` is
+NOT a `discord.Member` (i.e., this is a DM), send a clear bilingual
+message telling the student `!done <task>` doesn't work from DM and to
+type it in the server instead, then `return` — never falling through
+to "PASSED VERIFICATION" without an actual check. When `ctx.author` IS
+a `Member` (the normal, intended path), behavior is completely
+unchanged: `verify_task()` still runs exactly as before.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
+pull && docker compose up -d --build`), then a live re-test: have
+`bioroma` try `!done accent` (or any of shadow/speaking/writing/
+community) via DM and confirm it's now correctly rejected with the new
+guidance message, AND try it again in a real server channel with
+actual proof posted to confirm the normal path still works unchanged,
+before this can be marked ✅ Resolved.
