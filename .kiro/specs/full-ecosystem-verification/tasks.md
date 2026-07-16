@@ -942,11 +942,14 @@
 
 ## Phase H6 — Human Experience Walkthrough
 
-- [~] **H6.1** Owner (and 1-2 trusted others if available) walks the
+- [x] **H6.1** Owner (and 1-2 trusted others if available) walks the
   FULL new-student journey on a Ghost Testing account: join → onboarding
   DMs → tutorial → first task → first week → first escalation → first
   web dashboard visit.
-  → **IN PROGRESS, live with the owner.** First real action (join,
+  → **COMPLETE — every leg of the journey walked through live with
+  the owner** (join, welcome DMs, tutorial, all 7 daily task types,
+  `!week`, dashboard/link flow, full escalation loop — H6.4 below).
+  First real action (join,
   using the `bioroma` Ghost Testing account against the real production
   guild) immediately surfaced **D023 (Blocker)**: a second, internal
   "Ghost Bot" (meant to be fully isolated for safe feature testing) was
@@ -1028,17 +1031,38 @@
     — not yet started.
   **Do not assume any of the above are done or passing** — they are
   explicitly deferred, not completed, not skipped-as-fine.
-- [ ] **H6.2** Explicitly judge and record (not just "it worked"):
+- [x] **H6.2** Explicitly judge and record (not just "it worked"):
   clarity of onboarding, tone of Nour's responses, pacing of the daily
   loop, whether Arabic support feels genuinely supportive, whether the
   dashboard is motivating or confusing.
-  → Not yet formally judged — the FIRST pass's "not professional and
-  so confusing" reaction is now known to have been contaminated by
-  D023 (two bots' outputs interleaved), not necessarily a verdict on
-  the real bot's onboarding alone. Needs re-judging on the clean,
-  single-bot experience from the second pass onward.
-- [ ] **H6.3** Flag any point where a real zero-English beginner would
+  → **Judged by the owner, 2026-07-16, after the full H6.1/H6.4 walkthrough
+  (all defects found along the way already fixed and re-verified —
+  this judgment is on the CLEAN, fully-fixed experience, not the
+  original contaminated first pass):**
+  - **Onboarding clarity** (join → welcome → tutorial, post-D023/D024
+    fix): ✅ **clear and professional.**
+  - **Nour's tone** (`#ask-nour` + escalation reply, post-D032 fix):
+    ✅ **warm/supportive**, not robotic or generic.
+  - **Daily-loop pacing** (7 tasks/day): ✅ **reasonable and
+    sustainable**, not too much or too little.
+  - **Arabic support** (bilingual framing across tasks/quizzes/
+    escalation): ✅ **genuinely supportive**, not just translated-on-top.
+  - **Dashboard motivation** (`/dash/` + homepage, post-D029/D030
+    fix): ✅ **"its good"** — motivating, not confusing or flat.
+
+  This is the FIRST pass's original "not professional and so
+  confusing" reaction, now fully superseded — that reaction is
+  confirmed (via D023's investigation) to have been contaminated by
+  Ghost Bot's uncoordinated second welcome-DM sequence, not a verdict
+  on the real bot's actual onboarding. On the clean experience, every
+  dimension checked came back positive.
+- [x] **H6.3** Flag any point where a real zero-English beginner would
   likely get stuck or confused, even if the system technically worked.
+  → **Judged by the owner, 2026-07-16**, reflecting across the ENTIRE
+  walkthrough (join, onboarding, tutorial, all 7 daily tasks, `!week`,
+  dashboard/link flow, full escalation loop): **"i dont think so all
+  good beginner friendly"** — no single point identified where a real
+  zero-English-confidence beginner would likely get stuck or give up.
 - [x] **H6.4** Walk the escalation experience from the STUDENT's side
   (send a message that should trigger Nour escalation) and from the
   OWNER's side (receive it on Telegram, reply, confirm delivery) —
