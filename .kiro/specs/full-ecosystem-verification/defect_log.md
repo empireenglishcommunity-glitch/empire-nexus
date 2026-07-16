@@ -2100,3 +2100,89 @@ community) via DM and confirm it's now correctly rejected with the new
 guidance message, AND try it again in a real server channel with
 actual proof posted to confirm the normal path still works unchanged,
 before this can be marked ✅ Resolved.
+
+
+
+---
+
+## D027 — Discord's `!done listening` quiz is disconnected from the practice-platform listening page's actual content (Major)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, continuing the daily-task walkthrough after D025/D026. The
+owner clicked the practice-platform listening link from the daily task
+post, did that page's exercise, then came back to Discord and typed
+`!done listening` — and got a comprehension question about a stranger
+named Sarah living in Cairo, with no connection to anything on the
+page they'd just visited.
+
+**Root cause, confirmed via direct code reading of both systems:**
+- The practice-platform listening page (`empire-dojo`'s
+  `generate.py`'s `gen_listening()`) is, in reality, a **vocabulary
+  meaning-matching quiz with audio**: it shows a real curriculum
+  vocabulary word for that specific level/week/day (via
+  `curriculum.get_vocabulary_for_day()` — the exact per-day word slice
+  the student is actually studying that day), plays its pronunciation,
+  and asks the student to pick its correct Arabic meaning.
+- Discord's `!done listening` (`verification.generate_listening_quiz()`)
+  always pulled from `LISTENING_QUESTIONS`, a **hardcoded bank of
+  exactly 8 generic placeholder sentences** ("My name is Sarah and I
+  live in Cairo," "I have two brothers and one sister") with zero
+  relationship to the student's real level, week, day, or the specific
+  words they were just studying.
+
+These are simply two disconnected systems that happen to share the
+word "listening" — not a case of the SAME content being retrieved
+incorrectly, but two entirely separate, never-linked implementations.
+Every student, every day, at any level, would hit this same
+disconnect between what the link shows and what Discord asks.
+
+**Severity: Major.** Doesn't block task completion (the quiz still
+works, still awards points correctly, D025 already fixed the crash
+that was silently eating answers) — but it actively undermines trust
+and the pedagogical point of "listening practice," since the Discord
+half of the exercise is unrelated filler content rather than
+reinforcement of what the student was just shown.
+
+**Fix applied (2026-07-15):** rewrote `generate_listening_quiz()` to
+pull from the SAME real curriculum vocabulary the practice platform
+and the vocab quiz (`generate_vocab_quiz()`, directly above it in the
+same file) already use — specifically `curriculum
+.get_vocabulary_for_day()` for the member's actual level/week/day
+(computed via the exact same day-index convention already used
+elsewhere in this codebase for the daily task post itself, in
+`tasks.py`'s `generate_daily_tasks()` — not a new convention invented
+here), falling back to `get_quiz_words()` (broader week+prior-2-weeks
+sample) if that specific day has no data, and only falling back to the
+old hardcoded generic bank if there's truly no curriculum data loaded
+at all (so this never regresses to "no question"). Mirrors
+`generate_vocab_quiz()`'s EN↔AR question shape, since this bot has no
+way to play an actual audio clip inside Discord — "listening" here
+means "the word you just heard read aloud via TTS on the practice
+platform," consistent with how the practice platform's own page
+already frames it, not a newly-invented format.
+
+**Tested (2026-07-15), safely, before any deploy:** per this
+project's established `docker exec`-swap methodology (D019: a
+temporary file swap inside the container is a separate OS process from
+the live bot, module-level state is never shared, safe for pre-deploy
+verification) — backed up the container's live `verification.py`,
+copied in the fixed version, and ran `generate_listening_quiz()` +
+`check_listening_answer()` directly against `bioroma`'s real member
+row (level L0, week 3): produced `"ما معنى كلمة **clean** بالعربي؟"`
+(a real word from that week/day's actual vocabulary, confirmed against
+the same `get_vocabulary_for_day()` call used above for the D025
+investigation), correctly accepted the right answer, correctly
+rejected a wrong answer showing the right one. Restored the container's
+original file afterward — this test never touched the live bot process
+or deployed anything.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED (via the real Discord flow).** The safe pre-deploy test
+above confirms the underlying logic works correctly, but per this
+campaign's standing discipline, still needs: PR review/merge, deploy
+to production (`git pull && docker compose up -d --build`), then a
+live re-test through the REAL Discord flow: `bioroma` visits today's
+practice-platform listening link, notes the word shown, then types
+`!done listening` in `#bot-commands` and confirms the SAME word (or at
+least a word from the same day's real list) appears in the Discord
+question, before this can be marked ✅ Resolved.
