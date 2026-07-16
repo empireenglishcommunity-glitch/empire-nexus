@@ -1748,6 +1748,25 @@ async def cmd_progress(ctx):
     pron_avg = database.get_pronunciation_average(str(ctx.author.id))
     if pron_avg > 0:
         msg += f"\n🎯 Pronunciation: **{pron_avg:.0f}%** | Difficulty: {diff_emoji} {diff_label}"
+
+    # Masar M1.3: Momentum Score, added alongside (not replacing) the
+    # level badge line above -- fixes Hisn D012 by giving students one
+    # honest, clearly-labeled recency signal, computed identically to
+    # the dashboard's momentum field (same narrative_engine.momentum_score()
+    # call) so the two surfaces never disagree about the same student
+    # at the same moment (R2's consistency requirement).
+    if database.is_feature_enabled("masar_momentum_score", str(ctx.author.id)):
+        from . import narrative_engine
+        momentum = narrative_engine.momentum_score(str(ctx.author.id))
+        momentum_label_ar = {
+            "restarting": "بداية جديدة", "building": "في البناء",
+            "steady": "مستقر", "strong": "زخم قوي",
+        }.get(momentum["label"], "")
+        msg += (
+            f"\n🧭 Momentum This Week: **{momentum['score']}** ({momentum['label'].title()})"
+            f" — نشاطك الأسبوعي{f' / {momentum_label_ar}' if momentum_label_ar else ''}"
+        )
+
     await ctx.send(msg)
 
 

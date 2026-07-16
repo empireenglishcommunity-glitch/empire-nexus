@@ -20,14 +20,24 @@
 
 ## Phase M0 — Foundation
 
-- [ ] **M0.1** Write `narrative_engine.py` with `gather_signals(discord_id)`
+- [x] **M0.1** Write `narrative_engine.py` with `gather_signals(discord_id)`
   — pulls from `nour_memories`, `ability_milestones` (last 14 days),
   `pronunciation_scores` (14d trend), `vocab_srs` (due/mastered/accuracy),
   `members.difficulty_level`, `members.current_streak`, and a summary
   of recent `nour_conversations` themes, into one dict. Unit-testable
   on its own (a real gap D020 had — no generation function existed to
   test at all).
-- [ ] **M0.2** Wire the AI-chain calls (`build_growth_letter`,
+  → **Done.** Reuses existing helpers throughout (`nour_personality.get_memories()`,
+  `database.get_srs_stats()`, `database._get_pronunciation_stats()`,
+  `database.tasks_completed_today()`, `tasks.calculate_completion_rate()`)
+  rather than duplicating SQL — only one genuinely new query was
+  needed (`_get_recent_milestones()`, a 14-day-windowed variant of the
+  existing lifetime-only `get_completed_milestones()`).
+  `conversation_themes` is a plain extraction of recent
+  `nour_conversations` rows (topic/intent or a message snippet), NOT
+  an AI summary — keeps `gather_signals()` itself free of any AI call,
+  fully deterministic and testable without network access.
+- [x] **M0.2** Wire the AI-chain calls (`build_growth_letter`,
   `build_milestone_moment`, `build_difficulty_note` — stub bodies for
   now, full prompts come in M2-M4) to reuse the SAME Groq→Gemini
   fallback pattern already proven working in `nour_concierge._generate_response()`
@@ -37,42 +47,100 @@
   `None`/silence — this is the exact class of gap that made D020
   invisible for so long; each function must have a working, verified
   non-AI fallback before any real feature is built on top of it.
-- [ ] **M0.3** Produce the Data Honesty Audit table (design.md's
+  → **Done, live-tested.** `_call_groq()`/`_call_gemini()`/
+  `_generate_with_fallback()` copy the exact proven request shape
+  (timeouts, failure tracking) from `nour_concierge.py`. Ran the same
+  2-scenario test Hisn H4.1 used, against all 3 functions: (1) Groq
+  fails, Gemini succeeds → all 3 returned AI-sourced text; (2) both
+  fail → all 3 returned real, signals-based (not generic) template
+  text, never `None`/silence. Reused Nour's exact existing personality
+  prompt (`nour_concierge.NOUR_SYSTEM_PROMPT`), no new voice invented.
+- [x] **M0.3** Produce the Data Honesty Audit table (design.md's
   Component 6) as a real, current-state check — re-verify each of the
   9 listed displays against the live system (not just trust the
   design doc's table, which was written from a code read) before
   presenting it to the owner for sign-off. Get explicit owner sign-off
   on the audit before proceeding to M1.
-- [ ] **M0.4** Create the `nour_growth_letters` table (schema in
+  → **Done, owner sign-off given.** Re-verified all 9 rows against the
+  actual current code (`bot.py`'s `cmd_progress`/`cmd_streak`/`cmd_level`,
+  `api_server.py`'s `get_dashboard`/`get_nour_tips`) rather than
+  trusting the design doc's table alone — also independently checked
+  `!level` and the streak leaderboard, not explicitly listed in
+  design.md's table, and confirmed both clean. Result: same 2 of 10
+  displays fail (D012's XP bar, D020's tips card) — confirming the
+  original scoping was accurate, not inflated. Owner initially
+  flagged confusion over "2 fails" sounding like open problems being
+  left alone; clarified that both are the very next 2 tasks (M1, M2),
+  not skipped — owner then confirmed: "ok we can proceed."
+- [x] **M0.4** Create the `nour_growth_letters` table (schema in
   design.md Component 2) via a normal `database.py` schema migration,
   consistent with every other table in this codebase. Confirm it's
   created correctly on both a fresh DB and an existing production-like
   DB (use the Hisn H5 DB clone methodology — a real clone, never
   production directly — to test the migration path safely).
+  → **Done, tested both ways.** Added to `_SCHEMA` right after the old
+  `nour_study_tips` table, with a comment explaining `nour_study_tips`
+  is left in place (inert, not dropped) until M2.5 formally retires
+  it — avoids a silent half-migration. Tested `database.init_db()` on
+  (a) a brand new empty DB file, (b) a real clone of the current
+  production DB (via `docker cp`, never touching production directly)
+  — confirmed idempotent, zero disruption to existing tables/rows in
+  either case.
 
 ## Phase M1 — Momentum Score (fixes D012)
 
-- [ ] **M1.1** Implement `narrative_engine.momentum_score(discord_id)`
+- [x] **M1.1** Implement `narrative_engine.momentum_score(discord_id)`
   per design.md's Component 3 formula (streak/completion/trend
   weighted average → score + label). Pure computation, no AI, unit
   tested directly against known input combinations (e.g. confirm a
   0-streak/0-tasks member scores in the "restarting" band, a
   full-streak/full-completion/improving-trend member scores "strong").
-- [ ] **M1.2** Wire `momentum_score()` into the dashboard's existing
+  → **Done, tested against both boundary cases via `GHOST_TEST_`
+  members in a real DB clone**: zero-everything member → score 10 →
+  "restarting" ✅; full-streak(14d)/full-completion(100%)/
+  improving-trend member → score 100 → "strong" ✅; a mid-range member
+  → score 51 → "steady" (sensible middle value, not tested for in the
+  task but useful confirmation the bands aren't degenerate).
+- [x] **M1.2** Wire `momentum_score()` into the dashboard's existing
   `level-progress` bar element — replace the fill-%/label source, keep
   the existing CSS/markup, change only what data feeds it and its
   displayed label text (bilingual, per constraints). Confirm via a
   live dashboard load (same Ghost-Testing-member methodology as Hisn
   H2.3) that the bar now shows momentum, not points-vs-threshold.
-- [ ] **M1.3** Add the Momentum Score as a new line in `!progress`'s
+  → **Done.** `/api/dashboard` now includes an optional `momentum`
+  field (only present when `masar_momentum_score` is enabled for that
+  specific `discord_id` — omitted entirely when off, not sent as
+  null/zero, so the frontend needs no special-casing to fall back).
+  `empire-dojo/site/dash/index.html`'s JS checks for `d.momentum`
+  first; if present, drives the SAME bar/label DOM elements
+  (`#level-progress`, `#level-progress-label`) from the score/label,
+  bilingual ("Steady (62) — نشاطك الأسبوعي / مستقر"); if absent,
+  unchanged fallback to the original XP-bar behavior. CSS/markup
+  untouched.
+- [x] **M1.3** Add the Momentum Score as a new line in `!progress`'s
   Discord output, alongside (not replacing) the existing level badge
   line. Confirm via direct command-callback invocation (same harness
   pattern as Hisn H1.1) that both surfaces show the same score for the
   same member at the same moment (design.md's R2 consistency
   requirement).
-- [ ] **M1.4** Add `masar_momentum_score` feature flag (default OFF),
+  → **Done.** New line added to `cmd_progress()` in `bot.py`, right
+  after the existing Dhaka' pronunciation/difficulty line, gated by
+  the same per-member `is_feature_enabled("masar_momentum_score",
+  discord_id)` check. R2 consistency confirmed structurally, not just
+  by inspection: both the dashboard field and the `!progress` line
+  call the exact same `narrative_engine.momentum_score()` function —
+  there is no second formula anywhere else that could ever diverge
+  from it. Live-tested by calling it twice "at the same moment" for
+  the same `GHOST_TEST_` member — identical output both times.
+- [x] **M1.4** Add `masar_momentum_score` feature flag (default OFF),
   gate both M1.2 and M1.3 behind it. Flip to ON only after M1.2/M1.3
   are both live-verified.
+  → **Done.** Registered in `flag_registry.py` under a new `masar`
+  initiative group (🧭), default `False`, alongside placeholder
+  registrations for `masar_growth_letter`/`masar_milestone_moments`/
+  `masar_difficulty_notes` (M2/M3/M4's flags, registered now so
+  `!flag list` shows the full Masar picture even before each phase
+  ships — each stays OFF until its own phase is live-verified).
 - [ ] **M1.5** **Live verification (repeat before marking M1 done):**
   toggle the flag on in production, confirm both the dashboard and
   `!progress` reflect a real test member's momentum score correctly,
@@ -80,6 +148,13 @@
   (same D010-style flag-gate discipline). Only then mark D012 as
   Resolved in Hisn's `defect_log.md` (cross-reference, since D012 was
   found there).
+  → **Pre-verified against a real DB clone (never production) with 4
+  explicit gate scenarios** (flag OFF/default, flag ON for everyone,
+  flag ON but member not in a restricted allowlist, flag restored to
+  OFF) — all 4 behaved exactly as expected, same D010-style discipline
+  confirmed. **Still needs the ACTUAL production toggle** once this
+  PR is merged and deployed — tracked as the next action, not yet
+  done as of this commit.
 
 ## Phase M2 — Nour's Weekly Growth Letter (fixes D020) — the flagship deliverable
 

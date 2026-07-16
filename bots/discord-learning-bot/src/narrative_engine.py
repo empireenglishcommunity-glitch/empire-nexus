@@ -1,0 +1,432 @@
+"""Masar (مسار) — Personal Growth Narrative Engine.
+
+One shared module that turns a student's existing, already-collected
+data (memories, milestones, pronunciation trend, SRS state, difficulty
+level, streak, recent conversation themes) into a single "signals"
+snapshot, and then into Nour-voiced, personal text for three surfaces:
+
+  - The Weekly Growth Letter (M2, fixes D020 — the AI tips engine that
+    was designed but never actually built)
+  - Milestone unlock moments (M3, optional)
+  - Adaptive difficulty change notes (M4, optional)
+
+Plus one pure-computation helper, `momentum_score()` (M1, fixes D012 —
+the dashboard's XP bar and level badge measuring two unrelated things).
+
+Design principle (per .kiro/specs/masar/design.md, Component 1):
+`gather_signals()` is the ONE place that knows how to read "everything
+about this student." Every feature below reads the SAME snapshot,
+rather than each re-querying slightly differently. `gather_signals()`
+itself makes NO AI calls — it is pure data-gathering, deterministic,
+and unit-testable on its own. This is the exact gap D020 had: no
+generation function existed at all, so nobody could ever prove the
+"AI-generated weekly tips" claim was false until Hisn found it by
+accident. Testability from day one is the whole point of this module.
+
+AI Provider Strategy (identical pattern to nour_concierge.py's proven
+Groq→Gemini→template fallback, confirmed working in Hisn H4.1):
+  1. Groq (Llama 3.3 70B) — PRIMARY
+  2. Gemini — FALLBACK (if Groq fails)
+  3. Template, built from real `signals` data — LAST RESORT (never
+     silence, and unlike a generic "no letter today" string, this
+     fallback is itself personal — it just isn't AI-phrased).
+
+M0.2 note: `build_growth_letter()`, `build_milestone_moment()`, and
+`build_difficulty_note()` are stub bodies in this file for now — they
+wire the fallback chain correctly and return real (if generic-for-now)
+text, but their full Nour-voiced prompts are built out in M2/M3/M4
+respectively. The CONTRACT that matters at this phase is: never return
+None, always go through the same three-tier fallback, and be live-
+tested (Groq-fail/Gemini-succeed, both-fail) before anything is built
+on top of them — exactly the discipline D020's engine never had.
+"""
+import datetime
+import logging
+import random
+from typing import Optional
+
+import aiohttp
+
+from . import config, database
+
+logger = logging.getLogger("empire-bot.narrative")
+
+# ============================================================
+#  CONFIGURATION
+# ============================================================
+
+MAX_RESPONSE_TOKENS = 300
+
+# Reuse Nour's exact established voice (do not invent a new one, per
+# requirements.md's constraint on R3). Imported lazily inside functions
+# that need it, to avoid a module-load-time circular import between
+# narrative_engine and nour_concierge (both import database; neither
+# needs to import the other at import time).
+
+
+# ============================================================
+#  COMPONENT 1 — gather_signals() — pure data gathering, no AI
+# ============================================================
+
+def gather_signals(discord_id: str) -> dict:
+    """Pull together everything Masar's features need about one
+    student, from tables that already exist in this codebase. Makes
+    NO AI calls. Every `build_*` function below is called with this
+    dict's output, so every feature reads the same snapshot.
+
+    Returns a dict with keys:
+        memories, milestones_recent, pronunciation_trend, srs_state,
+        difficulty_level, streak, longest_streak, level, week,
+        total_points, tasks_today_count, completion_rate_7d,
+        conversation_themes, discord_name
+    """
+    member = database.get_member(discord_id)
+    if not member:
+        # Caller's responsibility to check for this — gather_signals()
+        # itself stays a pure function, no exception-as-control-flow.
+        return {}
+
+    from . import nour_personality
+
+    memories = nour_personality.get_memories(discord_id, limit=5)
+    milestones_recent = _get_recent_milestones(discord_id, days=14)
+    pronunciation_trend = database._get_pronunciation_stats(discord_id)
+    srs_state = database.get_srs_stats(discord_id)
+    conversation_themes = _summarize_conversation_themes(discord_id)
+
+    from . import tasks as tasks_module
+
+    return {
+        "discord_id": discord_id,
+        "discord_name": member.get("discord_name", "").split("#")[0],
+        "level": member.get("level", "L0"),
+        "week": database.member_week_number(discord_id),
+        "total_points": member.get("total_points", 0),
+        "streak": member.get("current_streak", 0),
+        "longest_streak": member.get("longest_streak", 0),
+        "difficulty_level": member.get("difficulty_level", 2),
+        "tasks_today_count": len(database.tasks_completed_today(discord_id)),
+        "completion_rate_7d": tasks_module.calculate_completion_rate(discord_id, days=7),
+        "memories": memories,
+        "milestones_recent": milestones_recent,
+        "pronunciation_trend": pronunciation_trend,
+        "srs_state": srs_state,
+        "conversation_themes": conversation_themes,
+    }
+
+
+def _get_recent_milestones(discord_id: str, days: int = 14) -> list[dict]:
+    """Milestones this student completed in the last N days.
+
+    No existing helper filters ability_milestones by a recency window
+    (get_completed_milestones() returns the full lifetime list), so
+    this adds that one specific query rather than reusing a mismatched
+    helper.
+    """
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    conn = database._connect()
+    rows = conn.execute(
+        """SELECT milestone_id, completed_at, level FROM ability_milestones
+           WHERE discord_id=? AND completed_at>=? ORDER BY completed_at DESC""",
+        (discord_id, cutoff),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def _summarize_conversation_themes(discord_id: str, limit: int = 8) -> list[str]:
+    """Plain extraction of recent nour_conversations themes — NOT an
+    AI summary. Keeping gather_signals() itself free of any AI call
+    (only the build_* functions call AI) makes it deterministic,
+    fast, and unit-testable without network access — the same
+    property that made D012's momentum_score() testable per M1.1.
+
+    Returns a short list of student-side message snippets (the
+    'intent' field when set, otherwise a truncated snippet of the
+    message itself) — raw material for a prompt, not a finished
+    summary.
+    """
+    history = database.get_recent_conversation(discord_id, limit=limit)
+    themes = []
+    for h in history:
+        if h.get("role") != "student":
+            continue
+        intent = (h.get("intent") or "").strip()
+        if intent and intent != "escalation":
+            themes.append(intent)
+        else:
+            snippet = h.get("message", "").strip()[:80]
+            if snippet:
+                themes.append(snippet)
+    return themes
+
+
+# ============================================================
+#  COMPONENT 3 — momentum_score() — pure computation, no AI (M1)
+# ============================================================
+
+def momentum_score(discord_id: str) -> dict:
+    """A single, honestly-computed 'how am I doing lately' signal.
+
+    Deterministic, no AI call, fast enough to compute live on every
+    API/!progress call (per design.md's Component 3). Reads
+    gather_signals()'s output rather than re-querying tables directly,
+    so this and every other Masar feature always agree on the same
+    underlying facts about a student at a given moment (R2's
+    dashboard/!progress consistency requirement).
+
+    Returns: {"score": int 0-100, "label": str, "basis": str}
+    """
+    signals = gather_signals(discord_id)
+    if not signals:
+        return {"score": 0, "label": "restarting", "basis": "no data"}
+
+    streak_component = min(signals["streak"] / 7, 1.0) * 40
+    completion_component = min(signals["completion_rate_7d"] / 100, 1.0) * 40
+
+    trend = signals["pronunciation_trend"].get("trend", "no_data")
+    trend_component = {
+        "improving": 20.0,
+        "stable": 10.0,
+        "declining": 0.0,
+        "no_data": 10.0,
+    }.get(trend, 10.0)
+
+    score = round(streak_component + completion_component + trend_component)
+    score = max(0, min(100, score))
+
+    if score < 25:
+        label = "restarting"
+    elif score < 50:
+        label = "building"
+    elif score < 75:
+        label = "steady"
+    else:
+        label = "strong"
+
+    return {
+        "score": score,
+        "label": label,
+        "basis": "7-day streak + task completion + pronunciation trend",
+    }
+
+
+# ============================================================
+#  AI CHAIN — Groq -> Gemini -> template (never returns None)
+#  Same proven pattern as nour_concierge._generate_response(),
+#  parameterized so all 3 build_* functions below share ONE
+#  implementation instead of each re-inventing fallback logic.
+# ============================================================
+
+async def _call_groq(system_prompt: str, user_prompt: str,
+                      temperature: float = 0.7) -> Optional[str]:
+    """Primary provider. Identical request shape to nour_concierge's
+    proven Groq call — same timeout, same failure tracking."""
+    if not config.GROQ_API_KEY:
+        return None
+
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {config.GROQ_API_KEY}",
+    }
+    payload = {
+        "model": config.GROQ_MODEL,
+        "temperature": temperature,
+        "max_tokens": MAX_RESPONSE_TOKENS,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+    }
+
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers,
+                                    timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Groq API error for narrative_engine: {resp.status}")
+                    from . import ops_monitoring
+                    import asyncio
+                    asyncio.create_task(ops_monitoring.track_groq_failure())
+                    return None
+                data = await resp.json()
+                text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                return text.strip() if text else None
+    except Exception as e:
+        logger.error(f"Groq call failed for narrative_engine: {e}")
+        from . import ops_monitoring
+        import asyncio
+        asyncio.create_task(ops_monitoring.track_groq_failure())
+        return None
+
+
+async def _call_gemini(system_prompt: str, user_prompt: str,
+                        temperature: float = 0.7) -> Optional[str]:
+    """Fallback provider. Identical request shape to nour_concierge's
+    proven Gemini call."""
+    if not config.GEMINI_API_KEY:
+        return None
+
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{config.GEMINI_MODEL}:generateContent?key={config.GEMINI_API_KEY}"
+    )
+    payload = {
+        "contents": [{"parts": [{"text": f"{system_prompt}\n\n{user_prompt}"}]}],
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": MAX_RESPONSE_TOKENS},
+    }
+
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload,
+                                    timeout=aiohttp.ClientTimeout(total=20)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Gemini API error for narrative_engine: {resp.status}")
+                    return None
+                data = await resp.json()
+                text = (data.get("candidates", [{}])[0]
+                        .get("content", {}).get("parts", [{}])[0].get("text", ""))
+                return text.strip() if text else None
+    except Exception as e:
+        logger.error(f"Gemini call failed for narrative_engine: {e}")
+        return None
+
+
+def _clean_ai_text(text: str) -> str:
+    """Same artifact-cleanup as nour_concierge._clean_response()."""
+    text = text.strip().strip('"').strip("'")
+    if text.lower().startswith("nour:"):
+        text = text[5:].strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
+    return text
+
+
+async def _generate_with_fallback(system_prompt: str, user_prompt: str,
+                                   template_fallback_fn) -> tuple[str, str]:
+    """Shared 3-tier fallback used by every build_* function below.
+
+    Returns (text, source) where source is "ai" or "template_fallback"
+    — callers that persist a letter (e.g. M2's nour_growth_letters
+    table) can record which path produced it, per design.md's schema.
+
+    `template_fallback_fn` is a zero-arg callable that returns a
+    signals-based (not generic) string — it is called ONLY if both AI
+    providers fail, and it must never return None/empty (enforced by
+    a final guard below, so this function itself never returns None
+    even if a caller's fallback function has a bug).
+    """
+    text = await _call_groq(system_prompt, user_prompt)
+    if text:
+        return _clean_ai_text(text), "ai"
+
+    logger.info("narrative_engine: Groq failed, trying Gemini fallback")
+    text = await _call_gemini(system_prompt, user_prompt)
+    if text:
+        return _clean_ai_text(text), "ai"
+
+    logger.warning("narrative_engine: both AI providers failed, using template fallback")
+    fallback_text = template_fallback_fn()
+    if not fallback_text:
+        # Guard against a broken template function — this class of bug
+        # (a fallback path that silently produces nothing) is exactly
+        # what made D020 invisible; never let it happen here even by
+        # accident.
+        fallback_text = "احنا فاكرينك! خد وقتك وكمل شوية شوية 😊"
+    return fallback_text, "template_fallback"
+
+
+# ============================================================
+#  COMPONENT 1 (cont'd) — build_* functions (M0.2: stub bodies,
+#  full Nour-voiced prompts land in M2/M3/M4)
+# ============================================================
+
+def _nour_voice_system_prompt() -> str:
+    """Reuse Nour's exact established personality, not a new voice
+    (per requirements.md's R3 constraint). Imported lazily to avoid a
+    module-load-time circular import with nour_concierge."""
+    from . import nour_concierge
+    return nour_concierge.NOUR_SYSTEM_PROMPT
+
+
+async def build_growth_letter(signals: dict) -> tuple[str, str]:
+    """M0.2 stub: wires the real fallback chain and returns real,
+    signals-based text today, even though the full weekly-letter
+    prompt (M2.1) isn't written yet. This is intentionally usable,
+    not a placeholder that raises NotImplementedError — the whole
+    point of M0.2 is to prove the chain works end-to-end before M2
+    builds the flagship feature on top of it.
+
+    Returns (letter_text, source).
+    """
+    system_prompt = _nour_voice_system_prompt()
+    user_prompt = (
+        f"Write a short (3-5 sentence) personal weekly check-in message "
+        f"in Egyptian Arabic for {signals.get('discord_name', 'the student')}, "
+        f"who is at level {signals.get('level')}, week {signals.get('week')}, "
+        f"with a {signals.get('streak')}-day streak and "
+        f"{signals.get('completion_rate_7d')}% task completion this week. "
+        f"Be warm and specific, not generic."
+    )
+    return await _generate_with_fallback(
+        system_prompt, user_prompt,
+        lambda: _template_growth_letter(signals),
+    )
+
+
+def _template_growth_letter(signals: dict) -> str:
+    """Non-AI fallback for the growth letter — built directly from
+    real signals (per design.md: 'this fallback is itself personal,
+    just not AI-phrased'), never a generic string."""
+    streak = signals.get("streak", 0)
+    completion = signals.get("completion_rate_7d", 0)
+    milestones = signals.get("milestones_recent", [])
+    parts = [f"استمرارك {streak} يوم على التوالي ده حاجة حلوة فعلاً 🔥"]
+    if milestones:
+        parts.append(f"وكمان فتحت {len(milestones)} إنجاز جديد الأسبوعين اللي فاتوا — عاش!")
+    parts.append(f"معدل إنجازك الأسبوع ده {completion:.0f}%. كمل بنفس الطاقة 💪")
+    return " ".join(parts)
+
+
+async def build_milestone_moment(discord_id: str, milestone_id: str,
+                                  signals: dict) -> tuple[str, str]:
+    """M0.2 stub — full milestone-specific prompt lands in M3.1."""
+    system_prompt = _nour_voice_system_prompt()
+    user_prompt = (
+        f"The student {signals.get('discord_name', '')} just unlocked the "
+        f"milestone '{milestone_id}'. Write a short, warm, specific "
+        f"congratulations message in Egyptian Arabic."
+    )
+    return await _generate_with_fallback(
+        system_prompt, user_prompt,
+        lambda: f"🏆 مبروك! فتحت إنجاز جديد ({milestone_id}) — استمر كده يا نجم!",
+    )
+
+
+async def build_difficulty_note(discord_id: str, direction: str,
+                                 signals: dict) -> tuple[str, str]:
+    """M0.2 stub — full direction-aware prompt lands in M4.1.
+    `direction` is "up" or "down"; both must be framed positively
+    per R5's acceptance criteria, enforced even in this stub's
+    template fallback.
+    """
+    system_prompt = _nour_voice_system_prompt()
+    if direction == "up":
+        user_prompt = (
+            f"The student {signals.get('discord_name', '')} is being moved to "
+            f"a harder difficulty because their scores are strong. Write a "
+            f"short, positive, encouraging message in Egyptian Arabic — "
+            f"frame this as 'you're ready for more,' never as a penalty."
+        )
+        template = "أنت جاهز لتحدي أكبر دلوقتي — هنرفع مستوى المهام شوية عشان نستمر في التطور 🚀"
+    else:
+        user_prompt = (
+            f"The student {signals.get('discord_name', '')} is being moved to "
+            f"an easier difficulty to build confidence. Write a short, "
+            f"positive, encouraging message in Egyptian Arabic — frame this "
+            f"as building a stronger foundation, never as a setback."
+        )
+        template = "هنبسط المهام شوية عشان نبني أساس أقوى — دي خطوة ذكية، مش تراجع 💪"
+
+    return await _generate_with_fallback(system_prompt, user_prompt, lambda: template)
