@@ -1897,10 +1897,26 @@ immediately after `handle_tutorial_dm()` reports the message as
 handled, before `process_commands()` would otherwise run for the same
 message).
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
-pull && docker compose up -d --build`), then a live re-test: have
-`bioroma` (or a fresh Ghost Testing account) go through the tutorial
-again and confirm steps 3 and 4 now show the REAL progress card and
-REAL help list, not just the scripted acknowledgment text, before this
-can be marked ✅ Resolved.
+**Deployed (2026-07-15):** merged via [PR #151](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/151) (a clean rebase of the
+original PR #150, which had gone stale/conflicting against `main`
+after PR #149 merged first — #150 was closed unmerged, #151 replaced
+it with an identical diff applied cleanly on top of current `main`).
+Confirmed landed on `main` via direct grep for
+`"invoke_real_command"`. Deployed to production (`git pull && docker
+compose up -d --build`) — confirmed via `docker exec ... grep -c
+invoke_real_command /app/src/features.py` returning `4` (all 4
+occurrences present in the running container's actual file) and a
+clean "Bot online" startup log with no errors.
+
+**Live re-tested (2026-07-15):** the bot process restart cleared
+`bioroma`'s in-memory tutorial progress (tutorial state is
+process-local, not DB-persisted), so the owner used the existing
+`!tutorial` command to manually restart the 5-step tutorial fresh
+against the newly-deployed code, then walked through it again. Owner
+confirmed: **"it worked"** — steps 3 (`!تقدم`) and 4 (`!مساعدة`) now
+show the real progress card and real help list, not just the scripted
+acknowledgment text.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified by the owner repeating the exact original repro against
+the newly-deployed code.

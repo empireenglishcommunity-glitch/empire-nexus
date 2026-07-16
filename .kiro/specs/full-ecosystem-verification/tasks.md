@@ -962,7 +962,23 @@
   Onboarding DM content itself (5-step Arabic tutorial, `!1` to
   advance) received cleanly on this second pass — continuing H6.1
   onward (tutorial completion → first task → first week → first
-  escalation → first web dashboard visit) next.
+  escalation → first web dashboard visit).
+
+  Continuing the tutorial surfaced **D024 (Major)**: steps 3 (`!تقدم`)
+  and 4 (`!مساعدة`) claimed to show the student their real progress
+  card / real command list, but only ever sent a short scripted
+  acknowledgment — the actual commands never ran, because
+  `handle_tutorial_dm()` intercepts and consumes the DM before
+  Discord's own command dispatcher ever sees it. Fixed by having those
+  steps actually invoke the real command via the bot's own
+  `get_context()`/`invoke()`, merged (PR #151, after PR #150 went
+  stale/conflicting and was closed unmerged), deployed, and live
+  re-tested by the owner restarting the tutorial via `!tutorial` on
+  the freshly-deployed code — owner confirmed "it worked." D024 marked
+  ✅ Resolved.
+
+  Continuing H6.1 onward (tutorial completion → first task → first
+  week → first escalation → first web dashboard visit) next.
 - [ ] **H6.2** Explicitly judge and record (not just "it worked"):
   clarity of onboarding, tone of Nour's responses, pacing of the daily
   loop, whether Arabic support feels genuinely supportive, whether the
