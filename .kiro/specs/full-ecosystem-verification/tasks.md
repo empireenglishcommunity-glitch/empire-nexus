@@ -977,8 +977,57 @@
   the freshly-deployed code — owner confirmed "it worked." D024 marked
   ✅ Resolved.
 
-  Continuing H6.1 onward (tutorial completion → first task → first
-  week → first escalation → first web dashboard visit) next.
+  Continuing H6.1 onward, the owner began the "first task" leg,
+  working through today's real daily tasks with `bioroma` in the real
+  server (`#l0-daily-tasks`/`#bot-commands`), which surfaced 3 more
+  defects — all found live, fixed, deployed, and live re-verified same
+  session (same full discipline as D023/D024 above):
+  - **D025 (Blocker):** `on_message` crashed with an `AttributeError`
+    on EVERY DM the bot received (`DMChannel` has no `.name` attribute,
+    read unconditionally near the top of `on_message`), silently
+    eating any DM-based quiz answer before it could ever be checked.
+    Confirmed directly in production logs. Fixed via `getattr()`
+    guards at all 4 affected call sites. ✅ Resolved.
+  - **D026 (Major):** `!done accent`/`shadow`/`speaking`/`writing`/
+    `community` attempted via DM silently skipped ALL verification
+    (the `isinstance(ctx.author, discord.Member)` guard was `False` in
+    a DM, so the check block was skipped entirely and execution fell
+    through to awarding full points with zero proof of work). Found
+    while the owner explicitly asked whether D025's bug might affect
+    other task types too — it didn't crash, but this bypass was
+    arguably worse. Fixed with an explicit DM rejection message
+    instead of a silent skip. Owner live-tested via DM (correctly
+    rejected) and via both `#l0-daily-tasks` and `#bot-commands`
+    (correctly accepted, unchanged normal behavior). ✅ Resolved.
+  - **D027 (Major):** the practice-platform listening page's real
+    curriculum vocabulary word had zero connection to Discord's
+    `!done listening` quiz question, which pulled from a hardcoded
+    bank of 8 generic placeholder sentences. Fixed by grounding the
+    Discord quiz in the same real per-day curriculum vocabulary the
+    practice platform already uses. Live re-tested through the real
+    Discord flow: the question asked about "play," confirmed
+    server-side to be the actual first word in that exact
+    level/week/day's real vocabulary list. ✅ Resolved.
+
+  **A false-alarm avoided along the way:** briefly misdiagnosed the
+  `#l0-daily-tasks`-vs-`#bot-commands` channel restriction on vocab/
+  listening quiz answers as a bug (an in-progress, uncommitted local
+  edit removing the restriction) — the owner correctly caught this and
+  clarified the restriction is intentional (keeps quiz Q&A out of the
+  daily-tasks channel) before it was ever committed or deployed. Edit
+  discarded; the `#bot-commands`-only requirement for quiz answers is
+  unchanged and confirmed correct as designed.
+
+  **Owner has explicitly deferred the remaining H6.1 legs to a later,
+  dedicated full human-test session**, rather than continuing
+  piecemeal today:
+  - Remaining task types today (shadowing, speaking, writing,
+    community) — not yet tried.
+  - `!week` check, first web dashboard visit (`/dash/`), and H6.4's
+    escalation walkthrough (both student-side and owner/Telegram-side)
+    — not yet started.
+  **Do not assume any of the above are done or passing** — they are
+  explicitly deferred, not completed, not skipped-as-fine.
 - [ ] **H6.2** Explicitly judge and record (not just "it worked"):
   clarity of onboarding, tone of Nour's responses, pacing of the daily
   loop, whether Arabic support feels genuinely supportive, whether the
