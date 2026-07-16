@@ -1920,3 +1920,183 @@ acknowledgment text.
 **Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
 re-verified by the owner repeating the exact original repro against
 the newly-deployed code.
+
+
+
+---
+
+## D025 — `on_message` crashes on EVERY DM due to unguarded `message.channel.name`, silently discarding vocab/listening quiz answers and more (Blocker)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, continuing the new-student journey on `bioroma`. The owner
+tried `!done vocab`, received the quiz question correctly, answered it
+(in the same DM conversation the whole tutorial had happened in), and
+got no reply at all — the task never got marked done.
+
+**Root cause, confirmed via direct log evidence (not just inferred):**
+`discord.py`'s `DMChannel` class has NO `.name` attribute at all
+(confirmed directly: `hasattr(discord.DMChannel, 'name')` → `False`
+against the actual installed `discord.py 2.7.1` on the production
+container). Four places in the codebase read `message.channel.name`
+unconditionally, with no guard for this:
+
+1. `features.check_english_only()` (`features.py` line 561, prior to
+   fix) — called unconditionally near the top of `on_message` for
+   EVERY message the bot receives, DM or not.
+2. The vocab-quiz-answer handler (`bot.py`, prior to fix) — reads
+   `message.channel.name == "bot-commands"` to decide whether to check
+   a pending quiz answer.
+3. The listening-quiz-answer handler (`bot.py`, prior to fix) — same
+   pattern, same channel check.
+4. The `#writing-feedback` auto-evaluation handler (`bot.py`, prior to
+   fix) — same pattern.
+
+Because (1) runs FIRST and unconditionally, **every single DM message
+sent to the bot crashed there**, before the message could ever reach
+(2), (3), or (4) further down in the same `on_message` handler.
+Confirmed directly in the production logs:
+```
+2026-07-15 23:59:59 [ERROR] discord.client: Ignoring exception in on_message
+Traceback (most recent call last):
+  File ".../discord/client.py", line 508, in _run_event
+    await coro(*args, **kwargs)
+  File "/app/src/bot.py", line 2067, in on_message
+    await features.check_english_only(message)
+  File "/app/src/features.py", line 561, in check_english_only
+    channel_name = message.channel.name
+                   ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DMChannel' object has no attribute 'name'
+```
+This exact crash fired twice around the owner's tutorial/vocab-attempt
+timestamps, confirming this is precisely what silently ate the vocab
+quiz answer: discord.py's own exception handler logs the crash as an
+`[ERROR]`-level "Ignoring exception in on_message" line and otherwise
+swallows it completely — no reply to the student, no visible sign
+anything went wrong, and easy to miss in logs unless specifically
+grepped for.
+
+**Severity: Blocker, not Minor.** This is NOT specific to vocab. ANY
+message a student sends to the bot via DM — answering a vocab quiz, a
+listening quiz, or anything else that would otherwise be handled later
+in `on_message` — crashes before reaching that logic. Given how much
+of onboarding (the tutorial itself, Nour's DM-based concierge
+conversations) already happens via DM, and how naturally a student
+would continue answering in the same DM thread they were just guided
+through, this is a systemic gap, not an edge case.
+
+**Secondary, related finding:** the vocab quiz word CAN legitimately
+differ from the words shown on the practice-platform link the student
+just visited — `curriculum.get_quiz_words()` intentionally samples from
+the current week PLUS the previous 2 weeks (for spaced repetition),
+while the practice platform's vocab page only shows today's specific
+day-slice of the current week's words. This is working as designed,
+not a bug, but it is genuinely confusing without any explanation
+shown to the student — noted here for awareness, not filed as its own
+defect, since "make it less confusing" is a product/UX judgment call
+(similar in spirit to D012/D020), not a correctness bug. Flagged for
+consideration during Masar or a future onboarding-polish pass.
+
+**Fix applied (2026-07-15):** added an explicit DM-safe guard to all 4
+call sites:
+- `features.check_english_only()`: added `if not hasattr(message.channel,
+  "name"): return False` right after the bot-author check, before the
+  first unconditional `.name` read. English-only enforcement was never
+  meant to apply to DMs anyway (the whole concept of "channel" doesn't
+  apply there), so skipping entirely is correct, not just crash-safe.
+- The vocab handler, listening handler, and `#writing-feedback`
+  handler in `bot.py`: changed `message.channel.name == "..."` to
+  `getattr(message.channel, "name", None) == "..."` — a DM channel now
+  safely evaluates to `None == "bot-commands"` (i.e. `False`) instead
+  of crashing, which is the correct behavior (a DM was never going to
+  equal any of these channel-name strings regardless).
+- Searched the full codebase for any other unguarded
+  `message.channel.name`/`ctx.channel.name` reads (`grep -rn
+  "\.channel\.name\b"` across all of `src/*.py`) — confirmed the only
+  remaining occurrences (in `features.py` and `nour_onboarding.py`)
+  are already correctly guarded by an earlier `hasattr()` check in the
+  same function, so this fix is comprehensive, not just patching the
+  one symptom that happened to be reported.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
+pull && docker compose up -d --build`), then a live re-test: have
+`bioroma` try `!done vocab` again, answer the quiz question in the
+SAME DM conversation (the exact original repro), and confirm it now
+registers correctly (points awarded, task marked done, no silent
+failure) before this can be marked ✅ Resolved.
+
+
+
+---
+
+## D026 — `!done accent`/`shadow`/`speaking`/`writing`/`community` from a DM silently bypasses ALL verification, awarding points for zero proof of work (Major)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, while investigating whether D025's DM-crash bug also affected
+task types other than vocab/listening (the owner explicitly asked
+this before merging/testing D025's fix — good instinct, since it
+surfaced a second, arguably worse issue in the same investigation).
+
+**What would have happened:** unlike vocab/listening (which use a
+two-step "post the quiz, wait for a DM reply" flow — D025's bug),
+accent/shadow/speaking/writing/community are one-step: `!done <task>`
+immediately checks whether the student already posted proof (a
+recording or text) in the right channel within the last 2 hours, via
+`verification.verify_task()`, which searches `ctx.guild`'s channel
+history. This means these 5 task types were NEVER at risk of D025's
+specific `AttributeError` crash (confirmed by tracing `verify_task()`
+and its 3 helpers — none read `channel.name` unsafely).
+
+However, tracing `cmd_done()`'s actual call site revealed a DIFFERENT,
+arguably more serious problem:
+
+```python
+if isinstance(ctx.author, discord.Member):
+    passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
+    if not passed:
+        await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
+        return
+# PASSED VERIFICATION — process the submission
+```
+
+In a DM, `ctx.author` is a `discord.User`, not a `discord.Member`
+(Discord's own distinction: a `Member` only exists in the context of a
+specific guild). So `isinstance(ctx.author, discord.Member)` is
+`False` in a DM, the entire verification block is skipped, and
+execution falls straight through to "PASSED VERIFICATION" — awarding
+full points and marking the task done with **zero check that the
+student actually did anything**. This is not a crash and produces no
+error in the logs — the bot would have replied with a completely
+normal-looking success message, making it invisible without
+specifically tracing this code path (found via code reading, not a
+live repro, since this wasn't the specific complaint that started the
+investigation).
+
+**Severity: Major, not Blocker.** Doesn't break the student
+experience (a student attempting this from DM would have their task
+marked done successfully, no error shown) — the risk is entirely on
+the INTEGRITY side: any student who realizes `!done accent` works from
+DM without actually doing the accent drill gets free points with no
+proof required, undermining the point of proof-of-work verification
+for exactly the 5 task types that have real submission checks. Given
+this system is about to onboard 16 real students, closing this before
+they arrive (rather than after someone discovers it) is the right
+call.
+
+**Fix applied (2026-07-15):** replaced the silent-skip `if
+isinstance(...)` guard with an explicit rejection: if `ctx.author` is
+NOT a `discord.Member` (i.e., this is a DM), send a clear bilingual
+message telling the student `!done <task>` doesn't work from DM and to
+type it in the server instead, then `return` — never falling through
+to "PASSED VERIFICATION" without an actual check. When `ctx.author` IS
+a `Member` (the normal, intended path), behavior is completely
+unchanged: `verify_task()` still runs exactly as before.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
+pull && docker compose up -d --build`), then a live re-test: have
+`bioroma` try `!done accent` (or any of shadow/speaking/writing/
+community) via DM and confirm it's now correctly rejected with the new
+guidance message, AND try it again in a real server channel with
+actual proof posted to confirm the normal path still works unchanged,
+before this can be marked ✅ Resolved.

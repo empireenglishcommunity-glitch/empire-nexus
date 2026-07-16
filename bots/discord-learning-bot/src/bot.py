@@ -1617,11 +1617,33 @@ async def cmd_done(ctx, task: str = None):
             return  # Answer handled in on_message
 
         # OTHER TASKS: Verify proof exists
-        if isinstance(ctx.author, discord.Member):
-            passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
-            if not passed:
-                await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
-                return
+        #
+        # Hisn D026: verify_task() needs a real discord.Member + guild to
+        # search channel history for the student's actual submission
+        # (recording/text) -- it can never do that from a DM, since a DM
+        # has no guild and ctx.author there is a discord.User, not a
+        # discord.Member. The ORIGINAL code's `if isinstance(...)` guard
+        # only ever ran verify_task() when in a guild -- but when NOT in
+        # a guild, it silently fell through to "PASSED VERIFICATION"
+        # below with NO verification at all, awarding points for zero
+        # proof of work. Confirmed live during Hisn H6 investigation
+        # (traced while checking whether D025's DM-crash bug also
+        # affected accent/shadow/speaking/writing/community -- it
+        # doesn't crash, but this silent bypass is arguably worse).
+        # Explicitly reject instead, telling the student where to go.
+        if not isinstance(ctx.author, discord.Member):
+            await ctx.send(
+                f"❌ **مينفعش تعمل `!done {task}` من الرسائل الخاصة (DM).**\n\n"
+                f"لازم تكتبها في السيرفر (أي قناة) عشان البوت يقدر يتأكد "
+                f"إنك فعلاً عملت المهمة.\n\n"
+                f"*You can't do `!done {task}` from a DM — type it in "
+                f"the server so the bot can verify your submission.*"
+            )
+            return
+        passed, error_msg = await verification.verify_task(task, ctx.author, ctx.guild)
+        if not passed:
+            await ctx.send(f"❌ **لم يتم التحقق:**\n\n{error_msg}")
+            return
 
         # PASSED VERIFICATION — process the submission
         verification.record_done_time(str(ctx.author.id))
@@ -2094,8 +2116,22 @@ async def on_message(message: discord.Message):
     await bot.process_commands(message)
 
     # Handle pending VOCAB quiz answers
+    #
+    # Hisn D025: message.channel.name doesn't exist on DMChannel at all --
+    # this crashed with an AttributeError for EVERY DM message the bot
+    # received (this line runs unconditionally, before checking whether
+    # a quiz is even pending), which silently discarded quiz answers sent
+    # via DM with no visible error to the student. Confirmed live during
+    # Hisn H6: the vocab quiz question itself is sent correctly (that's a
+    # !done command, handled by cmd_done regardless of channel type), but
+    # since the tutorial and most onboarding happens via DM, answering in
+    # the same DM conversation is the natural thing a student would do --
+    # and that's exactly the path that crashed. Use getattr() with a
+    # default so DMs are simply treated as "not bot-commands" (correctly
+    # -- a DM channel was never going to equal that string anyway) instead
+    # of crashing before the pending-quiz logic below ever runs.
     if verification.has_pending_quiz(str(message.author.id)):
-        if message.channel.name == "bot-commands" and not message.content.startswith("!"):
+        if getattr(message.channel, "name", None) == "bot-commands" and not message.content.startswith("!"):
             passed, error_msg = verification.check_vocab_answer(str(message.author.id), message.content)
             if passed:
                 # Process the vocab submission
@@ -2114,8 +2150,9 @@ async def on_message(message: discord.Message):
             return
 
     # Handle pending LISTENING quiz answers
+    # Hisn D025: same DMChannel.name crash as the vocab handler above.
     if verification.has_pending_listening(str(message.author.id)):
-        if message.channel.name == "bot-commands" and not message.content.startswith("!"):
+        if getattr(message.channel, "name", None) == "bot-commands" and not message.content.startswith("!"):
             passed, error_msg = verification.check_listening_answer(str(message.author.id), message.content)
             if passed:
                 verification.record_done_time(str(message.author.id))
@@ -2133,7 +2170,9 @@ async def on_message(message: discord.Message):
             return
 
     # Auto-evaluate writing in #writing-feedback channel
-    if message.channel.name == "writing-feedback" and len(message.content) > 30:
+    # Hisn D025: same DMChannel.name crash as the vocab/listening handlers
+    # above -- this ran unconditionally for every message including DMs.
+    if getattr(message.channel, "name", None) == "writing-feedback" and len(message.content) > 30:
         member = database.get_member(str(message.author.id))
         if not member:
             return
