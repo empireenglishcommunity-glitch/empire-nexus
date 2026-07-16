@@ -351,40 +351,117 @@ def _nour_voice_system_prompt() -> str:
 
 
 async def build_growth_letter(signals: dict) -> tuple[str, str]:
-    """M0.2 stub: wires the real fallback chain and returns real,
-    signals-based text today, even though the full weekly-letter
-    prompt (M2.1) isn't written yet. This is intentionally usable,
-    not a placeholder that raises NotImplementedError — the whole
-    point of M0.2 is to prove the chain works end-to-end before M2
-    builds the flagship feature on top of it.
+    """M2.1: Nour's Weekly Growth Letter — the flagship fix for D020
+    (the AI-generated tips feature that was designed in Wuslah's W4
+    spec but whose actual generation task, W4.2, was never built —
+    every real student silently received only generic fallback tips,
+    forever, until Hisn found it).
+
+    Per R3's acceptance criteria, the prompt must be built from AT
+    LEAST 2 of: nour_memories, pronunciation trend, vocab_srs state,
+    ability_milestones, difficulty_level changes, recent
+    nour_conversations themes. This builds from as many of those as
+    are actually present for this specific student (not always all 6
+    — a brand new student may only have streak/completion data yet,
+    which is fine; the letter is honest about whatever is real for
+    THEM, not padded with invented specifics).
 
     Returns (letter_text, source).
     """
     system_prompt = _nour_voice_system_prompt()
-    user_prompt = (
-        f"Write a short (3-5 sentence) personal weekly check-in message "
-        f"in Egyptian Arabic for {signals.get('discord_name', 'the student')}, "
-        f"who is at level {signals.get('level')}, week {signals.get('week')}, "
-        f"with a {signals.get('streak')}-day streak and "
-        f"{signals.get('completion_rate_7d')}% task completion this week. "
-        f"Be warm and specific, not generic."
-    )
+    user_prompt = _build_growth_letter_prompt(signals)
     return await _generate_with_fallback(
         system_prompt, user_prompt,
         lambda: _template_growth_letter(signals),
     )
 
 
+def _build_growth_letter_prompt(signals: dict) -> str:
+    """Builds the user-facing prompt for build_growth_letter() from
+    whichever signals are actually present for this student. Kept as
+    its own function (not inlined) so it's directly unit-testable —
+    you can assert on the STRING this produces without needing a real
+    AI call, which matters for catching a regression here specifically
+    (this is the exact piece of logic where D020's engine, had it ever
+    been built, most likely would have quietly degraded to generic
+    text without anyone noticing).
+    """
+    name = signals.get("discord_name", "the student")
+    level = signals.get("level", "L0")
+    week = signals.get("week", 1)
+    streak = signals.get("streak", 0)
+    completion = signals.get("completion_rate_7d", 0)
+
+    facts = [f"Level {level}, week {week}, {streak}-day streak, {completion:.0f}% task completion this week."]
+
+    memories = signals.get("memories", [])
+    if memories:
+        facts.append(f"Known personal facts about them (Nour's own memory): {'; '.join(memories[:3])}.")
+
+    milestones = signals.get("milestones_recent", [])
+    if milestones:
+        names = ", ".join(m["milestone_id"] for m in milestones[:3])
+        facts.append(f"Milestones unlocked in the last 14 days: {names}.")
+
+    trend = signals.get("pronunciation_trend", {})
+    if trend.get("total_scored", 0) > 0:
+        facts.append(
+            f"Pronunciation: {trend.get('trend', 'no_data')} trend, "
+            f"7-day average {trend.get('average_7d', 0):.0f}%."
+        )
+
+    srs = signals.get("srs_state", {})
+    if srs.get("total", 0) > 0:
+        facts.append(
+            f"Vocabulary (SRS): {srs.get('mastered', 0)} words mastered, "
+            f"{srs.get('due_today', 0)} due for review today."
+        )
+
+    themes = signals.get("conversation_themes", [])
+    if themes:
+        facts.append(f"Recently asked Nour about: {'; '.join(themes[:2])}.")
+
+    facts_text = "\n".join(f"- {f}" for f in facts)
+
+    return (
+        f"Write a short (3-5 sentence) personal weekly check-in message in "
+        f"Egyptian Arabic for {name}, in Nour's voice, for their weekly "
+        f"growth letter. Use AT LEAST 2 of the specific facts below — "
+        f"reference them naturally, don't just list them. Be warm and "
+        f"genuinely specific to THIS student, never generic or something "
+        f"that could apply to anyone:\n\n{facts_text}\n\n"
+        f"If a fact area has no data (e.g. no milestones yet), don't "
+        f"mention it or apologize for it — just build the letter from "
+        f"whatever facts ARE present."
+    )
+
+
 def _template_growth_letter(signals: dict) -> str:
     """Non-AI fallback for the growth letter — built directly from
     real signals (per design.md: 'this fallback is itself personal,
-    just not AI-phrased'), never a generic string."""
+    just not AI-phrased'), never a generic string. Uses whichever
+    signal sources are actually present for this student, same
+    principle as _build_growth_letter_prompt() above — this is the
+    fallback that fires when BOTH AI providers are down, so it needs
+    to stand on its own as genuinely personal, not just a shorter
+    version of the AI prompt."""
     streak = signals.get("streak", 0)
     completion = signals.get("completion_rate_7d", 0)
     milestones = signals.get("milestones_recent", [])
+    srs = signals.get("srs_state", {})
+    trend = signals.get("pronunciation_trend", {})
+
     parts = [f"استمرارك {streak} يوم على التوالي ده حاجة حلوة فعلاً 🔥"]
+
     if milestones:
         parts.append(f"وكمان فتحت {len(milestones)} إنجاز جديد الأسبوعين اللي فاتوا — عاش!")
+
+    if trend.get("total_scored", 0) > 0 and trend.get("trend") == "improving":
+        parts.append("ونطقك بيتحسن بشكل واضح، حاسة بيه فعلاً 🎯")
+
+    if srs.get("mastered", 0) > 0:
+        parts.append(f"وحفظت {srs['mastered']} كلمة كويس لدرجة إنك متقنها — تقدم حقيقي 📝")
+
     parts.append(f"معدل إنجازك الأسبوع ده {completion:.0f}%. كمل بنفس الطاقة 💪")
     return " ".join(parts)
 

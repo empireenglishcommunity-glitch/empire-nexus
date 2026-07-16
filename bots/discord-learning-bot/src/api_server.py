@@ -533,7 +533,75 @@ async def get_progress_v2(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  MASAR M2.4: /api/growth-letter — Nour's Weekly Growth Letter
+#  (fixes Hisn D020, replaces /api/nour-tips below)
+# ============================================================
+
+@routes.get("/api/growth-letter")
+async def get_growth_letter(request: web.Request) -> web.Response:
+    """Return the most recently generated Weekly Growth Letter for the
+    student, cached in nour_growth_letters by nour_growth_letter_task()
+    (bot.py) — zero AI cost per page load, same caching pattern as the
+    old /api/nour-tips endpoint below.
+
+    Same flag-gating pattern already correctly used elsewhere in this
+    file (top-level `is_feature_enabled()` call inside the handler,
+    confirmed via Hisn D010's fix as the pattern that cannot be
+    silently bypassed) — this endpoint reuses that exact pattern
+    rather than inventing a new gating approach.
+    """
+    token = request.query.get("token", "")
+    if not token:
+        return web.json_response({"error": "token required"}, status=400)
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429)
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"error": "invalid token"}, status=404)
+
+    # Deliberately NO early no-discord_id flag check here (unlike some
+    # other endpoints in this file) -- is_feature_enabled(name) with no
+    # discord_id only returns True when the flag's allowed_ids is EMPTY
+    # (see its own docstring). An early check here, before we know WHO
+    # is asking, would incorrectly reject every member whenever the
+    # flag is scoped to a restricted allowlist -- exactly the gradual
+    # beta-squad rollout this flag is meant to support. The single
+    # per-member check below (run only once we know discord_id) is both
+    # correct and sufficient: it still returns False for everyone when
+    # the flag is fully OFF, and True only for allowlisted members when
+    # it's restricted.
+    discord_id = member["discord_id"]
+    if not database.is_feature_enabled("masar_growth_letter", discord_id):
+        return web.json_response({"error": "growth letter API not enabled"}, status=503)
+
+    _touch_token(token)
+
+    letter = database.get_latest_growth_letter(discord_id)
+    if not letter:
+        return web.json_response({
+            "letter": None,
+            "generated_at": None,
+            "source": None,
+        }, headers=_cors_headers())
+
+    return web.json_response({
+        "letter": letter["letter_text"],
+        "generated_at": letter["generated_at"],
+        "source": letter["source"],
+    }, headers=_cors_headers())
+
+
+# ============================================================
 #  WUSLAH W4: /api/nour-tips — pre-generated study tips
+#  (LEGACY — superseded by /api/growth-letter above per Masar M2.
+#  Never actually populated with real AI-generated content in
+#  production, per Hisn D020 -- left in place, inert, rather than
+#  removed, since some in-flight dashboard sessions might still be
+#  caching the old JS that calls it until they reload. M2.5 removes
+#  the dashboard's call site; this endpoint itself can be deleted in
+#  a later cleanup pass once confirmed nothing calls it anymore.)
 # ============================================================
 
 @routes.get("/api/nour-tips")
