@@ -365,12 +365,18 @@
   output-quality guard in the shared fallback chain) rather than
   patched narrowly within Masar alone, per the owner's explicit
   instruction: "do what you think is best interest for the system on
-  the long run not temp fix." D033's own fix still needs its own
-  fresh production re-verification (re-run `!markmilestone` against
-  `bioroma` — who now has a real `gender=male` value set — and
-  confirm correct masculine grammar + zero foreign-language leakage
-  in the actual delivered DM) before M3 as a whole is considered
-  fully closed — tracked as the immediate next action.
+  the long run not temp fix." **D033's fix has now been deployed and
+  live re-verified (2026-07-16, same session as this checkpoint) —
+  `bioroma`'s `gender` set to `male`, the exact `complete_milestone()`
+  → `build_milestone_moment()` path re-run against a genuinely new
+  milestone (`l0_count100`), 4 independent AI-generated messages all
+  confirmed correct masculine grammar with zero foreign-language
+  leakage, one delivered as a real Discord DM (message ID
+  `1527387035470659787`). D033 marked ✅ Resolved in `defect_log.md`.
+  Post-verification cleanup done: `bioroma`'s full footprint deleted
+  from `members`/`ability_milestones`/`nour_memories`, and
+  `masar_milestone_moments` restored to default OFF. M3 is now fully
+  closed — no open blockers remain.**
 
 ## Phase M4 — Adaptive Difficulty Transparency (optional polish, independently skippable)
 
