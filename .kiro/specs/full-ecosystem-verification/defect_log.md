@@ -785,16 +785,16 @@ site --project-name=empire-practice`; confirmed server-side that the
 fixed `app.js` (containing `_pickMimeType()`) is now what
 `practice.empireenglish.online/js/app.js` actually serves.
 
-**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
-content verified live, but NOT YET RE-TESTED ON A REAL SAFARI/iOS
-DEVICE.** The fix's logic is sound (feature-detects a real supported
-mime type instead of assuming `audio/webm`) and the deployed file is
-confirmed correct, but this specific defect was only ever provable by
-an actual device test (that's how it was found in the first place —
-desktop worked, the owner's phone didn't). Needs the owner to
-re-run the exact original repro (record → play back → download) on
-the SAME iPhone, ideally during H6, before this can be marked fully
-✅ Resolved.
+**Live re-tested (2026-07-16), on the SAME iPhone Safari that
+originally found this:** the owner repeated the exact original repro
+(record → play back via "Listen to Yours" → download) as part of
+H6's Tier 1 device re-test pass. Owner confirmed: **"playback work
+now, and downloadable."** Both symptoms that originally failed are
+now fixed.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified on the exact same real Safari/iOS device that originally
+found this defect.
 
 
 
@@ -964,12 +964,13 @@ site --project-name=empire-practice`; confirmed server-side that the
 live `app.js` on `practice.empireenglish.online` now contains the
 `markDone()` re-render logic.
 
-**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
-content verified live, but NOT YET RE-TESTED BY ACTUALLY CLICKING
-"Done" ON THE REAL SITE.** This one is inherently a same-page visual
-behavior (does the progress bar visibly move right after the click),
-which a `curl` check can't observe — needs a quick manual click-
-through during H6 to confirm before marking fully ✅ Resolved.
+**Live re-tested (2026-07-16):** the owner checked a "Done" checkbox
+on a real exercise page as part of H6's Tier 1 device re-test pass,
+and confirmed: **"yes"** — the progress bar/task counter at the top
+of the page visibly updates immediately, right after checking it.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified by the owner directly clicking "Done" on the real site.
 
 
 
@@ -1062,13 +1063,14 @@ site --project-name=empire-practice`; confirmed server-side that the
 live `app.js` on `practice.empireenglish.online` now contains
 `_restoreDoneCheckbox()`, called from `Gamification.init()`.
 
-**Status:** 🟡 **CODE FIXED, MERGED, AND DEPLOYED — server-side
-content verified live, but NOT YET RE-TESTED BY REPEATING THE ORIGINAL
-REPRO.** Like D016, this is a client-side interactive behavior a
-`curl` check can't fully observe — needs the owner to mark an
-exercise done, navigate away, navigate back, and confirm the checkbox
-is still checked, ideally during H6, before marking fully ✅
-Resolved.
+**Live re-tested (2026-07-16):** the owner marked an exercise done,
+navigated away and back (the exact original repro) as part of H6's
+Tier 1 device re-test pass, and confirmed: **"the 'Done' checkbox
+still show as checked when I returned."**
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified by the owner repeating the exact original repro on the
+real site.
 
 
 
