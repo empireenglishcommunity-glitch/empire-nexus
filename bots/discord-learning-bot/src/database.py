@@ -58,6 +58,18 @@ def _migrate(conn: sqlite3.Connection):
     if "difficulty_level" not in member_cols:
         conn.execute("ALTER TABLE members ADD COLUMN difficulty_level INTEGER NOT NULL DEFAULT 2")
 
+    # Masar D033 fix: gender field on members table. Egyptian Arabic
+    # second-person grammar requires knowing the addressee's gender
+    # (masculine "-ك"/"عليك" vs feminine "-كي"/"عليكي") -- this field
+    # never existed anywhere in this codebase before, which is the
+    # root cause of Nour addressing a real male student with feminine
+    # grammar (found live during Masar M3's testing). '' means unknown
+    # -- every existing student today, until they explicitly set it via
+    # !gender. Nothing defaults to a guess; unknown is handled by using
+    # genuinely gender-neutral phrasing, never a silent assumption.
+    if "gender" not in member_cols:
+        conn.execute("ALTER TABLE members ADD COLUMN gender TEXT NOT NULL DEFAULT ''")
+
     # Wuslah W0.4: last_used on link_tokens table (for token expiry)
     lt_cols = {row["name"] for row in conn.execute("PRAGMA table_info(link_tokens)")}
     if "last_used" not in lt_cols:
@@ -81,7 +93,8 @@ CREATE TABLE IF NOT EXISTS members (
     longest_streak  INTEGER NOT NULL DEFAULT 0,
     status          TEXT NOT NULL DEFAULT 'active',
     buddy_id        TEXT DEFAULT '',
-    notes           TEXT DEFAULT ''
+    notes           TEXT DEFAULT '',
+    gender          TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS daily_submissions (

@@ -303,6 +303,40 @@ def _clean_ai_text(text: str) -> str:
     return text
 
 
+# Masar D033 fix: character ranges for scripts that should NEVER
+# appear in Nour's output (which is always Arabic, with occasional
+# English words/level names). Found live during Masar M3's testing:
+# a Groq response contained a stray Vietnamese word fragment ("đặc")
+# mid-sentence -- a real token-hallucination glitch, not a typo --
+# and nothing anywhere in this codebase ever checked AI output for
+# this class of problem before sending it to a student. This is a
+# deliberately narrow blocklist (scripts that have no legitimate
+# reason to appear), not a broad "must be X% Arabic" heuristic that
+# could false-positive on legitimate English words/numbers/emoji.
+_UNEXPECTED_SCRIPT_RANGES = [
+    (0x1E00, 0x1EFF),   # Latin Extended Additional (Vietnamese diacritics)
+    (0x0900, 0x097F),   # Devanagari (Hindi etc.)
+    (0x4E00, 0x9FFF),   # CJK Unified Ideographs (Chinese/Japanese)
+    (0x3040, 0x30FF),   # Japanese Hiragana/Katakana
+    (0xAC00, 0xD7AF),   # Hangul (Korean)
+    (0x0400, 0x04FF),   # Cyrillic
+]
+
+
+def _has_unexpected_script(text: str) -> bool:
+    """True if `text` contains any character from a script that has
+    no legitimate reason to appear in Nour's Arabic/English output.
+    Used to catch AI hallucination glitches (a stray foreign-language
+    fragment mid-sentence) before they ever reach a student, treating
+    them as a failed generation rather than sending garbled text."""
+    for ch in text:
+        code = ord(ch)
+        for start, end in _UNEXPECTED_SCRIPT_RANGES:
+            if start <= code <= end:
+                return True
+    return False
+
+
 async def _generate_with_fallback(system_prompt: str, user_prompt: str,
                                    template_fallback_fn) -> tuple[str, str]:
     """Shared 3-tier fallback used by every build_* function below.
@@ -316,15 +350,36 @@ async def _generate_with_fallback(system_prompt: str, user_prompt: str,
     providers fail, and it must never return None/empty (enforced by
     a final guard below, so this function itself never returns None
     even if a caller's fallback function has a bug).
+
+    Masar D033 fix: a response containing an unexpected foreign
+    script (see _has_unexpected_script()) is now treated as a FAILED
+    generation, exactly like an empty/None response — it falls
+    through to the next provider, and ultimately to the template
+    fallback, rather than ever being sent to a student. Found live
+    during Masar M3's testing (a Vietnamese fragment leaked into an
+    otherwise-Arabic Groq response); this same class of bug could
+    recur in nour_concierge's regular chat responses too, but fixing
+    that call site is out of this defect's immediate scope -- flagged
+    separately in defect_log.md.
     """
     text = await _call_groq(system_prompt, user_prompt)
-    if text:
+    if text and not _has_unexpected_script(text):
         return _clean_ai_text(text), "ai"
+    if text:
+        logger.warning(
+            "narrative_engine: Groq response contained an unexpected "
+            "script, discarding and trying Gemini fallback"
+        )
 
     logger.info("narrative_engine: Groq failed, trying Gemini fallback")
     text = await _call_gemini(system_prompt, user_prompt)
-    if text:
+    if text and not _has_unexpected_script(text):
         return _clean_ai_text(text), "ai"
+    if text:
+        logger.warning(
+            "narrative_engine: Gemini response ALSO contained an unexpected "
+            "script, discarding and using template fallback"
+        )
 
     logger.warning("narrative_engine: both AI providers failed, using template fallback")
     fallback_text = template_fallback_fn()
@@ -423,6 +478,9 @@ def _build_growth_letter_prompt(signals: dict) -> str:
 
     facts_text = "\n".join(f"- {f}" for f in facts)
 
+    from . import nour_personality
+    gender_instruction = nour_personality.get_gender_instruction(signals.get("discord_id", ""))
+
     return (
         f"Write a short (3-5 sentence) personal weekly check-in message in "
         f"Egyptian Arabic for {name}, in Nour's voice, for their weekly "
@@ -430,9 +488,12 @@ def _build_growth_letter_prompt(signals: dict) -> str:
         f"reference them naturally, don't just list them. Be warm and "
         f"genuinely specific to THIS student, never generic or something "
         f"that could apply to anyone:\n\n{facts_text}\n\n"
+        f"ADDRESSING THIS STUDENT: {gender_instruction}\n\n"
         f"If a fact area has no data (e.g. no milestones yet), don't "
         f"mention it or apologize for it — just build the letter from "
-        f"whatever facts ARE present."
+        f"whatever facts ARE present. Write ONLY in clear Arabic (with "
+        f"English words only where natural, e.g. a level name) — never "
+        f"mix in any other language."
     )
 
 
@@ -462,7 +523,7 @@ def _template_growth_letter(signals: dict) -> str:
     if srs.get("mastered", 0) > 0:
         parts.append(f"وحفظت {srs['mastered']} كلمة كويس لدرجة إنك متقنها — تقدم حقيقي 📝")
 
-    parts.append(f"معدل إنجازك الأسبوع ده {completion:.0f}%. كمل بنفس الطاقة 💪")
+    parts.append(f"معدل الإنجاز الأسبوع ده {completion:.0f}%. يلا نكمل بنفس الطاقة 💪")
     return " ".join(parts)
 
 
@@ -492,16 +553,22 @@ async def build_milestone_moment(discord_id: str, milestone_id: str,
         extra_context.append(f"known personal context: {memories[0]}")
     context_str = f" Additional real context: {'; '.join(extra_context)}." if extra_context else ""
 
+    from . import nour_personality
+    gender_instruction = nour_personality.get_gender_instruction(discord_id)
+
     user_prompt = (
         f"The student {signals.get('discord_name', '')} just completed the "
         f"'{milestone_name}' milestone ({milestone_desc}). Write a short, "
         f"warm, SPECIFIC congratulations message in Egyptian Arabic that "
         f"references what they actually accomplished, not a generic "
-        f"'unlocked!' message.{context_str}"
+        f"'unlocked!' message.{context_str}\n\n"
+        f"ADDRESSING THIS STUDENT: {gender_instruction}\n\n"
+        f"Write ONLY in clear Arabic (English words only where natural) — "
+        f"never mix in any other language."
     )
     return await _generate_with_fallback(
         system_prompt, user_prompt,
-        lambda: f"🏆 مبروك يا نجم! خلصت '{milestone_name}' — ده إنجاز حقيقي، استمر كده!",
+        lambda: f"🏆 مبروك يا نجم! إنجاز '{milestone_name}' اكتمل — ده تقدم حقيقي، يلا نكمل كده!",
     )
 
 
@@ -534,20 +601,29 @@ async def build_difficulty_note(discord_id: str, direction: str,
     template fallback.
     """
     system_prompt = _nour_voice_system_prompt()
+    from . import nour_personality
+    gender_instruction = nour_personality.get_gender_instruction(discord_id)
+    language_purity_note = (
+        "Write ONLY in clear Arabic (English words only where natural) — "
+        "never mix in any other language."
+    )
+
     if direction == "up":
         user_prompt = (
             f"The student {signals.get('discord_name', '')} is being moved to "
             f"a harder difficulty because their scores are strong. Write a "
             f"short, positive, encouraging message in Egyptian Arabic — "
-            f"frame this as 'you're ready for more,' never as a penalty."
+            f"frame this as 'you're ready for more,' never as a penalty.\n\n"
+            f"ADDRESSING THIS STUDENT: {gender_instruction}\n\n{language_purity_note}"
         )
-        template = "أنت جاهز لتحدي أكبر دلوقتي — هنرفع مستوى المهام شوية عشان نستمر في التطور 🚀"
+        template = "الوقت مناسب لتحدي أكبر دلوقتي — هنرفع مستوى المهام شوية عشان نستمر في التطور 🚀"
     else:
         user_prompt = (
             f"The student {signals.get('discord_name', '')} is being moved to "
             f"an easier difficulty to build confidence. Write a short, "
             f"positive, encouraging message in Egyptian Arabic — frame this "
-            f"as building a stronger foundation, never as a setback."
+            f"as building a stronger foundation, never as a setback.\n\n"
+            f"ADDRESSING THIS STUDENT: {gender_instruction}\n\n{language_purity_note}"
         )
         template = "هنبسط المهام شوية عشان نبني أساس أقوى — دي خطوة ذكية، مش تراجع 💪"
 
