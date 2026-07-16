@@ -571,9 +571,36 @@ Continue the rest of the Hisn walkthrough first, then address this
 alongside any other findings in one batch at the end — explicitly NOT
 to be forgotten in the meantime. This entry is the record that
 guarantees that.
-**Status:** 🟡 **DEFERRED** — confirmed real, not yet fixed, intentionally
-batched with other findings for a single fix-everything pass at the
-end of the Hisn campaign (before H7's Go/No-Go sign-off).
+**Status:** ✅ **RESOLVED (2026-07-16, via Masar M1 — Momentum Score).**
+Per the owner's own later decision (documented in
+`.kiro/specs/masar/requirements.md`), this was deliberately NOT
+patched with a quick relabel — it was treated as one instance of a
+bigger pattern (alongside D020) and given a proper initiative
+(Masar/مسار). The actual fix: the old points-vs-threshold XP bar is
+now replaced by `narrative_engine.momentum_score()` — a single,
+honestly-computed, recency-based signal (7-day streak + task
+completion + pronunciation trend), shown identically on both the
+dashboard (`/dash/`) and `!progress`, explicitly labeled "Momentum
+This Week / نشاطك الأسبوعي" so it can never again imply a connection
+to level-up that doesn't exist. Level badge itself was left completely
+unchanged, per R1's constraint.
+Shipped behind `masar_momentum_score` (default OFF, D010-style
+per-member flag gating). Live-verified in PRODUCTION on 2026-07-16
+using a real `GHOST_TEST_920001` member (not a DB-clone simulation):
+flag ON → `/api/dashboard`'s live response included
+`"momentum": {"score": 29, "label": "building", ...}`, and a direct
+call to the exact same `narrative_engine.momentum_score()` function
+(the same one `!progress` calls) returned the identical
+`{"score": 29, "label": "building", ...}` — structurally guaranteeing
+R2's dashboard/`!progress` consistency requirement, not just a
+one-time coincidence. Flag OFF → `momentum` field genuinely absent
+from the live response, old `level_progress` fallback untouched —
+confirmed the D010-style flag-gate discipline holds in production, not
+just in a clone. Test member fully cleaned up afterward, `members`
+back to 0 rows. See `.kiro/specs/masar/tasks.md`'s M1 phase for the
+full implementation record. PRs:
+[empire-nexus#171](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/171),
+[empire-dojo#26](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/26).
 
 
 
