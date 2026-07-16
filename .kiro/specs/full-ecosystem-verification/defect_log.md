@@ -2877,9 +2877,31 @@ Gemini response) and with BOTH providers simulated garbled
 core update/clear/invalid-input logic tested directly against
 `database.update_member()`.
 
-**Status:** 🟡 **Fix written and locally tested, NOT yet deployed or
-live-verified in production.** Tracked as the immediate next action —
-this defect must be live-verified (a real `!markmilestone` or growth-
-letter run against `bioroma`, confirming correct masculine grammar and
-zero foreign-language leakage in the actual delivered DM) before it
-can be marked Resolved, per this campaign's own standing discipline.
+**Status:** ✅ **RESOLVED.** Deployed to production (2026-07-16,
+`main` merged through `bfad1dd`, `docker compose up -d --build` on
+`empire-english-bot`, deployed commit confirmed directly via `git log
+--oneline -1` on the server). `bioroma`'s `gender` set to `male`
+directly against production (`gender` column confirmed present
+post-deploy). Re-verified live via the exact `complete_milestone()` →
+`build_milestone_moment()` code path `!markmilestone` itself calls
+(new milestone `l0_count100`, a genuinely uncompleted one for
+`bioroma` at the time): across 4 independent Groq-generated messages,
+100% used correct masculine Egyptian Arabic grammar ("ليك" not
+"ليكي", "انت قدرت/عملت/قمت" not "انتي...تي", "يا باشا") and 0%
+contained any foreign-script leakage. The `_has_unexpected_script()`
+guard was also observed actively catching and discarding a real Groq
+hallucination live during this same re-verification run (fell through
+to Gemini, which is separately returning `401` — see "Key
+Infrastructure & Standing Lessons" in `STATUS.md`, unrelated to this
+defect and not investigated further here — then to the template
+fallback), proving the guard works end-to-end under a real failure,
+not just in the DB-clone test. One AI-generated message was then
+delivered as a real Discord DM to `bioroma`, confirmed via a real
+message ID (`1527387035470659787`). Post-verification cleanup done:
+`bioroma`'s full footprint (`members`, `ability_milestones`,
+`nour_memories`) deleted, `members` back to 0 rows;
+`masar_milestone_moments` flag restored to default OFF with
+`allowed_ids` cleared. The `nour_concierge.py` follow-up gap noted
+above (no `_has_unexpected_script()` guard on the older regular-chat
+AI chain) remains open and explicitly flagged, unchanged by this
+re-verification — still a known, non-blocking gap, not a silent one.
