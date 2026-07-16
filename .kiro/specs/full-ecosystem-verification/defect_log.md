@@ -3077,12 +3077,29 @@ match `milestones.json`'s real IDs, and explicitly confirming NONE of
 the old fictional IDs (`first_recording`, `streak_7`, etc.) appear in
 the real catalog. Full suite: 378/378 passing, zero regressions.
 
-**Status:** 🟡 **Fix written, locally tested, NOT yet deployed or
-live-verified** (needs `empire-nexus`'s API change deployed AND
-`empire-dojo`'s frontend change deployed via
-`npx wrangler pages deploy site --project-name=empire-practice` —
-per this whole campaign's own discipline, both halves need a real
-browser/API check before this can be marked Resolved: open the real
-dashboard for a member with at least one completed milestone,
-confirm it now shows ✅ for that real milestone instead of the grid
-always showing everything locked).
+**Status:** ✅ **RESOLVED.** Both halves deployed
+([empire-nexus#182](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/182),
+[empire-dojo#28](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/28))
+— API rebuilt on both production and Ghost Bot (`1502392`, confirmed
+via `git log` on the server), frontend deployed via `npx wrangler
+pages deploy site --project-name=empire-practice`, confirmed live on
+both the `.pages.dev` URL and the real custom domain
+(`practice.empireenglish.online`) after CDN propagation — the
+`_renderMilestones()` function now reads `allMilestones = catalog ||
+[]` (the real catalog), with the old hardcoded fictional array fully
+removed (only survives as an explanatory code comment describing the
+bug it fixed). Live end-to-end verified against the REAL production
+`/api/dashboard` endpoint (not a mock): created one temporary
+synthetic test member (`9999000001`, clearly non-Discord-ID-shaped,
+never a real student), completed 1 real milestone (`l0_introduce`)
+for them, hit the real endpoint with a real link token, and confirmed
+the response's `milestones_catalog` (15 real entries) and `milestones`
+(the 1 real completion) correctly cross-reference — simulating the
+exact frontend achieved-check logic against the real payload showed 1
+of 15 milestones correctly marked achieved, 14 correctly locked (the
+old code would have shown 0 of 15 achieved, always, regardless of real
+progress). Test member's full footprint (`members`,
+`ability_milestones`, `link_tokens`) deleted afterward; `members` back
+to 0 rows. The `wuslah_dashboard_api` flag's pre-existing state
+(globally ON, empty allowlist) was confirmed unchanged before/after
+this verification.

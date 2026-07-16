@@ -471,7 +471,13 @@
   Per R6's acceptance criteria ("fixed within scope OR explicitly
   logged as a deferred defect with owner sign-off"), fixed directly
   (see `defect_log.md`'s D036 entry) rather than deferred, since the
-  fix was small and well-scoped once found.
+  fix was small and well-scoped once found. **D036 deployed (both
+  `empire-nexus`'s API and `empire-dojo`'s frontend) and live
+  end-to-end verified against the real production `/api/dashboard`
+  endpoint with a temporary synthetic test member** — confirmed 1 of
+  15 real milestones correctly shows achieved (matching that
+  member's 1 real completion), 14 correctly locked; test footprint
+  fully cleaned up afterward. **D036 marked ✅ Resolved.**
 - [ ] **M5.2** Run a combined live scenario end-to-end for one Ghost
   Testing member: register → complete tasks across several simulated
   days → unlock a milestone → trigger a difficulty change → trigger
