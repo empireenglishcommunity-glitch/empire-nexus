@@ -2693,10 +2693,26 @@ resolves to `bilingual_ar`, producing the expected framed output:
 Restored the container's original file afterward — this test never
 touched the live bot process or deployed anything.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED (via the real Discord flow).** Needs: PR review/merge,
-deploy to production (`git pull && docker compose up -d --build`),
-then a live re-test: re-run H6.4's exact repro (trigger a new
-escalation, reply from Telegram) and confirm the DM `bioroma` receives
-now includes the "A reply from Nour" framing before the actual answer
-— before this can be marked ✅ Resolved.
+**Deployed (2026-07-16):** merged via [PR #165](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/165), confirmed
+landed on `main`. Deployed to production (`git pull && docker compose
+up -d --build`) — confirmed via `docker exec ... grep -c "Hisn D032"
+/app/src/nour_escalation.py` returning `1` and a clean startup log.
+
+**Live re-tested (2026-07-16), through the REAL Discord flow:**
+re-ran H6.4's exact repro end-to-end a second time. Server logs
+confirm the full loop fired cleanly (`escalation sent via Empire Ops
+bot: BioRoMa` → `forwarded owner reply to BioRoMa`). Owner confirmed
+the delivered DM now reads:
+```
+💬 رد من نور (reply from Nour):
+
+ok will reply back in 2 hours, thanks for asking
+```
+— the `bilingual_ar` framing fires exactly as designed (matching the
+safe pre-deploy test's prediction for `bioroma`'s real language phase)
+and the attribution gap that originally prompted this defect is
+closed.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified through the real Discord flow, with the exact predicted
+bilingual framing confirmed in the actual delivered DM.
