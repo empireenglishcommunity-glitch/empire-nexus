@@ -558,6 +558,20 @@ async def check_english_only(message: discord.Message) -> bool:
     if message.author.bot:
         return False
 
+    # Hisn D025: DMChannel has no .name attribute at all -- accessing it
+    # unconditionally crashed with an AttributeError on EVERY DM the bot
+    # received (not just ones relevant to this check), since this runs
+    # unconditionally near the top of on_message for every message.
+    # Confirmed live during Hisn H6: this crash silently discarded the
+    # student's DM'd vocab-quiz answer before it ever reached the vocab
+    # answer handler further down in on_message, with no visible error
+    # to the student and no obvious explanation in the logs either
+    # (looked like a normal INFO-level "Ignoring exception" line, easy
+    # to miss). English-only enforcement only ever makes sense in real
+    # guild channels anyway, so DMs should just skip this check entirely.
+    if not hasattr(message.channel, "name"):
+        return False
+
     channel_name = message.channel.name
     if channel_name in ARABIC_ALLOWED_CHANNELS:
         return False

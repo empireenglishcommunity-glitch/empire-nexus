@@ -2094,8 +2094,22 @@ async def on_message(message: discord.Message):
     await bot.process_commands(message)
 
     # Handle pending VOCAB quiz answers
+    #
+    # Hisn D025: message.channel.name doesn't exist on DMChannel at all --
+    # this crashed with an AttributeError for EVERY DM message the bot
+    # received (this line runs unconditionally, before checking whether
+    # a quiz is even pending), which silently discarded quiz answers sent
+    # via DM with no visible error to the student. Confirmed live during
+    # Hisn H6: the vocab quiz question itself is sent correctly (that's a
+    # !done command, handled by cmd_done regardless of channel type), but
+    # since the tutorial and most onboarding happens via DM, answering in
+    # the same DM conversation is the natural thing a student would do --
+    # and that's exactly the path that crashed. Use getattr() with a
+    # default so DMs are simply treated as "not bot-commands" (correctly
+    # -- a DM channel was never going to equal that string anyway) instead
+    # of crashing before the pending-quiz logic below ever runs.
     if verification.has_pending_quiz(str(message.author.id)):
-        if message.channel.name == "bot-commands" and not message.content.startswith("!"):
+        if getattr(message.channel, "name", None) == "bot-commands" and not message.content.startswith("!"):
             passed, error_msg = verification.check_vocab_answer(str(message.author.id), message.content)
             if passed:
                 # Process the vocab submission
@@ -2114,8 +2128,9 @@ async def on_message(message: discord.Message):
             return
 
     # Handle pending LISTENING quiz answers
+    # Hisn D025: same DMChannel.name crash as the vocab handler above.
     if verification.has_pending_listening(str(message.author.id)):
-        if message.channel.name == "bot-commands" and not message.content.startswith("!"):
+        if getattr(message.channel, "name", None) == "bot-commands" and not message.content.startswith("!"):
             passed, error_msg = verification.check_listening_answer(str(message.author.id), message.content)
             if passed:
                 verification.record_done_time(str(message.author.id))
@@ -2133,7 +2148,9 @@ async def on_message(message: discord.Message):
             return
 
     # Auto-evaluate writing in #writing-feedback channel
-    if message.channel.name == "writing-feedback" and len(message.content) > 30:
+    # Hisn D025: same DMChannel.name crash as the vocab/listening handlers
+    # above -- this ran unconditionally for every message including DMs.
+    if getattr(message.channel, "name", None) == "writing-feedback" and len(message.content) > 30:
         member = database.get_member(str(message.author.id))
         if not member:
             return

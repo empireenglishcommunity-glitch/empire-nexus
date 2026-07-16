@@ -1920,3 +1920,107 @@ acknowledgment text.
 **Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
 re-verified by the owner repeating the exact original repro against
 the newly-deployed code.
+
+
+
+---
+
+## D025 — `on_message` crashes on EVERY DM due to unguarded `message.channel.name`, silently discarding vocab/listening quiz answers and more (Blocker)
+
+**Found during:** H6.1 (Human Experience Walkthrough), live with the
+owner, continuing the new-student journey on `bioroma`. The owner
+tried `!done vocab`, received the quiz question correctly, answered it
+(in the same DM conversation the whole tutorial had happened in), and
+got no reply at all — the task never got marked done.
+
+**Root cause, confirmed via direct log evidence (not just inferred):**
+`discord.py`'s `DMChannel` class has NO `.name` attribute at all
+(confirmed directly: `hasattr(discord.DMChannel, 'name')` → `False`
+against the actual installed `discord.py 2.7.1` on the production
+container). Four places in the codebase read `message.channel.name`
+unconditionally, with no guard for this:
+
+1. `features.check_english_only()` (`features.py` line 561, prior to
+   fix) — called unconditionally near the top of `on_message` for
+   EVERY message the bot receives, DM or not.
+2. The vocab-quiz-answer handler (`bot.py`, prior to fix) — reads
+   `message.channel.name == "bot-commands"` to decide whether to check
+   a pending quiz answer.
+3. The listening-quiz-answer handler (`bot.py`, prior to fix) — same
+   pattern, same channel check.
+4. The `#writing-feedback` auto-evaluation handler (`bot.py`, prior to
+   fix) — same pattern.
+
+Because (1) runs FIRST and unconditionally, **every single DM message
+sent to the bot crashed there**, before the message could ever reach
+(2), (3), or (4) further down in the same `on_message` handler.
+Confirmed directly in the production logs:
+```
+2026-07-15 23:59:59 [ERROR] discord.client: Ignoring exception in on_message
+Traceback (most recent call last):
+  File ".../discord/client.py", line 508, in _run_event
+    await coro(*args, **kwargs)
+  File "/app/src/bot.py", line 2067, in on_message
+    await features.check_english_only(message)
+  File "/app/src/features.py", line 561, in check_english_only
+    channel_name = message.channel.name
+                   ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DMChannel' object has no attribute 'name'
+```
+This exact crash fired twice around the owner's tutorial/vocab-attempt
+timestamps, confirming this is precisely what silently ate the vocab
+quiz answer: discord.py's own exception handler logs the crash as an
+`[ERROR]`-level "Ignoring exception in on_message" line and otherwise
+swallows it completely — no reply to the student, no visible sign
+anything went wrong, and easy to miss in logs unless specifically
+grepped for.
+
+**Severity: Blocker, not Minor.** This is NOT specific to vocab. ANY
+message a student sends to the bot via DM — answering a vocab quiz, a
+listening quiz, or anything else that would otherwise be handled later
+in `on_message` — crashes before reaching that logic. Given how much
+of onboarding (the tutorial itself, Nour's DM-based concierge
+conversations) already happens via DM, and how naturally a student
+would continue answering in the same DM thread they were just guided
+through, this is a systemic gap, not an edge case.
+
+**Secondary, related finding:** the vocab quiz word CAN legitimately
+differ from the words shown on the practice-platform link the student
+just visited — `curriculum.get_quiz_words()` intentionally samples from
+the current week PLUS the previous 2 weeks (for spaced repetition),
+while the practice platform's vocab page only shows today's specific
+day-slice of the current week's words. This is working as designed,
+not a bug, but it is genuinely confusing without any explanation
+shown to the student — noted here for awareness, not filed as its own
+defect, since "make it less confusing" is a product/UX judgment call
+(similar in spirit to D012/D020), not a correctness bug. Flagged for
+consideration during Masar or a future onboarding-polish pass.
+
+**Fix applied (2026-07-15):** added an explicit DM-safe guard to all 4
+call sites:
+- `features.check_english_only()`: added `if not hasattr(message.channel,
+  "name"): return False` right after the bot-author check, before the
+  first unconditional `.name` read. English-only enforcement was never
+  meant to apply to DMs anyway (the whole concept of "channel" doesn't
+  apply there), so skipping entirely is correct, not just crash-safe.
+- The vocab handler, listening handler, and `#writing-feedback`
+  handler in `bot.py`: changed `message.channel.name == "..."` to
+  `getattr(message.channel, "name", None) == "..."` — a DM channel now
+  safely evaluates to `None == "bot-commands"` (i.e. `False`) instead
+  of crashing, which is the correct behavior (a DM was never going to
+  equal any of these channel-name strings regardless).
+- Searched the full codebase for any other unguarded
+  `message.channel.name`/`ctx.channel.name` reads (`grep -rn
+  "\.channel\.name\b"` across all of `src/*.py`) — confirmed the only
+  remaining occurrences (in `features.py` and `nour_onboarding.py`)
+  are already correctly guarded by an earlier `hasattr()` check in the
+  same function, so this fix is comprehensive, not just patching the
+  one symptom that happened to be reported.
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge, deploy to production (`git
+pull && docker compose up -d --build`), then a live re-test: have
+`bioroma` try `!done vocab` again, answer the quiz question in the
+SAME DM conversation (the exact original repro), and confirm it now
+registers correctly (points awarded, task marked done, no silent
+failure) before this can be marked ✅ Resolved.
