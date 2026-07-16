@@ -2303,13 +2303,29 @@ DIFFERENT message ID for `speaking` correctly succeeds. Cleaned up the
 test rows and restored the container's original files afterward —
 this test never touched the live bot process or deployed anything.
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED (via the real Discord flow).** The safe pre-deploy test
-above confirms the underlying database logic works correctly, but
-still needs: PR review/merge, deploy to production (`git pull &&
-docker compose up -d --build`), then a live re-test through the REAL
-Discord flow: upload one recording, run `!done shadow` (should pass),
-then immediately try `!done speaking` WITHOUT a new upload (should now
-be correctly REJECTED with the new "upload a new recording" message),
-then upload a genuinely new recording and confirm `!done speaking`
-now passes — before this can be marked ✅ Resolved.
+**Deployed (2026-07-16):** merged via [PR #159](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/159), confirmed
+landed on `main`. Deployed to production (`git pull && docker compose
+up -d --build`) — confirmed via `docker exec ... grep -c
+"consumed_proof_messages"` returning `4` in the running container, AND
+confirmed the new table was actually created in the real production
+database on startup (`sqlite_master` query). Since `bioroma` had
+already genuinely completed `shadow`/`speaking` earlier the same day
+(the day's real submission gate — a separate, unrelated,
+one-task-per-day constraint — would have blocked re-testing), cleared
+just those 2 rows from `daily_submissions` for that date (leaving
+`consumed_proof_messages` untouched) to allow a clean re-test.
+
+**Live re-tested (2026-07-16), through the REAL Discord flow:** owner
+ran `!done shadow` — accepted correctly, streak/points updated. Owner
+then immediately ran `!done speaking` with NO new upload — first hit
+the pre-existing, unrelated 5-minute cooldown gate ("استنى 0:48 قبل ما
+تسجل مهمة تانية"), then after waiting, ran `!done speaking` again —
+**correctly REJECTED** with exactly the new message: *"لازم ترفع
+تسجيل صوتي جديد... التسجيل اللي استخدمته قبل كده لمهمة تانية معدش
+يصلح تاني"* (You need to upload a NEW recording — a recording already
+used for another task can't be reused). This is the exact repro that
+originally found the bug, now correctly blocked.
+
+**Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
+re-verified through the real Discord flow, reproducing the exact
+original scenario and confirming it's now correctly rejected.
