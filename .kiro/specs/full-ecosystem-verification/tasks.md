@@ -1076,20 +1076,17 @@
   scenarios post-deploy (D021: full day 2/3/5/8 tier simulation
   against the actual deployed code, 5/5 pass; D022: static schedule
   re-extraction confirming no new collisions).
-  → **D013-D017: deployed and server-side content-verified live**
-  (curl'd `practice.empireenglish.online` directly, confirming each
-  fixed file/markup is what's actually served — not just trusting the
-  deploy tool's success message). **D013 and D015 marked fully ✅
-  Resolved** — both are structurally verifiable from the server side
-  alone (D013: `/offline` no longer `.html`-suffixed, offline page
-  renders 200; D015: markup on multiple pages/levels shows
-  `KokoroAudio.stop()`/`setRate()`). **D014, D016, D017 remain 🟡
-  (deployed + content-verified, not yet Resolved)** — these three are
-  inherently client-side interactive behaviors a `curl` check can't
-  fully observe (Safari MediaRecorder behavior, same-page progress-bar
-  re-render, checkbox state across navigation) and need a real
-  hands-on pass, ideally folded into H6's device walkthrough rather
-  than a separate re-test round.
+  → **D013-D017: all 5 now fully ✅ Resolved.** D013/D015 were
+  structurally verifiable from the server side alone (curl'd
+  `practice.empireenglish.online` directly). **D014, D016, D017**
+  (Safari MediaRecorder playback/download, same-page progress-bar
+  re-render, checkbox state across navigation) needed a real hands-on
+  device pass — completed as H6's Tier 1 device re-test, on the exact
+  same iPhone Safari that originally found D014: owner confirmed
+  playback + download now work (D014), the progress bar updates
+  immediately on check (D016), and the checkbox stays checked after
+  navigating away and back (D017). All 3 marked ✅ Resolved in
+  `defect_log.md`.
 - [ ] **H7.4** Produce the final Go/No-Go Checklist — one line per
   requirement (R1-R11 from requirements.md), each marked ✅ Verified /
   ⚠️ Deferred (with explicit reasoning) / ❌ Blocked.
