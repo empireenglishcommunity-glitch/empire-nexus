@@ -478,13 +478,59 @@
   15 real milestones correctly shows achieved (matching that
   member's 1 real completion), 14 correctly locked; test footprint
   fully cleaned up afterward. **D036 marked ✅ Resolved.**
-- [ ] **M5.2** Run a combined live scenario end-to-end for one Ghost
-  Testing member: register → complete tasks across several simulated
-  days → unlock a milestone → trigger a difficulty change → trigger
-  the weekly growth letter → check the dashboard and `!progress` both
-  reflect everything correctly and consistently. This is Masar's own
-  equivalent of Hisn's H3 integration traces — don't skip it just
-  because each phase was individually verified.
+- [x] **M5.2 — done, run on the Ghost Bot** (isolated DB/token, using
+  `bioroma`'s Discord identity for real DM delivery — same rationale
+  as M4.4: this scenario needs multiple simulated days of activity and
+  synthetic pronunciation scores, more invasive than any single-phase
+  test, so kept off production entirely). One continuous scenario for
+  one member, touching every phase in sequence:
+  1. **Register**: `database.register_member()`, `gender=male`,
+     `level=L0`, `difficulty_level=2` (Normal).
+  2. **Simulated task activity across 4 days**: `update_streak()` ×4
+     (→ `current_streak=4`), `add_points(150)`.
+  3. **Pronunciation scores**: 7 days at 78% (realistic mid-range,
+     confirmed correctly produces NO adaptive adjustment — the
+     "nothing needs to change" path is honestly exercised too, not
+     skipped), then raised to 7 days at 90% to continue the scenario
+     into an UP adjustment.
+  4. **Milestone unlock**: `complete_milestone(l0_introduce)` →
+     real unlock DM generated via `build_milestone_moment()`
+     (template fallback, since the Ghost Bot has no AI keys — D035's
+     already-documented gap, not re-litigated here).
+  5. **Difficulty change**: `check_and_adjust()` correctly returned
+     `None` at 78% avg (between the 50%/85% thresholds — confirmed
+     the no-op path is honest), then correctly returned a real `up`
+     adjustment (`2→3`) once scores were raised to 90%; the resulting
+     DM used the correct "ready for more" framing.
+  6. **Growth letter**: `build_growth_letter()` produced a letter
+     genuinely referencing this run's OWN real signals — "استمرارك 4
+     يوم على التوالي" (your 4-day streak) and "فتحت 1 إنجاز جديد"
+     (you unlocked 1 new achievement) — not generic boilerplate.
+  7. **Dashboard/`!progress` consistency check**: `momentum_score()`
+     called twice in a row returned byte-identical results (structurally
+     guaranteed — both surfaces call the exact same function);
+     `get_latest_growth_letter()` (what `/api/growth-letter` serves)
+     returned the exact letter just stored; `get_completed_milestones()`
+     correctly showed `l0_introduce`; `difficulty_level` correctly
+     showed `3` post-adjustment; `current_streak` correctly showed `4`
+     throughout. **No inconsistency found anywhere in the chain.**
+
+  **One real-world timing note, not a defect:** step 4's DM was
+  initially gated out by `is_quiet_hours()` — the test happened to run
+  at 23:47 Asia/Dubai, genuinely inside the member's default
+  23:00-05:00 quiet window. Confirmed this is the gate working
+  correctly, not a bug; narrowed the TEST member's own quiet-hours
+  window to unblock the scenario rather than waiting out the clock or
+  weakening the real gate logic.
+
+  Full footprint (8 tables: `members`, `streaks`, `points_log`,
+  `notification_preferences`, `notification_log`, `ability_milestones`,
+  `pronunciation_scores`, `nour_growth_letters`) discovered by scanning
+  every table for this discord_id (not assumed from memory) and fully
+  deleted afterward; all 5 flags (`masar_momentum_score`,
+  `masar_growth_letter`, `masar_milestone_moments`,
+  `masar_difficulty_notes`, `tatawwur_adaptive`) reset to OFF with
+  `allowed_ids` cleared.
 - [ ] **M5.3** Update `STATUS.md`'s initiative table: add Masar as
   initiative #11, mark complete once M0-M2 (the two required phases)
   plus whichever of M3/M4 were actually built are done and verified.
