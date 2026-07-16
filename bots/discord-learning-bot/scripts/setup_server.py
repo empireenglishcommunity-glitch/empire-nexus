@@ -190,6 +190,20 @@ CATEGORIES_CONFIG = [
             {"name": "leaderboard", "type": "text", "topic": "🏆 لوحة المتصدرين — تتحدث تلقائيًا",
              "override": {"🌱 Level 0 | مبتدئ": _VIEW_ONLY, "💪 Level 1 | متقدم": _VIEW_ONLY, "🚀 Level 2 | متواصل": _VIEW_ONLY, "👑 Level 3 | طليق": _VIEW_ONLY}},
             {"name": "support", "type": "text", "topic": "🆘 محتاج مساعدة؟ اسأل هنا"},
+            # Hisn D031: ask-nour was created manually, outside this
+            # script, at some point after initial server setup -- it was
+            # never added here, so it never got the standard @everyone
+            # VIEW_CHANNEL grant every other channel in this file
+            # explicitly has. Confirmed live during Hisn H6.4: the
+            # channel had ZERO permission overwrites and no parent
+            # category, silently falling back to this server's actual
+            # @everyone default (VIEW_CHANNEL denied), making Nour's
+            # dedicated student-help channel invisible to every real
+            # student. Fixed directly on the live server (a one-time
+            # permission PUT, not a code deploy), and added here so a
+            # future full server rebuild creates it correctly the first
+            # time instead of silently reintroducing the exact same gap.
+            {"name": "ask-nour", "type": "text", "topic": "🤝 اسأل نور — مساعدتك الشخصية بالذكاء الاصطناعي"},
             {"name": "suggestions", "type": "text", "topic": "💡 عندك فكرة لتحسين المجتمع؟"},
         ],
     },
