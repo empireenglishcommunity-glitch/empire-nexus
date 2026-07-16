@@ -1039,10 +1039,46 @@
   single-bot experience from the second pass onward.
 - [ ] **H6.3** Flag any point where a real zero-English beginner would
   likely get stuck or confused, even if the system technically worked.
-- [ ] **H6.4** Walk the escalation experience from the STUDENT's side
+- [x] **H6.4** Walk the escalation experience from the STUDENT's side
   (send a message that should trigger Nour escalation) and from the
   OWNER's side (receive it on Telegram, reply, confirm delivery) —
   both perspectives in the same pass.
+  → **Complete, live with the owner, both sides in one pass.** Enabled
+  `nour_escalation` (was OFF), triggered a real escalation from
+  `bioroma` in `#ask-nour` ("Payment") — Nour correctly replied "let
+  me ask the team," and the owner received a clean, well-formatted
+  Telegram alert with the student's real context (name, level,
+  streak, message, recent conversation) via the Empire Ops bot. Owner
+  replied directly to the Telegram message; the reply was correctly
+  forwarded and delivered as a Discord DM to `bioroma`, confirmed
+  server-side (`ops_poller: forwarded owner reply to BioRoMa`) and by
+  the escalation's DB row flipping to `resolved=1`.
+
+  Surfaced 2 real defects along the way, both found live, fixed,
+  deployed, and live re-verified same session:
+  - **D031 (Blocker):** `#ask-nour` itself was invisible to `bioroma`
+    (and by extension every real student) — the channel had zero
+    permission overwrites and no parent category, silently falling
+    back to this server's actual `@everyone` default (`VIEW_CHANNEL`
+    denied). Fixed directly on the live server via the Discord API,
+    AND fixed in `scripts/setup_server.py` so a future full rebuild
+    creates it correctly. Owner confirmed: "yes i can see it now."
+  - **D032 (Minor, UX):** the owner's forwarded reply arrived as a
+    bare, unframed DM with zero indication it was "from Nour" — even
+    the owner, receiving their own test reply, couldn't tell whose
+    voice it was. Fixed by adding a bilingual "reply from Nour"
+    framing prefix. Re-tested a second time end-to-end; owner
+    confirmed the exact predicted framing appeared:
+    "💬 رد من نور (reply from Nour): ..."
+
+  Repeated the full end-to-end flow TWICE (once to find D031/D032,
+  once more after both fixes deployed) to confirm both fixes actually
+  closed the gaps, not just "looked fixed."
+  Left `nour_escalation` flag ON afterward (was OFF before this
+  session) — **flagged for H7.6's pre-launch review**: decide whether
+  this should be ON by default for the real 16 students, or toggled
+  per the owner's actual escalation-monitoring readiness at launch
+  time, not left on by testing-session default.
 
 ## Phase H7 — Defect Resolution + Go/No-Go Sign-off
 
