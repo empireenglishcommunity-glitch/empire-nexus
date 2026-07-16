@@ -2905,3 +2905,51 @@ message ID (`1527387035470659787`). Post-verification cleanup done:
 above (no `_has_unexpected_script()` guard on the older regular-chat
 AI chain) remains open and explicitly flagged, unchanged by this
 re-verification — still a known, non-blocking gap, not a silent one.
+
+
+
+---
+
+## D034 — `adaptive_engine.check_and_adjust()` called `is_feature_enabled("tatawwur_adaptive")` with no `discord_id`, silently disabling the entire Adaptive Difficulty feature for any allowlist-scoped rollout (Major)
+
+**Found during:** Masar M4.4's live-verification on the Ghost Bot
+(2026-07-16). Setting up a synthetic test member with `tatawwur_adaptive`
+enabled via allowlist (scoped to just that one discord_id — the exact
+"roll out to a beta squad first" use case the allowlist feature exists
+for), injecting 7 pronunciation scores of 90% (well above the 85%
+`THRESHOLD_UP`), and calling `adaptive_engine.check_and_adjust()`
+directly produced `None` — no adjustment at all, despite every
+precondition being met.
+
+**Root cause:** `check_and_adjust(discord_id)` has `discord_id` as its
+own parameter, but its very first line calls
+`database.is_feature_enabled("tatawwur_adaptive")` — with NO
+`discord_id` argument. Per `is_feature_enabled()`'s own documented
+contract, a `discord_id` of `None` is only ever treated as enabled if
+the flag's `allowed_ids` is EMPTY (i.e. "on for everyone"); a
+member-scoped allowlist rollout is unconditionally rejected, even for
+members who ARE on the allowlist. **This is the IDENTICAL bug class
+already found and fixed TWICE during Masar M2** (in
+`nour_growth_letter_task()` and the `/api/growth-letter` endpoint —
+see `STATUS.md`'s "Key Infrastructure & Standing Lessons" and its
+explicit "Rule going forward" about this exact pattern) — this is now
+the THIRD confirmed occurrence of the same defect class, and the first
+one found in `adaptive_engine.py` / Tatawwur's own code rather than
+Masar's new code. Since production's `tatawwur_adaptive` flag has
+always been globally OFF (empty allowlist) or globally ON to date,
+this bug has never yet affected a real student in production — but it
+would silently and completely disable adaptive difficulty for EVERY
+real student the moment anyone tried to do a real beta-squad rollout
+via the allowlist, exactly the scenario M4's own live-verification
+just exercised.
+
+**Fix:** pass `discord_id` through to the `is_feature_enabled()` call
+in `check_and_adjust()` — one-line change, no behavior change for the
+"globally on/off" cases, only for the allowlist-scoped case.
+
+**Status:** 🟡 **Fix identified live during M4.4's testing, being
+applied now in the same session** (see the commit that introduces this
+defect_log entry). Full live re-verification (repeat the exact same
+Ghost Bot UP-direction test that surfaced this, confirm a real
+adjustment now fires) still pending — tracked as part of M4.4's
+remaining work, not yet marked resolved here until that re-run passes.

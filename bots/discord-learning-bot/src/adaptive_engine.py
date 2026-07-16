@@ -116,7 +116,12 @@ def check_and_adjust(discord_id: str) -> Optional[dict]:
     6. Update members.difficulty_level
     7. Return adjustment info for notification
     """
-    if not database.is_feature_enabled("tatawwur_adaptive"):
+    # Hisn D034 fix: MUST pass discord_id here. Calling
+    # is_feature_enabled() with no discord_id treats an allowlist-scoped
+    # flag as disabled for EVERYONE, even members who are actually on
+    # the allowlist -- the exact same bug class already found and fixed
+    # twice in Masar M2's code (see STATUS.md's "Rule going forward").
+    if not database.is_feature_enabled("tatawwur_adaptive", discord_id):
         return None
 
     scores = database.get_recent_scores(discord_id, days=30)
