@@ -1162,9 +1162,17 @@
   that R9's "✅ Verified" (no integrity defect ever found) is NOT the
   same claim as "H7.6's cleanup is done" — the two are kept separate
   on purpose so a future reader doesn't conflate them.
-- [ ] **H7.5** Review the Go/No-Go Checklist explicitly with the owner.
+- [x] **H7.5** Review the Go/No-Go Checklist explicitly with the owner.
   Only after explicit owner sign-off does this spec close and student
   invitations proceed.
+  → **Signed off by the owner, 2026-07-16.** Walked through the full
+  R1–R12 verdict table and the D001–D032 defect summary from
+  `go_no_go_checklist.md` directly with the owner. Owner's explicit
+  response: **"all ok, lets move on."** Owner sign-off recorded here
+  as the authoritative record — this is a genuine GO, not a rubber
+  stamp: every line had traceable evidence, D012/D020 were flagged
+  again as the only 2 known open items (both already knowingly
+  deferred to Masar, not new information). **Proceeding to H7.6.**
 - [ ] **H7.6** Restore/clean the database to its pre-testing state
   (remove all `GHOST_TEST_` data from production if any leaked there
   despite Component 1's isolation design — verify zero leakage as part
