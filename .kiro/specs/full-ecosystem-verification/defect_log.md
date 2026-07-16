@@ -2544,3 +2544,77 @@ re-verified through the real Discord flow, confirming both halves of
 the intended behavior: auto-jump on a fresh `!link` click, and
 today-highlighting (without forced navigation) on an ordinary
 homepage revisit.
+
+
+
+---
+
+## D031 — `#ask-nour` channel was invisible to all real students (missing `@everyone` permission overwrite) (Blocker)
+
+**Found during:** H6.4's escalation walkthrough, live with the owner.
+Setting up to trigger a real Nour escalation, the owner switched to
+`bioroma` and reported: *"from bioroma account i am unable to see
+#ask-nour."*
+
+**Root cause, confirmed via direct Discord API inspection:** the
+server's `@everyone` role does NOT grant `VIEW_CHANNEL` by default
+(confirmed: base permissions integer `65600` does not include the
+`0x400` `VIEW_CHANNEL` bit). Every other channel checked
+(`l0-daily-tasks`, `general-chat`, `bot-commands`, etc.) has an
+EXPLICIT per-channel permission overwrite granting `@everyone` (or
+specific level roles) `VIEW_CHANNEL` — that explicit grant is what
+actually makes channels visible in this server, not the role default.
+
+`#ask-nour` had **zero permission overwrites at all**, and — unlike
+every other channel — **no parent category either**
+(`parent_id: None`). With no overwrite of its own and no category to
+inherit a broader grant from, it silently fell back to the server's
+actual base default: invisible to everyone except roles with
+`ADMINISTRATOR` (which bypasses all channel-visibility checks
+entirely — explaining why this was never noticed from an admin
+account).
+
+Cross-checked against `scripts/setup_server.py` (the script that
+creates/configures every other channel with correct permissions at
+server-setup time): `ask-nour` is **not referenced anywhere in that
+script at all** — confirming it was created manually, after the fact,
+outside the normal setup flow, and never had its permissions
+configured to match the rest of the server's channels.
+
+**Severity: Blocker.** This is not `bioroma`-specific — every one of
+the 16 real students would hit the exact same invisibility, meaning
+Nour's dedicated student-facing help channel (the ENTIRE point of
+which is to be a place students can ask for help / get escalated to a
+human) has been unreachable by any real student since it was created.
+Given H3.2 and H6.4 both specifically needed to exercise the
+escalation path, and both are Hisn's OWN verification of exactly this
+system, this could easily have gone unnoticed all the way to real
+student launch if H6.4 hadn't specifically required a real student
+account to physically attempt reaching this channel.
+
+**Fix applied (2026-07-16):** added an explicit permission overwrite
+on `#ask-nour` for the `@everyone` role, granting `VIEW_CHANNEL`
+(`0x400`) + `SEND_MESSAGES` (`0x800`) + `READ_MESSAGE_HISTORY`
+(`0x10000`) — the same three permissions every other student-facing
+channel in this server explicitly grants. Applied directly via the
+Discord API (`PUT /channels/{id}/permissions/{everyone_role_id}`),
+confirmed `204` response, and confirmed via a follow-up `GET` that the
+overwrite is now present exactly as intended.
+
+**Follow-up applied (2026-07-16):** added `ask-nour` to
+`scripts/setup_server.py`'s SYSTEM category channel list (alongside
+the pre-existing, thematically-identical `support` channel — "🆘
+محتاج مساعدة؟ اسأل هنا"), inheriting that category's standard
+`@everyone`/level-role `_VIEW_SEND` overwrite pattern every other
+channel in this script already uses. This is the actual code fix that
+prevents this exact gap from being silently reintroduced if the
+server is ever rebuilt from scratch — the direct-API permission fix
+above only fixed the one, already-existing, live channel instance.
+`python3 -m py_compile` confirms the script still parses cleanly.
+
+**Status:** ✅ **RESOLVED** — fixed on the live server (permission
+overwrite applied directly, confirmed by the owner: *"yes i can see
+it now"*) AND the setup script corrected so a future full rebuild
+creates `#ask-nour` with the right permissions from the start, closing
+both the immediate symptom and the underlying process gap that let it
+happen in the first place.
