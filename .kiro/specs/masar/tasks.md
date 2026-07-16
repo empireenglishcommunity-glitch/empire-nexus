@@ -380,23 +380,48 @@
 
 ## Phase M4 — Adaptive Difficulty Transparency (optional polish, independently skippable)
 
-- [ ] **M4.1** Implement `narrative_engine.build_difficulty_note()`
-  fully (AI prompt + direction-aware template fallback, both framed
-  positively per R5).
-- [ ] **M4.2** Hook into `adaptive_engine.py`'s difficulty-adjustment
-  call site (confirmed location: near line ~178, per design.md —
-  re-verify this line number against current code before editing,
-  since other work may have shifted it since this spec was written).
-  Add the new `notification_log` entry type (`difficulty_change`) and
-  the 7-day throttle check.
-- [ ] **M4.3** Add `masar_difficulty_notes` feature flag (default OFF).
-- [ ] **M4.4** **Live verification:** force a real difficulty change
-  for a Ghost Testing member in both directions (up and down), confirm
-  each produces a correctly-directioned, positively-framed message,
-  and confirm the 7-day throttle genuinely suppresses a second
-  notification if triggered again within the window (test this
-  specifically — don't assume the throttle logic works because it
-  compiles).
+- [x] **M4.1** `narrative_engine.build_difficulty_note()` was already
+  fully implemented (not just stubbed) as part of D033's own fix
+  (same PR that added the `gender` field + `_has_unexpected_script()`
+  guard) — both directions' prompts and template fallbacks were
+  already framed positively per R5, confirmed by re-reading the
+  function in full before starting M4's remaining wiring work.
+- [x] **M4.2** Hook into `adaptive_engine.py`'s difficulty-adjustment
+  call site — confirmed still at line 178 (`_set_difficulty()` →
+  `database.update_member(discord_id, difficulty_level=level)`),
+  unchanged since design.md was written. The REAL call site
+  (`bot.py`'s pronunciation-scoring handler, where `adjustment =
+  adaptive_engine.check_and_adjust(discord_id)` already lived) was
+  already sending a hardcoded bilingual message on every adjustment,
+  completely outside Nour's voice and with no throttle — this is the
+  actual thing M4 replaces, not a previously-empty hook. New
+  `database.was_notification_sent_within(discord_id, type, days)`
+  helper added (reuses the existing `notification_log` table/index,
+  no new table, same pattern as every other notification type in this
+  codebase) for the 7-day throttle, using the `difficulty_change`
+  notification type. Design choice: when `masar_difficulty_notes` is
+  OFF, the original pre-Masar hardcoded message is preserved exactly
+  as-is (no regression for members not on the new flag); when ON, a
+  gender-aware, D033-guarded, narrative_engine-generated note replaces
+  it, throttled to at most one notification per 7 days per member —
+  the underlying difficulty ADJUSTMENT itself is never throttled, only
+  the notification, per R5's exact acceptance criterion.
+- [x] **M4.3** `masar_difficulty_notes` feature flag was already
+  registered in `flag_registry.py` (default OFF) since M0 — confirmed
+  present, no change needed.
+- [x] **M4.4 (partial — DB-clone test)** 5 new unit tests added for
+  `was_notification_sent_within()` (never sent, recent send, outside
+  window, exact-boundary inclusive, type-specificity) — all pass, plus
+  the full existing 364-test suite re-run with zero regressions (369
+  total passing). **Still needed before M4 can be marked fully done:
+  a real live-verification pass (per this whole campaign's own
+  standing discipline — code-reviewed is not the same as live-
+  verified) forcing a real difficulty change for a Ghost Testing
+  member in BOTH directions, confirming the delivered DM is correctly
+  masculine/feminine/neutral per D033's gender guard, positively
+  framed per direction, and that the 7-day throttle genuinely
+  suppresses a second notification on a real second adjustment within
+  the window** — tracked as the immediate next step, not yet done.
 
 ## Phase M5 — Final Integration Verification + Documentation
 

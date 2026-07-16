@@ -1433,6 +1433,27 @@ def was_notification_sent(discord_id: str, notification_type: str, date: str) ->
     return row is not None
 
 
+def was_notification_sent_within(discord_id: str, notification_type: str, days: int) -> bool:
+    """Masar M4 (R5): check if a notification of this type was sent to
+    this member at any point in the last `days` days (not just an
+    exact-date match, unlike `was_notification_sent()` above) — used
+    for throttling notification TYPES that can legitimately recur
+    (e.g. `difficulty_change`, which can fire more than once a week if
+    the adaptive engine adjusts again), as opposed to once-per-day
+    dedup. Reuses the existing `notification_log` table/index, no new
+    table needed, same pattern as every other notification type in
+    this codebase.
+    """
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    conn = _connect()
+    row = conn.execute(
+        "SELECT 1 FROM notification_log WHERE discord_id=? AND notification_type=? AND date>=? LIMIT 1",
+        (discord_id, notification_type, cutoff),
+    ).fetchone()
+    conn.close()
+    return row is not None
+
+
 def is_quiet_hours(discord_id: str) -> bool:
     """Check if the current time is within this member's quiet hours.
 
