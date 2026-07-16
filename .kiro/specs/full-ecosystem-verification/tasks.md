@@ -1147,9 +1147,21 @@
   immediately on check (D016), and the checkbox stays checked after
   navigating away and back (D017). All 3 marked ✅ Resolved in
   `defect_log.md`.
-- [ ] **H7.4** Produce the final Go/No-Go Checklist — one line per
+- [x] **H7.4** Produce the final Go/No-Go Checklist — one line per
   requirement (R1-R11 from requirements.md), each marked ✅ Verified /
   ⚠️ Deferred (with explicit reasoning) / ❌ Blocked.
+  → **Complete.** Written as its own dedicated file,
+  `go_no_go_checklist.md`, mapped to the actual R1–R12 in
+  `requirements.md` (12, not 11 — requirements.md has 12 numbered
+  requirements; the task text's "R1-R11" appears to predate R12 being
+  added). Every line has a traceable evidence pointer into `tasks.md`
+  and/or `defect_log.md` — nothing asserted without a concrete
+  reference to where it was actually checked. **Result: all 12 marked
+  ✅ Verified.** Zero open Blockers, zero open Majors outside the 2
+  explicitly-deferred-to-Masar items (D012, D020). Explicitly flags
+  that R9's "✅ Verified" (no integrity defect ever found) is NOT the
+  same claim as "H7.6's cleanup is done" — the two are kept separate
+  on purpose so a future reader doesn't conflate them.
 - [ ] **H7.5** Review the Go/No-Go Checklist explicitly with the owner.
   Only after explicit owner sign-off does this spec close and student
   invitations proceed.
