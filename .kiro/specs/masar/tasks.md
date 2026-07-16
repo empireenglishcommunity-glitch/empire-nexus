@@ -292,21 +292,71 @@
 
 ## Phase M3 — Milestone Moments (optional polish, independently skippable)
 
-- [ ] **M3.1** Implement `narrative_engine.build_milestone_moment()`
+> **Scope-changing discovery made at the start of this phase, resolved
+> with the owner before any code was written:** confirming M3.2's
+> "real `complete_milestone()` call site" per design.md's own
+> instruction to verify rather than assume revealed that
+> `complete_milestone()` has **ZERO call sites anywhere in the live
+> codebase** — no real student has ever had a milestone marked
+> complete, ever, since the feature was built. Same root pattern as
+> D020/D012 (a feature designed, but the piece that actually triggers
+> it missing), just never logged as its own defect before now. Since
+> these 15 milestones (`content/milestones/milestones.json`) need a
+> human to judge a recording/essay/conversation — not something
+> auto-detectable from existing signals — M3.2 was expanded (with the
+> owner's explicit go-ahead: "do what you think is for the ecosystem's
+> best interest") to add a minimal `!markmilestone` admin command,
+> giving `complete_milestone()` its first real, working call site.
+> Milestone definitions/criteria themselves were left completely
+> unchanged, per requirements.md's out-of-scope note — only HOW a
+> completion gets recorded was touched.
+- [x] **M3.1** Implement `narrative_engine.build_milestone_moment()`
   fully (AI prompt + milestone-specific template fallback).
-- [ ] **M3.2** Hook into the real `complete_milestone()` call site(s)
+  → **Done.** Looks up the milestone's REAL name/description from
+  `milestones.json` via a new `_get_milestone_info()` helper (falls
+  back to the raw ID only if the lookup fails, e.g. a stale ID) —
+  this is the concrete improvement over M0.2's stub, which only ever
+  had the raw machine ID to work with. Includes extra real context
+  (streak, a memory) in the AI prompt when available. Template
+  fallback also uses the real name, e.g. "خلصت 'Introduce Yourself'"
+  — not the raw `l0_introduce` ID.
+- [x] **M3.2** Hook into the real `complete_milestone()` call site(s)
   — confirm via code search exactly where this is called from in the
   live codebase (design.md flags this as "to be confirmed at
   implementation time," do that confirmation here, don't assume).
   Add the notification call, gated by the existing `celebrations`
   preference and quiet-hours check.
-- [ ] **M3.3** Add `masar_milestone_moments` feature flag (default OFF).
+  → **Done — with the scope expansion noted above.** New admin
+  command `!markmilestone @user <milestone_id>` (in the ADMIN COMMANDS
+  section of `bot.py`, `manage_guild` permission-gated like every
+  other admin command) validates the milestone_id against the
+  student's actual level's milestones, calls
+  `database.complete_milestone()` (confirmed idempotent — a repeat
+  call for an already-completed milestone returns `False` and sends
+  no duplicate notification), and on a genuinely NEW completion,
+  gathers signals and calls `build_milestone_moment()`, gated by BOTH
+  the `masar_milestone_moments` flag AND the existing `celebrations`
+  preference AND `is_quiet_hours()` — same 3-gate discipline as every
+  other celebratory notification in this codebase.
+- [x] **M3.3** Add `masar_milestone_moments` feature flag (default OFF).
+  → **Done** (registered during M0.2's commit, alongside the other 3
+  Masar flags).
 - [ ] **M3.4** **Live verification:** trigger a real milestone unlock
   for a Ghost Testing member (same convention as Hisn's `GHOST_TEST_`
   IDs), confirm the personalized message sends correctly, confirm it
   correctly does NOT send when `celebrations` is off or during quiet
   hours (test both gates explicitly, don't assume they work because
   the code calls them).
+  → **Pre-verified against a real DB clone** (never production):
+  `complete_milestone()`'s idempotency confirmed (first call → `True`,
+  repeat call → `False`, no duplicate notification path taken); the
+  milestone-name lookup confirmed correct for both AI and template
+  paths; all 4 gate combinations tested explicitly (flag OFF, flag
+  ON, celebrations OFF, quiet hours ON) — each independently blocks
+  sending, not just assumed. **Still needs the ACTUAL production
+  trigger via the real `!markmilestone` command + real Discord DM
+  delivery check** once this PR is merged and deployed — tracked as
+  the next action.
 
 ## Phase M4 — Adaptive Difficulty Transparency (optional polish, independently skippable)
 
