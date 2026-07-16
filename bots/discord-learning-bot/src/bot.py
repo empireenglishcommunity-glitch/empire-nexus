@@ -1526,6 +1526,44 @@ async def cmd_join(ctx, *, goal: str = ""):
     await ctx.send(msg)
 
 
+@bot.command(name="gender")
+async def cmd_gender(ctx, value: str = ""):
+    """Masar D033 fix: set your gender so Nour addresses you correctly
+    in Egyptian Arabic (masculine/feminine second-person grammar
+    differ -- "عليك" vs "عليكي", "انت" vs "انتي"). Entirely optional
+    and skippable -- until set, Nour uses gender-neutral phrasing, she
+    never guesses. Usage: !gender male | !gender female | !gender clear
+    """
+    value = value.strip().lower()
+    valid = {
+        "male": "male", "m": "male", "ذكر": "male", "رجل": "male",
+        "female": "female", "f": "female", "أنثى": "female", "انثى": "female", "ست": "female",
+        "clear": "", "none": "", "reset": "",
+    }
+    if value not in valid:
+        await ctx.send(
+            "Usage: `!gender male` or `!gender female` (or `!gender clear` to reset). "
+            "This is optional — it just helps Nour address you correctly in Arabic. "
+            "\nاستخدم `!gender male` أو `!gender female` (أو `!gender clear` للحذف) — "
+            "اختياري تماماً، بيساعد نور تتكلم معاك بالصيغة الصحيحة."
+        )
+        return
+
+    discord_id = str(ctx.author.id)
+    member = database.get_member(discord_id)
+    if not member:
+        await ctx.send("You're not registered yet. Use `!join` to start.")
+        return
+
+    database.update_member(discord_id, gender=valid[value])
+    if valid[value] == "male":
+        await ctx.send("✅ Got it — Nour will address you as male. / تمام، نور هتتكلم معاك كراجل.")
+    elif valid[value] == "female":
+        await ctx.send("✅ Got it — Nour will address you as female. / تمام، نور هتتكلم معاكي كستّ.")
+    else:
+        await ctx.send("✅ Cleared — Nour will use gender-neutral phrasing. / تمام، نور هتستخدم صيغة عامة.")
+
+
 async def _score_pronunciation(ctx, task_id: str):
     """Dhaka' P1: background pronunciation scoring.
 

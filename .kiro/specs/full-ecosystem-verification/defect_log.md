@@ -2785,3 +2785,92 @@ closed.
 **Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
 re-verified through the real Discord flow, with the exact predicted
 bilingual framing confirmed in the actual delivered DM.
+
+---
+
+## D033 — Nour's AI-generated messages had no gender field to work from (silently guessed, sometimes wrong) and no output-quality guard against foreign-language hallucinations (Major)
+
+**Found during:** Masar M3.4's production live-verification. The
+owner ran the real `!markmilestone` command against their own
+`bioroma` account (a real male-presenting personal account) and
+received a personalized milestone message that (a) addressed them
+using feminine Egyptian Arabic grammar throughout ("عليكي", "انكي",
+"سجليتي" — all feminine second-person forms, when the correct forms
+for a male addressee are "عليك", "انك", "سجلت") and (b) contained a
+stray Vietnamese word fragment ("đặc", from "đặc biệt" / "especially")
+spliced into the middle of an otherwise-Arabic sentence.
+
+**Root cause, part 1 (gender):** confirmed via full schema search that
+`members` has **no gender field at all**, anywhere, and never has —
+not a Masar regression, a pre-existing gap in the whole system. Every
+AI prompt that addresses a student directly in Egyptian Arabic
+(`nour_concierge.py`'s regular chat, and all 3 of `narrative_engine.py`'s
+new `build_*` functions) had nothing telling the model the student's
+gender, so the model silently guessed one every single time — visible
+here specifically because Masar's new features are the first to
+generate long, second-person-addressed sentences ABOUT a specific
+student by name, but the identical exposure exists in Nour's regular
+`#ask-nour` chat too.
+
+**Root cause, part 2 (foreign-language leak):** confirmed via code
+read that neither `nour_concierge._clean_response()` nor
+`narrative_engine._clean_ai_text()` ever checked AI output for
+anything beyond stripping quote marks/markdown artifacts — no check
+existed anywhere for whether a response was actually clean
+Arabic/English text. Groq's Llama 3.3 70B produced a genuine
+token-hallucination glitch (a real word from another language it was
+trained on, not a typo), and there was no mechanism to catch it before
+it reached the student.
+
+**Fix applied (2026-07-16), addressing the root cause, not the
+individual symptom:**
+1. **New `gender` column on `members`** (default `''` = unknown,
+   nullable/optional, never a guessed default) — a real schema
+   migration (`_migrate()`), added to `_SCHEMA` for fresh installs too.
+2. **New `!gender male|female|clear` command** — fully optional,
+   skippable, available to any student at any time (existing or new),
+   accepts English and Arabic input values.
+3. **New shared `nour_personality.get_gender_instruction(discord_id)`
+   helper** — used by BOTH `nour_concierge.py`'s regular chat AND all
+   3 of `narrative_engine.py`'s `build_*` functions (not just the ones
+   that happened to expose the bug) — explicitly instructs the AI to
+   use the correct gendered grammar when known, and explicit
+   genuinely-gender-neutral phrasing (never a default guess) when
+   unknown, which is the case for every existing student today.
+4. **Fixed 3 masculine-only imperative forms in the non-AI template
+   fallbacks** (`كمل`, `استمر كده`, `جاهز`) — these can't use the
+   dynamic AI instruction since they never call AI, so they were
+   rewritten as genuinely gender-neutral phrasing directly.
+5. **New `_has_unexpected_script()` quality guard in
+   `narrative_engine.py`'s shared fallback chain** — a narrow
+   blocklist of scripts that have no legitimate reason to appear in
+   Nour's Arabic/English output (Vietnamese-range Latin Extended
+   Additional, Devanagari, CJK, Hangul, Cyrillic). A response
+   containing any of these is now treated as a FAILED generation —
+   Groq-fail falls through to Gemini, Gemini-fail falls through to
+   the template — rather than ever being sent to a student. Applied to
+   `narrative_engine.py`'s shared chain (used by all 3 `build_*`
+   functions); **NOT yet applied to `nour_concierge.py`'s separate,
+   older chat-response chain**, which has the identical theoretical
+   exposure — flagged here explicitly as a known follow-up, not a
+   silent gap, since fixing it is a small, separate, well-scoped
+   change that didn't need to block this fix.
+
+**Tested (2026-07-16), against a real DB clone (never production):**
+`get_gender_instruction()` confirmed producing correct, distinct
+instructions for all 3 states (male/female/unknown); the quality guard
+tested against the EXACT real garbled string the owner received
+(correctly flagged) and against clean Arabic/English/emoji/number text
+(correctly NOT flagged); the full fallback chain tested with a
+simulated garbled Groq response (correctly fell through to a clean
+Gemini response) and with BOTH providers simulated garbled
+(correctly fell through to the template); the `!gender` command's
+core update/clear/invalid-input logic tested directly against
+`database.update_member()`.
+
+**Status:** 🟡 **Fix written and locally tested, NOT yet deployed or
+live-verified in production.** Tracked as the immediate next action —
+this defect must be live-verified (a real `!markmilestone` or growth-
+letter run against `bioroma`, confirming correct masculine grammar and
+zero foreign-language leakage in the actual delivered DM) before it
+can be marked Resolved, per this campaign's own standing discipline.

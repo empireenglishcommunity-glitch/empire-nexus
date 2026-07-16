@@ -341,22 +341,36 @@
 - [x] **M3.3** Add `masar_milestone_moments` feature flag (default OFF).
   → **Done** (registered during M0.2's commit, alongside the other 3
   Masar flags).
-- [ ] **M3.4** **Live verification:** trigger a real milestone unlock
+- [x] **M3.4** **Live verification:** trigger a real milestone unlock
   for a Ghost Testing member (same convention as Hisn's `GHOST_TEST_`
   IDs), confirm the personalized message sends correctly, confirm it
   correctly does NOT send when `celebrations` is off or during quiet
   hours (test both gates explicitly, don't assume they work because
   the code calls them).
-  → **Pre-verified against a real DB clone** (never production):
-  `complete_milestone()`'s idempotency confirmed (first call → `True`,
-  repeat call → `False`, no duplicate notification path taken); the
-  milestone-name lookup confirmed correct for both AI and template
-  paths; all 4 gate combinations tested explicitly (flag OFF, flag
-  ON, celebrations OFF, quiet hours ON) — each independently blocks
-  sending, not just assumed. **Still needs the ACTUAL production
-  trigger via the real `!markmilestone` command + real Discord DM
-  delivery check** once this PR is merged and deployed — tracked as
-  the next action.
+  → **Done, in REAL production, using the owner's own real `bioroma`
+  account (same reasoning as M2.7 — a synthetic ID can't receive a
+  real DM).** The gating mechanics themselves worked exactly as
+  designed: flag ON, celebrations ON, not quiet hours → the DM sent.
+  **But the DM's actual CONTENT revealed two real, pre-existing
+  system-wide bugs, found live** (not caused by M3's own code): (1)
+  Nour addressed a real male student using feminine Egyptian Arabic
+  grammar throughout — because NOTHING in this codebase, anywhere,
+  ever told the AI a student's gender, so it silently guessed one
+  every time; (2) a stray Vietnamese word fragment ("đặc") appeared
+  mid-sentence — a genuine AI token-hallucination glitch that nothing
+  anywhere checked for. **Logged as D033 in Hisn's `defect_log.md`,**
+  fixed at the root (new `gender` field + `!gender` command + a
+  shared `get_gender_instruction()` helper used by BOTH Nour's
+  regular chat AND all 3 Masar `build_*` functions, plus a real
+  output-quality guard in the shared fallback chain) rather than
+  patched narrowly within Masar alone, per the owner's explicit
+  instruction: "do what you think is best interest for the system on
+  the long run not temp fix." D033's own fix still needs its own
+  fresh production re-verification (re-run `!markmilestone` against
+  `bioroma` — who now has a real `gender=male` value set — and
+  confirm correct masculine grammar + zero foreign-language leakage
+  in the actual delivered DM) before M3 as a whole is considered
+  fully closed — tracked as the immediate next action.
 
 ## Phase M4 — Adaptive Difficulty Transparency (optional polish, independently skippable)
 

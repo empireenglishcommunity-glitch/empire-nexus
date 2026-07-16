@@ -116,6 +116,49 @@ async def extract_memories_from_conversation(discord_id: str, student_message: s
 #  N5.3 — TIME-OF-DAY PERSONALITY
 # ============================================================
 
+def get_gender_instruction(discord_id: str) -> str:
+    """Masar D033 fix: tells the AI how to address this specific
+    student in Egyptian Arabic second-person grammar (masculine
+    "-ك"/"عليك"/"انت" vs feminine "-كي"/"عليكي"/"انتي" -- these forms
+    genuinely differ and using the wrong one is jarring, not a minor
+    detail). Returns a short instruction string to append to any
+    prompt that addresses the student directly in Arabic.
+
+    `gender` on `members` defaults to '' (unknown) for every existing
+    student -- this is NOT a bug to silently guess around. When
+    unknown, this instructs the AI to use genuinely gender-neutral
+    phrasing (address by name, avoid gendered second-person suffixes
+    entirely) rather than defaulting to either gender, which is
+    exactly the mistake found live during Masar M3's testing (a real
+    male student was addressed with feminine grammar because nothing
+    told the AI otherwise, and it silently guessed).
+    """
+    member = database.get_member(discord_id)
+    gender = (member or {}).get("gender", "")
+
+    if gender == "male":
+        return (
+            "This student is male -- use masculine second-person Arabic "
+            "grammar throughout (e.g. عليك، انت، مبروك ليك), never feminine "
+            "forms (عليكي، انتي)."
+        )
+    elif gender == "female":
+        return (
+            "This student is female -- use feminine second-person Arabic "
+            "grammar throughout (e.g. عليكي، انتي، مبروك ليكي), never "
+            "masculine forms (عليك، انت)."
+        )
+    else:
+        return (
+            "This student's gender is UNKNOWN -- do NOT guess or default to "
+            "either gender. Address them by name and use genuinely "
+            "gender-neutral Arabic phrasing throughout (avoid second-person "
+            "gendered suffixes like عليك/عليكي or انت/انتي entirely -- "
+            "restructure sentences around their name instead, e.g. 'يلا "
+            "[Name] نكمل' instead of 'يلا كمّل/كمّلي')."
+        )
+
+
 def get_time_personality() -> str:
     """Get personality modifier based on current time (Asia/Dubai timezone).
 

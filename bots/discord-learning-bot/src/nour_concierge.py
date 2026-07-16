@@ -201,6 +201,14 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
     # N5.4: Cultural context
     cultural_context = nour_personality.get_cultural_context()
 
+    # Masar D033 fix: tell the AI how to address this student in
+    # Egyptian Arabic (gendered second-person grammar) -- previously
+    # nothing did this anywhere in this codebase, so the AI silently
+    # guessed a gender every single time. Applies here too, not just
+    # to narrative_engine's new functions, since regular chat has the
+    # identical exposure.
+    gender_instruction = nour_personality.get_gender_instruction(discord_id)
+
     # Knowledge base (truncated to fit token limit)
     knowledge = _load_knowledge_base()
 
@@ -211,6 +219,8 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
 - Points: {points}
 - Tasks today: {tasks_done}/7 done ({', '.join(tasks_today) if tasks_today else 'none yet'})
 - Pronunciation average: {pron_avg:.0f}% (last 7 days)
+
+ADDRESSING THIS STUDENT: {gender_instruction}
 
 MEMORIES (things you know about this student):
 {memories_text}
