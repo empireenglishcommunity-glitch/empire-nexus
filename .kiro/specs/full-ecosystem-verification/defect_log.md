@@ -2329,3 +2329,104 @@ originally found the bug, now correctly blocked.
 **Status:** ✅ **RESOLVED** — fixed, merged, deployed, and live
 re-verified through the real Discord flow, reproducing the exact
 original scenario and confirming it's now correctly rejected.
+
+
+
+---
+
+## D029 — `!link`'s DM'd URL token is silently ignored; practice-platform homepage never reflects the student's real level/week (Major)
+
+**Found during:** H6.1's Tier 1 dashboard-visit walkthrough, live with
+the owner. Ran `!link`, took the DM'd URL "straight" (clicked it
+directly, did not manually use the "Connect to Discord" button/paste
+flow), and landed on the practice platform's level/week picker showing
+**Level 0, Week 1** — while Discord itself (`!week`, confirmed
+correct) knows the owner is genuinely on **Week 3**. Owner's own
+framing: *"its really critical the link and eco and harmony between
+discord bot and the practice."*
+
+**Root cause, confirmed via direct code reading across BOTH repos:**
+Two independent gaps, compounding into one visible symptom:
+
+1. **`empire-dojo`'s `app.js`/`index.html`:** `cmd_link()`
+   (`bot.py`) DMs `{platform_url}?token={token}` — but NOTHING on the
+   practice platform ever read the `?token=` URL query parameter.
+   Confirmed via `grep -rn "URLSearchParams"` across the whole
+   `site/js/app.js` — zero matches before this fix. The token sat
+   inert in the address bar; the page loaded exactly as if no token
+   were present at all. The student would have had to separately
+   notice the "Connect Discord" button and manually re-paste the same
+   token by hand for it to do anything — directly contradicting the
+   DM's own framing of it as "your personal link" (رابطك الشخصي).
+2. **The homepage's level/week picker (`index.html`) is a fully
+   static UI with hardcoded defaults** (`let currentLevel = 'l0'; let
+   currentWeek = 1;`) and had no code path connecting it to
+   `ConnectedProgress` (the object that DOES fetch real progress data,
+   for the streak display and pronunciation stats) at all. Even a
+   student who manually pasted their token via "Connect Discord"
+   would still see the picker sitting at Level 0/Week 1 — only the
+   streak number and pronunciation stat would update, not the
+   level/week selection itself.
+3. **Secondary gap, found while fixing #2:** `get_progress_for_token()`
+   (`database.py`) returned `level` but never `week` at all — even a
+   frontend that WANTED to auto-select the real week had no way to
+   know it from the existing API response.
+
+**Severity: Major.** Every one of the 16 real students following the
+exact intended flow (`!link` → click the DM'd link) would land on a
+picker showing the wrong level/week relative to their real progress,
+undermining trust in the Discord↔web connection at the very moment
+that connection is supposed to prove itself working. Not a Blocker
+since the student CAN still manually navigate to the correct
+level/week (the picker itself works correctly once clicked through) —
+but it directly contradicts the product's own promise of a connected,
+harmonious ecosystem.
+
+**Fix applied (2026-07-16):**
+1. `database.py`'s `get_progress_for_token()` now also returns
+   `week` (via `member_week_number()` — the exact same function
+   `!week` itself already uses, guaranteeing the two can never
+   disagree).
+2. `app.js`'s `ConnectedProgress.init()` now checks
+   `URLSearchParams(window.location.search).get('token')` FIRST,
+   before falling back to any previously-saved `localStorage` token —
+   if present, it connects immediately (same code path
+   `connect()`/`_fetchProgress()` the manual paste flow already uses)
+   and then strips the token from the visible URL via
+   `history.replaceState()` (mirroring the DM's own "don't share this
+   link" warning — a token sitting in the address bar is easy to
+   accidentally screenshot/share).
+3. `ConnectedProgress._fetchProgress()` now dispatches a
+   `window.dispatchEvent(new CustomEvent('empire:progress-loaded', ...))`
+   custom event with the fetched data every time fresh progress data
+   arrives (not just on first connect) — a minimal, decoupled hook so
+   `ConnectedProgress` (in `app.js`, shared across every generated
+   page) doesn't need to know the homepage's picker exists at all.
+4. `index.html`'s inline script now listens for that event and, when
+   fired, sets `currentLevel`/`currentWeek` to the real values from
+   the student's progress data (clamped to that level's real max week
+   via the existing `WEEKS` map, same defensive clamping pattern
+   already used elsewhere in this codebase for week numbers) and
+   re-renders the week/day grid and weekly chart to match.
+
+Also confirms `!link`'s existing DM text needs NO changes — it already
+correctly describes `{platform_url}?token={token}` as the student's
+personal link; the fix makes that description actually true, rather
+than requiring new bot-side copy.
+
+**Not tested yet (safely, before deploy)** — this fix spans TWO
+repositories (`empire-nexus` for the API's new `week` field,
+`empire-dojo` for the frontend) that must be deployed together for
+either half to matter (the frontend fix reads a field the API didn't
+return before; the API fix alone changes nothing visible without the
+frontend reading it).
+
+**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
+LIVE-VERIFIED.** Needs: PR review/merge in BOTH `empire-nexus` (API)
+and `empire-dojo` (frontend), deploy both (bot: `git pull && docker
+compose up -d --build`; practice platform: `npx wrangler pages deploy
+site --project-name=empire-practice`), then a live re-test: run
+`!link` again, click the DM'd URL directly (the exact original repro),
+and confirm the homepage now shows the owner's REAL level (L0) and
+REAL week (3) immediately, with no manual "Connect Discord" step
+needed — before this can be marked ✅ Resolved.

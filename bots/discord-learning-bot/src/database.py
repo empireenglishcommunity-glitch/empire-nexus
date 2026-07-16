@@ -1718,6 +1718,18 @@ def get_progress_for_token(token: str) -> dict | None:
         "discord_id": discord_id,
         "discord_name": member.get("discord_name", ""),
         "level": member.get("level", "L0"),
+        # Hisn D029: the practice platform's homepage (level/week/day
+        # picker) had ZERO awareness of a connected student's real
+        # progress -- it always defaulted to Level 0/Week 1 regardless
+        # of who was actually connected, even though Discord itself
+        # (e.g. !week) correctly knew the student's real current week.
+        # Confirmed live during Hisn H6: the owner was on real Week 3
+        # in Discord but the homepage picker started at Week 1. Adding
+        # `week` here (previously only `level` was exposed) lets the
+        # frontend (app.js's ConnectedProgress) auto-select the
+        # student's real level+week once connected, instead of always
+        # defaulting to L0/Week 1 for every visitor.
+        "week": member_week_number(discord_id),
         "streak": member.get("current_streak", 0),
         "longest_streak": member.get("longest_streak", 0),
         "total_points": member.get("total_points", 0),
