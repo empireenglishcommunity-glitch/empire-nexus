@@ -2490,15 +2490,24 @@ either half to matter (the frontend fix reads a field the API didn't
 return before; the API fix alone changes nothing visible without the
 frontend reading it).
 
-**Status:** 🟡 **CODE FIXED — NOT YET MERGED, DEPLOYED, OR
-LIVE-VERIFIED.** Needs: PR review/merge in BOTH `empire-nexus` (API)
-and `empire-dojo` (frontend), deploy both (bot: `git pull && docker
-compose up -d --build`; practice platform: `npx wrangler pages deploy
-site --project-name=empire-practice`), then a live re-test: run
-`!link` again, click the DM'd URL directly (the exact original repro),
-and confirm the homepage now shows the owner's REAL level (L0) and
-REAL week (3) immediately, with no manual "Connect Discord" step
-needed — before this can be marked ✅ Resolved.
+**Status:** ✅ **RESOLVED.** Merged in both repos
+([empire-nexus#161](https://github.com/empireenglishcommunity-glitch/empire-nexus/pull/161),
+[empire-dojo#24](https://github.com/empireenglishcommunity-glitch/empire-dojo/pull/24)),
+deployed, and live re-verified via the exact original repro (`!link`
+→ click the DM'd URL directly) during the same H6.1 session — confirmed
+in D030's own entry immediately below, which explicitly describes
+testing happening "immediately after D029's fix landed and correctly
+jumped the homepage to the student's real level/week."
+**Correction note (added 2026-07-16, during a Kiro account-migration
+handover):** this Status line was left on its pre-verification wording
+long after the fix actually shipped and was confirmed live — a stale-
+status documentation bug, same class as the one previously caught and
+fixed for D025/D026 (see that entry's own correction note). Caught
+by a fresh Kiro session cross-checking `STATUS.md`'s "10 initiatives
+fully complete" claim against this file directly, rather than trusting
+either document at face value. No code change was needed here — only
+this Status line was out of date; the underlying fix has been live and
+correct since H6.1.
 
 
 
