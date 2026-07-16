@@ -468,17 +468,62 @@ def _template_growth_letter(signals: dict) -> str:
 
 async def build_milestone_moment(discord_id: str, milestone_id: str,
                                   signals: dict) -> tuple[str, str]:
-    """M0.2 stub — full milestone-specific prompt lands in M3.1."""
+    """M3.1: a personalized, in-the-moment message when a student
+    unlocks one of the 12 (per design.md's framing)/15 (per the actual
+    milestones.json content this session found) real ability
+    milestones — fixes the generic "🏆 Unlocked!" pattern per R4.
+
+    Looks up the real milestone's name/description from
+    milestones.json (not just the raw machine ID) so the prompt is
+    genuinely specific to what the student actually did, and includes
+    whatever real context `signals` has (streak, related memory) for
+    extra personalization when available.
+    """
+    milestone_info = _get_milestone_info(milestone_id, signals.get("level", "L0"))
+    milestone_name = milestone_info.get("name", milestone_id) if milestone_info else milestone_id
+    milestone_desc = milestone_info.get("description", "") if milestone_info else ""
+
     system_prompt = _nour_voice_system_prompt()
+    extra_context = []
+    if signals.get("streak", 0) > 0:
+        extra_context.append(f"they're on a {signals['streak']}-day streak")
+    memories = signals.get("memories", [])
+    if memories:
+        extra_context.append(f"known personal context: {memories[0]}")
+    context_str = f" Additional real context: {'; '.join(extra_context)}." if extra_context else ""
+
     user_prompt = (
-        f"The student {signals.get('discord_name', '')} just unlocked the "
-        f"milestone '{milestone_id}'. Write a short, warm, specific "
-        f"congratulations message in Egyptian Arabic."
+        f"The student {signals.get('discord_name', '')} just completed the "
+        f"'{milestone_name}' milestone ({milestone_desc}). Write a short, "
+        f"warm, SPECIFIC congratulations message in Egyptian Arabic that "
+        f"references what they actually accomplished, not a generic "
+        f"'unlocked!' message.{context_str}"
     )
     return await _generate_with_fallback(
         system_prompt, user_prompt,
-        lambda: f"🏆 مبروك! فتحت إنجاز جديد ({milestone_id}) — استمر كده يا نجم!",
+        lambda: f"🏆 مبروك يا نجم! خلصت '{milestone_name}' — ده إنجاز حقيقي، استمر كده!",
     )
+
+
+def _get_milestone_info(milestone_id: str, level: str) -> Optional[dict]:
+    """Look up a milestone's real name/description from
+    milestones.json, by ID and level. Returns None if not found
+    (e.g. a stale/renamed ID) — callers fall back to the raw ID."""
+    import json
+    from pathlib import Path
+    milestones_file = (
+        Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
+    )
+    if not milestones_file.exists():
+        return None
+    try:
+        all_milestones = json.loads(milestones_file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+    for m in all_milestones.get(level, []):
+        if m.get("id") == milestone_id:
+            return m
+    return None
 
 
 async def build_difficulty_note(discord_id: str, direction: str,

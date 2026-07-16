@@ -2954,6 +2954,78 @@ async def cmd_systemstatus(ctx):
     )
 
 
+@bot.command(name="markmilestone")
+@commands.has_permissions(manage_guild=True)
+async def cmd_markmilestone(ctx, member: discord.Member = None, milestone_id: str = None):
+    """Admin command: mark an ability milestone as completed for a
+    student, after manually reviewing their submitted evidence
+    (recording/writing/conversation per milestones.json's `type`
+    field). Usage: !markmilestone @user l0_introduce
+
+    Masar M3.2: this is `database.complete_milestone()`'s FIRST real
+    call site anywhere in this codebase. Investigating M3's scope
+    found that although milestones are fully designed (15 of them,
+    `content/milestones/milestones.json`) and students can view their
+    progress via `!abilities`, nothing anywhere ever actually called
+    `complete_milestone()` — meaning no real student has EVER had a
+    milestone marked complete, at all, since the feature was built.
+    This is the exact D020/D012 pattern (a feature designed, but the
+    piece that actually triggers it missing) applied to milestones —
+    these specific milestones need a human (or future AI) to actually
+    listen to a recording or read an essay and judge it, which is why
+    an admin command, not an automatic detector, is the right fix here
+    (out of scope: changing what the milestones themselves are, or
+    how they're judged — this only gives the existing, unchanged
+    system its first working way to actually award one).
+    """
+    if not member or not milestone_id:
+        await ctx.send("Usage: `!markmilestone @user <milestone_id>` (see `!abilities` for valid IDs)")
+        return
+
+    discord_id = str(member.id)
+    target = database.get_member(discord_id)
+    if not target:
+        await ctx.send(f"❌ {member.display_name} isn't registered.")
+        return
+
+    import json
+    from pathlib import Path
+    milestones_file = Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
+    all_milestones = json.loads(milestones_file.read_text(encoding="utf-8"))
+    level = target.get("level", "L0")
+    level_milestones = {m["id"]: m for m in all_milestones.get(level, [])}
+    milestone = level_milestones.get(milestone_id)
+    if not milestone:
+        valid_ids = ", ".join(level_milestones.keys()) or "(none defined for this level)"
+        await ctx.send(f"❌ Unknown milestone_id `{milestone_id}` for {level}. Valid IDs: {valid_ids}")
+        return
+
+    newly_completed = database.complete_milestone(discord_id, milestone_id, level=level)
+    if not newly_completed:
+        await ctx.send(f"ℹ️ {member.display_name} already completed **{milestone['name']}** — no change.")
+        return
+
+    await ctx.send(f"✅ Marked **{milestone['name']}** ({milestone['name_ar']}) complete for {member.display_name}.")
+
+    # Masar M3: fire the personalized unlock moment, same gating
+    # discipline (celebrations preference + quiet hours) as every
+    # other celebratory notification in this codebase.
+    if database.is_feature_enabled("masar_milestone_moments", discord_id):
+        prefs = database.get_notification_prefs(discord_id)
+        if prefs.get("celebrations", 1) and not database.is_quiet_hours(discord_id):
+            try:
+                from . import narrative_engine
+                signals = narrative_engine.gather_signals(discord_id)
+                message, _source = await narrative_engine.build_milestone_moment(
+                    discord_id, milestone_id, signals,
+                )
+                await member.send(message)
+            except (discord.Forbidden, discord.HTTPException):
+                pass
+            except Exception as e:
+                logger.error(f"Masar milestone moment error for {discord_id}: {e}")
+
+
 @bot.command(name="setlevel")
 @commands.has_permissions(manage_guild=True)
 async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
