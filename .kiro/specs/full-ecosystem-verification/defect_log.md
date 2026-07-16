@@ -3018,3 +3018,71 @@ now. Not fixed here (deciding whether to share production's keys with
 the Ghost Bot, or issue it separate ones, is a credentials/quota
 decision for the owner, not a code fix) — flagged explicitly, not
 silently left broken.
+
+
+
+---
+
+## D036 — Dashboard's milestone grid used a hardcoded, entirely fictional list of milestone IDs with ZERO overlap with the real milestone catalog — could never show an achieved badge for any real milestone (Major)
+
+**Found during:** Masar M5.1's re-run of the Data Honesty Audit
+(2026-07-16), while re-verifying the "Milestone grid" row of
+`design.md`'s Component 6 table against the LIVE code, not just
+trusting the original table's "✅ Yes, honest, no change" verdict.
+Reading `empire-dojo/site/dash/index.html`'s `_renderMilestones()`
+function directly (not just checking that `/api/dashboard` returns a
+`milestones` field) surfaced a hardcoded 12-item `allMilestones` array
+with IDs like `first_recording`, `streak_7`, `level_l1`,
+`conversation_first` — cross-checked against the real 15 IDs actually
+used by `content/milestones/milestones.json` (`l0_introduce`,
+`l0_count100`, `l1_daily_story`, `l2_job_interview`, etc., the same
+file `!markmilestone`/`!abilities`/`narrative_engine.py` all read
+from): **zero overlap between the two ID sets.**
+
+**Consequence:** since `_renderMilestones()`'s "achieved" check is
+`achieved.has(m.id)` against the hardcoded list, and no real
+`ability_milestones` row's `milestone_id` can ever match any ID in
+that list, **the dashboard's milestone grid has NEVER been able to
+show an achieved (✅) badge for any milestone any real student has
+ever completed** — every real milestone always renders as 🔒 locked,
+for every student, forever, regardless of actual progress. This
+predates Masar entirely (Wuslah-era dashboard, `empire-dojo` PR #27's
+history traces further back) and was NOT caught by Hisn's original
+Data Honesty Audit pass (M0.3) or design.md's own Component 6 table,
+both of which took the milestone grid's existence/data-source at face
+value without cross-checking the actual ID space rendered client-side
+— confirming M5's own re-verification (re-check against LIVE code, not
+trust a prior table) has real value, not just process theater.
+
+**Confirmed NOT present in the Discord side:** `!abilities`
+(`bot.py`'s `cmd_abilities`) correctly reads `milestones.json` directly
+and checks against `database.get_completed_milestones()` — same
+correct pattern throughout, no fictional ID list. This defect was
+isolated to the web dashboard's frontend-only hardcoded array.
+
+**Fix:** added `api_server._get_milestones_catalog()` — reads the same
+`content/milestones/milestones.json` `!markmilestone`/`narrative_engine.py`
+use, returns a flat `[{id, name, name_ar, level}, ...]` list, cached
+in-memory (same pattern as `curriculum.py`'s content loading). Added
+as a new `milestones_catalog` field on `/api/dashboard`'s response
+(additive — the existing `milestones` field, real completion records,
+is unchanged). Updated `empire-dojo/site/dash/index.html`'s
+`_renderMilestones()` to render from the real catalog instead of the
+hardcoded array, matching achieved status against real
+`milestone_id`s for the first time.
+
+**Tested:** 4 new unit tests
+(`tests/test_api_server.py`) confirming the catalog's IDs exactly
+match `milestones.json`'s real IDs, and explicitly confirming NONE of
+the old fictional IDs (`first_recording`, `streak_7`, etc.) appear in
+the real catalog. Full suite: 378/378 passing, zero regressions.
+
+**Status:** 🟡 **Fix written, locally tested, NOT yet deployed or
+live-verified** (needs `empire-nexus`'s API change deployed AND
+`empire-dojo`'s frontend change deployed via
+`npx wrangler pages deploy site --project-name=empire-practice` —
+per this whole campaign's own discipline, both halves need a real
+browser/API check before this can be marked Resolved: open the real
+dashboard for a member with at least one completed milestone,
+confirm it now shows ✅ for that real milestone instead of the grid
+always showing everything locked).

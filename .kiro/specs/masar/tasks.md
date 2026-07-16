@@ -445,11 +445,33 @@
 
 ## Phase M5 — Final Integration Verification + Documentation
 
-- [ ] **M5.1** Re-run the Data Honesty Audit (M0.3's table) one more
-  time against the fully-shipped state (all flags that were built ON),
-  confirming every previously-failing display (the XP bar, the tips
-  card) now passes, and no NEW display introduced by M1-M4 fails the
-  honesty check.
+- [x] **M5.1** Re-ran the Data Honesty Audit (M0.3's table) against the
+  fully-shipped code (all of M0-M4's actual current source, not the
+  design doc's table taken on faith). Result:
+
+  | Display | Honest now? | Note |
+  |---|---|---|
+  | Level badge (`!level`, dashboard) | ✅ Yes | Unchanged |
+  | Momentum Score (dashboard + `!progress`) | ✅ Yes | Fixes D012. Both surfaces call the SAME `narrative_engine.momentum_score()` — structurally guaranteed consistent (R2), confirmed by reading the function: pure computation from `gather_signals()`, no AI, deterministic |
+  | Milestone grid (dashboard) | ❌ **NO — newly found, D036** | The grid's `_renderMilestones()` used a hardcoded, entirely fictional 12-ID list with ZERO overlap with the real 15 milestone IDs — could never show an achieved badge for ANY real milestone, for any student, ever. Predates Masar (Wuslah-era), missed by M0.3's own audit (which checked the field existed, not the actual ID space rendered). **Fixed in this same PR**: new `api_server._get_milestones_catalog()` + `milestones_catalog` field on `/api/dashboard`, frontend updated to render from it |
+  | Milestone unlock DM (M3) | ✅ Yes | Looks up the real milestone name from `milestones.json` by ID — same file, no fictional IDs involved here |
+  | Growth Letter card (dashboard) | ✅ Yes | Fixes D020. Replaces the old dead tips card entirely (confirmed: card is `display:none` until a real letter exists, never shows stale/generic content) |
+  | Difficulty transparency DM (M4) | ✅ Yes | Confirmed both directions use non-penalty framing (M4.4's live-verification) |
+  | Leaderboard rank | ✅ Yes | Real, live-computed |
+  | Streak counter | ✅ Yes | Real, DB-backed |
+  | SRS due/mastered counts | ✅ Yes | Real, DB-backed |
+  | Pronunciation trend/average | ✅ Yes | Real, computed from real scores |
+  | `!progress` Discord output | ✅ Yes | Mirrors dashboard fields + Momentum Score line |
+
+  **1 of 10 displays failed (D036, newly found) — 0 of the ORIGINAL
+  2 failures (D012, D020) remain failing** (both fixed by M1/M2
+  respectively). D036 is NOT a Masar-introduced defect — it's a
+  pre-existing Wuslah-era bug this audit's own re-verification
+  discipline caught, exactly the kind of thing R6 exists to surface.
+  Per R6's acceptance criteria ("fixed within scope OR explicitly
+  logged as a deferred defect with owner sign-off"), fixed directly
+  (see `defect_log.md`'s D036 entry) rather than deferred, since the
+  fix was small and well-scoped once found.
 - [ ] **M5.2** Run a combined live scenario end-to-end for one Ghost
   Testing member: register → complete tasks across several simulated
   days → unlock a milestone → trigger a difficulty change → trigger
