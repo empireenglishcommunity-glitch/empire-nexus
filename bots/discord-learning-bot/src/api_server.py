@@ -145,6 +145,60 @@ def _touch_token(token: str) -> None:
         pass  # Non-critical — don't break the request for housekeeping
 
 
+async def _log_ip_and_check(token: str, request: web.Request) -> None:
+    """Hissar P5: Log the request IP and check for token sharing.
+
+    If the token has been used from 5+ unique IPs, send a Telegram alert
+    to the owner via Markaz ops hub. Non-blocking, non-fatal.
+    """
+    if not database.is_feature_enabled("hissar_ip_detection"):
+        return
+
+    # Get client IP (behind reverse proxy, check X-Forwarded-For first)
+    ip = request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+    if not ip:
+        ip = request.headers.get("X-Real-IP", "")
+    if not ip:
+        peername = request.transport.get_extra_info("peername")
+        ip = peername[0] if peername else "unknown"
+
+    if not ip or ip == "unknown":
+        return
+
+    unique_count = database.log_token_ip(token, ip)
+
+    # Auto-flag at 5+ unique IPs
+    if unique_count >= 5:
+        # Check if we already alerted for this token recently (avoid spam)
+        alert_key = f"ip_alert_{token}"
+        if database.get_setting(alert_key):
+            return  # Already alerted
+
+        # Mark as alerted
+        database.set_setting(alert_key, "1")
+
+        # Get member info for the alert
+        member = database.get_member_by_token(token)
+        member_name = (member.get("discord_name", "Unknown") if member else "Unknown").split("#")[0]
+        discord_id = member.get("discord_id", "?") if member else "?"
+
+        # Send Telegram alert
+        try:
+            from . import ops_hub
+            await ops_hub.send_ops_alert(
+                title="Token Sharing Detected",
+                body=(
+                    f"Student: {member_name} (ID: {discord_id})\n"
+                    f"Unique IPs: {unique_count}\n"
+                    f"Token may be shared with unauthorized users.\n\n"
+                    f"Action: Use !revoke @{member_name} to invalidate their token."
+                ),
+                severity="warning",
+            )
+        except Exception:
+            pass  # Alert is best-effort
+
+
 # ============================================================
 #  EXISTING ENDPOINTS (Sahel S6)
 # ============================================================
@@ -860,6 +914,7 @@ async def get_validate_token(request: web.Request) -> web.Response:
         return web.json_response({"valid": False}, status=401, headers=_cors_headers(request))
 
     _touch_token(token)
+    await _log_ip_and_check(token, request)
     return web.json_response({
         "valid": True,
         "name": (member.get("discord_name") or "Student").split("#")[0],

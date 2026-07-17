@@ -414,6 +414,29 @@ CREATE TABLE IF NOT EXISTS consumed_proof_messages (
     consumed_at     TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_consumed_proof ON consumed_proof_messages(discord_id, task_id);
+
+-- Hissar P4: persistent cooldown tracking (survives bot restarts).
+-- In-memory dict loses all cooldown state on restart, letting students
+-- immediately submit again. This table stores the actual last-done
+-- timestamp per student, checked before the in-memory fallback.
+CREATE TABLE IF NOT EXISTS done_cooldowns (
+    discord_id      TEXT PRIMARY KEY,
+    last_done_at    TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Hissar P5: IP logging for token sharing detection.
+-- Every API request that uses a token logs the source IP here.
+-- If a single token shows 5+ unique IPs, it's flagged as suspicious.
+CREATE TABLE IF NOT EXISTS token_ip_log (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    token           TEXT NOT NULL,
+    ip_address      TEXT NOT NULL,
+    first_seen      TEXT NOT NULL DEFAULT (datetime('now')),
+    last_seen       TEXT NOT NULL DEFAULT (datetime('now')),
+    request_count   INTEGER NOT NULL DEFAULT 1,
+    UNIQUE(token, ip_address)
+);
+CREATE INDEX IF NOT EXISTS idx_token_ip ON token_ip_log(token);
 """
 
 
@@ -1977,3 +2000,113 @@ def cleanup_expired_tokens(days: int = 30) -> int:
     finally:
         conn.close()
     return removed
+
+
+
+# ============================================================
+#  HISSAR P4: PERSISTENT COOLDOWN (survives bot restarts)
+# ============================================================
+
+def get_last_done_time(discord_id: str) -> datetime.datetime | None:
+    """Get the last !done timestamp from the persistent table."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT last_done_at FROM done_cooldowns WHERE discord_id=?",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    if row and row["last_done_at"]:
+        try:
+            return datetime.datetime.fromisoformat(row["last_done_at"])
+        except (ValueError, TypeError):
+            return None
+    return None
+
+
+def record_last_done_time(discord_id: str) -> None:
+    """Persist the current timestamp as the student's last !done time."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO done_cooldowns (discord_id, last_done_at)
+           VALUES (?, datetime('now'))
+           ON CONFLICT(discord_id) DO UPDATE SET last_done_at=datetime('now')""",
+        (discord_id,),
+    )
+    conn.commit()
+    conn.close()
+
+
+# ============================================================
+#  HISSAR P5: IP LOGGING FOR TOKEN SHARING DETECTION
+# ============================================================
+
+def log_token_ip(token: str, ip_address: str) -> int:
+    """Log an IP address used with a token. Returns unique IP count for this token.
+
+    Uses UPSERT: if the (token, ip) pair already exists, increments
+    request_count and updates last_seen. Otherwise creates a new row.
+    """
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO token_ip_log (token, ip_address)
+           VALUES (?, ?)
+           ON CONFLICT(token, ip_address) DO UPDATE SET
+               last_seen=datetime('now'),
+               request_count=request_count+1""",
+        (token, ip_address),
+    )
+    conn.commit()
+    # Count unique IPs for this token
+    row = conn.execute(
+        "SELECT COUNT(DISTINCT ip_address) as cnt FROM token_ip_log WHERE token=?",
+        (token,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def get_token_ip_count(token: str) -> int:
+    """Get the number of unique IPs that have used this token."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(DISTINCT ip_address) as cnt FROM token_ip_log WHERE token=?",
+        (token,),
+    ).fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+def get_token_ips(token: str) -> list[dict]:
+    """Get all IPs that have used a token, with timestamps and counts."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT ip_address, first_seen, last_seen, request_count FROM token_ip_log WHERE token=? ORDER BY last_seen DESC",
+        (token,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def revoke_member_token(discord_id: str) -> bool:
+    """Delete all link tokens for a member, forcing them to re-link.
+    Returns True if any tokens were deleted."""
+    conn = _connect()
+    cur = conn.execute(
+        "DELETE FROM link_tokens WHERE discord_id=?",
+        (discord_id,),
+    )
+    conn.commit()
+    removed = cur.rowcount
+    conn.close()
+    return removed > 0
+
+
+def get_token_for_member(discord_id: str) -> str | None:
+    """Get the link token for a member, or None."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT token FROM link_tokens WHERE discord_id=?",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    return row["token"] if row else None

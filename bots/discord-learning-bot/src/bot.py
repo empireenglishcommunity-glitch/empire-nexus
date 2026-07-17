@@ -3118,6 +3118,50 @@ async def cmd_setupgate(ctx):
     await role_gate.cmd_setupgate(ctx)
 
 
+@bot.command(name="revoke")
+@commands.has_permissions(administrator=True)
+async def cmd_revoke(ctx, member: discord.Member = None):
+    """Hissar P5: Revoke a student's practice platform token (forces re-link).
+
+    Usage: !revoke @student
+    The student will need to run !link again to get a new token.
+    """
+    if not member:
+        await ctx.send("Usage: `!revoke @student` — invalidates their practice platform token.")
+        return
+
+    discord_id = str(member.id)
+    token = database.get_token_for_member(discord_id)
+    if not token:
+        await ctx.send(f"⚠️ {member.display_name} has no active token.")
+        return
+
+    # Show IP info before revoking
+    ip_count = database.get_token_ip_count(token)
+    ips = database.get_token_ips(token)
+
+    revoked = database.revoke_member_token(discord_id)
+    if revoked:
+        ip_info = f" (was used from {ip_count} unique IP{'s' if ip_count != 1 else ''})" if ip_count else ""
+        await ctx.send(
+            f"🔒 **Token revoked** for {member.mention}{ip_info}.\n"
+            f"They must run `!link` again to get a new token.\n"
+            f"Practice pages will show 'locked' until they re-link."
+        )
+        # DM the student
+        try:
+            await member.send(
+                "⚠️ **تم إلغاء رابط الممارسة الخاص بك.**\n"
+                "اكتب `!link` في `#bot-commands` للحصول على رابط جديد.\n\n"
+                "⚠️ **Your practice link has been revoked.**\n"
+                "Type `!link` in `#bot-commands` to get a new one."
+            )
+        except (discord.Forbidden, discord.HTTPException):
+            pass
+    else:
+        await ctx.send(f"❌ Failed to revoke token for {member.display_name}.")
+
+
 @bot.command(name="status")
 @commands.has_permissions(manage_guild=True)
 async def cmd_status(ctx):

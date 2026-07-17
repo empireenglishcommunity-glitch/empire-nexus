@@ -29,27 +29,108 @@ logger = logging.getLogger("empire-bot.verify")
 
 # In-memory cache: {discord_id: last_done_timestamp}
 _last_done_time: dict[str, datetime.datetime] = {}
-COOLDOWN_SECONDS = 60  # 1 minute
+COOLDOWN_SECONDS = 60  # 1 minute (base — overridden to 180 when hissar_anti_cheat is ON)
+COOLDOWN_SECONDS_HISSAR = 180  # 3 minutes (Hissar P4)
+
+# Progressive quiz delay: {discord_id: {"wrong_count": int, "last_wrong": datetime}}
+_quiz_fail_tracker: dict[str, dict] = {}
 
 # Voice tracking: {discord_id: {"join_time": datetime, "total_minutes": float}}
 _voice_sessions: dict[str, dict] = {}
 
 
+def _get_effective_cooldown() -> int:
+    """Get the effective cooldown based on hissar_anti_cheat flag."""
+    if database.is_feature_enabled("hissar_anti_cheat"):
+        return COOLDOWN_SECONDS_HISSAR
+    return COOLDOWN_SECONDS
+
+
 def check_cooldown(discord_id: str) -> tuple[bool, int]:
-    """Check if user is past the cooldown. Returns (allowed, seconds_remaining)."""
+    """Check if user is past the cooldown. Returns (allowed, seconds_remaining).
+
+    Hissar P4: checks persistent DB first (survives restarts), then
+    in-memory cache as fallback for the same-process window.
+    """
+    cooldown = _get_effective_cooldown()
     now = datetime.datetime.now()
+
+    # Check in-memory first (fastest path)
     last = _last_done_time.get(discord_id)
+
+    # Hissar P4: also check persistent DB (survives restarts)
+    if last is None and database.is_feature_enabled("hissar_anti_cheat"):
+        last = database.get_last_done_time(discord_id)
+
     if last is None:
         return True, 0
     elapsed = (now - last).total_seconds()
-    if elapsed >= COOLDOWN_SECONDS:
+    if elapsed >= cooldown:
         return True, 0
-    return False, int(COOLDOWN_SECONDS - elapsed)
+    return False, int(cooldown - elapsed)
 
 
 def record_done_time(discord_id: str):
     """Record that a !done was just processed."""
     _last_done_time[discord_id] = datetime.datetime.now()
+    # Hissar P4: persist to DB so it survives restarts
+    if database.is_feature_enabled("hissar_anti_cheat"):
+        database.record_last_done_time(discord_id)
+
+
+# ============================================================
+#  HISSAR P4: PROGRESSIVE QUIZ DELAY
+# ============================================================
+
+def check_quiz_delay(discord_id: str) -> tuple[bool, int]:
+    """Check if student must wait before next quiz attempt after wrong answers.
+
+    Returns (allowed, seconds_remaining).
+    Delay escalates: 30s after 1st wrong, 60s after 2nd, 120s after 3rd+.
+    Resets after a correct answer or after 10 minutes of no attempts.
+    """
+    if not database.is_feature_enabled("hissar_anti_cheat"):
+        return True, 0
+
+    tracker = _quiz_fail_tracker.get(discord_id)
+    if not tracker or tracker["wrong_count"] == 0:
+        return True, 0
+
+    now = datetime.datetime.now()
+    last_wrong = tracker["last_wrong"]
+    wrong_count = tracker["wrong_count"]
+
+    # Reset after 10 minutes of inactivity
+    if (now - last_wrong).total_seconds() > 600:
+        _quiz_fail_tracker[discord_id] = {"wrong_count": 0, "last_wrong": now}
+        return True, 0
+
+    # Progressive delay: 30, 60, 120 seconds
+    delays = [30, 60, 120]
+    delay = delays[min(wrong_count - 1, len(delays) - 1)]
+
+    elapsed = (now - last_wrong).total_seconds()
+    if elapsed >= delay:
+        return True, 0
+    return False, int(delay - elapsed)
+
+
+def record_quiz_wrong(discord_id: str):
+    """Record a wrong quiz answer (increases progressive delay)."""
+    now = datetime.datetime.now()
+    tracker = _quiz_fail_tracker.get(discord_id)
+    if not tracker:
+        _quiz_fail_tracker[discord_id] = {"wrong_count": 1, "last_wrong": now}
+    else:
+        _quiz_fail_tracker[discord_id] = {
+            "wrong_count": tracker["wrong_count"] + 1,
+            "last_wrong": now,
+        }
+
+
+def record_quiz_correct(discord_id: str):
+    """Record a correct quiz answer (resets progressive delay)."""
+    _quiz_fail_tracker.pop(discord_id, None)
 
 
 # ============================================================
