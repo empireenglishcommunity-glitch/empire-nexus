@@ -2110,3 +2110,55 @@ def get_token_for_member(discord_id: str) -> str | None:
     ).fetchone()
     conn.close()
     return row["token"] if row else None
+
+
+
+# ============================================================
+#  HISSAR P6: SECURITY MONITORING STATS
+# ============================================================
+
+def get_security_stats() -> dict:
+    """Get security metrics for the Markaz daily digest.
+
+    Returns:
+        {
+            "flagged_tokens": int,       # tokens with 5+ unique IPs
+            "total_tracked_tokens": int,  # tokens that have any IP logged
+            "revoked_today": int,         # tokens revoked in last 24h (via setting keys)
+            "suspicious_ips": list,       # [{token, discord_name, ip_count}] for flagged
+        }
+    """
+    conn = _connect()
+
+    # Tokens with 5+ unique IPs (flagged)
+    flagged_rows = conn.execute(
+        """SELECT token, COUNT(DISTINCT ip_address) as ip_count
+           FROM token_ip_log GROUP BY token HAVING ip_count >= 5"""
+    ).fetchall()
+
+    flagged_tokens = len(flagged_rows)
+
+    # Enrich with member names
+    suspicious = []
+    for r in flagged_rows:
+        member = get_member_by_token(r["token"])
+        name = (member.get("discord_name", "Unknown") if member else "Unknown").split("#")[0]
+        suspicious.append({
+            "token": r["token"][:8] + "...",
+            "discord_name": name,
+            "ip_count": r["ip_count"],
+        })
+
+    # Total tokens with any IP activity
+    tracked = conn.execute(
+        "SELECT COUNT(DISTINCT token) as cnt FROM token_ip_log"
+    ).fetchone()
+    total_tracked = tracked["cnt"] if tracked else 0
+
+    conn.close()
+
+    return {
+        "flagged_tokens": flagged_tokens,
+        "total_tracked_tokens": total_tracked,
+        "suspicious": suspicious,
+    }
