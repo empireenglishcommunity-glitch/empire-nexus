@@ -74,6 +74,9 @@ REGISTRY = [
     ("masar_milestone_moments", "Personalized milestone unlock DMs", "masar", False),
     ("masar_difficulty_notes", "Adaptive difficulty change transparency DMs", "masar", False),
     ("vocab_cheat_sheet", "Weekly Vocabulary Cheat Sheet in #cheat-sheets (Sahin Phase 4)", "sahin", False),
+
+    # ── HISSAR (security / anti-cheat / copyright) ──
+    ("hissar_role_gate", "Role-gate system: new members must accept rules before seeing channels (replaces removed Discord Rules Screening)", "hissar", True),
 ]
 
 # Initiative display names and emoji
@@ -87,6 +90,7 @@ INITIATIVES = {
     "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
     "wuslah": ("🔗", "WUSLAH", "ecosystem harmony"),
     "masar": ("🧭", "MASAR", "personal growth narrative"),
+    "hissar": ("🏰", "HISSAR", "security / anti-cheat / copyright"),
 }
 
 

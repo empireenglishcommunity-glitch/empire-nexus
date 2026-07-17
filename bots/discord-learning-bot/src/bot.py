@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -94,6 +94,7 @@ _EMOJI_TO_TASK_INDEX = {e: i for i, e in enumerate(_TASK_NUMBER_EMOJIS)}
 
 ARABIC_COMMAND_ALIASES = {
     "انضم": "join",
+    "أوافق": "agree",
     "تم": "done",
     "خلص": "done",
     "تقدم": "progress",
@@ -566,11 +567,18 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
     if config.IS_GHOST_INSTANCE:
         return
 
+    # Hissar P1.2: Role-gate — handle ✅ in #rules BEFORE bawaba_reactions
+    # so it takes priority. If role_gate handles it, don't fall through.
+    guild = bot.get_guild(payload.guild_id) if payload.guild_id else None
+    if guild:
+        handled = await role_gate.handle_reaction_gate(payload, guild)
+        if handled:
+            return
+
     # Check feature flag (use None for discord_id since this is a global check)
     if not database.is_feature_enabled("bawaba_reactions"):
         return
 
-    guild = bot.get_guild(payload.guild_id) if payload.guild_id else None
     if not guild:
         return
 
@@ -1632,6 +1640,12 @@ async def nour_growth_letter_task():
 # ============================================================
 #  MEMBER COMMANDS
 # ============================================================
+
+@bot.command(name="agree")
+async def cmd_agree(ctx):
+    """Accept server rules and unlock channels (Hissar P1.2 role-gate)."""
+    await role_gate.cmd_agree(ctx)
+
 
 @bot.command(name="join")
 async def cmd_join(ctx, *, goal: str = ""):
@@ -3089,6 +3103,20 @@ async def cmd_confirm_delete(ctx):
 # ============================================================
 #  ADMIN COMMANDS
 # ============================================================
+
+@bot.command(name="postgate")
+@commands.has_permissions(administrator=True)
+async def cmd_postgate(ctx):
+    """Post the role-gate agreement message in #rules (Hissar P1.2)."""
+    await role_gate.cmd_postgate(ctx)
+
+
+@bot.command(name="setupgate")
+@commands.has_permissions(administrator=True)
+async def cmd_setupgate(ctx):
+    """Auto-configure channel permissions for role-gate (Hissar P1.2). Run ONCE."""
+    await role_gate.cmd_setupgate(ctx)
+
 
 @bot.command(name="status")
 @commands.has_permissions(manage_guild=True)
