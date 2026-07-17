@@ -1345,6 +1345,21 @@ async def markaz_daily_digest():
     lines.append(f"🆕 New registrations: {new_members}")
     lines.append(f"💬 Nour conversations: {nour_convos}")
     lines.append(f"🚨 Pending escalations: {pending_escalations}")
+
+    # Hissar P6: Security monitoring section
+    if database.is_feature_enabled("hissar_ip_detection"):
+        sec = database.get_security_stats()
+        lines.append("")
+        lines.append("🏰 *Security \\(Hissar\\):*")
+        lines.append(f"   🔍 Tracked tokens: {sec['total_tracked_tokens']}")
+        if sec["flagged_tokens"] > 0:
+            lines.append(f"   ⚠️ *Flagged \\(5\\+ IPs\\): {sec['flagged_tokens']}*")
+            for s in sec["suspicious"][:3]:
+                safe_name = ops_hub.escape_markdown(s["discord_name"])
+                lines.append(f"      • {safe_name}: {s['ip_count']} IPs")
+        else:
+            lines.append("   ✅ No suspicious token sharing detected")
+
     lines.append("")
     lines.append(
         "*All systems healthy\\.* ✅" if pending_escalations == 0
