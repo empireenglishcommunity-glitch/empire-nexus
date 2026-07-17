@@ -142,6 +142,73 @@
   this phase doesn't fix a "defect" per se, but should still be
   recorded as done, per Requirement 6.3's discipline.
 
+## Phase 1 (cont'd) — bidi text fix, live deployment + cleanup [NEED]
+
+> ✅ **PHASE 1 IS NOW FULLY COMPLETE, LIVE-VERIFIED CLEAN.** Owner
+> flagged a real Arabic/English mixed-direction (bidi) readability
+> issue after Phase 1's initial deployment — resolved via PR #192
+> (`scripts/bidi_check.py`, a reusable checker + regression test),
+> then deployed and verified live on the real production server.
+
+- [x] Found and fixed 15 bidi issues across 13 `CHANNEL_GUIDES`
+  entries (see `defect_log.md`/PR #192 for full detail) — a single
+  Arabic line with 2+ embedded LTR (channel/command) tokens produces
+  disorienting visual reading order per the Unicode Bidirectional
+  Algorithm, not a wording mistake specific to any one line.
+- [x] Built `scripts/bidi_check.py` as a permanent, reusable checker
+  (not a one-off fix) — `find_bidi_issues()`/`find_bidi_issues_in_dict()`
+  — plus a regression test
+  (`tests/test_bidi_check.py::test_real_channel_guides_have_zero_bidi_issues`)
+  that runs against the REAL live `CHANNEL_GUIDES` content, so this
+  class of bug is caught automatically by CI/the test suite going
+  forward, not just by a human reading it again.
+- [x] Documented a new standing rule in `.kiro/steering/project-rules.md`
+  (never write an Arabic line with 2+ embedded LTR tokens; run
+  `bidi_check.py` before shipping new Arabic content with inline
+  channel/command references) — also documented the scoped
+  MSA-vs-Egyptian-dialect exception for this file in the same edit.
+- [x] Deployed to production (`fad8a6e`, confirmed via `git log` on
+  the server) and re-ran `setup_server.py` for real against the live
+  guild.
+- [x] **Live cleanup, done in 3 passes as real drift was discovered
+  at each step** (documenting the full process since it wasn't
+  perfectly linear — useful for a future session doing something
+  similar):
+  1. Unpinned the 14 originally-wrong-pinned messages from the
+     idempotency bug (PR #190).
+  2. Unpinned + deleted the 2 exact-duplicate messages caused by the
+     trailing-whitespace bug (`#welcome`, `#roles-info`) and 1
+     orphaned duplicate in `#rules` (PR #191).
+  3. **Found via a stricter live audit** (checking "exactly 1 pin
+     total per channel", not just "at least 1 correct pin exists")
+     that **16 channels still had their ORIGINAL Egyptian-colloquial
+     pin from Phase 1's very first run sitting alongside the new
+     correct MSA pin** — e.g. `#suggestions` had 2 pins: the correct
+     new one AND the old one, both technically "present," but only
+     the strict single-pin check caught that the old one was never
+     actually removed. Unpinned + deleted all 16, then found and
+     deleted 21 further stale UNPINNED leftover messages (old
+     Egyptian-colloquial and intermediate pre-bidi-fix versions still
+     sitting in channel history, cluttering it even though correctly
+     never pinned).
+- [x] **Final live verification, done STRICTLY this time**: for
+  every one of the 38 `CHANNEL_GUIDES` channels, confirmed exactly 1
+  pin total (not "at least 1 correct pin among possibly several") and
+  that pin's content matches expected exactly, AND re-ran
+  `find_bidi_issues()` directly against the live pinned content
+  (not just the source file) to confirm zero bidi issues in what
+  students will actually see. All 38 confirmed clean. Zero remaining
+  stale/leftover messages anywhere (separately confirmed via a full
+  history scan).
+
+**Lesson recorded for future phases of this spec**: a verification
+check that only confirms "the correct content exists somewhere" is
+NOT sufficient after multiple content-editing passes on the same
+channel — always also check "and nothing ELSE incorrect is still
+pinned/present," since iterative fixes on live, already-populated
+channels can leave old versions behind even when the new version is
+correctly added.
+
 ## Phase 2 — Permission audit + fix [NEED]
 
 > Depends on Phase 0's ground-truth table already existing.
