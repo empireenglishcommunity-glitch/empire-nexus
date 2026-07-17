@@ -337,6 +337,8 @@ async def on_ready():
         monday_progress_report.start()
     if not grammar_card_delivery.is_running():
         grammar_card_delivery.start()
+    if not vocab_cheat_sheet_delivery.is_running():
+        vocab_cheat_sheet_delivery.start()
     if not daily_word_delivery.is_running():
         daily_word_delivery.start()
     if not daily_streak_post.is_running():
@@ -1070,6 +1072,64 @@ async def monday_progress_report():
     guild = bot.get_guild(config.GUILD_ID)
     if guild:
         await features.send_weekly_progress_report(guild)
+
+
+@tasks.loop(time=datetime.time(hour=config.DAILY_TASK_HOUR, minute=15, tzinfo=_zone()))
+async def vocab_cheat_sheet_delivery():
+    """Post Weekly Vocabulary Cheat Sheet on Sunday in #cheat-sheets.
+
+    Sahin Phase 4: the Weekly Vocabulary Cheat Sheet prompt was fully
+    designed months ago (content/prompts/cheat_sheets.json, prompt #1)
+    but NEVER wired up to post anywhere — the same "designed but never
+    built" pattern found repeatedly in this project (D012, D020, D036).
+    This is the fix.
+
+    Uses pre-authored curriculum vocabulary data (same source as
+    daily_word_delivery() and the daily vocab task), NOT AI-generated —
+    more reliable, no Groq/Gemini dependency, uses real curated words.
+
+    Fires every Sunday at DAILY_TASK_HOUR:15 (deliberately a different
+    day than Wednesday's grammar card, per Masar M2's established
+    "don't cluster weekly posts on the same day" precedent).
+
+    Gated behind the `vocab_cheat_sheet` feature flag (default OFF),
+    per Aegis's flag-then-release discipline.
+    """
+    if _now().weekday() != 6:  # 6 = Sunday
+        return
+
+    if config.IS_GHOST_INSTANCE:
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    channel = discord.utils.get(guild.text_channels, name="cheat-sheets")
+    if not channel:
+        logger.warning("vocab_cheat_sheet_delivery: #cheat-sheets channel not found")
+        return
+
+    for level_key in ["L0", "L1", "L2", "L3"]:
+        members = database.members_at_level(level_key)
+        if not members:
+            continue
+
+        discord_id = members[0]["discord_id"]
+        if not database.is_feature_enabled("vocab_cheat_sheet", discord_id):
+            continue
+
+        week = database.member_week_number(discord_id)
+        sheet = features.format_vocab_cheat_sheet(week, level_key)
+        if not sheet:
+            logger.info(f"No vocab content for {level_key} week {week} — skipped")
+            continue
+
+        try:
+            await channel.send(sheet)
+            logger.info(f"Vocab cheat sheet posted for {level_key} week {week}")
+        except discord.HTTPException as e:
+            logger.error(f"Failed to post vocab cheat sheet for {level_key}: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=config.DAILY_TASK_HOUR, minute=30, tzinfo=_zone()))
