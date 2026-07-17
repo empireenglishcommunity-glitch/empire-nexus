@@ -782,8 +782,23 @@ class ServerSetup(discord.Client):
             # length heuristic — this is the only way to reliably tell
             # "this exact guide was already posted" apart from "the bot
             # said something long, once, for an unrelated reason."
+            # Compare with trailing whitespace stripped on both sides —
+            # Discord's API strips trailing whitespace from sent message
+            # content server-side, but Python triple-quoted string
+            # literals (WELCOME_MESSAGE etc.) commonly end with a "\n"
+            # right before the closing \"\"\". A raw == comparison
+            # against the un-stripped constant is ALWAYS false for
+            # those messages, even when the content is otherwise
+            # identical — confirmed live: this caused #welcome and
+            # #roles-info to each get a genuine duplicate post the
+            # first time this stricter check replaced the old, too-
+            # loose one. .rstrip() on both sides fixes this without
+            # reopening the original bug (an unrelated long message
+            # would still need to match everywhere but trailing
+            # whitespace, which is a much narrower, safe allowance).
+            target = content.rstrip()
             async for msg in channel.history(limit=20):
-                if msg.author == self.user and msg.content == content:
+                if msg.author == self.user and msg.content.rstrip() == target:
                     posted_message = msg
                     print(f"  ⏭️  #{ch_name} already has this exact content — skipped posting")
                     break
