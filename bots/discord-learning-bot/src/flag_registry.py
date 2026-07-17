@@ -77,6 +77,8 @@ REGISTRY = [
 
     # ── HISSAR (security / anti-cheat / copyright) ──
     ("hissar_role_gate", "Role-gate system: new members must accept rules before seeing channels (replaces removed Discord Rules Screening)", "hissar", True),
+    ("hissar_anti_cheat", "P4: increased cooldown (180s), persistent cooldown across restarts, progressive quiz delay", "hissar", True),
+    ("hissar_ip_detection", "P5: log IPs per token, auto-flag on 5+ unique IPs, Telegram alert to owner", "hissar", True),
 ]
 
 # Initiative display names and emoji
