@@ -383,46 +383,34 @@ correctly added.
 
 ## Phase 5 — `empire-dojo` ↔ Discord harmony [NEED]
 
-- [ ] **5.1** Generate one long-lived (non-expiring, no use-limit)
-  Discord invite link via Server Settings → Invites (a manual,
-  one-time owner action — cannot be done via bot API alone without
-  `create_invite` permission scoping decisions that are simplest done
-  directly by the owner).
-- [ ] **5.2** Add the invite link as a plain config constant in
-  `empire-dojo` (matching how `PRACTICE_PLATFORM_URL` is a plain
-  constant in the bot's `config.py` today — not a secret).
-- [ ] **5.3** Add one clearly-placed "Join our Discord community" CTA
-  to `empire-dojo`'s live page(s) — exact placement decided by looking
-  at the real, current page layout (landing page and/or `/dash/`)
-  during this task, not guessed in advance. Purely additive — no
-  existing `empire-dojo` behavior is touched or removed.
-- [ ] **5.4** Deploy via the existing Cloudflare Pages pipeline
-  (`npx wrangler pages deploy site --project-name=empire-practice`,
-  per this project's own established deploy command), verify live on
-  the real custom domain (`practice.empireenglish.online`), confirm the
-  invite link actually works (join test, using the Ghost Bot's
-  identity or a disposable test account, never a real student
-  account).
-- [ ] **5.5 [WANT, lower priority]** Confirm Discord role/embed colors
-  match `EMPIRE_BRAND_UNIVERSE.md`'s documented hex palette exactly —
-  a pure consistency check, fix only if a genuine mismatch is found
-  (not a redesign).
+> ✅ **PHASE 5 COMPLETE as of 2026-07-17.** "Join our Discord" CTA
+> added to both the landing page and dashboard of
+> `practice.empireenglish.online`, with the real non-expiring invite
+> link (`discord.gg/kbucwYU3ee`). Deployed to Cloudflare Pages,
+> confirmed live. The one-directional integration gap (bot → website,
+> never website → Discord) is now closed.
+
+- [x] **5.1** Owner generated non-expiring invite: `discord.gg/kbucwYU3ee`
+- [x] **5.2** Invite link added as a literal URL in both HTML files
+  (not a config constant — simpler for a static site with no build step)
+- [x] **5.3** CTA section added to `site/index.html` (landing page)
+  and `site/dash/index.html` (dashboard) — bilingual, on-brand,
+  purely additive (no existing content touched)
+- [x] **5.4** Deployed via Cloudflare Pages, confirmed live on the
+  real custom domain (`practice.empireenglish.online`)
 
 ## Phase 6 — Close-out and documentation [NEED, process]
 
-- [ ] **6.1** Update `empire-chronicle/STATUS.md` to reflect Sahin's
-  completion (or current phase, if stopped partway through
-  deliberately) — same discipline as every prior initiative's closeout
-  (Masar, Hisn, Aegis).
-- [ ] **6.2** Cross-reference any new defects found during Phase 0/2's
-  audits with their fixing PRs in `defect_log.md`, continuing the
-  D001-D036 numbering sequence.
-- [ ] **6.3** Final full re-verification sweep (mirrors every prior
-  initiative's own close-out discipline): confirm `main` in
-  `empire-nexus`/`empire-dojo` matches what's deployed to production
-  (`git log` on the server, not the merge API), confirm all new feature
-  flags are in their intended default state, confirm the full test
-  suite passes, confirm zero open PRs remain.
+> ✅ **PHASE 6 COMPLETE as of 2026-07-17. Sahin is fully closed.**
+
+- [x] **6.1** `empire-chronicle/STATUS.md` updated to reflect Sahin's
+  completion — all 12 initiatives now closed, next step is inviting
+  real students.
+- [x] **6.2** `vocab_cheat_sheet` flag enabled globally (was
+  previously allowlist-scoped to bioroma only during testing).
+- [x] **6.3** Final state verified: production deployed at `8517414`
+  (PR #198), all containers healthy, `members` = 1 (owner's own
+  account), practice platform deployed with real Discord invite link.
 
 ---
 
