@@ -337,6 +337,8 @@ async def on_ready():
         monday_progress_report.start()
     if not grammar_card_delivery.is_running():
         grammar_card_delivery.start()
+    if not daily_word_delivery.is_running():
+        daily_word_delivery.start()
     if not daily_streak_post.is_running():
         daily_streak_post.start()
     if not weekly_leaderboard_post.is_running():
@@ -1107,6 +1109,81 @@ async def grammar_card_delivery():
             logger.info(f"Grammar card posted for {level_key} week {week}")
         except discord.HTTPException as e:
             logger.error(f"Failed to post grammar card for {level_key}: {e}")
+
+
+@tasks.loop(time=datetime.time(hour=config.DAILY_TASK_HOUR, minute=45, tzinfo=_zone()))
+async def daily_word_delivery():
+    """Post Word of the Day in #daily-word every morning.
+
+    Sahin Phase 3 finding: the bot's own daily task message tells
+    students "Post in #daily-word (use today's word in a sentence)" —
+    but nothing ever actually delivered a "word of the day" to that
+    channel. This is the fix: picks ONE word from today's curriculum
+    vocabulary (same data source as the daily vocab task) and posts it
+    as a short, bilingual, inviting message students can respond to.
+
+    Fires daily at DAILY_TASK_HOUR:45 (15 min after the daily tasks
+    post at :00, and 15 min after grammar_card_delivery at :30 — so
+    all three never collide). Uses the lowest-level members' current
+    week to pick the word, matching daily_task_post()'s own logic for
+    determining which curriculum week to use.
+    """
+    import random
+
+    if config.IS_GHOST_INSTANCE:
+        return
+
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+
+    channel = discord.utils.get(guild.text_channels, name="daily-word")
+    if not channel:
+        logger.warning("daily_word_delivery: #daily-word channel not found")
+        return
+
+    # Use L0 members' week (the largest cohort, and L0's vocabulary is
+    # the most useful for a mixed-level "word of the day" since higher-
+    # level students already know L0 words and can still engage, while
+    # L0 students are actively learning them). Fall back to week 1 if
+    # no L0 members exist yet.
+    members = database.members_at_level("L0")
+    if members:
+        week = database.member_week_number(members[0]["discord_id"])
+    else:
+        week = 1
+
+    # Get today's day index (0=Saturday...6=Friday per curriculum convention)
+    today = _now()
+    day_index = (today.weekday() + 2) % 7  # Python: Mon=0; curriculum: Sat=0
+
+    words = curriculum.get_vocabulary_for_day(week, day_index, "L0")
+    if not words:
+        # Fallback: try the full week's vocab and pick randomly
+        words = curriculum.get_vocabulary_for_week(week, "L0")
+    if not words:
+        logger.info("daily_word_delivery: no vocabulary available, skipping")
+        return
+
+    word = random.choice(words)
+
+    # Format the post — bilingual, inviting, simple
+    msg = (
+        f"📖 **Word of the Day | كلمة اليوم**\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"🔤 **{word['word']}**\n"
+        f"🔊 {word.get('pronunciation', '')}\n"
+        f"📝 {word.get('arabic', '')}\n"
+        f"🏷️ _{word.get('pos', '')}_\n\n"
+        f"✍️ **اكتب جملة باستخدام هذه الكلمة!**\n"
+        f"Write a sentence using this word below 👇"
+    )
+
+    try:
+        await channel.send(msg)
+        logger.info(f"Daily word posted: {word['word']} (L0 week {week})")
+    except discord.HTTPException as e:
+        logger.error(f"Failed to post daily word: {e}")
 
 
 @tasks.loop(minutes=2)
