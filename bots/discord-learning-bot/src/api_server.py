@@ -82,7 +82,7 @@ def _get_milestones_catalog() -> list[dict]:
 
 _rate_limits: dict[str, list[float]] = defaultdict(list)
 _RATE_LIMIT_WINDOW = 60  # seconds
-_RATE_LIMIT_MAX = 60  # requests per window
+_RATE_LIMIT_MAX = 20  # requests per window (Hissar P2: tightened from 60)
 
 
 def _check_rate_limit(token: str) -> bool:
@@ -102,9 +102,30 @@ def _check_rate_limit(token: str) -> bool:
     return True
 
 
-def _cors_headers() -> dict:
+def _cors_headers(request=None) -> dict:
+    """Hissar P2: CORS restricted to allowed origins only.
+    Previously was Access-Control-Allow-Origin: * (any website could
+    use the API). Now only allows the real practice platform domains.
+    """
+    allowed_origins = {
+        "https://practice.empireenglish.online",
+        "https://empire-practice-8l0.pages.dev",
+    }
+    origin = ""
+    if request and hasattr(request, "headers"):
+        origin = request.headers.get("Origin", "")
+    # Also allow Cloudflare Pages preview URLs (*.empire-practice-8l0.pages.dev)
+    if origin in allowed_origins or origin.endswith(".empire-practice-8l0.pages.dev"):
+        return {
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+        }
+    # Unknown origin: return CORS headers with the primary domain
+    # (browsers will block if it doesn't match their Origin, which is
+    # the desired behavior — blocks unauthorized frontends)
     return {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://practice.empireenglish.online",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
     }
