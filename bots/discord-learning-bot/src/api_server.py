@@ -831,13 +831,50 @@ async def post_notifications(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  HISSAR P3: /api/validate-token — lightweight token check
+# ============================================================
+
+@routes.get("/api/validate-token")
+async def get_validate_token(request: web.Request) -> web.Response:
+    """Lightweight token validation for content gating on practice pages.
+
+    Hissar P3: practice pages hide their content until this endpoint
+    confirms the student holds a valid link token. Much lighter than
+    /api/progress (no DB aggregation, no heavy joins) — just checks
+    that the token exists and is associated with an active member.
+
+    Returns:
+      200 {"valid": true, "name": "...", "level": "L0"}  — token OK
+      401 {"valid": false}                                — invalid/expired
+      429 {"error": "rate limit exceeded"}                — throttled
+    """
+    token = request.query.get("token", "")
+    if not token:
+        return web.json_response({"valid": False}, status=401, headers=_cors_headers(request))
+
+    if not _check_rate_limit(token):
+        return web.json_response({"error": "rate limit exceeded"}, status=429, headers=_cors_headers(request))
+
+    member = database.get_member_by_token(token)
+    if not member:
+        return web.json_response({"valid": False}, status=401, headers=_cors_headers(request))
+
+    _touch_token(token)
+    return web.json_response({
+        "valid": True,
+        "name": (member.get("discord_name") or "Student").split("#")[0],
+        "level": member.get("level", "L0"),
+    }, headers=_cors_headers(request))
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 
 @routes.options("/api/{tail:.*}")
 async def cors_preflight(request: web.Request) -> web.Response:
     """Handle CORS preflight requests."""
-    return web.Response(headers=_cors_headers())
+    return web.Response(headers=_cors_headers(request))
 
 
 # ============================================================
