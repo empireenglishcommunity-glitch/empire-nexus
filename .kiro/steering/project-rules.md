@@ -179,11 +179,51 @@ else:
   `!flag list` always shows accurate descriptions and `default_enabled`
   always reflects the intended production state.
 
+### Arabic/English mixed-direction (bidi) text — Sahin standing rule
+Found live during Sahin Phase 1 (2026-07-17): an Arabic (RTL) line
+containing **two or more** separate embedded English/code tokens
+(e.g. two different `` `#channel-name` `` references joined by an
+Arabic connector word like "أو"/"ثم") produces genuinely disorienting
+reading order — the eye must jump between RTL and LTR runs multiple
+times in an order that doesn't match the logical/typed order. This is
+a real property of the Unicode Bidirectional Algorithm every modern
+text renderer (including Discord's client) follows — not a wording
+mistake specific to any one line.
+
+**Rule going forward: never write an Arabic sentence/line containing
+2+ separate embedded LTR tokens (channel names, commands, English
+words).** Fix pattern, in order of preference:
+1. Split into separate lines, one embedded LTR token per line, so
+   each line has at most one RTL→LTR transition and nothing Arabic
+   trails after the token on that same line.
+2. If several tokens genuinely belong together (e.g. a list of
+   commands), move them onto their OWN line with zero Arabic on that
+   line (pure LTR content has no direction to alternate with, so it's
+   never a bidi issue on its own) — join with a direction-neutral
+   separator (`—`, `←`, `·`) rather than an Arabic connector word.
+
+**Before shipping any new Arabic content with inline
+channel/command/English references**, run
+`bots/discord-learning-bot/scripts/bidi_check.py` (or import
+`find_bidi_issues()`/`find_bidi_issues_in_dict()` from it directly) —
+it flags every line with 2+ embedded LTR islands. A regression test
+(`tests/test_bidi_check.py::test_real_channel_guides_have_zero_bidi_issues`)
+already locks this in for `channel_guides.py`; extend that pattern to
+any NEW Arabic content map added to this codebase, don't invent a
+separate check per file.
+
 ### General
 - Commit messages: `type(scope): description`
 - Branch naming: `component/description`
 - Always push to a branch, never directly to main (create PR)
-- Arabic text: use Egyptian dialect, warm tone, consistent emojis
+- Arabic text: use Egyptian dialect, warm tone, consistent emojis —
+  **EXCEPTION: `discord-learning-bot/scripts/channel_guides.py`'s
+  per-channel guides deliberately use Modern Standard Arabic (فصحى)
+  instead, per an explicit 2026-07-17 owner decision (Sahin Phase 1) —
+  see that file's own module docstring for the full reasoning. This
+  is a scoped exception, not a project-wide dialect change; new
+  Arabic content elsewhere should still default to Egyptian dialect
+  unless explicitly told otherwise.**
 
 ---
 
