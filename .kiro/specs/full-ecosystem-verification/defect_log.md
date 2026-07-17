@@ -3130,3 +3130,98 @@ progress). Test member's full footprint (`members`,
 to 0 rows. The `wuslah_dashboard_api` flag's pre-existing state
 (globally ON, empty allowlist) was confirmed unchanged before/after
 this verification.
+
+
+
+---
+
+## D037 — `#ask-nour` has correct permissions (D031's fix holds) but is STILL not inside its intended SYSTEM category — a partial regression of D031 (Minor)
+
+**Found during:** Sahin's Phase 0 live re-verification audit
+(2026-07-17), which exists specifically to re-confirm — not assume —
+that prior sessions' fixes (D001-D036) still hold on the live server.
+
+**What's confirmed STILL correct (D031's actual fix, not regressed):**
+`#ask-nour`'s `@everyone` permission overwrite is exactly right —
+`allow=68608` decodes to `VIEW_CHANNEL` + `SEND_MESSAGES` +
+`READ_MESSAGE_HISTORY`, the same 3 permissions D031's fix applied. The
+channel IS visible and usable by real students right now. This is NOT
+a repeat of D031's original (Blocker-severity) symptom.
+
+**What's still wrong:** live inspection via the Discord API
+(`channel.category`) shows `#ask-nour`'s `category` is `None` — it is
+still an orphan channel, sitting at raw position 49 among voice
+channels rather than inside the `⚙️ الأوامر | SYSTEM` category, exactly
+where `scripts/setup_server.py` defines it (added as part of D031's
+own code-side fix). The direct-API permission PUT from D031's original
+fix was applied to the channel directly; the category re-parent step
+was evidently never separately applied (Discord's API treats "which
+category a channel sits in" and "what permission overwrites a channel
+has" as two independent operations — fixing one does not fix the
+other).
+
+**Impact:** cosmetic/organizational only, not a repeat Blocker — the
+channel works, `!join`/Nour's own `on_message` channel-name check
+(`message.channel.name == "ask-nour"`) don't care about category
+membership at all, only the channel's own name and permissions, both
+of which are correct. The only real consequence is: a student browsing
+the channel list sees `#ask-nour` floating oddly outside any category
+group, instead of grouped sensibly with `#bot-commands`/`#support` in
+SYSTEM — a minor "does this look professional" issue, not a
+functional one, but worth fixing as part of Sahin's own permission/
+categorization audit (Requirement 2).
+
+**Full live audit performed alongside this finding (confirms no other
+drift exists):** exact 1:1 match between every live channel name and
+every channel name in `setup_server.py` (0 unexpected live channels, 0
+missing expected channels); D001-D004's fixes (corrupted emoji,
+duplicate LEVEL 2 category, leftover default categories) all confirmed
+still holding — no corrupted category names, no duplicates, no
+leftover "Text Channels"/"Voice Channels" defaults found; D006's fix
+(`دليل-القنوات` under WELCOME) confirmed still present; all 5 Masar
+feature flags + `tatawwur_adaptive` confirmed still OFF with empty
+allowlists (no drift since the last Masar checkpoint).
+
+**Separately noted (not a defect, informational):** production
+`members` table now has 1 row — `bioroma` (the owner's own account),
+`joined_at: 2026-07-16 23:35:34`, with real associated activity
+(`nour_conversations`, a real `!link` token use, a real morning DM
+sent 2026-07-17). This happened via a genuine Discord join/interaction
+between the last session's cleanup and this audit — not caused by any
+automated process or leftover test data. Not touched by this audit;
+flagged to the owner separately as a "is this expected / do you want
+it cleaned up" question rather than assumed to be either a bug or
+something to silently delete.
+
+**Status:** ✅ **RESOLVED.** Fixed live via
+`channel.edit(category=<system_category>, sync_permissions=False)` —
+confirmed via a direct `fetch_channel()` call (bypassing client-side
+cache, which initially showed a stale `category=None` on the same
+client object) that `#ask-nour`'s `category_id` now correctly matches
+SYSTEM's ID, and that its existing `@everyone` permission overwrite
+(`allow=68608`, D031's original fix) was fully preserved by the
+re-parent operation (`sync_permissions=False` deliberately used to
+avoid overwriting the channel's own correct overwrite with the
+category's, which is broader `_VIEW_SEND` than `#ask-nour` needs — no
+functional difference here since both grant view+send, but preserving
+the more specific existing overwrite is the safer choice). Re-ran the
+full guild orphan-channel scan afterward: **0 orphan channels remain
+anywhere on the server.**
+
+**Second, more subtle bug also found and confirmed fixed by the same
+action**: `setup_server.py`'s own channel-lookup logic
+(`discord.utils.get(category.text_channels, name=ch_name)`, line
+~695-698) only searches WITHIN a category's own channel list — while
+`#ask-nour` was an orphan (no category), this lookup would NEVER have
+found it, meaning a future full server rebuild via this script would
+have SILENTLY CREATED A DUPLICATE `#ask-nour` inside SYSTEM rather
+than fixing the orphan one, leaving two channels with the same name
+(one orphaned, one correctly placed) — a real, if narrow, footgun for
+any future rebuild. Confirmed via a direct dry-run reproducing the
+script's exact own lookup line against the live post-fix state:
+`discord.utils.get(system_category.text_channels, name="ask-nour")`
+now correctly returns the channel — a future rebuild will `.edit()`
+the existing, correctly-placed channel rather than duplicate it. No
+code change to `setup_server.py` was needed — the script's logic was
+always correct FOR A CORRECTLY-PARENTED channel; the live data was
+wrong, not the script.
