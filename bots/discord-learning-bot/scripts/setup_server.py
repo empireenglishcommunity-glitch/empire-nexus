@@ -33,6 +33,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import discord
 from dotenv import load_dotenv
 
+from channel_guides import CHANNEL_GUIDES
+
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 # ============================================================
@@ -736,24 +738,60 @@ class ServerSetup(discord.Client):
         return result
 
     async def _post_content(self, guild: discord.Guild):
-        """Post welcome, rules, and roles content."""
+        """Post welcome, rules, and roles content, plus (Sahin Phase 1)
+        a per-channel "how to use this channel" pinned guide for every
+        student-facing text channel in CHANNEL_GUIDES.
+
+        Both content maps share the same idempotency check (skip if the
+        bot's own message with length > 100 already exists in the
+        channel's last 5 messages) so re-running this script never
+        double-posts. Sahin Phase 1 additionally ensures the message is
+        actually PINNED — the pre-Sahin version of this method sent
+        content but never pinned it, so #welcome/#rules/#roles-info
+        had real content that could still silently scroll out of view
+        once real chat activity started. Pinning (not just posting) is
+        the actual point of Requirement 1 in
+        .kiro/specs/discord-channel-experience/requirements.md.
+        """
         guild = self.get_guild(self.target_guild_id)
         content_map = {
             "welcome": WELCOME_MESSAGE,
             "rules": RULES_MESSAGE,
             "roles-info": ROLES_INFO_MESSAGE,
+            **CHANNEL_GUIDES,
         }
         for ch_name, content in content_map.items():
             channel = discord.utils.get(guild.text_channels, name=ch_name)
-            if channel:
-                # Check if content already posted (avoid duplicates)
-                async for msg in channel.history(limit=5):
-                    if msg.author == self.user and len(msg.content) > 100:
-                        print(f"  ⏭️  #{ch_name} already has content — skipped")
-                        break
-                else:
-                    await channel.send(content)
-                    print(f"  ✅ Posted content in #{ch_name}")
+            if not channel:
+                print(f"  ⚠️  #{ch_name} not found — skipped (check CHANNEL_GUIDES for a stale/renamed channel name)")
+                await asyncio.sleep(0.2)
+                continue
+
+            posted_message = None
+            # Check if content already posted (avoid duplicates)
+            async for msg in channel.history(limit=5):
+                if msg.author == self.user and len(msg.content) > 100:
+                    posted_message = msg
+                    print(f"  ⏭️  #{ch_name} already has content — skipped posting")
+                    break
+            else:
+                posted_message = await channel.send(content)
+                print(f"  ✅ Posted content in #{ch_name}")
+
+            # Pin it, if it isn't already (idempotent — Discord's own
+            # API is a no-op if the message is already pinned, but
+            # check first anyway to avoid an unnecessary audit-log entry
+            # on every re-run).
+            if posted_message and not posted_message.pinned:
+                try:
+                    await posted_message.pin()
+                    print(f"    📌 Pinned in #{ch_name}")
+                except discord.HTTPException as e:
+                    # Discord caps a channel at 50 pins -- fail loudly
+                    # in the console but don't crash the whole setup
+                    # run over one channel.
+                    print(f"    ⚠️  Could not pin in #{ch_name}: {e}")
+
             await asyncio.sleep(0.5)
 
 
