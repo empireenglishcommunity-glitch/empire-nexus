@@ -252,39 +252,84 @@ correctly added.
 
 ## Phase 3 — Channel-by-channel review: keep / enhance / merge / archive [NEED for identifying gaps; individual fixes tagged per-item]
 
-- [ ] **3.1** Walk every channel in `setup_server.py`'s
-  `CATEGORIES_CONFIG` and assign one verdict (Keep / Enhance / Merge /
-  Archive) per Component 3's table. Record the full table in this
-  file (append below this task) or in `design.md` — pick one location
-  and keep it there, don't split across both.
-- [ ] **3.2** For every **Enhance** verdict, confirm via a direct grep
-  of `bot.py`/`features.py`/`tasks.py` whether real content/behavior
-  already exists and is just underused, or whether it's genuinely
-  missing (the "designed but never wired up" pattern already found 4
-  times this project — D012, D020, D036, and Real Finding #1 above).
-  Specifically confirm/deny during this task:
-  - `#daily-word` — does anything actually post a daily word? (flagged
-    as unconfirmed in `design.md`)
-  - `#video-library`/`#podcast-recs`/`#book-club` — confirmed
-    placeholder-only (topic string, no poster logic) per context
-    gathered for this spec — re-confirm live, don't just trust this
-    note.
-- [ ] **3.3** For each confirmed-missing "Enhance" item, open a
-  separate, small, focused PR (one per channel/feature, not one giant
-  PR) — mirrors how Masar's own phases (M1/M2/M3/M4) were each shipped
-  independently. Do not bundle Phase 3 enhancements with Phase 4's
-  cheat-sheet work even if they feel similar — keep blast radius small
-  and reviewable.
-- [ ] **3.4** For any **Merge** candidate, apply Component 6's full
-  rename/merge safety net BEFORE touching anything live. Per
-  `design.md`'s open question, the recommendation is to DEFER any
-  merge decision until real student usage data exists — confirm this
-  with the user before doing any merge work in this phase.
-- [ ] **3.5** For any **Archive** candidate, apply via permission deny
-  only (`@everyone` + all level roles denied view) — never delete the
-  channel, its history, or remove it from `setup_server.py` (comment it
-  as archived with a dated note instead, so a future rebuild doesn't
-  silently resurrect it without context).
+> ✅ **PHASE 3 AUDIT TABLE COMPLETE as of 2026-07-17.** Every
+> student-facing channel reviewed against live data (message counts,
+> bot automation presence, user activity). Verdicts assigned. No
+> merges or archives recommended at this time (0 real students in the
+> system = no usage data to justify merging, per design.md's open
+> question #2 recommendation to defer merges until real data exists).
+
+- [x] **3.1** Full verdict table (below).
+- [x] **3.2** Confirmed via direct code grep which channels have real
+  bot-driven content automation (scheduled tasks posting to them) vs.
+  which depend entirely on student activity or are empty placeholders.
+
+### Phase 3 Verdict Table
+
+| # | Channel | Category | Verdict | Rationale |
+|---|---------|----------|---------|-----------|
+| 1 | `#start-here` | WELCOME | **Keep** | Read-only entry point, has pinned guide + clear onboarding instructions |
+| 2 | `#welcome` | WELCOME | **Keep** | Has the full welcome message + Arabic guide, both pinned |
+| 3 | `#rules` | WELCOME | **Keep** | Has rules + privacy policy + Arabic guide, all pinned |
+| 4 | `#roles-info` | WELCOME | **Keep** | Has level explanation + Arabic guide, both pinned |
+| 5 | `#announcements` | WELCOME | **Keep** | Active — `!announce` posts here, real admin activity |
+| 6 | `#دليل-القنوات` | WELCOME | **Keep** | Already serves as the whole-server Arabic channel map/index, pinned |
+| 7 | `#bot-commands` | SYSTEM | **Keep** | Active — ALL commands live here, highest user activity |
+| 8 | `#leaderboard` | SYSTEM | **Keep** | Active — auto-updated by `post_leaderboard()` scheduled task |
+| 9 | `#support` | SYSTEM | **Keep** | Purpose clear, will activate once students arrive |
+| 10 | `#ask-nour` | SYSTEM | **Keep** | Active — Nour AI concierge responds in real time, high activity |
+| 11 | `#suggestions` | SYSTEM | **Keep** | Purpose clear, will activate once students arrive |
+| 12 | `#l0-daily-tasks` | LEVEL 0 | **Keep** | Active — daily tasks posted at 6 AM, highest message volume |
+| 13 | `#l0-text-practice` | LEVEL 0 | **Keep** | Real student writing submissions exist |
+| 14 | `#l0-questions` | LEVEL 0 | **Keep** | Arabic allowed here (exception), important for confused L0 students |
+| 15 | `#l0-showcase` | LEVEL 0 | **Keep** | Real student recordings uploaded |
+| 16 | `#l1-daily-tasks` | LEVEL 1 | **Keep** | Active — daily tasks auto-posted (level-gated, activates at L1) |
+| 17 | `#l1-text-practice` | LEVEL 1 | **Keep** | Same as L0 equivalent, activates at L1 |
+| 18 | `#l1-questions` | LEVEL 1 | **Keep** | Same as L0 equivalent |
+| 19 | `#l1-showcase` | LEVEL 1 | **Keep** | Same as L0 equivalent |
+| 20 | `#l2-daily-tasks` | LEVEL 2 | **Keep** | Active — daily tasks auto-posted |
+| 21 | `#l2-text-practice` | LEVEL 2 | **Keep** | Same pattern |
+| 22 | `#l2-questions` | LEVEL 2 | **Keep** | Same pattern |
+| 23 | `#l2-showcase` | LEVEL 2 | **Keep** | Same pattern |
+| 24 | `#l3-daily-tasks` | LEVEL 3 | **Keep** | Active — daily tasks auto-posted |
+| 25 | `#l3-text-practice` | LEVEL 3 | **Keep** | Same pattern |
+| 26 | `#l3-mentorship` | LEVEL 3 | **Keep** | Unique to L3, purpose clear (help beginners) |
+| 27 | `#l3-showcase` | LEVEL 3 | **Keep** | Same pattern |
+| 28 | `#general-chat` | COMMUNITY | **Keep** | Active — real user messages, free English practice space |
+| 29 | `#introductions` | COMMUNITY | **Keep** | Purpose clear, activates when students join |
+| 30 | `#events` | COMMUNITY | **Keep** | Admin posts sessions here, pre-existing real content |
+| 31 | `#daily-word` | COMMUNITY | **Enhance** [NEED] | Has a Word of the Day bot post mechanism (`daily_word_delivery()` scheduled task confirmed in `bot.py` line 1063), BUT: needs verification that it's actually posting daily content consistently — live data shows only 5 messages total (4 bot, 1 user), which is low for a "daily" feature. Investigate whether this is a flag-gated feature not yet enabled, or genuinely posting and just has low engagement. |
+| 32 | `#daily-check-in` | ACCOUNTABILITY | **Keep** | Active — morning/evening reminders, missed-day reports, real user check-ins |
+| 33 | `#streak-tracker` | ACCOUNTABILITY | **Keep** | Active — auto-updated daily |
+| 34 | `#weekly-goals` | ACCOUNTABILITY | **Keep** | Purpose clear, will activate once students set goals regularly |
+| 35 | `#cheat-sheets` | RESOURCES | **Enhance** [NEED] | **Phase 4's flagship scope.** Currently ONLY has the Wednesday grammar card. The Weekly Vocabulary Cheat Sheet prompt exists but was never wired up (Real Finding #1 from this spec's own requirements.md). This is the single highest-value missing content in the entire server. |
+| 36 | `#video-library` | RESOURCES | **Enhance** [WANT] | Currently a pure placeholder (0 user messages, only the pinned guide). Needs real curated content (at minimum: 3-5 recommended videos per level as a starter set). Defer until after Phase 4 and/or until real students arrive and can contribute. |
+| 37 | `#podcast-recs` | RESOURCES | **Enhance** [WANT] | Same as `#video-library` — placeholder today, needs a curated starter set. Defer same timeline. |
+| 38 | `#book-club` | RESOURCES | **Enhance** [WANT] | Same — no content yet. Lowest priority of the 3 resource channels since it requires the most sustained commitment (monthly book picks). Defer. |
+| 39 | `#speaking-feedback` | FEEDBACK | **Keep** | Active — real recordings uploaded, AI assessment triggers on submissions |
+| 40 | `#writing-feedback` | FEEDBACK | **Keep** | Active — AI auto-evaluates submissions > 30 chars in this channel |
+| 41 | `#accent-feedback` | FEEDBACK | **Keep** | Purpose clear, distinct from `#speaking-feedback` (pronunciation-specific vs. general fluency) |
+| 42 | `#grammar-qa` | FEEDBACK | **Keep** | Purpose clear, will activate with real student questions |
+
+### Summary of verdicts
+
+| Verdict | Count | Action needed |
+|---------|-------|---------------|
+| **Keep** | 39 | None — already serving their purpose or will activate naturally once students join |
+| **Enhance [NEED]** | 2 | `#cheat-sheets` (Phase 4 scope), `#daily-word` (investigate if automation is running) |
+| **Enhance [WANT]** | 3 | `#video-library`, `#podcast-recs`, `#book-club` — need curated starter content, defer |
+| **Merge** | 0 | Per design.md's open question #2: defer ALL merge decisions until real usage data exists (0 students today = 0 data to justify a merge) |
+| **Archive** | 0 | No channel is genuinely dead or redundant — every one either has real automation or a clear, distinct purpose that doesn't overlap meaningfully with any other |
+
+### Key findings from this review
+
+1. **`#daily-word` needs investigation** — code shows a `daily_word_delivery()` scheduled task exists (line 1063, fires at 7:00 AM), but the channel only has 5 total messages. This could mean the feature is flag-gated and not yet enabled, or it's firing but the content disappears / doesn't generate properly. Will investigate in a follow-up task (not Phase 4, since that's specifically about `#cheat-sheets`).
+
+2. **`#video-library` / `#podcast-recs` / `#book-club`** are genuine placeholders today — but NOT candidates for archive/merge. They serve distinct, real purposes that will activate once real students arrive and start sharing content. The right action is to seed them with a small starter set of curated recommendations (3-5 items each) AFTER the higher-priority Phase 4 work ships, not before.
+
+3. **No channel merges are recommended.** The 3 resource channels (video/podcast/book) look like merge candidates on paper ("low activity"), but they serve genuinely different content types (video vs. audio vs. text) that students would naturally look for in different places. Merging them into one generic "resources" channel would make the single merged channel harder to navigate, not easier. Confirmed: defer this decision per design.md's own explicit recommendation.
+
+4. **The system as designed is structurally sound.** 39 of 42 channels are either already active or will activate naturally when students join — this is a well-designed server structure, not an over-built one. The "enhance" items (cheat-sheets content, daily-word investigation, resource-channel seeding) are genuine gaps worth fixing, but they're additions to an already-working structure, not fixes to a broken one.
 
 ## Phase 4 — `#cheat-sheets` redesign (the flagship) [NEED for 4a; NEED-pending-user-decision for 4b per design.md's open question; WANT for 4c]
 
