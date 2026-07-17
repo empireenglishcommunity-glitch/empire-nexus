@@ -22,37 +22,67 @@
 
 ## Phase 0 — Re-verify live state (do this FIRST, before any new code) [NEED]
 
-> Per this project's own standing rule: never trust a prior session's
-> defect-log entry as still-true without re-checking live. D031/D001-D006
-> were fixed in a PAST session — Phase 0 confirms they're STILL fixed,
-> not assumed.
+> ✅ **PHASE 0 COMPLETE as of 2026-07-17.** Live audit performed,
+> 1 real (Minor) defect found and fixed (D037), everything else
+> confirmed still holding from prior sessions. Safe to move on to
+> Phase 1.
 
-- [ ] **0.1** Request a fresh, temporary SSH/bot-token grant (per this
-  project's standing pattern — keys never survive between sessions).
-- [ ] **0.2** Write and run a small, disposable, READ-ONLY audit script
-  (`scripts/audit_channels.py` — delete or keep as a reusable tool,
-  decide at the end of this task, but it must not modify anything on
-  its own) that connects via the bot's own token and prints, for every
-  real channel/category on the live guild: name, category, channel
-  type, and every permission overwrite's raw allow/deny bitmask.
-- [ ] **0.3** Compare Phase 0.2's live output against
-  `scripts/setup_server.py`'s `CATEGORIES_CONFIG`, channel by channel.
-  Specifically confirm these previously-fixed items are STILL correct:
-  - `#ask-nour` is inside SYSTEM with `@everyone` granted view+send+history (D031).
-  - No corrupted-emoji or duplicate LEVEL 2 categories exist (D001-D003).
-  - `دليل-القنوات` exists under WELCOME (D006).
-  - Confirm current real member count in the production DB (last known:
-    0 — re-confirm, don't assume it's still 0).
-- [ ] **0.4** Record the results as a dated audit note appended to
-  `defect_log.md` (even if everything is confirmed still-correct — a
-  "confirmed clean, re-verified 2026-XX-XX" entry has real value for the
-  next session, exactly like D007's "investigated, no action needed"
-  entry already does).
-- [ ] **0.5** If ANY drift is found (a channel moved, a permission
-  changed, a new manually-created channel with no overwrites), log it
-  as a new numbered defect (continuing past D036) and fix it per
-  Component 2's two-part rule (live fix + `setup_server.py` fix,
-  together) before proceeding to any later phase.
+- [x] **0.1** Fresh temporary SSH grant obtained.
+- [x] **0.2** Wrote and ran a disposable, read-only audit script
+  (inline, via `docker exec ... python3 -c "..."` against the live
+  bot's own Discord token — not saved as a standalone file, since a
+  single targeted run was sufficient and the project's own
+  `page_crawler.py`/`api_adversarial_test.py` precedent shows
+  throwaway scripts are an accepted pattern here). Printed every
+  category, every channel (name/id/type/topic), every permission
+  overwrite's raw allow/deny bitmask, and a dedicated orphan-channel
+  scan (channels with `category=None`).
+- [x] **0.3** Compared live output against `setup_server.py`
+  channel-by-channel. Results:
+  - **50 live text+voice channels, exact 1:1 match against
+    `setup_server.py`'s full channel list** — 0 unexpected live
+    channels, 0 missing expected channels.
+  - D001-D004 (corrupted emoji, duplicate LEVEL 2 category, leftover
+    default categories) — confirmed still fixed, no recurrence.
+  - D006 (`دليل-القنوات` under WELCOME) — confirmed still present and
+    correctly placed.
+  - **D031 found PARTIALLY regressed**: `#ask-nour`'s permission
+    overwrite was still correct (D031's actual Blocker-severity fix
+    holds — the channel is visible and usable), but the channel was
+    STILL an orphan (`category=None`), never actually re-parented into
+    SYSTEM. Logged and fixed as **D037** (see 0.5).
+  - Production `members` table: **1 row**, not 0 as last confirmed —
+    `bioroma` (the owner's own account), joined 2026-07-16 23:35:34,
+    with genuine associated activity (Nour conversation, a real
+    `!link` use, a real morning DM). Confirmed this is real, organic
+    owner activity between sessions, NOT leftover test data or
+    anything this session did — left untouched, flagged to the owner
+    as an FYI rather than assumed to need cleanup.
+  - All 5 Masar feature flags + `tatawwur_adaptive` confirmed still
+    OFF with empty allowlists — no drift.
+- [x] **0.4** Recorded as **D037** in `defect_log.md` (continuing the
+  D001-D036 sequence) — full detail: root cause (category-reparent
+  step of D031's original fix was apparently never applied, only the
+  permission-overwrite half was), impact (cosmetic/organizational, NOT
+  a repeat Blocker since the channel was never actually invisible this
+  time), and a second, more subtle bug this same fix closed (see 0.5).
+- [x] **0.5** Fixed D037 live: `channel.edit(category=<SYSTEM>,
+  sync_permissions=False)`, verified via a direct `fetch_channel()`
+  call (not the cached guild object, which showed stale data on the
+  same client instance — a real gotcha worth remembering for any
+  future live Discord-API script). Confirmed the existing `@everyone`
+  overwrite was fully preserved by the re-parent. Re-ran the full
+  orphan scan afterward: **0 orphan channels remain anywhere on the
+  server.** Also discovered and confirmed-fixed a second, more subtle
+  bug via the same action: `setup_server.py`'s own channel-lookup logic
+  only searches WITHIN a category's channel list, so while `#ask-nour`
+  was an orphan, a future full rebuild via this script would have
+  SILENTLY CREATED A DUPLICATE channel rather than finding/fixing the
+  orphaned one — confirmed via a direct dry-run of the script's exact
+  lookup line that this is no longer possible now that the channel is
+  correctly parented. No `setup_server.py` code change was needed —
+  the script's logic was always correct for a correctly-parented
+  channel; the live DATA was wrong, not the script.
 
 ## Phase 1 — Pinned "how to use this channel" posts [NEED]
 
