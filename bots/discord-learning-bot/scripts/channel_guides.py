@@ -123,6 +123,15 @@ CHANNEL_GUIDES: dict[str, str] = {
         )
         for level in ("0", "1", "2", "3")
     },
+    # NOTE: only L0/L1/L2 have a dedicated "-questions" channel in
+    # setup_server.py's LEVEL 3 category -- L3 deliberately does NOT
+    # (confirmed live during this same phase's execution: the script's
+    # own "not found -- skipped" warning caught this exact mismatch).
+    # L3 students use #l3-mentorship for this instead, which already
+    # has its own guide below. Do NOT add "l3-questions" back into this
+    # loop without first adding the actual channel to setup_server.py's
+    # CATEGORIES_CONFIG -- this loop must always mirror real server
+    # structure, never assume symmetry across levels.
     **{
         f"l{level}-questions": (
             f"❓ **إيه ده الروم؟**\n"
@@ -132,7 +141,7 @@ CHANNEL_GUIDES: dict[str, str] = {
             + "❌ للمساعدة الشخصية الأشمل، روح `#ask-nour`\n\n"
             "زمايلك في نفس المستوى ممكن يردوا عليك كمان، متستحيش تسأل!"
         )
-        for level in ("0", "1", "2", "3")
+        for level in ("0", "1", "2")
     },
     **{
         f"l{level}-showcase": (
