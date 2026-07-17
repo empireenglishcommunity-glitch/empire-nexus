@@ -768,11 +768,24 @@ class ServerSetup(discord.Client):
                 continue
 
             posted_message = None
-            # Check if content already posted (avoid duplicates)
-            async for msg in channel.history(limit=5):
-                if msg.author == self.user and len(msg.content) > 100:
+            # Sahin Phase 1 bugfix: the ORIGINAL idempotency check here
+            # was "any bot message > 100 chars in the last 5" — far too
+            # broad. Channels like #ask-nour, #daily-word,
+            # #streak-tracker, #bot-commands, etc. already have REAL,
+            # long, automated bot activity from normal operation (Nour
+            # replies, daily digests, welcome DMs echoed into the
+            # channel, etc.) that has nothing to do with this guide.
+            # Confirmed live: this caused 14 of 39 channels to be
+            # WRONGLY pinned on an unrelated old message instead of
+            # ever actually posting/pinning the real guide. Fixed by
+            # matching on the EXACT content string instead of a loose
+            # length heuristic — this is the only way to reliably tell
+            # "this exact guide was already posted" apart from "the bot
+            # said something long, once, for an unrelated reason."
+            async for msg in channel.history(limit=20):
+                if msg.author == self.user and msg.content == content:
                     posted_message = msg
-                    print(f"  ⏭️  #{ch_name} already has content — skipped posting")
+                    print(f"  ⏭️  #{ch_name} already has this exact content — skipped posting")
                     break
             else:
                 posted_message = await channel.send(content)
