@@ -376,6 +376,83 @@ def format_grammar_card(week: int, level: str = "L0") -> str:
     return "\n".join(lines)
 
 
+def format_vocab_cheat_sheet(week: int, level: str = "L0") -> str:
+    """Format the weekly vocabulary cheat sheet for posting in #cheat-sheets.
+
+    Sahin Phase 4: this prompt existed in content/prompts/cheat_sheets.json
+    but was NEVER wired up to any code — the same "designed but never
+    built" pattern found repeatedly in this project (D012, D020, D036).
+    This function reads the SAME curriculum vocabulary data that
+    daily_word_delivery() and the daily vocab task use (not AI-generated —
+    pre-authored, curated, level-appropriate), and formats it as a clean,
+    readable weekly reference that students can pin or screenshot.
+
+    Returns "" if this level/week has no vocabulary content — the caller
+    (bot.py's vocab_cheat_sheet_delivery task) is expected to skip posting
+    for that level rather than post an empty/broken sheet.
+    """
+    words = curriculum.get_vocabulary_for_week(week, level)
+    if not words:
+        return ""
+
+    theme = curriculum.get_theme(week, level) if hasattr(curriculum, "get_theme") else config.VOCAB_THEMES.get(week, "General")
+
+    lines = [
+        f"📝 **Weekly Vocabulary — {level} Week {week}**",
+        f"📌 **Theme | الموضوع:** {theme}",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+    ]
+
+    # Group words into days (8 per day for L0, per the spec)
+    words_per_day = 8 if level == "L0" else 10
+    day_names = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
+
+    for day_idx in range(min(7, (len(words) + words_per_day - 1) // words_per_day)):
+        start = day_idx * words_per_day
+        end = start + words_per_day
+        day_words = words[start:end]
+        if not day_words:
+            break
+
+        day_name = day_names[day_idx] if day_idx < len(day_names) else f"Day {day_idx + 1}"
+        lines.append(f"**{day_name}:**")
+        for w in day_words:
+            pronunciation = w.get("pronunciation", "")
+            arabic = w.get("arabic", "")
+            pos = w.get("pos", "")
+            lines.append(f"  • **{w['word']}** ({pronunciation}) — {arabic} _{pos}_")
+        lines.append("")
+
+    lines.append(f"📊 **Total: {len(words)} words this week**")
+    lines.append("✅ Review daily | راجع يوميًا")
+
+    result = "\n".join(lines)
+
+    # Discord message limit check — if over 2000 chars, split into
+    # just the first few days + a note. This is a safety check, not
+    # expected to fire for normal curriculum data (56 words × ~40
+    # chars each ≈ ~2240, might be tight for some weeks).
+    if len(result) > 1900:
+        # Trim to fit: show first 4 days + note
+        lines_short = lines[:4]  # header
+        for day_idx in range(4):
+            start = day_idx * words_per_day
+            end = start + words_per_day
+            day_words = words[start:end]
+            if not day_words:
+                break
+            day_name = day_names[day_idx] if day_idx < len(day_names) else f"Day {day_idx + 1}"
+            lines_short.append(f"**{day_name}:**")
+            for w in day_words:
+                lines_short.append(f"  • **{w['word']}** ({w.get('pronunciation', '')}) — {w.get('arabic', '')}")
+            lines_short.append("")
+        lines_short.append(f"_(+ {len(words) - 4 * words_per_day} more words — see daily tasks for the full list)_")
+        result = "\n".join(lines_short)
+
+    return result
+
+
 # ============================================================
 #  7. ADVANCEMENT EXAM (!exam command)
 # ============================================================

@@ -73,6 +73,7 @@ REGISTRY = [
     ("masar_growth_letter", "Nour's Weekly Growth Letter (task + API + dashboard card, fixes D020)", "masar", False),
     ("masar_milestone_moments", "Personalized milestone unlock DMs", "masar", False),
     ("masar_difficulty_notes", "Adaptive difficulty change transparency DMs", "masar", False),
+    ("vocab_cheat_sheet", "Weekly Vocabulary Cheat Sheet in #cheat-sheets (Sahin Phase 4)", "sahin", False),
 ]
 
 # Initiative display names and emoji
@@ -82,6 +83,7 @@ INITIATIVES = {
     "nabd": ("🔔", "NABD", "student notifications"),
     "tatawwur": ("🚀", "TATAWWUR", "system evolution"),
     "nour": ("💬", "NOUR", "autonomous student concierge"),
+    "sahin": ("🦅", "SAHIN", "Discord channel experience"),
     "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
     "wuslah": ("🔗", "WUSLAH", "ecosystem harmony"),
     "masar": ("🧭", "MASAR", "personal growth narrative"),
