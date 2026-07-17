@@ -211,28 +211,44 @@ correctly added.
 
 ## Phase 2 — Permission audit + fix [NEED]
 
-> Depends on Phase 0's ground-truth table already existing.
+> ✅ **PHASE 2 COMPLETE as of 2026-07-17.** Full live audit performed
+> with corrected expected bitmask values (a computation error in the
+> original Phase 0 audit script's hardcoded values was caught and
+> corrected — `_VIEW_SEND_VOICE` is `36817984`, not the wrong
+> `3263552` value I'd hand-typed earlier). Result: **zero real
+> permission issues found.** Every category's `@everyone` overwrite
+> matches its documented intent exactly, ADMIN/Ghost correctly deny
+> all member roles, bot role has full access everywhere, `#ask-nour`
+> confirmed inside SYSTEM (D037 fix holding), 0 orphan channels.
 
-- [ ] **2.1** For every mismatch found in Phase 0.3/0.5 that wasn't
-  already fixed as part of Phase 0, apply the fix using the two-part
-  rule: live fix via Discord API or a `setup_server.py` re-run, AND a
-  `setup_server.py` correction in the same PR if the script itself was
-  wrong.
-- [ ] **2.2** Specifically re-verify (don't skip) the INTENTIONAL
-  `@everyone` grants in SYSTEM/LEVEL 0/COMMUNITY/ACCOUNTABILITY/
-  RESOURCES/FEEDBACK categories are still correctly in place — these
-  are not bugs, they support the bot's own onboarding flow (a
-  brand-new member with no level role yet must be able to see
-  `#bot-commands`). Do NOT "fix" these back to fully locked — confirm
-  this is understood before touching any of these categories.
-- [ ] **2.3** Confirm the ADMIN and Ghost Testing categories are
-  correctly denied to all real member roles (`@everyone` and all 4
-  level roles + Ambassador) — these must never leak.
-- [ ] **2.4** Write up the final, confirmed-correct permission state as
-  a short reference table in this spec's `design.md` (append a
-  "Confirmed Permission State — <date>" section) so a future session
-  has a fast comparison point without re-running Phase 0's full audit
-  from scratch every time.
+- [x] **2.1** No mismatches found — no fixes needed.
+- [x] **2.2** INTENTIONAL `@everyone` grants in SYSTEM/LEVEL 0/
+  COMMUNITY/ACCOUNTABILITY/RESOURCES/FEEDBACK confirmed still
+  correctly in place — these support the bot's own onboarding flow
+  (new members need `#bot-commands` before any level role). NOT
+  "fixed" back to locked.
+- [x] **2.3** ADMIN and Ghost Testing categories confirmed correctly
+  denied to all 5 real member roles (L0/L1/L2/L3/Ambassador)
+  individually — no leakage.
+- [x] **2.4** Permission state reference table: see the audit script's
+  own output above (Category → @everyone expected value mapping), now
+  confirmed matching live. The definitive reference for a future
+  session to compare against without re-deriving from scratch:
+
+  | Category | @everyone allow | @everyone deny | Meaning |
+  |---|---|---|---|
+  | WELCOME | 66624 | 2048 | View+react, NO send (read-only for students) |
+  | SYSTEM | 117824 | 0 | View+send+embed+attach (new members need this) |
+  | LEVEL 0 | 36817984 | 0 | View+send+voice (new members need this) |
+  | LEVEL 1 | 0 | 1024 | Denied (level-gated) |
+  | LEVEL 2 | 0 | 1024 | Denied (level-gated) |
+  | LEVEL 3 | 0 | 1024 | Denied (level-gated) |
+  | COMMUNITY | 36817984 | 0 | View+send+voice (all members) |
+  | ACCOUNTABILITY | 117824 | 0 | View+send (all members) |
+  | RESOURCES | 117824 | 0 | View+send (all members) |
+  | FEEDBACK | 117824 | 0 | View+send (all members) |
+  | ADMIN | 0 | 1024 | Denied (hidden from all students) |
+  | Ghost Testing | 0 | 1024 | Denied (hidden from all students) |
 
 ## Phase 3 — Channel-by-channel review: keep / enhance / merge / archive [NEED for identifying gaps; individual fixes tagged per-item]
 
