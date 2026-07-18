@@ -10,28 +10,46 @@
 
 ---
 
-## Phase A0: Foundation — Roles, Permissions, Schema
+## Phase A0: Foundation — Roles, Permissions, Schema ✅ COMPLETE
 
 No user-visible change. Pure scaffolding, fully covered by unit tests
 before any AI call is wired in.
 
-- [ ] A0.1: Add `OWNER_DISCORD_ID` to `config.py` (new env var)
-- [ ] A0.2: Create `src/nour/` package (`__init__.py`, `roles.py`, `permissions.py`)
-- [ ] A0.3: Implement `resolve_role()` per design.md Section 2
-- [ ] A0.4: Implement `KNOWLEDGE_DOMAINS` / `TOOL_REGISTRY` mappings per Section 3
-- [ ] A0.5: Add new DB tables: `knowledge_chunks`, `nour_episodic_summaries`,
+- [x] A0.1: Add `OWNER_DISCORD_ID` to `config.py` (new env var)
+- [x] A0.2: Create `src/nour/` package (`__init__.py`, `roles.py`, `permissions.py`)
+- [x] A0.3: Implement `resolve_role()` per design.md Section 2
+- [x] A0.4: Implement `KNOWLEDGE_DOMAINS` / `TOOL_REGISTRY` mappings per Section 3
+- [x] A0.5: Add new DB tables: `knowledge_chunks`, `nour_episodic_summaries`,
       `journey_coverage`, `nour_tool_calls`, `nour_guardrail_events`,
       `nour_retrieval_log` (all additive, via `_SCHEMA` + `_migrate()`
       following this codebase's existing pattern)
-- [ ] A0.6: Add `category` column migration to existing `nour_memories` table
-- [ ] A0.7: Register `nour_aql_core` flag in `flag_registry.py`, default OFF
-- [ ] A0.8: Unit test: student-role permission mapping contains ZERO
+- [x] A0.6: Add `category` column migration to existing `nour_memories` table
+- [x] A0.7: Register `nour_aql_core` flag in `flag_registry.py`, default OFF
+- [x] A0.8: Unit test: student-role permission mapping contains ZERO
       owner-only domain/tool names, under every red-team phrasing in a
       fixture list (this is the Requirements §5 acceptance test —
       write it now, before any retrieval/tool code exists, so it's
       testing the mapping itself, not yet the full pipeline)
 
 **Deliverable:** Role/permission mechanism exists, tested, inert.
+
+**Completion notes:**
+- `src/nour/roles.py`: `Role` enum (OWNER, STUDENT populated;
+  ADMIN/MODERATOR/COACH reserved), `resolve_role()`, `is_owner()`.
+- `src/nour/permissions.py`: `KNOWLEDGE_DOMAINS`/`TOOL_REGISTRY` dicts
+  plus `get_knowledge_domains()`/`get_tool_registry()`/
+  `is_domain_allowed()`/`is_tool_allowed()` accessors that return an
+  empty list (not a fallback) for unpopulated future roles.
+- `tests/test_nour_permissions.py`: 42 tests — role resolution edge
+  cases, owner-superset-of-student invariants, 6 owner-only domains +
+  9 owner-only tools individually verified blocked for students,
+  10 red-team phrasings (including Arabic and instruction-override
+  framings) proving the mapping is blind to message content by
+  construction, and explicit reserved-role-gets-zero-access checks.
+- Full existing suite (441 tests) still passes — zero regressions.
+- All new/modified files pass `scripts/bidi_check.py` and `py_compile`.
+- `OWNER_DISCORD_ID` documented in `.env.example` (empty by default —
+  safe, not fail-open).
 
 ---
 

@@ -75,6 +75,17 @@ def _migrate(conn: sqlite3.Connection):
     if "last_used" not in lt_cols:
         conn.execute("ALTER TABLE link_tokens ADD COLUMN last_used TEXT DEFAULT NULL")
 
+    # Aql A0.6: category on nour_memories table (semantic memory
+    # classification -- design.md Section 6). Additive column, same
+    # zero-migration-risk pattern as gender/difficulty_level/last_used
+    # above. Existing rows default to 'general' rather than NULL, so
+    # every pre-existing memory is still a valid, filterable row
+    # immediately -- not silently excluded from category-filtered
+    # retrieval until someone re-classifies it.
+    nm_cols = {row["name"] for row in conn.execute("PRAGMA table_info(nour_memories)")}
+    if "category" not in nm_cols:
+        conn.execute("ALTER TABLE nour_memories ADD COLUMN category TEXT NOT NULL DEFAULT 'general'")
+
     conn.commit()
 
 
@@ -440,6 +451,12 @@ CREATE INDEX IF NOT EXISTS idx_token_ip ON token_ip_log(token);
 
 -- Rawiya R2: structured onboarding journey state machine.
 -- Tracks where each student is in their guided first-week experience.
+-- SUPERSEDED by Aql's journey_coverage table below (design.md Section
+-- 9.1 / 8.1) once Phase A6/A7 cuts over -- left in place, inert, per
+-- this codebase's own established migration discipline (see
+-- nour_study_tips's precedent: superseded tables are never dropped in
+-- the same change that stops writing to them, only in a later,
+-- separate cleanup once the replacement is confirmed live).
 CREATE TABLE IF NOT EXISTS student_journey (
     discord_id      TEXT PRIMARY KEY,
     current_step    TEXT NOT NULL DEFAULT 'welcome',
@@ -449,6 +466,119 @@ CREATE TABLE IF NOT EXISTS student_journey (
     completed_at    TEXT DEFAULT NULL,
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- ============================================================
+-- AQL (Nour Intelligence Core, Initiative #15) — Phase A0 schema.
+-- See .kiro/specs/nour-intelligence-core/design.md for full rationale
+-- on every table below. All additive, all inert until the
+-- corresponding later phase (A1/A3/A4/A6) actually reads/writes them.
+-- ============================================================
+
+-- design.md Section 4.2: chunked + embedded knowledge base. Replaces
+-- keyword-substring matching (_KB_CATEGORIES in nour_concierge.py)
+-- with real semantic search. `domain` values match
+-- data/nour_knowledge/*.md filename stems (student domains) plus new
+-- data/nour_knowledge_owner/*.md stems (owner-only domains, Phase A2)
+-- -- these are exactly the strings enumerated in
+-- src/nour/permissions.py's KNOWLEDGE_DOMAINS mapping.
+CREATE TABLE IF NOT EXISTS knowledge_chunks (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    domain          TEXT NOT NULL,
+    source_file     TEXT NOT NULL,
+    heading         TEXT NOT NULL,
+    content         TEXT NOT NULL,
+    embedding       BLOB NOT NULL,
+    embedding_model TEXT NOT NULL,
+    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_knowledge_domain ON knowledge_chunks(domain);
+
+-- design.md Section 6: episodic memory -- a compact per-student
+-- summary of PAST conversation sessions (not verbatim), replacing the
+-- need to re-send unbounded raw history on every request. Regenerated
+-- weekly per active student (Phase A6.2).
+CREATE TABLE IF NOT EXISTS nour_episodic_summaries (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    summary_text    TEXT NOT NULL,
+    covers_from     TEXT NOT NULL,
+    covers_to       TEXT NOT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_episodic_discord ON nour_episodic_summaries(discord_id);
+
+-- design.md Section 9.1: onboarding coverage model, replacing the
+-- rigid linear FSM in nour_journey.py. Independent boolean facts,
+-- not a sequence -- each flips based on a real signal (task
+-- completion, !link usage, channel visits), the SAME detection
+-- wiring Rawiya's FSM used, just writing to a coverage table instead
+-- of advancing a state pointer (Phase A6.4). Nour's context assembly
+-- surfaces uncovered topics as conversational material to weave in
+-- naturally, rather than firing a scripted message regardless of fit.
+CREATE TABLE IF NOT EXISTS journey_coverage (
+    discord_id          TEXT PRIMARY KEY,
+    knows_daily_tasks   INTEGER NOT NULL DEFAULT 0,
+    knows_platform_link INTEGER NOT NULL DEFAULT 0,
+    knows_streaks       INTEGER NOT NULL DEFAULT 0,
+    knows_channels      INTEGER NOT NULL DEFAULT 0,
+    first_task_done     INTEGER NOT NULL DEFAULT 0,
+    updated_at          TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
+-- design.md Section 13: observability for tool-calling (Phase A3.4).
+-- Every tool call is logged -- name, args (minus sensitive values),
+-- latency, success/fail -- for debugging and for identifying which
+-- tools are actually used vs. dead weight.
+CREATE TABLE IF NOT EXISTS nour_tool_calls (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    role            TEXT NOT NULL,
+    tool_name       TEXT NOT NULL,
+    arguments_json  TEXT DEFAULT '{}',
+    latency_ms      INTEGER DEFAULT NULL,
+    success         INTEGER NOT NULL DEFAULT 1,
+    error_message   TEXT DEFAULT '',
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_tool_calls_discord ON nour_tool_calls(discord_id);
+CREATE INDEX IF NOT EXISTS idx_tool_calls_tool ON nour_tool_calls(tool_name);
+
+-- design.md Section 13 / Section 7: observability for the output
+-- guardrail gate (Phase A4.5) -- the DIRECT metric for whether the
+-- original "random foreign-language output" bug is actually fixed in
+-- production. A non-zero role-leak-block count here is itself
+-- valuable signal: the structural boundary held AND defense-in-depth
+-- caught something, meaning the layered design is working as intended.
+CREATE TABLE IF NOT EXISTS nour_guardrail_events (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id          TEXT NOT NULL,
+    guardrail_type      TEXT NOT NULL,  -- 'script' | 'bidi' | 'role_leak'
+    original_text_hash  TEXT NOT NULL,  -- hash, not raw text -- avoid storing a second copy of every failure verbatim
+    outcome             TEXT NOT NULL,  -- 'corrected_on_retry' | 'template_fallback'
+    created_at          TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_guardrail_type ON nour_guardrail_events(guardrail_type);
+
+-- design.md Section 13: observability for retrieval quality (Phase
+-- A1.6-A1.7). Every retrieval query + the top-k chunk IDs returned +
+-- which chunk was actually used in the final composed answer --
+-- the direct replacement for the old ad-hoc "weekly self-review" Groq
+-- analysis, now grounded in real retrieval data instead of a sampled
+-- conversation summary. Frequent queries with low-similarity top
+-- results reveal real knowledge-base gaps.
+CREATE TABLE IF NOT EXISTS nour_retrieval_log (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    role            TEXT NOT NULL,
+    query_text      TEXT NOT NULL,
+    top_chunk_ids   TEXT DEFAULT '[]',   -- JSON list of knowledge_chunks.id
+    top_similarity  REAL DEFAULT NULL,
+    used_chunk_id   INTEGER DEFAULT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_retrieval_discord ON nour_retrieval_log(discord_id);
 """
 
 
