@@ -151,17 +151,66 @@ async def handle_with_human_touch(message: discord.Message):
     async with channel.typing():
         await asyncio.sleep(delay)
 
-    # Occasionally split long responses into 2 messages (feels more human)
-    if len(response) > 200 and random.random() < 0.2:
-        # Find a good split point
-        split_point = response.find("\n", len(response) // 3)
-        if split_point > 0:
-            await channel.send(response[:split_point])
-            await asyncio.sleep(random.uniform(1.5, 3.0))
-            await channel.send(response[split_point:].strip())
-            return
+    # Rawiya R8: Use webhook in #ask-nour for Nour identity (custom name + avatar)
+    # In DMs, fall back to normal send (can't use webhooks in DMs)
+    sent_via_webhook = False
+    if hasattr(channel, 'name') and channel.name == "ask-nour":
+        sent_via_webhook = await _send_as_nour(channel, response)
 
-    await channel.send(response)
+    if not sent_via_webhook:
+        # Occasionally split long responses into 2 messages (feels more human)
+        if len(response) > 200 and random.random() < 0.2:
+            # Find a good split point
+            split_point = response.find("\n", len(response) // 3)
+            if split_point > 0:
+                await channel.send(response[:split_point])
+                await asyncio.sleep(random.uniform(1.5, 3.0))
+                await channel.send(response[split_point:].strip())
+                return
+
+        await channel.send(response)
+
+
+# Nour's avatar URL (a warm, professional avatar)
+# Using a free, stable image URL. Can be changed to a custom-uploaded one later.
+NOUR_AVATAR_URL = "https://cdn.discordapp.com/embed/avatars/0.png"
+NOUR_DISPLAY_NAME = "نور | Nour"
+
+# Cache the webhook per channel to avoid creating duplicates
+_nour_webhook_cache: dict[int, discord.Webhook] = {}
+
+
+async def _send_as_nour(channel: discord.TextChannel, content: str) -> bool:
+    """Send a message via webhook with Nour's custom name and avatar.
+
+    Returns True if sent successfully, False if webhook unavailable
+    (falls back to normal bot send).
+    """
+    try:
+        webhook = _nour_webhook_cache.get(channel.id)
+
+        if not webhook:
+            # Find existing Nour webhook or create one
+            webhooks = await channel.webhooks()
+            webhook = next((w for w in webhooks if w.name == NOUR_DISPLAY_NAME), None)
+
+            if not webhook:
+                webhook = await channel.create_webhook(
+                    name=NOUR_DISPLAY_NAME,
+                    reason="Rawiya R8: Nour identity webhook for #ask-nour",
+                )
+
+            _nour_webhook_cache[channel.id] = webhook
+
+        await webhook.send(
+            content=content,
+            username=NOUR_DISPLAY_NAME,
+            avatar_url=NOUR_AVATAR_URL,
+        )
+        return True
+    except (discord.Forbidden, discord.HTTPException, Exception) as e:
+        logger.warning(f"Nour webhook send failed, falling back to bot send: {e}")
+        return False
 
 
 # ============================================================

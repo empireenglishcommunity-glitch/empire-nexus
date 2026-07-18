@@ -79,7 +79,7 @@ async def handle_status(args: str, bot) -> str:
         levels[lvl] = len(database.members_at_level(lvl))
 
     # Uptime from heartbeat
-    last_hb = database.get_setting("heartbeat_ts", "")
+    last_hb = database.get_setting("last_heartbeat", "")
     hb_status = "✅" if last_hb else "⚠️ no heartbeat"
 
     # AI providers
