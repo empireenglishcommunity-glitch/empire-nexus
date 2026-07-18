@@ -127,6 +127,10 @@ async def handle_message(message: discord.Message) -> Optional[str]:
     from . import nour_personality
     asyncio.create_task(nour_personality.extract_memories_from_conversation(discord_id, text))
 
+    # Rawiya R2: check if this message should advance the onboarding journey
+    from . import nour_journey
+    asyncio.create_task(nour_journey.check_advancement(discord_id, "message_received", bot=None))
+
     return response
 
 
@@ -212,6 +216,10 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
     # Knowledge base (truncated to fit token limit)
     knowledge = _load_knowledge_base(text)
 
+    # Rawiya R2: journey context (so Nour knows where the student is in onboarding)
+    from . import nour_journey
+    journey_context = nour_journey.get_journey_context(discord_id)
+
     context = f"""STUDENT DATA:
 - Name: {name}
 - Level: {level}, Week: {week}
@@ -219,6 +227,8 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
 - Points: {points}
 - Tasks today: {tasks_done}/7 done ({', '.join(tasks_today) if tasks_today else 'none yet'})
 - Pronunciation average: {pron_avg:.0f}% (last 7 days)
+
+{journey_context}
 
 ADDRESSING THIS STUDENT: {gender_instruction}
 

@@ -437,6 +437,18 @@ CREATE TABLE IF NOT EXISTS token_ip_log (
     UNIQUE(token, ip_address)
 );
 CREATE INDEX IF NOT EXISTS idx_token_ip ON token_ip_log(token);
+
+-- Rawiya R2: structured onboarding journey state machine.
+-- Tracks where each student is in their guided first-week experience.
+CREATE TABLE IF NOT EXISTS student_journey (
+    discord_id      TEXT PRIMARY KEY,
+    current_step    TEXT NOT NULL DEFAULT 'welcome',
+    step_data       TEXT DEFAULT '{}',
+    started_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    last_step_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    completed_at    TEXT DEFAULT NULL,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 

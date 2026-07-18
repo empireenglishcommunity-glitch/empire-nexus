@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),

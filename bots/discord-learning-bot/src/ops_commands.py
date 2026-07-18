@@ -285,3 +285,118 @@ async def handle_help(args: str, bot) -> str:
         "💡 Reply to an escalation message to respond as Nour\\.",
     ]
     return "\n".join(lines)
+
+
+
+# ============================================================
+#  /check — full student status report (Rawiya R5)
+# ============================================================
+
+@command("/check")
+async def handle_check(args: str, bot) -> str:
+    """Get a detailed status report for a specific student.
+
+    Usage: /check [name or partial name]
+    """
+    if not args.strip():
+        return "Usage: `/check [student name]`"
+
+    name = args.strip().lower()
+    members = database.all_active_members()
+    member = None
+    for m in members:
+        display_name = (m.get("discord_name", "") or "").split("#")[0].lower()
+        if name in display_name:
+            member = m
+            break
+
+    if not member:
+        return f"❌ Student '{ops_hub.escape_markdown(args.strip())}' not found\\."
+
+    discord_id = member["discord_id"]
+    level = member.get("level", "L0")
+    streak, longest = database.get_streak(discord_id)
+    points = member.get("total_points", 0)
+    week = database.member_week_number(discord_id)
+    tasks_today = len(database.tasks_completed_today(discord_id))
+    safe_name = ops_hub.escape_markdown((member.get("discord_name", "?").split("#")[0]))
+
+    # Days since active
+    last_active = member.get("last_active_at", "")
+    try:
+        last_dt = datetime.datetime.fromisoformat(last_active)
+        days_inactive = (datetime.datetime.now() - last_dt).days
+    except (ValueError, TypeError):
+        days_inactive = 0
+
+    # Journey status
+    from . import nour_journey
+    journey = nour_journey._get_journey(discord_id)
+    if journey and journey.get("completed_at"):
+        journey_status = "✅ Completed"
+    elif journey:
+        journey_status = f"Step: {ops_hub.escape_markdown(journey['current_step'])}"
+    else:
+        journey_status = "Not started"
+
+    # Pronunciation
+    pron_avg = database.get_pronunciation_average(discord_id)
+
+    return (
+        f"👤 *{safe_name}*\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"📊 Level: {level} \\| Week: {week}\n"
+        f"🔥 Streak: {streak} days \\(best: {longest}\\)\n"
+        f"💎 Points: {points:,}\n"
+        f"✅ Today: {tasks_today}/7 tasks\n"
+        f"⏱ Last active: {days_inactive} day\\(s\\) ago\n"
+        f"🎙 Pronunciation avg: {pron_avg:.0f}%\n"
+        f"🗺 Journey: {journey_status}"
+    )
+
+
+# ============================================================
+#  /nudge — send personalized Nour check-in (Rawiya R5)
+# ============================================================
+
+@command("/nudge")
+async def handle_nudge(args: str, bot) -> str:
+    """Send a personalized Nour check-in DM to a student.
+
+    Usage: /nudge [name or partial name]
+    """
+    if not args.strip():
+        return "Usage: `/nudge [student name]`"
+
+    name = args.strip().lower()
+    members = database.all_active_members()
+    member = None
+    for m in members:
+        display_name = (m.get("discord_name", "") or "").split("#")[0].lower()
+        if name in display_name:
+            member = m
+            break
+
+    if not member:
+        return f"❌ Student '{ops_hub.escape_markdown(args.strip())}' not found\\."
+
+    discord_id = member["discord_id"]
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return "❌ Discord guild not found\\."
+
+    discord_member = guild.get_member(int(discord_id))
+    if not discord_member:
+        return "❌ Member not in server\\."
+
+    safe_name = (member.get("discord_name", "").split("#")[0]) or "there"
+    try:
+        await discord_member.send(
+            f"👋 مرحبًا {safe_name}!\n\n"
+            f"كل شيء على ما يرام؟ لاحظت أنك لم تكن نشطًا مؤخرًا.\n"
+            f"إذا احتجت أي مساعدة أو لديك سؤال، أنا هنا دائمًا 😊\n\n"
+            f"💡 تذكّر: مهمة واحدة يوميًا تكفي للحفاظ على السلسلة!"
+        )
+        return f"✅ Nudge sent to *{ops_hub.escape_markdown(safe_name)}*\\."
+    except Exception as e:
+        return f"❌ Could not DM {ops_hub.escape_markdown(safe_name)}: {ops_hub.escape_markdown(str(e)[:100])}"
