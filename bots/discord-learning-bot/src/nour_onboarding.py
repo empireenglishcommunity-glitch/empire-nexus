@@ -86,10 +86,10 @@ async def check_wrong_channel(message: discord.Message) -> bool:
     try:
         name = member_data.get("discord_name", "").split("#")[0] or message.author.display_name
         await message.author.send(
-            f"👋 أهلاً {name}!\n\n"
-            f"الأوامر بتشتغل في قناة `#bot-commands` بس.\n"
-            f"روح هناك واكتب الأمر تاني وهيشتغل معاك 👍\n\n"
-            f"لو محتاج مساعدة في أي حاجة، ابعتلي هنا أو اكتب في `#ask-nour` 😊"
+            f"👋 مرحبًا {name}!\n\n"
+            f"الأوامر تعمل فقط في قناة `#bot-commands`.\n"
+            f"اذهب إلى هناك واكتب الأمر مرة أخرى وسيعمل معك 👍\n\n"
+            f"إذا احتجت مساعدة في أي شيء، أرسل لي هنا أو اكتب في `#ask-nour` 😊"
         )
         _mark_helped(discord_id, "wrong_channel")
         logger.info(f"Nour onboarding: redirected {name} from #{message.channel.name} to #bot-commands")
@@ -137,11 +137,11 @@ async def check_command_typo(message: discord.Message) -> bool:
         name = member_data.get("discord_name", "").split("#")[0] or message.author.display_name
         correct_command = f"!{text.split()[0]}" if text.split() else "!done"
         await message.author.send(
-            f"💡 {name}، شكلك عايز تكتب أمر!\n\n"
-            f"الأوامر لازم تبدأ بـ `!` — يعني اكتب `{correct_command}` مش `{text.split()[0]}`\n\n"
-            f"جرب كده في `#bot-commands`:\n"
+            f"💡 {name}، يبدو أنك تريد كتابة أمر!\n\n"
+            f"الأوامر يجب أن تبدأ بعلامة `!` — أي اكتب `{correct_command}` وليس `{text.split()[0]}`\n\n"
+            f"جرّب في `#bot-commands`:\n"
             f"```\n!done accent\n```\n"
-            f"أو اكتب `!مساعدة` لو عايز تشوف كل الأوامر 😊"
+            f"أو اكتب `!مساعدة` إذا أردت رؤية جميع الأوامر 😊"
         )
         _mark_helped(discord_id, "command_typo")
         logger.info(f"Nour onboarding: helped {name} with command typo '{text[:20]}'")

@@ -33,27 +33,30 @@ logger = logging.getLogger("empire-bot.nour")
 # ============================================================
 
 # Nour's personality prompt — the core of how she behaves
-NOUR_SYSTEM_PROMPT = """أنت نور (Nour)، كوتش تعلّم في Empire English Community.
-أنت بنت/ولد (gender-neutral) من الفريق. دايماً حنونة ومشجعة وبتتكلمي عامية مصرية.
+NOUR_SYSTEM_PROMPT = """أنت نور (Nour)، مدربة التعلّم في مجتمع Empire English.
+أنت عضوة في الفريق. دائمًا ودودة ومشجعة وتتحدثين بالعربية الفصحى الحديثة.
 
 شخصيتك:
-- بتنادي الطلاب بأسمائهم
-- بتفتكري تقدمهم وبتشيري ليه
-- صبورة جداً مع المبتدئين (أول مرة يستخدموا Discord)
-- بتستخدمي سلانج مصري طبيعي (يا باشا، تمام، أيوه، ماشي)
-- خفيفة الظل بس محترمة
-- بتحتفلي بالإنجازات الصغيرة
-- مش بتقولي أبداً "أنا AI" أو "أنا بوت" — أنت نور من الفريق
-- لو مش متأكدة من حاجة → "خليني أسأل الفريق وأرجعلك"
-- مش بتستخدمي لغة رسمية ("نقدر خدمتكم"، "شكراً لتواصلكم") — دايماً طبيعية
+- تنادين الطلاب بأسمائهم
+- تتذكرين تقدمهم وتشيرين إليه
+- صبورة جدًا مع المبتدئين (أول مرة يستخدمون Discord)
+- تستخدمين لغة واضحة ودافئة — ليست رسمية جافة ولا عامية
+- خفيفة الظل ومحترمة
+- تحتفلين بالإنجازات الصغيرة
+- لا تقولين أبدًا "أنا ذكاء اصطناعي" أو "أنا برنامج" — أنت نور من الفريق
+- إذا لم تكوني متأكدة من شيء → "دعني أسأل الفريق وأرجع إليك"
+- لا تستخدمين لغة خدمة عملاء ("نقدر نخدمكم") — دائمًا طبيعية ودودة
+- لا تستخدمين أي لهجة عامية (لا مصرية، لا خليجية، لا شامية)
 
 قواعد:
-- ALWAYS respond in Egyptian Arabic (عامية مصرية)
-- Responses SHORT: 2-5 sentences MAX. لا تحاضري.
-- لو سألوا عن فلوس/اشتراك/إلغاء → "خليني أرجع للفريق في الموضوع ده"
-- لو مش متأكدة → ماتخمنيش، قولي "هسأل وأرجعلك"
+- ALWAYS respond in Modern Standard Arabic (الفصحى الحديثة)
+- NEVER use Egyptian dialect (no أيوه، ماشي، عايز، كده، إيه)
+- NEVER use Gulf dialect (no إنشاء الله with wrong spelling)
+- Responses SHORT: 2-5 sentences MAX. لا تُلقي محاضرات.
+- إذا سألوا عن أموال/اشتراك/إلغاء → "دعني أتواصل مع الفريق بخصوص هذا الأمر"
+- إذا لم تكوني متأكدة → لا تخمّني، قولي "سأسأل وأرجع إليك"
 - Reference their actual data (level, streak, scores) when relevant
-- لو سألوك "انتي بوت؟" → "أنا نور من فريق Empire English 😊 في حاجة أقدر أساعدك فيها؟"
+- إذا سألوك "هل أنت برنامج؟" → "أنا نور من فريق Empire English 😊 هل أستطيع مساعدتك بشيء؟"
 """
 
 # Escalation trigger keywords
@@ -64,9 +67,6 @@ ESCALATION_KEYWORDS = [
 
 # Maximum response tokens
 MAX_RESPONSE_TOKENS = 300
-
-# Knowledge base path
-KNOWLEDGE_BASE_PATH = Path(__file__).resolve().parent.parent / "data" / "nour_knowledge.md"
 
 
 # ============================================================
@@ -103,7 +103,7 @@ async def handle_message(message: discord.Message) -> Optional[str]:
     # Check for escalation triggers BEFORE generating response
     if _should_escalate_immediately(text):
         _store_conversation(discord_id, "student", text, intent="escalation")
-        response = "خليني أسأل الفريق في الموضوع ده وأرجعلك في أقرب وقت 😊"
+        response = "دعني أسأل الفريق بخصوص هذا الأمر وأرجع إليك في أقرب وقت 😊"
         _store_conversation(discord_id, "nour", response, intent="escalation")
         # N3: send Telegram alert to owner
         from . import nour_escalation
@@ -210,7 +210,7 @@ def _build_context(discord_id: str, text: str, member: dict) -> str:
     gender_instruction = nour_personality.get_gender_instruction(discord_id)
 
     # Knowledge base (truncated to fit token limit)
-    knowledge = _load_knowledge_base()
+    knowledge = _load_knowledge_base(text)
 
     context = f"""STUDENT DATA:
 - Name: {name}
@@ -317,10 +317,10 @@ async def _call_gemini_chat(prompt: str, temperature: float = 0.7) -> Optional[s
 
 # Template fallback responses (never silence)
 _TEMPLATE_RESPONSES = [
-    "تمام، خليني أشوف الموضوع ده وأرجعلك 😊",
-    "سؤال حلو! خليني أسأل الفريق وأرجعلك بإجابة كاملة 👍",
-    "ماشي، هرد عليك في أقرب وقت 😊 لو محتاج حاجة تانية قولي",
-    "فاهمك 👍 خليني أتأكد من المعلومة وأرجعلك",
+    "حسنًا، دعني أتحقق من هذا الأمر وأرجع إليك 😊",
+    "سؤال جيد! دعني أسأل الفريق وأعود إليك بإجابة كاملة 👍",
+    "فهمتك 👍 دعني أتأكد من المعلومة وأرجع إليك",
+    "سأرد عليك في أقرب وقت 😊 إذا احتجت شيئًا آخر أخبرني",
 ]
 
 
@@ -331,7 +331,7 @@ async def _generate_response(context: str, student_message: str, member: dict) -
     full_prompt = (
         f"CONTEXT:\n{context}\n\n"
         f"The student \"{name}\" just said: \"{student_message}\"\n\n"
-        f"Respond as Nour (2-5 sentences max, Egyptian Arabic, warm and helpful):"
+        f"Respond as Nour (2-5 sentences max, Modern Standard Arabic / الفصحى الحديثة, warm and helpful):"
     )
 
     # Try 1: Groq (fast, reliable)
@@ -395,26 +395,75 @@ def _calculate_delay(response: str) -> float:
 #  KNOWLEDGE BASE
 # ============================================================
 
-_knowledge_cache: Optional[str] = None
+
+# Knowledge base directory (Rawiya R1: multi-file categorized KB)
+KNOWLEDGE_DIR = Path(__file__).resolve().parent.parent / "data" / "nour_knowledge"
+
+# Category keywords for smart KB routing
+_KB_CATEGORIES = {
+    "daily_tasks.md": ["مهمة", "مهام", "task", "done", "تم", "accent", "vocab", "shadow", "speaking", "listening", "writing", "community", "نطق", "مفردات", "محاكاة", "كلام", "استماع", "كتابة", "مجتمع"],
+    "channels.md": ["قناة", "قنوات", "channel", "showcase", "bot-commands", "ask-nour", "daily-tasks", "text-practice", "general-chat", "questions"],
+    "commands.md": ["أمر", "أوامر", "command", "!done", "!progress", "!streak", "!level", "!help", "!link", "!join", "!top", "تقدم", "سلسلة", "مستوى", "مساعدة", "ربط", "انضم"],
+    "practice_platform.md": ["منصة", "platform", "practice", "تمرين", "link", "ربط", "تطبيق", "app", "موقع", "website"],
+    "troubleshooting.md": ["مشكلة", "problem", "لا يعمل", "خطأ", "error", "لا أستطيع", "can't", "broken", "stuck", "عالق"],
+    "mobile_guide.md": ["هاتف", "موبايل", "mobile", "phone", "تطبيق", "app", "discord", "تحميل", "download", "تسجيل صوت"],
+    "study_strategies.md": ["حافز", "motivation", "عادة", "habit", "كسلان", "lazy", "متى", "when", "أفضل وقت", "best time", "نصيحة", "tip", "استراتيجية"],
+    "levels_points.md": ["مستوى", "level", "نقاط", "points", "سلسلة", "streak", "ترقية", "advance", "اختبار", "exam", "assess", "تقييم", "ترتيب", "leaderboard"],
+    "faq.md": [],  # fallback — used when no specific category matches
+    "system_overview.md": ["نظام", "system", "empire", "ما هو", "what is", "فلسفة", "philosophy", "كيف يعمل", "how"],
+}
+
+# Cache for loaded KB files
+_kb_cache: dict[str, str] = {}
 
 
-def _load_knowledge_base() -> str:
-    """Load the knowledge base markdown file (cached after first read)."""
-    global _knowledge_cache
-    if _knowledge_cache is not None:
-        return _knowledge_cache
+def _load_knowledge_base(student_message: str = "") -> str:
+    """Load relevant knowledge base section(s) based on student's question.
 
+    Rawiya R1: smart category routing — only includes the relevant
+    section(s) per query, not the entire KB. Token-efficient.
+    """
+    # Determine which files are relevant to this question
+    message_lower = student_message.lower()
+    relevant_files = []
+
+    for filename, keywords in _KB_CATEGORIES.items():
+        if any(kw in message_lower for kw in keywords):
+            relevant_files.append(filename)
+
+    # If no specific match, use FAQ + system overview as defaults
+    if not relevant_files:
+        relevant_files = ["faq.md", "system_overview.md"]
+
+    # Limit to 2 files max to stay within token budget
+    relevant_files = relevant_files[:2]
+
+    # Load and concatenate
+    parts = []
+    for filename in relevant_files:
+        content = _load_kb_file(filename)
+        if content:
+            parts.append(content)
+
+    return "\n\n---\n\n".join(parts) if parts else "Knowledge base unavailable."
+
+
+def _load_kb_file(filename: str) -> str:
+    """Load a single KB file (cached after first read)."""
+    if filename in _kb_cache:
+        return _kb_cache[filename]
+
+    filepath = KNOWLEDGE_DIR / filename
     try:
-        if KNOWLEDGE_BASE_PATH.exists():
-            content = KNOWLEDGE_BASE_PATH.read_text(encoding="utf-8")
-            # Truncate to ~3000 chars to fit in Gemini context
-            _knowledge_cache = content[:3000]
-            return _knowledge_cache
+        if filepath.exists():
+            content = filepath.read_text(encoding="utf-8")
+            # Truncate each file to ~2000 chars to stay within context limits
+            _kb_cache[filename] = content[:2000]
+            return _kb_cache[filename]
     except Exception as e:
-        logger.error(f"Failed to load knowledge base: {e}")
+        logger.error(f"Failed to load KB file {filename}: {e}")
 
-    _knowledge_cache = "Knowledge base unavailable."
-    return _knowledge_cache
+    return ""
 
 
 # ============================================================

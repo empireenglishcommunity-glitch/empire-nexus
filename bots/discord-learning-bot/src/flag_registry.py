@@ -54,6 +54,7 @@ REGISTRY = [
     ("nour_concierge", "AI concierge handles DMs and #ask-nour questions", "nour", True),
     ("nour_proactive", "Proactive outreach (anti-churn check-ins)", "nour", False),
     ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),
+    ("nour_msa", "Rawiya R0: Nour speaks Modern Standard Arabic (فصحى) instead of Egyptian colloquial", "nour", True),
 
     # ── MARKAZ (Telegram operations hub) ──
     ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),
