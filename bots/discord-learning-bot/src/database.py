@@ -2497,3 +2497,49 @@ def log_tool_call(discord_id: str, role: str, tool_name: str, arguments: dict,
     )
     conn.commit()
     conn.close()
+
+
+
+# ============================================================
+#  AQL (#15) — GUARDRAIL OBSERVABILITY (Phase A4.5, design.md
+#  Section 13)
+# ============================================================
+
+def log_guardrail_event(discord_id: str, guardrail_type: str,
+                        original_text_hash: str, outcome: str) -> None:
+    """Log a guardrail trigger -- called ONLY when a guardrail actually
+    fires (a response that passes on the first try is never logged
+    here; there is nothing to observe). `original_text_hash` is a
+    hash, never the raw failing text, per this table's own schema
+    comment: avoid storing a second copy of every failure verbatim.
+
+    guardrail_type: 'script' | 'bidi' | 'role_leak'
+    outcome: 'corrected_on_retry' | 'template_fallback'
+    """
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO nour_guardrail_events
+           (discord_id, guardrail_type, original_text_hash, outcome)
+           VALUES (?, ?, ?, ?)""",
+        (discord_id, guardrail_type, original_text_hash, outcome),
+    )
+    conn.commit()
+    conn.close()
+
+
+def count_guardrail_events(guardrail_type: str = None) -> int:
+    """Count guardrail trigger events, optionally filtered to one
+    type. Used by tests and by any future monitoring/digest that wants
+    to surface 'how often is the guardrail actually catching
+    something' -- the direct, measurable signal for whether Phase A4
+    is doing real work in production, not just passing tests."""
+    conn = _connect()
+    if guardrail_type:
+        row = conn.execute(
+            "SELECT COUNT(*) as cnt FROM nour_guardrail_events WHERE guardrail_type=?",
+            (guardrail_type,),
+        ).fetchone()
+    else:
+        row = conn.execute("SELECT COUNT(*) as cnt FROM nour_guardrail_events").fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
