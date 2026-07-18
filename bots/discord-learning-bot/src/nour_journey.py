@@ -245,8 +245,8 @@ async def start_journey(member: discord.Member) -> None:
         logger.warning(f"Nour journey: can't DM {member.display_name}")
 
 
-async def check_advancement(discord_id: str, trigger: str, bot=None) -> None:
-    """Check if a trigger should advance the student's journey.
+def _next_step_for_trigger(current_step: str, trigger: str) -> Optional[str]:
+    """Pure step-transition table — no I/O, easy to test/verify.
 
     Triggers:
     - "message_received" — student sent any DM (advances welcome → task_intro)
@@ -255,6 +255,69 @@ async def check_advancement(discord_id: str, trigger: str, bot=None) -> None:
     - "token_validated" — practice page validated (advances platform_intro → streaks)
     - "day_passed" — daily check (time-based advances)
     """
+    if current_step == "welcome" and trigger == "message_received":
+        return "task_intro"
+    if current_step == "task_intro" and trigger == "task_completed":
+        return "first_task"
+    if current_step == "first_task" and trigger == "link_used":
+        return "platform_intro"
+    if current_step == "platform_intro" and trigger in ("token_validated", "day_passed"):
+        return "streaks_explained"
+    if current_step == "streaks_explained" and trigger == "day_passed":
+        return "channels_tour"
+    if current_step == "channels_tour" and trigger == "day_passed":
+        return "independent"
+    return None
+
+
+async def try_message_triggered_advance(discord_id: str, student_text: str) -> Optional[str]:
+    """Rawiya R8 fix: handle journey advancement for the ONE trigger that
+    fires from a plain chat reply ("message_received", i.e. the
+    "welcome" step — Nour asks the student's goal, any reply advances).
+
+    Returns the next step's message (to send as the ONLY reply) if the
+    journey advanced, or None if this message shouldn't be treated as
+    a journey-advancing reply (not in journey, already past "welcome",
+    or journey disabled) — in which case the caller should fall through
+    to the normal AI response path.
+
+    This does NOT need a live `bot`/guild lookup (unlike the other
+    triggers below, which fire from command handlers that already have
+    a Member/Context object) — the reply always goes back to the exact
+    `discord.Message.author`/channel that's already mid-conversation
+    with Nour, handled by the caller (nour_concierge.handle_message).
+    """
+    if not database.is_feature_enabled("nour_journey"):
+        return None
+
+    journey = _get_journey(discord_id)
+    if not journey or journey.get("completed_at"):
+        return None
+
+    current_step = journey["current_step"]
+    if current_step != "welcome":
+        return None  # only "welcome" advances via plain chat reply
+
+    next_step = _next_step_for_trigger(current_step, "message_received")
+    if not next_step:
+        return None
+
+    _advance_step(discord_id, next_step)
+    logger.info(f"Nour journey: {discord_id} advanced welcome -> {next_step} (chat reply)")
+    return JOURNEY_MESSAGES.get(next_step)
+
+
+async def check_advancement(discord_id: str, trigger: str, bot) -> None:
+    """Check if a trigger should advance the student's journey, and if
+    so, DM them the next step's message directly.
+
+    Used for triggers that fire from command handlers / scheduled tasks
+    (task_completed, link_used, token_validated, day_passed) — these
+    always have a real `bot` instance available at the call site
+    (command handlers run inside the live bot process), unlike the
+    message-reply case above which is handled by
+    try_message_triggered_advance() instead.
+    """
     if not database.is_feature_enabled("nour_journey"):
         return
 
@@ -262,25 +325,12 @@ async def check_advancement(discord_id: str, trigger: str, bot=None) -> None:
     if not journey or journey.get("completed_at"):
         return
 
-    current_step = journey["current_step"]
-    next_step = None
+    next_step = _next_step_for_trigger(journey["current_step"], trigger)
+    if not next_step or not bot:
+        return
 
-    if current_step == "welcome" and trigger == "message_received":
-        next_step = "task_intro"
-    elif current_step == "task_intro" and trigger == "task_completed":
-        next_step = "first_task"
-    elif current_step == "first_task" and trigger == "link_used":
-        next_step = "platform_intro"
-    elif current_step == "platform_intro" and trigger in ("token_validated", "day_passed"):
-        next_step = "streaks_explained"
-    elif current_step == "streaks_explained" and trigger == "day_passed":
-        next_step = "channels_tour"
-    elif current_step == "channels_tour" and trigger == "day_passed":
-        next_step = "independent"
-
-    if next_step and bot:
-        _advance_step(discord_id, next_step)
-        await _send_step_message(discord_id, next_step, bot)
+    _advance_step(discord_id, next_step)
+    await _send_step_message(discord_id, next_step, bot)
 
 
 async def _send_step_message(discord_id: str, step: str, bot) -> None:

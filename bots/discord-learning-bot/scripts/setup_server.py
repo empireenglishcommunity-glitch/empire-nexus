@@ -436,34 +436,43 @@ CATEGORIES_CONFIG = [
 # ============================================================
 #  WELCOME CONTENT (auto-posted to channels after creation)
 # ============================================================
-WELCOME_MESSAGE = """🏛️ **Welcome to Empire English Community**
+WELCOME_MESSAGE = """🏛️ **مرحبًا بك في مجتمع Empire English**
+🏛️ **Welcome to Empire English Community**
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The Empire English System is **NOT a course.**
-It is a **Learning Operating System.**
+نظام Empire English **ليس دورة تدريبية عادية.**
+إنه **نظام تشغيل تعلّم متكامل.**
 
-✅ American accent training from Day 1
-✅ 7 daily tasks (45-75 min for Core track)
-✅ Weekly assessments with real scores
-✅ AI-powered feedback on every submission
-✅ Community voice lounges for real practice
-✅ Level advancement through demonstrated competency
+The Empire English System is **NOT a regular course.**
+It is a complete **Learning Operating System.**
 
-**YOUR JOURNEY:**
-🌱 Level 0: Absolute Beginner (8-12 weeks)
-💪 Level 1: Survival English (10-14 weeks)
-🚀 Level 2: Communication (12-16 weeks)
-👑 Level 3: Fluency & Native Accent (ongoing mastery)
+✅ تدريب على اللهجة الأمريكية من اليوم الأول
+✅ ٧ مهام يومية (٢٠-٤٥ دقيقة)
+✅ تقييمات أسبوعية بدرجات حقيقية
+✅ ملاحظات مدعومة بالذكاء الاصطناعي على كل مهمة
+✅ غرف صوتية للممارسة الحقيقية مع المجتمع
+✅ الترقية بين المستويات بناءً على الكفاءة الفعلية
+
+**رحلتك عبر المستويات:**
+🌱 المستوى صفر: مبتدئ تمامًا (٨-١٢ أسبوعًا)
+💪 المستوى الأول: إنجليزية النجاة (١٠-١٤ أسبوعًا)
+🚀 المستوى الثاني: التواصل (١٢-١٦ أسبوعًا)
+👑 المستوى الثالث: الطلاقة ولهجة قريبة من الأصلية (تطوّر مستمر)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📋 **START HERE:**
-1. Read #rules
-2. Accept the rules screening
-3. Check #roles-info to understand levels
-4. Your onboarding buddy will contact you within 12 hours
+📋 **ابدأ من هنا:**
+١. اقرأ قناة `#rules`
+٢. اضغط ✅ على الرسالة المثبّتة هناك للموافقة على القوانين
+٣. ستُفتح باقي القنوات فورًا، وستراسلك **نور** (مدربتك الشخصية) مباشرة لترشدك خطوة بخطوة
 
+**START HERE:**
+1. Read the pinned message in `#rules`
+2. React with ✅ to accept the rules
+3. Channels unlock immediately, and **Nour** (your personal guide) will DM you right away to walk you through everything
+
+🏛️ *النظام فوق المدرّس. التنفيذ فوق النظرية. المنطق السليم أولًا.*
 🏛️ *System over instructor. Execution over theory. Common sense first.*
 """
 

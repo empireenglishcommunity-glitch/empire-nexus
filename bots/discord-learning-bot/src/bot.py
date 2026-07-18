@@ -352,6 +352,8 @@ async def on_ready():
         missed_day_report.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
+    if not nour_journey_daily_check.is_running():
+        nour_journey_daily_check.start()
     if not markaz_daily_digest.is_running():
         markaz_daily_digest.start()
     if not markaz_weekly_report.is_running():
@@ -417,6 +419,16 @@ async def on_member_join(member: discord.Member):
     database.register_member(str(member.id), member.display_name)
     # Assign buddy (silent — no DM)
     await features.assign_buddy(member, member.guild)
+
+    # Rawiya R8: Discord does NOT clear a member's past reactions from a
+    # message when they leave and rejoin the server — a ✅ they left on
+    # the rules message from a PREVIOUS visit is still there. Since our
+    # role-gate only reacts to the on_raw_reaction_add EVENT (a NEW
+    # reaction being added), a returning member whose old reaction is
+    # already present gets no event at all and stays locked out until
+    # they manually un-react/re-react. Self-heal: check for an existing
+    # reaction on rejoin and grant the role immediately if found.
+    await role_gate.check_existing_reaction_on_join(member)
 
 
 @bot.event
@@ -1321,6 +1333,28 @@ async def midnight_voice_reset():
     verification.reset_daily_voice()
 
 
+@tasks.loop(time=datetime.time(hour=1, minute=0, tzinfo=_zone()))
+async def nour_journey_daily_check():
+    """Rawiya R2/R8: advance time-based onboarding journey steps once
+    per day (platform_intro -> streaks_explained -> channels_tour ->
+    independent). Runs once daily, well after midnight, so it fires at
+    most once per calendar day per student regardless of when they
+    joined. Safe no-op for every student not currently on one of these
+    specific steps (check_advancement's own step-transition table
+    already guards this — this loop just supplies the 'day_passed'
+    trigger to everyone with an active journey).
+    """
+    if not database.is_feature_enabled("nour_journey"):
+        return
+    conn = database._connect()
+    rows = conn.execute(
+        "SELECT discord_id FROM student_journey WHERE completed_at IS NULL"
+    ).fetchall()
+    conn.close()
+    for row in rows:
+        await nour_journey.check_advancement(row["discord_id"], "day_passed", bot)
+
+
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
 async def daily_streak_post():
     """Post streak tracker summary every evening."""
@@ -1896,6 +1930,10 @@ async def cmd_done(ctx, task: str = None):
     if not result["new"]:
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
         return
+
+    # Rawiya R2/R8: advance onboarding journey on first task completion
+    # (safe no-op if student isn't in journey or already past this step)
+    await nour_journey.check_advancement(str(ctx.author.id), "task_completed", bot)
 
     # Format response — Bawaba B5: language adapts to member's week
     # (arabic → bilingual_ar → bilingual). Falls back to the old
@@ -3605,6 +3643,8 @@ async def cmd_link(ctx):
             f"لو محتاج رابط جديد، اكتب `!link` تاني."
         )
         await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
+        # Rawiya R2/R8: advance onboarding journey when student links the platform
+        await nour_journey.check_advancement(discord_id, "link_used", bot)
     except discord.Forbidden:
         await ctx.send("❌ I can't DM you. Enable DMs from server members and try again.")
 

@@ -183,24 +183,16 @@ async def cmd_agree(ctx) -> bool:
 
     granted = await grant_student_role(member)
     if granted:
+        # Rawiya R8: don't send a separate "approved" DM here — Nour's
+        # journey (started inside grant_student_role) already sends the
+        # welcome DM which itself confirms access was granted. A short
+        # confirmation in the channel itself is still useful (visible
+        # to the student without needing to check DMs).
         await ctx.send(
-            f"\u2705 {member.mention} **\u062a\u0645\u062a \u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629!** \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0645\u0641\u062a\u0648\u062d\u0629 \u0627\u0644\u0622\u0646. "
-            "\u0627\u0643\u062a\u0628 `!\u0627\u0646\u0636\u0645` \u0641\u064a `#bot-commands` \u0644\u0644\u062a\u0633\u062c\u064a\u0644.\n\n"
-            f"\u2705 **Approved!** Channels unlocked. Type `!join` in `#bot-commands` to register.",
+            f"\u2705 {member.mention} \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0645\u0641\u062a\u0648\u062d\u0629 \u0627\u0644\u0622\u0646. \u062a\u062d\u0642\u0651\u0642 \u0645\u0646 \u0631\u0633\u0627\u0644\u062a\u0643 \u0627\u0644\u062e\u0627\u0635\u0651\u0629 \u0645\u0646 \u0646\u0648\u0631.\n"
+            f"\u2705 Channels unlocked. Check your DMs from Nour.",
             delete_after=30,
         )
-        # Also send DM
-        try:
-            await member.send(
-                "\u2705 **\u062a\u0645\u062a \u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629!** "
-                "\u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0645\u0641\u062a\u0648\u062d\u0629 \u0627\u0644\u0622\u0646. "
-                "\u0627\u0628\u062f\u0623 \u0628\u0643\u062a\u0627\u0628\u0629 `!\u0627\u0646\u0636\u0645` \u0641\u064a "
-                "`#bot-commands` \u0644\u0644\u062a\u0633\u062c\u064a\u0644 \u0641\u064a \u0627\u0644\u0646\u0638\u0627\u0645.\n\n"
-                "\u2705 **Approved!** Channels are now unlocked. "
-                "Type `!join` in `#bot-commands` to register."
-            )
-        except (discord.Forbidden, discord.HTTPException):
-            pass
     else:
         await ctx.send(
             "\u274c \u062d\u062f\u062b \u062e\u0637\u0623. \u062a\u0648\u0627\u0635\u0644 \u0645\u0639 \u0627\u0644\u0625\u062f\u0627\u0631\u0629.\n"
@@ -209,6 +201,53 @@ async def cmd_agree(ctx) -> bool:
         )
 
     return True
+
+
+# ============================================================
+#  RAWIYA R8: SELF-HEAL FOR PERSISTENT REACTIONS ON REJOIN
+# ============================================================
+
+async def check_existing_reaction_on_join(member: discord.Member) -> None:
+    """Discord does not clear a member's past reactions from a message
+    when they leave and rejoin a server — a ✅ they left on the rules
+    message during a PREVIOUS visit is still physically there. Since
+    the normal flow only reacts to the on_raw_reaction_add EVENT (a NEW
+    reaction), a returning member whose old reaction still shows on the
+    message gets no event at all, and stays locked out of every channel
+    until they manually un-react and react again (confirmed live during
+    Rawiya R8 testing).
+
+    Called from on_member_join: checks the gate message for this
+    member's reaction and grants the role immediately if found, exactly
+    as if a fresh reaction event had just arrived.
+    """
+    if not database.is_feature_enabled("hissar_role_gate"):
+        return
+    if has_student_role(member):
+        return  # already has it, nothing to heal
+
+    gate_msg_id = database.get_setting("role_gate_message_id", "")
+    if not gate_msg_id:
+        return
+
+    guild = member.guild
+    rules_channel = discord.utils.get(guild.text_channels, name="rules")
+    if not rules_channel:
+        return
+
+    try:
+        gate_msg = await rules_channel.fetch_message(int(gate_msg_id))
+    except (discord.NotFound, discord.HTTPException, ValueError):
+        return
+
+    for reaction in gate_msg.reactions:
+        if str(reaction.emoji) != GATE_EMOJI:
+            continue
+        async for user in reaction.users():
+            if user.id == member.id:
+                logger.info(f"Role-gate: self-heal — {member.display_name} already had ✅ from a previous visit, granting role now")
+                await grant_student_role(member)
+                return
 
 
 # ============================================================

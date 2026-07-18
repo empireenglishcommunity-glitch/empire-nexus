@@ -97,6 +97,26 @@ async def handle_message(message: discord.Message) -> Optional[str]:
     if not member:
         return None  # Only help registered students
 
+    # Rawiya R8 fix: if the student is on a journey step that advances
+    # purely by replying (currently only "welcome" — Nour asks their
+    # goal, any reply advances), handle it here directly and SKIP the
+    # general AI call entirely. Previously the AI always generated a
+    # reply first (regardless of journey state) AND a separate
+    # fire-and-forget background task tried to advance the journey —
+    # but that background task was called with bot=None, so it never
+    # actually advanced, leaving every student stuck on "welcome"
+    # forever while the AI kept improvising with stale step-1 context
+    # (confirmed live: this produced the exact repeating/confused
+    # behavior). Fixing bot=None alone would still send TWO replies
+    # per student message (an AI one + the scripted step message) —
+    # this short-circuit keeps it to exactly one clean reply per turn.
+    from . import nour_journey
+    journey_reply = await nour_journey.try_message_triggered_advance(discord_id, text)
+    if journey_reply:
+        _store_conversation(discord_id, "student", text)
+        _store_conversation(discord_id, "nour", journey_reply)
+        return journey_reply
+
     # Build context
     context = _build_context(discord_id, text, member)
 
@@ -126,10 +146,6 @@ async def handle_message(message: discord.Message) -> Optional[str]:
     import asyncio
     from . import nour_personality
     asyncio.create_task(nour_personality.extract_memories_from_conversation(discord_id, text))
-
-    # Rawiya R2: check if this message should advance the onboarding journey
-    from . import nour_journey
-    asyncio.create_task(nour_journey.check_advancement(discord_id, "message_received", bot=None))
 
     return response
 
