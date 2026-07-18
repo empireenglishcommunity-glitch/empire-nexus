@@ -51,6 +51,13 @@ GUILD_ID = int(os.getenv("GUILD_ID", "0") or "0")
 # ============================================================
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+# Aql (#15) Phase A1.2: separate from GEMINI_MODEL above (which is the
+# CHAT model) -- this is Gemini's dedicated embedding model, used only
+# by src/nour/knowledge/embedder.py for chunk/query embeddings.
+# gemini-embedding-001 is the current stable, well-documented model;
+# free-tier quota is generous for a corpus of a few hundred chunks
+# (design.md Section 11's cost analysis).
+GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")

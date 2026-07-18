@@ -2304,3 +2304,115 @@ def get_security_stats() -> dict:
         "total_tracked_tokens": total_tracked,
         "suspicious": suspicious,
     }
+
+
+
+# ============================================================
+#  AQL (Nour Intelligence Core, #15) — KNOWLEDGE CHUNKS (Phase A1)
+# ============================================================
+
+def insert_knowledge_chunk(domain: str, source_file: str, heading: str,
+                           content: str, embedding: bytes, embedding_model: str) -> int:
+    """Insert one chunked+embedded knowledge fragment. Returns the new
+    row's id. Called by the one-time embed script (Phase A1.3) --
+    NOT during normal request handling, since embedding happens at
+    index-build time, not per-query (design.md Section 4.2)."""
+    conn = _connect()
+    cur = conn.execute(
+        """INSERT INTO knowledge_chunks
+           (domain, source_file, heading, content, embedding, embedding_model)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (domain, source_file, heading, content, embedding, embedding_model),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def clear_knowledge_chunks(domain: str = None) -> int:
+    """Delete existing chunks before a re-embed run, so re-running the
+    embed script never leaves stale duplicate chunks from a previous
+    run alongside the new ones. If `domain` is given, only that
+    domain's chunks are cleared (lets the embed script safely
+    re-process ONE knowledge file without touching every other
+    domain's already-good chunks). Returns rows deleted."""
+    conn = _connect()
+    if domain:
+        cur = conn.execute("DELETE FROM knowledge_chunks WHERE domain=?", (domain,))
+    else:
+        cur = conn.execute("DELETE FROM knowledge_chunks")
+    conn.commit()
+    removed = cur.rowcount
+    conn.close()
+    return removed
+
+
+def get_chunks_by_domains(domains: list[str]) -> list[dict]:
+    """Get all knowledge chunks whose domain is in the given list.
+
+    design.md Section 4.2: this SQL `WHERE domain IN (...)` clause IS
+    the role boundary enforced at the data layer -- a SECOND
+    enforcement point beneath src/nour/permissions.py's
+    application-layer check (defense in depth). Callers must always
+    pass the caller's OWN role's allowed domain list
+    (permissions.get_knowledge_domains(role)), never an
+    unfiltered/expanded list -- Phase A1.7's test fault-injects an
+    expanded domain list specifically to verify this function itself
+    behaves correctly regardless of what it's given (the APPLICATION
+    is responsible for never passing owner domains for a student
+    request; this function's job is just to filter correctly on
+    whatever list it receives).
+
+    Returns an empty list for an empty `domains` list (not an error,
+    not "all chunks") -- matches permissions.py's own "empty means no
+    access" semantics for unpopulated future roles.
+    """
+    if not domains:
+        return []
+    conn = _connect()
+    placeholders = ",".join("?" for _ in domains)
+    rows = conn.execute(
+        f"SELECT * FROM knowledge_chunks WHERE domain IN ({placeholders})",
+        domains,
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def count_knowledge_chunks(domain: str = None) -> int:
+    """Count chunks, optionally filtered to one domain. Used by the
+    embed script's own progress reporting and by tests."""
+    conn = _connect()
+    if domain:
+        row = conn.execute(
+            "SELECT COUNT(*) as cnt FROM knowledge_chunks WHERE domain=?", (domain,)
+        ).fetchone()
+    else:
+        row = conn.execute("SELECT COUNT(*) as cnt FROM knowledge_chunks").fetchone()
+    conn.close()
+    return row["cnt"] if row else 0
+
+
+# ============================================================
+#  AQL (#15) — RETRIEVAL OBSERVABILITY (Phase A1.6/A1.7, design.md
+#  Section 13)
+# ============================================================
+
+def log_retrieval(discord_id: str, role: str, query_text: str,
+                  top_chunk_ids: list[int], top_similarity: float,
+                  used_chunk_id: int = None) -> None:
+    """Log a retrieval query for later analysis (identifying knowledge
+    gaps -- frequent queries with low-similarity top results). See
+    design.md Section 13's replacement for the old ad-hoc weekly
+    self-review."""
+    import json as _json
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO nour_retrieval_log
+           (discord_id, role, query_text, top_chunk_ids, top_similarity, used_chunk_id)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (discord_id, role, query_text[:500], _json.dumps(top_chunk_ids), top_similarity, used_chunk_id),
+    )
+    conn.commit()
+    conn.close()

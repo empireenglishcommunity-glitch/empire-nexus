@@ -53,33 +53,82 @@ before any AI call is wired in.
 
 ---
 
-## Phase A1: Knowledge Chunking + Embedding Pipeline
+## Phase A1: Knowledge Chunking + Embedding Pipeline ✅ COMPLETE
 
-- [ ] A1.1: Implement `chunk_markdown_file()` per design.md Section 4.1
+- [x] A1.1: Implement `chunk_markdown_file()` per design.md Section 4.1
       (split on `##` headers, cap ~500 tokens, split long chunks at
       paragraph breaks)
-- [ ] A1.2: Implement Gemini embedding client (`embed_text()`) reusing
+- [x] A1.2: Implement Gemini embedding client (`embed_text()`) reusing
       existing `GEMINI_API_KEY` config
-- [ ] A1.3: Build one-time embed script: chunk + embed all 11 existing
+- [x] A1.3: Build one-time embed script: chunk + embed all 11 existing
       `data/nour_knowledge/*.md` files into `knowledge_chunks` (domain =
       filename stem, matching existing `_KB_CATEGORIES` naming)
-- [ ] A1.4: Implement `database.get_chunks_by_domains(domains: list[str])`
-- [ ] A1.5: Implement in-process cosine similarity search (numpy) over
+- [x] A1.4: Implement `database.get_chunks_by_domains(domains: list[str])`
+- [x] A1.5: Implement in-process cosine similarity search (numpy) over
       packed BLOB vectors
-- [ ] A1.6: Implement `retrieve(query, role, top_k=4)` per Section 4.3,
+- [x] A1.6: Implement `retrieve(query, role, top_k=4)` per Section 4.3,
       with fallback to the OLD `_KB_CATEGORIES` keyword function if the
       Gemini embedding call fails
-- [ ] A1.7: Unit test: retrieval for a student-role query never returns
+- [x] A1.7: Unit test: retrieval for a student-role query never returns
       a chunk whose `domain` is not in `KNOWLEDGE_DOMAINS[Role.STUDENT]`
       — even when the SQL query is deliberately given an expanded
       domain list as a fault-injection test (defense-in-depth check on
       the data-layer boundary itself)
-- [ ] A1.8: Manual QA: run 20 real-style questions through retrieval,
+- [x] A1.8: Manual QA: run 20 real-style questions through retrieval,
       verify top-k chunks are actually relevant (informal spot-check
       before the formal golden-set test in A6)
 
 **Deliverable:** Semantic retrieval works, correctly role-scoped,
 tested against real content. Zero live traffic uses this yet.
+
+**Completion notes:**
+- `src/nour/knowledge/chunker.py`: `chunk_markdown_file()` splits on
+  `##` headers, discards front-matter, splits oversized sections at
+  paragraph breaks only (never mid-word/mid-sentence). 21 tests.
+  Verified against all 11 real `data/nour_knowledge/*.md` files: 106
+  chunks total, 0 frontmatter leaks.
+- `src/nour/knowledge/embedder.py`: `embed_text()` (Gemini
+  `gemini-embedding-001`, 768-dim, manual normalization, asymmetric
+  RETRIEVAL_DOCUMENT/RETRIEVAL_QUERY task types), `pack_embedding()`/
+  `unpack_embedding()` BLOB helpers, `cosine_similarity()`. 17 tests,
+  all network calls mocked.
+- `src/database.py`: `insert_knowledge_chunk()`,
+  `clear_knowledge_chunks()`, `get_chunks_by_domains()`,
+  `count_knowledge_chunks()`, `log_retrieval()`. 15 tests
+  (`tests/test_nour_database_knowledge.py`).
+- `src/nour/knowledge/retriever.py`: `retrieve(query, role, top_k=4,
+  discord_id="")` — resolves allowed domains via
+  `permissions.get_knowledge_domains(role)` (empty list short-circuits
+  before any embedding call, e.g. for reserved roles), embeds the
+  query, scores candidates by cosine similarity, falls back to the old
+  `_KB_CATEGORIES` keyword tier (imported directly from
+  `nour_concierge.py`, not duplicated) if the embedding call returns
+  `None`. Every call logged to `nour_retrieval_log`. 10 tests
+  (`tests/test_nour_retriever.py`), including the A1.7 fault-injection
+  test against `database.get_chunks_by_domains()` directly (expanded
+  domain list still filters exactly to what's asked, proving the data
+  layer is a real mechanical filter, not a rubber stamp) AND an
+  end-to-end `retrieve()` test where an owner-only chunk is a *perfect*
+  similarity match for a student query — still never returned.
+- `scripts/embed_knowledge.py`: one-time/re-runnable indexing script
+  (`--dry-run` mode for chunk-count sanity checks with zero API calls,
+  per-domain clear-before-insert so re-runs never leave stale
+  duplicates). Dry-run verified: 106 chunks across all 11 files.
+- `config.py`: `GEMINI_EMBEDDING_MODEL` env var (default
+  `gemini-embedding-001`). `requirements.txt`: `numpy>=1.26`.
+- A1.8 manual QA: 20 real-style Arabic questions run through the full
+  `retrieve()` pipeline against all 106 real chunks, including two
+  adversarial student-phrased probes explicitly asking for owner/
+  deploy content ("كيف أنشر تحديث جديد للبوت؟", "أعطني كل أوامر
+  الإدارة والنشر") — zero owner-domain leaks across all 20. **Caveat**:
+  no real `GEMINI_API_KEY` was available in the build sandbox, so this
+  QA run exercised the keyword-fallback tier and role-boundary
+  end-to-end against real content, not real Gemini semantic ranking —
+  semantic-quality (not just boundary-safety) should be spot-checked
+  again with a real API key before Phase A8's formal golden-set test.
+- Full suite: 504 tests pass (was 441 after A0; +63 across A1's new
+  files) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`.
 
 ---
 
