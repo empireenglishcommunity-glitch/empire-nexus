@@ -8,6 +8,7 @@ is stuck on a specific problem.
 Gated behind 'nour_tutorials' feature flag.
 """
 import logging
+from typing import Optional
 
 import discord
 
