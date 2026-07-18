@@ -561,6 +561,26 @@ CREATE TABLE IF NOT EXISTS nour_guardrail_events (
 );
 CREATE INDEX IF NOT EXISTS idx_guardrail_type ON nour_guardrail_events(guardrail_type);
 
+-- Aql (#15) Phase A8.5: shadow-mode comparison log (design.md Section
+-- 12 Phase M1). Every time the NEW pipeline runs in shadow mode
+-- alongside the OLD live response, both are recorded side-by-side for
+-- manual owner review -- this table is read-only from the owner's
+-- perspective (no code ever re-reads it to make a live decision), it
+-- exists purely as the durable record A8.7's sign-off review works
+-- from.
+CREATE TABLE IF NOT EXISTS nour_shadow_comparisons (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id      TEXT NOT NULL,
+    role            TEXT DEFAULT '',
+    text            TEXT NOT NULL,
+    old_response    TEXT DEFAULT '',
+    new_response    TEXT DEFAULT '',
+    error           TEXT DEFAULT '',
+    responses_match INTEGER NOT NULL DEFAULT 0,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_shadow_discord ON nour_shadow_comparisons(discord_id);
+
 -- design.md Section 13: observability for retrieval quality (Phase
 -- A1.6-A1.7). Every retrieval query + the top-k chunk IDs returned +
 -- which chunk was actually used in the final composed answer --
@@ -2638,3 +2658,64 @@ def get_latest_episodic_summary(discord_id: str) -> Optional[dict]:
     ).fetchone()
     conn.close()
     return dict(row) if row else None
+
+
+
+# ============================================================
+#  AQL (#15) — SHADOW MODE (Phase A8.5, design.md Section 12 Phase M1)
+# ============================================================
+
+def log_shadow_comparison(discord_id: str, role: Optional[str], text: str,
+                          old_response: Optional[str], new_response: Optional[str],
+                          error: Optional[str], responses_match: bool) -> int:
+    """Persist one shadow-mode comparison record. Returns the new
+    row's id. Called by src/nour/shadow.py's run_shadow_check() --
+    never called with the intent of influencing which response gets
+    sent (shadow mode's whole point is that it never does)."""
+    conn = _connect()
+    cur = conn.execute(
+        """INSERT INTO nour_shadow_comparisons
+           (discord_id, role, text, old_response, new_response, error, responses_match)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (discord_id, role or "", text, old_response or "", new_response or "",
+         error or "", 1 if responses_match else 0),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def get_shadow_comparisons(discord_id: str = None, limit: int = 50) -> list[dict]:
+    """Read back shadow comparison records, most recent first,
+    optionally filtered to one discord_id. This is the read path
+    A8.7's owner sign-off review works from."""
+    conn = _connect()
+    if discord_id:
+        rows = conn.execute(
+            """SELECT * FROM nour_shadow_comparisons WHERE discord_id=?
+               ORDER BY created_at DESC, id DESC LIMIT ?""",
+            (discord_id, limit),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT * FROM nour_shadow_comparisons ORDER BY created_at DESC, id DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def count_shadow_comparisons(matches_only: bool = False) -> int:
+    """Count shadow comparison rows, optionally only ones where
+    old_response and new_response matched exactly. Used for a quick
+    agreement-rate signal ahead of a full manual review."""
+    conn = _connect()
+    if matches_only:
+        row = conn.execute(
+            "SELECT COUNT(*) as cnt FROM nour_shadow_comparisons WHERE responses_match=1"
+        ).fetchone()
+    else:
+        row = conn.execute("SELECT COUNT(*) as cnt FROM nour_shadow_comparisons").fetchone()
+    conn.close()
+    return row["cnt"] if row else 0

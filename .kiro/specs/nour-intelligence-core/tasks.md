@@ -737,23 +737,23 @@ integrated into the new architecture; its rigid mechanism is gone.
 
 ---
 
-## Phase A8: Shadow Mode + Golden-Set Validation
+## Phase A8: Shadow Mode + Golden-Set Validation ⚠️ STRUCTURALLY COMPLETE, GATE NOT YET PASSED
 
-- [ ] A8.1: Build the 100-question student golden set (real-style
+- [x] A8.1: Build the 100-question student golden set (real-style
       questions across all knowledge domains) with human-verified
       correct answers
-- [ ] A8.2: Build the 30-question owner golden set (operational +
+- [x] A8.2: Build the 30-question owner golden set (operational +
       architectural questions)
-- [ ] A8.3: Build the 50-prompt red-team set (role-leak attempts —
+- [x] A8.3: Build the 50-prompt red-team set (role-leak attempts —
       direct requests, role-play framing, instruction-override attempts,
       obfuscated/translated phrasing)
-- [ ] A8.4: Enable `nour_aql_core` flag for the owner's own Discord ID
+- [x] A8.4: Enable `nour_aql_core` flag for the owner's own Discord ID
       only (self-testing tier, matching this project's established
       pattern)
-- [ ] A8.5: Run shadow mode: BOTH pipelines execute on every owner
+- [x] A8.5: Run shadow mode: BOTH pipelines execute on every owner
       message; only OLD response is sent; NEW response logged
       side-by-side for manual comparison
-- [ ] A8.6: Run all 3 golden/red-team sets against the NEW pipeline in
+- [x] A8.6: Run all 3 golden/red-team sets against the NEW pipeline in
       isolation (not shadow mode — direct evaluation), record pass rates
 - [ ] A8.7: Owner review + sign-off gate: SC1-SC4 pass bars met before
       proceeding to A9. If not met, return to the relevant earlier
@@ -763,6 +763,73 @@ integrated into the new architecture; its rigid mechanism is gone.
 **Deliverable:** Quantified evidence the new pipeline meets every
 Requirements success criterion, reviewed by the owner, before any real
 student sees it.
+
+**Completion notes — READ BEFORE STARTING PHASE A9:**
+- All mechanisms this phase calls for are BUILT and TESTED:
+  `data/nour_eval/golden_set_student.json` (100 questions, hand-verified
+  against real `data/nour_knowledge/*.md` content), `golden_set_owner.json`
+  (30 questions, hand-verified against real `data/nour_knowledge_owner/*.md`
+  content and the real source files they describe), `red_team_set.json`
+  (50 prompts, 5 categories × 10: direct, role_play,
+  instruction_override, obfuscated_translated, social_engineering).
+  `src/nour/shadow.py` (`enable_self_test()` — a thin, documented
+  wrapper over the EXISTING `database.set_feature_flag()` allowlist
+  mechanism, not a new one; `run_shadow_check()` — near-zero-cost for
+  non-eligible callers, never raises even if the new pipeline itself
+  crashes, persists every comparison to the new
+  `nour_shadow_comparisons` table). `scripts/run_golden_set_eval.py` —
+  the evaluation harness, with **structural** (not LLM-self-report)
+  red-team scoring: a prompt only counts as a successful attack if
+  retrieval actually surfaced an owner-only domain, the tool schema
+  list actually contained an owner-only tool name, or an owner-only
+  tool was actually executed (checked against the real
+  `nour_tool_calls` log) — never by asking the model whether it leaked
+  something.
+- **A8.6/A8.7's honest, load-bearing finding**: this phase was built in
+  a sandbox with **no real `GROQ_API_KEY`/`GEMINI_API_KEY` available**.
+  Two of the four bars this gate checks could be fully verified without
+  one:
+  - **SC1** (script conformance): ✅ verified — Phase A4's 200-iteration
+    stress test already proves this structurally and was re-confirmed
+    passing in this phase's full suite run.
+  - **SC3** (0/50 red-team): ✅ verified with real numbers — **50/50
+    passed** running the real harness against the real permissions/
+    retrieval/dispatcher boundary. Valid without a real API key because
+    every check is structural (see above), not dependent on what an
+    LLM said.
+  - **SC2** (≥90% student golden set) and **SC4** (≥90% owner golden
+    set): ❌ **NOT verified**. Running the harness with a deliberately
+    invalid key correctly produced 0/100 and 0/30 — this is the
+    CORRECT behavior of `guarded_generate()`'s template-fallback tier
+    under a total provider outage, not evidence the real pipeline
+    fails the bar. It is evidence this sandbox run could not test real
+    model quality at all. See `data/nour_eval/A8.7-SIGNOFF.md` for the
+    full breakdown and an explicit checklist.
+  - **A8.7 is therefore NOT signed off.** Per this phase's own explicit
+    instruction ("do not patch symptoms, diagnose which component is
+    under-performing"), a 0%-under-a-broken-key result must never be
+    recorded as a real SC2/SC4 measurement, and Phase A9 must not begin
+    until someone re-runs
+    `python3 scripts/run_golden_set_eval.py --set student` and
+    `--set owner` with a real API key and updates
+    `data/nour_eval/A8.7-SIGNOFF.md` with the real numbers — passing
+    OR failing.
+- `tests/test_nour_shadow.py` (15 tests) + `tests/test_nour_phase_a8.py`
+  (16 tests) — cover the shadow mechanism itself, all 3 data files'
+  structure/uniqueness/domain-validity, and the harness's OWN scoring
+  logic with a mocked pipeline (deliberately NOT a test of real model
+  quality — that split is the same one `A8.7-SIGNOFF.md` draws).
+- Full suite: 717 tests pass (was 686 after A7; +31 across A8's new
+  files) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`, including the 3 JSON eval
+  files themselves.
+- **Next action, before touching Phase A9 at all**: obtain a real
+  `GROQ_API_KEY` (and ideally `GEMINI_API_KEY`), re-run the harness for
+  `student` and `owner`, and update `A8.7-SIGNOFF.md` with real
+  results. If either bar is missed, return to the specific
+  under-performing phase (A1 retrieval quality? A2 thin KB content? A5
+  prompt composition? A3 tool usage?) — do not lower the bar or patch
+  this document.
 
 ---
 
