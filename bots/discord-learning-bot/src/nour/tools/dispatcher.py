@@ -58,6 +58,28 @@ for _name, _fn in owner_tools.FUNCTIONS.items():
 # arg for these, unlike every student tool.
 _STUDENT_SCOPED_TOOLS = frozenset(student_tools.FUNCTIONS.keys())
 
+# Merged schema lookup by name (student_tools.TOOLS + owner_tools.TOOLS)
+# -- same import-time uniqueness guarantee as _ALL_FUNCTIONS above,
+# since both lists are keyed by the same tool names.
+_ALL_SCHEMAS: dict[str, dict] = {}
+for _schema in student_tools.TOOLS:
+    _ALL_SCHEMAS[_schema["name"]] = _schema
+for _schema in owner_tools.TOOLS:
+    _ALL_SCHEMAS[_schema["name"]] = _schema
+
+
+def get_tool_schemas_for_role(role: Role) -> list[dict]:
+    """Returns the model-facing TOOLS schema list for exactly this
+    role's permitted tools (permissions.get_tool_registry(role)) --
+    the orchestrator (Phase A5) calls this ONCE per request and passes
+    the result to the LLM call; a student-role request never even
+    constructs a schema dict for an owner-only tool name, matching
+    design.md Section 3's framing that there is nothing for a
+    prompt-injection attempt to extract because it was never fetched
+    into that request's working set in the first place."""
+    allowed_names = permissions.get_tool_registry(role)
+    return [_ALL_SCHEMAS[name] for name in allowed_names if name in _ALL_SCHEMAS]
+
 
 async def execute_tool(name: str, role: Role, discord_id: str,
                        arguments: Optional[dict] = None) -> Any:

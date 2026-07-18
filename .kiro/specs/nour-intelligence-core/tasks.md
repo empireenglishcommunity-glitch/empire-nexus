@@ -402,33 +402,112 @@ to the original complaint — do not skip or compress its testing.
 
 ---
 
-## Phase A5: Bounded Orchestrator + Intent Classification
+## Phase A5: Bounded Orchestrator + Intent Classification ✅ COMPLETE
 
-- [ ] A5.1: Implement `classify_intent()` — one cheap/fast LLM call,
+- [x] A5.1: Implement `classify_intent()` — one cheap/fast LLM call,
       low max_tokens, categories per design.md Section 1
-- [ ] A5.2: Implement `handle_message()` orchestrator per Section 8 —
+- [x] A5.2: Implement `handle_message()` orchestrator per Section 8 —
       role resolve → intent → memory assembly → bounded tool/retrieval
       loop (max 3 iterations) → guarded generation → memory write
-- [ ] A5.3: Wire Groq function-calling (`tools=` parameter) as primary
+- [x] A5.3: Wire Groq function-calling (`tools=` parameter) as primary
       LLM call path
-- [ ] A5.4: Wire Gemini function-calling as fallback path (verify
+- [x] A5.4: Wire Gemini function-calling as fallback path (verify
       current Gemini API function-calling support/format before
       implementing — API details can shift; confirm against live docs
       at implementation time rather than trusting this spec's
       point-in-time assumption)
-- [ ] A5.5: Preserve template-response last-resort tier (reuse existing
+- [x] A5.5: Preserve template-response last-resort tier (reuse existing
       `_TEMPLATE_RESPONSES` list)
-- [ ] A5.6: Escalation path check (payment/refund/cancel keywords) —
+- [x] A5.6: Escalation path check (payment/refund/cancel keywords) —
       route through EXISTING `nour_escalation.escalate_to_owner()`
       unchanged, before the orchestrator loop even starts (matching
       today's early-exit behavior in `handle_message()`)
-- [ ] A5.7: Unit test: a tool-calling loop that would exceed 3
+- [x] A5.7: Unit test: a tool-calling loop that would exceed 3
       iterations is force-terminated into composition, never allowed
       to spiral (cost/latency safety valve, directly testing the
       "bounded" claim in the architecture)
 
 **Deliverable:** Full orchestration pipeline functional end-to-end
 against synthetic conversations. Still zero live traffic.
+
+**Completion notes:**
+- `src/nour/orchestrator.py`: `classify_intent()` (one low-max_tokens,
+  temperature=0 Groq call, degrades to the safest default
+  `"knowledge_question"` on any failure — missing key, network error,
+  unparseable response). `handle_message(discord_id, text,
+  channel_context="")` implements design.md Section 8's full pipeline:
+  role resolve → fixed-keyword escalation check (unchanged
+  `nour_concierge._should_escalate_immediately`) → intent
+  classification (a SECOND, classifier-based escalation check, for
+  defense in depth against phrasing the fixed list misses) → working
+  memory (`database.get_recent_conversation`) + semantic memories
+  (`nour_personality.get_memories`) + journey coverage
+  (`database.get_journey_coverage`, student-only) → role-scoped
+  retrieval (A1's `retrieve()`) → the bounded tool-calling loop → A4's
+  `guarded_generate()` → conversation write (both turns, via the
+  existing `nour_concierge._store_conversation`).
+- **The bound is structural, not a suggestion**: `MAX_ITERATIONS = 3`,
+  and the tool schema list passed to the LLM call is literally empty
+  (`[]`) on the 3rd/final iteration — there is nothing for the model
+  to request a tool call *with* at that point, not merely an
+  instruction telling it not to. Verified by A5.7's test with a fake
+  LLM that unconditionally requests a tool whenever any tool schema is
+  present: it is still forced to produce real text on exactly the 3rd
+  call, never a 4th.
+- Provider abstraction: `_call_groq_with_tools()` /
+  `_call_gemini_with_tools()`, both converting to/from ONE internal,
+  provider-neutral message format (`_messages_to_openai_format()` /
+  `_messages_to_gemini_contents()`), so a mid-loop provider switch
+  (Groq fails on iteration 1 after succeeding on iteration 0) works
+  correctly against the same accumulated message history.
+  `_call_llm_with_tools()` is the Groq-primary/Gemini-fallback
+  dispatcher, matching `nour_concierge._generate_response()`'s
+  existing three-tier philosophy, now tool-aware at each tier.
+- Gemini's function-calling format was verified against Google's live
+  docs at implementation time (per A5.4's explicit instruction), not
+  assumed from the spec's point-in-time text:
+  https://ai.google.dev/gemini-api/docs/function-calling and
+  https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/function-calling
+  — `functionDeclarations` format, `type: "object"` schemas,
+  zero-parameter tools correctly omit the `parameters` key entirely
+  (documented as Optional) rather than sending an empty object.
+- `src/nour/tools/dispatcher.py` extended with
+  `get_tool_schemas_for_role(role)` — the orchestrator's actual
+  enforcement point for design.md Section 3's "nothing to extract
+  because it was never fetched" framing: a student-role request's
+  tool schema list is constructed ONLY from
+  `permissions.get_tool_registry(Role.STUDENT)`, so an owner-only
+  tool's name/description/parameters never appear anywhere in a
+  student request's payload to any LLM provider.
+- Defense in depth preserved even though it should be structurally
+  unreachable: if a tool_call name isn't in the schemas that were
+  actually offered this iteration, the orchestrator silently discards
+  it rather than executing it (tested explicitly in
+  `test_a5_7_owner_only_tool_never_reaches_student_via_orchestrator`).
+  A tool that raises internally is caught (`dispatcher.ToolError`) and
+  fed back as an `{"error": ...}` tool-result message, not a crash.
+- `tests/test_nour_orchestrator.py` (30 tests): intent classification
+  (all 6 categories + 2 degradation paths), schema-conversion
+  correctness for both providers, the full Groq→Gemini→template
+  fallback chain, both escalation paths (fixed-keyword AND
+  classifier-detected) confirmed to short-circuit BEFORE any LLM call
+  via `assert_not_called()` (not just "the response looks right"),
+  and the complete A5.7 bounded-loop suite: exact 3-call termination
+  under an always-wants-a-tool model, early termination when a model
+  answers directly on call 1, real tool-result data actually appearing
+  in the 2nd call's message history (not just iteration counting), the
+  owner-only-tool-leak defense, and internal tool-error handling.
+- Full suite: 639 tests pass (was 609 after A4; +30 across A5's new
+  file) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`.
+- Not built in A5 (deliberately deferred): wiring
+  `orchestrator.handle_message()` into `bot.py`'s real message
+  handler — that cutover belongs to Phase A9's phased migration.
+  `nour_concierge.handle_message()` remains completely untouched and
+  is still the only thing answering real messages today. Episodic
+  summaries (design.md Section 6) are not yet part of context
+  assembly — `_build_messages()` is structured so Phase A6 can add
+  that section without changing the loop shape around it.
 
 ---
 
