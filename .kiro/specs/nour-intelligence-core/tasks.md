@@ -211,28 +211,102 @@ knowledge. Student-side boundary re-verified unbroken.
 
 ---
 
-## Phase A3: Tool Layer
+## Phase A3: Tool Layer ✅ COMPLETE
 
-- [ ] A3.1: Implement student tool set (`get_my_progress`,
+- [x] A3.1: Implement student tool set (`get_my_progress`,
       `get_my_journey_coverage`, `get_my_recent_scores`,
       `get_leaderboard_position`) per Section 5.2 — `discord_id` bound
       server-side, never a model-supplied parameter
-- [ ] A3.2: Implement owner tool set as thin wrappers over EXISTING
+- [x] A3.2: Implement owner tool set as thin wrappers over EXISTING
       `ops_commands.py` functions per Section 5.3 — zero reimplementation
-- [ ] A3.3: Implement `execute_tool(name, discord_id, arguments)` dispatcher
+- [x] A3.3: Implement `execute_tool(name, discord_id, arguments)` dispatcher
       that validates `name` against the caller's `TOOL_REGISTRY[role]`
       before executing (defensive check — structurally redundant per
       Section 3, but present per this codebase's "double-check
       security-relevant logic" convention)
-- [ ] A3.4: Log every tool call to `nour_tool_calls` (name, args minus
+- [x] A3.4: Log every tool call to `nour_tool_calls` (name, args minus
       any sensitive values, latency, success/fail)
-- [ ] A3.5: Unit test: attempting to call an owner-only tool name
+- [x] A3.5: Unit test: attempting to call an owner-only tool name
       through the student dispatcher path raises/returns an error, not
       a silent success — verifies A3.3's gate actually gates
-- [ ] A3.6: Unit test: every student tool's real function signature has
+- [x] A3.6: Unit test: every student tool's real function signature has
       NO parameter that could target a different student's data
 
 **Deliverable:** Tool-calling works, correctly scoped, logged, tested.
+
+**Completion notes:**
+- `src/nour/tools/student_tools.py`: `get_my_progress`,
+  `get_my_journey_coverage`, `get_my_recent_scores`,
+  `get_leaderboard_position` — each takes exactly one parameter
+  (`discord_id`, bound server-side by the dispatcher), matching a
+  zero-parameter `TOOLS` schema offered to the model. Reuses existing
+  `database.py` functions verbatim (`get_member`, `get_streak`,
+  `member_week_number`, `tasks_completed_today`,
+  `get_recent_scores`/`get_pronunciation_average`) — no new
+  business logic, just tool-shaped reads.
+- `src/nour/tools/owner_tools.py`: `get_student_status`,
+  `get_roster_summary`, `get_system_health` delegate directly to
+  `ops_commands.handle_check`/`handle_students`/`handle_status`
+  (zero reimplementation, per design.md Section 5.3). `flag_student`
+  delegates to `nour_ops_commands._cmd_flag`. `get_security_stats`
+  reads `database.get_security_stats()` directly. `send_announcement`
+  → `ops_commands.handle_announce`. `nudge_student` →
+  `ops_commands.handle_nudge`. `toggle_feature_flag` →
+  `database.set_feature_flag()` directly (tagged
+  `updated_by="nour_owner_tool"` for audit-trail distinction from
+  manual toggles). `explain_code_behavior` retrieves from a deliberate
+  subset of owner domains (`architecture`/`codebase_map`/
+  `database_schema` — NOT `deployment_runbook`/
+  `flag_registry_reference`, which have their own dedicated tools)
+  and returns raw grounding chunks, composition left to the future
+  orchestrator (A5). A module-level `set_bot()`/`get_bot()`
+  registration mechanism avoids a circular import with `bot.py`;
+  calling a Discord-touching owner tool before a bot is registered
+  raises `RuntimeError` with a clear message rather than a bare
+  `AttributeError`.
+- `src/nour/tools/dispatcher.py`: `execute_tool(name, role, discord_id,
+  arguments)` — checks `permissions.is_tool_allowed(role, name)`
+  first and raises `ToolError` (never a silent no-op, never a
+  successful-looking empty result) if not permitted or if the name
+  has no implementation; otherwise binds `discord_id` positionally
+  for student-scoped tools or unpacks `arguments` as kwargs for owner
+  tools, and logs every attempt (rejected, failed, or successful) to
+  `nour_tool_calls` via the new `database.log_tool_call()`. A
+  redaction extension point (`_REDACT_KEYS`) exists for any future
+  tool with a genuinely sensitive parameter, currently empty since no
+  A3 tool takes one. An import-time assertion guards against a tool
+  name existing in both `student_tools.FUNCTIONS` and
+  `owner_tools.FUNCTIONS`.
+- `src/database.py`: `get_journey_coverage()` (read-only in this
+  phase — returns real all-zero defaults for an unseen student;
+  Phase A6.4 wires the write side to real signals),
+  `get_member_rank()` (1-indexed rank by points, unlike
+  `leaderboard()`'s top-N-only slice), `log_tool_call()`.
+- `tests/test_nour_tools.py` (31 tests): A3.6 inspects every student
+  tool's REAL function signature via `inspect.signature` (not just
+  reading the code by eye) to confirm it's exactly `["discord_id"]`
+  with no suspicious extra parameter, and confirms the model-facing
+  schema declares empty `parameters: {}` for all four. A3.5 confirms
+  `get_student_status` (owner-only) called through `Role.STUDENT`
+  raises `ToolError` and is explicitly asserted to never return a
+  value on the success path. Also covers: real student-tool data
+  correctness, owner-tool delegation via a fake bot fixture,
+  `RuntimeError` when no bot is registered, `explain_code_behavior`'s
+  domain filtering, and A3.4's full logging matrix (successful,
+  rejected, internally-failed, and unknown-tool-name attempts all
+  produce exactly one `nour_tool_calls` row each with the correct
+  `success` flag).
+- `tests/test_nour_database_knowledge.py` extended (+8 tests) for the
+  three new `database.py` functions.
+- Full suite: 551 tests pass (was 512 after A2; +39 across A3's new
+  files) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`.
+- Not built in A3 (deliberately deferred to later phases per
+  tasks.md's own sequencing): wiring `owner_tools.set_bot()` into
+  `bot.py`'s real startup (Phase A5, once an orchestrator actually
+  exists to call these tools), and any Groq/Gemini function-calling
+  schema translation (also Phase A5 — `TOOLS` lists here are
+  provider-agnostic dicts, not yet formatted for either API).
 
 ---
 

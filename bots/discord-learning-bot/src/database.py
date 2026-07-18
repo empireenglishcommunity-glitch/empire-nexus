@@ -2416,3 +2416,84 @@ def log_retrieval(discord_id: str, role: str, query_text: str,
     )
     conn.commit()
     conn.close()
+
+
+
+# ============================================================
+#  AQL (#15) — TOOL LAYER SUPPORT (Phase A3)
+# ============================================================
+
+def get_journey_coverage(discord_id: str) -> dict:
+    """Read a student's onboarding coverage flags (design.md Section
+    9.1). Returns all-zero defaults (matching the table's own column
+    defaults) for a student with no row yet -- this is a pure READ
+    added in Phase A3.1 so `get_my_journey_coverage` (the student
+    tool) has something real to expose; Phase A6.4 is what wires the
+    WRITE side to real signals (task completion, !link usage, etc.).
+    Reading a not-yet-written row as "nothing covered yet" is correct
+    either way -- it's not a placeholder that needs revisiting once
+    A6.4 lands, just the natural starting state.
+    """
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM journey_coverage WHERE discord_id=?", (discord_id,)
+    ).fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    return {
+        "discord_id": discord_id,
+        "knows_daily_tasks": 0,
+        "knows_platform_link": 0,
+        "knows_streaks": 0,
+        "knows_channels": 0,
+        "first_task_done": 0,
+        "updated_at": None,
+    }
+
+
+def get_member_rank(discord_id: str) -> Optional[int]:
+    """1-indexed rank of an active member by total_points, or None if
+    the member is not active/doesn't exist. Used by the
+    `get_leaderboard_position` student tool -- leaderboard() above
+    only returns a top-N slice, which can't answer "where do I rank"
+    for anyone outside that slice.
+    """
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT discord_id FROM members WHERE status='active' ORDER BY total_points DESC"
+    ).fetchall()
+    conn.close()
+    ids = [r["discord_id"] for r in rows]
+    if discord_id not in ids:
+        return None
+    return ids.index(discord_id) + 1
+
+
+# ============================================================
+#  AQL (#15) — TOOL CALL OBSERVABILITY (Phase A3.4, design.md
+#  Section 13)
+# ============================================================
+
+def log_tool_call(discord_id: str, role: str, tool_name: str, arguments: dict,
+                  latency_ms: int, success: bool, error_message: str = "") -> None:
+    """Log a tool invocation for later analysis (which tools are
+    actually used vs. dead weight, latency outliers, failure
+    patterns). `arguments` should already have any sensitive values
+    redacted by the caller (src/nour/tools/dispatcher.py) before this
+    function serializes them -- this function itself does not know
+    which keys are sensitive for a given tool, that judgment belongs
+    at the dispatch layer where the tool's real parameter meanings are
+    known.
+    """
+    import json as _json
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO nour_tool_calls
+           (discord_id, role, tool_name, arguments_json, latency_ms, success, error_message)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (discord_id, role, tool_name, _json.dumps(arguments, ensure_ascii=False),
+         latency_ms, 1 if success else 0, error_message),
+    )
+    conn.commit()
+    conn.close()

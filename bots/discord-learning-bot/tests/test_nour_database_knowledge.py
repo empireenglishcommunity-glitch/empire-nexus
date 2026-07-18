@@ -210,3 +210,94 @@ def test_log_retrieval_truncates_long_query_text():
     row = conn.execute("SELECT * FROM nour_retrieval_log WHERE discord_id='u1'").fetchone()
     conn.close()
     assert len(row["query_text"]) == 500
+
+
+
+# ============================================================
+#  AQL (#15) PHASE A3 — TOOL LAYER SUPPORT FUNCTIONS
+# ============================================================
+
+def test_get_journey_coverage_defaults_for_unseen_member():
+    result = database.get_journey_coverage("never_seen")
+    assert result["discord_id"] == "never_seen"
+    assert result["knows_daily_tasks"] == 0
+    assert result["knows_platform_link"] == 0
+    assert result["knows_streaks"] == 0
+    assert result["knows_channels"] == 0
+    assert result["first_task_done"] == 0
+
+
+def test_get_journey_coverage_reads_real_row():
+    database.register_member("u1", "Alice")
+    conn = database._connect()
+    conn.execute(
+        """INSERT INTO journey_coverage (discord_id, knows_daily_tasks, first_task_done)
+           VALUES (?, 1, 1)""",
+        ("u1",),
+    )
+    conn.commit()
+    conn.close()
+
+    result = database.get_journey_coverage("u1")
+    assert result["knows_daily_tasks"] == 1
+    assert result["first_task_done"] == 1
+    assert result["knows_streaks"] == 0
+
+
+def test_get_member_rank_orders_by_points_descending():
+    database.register_member("u1", "Alice")
+    database.register_member("u2", "Bob")
+    database.register_member("u3", "Carol")
+    database.add_points("u1", 300, "test")
+    database.add_points("u2", 500, "test")
+    database.add_points("u3", 100, "test")
+
+    assert database.get_member_rank("u2") == 1
+    assert database.get_member_rank("u1") == 2
+    assert database.get_member_rank("u3") == 3
+
+
+def test_get_member_rank_unknown_member_returns_none():
+    assert database.get_member_rank("ghost") is None
+
+
+def test_get_member_rank_inactive_member_returns_none():
+    database.register_member("u1", "Alice")
+    database.update_member("u1", status="inactive")
+    assert database.get_member_rank("u1") is None
+
+
+def test_log_tool_call_does_not_raise():
+    database.log_tool_call(
+        discord_id="u1", role="student", tool_name="get_my_progress",
+        arguments={}, latency_ms=12, success=True,
+    )
+
+
+def test_log_tool_call_persists_row_correctly():
+    database.log_tool_call(
+        discord_id="u1", role="owner", tool_name="send_announcement",
+        arguments={"message": "hi"}, latency_ms=42, success=False,
+        error_message="channel not found",
+    )
+    conn = database._connect()
+    row = conn.execute("SELECT * FROM nour_tool_calls WHERE discord_id='u1'").fetchone()
+    conn.close()
+    assert row is not None
+    assert row["role"] == "owner"
+    assert row["tool_name"] == "send_announcement"
+    assert json.loads(row["arguments_json"]) == {"message": "hi"}
+    assert row["latency_ms"] == 42
+    assert row["success"] == 0
+    assert row["error_message"] == "channel not found"
+
+
+def test_log_tool_call_defaults_error_message_to_empty_string():
+    database.log_tool_call(
+        discord_id="u1", role="student", tool_name="get_my_progress",
+        arguments={}, latency_ms=5, success=True,
+    )
+    conn = database._connect()
+    row = conn.execute("SELECT * FROM nour_tool_calls WHERE discord_id='u1'").fetchone()
+    conn.close()
+    assert row["error_message"] == ""
