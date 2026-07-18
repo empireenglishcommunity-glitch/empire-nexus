@@ -51,6 +51,7 @@ REGISTRY = [
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
 
     # ── NOUR (autonomous student concierge) ──
+    ("aql_episodic_summaries", "Aql (#15) Phase A6: weekly per-student episodic summary generation (Groq)", "nour", False),
     ("nour_concierge", "AI concierge handles DMs and #ask-nour questions", "nour", True),
     ("nour_proactive", "Proactive outreach (anti-churn check-ins)", "nour", False),
     ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),

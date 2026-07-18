@@ -392,6 +392,12 @@ async def on_ready():
     # Nour N5.1: weekly self-review (Sunday 10 AM)
     if not nour_weekly_review.is_running():
         nour_weekly_review.start()
+    # Aql (#15) Phase A6.2: per-student episodic summary regeneration
+    # (Sunday 10:30 AM -- 30 minutes after nour_weekly_review, same
+    # day since both are "weekly" tasks, but staggered so they don't
+    # both hit Groq's API in the exact same minute)
+    if not aql_episodic_summary_task.is_running():
+        aql_episodic_summary_task.start()
     # Masar M2.2: Nour's Weekly Growth Letter (Wednesday 11 AM,
     # deliberately staggered against Sunday's cluster of weekly tasks)
     if not nour_growth_letter_task.is_running():
@@ -1504,6 +1510,37 @@ async def nour_weekly_review():
         logger.error(f"Nour weekly review error: {e}")
 
 
+@tasks.loop(time=datetime.time(hour=10, minute=30, tzinfo=_zone()))
+async def aql_episodic_summary_task():
+    """Aql (#15) Phase A6.2: regenerate every active student's episodic
+    summary once a week (design.md Section 6). Runs Sunday only, 30
+    minutes after nour_weekly_review, so both weekly Groq-summarization
+    jobs don't fire in the same minute.
+
+    Gated behind 'aql_episodic_summaries' (default OFF): even though
+    writing new nour_episodic_summaries rows has zero effect on
+    anything Nour's CURRENT live response path reads, this task would
+    otherwise start consuming real Groq API quota against every real
+    student's real conversation history on a schedule, the moment this
+    PR merges -- a genuine live side effect, not the "zero live
+    effect" every other Aql phase has maintained. The flag makes this
+    phase's actual first live behavior an explicit, deliberate, later
+    decision (per this codebase's established deploy-dormant/release-
+    separately discipline), not an accidental side effect of building
+    the mechanism.
+    """
+    if not database.is_feature_enabled("aql_episodic_summaries"):
+        return
+    if _now().weekday() != 6:  # 6 = Sunday
+        return
+    from . import nour_personality
+    try:
+        count = await nour_personality.run_weekly_episodic_summaries(bot)
+        logger.info(f"Aql episodic summaries: regenerated for {count} student(s)")
+    except Exception as e:
+        logger.error(f"Aql episodic summary task error: {e}")
+
+
 @tasks.loop(time=datetime.time(hour=11, minute=0, tzinfo=_zone()))
 async def nour_growth_letter_task():
     """Masar M2.2: Nour's Weekly Growth Letter — the flagship fix for
@@ -1935,6 +1972,18 @@ async def cmd_done(ctx, task: str = None):
     # (safe no-op if student isn't in journey or already past this step)
     await nour_journey.check_advancement(str(ctx.author.id), "task_completed", bot)
 
+    # Aql (#15) Phase A6.4: journey_coverage's independent-flags model
+    # replaces the FSM above -- fires on the SAME real signal
+    # (task_completed), at the SAME call site, but flips a durable fact
+    # rather than advancing a state pointer. Both mechanisms coexist
+    # during Aql's dormant build-out (nour_journey.py is still the only
+    # thing that actually sends onboarding DMs today); this call has
+    # zero user-visible effect until Phase A9's cutover starts reading
+    # journey_coverage instead of student_journey.
+    database.set_journey_coverage(
+        str(ctx.author.id), knows_daily_tasks=True, first_task_done=True,
+    )
+
     # Format response — Bawaba B5: language adapts to member's week
     # (arabic → bilingual_ar → bilingual). Falls back to the old
     # L0-Arabic / higher-English split when the flag is OFF.
@@ -2052,6 +2101,13 @@ async def cmd_progress(ctx):
 @bot.command(name="streak")
 async def cmd_streak(ctx):
     """View your streak details."""
+    # Aql (#15) Phase A6.4: actually viewing !streak is the real
+    # signal that this student now knows the streak system exists --
+    # a genuinely observed behavior, not a scripted checkpoint. See
+    # cmd_done's comment above for why this coexists with the
+    # unrelated nour_journey.py FSM with zero user-visible effect today.
+    database.set_journey_coverage(str(ctx.author.id), knows_streaks=True)
+
     current, longest = database.get_streak(str(ctx.author.id))
     completed = database.tasks_completed_today(str(ctx.author.id))
     bar = "█" * len(completed) + "░" * (7 - len(completed))
@@ -2382,6 +2438,18 @@ async def on_message(message: discord.Message):
             except Exception as e:
                 logger.error(f"Nour #ask-nour handler error: {e}")
             return
+
+    # Aql (#15) Phase A6.4: posting in one of the "tour" channels
+    # nour_journey.py's own channels_tour step introduces (daily-word,
+    # cheat-sheets, general-chat, ask-nour) is a real observed signal
+    # that this student has found and used channels beyond the
+    # default daily-tasks/bot-commands pair -- a genuine behavior, not
+    # a scripted checkpoint. Cheap membership check, no extra query
+    # unless the channel actually matches.
+    if hasattr(message.channel, "name") and message.channel.name in (
+        "daily-word", "cheat-sheets", "general-chat", "ask-nour",
+    ):
+        database.set_journey_coverage(str(message.author.id), knows_channels=True)
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
@@ -3645,6 +3713,11 @@ async def cmd_link(ctx):
         await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
         # Rawiya R2/R8: advance onboarding journey when student links the platform
         await nour_journey.check_advancement(discord_id, "link_used", bot)
+        # Aql (#15) Phase A6.4: same real signal, feeds the
+        # journey_coverage independent-flags model too -- see
+        # cmd_done's identical comment above for why both mechanisms
+        # coexist right now with zero user-visible effect.
+        database.set_journey_coverage(discord_id, knows_platform_link=True)
     except discord.Forbidden:
         await ctx.send("❌ I can't DM you. Enable DMs from server members and try again.")
 

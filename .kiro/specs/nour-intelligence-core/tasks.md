@@ -511,32 +511,122 @@ against synthetic conversations. Still zero live traffic.
 
 ---
 
-## Phase A6: Structured Memory
+## Phase A6: Structured Memory ✅ COMPLETE
 
-- [ ] A6.1: Implement working-memory retrieval (last ~10 turns from
+- [x] A6.1: Implement working-memory retrieval (last ~10 turns from
       existing `nour_conversations`, unchanged schema)
-- [ ] A6.2: Implement episodic summary generation — weekly per active
+- [x] A6.2: Implement episodic summary generation — weekly per active
       student, reusing the Groq-summarization pattern from
       `nour_personality.run_weekly_review` redirected to per-student
       output into `nour_episodic_summaries`
-- [ ] A6.3: Extend semantic memory retrieval to filter by `category` +
+- [x] A6.3: Extend semantic memory retrieval to filter by `category` +
       relevance to current topic (not all facts dumped regardless of
       relevance)
-- [ ] A6.4: Implement `journey_coverage` read/write functions —
+- [x] A6.4: Implement `journey_coverage` read/write functions —
       coverage flags flip on the SAME real signals Rawiya's triggers
       used (task completion, `!link` usage, channel visits), replacing
       the FSM's `_advance_step()` calls at those exact call sites in
       `bot.py` (`cmd_done`, `cmd_link`, daily check task)
-- [ ] A6.5: Wire journey-gap surfacing into context assembly (Section 6)
+- [x] A6.5: Wire journey-gap surfacing into context assembly (Section 6)
       — gaps become retrievable conversational material, not a
       scripted trigger
-- [ ] A6.6: Golden-set test: verify a multi-session conversation
+- [x] A6.6: Golden-set test: verify a multi-session conversation
       (simulate 3 separate days of chat) correctly references earlier
       context via episodic summary without needing full raw history
       re-sent every time
 
 **Deliverable:** Memory is structured, bounded, and the onboarding
 coverage model works without a rigid FSM.
+
+**Completion notes:**
+- `src/database.py`: `set_journey_coverage(discord_id, **flags)` —
+  independent boolean flags (`knows_daily_tasks`, `knows_platform_link`,
+  `knows_streaks`, `knows_channels`, `first_task_done`), upserting so
+  the FIRST real signal for a student creates the row and every
+  subsequent call only touches the flags it's actually given (a
+  `!streak` view never accidentally resets `knows_channels` back to
+  0). Degrades to a silent no-op (not a crash) for a `discord_id` with
+  no `members` row yet, since `on_message`'s channel-visit signal can
+  legitimately fire for a Discord user who has never run `!join`.
+  `store_episodic_summary()`, `get_latest_episodic_summary()` (tie-broken
+  by `id DESC`, same known-limitation workaround as
+  `last_advancement_attempt()`'s existing precedent for
+  second-resolution `datetime('now')` timestamps).
+- `src/nour_personality.py`: `store_memory()`/`get_memories()` extended
+  with a `category` parameter (defaults to `'general'`, so every
+  existing call site's behavior is byte-for-byte unchanged).
+  `get_memories_by_topic(discord_id, current_topic)` — a cheap keyword-hint
+  match (same convention as `nour_concierge._KB_CATEGORIES`) against
+  the current request's text, returning only memories in matched
+  categories; degrades to full unfiltered recency if no category
+  matches OR if a matched category has zero stored memories for this
+  student (never silently returns nothing when real memories exist).
+  `generate_episodic_summary()` (reuses `run_weekly_review()`'s exact
+  Groq-call PATTERN, redirected to one student's own conversation
+  history; returns `None` on missing key/no conversations/API
+  failure, never raises) and `run_weekly_episodic_summaries()` (loops
+  every active member, only stores a summary for students who
+  actually had conversation activity in the window).
+- `src/bot.py`: `journey_coverage` real-signal wiring at the exact
+  call sites design.md's own framing calls for — `cmd_done` (fires
+  `knows_daily_tasks`+`first_task_done` on the SAME real event
+  `nour_journey.check_advancement("task_completed", ...)` already
+  used), `cmd_link` (`knows_platform_link`, same signal as
+  `"link_used"`), `cmd_streak` (`knows_streaks` — viewing the command
+  IS the real signal that the student now knows it exists), and
+  `on_message` (`knows_channels`, fired by posting in any of the 4
+  "tour" channels `nour_journey.py`'s own `channels_tour` step
+  introduces: daily-word, cheat-sheets, general-chat, ask-nour). The
+  OLD FSM (`nour_journey.py`) is completely untouched and remains the
+  only thing actually sending onboarding DMs today — both mechanisms
+  coexist with zero user-visible effect until Phase A9's cutover
+  reads `journey_coverage` instead of `student_journey`.
+- New `aql_episodic_summary_task` (Sunday 10:30 AM, 30 min after the
+  existing `nour_weekly_review`) calls
+  `run_weekly_episodic_summaries()` — **explicitly gated behind a new
+  `aql_episodic_summaries` flag, default OFF**. Unlike every other
+  piece of Phase A1-A6 (which are dormant purely because nothing
+  live calls them yet), this task loop WOULD start consuming real
+  Groq API quota against every real student's real conversation
+  history on a weekly schedule the moment this PR merges, even though
+  writing new `nour_episodic_summaries` rows has zero effect on
+  anything Nour's current live response path reads. The flag makes
+  this phase's actual first live side effect a deliberate, separate
+  decision, not an accidental one baked into "just building the
+  mechanism" — matches this codebase's established deploy-dormant/
+  release-separately discipline (Aegis Phase 1).
+- `src/nour/orchestrator.py`: `_build_messages()` extended with an
+  `episodic_summary` parameter (a `PAST CONTEXT` system-prompt
+  section, omitted entirely when `None`) and now receives
+  `get_memories_by_topic()`'s topic-filtered output instead of
+  `get_memories()`'s unfiltered one. `handle_message()` fetches the
+  latest episodic summary and topic-filtered facts as part of its
+  existing context-assembly step — no change to the loop shape
+  around it, exactly as A5's own completion notes anticipated.
+- `tests/test_nour_memory.py` (29 tests): journey_coverage's
+  independence-not-sequence property (flags settable in any order,
+  partial updates never clobber untouched flags, invalid flag names
+  silently ignored, FK-violation degrades to no-op), the real
+  `cmd_done`/`cmd_link` call-site flag choices, topic-filtered memory
+  retrieval (including both graceful-degradation paths), episodic
+  summary generation (real Groq payload inspection, not just
+  mocked-return-value checking, plus the missing-key/no-conversation/
+  API-failure degradation paths), `_build_messages()`'s journey-gap
+  and episodic-summary sections in isolation, an end-to-end
+  `handle_message()` check that real gaps reach the real LLM payload,
+  and the **A6.6 golden-set test**: a synthetic 3-session conversation
+  (day 1's exam-anxiety disclosure, 12 unrelated turns across day 2-3
+  pushing day 1 out of the ~10-turn working-memory window, then a
+  day-3 follow-up) confirms the episodic summary's exam reference
+  reaches the system prompt while day 1's raw message text is
+  confirmed ABSENT from the working-memory turns actually sent.
+- Full suite: 668 tests pass (was 639 after A5; +29 across A6's new
+  file) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`.
+- Not built in A6 (deliberately deferred): actually reading
+  `journey_coverage` (instead of `student_journey`) anywhere in a live
+  code path, and enabling `aql_episodic_summaries` for real — both
+  belong to Phase A9's phased cutover, not this phase.
 
 ---
 

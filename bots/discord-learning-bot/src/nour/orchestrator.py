@@ -351,16 +351,17 @@ async def _call_llm_with_tools(messages: list[dict], tool_defs: list[dict]) -> O
 
 def _build_messages(role: Role, text: str, working_memory: list[dict],
                     semantic_facts: list[str], journey_coverage: Optional[dict],
-                    retrieved_chunks: list) -> list[dict]:
+                    retrieved_chunks: list, episodic_summary: Optional[str] = None) -> list[dict]:
     """Assembles the message list for the composition call. Reuses
     nour_concierge.NOUR_SYSTEM_PROMPT verbatim (the actual personality
     is not being re-litigated in this phase) plus whatever grounding
-    context is available TODAY: working memory (A1), semantic memories
-    (existing nour_personality), journey coverage (A3's read path),
-    and role-scoped retrieval (A1). Episodic summaries (design.md
-    Section 6) are Phase A6's own build -- this function is structured
-    so A6 can add one more system-prompt section without changing the
-    loop shape around it.
+    context is available: working memory (A1), TOPIC-FILTERED semantic
+    memories (A6.3 -- `semantic_facts` is expected to already be the
+    output of `nour_personality.get_memories_by_topic()`, not the
+    unfiltered `get_memories()`), journey coverage gaps (A6.5), an
+    episodic summary of older conversation history (A6.2, replacing
+    the need to re-send unbounded raw history), and role-scoped
+    retrieval (A1).
     """
     system_parts = [nour_concierge.NOUR_SYSTEM_PROMPT]
 
@@ -369,6 +370,14 @@ def _build_messages(role: Role, text: str, working_memory: list[dict],
             "ملاحظة: أنت تتحدث الآن مع مالك النظام (Owner)، الذي لديه صلاحية "
             "الوصول الكامل لكل الأدوات والمعرفة الإدارية المتاحة لك."
         )
+
+    if episodic_summary:
+        # A6.2/A6.6: a compact stand-in for conversation history OLDER
+        # than the working-memory window below -- this is what lets a
+        # multi-session conversation (day 1, day 8, day 15) reference
+        # earlier context without ever re-sending raw history from
+        # those earlier sessions.
+        system_parts.append(f"PAST CONTEXT (ملخص محادثات سابقة، ليس نصًا حرفيًا):\n{episodic_summary}")
 
     if retrieved_chunks:
         kb_text = "\n\n---\n\n".join(f"### {c.heading}\n{c.content}" for c in retrieved_chunks)
@@ -457,14 +466,30 @@ async def handle_message(discord_id: str, text: str, channel_context: str = "") 
         # keyword list didn't. Same unchanged escalation path either way.
         return await _handle_escalation(discord_id, text)
 
+    # A6.1: working memory -- unchanged nour_conversations table/query.
     working_memory = database.get_recent_conversation(discord_id, limit=10)
-    semantic_facts = nour_personality.get_memories(discord_id)
+    # A6.3: filtered by relevance to THIS request's text, not every
+    # stored fact dumped regardless of relevance.
+    semantic_facts = nour_personality.get_memories_by_topic(discord_id, text)
+    # A6.5: journey gaps are read here and surfaced inside
+    # _build_messages() as conversational material, not a scripted
+    # trigger -- student role only, matching journey_coverage's own
+    # student-only semantics.
     journey_coverage = database.get_journey_coverage(discord_id) if role == Role.STUDENT else None
+    # A6.2/A6.6: a compact stand-in for conversation history older
+    # than the working-memory window -- None if no summary has ever
+    # been generated yet (e.g. this student's first week), which
+    # _build_messages() already handles by simply omitting the section.
+    episodic = database.get_latest_episodic_summary(discord_id)
+    episodic_summary = episodic["summary_text"] if episodic else None
 
     tool_schemas = dispatcher.get_tool_schemas_for_role(role)
     retrieved_chunks = await retrieve(text, role, top_k=4, discord_id=discord_id)
 
-    messages = _build_messages(role, text, working_memory, semantic_facts, journey_coverage, retrieved_chunks)
+    messages = _build_messages(
+        role, text, working_memory, semantic_facts, journey_coverage,
+        retrieved_chunks, episodic_summary=episodic_summary,
+    )
 
     final_text = None
     for iteration in range(MAX_ITERATIONS):
