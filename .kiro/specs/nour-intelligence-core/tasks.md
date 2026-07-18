@@ -310,23 +310,23 @@ knowledge. Student-side boundary re-verified unbroken.
 
 ---
 
-## Phase A4: Output Guardrails
+## Phase A4: Output Guardrails ✅ COMPLETE
 
-- [ ] A4.1: Implement `check_script_conformance()` per Section 7,
+- [x] A4.1: Implement `check_script_conformance()` per Section 7,
       reusing the Arabic-range regex already proven in
       `scripts/bidi_check.py` / `features.py`
-- [ ] A4.2: Implement `check_bidi_structure()` as a direct import of
+- [x] A4.2: Implement `check_bidi_structure()` as a direct import of
       `scripts.bidi_check.find_bidi_issues()` — not reimplemented
-- [ ] A4.3: Implement `check_role_leak()` with an initial
+- [x] A4.3: Implement `check_role_leak()` with an initial
       `OWNER_LEAK_MARKERS` list (internal table names, deploy commands,
       flag internals) — start conservative, expand from real
       `nour_guardrail_events` log data post-launch
-- [ ] A4.4: Implement `guarded_generate()` wrapper: generate → check →
+- [x] A4.4: Implement `guarded_generate()` wrapper: generate → check →
       retry-with-correction-hint once → template fallback
-- [ ] A4.5: Log every guardrail trigger to `nour_guardrail_events`
+- [x] A4.5: Log every guardrail trigger to `nour_guardrail_events`
       (type: script/bidi/role-leak, original text hash, corrected
       or fell back to template)
-- [ ] A4.6: Stress test: reproduce the exact original bug conditions
+- [x] A4.6: Stress test: reproduce the exact original bug conditions
       (long conversation, KB-heavy context, truncation-adjacent chunk
       sizes) 200 times against the new chunked-retrieval + guardrail
       pipeline — confirm 0 non-Arabic responses reach the "delivered"
@@ -336,6 +336,69 @@ knowledge. Student-side boundary re-verified unbroken.
 **Deliverable:** The original reported bug is mechanically
 un-reproducible. This is the single most load-bearing phase relative
 to the original complaint — do not skip or compress its testing.
+
+**Completion notes:**
+- `src/nour/guardrails.py`: `check_script_conformance()` (dominant-
+  Arabic ratio >0.7 over actual letters only — digits/punctuation/
+  emoji are script-neutral and never count against it, exactly
+  matching design.md Section 7's formula; empty/emoji-only text
+  correctly passes since there's no "wrong script" to detect absent
+  any script at all), `check_bidi_structure()` (a genuine, verified
+  passthrough to `scripts.bidi_check.find_bidi_issues()` — tested
+  directly against that function's output for identical inputs, not
+  just assumed to match), `check_role_leak()` (owner role always
+  passes trivially; student role scanned against `OWNER_LEAK_MARKERS`
+  — real internal table names, real deploy/rollback commands, real
+  flag-internals terms, owner-identifying env var names — 18 entries
+  at launch, every single one covered by its own parametrized test),
+  `guarded_generate()` (generate → check all three → on any failure,
+  retry once with a failure-type-specific Arabic-only correction hint
+  → on second failure, fall back to `nour_concierge._TEMPLATE_RESPONSES`
+  directly, not a duplicated list).
+- `src/database.py`: `log_guardrail_event()` (hash only, never raw
+  failing text — verified by a dedicated test that the original text
+  literally does not appear anywhere in the logged row),
+  `count_guardrail_events()`.
+- **Real bug caught and fixed during this phase's own testing**: the
+  first-written "bidi" correction hint text itself violated the bidi
+  rule it was instructing the model to follow (two embedded LTR
+  references, `#channel` and `!command`, joined by Arabic connector
+  text on one line) — caught by running `bidi_check.py` against the
+  new file as part of this phase's own verification step, not by a
+  separate test written in advance. Fixed the hint's wording, then
+  added a permanent regression test (`test_every_correction_hint_passes_
+  bidi_structure_check` / `..._script_conformance_check`, parametrized
+  over all three failure types) so a future edit to any hint's wording
+  can never reintroduce this same category of self-defeating bug
+  silently.
+- `tests/test_nour_guardrails.py` (54 tests) — deliberately the most
+  exhaustive test file in the Aql spec so far, per this phase's own
+  "do not skip or compress its testing" instruction. Includes the
+  **A4.6 stress test**: 200 deterministic (seeded) reproductions of
+  the original bug conditions — a "flaky provider" that returns
+  garbled/foreign-language/degenerate text (English, French, German,
+  Japanese, Russian, bidi-broken Arabic, a real leak marker, empty
+  string, whitespace-only, digits-only), with retries succeeding
+  ~50% of the time and failing the other ~50% (forcing the template
+  fallback path) — and asserts that **zero of the 200 delivered
+  responses** fail any guardrail check. Also covers: the full
+  `guarded_generate()` state machine (pass-first-try /
+  retry-succeeds / retry-fails-falls-back), correct failure-type
+  attribution when isolating each of the three checks independently,
+  the owner role's exemption from `role_leak` specifically (not from
+  script/bidi), and confirmation that a first-try pass is never
+  logged at all (only actual triggers are).
+- `tests/test_nour_database_knowledge.py` extended (+4 tests) for the
+  2 new `database.py` functions.
+- Full suite: 609 tests pass (was 551 after A3; +58 across A4's new
+  files) — zero regressions. All new/modified files pass
+  `scripts/bidi_check.py` and `py_compile`.
+- Not built in A4 (deliberately deferred): wiring `guarded_generate()`
+  into `nour_concierge.py`'s real `_generate_response()` call path —
+  that is the actual cutover moment and belongs to a later phase
+  (A9's phased migration), not this one. A4 built and exhaustively
+  tested the mechanism in isolation; it has zero live effect until
+  something calls it.
 
 ---
 

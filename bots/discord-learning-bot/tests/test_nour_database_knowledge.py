@@ -301,3 +301,44 @@ def test_log_tool_call_defaults_error_message_to_empty_string():
     row = conn.execute("SELECT * FROM nour_tool_calls WHERE discord_id='u1'").fetchone()
     conn.close()
     assert row["error_message"] == ""
+
+
+
+# ============================================================
+#  AQL (#15) PHASE A4 — GUARDRAIL OBSERVABILITY
+# ============================================================
+
+def test_log_guardrail_event_does_not_raise():
+    database.log_guardrail_event(
+        discord_id="u1", guardrail_type="script",
+        original_text_hash="abc123", outcome="corrected_on_retry",
+    )
+
+
+def test_log_guardrail_event_persists_row_correctly():
+    database.log_guardrail_event(
+        discord_id="u1", guardrail_type="bidi",
+        original_text_hash="deadbeef", outcome="template_fallback",
+    )
+    conn = database._connect()
+    row = conn.execute("SELECT * FROM nour_guardrail_events WHERE discord_id='u1'").fetchone()
+    conn.close()
+    assert row is not None
+    assert row["guardrail_type"] == "bidi"
+    assert row["original_text_hash"] == "deadbeef"
+    assert row["outcome"] == "template_fallback"
+
+
+def test_count_guardrail_events_total_and_filtered():
+    database.log_guardrail_event("u1", "script", "hash1", "corrected_on_retry")
+    database.log_guardrail_event("u2", "bidi", "hash2", "template_fallback")
+    database.log_guardrail_event("u3", "script", "hash3", "template_fallback")
+
+    assert database.count_guardrail_events() == 3
+    assert database.count_guardrail_events("script") == 2
+    assert database.count_guardrail_events("bidi") == 1
+    assert database.count_guardrail_events("role_leak") == 0
+
+
+def test_count_guardrail_events_empty_db_is_zero():
+    assert database.count_guardrail_events() == 0
