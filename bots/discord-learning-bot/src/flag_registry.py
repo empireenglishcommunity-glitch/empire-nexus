@@ -60,6 +60,7 @@ REGISTRY = [
     ("nour_tutorials", "Rawiya R4: pre-written MSA micro-tutorials for confused students", "nour", True),
     ("nour_owner_commands", "Rawiya R5: /check and /nudge commands via Telegram", "nour", True),
     ("nour_graduated", "Rawiya R6: graduated presence (decreasing contact for experienced students)", "nour", True),
+    ("nour_aql_core", "Aql (#15): role-scoped RAG + tool-calling cognitive core, replaces single-shot nour_concierge pipeline when ON", "nour", False),
 
     # ── MARKAZ (Telegram operations hub) ──
     ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),

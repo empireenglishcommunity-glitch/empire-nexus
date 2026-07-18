@@ -115,6 +115,24 @@ OPS_BOT_TOKEN = os.getenv("OPS_BOT_TOKEN", "")
 OPS_CHAT_ID = os.getenv("OPS_CHAT_ID", "")  # Owner's private chat with the ops bot
 
 # ============================================================
+#  AQL (Nour Intelligence Core, Initiative #15) — ROLE RESOLUTION
+# ============================================================
+# The owner's real Discord snowflake ID. This is the structural
+# identity check nour/roles.resolve_role() uses to grant the OWNER
+# role from Discord (not Telegram) — the Telegram path never needs
+# this at all, since every message arriving via OPS_CHAT_ID above is
+# already definitionally the owner (unchanged from how ops_poller.py
+# has always treated that chat ID).
+#
+# Deliberately NOT derived from a Discord ROLE (roles are editable by
+# anyone with sufficient server permissions) or from being "the first
+# registered member" (fragile, accidental). This must be set once in
+# .env to the owner's actual Discord user ID and never changes at
+# runtime. Empty string = unset, meaning no one currently resolves as
+# OWNER via the Discord path (fail-safe default, not fail-open).
+OWNER_DISCORD_ID = os.getenv("OWNER_DISCORD_ID", "")
+
+# ============================================================
 #  PATHS
 # ============================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
