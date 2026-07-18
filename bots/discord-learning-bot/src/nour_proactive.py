@@ -91,30 +91,34 @@ async def _generate_proactive_message(student_name: str, context: str,
         "new_student": (
             f"You are Nour, a warm learning coach at Empire English. "
             f"A new student named {student_name} joined 24 hours ago but hasn't started any tasks yet. "
-            f"Send them a SHORT warm DM (2-3 sentences, Egyptian Arabic عامية) checking in. "
+            f"Send them a SHORT warm DM (2-3 sentences, Modern Standard Arabic / فصحى) checking in. "
             f"Be personal, not pushy. Ask if they need help getting started. "
+            f"NEVER use Egyptian dialect. Use MSA only. "
             f"Context: {context}"
         ),
         "quiet_student": (
             f"You are Nour, a warm learning coach. "
             f"Student {student_name} hasn't done any tasks for 2 days. "
-            f"Send a SHORT warm check-in DM (2-3 sentences, Egyptian Arabic). "
+            f"Send a SHORT warm check-in DM (2-3 sentences, Modern Standard Arabic / فصحى). "
             f"Show you noticed their absence, ask if everything is OK. "
             f"DON'T be guilt-tripping. Be genuinely caring. "
+            f"NEVER use Egyptian dialect. Use MSA only. "
             f"Context: {context}"
         ),
         "score_drop": (
             f"You are Nour, a warm learning coach. "
             f"Student {student_name}'s pronunciation scores dropped significantly. "
-            f"Send an encouraging DM (2-3 sentences, Egyptian Arabic). "
+            f"Send an encouraging DM (2-3 sentences, Modern Standard Arabic / فصحى). "
             f"Acknowledge it's hard, give ONE specific tip, encourage them to keep going. "
+            f"NEVER use Egyptian dialect. Use MSA only. "
             f"Context: {context}"
         ),
         "first_milestone": (
             f"You are Nour, a warm learning coach. "
             f"Student {student_name} just completed ALL 7 tasks in one day for the FIRST TIME! "
-            f"Send a personal celebration DM (2-3 sentences, Egyptian Arabic). "
+            f"Send a personal celebration DM (2-3 sentences, Modern Standard Arabic / فصحى). "
             f"Be genuinely excited, mention their specific achievement. "
+            f"NEVER use Egyptian dialect. Use MSA only. "
             f"Context: {context}"
         ),
     }
@@ -132,7 +136,7 @@ async def _generate_proactive_message(student_name: str, context: str,
             "temperature": 0.8,
             "max_tokens": 200,
             "messages": [
-                {"role": "system", "content": "أنت نور، كوتش تعلّم في Empire English. بتتكلمي عامية مصرية. دايماً حنونة ومشجعة. ردودك قصيرة (2-3 جمل بس)."},
+                {"role": "system", "content": "أنت نور، مدربة التعلّم في Empire English. تتحدثين بالعربية الفصحى الحديثة. دائمًا ودودة ومشجعة. ردودك قصيرة (2-3 جمل فقط). لا تستخدمي أي لهجة عامية."},
                 {"role": "user", "content": prompt},
             ],
         }
@@ -150,10 +154,10 @@ async def _generate_proactive_message(student_name: str, context: str,
 
     # Template fallbacks (never silence)
     fallbacks = {
-        "new_student": f"أهلاً {student_name}! 👋 شفت إنك انضميت إمبارح. محتاج مساعدة تبدأ؟ أنا هنا لأي سؤال 😊",
-        "quiet_student": f"يا {student_name}! 👋 كل حاجة تمام؟ لاحظت إنك مبقتش تدخل. لو محتاج حاجة أنا هنا 💪",
-        "score_drop": f"يا {student_name}، عادي لو حسيت إنك مش متحسن. كلنا بنعدي بفترات كده. جرب تبطئ شوية وركز على كلمة واحدة بس النهاردة 🌟",
-        "first_milestone": f"يا {student_name}! 🎉🎉🎉 أول يوم تخلص فيه الـ 7 مهام! ده إنجاز حقيقي. فخورة بيك! 💪🔥",
+        "new_student": f"مرحبًا {student_name}! 👋 لاحظت أنك انضممت إلينا بالأمس. هل تحتاج مساعدة للبدء؟ أنا هنا لأي سؤال 😊",
+        "quiet_student": f"مرحبًا {student_name}! 👋 هل كل شيء على ما يرام؟ لاحظت أنك لم تدخل مؤخرًا. إذا احتجت أي شيء أنا هنا 💪",
+        "score_drop": f"{student_name}، لا بأس إذا شعرت بصعوبة. جميعنا نمر بفترات كهذه. حاول أن تبطئ قليلًا وركّز على كلمة واحدة فقط اليوم 🌟",
+        "first_milestone": f"{student_name}! 🎉🎉🎉 أول يوم تُكمل فيه المهام السبع جميعها! هذا إنجاز حقيقي. فخورة بك! 💪🔥",
     }
     return fallbacks.get(outreach_type, fallbacks["quiet_student"])
 
