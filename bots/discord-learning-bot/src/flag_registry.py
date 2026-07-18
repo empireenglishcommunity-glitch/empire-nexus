@@ -57,7 +57,11 @@ REGISTRY = [
     ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),
     ("nour_msa", "Rawiya R0: Nour speaks Modern Standard Arabic (فصحى) instead of Egyptian colloquial", "nour", True),
     ("nour_journey", "Rawiya R2: structured 7-day onboarding journey for new students", "nour", True),
-    ("nour_enhanced_proactive", "Rawiya R3: expanded proactive triggers (9 conditions)", "nour", True),
+    # Aql (#15) Phase A7.5 audit: corrected from "9 conditions" -- the
+    # real implementation in nour_proactive.py has 4 detection checks
+    # (new_student, quiet_student, score_drop, first_milestone), not 9.
+    # See nour_proactive.py's module docstring for the full note.
+    ("nour_enhanced_proactive", "Rawiya R3: expanded proactive triggers (4 conditions: new/quiet/score-drop/milestone)", "nour", True),
     ("nour_tutorials", "Rawiya R4: pre-written MSA micro-tutorials for confused students", "nour", True),
     ("nour_owner_commands", "Rawiya R5: /check and /nudge commands via Telegram", "nour", True),
     ("nour_graduated", "Rawiya R6: graduated presence (decreasing contact for experienced students)", "nour", True),
