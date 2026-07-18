@@ -138,18 +138,12 @@ async def handle_reaction_gate(
     # Grant the role
     granted = await grant_student_role(member)
     if granted:
-        # Send a brief welcome DM confirming access
-        try:
-            await member.send(
-                "\u2705 **\u062a\u0645\u062a \u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629!** "
-                "\u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0645\u0641\u062a\u0648\u062d\u0629 \u0627\u0644\u0622\u0646. "
-                "\u0627\u0628\u062f\u0623 \u0628\u0643\u062a\u0627\u0628\u0629 `!\u0627\u0646\u0636\u0645` \u0641\u064a "
-                "`#bot-commands` \u0644\u0644\u062a\u0633\u062c\u064a\u0644 \u0641\u064a \u0627\u0644\u0646\u0638\u0627\u0645.\n\n"
-                "\u2705 **Approved!** Channels are now unlocked. "
-                "Type `!join` in `#bot-commands` to register."
-            )
-        except (discord.Forbidden, discord.HTTPException):
-            pass  # DMs disabled, that's fine — role is granted either way
+        # Rawiya R8: Don't send a separate confirmation DM here.
+        # Nour's journey (started by grant_student_role) already sends
+        # the welcome message which implicitly confirms access is granted.
+        # Sending two DMs ("access granted!" + "welcome to Empire!") is
+        # confusing — one unified message from Nour is better.
+        pass
 
     return True
 

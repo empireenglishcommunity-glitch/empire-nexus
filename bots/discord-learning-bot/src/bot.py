@@ -401,116 +401,22 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member: discord.Member):
-    """Auto-register new members and send welcome DM with full manual."""
-    # Hisn D023: on_member_join is a guild-wide event, not scoped to any
-    # channel -- it fires for EVERY bot instance connected to the guild,
-    # regardless of that instance's channel permissions. The ghost bot
-    # (Aegis Phase 6) shares this exact codebase and connects to the same
-    # real guild, so without this guard it DMs every real new member its
-    # own separate, uncoordinated welcome sequence alongside the real
-    # bot's -- confirmed live during Hisn H6 (two welcome-DM sequences
-    # landed in the same student's inbox from a single real join).
+    """Register new members silently. Onboarding DMs are handled by Nour's
+    journey (Rawiya R2) after the role-gate is accepted — NOT here.
+
+    Rawiya R8 fix: previously this fired a full Bawaba tutorial DM
+    sequence (Egyptian Arabic, 5 steps, multimedia) BEFORE the student
+    even accepted rules, creating chaos alongside the Nour journey that
+    fires AFTER role-gate accept. Now: just register + assign buddy,
+    zero DMs. The student sees #rules and #welcome only until they
+    accept, then Nour takes over with her structured MSA journey.
+    """
+    # Hisn D023: ghost bot guard
     if config.IS_GHOST_INSTANCE:
         return
     database.register_member(str(member.id), member.display_name)
-    # Assign buddy
+    # Assign buddy (silent — no DM)
     await features.assign_buddy(member, member.guild)
-
-    # Bawaba B2: if the tutorial quest flag is enabled, start the
-    # interactive tutorial instead of the 4-message text wall.
-    if database.is_feature_enabled("bawaba_tutorial"):
-        try:
-            # Bawaba B6: direct to #start-here first (if flag enabled)
-            start_here_note = ""
-            if database.is_feature_enabled("bawaba_start_channel"):
-                start_here_note = "\n📌 **روح `#start-here` أول حاجة** — هتلاقي كل اللي محتاجه هناك.\n"
-
-            await member.send(
-                f"🏛️ **أهلًا بيك في Empire English, {member.display_name}!**\n\n"
-                f"ده نظام تعلّم يومي هيخليك تتكلم إنجليزي.\n"
-                f"{start_here_note}"
-                f"خلينا نبدأ بـ 5 خطوات سريعة (دقيقتين بس) 👇"
-            )
-
-            # Bawaba B3: send multimedia onboarding assets if available
-            if database.is_feature_enabled("bawaba_multimedia"):
-                await _send_onboarding_media(member)
-
-            await asyncio.sleep(1)
-            await features.start_tutorial(member)
-        except discord.Forbidden:
-            pass
-        return
-
-    try:
-        # Message 1: Welcome + First Steps
-        await member.send(
-            f"🏛️ **أهلًا بيك في Empire English Community, {member.display_name}!**\n\n"
-            f"ده مش كورس عادي. ده **نظام تعلّم يومي** هيخليك تتكلم إنجليزي بلهجة أمريكية صح.\n\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"🚀 **أول 5 دقايق — ابدأ من هنا:**\n\n"
-            f"1️⃣ اقرأ قناة `#rules` واقبل القوانين\n"
-            f"2️⃣ روح `#bot-commands` واكتب:\n"
-            f"```!join هدفي أتكلم إنجليزي بطلاقة```\n"
-            f"3️⃣ كل يوم الساعة 6 الصبح — شوف `#l0-daily-tasks`\n"
-            f"4️⃣ بعد ما تخلص المهمة اكتب: `!done accent`\n"
-            f"5️⃣ شوف تقدمك: `!progress`"
-        )
-        await asyncio.sleep(2)
-
-        # Message 2: Daily Tasks + Commands (with verification info)
-        await member.send(
-            "📅 **الروتين اليومي (7 مهام — 45 دقيقة بس):**\n\n"
-            "🎯 تدريب النطق — سجل صوتك في `#l0-showcase` ← ثم `!done accent`\n"
-            "📖 مفردات جديدة — `!done vocab` ← البوت هيسألك سؤال\n"
-            "🎧 المحاكاة (Shadowing) — سجل 30 ثانية في `#l0-showcase` ← ثم `!done shadow`\n"
-            "🎙️ مهمة الكلام — سجل صوتك في `#l0-showcase` ← ثم `!done speaking`\n"
-            "👂 تمرين الاستماع — `!done listening` ← البوت هيسألك سؤال\n"
-            "✍️ تمرين الكتابة — اكتب في `#l0-text-practice` ← ثم `!done writing`\n"
-            "💬 مشاركة مجتمعية — اكتب في `#general-chat` أو ادخل voice 10 دقايق ← ثم `!done community`\n\n"
-            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            "⚠️ **مهم:** لازم تعمل المهمة الأول وبعدين تكتب `!done`\n"
-            "البوت بيتأكد إنك فعلاً عملت المهمة قبل ما يديك النقاط."
-        )
-        await asyncio.sleep(2)
-
-        # Message 3: Levels + Points
-        await member.send(
-            "🏆 **نظام المستويات:**\n\n"
-            "🌱 **Level 0** — مبتدئ (8-12 أسبوع)\n"
-            "   الهدف: تعريف نفسك في 60 ثانية\n\n"
-            "💪 **Level 1** — النجاة (10-14 أسبوع)\n"
-            "   الهدف: مونولوج 2 دقيقة بدون تحضير\n\n"
-            "🚀 **Level 2** — التواصل (12-16 أسبوع)\n"
-            "   الهدف: عرض 5 دقايق عن أي موضوع\n\n"
-            "👑 **Level 3** — الطلاقة (مستمر)\n"
-            "   كلام طبيعي بلهجة أمريكية\n\n"
-            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            "🔥 **النقاط:** كل مهمة = 15 نقطة | الـ 7 مهام = +100 بونص\n"
-            "🔥 **Streaks:** 7 أيام = +200 | 30 يوم = +1000 | 100 يوم = +5000"
-        )
-        await asyncio.sleep(2)
-
-        # Message 4: Channel Guide
-        await member.send(
-            "🗺️ **خريطة القنوات المهمة:**\n\n"
-            "⭐ `#bot-commands` — اكتب كل الأوامر هنا\n"
-            "⭐ `#l0-daily-tasks` — المهام اليومية (6 صباحًا)\n"
-            "📝 `#l0-text-practice` — تمارين الكتابة\n"
-            "🎙️ `#l0-showcase` — شارك تسجيلاتك\n"
-            "❓ `#l0-questions` — أسئلة (عربي مسموح هنا)\n"
-            "🔊 `l0-voice-1` — غرفة صوتية للتمرين\n"
-            "💬 `#general-chat` — دردشة إنجليزي\n"
-            "📖 `#daily-word` — كلمة اليوم\n"
-            "🎙️ `#speaking-feedback` — ارفع تسجيل ← AI يرد عليك\n"
-            "📊 `#daily-check-in` — سجل خطتك كل صباح\n\n"
-            "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            "🏛️ **خلاصة:** ادخل كل يوم. اعمل الـ 7 مهام. اكتب `!done`. بس كده.\n"
-            "النظام هيعمل الباقي. 💪\n\n"
-            "*System over instructor. Common Sense First.* 🏛️"
-        )
-    except discord.Forbidden:
-        pass  # DMs disabled by user
 
 
 @bot.event
