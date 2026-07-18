@@ -181,6 +181,10 @@ async def run_proactive_checks(bot: discord.Client):
     if not guild:
         return
 
+    # Rawiya R2: also send journey nudges during proactive checks
+    from . import nour_journey
+    await nour_journey.send_nudges(bot)
+
     today = datetime.date.today().isoformat()
     now = datetime.datetime.now()
     members = database.all_active_members()
@@ -279,3 +283,86 @@ async def run_proactive_checks(bot: discord.Client):
 
     if sent > 0:
         logger.info(f"Nour proactive check complete: {sent} outreach message(s) sent")
+
+
+
+# ============================================================
+#  RAWIYA R6: GRADUATED PRESENCE
+# ============================================================
+
+def get_presence_level(discord_id: str) -> str:
+    """Determine how present Nour should be with this student.
+
+    Returns: "high" | "medium" | "low" | "minimal"
+
+    Week 1-2: high (daily presence)
+    Week 3-4: medium (every 2-3 days)
+    Week 5-8: low (weekly)
+    Week 9+:  minimal (monthly + problems only)
+    """
+    if not database.is_feature_enabled("nour_graduated"):
+        return "high"  # Default to high if not enabled
+
+    week = database.member_week_number(discord_id)
+    if week <= 2:
+        return "high"
+    elif week <= 4:
+        return "medium"
+    elif week <= 8:
+        return "low"
+    else:
+        return "minimal"
+
+
+def should_send_proactive(discord_id: str, urgency: str = "normal") -> bool:
+    """Check if proactive outreach should be sent based on graduated presence.
+
+    urgency: "critical" (always send), "normal" (respect presence level),
+             "celebration" (only high/medium)
+
+    Rawiya R6: experienced students aren't over-contacted.
+    """
+    if not database.is_feature_enabled("nour_graduated"):
+        return True  # No graduation, always send
+
+    level = get_presence_level(discord_id)
+
+    if urgency == "critical":
+        return True  # Always send critical messages
+
+    if urgency == "celebration":
+        return level in ("high", "medium")
+
+    # Normal urgency
+    if level == "high":
+        return True
+    elif level == "medium":
+        # Only every 2-3 days: check last outreach
+        last = _last_outreach_time(discord_id)
+        if not last:
+            return True
+        try:
+            last_dt = datetime.datetime.fromisoformat(last)
+            return (datetime.datetime.now() - last_dt).total_seconds() > 2 * 24 * 3600
+        except (ValueError, TypeError):
+            return True
+    elif level == "low":
+        # Only weekly
+        last = _last_outreach_time(discord_id)
+        if not last:
+            return True
+        try:
+            last_dt = datetime.datetime.fromisoformat(last)
+            return (datetime.datetime.now() - last_dt).total_seconds() > 7 * 24 * 3600
+        except (ValueError, TypeError):
+            return True
+    else:  # minimal
+        # Only monthly (or critical, handled above)
+        last = _last_outreach_time(discord_id)
+        if not last:
+            return True
+        try:
+            last_dt = datetime.datetime.fromisoformat(last)
+            return (datetime.datetime.now() - last_dt).total_seconds() > 30 * 24 * 3600
+        except (ValueError, TypeError):
+            return True

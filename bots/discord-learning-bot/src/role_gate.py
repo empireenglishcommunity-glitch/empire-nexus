@@ -90,6 +90,10 @@ async def grant_student_role(member: discord.Member) -> bool:
     try:
         await member.add_roles(role, reason="Hissar P1.2: member agreed to rules")
         logger.info(f"Role-gate: granted Student role to {member.display_name} ({member.id})")
+        # Rawiya R2: start the onboarding journey when student accepts rules
+        from . import nour_journey
+        import asyncio
+        asyncio.create_task(nour_journey.start_journey(member))
         return True
     except discord.Forbidden:
         logger.error(f"Role-gate: cannot assign role to {member.display_name} — missing permissions")
