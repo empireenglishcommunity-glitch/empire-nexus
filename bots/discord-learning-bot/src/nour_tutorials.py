@@ -6,6 +6,43 @@ is a fixed MSA string that Nour sends when she detects the student
 is stuck on a specific problem.
 
 Gated behind 'nour_tutorials' feature flag.
+
+Aql (#15) Phase A7.3/A7.4 decision (design.md Section 8.3):
+`TUTORIALS` is now ALSO retrievable content — see
+scripts/generate_tutorials_kb.py, which generates
+data/nour_knowledge/tutorials.md directly from this dict (never
+hand-copied), chunked/embedded under the `tutorials` domain. A student
+who ASKS "how do I record on my phone" now retrieves this exact
+tutorial text verbatim via semantic search (paraphrase-tolerant --
+reachable even if they don't use the exact keyword this module's own
+`_get_tutorial_for_trigger()` mapping expects), through the SAME
+retrieval mechanism (Component 4 / `retrieve()`) every other knowledge
+question uses.
+
+`check_and_send_tutorial()` below is explicitly KEPT as a SEPARATE,
+PROACTIVE-PUSH mechanism, not replaced by retrieval — these are
+different use cases, both valid:
+  - Retrieval: the student ASKED a question; Nour looks up an answer.
+  - This module's proactive push: the student did NOT ask anything;
+    a real detected trigger (e.g. "!done with no proof-of-work 3 times
+    in a row") causes Nour to PUSH help unprompted, before the student
+    even thinks to ask.
+Neither mechanism replaces the other. A student who never asks "how do
+I record audio" but keeps failing to send proof-of-work still needs
+the proactive push; a student who DOES ask, in whatever phrasing,
+should get an answer via retrieval regardless of whether any of this
+module's specific trigger conditions have fired for them.
+
+Honest finding from this same audit, documented rather than silently
+"fixed" (out of scope for Phase A7's absorption work, which integrates
+existing behavior into the new architecture -- it does not fix
+pre-existing gaps unrelated to Aql): `check_and_send_tutorial()` is not
+actually called from anywhere in bot.py today. The trigger_type strings
+its own `_get_tutorial_for_trigger()` mapping expects
+(`"recording_failed"`, `"wrong_channel_command"`, etc.) have no real
+call site that detects and passes them. This predates Aql and is
+unrelated to the retrieval integration above; noted here so it isn't
+mistaken for something Phase A7 was supposed to wire up.
 """
 import logging
 from typing import Optional

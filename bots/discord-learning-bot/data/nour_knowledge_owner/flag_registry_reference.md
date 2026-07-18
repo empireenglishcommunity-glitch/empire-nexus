@@ -75,7 +75,7 @@
 | `nour_escalation` | Telegram alerts for escalated issues | معطَّل |
 | `nour_msa` | Rawiya R0: Nour speaks Modern Standard Arabic (فصحى) instead of Egyptian colloquial | مفعَّل |
 | `nour_journey` | Rawiya R2: structured 7-day onboarding journey for new students | مفعَّل |
-| `nour_enhanced_proactive` | Rawiya R3: expanded proactive triggers (9 conditions) | مفعَّل |
+| `nour_enhanced_proactive` | Rawiya R3: expanded proactive triggers (4 conditions: new/quiet/score-drop/milestone) | مفعَّل |
 | `nour_tutorials` | Rawiya R4: pre-written MSA micro-tutorials for confused students | مفعَّل |
 | `nour_owner_commands` | Rawiya R5: /check and /nudge commands via Telegram | مفعَّل |
 | `nour_graduated` | Rawiya R6: graduated presence (decreasing contact for experienced students) | مفعَّل |

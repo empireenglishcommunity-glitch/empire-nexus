@@ -630,32 +630,110 @@ coverage model works without a rigid FSM.
 
 ---
 
-## Phase A7: Rawiya Absorption — Proactive + Tutorials Integration
+## Phase A7: Rawiya Absorption — Proactive + Tutorials Integration ✅ COMPLETE
 
-- [ ] A7.1: Redirect `nour_proactive.py`'s message *generation* calls
+- [x] A7.1: Redirect `nour_proactive.py`'s message *generation* calls
       through `guarded_generate()` instead of their own separate,
       unguarded Groq call — detection logic itself UNCHANGED
-- [ ] A7.2: Confirm `nour_proactive.get_presence_level()` /
+- [x] A7.2: Confirm `nour_proactive.get_presence_level()` /
       `should_send_proactive()` graduated-presence logic requires zero
       changes (verify, don't assume, against the new orchestrator's
       call sites)
-- [ ] A7.3: Chunk + embed the 8 existing tutorial texts
+- [x] A7.3: Chunk + embed the 8 existing tutorial texts
       (`nour_tutorials.TUTORIALS`) into the retrievable knowledge base
       under a `tutorials` domain — confirm retrieval surfaces the exact
       pre-written text verbatim (these must NEVER be paraphrased by the
       model; they are pre-verified-correct content, retrieved and
       quoted, not regenerated)
-- [ ] A7.4: Decide + document: keep `nour_tutorials.check_and_send_tutorial()`'s
+- [x] A7.4: Decide + document: keep `nour_tutorials.check_and_send_tutorial()`'s
       trigger-based proactive dispatch (e.g. "3 wrong quiz answers in a
       row") as a SEPARATE proactive-push mechanism (student didn't ask,
       Nour proactively sends), distinct from retrieval (student DID ask,
       Nour retrieves) — these are different use cases, both valid, not
       one replacing the other
-- [ ] A7.5: Regression test: every one of Rawiya's 9 proactive triggers
+- [x] A7.5: Regression test: every one of Rawiya's proactive triggers
       still fires correctly and produces a guardrail-passing message
 
 **Deliverable:** Rawiya's real value (detection + content) is fully
 integrated into the new architecture; its rigid mechanism is gone.
+
+**Completion notes:**
+- `src/nour_proactive.py`: message generation split into
+  `_generate_proactive_message()` (now calls `guarded_generate()`,
+  Role.STUDENT, per design.md Section 8.2) wrapping the unchanged
+  `_call_groq_for_proactive_message()` (the original prompt
+  construction + per-type template-fallback-on-API-failure logic,
+  untouched, now accepting an optional `correction_hint` threaded
+  into the prompt for `guarded_generate()`'s retry tier). Every
+  detection branch in `run_proactive_checks()` — the actual business
+  logic this phase's own instruction says to leave UNCHANGED — is
+  byte-for-byte identical to before this phase; only the call to
+  generate the message text changed.
+- **A7.2 finding**: the orchestrator (Phase A5) never calls into
+  `nour_proactive.py` at all — proactive outreach is a separate,
+  scheduled OUTBOUND push (a `@tasks.loop` in `bot.py`), not something
+  invoked per incoming request. There is therefore zero coupling to
+  verify; `get_presence_level()`/`should_send_proactive()` require no
+  changes because nothing in the new architecture calls them, positively
+  confirmed by a targeted search rather than assumed. Separately
+  noted (pre-existing, unrelated to Aql, NOT fixed in this phase since
+  A7 is absorption, not bug-fixing): these two functions are never
+  actually called from `run_proactive_checks()` or anywhere else
+  either — the graduated-presence logic exists but was never wired
+  into a real send-decision call site, even before Aql.
+- **A7.3**: `scripts/generate_tutorials_kb.py` generates
+  `data/nour_knowledge/tutorials.md` DIRECTLY from
+  `nour_tutorials.TUTORIALS` (same "generated, never hand-maintained"
+  discipline as A2.4's `flag_registry_reference.md`) — this is what
+  GUARANTEES the verbatim-retrieval guarantee mechanically rather than
+  by convention: there is no second hand-copied version of this text
+  that could ever drift from the original. Verified: chunking the
+  generated file produces exactly 8 chunks, each one a byte-for-byte
+  exact match to the corresponding `TUTORIALS` dict value (tested
+  directly, not just chunk-count-checked). `tutorials` domain
+  confirmed already present in both `Role.STUDENT` and `Role.OWNER`'s
+  `KNOWLEDGE_DOMAINS` (pre-registered in Phase A0 per its own stated
+  "ahead of the content existing" convention). End-to-end retrieval
+  test confirms a real `retrieve()` call surfaces the tutorial's exact
+  unmodified text.
+- **A7.4 decision, documented directly in `nour_tutorials.py`'s module
+  docstring**: `check_and_send_tutorial()`'s trigger-based proactive
+  push is KEPT, not replaced by retrieval — retrieval serves "student
+  asked a question" (now reachable via paraphrase-tolerant semantic
+  search instead of exact keyword-trigger matching), the push
+  mechanism serves "student didn't ask, but a real detected trigger
+  means they need help now" (e.g. 3 wrong quiz answers in a row).
+  Neither replaces the other. **Honest finding, documented rather
+  than silently fixed** (out of scope for absorption): the real
+  `bot.py` call sites that would need to detect
+  `_get_tutorial_for_trigger()`'s trigger_type strings
+  (`"recording_failed"`, `"wrong_channel_command"`, etc.) and invoke
+  `check_and_send_tutorial()` don't actually exist yet — this predates
+  Aql and is unrelated to the retrieval integration this phase adds.
+- **A7.5 regression test + a real documentation bug found and fixed**:
+  `nour_proactive.py`'s own module docstring claimed 5 checks (listing
+  a "return after absence" condition with zero corresponding
+  detection code) and `flag_registry.py`'s `nour_enhanced_proactive`
+  description claimed "9 conditions" — neither number matched the 4
+  real detection branches (`new_student`, `quiet_student`,
+  `score_drop`, `first_milestone`) that actually exist in
+  `run_proactive_checks()`. Both corrected in this phase (with an
+  explanatory note in `nour_proactive.py`'s docstring, not a silent
+  fix) rather than inventing a 5th/9th detection condition with no
+  real signal behind it just to match the stale number. All 4 REAL
+  triggers verified firing correctly via a full `run_proactive_checks()`
+  integration test per trigger (fake guild/member/bot, real database
+  rows, message generation mocked since A7.1's tests already cover
+  it), plus a negative case confirming a healthy student matching none
+  of the 4 conditions receives nothing.
+- `tests/test_nour_phase_a7.py` (17 tests). Full suite: 686 tests pass
+  (was 668 after A6; +18 across A7's new/modified files) — zero
+  regressions. All new/modified files pass `scripts/bidi_check.py`
+  and `py_compile`.
+- Not built in A7 (out of scope, pre-existing gaps unrelated to Aql,
+  documented not fixed): wiring real trigger detection call sites for
+  `check_and_send_tutorial()`, and wiring `get_presence_level()`/
+  `should_send_proactive()` into an actual send-decision call site.
 
 ---
 
