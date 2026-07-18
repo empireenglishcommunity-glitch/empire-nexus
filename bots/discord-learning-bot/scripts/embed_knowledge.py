@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """
-Aql (العقل) Phase A1.3 — one-time knowledge embedding script.
+Aql (العقل) Phase A1.3 / A2.5 — one-time knowledge embedding script.
 
-Chunks + embeds every `data/nour_knowledge/*.md` file into the
-`knowledge_chunks` table, one row per chunk. `domain` = the file's
-stem (e.g. "daily_tasks.md" -> "daily_tasks"), matching the existing
+Chunks + embeds every `.md` file in `data/nour_knowledge/` (student +
+shared domains) AND `data/nour_knowledge_owner/` (owner-only domains,
+Phase A2) into the `knowledge_chunks` table, one row per chunk.
+`domain` = the file's stem (e.g. "daily_tasks.md" -> "daily_tasks",
+"architecture.md" -> "architecture"), matching the existing
 `_KB_CATEGORIES` naming in nour_concierge.py and the domain strings
-enumerated in src/nour/permissions.py's KNOWLEDGE_DOMAINS mapping.
+enumerated in src/nour/permissions.py's KNOWLEDGE_DOMAINS mapping. The
+two source directories are just a filing convenience for humans
+editing these files — the actual role boundary is enforced entirely
+by `domain` string matching in permissions.py / database.py, not by
+which directory a file happens to live in.
 
 This is an OFFLINE indexing step, not something that runs per-request
 (design.md Section 4.2) — re-run it manually whenever a knowledge file
@@ -16,8 +22,10 @@ duplicates alongside fresh ones (see database.clear_knowledge_chunks's
 own docstring).
 
 Usage:
-    python3 scripts/embed_knowledge.py                # embed all files
-    python3 scripts/embed_knowledge.py daily_tasks.md  # embed one file
+    python3 scripts/embed_knowledge.py                # embed all files (both dirs)
+    python3 scripts/embed_knowledge.py daily_tasks.md  # embed one file, by name
+    python3 scripts/embed_knowledge.py --owner-only    # embed only data/nour_knowledge_owner/
+    python3 scripts/embed_knowledge.py --student-only  # embed only data/nour_knowledge/
     python3 scripts/embed_knowledge.py --dry-run       # chunk only, no
                                                         # embedding calls,
                                                         # no DB writes —
@@ -48,7 +56,9 @@ from src import config, database  # noqa: E402
 from src.nour.knowledge.chunker import chunk_markdown_file  # noqa: E402
 from src.nour.knowledge.embedder import embed_text, pack_embedding  # noqa: E402
 
-KB_DIR = Path(__file__).resolve().parent.parent / "data" / "nour_knowledge"
+_ROOT = Path(__file__).resolve().parent.parent
+KB_DIR = _ROOT / "data" / "nour_knowledge"
+KB_OWNER_DIR = _ROOT / "data" / "nour_knowledge_owner"
 
 
 async def embed_file(filepath: Path, dry_run: bool) -> int:
@@ -85,9 +95,15 @@ async def embed_file(filepath: Path, dry_run: bool) -> int:
 async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("filename", nargs="?", default=None,
-                        help="Embed only this one file (e.g. daily_tasks.md). Default: all files.")
+                        help="Embed only this one file (e.g. daily_tasks.md or architecture.md). "
+                             "Searches both directories. Default: all files in both directories.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Chunk only — no embedding calls, no DB writes.")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--owner-only", action="store_true",
+                       help="Only embed data/nour_knowledge_owner/*.md (Phase A2 owner-only domains).")
+    group.add_argument("--student-only", action="store_true",
+                       help="Only embed data/nour_knowledge/*.md (student + shared domains).")
     args = parser.parse_args()
 
     if not args.dry_run and not config.GEMINI_API_KEY:
@@ -96,16 +112,20 @@ async def main() -> int:
         return 1
 
     if args.filename:
-        targets = [KB_DIR / args.filename]
-        missing = [t for t in targets if not t.exists()]
-        if missing:
-            print(f"ERROR: file not found: {missing[0]}", file=sys.stderr)
+        candidates = [KB_DIR / args.filename, KB_OWNER_DIR / args.filename]
+        targets = [c for c in candidates if c.exists()]
+        if not targets:
+            print(f"ERROR: file not found in {KB_DIR} or {KB_OWNER_DIR}: {args.filename}", file=sys.stderr)
             return 1
-    else:
+    elif args.owner_only:
+        targets = sorted(KB_OWNER_DIR.glob("*.md"))
+    elif args.student_only:
         targets = sorted(KB_DIR.glob("*.md"))
+    else:
+        targets = sorted(KB_DIR.glob("*.md")) + sorted(KB_OWNER_DIR.glob("*.md"))
 
     if not targets:
-        print(f"ERROR: no .md files found in {KB_DIR}", file=sys.stderr)
+        print(f"ERROR: no .md files found for the requested scope.", file=sys.stderr)
         return 1
 
     print(f"Aql knowledge embed{' (DRY RUN)' if args.dry_run else ''} — {len(targets)} file(s)")

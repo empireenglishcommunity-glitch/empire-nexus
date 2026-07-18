@@ -132,26 +132,82 @@ tested against real content. Zero live traffic uses this yet.
 
 ---
 
-## Phase A2: Owner-Only Knowledge Domains
+## Phase A2: Owner-Only Knowledge Domains ✅ COMPLETE
 
-- [ ] A2.1: Write `data/nour_knowledge_owner/architecture.md`
+- [x] A2.1: Write `data/nour_knowledge_owner/architecture.md`
       (human-curated system overview — bot process, DB, integrations)
-- [ ] A2.2: Write `data/nour_knowledge_owner/database_schema.md`
+- [x] A2.2: Write `data/nour_knowledge_owner/database_schema.md`
       (table purposes/relationships, human-readable)
-- [ ] A2.3: Write `data/nour_knowledge_owner/deployment_runbook.md`
+- [x] A2.3: Write `data/nour_knowledge_owner/deployment_runbook.md`
       (consolidate existing deploy/rollback knowledge from STATUS.md history)
-- [ ] A2.4: Build generator script for
+- [x] A2.4: Build generator script for
       `data/nour_knowledge_owner/flag_registry_reference.md` — generated
       FROM `flag_registry.py`'s `REGISTRY`, never hand-maintained,
       re-run whenever flags change
-- [ ] A2.5: Chunk + embed all owner-only files with `domain` values
+- [x] A2.5: Chunk + embed all owner-only files with `domain` values
       matching `KNOWLEDGE_DOMAINS[Role.OWNER]`'s owner-exclusive entries
-- [ ] A2.6: Re-run A0.8's permission test — confirm these new domains
+- [x] A2.6: Re-run A0.8's permission test — confirm these new domains
       are now present for owner-role requests and STILL absent for
       student-role requests
 
 **Deliverable:** Owner has real, retrievable technical/operational
 knowledge. Student-side boundary re-verified unbroken.
+
+**Completion notes:**
+- `data/nour_knowledge_owner/architecture.md` (7 chunks) — system
+  overview: bot process (`bot.py` entry point + `api_server.py`),
+  core modules (`config.py`, `database.py`, `curriculum.py`,
+  `tasks.py`, `verification.py`, `features.py`, `ai_engine.py`,
+  `flag_registry.py`), the Nour subsystem (`nour_concierge.py` et al.
+  vs. the new `src/nour/` Aql package), the Telegram "Markaz" ops
+  layer, the empire-dojo integration, AI providers, and the Ghost Bot
+  isolation caveat (Hisn D023) — all verified against real source
+  files, not invented.
+- `data/nour_knowledge_owner/database_schema.md` (9 chunks) — every
+  real table from `src/database.py`'s `_SCHEMA` grouped by purpose
+  (student/learning, operations/infra, notifications, Nour/memory,
+  Aql's own 6 tables), explicitly flags the 2 superseded-but-inert
+  tables (`nour_study_tips`, `student_journey`), and closes with a
+  "code is the source of truth, this file follows" note matching the
+  project's own migration discipline.
+- `data/nour_knowledge_owner/deployment_runbook.md` (7 chunks) — real
+  `scripts/deploy.py`/`rollback.py`/`backup.py` procedures (Hetzner
+  VPS, git-SHA image tagging, health-check gate, manual DB-restore
+  steps kept deliberately separate from code rollback), plus feature
+  flags as the fastest true instant-revert mechanism (no redeploy),
+  and an explicit "undocumented, ask the owner" section for secret
+  rotation (no bot-specific rotation runbook exists in this repo/
+  empire-chronicle today) rather than guessing at one.
+- `data/nour_knowledge_owner/flag_registry_reference.md` (12 chunks)
+  — GENERATED, not hand-written, by
+  `scripts/generate_flag_reference.py` from `flag_registry.py`'s
+  `REGISTRY` (51 flags, 10 initiatives at generation time). Script
+  supports `--check` (CI-friendly staleness check, no writes) and is
+  re-run any time a flag changes.
+- `scripts/embed_knowledge.py` extended (not duplicated) to index
+  BOTH `data/nour_knowledge/` and `data/nour_knowledge_owner/` — new
+  `--owner-only`/`--student-only` flags, `--dry-run` verified: 141
+  total chunks across all 15 files (106 student + 35 owner-only).
+- `tests/test_nour_phase_a2.py` (8 tests): confirms all 4 real files
+  exist and chunk to non-empty content, confirms their domain names
+  (filename stems) are exactly the ones A0 pre-registered in
+  `permissions.py`'s owner-only list and are absent from the student
+  list, re-runs the A0.8-style boundary check against REAL indexed
+  content from these 4 files (owner retrieval finds all 4 new
+  domains; student retrieval finds none of them), confirms A1's
+  pre-existing student domains are undisturbed after A2's additions,
+  and confirms the committed `flag_registry_reference.md` is
+  byte-identical to what the generator produces right now (catches
+  drift if a flag changes without re-running the generator).
+- Full suite: 512 tests pass (was 504 after A1; +8 for A2) — zero
+  regressions. All new/modified files pass `scripts/bidi_check.py`
+  and `py_compile`.
+- Not built in A2 (deferred, no owner-only content/need yet): a
+  `codebase_map` domain distinct from `architecture.md` — the
+  `_OWNER_ONLY_DOMAINS` list in `permissions.py` reserves the name,
+  but A2's 4 tasks didn't call for a separate file; `architecture.md`
+  currently covers this ground. Revisit if `architecture.md` grows
+  unwieldy enough to warrant a split.
 
 ---
 
