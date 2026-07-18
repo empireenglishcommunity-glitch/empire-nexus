@@ -24,11 +24,27 @@ logger = logging.getLogger("empire-bot.nour.personality")
 #  N5.2 — MEMORY PERSISTENCE
 # ============================================================
 
-def store_memory(discord_id: str, fact: str):
+
+# Aql (#15) Phase A6.3: the real category values design.md Section 6
+# names for nour_memories.category (added inert in Phase A0.6, default
+# 'general' for every pre-existing row). A category NOT in this set is
+# still stored (store_memory never rejects a caller-supplied category
+# outright -- 'general' remains a legitimate, intentional catch-all,
+# not a typo to guard against), but get_memories_by_topic() below only
+# ever filters using these four plus 'general'.
+MEMORY_CATEGORIES = ("schedule", "preference", "life_event", "learning_style", "general")
+
+
+def store_memory(discord_id: str, fact: str, category: str = "general"):
     """Store a key fact about a student that Nour should remember.
 
     Called after conversations where the student reveals something personal
     (e.g. "I work night shifts", "I have exams next week", "busy on Tuesdays").
+
+    `category` defaults to 'general' (matching the column's own DB
+    default from Phase A0.6) -- existing call sites that don't pass a
+    category continue to behave exactly as before this parameter was
+    added.
     """
     conn = database._connect()
     # Don't store duplicates
@@ -38,21 +54,83 @@ def store_memory(discord_id: str, fact: str):
     ).fetchone()
     if not existing:
         conn.execute(
-            "INSERT INTO nour_memories (discord_id, fact) VALUES (?, ?)",
-            (discord_id, fact),
+            "INSERT INTO nour_memories (discord_id, fact, category) VALUES (?, ?, ?)",
+            (discord_id, fact, category),
         )
         conn.commit()
     conn.close()
 
 
 def get_memories(discord_id: str, limit: int = 5) -> list[str]:
-    """Get stored facts about a student for context building."""
+    """Get stored facts about a student for context building.
+
+    UNCHANGED behavior -- returns the most recent `limit` facts
+    regardless of category, exactly as before Phase A6.3. Existing
+    call sites (nour_concierge.py, narrative_engine.py) keep this
+    generic recency-based retrieval; get_memories_by_topic() below is
+    the NEW, topic-aware alternative Phase A6.3 adds for the
+    orchestrator's context assembly, not a replacement for this one.
+    """
     conn = database._connect()
     rows = conn.execute(
         "SELECT fact FROM nour_memories WHERE discord_id=? ORDER BY created_at DESC LIMIT ?",
         (discord_id, limit),
     ).fetchall()
     conn.close()
+    return [r["fact"] for r in rows]
+
+
+# Cheap keyword hints per category -- design.md Section 6's "filtered
+# by relevance to the current topic (not all facts dumped regardless
+# of relevance, as today)". This is a deliberately simple substring
+# match, not a second embedding call -- semantic facts are typically
+# only a handful per student (5-10), so a cheap heuristic filter is
+# proportionate; A1's real embedding-based retrieval is reserved for
+# the knowledge base (hundreds of chunks), a genuinely different scale
+# problem.
+_CATEGORY_KEYWORDS = {
+    "schedule": ["وقت", "موعد", "جدول", "متفرغ", "مشغول", "schedule", "time", "busy", "free"],
+    "preference": ["أحب", "أفضل", "بفضل", "prefer", "like", "favorite", "أحسن"],
+    "life_event": ["امتحان", "سفر", "زواج", "أولاد", "exam", "travel", "married", "kids", "سفرة"],
+    "learning_style": ["أتعلم", "بتعلم", "طريقة", "learn", "style", "method"],
+}
+
+
+def get_memories_by_topic(discord_id: str, current_topic: str, limit: int = 5) -> list[str]:
+    """design.md Section 6: semantic facts filtered by relevance to
+    the CURRENT topic, not all facts dumped regardless of relevance.
+
+    Matches `current_topic` against each category's keyword hints
+    (case-insensitive substring match, same convention as
+    nour_concierge.py's existing `_KB_CATEGORIES` keyword router) to
+    pick which categories are relevant to THIS request, then returns
+    only memories in those categories. Falls back to get_memories()'s
+    unfiltered recency behavior if no category's keywords match
+    anything in `current_topic` -- an irrelevant-looking topic string
+    must never silently return zero memories when the student has
+    real ones stored; it should degrade to "show the most recent
+    facts anyway", not "show nothing".
+    """
+    topic_lower = (current_topic or "").lower()
+    matched_categories = [
+        cat for cat, keywords in _CATEGORY_KEYWORDS.items()
+        if any(kw in topic_lower for kw in keywords)
+    ]
+    if not matched_categories:
+        return get_memories(discord_id, limit=limit)
+
+    conn = database._connect()
+    placeholders = ",".join("?" for _ in matched_categories)
+    rows = conn.execute(
+        f"""SELECT fact FROM nour_memories WHERE discord_id=? AND category IN ({placeholders})
+           ORDER BY created_at DESC LIMIT ?""",
+        [discord_id, *matched_categories, limit],
+    ).fetchall()
+    conn.close()
+    if not rows:
+        # Matched a category but this student has zero memories in it
+        # -- same "never silently show nothing" rule as above.
+        return get_memories(discord_id, limit=limit)
     return [r["fact"] for r in rows]
 
 
@@ -230,6 +308,114 @@ def get_cultural_context() -> str:
         return "اليوم الجمعة — قد يكون الطلاب متفرغين أكثر. شجعيهم على إنجاز مهام إضافية."
 
     return ""
+
+
+# ============================================================
+#  AQL (#15) PHASE A6.2 — PER-STUDENT EPISODIC SUMMARY
+# ============================================================
+
+async def generate_episodic_summary(discord_id: str, days: int = 7) -> Optional[str]:
+    """design.md Section 6: a compact, ONE-paragraph summary of a
+    student's past conversation sessions, replacing the need to
+    re-send unbounded raw nour_conversations history on every request.
+
+    Reuses run_weekly_review()'s exact Groq-summarization PATTERN
+    (same model, same simple prompt-and-parse shape, same
+    never-crash-on-failure discipline) but redirected to a SINGLE
+    student's own conversation history instead of an aggregate
+    cross-student report -- this function's output is what
+    database.store_episodic_summary() persists, this module never
+    writes to nour_episodic_summaries itself (keeps the DB access
+    pattern consistent with every other function in this file, which
+    read/write nour_memories directly but delegate cross-table
+    concerns to database.py's own dedicated functions where one
+    exists).
+
+    Returns the summary text, or None if there's nothing to summarize
+    (no conversations in the window) or if Groq is unavailable --
+    matches this codebase's universal "never crash, degrade instead"
+    convention for every AI-call site.
+    """
+    if not config.GROQ_API_KEY:
+        return None
+
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    conn = database._connect()
+    rows = conn.execute(
+        """SELECT role, message FROM nour_conversations
+           WHERE discord_id=? AND created_at >= ? ORDER BY created_at""",
+        (discord_id, cutoff + " 00:00:00"),
+    ).fetchall()
+    conn.close()
+
+    if not rows:
+        return None
+
+    conversation_text = "\n".join(
+        f"{'الطالب' if r['role'] == 'student' else 'نور'}: {r['message'][:150]}"
+        for r in rows
+    )
+
+    prompt = (
+        f"هذه محادثة بين نور (مدربة تعلّم اللغة) وطالب على مدار الأسبوع الماضي:\n\n"
+        f"{conversation_text}\n\n"
+        f"اكتب ملخصًا قصيرًا (فقرة واحدة، ٣-٤ جمل فقط) بالعربية عن أهم ما "
+        f"تحدث الطالب عنه أو احتاج مساعدة فيه، ليُستخدَم كذاكرة سياقية في "
+        f"محادثات مستقبلية. لا تكرر تفاصيل روتينية (مثل تأكيد إتمام مهمة "
+        f"يومية عادية) -- ركّز على ما هو مميز أو يستحق التذكر."
+    )
+
+    try:
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {config.GROQ_API_KEY}",
+        }
+        payload = {
+            "model": config.GROQ_MODEL,
+            "temperature": 0.3,
+            "max_tokens": 150,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers,
+                                    timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                if resp.status != 200:
+                    return None
+                data = await resp.json()
+                summary = data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+                return summary if summary else None
+    except Exception as e:
+        logger.error(f"Aql episodic summary generation failed for {discord_id}: {e}")
+        return None
+
+
+async def run_weekly_episodic_summaries(bot=None) -> int:
+    """Regenerates episodic summaries for every active student, once
+    per week (design.md Section 6: "Regenerated weekly per active
+    student"). Intended to be scheduled the same way
+    run_weekly_review() already is (a Sunday @tasks.loop in bot.py) --
+    `bot` is accepted but unused today, kept for call-site symmetry
+    with run_weekly_review(bot) in case a future revision wants to
+    post a completion notice somewhere.
+
+    Returns the number of students a NEW summary was actually stored
+    for (students with zero conversation activity in the window are
+    skipped, not stored as an empty/None summary -- store_episodic_summary()
+    is only ever called with real generated text).
+    """
+    students = database.all_active_members()
+    covers_from = (datetime.date.today() - datetime.timedelta(days=7)).isoformat()
+    covers_to = datetime.date.today().isoformat()
+
+    stored = 0
+    for student in students:
+        discord_id = student["discord_id"]
+        summary = await generate_episodic_summary(discord_id, days=7)
+        if summary:
+            database.store_episodic_summary(discord_id, summary, covers_from, covers_to)
+            stored += 1
+    return stored
 
 
 # ============================================================

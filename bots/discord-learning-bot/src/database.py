@@ -2543,3 +2543,98 @@ def count_guardrail_events(guardrail_type: str = None) -> int:
         row = conn.execute("SELECT COUNT(*) as cnt FROM nour_guardrail_events").fetchone()
     conn.close()
     return row["cnt"] if row else 0
+
+
+
+# ============================================================
+#  AQL (#15) — STRUCTURED MEMORY (Phase A6)
+# ============================================================
+
+def set_journey_coverage(discord_id: str, **flags) -> None:
+    """Flip one or more journey_coverage flags for a student, based on
+    a REAL observed signal (task completion, !link usage, viewing
+    !streak, visiting a tour channel) -- design.md Section 9.1's
+    explicit "computed from real signals, not advanced by chat
+    replies" requirement, replacing the FSM's rigid step-advance model
+    with independent boolean facts.
+
+    Upserts: creates the row on a student's first tracked signal
+    (INSERT OR IGNORE), otherwise only touches the flags actually
+    passed -- any flag not passed keeps its current value, so calling
+    this from `cmd_done` never accidentally resets `knows_channels` to
+    0 just because `cmd_done` itself has no opinion about it.
+
+    Valid flags: knows_daily_tasks, knows_platform_link, knows_streaks,
+    knows_channels, first_task_done. Any other key is silently
+    ignored -- a typo'd flag name must never crash a LIVE command call
+    site (cmd_done, cmd_link, cmd_streak, on_message all call this
+    directly per Phase A6.4).
+    """
+    valid_flags = {"knows_daily_tasks", "knows_platform_link", "knows_streaks",
+                   "knows_channels", "first_task_done"}
+    flags = {k: (1 if v else 0) for k, v in flags.items() if k in valid_flags}
+    if not flags:
+        return
+    conn = _connect()
+    try:
+        # journey_coverage.discord_id has a FOREIGN KEY to members --
+        # a real call site (on_message's channel-visit signal, in
+        # particular) can fire for a Discord user who has sent a
+        # message but never run !join. This must degrade to a silent
+        # no-op, not an uncaught IntegrityError crashing the message
+        # handler -- same FK-tolerance convention already used by
+        # log_notification() elsewhere in this file.
+        conn.execute(
+            "INSERT OR IGNORE INTO journey_coverage (discord_id) VALUES (?)",
+            (discord_id,),
+        )
+        sets = ", ".join(f"{k}=?" for k in flags) + ", updated_at=datetime('now')"
+        conn.execute(
+            f"UPDATE journey_coverage SET {sets} WHERE discord_id=?",
+            list(flags.values()) + [discord_id],
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass  # FK constraint -- discord_id isn't a registered member yet
+    finally:
+        conn.close()
+
+
+def store_episodic_summary(discord_id: str, summary_text: str,
+                           covers_from: str, covers_to: str) -> int:
+    """Store a compact per-student conversation summary (design.md
+    Section 6) -- called by nour_personality.generate_episodic_summary().
+    Returns the new row's id."""
+    conn = _connect()
+    cur = conn.execute(
+        """INSERT INTO nour_episodic_summaries
+           (discord_id, summary_text, covers_from, covers_to)
+           VALUES (?, ?, ?, ?)""",
+        (discord_id, summary_text, covers_from, covers_to),
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def get_latest_episodic_summary(discord_id: str) -> Optional[dict]:
+    """Get the most recent episodic summary for a student, or None if
+    none has ever been generated. Read by the orchestrator's context
+    assembly (Phase A5/A6) -- a short paragraph standing in for
+    unbounded raw history older than the working-memory window.
+
+    Ties on created_at (SQLite's datetime('now') has only
+    second-level resolution -- same known limitation
+    last_advancement_attempt() already documents and works around)
+    are broken by id DESC, so the row actually inserted last is always
+    the one returned.
+    """
+    conn = _connect()
+    row = conn.execute(
+        """SELECT * FROM nour_episodic_summaries WHERE discord_id=?
+           ORDER BY created_at DESC, id DESC LIMIT 1""",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None

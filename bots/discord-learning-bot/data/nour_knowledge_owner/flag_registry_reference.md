@@ -69,6 +69,7 @@
 
 | العلم (Flag) | الوصف | الحالة الافتراضية |
 |---|---|---|
+| `aql_episodic_summaries` | Aql (#15) Phase A6: weekly per-student episodic summary generation (Groq) | معطَّل |
 | `nour_concierge` | AI concierge handles DMs and #ask-nour questions | مفعَّل |
 | `nour_proactive` | Proactive outreach (anti-churn check-ins) | معطَّل |
 | `nour_escalation` | Telegram alerts for escalated issues | معطَّل |
@@ -124,4 +125,4 @@
 
 ## إجمالي الأعلام
 
-العدد الكلي للأعلام المُسجَّلة حاليًّا: **51**
+العدد الكلي للأعلام المُسجَّلة حاليًّا: **52**
