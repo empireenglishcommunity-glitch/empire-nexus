@@ -369,6 +369,14 @@ async def on_ready():
     if not getattr(bot, "_ops_poller_started", False):
         asyncio.create_task(ops_poller.poll_for_replies(bot))
         bot._ops_poller_started = True
+
+    # Aql (#15) Phase A9: register the live bot instance with
+    # owner_tools so any owner tool that needs Discord access (e.g.
+    # send_announcement, nudge_student) can function when the
+    # orchestrator calls them. Safe to call on every on_ready()
+    # (idempotent — just overwrites the same global with the same bot).
+    from .nour.tools import owner_tools
+    owner_tools.set_bot(bot)
     # Markaz M5.1: send restart notification (only on first on_ready,
     # not on gateway reconnects — same guard as the poller).
     if not getattr(bot, "_restart_notified", False):
