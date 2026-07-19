@@ -210,18 +210,19 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 3: LEVEL 0 ZONE ──
-    # NOTE: @everyone can view+send+voice here too, for the same reason
-    # as SYSTEM above — a brand-new member (no level role yet) needs to
-    # be able to see l0-daily-tasks etc. immediately, matching the bot's
-    # actual working onboarding flow. Reconciled 2026-07-12.
+    # Strict level isolation: ONLY L0 students see this zone.
+    # @everyone is DENIED — a student must have the L0 role (assigned
+    # on !join or on_member_join) to see these channels. Higher-level
+    # students (L1/L2/L3) are explicitly denied so they only see their
+    # own level's zone, not levels below them.
     {
         "name": "🌱 المستوى 0 | LEVEL 0",
         "overwrites": {
-            "@everyone": _VIEW_SEND_VOICE,
+            "@everyone": _DENY_ALL,
             "🌱 Level 0 | مبتدئ": _VIEW_SEND_VOICE,
-            "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
-            "🚀 Level 2 | متواصل": _VIEW_ONLY,
-            "👑 Level 3 | طليق": _VIEW_ONLY,
+            "💪 Level 1 | متقدم": _DENY_ALL,
+            "🚀 Level 2 | متواصل": _DENY_ALL,
+            "👑 Level 3 | طليق": _DENY_ALL,
             "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
             "bot": _BOT_FULL,
         },
@@ -235,14 +236,15 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 4: LEVEL 1 ZONE ──
+    # Strict level isolation: ONLY L1 students see this zone.
     {
         "name": "💪 المستوى 1 | LEVEL 1",
         "overwrites": {
             "@everyone": _DENY_ALL,
             "🌱 Level 0 | مبتدئ": _DENY_ALL,
             "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
-            "🚀 Level 2 | متواصل": _VIEW_SEND_VOICE,
-            "👑 Level 3 | طليق": _VIEW_ONLY,
+            "🚀 Level 2 | متواصل": _DENY_ALL,
+            "👑 Level 3 | طليق": _DENY_ALL,
             "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
             "bot": _BOT_FULL,
         },
@@ -256,6 +258,7 @@ CATEGORIES_CONFIG = [
         ],
     },
     # ── Category 5: LEVEL 2 ZONE ──
+    # Strict level isolation: ONLY L2 students see this zone.
     {
         "name": "🚀 المستوى 2 | LEVEL 2",
         "overwrites": {
@@ -263,7 +266,7 @@ CATEGORIES_CONFIG = [
             "🌱 Level 0 | مبتدئ": _DENY_ALL,
             "💪 Level 1 | متقدم": _DENY_ALL,
             "🚀 Level 2 | متواصل": _VIEW_SEND_VOICE,
-            "👑 Level 3 | طليق": _VIEW_SEND_VOICE,
+            "👑 Level 3 | طليق": _DENY_ALL,
             "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
             "bot": _BOT_FULL,
         },
