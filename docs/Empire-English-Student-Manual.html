@@ -526,16 +526,16 @@
         /* PRINT STYLES */
         @media print {
             body {
-                background: white;
-                color: #1a1a2e;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: var(--dark-navy) !important;
+                color: var(--text-primary) !important;
                 font-size: 11pt;
             }
 
             body::before {
                 position: fixed;
-                opacity: 0.05;
-                color: #1a1a2e;
-                font-size: 3rem;
+                opacity: 0.04;
             }
 
             .container {
@@ -556,34 +556,13 @@
             }
 
             .card, .level-card, .faq-item, .task-item {
-                background: #f8f8fc;
-                border-color: #D4AF37;
-                box-shadow: none;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
 
-            .cover-logo {
+            .cover-logo, .data-table thead th, .section-number, .level-badge, .rule-number, .steps li::before {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-            }
-
-            .data-table thead th {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .section-number, .level-badge, .rule-number, .steps li::before {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .cover-title, .section-title, .card-title, .channel-category-title {
-                color: #1a1a2e;
-            }
-
-            .gold-print {
-                color: #8B7200;
             }
 
             .page-footer {
@@ -591,11 +570,11 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                border-top: 1px solid #D4AF37;
+                border-top: 1px solid var(--border-gold);
             }
 
             a {
-                color: #1a1a2e;
+                color: var(--gold-light);
                 text-decoration: none;
             }
         }
