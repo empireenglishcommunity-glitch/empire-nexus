@@ -22,11 +22,25 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            max-width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            min-width: 0;
         }
 
         @page {
             size: A4;
             margin: 2cm 1.5cm;
+            direction: rtl;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            overflow-x: hidden;
         }
 
         body {
@@ -56,9 +70,10 @@
 
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0 0.5rem;
         }
 
         /* COVER PAGE */
@@ -66,11 +81,16 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
             text-align: center;
             padding: 4rem 2rem;
             position: relative;
+            width: 100%;
+        }
+
+        .cover-page > * {
+            width: 100%;
         }
 
         .cover-logo {
@@ -230,31 +250,36 @@
 
         .channel-list {
             list-style: none;
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .channel-list li {
-            padding: 0.5rem 0;
-            display: flex;
-            gap: 0.8rem;
-            align-items: baseline;
+            display: table-row;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .channel-name {
+            display: table-cell;
             font-family: 'Courier New', monospace;
             color: var(--gold-light);
             font-size: 0.85rem;
             direction: ltr;
             unicode-bidi: embed;
             white-space: nowrap;
-            min-width: 160px;
-            display: inline-block;
             text-align: left;
+            padding: 0.5rem 0.8rem 0.5rem 0;
+            vertical-align: top;
+            width: 1%;
         }
 
         .channel-desc {
+            display: table-cell;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            padding: 0.5rem 0;
+            vertical-align: top;
         }
 
         /* TABLES */
@@ -379,28 +404,35 @@
 
         /* RULES */
         .rule-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        .rule-number-cell {
+            display: table-cell;
+            width: 1%;
+            vertical-align: top;
+            padding-left: 1rem;
+        }
+
         .rule-number {
-            flex-shrink: 0;
             width: 32px;
             height: 32px;
+            line-height: 32px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--dark-navy);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
             font-weight: 800;
             font-size: 0.8rem;
         }
 
         .rule-text {
+            display: table-cell;
+            vertical-align: top;
             font-size: 0.95rem;
             line-height: 1.7;
         }
@@ -418,14 +450,23 @@
             border: 1px solid var(--border-gold);
             border-radius: 10px;
             padding: 1.2rem;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .task-icon {
+            display: table-cell;
             font-size: 1.5rem;
-            flex-shrink: 0;
+            width: 1%;
+            padding-left: 1rem;
+            vertical-align: middle;
+        }
+
+        .task-info {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
         }
 
         .task-info h4 {
@@ -440,7 +481,9 @@
         }
 
         .task-time {
-            margin-right: auto;
+            display: table-cell;
+            vertical-align: middle;
+            width: 1%;
             background: rgba(212, 175, 55, 0.1);
             color: var(--gold);
             padding: 0.2rem 0.6rem;
@@ -1175,43 +1218,43 @@
 
             <div class="card">
                 <div class="rule-item">
-                    <span class="rule-number">1</span>
+                    <div class="rule-number-cell"><span class="rule-number">1</span></div>
                     <span class="rule-text"><strong>إنجليزي فقط</strong> في جميع القنوات (الاستثناء: <span class="channel-name">#l0-questions</span> — جملة عربية واحدة للتوضيح)</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">2</span>
+                    <div class="rule-number-cell"><span class="rule-number">2</span></div>
                     <span class="rule-text"><strong>أنجز مهامك اليومية</strong> — النظام يعمل عندما تعمل أنت</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">3</span>
+                    <div class="rule-number-cell"><span class="rule-number">3</span></div>
                     <span class="rule-text"><strong>ادعم، لا تحكم</strong> — الكل بدأ من الصفر. صحّح بلطف.</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">4</span>
+                    <div class="rule-number-cell"><span class="rule-number">4</span></div>
                     <span class="rule-text"><strong>الغرف الصوتية:</strong> المايك مطلوب، أقصى حد 2 دقيقة كلام متواصل، 10 دقائق حد أدنى للاحتساب</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">5</span>
+                    <div class="rule-number-cell"><span class="rule-number">5</span></div>
                     <span class="rule-text"><strong>شارك تسجيلاتك</strong> وقدّم ملاحظات — هكذا تتطور</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">6</span>
+                    <div class="rule-number-cell"><span class="rule-number">6</span></div>
                     <span class="rule-text"><strong>تسامح صفر:</strong> لا تحرش، لا سبام، لا مشاركة تسجيلات الآخرين</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">7</span>
+                    <div class="rule-number-cell"><span class="rule-number">7</span></div>
                     <span class="rule-text"><strong>لا تخطي مستويات</strong> — تتقدم بإثبات كفاءتك</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">8</span>
+                    <div class="rule-number-cell"><span class="rule-number">8</span></div>
                     <span class="rule-text"><strong>لا تشارك رابط المنصة الشخصي</strong> مع أي شخص (مرتبط بحسابك)</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">9</span>
+                    <div class="rule-number-cell"><span class="rule-number">9</span></div>
                     <span class="rule-text"><strong>الاستمرارية أهم من الكمال</strong> — مهمة واحدة يومياً أفضل من صفر</span>
                 </div>
                 <div class="rule-item">
-                    <span class="rule-number">10</span>
+                    <div class="rule-number-cell"><span class="rule-number">10</span></div>
                     <span class="rule-text"><strong>عند الشك، اسأل نور</strong> في <span class="channel-name">#ask-nour</span> (متاحة 24/7)</span>
                 </div>
             </div>
