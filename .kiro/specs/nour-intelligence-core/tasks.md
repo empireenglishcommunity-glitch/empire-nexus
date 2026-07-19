@@ -755,10 +755,18 @@ integrated into the new architecture; its rigid mechanism is gone.
       side-by-side for manual comparison
 - [x] A8.6: Run all 3 golden/red-team sets against the NEW pipeline in
       isolation (not shadow mode — direct evaluation), record pass rates
-- [ ] A8.7: Owner review + sign-off gate: SC1-SC4 pass bars met before
+- [x] A8.7: Owner review + sign-off gate: SC1-SC4 pass bars met before
       proceeding to A9. If not met, return to the relevant earlier
       phase (do not patch symptoms at this stage — diagnose which
       component is under-performing and fix there)
+      **CONDITIONALLY SIGNED OFF (2026-07-19):** SC1/SC3 pass
+      unconditionally. SC2 (76%) and SC4 (53%) measured on a
+      DOUBLE-DEGRADED path (8b model + keyword retrieval, not
+      production's 70b + Gemini embeddings). Owner accepted
+      proceeding to Phase A9's shadow-mode self-testing as the
+      definitive quality gate on the real production path. Retrieval
+      improved (content-level scoring added to keyword fallback).
+      See `data/nour_eval/A8.7-SIGNOFF.md` for full details.
 
 **Deliverable:** Quantified evidence the new pipeline meets every
 Requirements success criterion, reviewed by the owner, before any real
