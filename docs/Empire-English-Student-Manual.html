@@ -30,8 +30,14 @@
 
         @page {
             size: A4;
-            margin: 2cm 1.5cm;
+            margin: 2cm 1.5cm 2.6cm 1.5cm;
             direction: rtl;
+            @bottom-center {
+                content: "© 2026 Empire English Community — All rights reserved.";
+                font-family: 'Cairo', sans-serif;
+                font-size: 8pt;
+                color: #8a8aa0;
+            }
         }
 
         html {
@@ -260,8 +266,13 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
+        /* Generic inline channel-name mention (used within running
+           sentences, e.g. "اكتب في #bot-commands"). Must stay
+           inline-block, NOT table-cell -- table-cell breaks normal
+           text flow and yanks the element onto its own anonymous row,
+           disconnected from the sentence around it. */
         .channel-name {
-            display: table-cell;
+            display: inline-block;
             font-family: 'Courier New', monospace;
             color: var(--gold-light);
             font-size: 0.85rem;
@@ -269,15 +280,24 @@
             unicode-bidi: embed;
             white-space: nowrap;
             text-align: left;
+        }
+
+        /* Table-cell version ONLY inside the channel-list (server map) --
+           scoped narrowly so it never affects inline mentions elsewhere. */
+        .channel-list .channel-name {
+            display: table-cell;
             padding: 0.5rem 0.8rem 0.5rem 0;
             vertical-align: top;
             width: 1%;
         }
 
         .channel-desc {
-            display: table-cell;
             color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+
+        .channel-list .channel-desc {
+            display: table-cell;
             padding: 0.5rem 0;
             vertical-align: top;
         }
@@ -555,7 +575,7 @@
             padding-top: 2rem;
         }
 
-        /* FOOTER */
+        /* FOOTER (screen-only fallback; print uses @page bottom-center) */
         .page-footer {
             text-align: center;
             padding: 2rem;
@@ -609,11 +629,7 @@
             }
 
             .page-footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                border-top: 1px solid var(--border-gold);
+                display: none;
             }
 
             a {
@@ -667,10 +683,94 @@
             <p class="cover-date">July 2026</p>
         </div>
 
-        <!-- ========== SECTION 1: Discord Account ========== -->
+        <!-- ========== SECTION 1: Vision & Mission ========== -->
         <div class="section">
             <div class="section-header">
                 <span class="section-number">القسم 1 / SECTION 1</span>
+                <h2 class="section-title">الرؤية والرسالة</h2>
+                <p class="section-title-en">Vision &amp; Mission</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">&#128302; رؤيتنا — Our Vision</div>
+                <p>أن يصل كل متحدث عربي جاد إلى إنجليزية قريبة من اللهجة الأصلية (native-like) — بدون سفر، بدون معلم خاص مكلف، وبدون سنوات ضائعة في طرق تعليم لا تعمل.</p>
+                <p class="mt-2" style="direction: ltr; color: var(--text-secondary);">Every serious Arabic speaker reaching native-like English — without travel, without expensive private tutors, without years wasted on methods that don't work.</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#127919; رسالتنا — Our Mission</div>
+                <p>نبني نظام تشغيل تعلّم كامل (Learning Operating System) يحوّل التعلّم من "حماس يومين وترك" إلى نظام يومي مستمر لا يعتمد على مزاجك — نظام صمم فيه <strong>التكرار المنضبط</strong> و<strong>المساءلة اليومية</strong> و<strong>المحتوى الصحيح في الوقت الصحيح</strong> ليأخذك خطوة بخطوة من الصفر إلى الطلاقة.</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#10067; لماذا يفشل أغلب متعلمي اللغة؟</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>لا استمرارية:</strong> يتعلمون بحماس لأسبوع ثم يتوقفون
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>لا مساءلة:</strong> لا يوجد أحد يتابع تقدمهم يومياً
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; <strong>لا تكرار مدروس:</strong> يتعلمون كلمات وينسونها بدل تكرارها بطريقة علمية
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tip-box mt-2">
+                <div class="tip-box-title">كيف يحل Empire English هذه المشاكل الثلاثة</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.4rem 0;">&#8226; <strong>الاستمرارية:</strong> نظام سلسلة (streak) يومي + مهام تصلك تلقائياً كل صباح</li>
+                    <li style="padding: 0.4rem 0;">&#8226; <strong>المساءلة:</strong> مجتمع حقيقي يراك، بوت يتابعك، تقييمات أسبوعية حقيقية</li>
+                    <li style="padding: 0.4rem 0;">&#8226; <strong>التكرار المدروس:</strong> منصة تمرين مبنية على علم التكرار المتباعد (spaced repetition) والمحاكاة الصوتية (shadowing)</li>
+                </ul>
+            </div>
+
+            <h3 style="color: var(--gold); margin: 2rem 0 1rem; font-size: 1.1rem; text-align: center;">من الصفر إلى الطلاقة — إذا التزمت</h3>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>المستوى</th>
+                        <th>المدة (بالانضباط اليومي)</th>
+                        <th>ماذا تحقق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&#127793; Level 0</td>
+                        <td>8-12 أسبوع</td>
+                        <td>تتحدث عن نفسك بثقة، تعرف 500 كلمة، وكل الأصوات الإنجليزية</td>
+                    </tr>
+                    <tr>
+                        <td>&#128170; Level 1</td>
+                        <td>10-14 أسبوع</td>
+                        <td>محادثات يومية بدون تحضير، 1500 كلمة</td>
+                    </tr>
+                    <tr>
+                        <td>&#128640; Level 2</td>
+                        <td>12-16 أسبوع</td>
+                        <td>تناقش مواضيع معقدة، لغة شبه مهنية، 3000 كلمة</td>
+                    </tr>
+                    <tr>
+                        <td>&#128081; Level 3</td>
+                        <td>مستمر (بلا حد أعلى)</td>
+                        <td>طلاقة قريبة من الأصلية، +5000 كلمة، لهجة أمريكية واضحة</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="important-box mt-2">
+                <div class="important-box-title">تنبيه صادق</div>
+                <p>هذه الأرقام مبنية على <strong>الانضباط اليومي الحقيقي</strong> (45-90 دقيقة يومياً حسب مستواك)، لا على الحضور بدون تنفيذ. النظام لا يصنع معجزات — هو يصنع <strong>نتائج ثابتة لمن يلتزم</strong>. من يعمل أسبوعاً ويترك أسبوعاً، ستطول رحلته أكثر من هذا الجدول.</p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 2: Discord Account ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 2 / SECTION 2</span>
                 <h2 class="section-title">إنشاء حساب Discord</h2>
                 <p class="section-title-en">Creating a Discord Account</p>
             </div>
@@ -704,10 +804,10 @@
         </div>
 
 
-        <!-- ========== SECTION 2: Joining the Server ========== -->
+        <!-- ========== SECTION 3: Joining the Server ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 2 / SECTION 2</span>
+                <span class="section-number">القسم 3 / SECTION 3</span>
                 <h2 class="section-title">الانضمام إلى السيرفر</h2>
                 <p class="section-title-en">Joining the Server</p>
             </div>
@@ -734,16 +834,16 @@
                         أو اكتب <code>!أوافق</code>
                     </li>
                     <li>جميع القنوات ستُفتح فوراً</li>
-                    <li>نور (مساعدتك بالذكاء الاصطناعي) سترسل لك رسالة ترحيب خاصة مع شرح مفصّل</li>
+                    <li>ابدأ فوراً: اذهب إلى <span class="channel-name">#bot-commands</span> واكتب <code>!join</code></li>
                 </ol>
             </div>
         </div>
 
 
-        <!-- ========== SECTION 3: Server Map ========== -->
+        <!-- ========== SECTION 4: Server Map ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 3 / SECTION 3</span>
+                <span class="section-number">القسم 4 / SECTION 4</span>
                 <h2 class="section-title">خريطة السيرفر</h2>
                 <p class="section-title-en">Server Map</p>
             </div>
@@ -767,8 +867,7 @@
                 <ul class="channel-list">
                     <li><span class="channel-name">#bot-commands</span><span class="channel-desc">المكان الوحيد لكتابة الأوامر</span></li>
                     <li><span class="channel-name">#leaderboard</span><span class="channel-desc">لوحة المتصدرين (للقراءة فقط)</span></li>
-                    <li><span class="channel-name">#support</span><span class="channel-desc">مساعدة تقنية</span></li>
-                    <li><span class="channel-name">#ask-nour</span><span class="channel-desc">اسأل نور (مساعدتك الشخصية بالذكاء الاصطناعي)</span></li>
+                    <li><span class="channel-name">#support</span><span class="channel-desc">مساعدة تقنية — للإدارة والمشرفين</span></li>
                     <li><span class="channel-name">#suggestions</span><span class="channel-desc">اقتراحاتك لتحسين المجتمع</span></li>
                 </ul>
             </div>
@@ -834,10 +933,10 @@
         </div>
 
 
-        <!-- ========== SECTION 4: The Daily System ========== -->
+        <!-- ========== SECTION 5: The Daily System ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 4 / SECTION 4</span>
+                <span class="section-number">القسم 5 / SECTION 5</span>
                 <h2 class="section-title">النظام اليومي</h2>
                 <p class="section-title-en">The Daily System</p>
             </div>
@@ -965,10 +1064,10 @@
         </div>
 
 
-        <!-- ========== SECTION 5: Practice Platform ========== -->
+        <!-- ========== SECTION 6: Practice Platform ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 5 / SECTION 5</span>
+                <span class="section-number">القسم 6 / SECTION 6</span>
                 <h2 class="section-title">منصة التمرين</h2>
                 <p class="section-title-en">Practice Platform</p>
             </div>
@@ -978,6 +1077,28 @@
                 <p style="direction: ltr; text-align: center; font-size: 1.2rem; color: var(--gold); font-weight: 700; margin: 1rem 0;">
                     practice.empireenglish.online
                 </p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#127919; الهدف من المنصة ودورها في النظام</div>
+                <p><strong>Discord</strong> هو مكان المجتمع والمساءلة والتوجيه اليومي — يخبرك بالمهمة، يتابع سلسلتك، ويربطك بزملائك. لكنه <strong>لا يستطيع</strong> أن يكون أداة تدريب حقيقية للنطق والاستماع والحفظ.</p>
+                <p class="mt-2"><strong>منصة التمرين</strong> هي محرك التدريب الفعلي: مكان تسمع فيه النموذج الصوتي الصحيح، تكرره، تسجل نفسك، وتقارن. هي المكان الذي يتشكّل فيه أذنك ولسانك فعلياً — وليس فقط عقلك.</p>
+                <p class="mt-2" style="color: var(--gold);">Discord يقول لك "ماذا تفعل اليوم" — المنصة هي "أين تتدرب فعلياً".</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#128300; الأساس العلمي للمنصة</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>المحاكاة (Shadowing):</strong> تسمع جملة وتكررها بنفس النغمة والسرعة فوراً — أثبتت الأبحاث أنها من أسرع طرق تحسين النطق والطلاقة معاً
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>التكرار المتباعد (Spaced Repetition):</strong> بطاقات المفردات تُعاد لك في فترات محسوبة بالضبط عندما تبدأ تنسى — هذا ما يحوّل الكلمة من "حفظتها" إلى "أعرفها للأبد"
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; <strong>الاستدعاء النشط (Active Recall):</strong> الاختبارات القصيرة (اكتب ما سمعت، اختر المعنى الصحيح) تجبر عقلك يشتغل بدل أن يقرأ بشكل سطحي
+                    </li>
+                </ul>
             </div>
 
             <div class="card mt-2">
@@ -1026,10 +1147,10 @@
         </div>
 
 
-        <!-- ========== SECTION 6: Essential Commands ========== -->
+        <!-- ========== SECTION 7: Essential Commands ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 6 / SECTION 6</span>
+                <span class="section-number">القسم 7 / SECTION 7</span>
                 <h2 class="section-title">الأوامر المهمة</h2>
                 <p class="section-title-en">Essential Commands</p>
             </div>
@@ -1125,10 +1246,10 @@
         </div>
 
 
-        <!-- ========== SECTION 7: Level System ========== -->
+        <!-- ========== SECTION 8: Level System ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 7 / SECTION 7</span>
+                <span class="section-number">القسم 8 / SECTION 8</span>
                 <h2 class="section-title">نظام المستويات</h2>
                 <p class="section-title-en">Level System</p>
             </div>
@@ -1205,13 +1326,24 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="card mt-3">
+                <div class="card-title">&#127775; ماذا بعد المستوى 3؟</div>
+                <p>المستوى 3 هو <strong>تطوّر مستمر</strong>، ليس نقطة نهاية. عند الوصول إليه:</p>
+                <ul style="list-style: none; margin-top: 0.8rem;">
+                    <li style="padding: 0.4rem 0;">&#8226; تحصل على شهادة تقييم ربع سنوية تقيس مستوى طلاقتك الحالي</li>
+                    <li style="padding: 0.4rem 0;">&#8226; يمكنك التقدم لرتبة <strong>سفير | Ambassador</strong> — دور خاص لمساعدة الطلاب الجدد</li>
+                    <li style="padding: 0.4rem 0;">&#8226; كسفير، تشارك في <span class="channel-name">#l3-mentorship</span> لتوجيه المبتدئين بخبرتك الحقيقية</li>
+                    <li style="padding: 0.4rem 0;">&#8226; تصبح جزءاً دائماً من قصة نجاح المجتمع — رحلتك تُلهم من يبدأ بعدك</li>
+                </ul>
+            </div>
         </div>
 
 
-        <!-- ========== SECTION 8: Golden Rules ========== -->
+        <!-- ========== SECTION 9: Golden Rules ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 8 / SECTION 8</span>
+                <span class="section-number">القسم 9 / SECTION 9</span>
                 <h2 class="section-title">القوانين الذهبية</h2>
                 <p class="section-title-en">Golden Rules</p>
             </div>
@@ -1255,16 +1387,126 @@
                 </div>
                 <div class="rule-item">
                     <div class="rule-number-cell"><span class="rule-number">10</span></div>
-                    <span class="rule-text"><strong>عند الشك، اسأل نور</strong> في <span class="channel-name">#ask-nour</span> (متاحة 24/7)</span>
+                    <span class="rule-text"><strong>عند الشك، اسأل في</strong> <span class="channel-name">#support</span> — الإدارة والمشرفون هنا لمساعدتك</span>
                 </div>
             </div>
         </div>
 
 
-        <!-- ========== SECTION 9: FAQ ========== -->
+        <!-- ========== SECTION 10: Setup Requirements ========== -->
         <div class="section">
             <div class="section-header">
-                <span class="section-number">القسم 9 / SECTION 9</span>
+                <span class="section-number">القسم 10 / SECTION 10</span>
+                <h2 class="section-title">متطلبات الإعداد</h2>
+                <p class="section-title-en">Setup Requirements</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">&#127908; المايك (Microphone)</div>
+                <p>مطلوب لمهام الكلام والنطق والمحاكاة. أي مايك (سماعة أذن، مايك اللابتوب، مايك الموبايل) يكفي — لا حاجة لمعدات احترافية.</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#127961;&#65039; مكان هادئ</div>
+                <p>حاول التدرب في مكان بدون ضجيج كبير — هذا يساعدك تسمع النموذج الصوتي بوضوح ويحسّن جودة تسجيلاتك.</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">&#128241; الموبايل أو الكمبيوتر؟</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>Discord:</strong> يعمل بشكل ممتاز على التطبيق (موبايل) أو سطح المكتب
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>منصة التمرين:</strong> تعمل على متصفح الموبايل، لكن التسجيل الصوتي وقراءة النصوص الطويلة أسهل على الكمبيوتر أو التابلت
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; الأفضل: Discord على الموبايل للمتابعة السريعة، والمنصة على شاشة أكبر وقت التدريب الفعلي
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tip-box mt-2">
+                <div class="tip-box-title">نصيحة</div>
+                <p>حدد وقتاً ثابتاً يومياً (مثلاً بعد الفجر أو بعد العشاء) وثبّته كجزء من روتينك — الاستمرارية تأتي من الثبات، لا من "لما تفضى".</p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 11: Pause Policy ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 11 / SECTION 11</span>
+                <h2 class="section-title">سياسة التوقف المؤقت</h2>
+                <p class="section-title-en">Life Happens — Pause Policy</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">&#127793; الحياة لا تتوقف، ونحن نتفهم ذلك</div>
+                <p>مرض، سفر، ظرف طارئ، أسبوع صعب في العمل أو الدراسة — كل هذا طبيعي ومتوقع. النظام مصمم ليكون <strong>صارماً في المنهج، ومتفهماً مع الإنسان</strong>.</p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">ماذا يحصل فعلياً إذا فاتك وقت</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; سلسلتك (streak) تعود للصفر — هذا رقم فقط، لا يؤثر على مستواك أو تسجيلك
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; مكانك في المستوى ومحتواك المحفوظ يبقى كما هو — لا تبدأ من الصفر
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; يمكنك تعديل إشعاراتك مؤقتاً بـ <code>!notifications</code> إذا احتجت هدوءاً بدون رسائل يومية
+                    </li>
+                </ul>
+            </div>
+
+            <div class="important-box mt-2">
+                <div class="important-box-title">إذا كنت ستغيب لفترة طويلة</div>
+                <p>أخبرنا في <span class="channel-name">#support</span> — هذا يساعدنا نفهم غيابك ونرحب بك بشكل صحيح عند رجوعك، بدل أن تشعر بالحرج من "الانقطاع".</p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 12: Common Mistakes ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 12 / SECTION 12</span>
+                <h2 class="section-title">أخطاء شائعة يجب تجنبها</h2>
+                <p class="section-title-en">Common Mistakes to Avoid</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">&#10060; الترجمة الذهنية (الترجمة من العربي لكل جملة)</div>
+                <div class="faq-a">هذا يبطئك ويصنع جملاً غريبة. حاول تفكر بالإنجليزي مباشرة من كلمات بسيطة، حتى لو الجملة ناقصة — الطلاقة تأتي من التفكير المباشر لا الترجمة.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">&#10060; الخجل من التسجيل والكلام</div>
+                <div class="faq-a">كل عضو في هذا المجتمع بدأ بنفس الخجل. من لا يسجل صوته لا يتحسن في النطق أبداً — النطق مهارة عضلية، تحتاج تمريناً فعلياً لا قراءة صامتة.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">&#10060; الكمالية (انتظار أن تكون جاهزاً "تماماً")</div>
+                <div class="faq-a">لا يوجد "جاهز تماماً". مهمة واحدة ناقصة كل يوم أفضل من صفر مهام بانتظار اليوم المثالي. الاستمرارية تبني الكفاءة — ليس العكس.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">&#10060; حفظ الكلمات بدون استخدامها</div>
+                <div class="faq-a">كلمة تحفظها ولا تستخدمها في جملة تُنسى خلال أيام. استخدم كل كلمة جديدة في جملة من عندك فوراً — هذا ما يثبّتها في ذاكرتك الحقيقية.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">&#10060; المقارنة بالآخرين</div>
+                <div class="faq-a">كل شخص يتعلم بسرعته الخاصة. قارن نفسك بنفسك بالأسبوع الماضي، لا بزميلك. التقدم الحقيقي شخصي وتراكمي.</div>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 13: FAQ ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 13 / SECTION 13</span>
                 <h2 class="section-title">الأسئلة الشائعة</h2>
                 <p class="section-title-en">Frequently Asked Questions</p>
             </div>
@@ -1295,11 +1537,6 @@
             </div>
 
             <div class="faq-item">
-                <div class="faq-q">من هي نور؟</div>
-                <div class="faq-a">مساعدتك الشخصية بالذكاء الاصطناعي. اسألها أي شيء في <span class="channel-name">#ask-nour</span>.</div>
-            </div>
-
-            <div class="faq-item">
                 <div class="faq-q">ماذا لو واجهت مشكلة تقنية؟</div>
                 <div class="faq-a">اكتب في <span class="channel-name">#support</span> وسيرد عليك أحد من الإدارة.</div>
             </div>
@@ -1311,7 +1548,26 @@
         </div>
 
 
-        <!-- ========== SECTION 10: Back Cover ========== -->
+        <!-- ========== SECTION 14: Personal Commitment ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 14 / SECTION 14</span>
+                <h2 class="section-title">عهدك مع نفسك</h2>
+                <p class="section-title-en">Your Personal Commitment</p>
+            </div>
+
+            <div class="card" style="border-color: var(--gold); box-shadow: 0 0 30px rgba(212,175,55,0.1);">
+                <p style="font-size: 1rem; line-height: 2; text-align: center;">
+                    أنا أنضم إلى Empire English ليس بحثاً عن معجزة، بل التزاماً بنظام.<br>
+                    أعرف أن الاستمرارية أهم من الكمال، وأن مهمة واحدة يومياً أقوى من عشر مهام في يوم واحد يتبعه أسبوع صمت.<br>
+                    سأخجل، سأخطئ، وسأتحسّن — بهذا الترتيب.<br>
+                    <strong style="color: var(--gold);">أنا جزء من هذا المجتمع، ونجاحي جزء من نجاحه.</strong>
+                </p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 15: Back Cover ========== -->
         <div class="back-cover">
             <p class="back-cover-quote">"Welcome to Empire. Let's build something real."</p>
             <p class="back-cover-quote-ar">"أهلاً بك في Empire. هنا نبني شيئاً حقيقياً."</p>
