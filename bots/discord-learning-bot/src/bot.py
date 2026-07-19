@@ -631,8 +631,14 @@ async def daily_task_post():
         if not members:
             continue
 
-        # Determine the week (use first member's week — all same level start similarly)
-        week = database.member_week_number(members[0]["discord_id"])
+        # Determine the week: use the MINIMUM week across all members at
+        # this level, so the channel broadcast matches the newest student's
+        # curriculum position. Students who joined earlier get their
+        # personalized (higher-week) content via the morning_kickstart DM
+        # which already uses per-student member_week_number(). This ensures
+        # a student joining on day 1 sees Week 1 tasks in the channel —
+        # not whatever week the oldest member happens to be on.
+        week = min(database.member_week_number(m["discord_id"]) for m in members)
 
         # Generate tasks
         task_data = await task_engine.generate_daily_tasks(level_key, week)
@@ -727,9 +733,14 @@ async def morning_kickstart():
         # Language phase (Bawaba B5)
         phase = features.response_language(discord_id)
 
-        # Practice platform link
+        # Practice platform link — include the student's personal token so
+        # clicking the link in the DM instantly unlocks the practice page
+        # (no need to manually run !link first). The token is auto-created
+        # if the student doesn't have one yet.
         day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(task_engine.current_day_name()) if task_engine.current_day_name() in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
         practice_url = curriculum.practice_platform_day_url(week, day_index, m.get("level", "L0"))
+        token = database.create_link_token(discord_id)
+        practice_url_with_token = f"{practice_url}?token={token}"
 
         if phase == "arabic":
             streak_text = f"\U0001f525 \u0633\u0644\u0633\u0644\u062a\u0643: **{streak}** \u064a\u0648\u0645" if streak > 0 else "\U0001f331 \u0627\u0628\u062f\u0623 \u0633\u0644\u0633\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \u0627\u0644\u0646\u0647\u0627\u0631\u062f\u0629!"
@@ -738,7 +749,7 @@ async def morning_kickstart():
                 f"\u0645\u0647\u0627\u0645\u0643 \u062c\u0627\u0647\u0632\u0629 \U0001f4cb\n"
                 f"{streak_text}\n\n"
                 f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629: **{first_task['name_ar']}** {first_task['emoji']}\n"
-                f"\U0001f310 \u0627\u062a\u0645\u0631\u0646 \u0623\u0648\u0646\u0644\u0627\u064a\u0646: {practice_url}\n\n"
+                f"\U0001f310 \u0627\u062a\u0645\u0631\u0646 \u0623\u0648\u0646\u0644\u0627\u064a\u0646: {practice_url_with_token}\n\n"
                 f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 \U0001f4aa"
             )
         elif phase == "bilingual_ar":
@@ -748,7 +759,7 @@ async def morning_kickstart():
                 f"\u0645\u0647\u0627\u0645\u0643 \u062c\u0627\u0647\u0632\u0629 (Tasks ready) \U0001f4cb\n"
                 f"{streak_text}\n\n"
                 f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629 (First task): **{first_task['name_ar']}** ({first_task['name']}) {first_task['emoji']}\n"
-                f"\U0001f310 Practice online: {practice_url}\n\n"
+                f"\U0001f310 Practice online: {practice_url_with_token}\n\n"
                 f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 (type `!1` when done) \U0001f4aa"
             )
         else:
@@ -758,7 +769,7 @@ async def morning_kickstart():
                 f"Your tasks are ready \U0001f4cb\n"
                 f"{streak_text}\n\n"
                 f"First task: **{first_task['name']}** {first_task['emoji']}\n"
-                f"\U0001f310 Practice online: {practice_url}\n\n"
+                f"\U0001f310 Practice online: {practice_url_with_token}\n\n"
                 f"Type `!1` when done \U0001f4aa"
             )
 
