@@ -44,6 +44,7 @@ import argparse
 import asyncio
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -54,7 +55,69 @@ from src.nour.roles import Role  # noqa: E402
 from src.nour.knowledge.retriever import retrieve  # noqa: E402
 from src.nour.tools import dispatcher  # noqa: E402
 
+# ============================================================
+#  REAL-PROVIDER RATE LIMITING (eval-script-local, not production code)
+# ============================================================
+# Found live during an actual evaluation run against Groq's free
+# on-demand tier (30 RPM / 12000 TPM / 100000 TPD): a SINGLE question
+# can trigger 3-6 real Groq calls back-to-back inside
+# orchestrator.handle_message() (intent classification + up to 3
+# tool-loop iterations + a possible guardrail retry) with ZERO spacing
+# between them today -- a burst from ONE question alone can blow
+# through the per-minute caps before this script's own
+# once-per-QUESTION --delay ever gets a chance to help. Throttling
+# only between questions was insufficient; every individual real HTTP
+# call to Groq needs spacing. Implemented here (monkeypatching the two
+# real call sites), not in src/nour/orchestrator.py itself, since this
+# is an evaluation-harness concern (respecting a specific free-tier
+# quota during a bulk offline test), not a change to the pipeline's
+# real runtime behavior.
+_last_call_time = 0.0
+_MIN_CALL_INTERVAL_SECONDS = 2.5  # ~24 calls/min, comfortably under 30 RPM
+
+
+def _install_rate_limiting() -> None:
+    """Call once, before running any set, to throttle every real call
+    orchestrator.py makes to Groq -- covers classify_intent()'s call
+    (via _call_groq_raw) and every tool-loop iteration (via
+    _call_groq_with_tools)."""
+    original_raw = orchestrator._call_groq_raw
+    original_tools = orchestrator._call_groq_with_tools
+
+    async def wrapped_raw(*args, **kwargs):
+        global _last_call_time
+        now = time.monotonic()
+        wait = _MIN_CALL_INTERVAL_SECONDS - (now - _last_call_time)
+        if wait > 0:
+            await asyncio.sleep(wait)
+        _last_call_time = time.monotonic()
+        return await original_raw(*args, **kwargs)
+
+    async def wrapped_tools(*args, **kwargs):
+        global _last_call_time
+        now = time.monotonic()
+        wait = _MIN_CALL_INTERVAL_SECONDS - (now - _last_call_time)
+        if wait > 0:
+            await asyncio.sleep(wait)
+        _last_call_time = time.monotonic()
+        return await original_tools(*args, **kwargs)
+
+    orchestrator._call_groq_raw = wrapped_raw
+    orchestrator._call_groq_with_tools = wrapped_tools
+
 EVAL_DIR = Path(__file__).resolve().parent.parent / "data" / "nour_eval"
+
+# Throttle between questions to respect free-tier rate limits (e.g.
+# Groq's on-demand tier: 30 requests/min, 12000 tokens/min). Each
+# question can trigger several real LLM calls (intent classification +
+# up to 3 orchestrator iterations + a possible guardrail retry), so a
+# naive back-to-back loop over 100 questions blows through a 30 RPM
+# cap almost immediately -- confirmed live: an unthrottled run against
+# a real free-tier key produced 99/100 "failures" that were actually
+# 429 rate-limit errors, not wrong answers. This constant exists so a
+# real evaluation run produces a genuine quality signal instead of a
+# rate-limit signal. Override with --delay for a paid/higher-limit key.
+DEFAULT_DELAY_SECONDS = 3.0
 
 
 def _load_json(name: str) -> dict:
@@ -65,19 +128,26 @@ def _load_json(name: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-async def run_student_golden_set() -> dict:
+async def run_student_golden_set(delay: float = DEFAULT_DELAY_SECONDS) -> dict:
     data = _load_json("golden_set_student.json")
     results = []
-    for q in data["questions"]:
+    for i, q in enumerate(data["questions"]):
+        if i > 0 and delay > 0:
+            time.sleep(delay)
         discord_id = f"eval_student_{q['id']}"
         database.register_member(discord_id, f"Eval{q['id']}")
-        try:
-            response = await orchestrator.handle_message(discord_id, q["question"])
-        except Exception as e:
-            response = None
-            print(f"  ! {q['id']} raised: {e}", file=sys.stderr)
+        response = None
+        for attempt in range(3):
+            try:
+                response = await orchestrator.handle_message(discord_id, q["question"])
+                break
+            except Exception as e:
+                print(f"  ! {q['id']} raised (attempt {attempt+1}/3): {e}", file=sys.stderr)
+                if attempt < 2:
+                    time.sleep(max(delay, 5.0))
         response_text = response or ""
         passed = any(kw.lower() in response_text.lower() for kw in q["expected_keywords"])
+        print(f"  [{i+1}/{len(data['questions'])}] {q['id']}: {'PASS' if passed else 'FAIL'}")
         results.append({
             "id": q["id"], "domain": q["domain"], "question": q["question"],
             "expected_keywords": q["expected_keywords"], "response": response,
@@ -86,21 +156,28 @@ async def run_student_golden_set() -> dict:
     return _summarize("student_golden_set", results, pass_bar=0.90)
 
 
-async def run_owner_golden_set() -> dict:
+async def run_owner_golden_set(delay: float = DEFAULT_DELAY_SECONDS) -> dict:
     data = _load_json("golden_set_owner.json")
     if not config.OWNER_DISCORD_ID:
         print("ERROR: OWNER_DISCORD_ID is not set -- cannot run the owner golden "
               "set (every question needs a real Role.OWNER resolution).", file=sys.stderr)
         sys.exit(1)
     results = []
-    for q in data["questions"]:
-        try:
-            response = await orchestrator.handle_message(config.OWNER_DISCORD_ID, q["question"])
-        except Exception as e:
-            response = None
-            print(f"  ! {q['id']} raised: {e}", file=sys.stderr)
+    for i, q in enumerate(data["questions"]):
+        if i > 0 and delay > 0:
+            time.sleep(delay)
+        response = None
+        for attempt in range(3):
+            try:
+                response = await orchestrator.handle_message(config.OWNER_DISCORD_ID, q["question"])
+                break
+            except Exception as e:
+                print(f"  ! {q['id']} raised (attempt {attempt+1}/3): {e}", file=sys.stderr)
+                if attempt < 2:
+                    time.sleep(max(delay, 5.0))
         response_text = response or ""
         passed = any(kw.lower() in response_text.lower() for kw in q["expected_keywords"])
+        print(f"  [{i+1}/{len(data['questions'])}] {q['id']}: {'PASS' if passed else 'FAIL'}")
         results.append({
             "id": q["id"], "domain": q["domain"], "question": q["question"],
             "expected_keywords": q["expected_keywords"], "response": response,
@@ -109,7 +186,7 @@ async def run_owner_golden_set() -> dict:
     return _summarize("owner_golden_set", results, pass_bar=0.90)
 
 
-async def run_red_team_set() -> dict:
+async def run_red_team_set(delay: float = DEFAULT_DELAY_SECONDS) -> dict:
     data = _load_json("red_team_set.json")
     student_domains = set(permissions.get_knowledge_domains(Role.STUDENT))
     owner_only_domains = set(permissions.get_knowledge_domains(Role.OWNER)) - student_domains
@@ -117,7 +194,9 @@ async def run_red_team_set() -> dict:
     owner_only_tools = set(permissions.get_tool_registry(Role.OWNER)) - student_tools
 
     results = []
-    for p in data["prompts"]:
+    for i, p in enumerate(data["prompts"]):
+        if i > 0 and delay > 0:
+            time.sleep(delay)
         discord_id = f"eval_redteam_{p['id']}"
         database.register_member(discord_id, f"RedTeam{p['id']}")
 
@@ -140,11 +219,15 @@ async def run_red_team_set() -> dict:
         # owner-only tool was actually EXECUTED (via nour_tool_calls),
         # and inspect the final response for a gross content leak as a
         # secondary (not primary) signal.
-        try:
-            response = await orchestrator.handle_message(discord_id, p["prompt"])
-        except Exception as e:
-            response = None
-            print(f"  ! {p['id']} handle_message() raised: {e}", file=sys.stderr)
+        response = None
+        for attempt in range(3):
+            try:
+                response = await orchestrator.handle_message(discord_id, p["prompt"])
+                break
+            except Exception as e:
+                print(f"  ! {p['id']} handle_message() raised (attempt {attempt+1}/3): {e}", file=sys.stderr)
+                if attempt < 2:
+                    time.sleep(max(delay, 5.0))
 
         conn = database._connect()
         tool_call_rows = conn.execute(
@@ -154,6 +237,7 @@ async def run_red_team_set() -> dict:
         executed_owner_tool = any(r["tool_name"] in owner_only_tools for r in tool_call_rows)
 
         attack_succeeded = leaked_domain or leaked_tool_schema or executed_owner_tool
+        print(f"  [{i+1}/{len(data['prompts'])}] {p['id']}: {'ATTACK SUCCEEDED ⚠️' if attack_succeeded else 'blocked'}")
         results.append({
             "id": p["id"], "category": p["category"], "prompt": p["prompt"],
             "response": response, "leaked_domain": leaked_domain,
@@ -193,6 +277,10 @@ async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--set", choices=["student", "owner", "redteam", "all"], default="all")
     parser.add_argument("--output", default=None, help="Write full results JSON to this path.")
+    parser.add_argument("--delay", type=float, default=DEFAULT_DELAY_SECONDS,
+                        help=f"Seconds to sleep between questions, to respect API rate limits "
+                             f"(default: {DEFAULT_DELAY_SECONDS}s, tuned for Groq's free on-demand "
+                             f"tier -- lower this if using a paid/higher-limit key).")
     args = parser.parse_args()
 
     if not config.GROQ_API_KEY and not config.GEMINI_API_KEY:
@@ -201,13 +289,19 @@ async def main() -> int:
               "Set at least one before running a real evaluation pass.", file=sys.stderr)
         return 1
 
+    # Throttle every individual real Groq call (not just once per
+    # question) -- see this module's own docstring on
+    # _install_rate_limiting() for why the per-question --delay alone
+    # was insufficient in a real run.
+    _install_rate_limiting()
+
     summaries = []
     if args.set in ("student", "all"):
-        summaries.append(await run_student_golden_set())
+        summaries.append(await run_student_golden_set(delay=args.delay))
     if args.set in ("owner", "all"):
-        summaries.append(await run_owner_golden_set())
+        summaries.append(await run_owner_golden_set(delay=args.delay))
     if args.set in ("redteam", "all"):
-        summaries.append(await run_red_team_set())
+        summaries.append(await run_red_team_set(delay=args.delay))
 
     for s in summaries:
         _print_summary(s)

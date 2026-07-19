@@ -155,8 +155,41 @@ async def handle_with_human_touch(message: discord.Message):
 
     This is the function bot.py calls — it wraps handle_message with
     the human touch simulation.
+
+    Aql (#15) Phase A9: when the `nour_aql_core` flag is enabled for
+    this specific user (via its allowlist — typically owner-only during
+    shadow/self-testing, then expanded), routes through the NEW
+    orchestrator pipeline instead of the OLD handle_message() below.
+    The "human touch" wrapper (typing indicator, delay, webhook send)
+    is applied identically regardless of which backend produced the
+    response — the user-facing behavior is the same, only the
+    intelligence layer behind it changes.
     """
-    response = await handle_message(message)
+    discord_id = str(message.author.id)
+
+    # Aql (#15) Phase A9: flag-gated routing to the new orchestrator
+    if database.is_feature_enabled("nour_aql_core", discord_id):
+        from .nour import orchestrator as aql_orchestrator
+        from .nour import shadow as aql_shadow
+        try:
+            response = await aql_orchestrator.handle_message(
+                discord_id, message.content,
+                channel_context=getattr(message.channel, 'name', 'DM'),
+            )
+        except Exception as e:
+            logger.error(f"Aql orchestrator error for {discord_id}: {e}")
+            response = None
+
+        # Shadow mode logging (A8.5): if we're in the Aql path, also
+        # run the old pipeline silently for comparison logging -- but
+        # ONLY if this is genuinely a shadow/self-testing phase (the
+        # flag is on an allowlist, not on for everyone yet). Once the
+        # flag is fully released (empty allowlist = everyone), skip
+        # this double-run to avoid wasting resources.
+        # For now, we just use the Aql response directly.
+    else:
+        response = await handle_message(message)
+
     if not response:
         return
 

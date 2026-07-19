@@ -112,32 +112,72 @@ def _keyword_fallback(query: str, allowed_domains: list[str], top_k: int) -> lis
     Section 4.3. Only chunks whose domain is in `allowed_domains` are
     ever considered, so the role boundary holds even in the fallback
     path.
+
+    Two-stage retrieval within this fallback:
+    1. Domain selection — which knowledge FILE(s) are relevant to this
+       query? Uses `_KB_CATEGORIES`'s existing keyword lists (unchanged).
+    2. Chunk ranking — within those matched domains (which may each
+       contain 5-22 chunks), WHICH specific chunks are most relevant?
+       Uses a cheap term-overlap score: count how many distinct query
+       words appear in each chunk's heading+content. This is not
+       semantic search (which requires embeddings), but it's vastly
+       better than "grab the first N chunks in insertion order" — it
+       makes the difference between retrieving the specific chunk about
+       "streak" vs. an unrelated chunk about "registration" from the
+       same FAQ file.
     """
+    import re
     from ...nour_concierge import _KB_CATEGORIES
 
     message_lower = query.lower()
+
+    # Stage 1: domain selection (unchanged from original)
     matched_files = []
     for filename, keywords in _KB_CATEGORIES.items():
         if any(kw in message_lower for kw in keywords):
             matched_files.append(filename)
 
     if not matched_files:
-        matched_files = ["faq.md", "system_overview.md"]
+        # No domain-level keyword matched — search ALL allowed domains
+        # with content-level scoring rather than defaulting to just
+        # faq+system_overview (which was too narrow for many questions).
+        matched_domains = allowed_domains
+    else:
+        matched_domains = [f[:-3] for f in matched_files if f.endswith(".md")]
+        matched_domains = [d for d in matched_domains if d in allowed_domains]
 
-    matched_domains = [f[:-3] for f in matched_files if f.endswith(".md")]
-    matched_domains = [d for d in matched_domains if d in allowed_domains]
     if not matched_domains:
-        # Nothing matched fell inside this role's allowed set — do not
-        # silently widen scope; return nothing rather than leak an
-        # out-of-scope domain's content.
         return []
 
     rows = database.get_chunks_by_domains(matched_domains)
+    if not rows:
+        return []
+
+    # Stage 2: content-level scoring — rank ALL chunks from matched
+    # domains by how many distinct query words appear in each chunk.
+    # Strips Arabic diacritics and common short words for slightly
+    # better matching (but no stemming — keeps this simple and fast).
+    query_words = set(re.findall(r'\w{2,}', message_lower))
+    # Add the original query's words without diacritics too
+    _DIACRITICS = re.compile(r'[\u064B-\u065F\u0670]')
+    query_clean = _DIACRITICS.sub('', message_lower)
+    query_words.update(re.findall(r'\w{2,}', query_clean))
+
+    scored_rows = []
+    for row in rows:
+        chunk_text = (row["heading"] + " " + row["content"]).lower()
+        chunk_text_clean = _DIACRITICS.sub('', chunk_text)
+        # Count distinct query words found in this chunk
+        score = sum(1 for w in query_words if w in chunk_text or w in chunk_text_clean)
+        scored_rows.append((score, row))
+
+    scored_rows.sort(key=lambda pair: pair[0], reverse=True)
+
     results = [
         RetrievedChunk(
             id=row["id"], domain=row["domain"], source_file=row["source_file"],
             heading=row["heading"], content=row["content"], similarity=0.0,
         )
-        for row in rows[:top_k]
+        for _, row in scored_rows[:top_k]
     ]
     return results
