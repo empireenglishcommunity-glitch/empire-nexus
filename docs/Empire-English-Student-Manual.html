@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الطالب الرسمي | Official Student Manual — Empire English Community</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #f0d060;
+            --dark-navy: #1a1a2e;
+            --card-bg: #16213e;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b8b8cc;
+            --border-gold: rgba(212, 175, 55, 0.3);
+            --shadow-gold: rgba(212, 175, 55, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 2cm 1.5cm;
+        }
+
+        body {
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-navy);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 14px;
+            position: relative;
+        }
+
+        body::before {
+            content: "Empire English — Confidential / سري";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--gold);
+            opacity: 0.04;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 9999;
+            letter-spacing: 0.1em;
+        }
+
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* COVER PAGE */
+        .cover-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .cover-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+            border: 4px solid var(--gold);
+        }
+
+        .cover-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .cover-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cover-confidential {
+            font-size: 0.95rem;
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .cover-date {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+
+        /* SECTIONS */
+        .section {
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-gold);
+        }
+
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--dark-navy);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .section-title-en {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            direction: ltr;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* STEPS */
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            padding: 0.8rem 0;
+            padding-right: 3rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .steps li:last-child {
+            border-bottom: none;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            right: 0;
+            top: 0.8rem;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--dark-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+
+        /* CHANNEL LIST */
+        .channel-category {
+            margin-bottom: 2rem;
+        }
+
+        .channel-category-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .channel-list {
+            list-style: none;
+        }
+
+        .channel-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            gap: 0.8rem;
+            align-items: baseline;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .channel-name {
+            font-family: 'Courier New', monospace;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            direction: ltr;
+            unicode-bidi: embed;
+            white-space: nowrap;
+            min-width: 160px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .channel-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* TABLES */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table thead th {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--dark-navy);
+            font-weight: 700;
+            padding: 0.8rem 1rem;
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .data-table tbody td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background: rgba(22, 33, 62, 0.5);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .data-table code {
+            font-family: 'Courier New', monospace;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            color: var(--gold-light);
+            direction: ltr;
+            unicode-bidi: embed;
+            font-size: 0.8rem;
+        }
+
+
+        /* LEVEL CARDS */
+        .level-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold);
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .level-card h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .level-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .level-meta-item {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .level-meta-item strong {
+            color: var(--gold-light);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-q {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .faq-a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* RULES */
+        .rule-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rule-number {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--dark-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .rule-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+
+        /* TASK GRID */
+        .task-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .task-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 1.2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .task-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .task-info h4 {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .task-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .task-time {
+            margin-right: auto;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* IMPORTANT BOX */
+        .important-box {
+            background: rgba(255, 107, 107, 0.05);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-box-title {
+            color: #ff6b6b;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box-title {
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* BACK COVER */
+        .back-cover {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .back-cover-quote {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .back-cover-quote-ar {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .back-cover-notice {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            line-height: 1.8;
+            border-top: 1px solid var(--border-gold);
+            padding-top: 2rem;
+        }
+
+        /* FOOTER */
+        .page-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-gold);
+            margin-top: 2rem;
+        }
+
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: white;
+                color: #1a1a2e;
+                font-size: 11pt;
+            }
+
+            body::before {
+                position: fixed;
+                opacity: 0.05;
+                color: #1a1a2e;
+                font-size: 3rem;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .section {
+                page-break-before: always;
+            }
+
+            .cover-page {
+                page-break-after: always;
+            }
+
+            .back-cover {
+                page-break-before: always;
+            }
+
+            .card, .level-card, .faq-item, .task-item {
+                background: #f8f8fc;
+                border-color: #D4AF37;
+                box-shadow: none;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-logo {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .data-table thead th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section-number, .level-badge, .rule-number, .steps li::before {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-title, .section-title, .card-title, .channel-category-title {
+                color: #1a1a2e;
+            }
+
+            .gold-print {
+                color: #8B7200;
+            }
+
+            .page-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border-top: 1px solid #D4AF37;
+            }
+
+            a {
+                color: #1a1a2e;
+                text-decoration: none;
+            }
+        }
+
+        /* UTILITIES */
+        .ltr {
+            direction: ltr;
+            text-align: left;
+            unicode-bidi: embed;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+
+        .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border-gold);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+
+        <!-- ========== COVER PAGE ========== -->
+        <div class="cover-page">
+            <div class="cover-logo">&#127963;</div>
+            <h1 class="cover-title">دليل الطالب الرسمي<br><span class="ltr">Official Student Manual</span></h1>
+            <p class="cover-subtitle">Empire English Community — Common Sense First</p>
+            <div class="cover-confidential">
+                سري — للطلاب المسجلين فقط<br>
+                <span class="ltr">Confidential — Registered Students Only</span>
+            </div>
+            <p class="cover-date">July 2026</p>
+        </div>
+
+        <!-- ========== SECTION 1: Discord Account ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 1 / SECTION 1</span>
+                <h2 class="section-title">إنشاء حساب Discord</h2>
+                <p class="section-title-en">Creating a Discord Account</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">خطوات إنشاء الحساب</div>
+                <ol class="steps">
+                    <li>
+                        حمّل تطبيق Discord على هاتفك أو جهاز الكمبيوتر، أو افتح الموقع
+                        <span class="ltr">discord.com</span>
+                    </li>
+                    <li>
+                        اضغط على <strong>"Register"</strong> أو <strong>"إنشاء حساب"</strong>
+                    </li>
+                    <li>
+                        أدخل بريدك الإلكتروني، اختر اسم مستخدم (يُفضّل: اسمك الأول)، وأنشئ كلمة مرور قوية
+                    </li>
+                    <li>
+                        تحقق من بريدك الإلكتروني — افتح صندوق الوارد واضغط على رابط التأكيد
+                    </li>
+                    <li>
+                        حمّل التطبيق للحصول على أفضل تجربة (أفضل من المتصفح)
+                    </li>
+                </ol>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-box-title">نصيحة</div>
+                <p>استخدم اسمك الحقيقي الأول كاسم مستخدم — هذا يسهّل على المجتمع التعرف عليك ومساعدتك.</p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 2: Joining the Server ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 2 / SECTION 2</span>
+                <h2 class="section-title">الانضمام إلى السيرفر</h2>
+                <p class="section-title-en">Joining the Server</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">خطوات الانضمام</div>
+                <ol class="steps">
+                    <li>اضغط على رابط الدعوة (سيُرسل لك بشكل منفصل)</li>
+                    <li>سترى اسم السيرفر <strong>"Empire English Community"</strong></li>
+                    <li>اضغط <strong>"Accept Invite"</strong> أو <strong>"قبول الدعوة"</strong></li>
+                    <li>
+                        ستصل إلى قناة <span class="channel-name">#start-here</span> — اتبع المسار التالي:
+                    </li>
+                </ol>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">المسار بعد الدخول</div>
+                <ol class="steps">
+                    <li>اقرأ <span class="channel-name">#welcome</span> — لفهم النظام</li>
+                    <li>اقرأ <span class="channel-name">#rules</span> — قوانين المجتمع</li>
+                    <li>
+                        تفاعل بـ &#10004;&#65039; على الرسالة المثبتة في <span class="channel-name">#rules</span>
+                        أو اكتب <code>!أوافق</code>
+                    </li>
+                    <li>جميع القنوات ستُفتح فوراً</li>
+                    <li>نور (مساعدتك بالذكاء الاصطناعي) سترسل لك رسالة ترحيب خاصة مع شرح مفصّل</li>
+                </ol>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 3: Server Map ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 3 / SECTION 3</span>
+                <h2 class="section-title">خريطة السيرفر</h2>
+                <p class="section-title-en">Server Map</p>
+            </div>
+
+            <!-- WELCOME Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#128203; أهلاً | WELCOME</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#start-here</span><span class="channel-desc">بوابتك للمجتمع، اقرأها أولاً</span></li>
+                    <li><span class="channel-name">#welcome</span><span class="channel-desc">رسالة ترحيب وشرح النظام</span></li>
+                    <li><span class="channel-name">#rules</span><span class="channel-desc">القوانين (وافق عليها لفتح باقي القنوات)</span></li>
+                    <li><span class="channel-name">#roles-info</span><span class="channel-desc">شرح المستويات وكيف تترقى</span></li>
+                    <li><span class="channel-name">#announcements</span><span class="channel-desc">إعلانات رسمية من الإدارة</span></li>
+                    <li><span class="channel-name">#دليل-القنوات</span><span class="channel-desc">خريطة كاملة لكل القنوات بالعربي</span></li>
+                </ul>
+            </div>
+
+            <!-- SYSTEM Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#9881;&#65039; الأوامر | SYSTEM</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#bot-commands</span><span class="channel-desc">المكان الوحيد لكتابة الأوامر</span></li>
+                    <li><span class="channel-name">#leaderboard</span><span class="channel-desc">لوحة المتصدرين (للقراءة فقط)</span></li>
+                    <li><span class="channel-name">#support</span><span class="channel-desc">مساعدة تقنية</span></li>
+                    <li><span class="channel-name">#ask-nour</span><span class="channel-desc">اسأل نور (مساعدتك الشخصية بالذكاء الاصطناعي)</span></li>
+                    <li><span class="channel-name">#suggestions</span><span class="channel-desc">اقتراحاتك لتحسين المجتمع</span></li>
+                </ul>
+            </div>
+
+            <!-- LEVEL 0 Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#127793; المستوى 0 | LEVEL 0</div>
+                <p class="channel-desc mb-2" style="font-size: 0.85rem; color: var(--text-secondary);">(منطقتك — أنت وزملاء مستواك فقط ترون هذه القنوات)</p>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#l0-daily-tasks</span><span class="channel-desc">مهامك اليومية (تنزل 6 صباحاً)</span></li>
+                    <li><span class="channel-name">#l0-text-practice</span><span class="channel-desc">اكتب تمارين الكتابة هنا</span></li>
+                    <li><span class="channel-name">#l0-voice-1</span><span class="channel-desc">غرفة صوتية للممارسة</span></li>
+                    <li><span class="channel-name">#l0-voice-2</span><span class="channel-desc">غرفة صوتية للممارسة</span></li>
+                    <li><span class="channel-name">#l0-questions</span><span class="channel-desc">أسئلة عن المحتوى (العربي مسموح هنا)</span></li>
+                    <li><span class="channel-name">#l0-showcase</span><span class="channel-desc">شارك تسجيلاتك الصوتية</span></li>
+                </ul>
+            </div>
+
+
+            <!-- COMMUNITY Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#127758; المجتمع | COMMUNITY</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#general-chat</span><span class="channel-desc">دردشة حرة بالإنجليزي فقط</span></li>
+                    <li><span class="channel-name">#introductions</span><span class="channel-desc">عرّف نفسك</span></li>
+                    <li><span class="channel-name">#voice-lounge</span><span class="channel-desc">غرفة صوتية مفتوحة</span></li>
+                    <li><span class="channel-name">#events</span><span class="channel-desc">جلسات وفعاليات قادمة</span></li>
+                    <li><span class="channel-name">#daily-word</span><span class="channel-desc">كلمة اليوم (استخدمها في جملة)</span></li>
+                </ul>
+            </div>
+
+            <!-- ACCOUNTABILITY Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#128202; المتابعة | ACCOUNTABILITY</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#daily-check-in</span><span class="channel-desc">صباحاً: خطتك. مساءً: إنجازك</span></li>
+                    <li><span class="channel-name">#streak-tracker</span><span class="channel-desc">متابعة استمراريتك (للقراءة فقط)</span></li>
+                    <li><span class="channel-name">#weekly-goals</span><span class="channel-desc">حدد أهداف الأسبوع كل إثنين</span></li>
+                </ul>
+            </div>
+
+            <!-- RESOURCES Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#128218; المصادر | RESOURCES</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#cheat-sheets</span><span class="channel-desc">ملخصات سريعة</span></li>
+                    <li><span class="channel-name">#video-library</span><span class="channel-desc">فيديوهات تعليمية</span></li>
+                    <li><span class="channel-name">#podcast-recs</span><span class="channel-desc">بودكاست مقترح</span></li>
+                    <li><span class="channel-name">#book-club</span><span class="channel-desc">كتاب الشهر</span></li>
+                </ul>
+            </div>
+
+            <!-- FEEDBACK Category -->
+            <div class="channel-category">
+                <div class="channel-category-title">&#128172; التقييم | FEEDBACK</div>
+                <ul class="channel-list">
+                    <li><span class="channel-name">#speaking-feedback</span><span class="channel-desc">ارفع تسجيل واحصل على ملاحظات</span></li>
+                    <li><span class="channel-name">#writing-feedback</span><span class="channel-desc">كتابتك + تصحيح</span></li>
+                    <li><span class="channel-name">#accent-feedback</span><span class="channel-desc">ملاحظات على لهجتك</span></li>
+                    <li><span class="channel-name">#grammar-qa</span><span class="channel-desc">أسئلة قواعد</span></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 4: The Daily System ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 4 / SECTION 4</span>
+                <h2 class="section-title">النظام اليومي</h2>
+                <p class="section-title-en">The Daily System</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">الدورة اليومية</div>
+                <p>كل يوم الساعة <strong>6:00 صباحاً</strong> (بتوقيت دبي):</p>
+                <ul style="list-style: none; margin-top: 1rem;">
+                    <li style="padding: 0.3rem 0;">&#8226; تظهر 7 مهام في قناة مستواك <span class="channel-name">#l0-daily-tasks</span></li>
+                    <li style="padding: 0.3rem 0;">&#8226; الساعة 6:05 صباحاً تصلك رسالة خاصة بمهمتك الأولى + رابط التمرين</li>
+                </ul>
+            </div>
+
+            <h3 style="color: var(--gold); margin: 1.5rem 0 1rem; font-size: 1.1rem;">المهام السبع اليومية</h3>
+
+            <div class="task-grid">
+                <div class="task-item">
+                    <span class="task-icon">&#127919;</span>
+                    <div class="task-info">
+                        <h4>تدريب النطق — Accent Drill</h4>
+                        <p>تدرّب على الأصوات الإنجليزية</p>
+                    </div>
+                    <span class="task-time">10 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#128214;</span>
+                    <div class="task-info">
+                        <h4>مفردات جديدة — Vocabulary</h4>
+                        <p>تعلّم كلمات جديدة واحفظها</p>
+                    </div>
+                    <span class="task-time">10 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#127911;</span>
+                    <div class="task-info">
+                        <h4>تمرين المحاكاة — Shadowing</h4>
+                        <p>استمع وكرر بنفس النغمة والإيقاع</p>
+                    </div>
+                    <span class="task-time">10 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#127908;</span>
+                    <div class="task-info">
+                        <h4>مهمة الكلام — Speaking Mission</h4>
+                        <p>تحدّث عن موضوع محدد وسجّل</p>
+                    </div>
+                    <span class="task-time">10 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#128066;</span>
+                    <div class="task-info">
+                        <h4>تمرين الاستماع — Listening</h4>
+                        <p>استمع وأجب عن أسئلة الفهم</p>
+                    </div>
+                    <span class="task-time">8 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#9997;&#65039;</span>
+                    <div class="task-info">
+                        <h4>تمرين الكتابة — Writing</h4>
+                        <p>اكتب جمل أو فقرة قصيرة</p>
+                    </div>
+                    <span class="task-time">7 دقائق</span>
+                </div>
+                <div class="task-item">
+                    <span class="task-icon">&#128172;</span>
+                    <div class="task-info">
+                        <h4>مشاركة مجتمعية — Community</h4>
+                        <p>تفاعل مع زملائك في المجتمع</p>
+                    </div>
+                    <span class="task-time">5 دقائق</span>
+                </div>
+            </div>
+
+            <p class="text-center mt-2" style="color: var(--gold); font-weight: 700; font-size: 1.1rem;">
+                المجموع: ~60 دقيقة يومياً
+            </p>
+
+
+            <div class="important-box mt-3">
+                <div class="important-box-title">مهم للطلاب الجدد (الأسبوع الأول)</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.4rem 0;"><strong>الأيام 1-3:</strong> تظهر 3 مهام فقط (نطق، مفردات، مشاركة) — دخول تدريجي</li>
+                    <li style="padding: 0.4rem 0;"><strong>الأيام 4-7:</strong> تظهر 5 مهام (+ كلام، كتابة)</li>
+                    <li style="padding: 0.4rem 0;"><strong>الأسبوع 2+:</strong> جميع المهام السبع مفعّلة</li>
+                </ul>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">كيف تُسجّل إنجاز المهام</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <strong>الطريقة 1:</strong> اضغط على إيموجي الرقم (1&#65039;&#8419;-7&#65039;&#8419;) على رسالة المهام اليومية
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <strong>الطريقة 2:</strong> اكتب <code>!done accent</code> (أو <code>!done vocab</code> إلخ) في <span class="channel-name">#bot-commands</span>
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <strong>الطريقة 3:</strong> اكتب <code>!1</code>, <code>!2</code>, ... <code>!7</code> في <span class="channel-name">#bot-commands</span>
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        <strong>الطريقة 4 (عربي):</strong> اكتب <code>!تم نطق</code> (أو <code>!تم مفردات</code> إلخ)
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">نظام السلسلة (Streaks)</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.4rem 0;">&#8226; أكمل مهمة واحدة على الأقل يومياً للحفاظ على سلسلتك</li>
+                    <li style="padding: 0.4rem 0;">&#8226; مكافآت السلسلة: <strong>7 أيام = 200 نقطة</strong> | <strong>14 يوم = 400 نقطة</strong> | <strong>30 يوم = 1000 نقطة</strong></li>
+                    <li style="padding: 0.4rem 0;">&#8226; إذا فاتك يوم واحد، السلسلة تعود للصفر</li>
+                </ul>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">الإشعارات التلقائية (رسائل خاصة من البوت)</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.4rem 0;"><strong>6:05 ص:</strong> بداية الصباح (مهامك + رابط التمرين)</li>
+                    <li style="padding: 0.4rem 0;"><strong>8:00 م:</strong> تذكير مسائي (إذا لم تنهِ مهامك)</li>
+                    <li style="padding: 0.4rem 0;"><strong>9:00 م:</strong> تحذير السلسلة (إذا سلسلتك 3+ ولم تنجز شيئاً اليوم)</li>
+                    <li style="padding: 0.4rem 0;">يمكنك تخصيصها: اكتب <code>!notifications</code> في <span class="channel-name">#bot-commands</span></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 5: Practice Platform ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 5 / SECTION 5</span>
+                <h2 class="section-title">منصة التمرين</h2>
+                <p class="section-title-en">Practice Platform</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">الرابط</div>
+                <p style="direction: ltr; text-align: center; font-size: 1.2rem; color: var(--gold); font-weight: 700; margin: 1rem 0;">
+                    practice.empireenglish.online
+                </p>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">كيفية الوصول</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; اضغط الرابط في رسالتك الصباحية الخاصة (يُفتح تلقائياً، لا حاجة لخطوات إضافية)
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; أو اكتب <code>!link</code> في <span class="channel-name">#bot-commands</span> ← البوت يرسل لك رابطك الشخصي
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; بمجرد دخولك مرة واحدة، المنصة تتذكرك دائماً
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card mt-2">
+                <div class="card-title">ماذا ستجد على المنصة</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; تدريبات النطق مع نماذج صوتية (استمع وسجّل نفسك)
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; بطاقات مفردات (اقلبها لترى المعنى بالعربي)
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; نصوص المحاكاة (استمع + كرر + سجّل)
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; تمارين استماع مع أسئلة فهم
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; التحكم بالسرعة (بطيء / عادي / سريع)
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; متابعة التقدم (متزامنة مع Discord)
+                    </li>
+                </ul>
+            </div>
+
+            <div class="important-box mt-2">
+                <div class="important-box-title">تنبيه مهم</div>
+                <p>رابط المنصة الشخصي مرتبط بحسابك. لا تشاركه مع أي شخص آخر.</p>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 6: Essential Commands ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 6 / SECTION 6</span>
+                <h2 class="section-title">الأوامر المهمة</h2>
+                <p class="section-title-en">Essential Commands</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">جدول الأوامر</div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    جميع الأوامر تُكتب في <span class="channel-name">#bot-commands</span> فقط
+                </p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>الأمر (English)</th>
+                            <th>الأمر (عربي)</th>
+                            <th>الوظيفة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>!join [goal]</code></td>
+                            <td><code>!انضم</code></td>
+                            <td>التسجيل وتحديد هدفك</td>
+                        </tr>
+                        <tr>
+                            <td><code>!done [task]</code></td>
+                            <td><code>!تم</code></td>
+                            <td>تسجيل إنجاز مهمة</td>
+                        </tr>
+                        <tr>
+                            <td><code>!1</code> to <code>!7</code></td>
+                            <td>—</td>
+                            <td>إنجاز سريع حسب رقم المهمة</td>
+                        </tr>
+                        <tr>
+                            <td><code>!progress</code></td>
+                            <td><code>!تقدم</code></td>
+                            <td>عرض لوحة تقدمك</td>
+                        </tr>
+                        <tr>
+                            <td><code>!streak</code></td>
+                            <td><code>!سلسلة</code></td>
+                            <td>معلومات سلسلتك</td>
+                        </tr>
+                        <tr>
+                            <td><code>!top</code></td>
+                            <td><code>!ترتيب</code></td>
+                            <td>لوحة متصدري النقاط</td>
+                        </tr>
+                        <tr>
+                            <td><code>!streaks</code></td>
+                            <td><code>!سلسلات</code></td>
+                            <td>لوحة متصدري السلسلات</td>
+                        </tr>
+                        <tr>
+                            <td><code>!level</code></td>
+                            <td><code>!مستوى</code></td>
+                            <td>معلومات مستواك + تقدم الترقية</td>
+                        </tr>
+                        <tr>
+                            <td><code>!week</code></td>
+                            <td><code>!أسبوع</code></td>
+                            <td>محتوى هذا الأسبوع</td>
+                        </tr>
+                        <tr>
+                            <td><code>!link</code></td>
+                            <td><code>!ربط</code></td>
+                            <td>رابط منصة التمرين الشخصي</td>
+                        </tr>
+                        <tr>
+                            <td><code>!help</code></td>
+                            <td><code>!مساعدة</code></td>
+                            <td>عرض جميع الأوامر</td>
+                        </tr>
+                        <tr>
+                            <td><code>!notifications</code></td>
+                            <td><code>!إشعارات</code></td>
+                            <td>إدارة تفضيلات الإشعارات</td>
+                        </tr>
+                        <tr>
+                            <td><code>!today</code></td>
+                            <td><code>!اليوم</code></td>
+                            <td>المهام المتبقية اليوم</td>
+                        </tr>
+                        <tr>
+                            <td><code>!agree</code></td>
+                            <td><code>!أوافق</code></td>
+                            <td>قبول القوانين (في #rules فقط)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 7: Level System ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 7 / SECTION 7</span>
+                <h2 class="section-title">نظام المستويات</h2>
+                <p class="section-title-en">Level System</p>
+            </div>
+
+            <!-- Level 0 -->
+            <div class="level-card">
+                <span class="level-badge">&#127793; Level 0</span>
+                <h4>مبتدئ تماماً — Absolute Beginner</h4>
+                <div class="level-meta">
+                    <div class="level-meta-item"><strong>المدة:</strong> 8-12 أسبوع</div>
+                    <div class="level-meta-item"><strong>المفردات:</strong> 500 كلمة</div>
+                    <div class="level-meta-item"><strong>الكلام:</strong> 60 ثانية متواصلة</div>
+                    <div class="level-meta-item"><strong>التركيز:</strong> جميع الـ44 صوت إنجليزي، التحيات، تقديم النفس</div>
+                    <div class="level-meta-item"><strong>الترقية:</strong> درجة 70+ في امتحان الخروج</div>
+                </div>
+            </div>
+
+            <!-- Level 1 -->
+            <div class="level-card">
+                <span class="level-badge">&#128170; Level 1</span>
+                <h4>إنجليزية النجاة — Survival English</h4>
+                <div class="level-meta">
+                    <div class="level-meta-item"><strong>المدة:</strong> 10-14 أسبوع</div>
+                    <div class="level-meta-item"><strong>المفردات:</strong> 1,500 كلمة</div>
+                    <div class="level-meta-item"><strong>الكلام:</strong> دقيقتان بدون تحضير</div>
+                    <div class="level-meta-item"><strong>التركيز:</strong> محادثات يومية، طلاقة أساسية</div>
+                    <div class="level-meta-item"><strong>الترقية:</strong> درجة 75+ في امتحان الخروج</div>
+                </div>
+            </div>
+
+            <!-- Level 2 -->
+            <div class="level-card">
+                <span class="level-badge">&#128640; Level 2</span>
+                <h4>التواصل — Communication</h4>
+                <div class="level-meta">
+                    <div class="level-meta-item"><strong>المدة:</strong> 12-16 أسبوع</div>
+                    <div class="level-meta-item"><strong>المفردات:</strong> 3,000 كلمة</div>
+                    <div class="level-meta-item"><strong>الكلام:</strong> 4 دقائق عرض تقديمي</div>
+                    <div class="level-meta-item"><strong>التركيز:</strong> مواضيع معقدة، لغة مهنية</div>
+                    <div class="level-meta-item"><strong>الترقية:</strong> درجة 80+ في امتحان الخروج</div>
+                </div>
+            </div>
+
+            <!-- Level 3 -->
+            <div class="level-card">
+                <span class="level-badge">&#128081; Level 3</span>
+                <h4>الطلاقة واللهجة — Fluency &amp; Native Accent</h4>
+                <div class="level-meta">
+                    <div class="level-meta-item"><strong>المدة:</strong> مستمر</div>
+                    <div class="level-meta-item"><strong>المفردات:</strong> +5,000 كلمة</div>
+                    <div class="level-meta-item"><strong>الكلام:</strong> 5 دقائق في أي موضوع</div>
+                    <div class="level-meta-item"><strong>التركيز:</strong> انسيابية طبيعية، شهادة ربع سنوية</div>
+                </div>
+            </div>
+
+
+            <div class="card mt-3">
+                <div class="card-title">كيف تترقّى</div>
+                <ul style="list-style: none;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; <strong>لا يمكنك تخطي المستويات</strong> — يجب إثبات كفاءتك في كل مستوى
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; تقييمات أسبوعية كل يوم أحد تساعدك على تتبع تقدمك
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; عندما تكون جاهزاً، اطلب امتحان الخروج: اكتب <code>!exam</code> في <span class="channel-name">#bot-commands</span>
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        &#8226; الامتحان يشمل: تسجيل صوتي + كتابة + اختبار مفردات
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        &#8226; الدرجة المطلوبة تختلف حسب المستوى (70 / 75 / 80)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 8: Golden Rules ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 8 / SECTION 8</span>
+                <h2 class="section-title">القوانين الذهبية</h2>
+                <p class="section-title-en">Golden Rules</p>
+            </div>
+
+            <div class="card">
+                <div class="rule-item">
+                    <span class="rule-number">1</span>
+                    <span class="rule-text"><strong>إنجليزي فقط</strong> في جميع القنوات (الاستثناء: <span class="channel-name">#l0-questions</span> — جملة عربية واحدة للتوضيح)</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">2</span>
+                    <span class="rule-text"><strong>أنجز مهامك اليومية</strong> — النظام يعمل عندما تعمل أنت</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">3</span>
+                    <span class="rule-text"><strong>ادعم، لا تحكم</strong> — الكل بدأ من الصفر. صحّح بلطف.</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">4</span>
+                    <span class="rule-text"><strong>الغرف الصوتية:</strong> المايك مطلوب، أقصى حد 2 دقيقة كلام متواصل، 10 دقائق حد أدنى للاحتساب</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">5</span>
+                    <span class="rule-text"><strong>شارك تسجيلاتك</strong> وقدّم ملاحظات — هكذا تتطور</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">6</span>
+                    <span class="rule-text"><strong>تسامح صفر:</strong> لا تحرش، لا سبام، لا مشاركة تسجيلات الآخرين</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">7</span>
+                    <span class="rule-text"><strong>لا تخطي مستويات</strong> — تتقدم بإثبات كفاءتك</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">8</span>
+                    <span class="rule-text"><strong>لا تشارك رابط المنصة الشخصي</strong> مع أي شخص (مرتبط بحسابك)</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">9</span>
+                    <span class="rule-text"><strong>الاستمرارية أهم من الكمال</strong> — مهمة واحدة يومياً أفضل من صفر</span>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">10</span>
+                    <span class="rule-text"><strong>عند الشك، اسأل نور</strong> في <span class="channel-name">#ask-nour</span> (متاحة 24/7)</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 9: FAQ ========== -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-number">القسم 9 / SECTION 9</span>
+                <h2 class="section-title">الأسئلة الشائعة</h2>
+                <p class="section-title-en">Frequently Asked Questions</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">متى تنزل المهام اليومية؟</div>
+                <div class="faq-a">الساعة 6:00 صباحاً بتوقيت دبي، كل يوم بدون استثناء.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">ماذا أفعل إذا فاتني يوم؟</div>
+                <div class="faq-a">السلسلة (streak) تعود للصفر، لكن يمكنك البدء من جديد فوراً. الأهم هو العودة.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">كيف أستخدم منصة التمرين؟</div>
+                <div class="faq-a">اضغط الرابط في رسالة الصباح الخاصة. أو اكتب <code>!link</code> في <span class="channel-name">#bot-commands</span>.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">هل يمكنني التحدث بالعربية؟</div>
+                <div class="faq-a">فقط في <span class="channel-name">#l0-questions</span> (جملة واحدة للتوضيح). باقي القنوات إنجليزي فقط.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">كيف أرقّي مستواي؟</div>
+                <div class="faq-a">اكتب <code>!exam</code> في <span class="channel-name">#bot-commands</span> عندما تكون جاهزاً. الامتحان يشمل كلام + كتابة + مفردات.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">من هي نور؟</div>
+                <div class="faq-a">مساعدتك الشخصية بالذكاء الاصطناعي. اسألها أي شيء في <span class="channel-name">#ask-nour</span>.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">ماذا لو واجهت مشكلة تقنية؟</div>
+                <div class="faq-a">اكتب في <span class="channel-name">#support</span> وسيرد عليك أحد من الإدارة.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">كم الوقت المطلوب يومياً؟</div>
+                <div class="faq-a">45-60 دقيقة (المستوى 0). يمكنك تقسيمها على فترات.</div>
+            </div>
+        </div>
+
+
+        <!-- ========== SECTION 10: Back Cover ========== -->
+        <div class="back-cover">
+            <p class="back-cover-quote">"Welcome to Empire. Let's build something real."</p>
+            <p class="back-cover-quote-ar">"أهلاً بك في Empire. هنا نبني شيئاً حقيقياً."</p>
+
+            <div class="back-cover-notice">
+                <p>هذا الدليل ملكية خاصة لـ Empire English Community. يُمنع نسخه أو مشاركته مع غير المسجلين.</p>
+                <br>
+                <p style="direction: ltr; text-align: center;">Contact: Discord Server (invite link will be provided separately)</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="page-footer">
+            &copy; 2026 Empire English Community. All rights reserved.
+        </footer>
+
+    </div>
+</body>
+</html>
