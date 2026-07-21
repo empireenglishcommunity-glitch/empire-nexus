@@ -2439,6 +2439,28 @@ async def on_message(message: discord.Message):
             handled = await features.handle_benchmark_recording(message)
             if handled:
                 return
+        # Journey advancement: check if this DM advances the onboarding
+        # journey BEFORE routing to nour_concierge. This ensures the
+        # journey works even when nour_concierge flag is OFF (the AI
+        # chatbot). Previously, try_message_triggered_advance() was only
+        # called from inside nour_concierge.handle_message(), which exits
+        # immediately when its own flag is disabled — leaving new students
+        # stuck on the "welcome" step forever with no response.
+        if not message.content.startswith(config.BOT_PREFIX):
+            from . import nour_journey
+            try:
+                journey_reply = await nour_journey.try_message_triggered_advance(
+                    str(message.author.id), message.content.strip()
+                )
+                if journey_reply:
+                    # Journey advanced — send the scripted next-step message
+                    async with message.channel.typing():
+                        await asyncio.sleep(1.5)  # Human-like delay
+                    await message.channel.send(journey_reply)
+                    return
+            except Exception as e:
+                logger.error(f"Journey DM advance error: {e}")
+
         # Nour N0: handle non-command DMs as concierge conversation
         if not message.content.startswith(config.BOT_PREFIX):
             from . import nour_concierge
