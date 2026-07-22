@@ -31,26 +31,24 @@ logger = logging.getLogger("empire-bot.features")
 # ============================================================
 
 def get_allowed_tasks_for_member(discord_id: str) -> list[str]:
-    """Determine how many tasks a new member should do based on days since joining.
-    Day 1-3: 3 tasks (accent, vocab, community)
-    Day 4-7: 5 tasks (+ speaking, writing)
-    Week 2+: all 7 tasks
+    """All members get all 7 daily tasks from day one — one consistent
+    experience for everyone at the same level.
+
+    Previously this RAMPED the number of unlocked tasks by days-since-join
+    (day 1-3 = 3 tasks, day 4-7 = 5, week 2+ = 7). In practice that meant
+    two members at the SAME level saw a different number of tasks purely
+    because they joined on different days — confusing for students (a
+    day-1 member who tried task #4 was told it was "not unlocked yet"
+    even though the channel post already listed all 7) and confusing for
+    the owner watching them. The owner chose a single, consistent
+    experience: everyone can see and complete all 7 tasks from day one.
+    Beginners are free to start with just 1-2 tasks and build up at their
+    own pace — the choice is theirs, not gated by the system.
+
+    The signature is unchanged (callers still pass discord_id) so nothing
+    else needs to change.
     """
-    member = database.get_member(discord_id)
-    if not member:
-        return [t["id"] for t in config.DAILY_TASKS]
-
-    joined = datetime.datetime.fromisoformat(member["joined_at"])
-    days_since = (datetime.datetime.now() - joined).days
-
-    all_tasks = [t["id"] for t in config.DAILY_TASKS]
-
-    if days_since < 3:
-        return ["accent", "vocab", "community"]
-    elif days_since < 7:
-        return ["accent", "vocab", "speaking", "writing", "community"]
-    else:
-        return all_tasks
+    return [t["id"] for t in config.DAILY_TASKS]
 
 
 # ============================================================
