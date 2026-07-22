@@ -25,18 +25,24 @@ def test_get_allowed_tasks_unregistered_member_gets_all_tasks():
     assert allowed == [t["id"] for t in config.DAILY_TASKS]
 
 
-def test_get_allowed_tasks_new_member_gets_three_tasks():
+# The gradual 3->5->7 task ramp was removed: every member now gets all 7
+# tasks from day one, so that two members at the same level always see the
+# same thing regardless of when they joined. These tests assert that new
+# consistent behavior across the same join-date scenarios the ramp used to
+# differentiate (brand new, day 3, day 5, week 2+).
+
+def test_get_allowed_tasks_new_member_gets_all_seven():
     database.register_member("u1", "Alice")
     allowed = features.get_allowed_tasks_for_member("u1")
-    assert allowed == ["accent", "vocab", "community"]
+    assert allowed == [t["id"] for t in config.DAILY_TASKS]
 
 
-def test_get_allowed_tasks_day_4_to_7_gets_five_tasks():
+def test_get_allowed_tasks_day_5_gets_all_seven():
     database.register_member("u1", "Alice")
     joined = (datetime.datetime.now() - datetime.timedelta(days=5)).isoformat()
     database.update_member("u1", joined_at=joined)
     allowed = features.get_allowed_tasks_for_member("u1")
-    assert allowed == ["accent", "vocab", "speaking", "writing", "community"]
+    assert allowed == [t["id"] for t in config.DAILY_TASKS]
 
 
 def test_get_allowed_tasks_week_2_plus_gets_all_seven():
@@ -47,14 +53,12 @@ def test_get_allowed_tasks_week_2_plus_gets_all_seven():
     assert allowed == [t["id"] for t in config.DAILY_TASKS]
 
 
-def test_get_allowed_tasks_boundary_exactly_day_3():
-    """days_since < 3 is the 3-task rule; exactly 3 days must already
-    be in the 5-task bracket (boundary correctness, not just direction)."""
+def test_get_allowed_tasks_day_3_gets_all_seven():
     database.register_member("u1", "Alice")
     joined = (datetime.datetime.now() - datetime.timedelta(days=3)).isoformat()
     database.update_member("u1", joined_at=joined)
     allowed = features.get_allowed_tasks_for_member("u1")
-    assert allowed == ["accent", "vocab", "speaking", "writing", "community"]
+    assert allowed == [t["id"] for t in config.DAILY_TASKS]
 
 
 # ============================================================
