@@ -68,33 +68,49 @@ mastery). No student-visible change in Phase 1.
 Goal: build the server truth. No student-visible change yet (the pieces
 are dormant until Phases 2–3 wire the UI). All in `empire-nexus`.
 
-- [ ] **1.1** Schema: add `claim_codes`, `device_sessions`,
+- [x] **1.1** Schema: add `claim_codes`, `device_sessions`,
   `practice_mastery` tables via idempotent `CREATE TABLE IF NOT EXISTS`
-  (same migration pattern as existing `init_db`). (R5, R8, R9)
-- [ ] **1.2** Claim code lifecycle: `create_claim_code(discord_id)`
-  (deletes prior unconsumed, inserts fresh, 15-min expiry),
-  `consume_claim_code(code)` (validates + marks consumed atomically).
-  (R5.1–5.3) + rate limit (R6.5).
-- [ ] **1.3** Session mint/verify: `mint_session(discord_id, level,
-  device_id)` → HMAC-signed token using `DARB_SESSION_SECRET`;
-  `verify_session(token)` helper (also usable as reference for the edge).
-  2-session cap with revoke-oldest + owner alert. (R5.3–5.5, R6.2)
-- [ ] **1.4** Completion+mastery core: `record_practice_completion(
-  discord_id, level, week, day, exercise)` implementing the once-per-day
-  increment (cap 5), first/last dates, AND a `daily_submissions` write
-  for streak/points. Returns exercise tier + day tier (min of 4). (R8, R9)
-- [ ] **1.5** API endpoints (aiohttp, `api_server.py`):
-  - `POST /api/claim` {code, device_id} → session token + level (Flow A)
-  - `GET  /api/session-status` → {valid, revoked, level} (edge revocation)
-  - `GET  /api/calendar` → the calendar JSON (R7 shape)
-  - `POST /api/practice-complete` {level,week,day,exercise} → tiers (Flow C)
-  - CORS for `practice.empireenglish.online`; all read the session cookie.
-- [ ] **1.6** `DARB_SESSION_SECRET` generated, added to server `.env`
-  (not git); documented for the Pages env var (Phase 3). (C3)
-- [ ] **1.7** Unit tests for: once-per-day increment, tier cap at 5, day
-  tier = min, claim single-use + invalidation, 2-session cap. CI green.
-- [ ] **1.8** PR merged + deployed. (No student-visible change to verify;
-  confirm endpoints respond with a ghost account.) Update STATUS.md.
+  (same migration pattern as existing `init_db`). (R5, R8, R9) *(Done —
+  in database.py `_SCHEMA`; migrations run clean on the live DB.)*
+- [x] **1.2** Claim code lifecycle: `create_claim_code(discord_id)`
+  (soft-invalidates prior unconsumed — expires them, doesn't delete, to
+  preserve history for the rate limit — inserts fresh, 15-min expiry),
+  `consume_claim_code(code)` (atomic conditional UPDATE + rowcount guard
+  against a double-claim race). (R5.1–5.3) + rate limit 6/hr (R6.5).
+- [x] **1.3** Session mint/verify: `mint_session` → HMAC-SHA256 token
+  using `DARB_SESSION_SECRET` (empty secret = fail-safe);
+  `verify_session` (sig + expiry). 2-session cap with revoke-oldest +
+  owner Telegram alert (in `darb.claim()`). (R5.3–5.5, R6.2)
+- [x] **1.4** Completion+mastery core: `record_practice_mastery(...)` —
+  once-per-day increment (cap 5), first/last dates. Paired at the API
+  layer with the canonical `tasks.process_submission` for streak/points
+  (no double-log). `get_calendar_mastery` returns day_tier = min of 4,
+  done = all 4 ≥ 1. (R8, R9)
+- [x] **1.5** API endpoints (aiohttp, `api_server.py`): `POST /api/claim`,
+  `GET /api/session-status`, `GET /api/calendar`,
+  `POST /api/practice-complete`. Auth via the signed session (cookie /
+  `X-Darb-Session` header / `?session=` for testing). CORS gained
+  Allow-Credentials + X-Darb-Session. *(device_id is server-generated at
+  claim, not client-supplied — simpler + unspoofable.)*
+- [x] **1.6** `DARB_SESSION_SECRET` generated on the server (64 hex) and
+  added to `/opt/empire-english-bot/.env` (NOT git). **Phase 3 must set
+  the SAME value in the Cloudflare Pages env** (read it back from the
+  server `.env`). (C3)
+- [x] **1.7** Unit tests (`tests/test_darb.py`, 22): once-per-day
+  increment, tier cap 5, day tier = min, claim single-use + invalidation
+  + expiry + rate limit, 2-device cap eviction, session mint/verify/
+  tamper/expire/empty-secret, calendar states, async claim flow. 421
+  core tests pass on Python 3.12, 0 regressions. (empire-nexus PR #228)
+- [x] **1.8** PR #228 merged + deployed to the VPS. **Live smoke test
+  with a ghost account passed** end-to-end: claim → signed session →
+  calendar (correct join-anchored dates + today/missed/locked) →
+  practice-complete (day turns green only when all 4 done; day_tier =
+  min of 4; same-day repeat does NOT bump the tier). STATUS.md updated.
+
+**✅ Phase 1 COMPLETE (2026-07-23)** — backend live, dormant (no UI calls
+it yet), fully smoke-tested. Next: Phase 2 (calendar UI) — which also
+wires Discord `!done` → `record_practice_mastery` (deferred from Phase 1)
+so the calendar reflects both entry points.
 
 ---
 
