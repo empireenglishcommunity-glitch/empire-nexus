@@ -482,8 +482,6 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
 
     task_by_id = {t["id"]: t for t in task_data["tasks"]}
     num_by_id = {t["id"]: i + 1 for i, t in enumerate(config.DAILY_TASKS)}
-    emoji_by_id = {t["id"]: t["emoji"] for t in config.DAILY_TASKS}
-    name_by_id = {t["id"]: (t["name"], t["name_ar"]) for t in config.DAILY_TASKS}
     NUM_EMOJI = {1: "1️⃣", 2: "2️⃣", 3: "3️⃣", 4: "4️⃣", 5: "5️⃣", 6: "6️⃣", 7: "7️⃣"}
 
     PRACTICE_IDS = ["accent", "vocab", "shadow", "listening"]
@@ -496,22 +494,26 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
-    # Section 1 — the practice platform (ONE link, concise task list)
-    practice_lines = [
-        f"🌐 **{bl('On the practice platform', 'على منصة التمرين')}:** {config.PRACTICE_PLATFORM_URL}",
-    ]
-    for tid in PRACTICE_IDS:
-        if tid in task_by_id:
-            en, ar = name_by_id[tid]
-            practice_lines.append(f"{NUM_EMOJI[num_by_id[tid]]} {emoji_by_id[tid]} {en} / {ar}")
-    practice_lines.append(
-        bl("Open today and start — audio, drills and quizzes are all there.",
-           "افتح يوم النهاردة وابدأ — الصوت والتمارين والاختبارات كلها هناك.")
-    )
-    practice_block = "\n".join(practice_lines)
+    blocks = []
 
-    # Section 2 — the Discord tasks (keep their prompts; done in Discord)
-    discord_intro = f"💬 **{bl('Here on Discord', 'هنا في Discord')}:**"
+    # Section 1 — the practice platform: ONE link + the platform tasks
+    # listed concisely by their real title (their full content lives on
+    # the platform, so no per-task deep links and no content dump here).
+    practice_present = [tid for tid in PRACTICE_IDS if tid in task_by_id]
+    if practice_present:
+        practice_lines = [
+            f"🌐 **{bl('On the practice platform', 'على منصة التمرين')}:** {config.PRACTICE_PLATFORM_URL}",
+        ]
+        for tid in practice_present:
+            t = task_by_id[tid]
+            practice_lines.append(f"{NUM_EMOJI[num_by_id[tid]]} {t['title']}")
+        practice_lines.append(
+            bl("Open today and start — audio, drills and quizzes are all there.",
+               "افتح يوم النهاردة وابدأ — الصوت والتمارين والاختبارات كلها هناك.")
+        )
+        blocks.append("\n".join(practice_lines))
+
+    # Section 2 — the Discord tasks (done in Discord, so keep their prompts)
     discord_blocks = []
     for tid in DISCORD_IDS:
         t = task_by_id.get(tid)
@@ -519,6 +521,9 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
             discord_blocks.append(
                 f"{NUM_EMOJI[num_by_id[tid]]} **{t['title']}** ({t['duration_min']} min)\n{t['content']}"
             )
+    if discord_blocks:
+        blocks.append(f"💬 **{bl('Here on Discord', 'هنا في Discord')}:**")
+        blocks.extend(discord_blocks)
 
     footer = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
@@ -526,8 +531,6 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
         f"✅ {bl('Log each when done:', 'لما تخلص كل مهمة اكتب:')} `!done` / `!1`-`!7` {bl('in', 'في')} #daily-check-in",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
-
-    blocks = [practice_block, discord_intro] + discord_blocks
 
     # Daily conversational pattern (Tatawwur T1 / Sahel S3), if present
     pattern = task_data.get("daily_pattern")
