@@ -70,6 +70,16 @@ def _migrate(conn: sqlite3.Connection):
     if "gender" not in member_cols:
         conn.execute("ALTER TABLE members ADD COLUMN gender TEXT NOT NULL DEFAULT ''")
 
+    # Darb Phase 6: level_started_at anchors the personal calendar to when
+    # the student began their CURRENT level, not their original bot-join
+    # date. Nullable — when NULL, callers fall back to joined_at (so every
+    # existing student is unchanged: their calendar/week keep their current
+    # position). It is set to 'now' on a level promotion (set_level), so a
+    # student advancing L0->L1 correctly restarts at Week 1 Day 1 of the
+    # new level instead of the calendar thinking they're 8 weeks deep.
+    if "level_started_at" not in member_cols:
+        conn.execute("ALTER TABLE members ADD COLUMN level_started_at TEXT DEFAULT NULL")
+
     # Wuslah W0.4: last_used on link_tokens table (for token expiry)
     lt_cols = {row["name"] for row in conn.execute("PRAGMA table_info(link_tokens)")}
     if "last_used" not in lt_cols:
@@ -720,8 +730,15 @@ def update_member(discord_id: str, **fields):
 
 
 def set_level(discord_id: str, new_level: str):
-    """Update a member's level (after passing advancement exam)."""
-    update_member(discord_id, level=new_level)
+    """Update a member's level (after passing advancement exam).
+
+    Darb Phase 6: also stamps level_started_at = now, so the personal
+    calendar and week number restart at Week 1 Day 1 of the NEW level
+    (instead of the anchor staying on the original bot-join date, which
+    would make the L1 calendar think the student is already 8 weeks deep
+    and show most of L1 as 'missed')."""
+    update_member(discord_id, level=new_level,
+                  level_started_at=datetime.datetime.now().isoformat())
 
 
 def all_active_members() -> list[dict]:
@@ -1577,13 +1594,25 @@ def members_with_buddy(buddy_discord_id: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def level_anchor_iso(member: dict) -> str:
+    """Darb Phase 6: the date the student's CURRENT level began, as an ISO
+    string. Falls back to joined_at when level_started_at is unset (every
+    student who has never been promoted), so behaviour is identical to
+    before for them. Single source of truth for both the personal
+    calendar (darb.py) and the week number below, so they never diverge."""
+    return (member.get("level_started_at") or member.get("joined_at") or
+            datetime.datetime.now().isoformat())
+
+
 def member_week_number(discord_id: str) -> int:
-    """Calculate which week a member is in (from join date)."""
+    """Calculate which week a member is in (from their current level's
+    start — Darb Phase 6). Falls back to join date for un-promoted
+    students, so this is unchanged for everyone today."""
     member = get_member(discord_id)
     if not member:
         return 1
-    joined = datetime.datetime.fromisoformat(member["joined_at"])
-    days = (datetime.datetime.now() - joined).days
+    anchor = datetime.datetime.fromisoformat(level_anchor_iso(member))
+    days = (datetime.datetime.now() - anchor).days
     return max(1, (days // 7) + 1)
 
 
@@ -2999,6 +3028,82 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
                 incremented = False  # same-day repeat: no tier change
         conn.commit()
         return {"exercise_tier": count, "incremented": incremented}
+    finally:
+        conn.close()
+
+
+def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:
+    """Darb Phase 6: reconstruct calendar mastery for a student from their
+    real `daily_submissions` history, so days they were actually active
+    show as 'done' (green) on the new calendar instead of 'missed'.
+
+    This is the migration path for students who were practising BEFORE the
+    Phase 1 `practice_mastery` table existed. It is date-based (robust to
+    the day-of-week vs join-anchored question): each historical submission
+    of a practice exercise (accent/vocab/shadow/listening) is mapped to the
+    content-day it falls on, using the student's level anchor
+    (`level_anchor_iso`), and inserted at Bronze (completion_count=1).
+
+    Idempotent + non-destructive: uses INSERT ... ON CONFLICT DO NOTHING,
+    so it never lowers or overwrites a tier the student earned for real
+    after launch. Safe to run multiple times.
+
+    Returns {"days_marked": int, "exercises_marked": int}.
+    """
+    member = get_member(discord_id)
+    if not member:
+        return {"days_marked": 0, "exercises_marked": 0}
+    level = member.get("level", "L0")
+    try:
+        anchor = datetime.datetime.fromisoformat(level_anchor_iso(member)).date()
+    except (ValueError, TypeError):
+        anchor = datetime.date.today()
+
+    # Which curriculum weeks exist for this level (avoid writing out-of-range)
+    from . import curriculum
+    max_week = curriculum.max_week_for_level(level)
+
+    practice_ex = set(PRACTICE_EXERCISES)  # accent, vocab, shadow, listening
+
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT date, task_id FROM daily_submissions WHERE discord_id=?",
+            (discord_id,),
+        ).fetchall()
+
+        days_seen = set()
+        exercises_marked = 0
+        for r in rows:
+            task = r["task_id"]
+            if task not in practice_ex:
+                continue
+            try:
+                sub_date = datetime.date.fromisoformat(r["date"][:10])
+            except (ValueError, TypeError):
+                continue
+            day_offset = (sub_date - anchor).days
+            if day_offset < 0:
+                continue  # submission predates this level's start — skip
+            cal_index = day_offset + 1
+            week = (cal_index - 1) // 7 + 1
+            day = (cal_index - 1) % 7 + 1
+            if week > max_week:
+                continue  # beyond the level's curriculum
+            iso = sub_date.isoformat()
+            cur = conn.execute(
+                "INSERT INTO practice_mastery "
+                "(discord_id, level, week, day, exercise, completion_count, "
+                " first_completed_date, last_completed_date) "
+                "VALUES (?, ?, ?, ?, ?, 1, ?, ?) "
+                "ON CONFLICT(discord_id, level, week, day, exercise) DO NOTHING",
+                (discord_id, level, week, day, task, iso, iso),
+            )
+            if cur.rowcount:
+                exercises_marked += 1
+                days_seen.add((week, day))
+        conn.commit()
+        return {"days_marked": len(days_seen), "exercises_marked": exercises_marked}
     finally:
         conn.close()
 

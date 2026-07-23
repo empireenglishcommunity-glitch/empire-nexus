@@ -198,7 +198,10 @@ def today_week_day(discord_id: str) -> tuple[int, int] | None:
         return None
     level = member.get("level", "L0")
 
-    join_raw = member.get("joined_at") or ""
+    # Darb Phase 6: anchor to the current level's start (falls back to
+    # joined_at for un-promoted students), so a promoted student's day
+    # counter restarts for the new level.
+    join_raw = database.level_anchor_iso(member)
     try:
         join_date = datetime.date.fromisoformat(join_raw[:10])
     except (ValueError, TypeError):
@@ -233,7 +236,9 @@ def build_calendar(discord_id: str) -> dict | None:
         return None
     level = member.get("level", "L0")
 
-    join_raw = member.get("joined_at") or ""
+    # Darb Phase 6: anchor to the current level's start (falls back to
+    # joined_at for un-promoted students).
+    join_raw = database.level_anchor_iso(member)
     try:
         join_date = datetime.date.fromisoformat(join_raw[:10])
     except (ValueError, TypeError):
