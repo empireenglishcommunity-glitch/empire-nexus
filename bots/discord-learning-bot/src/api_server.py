@@ -119,7 +119,10 @@ def _cors_headers(request=None) -> dict:
         return {
             "Access-Control-Allow-Origin": origin,
             "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Headers": "Content-Type, X-Darb-Session",
+            # Darb: the practice page sends the empire_session cookie
+            # cross-subdomain (practice. -> bot.), which requires this.
+            "Access-Control-Allow-Credentials": "true",
         }
     # Unknown origin: return CORS headers with the primary domain
     # (browsers will block if it doesn't match their Origin, which is
@@ -919,6 +922,156 @@ async def get_validate_token(request: web.Request) -> web.Response:
         "valid": True,
         "name": (member.get("discord_name") or "Student").split("#")[0],
         "level": member.get("level", "L0"),
+    }, headers=_cors_headers(request))
+
+
+# ============================================================
+#  DARB (درب) — Phase 1 endpoints (claim, session, calendar, complete)
+# ============================================================
+#
+# These power the gated personal practice experience. They authenticate
+# via the signed `empire_session` device token (Darb), NOT the legacy
+# link token. Dormant until the practice-page UI (Phase 2) and edge gate
+# (Phase 3) use them.
+
+def _client_ip(request: web.Request) -> str:
+    ip = request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+    if not ip:
+        ip = request.headers.get("X-Real-IP", "")
+    if not ip and request.transport:
+        peer = request.transport.get_extra_info("peername")
+        if peer:
+            ip = peer[0]
+    return ip or ""
+
+
+def _session_from_request(request: web.Request):
+    """Return the verified + non-revoked Darb session payload, or None.
+
+    Accepts the token from the `empire_session` cookie (browser), an
+    `X-Darb-Session` header, or a `?session=` query param (for testing
+    without a browser). Also confirms the device session isn't revoked."""
+    from . import darb
+    tok = (request.cookies.get("empire_session")
+           or request.headers.get("X-Darb-Session")
+           or request.query.get("session", ""))
+    payload = darb.verify_session(tok)
+    if not payload:
+        return None
+    sid = payload.get("sid")
+    if not sid or not database.is_device_session_active(sid):
+        return None
+    return payload
+
+
+@routes.post("/api/claim")
+async def post_claim(request: web.Request) -> web.Response:
+    """Flow A: exchange a one-time claim code for a durable session token."""
+    from . import darb
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    code = (body.get("code") or "").strip()
+    if not code:
+        return web.json_response({"ok": False, "error": "missing code"},
+                                 status=400, headers=_cors_headers(request))
+    result = await darb.claim(
+        code, ip=_client_ip(request),
+        user_agent=request.headers.get("User-Agent", ""),
+    )
+    if not result:
+        return web.json_response({"ok": False, "error": "invalid or expired code"},
+                                 status=400, headers=_cors_headers(request))
+    return web.json_response(
+        {"ok": True, "token": result["token"], "level": result["level"],
+         "name": result["name"]},
+        headers=_cors_headers(request),
+    )
+
+
+@routes.get("/api/session-status")
+async def get_session_status(request: web.Request) -> web.Response:
+    """Edge revocation check: is this session still valid + not revoked?"""
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"valid": False}, status=401,
+                                 headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+    return web.json_response({"valid": True, "revoked": False,
+                             "level": payload.get("lvl")},
+                            headers=_cors_headers(request))
+
+
+@routes.get("/api/calendar")
+async def get_calendar(request: web.Request) -> web.Response:
+    """The student's personal, join-anchored calendar (their level only)."""
+    from . import darb
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"error": "unauthorized"}, status=401,
+                                 headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+    cal = darb.build_calendar(payload["did"])
+    if cal is None:
+        return web.json_response({"error": "not found"}, status=404,
+                                 headers=_cors_headers(request))
+    return web.json_response(cal, headers=_cors_headers(request))
+
+
+@routes.post("/api/practice-complete")
+async def post_practice_complete(request: web.Request) -> web.Response:
+    """Flow C: record a content-day exercise completion. Runs the
+    canonical points/streak path (`process_submission`, same as Discord
+    `!done`) AND the content-day mastery/tier upsert."""
+    from . import curriculum
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"ok": False, "error": "unauthorized"},
+                                 status=401, headers=_cors_headers(request))
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    discord_id = payload["did"]
+    level = payload.get("lvl", "L0")
+    exercise = (body.get("exercise") or "").strip()
+    try:
+        week = int(body.get("week"))
+        day = int(body.get("day"))
+    except (TypeError, ValueError):
+        return web.json_response({"ok": False, "error": "bad week/day"},
+                                 status=400, headers=_cors_headers(request))
+    if exercise not in database.PRACTICE_EXERCISES:
+        return web.json_response({"ok": False, "error": "bad exercise"},
+                                 status=400, headers=_cors_headers(request))
+    if not (1 <= week <= curriculum.max_week_for_level(level)) or not (1 <= day <= 7):
+        return web.json_response({"ok": False, "error": "week/day out of range"},
+                                 status=400, headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+
+    # Canonical points/streak (identical path to Discord !done). Duplicate
+    # same-day completions are absorbed by log_submission's UNIQUE
+    # constraint (no double points). Best-effort — never fail the
+    # completion over a feedback/streak hiccup.
+    member = database.get_member(discord_id)
+    name = member.get("discord_name", "Student") if member else "Student"
+    try:
+        from . import tasks
+        await tasks.process_submission(discord_id, name, exercise)
+    except Exception as e:
+        logger.warning(f"practice-complete: process_submission failed: {e}")
+
+    # Content-day mastery/tier truth (the calendar's source of truth).
+    m = database.record_practice_mastery(discord_id, level, week, day, exercise)
+    day_state = database.get_calendar_mastery(discord_id, level).get((week, day), {})
+    return web.json_response({
+        "ok": True,
+        "exercise": exercise,
+        "exercise_tier": m["exercise_tier"],
+        "incremented": m["incremented"],
+        "day_tier": day_state.get("day_tier", 0),
+        "day_done": day_state.get("done", False),
     }, headers=_cors_headers(request))
 
 
