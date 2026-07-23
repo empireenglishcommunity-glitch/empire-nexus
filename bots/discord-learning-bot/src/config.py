@@ -96,6 +96,14 @@ PRACTICE_PLATFORM_URL = os.getenv(
 # Sahel S6: API port for practice platform connection
 API_PORT = int(os.getenv("API_PORT", "8099") or "8099")
 
+# Darb (درب) Phase 1: HMAC secret used to sign practice-platform device
+# session tokens. MUST be set in the production server's .env (and the
+# SAME value in the Cloudflare Pages env for the Phase 3 edge gate). It
+# is NEVER committed to git. When empty, session minting/verification is
+# disabled (fail-safe: no valid sessions can be produced or accepted).
+# Generate once with: python3 -c "import secrets; print(secrets.token_hex(32))"
+DARB_SESSION_SECRET = os.getenv("DARB_SESSION_SECRET", "")
+
 # ============================================================
 #  BAWABA: ONBOARDING VIDEO (optional — YouTube link)
 # ============================================================

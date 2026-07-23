@@ -299,6 +299,62 @@ CREATE TABLE IF NOT EXISTS link_tokens (
 );
 CREATE INDEX IF NOT EXISTS idx_link_tokens_member ON link_tokens(discord_id);
 
+-- ============================================================
+--  DARB (درب) — Phase 1 backend foundation
+--  Gated personal practice experience. These tables are inert until
+--  the Darb API endpoints + practice-page UI (Phases 2-3) use them.
+-- ============================================================
+
+-- Darb: one-time claim codes. `!link` issues a single-use code; the
+-- student enters it on the practice gate to mint a device session.
+-- Issuing a new code soft-invalidates any prior unconsumed one
+-- (expires_at set to the past) rather than deleting it, so history is
+-- preserved for rate-limiting.
+CREATE TABLE IF NOT EXISTS claim_codes (
+    code            TEXT PRIMARY KEY,
+    discord_id      TEXT NOT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    expires_at      TEXT NOT NULL,
+    consumed_at     TEXT DEFAULT NULL,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_claim_codes_member ON claim_codes(discord_id);
+
+-- Darb: durable per-device web sessions (max 2 active per student). A
+-- claim mints a new device_id here; the signed session cookie carries
+-- it. Revoking a row makes the edge gate fail for that device.
+CREATE TABLE IF NOT EXISTS device_sessions (
+    device_id       TEXT PRIMARY KEY,
+    discord_id      TEXT NOT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    last_seen_at    TEXT DEFAULT NULL,
+    created_ip      TEXT DEFAULT '',
+    user_agent      TEXT DEFAULT '',
+    revoked         INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_device_sessions_member ON device_sessions(discord_id);
+
+-- Darb: content-day-aware completion + mastery. The single source of
+-- truth for the personal calendar (green days) and the 5-tier mastery
+-- colors. Keyed by the CONTENT day (level/week/day/exercise), not the
+-- calendar date, so catch-up and cross-device both work. completion_count
+-- is the mastery tier driver (capped at 5); it increments at most once
+-- per calendar day (guarded by last_completed_date).
+CREATE TABLE IF NOT EXISTS practice_mastery (
+    discord_id            TEXT NOT NULL,
+    level                 TEXT NOT NULL,
+    week                  INTEGER NOT NULL,
+    day                   INTEGER NOT NULL,
+    exercise              TEXT NOT NULL,
+    completion_count      INTEGER NOT NULL DEFAULT 0,
+    first_completed_date  TEXT,
+    last_completed_date   TEXT,
+    PRIMARY KEY (discord_id, level, week, day, exercise),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_practice_mastery_member ON practice_mastery(discord_id, level);
+
 -- Nour Phase N0: conversation memory for AI concierge.
 CREATE TABLE IF NOT EXISTS nour_conversations (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -2719,3 +2775,259 @@ def count_shadow_comparisons(matches_only: bool = False) -> int:
         row = conn.execute("SELECT COUNT(*) as cnt FROM nour_shadow_comparisons").fetchone()
     conn.close()
     return row["cnt"] if row else 0
+
+
+
+# ============================================================
+#  DARB (درب) — claim codes, device sessions, practice mastery
+#  Phase 1 backend foundation. All inert until the Darb API +
+#  practice-page UI (Phases 2-3) call these. All time logic uses
+#  SQLite's own datetime('now') (UTC) to avoid Python/SQL clock skew.
+# ============================================================
+
+# The 4 practice-platform exercises whose completion drives the calendar
+# (a day is "done/green" when all 4 have completion_count >= 1). The 3
+# Discord tasks (speaking/writing/community) are tracked via
+# daily_submissions for streak/points, not here.
+PRACTICE_EXERCISES = ("accent", "vocab", "shadow", "listening")
+MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond
+
+
+# ---- Claim codes (one-time bridge from !link to a web session) ----
+
+def create_claim_code(discord_id: str, ttl_minutes: int = 15,
+                      max_per_hour: int = 6) -> Optional[str]:
+    """Issue a fresh single-use claim code for a student.
+
+    Soft-invalidates any prior unconsumed code (so a student can't
+    stockpile codes to hand out). Rate-limited to `max_per_hour` codes
+    per student per rolling hour — returns None if exceeded.
+    """
+    import secrets
+    conn = _connect()
+    try:
+        recent = conn.execute(
+            "SELECT COUNT(*) c FROM claim_codes "
+            "WHERE discord_id=? AND created_at >= datetime('now','-1 hour')",
+            (discord_id,),
+        ).fetchone()["c"]
+        if recent >= max_per_hour:
+            return None
+        # Invalidate prior unconsumed codes (expire them now).
+        conn.execute(
+            "UPDATE claim_codes SET expires_at=datetime('now') "
+            "WHERE discord_id=? AND consumed_at IS NULL",
+            (discord_id,),
+        )
+        code = secrets.token_hex(4).upper()  # 8 hex chars, easy to read/paste
+        conn.execute(
+            "INSERT INTO claim_codes (code, discord_id, expires_at) "
+            "VALUES (?, ?, datetime('now', ?))",
+            (code, discord_id, f"+{int(ttl_minutes)} minutes"),
+        )
+        conn.commit()
+        return code
+    finally:
+        conn.close()
+
+
+def consume_claim_code(code: str) -> Optional[str]:
+    """Atomically consume a claim code. Returns the discord_id if the
+    code was valid (exists, unexpired, unconsumed) and is now consumed;
+    None otherwise. The conditional UPDATE + rowcount guards against a
+    double-claim race (only one caller can flip consumed_at)."""
+    if not code:
+        return None
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            "UPDATE claim_codes SET consumed_at=datetime('now') "
+            "WHERE code=? AND consumed_at IS NULL AND expires_at > datetime('now')",
+            (code,),
+        )
+        if cur.rowcount != 1:
+            conn.rollback()
+            return None
+        row = conn.execute(
+            "SELECT discord_id FROM claim_codes WHERE code=?", (code,)
+        ).fetchone()
+        conn.commit()
+        return row["discord_id"] if row else None
+    finally:
+        conn.close()
+
+
+# ---- Device sessions (durable per-device web access, capped) ----
+
+def create_device_session(discord_id: str, device_id: str,
+                          ip: str = "", user_agent: str = "") -> None:
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT INTO device_sessions "
+            "(device_id, discord_id, created_ip, user_agent, last_seen_at) "
+            "VALUES (?, ?, ?, ?, datetime('now'))",
+            (device_id, discord_id, ip or "", (user_agent or "")[:400]),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def active_device_sessions(discord_id: str) -> list[dict]:
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM device_sessions WHERE discord_id=? AND revoked=0 "
+            "ORDER BY created_at ASC",
+            (discord_id,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def revoke_device_session(device_id: str) -> None:
+    conn = _connect()
+    try:
+        conn.execute("UPDATE device_sessions SET revoked=1 WHERE device_id=?", (device_id,))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def revoke_all_device_sessions(discord_id: str) -> int:
+    """Revoke every active session for a student (owner anti-abuse action).
+    Returns the number revoked."""
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            "UPDATE device_sessions SET revoked=1 WHERE discord_id=? AND revoked=0",
+            (discord_id,),
+        )
+        conn.commit()
+        return cur.rowcount
+    finally:
+        conn.close()
+
+
+def enforce_device_cap(discord_id: str, cap: int = 2) -> list[str]:
+    """Keep at most `cap` active sessions for a student. Revokes the
+    OLDEST beyond the cap. Returns the list of revoked device_ids (so
+    the caller can alert the owner)."""
+    active = active_device_sessions(discord_id)
+    revoked: list[str] = []
+    if len(active) > cap:
+        for row in active[: len(active) - cap]:  # oldest first
+            revoke_device_session(row["device_id"])
+            revoked.append(row["device_id"])
+    return revoked
+
+
+def is_device_session_active(device_id: str) -> bool:
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT revoked FROM device_sessions WHERE device_id=?", (device_id,)
+        ).fetchone()
+        return bool(row) and row["revoked"] == 0
+    finally:
+        conn.close()
+
+
+def touch_device_session(device_id: str) -> None:
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE device_sessions SET last_seen_at=datetime('now') WHERE device_id=?",
+            (device_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+# ---- Practice mastery (content-day-aware completion + tiers) ----
+
+def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
+                            exercise: str, today: str = None) -> dict:
+    """Record one completion of a content-day exercise and return the
+    resulting mastery tier.
+
+    The tier (completion_count, capped at MASTERY_MAX_TIER) increments at
+    most ONCE per calendar day — a same-day repeat does not advance it
+    (spaced repetition; prevents farming). This is the calendar's source
+    of truth, independent of the calendar DATE (so catching up a past day
+    works). It does NOT touch streaks/points — the caller pairs this with
+    the canonical `tasks.process_submission` for that.
+
+    Returns {"exercise_tier": int, "incremented": bool}.
+    """
+    if today is None:
+        today = datetime.date.today().isoformat()
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT completion_count, last_completed_date FROM practice_mastery "
+            "WHERE discord_id=? AND level=? AND week=? AND day=? AND exercise=?",
+            (discord_id, level, week, day, exercise),
+        ).fetchone()
+        if row is None:
+            count = 1
+            conn.execute(
+                "INSERT INTO practice_mastery "
+                "(discord_id, level, week, day, exercise, completion_count, "
+                " first_completed_date, last_completed_date) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (discord_id, level, week, day, exercise, count, today, today),
+            )
+            incremented = True
+        else:
+            count = row["completion_count"]
+            last = row["last_completed_date"]
+            if last is None or last < today:
+                count = min(count + 1, MASTERY_MAX_TIER)
+                conn.execute(
+                    "UPDATE practice_mastery SET completion_count=?, "
+                    "last_completed_date=?, "
+                    "first_completed_date=COALESCE(first_completed_date, ?) "
+                    "WHERE discord_id=? AND level=? AND week=? AND day=? AND exercise=?",
+                    (count, today, today, discord_id, level, week, day, exercise),
+                )
+                incremented = True
+            else:
+                incremented = False  # same-day repeat: no tier change
+        conn.commit()
+        return {"exercise_tier": count, "incremented": incremented}
+    finally:
+        conn.close()
+
+
+def get_calendar_mastery(discord_id: str, level: str) -> dict:
+    """Return per-content-day mastery for a student+level, for the
+    calendar. Keyed by (week, day) → {exercises: {ex: tier}, day_tier,
+    done}. A day is `done` when all 4 PRACTICE_EXERCISES have tier>=1;
+    `day_tier` is the MINIMUM tier across the 4 (so a Gold day means all
+    four exercises reached Gold), else 0."""
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT week, day, exercise, completion_count FROM practice_mastery "
+            "WHERE discord_id=? AND level=?",
+            (discord_id, level),
+        ).fetchall()
+    finally:
+        conn.close()
+    by_day: dict = {}
+    for r in rows:
+        by_day.setdefault((r["week"], r["day"]), {})[r["exercise"]] = r["completion_count"]
+    result: dict = {}
+    for key, exmap in by_day.items():
+        tiers = [exmap.get(ex, 0) for ex in PRACTICE_EXERCISES]
+        done = all(t >= 1 for t in tiers)
+        result[key] = {
+            "exercises": {ex: exmap.get(ex, 0) for ex in PRACTICE_EXERCISES},
+            "day_tier": (min(tiers) if done else 0),
+            "done": done,
+        }
+    return result
