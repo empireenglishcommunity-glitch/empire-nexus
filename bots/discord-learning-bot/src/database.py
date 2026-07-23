@@ -2071,6 +2071,35 @@ def get_progress_for_token(token: str) -> dict | None:
     }
 
 
+def get_srs_review_data(discord_id: str) -> dict:
+    """Darb: SRS review payload (due words + streak) for the Vocab Review
+    page, keyed by discord_id (Darb-session authed — NOT the legacy link
+    token). Mirrors the SRS slice of get_progress_for_token."""
+    member = get_member(discord_id)
+    if not member:
+        return {"streak": 0, "srs_due": 0, "srs_words": []}
+    today = datetime.date.today().isoformat()
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT COUNT(*) as cnt FROM vocab_srs WHERE discord_id=? AND next_review<=?",
+            (discord_id, today),
+        ).fetchone()
+        srs_due_count = row["cnt"] if row else 0
+        srs_words = conn.execute(
+            "SELECT word, ease_factor, interval_days, review_count FROM vocab_srs "
+            "WHERE discord_id=? AND next_review<=? LIMIT 20",
+            (discord_id, today),
+        ).fetchall()
+    finally:
+        conn.close()
+    return {
+        "streak": member.get("current_streak", 0),
+        "srs_due": srs_due_count,
+        "srs_words": [dict(r) for r in srs_words],
+    }
+
+
 def _get_pronunciation_stats(discord_id: str) -> dict:
     """Get pronunciation scoring stats for the API response (Dhaka' P2)."""
     scores = get_recent_scores(discord_id, days=7)

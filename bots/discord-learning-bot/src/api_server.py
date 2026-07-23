@@ -1243,6 +1243,50 @@ async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
 
 
 # ============================================================
+#  DARB — Vocab Review (SRS) via Darb session
+# ============================================================
+
+@routes.get("/api/darb/srs")
+async def get_darb_srs(request: web.Request) -> web.Response:
+    """Return the student's due SRS review words (Darb-session authed)."""
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"error": "unauthorized"}, status=401,
+                                 headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+    data = database.get_srs_review_data(payload["did"])
+    return web.json_response(data, headers=_cors_headers(request))
+
+
+@routes.post("/api/darb/srs-review")
+async def post_darb_srs_review(request: web.Request) -> web.Response:
+    """Record an SRS review result (Darb-session authed)."""
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"ok": False, "error": "unauthorized"},
+                                 status=401, headers=_cors_headers(request))
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    word = (body.get("word") or "").strip()
+    score = body.get("score")
+    if not word or score is None:
+        return web.json_response({"ok": False, "error": "word and score required"},
+                                 status=400, headers=_cors_headers(request))
+    try:
+        score = int(score)
+        if not (0 <= score <= 5):
+            raise ValueError
+    except (ValueError, TypeError):
+        return web.json_response({"ok": False, "error": "score must be 0-5"},
+                                 status=400, headers=_cors_headers(request))
+    database.record_srs_review(payload["did"], word, score)
+    database.touch_device_session(payload["sid"])
+    return web.json_response({"ok": True}, headers=_cors_headers(request))
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 

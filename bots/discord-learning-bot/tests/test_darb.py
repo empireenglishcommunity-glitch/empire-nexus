@@ -375,3 +375,36 @@ def test_backfill_is_idempotent_and_non_destructive():
     mastery = database.get_calendar_mastery("u1", "L0")
     # Tier stays at 3 (Gold) — backfill's ON CONFLICT DO NOTHING preserved it.
     assert mastery[(1, 1)]["exercises"]["accent"] == 3
+
+
+
+# ============================================================
+#  Vocab Review (SRS) via Darb session
+# ============================================================
+
+def test_get_srs_review_data_empty_for_new_member():
+    _member()
+    data = database.get_srs_review_data("u1")
+    assert data == {"streak": 0, "srs_due": 0, "srs_words": []} or (
+        data["srs_due"] == 0 and data["srs_words"] == []
+    )
+
+
+def test_get_srs_review_data_returns_due_words():
+    _member()
+    # Seed a due SRS word (next_review in the past).
+    conn = database._connect()
+    conn.execute(
+        "INSERT INTO vocab_srs (discord_id, word, ease_factor, interval_days, "
+        "review_count, next_review) VALUES ('u1','serendipity',2.5,1,0,date('now','-1 day'))"
+    )
+    conn.commit()
+    conn.close()
+    data = database.get_srs_review_data("u1")
+    assert data["srs_due"] == 1
+    assert len(data["srs_words"]) == 1
+    assert data["srs_words"][0]["word"] == "serendipity"
+
+
+def test_get_srs_review_data_unknown_member():
+    assert database.get_srs_review_data("999999999") == {"streak": 0, "srs_due": 0, "srs_words": []}
