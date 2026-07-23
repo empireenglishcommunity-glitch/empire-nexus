@@ -1144,7 +1144,12 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     if not audio_data:
         return web.json_response({"ok": False, "error": "no audio file"},
                                  status=400, headers=_cors_headers(request))
-    if exercise not in database.PRACTICE_EXERCISES:
+    # Recording exercises = the 4 core practice exercises + speaking (E1).
+    # Speaking is additive: it posts to #showcase and completes the speaking
+    # daily task, but the calendar's "green" still needs the 4 core only
+    # (get_calendar_mastery ignores non-core exercises), so existing green
+    # days are grandfathered.
+    if exercise not in database.PRACTICE_EXERCISES and exercise != "speaking":
         return web.json_response({"ok": False, "error": "bad exercise"},
                                  status=400, headers=_cors_headers(request))
     if not week or not day:
