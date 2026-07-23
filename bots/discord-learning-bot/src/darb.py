@@ -184,6 +184,39 @@ def _today_local() -> datetime.date:
         return datetime.date.today()
 
 
+def today_week_day(discord_id: str) -> tuple[int, int] | None:
+    """Return the student's current calendar (week, day) based on their
+    join date. Returns None if member unknown or past the level's end.
+
+    Used by the `!done` command handler to record mastery for the correct
+    content-day without the student having to specify week/day explicitly.
+    """
+    from . import curriculum
+
+    member = database.get_member(discord_id)
+    if not member:
+        return None
+    level = member.get("level", "L0")
+
+    join_raw = member.get("joined_at") or ""
+    try:
+        join_date = datetime.date.fromisoformat(join_raw[:10])
+    except (ValueError, TypeError):
+        join_date = datetime.date.today()
+
+    today = _today_local()
+    today_index = max(1, (today - join_date).days + 1)
+
+    max_week = curriculum.max_week_for_level(level)
+    total_days = max_week * 7
+    if today_index > total_days:
+        return None  # level complete
+
+    week = (today_index - 1) // 7 + 1
+    day = (today_index - 1) % 7 + 1
+    return (week, day)
+
+
 def build_calendar(discord_id: str) -> dict | None:
     """Build the student's personal calendar (their level only), anchored
     to their join date. Day 1 = join date. Returns None if unknown member.

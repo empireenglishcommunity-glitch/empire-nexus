@@ -598,6 +598,20 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
             )
 
         if result.get("new"):
+            # Darb Phase 2: mastery recording for reaction-based completions
+            if task_id in database.PRACTICE_EXERCISES:
+                try:
+                    from . import darb as darb_mod
+                    wk_day = darb_mod.today_week_day(str(payload.user_id))
+                    if wk_day:
+                        member_data = database.get_member(str(payload.user_id))
+                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        database.record_practice_mastery(
+                            str(payload.user_id), level, wk_day[0], wk_day[1], task_id
+                        )
+                except Exception as e:
+                    logger.warning(f"Reaction mastery recording failed (non-fatal): {e}")
+
             # Send a brief Arabic confirmation in the channel
             channel = bot.get_channel(payload.channel_id)
             if channel:
@@ -1987,6 +2001,23 @@ async def cmd_done(ctx, task: str = None):
         await ctx.send(f"✅ You already submitted `{task}` today. Keep going!")
         return
 
+    # Darb Phase 2: record practice mastery for the student's current
+    # calendar day (same once-per-day tier logic the practice page uses).
+    # Only for the 4 practice-page exercises; speaking/writing/community
+    # are Discord-only tasks and don't map to the practice calendar.
+    if task in database.PRACTICE_EXERCISES:
+        try:
+            from . import darb as darb_mod
+            wk_day = darb_mod.today_week_day(str(ctx.author.id))
+            if wk_day:
+                member_data = database.get_member(str(ctx.author.id))
+                level = (member_data.get("level", "L0") if member_data else "L0")
+                database.record_practice_mastery(
+                    str(ctx.author.id), level, wk_day[0], wk_day[1], task
+                )
+        except Exception as e:
+            logger.warning(f"!done mastery recording failed (non-fatal): {e}")
+
     # Rawiya R2/R8: advance onboarding journey on first task completion
     # (safe no-op if student isn't in journey or already past this step)
     await nour_journey.check_advancement(str(ctx.author.id), "task_completed", bot)
@@ -2546,6 +2577,18 @@ async def on_message(message: discord.Message):
                 result = await task_engine.process_submission(
                     str(message.author.id), message.author.display_name, "vocab"
                 )
+                # Darb Phase 2: mastery for vocab quiz completion
+                try:
+                    from . import darb as darb_mod
+                    wk_day = darb_mod.today_week_day(str(message.author.id))
+                    if wk_day:
+                        member_data = database.get_member(str(message.author.id))
+                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        database.record_practice_mastery(
+                            str(message.author.id), level, wk_day[0], wk_day[1], "vocab"
+                        )
+                except Exception:
+                    pass
                 bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
                 await message.channel.send(
                     f"✅ **صح!** أحسنت {message.author.mention}!\n\n"
@@ -2566,6 +2609,18 @@ async def on_message(message: discord.Message):
                 result = await task_engine.process_submission(
                     str(message.author.id), message.author.display_name, "listening"
                 )
+                # Darb Phase 2: mastery for listening quiz completion
+                try:
+                    from . import darb as darb_mod
+                    wk_day = darb_mod.today_week_day(str(message.author.id))
+                    if wk_day:
+                        member_data = database.get_member(str(message.author.id))
+                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        database.record_practice_mastery(
+                            str(message.author.id), level, wk_day[0], wk_day[1], "listening"
+                        )
+                except Exception:
+                    pass
                 bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
                 await message.channel.send(
                     f"✅ **صح!** أحسنت {message.author.mention}!\n\n"
