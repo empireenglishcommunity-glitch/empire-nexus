@@ -15,26 +15,51 @@ task when finished, so a future session doesn't re-derive.
 Goal: remove clutter and the flash, clean up the daily message. Pure
 front-end + bot-message changes. No new tables, no gating yet.
 
-- [ ] **0.1** Remove the "Join Discord" button from the gate overlay and
-  homepage footer. (R2.1) — `empire-dojo`.
-- [ ] **0.2** Eliminate the gate-overlay flash for returning students:
+- [x] **0.1** Remove the "Join Discord" button from the gate overlay and
+  homepage footer. (R2.1) — `empire-dojo`. *(Done: removed from the gate
+  overlay in `generate.py`, the homepage footer, AND a leftover one on
+  `/dash/`. empire-dojo PR #34 + #35.)*
+- [x] **0.2** Eliminate the gate-overlay flash for returning students:
   if a saved token/session exists, hide the overlay **synchronously** on
   first paint and validate in the background; only show the gate if there
   is genuinely no credential. (R2.2) — `empire-dojo`. *(Interim until the
-  edge gate in Phase 3 removes the JS overlay entirely.)*
-- [ ] **0.3** Remove the homepage render-then-auto-redirect (the D030
+  edge gate in Phase 3 removes the JS overlay entirely.)* *(Done via a
+  synchronous `<head>` script setting `html.has-token` before first paint
+  + CSS; `content_gate_js()` validates in background and re-locks only if
+  invalid. Live-verified: 5 `has-token` refs served on exercise pages.)*
+- [x] **0.3** Remove the homepage render-then-auto-redirect (the D030
   auto-jump); the single intro link lands cleanly on the homepage/
-  calendar. (R2.4)
-- [ ] **0.4** Unify the connect UI into one consistent affordance;
+  calendar. (R2.4) *(Done: 0 `fromUrlThisLoad` refs served on the live
+  homepage.)*
+- [x] **0.4** Unify the connect UI into one consistent affordance;
   remove the duplicate/conditional "Connect Discord" button confusion.
-  (R2.3)
-- [ ] **0.5** Redesign the daily task message + morning DM: one intro
+  (R2.3) *(Minimal for Phase 0: the useless Join button is gone
+  everywhere; the gate paste field + homepage connect modal share the
+  same localStorage token mechanism. Phase 3's `gate.html` fully unifies
+  this.)*
+- [x] **0.5** Redesign the daily task message + morning DM: one intro
   link, two labelled groups (practice-platform vs Discord tasks), no
   per-task deep links, bilingual, under 2000 chars. (R1) — `empire-nexus`
-  `tasks.py` / `bot.py`.
-- [ ] **0.6** Deploy `empire-dojo` (wrangler) + bot; verify live: message
+  `tasks.py` / `bot.py`. *(Done: `format_daily_post_chunks` rewritten into
+  two sections. Morning DM intentionally left as-is for Phase 0 — still
+  one tokenized link, no regression; revisited in Phase 3. Live safety
+  check across L0-L3 × weeks × days = ALL OK, never raises, exactly one
+  link.)*
+- [x] **0.6** Deploy `empire-dojo` (wrangler) + bot; verify live: message
   shape correct, no flash for a returning student, buttons gone.
-- [ ] **0.7** PR merged, deployed, live-verified. Update STATUS.md.
+  *(Bot: server pulled to `06c281d`, rebuilt, "Bot online" confirmed,
+  formatter safety-checked live. Practice page: `wrangler pages deploy`
+  needs BOTH `CLOUDFLARE_API_TOKEN` and
+  `CLOUDFLARE_ACCOUNT_ID=8c2ca895bd4e579be07d2fa6c9fdba7e`. 1331 files
+  uploaded; curl-verified on the production domain.)*
+- [x] **0.7** PR merged, deployed, live-verified. Update STATUS.md.
+  *(empire-nexus #226 + empire-dojo #34 merged & deployed; empire-dojo
+  #35 = the `/dash/` join-button removal, content already deployed,
+  awaiting merge for git consistency. STATUS.md updated.)*
+
+**✅ Phase 0 COMPLETE (2026-07-23)** — all quick wins live and verified.
+Next: Phase 1 (backend foundation: claim codes, sessions, completion +
+mastery). No student-visible change in Phase 1.
 
 ---
 
