@@ -1093,8 +1093,6 @@ async def post_submit_recording(request: web.Request) -> web.Response:
 
     Auth: Darb session (same as other Darb endpoints).
     """
-    from . import darb as darb_mod
-
     payload = _session_from_request(request)
     if not payload:
         return web.json_response({"ok": False, "error": "unauthorized"},
@@ -1152,6 +1150,10 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     if not week or not day:
         return web.json_response({"ok": False, "error": "week and day required"},
                                  status=400, headers=_cors_headers(request))
+    from . import curriculum
+    if not (1 <= week <= curriculum.max_week_for_level(level)) or not (1 <= day <= 7):
+        return web.json_response({"ok": False, "error": "week/day out of range"},
+                                 status=400, headers=_cors_headers(request))
 
     # Get member info
     member_data = database.get_member(discord_id)
@@ -1174,10 +1176,14 @@ async def post_submit_recording(request: web.Request) -> web.Response:
         logger.warning(f"submit-recording: process_submission failed: {e}")
         result = {"new": False}
 
+    # Record mastery for the SPECIFIC content-day the student is practising
+    # (from the form), NOT today. Bug fix: previously used today_week_day(),
+    # so a recording made while catching up on a PAST day was credited to
+    # today's day instead — the past day stayed stuck at 2/4 (only the
+    # vocab/listening 'Done' checkbox, which correctly used the viewed day,
+    # registered). Now accent/shadow catch-up reaches 4/4 like it should.
     try:
-        wk_day = darb_mod.today_week_day(discord_id)
-        if wk_day:
-            database.record_practice_mastery(discord_id, level, wk_day[0], wk_day[1], exercise)
+        database.record_practice_mastery(discord_id, level, week, day, exercise)
     except Exception as e:
         logger.warning(f"submit-recording: mastery recording failed: {e}")
 
