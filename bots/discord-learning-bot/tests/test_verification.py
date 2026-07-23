@@ -57,6 +57,8 @@ def test_voice_minutes_zero_before_any_join():
 
 
 def test_voice_minutes_accumulate_after_leave():
+    from src import database
+    database.register_member("u1", "U1")
     verification.on_voice_join("u1")
     verification._voice_sessions["u1"]["join_time"] = (
         datetime.datetime.now() - datetime.timedelta(minutes=10)
@@ -64,6 +66,21 @@ def test_voice_minutes_accumulate_after_leave():
     verification.on_voice_leave("u1")
     minutes = verification.get_voice_minutes_today("u1")
     assert 9 <= minutes <= 11
+
+
+def test_voice_minutes_persist_across_restart():
+    """E5: minutes are stored in the DB, so a bot restart (which wipes the
+    in-memory _voice_sessions) must NOT lose a student's accumulated time."""
+    from src import database
+    database.register_member("u1", "U1")
+    verification.on_voice_join("u1")
+    verification._voice_sessions["u1"]["join_time"] = (
+        datetime.datetime.now() - datetime.timedelta(minutes=12)
+    )
+    verification.on_voice_leave("u1")
+    # Simulate a restart: in-memory state gone, DB persists.
+    verification._voice_sessions.clear()
+    assert verification.get_voice_minutes_today("u1") >= 10
 
 
 def test_voice_minutes_ongoing_session_counts_live():
@@ -77,6 +94,8 @@ def test_voice_minutes_ongoing_session_counts_live():
 
 
 def test_voice_minutes_accumulate_across_multiple_sessions():
+    from src import database
+    database.register_member("u1", "U1")
     verification.on_voice_join("u1")
     verification._voice_sessions["u1"]["join_time"] = (
         datetime.datetime.now() - datetime.timedelta(minutes=5)

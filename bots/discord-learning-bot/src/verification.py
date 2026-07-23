@@ -146,29 +146,35 @@ def on_voice_join(discord_id: str):
 
 
 def on_voice_leave(discord_id: str):
-    """Called when a member leaves a voice channel."""
+    """Called when a member leaves a voice channel. Persists the elapsed
+    minutes to the DB (E5) so they survive a bot restart."""
     session = _voice_sessions.get(discord_id)
     if session and session.get("join_time"):
         elapsed = (datetime.datetime.now() - session["join_time"]).total_seconds() / 60
-        _voice_sessions[discord_id] = {
-            "join_time": None,
-            "total_minutes": session.get("total_minutes", 0) + elapsed,
-        }
+        try:
+            database.add_voice_minutes(discord_id, elapsed)
+        except Exception:
+            pass
+        _voice_sessions[discord_id] = {"join_time": None}
 
 
 def get_voice_minutes_today(discord_id: str) -> float:
-    """Get total voice minutes for today."""
+    """Total voice minutes today = persisted minutes (survives restarts) +
+    any ongoing (currently-in-voice) session time (E5)."""
+    total = 0.0
+    try:
+        total = database.get_voice_minutes(discord_id)
+    except Exception:
+        total = 0.0
     session = _voice_sessions.get(discord_id, {})
-    total = session.get("total_minutes", 0)
-    # If currently in voice, add ongoing time
     if session.get("join_time"):
-        elapsed = (datetime.datetime.now() - session["join_time"]).total_seconds() / 60
-        total += elapsed
+        total += (datetime.datetime.now() - session["join_time"]).total_seconds() / 60
     return total
 
 
 def reset_daily_voice():
-    """Reset voice tracking (call at midnight)."""
+    """Clear in-memory ongoing sessions. Persisted per-day minutes live in
+    the DB keyed by date, so no cross-day bleed to reset there."""
     _voice_sessions.clear()
 
 
@@ -261,35 +267,40 @@ async def verify_audio(member: discord.Member, guild: discord.Guild,
 # ============================================================
 
 async def verify_community(member: discord.Member, guild: discord.Guild) -> tuple[bool, str]:
-    """Check if member either posted in #general-chat today OR spent 10+ min in voice."""
-    # Check voice minutes
+    """E5: the community task now requires BOTH mandatory sub-tasks:
+      (1) 10+ minutes in a voice lounge today, AND
+      (2) a message in #general-chat today.
+    Returns a clear bilingual checklist of what's done / still pending."""
+    # (1) Voice: 10+ minutes today (persistent + ongoing)
     voice_min = get_voice_minutes_today(str(member.id))
-    if voice_min >= 10:
-        return True, ""
+    voice_ok = voice_min >= 10
 
-    # Check if posted in general-chat today
+    # (2) A message in #general-chat today
+    chat_ok = False
     channel = discord.utils.get(guild.text_channels, name="general-chat")
     if channel:
-        today_start = datetime.datetime.now(datetime.timezone.utc).replace(hour=0, minute=0, second=0)
-        async for msg in channel.history(limit=100, after=today_start):
+        today_start = datetime.datetime.now(datetime.timezone.utc).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        async for msg in channel.history(limit=200, after=today_start):
             if msg.author.id == member.id:
-                return True, ""
+                chat_ok = True
+                break
 
-    # Check speaking-feedback or daily-word
-    for ch_name in ["speaking-feedback", "daily-word", "introductions"]:
-        ch = discord.utils.get(guild.text_channels, name=ch_name)
-        if ch:
-            today_start = datetime.datetime.now(datetime.timezone.utc).replace(hour=0, minute=0, second=0)
-            async for msg in ch.history(limit=50, after=today_start):
-                if msg.author.id == member.id:
-                    return True, ""
+    if voice_ok and chat_ok:
+        return True, ""
 
+    # Build a checklist showing what's done vs pending
+    v_mark = "✅" if voice_ok else "⬜"
+    c_mark = "✅" if chat_ok else "⬜"
+    v_detail = f"({int(voice_min)}/10 دقيقة)" if not voice_ok else ""
     return False, (
-        "لازم تعمل واحدة من دول الأول:\n"
-        "• اكتب رسالة في `#general-chat`\n"
-        "• أو ادخل غرفة صوتية 10 دقايق\n"
-        "• أو شارك في `#daily-word` أو `#speaking-feedback`\n\n"
-        "بعدين ارجع اكتب `!done community`"
+        "مهمة المجتمع تتطلب **الاثنين معاً**:\n"
+        f"{v_mark} اقضِ **10 دقائق** على الأقل في غرفة صوتية {v_detail}\n"
+        f"{c_mark} اكتب رسالة في `#general-chat`\n\n"
+        "أكمل الناقص ثم اكتب `!done community` مرة أخرى.\n"
+        "_(The community task needs BOTH: 10+ min in voice AND a message in "
+        "#general-chat.)_"
     )
 
 

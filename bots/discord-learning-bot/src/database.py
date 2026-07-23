@@ -365,6 +365,17 @@ CREATE TABLE IF NOT EXISTS practice_mastery (
 );
 CREATE INDEX IF NOT EXISTS idx_practice_mastery_member ON practice_mastery(discord_id, level);
 
+-- Enhancement E5: persistent voice-lounge minutes per day, so the
+-- community task's 10-minute requirement survives a bot restart (was
+-- in-memory only and reset on every restart). Keyed by (discord_id, date).
+CREATE TABLE IF NOT EXISTS voice_minutes (
+    discord_id  TEXT NOT NULL,
+    date        TEXT NOT NULL,
+    minutes     REAL NOT NULL DEFAULT 0,
+    PRIMARY KEY (discord_id, date),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
 -- Nour Phase N0: conversation memory for AI concierge.
 CREATE TABLE IF NOT EXISTS nour_conversations (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1592,6 +1603,41 @@ def members_with_buddy(buddy_discord_id: str) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+def add_voice_minutes(discord_id: str, minutes: float, date: str = None) -> None:
+    """Enhancement E5: persistently add voice-lounge minutes for a day
+    (upsert). Survives bot restarts so the community task's 10-min
+    requirement isn't wiped when the process bounces."""
+    if minutes <= 0:
+        return
+    if date is None:
+        date = datetime.date.today().isoformat()
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT INTO voice_minutes (discord_id, date, minutes) VALUES (?, ?, ?) "
+            "ON CONFLICT(discord_id, date) DO UPDATE SET minutes = minutes + excluded.minutes",
+            (discord_id, date, minutes),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_voice_minutes(discord_id: str, date: str = None) -> float:
+    """Persistent voice minutes for a student on a given day (default today)."""
+    if date is None:
+        date = datetime.date.today().isoformat()
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT minutes FROM voice_minutes WHERE discord_id=? AND date=?",
+            (discord_id, date),
+        ).fetchone()
+        return row["minutes"] if row else 0.0
+    finally:
+        conn.close()
 
 
 def level_anchor_iso(member: dict) -> str:

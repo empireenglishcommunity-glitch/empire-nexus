@@ -304,23 +304,17 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "duration_min": 7 if level == "L0" else 20,
     })
 
-    # Task 7: Community
-    daily_word_label = bl(
-        "Post in #daily-word (use today's word in a sentence)",
-        "حط في #daily-word (استخدم كلمة اليوم في جملة)",
-    )
+    # Task 7: Community — E5: BOTH voice (10+ min) AND a #general-chat message
     tasks.append({
         "id": "community",
         "title": "💬 Community Participation",
         "content": (
-            f"{bl('Choose one', 'اختار حاجة واحدة')}:\n"
-            f"• {bl('Join voice lounge for 10+ minutes', 'دخل الفويس ١٠ دقايق على الأقل')}\n"
-            f"• {bl('Reply to someone in #general-chat (in English)', 'رد على حد في #general-chat (بالإنجليزي)')}\n"
-            f"• {bl('Give feedback on a recording in #speaking-feedback', 'اكتب رأيك على تسجيل في #speaking-feedback')}\n"
-            f"• {daily_word_label}\n\n"
+            f"{bl('Do BOTH', 'اعمل الاتنين معاً')}:\n"
+            f"1️⃣ {bl('Join a voice lounge for 10+ minutes', 'ادخل غرفة صوتية 10 دقائق على الأقل')}\n"
+            f"2️⃣ {bl('Send a message in #general-chat (in English)', 'اكتب رسالة في #general-chat (بالإنجليزي)')}\n\n"
             f"🏛️ {bl('The community grows when YOU participate.', 'المجتمع بيكبر لما إنت تشارك.')}"
         ),
-        "duration_min": 5 if level == "L0" else 15,
+        "duration_min": 10 if level == "L0" else 15,
     })
 
     total_min = sum(t["duration_min"] for t in tasks)
