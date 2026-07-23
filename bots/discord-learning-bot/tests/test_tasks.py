@@ -85,12 +85,24 @@ def test_format_daily_post_chunks_never_splits_a_task_mid_content():
         assert joined.count(task["title"]) == 1
 
 
-def test_format_daily_post_chunks_preserves_all_task_content():
+def test_format_daily_post_chunks_platform_link_and_discord_content():
+    """Darb Phase 0: the daily message has exactly ONE practice-platform
+    link; the 4 platform tasks (accent/vocab/shadowing/listening) are
+    listed by title only (their content lives on the platform); the 3
+    Discord tasks (speaking/writing/community) keep their full content."""
     task_data = _sample_task_data()
-    chunks = tasks.format_daily_post_chunks(task_data)
-    joined = "\n\n".join(chunks)
-    for task in task_data["tasks"]:
-        assert task["content"] in joined
+    joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
+    # Exactly one practice-platform link in the whole message.
+    assert joined.count("practice.empireenglish.online") == 1
+    # Discord tasks keep their prompts/content.
+    for tid in ("speaking", "writing", "community"):
+        content = next(t["content"] for t in task_data["tasks"] if t["id"] == tid)
+        assert content in joined
+    # Platform tasks' content is NOT dumped into the Discord message
+    # (it lives on the platform; only the title/link appear here).
+    for tid in ("accent", "vocab", "shadow", "listening"):
+        content = next(t["content"] for t in task_data["tasks"] if t["id"] == tid)
+        assert content not in joined
 
 
 def test_format_daily_post_returns_single_joined_string():

@@ -469,47 +469,80 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     post to Discord for most level/week combinations already, independent
     of anything added in this change.
     """
-    from . import curriculum
-
+    # Darb Phase 0: the daily message is decluttered into TWO clearly
+    # labelled sections with exactly ONE practice-platform link (the bare
+    # intro URL). The 4 platform tasks (accent/vocab/shadowing/listening)
+    # are listed concisely — their full content lives on the platform, so
+    # no per-task deep links here. The 3 Discord tasks (speaking/writing/
+    # community) keep their prompts, since they're done in Discord. Task
+    # numbers still map to !1-!7 and the reaction emojis (they index into
+    # config.DAILY_TASKS, independent of the display grouping).
     level = task_data["level"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
-    day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(task_data["day_name"]) \
-        if task_data["day_name"] in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
-    day_menu_url = curriculum.practice_platform_day_url(task_data["week"], day_index, level)
 
-    exercises_online_label = bl("Today's exercises online", "تمارين اليوم أونلاين")
+    task_by_id = {t["id"]: t for t in task_data["tasks"]}
+    num_by_id = {t["id"]: i + 1 for i, t in enumerate(config.DAILY_TASKS)}
+    NUM_EMOJI = {1: "1️⃣", 2: "2️⃣", 3: "3️⃣", 4: "4️⃣", 5: "5️⃣", 6: "6️⃣", 7: "7️⃣"}
+
+    PRACTICE_IDS = ["accent", "vocab", "shadow", "listening"]
+    DISCORD_IDS = ["speaking", "writing", "community"]
+
     header = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
         f"📅 **{bl('DAY', 'اليوم')} — {task_data['day_name']}, {bl('Week', 'أسبوع')} {task_data['week']}**",
         f"🏛️ EMPIRE ENGLISH — {level_info['emoji']} {level_info['name']}",
-        f"🌐 {exercises_online_label}: {day_menu_url}",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
+
+    blocks = []
+
+    # Section 1 — the practice platform: ONE link + the platform tasks
+    # listed concisely by their real title (their full content lives on
+    # the platform, so no per-task deep links and no content dump here).
+    practice_present = [tid for tid in PRACTICE_IDS if tid in task_by_id]
+    if practice_present:
+        practice_lines = [
+            f"🌐 **{bl('On the practice platform', 'على منصة التمرين')}:** {config.PRACTICE_PLATFORM_URL}",
+        ]
+        for tid in practice_present:
+            t = task_by_id[tid]
+            practice_lines.append(f"{NUM_EMOJI[num_by_id[tid]]} {t['title']}")
+        practice_lines.append(
+            bl("Open today and start — audio, drills and quizzes are all there.",
+               "افتح يوم النهاردة وابدأ — الصوت والتمارين والاختبارات كلها هناك.")
+        )
+        blocks.append("\n".join(practice_lines))
+
+    # Section 2 — the Discord tasks (done in Discord, so keep their prompts)
+    discord_blocks = []
+    for tid in DISCORD_IDS:
+        t = task_by_id.get(tid)
+        if t:
+            discord_blocks.append(
+                f"{NUM_EMOJI[num_by_id[tid]]} **{t['title']}** ({t['duration_min']} min)\n{t['content']}"
+            )
+    if discord_blocks:
+        blocks.append(f"💬 **{bl('Here on Discord', 'هنا في Discord')}:**")
+        blocks.extend(discord_blocks)
 
     footer = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')} ({level_info['name']} Core track)",
-        f"✅ {bl('When done: type', 'لما تخلص: اكتب')} `!done` {bl('in', 'في')} #daily-check-in",
+        f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')}",
+        f"✅ {bl('Log each when done:', 'لما تخلص كل مهمة اكتب:')} `!done` / `!1`-`!7` {bl('in', 'في')} #daily-check-in",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
-    task_blocks = []
-    for i, task in enumerate(task_data["tasks"], 1):
-        block = f"**{i}️⃣ {task['title']}** ({task['duration_min']} min)\n{task['content']}"
-        task_blocks.append(block)
-
-    # Add daily pattern card if available (Tatawwur T1 / Sahel S3)
+    # Daily conversational pattern (Tatawwur T1 / Sahel S3), if present
     pattern = task_data.get("daily_pattern")
     if pattern:
         pattern_label = bl("Today's Pattern", "نمط اليوم")
-        pattern_block = (
+        blocks.append(
             f"💬 **{pattern_label}**\n"
             f"**\"{pattern['phrase']}\"**\n"
             f"📍 {pattern['when']}\n"
             f"🇪🇬 {pattern['arabic']}\n"
             f"💡 _{pattern['example']}_"
         )
-        task_blocks.append(pattern_block)
 
     chunks = []
     current = [header]
@@ -522,7 +555,7 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
         current = []
         current_len = 0
 
-    for block in task_blocks:
+    for block in blocks:
         block_len = len(block)
         if current_len + block_len + 2 > DISCORD_MESSAGE_LIMIT and current:
             flush()
