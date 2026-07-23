@@ -3266,8 +3266,11 @@ async def cmd_revoke(ctx, member: discord.Member = None):
     revoked = database.revoke_member_token(discord_id)
     if revoked:
         ip_info = f" (was used from {ip_count} unique IP{'s' if ip_count != 1 else ''})" if ip_count else ""
+        # Also revoke all Darb device sessions (Phase 3 edge gate)
+        darb_revoked = database.revoke_all_device_sessions(discord_id)
+        darb_info = f"\n🔐 {darb_revoked} Darb device session(s) also revoked." if darb_revoked else ""
         await ctx.send(
-            f"🔒 **Token revoked** for {member.mention}{ip_info}.\n"
+            f"🔒 **Token revoked** for {member.mention}{ip_info}.{darb_info}\n"
             f"They must run `!link` again to get a new token.\n"
             f"Practice pages will show 'locked' until they re-link."
         )
