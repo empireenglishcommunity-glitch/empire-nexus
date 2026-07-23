@@ -265,3 +265,113 @@ async def test_claim_flow_enforces_two_device_cap(monkeypatch):
 async def test_claim_invalid_code_returns_none(monkeypatch):
     monkeypatch.setattr(config, "DARB_SESSION_SECRET", "test-secret-abc")
     assert await darb.claim("BADCODE") is None
+
+
+
+# ============================================================
+#  PHASE 6 — level anchor + existing-student backfill
+# ============================================================
+
+def test_level_anchor_falls_back_to_joined_at():
+    """Un-promoted student: anchor == joined_at (no behaviour change)."""
+    _member(joined_at="2026-07-01 09:00:00")
+    m = database.get_member("u1")
+    assert database.level_anchor_iso(m).startswith("2026-07-01")
+
+
+def test_set_level_stamps_level_started_at():
+    """Promotion resets the anchor to now, so the new level's calendar
+    restarts at Week 1 Day 1 instead of inheriting the old join date."""
+    _member(joined_at="2026-01-01 09:00:00", level="L0")
+    database.set_level("u1", "L1")
+    m = database.get_member("u1")
+    assert m["level"] == "L1"
+    assert m["level_started_at"] is not None
+    # Anchor is now (recent), NOT the old 2026-01-01 join date.
+    anchor = datetime.datetime.fromisoformat(database.level_anchor_iso(m))
+    assert (datetime.datetime.now() - anchor).total_seconds() < 60
+
+
+def test_member_week_number_uses_level_anchor():
+    """After promotion, week number restarts near 1 for the new level."""
+    _member(joined_at="2026-01-01 09:00:00", level="L0")
+    # Before promotion: many weeks deep from the old join date.
+    assert database.member_week_number("u1") > 4
+    database.set_level("u1", "L1")
+    # After promotion: back to week 1 (anchor just reset).
+    assert database.member_week_number("u1") == 1
+
+
+def test_calendar_uses_level_anchor_after_promotion():
+    """build_calendar anchors 'today' to the new level's start date."""
+    _member(joined_at="2026-01-01 09:00:00", level="L0")
+    database.set_level("u1", "L1")
+    cal = darb.build_calendar("u1")
+    assert cal is not None
+    assert cal["level"] == "L1"
+    # today_index == 1: the calendar treats the promotion day as day 1.
+    assert cal["today_index"] == 1
+    assert cal["days"][0]["state"] == "today"
+
+
+def test_backfill_marks_past_days_done():
+    """Historical daily_submissions are reconstructed into calendar
+    mastery so past active days show green, not 'missed'."""
+    # Joined 3 days ago so days 1-3 are in the past / today.
+    join = (datetime.date.today() - datetime.timedelta(days=3)).isoformat() + " 09:00:00"
+    _member(joined_at=join, level="L0")
+
+    # Simulate the student having done all 4 practice exercises on day 1.
+    day1_date = (datetime.date.today() - datetime.timedelta(days=3)).isoformat()
+    conn = database._connect()
+    for ex in ("accent", "vocab", "shadow", "listening"):
+        conn.execute(
+            "INSERT INTO daily_submissions (discord_id, date, task_id) VALUES (?, ?, ?)",
+            ("u1", day1_date, ex),
+        )
+    # Also a non-practice task (should be ignored by the backfill).
+    conn.execute(
+        "INSERT INTO daily_submissions (discord_id, date, task_id) VALUES (?, ?, ?)",
+        ("u1", day1_date, "writing"),
+    )
+    conn.commit()
+    conn.close()
+
+    result = database.backfill_practice_mastery_from_submissions("u1")
+    assert result["days_marked"] == 1          # one content-day touched
+    assert result["exercises_marked"] == 4      # 4 practice exercises (writing ignored)
+
+    # The calendar's week1/day1 is now 'done' (all 4 present).
+    cal = darb.build_calendar("u1")
+    day1 = cal["days"][0]
+    assert day1["state"] == "done"
+    assert day1["day_tier"] == 1  # Bronze
+
+
+def test_backfill_is_idempotent_and_non_destructive():
+    """Re-running the backfill does not lower a tier earned for real."""
+    join = (datetime.date.today() - datetime.timedelta(days=2)).isoformat() + " 09:00:00"
+    _member(joined_at=join, level="L0")
+    day1_date = (datetime.date.today() - datetime.timedelta(days=2)).isoformat()
+
+    # Student earned Gold (tier 3) on accent w1d1 for real (post-launch).
+    conn = database._connect()
+    conn.execute(
+        "INSERT INTO practice_mastery (discord_id, level, week, day, exercise, "
+        "completion_count, first_completed_date, last_completed_date) "
+        "VALUES ('u1','L0',1,1,'accent',3,?,?)",
+        (day1_date, day1_date),
+    )
+    conn.execute(
+        "INSERT INTO daily_submissions (discord_id, date, task_id) VALUES ('u1', ?, 'accent')",
+        (day1_date,),
+    )
+    conn.commit()
+    conn.close()
+
+    database.backfill_practice_mastery_from_submissions("u1")
+    database.backfill_practice_mastery_from_submissions("u1")  # run twice
+
+    mastery = database.get_calendar_mastery("u1", "L0")
+    # Tier stays at 3 (Gold) — backfill's ON CONFLICT DO NOTHING preserved it.
+    assert mastery[(1, 1)]["exercises"]["accent"] == 3
