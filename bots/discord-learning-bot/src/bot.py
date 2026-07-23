@@ -747,14 +747,13 @@ async def morning_kickstart():
         # Language phase (Bawaba B5)
         phase = features.response_language(discord_id)
 
-        # Practice platform link — include the student's personal token so
-        # clicking the link in the DM instantly unlocks the practice page
-        # (no need to manually run !link first). The token is auto-created
-        # if the student doesn't have one yet.
-        day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(task_engine.current_day_name()) if task_engine.current_day_name() in ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] else 0
-        practice_url = curriculum.practice_platform_day_url(week, day_index, m.get("level", "L0"))
-        token = database.create_link_token(discord_id)
-        practice_url_with_token = f"{practice_url}?token={token}"
+        # Practice platform link — point to the personal calendar (the
+        # gated hub). Darb: the old tokenized day-deep-link no longer works
+        # now that the edge gate requires an empire_session cookie (it
+        # ignores ?token= and would just land the student on the gate).
+        # After claiming once via !link, the student's 60-day session keeps
+        # them logged in and the calendar highlights today's tasks.
+        practice_url_with_token = config.PRACTICE_PLATFORM_URL
 
         if phase == "arabic":
             streak_text = f"\U0001f525 \u0633\u0644\u0633\u0644\u062a\u0643: **{streak}** \u064a\u0648\u0645" if streak > 0 else "\U0001f331 \u0627\u0628\u062f\u0623 \u0633\u0644\u0633\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \u0627\u0644\u0646\u0647\u0627\u0631\u062f\u0629!"
@@ -3794,20 +3793,34 @@ async def cmd_link(ctx):
         await ctx.send("❌ You need to register first. Type `!join` or react ✅ to any message.")
         return
 
-    # Generate or retrieve existing token
-    token = database.create_link_token(discord_id)
     platform_url = config.PRACTICE_PLATFORM_URL
 
-    # DM the token to the user (never in public channels)
+    # Darb: issue a one-time CLAIM CODE (the gate/edge middleware only
+    # accepts codes minted by create_claim_code -> /api/claim, NOT the
+    # legacy link token). Rate-limited to 6/hour; returns None if exceeded.
+    code = database.create_claim_code(discord_id)
+    if not code:
+        await ctx.send(
+            "⏳ لقد طلبت أكواد كتير في الساعة الأخيرة. استنى شوية وحاول تاني.\n"
+            "(You've requested several codes in the last hour — please wait a bit and try again.)"
+        )
+        return
+
+    # Also refresh the legacy link token so the older dashboard/progress
+    # API keeps working for anything still using it (harmless, not shown).
+    database.create_link_token(discord_id)
+
+    # DM the claim code + a one-click link (the gate auto-fills ?code=).
     try:
         await ctx.author.send(
-            f"🔗 **ربط حسابك بمنصة التمرين**\n\n"
-            f"الرابط الشخصي بتاعك:\n"
-            f"```\n{platform_url}?token={token}\n```\n\n"
-            f"**أو** افتح المنصة واضغط \"Connect to Discord\" والصق:\n"
-            f"```\n{token}\n```\n\n"
-            f"⚠️ **ماتشاركش الرابط ده مع حد — ده خاص بيك.**\n"
-            f"لو محتاج رابط جديد، اكتب `!link` تاني."
+            f"🔗 **كود الدخول لمنصة التمرين**\n\n"
+            f"الكود بتاعك (صالح ١٥ دقيقة، مرة واحدة بس):\n"
+            f"```\n{code}\n```\n\n"
+            f"**اضغط الرابط ده وهيدخّلك على طول:**\n"
+            f"{platform_url}?code={code}\n\n"
+            f"أو افتح **{platform_url}** والصق الكود في خانة الدخول.\n\n"
+            f"⚠️ **الكود ده خاص بيك — ماتشاركهوش مع حد.**\n"
+            f"لو خلص أو ضاع، اكتب `!link` تاني عشان تاخد كود جديد."
         )
         await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
         # Rawiya R2/R8: advance onboarding journey when student links the platform
