@@ -1121,7 +1121,7 @@ async def post_submit_recording(request: web.Request) -> web.Response:
         if part is None:
             break
         if part.name == "audio":
-            audio_data = await part.read(limit=10 * 1024 * 1024)  # 10MB max
+            audio_data = await part.read()  # max enforced by client_max_size
             # Determine filename from content type
             ct = part.headers.get("Content-Type", "audio/webm")
             if "mp4" in ct or "m4a" in ct:
