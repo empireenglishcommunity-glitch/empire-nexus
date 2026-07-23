@@ -1076,6 +1076,173 @@ async def post_practice_complete(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  DARB Phase 4 — Submit Recording → #showcase + auto-complete
+# ============================================================
+
+@routes.post("/api/submit-recording")
+async def post_submit_recording(request: web.Request) -> web.Response:
+    """Flow D: upload a recording from the practice page → bot posts it
+    to the student's #lN-showcase channel on Discord, then auto-marks
+    the exercise as done (same as if they ran !done).
+
+    Expects multipart/form-data with:
+      - audio: the recording file (audio/webm, audio/mp4, audio/ogg, etc.)
+      - exercise: one of accent/shadow/vocab/listening
+      - week: integer
+      - day: integer
+
+    Auth: Darb session (same as other Darb endpoints).
+    """
+    from . import darb as darb_mod
+
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"ok": False, "error": "unauthorized"},
+                                 status=401, headers=_cors_headers(request))
+
+    discord_id = payload["did"]
+    level = payload.get("lvl", "L0")
+
+    # Parse multipart
+    try:
+        reader = await request.multipart()
+    except Exception:
+        return web.json_response({"ok": False, "error": "multipart required"},
+                                 status=400, headers=_cors_headers(request))
+
+    audio_data = None
+    audio_filename = "recording.webm"
+    exercise = None
+    week = None
+    day = None
+
+    while True:
+        part = await reader.next()
+        if part is None:
+            break
+        if part.name == "audio":
+            audio_data = await part.read(limit=10 * 1024 * 1024)  # 10MB max
+            # Determine filename from content type
+            ct = part.headers.get("Content-Type", "audio/webm")
+            if "mp4" in ct or "m4a" in ct:
+                audio_filename = "recording.m4a"
+            elif "ogg" in ct:
+                audio_filename = "recording.ogg"
+            else:
+                audio_filename = "recording.webm"
+        elif part.name == "exercise":
+            exercise = (await part.text()).strip()
+        elif part.name == "week":
+            try:
+                week = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+        elif part.name == "day":
+            try:
+                day = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+
+    if not audio_data:
+        return web.json_response({"ok": False, "error": "no audio file"},
+                                 status=400, headers=_cors_headers(request))
+    if exercise not in database.PRACTICE_EXERCISES:
+        return web.json_response({"ok": False, "error": "bad exercise"},
+                                 status=400, headers=_cors_headers(request))
+    if not week or not day:
+        return web.json_response({"ok": False, "error": "week and day required"},
+                                 status=400, headers=_cors_headers(request))
+
+    # Get member info
+    member_data = database.get_member(discord_id)
+    if not member_data:
+        return web.json_response({"ok": False, "error": "member not found"},
+                                 status=404, headers=_cors_headers(request))
+    name = member_data.get("discord_name", "Student")
+
+    # Post to Discord #lN-showcase channel
+    posted = await _post_recording_to_showcase(
+        discord_id, level, name, exercise, week, day, audio_data, audio_filename
+    )
+
+    # Auto-complete: run process_submission + record_practice_mastery
+    # (same as !done + Phase 2 wiring — best-effort, never fail the upload)
+    try:
+        from . import tasks as task_engine
+        result = await task_engine.process_submission(discord_id, name, exercise)
+    except Exception as e:
+        logger.warning(f"submit-recording: process_submission failed: {e}")
+        result = {"new": False}
+
+    try:
+        wk_day = darb_mod.today_week_day(discord_id)
+        if wk_day:
+            database.record_practice_mastery(discord_id, level, wk_day[0], wk_day[1], exercise)
+    except Exception as e:
+        logger.warning(f"submit-recording: mastery recording failed: {e}")
+
+    # Get updated day state for tier feedback
+    day_state = database.get_calendar_mastery(discord_id, level).get((week, day), {})
+
+    return web.json_response({
+        "ok": True,
+        "posted": posted,
+        "exercise": exercise,
+        "exercise_tier": day_state.get("exercises", {}).get(exercise, 0),
+        "day_tier": day_state.get("day_tier", 0),
+        "day_done": day_state.get("done", False),
+        "already_done": not result.get("new", True),
+    }, headers=_cors_headers(request))
+
+
+async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
+                                       exercise: str, week: int, day: int,
+                                       audio_data: bytes, filename: str) -> bool:
+    """Post an audio recording to the student's #lN-showcase Discord channel.
+    Returns True if posted successfully, False otherwise (best-effort)."""
+    try:
+        from . import bot as bot_mod, config
+        import discord as discord_lib
+        import io
+
+        discord_bot = bot_mod.bot
+        if not discord_bot or not discord_bot.is_ready():
+            logger.warning("submit-recording: bot not ready, can't post to Discord")
+            return False
+
+        guild = discord_bot.get_guild(config.GUILD_ID)
+        if not guild:
+            logger.warning("submit-recording: guild not found")
+            return False
+
+        channel_name = f"l{level[1].lower()}-showcase"
+        channel = discord_lib.utils.get(guild.text_channels, name=channel_name)
+        if not channel:
+            logger.warning(f"submit-recording: channel {channel_name} not found")
+            return False
+
+        # Build the message
+        exercise_names = {
+            "accent": "Accent Drill",
+            "shadow": "Shadowing",
+            "vocab": "Vocabulary",
+            "listening": "Listening",
+        }
+        ex_display = exercise_names.get(exercise, exercise)
+        caption = f"🎙️ **{name}** — {ex_display} (Week {week}, Day {day})"
+
+        # Send with audio file attachment
+        audio_file = discord_lib.File(io.BytesIO(audio_data), filename=filename)
+        await channel.send(content=caption, file=audio_file)
+        logger.info(f"submit-recording: posted {filename} ({len(audio_data)} bytes) to #{channel_name} for {name}")
+        return True
+
+    except Exception as e:
+        logger.error(f"submit-recording: Discord post failed: {e}")
+        return False
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 
@@ -1091,7 +1258,7 @@ async def cors_preflight(request: web.Request) -> web.Response:
 
 def create_app() -> web.Application:
     """Create the aiohttp web application."""
-    app = web.Application()
+    app = web.Application(client_max_size=10 * 1024 * 1024)  # 10MB for audio uploads
     app.add_routes(routes)
     return app
 
