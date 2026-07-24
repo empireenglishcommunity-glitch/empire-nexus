@@ -2638,6 +2638,33 @@ async def on_message(message: discord.Message):
                 await message.channel.send(f"{message.author.mention} {error_msg}")
             return
 
+    # Hafiz (Phase F, E4 -- owner feedback #7): AI motivational auto-reply
+    # in #lN-text-practice + #lN-showcase. Deliberately narrow: pure
+    # encouragement, never corrections (that's #writing-feedback's job via
+    # ai_engine.evaluate_writing above, and the dedicated feedback
+    # channel for speaking) -- so this must NOT fire for #writing-feedback
+    # or command messages, only genuine student posts in those two
+    # channels. Flag-gated (hafiz_motivation, default off).
+    ch_name = getattr(message.channel, "name", None)
+    if (
+        database.is_feature_enabled("hafiz_motivation", str(message.author.id))
+        and ch_name
+        and not message.content.startswith(config.BOT_PREFIX)
+        and (ch_name.endswith("-text-practice") or ch_name.endswith("-showcase"))
+    ):
+        from . import motivation
+        post_type = "voice" if message.attachments else "text"
+        try:
+            reply = await motivation.maybe_reply(
+                str(message.author.id), message.author.display_name,
+                message.channel.id, post_type, message.content,
+                bool(message.attachments),
+            )
+            if reply:
+                await message.reply(reply, mention_author=False)
+        except Exception as e:
+            logger.error(f"Hafiz motivation reply error: {e}")
+
     # Auto-evaluate writing in #writing-feedback channel
     # Hisn D025: same DMChannel.name crash as the vocab/listening handlers
     # above -- this ran unconditionally for every message including DMs.

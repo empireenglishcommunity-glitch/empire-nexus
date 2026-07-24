@@ -107,14 +107,24 @@ Legend: [ ] todo · [x] done
   PR merged.
 
 ## Phase F — AI motivational auto-replies (E4) — *isolated, flag-gated, last*
-- [ ] **F1** New `motivation.py`: generate short, unique, correction-free
-  encouragement (AI + varied fallback pool), post-type aware, non-repetition
-  hint from a recent-replies ring. (R4.1, R4.2, R4.5)
-- [ ] **F2** Hook into `bot.py` `on_message` for `lN-text-practice` +
-  `lN-showcase`; ignore bots; throttle per student/channel. (R4.3)
-- [ ] **F3** Feature flag `hafiz_motivation` (default off). (R4.4)
+- [x] **F1** New `motivation.py`: generate short, unique, correction-free
+  encouragement (AI + varied fallback pool of 15 per post-type), post-type
+  aware, non-repetition hint from a recent-replies ring (per-channel,
+  size 12) passed into the LLM prompt. (R4.1, R4.2, R4.5)
+- [x] **F2** Hook into `bot.py` `on_message` for `l{n}-text-practice` +
+  `l{n}-showcase` (suffix match, so all 4 levels covered); ignore bots
+  (existing top-of-function check) and command messages (`!`-prefixed);
+  throttle per (student, channel), 60s. (R4.3)
+- [x] **F3** Feature flag `hafiz_motivation` (new HAFIZ initiative,
+  default off) registered in `flag_registry.py`; supports the standard
+  allowlist mechanism for a beta rollout before going to everyone. (R4.4)
 - [ ] **F4** Live-verify: distinct replies to a text post and a voice post;
-  no repeats across several posts; throttle works; flag off = silent. PR merged.
+  no repeats across several posts; throttle works; flag off = silent. PR
+  merged. *(Deploy with the flag OFF; owner enables for a beta allowlist
+  first, then everyone, once satisfied live.)*
+  - Tests: 20 new in `test_motivation.py` (uniqueness, post-type
+    tailoring, throttle scoping, no-correction guardrail on the fallback
+    pool + the AI prompt, flag default-off + allowlist). 465 total pass.
 
 ---
 
