@@ -25,6 +25,37 @@ def _connect() -> sqlite3.Connection:
     return conn
 
 
+def _today_local() -> datetime.date:
+    """'Today' in the bot's configured timezone (Asia/Dubai by default),
+    not the server/UTC clock.
+
+    Phase E audit (owner feedback #9 — "finished all tasks but it still
+    shows remaining") found a real bug behind part of this confusion:
+    every date-sensitive read in this module used bare
+    `datetime.date.today()`, which follows the SERVER's system clock
+    (UTC on this deployment), while submissions are LOGGED under
+    `tasks.today_str()`'s timezone-aware Asia/Dubai date (same pattern
+    already used by `darb._today_local()` for the personal calendar).
+    For the ~4-hour window each night where the UTC calendar date has
+    already flipped but Dubai's hasn't yet (20:00-24:00 UTC = 00:00-04:00
+    Dubai) -- or the reverse gap depending on how the two clocks
+    disagree -- a submission logged under "today" (Dubai) would then be
+    read back by `tasks_completed_today()`/`_recompute_streak()`/etc.
+    against the WRONG (server) "today", making a just-completed task
+    invisible to `!progress`, `!today`, `!done`, and the practice-page
+    API's `tasks_today` field until the server's date caught up. This
+    single helper replaces every date-sensitive `datetime.date.today()`
+    call in this module so they all agree with `tasks.today_str()`
+    (and `darb._today_local()`) about what day it is.
+    """
+    try:
+        from zoneinfo import ZoneInfo
+        tz = getattr(config, "TIMEZONE", "Asia/Dubai") or "Asia/Dubai"
+        return datetime.datetime.now(ZoneInfo(tz)).date()
+    except Exception:
+        return datetime.date.today()
+
+
 def init_db():
     """Create all tables if they don't exist. Safe to call on every startup."""
     conn = _connect()
@@ -855,7 +886,7 @@ def get_submissions_since(discord_id: str, days: int = 7) -> list[dict]:
     actually completed, and to pull the most recent AI-scored writing
     submission, without adding a separate narrow query per task type.
     """
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days - 1)).isoformat()
+    cutoff = (_today_local() - datetime.timedelta(days=days - 1)).isoformat()
     conn = _connect()
     rows = conn.execute(
         "SELECT * FROM daily_submissions WHERE discord_id=? AND date>=? ORDER BY submitted_at",
@@ -878,7 +909,7 @@ def count_submissions_for_date(discord_id: str, date: str) -> int:
 
 def tasks_completed_today(discord_id: str) -> list[str]:
     """Get list of task_ids completed today."""
-    today = datetime.date.today().isoformat()
+    today = _today_local().isoformat()
     conn = _connect()
     rows = conn.execute(
         "SELECT task_id FROM daily_submissions WHERE discord_id=? AND date=?",
@@ -921,7 +952,7 @@ def _recompute_streak(discord_id: str):
         return
 
     streak = 0
-    today = datetime.date.today()
+    today = _today_local()
     expected = today
 
     for row in rows:
@@ -1355,7 +1386,7 @@ def member_count() -> int:
 
 def total_submissions_today() -> int:
     """Count all submissions across all members today."""
-    return total_submissions_on_date(datetime.date.today().isoformat())
+    return total_submissions_on_date(_today_local().isoformat())
 
 
 def total_submissions_on_date(date_str: str) -> int:
@@ -1612,7 +1643,7 @@ def add_voice_minutes(discord_id: str, minutes: float, date: str = None) -> None
     if minutes <= 0:
         return
     if date is None:
-        date = datetime.date.today().isoformat()
+        date = _today_local().isoformat()
     conn = _connect()
     try:
         conn.execute(
@@ -1628,7 +1659,7 @@ def add_voice_minutes(discord_id: str, minutes: float, date: str = None) -> None
 def get_voice_minutes(discord_id: str, date: str = None) -> float:
     """Persistent voice minutes for a student on a given day (default today)."""
     if date is None:
-        date = datetime.date.today().isoformat()
+        date = _today_local().isoformat()
     conn = _connect()
     try:
         row = conn.execute(
@@ -1760,7 +1791,7 @@ def was_notification_sent_within(discord_id: str, notification_type: str, days: 
     table needed, same pattern as every other notification type in
     this codebase.
     """
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (_today_local() - datetime.timedelta(days=days)).isoformat()
     conn = _connect()
     row = conn.execute(
         "SELECT 1 FROM notification_log WHERE discord_id=? AND notification_type=? AND date>=? LIMIT 1",
@@ -1895,7 +1926,7 @@ def add_word_to_srs(discord_id: str, word: str):
 
 def get_due_reviews(discord_id: str, limit: int = 3) -> list[dict]:
     """Get words due for review today (next_review <= today)."""
-    today = datetime.date.today().isoformat()
+    today = _today_local().isoformat()
     conn = _connect()
     rows = conn.execute(
         "SELECT * FROM vocab_srs WHERE discord_id=? AND next_review<=? ORDER BY next_review ASC LIMIT ?",
@@ -1938,7 +1969,7 @@ def record_review_result(discord_id: str, word: str, quality: int):
         ef = ef + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
         ef = max(1.3, ef)
 
-    next_review = (datetime.date.today() + datetime.timedelta(days=interval)).isoformat()
+    next_review = (_today_local() + datetime.timedelta(days=interval)).isoformat()
 
     conn.execute(
         """UPDATE vocab_srs SET ease_factor=?, interval_days=?, next_review=?,
@@ -1951,7 +1982,7 @@ def record_review_result(discord_id: str, word: str, quality: int):
 
 def get_srs_stats(discord_id: str) -> dict:
     """Get vocab SRS statistics for a member."""
-    today = datetime.date.today().isoformat()
+    today = _today_local().isoformat()
     conn = _connect()
     total = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=?", (discord_id,)).fetchone()["c"]
     due = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=? AND next_review<=?", (discord_id, today)).fetchone()["c"]
@@ -2070,7 +2101,7 @@ def get_progress_for_token(token: str) -> dict | None:
         return None
 
     discord_id = member["discord_id"]
-    today = datetime.date.today().isoformat()
+    today = _today_local().isoformat()
 
     # Get today's completed tasks
     tasks_today = tasks_completed_today(discord_id)
@@ -2124,7 +2155,7 @@ def get_srs_review_data(discord_id: str) -> dict:
     member = get_member(discord_id)
     if not member:
         return {"streak": 0, "srs_due": 0, "srs_words": []}
-    today = datetime.date.today().isoformat()
+    today = _today_local().isoformat()
     conn = _connect()
     try:
         row = conn.execute(
@@ -2207,7 +2238,7 @@ def record_srs_review(discord_id: str, word: str, score: int):
     if ease < 1.3:
         ease = 1.3
 
-    next_review = (datetime.date.today() + datetime.timedelta(days=interval)).isoformat()
+    next_review = (_today_local() + datetime.timedelta(days=interval)).isoformat()
 
     conn.execute(
         """UPDATE vocab_srs SET ease_factor=?, interval_days=?, next_review=?,
@@ -2243,7 +2274,7 @@ def store_pronunciation_score(discord_id: str, date: str, task_id: str,
 
 def get_recent_scores(discord_id: str, days: int = 7) -> list[dict]:
     """Get pronunciation scores from the last N days."""
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days - 1)).isoformat()
+    cutoff = (_today_local() - datetime.timedelta(days=days - 1)).isoformat()
     conn = _connect()
     rows = conn.execute(
         """SELECT * FROM pronunciation_scores
@@ -3068,7 +3099,7 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
     Returns {"exercise_tier": int, "incremented": bool}.
     """
     if today is None:
-        today = datetime.date.today().isoformat()
+        today = _today_local().isoformat()
     conn = _connect()
     try:
         row = conn.execute(
@@ -3132,7 +3163,7 @@ def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:
     try:
         anchor = datetime.datetime.fromisoformat(level_anchor_iso(member)).date()
     except (ValueError, TypeError):
-        anchor = datetime.date.today()
+        anchor = _today_local()
 
     # Which curriculum weeks exist for this level (avoid writing out-of-range)
     from . import curriculum

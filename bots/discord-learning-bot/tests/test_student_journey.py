@@ -99,15 +99,18 @@ async def _simulate_one_day(discord_id: str, name: str, date_str: str,
     results = []
     for task_id in ALL_TASK_IDS:
         # Patch today_str (used by process_submission for the date string)
-        # AND datetime.date.today in database.py (used by _recompute_streak
-        # and tasks_completed_today) so the streak logic sees dates
-        # consistently with the submissions we're creating.
+        # AND database._today_local (used by _recompute_streak and
+        # tasks_completed_today, see Phase E's tz-aware-date fix) so the
+        # streak logic sees dates consistently with the submissions we're
+        # creating. Patching the single _today_local() helper directly
+        # (rather than mocking the whole `datetime` module, as this test
+        # used to) is simpler and can't accidentally leak the real
+        # wall-clock time the way mocking `datetime.datetime.now` while
+        # keeping the mock's `.datetime` attribute pointed at the REAL
+        # class did (that's exactly the trap that would silently
+        # reproduce Phase E's tz-vs-server-clock bug inside this test).
         with patch.object(task_engine, "today_str", return_value=date_str), \
-             patch("src.database.datetime") as mock_db_dt:
-            mock_db_dt.date.today.return_value = simulated_date
-            mock_db_dt.date.fromisoformat = datetime.date.fromisoformat
-            mock_db_dt.datetime = datetime.datetime
-            mock_db_dt.timedelta = datetime.timedelta
+             patch.object(database, "_today_local", return_value=simulated_date):
             result = await task_engine.process_submission(
                 discord_id, name, task_id, content=f"simulated {task_id}"
             )
@@ -172,13 +175,9 @@ async def test_full_student_journey():
                 f"Day {day_num}: expected streak=7, got {last_result['streak']}"
             )
 
-    # Verify streak after all 8 days (need today() to be day 8)
+    # Verify streak after all 8 days (need "today" to be day 8)
     day_8_date = start_date + datetime.timedelta(days=7)
-    with patch("src.database.datetime") as mock_db_dt:
-        mock_db_dt.date.today.return_value = day_8_date
-        mock_db_dt.date.fromisoformat = datetime.date.fromisoformat
-        mock_db_dt.datetime = datetime.datetime
-        mock_db_dt.timedelta = datetime.timedelta
+    with patch.object(database, "_today_local", return_value=day_8_date):
         current_streak, longest_streak = database.get_streak(MEMBER_ID)
 
     assert current_streak == 8, f"Expected current_streak=8, got {current_streak}"
@@ -217,14 +216,11 @@ async def test_full_student_journey():
     # The member is now in "week 2" (joined day 1, now on day 8).
     # Patch member_week_number to return 2 (since the test controls time).
     with patch.object(database, "member_week_number", return_value=2):
-        # Also patch get_submissions_since to return this week's submissions
-        # (the function uses datetime.date.today() internally)
+        # Also patch database._today_local (get_submissions_since uses it,
+        # Phase E's tz-aware-date fix) so "today" for this lookup matches
+        # the simulated day 8, not the real wall clock.
         day_8_date = start_date + datetime.timedelta(days=7)
-        with patch("src.database.datetime") as mock_db_dt:
-            mock_db_dt.date.today.return_value = day_8_date
-            mock_db_dt.date.fromisoformat = datetime.date.fromisoformat
-            mock_db_dt.datetime = datetime.datetime
-            mock_db_dt.timedelta = datetime.timedelta
+        with patch.object(database, "_today_local", return_value=day_8_date):
 
             # build_weekly_assessment uses calculate_completion_rate which
             # also uses datetime.date.today

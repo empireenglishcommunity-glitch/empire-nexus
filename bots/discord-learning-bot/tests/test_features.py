@@ -666,3 +666,93 @@ def test_has_pending_exam_false_once_waiting():
 
 def test_has_pending_exam_false_for_unknown_user():
     assert features.has_pending_exam("never-started") is False
+
+
+
+# ============================================================
+#  PHASE E (E6, R6.2/R6.4) — !today's calendar-vs-Discord breakdown
+# ============================================================
+# Owner feedback #9: "finished all tasks but still shows remaining".
+# show_today() now explicitly splits the 7 daily tasks into the 5
+# practice-page calendar tasks (accent/vocab/shadow/listening/speaking)
+# and the 2 Discord-only tasks (writing/community), with a breakdown
+# count for each, so a student who greened their calendar understands
+# exactly which 2 Discord tasks are still open rather than seeing one
+# ambiguous "N/7".
+
+def _mock_ctx(discord_id: str = "u1"):
+    ctx = MagicMock()
+    ctx.author.id = int(discord_id) if discord_id.isdigit() else 1
+    ctx.author.id = 1  # keep numeric regardless of discord_id string form
+    ctx.send = AsyncMock()
+    return ctx
+
+
+@pytest.mark.asyncio
+async def test_show_today_unregistered_member_prompts_join():
+    ctx = _mock_ctx()
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "!join" in sent
+
+
+@pytest.mark.asyncio
+async def test_show_today_shows_two_labelled_sections():
+    database.register_member("1", "Alice")
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "على منصة التمرين" in sent  # calendar section label
+    assert "هنا في Discord" in sent  # Discord-only section label
+
+
+@pytest.mark.asyncio
+async def test_show_today_breakdown_counts_calendar_and_discord_separately():
+    """With 0 tasks done, the breakdown must read 0/5 calendar + 0/2
+    Discord (5 core practice-page tasks incl. speaking, 2 Discord-only:
+    writing + community)."""
+    database.register_member("1", "Alice")
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "🌐 تقويمك 0/5" in sent
+    assert "💬 Discord 0/2" in sent
+    assert "0/7" in sent
+
+
+@pytest.mark.asyncio
+async def test_show_today_breakdown_reflects_completed_calendar_tasks():
+    """Completing all 5 calendar tasks (but no Discord ones) must show
+    5/5 calendar + 0/2 Discord — the exact scenario behind the reported
+    confusion (a student who greened their calendar sees clearly that
+    the *Discord* 2 are what's left, not a mysterious 'remaining')."""
+    database.register_member("1", "Alice")
+    today = database._today_local().isoformat()
+    for tid in ("accent", "vocab", "shadow", "listening", "speaking"):
+        database.log_submission("1", today, tid)
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "🌐 تقويمك 5/5" in sent
+    assert "💬 Discord 0/2" in sent
+    assert "5/7" in sent
+    # The 2 remaining Discord tasks must still be listed as not-done.
+    assert "!done writing" in sent
+    assert "!done community" in sent
+    # The 5 completed calendar tasks must NOT be listed as pending.
+    assert "!done accent" not in sent
+
+
+@pytest.mark.asyncio
+async def test_show_today_all_seven_done_shows_celebration_not_time_estimate():
+    database.register_member("1", "Alice")
+    today = database._today_local().isoformat()
+    for tid in [t["id"] for t in config.DAILY_TASKS]:
+        database.log_submission("1", today, tid)
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "خلصت كل مهام النهاردة" in sent
+    assert "7/7" in sent
+    assert "🌐 تقويمك 5/5" in sent
+    assert "💬 Discord 2/2" in sent
