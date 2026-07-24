@@ -123,8 +123,8 @@ def test_arabic_task_aliases_map_to_valid_task_ids():
 def test_number_commands_map_to_correct_tasks():
     """!1 through !7 should map to tasks in DAILY_TASKS order."""
     expected = [t["id"] for t in config.DAILY_TASKS]
-    assert expected == ["accent", "vocab", "shadow", "speaking",
-                        "listening", "writing", "community"]
+    assert expected == ["accent", "vocab", "shadow", "listening",
+                        "speaking", "writing", "community"]
     # The mapping happens in on_message (tested via integration), but
     # we verify the assumption this relies on: DAILY_TASKS order is fixed
     assert len(config.DAILY_TASKS) == 7

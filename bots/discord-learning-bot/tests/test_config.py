@@ -54,7 +54,9 @@ def test_daily_tasks_has_seven_tasks_in_fixed_order():
     every level (tasks.py builds them in this literal order)."""
     assert len(config.DAILY_TASKS) == 7
     ids = [t["id"] for t in config.DAILY_TASKS]
-    assert ids == ["accent", "vocab", "shadow", "speaking", "listening", "writing", "community"]
+    # listening precedes speaking so the daily-post emoji numbers read
+    # 1-2-3-4-5 in display order (see config.DAILY_TASKS comment).
+    assert ids == ["accent", "vocab", "shadow", "listening", "speaking", "writing", "community"]
 
 
 def test_daily_tasks_have_required_fields():
