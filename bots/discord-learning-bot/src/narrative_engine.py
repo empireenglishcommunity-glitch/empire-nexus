@@ -23,8 +23,8 @@ generation function existed at all, so nobody could ever prove the
 "AI-generated weekly tips" claim was false until Hisn found it by
 accident. Testability from day one is the whole point of this module.
 
-AI Provider Strategy (identical pattern to nour_concierge.py's proven
-Groq→Gemini→template fallback, confirmed working in Hisn H4.1):
+AI Provider Strategy (the proven Groq→Gemini→template fallback pattern,
+confirmed working in Hisn H4.1):
   1. Groq (Llama 3.3 70B) — PRIMARY
   2. Gemini — FALLBACK (if Groq fails)
   3. Template, built from real `signals` data — LAST RESORT (never
@@ -58,10 +58,9 @@ logger = logging.getLogger("empire-bot.narrative")
 MAX_RESPONSE_TOKENS = 300
 
 # Reuse Nour's exact established voice (do not invent a new one, per
-# requirements.md's constraint on R3). Imported lazily inside functions
-# that need it, to avoid a module-load-time circular import between
-# narrative_engine and nour_concierge (both import database; neither
-# needs to import the other at import time).
+# requirements.md's constraint on R3). The system prompt lives in
+# nour_personality; imported lazily inside functions that need it to
+# keep module-load-time imports minimal.
 
 
 # ============================================================
@@ -86,9 +85,13 @@ def gather_signals(discord_id: str) -> dict:
         # itself stays a pure function, no exception-as-control-flow.
         return {}
 
-    from . import nour_personality
-
-    memories = nour_personality.get_memories(discord_id, limit=5)
+    # Nour's per-student semantic memory (nour_memories) was removed
+    # along with the concierge/Aql subsystem, so there is no longer a
+    # source of stored facts to pull in. The signal is kept as an
+    # empty list so the growth letter still builds cleanly — every
+    # downstream consumer already handles an empty `memories` list
+    # gracefully (same pattern as `_get_recent_milestones` below).
+    memories = []
     milestones_recent = _get_recent_milestones(discord_id, days=14)
     pronunciation_trend = database._get_pronunciation_stats(discord_id)
     srs_state = database.get_srs_stats(discord_id)
@@ -206,15 +209,14 @@ def momentum_score(discord_id: str) -> dict:
 
 # ============================================================
 #  AI CHAIN — Groq -> Gemini -> template (never returns None)
-#  Same proven pattern as nour_concierge._generate_response(),
-#  parameterized so all 3 build_* functions below share ONE
+#  Parameterized so all 3 build_* functions below share ONE
 #  implementation instead of each re-inventing fallback logic.
 # ============================================================
 
 async def _call_groq(system_prompt: str, user_prompt: str,
                       temperature: float = 0.7) -> Optional[str]:
-    """Primary provider. Identical request shape to nour_concierge's
-    proven Groq call — same timeout, same failure tracking."""
+    """Primary provider — a standard Groq chat-completion call with a
+    timeout and failure tracking."""
     if not config.GROQ_API_KEY:
         return None
 
@@ -256,8 +258,7 @@ async def _call_groq(system_prompt: str, user_prompt: str,
 
 async def _call_gemini(system_prompt: str, user_prompt: str,
                         temperature: float = 0.7) -> Optional[str]:
-    """Fallback provider. Identical request shape to nour_concierge's
-    proven Gemini call."""
+    """Fallback provider — a standard Gemini generateContent call."""
     if not config.GEMINI_API_KEY:
         return None
 
@@ -287,7 +288,8 @@ async def _call_gemini(system_prompt: str, user_prompt: str,
 
 
 def _clean_ai_text(text: str) -> str:
-    """Same artifact-cleanup as nour_concierge._clean_response()."""
+    """Strip common AI-response artifacts (wrapping quotes, a leading
+    'Nour:' label, and Markdown code fences)."""
     text = text.strip().strip('"').strip("'")
     if text.lower().startswith("nour:"):
         text = text[5:].strip()
@@ -391,10 +393,7 @@ async def _generate_with_fallback(system_prompt: str, user_prompt: str,
     through to the next provider, and ultimately to the template
     fallback, rather than ever being sent to a student. Found live
     during Masar M3's testing (a Vietnamese fragment leaked into an
-    otherwise-Arabic Groq response); this same class of bug could
-    recur in nour_concierge's regular chat responses too, but fixing
-    that call site is out of this defect's immediate scope -- flagged
-    separately in defect_log.md.
+    otherwise-Arabic Groq response).
 
     Masar D035 fix: ALSO reject a response containing a known blocked
     foreign word (see _has_blocked_foreign_word()) -- catches the
@@ -444,10 +443,11 @@ async def _generate_with_fallback(system_prompt: str, user_prompt: str,
 
 def _nour_voice_system_prompt() -> str:
     """Reuse Nour's exact established personality, not a new voice
-    (per requirements.md's R3 constraint). Imported lazily to avoid a
-    module-load-time circular import with nour_concierge."""
-    from . import nour_concierge
-    return nour_concierge.NOUR_SYSTEM_PROMPT
+    (per requirements.md's R3 constraint). The system prompt now lives
+    in nour_personality (relocated from the removed concierge module).
+    Imported lazily to keep module-load-time imports minimal."""
+    from . import nour_personality
+    return nour_personality.NOUR_SYSTEM_PROMPT
 
 
 async def build_growth_letter(signals: dict) -> tuple[str, str]:
@@ -458,7 +458,7 @@ async def build_growth_letter(signals: dict) -> tuple[str, str]:
     forever, until Hisn found it).
 
     Per R3's acceptance criteria, the prompt must be built from AT
-    LEAST 2 of: nour_memories, pronunciation trend, vocab_srs state,
+    LEAST 2 of: pronunciation trend, vocab_srs state,
     ability_milestones, difficulty_level changes, recent
     nour_conversations themes. This builds from as many of those as
     are actually present for this specific student (not always all 6

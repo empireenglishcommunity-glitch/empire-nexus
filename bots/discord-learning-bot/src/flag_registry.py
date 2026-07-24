@@ -47,22 +47,11 @@ REGISTRY = [
     ("tatawwur_showcase", "Auto-post success stories to showcase channels", "tatawwur", True),
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
 
-    # ── NOUR (autonomous student concierge) ──
-    ("aql_episodic_summaries", "Aql (#15) Phase A6: weekly per-student episodic summary generation (Groq)", "nour", False),
-    ("nour_concierge", "AI concierge handles DMs and #ask-nour questions", "nour", True),
-    ("nour_proactive", "Proactive outreach (anti-churn check-ins)", "nour", False),
-    ("nour_escalation", "Telegram alerts for escalated issues", "nour", False),
+    # ── NOUR (onboarding journey + personality) ──
+    # The AI concierge and Aql cognitive core were removed; only the
+    # rule-based onboarding journey and MSA voice remain active.
     ("nour_msa", "Rawiya R0: Nour speaks Modern Standard Arabic (فصحى) instead of Egyptian colloquial", "nour", True),
     ("nour_journey", "Rawiya R2: structured 7-day onboarding journey for new students", "nour", True),
-    # Aql (#15) Phase A7.5 audit: corrected from "9 conditions" -- the
-    # real implementation in nour_proactive.py has 4 detection checks
-    # (new_student, quiet_student, score_drop, first_milestone), not 9.
-    # See nour_proactive.py's module docstring for the full note.
-    ("nour_enhanced_proactive", "Rawiya R3: expanded proactive triggers (4 conditions: new/quiet/score-drop/milestone)", "nour", True),
-    ("nour_tutorials", "Rawiya R4: pre-written MSA micro-tutorials for confused students", "nour", True),
-    ("nour_owner_commands", "Rawiya R5: /check and /nudge commands via Telegram", "nour", True),
-    ("nour_graduated", "Rawiya R6: graduated presence (decreasing contact for experienced students)", "nour", True),
-    ("nour_aql_core", "Aql (#15): role-scoped RAG + tool-calling cognitive core, replaces single-shot nour_concierge pipeline when ON", "nour", False),
 
     # ── MARKAZ (Telegram operations hub) ──
     ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),

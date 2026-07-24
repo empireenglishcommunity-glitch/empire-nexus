@@ -357,12 +357,12 @@ async def get_dashboard(request: web.Request) -> web.Response:
     ).fetchone()
     leaderboard_rank = rank_row["rank"] if rank_row else 0
 
-    # --- Nour study tips (cached) ---
-    tips_raw = conn.execute(
-        "SELECT tip_text FROM nour_study_tips WHERE discord_id=? ORDER BY generated_at DESC LIMIT 3",
-        (discord_id,),
-    ).fetchall()
-    nour_tips = [r["tip_text"] for r in tips_raw]
+    # --- Nour study tips ---
+    # The legacy nour_study_tips table (Wuslah W4) was removed; it was
+    # superseded by the weekly growth letter (Masar M2, served via
+    # /api/growth-letter). The dashboard's tips card no longer sources
+    # from it, so this is always an empty list now.
+    nour_tips = []
 
     conn.close()
 
@@ -721,25 +721,20 @@ async def get_growth_letter(request: web.Request) -> web.Response:
 
 
 # ============================================================
-#  WUSLAH W4: /api/nour-tips — pre-generated study tips
-#  (LEGACY — superseded by /api/growth-letter above per Masar M2.
-#  Never actually populated with real AI-generated content in
-#  production, per Hisn D020 -- left in place, inert, rather than
-#  removed, since some in-flight dashboard sessions might still be
-#  caching the old JS that calls it until they reload. M2.5 removes
-#  the dashboard's call site; this endpoint itself can be deleted in
-#  a later cleanup pass once confirmed nothing calls it anymore.)
+#  WUSLAH W4: /api/nour-tips — study tips
+#  (LEGACY — superseded by /api/growth-letter above per Masar M2. The
+#  backing nour_study_tips cache table was removed, so this endpoint
+#  now always returns generic level-appropriate tips. Kept in place so
+#  any in-flight dashboard session still calling it keeps working.)
 # ============================================================
 
 @routes.get("/api/nour-tips")
 async def get_nour_tips(request: web.Request) -> web.Response:
-    """Return AI-generated study tips for the student.
+    """Return study tips for the student.
 
-    Tips are pre-generated weekly (by ops_monitoring's tip generation
-    task) and cached in the nour_study_tips table. This endpoint just
-    reads the cached result — zero AI cost per page load.
-
-    Falls back to generic level-appropriate tips if none are cached.
+    The personalized cache (nour_study_tips) was removed along with the
+    concierge subsystem; this endpoint now always serves generic
+    level-appropriate tips — zero AI cost per page load.
     """
     token = request.query.get("token", "")
     if not token:
@@ -756,25 +751,9 @@ async def get_nour_tips(request: web.Request) -> web.Response:
         return web.json_response({"error": "invalid token"}, status=404)
 
     _touch_token(token)
-    discord_id = member["discord_id"]
     level = member.get("level", "L0")
 
-    # Try cached tips first
-    conn = database._connect()
-    tips_raw = conn.execute(
-        "SELECT tip_text, generated_at FROM nour_study_tips WHERE discord_id=? ORDER BY generated_at DESC LIMIT 3",
-        (discord_id,),
-    ).fetchall()
-    conn.close()
-
-    if tips_raw:
-        return web.json_response({
-            "tips": [r["tip_text"] for r in tips_raw],
-            "generated_at": tips_raw[0]["generated_at"],
-            "source": "personalized",
-        }, headers=_cors_headers())
-
-    # Fallback: generic level-appropriate tips
+    # Generic level-appropriate tips (the personalized cache was removed).
     generic_tips = _generic_tips_for_level(level)
     return web.json_response({
         "tips": generic_tips,

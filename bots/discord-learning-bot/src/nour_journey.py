@@ -284,8 +284,8 @@ async def try_message_triggered_advance(discord_id: str, student_text: str) -> O
     This does NOT need a live `bot`/guild lookup (unlike the other
     triggers below, which fire from command handlers that already have
     a Member/Context object) — the reply always goes back to the exact
-    `discord.Message.author`/channel that's already mid-conversation
-    with Nour, handled by the caller (nour_concierge.handle_message).
+    `discord.Message.author`/channel that's already mid-conversation,
+    handled by the caller (bot.py's on_message DM handler).
     """
     if not database.is_feature_enabled("nour_journey"):
         return None
@@ -403,9 +403,10 @@ async def send_nudges(bot) -> None:
 
 
 def get_journey_context(discord_id: str) -> str:
-    """Get journey context for Nour's AI prompt (so she knows where the student is).
+    """Get a human-readable summary of where the student is in the
+    onboarding journey.
 
-    Returns a string to append to the context in nour_concierge._build_context().
+    Returns a string describing the current journey step/state.
     """
     journey = _get_journey(discord_id)
     if not journey:

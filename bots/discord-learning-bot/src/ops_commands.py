@@ -71,7 +71,6 @@ async def handle_status(args: str, bot) -> str:
     """System health snapshot."""
     member_count = database.member_count()
     today_subs = database.total_submissions_today()
-    pending = database.count_pending_escalations()
 
     # Level breakdown
     levels = {}
@@ -101,7 +100,6 @@ async def handle_status(args: str, bot) -> str:
         f"*👥 Students:* {member_count} registered",
         f"  🌱 L0: {levels['L0']} \\| 💪 L1: {levels['L1']} \\| 🚀 L2: {levels['L2']} \\| 👑 L3: {levels['L3']}",
         f"*✅ Today:* {today_subs} submissions",
-        f"*🚨 Escalations:* {pending} pending",
     ]
     return "\n".join(lines)
 
@@ -234,36 +232,6 @@ async def handle_announce(args: str, bot) -> str:
 
 
 # ============================================================
-#  /nour — quick toggle for nour_concierge flag
-# ============================================================
-
-@command("/nour")
-async def handle_nour(args: str, bot) -> str:
-    """Quick toggle for the nour_concierge feature flag.
-
-    /nour       — show current state
-    /nour on    — enable Nour
-    /nour off   — disable Nour
-    """
-    flag_name = "nour_concierge"
-    args = args.strip().lower()
-
-    if not args:
-        enabled = database.is_feature_enabled(flag_name)
-        state = "🟢 ON" if enabled else "🔴 OFF"
-        return f"💬 Nour is currently *{state}*\n\nToggle: `/nour on` or `/nour off`"
-
-    if args in ("on", "enable", "1"):
-        database.set_feature_flag(flag_name, enabled=True, updated_by="telegram_ops")
-        return "💬 Nour is now *🟢 ON* — responding to student DMs and \\#ask\\-nour"
-    elif args in ("off", "disable", "0"):
-        database.set_feature_flag(flag_name, enabled=False, updated_by="telegram_ops")
-        return "💬 Nour is now *🔴 OFF* — students will get no AI response until re\\-enabled"
-    else:
-        return f"❓ Use `/nour on` or `/nour off`"
-
-
-# ============================================================
 #  /help — list available commands
 # ============================================================
 
@@ -279,10 +247,7 @@ async def handle_help(args: str, bot) -> str:
         "`/flag` — List/toggle feature flags",
         "`/flag <name> on/off` — Toggle a specific flag",
         "`/announce <msg>` — Post to \\#announcements",
-        "`/nour on/off` — Quick toggle for Nour AI concierge",
         "`/help` — This message",
-        "",
-        "💡 Reply to an escalation message to respond as Nour\\.",
     ]
     return "\n".join(lines)
 
