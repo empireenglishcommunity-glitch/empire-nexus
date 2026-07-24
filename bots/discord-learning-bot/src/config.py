@@ -223,8 +223,13 @@ DAILY_TASKS = [
     {"id": "accent", "name": "Accent/Phoneme Drill", "name_ar": "تدريب النطق", "emoji": "🎯"},
     {"id": "vocab", "name": "Vocabulary Acquisition", "name_ar": "مفردات جديدة", "emoji": "📖"},
     {"id": "shadow", "name": "Shadowing Practice", "name_ar": "تمرين المحاكاة", "emoji": "🎧"},
-    {"id": "speaking", "name": "Speaking Mission", "name_ar": "مهمة الكلام", "emoji": "🎙️"},
+    # listening before speaking so the daily-post numbering reads 1-2-3-4-5
+    # in display order (the post lists these as accent, vocab, shadow,
+    # listening, speaking; the emoji number = position here, so the two must
+    # agree). !1-!7 and the reaction emojis index into this list, so they
+    # stay consistent automatically: !4 = listening, !5 = speaking.
     {"id": "listening", "name": "Listening Exercise", "name_ar": "تمرين الاستماع", "emoji": "👂"},
+    {"id": "speaking", "name": "Speaking Mission", "name_ar": "مهمة الكلام", "emoji": "🎙️"},
     {"id": "writing", "name": "Writing Practice", "name_ar": "تمرين الكتابة", "emoji": "✍️"},
     {"id": "community", "name": "Community Participation", "name_ar": "مشاركة مجتمعية", "emoji": "💬"},
 ]
