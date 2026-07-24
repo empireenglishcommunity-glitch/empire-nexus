@@ -2,3 +2,10 @@ discord.py>=2.3,<3.0
 python-dotenv>=1.0
 aiohttp>=3.9
 numpy>=1.26
+# Bundles the IANA tz database for zoneinfo. The bot's date logic
+# (database._today_local / tasks._now / darb._today_local / bot._zone)
+# all resolve ZoneInfo("Asia/Dubai"); if the base image ever ships
+# without /usr/share/zoneinfo, that call would silently fall back to UTC
+# and every "today"/day-boundary/scheduled-post time would be wrong.
+# Pinning tzdata guarantees Asia/Dubai resolves regardless of base image.
+tzdata>=2024.1

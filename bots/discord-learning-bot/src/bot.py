@@ -410,6 +410,23 @@ async def on_ready():
     # deliberately staggered against Sunday's cluster of weekly tasks)
     if not nour_growth_letter_task.is_running():
         nour_growth_letter_task.start()
+    # Audit fix (E5 robustness): voice minutes are persisted on voice-LEAVE
+    # (verification.on_voice_leave). If the bot restarts while a student is
+    # already sitting in a voice channel, there was no join event for that
+    # session, so on_voice_leave later finds no join_time and credits zero —
+    # the student can genuinely spend 10+ min in voice across a restart yet
+    # have the community task show 0/10. Re-seed an in-memory join_time (=now)
+    # for everyone currently in voice so at least their post-restart time is
+    # counted. Best-effort, guild-scoped, ignores bots.
+    try:
+        for _guild in bot.guilds:
+            for _vc in _guild.voice_channels:
+                for _mem in _vc.members:
+                    if not _mem.bot:
+                        verification.on_voice_join(str(_mem.id))
+    except Exception as e:
+        logger.warning(f"Voice-session recovery scan failed: {e}")
+
     # Sahel S6: start the API server for practice platform connection
     from . import api_server
     await api_server.start_api_server(port=8099)

@@ -10,7 +10,7 @@ Verification methods:
 - speaking:   Audio in #l0-showcase (min target duration)
 - listening:  Bot asks comprehension question
 - writing:    Post in #l0-text-practice (min 20 chars)
-- community:  Posted in #general-chat OR spent 10+ min in voice today
+- community:  Posted in #general-chat AND spent 10+ min in voice today (E5)
 """
 import datetime
 import logging
@@ -158,6 +158,30 @@ def on_voice_leave(discord_id: str):
         _voice_sessions[discord_id] = {"join_time": None}
 
 
+def _local_day_start() -> datetime.datetime:
+    """Start of 'today' in the bot's configured timezone (Asia/Dubai), as a
+    tz-aware datetime.
+
+    Audit fix (practice-enhancements E5): verify_community's #general-chat
+    check used UTC midnight (`datetime.timezone.utc`), while the voice-minute
+    half of the SAME task uses database._today_local() (Asia/Dubai). During
+    the 00:00-04:00 Dubai window the two calendar dates disagree, so a student
+    could be told the community task is incomplete when it isn't (or the two
+    sub-tasks count against different days). Deriving the general-chat "today"
+    from the same Dubai boundary keeps both halves of the community task, and
+    the rest of the bot, in agreement about what "today" is.
+    """
+    try:
+        from zoneinfo import ZoneInfo
+        from . import config
+        tz = ZoneInfo(getattr(config, "TIMEZONE", "Asia/Dubai") or "Asia/Dubai")
+        return datetime.datetime.now(tz).replace(
+            hour=0, minute=0, second=0, microsecond=0)
+    except Exception:
+        return datetime.datetime.now(datetime.timezone.utc).replace(
+            hour=0, minute=0, second=0, microsecond=0)
+
+
 def get_voice_minutes_today(discord_id: str) -> float:
     """Total voice minutes today = persisted minutes (survives restarts) +
     any ongoing (currently-in-voice) session time (E5)."""
@@ -279,9 +303,10 @@ async def verify_community(member: discord.Member, guild: discord.Guild) -> tupl
     chat_ok = False
     channel = discord.utils.get(guild.text_channels, name="general-chat")
     if channel:
-        today_start = datetime.datetime.now(datetime.timezone.utc).replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
+        # Use the Asia/Dubai day boundary (same as voice-minute tracking),
+        # not UTC midnight — see _local_day_start(). channel.history()
+        # accepts a tz-aware datetime and normalises it internally.
+        today_start = _local_day_start()
         async for msg in channel.history(limit=200, after=today_start):
             if msg.author.id == member.id:
                 chat_ok = True

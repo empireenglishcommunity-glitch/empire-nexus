@@ -266,3 +266,119 @@ def test_has_pending_listening_expires_after_timeout():
         datetime.datetime.now() - datetime.timedelta(seconds=1)
     )
     assert verification.has_pending_listening("u1") is False
+
+
+
+# ============================================================
+#  AUDIT FIX (E5): community day-boundary consistency
+#
+#  Regression tests for the audit finding that verify_community's
+#  #general-chat "today" used UTC midnight while the voice-minute half of
+#  the SAME task used database._today_local() (Asia/Dubai). During the
+#  00:00-04:00 Dubai window the two disagreed, so a student could be told
+#  the community task was incomplete when it wasn't. Both halves must now
+#  use the same Asia/Dubai day boundary.
+# ============================================================
+
+import types
+from unittest.mock import patch
+
+import pytest
+
+from src import database
+
+
+def test_local_day_start_is_midnight_and_matches_today_local():
+    """_local_day_start() must be 00:00, tz-aware, and land on the SAME
+    calendar date as database._today_local() (both read config.TIMEZONE) —
+    that shared boundary is the whole fix. tz-agnostic so it holds under the
+    test env's TIMEZONE=UTC and under production's Asia/Dubai alike."""
+    start = verification._local_day_start()
+    assert (start.hour, start.minute, start.second) == (0, 0, 0)
+    assert start.tzinfo is not None
+    # Same day the rest of the bot reads submissions under.
+    assert start.date() == database._today_local()
+
+
+def test_local_day_start_honors_asia_dubai_and_is_not_utc_midnight():
+    """With TIMEZONE=Asia/Dubai (production default), the general-chat window
+    must be anchored to Dubai's day: offset +04:00, and its UTC instant is
+    20:00 the previous UTC day (00:00 Dubai == 20:00 UTC) — never 00:00 UTC,
+    which was the bug."""
+    with patch("src.config.TIMEZONE", "Asia/Dubai"):
+        start = verification._local_day_start()
+    assert start.utcoffset() == datetime.timedelta(hours=4)
+    assert (start.hour, start.minute, start.second) == (0, 0, 0)
+    assert start.astimezone(datetime.timezone.utc).hour == 20  # 00:00 Dubai == 20:00 UTC
+
+
+# ---- verify_community: BOTH voice AND chat required (E5) ----
+
+class _FakeHistory:
+    """Minimal async-iterable stand-in for discord channel.history()."""
+    def __init__(self, messages):
+        self._messages = messages
+    def __aiter__(self):
+        async def _gen():
+            for m in self._messages:
+                yield m
+        return _gen()
+
+
+def _make_guild_with_general_chat(messages):
+    """Build a fake guild whose #general-chat history yields `messages`,
+    and capture the `after` kwarg verify_community passes to history()."""
+    captured = {}
+
+    def _history(limit=None, after=None):
+        captured["after"] = after
+        return _FakeHistory(messages)
+
+    channel = types.SimpleNamespace(name="general-chat", history=_history)
+    guild = types.SimpleNamespace(text_channels=[channel])
+    return guild, captured
+
+
+def _msg_from(user_id):
+    return types.SimpleNamespace(author=types.SimpleNamespace(id=user_id))
+
+
+@pytest.mark.asyncio
+async def test_verify_community_needs_both_voice_and_chat():
+    member = types.SimpleNamespace(id=4242)
+
+    # (a) voice OK, but NO chat message today -> not done, checklist shown.
+    guild, _ = _make_guild_with_general_chat([])
+    with patch.object(verification, "get_voice_minutes_today", return_value=15):
+        ok, msg = await verification.verify_community(member, guild)
+    assert ok is False
+    assert "general-chat" in msg  # tells them what's still missing
+
+    # (b) chat OK, but voice < 10 min -> not done.
+    guild, _ = _make_guild_with_general_chat([_msg_from(4242)])
+    with patch.object(verification, "get_voice_minutes_today", return_value=3):
+        ok, msg = await verification.verify_community(member, guild)
+    assert ok is False
+
+    # (c) BOTH satisfied -> done.
+    guild, _ = _make_guild_with_general_chat([_msg_from(4242)])
+    with patch.object(verification, "get_voice_minutes_today", return_value=12):
+        ok, msg = await verification.verify_community(member, guild)
+    assert ok is True
+
+
+@pytest.mark.asyncio
+async def test_verify_community_chat_window_uses_dubai_day_start():
+    """The `after` cutoff handed to channel.history() must be the Dubai
+    day start (the fix), not UTC midnight."""
+    member = types.SimpleNamespace(id=4242)
+    guild, captured = _make_guild_with_general_chat([_msg_from(4242)])
+    with patch.object(verification, "get_voice_minutes_today", return_value=12):
+        await verification.verify_community(member, guild)
+    # The cutoff must be the shared local day start, not the old UTC-midnight
+    # literal. Compare only the date + that it's midnight/tz-aware (both
+    # computed "now", so allow them to be the same wall-clock day).
+    after = captured["after"]
+    assert after.tzinfo is not None
+    assert (after.hour, after.minute, after.second) == (0, 0, 0)
+    assert after.date() == database._today_local()
