@@ -1,8 +1,7 @@
 """Tests for api_server.py.
 
 Includes a regression test for D036: the dashboard's real milestone
-catalog helper must return the same IDs used everywhere else in the
-system (milestones.json, ability_milestones, !markmilestone) -- the
+catalog helper must return the same IDs used in milestones.json -- the
 web dashboard's frontend previously used a hardcoded, entirely
 fictional list of IDs with zero overlap with any real milestone_id.
 """

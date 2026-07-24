@@ -72,18 +72,6 @@ def _migrate(conn: sqlite3.Connection):
     migration below is safe to run every startup: it only adds a column
     if that column is not already present.
     """
-    existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(advancement_exams)")}
-    migrations = [
-        ("status", "TEXT NOT NULL DEFAULT 'pending'"),
-        ("speaking_recording_url", "TEXT DEFAULT ''"),
-        ("writing_submission", "TEXT DEFAULT ''"),
-        ("resolved_at", "TEXT DEFAULT NULL"),
-        ("resolved_by", "TEXT DEFAULT ''"),
-    ]
-    for col_name, col_def in migrations:
-        if col_name not in existing_cols:
-            conn.execute(f"ALTER TABLE advancement_exams ADD COLUMN {col_name} {col_def}")
-
     # Dhaka' A0: difficulty_level on members table
     member_cols = {row["name"] for row in conn.execute("PRAGMA table_info(members)")}
     if "difficulty_level" not in member_cols:
@@ -189,31 +177,6 @@ CREATE TABLE IF NOT EXISTS assessments (
     UNIQUE(discord_id, week_number)
 );
 
-CREATE TABLE IF NOT EXISTS advancement_exams (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    from_level      TEXT NOT NULL,
-    to_level        TEXT NOT NULL,
-    attempted_at    TEXT NOT NULL DEFAULT (datetime('now')),
-    speaking_score  REAL DEFAULT NULL,
-    listening_score REAL DEFAULT NULL,
-    vocabulary_score REAL DEFAULT NULL,
-    accent_score    REAL DEFAULT NULL,
-    writing_score   REAL DEFAULT NULL,
-    passed          INTEGER NOT NULL DEFAULT 0,
-    notes           TEXT DEFAULT '',
-    -- Added to close the "!exam dead-end" gap: a row is now created the
-    -- moment DM collection completes (status='pending'), so the 30-day
-    -- cooldown actually works, the submission survives a bot restart,
-    -- and an admin has something concrete to review and resolve.
-    status                  TEXT NOT NULL DEFAULT 'pending',  -- pending | passed | failed
-    speaking_recording_url  TEXT DEFAULT '',
-    writing_submission      TEXT DEFAULT '',
-    resolved_at             TEXT DEFAULT NULL,
-    resolved_by             TEXT DEFAULT '',
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-
 CREATE TABLE IF NOT EXISTS points_log (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     discord_id      TEXT NOT NULL,
@@ -273,24 +236,6 @@ CREATE TABLE IF NOT EXISTS notification_log (
 );
 CREATE INDEX IF NOT EXISTS idx_notif_log ON notification_log(discord_id, notification_type, date);
 
--- Tatawwur (system-evolution spec) Phase T0: voice progress portfolio.
--- Stores benchmark recordings and daily accent recordings over time,
--- enabling students to HEAR their own transformation.
-CREATE TABLE IF NOT EXISTS voice_portfolio (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    recorded_at     TEXT NOT NULL DEFAULT (datetime('now')),
-    recording_url   TEXT NOT NULL,
-    recording_type  TEXT NOT NULL DEFAULT 'daily',
-    week            INTEGER DEFAULT NULL,
-    level           TEXT DEFAULT '',
-    duration_seconds REAL DEFAULT NULL,
-    ai_score        REAL DEFAULT NULL,
-    notes           TEXT DEFAULT '',
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-CREATE INDEX IF NOT EXISTS idx_voice_portfolio ON voice_portfolio(discord_id, recording_type);
-
 -- Tatawwur Phase T2: spaced repetition for vocabulary recall (SM-2 algorithm).
 CREATE TABLE IF NOT EXISTS vocab_srs (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -306,29 +251,6 @@ CREATE TABLE IF NOT EXISTS vocab_srs (
     UNIQUE(discord_id, word)
 );
 CREATE INDEX IF NOT EXISTS idx_vocab_srs_review ON vocab_srs(discord_id, next_review);
-
--- Tatawwur Phase T3: ability milestones tracking.
-CREATE TABLE IF NOT EXISTS ability_milestones (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    milestone_id    TEXT NOT NULL,
-    completed_at    TEXT NOT NULL DEFAULT (datetime('now')),
-    evidence_url    TEXT DEFAULT '',
-    level           TEXT NOT NULL DEFAULT 'L0',
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id),
-    UNIQUE(discord_id, milestone_id)
-);
-
--- Tatawwur Phase T5: conversation session tracking.
-CREATE TABLE IF NOT EXISTS conversation_sessions (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    scheduled_at    TEXT NOT NULL,
-    level           TEXT NOT NULL DEFAULT 'L0',
-    status          TEXT NOT NULL DEFAULT 'scheduled',
-    participant_ids TEXT DEFAULT '',
-    prompt_id       TEXT DEFAULT '',
-    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);
 
 -- Sahel Phase S6: personal link tokens for practice platform connection.
 CREATE TABLE IF NOT EXISTS link_tokens (
@@ -1136,127 +1058,6 @@ def get_latest_assessment(discord_id: str) -> Optional[dict]:
 
 
 # ============================================================
-#  ADVANCEMENT EXAMS
-# ============================================================
-
-def log_advancement_attempt(discord_id: str, from_level: str, to_level: str,
-                            scores: dict, passed: bool, notes: str = ""):
-    """Log a fully-resolved advancement exam attempt (scores known up front).
-    Kept for any future auto-scored (non-DM-collection) exam path.
-    """
-    conn = _connect()
-    conn.execute(
-        """INSERT INTO advancement_exams
-           (discord_id, from_level, to_level, speaking_score, listening_score,
-            vocabulary_score, accent_score, writing_score, passed, notes, status, resolved_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
-        (
-            discord_id, from_level, to_level,
-            scores.get("speaking"), scores.get("listening"),
-            scores.get("vocabulary"), scores.get("accent"),
-            scores.get("writing"), 1 if passed else 0, notes,
-            "passed" if passed else "failed",
-        ),
-    )
-    conn.commit()
-    conn.close()
-
-
-def create_pending_exam(discord_id: str, from_level: str, to_level: str,
-                        speaking_recording_url: str = "", writing_submission: str = "") -> int:
-    """Create a 'pending' advancement exam row once DM collection completes.
-
-    This is what makes the 30-day cooldown (last_advancement_attempt) and
-    the exam-review admin flow actually work — previously NOTHING ever
-    wrote to this table, so every !exam request looked like a first
-    attempt forever, and submitted recordings/writing were never saved
-    anywhere durable (they lived only in an in-memory dict that a bot
-    restart would silently wipe).
-
-    Returns the new row's id.
-    """
-    conn = _connect()
-    cur = conn.execute(
-        """INSERT INTO advancement_exams
-           (discord_id, from_level, to_level, speaking_recording_url,
-            writing_submission, status)
-           VALUES (?, ?, ?, ?, ?, 'pending')""",
-        (discord_id, from_level, to_level, speaking_recording_url, writing_submission),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def last_advancement_attempt(discord_id: str) -> Optional[dict]:
-    """Get the most recent advancement exam attempt (any status).
-
-    Ties on attempted_at (SQLite's datetime('now') has only second-level
-    resolution, so two exams created within the same second are
-    indistinguishable by timestamp alone) are broken by id DESC, so the
-    row that was actually inserted last is always the one returned.
-    """
-    conn = _connect()
-    row = conn.execute(
-        "SELECT * FROM advancement_exams WHERE discord_id=? ORDER BY attempted_at DESC, id DESC LIMIT 1",
-        (discord_id,),
-    ).fetchone()
-    conn.close()
-    return dict(row) if row else None
-
-
-def pending_exams() -> list[dict]:
-    """Get all advancement exams awaiting admin review, oldest first."""
-    conn = _connect()
-    rows = conn.execute(
-        """SELECT e.*, m.discord_name FROM advancement_exams e
-           LEFT JOIN members m ON m.discord_id = e.discord_id
-           WHERE e.status='pending' ORDER BY e.attempted_at ASC"""
-    ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-def get_exam_by_id(exam_id: int) -> Optional[dict]:
-    """Get a single advancement exam row by its id.
-
-    An admin typing !examresult with an id outside SQLite's signed-64-bit
-    INTEGER range (e.g. a typo like an extra digit) previously raised a
-    bare OverflowError instead of the normal "No exam found" message --
-    found via boundary-condition stress testing, same failure mode as
-    add_points()/save_assessment(). Unlike those two, clamping doesn't
-    make sense for an id lookup (a clamped id would just be a different,
-    wrong id) -- treating it as simply not found is the correct behavior,
-    consistent with how an out-of-range id like -1 already behaves below.
-    """
-    conn = _connect()
-    try:
-        row = conn.execute("SELECT * FROM advancement_exams WHERE id=?", (exam_id,)).fetchone()
-    except OverflowError:
-        return None
-    finally:
-        conn.close()
-    return dict(row) if row else None
-
-
-def resolve_exam(exam_id: int, passed: bool, resolved_by: str, notes: str = ""):
-    """Mark a pending exam as passed/failed. Does NOT change the member's
-    level itself — the caller is responsible for calling set_level() on
-    pass, so the decision to promote is always an explicit, visible step.
-    """
-    conn = _connect()
-    conn.execute(
-        """UPDATE advancement_exams
-           SET status=?, passed=?, notes=?, resolved_by=?, resolved_at=datetime('now')
-           WHERE id=?""",
-        ("passed" if passed else "failed", 1 if passed else 0, notes, resolved_by, exam_id),
-    )
-    conn.commit()
-    conn.close()
-
-
-# ============================================================
 #  SETTINGS (key-value store for runtime config)
 # ============================================================
 
@@ -1830,82 +1631,6 @@ def is_quiet_hours(discord_id: str) -> bool:
 
 
 # ============================================================
-#  VOICE PORTFOLIO (Tatawwur Phase T0 — hear your growth)
-# ============================================================
-
-def save_voice_recording(discord_id: str, recording_url: str,
-                         recording_type: str = "daily",
-                         week: int = None, level: str = "",
-                         duration_seconds: float = None,
-                         ai_score: float = None, notes: str = "") -> int:
-    """Save a voice recording to the portfolio. Returns the new row's id.
-
-    recording_type: 'benchmark_day1', 'benchmark_periodic', 'daily',
-                    'assessment', 'milestone'
-    """
-    conn = _connect()
-    cur = conn.execute(
-        """INSERT INTO voice_portfolio
-           (discord_id, recording_url, recording_type, week, level,
-            duration_seconds, ai_score, notes)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-        (discord_id, recording_url, recording_type, week, level,
-         duration_seconds, ai_score, notes),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def get_voice_portfolio(discord_id: str) -> list[dict]:
-    """Get all recordings for a member, oldest first."""
-    conn = _connect()
-    rows = conn.execute(
-        "SELECT * FROM voice_portfolio WHERE discord_id=? ORDER BY recorded_at ASC",
-        (discord_id,),
-    ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-def get_voice_benchmarks(discord_id: str) -> list[dict]:
-    """Get only benchmark recordings (day 1 + periodic), for progress comparison."""
-    conn = _connect()
-    rows = conn.execute(
-        """SELECT * FROM voice_portfolio
-           WHERE discord_id=? AND recording_type LIKE 'benchmark%'
-           ORDER BY recorded_at ASC""",
-        (discord_id,),
-    ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-def count_voice_recordings(discord_id: str) -> int:
-    """Count total recordings in portfolio."""
-    conn = _connect()
-    row = conn.execute(
-        "SELECT COUNT(*) as cnt FROM voice_portfolio WHERE discord_id=?",
-        (discord_id,),
-    ).fetchone()
-    conn.close()
-    return row["cnt"] if row else 0
-
-
-def has_day1_benchmark(discord_id: str) -> bool:
-    """Check if this member already has a Day 1 benchmark recording."""
-    conn = _connect()
-    row = conn.execute(
-        "SELECT 1 FROM voice_portfolio WHERE discord_id=? AND recording_type='benchmark_day1'",
-        (discord_id,),
-    ).fetchone()
-    conn.close()
-    return row is not None
-
-
-
-# ============================================================
 #  SPACED REPETITION (Tatawwur Phase T2)
 # ============================================================
 
@@ -1989,71 +1714,6 @@ def get_srs_stats(discord_id: str) -> dict:
     mastered = conn.execute("SELECT COUNT(*) as c FROM vocab_srs WHERE discord_id=? AND interval_days>=30", (discord_id,)).fetchone()["c"]
     conn.close()
     return {"total": total, "due_today": due, "mastered": mastered, "learning": total - mastered}
-
-
-# ============================================================
-#  ABILITY MILESTONES (Tatawwur Phase T3)
-# ============================================================
-
-def complete_milestone(discord_id: str, milestone_id: str, evidence_url: str = "", level: str = "L0") -> bool:
-    """Mark a milestone as completed. Returns True if newly completed."""
-    conn = _connect()
-    try:
-        conn.execute(
-            "INSERT INTO ability_milestones (discord_id, milestone_id, evidence_url, level) VALUES (?, ?, ?, ?)",
-            (discord_id, milestone_id, evidence_url, level),
-        )
-        conn.commit()
-        return True
-    except sqlite3.IntegrityError:
-        return False  # already completed
-    finally:
-        conn.close()
-
-
-def get_completed_milestones(discord_id: str) -> list[str]:
-    """Get list of milestone_ids this member has completed."""
-    conn = _connect()
-    rows = conn.execute(
-        "SELECT milestone_id FROM ability_milestones WHERE discord_id=?",
-        (discord_id,),
-    ).fetchall()
-    conn.close()
-    return [r["milestone_id"] for r in rows]
-
-
-# ============================================================
-#  CONVERSATION SESSIONS (Tatawwur Phase T5)
-# ============================================================
-
-def create_conversation_session(scheduled_at: str, level: str, participant_ids: str, prompt_id: str = "") -> int:
-    """Create a scheduled conversation session. Returns the new id."""
-    conn = _connect()
-    cur = conn.execute(
-        "INSERT INTO conversation_sessions (scheduled_at, level, participant_ids, prompt_id) VALUES (?, ?, ?, ?)",
-        (scheduled_at, level, participant_ids, prompt_id),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def get_upcoming_sessions(level: str = None) -> list[dict]:
-    """Get upcoming conversation sessions (status='scheduled')."""
-    conn = _connect()
-    if level:
-        rows = conn.execute(
-            "SELECT * FROM conversation_sessions WHERE status='scheduled' AND level=? ORDER BY scheduled_at",
-            (level,),
-        ).fetchall()
-    else:
-        rows = conn.execute(
-            "SELECT * FROM conversation_sessions WHERE status='scheduled' ORDER BY scheduled_at"
-        ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
 
 
 # ============================================================
@@ -2836,10 +2496,8 @@ def get_latest_episodic_summary(discord_id: str) -> Optional[dict]:
     unbounded raw history older than the working-memory window.
 
     Ties on created_at (SQLite's datetime('now') has only
-    second-level resolution -- same known limitation
-    last_advancement_attempt() already documents and works around)
-    are broken by id DESC, so the row actually inserted last is always
-    the one returned.
+    second-level resolution) are broken by id DESC, so the row actually
+    inserted last is always the one returned.
     """
     conn = _connect()
     row = conn.execute(

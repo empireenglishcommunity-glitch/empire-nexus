@@ -111,10 +111,7 @@ ARABIC_COMMAND_ALIASES = {
     "تعليم": "tutorial",
     "إشعارات": "notifications",
     "نبض": "pulse",
-    "صوتي": "portfolio",
     "كلماتي": "words",
-    "قدراتي": "abilities",
-    "محادثة": "conversation",
 }
 
 # Maps Arabic task names to their English task_id equivalents (for !تم نطق etc.)
@@ -2254,9 +2251,9 @@ async def cmd_level(ctx):
     if level_info["advancement_score"]:
         msg += (
             f"\n**To advance to the next level:**\n"
-            f"• Pass the Exit Exam (minimum {level_info['advancement_score']}%)\n"
-            f"• Available after week {level_info['duration_weeks'][0]} minimum\n"
-            f"• All 5 exam sections must pass individually"
+            f"• Keep your weekly assessment strong (aim for {level_info['advancement_score']}%+ — run `!assess`)\n"
+            f"• Reachable from week {level_info['duration_weeks'][0]} onwards\n"
+            f"• Your coach promotes you when you're ready — just keep practicing daily! 🏛️"
         )
     else:
         msg += "\n👑 Level 3 is the mastery level — no advancement. Pursue quarterly certification!"
@@ -2404,20 +2401,17 @@ async def cmd_help(ctx):
         "⏳ 5 min cooldown between each `!done`\n\n"
         "**Admin:**\n"
         "`!status` — Bot status\n"
-        "`!attention` — Ranked list of who needs a human right now (inactive, declining, pending exams, buddy load)\n"
+        "`!attention` — Ranked list of who needs a human right now (inactive, declining, buddy load)\n"
         "`!setlevel @user L0/L1/L2/L3` — Set someone's level\n"
         "`!announce <message>` — Broadcast announcement\n"
         "`!members` — List all members\n"
         "`!orient <date/time>` — Send orientation invite\n"
         "`!recruit ar/en` — Get recruitment message template\n"
         "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
-        "`!examqueue` — List advancement exams awaiting review\n"
-        "`!examresult <id> pass/fail` — Resolve an exam (auto-promotes on pass)\n"
         "`!flag list/enable/disable/beta` — Feature flag management\n"
         "`!maintenance on/off` — Toggle maintenance mode (deploy presence)\n\n"
         "**Account:**\n"
         "`!delete` — Request deletion of all your data\n"
-        "`!exam` — Request level advancement exam\n"
     )
 
 
@@ -2478,20 +2472,10 @@ async def on_message(message: discord.Message):
     if message.author.bot:
         return
 
-    # Handle exam DM submissions
     if isinstance(message.channel, discord.DMChannel):
-        if features.has_pending_exam(str(message.author.id)):
-            handled = await features.handle_exam_dm(message)
-            if handled:
-                return
         # Bawaba B2: handle tutorial quest DM responses
         if features.has_pending_tutorial(str(message.author.id)):
             handled = await features.handle_tutorial_dm(message)
-            if handled:
-                return
-        # Tatawwur T0: handle Day 1 benchmark recording submission
-        if message.attachments:
-            handled = await features.handle_benchmark_recording(message)
             if handled:
                 return
         # Journey advancement: check if this DM advances the onboarding
@@ -2724,102 +2708,6 @@ async def on_message(message: discord.Message):
 #  ADVANCEMENT EXAM
 # ============================================================
 
-@bot.command(name="exam")
-async def cmd_exam(ctx):
-    """Request the level advancement exam."""
-    await features.handle_exam_request(ctx, bot)
-    # If eligible, start DM collection
-    member = database.get_member(str(ctx.author.id))
-    if member:
-        level_info = config.LEVELS.get(member["level"], config.LEVELS["L0"])
-        week = database.member_week_number(str(ctx.author.id))
-        min_weeks = level_info.get("duration_weeks")
-        if min_weeks and week >= min_weeks[0]:
-            await features.start_exam_collection(ctx.author)
-
-
-@bot.command(name="examresult")
-@commands.has_permissions(manage_guild=True)
-async def cmd_examresult(ctx, exam_id: int = None, result: str = None):
-    """Resolve a pending advancement exam. Usage: !examresult <id> pass|fail
-
-    Closes the loop that !exam previously left open: on 'pass' this
-    actually calls database.set_level() and reassigns the Discord role
-    (the same promotion logic !setlevel uses), then DMs the student.
-    On 'fail' it DMs constructive next steps. Either way the exam row
-    moves out of 'pending', which also releases the 30-day cooldown.
-    """
-    if exam_id is None or result not in ("pass", "fail"):
-        await ctx.send("Usage: `!examresult <id> pass` or `!examresult <id> fail`")
-        return
-
-    exam = database.get_exam_by_id(exam_id)
-    if not exam:
-        await ctx.send(f"❌ No exam found with id `{exam_id}`.")
-        return
-    if exam["status"] != "pending":
-        await ctx.send(f"⚠️ Exam #{exam_id} was already resolved as **{exam['status']}**.")
-        return
-
-    passed = result == "pass"
-    database.resolve_exam(exam_id, passed, resolved_by=str(ctx.author.id))
-
-    student = ctx.guild.get_member(int(exam["discord_id"]))
-
-    if passed:
-        database.set_level(exam["discord_id"], exam["to_level"])
-        if student:
-            await _assign_level_role(student, exam["to_level"])
-        level_info = config.LEVELS.get(exam["to_level"], config.LEVELS["L0"])
-        await ctx.send(
-            f"✅ Exam #{exam_id}: **{exam['discord_id']}** passed → promoted to "
-            f"**{exam['to_level']}** ({level_info['name']})"
-        )
-        if student:
-            try:
-                await student.send(
-                    f"🎉 **مبروك! نجحت في امتحان الترقية!**\n\n"
-                    f"انت دلوقتي في **{exam['to_level']} — {level_info['name']}** {level_info['emoji']}\n\n"
-                    f"استمر! 🏛️"
-                )
-            except discord.Forbidden:
-                pass
-    else:
-        await ctx.send(f"📋 Exam #{exam_id}: **{exam['discord_id']}** marked as failed. Stays at {exam['from_level']}.")
-        if student:
-            try:
-                await student.send(
-                    "📋 **نتيجة امتحان الترقية**\n\n"
-                    "لسه مش وقتها. استمر في التمرين وحاول تاني بعد شهر.\n"
-                    "ابعت `#support` لو عايز تفاصيل أكتر عن نقاط التحسين.\n\n"
-                    "احنا معاك. 🏛️"
-                )
-            except discord.Forbidden:
-                pass
-
-
-@bot.command(name="examqueue")
-@commands.has_permissions(manage_guild=True)
-async def cmd_examqueue(ctx):
-    """List all advancement exams awaiting review."""
-    rows = database.pending_exams()
-    if not rows:
-        await ctx.send("✅ No exams pending review.")
-        return
-    lines = [f"📋 **Pending Exams ({len(rows)})**\n"]
-    for r in rows:
-        lines.append(
-            f"#{r['id']} — {r.get('discord_name') or r['discord_id']} "
-            f"({r['from_level']} → {r['to_level']}) — submitted {r['attempted_at']}"
-        )
-    lines.append("\nResolve with `!examresult <id> pass` or `!examresult <id> fail`")
-    try:
-        await ctx.author.send("\n".join(lines))
-        await ctx.send("📩 Exam queue sent to your DMs.", delete_after=5)
-    except discord.Forbidden:
-        await ctx.send("\n".join(lines))
-
-
 @bot.command(name="delete")
 async def cmd_delete(ctx):
     """Request deletion of all your data."""
@@ -2955,116 +2843,6 @@ async def cmd_notifications(ctx, setting: str = None, value: str = None):
     await ctx.send(f"🔔 {setting}: {status}")
 
 
-@bot.command(name="portfolio")
-async def cmd_portfolio(ctx):
-    """View your voice progress portfolio — hear your growth over time.
-
-    Tatawwur T0: shows all benchmark recordings chronologically with
-    dates, scores, and links. The "before and after" that proves the
-    system works.
-    """
-    if not database.is_feature_enabled("tatawwur_portfolio"):
-        return
-
-    discord_id = str(ctx.author.id)
-    recordings = database.get_voice_portfolio(discord_id)
-
-    if not recordings:
-        phase = features.response_language(discord_id)
-        if phase == "arabic":
-            await ctx.send(
-                "🎙️ **محفظة صوتك فاضية لسه.**\n\n"
-                "لما تبدأ تسجل صوتك في المهام اليومية، هتلاقي تسجيلاتك هنا.\n"
-                "هتقدر تسمع نفسك وانت بتتحسن مع الوقت! 📈"
-            )
-        else:
-            await ctx.send(
-                "🎙️ **Your voice portfolio is empty.**\n\n"
-                "As you complete speaking tasks, your recordings will appear here.\n"
-                "You'll be able to hear yourself improving over time! 📈"
-            )
-        return
-
-    member = database.get_member(discord_id)
-    name = member["discord_name"] if member else ctx.author.display_name
-
-    lines = [
-        f"🎙️ **{name}'s Voice Portfolio**",
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"📊 Total recordings: **{len(recordings)}**",
-        "",
-    ]
-
-    # Show benchmarks first (the key "before/after" evidence)
-    benchmarks = [r for r in recordings if "benchmark" in r["recording_type"]]
-    if benchmarks:
-        lines.append("📍 **Benchmarks (hear your progress):**")
-        for r in benchmarks:
-            date = r["recorded_at"][:10]
-            score_text = f" — Score: {r['ai_score']:.0f}%" if r["ai_score"] else ""
-            type_label = "Day 1" if r["recording_type"] == "benchmark_day1" else f"Week {r['week'] or '?'}"
-            lines.append(f"  🎤 {type_label} ({date}){score_text}")
-            if r["recording_url"]:
-                lines.append(f"     🔗 {r['recording_url']}")
-        lines.append("")
-
-    # Recent daily recordings (last 5)
-    daily = [r for r in recordings if r["recording_type"] == "daily"]
-    if daily:
-        lines.append(f"🎯 **Recent recordings:** ({len(daily)} total)")
-        for r in daily[-5:]:
-            date = r["recorded_at"][:10]
-            score_text = f" — {r['ai_score']:.0f}%" if r["ai_score"] else ""
-            lines.append(f"  • {date} ({r['level']}){score_text}")
-
-    # Dhaka' P2: Pronunciation scores from AI scoring (last 7 days)
-    pronunciation_scores = database.get_recent_scores(discord_id, days=7)
-    if pronunciation_scores:
-        lines.append("")
-        lines.append(f"🎯 **AI Pronunciation Scores (last 7 days):**")
-        for ps in pronunciation_scores[:7]:
-            date = ps["date"]
-            task_label = "🎯 Accent" if ps["task_id"] == "accent" else "🎧 Shadow"
-            stars = "⭐" * int(ps["score"] / 20)
-            lines.append(f"  {task_label} {date} — {ps['score']:.0f}% {stars}")
-
-        # Trend calculation
-        if len(pronunciation_scores) >= 3:
-            recent_3 = [s["score"] for s in pronunciation_scores[:3]]
-            older_3 = [s["score"] for s in pronunciation_scores[-3:]]
-            recent_avg = sum(recent_3) / len(recent_3)
-            older_avg = sum(older_3) / len(older_3)
-            diff = recent_avg - older_avg
-            if diff > 5:
-                trend_arrow = "↑ improving"
-            elif diff < -5:
-                trend_arrow = "↓ needs attention"
-            else:
-                trend_arrow = "→ stable"
-            avg = sum(s["score"] for s in pronunciation_scores) / len(pronunciation_scores)
-            lines.append(f"  📊 Average: **{avg:.0f}%** | Trend: **{trend_arrow}**")
-        lines.append("")
-
-    # Pronunciation trend (if enough data)
-    scored = [r for r in recordings if r["ai_score"] is not None]
-    if len(scored) >= 3:
-        first_score = scored[0]["ai_score"]
-        last_score = scored[-1]["ai_score"]
-        change = last_score - first_score
-        trend = "📈" if change > 0 else "📉" if change < 0 else "➡️"
-        lines.append(f"\n{trend} **Pronunciation trend:** {first_score:.0f}% → {last_score:.0f}% ({'+' if change > 0 else ''}{change:.0f}%)")
-
-    msg = "\n".join(lines)
-    if len(msg) > 1900:
-        try:
-            await ctx.author.send(msg)
-            await ctx.send("📩 Portfolio sent to your DMs!", delete_after=10)
-        except discord.Forbidden:
-            await ctx.send(msg[:1900] + "\n...")
-    else:
-        await ctx.send(msg)
-
-
 @bot.command(name="words")
 async def cmd_words(ctx):
     """View your vocabulary strength — spaced repetition stats.
@@ -3097,102 +2875,6 @@ async def cmd_words(ctx):
         f"🔄 Due for review today: **{stats['due_today']}**\n\n"
         f"Strength: [{mastered_bar}] {stats['mastered']}/{stats['total']}"
     )
-
-
-@bot.command(name="abilities")
-async def cmd_abilities(ctx):
-    """View your ability milestones — what you CAN DO now.
-
-    Tatawwur T3: shows completed vs. pending milestones for your level.
-    These are concrete, testable challenges — not just points.
-    """
-    if not database.is_feature_enabled("tatawwur_milestones"):
-        return
-
-    import json
-    from pathlib import Path
-
-    discord_id = str(ctx.author.id)
-    member = database.get_member(discord_id)
-    if not member:
-        await ctx.send("مش مسجل. اكتب `!join` الأول.")
-        return
-
-    level = member["level"]
-    milestones_file = Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
-    if not milestones_file.exists():
-        await ctx.send("⚠️ Milestones data not found.")
-        return
-
-    with open(milestones_file, encoding="utf-8") as f:
-        all_milestones = json.load(f)
-
-    level_milestones = all_milestones.get(level, [])
-    if not level_milestones:
-        await ctx.send(f"⚠️ No milestones defined for {level} yet.")
-        return
-
-    completed_ids = database.get_completed_milestones(discord_id)
-
-    lines = [
-        f"🎯 **قدراتك — {level} Ability Milestones**",
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        "",
-    ]
-
-    done_count = 0
-    for m in level_milestones:
-        if m["id"] in completed_ids:
-            lines.append(f"  ✅ ~~{m['name_ar']}~~ ({m['name']})")
-            done_count += 1
-        else:
-            lines.append(f"  ⬜ **{m['name_ar']}** ({m['name']})")
-            lines.append(f"     {m['description_ar']}")
-
-    lines.append(f"\n📊 {done_count}/{len(level_milestones)} completed")
-
-    if done_count == len(level_milestones):
-        lines.append("\n🏆 **خلصت كل milestones المستوى ده! جاهز للترقية!**")
-
-    await ctx.send("\n".join(lines))
-
-
-@bot.command(name="conversation")
-async def cmd_conversation(ctx):
-    """Sign up for a structured conversation session.
-
-    Tatawwur T5: weekly paired speaking practice with a same-level
-    partner. The bot matches you and provides conversation prompts.
-    """
-    if not database.is_feature_enabled("tatawwur_conversations"):
-        return
-
-    discord_id = str(ctx.author.id)
-    member = database.get_member(discord_id)
-    if not member:
-        await ctx.send("مش مسجل. اكتب `!join` الأول.")
-        return
-
-    level = member["level"]
-    sessions = database.get_upcoming_sessions(level)
-
-    if sessions:
-        s = sessions[0]
-        await ctx.send(
-            f"🗣️ **الجلسة الجاية:**\n"
-            f"📅 {s['scheduled_at']}\n"
-            f"📊 Level: {s['level']}\n"
-            f"👥 Participants: {len(s['participant_ids'].split(',')) if s['participant_ids'] else 0}\n\n"
-            f"انت مسجل بالفعل! هتوصلك رسالة قبل الجلسة بنص ساعة."
-        )
-    else:
-        await ctx.send(
-            "🗣️ **جلسات المحادثة**\n"
-            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            "مفيش جلسات مجدولة حالياً.\n"
-            "الجلسات بتكون أسبوعية — هيتم الإعلان عنها في #announcements.\n\n"
-            "💡 لحد ما تبدأ الجلسات، اتمرن مع الـ buddy بتاعك!"
-        )
 
 
 @bot.command(name="pulse")
@@ -3417,78 +3099,6 @@ async def cmd_systemstatus(ctx):
     )
 
 
-@bot.command(name="markmilestone")
-@commands.has_permissions(manage_guild=True)
-async def cmd_markmilestone(ctx, member: discord.Member = None, milestone_id: str = None):
-    """Admin command: mark an ability milestone as completed for a
-    student, after manually reviewing their submitted evidence
-    (recording/writing/conversation per milestones.json's `type`
-    field). Usage: !markmilestone @user l0_introduce
-
-    Masar M3.2: this is `database.complete_milestone()`'s FIRST real
-    call site anywhere in this codebase. Investigating M3's scope
-    found that although milestones are fully designed (15 of them,
-    `content/milestones/milestones.json`) and students can view their
-    progress via `!abilities`, nothing anywhere ever actually called
-    `complete_milestone()` — meaning no real student has EVER had a
-    milestone marked complete, at all, since the feature was built.
-    This is the exact D020/D012 pattern (a feature designed, but the
-    piece that actually triggers it missing) applied to milestones —
-    these specific milestones need a human (or future AI) to actually
-    listen to a recording or read an essay and judge it, which is why
-    an admin command, not an automatic detector, is the right fix here
-    (out of scope: changing what the milestones themselves are, or
-    how they're judged — this only gives the existing, unchanged
-    system its first working way to actually award one).
-    """
-    if not member or not milestone_id:
-        await ctx.send("Usage: `!markmilestone @user <milestone_id>` (see `!abilities` for valid IDs)")
-        return
-
-    discord_id = str(member.id)
-    target = database.get_member(discord_id)
-    if not target:
-        await ctx.send(f"❌ {member.display_name} isn't registered.")
-        return
-
-    import json
-    from pathlib import Path
-    milestones_file = Path(__file__).resolve().parent.parent / "content" / "milestones" / "milestones.json"
-    all_milestones = json.loads(milestones_file.read_text(encoding="utf-8"))
-    level = target.get("level", "L0")
-    level_milestones = {m["id"]: m for m in all_milestones.get(level, [])}
-    milestone = level_milestones.get(milestone_id)
-    if not milestone:
-        valid_ids = ", ".join(level_milestones.keys()) or "(none defined for this level)"
-        await ctx.send(f"❌ Unknown milestone_id `{milestone_id}` for {level}. Valid IDs: {valid_ids}")
-        return
-
-    newly_completed = database.complete_milestone(discord_id, milestone_id, level=level)
-    if not newly_completed:
-        await ctx.send(f"ℹ️ {member.display_name} already completed **{milestone['name']}** — no change.")
-        return
-
-    await ctx.send(f"✅ Marked **{milestone['name']}** ({milestone['name_ar']}) complete for {member.display_name}.")
-
-    # Masar M3: fire the personalized unlock moment, same gating
-    # discipline (celebrations preference + quiet hours) as every
-    # other celebratory notification in this codebase.
-    if database.is_feature_enabled("masar_milestone_moments", discord_id):
-        prefs = database.get_notification_prefs(discord_id)
-        if prefs.get("celebrations", 1) and not database.is_quiet_hours(discord_id):
-            try:
-                from . import narrative_engine
-                signals = narrative_engine.gather_signals(discord_id)
-                message, _source = await narrative_engine.build_milestone_moment(
-                    discord_id, milestone_id, signals,
-                )
-                await member.send(message)
-            except (discord.Forbidden, discord.HTTPException):
-                pass
-            except Exception as e:
-                logger.error(f"Masar milestone moment error for {discord_id}: {e}")
-
-
 @bot.command(name="setlevel")
 @commands.has_permissions(manage_guild=True)
 async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
@@ -3687,11 +3297,10 @@ async def cmd_announce(ctx, *, message: str = ""):
 @commands.has_permissions(manage_guild=True)
 async def cmd_attention(ctx):
     """Ranked 'who needs a human right now' report: inactive members by
-    severity, declining assessment trends, pending exams, and buddy
-    load — combining signals that already exist across the bot into
-    one view instead of several separate commands. Read-only, sent via
-    DM (falls back to the channel if DMs are closed, same pattern as
-    !status/!members)."""
+    severity, declining assessment trends, and buddy load — combining
+    signals that already exist across the bot into one view instead of
+    several separate commands. Read-only, sent via DM (falls back to the
+    channel if DMs are closed, same pattern as !status/!members)."""
     report = await features.build_attention_report(ctx.guild)
     try:
         await ctx.author.send(report)

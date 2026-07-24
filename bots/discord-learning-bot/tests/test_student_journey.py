@@ -3,14 +3,14 @@
 This is NOT a collection of isolated unit tests (already well-covered by
 the 313-test suite). It's a single scripted scenario run against a fresh
 temp SQLite DB that exercises the full join → submit → streak → assess →
-exam → level-change path in one continuous flow, asserting final
-invariants (points, streaks, submission counts) against hand-computed
-expected values.
+level-change path in one continuous flow, asserting final invariants
+(points, streaks, submission counts) against hand-computed expected
+values.
 
 The mechanism this test provides: something like a points double-award
-bug, a broken streak-carry across days, or an exam that silently fails to
-promote would be caught HERE (at CI time, before merge) rather than after
-a real student's numbers look wrong.
+bug, a broken streak-carry across days, or a promotion that silently
+fails to change level would be caught HERE (at CI time, before merge)
+rather than after a real student's numbers look wrong.
 
 Runs in the existing .github/workflows/learning-bot-test.yml workflow
 with zero changes to that file — pytest discovers it automatically.
@@ -21,8 +21,8 @@ Design (from design.md, Component 4):
      the 7-day streak bonus threshold (STREAK_BONUS_POINTS[7] = 200).
   3. Run the weekly assessment flow (!assess) and confirm the score lands
      in the database with correct upsert-once-per-week behavior.
-  4. Drive a full advancement-exam submission through to examresult pass,
-     confirming the member's level actually changes.
+  4. Promote the member a level (mimics !setlevel), confirming the
+     member's level actually changes.
   5. Assert final invariants: total_points matches hand-computed expected
      value, longest_streak matches, no daily_submissions rows are missing.
 
@@ -131,10 +131,10 @@ async def _simulate_one_day(discord_id: str, name: str, date_str: str,
 
 @pytest.mark.asyncio
 async def test_full_student_journey():
-    """Simulate a complete student journey: join → 8 days → assess → exam → level up.
+    """Simulate a complete student journey: join → 8 days → assess → level up.
 
     This is the one test that would catch invariant violations spanning
-    multiple subsystems (points, streaks, assessments, exams, levels) that
+    multiple subsystems (points, streaks, assessments, levels) that
     individual unit tests — by definition — can't cover because they test
     each subsystem in isolation.
     """
@@ -267,36 +267,9 @@ async def test_full_student_journey():
     assert already_assessed_now is True
 
     # ------------------------------------------------------------------
-    # Phase 4: ADVANCEMENT EXAM (submit → admin resolves → level change)
+    # Phase 4: LEVEL PROMOTION (admin advances the student, e.g. !setlevel)
     # ------------------------------------------------------------------
-    # Create a pending exam (mimics handle_exam_dm completing collection)
-    exam_id = database.create_pending_exam(
-        MEMBER_ID, "L0", "L1",
-        speaking_recording_url="https://cdn.discord.com/fake/recording.ogg",
-        writing_submission="I wake up every morning at 7 AM. I brush my teeth and eat breakfast. "
-                          "Then I study English for one hour. I practice speaking with my friend. "
-                          "After lunch I do my homework. In the evening I watch English movies. "
-                          "I go to sleep at 11 PM. I love learning every day.",
-    )
-    assert exam_id is not None and exam_id > 0
-
-    # Verify it's in the pending queue
-    pending = database.pending_exams()
-    assert len(pending) == 1
-    assert pending[0]["id"] == exam_id
-    assert pending[0]["status"] == "pending"
-    assert pending[0]["from_level"] == "L0"
-    assert pending[0]["to_level"] == "L1"
-
-    # Admin resolves the exam as PASS
-    database.resolve_exam(exam_id, passed=True, resolved_by="admin_001", notes="Good work!")
-
-    # Verify exam is resolved
-    resolved = database.get_exam_by_id(exam_id)
-    assert resolved["status"] == "passed"
-    assert resolved["passed"] == 1
-
-    # The level change itself (mimics cmd_examresult's logic)
+    # The level change itself (mimics cmd_setlevel's logic)
     database.set_level(MEMBER_ID, "L1")
 
     # ------------------------------------------------------------------
@@ -306,7 +279,7 @@ async def test_full_student_journey():
 
     # Level changed
     assert final_member["level"] == "L1", (
-        f"Expected level=L1 after exam pass, got {final_member['level']}"
+        f"Expected level=L1 after promotion, got {final_member['level']}"
     )
 
     # Total points: hand-computed expected value
@@ -321,9 +294,6 @@ async def test_full_student_journey():
     assert final_member["longest_streak"] >= 8, (
         f"Expected longest_streak>=8, got {final_member['longest_streak']}"
     )
-
-    # No pending exams remain
-    assert len(database.pending_exams()) == 0
 
     # Assessment stored with correct week
     assessments = database.get_assessments(MEMBER_ID)
@@ -433,38 +403,4 @@ def test_assess_upsert_does_not_double_award():
     assert stored["overall_score"] == 90.0
 
 
-# ============================================================
-#  EXAM FLOW INTEGRITY: pending → resolved, level changes
-# ============================================================
 
-def test_exam_flow_pending_to_pass_changes_level():
-    """Verify the full exam flow: create pending → resolve pass → level
-    changes, and the exam leaves the pending queue."""
-    database.register_member("exam_user", "Omar")
-    assert database.get_member("exam_user")["level"] == "L0"
-
-    # Submit exam
-    eid = database.create_pending_exam("exam_user", "L0", "L1",
-                                       speaking_recording_url="https://example.com/audio.ogg",
-                                       writing_submission="Test writing sample.")
-    assert len(database.pending_exams()) == 1
-
-    # Resolve
-    database.resolve_exam(eid, passed=True, resolved_by="admin")
-    database.set_level("exam_user", "L1")
-
-    assert database.get_member("exam_user")["level"] == "L1"
-    assert len(database.pending_exams()) == 0
-    assert database.get_exam_by_id(eid)["status"] == "passed"
-
-
-def test_exam_flow_pending_to_fail_keeps_level():
-    """Verify that a failed exam does NOT change the member's level."""
-    database.register_member("exam_fail_user", "Layla")
-    eid = database.create_pending_exam("exam_fail_user", "L0", "L1")
-
-    database.resolve_exam(eid, passed=False, resolved_by="admin", notes="Needs more practice")
-
-    assert database.get_member("exam_fail_user")["level"] == "L0"
-    assert database.get_exam_by_id(eid)["status"] == "failed"
-    assert len(database.pending_exams()) == 0

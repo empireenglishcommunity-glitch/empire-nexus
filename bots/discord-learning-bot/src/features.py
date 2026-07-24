@@ -7,12 +7,11 @@ Implements remaining blueprint items:
 4. Spaced repetition (review words in quiz)
 5. Weekly progress report (Monday DM)
 6. Grammar Pattern Card delivery (Day 4 of week)
-7. Advancement exam flow
-8. Buddy system
-9. English-only detection
-10. Streak tracker auto-post
-11. Leaderboard auto-post
-12. At-risk member outreach
+7. Buddy system
+8. English-only detection
+9. Streak tracker auto-post
+10. Leaderboard auto-post
+11. At-risk member outreach
 """
 import datetime
 import logging
@@ -452,77 +451,6 @@ def format_vocab_cheat_sheet(week: int, level: str = "L0") -> str:
 
 
 # ============================================================
-#  7. ADVANCEMENT EXAM (!exam command)
-# ============================================================
-
-async def handle_exam_request(ctx, bot):
-    """Handle !exam command — check eligibility and start exam flow."""
-    member = database.get_member(str(ctx.author.id))
-    if not member:
-        await ctx.send("Not registered. Use `!join` first.")
-        return
-
-    level = member["level"]
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
-    week = database.member_week_number(str(ctx.author.id))
-
-    # Check minimum week requirement
-    min_weeks = level_info.get("duration_weeks")
-    if min_weeks and week < min_weeks[0]:
-        await ctx.send(
-            f"⏳ لسه مش جاهز للامتحان.\n"
-            f"المستوى {level} يحتاج على الأقل **{min_weeks[0]} أسابيع**.\n"
-            f"انت في الأسبوع {week}. استمر!"
-        )
-        return
-
-    # Check last attempt (max 1 per month, and never while one is still
-    # awaiting admin review — previously this check was unreachable
-    # because nothing ever wrote a row to advancement_exams).
-    last_attempt = database.last_advancement_attempt(str(ctx.author.id))
-    if last_attempt:
-        if last_attempt.get("status") == "pending":
-            await ctx.send(
-                "⏳ عندك امتحان قيد المراجعة بالفعل.\n"
-                "هتوصلك النتيجة في DM خلال 48 ساعة."
-            )
-            return
-        last_date = datetime.datetime.fromisoformat(last_attempt["attempted_at"])
-        days_since = (datetime.datetime.now() - last_date).days
-        if days_since < 30:
-            await ctx.send(
-                f"⏳ آخر محاولة كانت من {days_since} يوم.\n"
-                f"تقدر تحاول تاني بعد **{30 - days_since}** يوم."
-            )
-            return
-
-    # Eligible — send exam instructions via DM
-    next_level = {"L0": "L1", "L1": "L2", "L2": "L3"}.get(level)
-    if not next_level:
-        await ctx.send("👑 انت في أعلى مستوى بالفعل! مستوى 3 هو مستوى الإتقان.")
-        return
-
-    try:
-        await ctx.author.send(
-            f"📋 **امتحان الترقية: {level} → {next_level}**\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"الامتحان من 5 أقسام (60 دقيقة):\n\n"
-            f"1️⃣ **Speaking** (10 min) — سجل 60 ثانية بدون تحضير\n"
-            f"2️⃣ **Listening** (15 min) — 15 سؤال\n"
-            f"3️⃣ **Vocabulary** (10 min) — 50 كلمة\n"
-            f"4️⃣ **Accent** (5 min) — اقرأ passage + كلام حر\n"
-            f"5️⃣ **Writing** (20 min) — اكتب فقرة\n\n"
-            f"الحد الأدنى: **{level_info.get('advancement_score', 70)}%** في كل قسم\n\n"
-            f"⚠️ الامتحان هيكون مع المؤسس في voice call.\n"
-            f"ابعت رسالة في `#support` لتحديد الموعد.\n\n"
-            f"*Good luck! 🏛️*"
-        )
-        await ctx.send("📩 تفاصيل الامتحان اتبعتلك في DM.")
-    except discord.Forbidden:
-        await ctx.send("❌ مقدرش أبعتلك DM. افتح الرسائل الخاصة.")
-
-
-# ============================================================
 #  8. BUDDY SYSTEM
 # ============================================================
 
@@ -764,9 +692,9 @@ async def post_leaderboard(guild: discord.Guild):
 #  12a. ADMIN "NEEDS ATTENTION" DASHBOARD (!attention)
 # ============================================================
 # Ties together data that already exists across the bot (inactivity,
-# assessment trend, pending exams, buddy load) into a single ranked
-# view for the owner/admin, instead of requiring several separate
-# commands (!status, !members, !examqueue) to be checked manually.
+# assessment trend, buddy load) into a single ranked view for the
+# owner/admin, instead of requiring several separate commands
+# (!status, !members) to be checked manually.
 # Deliberately read-only -- this command never sends DMs to students or
 # changes any data, it only reports.
 
@@ -775,17 +703,7 @@ async def build_attention_report(guild: discord.Guild) -> str:
     a human to look at them right now, ranked most urgent first."""
     lines = ["🔎 **Needs Attention — Empire English**", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"]
 
-    # --- 1. Pending advancement exams (already actionable via !examqueue,
-    #    surfaced here too so this command is a genuine one-stop view) ---
-    pending = database.pending_exams()
-    if pending:
-        lines.append(f"\n📋 **{len(pending)} exam(s) awaiting review:**")
-        for e in pending[:5]:
-            lines.append(f"  • #{e['id']} — {e.get('discord_name') or e['discord_id']} ({e['from_level']}→{e['to_level']})")
-        if len(pending) > 5:
-            lines.append(f"  ... and {len(pending) - 5} more (see `!examqueue`)")
-
-    # --- 2. Inactive members, bucketed by severity (2/3/5/7+ days) ---
+    # --- 1. Inactive members, bucketed by severity (2/3/5/7+ days) ---
     # Reuses the same thresholds already defined in config, but actually
     # surfaces all of them (the scheduled streak_update loop currently
     # only ever acts on the 1-day bucket).
@@ -825,7 +743,7 @@ async def build_attention_report(guild: discord.Guild) -> str:
             if len(members) > 8:
                 lines.append(f"    ... and {len(members) - 8} more")
 
-    # --- 3. Declining assessment trend (two weeks in a row getting worse) ---
+    # --- 2. Declining assessment trend (two weeks in a row getting worse) ---
     declining = database.declining_assessment_members()
     if declining:
         lines.append(f"\n📉 **{len(declining)} member(s) trending down (2 weeks in a row):**")
@@ -834,7 +752,7 @@ async def build_attention_report(guild: discord.Guild) -> str:
                 f"  • {m['discord_name']} — {m['previous_score']:.0f}% → {m['latest_score']:.0f}%"
             )
 
-    # --- 4. Buddy load summary (so overload is visible before it happens) ---
+    # --- 3. Buddy load summary (so overload is visible before it happens) ---
     candidates = _eligible_buddies(guild)
     if candidates:
         loads = [(m, database.count_buddy_load(str(m.id))) for m in candidates]
@@ -949,7 +867,6 @@ async def handle_confirm_delete(ctx, bot):
     conn.execute("DELETE FROM daily_submissions WHERE discord_id=?", (discord_id,))
     conn.execute("DELETE FROM streaks WHERE discord_id=?", (discord_id,))
     conn.execute("DELETE FROM assessments WHERE discord_id=?", (discord_id,))
-    conn.execute("DELETE FROM advancement_exams WHERE discord_id=?", (discord_id,))
     conn.execute("DELETE FROM points_log WHERE discord_id=?", (discord_id,))
     conn.execute("DELETE FROM members WHERE discord_id=?", (discord_id,))
     conn.commit()
@@ -1439,157 +1356,13 @@ def get_daily_clip_links(week: int) -> dict:
 
 
 # ============================================================
-#  24. DM-BASED EXAM COLLECTION
-# ============================================================
-
-# Pending exams: {discord_id: {"stage": "speaking"|"writing"|"waiting", ...}}
-_pending_exams: dict = {}
-
-
-async def start_exam_collection(member: discord.Member):
-    """Start collecting exam submissions via DM.
-
-    NOTE: _pending_exams is intentionally still in-memory — it only tracks
-    "which DM stage is this student on" (speaking vs writing), which is
-    fine to lose on a bot restart (the student just re-runs !exam). What
-    is NOT safe to keep in-memory is the actual submission content once
-    collection completes — that is persisted to the database in
-    handle_exam_dm() below via database.create_pending_exam().
-    """
-    from . import database
-    m = database.get_member(str(member.id))
-    from_level = m["level"] if m else "L0"
-    to_level = {"L0": "L1", "L1": "L2", "L2": "L3"}.get(from_level, "L1")
-
-    _pending_exams[str(member.id)] = {
-        "stage": "speaking", "speaking": None, "writing": None,
-        "from_level": from_level, "to_level": to_level,
-    }
-    try:
-        await member.send(
-            "📋 **امتحان الترقية — الجزء 1: Speaking**\n\n"
-            "سجّل نفسك وانت بتتكلم عن هذا الموضوع:\n\n"
-            "**\"Introduce yourself, talk about your daily routine, and what you learned.\"**\n\n"
-            "⏱️ المدة: 60 ثانية على الأقل\n"
-            "🎙️ **ابعت التسجيل هنا (في هذه المحادثة)**"
-        )
-    except discord.Forbidden:
-        pass
-
-
-async def handle_exam_dm(message: discord.Message) -> bool:
-    """Handle exam submission in DM. Returns True if message was an exam submission."""
-    from . import database
-    discord_id = str(message.author.id)
-    if discord_id not in _pending_exams:
-        return False
-
-    exam = _pending_exams[discord_id]
-
-    if exam["stage"] == "speaking":
-        # Check for audio attachment
-        if message.attachments:
-            exam["speaking"] = message.attachments[0].url
-            exam["stage"] = "writing"
-            await message.channel.send(
-                "✅ **تم استلام التسجيل!**\n\n"
-                "📋 **الجزء 2: Writing**\n\n"
-                "اكتب فقرة (7 جمل على الأقل) عن:\n\n"
-                "**\"Describe your daily routine from morning to evening.\"**\n\n"
-                "✍️ **اكتب هنا:**"
-            )
-            return True
-        else:
-            await message.channel.send("🎙️ ابعت تسجيل صوتي (audio file) مش نص.")
-            return True
-
-    elif exam["stage"] == "writing":
-        if len(message.content) >= 30:
-            exam["writing"] = message.content
-            exam["stage"] = "waiting"
-
-            # Persist to the database NOW — this is the fix for the exam
-            # flow's dead end. Previously the submission only ever lived
-            # in this in-memory dict: nothing wrote it to the database,
-            # so (a) the 30-day cooldown never actually engaged because
-            # last_advancement_attempt() always saw zero rows, (b) no
-            # admin was ever notified, and (c) a bot restart would lose
-            # the submission with no trace.
-            exam_id = database.create_pending_exam(
-                discord_id,
-                exam["from_level"],
-                exam["to_level"],
-                speaking_recording_url=exam["speaking"] or "",
-                writing_submission=exam["writing"] or "",
-            )
-
-            await message.channel.send(
-                "✅ **تم استلام الكتابة!**\n\n"
-                "📊 الامتحان بتاعك هيتراجع خلال 48 ساعة.\n"
-                "هتوصلك النتيجة هنا في DM.\n\n"
-                "*Good luck! 🏛️*"
-            )
-
-            # Notify admins there's a real, actionable review pending —
-            # previously this was a comment saying "handled in bot.py"
-            # that pointed at code which did not exist anywhere.
-            await notify_admins_of_pending_exam(
-                message.author, exam_id, exam["from_level"], exam["to_level"],
-                exam["speaking"] or "", exam["writing"] or "",
-            )
-
-            # Clear the in-memory DM-stage tracker — the durable record
-            # now lives in the database as the source of truth.
-            del _pending_exams[discord_id]
-            return True
-        else:
-            await message.channel.send("✍️ محتاج 7 جمل على الأقل. حاول تاني.")
-            return True
-
-    return False
-
-
-async def notify_admins_of_pending_exam(student: discord.User, exam_id: int,
-                                        from_level: str, to_level: str,
-                                        speaking_url: str, writing_text: str):
-    """DM every admin (guild members with manage_guild permission) that an
-    advancement exam is ready for review, with a direct link to the
-    recording and the writing sample, plus the exact command to resolve it.
-    """
-    guild = student.mutual_guilds[0] if getattr(student, "mutual_guilds", None) else None
-    if not guild:
-        return
-    admins = [m for m in guild.members if m.guild_permissions.manage_guild and not m.bot]
-    summary = (
-        f"📋 **Advancement Exam Ready for Review** (#{exam_id})\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"Student: **{student.display_name}** ({from_level} → {to_level})\n\n"
-        f"🎙️ Speaking recording: {speaking_url or '(none)'}\n\n"
-        f"✍️ Writing sample:\n> {writing_text[:800]}\n\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"To resolve: `!examresult {exam_id} pass` or `!examresult {exam_id} fail`"
-    )
-    for admin in admins:
-        try:
-            await admin.send(summary)
-        except discord.Forbidden:
-            pass
-
-
-def has_pending_exam(discord_id: str) -> bool:
-    """Check if user is mid-DM-collection (speaking/writing stage)."""
-    return discord_id in _pending_exams and _pending_exams[discord_id]["stage"] != "waiting"
-
-
-
-# ============================================================
 #  25. BAWABA B2: INTERACTIVE TUTORIAL QUEST (onboarding by doing)
 # ============================================================
 
 # Pending tutorials: {discord_id: {"step": 1-5, "completed": False}}
-# Same in-memory pattern as _pending_exams — fine to lose on restart
-# (the student just sees the welcome DM again on next join, or can
-# trigger it via !tutorial).
+# In-memory session state — fine to lose on restart (the student just
+# sees the welcome DM again on next join, or can trigger it via
+# !tutorial).
 _pending_tutorials: dict = {}
 
 TUTORIAL_STEPS = {
@@ -1782,9 +1555,6 @@ async def handle_tutorial_dm(message: discord.Message) -> bool:
             # Clean up
             del _pending_tutorials[discord_id]
             logger.info(f"Bawaba B2: {message.author.display_name} completed tutorial quest (+15 pts)")
-
-            # Tatawwur T0: prompt for Day 1 benchmark recording
-            await prompt_day1_benchmark(message.author)
 
         return True
     else:
@@ -2082,96 +1852,3 @@ async def send_social_proof(guild, completer_discord_id: str):
             pass
 
 
-
-# ============================================================
-#  30. TATAWWUR T0: VOICE PORTFOLIO INTEGRATION
-# ============================================================
-
-# The Day 1 benchmark sentence — same for every student (enables
-# fair comparison over time). Short enough for a beginner, long enough
-# to reveal pronunciation patterns.
-DAY1_BENCHMARK_SENTENCE = "Hello, my name is... I am learning English. I want to speak like a native speaker."
-DAY1_BENCHMARK_PROMPT_AR = (
-    "🎙️ **آخر خطوة — سجّل صوتك!**\n\n"
-    "ده أول تسجيل ليك — هنحفظه عشان بعد شهر تسمع نفسك وتشوف قد إيه اتحسنت.\n\n"
-    "**اقرأ الجملة دي بصوت عالي وابعت تسجيل صوتي:**\n\n"
-    f"```{DAY1_BENCHMARK_SENTENCE}```\n\n"
-    "💡 *مش لازم تكون مثالي — ده مجرد نقطة البداية.*\n"
-    "ابعت التسجيل هنا 👇"
-)
-
-
-async def handle_benchmark_recording(message) -> bool:
-    """Handle a voice recording submitted after the Day 1 benchmark prompt.
-
-    Called from on_message when a member in DM sends an attachment after
-    their tutorial is complete but no benchmark exists yet.
-    Returns True if the message was consumed as a benchmark submission.
-    """
-    if not database.is_feature_enabled("tatawwur_portfolio"):
-        return False
-
-    discord_id = str(message.author.id)
-
-    # Only handle if: in DM, has attachment, no day1 benchmark yet
-    if not isinstance(message.channel, discord.DMChannel):
-        return False
-    if not message.attachments:
-        return False
-    if database.has_day1_benchmark(discord_id):
-        return False
-
-    # Check if they were prompted (via a setting flag)
-    if database.get_setting(f"benchmark_prompted_{discord_id}", "") != "yes":
-        return False
-
-    # Save the recording
-    attachment = message.attachments[0]
-    member = database.get_member(discord_id)
-    level = member["level"] if member else "L0"
-    week = database.member_week_number(discord_id) if member else 1
-
-    database.save_voice_recording(
-        discord_id,
-        recording_url=attachment.url,
-        recording_type="benchmark_day1",
-        week=week,
-        level=level,
-        notes=DAY1_BENCHMARK_SENTENCE,
-    )
-
-    # Clear the prompt flag
-    database.set_setting(f"benchmark_prompted_{discord_id}", "done")
-
-    await message.channel.send(
-        "✅ **تم حفظ تسجيلك الأول!** 🎉\n\n"
-        "بعد 4 أسابيع هنطلب منك تسجل نفس الجملة تاني.\n"
-        "وقتها هتقدر تسمع الفرق بنفسك. 📈\n\n"
-        "اكتب `!صوتي` أو `!portfolio` في أي وقت عشان تشوف تسجيلاتك."
-    )
-
-    logger.info(f"Tatawwur T0: Day 1 benchmark saved for {message.author.display_name}")
-    return True
-
-
-async def prompt_day1_benchmark(member_or_user):
-    """Send the Day 1 benchmark prompt after tutorial completion.
-
-    Called from the tutorial quest completion handler. Sets a flag so
-    handle_benchmark_recording knows to accept the next audio DM.
-    """
-    if not database.is_feature_enabled("tatawwur_portfolio"):
-        return
-
-    discord_id = str(member_or_user.id)
-    if database.has_day1_benchmark(discord_id):
-        return  # already done
-
-    database.set_setting(f"benchmark_prompted_{discord_id}", "yes")
-
-    try:
-        import asyncio
-        await asyncio.sleep(2)
-        await member_or_user.send(DAY1_BENCHMARK_PROMPT_AR)
-    except discord.Forbidden:
-        pass
