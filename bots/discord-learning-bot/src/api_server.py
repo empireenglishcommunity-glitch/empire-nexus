@@ -288,7 +288,10 @@ async def get_dashboard(request: web.Request) -> web.Response:
 
     import datetime
 
-    today = datetime.date.today().isoformat()
+    # Asia/Dubai "today", same source of truth as database reads and the
+    # Discord commands (audit fix: was naive date.today() = server/UTC, which
+    # disagreed with Dubai-logged submissions during the 00:00-04:00 window).
+    today = database._today_local().isoformat()
 
     # --- Pronunciation (14 days) ---
     pron_scores_raw = database.get_recent_scores(discord_id, days=14)
@@ -340,14 +343,15 @@ async def get_dashboard(request: web.Request) -> web.Response:
     # --- Week activity (7-day grid) ---
     week_activity = {}
     task_types = ["accent", "shadowing", "listening", "vocab", "writing", "grammar", "speaking"]
+    _today_local = database._today_local()
     for day_offset in range(7):
-        d = (datetime.date.today() - datetime.timedelta(days=day_offset)).isoformat()
+        d = (_today_local - datetime.timedelta(days=day_offset)).isoformat()
         day_subs = conn.execute(
             "SELECT task_id FROM daily_submissions WHERE discord_id=? AND date=?",
             (discord_id, d),
         ).fetchall()
         day_tasks = [r["task_id"] for r in day_subs]
-        day_name = (datetime.date.today() - datetime.timedelta(days=day_offset)).strftime("%a")
+        day_name = (_today_local - datetime.timedelta(days=day_offset)).strftime("%a")
         week_activity[day_name] = {t: (t in day_tasks) for t in task_types}
 
     # --- Voice portfolio (last 5) ---
@@ -547,7 +551,11 @@ async def post_complete_exercise(request: web.Request) -> web.Response:
 
     import datetime
     discord_id = member["discord_id"]
-    today = datetime.date.today().isoformat()
+    # Asia/Dubai "today" (audit fix): must match how the rest of the bot reads
+    # submissions, otherwise a web confirmation during the 00:00-04:00 Dubai
+    # window would be logged under the UTC date and read back under the Dubai
+    # date — the exact "I did it but it still shows remaining" symptom.
+    today = database._today_local().isoformat()
 
     # log_submission handles UNIQUE constraint (returns False if already exists)
     added = database.log_submission(discord_id, today, exercise_type)
@@ -606,7 +614,7 @@ async def get_progress_v2(request: web.Request) -> web.Response:
 
     import datetime
     discord_id = member["discord_id"]
-    today = datetime.date.today().isoformat()
+    today = database._today_local().isoformat()  # Asia/Dubai (audit fix)
 
     # Basic progress (same as legacy)
     streak = member.get("current_streak", 0)
