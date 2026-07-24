@@ -1238,6 +1238,7 @@ async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
             "shadow": "Shadowing",
             "vocab": "Vocabulary",
             "listening": "Listening",
+            "speaking": "Speaking Practice",
         }
         ex_display = exercise_names.get(exercise, exercise)
         caption = f"🎙️ **{name}** — {ex_display} (Week {week}, Day {day})"
