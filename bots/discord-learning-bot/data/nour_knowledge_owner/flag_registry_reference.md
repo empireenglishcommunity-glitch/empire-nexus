@@ -56,12 +56,9 @@
 
 | العلم (Flag) | الوصف | الحالة الافتراضية |
 |---|---|---|
-| `tatawwur_portfolio` | Voice progress portfolio (!portfolio / !صوتي) | مفعَّل |
 | `tatawwur_patterns` | Daily conversational patterns in tasks | مفعَّل |
 | `tatawwur_srs` | Spaced repetition for vocabulary recall | مفعَّل |
-| `tatawwur_milestones` | Ability milestones (!abilities / !قدراتي) | مفعَّل |
 | `tatawwur_pronunciation` | AI pronunciation scoring (Groq Whisper) | معطَّل |
-| `tatawwur_conversations` | Structured conversation sessions | مفعَّل |
 | `tatawwur_showcase` | Auto-post success stories to showcase channels | مفعَّل |
 | `tatawwur_adaptive` | Adaptive difficulty pacing | معطَّل |
 
@@ -131,4 +128,4 @@
 
 ## إجمالي الأعلام
 
-العدد الكلي للأعلام المُسجَّلة حاليًّا: **53**
+العدد الكلي للأعلام المُسجَّلة حاليًّا: **50**

@@ -305,14 +305,9 @@ async def get_dashboard(request: web.Request) -> web.Response:
     else:
         pron_trend = "stable" if pron_scores_raw else "no_data"
 
-    # --- Milestones ---
+    # --- Milestones catalog ---
     conn = database._connect()
-    milestones_raw = conn.execute(
-        "SELECT milestone_id, completed_at, level FROM ability_milestones WHERE discord_id=? ORDER BY completed_at DESC",
-        (discord_id,),
-    ).fetchall()
-    milestones = [{"id": r["milestone_id"], "completed_at": r["completed_at"], "level": r["level"]} for r in milestones_raw]
-    # Hisn D036 fix: also send the real milestone catalog (id/name/name_ar/level
+    # Hisn D036 fix: send the real milestone catalog (id/name/name_ar/level
     # for all 15 real milestones), so the frontend can render real IDs and
     # names instead of the previous hardcoded, entirely fictional 12-ID list
     # that shared zero overlap with any real milestone_id.
@@ -353,13 +348,6 @@ async def get_dashboard(request: web.Request) -> web.Response:
         day_tasks = [r["task_id"] for r in day_subs]
         day_name = (_today_local - datetime.timedelta(days=day_offset)).strftime("%a")
         week_activity[day_name] = {t: (t in day_tasks) for t in task_types}
-
-    # --- Voice portfolio (last 5) ---
-    voice_raw = conn.execute(
-        "SELECT recorded_at, recording_type, ai_score, recording_url FROM voice_portfolio WHERE discord_id=? ORDER BY recorded_at DESC LIMIT 5",
-        (discord_id,),
-    ).fetchall()
-    voice_portfolio = [{"date": r["recorded_at"], "type": r["recording_type"], "score": r["ai_score"], "url": r["recording_url"]} for r in voice_raw]
 
     # --- Leaderboard rank ---
     rank_row = conn.execute(
@@ -435,7 +423,6 @@ async def get_dashboard(request: web.Request) -> web.Response:
             "average": pron_avg,
             "trend": pron_trend,
         },
-        "milestones": milestones,
         "milestones_catalog": milestones_catalog,
         "assessments": assessments,
         "srs": {
@@ -450,7 +437,6 @@ async def get_dashboard(request: web.Request) -> web.Response:
             "needed_for_next": xp_needed,
             "pct": level_pct,
         },
-        "voice_portfolio": voice_portfolio,
         "nour_tips": nour_tips,
     }
     if momentum is not None:

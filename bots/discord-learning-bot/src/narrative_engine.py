@@ -116,22 +116,15 @@ def gather_signals(discord_id: str) -> dict:
 
 
 def _get_recent_milestones(discord_id: str, days: int = 14) -> list[dict]:
-    """Milestones this student completed in the last N days.
+    """Recent ability milestones signal for the growth letter.
 
-    No existing helper filters ability_milestones by a recency window
-    (get_completed_milestones() returns the full lifetime list), so
-    this adds that one specific query rather than reusing a mismatched
-    helper.
+    The ability-milestones feature was removed, so there is no longer a
+    source table to query. The signature and call sites are kept intact
+    so the growth letter still builds cleanly — it simply has no
+    milestones to report, and every downstream consumer already handles
+    an empty list gracefully.
     """
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
-    conn = database._connect()
-    rows = conn.execute(
-        """SELECT milestone_id, completed_at, level FROM ability_milestones
-           WHERE discord_id=? AND completed_at>=? ORDER BY completed_at DESC""",
-        (discord_id, cutoff),
-    ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
+    return []
 
 
 def _summarize_conversation_themes(discord_id: str, limit: int = 8) -> list[str]:
