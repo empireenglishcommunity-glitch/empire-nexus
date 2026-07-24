@@ -30,16 +30,18 @@ def temp_db(tmp_path, monkeypatch):
 
 @pytest.fixture(autouse=True)
 def clear_module_level_state():
-    """features.py and verification.py both use plain module-level dicts
-    for in-memory session state (exam DM stages, quiz cooldowns, voice
-    sessions) rather than the database. Reset them before each test so
-    no state leaks between tests regardless of run order."""
-    from src import features, verification
+    """features.py, verification.py, and motivation.py all use plain
+    module-level dicts for in-memory session state (exam DM stages, quiz
+    cooldowns, voice sessions, motivation throttle/non-repetition ring)
+    rather than the database. Reset them before each test so no state
+    leaks between tests regardless of run order."""
+    from src import features, verification, motivation
     features._pending_exams.clear()
     verification._last_done_time.clear()
     verification._voice_sessions.clear()
     verification._pending_quizzes.clear()
     verification._pending_listening.clear()
+    motivation.reset_throttle_state()
     yield
 
 

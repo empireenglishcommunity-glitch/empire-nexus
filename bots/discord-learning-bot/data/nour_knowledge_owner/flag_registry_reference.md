@@ -123,6 +123,12 @@
 | `hissar_anti_cheat` | P4: increased cooldown (180s), persistent cooldown across restarts, progressive quiz delay | مفعَّل |
 | `hissar_ip_detection` | P5: log IPs per token, auto-flag on 5+ unique IPs, Telegram alert to owner | مفعَّل |
 
+## 🎉 HAFIZ — motivational engagement
+
+| العلم (Flag) | الوصف | الحالة الافتراضية |
+|---|---|---|
+| `hafiz_motivation` | Phase F (E4): AI-generated, always-varied motivational replies in #lN-text-practice + #lN-showcase, correction-free, throttled | معطَّل |
+
 ## إجمالي الأعلام
 
-العدد الكلي للأعلام المُسجَّلة حاليًّا: **52**
+العدد الكلي للأعلام المُسجَّلة حاليًّا: **53**
