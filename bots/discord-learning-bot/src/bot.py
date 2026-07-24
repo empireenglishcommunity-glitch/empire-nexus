@@ -367,13 +367,6 @@ async def on_ready():
         asyncio.create_task(ops_poller.poll_for_replies(bot))
         bot._ops_poller_started = True
 
-    # Aql (#15) Phase A9: register the live bot instance with
-    # owner_tools so any owner tool that needs Discord access (e.g.
-    # send_announcement, nudge_student) can function when the
-    # orchestrator calls them. Safe to call on every on_ready()
-    # (idempotent — just overwrites the same global with the same bot).
-    from .nour.tools import owner_tools
-    owner_tools.set_bot(bot)
     # Markaz M5.1: send restart notification (only on first on_ready,
     # not on gateway reconnects — same guard as the poller).
     if not getattr(bot, "_restart_notified", False):
@@ -391,18 +384,9 @@ async def on_ready():
         nabd_weekly_summary.start()
     if not nabd_absence_check.is_running():
         nabd_absence_check.start()
-    # Nour N2: proactive outreach (every 2 hours)
-    if not nour_proactive_check.is_running():
-        nour_proactive_check.start()
     # Nour N5.1: weekly self-review (Sunday 10 AM)
     if not nour_weekly_review.is_running():
         nour_weekly_review.start()
-    # Aql (#15) Phase A6.2: per-student episodic summary regeneration
-    # (Sunday 10:30 AM -- 30 minutes after nour_weekly_review, same
-    # day since both are "weekly" tasks, but staggered so they don't
-    # both hit Groq's API in the exact same minute)
-    if not aql_episodic_summary_task.is_running():
-        aql_episodic_summary_task.start()
     # Masar M2.2: Nour's Weekly Growth Letter (Wednesday 11 AM,
     # deliberately staggered against Sunday's cluster of weekly tasks)
     if not nour_growth_letter_task.is_running():
@@ -1294,9 +1278,6 @@ async def markaz_daily_digest():
     new_members = database.count_new_members_on(yesterday_str)
     milestones = database.streak_milestones_on(yesterday_str)
     nour_convos = database.count_nour_conversations_on(yesterday_str)
-    # Markaz M2: now persisted in the DB (survives restarts), not an
-    # in-memory dict on the nour_escalation module.
-    pending_escalations = database.count_pending_escalations()
 
     lines = [
         f"📊 *Daily Digest — {ops_hub.escape_markdown(display_date)}*",
@@ -1314,7 +1295,6 @@ async def markaz_daily_digest():
         lines.append("🔥 Streak milestones: 0")
     lines.append(f"🆕 New registrations: {new_members}")
     lines.append(f"💬 Nour conversations: {nour_convos}")
-    lines.append(f"🚨 Pending escalations: {pending_escalations}")
 
     # Hissar P6: Security monitoring section
     if database.is_feature_enabled("hissar_ip_detection"):
@@ -1331,10 +1311,7 @@ async def markaz_daily_digest():
             lines.append("   ✅ No suspicious token sharing detected")
 
     lines.append("")
-    lines.append(
-        "*All systems healthy\\.* ✅" if pending_escalations == 0
-        else f"⚠️ *{pending_escalations} escalation\\(s\\) awaiting your reply\\.*"
-    )
+    lines.append("*All systems healthy\\.* ✅")
 
     await ops_hub.send_ops_message("\n".join(lines))
     # M4.4: check for churn risk as part of the morning ops cycle
@@ -1534,16 +1511,6 @@ async def nabd_absence_check():
         await features.check_absence_recovery(guild)
 
 
-@tasks.loop(hours=2)
-async def nour_proactive_check():
-    """Nour N2: proactive outreach — check every 2 hours for students who need attention."""
-    from . import nour_proactive
-    try:
-        await nour_proactive.run_proactive_checks(bot)
-    except Exception as e:
-        logger.error(f"Nour proactive check error: {e}")
-
-
 @tasks.loop(time=datetime.time(hour=10, minute=0, tzinfo=_zone()))
 async def nour_weekly_review():
     """Nour N5.1: weekly self-review — runs every Sunday at 10 AM."""
@@ -1554,37 +1521,6 @@ async def nour_weekly_review():
         await nour_personality.run_weekly_review(bot)
     except Exception as e:
         logger.error(f"Nour weekly review error: {e}")
-
-
-@tasks.loop(time=datetime.time(hour=10, minute=30, tzinfo=_zone()))
-async def aql_episodic_summary_task():
-    """Aql (#15) Phase A6.2: regenerate every active student's episodic
-    summary once a week (design.md Section 6). Runs Sunday only, 30
-    minutes after nour_weekly_review, so both weekly Groq-summarization
-    jobs don't fire in the same minute.
-
-    Gated behind 'aql_episodic_summaries' (default OFF): even though
-    writing new nour_episodic_summaries rows has zero effect on
-    anything Nour's CURRENT live response path reads, this task would
-    otherwise start consuming real Groq API quota against every real
-    student's real conversation history on a schedule, the moment this
-    PR merges -- a genuine live side effect, not the "zero live
-    effect" every other Aql phase has maintained. The flag makes this
-    phase's actual first live behavior an explicit, deliberate, later
-    decision (per this codebase's established deploy-dormant/release-
-    separately discipline), not an accidental side effect of building
-    the mechanism.
-    """
-    if not database.is_feature_enabled("aql_episodic_summaries"):
-        return
-    if _now().weekday() != 6:  # 6 = Sunday
-        return
-    from . import nour_personality
-    try:
-        count = await nour_personality.run_weekly_episodic_summaries(bot)
-        logger.info(f"Aql episodic summaries: regenerated for {count} student(s)")
-    except Exception as e:
-        logger.error(f"Aql episodic summary task error: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=11, minute=0, tzinfo=_zone()))
@@ -2479,12 +2415,10 @@ async def on_message(message: discord.Message):
             if handled:
                 return
         # Journey advancement: check if this DM advances the onboarding
-        # journey BEFORE routing to nour_concierge. This ensures the
-        # journey works even when nour_concierge flag is OFF (the AI
-        # chatbot). Previously, try_message_triggered_advance() was only
-        # called from inside nour_concierge.handle_message(), which exits
-        # immediately when its own flag is disabled — leaving new students
-        # stuck on the "welcome" step forever with no response.
+        # journey. The rule-based onboarding journey is still active even
+        # though the AI concierge has been removed — a non-command DM that
+        # advances the journey gets the scripted next-step reply; anything
+        # else simply falls through (no AI response).
         if not message.content.startswith(config.BOT_PREFIX):
             from . import nour_journey
             try:
@@ -2499,25 +2433,6 @@ async def on_message(message: discord.Message):
                     return
             except Exception as e:
                 logger.error(f"Journey DM advance error: {e}")
-
-        # Nour N0: handle non-command DMs as concierge conversation
-        if not message.content.startswith(config.BOT_PREFIX):
-            from . import nour_concierge
-            try:
-                await nour_concierge.handle_with_human_touch(message)
-            except Exception as e:
-                logger.error(f"Nour DM handler error: {e}")
-            return
-
-    # Nour N0: handle messages in #ask-nour channel
-    if hasattr(message.channel, 'name') and message.channel.name == "ask-nour":
-        if not message.content.startswith(config.BOT_PREFIX):
-            from . import nour_concierge
-            try:
-                await nour_concierge.handle_with_human_touch(message)
-            except Exception as e:
-                logger.error(f"Nour #ask-nour handler error: {e}")
-            return
 
     # Aql (#15) Phase A6.4: posting in one of the "tour" channels
     # nour_journey.py's own channels_tour step introduces (daily-word,

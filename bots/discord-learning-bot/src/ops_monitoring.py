@@ -176,9 +176,6 @@ async def send_weekly_report() -> None:
     for lvl in ["L0", "L1", "L2", "L3"]:
         levels[lvl] = len(database.members_at_level(lvl))
 
-    # Pending escalations
-    pending = database.count_pending_escalations()
-
     # Build the report
     lines = [
         f"📊 *Weekly Report — Week ending {ops_hub.escape_markdown(week_end)}*",
@@ -215,10 +212,7 @@ async def send_weekly_report() -> None:
         lines.append("🏆 Milestones this week: 0")
 
     lines.append("")
-    if pending > 0:
-        lines.append(f"🚨 *{pending} pending escalation\\(s\\)*")
-    else:
-        lines.append("✅ All systems healthy, no pending escalations\\.")
+    lines.append("✅ All systems healthy\\.")
 
     try:
         await ops_hub.send_ops_message("\n".join(lines))

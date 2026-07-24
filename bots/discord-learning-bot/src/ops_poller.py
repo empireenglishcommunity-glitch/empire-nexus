@@ -135,15 +135,11 @@ async def _handle_update(update: dict, bot) -> None:
     if not text:
         return
 
-    reply_to = message.get("reply_to_message")
-    if not reply_to:
-        # Not a reply — check if it's a /command (Phase M3).
-        if text.startswith("/"):
-            await _handle_command(text, bot)
-        return
-
-    replied_msg_id = reply_to.get("message_id")
-    await _handle_escalation_reply(replied_msg_id, text, bot)
+    # Only /commands are actionable now. The old reply-to-a-pending-
+    # escalation flow was removed together with the Nour escalation
+    # subsystem, so a plain reply (or any non-command text) is ignored.
+    if text.startswith("/"):
+        await _handle_command(text, bot)
 
 
 async def _handle_command(text: str, bot) -> None:
@@ -162,41 +158,3 @@ async def _handle_command(text: str, bot) -> None:
         except Exception:
             pass
 
-
-async def _handle_escalation_reply(replied_msg_id: int, reply_text: str, bot) -> None:
-    """Markaz M2.2-M2.4 — match a reply to a pending escalation, forward
-    it to the student, and confirm success/failure back to the owner."""
-    pending = database.get_pending_escalation(replied_msg_id)
-    if not pending:
-        # Reply to a message that isn't a tracked escalation (could be
-        # an old/already-resolved one, or just an unrelated reply).
-        # Silently ignore — don't confuse the owner with a notice for
-        # every reply that isn't escalation-related.
-        return
-
-    discord_id = pending["discord_id"]
-    student_name = pending.get("student_name") or discord_id
-
-    from . import nour_escalation
-    delivered = await nour_escalation.forward_reply_to_student(discord_id, reply_text, bot)
-
-    if delivered:
-        database.resolve_pending_escalation(replied_msg_id)
-        await ops_hub.send_ops_alert(
-            "Delivered",
-            f"Your reply was delivered to {student_name}.",
-            severity="success",
-        )
-        logger.info(f"ops_poller: forwarded owner reply to {student_name} ({discord_id})")
-    else:
-        # M2.4: do NOT resolve the escalation on failure — leave it
-        # pending so the owner can see it's still outstanding in the
-        # next daily digest, and so they know to try another channel.
-        await ops_hub.send_ops_alert(
-            "Delivery failed",
-            f"Couldn't deliver to {student_name} — they may have DMs "
-            f"off, left the server, or something else went wrong. "
-            f"Check Discord directly if this is urgent.",
-            severity="warning",
-        )
-        logger.warning(f"ops_poller: failed to forward owner reply to {student_name} ({discord_id})")

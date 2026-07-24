@@ -104,17 +104,6 @@ def _migrate(conn: sqlite3.Connection):
     if "last_used" not in lt_cols:
         conn.execute("ALTER TABLE link_tokens ADD COLUMN last_used TEXT DEFAULT NULL")
 
-    # Aql A0.6: category on nour_memories table (semantic memory
-    # classification -- design.md Section 6). Additive column, same
-    # zero-migration-risk pattern as gender/difficulty_level/last_used
-    # above. Existing rows default to 'general' rather than NULL, so
-    # every pre-existing memory is still a valid, filterable row
-    # immediately -- not silently excluded from category-filtered
-    # retrieval until someone re-classifies it.
-    nm_cols = {row["name"] for row in conn.execute("PRAGMA table_info(nour_memories)")}
-    if "category" not in nm_cols:
-        conn.execute("ALTER TABLE nour_memories ADD COLUMN category TEXT NOT NULL DEFAULT 'general'")
-
     conn.commit()
 
 
@@ -342,27 +331,6 @@ CREATE TABLE IF NOT EXISTS nour_conversations (
 );
 CREATE INDEX IF NOT EXISTS idx_nour_conversations ON nour_conversations(discord_id, created_at);
 
--- Nour Phase N2: proactive outreach log (prevents double-sending).
-CREATE TABLE IF NOT EXISTS nour_outreach_log (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    outreach_type   TEXT NOT NULL,
-    date            TEXT NOT NULL,
-    sent_at         TEXT NOT NULL DEFAULT (datetime('now')),
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-CREATE INDEX IF NOT EXISTS idx_nour_outreach ON nour_outreach_log(discord_id, outreach_type, date);
-
--- Nour Phase N5: memory persistence (facts Nour remembers about students).
-CREATE TABLE IF NOT EXISTS nour_memories (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    fact            TEXT NOT NULL,
-    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-CREATE INDEX IF NOT EXISTS idx_nour_memories ON nour_memories(discord_id);
-
 -- Dhaka' Phase P0: pronunciation scoring results.
 CREATE TABLE IF NOT EXISTS pronunciation_scores (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -380,47 +348,12 @@ CREATE TABLE IF NOT EXISTS pronunciation_scores (
 );
 CREATE INDEX IF NOT EXISTS idx_pronunciation_scores ON pronunciation_scores(discord_id, date);
 
--- Markaz Phase M2: persistent escalation → discord_id mapping. Previously
--- this lived only in an in-memory dict (nour_escalation._pending_escalations),
--- which meant any escalation the owner hadn't yet replied to before a
--- redeploy became permanently unmatchable (the reply would arrive with a
--- telegram_message_id the fresh process had never seen). Persisting this
--- means reply-forwarding survives restarts/deploys.
-CREATE TABLE IF NOT EXISTS pending_escalations (
-    telegram_message_id INTEGER PRIMARY KEY,
-    discord_id           TEXT NOT NULL,
-    student_name         TEXT NOT NULL DEFAULT '',
-    created_at           TEXT NOT NULL DEFAULT (datetime('now')),
-    resolved             INTEGER NOT NULL DEFAULT 0
-);
-CREATE INDEX IF NOT EXISTS idx_pending_escalations_discord ON pending_escalations(discord_id);
-
--- Wuslah Phase W4: AI-generated study tips (pre-computed weekly).
--- SUPERSEDED by Masar Phase M2's nour_growth_letters table below --
--- W4.2 (the actual generation task) was designed but never built, so
--- every real student silently received only the generic fallback
--- tips (Hisn D020). Left in place, inert, rather than dropped, per
--- Masar design.md's own note that the migration choice is decided at
--- implementation time -- this way any code still reading it (the old
--- /api/nour-tips endpoint, until M2.5 replaces its dashboard card)
--- keeps working exactly as before with zero behavior change.
-CREATE TABLE IF NOT EXISTS nour_study_tips (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    tip_text        TEXT NOT NULL,
-    generated_at    TEXT NOT NULL DEFAULT (datetime('now')),
-    week            INTEGER NOT NULL,
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-CREATE INDEX IF NOT EXISTS idx_nour_tips ON nour_study_tips(discord_id, week);
-
 -- Masar Phase M0.4 / M2: Nour's Weekly Growth Letter cache. Fixes
--- Hisn D020 by replacing nour_study_tips above with a real, verified
--- generation path (narrative_engine.build_growth_letter()) --
--- generated once per week per student by nour_growth_letter_task()
--- (M2.2), cached here so the dashboard's /api/growth-letter (M2.4)
--- serves it with zero extra AI cost per page load, same pattern as
--- the old nour_study_tips table it replaces.
+-- Hisn D020 with a real, verified generation path
+-- (narrative_engine.build_growth_letter()) -- generated once per week
+-- per student by nour_growth_letter_task() (M2.2), cached here so the
+-- dashboard's /api/growth-letter (M2.4) serves it with zero extra AI
+-- cost per page load.
 CREATE TABLE IF NOT EXISTS nour_growth_letters (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     discord_id      TEXT NOT NULL,
@@ -481,12 +414,7 @@ CREATE INDEX IF NOT EXISTS idx_token_ip ON token_ip_log(token);
 
 -- Rawiya R2: structured onboarding journey state machine.
 -- Tracks where each student is in their guided first-week experience.
--- SUPERSEDED by Aql's journey_coverage table below (design.md Section
--- 9.1 / 8.1) once Phase A6/A7 cuts over -- left in place, inert, per
--- this codebase's own established migration discipline (see
--- nour_study_tips's precedent: superseded tables are never dropped in
--- the same change that stops writing to them, only in a later,
--- separate cleanup once the replacement is confirmed live).
+-- This is the ACTIVE onboarding journey (nour_journey.py).
 CREATE TABLE IF NOT EXISTS student_journey (
     discord_id      TEXT PRIMARY KEY,
     current_step    TEXT NOT NULL DEFAULT 'welcome',
@@ -497,55 +425,12 @@ CREATE TABLE IF NOT EXISTS student_journey (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 
--- ============================================================
--- AQL (Nour Intelligence Core, Initiative #15) — Phase A0 schema.
--- See .kiro/specs/nour-intelligence-core/design.md for full rationale
--- on every table below. All additive, all inert until the
--- corresponding later phase (A1/A3/A4/A6) actually reads/writes them.
--- ============================================================
-
--- design.md Section 4.2: chunked + embedded knowledge base. Replaces
--- keyword-substring matching (_KB_CATEGORIES in nour_concierge.py)
--- with real semantic search. `domain` values match
--- data/nour_knowledge/*.md filename stems (student domains) plus new
--- data/nour_knowledge_owner/*.md stems (owner-only domains, Phase A2)
--- -- these are exactly the strings enumerated in
--- src/nour/permissions.py's KNOWLEDGE_DOMAINS mapping.
-CREATE TABLE IF NOT EXISTS knowledge_chunks (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    domain          TEXT NOT NULL,
-    source_file     TEXT NOT NULL,
-    heading         TEXT NOT NULL,
-    content         TEXT NOT NULL,
-    embedding       BLOB NOT NULL,
-    embedding_model TEXT NOT NULL,
-    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_knowledge_domain ON knowledge_chunks(domain);
-
--- design.md Section 6: episodic memory -- a compact per-student
--- summary of PAST conversation sessions (not verbatim), replacing the
--- need to re-send unbounded raw history on every request. Regenerated
--- weekly per active student (Phase A6.2).
-CREATE TABLE IF NOT EXISTS nour_episodic_summaries (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    summary_text    TEXT NOT NULL,
-    covers_from     TEXT NOT NULL,
-    covers_to       TEXT NOT NULL,
-    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
-    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
-);
-CREATE INDEX IF NOT EXISTS idx_episodic_discord ON nour_episodic_summaries(discord_id);
-
--- design.md Section 9.1: onboarding coverage model, replacing the
--- rigid linear FSM in nour_journey.py. Independent boolean facts,
--- not a sequence -- each flips based on a real signal (task
--- completion, !link usage, channel visits), the SAME detection
--- wiring Rawiya's FSM used, just writing to a coverage table instead
--- of advancing a state pointer (Phase A6.4). Nour's context assembly
--- surfaces uncovered topics as conversational material to weave in
--- naturally, rather than firing a scripted message regardless of fit.
+-- design.md Section 9.1: onboarding coverage model — independent
+-- boolean facts about what a new student has already discovered
+-- (daily tasks, platform link, streaks, channels, first task done).
+-- Each flips based on a real signal (task completion, !link usage,
+-- channel visits), written by set_journey_coverage(). Actively used
+-- by the onboarding journey / nudges (nour_onboarding, nour_journey).
 CREATE TABLE IF NOT EXISTS journey_coverage (
     discord_id          TEXT PRIMARY KEY,
     knows_daily_tasks   INTEGER NOT NULL DEFAULT 0,
@@ -556,79 +441,6 @@ CREATE TABLE IF NOT EXISTS journey_coverage (
     updated_at          TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
-
--- design.md Section 13: observability for tool-calling (Phase A3.4).
--- Every tool call is logged -- name, args (minus sensitive values),
--- latency, success/fail -- for debugging and for identifying which
--- tools are actually used vs. dead weight.
-CREATE TABLE IF NOT EXISTS nour_tool_calls (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    role            TEXT NOT NULL,
-    tool_name       TEXT NOT NULL,
-    arguments_json  TEXT DEFAULT '{}',
-    latency_ms      INTEGER DEFAULT NULL,
-    success         INTEGER NOT NULL DEFAULT 1,
-    error_message   TEXT DEFAULT '',
-    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_tool_calls_discord ON nour_tool_calls(discord_id);
-CREATE INDEX IF NOT EXISTS idx_tool_calls_tool ON nour_tool_calls(tool_name);
-
--- design.md Section 13 / Section 7: observability for the output
--- guardrail gate (Phase A4.5) -- the DIRECT metric for whether the
--- original "random foreign-language output" bug is actually fixed in
--- production. A non-zero role-leak-block count here is itself
--- valuable signal: the structural boundary held AND defense-in-depth
--- caught something, meaning the layered design is working as intended.
-CREATE TABLE IF NOT EXISTS nour_guardrail_events (
-    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id          TEXT NOT NULL,
-    guardrail_type      TEXT NOT NULL,  -- 'script' | 'bidi' | 'role_leak'
-    original_text_hash  TEXT NOT NULL,  -- hash, not raw text -- avoid storing a second copy of every failure verbatim
-    outcome             TEXT NOT NULL,  -- 'corrected_on_retry' | 'template_fallback'
-    created_at          TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_guardrail_type ON nour_guardrail_events(guardrail_type);
-
--- Aql (#15) Phase A8.5: shadow-mode comparison log (design.md Section
--- 12 Phase M1). Every time the NEW pipeline runs in shadow mode
--- alongside the OLD live response, both are recorded side-by-side for
--- manual owner review -- this table is read-only from the owner's
--- perspective (no code ever re-reads it to make a live decision), it
--- exists purely as the durable record A8.7's sign-off review works
--- from.
-CREATE TABLE IF NOT EXISTS nour_shadow_comparisons (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    role            TEXT DEFAULT '',
-    text            TEXT NOT NULL,
-    old_response    TEXT DEFAULT '',
-    new_response    TEXT DEFAULT '',
-    error           TEXT DEFAULT '',
-    responses_match INTEGER NOT NULL DEFAULT 0,
-    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_shadow_discord ON nour_shadow_comparisons(discord_id);
-
--- design.md Section 13: observability for retrieval quality (Phase
--- A1.6-A1.7). Every retrieval query + the top-k chunk IDs returned +
--- which chunk was actually used in the final composed answer --
--- the direct replacement for the old ad-hoc "weekly self-review" Groq
--- analysis, now grounded in real retrieval data instead of a sampled
--- conversation summary. Frequent queries with low-similarity top
--- results reveal real knowledge-base gaps.
-CREATE TABLE IF NOT EXISTS nour_retrieval_log (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    discord_id      TEXT NOT NULL,
-    role            TEXT NOT NULL,
-    query_text      TEXT NOT NULL,
-    top_chunk_ids   TEXT DEFAULT '[]',   -- JSON list of knowledge_chunks.id
-    top_similarity  REAL DEFAULT NULL,
-    used_chunk_id   INTEGER DEFAULT NULL,
-    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_retrieval_discord ON nour_retrieval_log(discord_id);
 """
 
 
@@ -1265,10 +1077,8 @@ def count_nour_conversations_on(date_str: str) -> int:
 
 def get_recent_conversation(discord_id: str, limit: int = 5) -> list[dict]:
     """Get the last N Nour conversation messages for a student, oldest
-    first. Public counterpart of nour_concierge._get_recent_conversation
-    (same query) — used by nour_escalation.py (Markaz M1.4) to include
-    conversation history in escalation alerts without reaching into
-    nour_concierge's private helpers."""
+    first. Used by narrative_engine (growth-letter conversation-theme
+    signals) to read recent history from nour_conversations."""
     conn = _connect()
     rows = conn.execute(
         """SELECT role, message, created_at FROM nour_conversations
@@ -1277,79 +1087,6 @@ def get_recent_conversation(discord_id: str, limit: int = 5) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in reversed(rows)]
-
-
-# ============================================================
-#  MARKAZ M2: PENDING ESCALATIONS (persistent reply-forwarding map)
-# ============================================================
-
-def record_pending_escalation(telegram_message_id: int, discord_id: str,
-                              student_name: str = "") -> None:
-    """Record a telegram_message_id → discord_id mapping so a later
-    owner reply (which only carries the replied-to message_id) can be
-    routed back to the right student, even across a bot restart."""
-    conn = _connect()
-    # try/finally on all four pending_escalations functions below:
-    # this table is written to from a long-running background poller
-    # (ops_poller.py) that never restarts on its own, so any leaked
-    # connection here compounds indefinitely rather than being cleared
-    # by a process restart soon after — worth the extra safety even
-    # though these specific statements don't hit a FOREIGN KEY (unlike
-    # the nour_conversations insert where this exact bug was found).
-    try:
-        conn.execute(
-            """INSERT OR REPLACE INTO pending_escalations
-               (telegram_message_id, discord_id, student_name, resolved)
-               VALUES (?, ?, ?, 0)""",
-            (telegram_message_id, discord_id, student_name),
-        )
-        conn.commit()
-    finally:
-        conn.close()
-
-
-def get_pending_escalation(telegram_message_id: int) -> Optional[dict]:
-    """Look up the discord_id for a given telegram_message_id, or None
-    if no unresolved escalation matches it."""
-    conn = _connect()
-    try:
-        row = conn.execute(
-            """SELECT * FROM pending_escalations
-               WHERE telegram_message_id=? AND resolved=0""",
-            (telegram_message_id,),
-        ).fetchone()
-    finally:
-        conn.close()
-    return dict(row) if row else None
-
-
-def resolve_pending_escalation(telegram_message_id: int) -> None:
-    """Mark an escalation as resolved after the owner's reply has been
-    forwarded, so it's no longer matched (also keeps the table from
-    growing unbounded in an unhelpful way — resolved rows are still
-    kept for history, just excluded from lookups)."""
-    conn = _connect()
-    try:
-        conn.execute(
-            "UPDATE pending_escalations SET resolved=1 WHERE telegram_message_id=?",
-            (telegram_message_id,),
-        )
-        conn.commit()
-    finally:
-        conn.close()
-
-
-def count_pending_escalations() -> int:
-    """Count unresolved escalations awaiting an owner reply. Used by
-    the Markaz daily digest."""
-    conn = _connect()
-    try:
-        row = conn.execute(
-            "SELECT COUNT(*) as cnt FROM pending_escalations WHERE resolved=0"
-        ).fetchone()
-    finally:
-        conn.close()
-    return row["cnt"] if row else 0
 
 
 def days_since_active(member: dict) -> int:
@@ -1976,8 +1713,7 @@ def store_growth_letter(discord_id: str, letter_text: str, source: str, week: in
 def get_latest_growth_letter(discord_id: str) -> dict | None:
     """Get the most recently generated growth letter for a student, or
     None if none exists yet. Read by GET /api/growth-letter (M2.4) --
-    zero AI cost per page load, same caching pattern as the old
-    nour_study_tips table this replaces."""
+    zero AI cost per page load."""
     conn = _connect()
     row = conn.execute(
         """SELECT letter_text, source, generated_at, week FROM nour_growth_letters
@@ -2179,119 +1915,7 @@ def get_security_stats() -> dict:
 
 
 # ============================================================
-#  AQL (Nour Intelligence Core, #15) — KNOWLEDGE CHUNKS (Phase A1)
-# ============================================================
-
-def insert_knowledge_chunk(domain: str, source_file: str, heading: str,
-                           content: str, embedding: bytes, embedding_model: str) -> int:
-    """Insert one chunked+embedded knowledge fragment. Returns the new
-    row's id. Called by the one-time embed script (Phase A1.3) --
-    NOT during normal request handling, since embedding happens at
-    index-build time, not per-query (design.md Section 4.2)."""
-    conn = _connect()
-    cur = conn.execute(
-        """INSERT INTO knowledge_chunks
-           (domain, source_file, heading, content, embedding, embedding_model)
-           VALUES (?, ?, ?, ?, ?, ?)""",
-        (domain, source_file, heading, content, embedding, embedding_model),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def clear_knowledge_chunks(domain: str = None) -> int:
-    """Delete existing chunks before a re-embed run, so re-running the
-    embed script never leaves stale duplicate chunks from a previous
-    run alongside the new ones. If `domain` is given, only that
-    domain's chunks are cleared (lets the embed script safely
-    re-process ONE knowledge file without touching every other
-    domain's already-good chunks). Returns rows deleted."""
-    conn = _connect()
-    if domain:
-        cur = conn.execute("DELETE FROM knowledge_chunks WHERE domain=?", (domain,))
-    else:
-        cur = conn.execute("DELETE FROM knowledge_chunks")
-    conn.commit()
-    removed = cur.rowcount
-    conn.close()
-    return removed
-
-
-def get_chunks_by_domains(domains: list[str]) -> list[dict]:
-    """Get all knowledge chunks whose domain is in the given list.
-
-    design.md Section 4.2: this SQL `WHERE domain IN (...)` clause IS
-    the role boundary enforced at the data layer -- a SECOND
-    enforcement point beneath src/nour/permissions.py's
-    application-layer check (defense in depth). Callers must always
-    pass the caller's OWN role's allowed domain list
-    (permissions.get_knowledge_domains(role)), never an
-    unfiltered/expanded list -- Phase A1.7's test fault-injects an
-    expanded domain list specifically to verify this function itself
-    behaves correctly regardless of what it's given (the APPLICATION
-    is responsible for never passing owner domains for a student
-    request; this function's job is just to filter correctly on
-    whatever list it receives).
-
-    Returns an empty list for an empty `domains` list (not an error,
-    not "all chunks") -- matches permissions.py's own "empty means no
-    access" semantics for unpopulated future roles.
-    """
-    if not domains:
-        return []
-    conn = _connect()
-    placeholders = ",".join("?" for _ in domains)
-    rows = conn.execute(
-        f"SELECT * FROM knowledge_chunks WHERE domain IN ({placeholders})",
-        domains,
-    ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-def count_knowledge_chunks(domain: str = None) -> int:
-    """Count chunks, optionally filtered to one domain. Used by the
-    embed script's own progress reporting and by tests."""
-    conn = _connect()
-    if domain:
-        row = conn.execute(
-            "SELECT COUNT(*) as cnt FROM knowledge_chunks WHERE domain=?", (domain,)
-        ).fetchone()
-    else:
-        row = conn.execute("SELECT COUNT(*) as cnt FROM knowledge_chunks").fetchone()
-    conn.close()
-    return row["cnt"] if row else 0
-
-
-# ============================================================
-#  AQL (#15) — RETRIEVAL OBSERVABILITY (Phase A1.6/A1.7, design.md
-#  Section 13)
-# ============================================================
-
-def log_retrieval(discord_id: str, role: str, query_text: str,
-                  top_chunk_ids: list[int], top_similarity: float,
-                  used_chunk_id: int = None) -> None:
-    """Log a retrieval query for later analysis (identifying knowledge
-    gaps -- frequent queries with low-similarity top results). See
-    design.md Section 13's replacement for the old ad-hoc weekly
-    self-review."""
-    import json as _json
-    conn = _connect()
-    conn.execute(
-        """INSERT INTO nour_retrieval_log
-           (discord_id, role, query_text, top_chunk_ids, top_similarity, used_chunk_id)
-           VALUES (?, ?, ?, ?, ?, ?)""",
-        (discord_id, role, query_text[:500], _json.dumps(top_chunk_ids), top_similarity, used_chunk_id),
-    )
-    conn.commit()
-    conn.close()
-
-
-
-# ============================================================
-#  AQL (#15) — TOOL LAYER SUPPORT (Phase A3)
+#  ONBOARDING JOURNEY COVERAGE (nour_journey / nour_onboarding)
 # ============================================================
 
 def get_journey_coverage(discord_id: str) -> dict:
@@ -2325,10 +1949,9 @@ def get_journey_coverage(discord_id: str) -> dict:
 
 def get_member_rank(discord_id: str) -> Optional[int]:
     """1-indexed rank of an active member by total_points, or None if
-    the member is not active/doesn't exist. Used by the
-    `get_leaderboard_position` student tool -- leaderboard() above
-    only returns a top-N slice, which can't answer "where do I rank"
-    for anyone outside that slice.
+    the member is not active/doesn't exist. leaderboard() only returns
+    a top-N slice, which can't answer "where do I rank" for anyone
+    outside that slice.
     """
     conn = _connect()
     rows = conn.execute(
@@ -2342,83 +1965,7 @@ def get_member_rank(discord_id: str) -> Optional[int]:
 
 
 # ============================================================
-#  AQL (#15) — TOOL CALL OBSERVABILITY (Phase A3.4, design.md
-#  Section 13)
-# ============================================================
-
-def log_tool_call(discord_id: str, role: str, tool_name: str, arguments: dict,
-                  latency_ms: int, success: bool, error_message: str = "") -> None:
-    """Log a tool invocation for later analysis (which tools are
-    actually used vs. dead weight, latency outliers, failure
-    patterns). `arguments` should already have any sensitive values
-    redacted by the caller (src/nour/tools/dispatcher.py) before this
-    function serializes them -- this function itself does not know
-    which keys are sensitive for a given tool, that judgment belongs
-    at the dispatch layer where the tool's real parameter meanings are
-    known.
-    """
-    import json as _json
-    conn = _connect()
-    conn.execute(
-        """INSERT INTO nour_tool_calls
-           (discord_id, role, tool_name, arguments_json, latency_ms, success, error_message)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (discord_id, role, tool_name, _json.dumps(arguments, ensure_ascii=False),
-         latency_ms, 1 if success else 0, error_message),
-    )
-    conn.commit()
-    conn.close()
-
-
-
-# ============================================================
-#  AQL (#15) — GUARDRAIL OBSERVABILITY (Phase A4.5, design.md
-#  Section 13)
-# ============================================================
-
-def log_guardrail_event(discord_id: str, guardrail_type: str,
-                        original_text_hash: str, outcome: str) -> None:
-    """Log a guardrail trigger -- called ONLY when a guardrail actually
-    fires (a response that passes on the first try is never logged
-    here; there is nothing to observe). `original_text_hash` is a
-    hash, never the raw failing text, per this table's own schema
-    comment: avoid storing a second copy of every failure verbatim.
-
-    guardrail_type: 'script' | 'bidi' | 'role_leak'
-    outcome: 'corrected_on_retry' | 'template_fallback'
-    """
-    conn = _connect()
-    conn.execute(
-        """INSERT INTO nour_guardrail_events
-           (discord_id, guardrail_type, original_text_hash, outcome)
-           VALUES (?, ?, ?, ?)""",
-        (discord_id, guardrail_type, original_text_hash, outcome),
-    )
-    conn.commit()
-    conn.close()
-
-
-def count_guardrail_events(guardrail_type: str = None) -> int:
-    """Count guardrail trigger events, optionally filtered to one
-    type. Used by tests and by any future monitoring/digest that wants
-    to surface 'how often is the guardrail actually catching
-    something' -- the direct, measurable signal for whether Phase A4
-    is doing real work in production, not just passing tests."""
-    conn = _connect()
-    if guardrail_type:
-        row = conn.execute(
-            "SELECT COUNT(*) as cnt FROM nour_guardrail_events WHERE guardrail_type=?",
-            (guardrail_type,),
-        ).fetchone()
-    else:
-        row = conn.execute("SELECT COUNT(*) as cnt FROM nour_guardrail_events").fetchone()
-    conn.close()
-    return row["cnt"] if row else 0
-
-
-
-# ============================================================
-#  AQL (#15) — STRUCTURED MEMORY (Phase A6)
+#  ONBOARDING JOURNEY COVERAGE (write path)
 # ============================================================
 
 def set_journey_coverage(discord_id: str, **flags) -> None:
@@ -2469,106 +2016,6 @@ def set_journey_coverage(discord_id: str, **flags) -> None:
         pass  # FK constraint -- discord_id isn't a registered member yet
     finally:
         conn.close()
-
-
-def store_episodic_summary(discord_id: str, summary_text: str,
-                           covers_from: str, covers_to: str) -> int:
-    """Store a compact per-student conversation summary (design.md
-    Section 6) -- called by nour_personality.generate_episodic_summary().
-    Returns the new row's id."""
-    conn = _connect()
-    cur = conn.execute(
-        """INSERT INTO nour_episodic_summaries
-           (discord_id, summary_text, covers_from, covers_to)
-           VALUES (?, ?, ?, ?)""",
-        (discord_id, summary_text, covers_from, covers_to),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def get_latest_episodic_summary(discord_id: str) -> Optional[dict]:
-    """Get the most recent episodic summary for a student, or None if
-    none has ever been generated. Read by the orchestrator's context
-    assembly (Phase A5/A6) -- a short paragraph standing in for
-    unbounded raw history older than the working-memory window.
-
-    Ties on created_at (SQLite's datetime('now') has only
-    second-level resolution) are broken by id DESC, so the row actually
-    inserted last is always the one returned.
-    """
-    conn = _connect()
-    row = conn.execute(
-        """SELECT * FROM nour_episodic_summaries WHERE discord_id=?
-           ORDER BY created_at DESC, id DESC LIMIT 1""",
-        (discord_id,),
-    ).fetchone()
-    conn.close()
-    return dict(row) if row else None
-
-
-
-# ============================================================
-#  AQL (#15) — SHADOW MODE (Phase A8.5, design.md Section 12 Phase M1)
-# ============================================================
-
-def log_shadow_comparison(discord_id: str, role: Optional[str], text: str,
-                          old_response: Optional[str], new_response: Optional[str],
-                          error: Optional[str], responses_match: bool) -> int:
-    """Persist one shadow-mode comparison record. Returns the new
-    row's id. Called by src/nour/shadow.py's run_shadow_check() --
-    never called with the intent of influencing which response gets
-    sent (shadow mode's whole point is that it never does)."""
-    conn = _connect()
-    cur = conn.execute(
-        """INSERT INTO nour_shadow_comparisons
-           (discord_id, role, text, old_response, new_response, error, responses_match)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (discord_id, role or "", text, old_response or "", new_response or "",
-         error or "", 1 if responses_match else 0),
-    )
-    conn.commit()
-    new_id = cur.lastrowid
-    conn.close()
-    return new_id
-
-
-def get_shadow_comparisons(discord_id: str = None, limit: int = 50) -> list[dict]:
-    """Read back shadow comparison records, most recent first,
-    optionally filtered to one discord_id. This is the read path
-    A8.7's owner sign-off review works from."""
-    conn = _connect()
-    if discord_id:
-        rows = conn.execute(
-            """SELECT * FROM nour_shadow_comparisons WHERE discord_id=?
-               ORDER BY created_at DESC, id DESC LIMIT ?""",
-            (discord_id, limit),
-        ).fetchall()
-    else:
-        rows = conn.execute(
-            "SELECT * FROM nour_shadow_comparisons ORDER BY created_at DESC, id DESC LIMIT ?",
-            (limit,),
-        ).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-def count_shadow_comparisons(matches_only: bool = False) -> int:
-    """Count shadow comparison rows, optionally only ones where
-    old_response and new_response matched exactly. Used for a quick
-    agreement-rate signal ahead of a full manual review."""
-    conn = _connect()
-    if matches_only:
-        row = conn.execute(
-            "SELECT COUNT(*) as cnt FROM nour_shadow_comparisons WHERE responses_match=1"
-        ).fetchone()
-    else:
-        row = conn.execute("SELECT COUNT(*) as cnt FROM nour_shadow_comparisons").fetchone()
-    conn.close()
-    return row["cnt"] if row else 0
-
 
 
 # ============================================================
