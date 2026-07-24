@@ -463,14 +463,25 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     post to Discord for most level/week combinations already, independent
     of anything added in this change.
     """
-    # Darb Phase 0: the daily message is decluttered into TWO clearly
-    # labelled sections with exactly ONE practice-platform link (the bare
-    # intro URL). The 4 platform tasks (accent/vocab/shadowing/listening)
-    # are listed concisely — their full content lives on the platform, so
-    # no per-task deep links here. The 3 Discord tasks (speaking/writing/
-    # community) keep their prompts, since they're done in Discord. Task
-    # numbers still map to !1-!7 and the reaction emojis (they index into
-    # config.DAILY_TASKS, independent of the display grouping).
+    # E2 (Phase D — decouple from personal calendars): every student's
+    # practice-page calendar is anchored to THEIR OWN join date, so "Day 1"
+    # falls on a different real weekday for every student. This channel
+    # post, however, used to select curriculum content by the REAL
+    # calendar day-of-week (current_day_name(), see generate_daily_tasks())
+    # — meaning the "Week N" / per-task theme it displayed rarely matched
+    # what any individual student's own calendar showed as "today." That
+    # mismatch is exactly the confusion reported (owner feedback #5:
+    # "the daily tasks shared... will be matching which student?!").
+    #
+    # Fix: the shared post no longer claims a specific day/week or per-task
+    # theme for the personal-calendar exercises (accent/vocab/shadowing/
+    # listening/speaking) — it's a generic nudge pointing at each
+    # student's own calendar, which always shows their real "today." Only
+    # the writing + community tasks (Discord-only, not calendar-day-
+    # specific in a way students compare against each other) keep their
+    # specific prompts, since those genuinely are the same task for
+    # everyone today. Task numbers still map to !1-!7 and the reaction
+    # emojis (they index into config.DAILY_TASKS, independent of display).
     level = task_data["level"]
     level_info = config.LEVELS.get(level, config.LEVELS["L0"])
 
@@ -478,33 +489,44 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     num_by_id = {t["id"]: i + 1 for i, t in enumerate(config.DAILY_TASKS)}
     NUM_EMOJI = {1: "1️⃣", 2: "2️⃣", 3: "3️⃣", 4: "4️⃣", 5: "5️⃣", 6: "6️⃣", 7: "7️⃣"}
 
-    PRACTICE_IDS = ["accent", "vocab", "shadow", "listening"]
-    DISCORD_IDS = ["speaking", "writing", "community"]
+    # Speaking now lives on the practice page too (E1) — grouped with the
+    # calendar tasks here rather than the Discord-only section.
+    PRACTICE_IDS = ["accent", "vocab", "shadow", "listening", "speaking"]
+    DISCORD_IDS = ["writing", "community"]
 
     header = "\n".join([
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"📅 **{bl('DAY', 'اليوم')} — {task_data['day_name']}, {bl('Week', 'أسبوع')} {task_data['week']}**",
+        f"📅 **{bl('Your daily practice', 'تمرينك النهاردة')}**",
         f"🏛️ EMPIRE ENGLISH — {level_info['emoji']} {level_info['name']}",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ])
 
     blocks = []
 
-    # Section 1 — the practice platform: ONE link + the platform tasks
-    # listed concisely by their real title (their full content lives on
-    # the platform, so no per-task deep links and no content dump here).
+    # Section 1 — the practice platform: ONE link + the calendar tasks
+    # listed by generic name only (NOT the day-of-week-specific title —
+    # e.g. "Accent" not "Accent Drill — Long vowels" — since that theme is
+    # today's REAL-calendar theme, not necessarily what an individual
+    # student's own personal-calendar day shows). The exact content for
+    # each student's actual "today" lives on their personal calendar page.
     practice_present = [tid for tid in PRACTICE_IDS if tid in task_by_id]
     if practice_present:
         practice_lines = [
-            f"🌐 **{bl('On the practice platform', 'على منصة التمرين')}:** {config.PRACTICE_PLATFORM_URL}",
+            f"🌐 **{bl('Open your calendar', 'افتح تقويمك')}:** {config.PRACTICE_PLATFORM_URL}",
+            bl("Your calendar always shows exactly where YOU are — not "
+               "today's date, YOUR day.",
+               "التقويم بتاعك دايمًا بيوريك يومك الحقيقي إنت — مش تاريخ "
+               "النهاردة، يومك إنت."),
         ]
+        generic_names = {
+            "accent": "🎯 " + bl("Accent", "النطق"),
+            "vocab": "📖 " + bl("Vocabulary", "المفردات"),
+            "shadow": "🎧 " + bl("Shadowing", "المحاكاة"),
+            "listening": "👂 " + bl("Listening", "الاستماع"),
+            "speaking": "🎙️ " + bl("Speaking", "الكلام"),
+        }
         for tid in practice_present:
-            t = task_by_id[tid]
-            practice_lines.append(f"{NUM_EMOJI[num_by_id[tid]]} {t['title']}")
-        practice_lines.append(
-            bl("Open today and start — audio, drills and quizzes are all there.",
-               "افتح يوم النهاردة وابدأ — الصوت والتمارين والاختبارات كلها هناك.")
-        )
+            practice_lines.append(f"{NUM_EMOJI[num_by_id[tid]]} {generic_names.get(tid, task_by_id[tid]['title'])}")
         blocks.append("\n".join(practice_lines))
 
     # Section 2 — the Discord tasks (done in Discord, so keep their prompts)

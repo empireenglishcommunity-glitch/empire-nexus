@@ -76,33 +76,75 @@ def test_format_daily_post_chunks_all_under_discord_limit():
 
 
 def test_format_daily_post_chunks_never_splits_a_task_mid_content():
-    """Each task block ('1\ufe0f\u20e3 Accent Drill...') must appear intact and
-    exactly once across the joined chunks — never truncated or duplicated."""
+    """Each Discord-only task block ('1\ufe0f\u20e3 Writing...') must appear
+    intact and exactly once across the joined chunks — never truncated or
+    duplicated. Calendar-task (accent/vocab/shadow/listening/speaking)
+    titles deliberately do NOT appear verbatim (Phase D decouple — they're
+    replaced with a generic label), so only the Discord-only tasks'
+    original titles are checked here."""
     task_data = _sample_task_data()
     chunks = tasks.format_daily_post_chunks(task_data)
     joined = "\n\n".join(chunks)
     for task in task_data["tasks"]:
-        assert joined.count(task["title"]) == 1
+        if task["id"] in ("writing", "community"):
+            assert joined.count(task["title"]) == 1
 
 
 def test_format_daily_post_chunks_platform_link_and_discord_content():
-    """Darb Phase 0: the daily message has exactly ONE practice-platform
-    link; the 4 platform tasks (accent/vocab/shadowing/listening) are
-    listed by title only (their content lives on the platform); the 3
-    Discord tasks (speaking/writing/community) keep their full content."""
+    """Phase D (E2 decouple): the daily message has exactly ONE
+    practice-platform link; the 5 calendar tasks (accent/vocab/shadowing/
+    listening/speaking) are listed generically (no day-of-week-specific
+    title/content — that only lives on each student's own calendar); the
+    2 Discord-only tasks (writing/community) keep their full content."""
     task_data = _sample_task_data()
     joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
     # Exactly one practice-platform link in the whole message.
     assert joined.count("practice.empireenglish.online") == 1
-    # Discord tasks keep their prompts/content.
-    for tid in ("speaking", "writing", "community"):
+    # Discord-only tasks keep their prompts/content.
+    for tid in ("writing", "community"):
         content = next(t["content"] for t in task_data["tasks"] if t["id"] == tid)
         assert content in joined
-    # Platform tasks' content is NOT dumped into the Discord message
-    # (it lives on the platform; only the title/link appear here).
-    for tid in ("accent", "vocab", "shadow", "listening"):
+    # Calendar tasks' day-of-week-specific CONTENT is NOT dumped into the
+    # shared message (it lives on each student's own personal calendar
+    # page, not the shared channel) — only a generic task name appears.
+    for tid in ("accent", "vocab", "shadow", "listening", "speaking"):
         content = next(t["content"] for t in task_data["tasks"] if t["id"] == tid)
         assert content not in joined
+
+
+def test_format_daily_post_chunks_no_day_of_week_or_week_number_claim():
+    """Phase D (E2 decouple): the header must not assert a specific
+    day-of-week or week number, since that's real-calendar-date content
+    that doesn't match any individual student's personal-calendar day
+    (root cause of owner feedback #5 — 'will be matching which
+    student?!'). Every level/week's post looks the same regardless of
+    which real weekday or level-week it's generated for."""
+    task_data = _sample_task_data()
+    joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
+    assert task_data["day_name"] not in joined
+    assert f"Week {task_data['week']}" not in joined
+
+
+def test_format_daily_post_chunks_calendar_nudge_present():
+    """The practice-platform section must point students at their own
+    personal calendar, not claim a shared 'today'."""
+    task_data = _sample_task_data()
+    joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
+    assert "Open your calendar" in joined
+    assert "YOUR day" in joined or "exactly where YOU are" in joined
+
+
+def test_format_daily_post_chunks_speaking_grouped_with_calendar_tasks():
+    """E1 (Speaking on the practice page) + E2: speaking is now a
+    calendar/practice-page task, so it should appear in the platform
+    section (generic name), not the Discord-only section (full prompt)."""
+    task_data = _sample_task_data()
+    joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
+    speaking_content = next(t["content"] for t in task_data["tasks"] if t["id"] == "speaking")
+    assert speaking_content not in joined
+    # Its generic label (English or Arabic side of the bl() pair) should
+    # still be present somewhere in the platform section.
+    assert "Speaking" in joined or "الكلام" in joined
 
 
 def test_format_daily_post_returns_single_joined_string():
