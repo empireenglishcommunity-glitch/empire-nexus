@@ -1,5 +1,6 @@
 """Tests for src/database.py — SQLite persistence layer."""
 import datetime
+from unittest.mock import patch
 
 from src import database
 
@@ -615,3 +616,114 @@ def test_days_since_active():
     database.update_member("u1", last_active_at=old_time)
     member = database.get_member("u1")
     assert database.days_since_active(member) == 4
+
+
+
+# ============================================================
+#  PHASE E (E6) — timezone-consistent "today" (owner feedback #9:
+#  "finished all tasks but the bot still shows remaining")
+# ============================================================
+#
+# Root cause found during the audit this phase mandates: every
+# date-sensitive read in this module used a bare `datetime.date.today()`,
+# which follows the SERVER's system clock (UTC on the real deployment),
+# while submissions are LOGGED under `tasks.today_str()`'s timezone-aware
+# Asia/Dubai date. During the daily window where the two clocks' calendar
+# dates disagree, a submission correctly logged under "today" (Dubai)
+# would be invisible to a same-moment `tasks_completed_today()` read,
+# because that read computed a DIFFERENT "today" (server/UTC). These
+# tests pin the fix: every read now goes through the single
+# `database._today_local()` helper, so a submission logged for a given
+# calendar day is always found by a read for that same calendar day,
+# regardless of what the bare server clock says.
+
+def test_today_local_uses_configured_timezone_not_server_clock():
+    """The bug, demonstrated directly: with the server clock (simulated
+    via freezing datetime.datetime.now) sitting at 22:00 UTC on day N,
+    Asia/Dubai (UTC+4) has already rolled over to day N+1. _today_local()
+    must return the Dubai date, not the naive server date. Explicitly
+    patches config.TIMEZONE to "Asia/Dubai" since the test conftest sets
+    TIMEZONE=UTC for every other test (deliberately, to avoid every
+    other date-sensitive test needing to account for a real offset)."""
+    from zoneinfo import ZoneInfo
+    utc_late_night = datetime.datetime(2026, 7, 23, 22, 0, 0, tzinfo=ZoneInfo("UTC"))
+
+    class _FrozenDateTime(datetime.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return utc_late_night.astimezone(tz) if tz else utc_late_night
+
+    with patch("src.database.config.TIMEZONE", "Asia/Dubai"), \
+         patch("src.database.datetime.datetime", _FrozenDateTime):
+        result = database._today_local()
+    assert result == datetime.date(2026, 7, 24), (
+        "Expected the Dubai-local date (already tomorrow relative to "
+        f"UTC 22:00), got {result}"
+    )
+
+
+def test_tasks_completed_today_sees_a_submission_logged_at_the_tz_boundary():
+    """The exact failure mode reported: a student submits a task late at
+    night. If it's logged under the Dubai date but read back under the
+    server's (different) date, the task appears to vanish — the student
+    did it, `!done` accepted it, but `!progress`/`!today` don't show it.
+    This test logs a submission for "today" (via the real _today_local(),
+    whatever it evaluates to right now) and confirms tasks_completed_today
+    finds it — i.e. the write path and the read path agree on "today" by
+    construction, since both now go through the same helper."""
+    database.register_member("u1", "Alice")
+    today = database._today_local().isoformat()
+    database.log_submission("u1", today, "accent")
+    assert "accent" in database.tasks_completed_today("u1")
+
+
+def test_tasks_completed_today_respects_patched_today_local():
+    """Confirms tasks_completed_today() itself calls _today_local() (not
+    an inlined datetime.date.today()) — patching the helper must change
+    what it considers 'today'."""
+    database.register_member("u1", "Alice")
+    fake_today = datetime.date(2026, 8, 15)
+    database.log_submission("u1", fake_today.isoformat(), "vocab")
+    with patch.object(database, "_today_local", return_value=fake_today):
+        completed = database.tasks_completed_today("u1")
+    assert completed == ["vocab"]
+    # And with the real "today" (not the fake date), it's empty — proving
+    # the patch actually changed the query, not a coincidence.
+    assert database.tasks_completed_today("u1") == []
+
+
+def test_recompute_streak_respects_patched_today_local():
+    """_recompute_streak() (called by update_streak) must anchor its
+    consecutive-day walk on _today_local(), not the server clock, or a
+    streak recorded for the Dubai 'today' could be computed against the
+    wrong reference day."""
+    database.register_member("u1", "Alice")
+    fake_today = datetime.date(2026, 9, 1)
+    with patch.object(database, "_today_local", return_value=fake_today):
+        database.update_streak("u1", fake_today.isoformat(), 7)
+        current, _ = database.get_streak("u1")
+    assert current == 1
+
+
+def test_add_voice_minutes_and_get_voice_minutes_agree_on_today():
+    """E5 (community task persistence) shares the same _today_local() —
+    minutes added for 'today' via the default date must be readable back
+    via get_voice_minutes()'s default date, even at the tz boundary."""
+    database.register_member("u1", "Alice")
+    fake_today = datetime.date(2026, 10, 10)
+    with patch.object(database, "_today_local", return_value=fake_today):
+        database.add_voice_minutes("u1", 12.0)
+        minutes = database.get_voice_minutes("u1")
+    assert minutes == 12.0
+
+
+def test_record_practice_mastery_default_today_uses_today_local():
+    """The practice-page calendar's mastery recording (when no explicit
+    `today` is passed, i.e. the real recording-submission path) must also
+    anchor on _today_local(), consistent with the Discord-side fix."""
+    database.register_member("u1", "Alice")
+    fake_today = datetime.date(2026, 11, 1)
+    with patch.object(database, "_today_local", return_value=fake_today):
+        result = database.record_practice_mastery("u1", "L0", 1, 1, "accent")
+    assert result["exercise_tier"] == 1
+    assert result["incremented"] is True

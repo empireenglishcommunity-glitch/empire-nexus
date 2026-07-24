@@ -80,13 +80,31 @@ Legend: [ ] todo · [x] done
   tasks and matches the calendar concept. PR merged.
 
 ## Phase E — Resolve "4-vs-7 done" confusion + audit (E6) — *after C/D*
-- [ ] **E1** Messaging: `!progress` / daily post show the full 7 with a clear
-  breakdown of what's left (writing, community). Calendar = self-study truth.
-  (R6.2, R6.4)
-- [ ] **E2** Audit script: for students who did all 7 on a date, confirm
-  `tasks_completed_today` == 7; surface any real mismatch. (R6.3)
-- [ ] **E3** Fix any genuine counting bug found; else document "no bug —
-  it's the self-study(5) vs full-program(7) split." PR merged.
+- [x] **E1** Messaging: `!progress` / `!today` show the full 7 with a clear
+  breakdown of what's left, split into 🌐 calendar (accent/vocab/shadow/
+  listening/speaking, 5) vs 💬 Discord-only (writing/community, 2), via a
+  shared `features.CALENDAR_TASK_IDS`/`DISCORD_ONLY_TASK_IDS` pair so the
+  two commands can never disagree. Calendar = self-study truth. (R6.2, R6.4)
+- [x] **E2** Audit script (`scripts/audit_task_counting.py`): checks (1) no
+  submission has a task_id outside the canonical 7, (2) every (student,
+  date) with all 7 tasks submitted recounts to exactly 7 for that date,
+  (3) historical exposure to the tz-boundary bug found below. Run against
+  the real DB before closing this phase. (R6.3)
+- [x] **E3** Real bug found and fixed (not just messaging): `database.py`
+  used a bare `datetime.date.today()` (server/UTC clock) everywhere
+  `tasks_completed_today()`/`_recompute_streak()`/`get_voice_minutes()`/
+  `record_practice_mastery()` needed "today", while submissions are LOGGED
+  under `tasks.today_str()`'s timezone-aware Asia/Dubai date. During the
+  window where the two calendar dates disagree (the UTC date has rolled
+  over but Dubai's hasn't, or vice versa), a task correctly logged under
+  "today" (Dubai) would be invisible to a same-moment read — the exact
+  "I did it but it still shows remaining" symptom. Fixed with a single
+  `database._today_local()` helper (same pattern as `darb._today_local()`)
+  and replaced all 16 call sites. 6 new regression tests pin the fix;
+  `test_student_journey.py`'s date-mocking was also fixed (it patched the
+  whole `datetime` module in a way that would have silently masked this
+  exact bug — now patches `_today_local()` directly). 445 total tests pass.
+  PR merged.
 
 ## Phase F — AI motivational auto-replies (E4) — *isolated, flag-gated, last*
 - [ ] **F1** New `motivation.py`: generate short, unique, correction-free

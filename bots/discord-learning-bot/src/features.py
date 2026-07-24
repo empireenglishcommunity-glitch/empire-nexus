@@ -1161,6 +1161,20 @@ def format_shadowing_resources(level: str) -> str:
 #  19. !TODAY COMMAND (personal remaining tasks)
 # ============================================================
 
+# Phase E (E6, R6.2/R6.4 — owner feedback #9: "finished all tasks but
+# still shows remaining"). Root cause was two OVERLAPPING notions of
+# "done": the practice-page calendar (5 self-study exercises: accent,
+# vocab, shadow, listening, speaking) vs the full 7-task Discord daily
+# program (adds writing + community). A student who greens their
+# calendar is only 5/7 in Discord terms — not a bug, but genuinely
+# confusing without an explicit breakdown. These two sets below drive
+# that breakdown everywhere "remaining tasks" is shown (not private —
+# bot.py's `!progress` reuses them too, so both surfaces never disagree
+# about which tasks are "calendar" vs "Discord-only").
+CALENDAR_TASK_IDS = ("accent", "vocab", "shadow", "listening", "speaking")
+DISCORD_ONLY_TASK_IDS = ("writing", "community")
+
+
 async def show_today(ctx):
     """Show what tasks remain for today with time estimate."""
     member = database.get_member(str(ctx.author.id))
@@ -1175,23 +1189,45 @@ async def show_today(ctx):
     lines = [f"📅 **مهامك النهاردة — Week {week}**", "━━━━━━━━━━━━━━━━━━━━━━━━", ""]
 
     total_min = 0
-    for task in config.DAILY_TASKS:
-        tid = task["id"]
-        if tid not in allowed:
-            continue
-        if tid in completed:
-            lines.append(f"  ✅ ~~{task['emoji']} {task['name_ar']}~~")
-        else:
-            mins = 10 if member.get("level", "L0") == "L0" else 15
-            total_min += mins
-            lines.append(f"  ⬜ {task['emoji']} {task['name_ar']} — `!done {tid}`")
 
-    lines.append("")
+    def _task_line(task):
+        nonlocal total_min
+        tid = task["id"]
+        if tid in completed:
+            return f"  ✅ ~~{task['emoji']} {task['name_ar']}~~"
+        mins = 10 if member.get("level", "L0") == "L0" else 15
+        total_min += mins
+        return f"  ⬜ {task['emoji']} {task['name_ar']} — `!done {tid}`"
+
+    # Section 1 — the practice-page calendar tasks. (R6.2: explicit label
+    # so a student who greened their calendar understands that's THIS
+    # group, not all 7.)
+    calendar_tasks = [t for t in config.DAILY_TASKS if t["id"] in allowed and t["id"] in CALENDAR_TASK_IDS]
+    if calendar_tasks:
+        lines.append("🌐 **على منصة التمرين (تقويمك):**")
+        for task in calendar_tasks:
+            lines.append(_task_line(task))
+        lines.append("")
+
+    # Section 2 — the Discord-only tasks.
+    discord_tasks = [t for t in config.DAILY_TASKS if t["id"] in allowed and t["id"] in DISCORD_ONLY_TASK_IDS]
+    if discord_tasks:
+        lines.append("💬 **هنا في Discord:**")
+        for task in discord_tasks:
+            lines.append(_task_line(task))
+        lines.append("")
+
     done_count = len([t for t in allowed if t in completed])
     total_count = len(allowed)
     bar = "█" * done_count + "░" * (total_count - done_count)
 
-    lines.append(f"[{bar}] {done_count}/{total_count}")
+    # R6.4: explicit breakdown, not just one ambiguous "N/7" bar — makes
+    # clear the calendar (self-study) and Discord counts are two parts
+    # of the same total, not two different totals.
+    cal_done = len([t for t in calendar_tasks if t["id"] in completed])
+    disc_done = len([t for t in discord_tasks if t["id"] in completed])
+    lines.append(f"[{bar}] {done_count}/{total_count}  "
+                 f"(🌐 تقويمك {cal_done}/{len(calendar_tasks)} + 💬 Discord {disc_done}/{len(discord_tasks)})")
 
     if total_min > 0:
         lines.append(f"⏱️ الوقت المتبقي: ~{total_min} دقيقة")

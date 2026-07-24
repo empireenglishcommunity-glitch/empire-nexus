@@ -2099,6 +2099,13 @@ async def cmd_progress(ctx):
     completed_today = database.tasks_completed_today(str(ctx.author.id))
     bar = "█" * len(completed_today) + "░" * (7 - len(completed_today))
 
+    # Phase E (E6, R6.2/R6.4 — owner feedback #9: "finished all tasks but
+    # still shows remaining"). Same calendar(5)-vs-Discord(2) breakdown as
+    # !today (features.show_today), reusing the same shared task-id sets
+    # so the two commands can never disagree about which is which.
+    cal_done = len([t for t in completed_today if t in features.CALENDAR_TASK_IDS])
+    disc_done = len([t for t in completed_today if t in features.DISCORD_ONLY_TASK_IDS])
+
     latest = database.get_latest_assessment(str(ctx.author.id))
     score_line = f"📊 Last assessment: **{latest['overall_score']:.0f}%** ({latest['rating']})" if latest else "📊 No assessment yet"
 
@@ -2113,7 +2120,8 @@ async def cmd_progress(ctx):
         f"📈 Completion rate (7 days): **{completion}%**\n"
         f"{score_line}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"Today [{bar}] {len(completed_today)}/7\n"
+        f"Today [{bar}] {len(completed_today)}/7  "
+        f"(🌐 calendar {cal_done}/{len(features.CALENDAR_TASK_IDS)} + 💬 Discord {disc_done}/{len(features.DISCORD_ONLY_TASK_IDS)})\n"
         f"Track: {member['track']}"
     )
 
