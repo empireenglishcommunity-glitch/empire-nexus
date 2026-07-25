@@ -51,20 +51,22 @@ def test_custom_message_overrides():
     maintenance.end()
 
 
-def test_auto_resume_failsafe_reports_live_and_clears():
-    """If the auto-end window has elapsed, status must report live (so a
-    forgotten `end` never leaves students locked out) and lazily clear."""
+def test_auto_resume_window_reports_live_without_clearing():
+    """If the auto-end window has elapsed, status reports live immediately
+    (so a forgotten `end` never leaves students locked out) — but it does NOT
+    clear the flag; the heartbeat's check_and_handle_auto_resume does the
+    clear + 'we're back' broadcast exactly once."""
     maintenance.start(level="hard", window_minutes=120)
     assert maintenance.is_active() is True
-    # Force the failsafe deadline into the past.
     past = (datetime.datetime.now(datetime.timezone.utc)
             - datetime.timedelta(minutes=1)).isoformat()
     database.set_setting("maintenance_auto_end_at", past)
     s = maintenance.get_status()
     assert s["state"] == "live"
     assert s.get("auto_ended") is True
-    # Flag was lazily cleared.
-    assert database.get_setting("maintenance_active", "0") == "0"
+    # Still flagged active (not cleared here) — cleared by the auto-resume handler.
+    assert database.get_setting("maintenance_active", "0") == "1"
+    maintenance.end()
 
 
 
@@ -157,3 +159,57 @@ async def test_broadcast_end_announces_and_restores(monkeypatch):
     result = await maintenance.broadcast_end(bot, "New feature X")
     assert result["discord"] is True
     assert "New feature X" in ch.sent[0]
+
+
+
+# ============================================================
+#  Phase 3 — auto-resume announcement + streak protection
+# ============================================================
+
+@pytest.mark.asyncio
+async def test_check_auto_resume_ends_and_announces_once(monkeypatch):
+    ch = _FakeChannel()
+    bot = _FakeBot(ch)
+    monkeypatch.setattr(config, "GUILD_ID", 123456789)
+    monkeypatch.setattr(config, "MAINTENANCE_TG_CHAT_IDS", [])
+    maintenance.start(level="hard", window_minutes=120)
+    # Force the window into the past.
+    past = (datetime.datetime.now(datetime.timezone.utc)
+            - datetime.timedelta(minutes=1)).isoformat()
+    database.set_setting("maintenance_auto_end_at", past)
+
+    resumed = await maintenance.check_and_handle_auto_resume(bot)
+    assert resumed is True
+    assert maintenance.is_active() is False
+    assert database.get_setting("maintenance_active", "0") == "0"
+    assert len(ch.sent) == 1                      # "we're back" announced once
+    assert "back" in ch.sent[0].lower()
+    # Idempotent: a second check does nothing (no double announcement).
+    assert await maintenance.check_and_handle_auto_resume(bot) is False
+
+
+def test_maintenance_day_bridges_a_missed_day_in_streak():
+    """A day the platform was under maintenance must not break a streak."""
+    import json
+    uid = "streak_bridge_user"
+    database.register_member(uid, "Bridge User")
+    today = database._today_local()
+    day = datetime.timedelta(days=1)
+
+    # Practiced today and 2 days ago, but MISSED yesterday.
+    database.set_setting("maintenance_days", "[]")
+    database.update_streak(uid, today.isoformat(), 7)
+    database.update_streak(uid, (today - 2 * day).isoformat(), 7)
+
+    # Without maintenance, yesterday's gap breaks the streak at 1 (today only).
+    cur, _ = database.get_streak(uid)
+    assert cur == 1
+
+    # Now mark YESTERDAY as a maintenance day → it bridges: today counts,
+    # yesterday is forgiven (not counted, not breaking), 2-days-ago counts.
+    database.set_setting("maintenance_days", json.dumps([(today - day).isoformat()]))
+    database._recompute_streak(uid)
+    cur, _ = database.get_streak(uid)
+    assert cur == 2
+
+    database.set_setting("maintenance_days", "[]")  # cleanup shared setting

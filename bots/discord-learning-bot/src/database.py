@@ -685,20 +685,37 @@ def _recompute_streak(discord_id: str):
         _set_streak(discord_id, 0)
         return
 
-    streak = 0
-    today = _today_local()
-    expected = today
+    # Map date -> tasks_completed for a day-by-day backward walk.
+    by_date = {row["date"]: row["tasks_completed"] for row in rows}
 
-    for row in rows:
-        row_date = datetime.date.fromisoformat(row["date"])
-        if row_date == expected and row["tasks_completed"] > 0:
+    # Maintenance days to BRIDGE: a day the platform was under maintenance
+    # must never break a student's streak (R5.1). Read the setting directly
+    # to avoid a circular import with the maintenance module.
+    import json
+    try:
+        maint_days = set(json.loads(get_setting("maintenance_days", "[]")))
+    except Exception:
+        maint_days = set()
+
+    streak = 0
+    d = _today_local()
+    # Walk backward day-by-day (bounded so it always terminates). This
+    # reproduces the original consecutive-days logic exactly for normal
+    # days, and additionally forgives maintenance days.
+    for _ in range(800):
+        ds = d.isoformat()
+        tasks = by_date.get(ds, 0)
+        if tasks and tasks > 0:
             streak += 1
-            expected -= datetime.timedelta(days=1)
-        elif row_date == expected and row["tasks_completed"] == 0:
-            break
-        elif row_date < expected:
-            # Missed a day
-            break
+            d -= datetime.timedelta(days=1)
+            continue
+        # No activity on this day.
+        if ds in maint_days:
+            # Maintenance day — bridge it: don't break, don't count it.
+            d -= datetime.timedelta(days=1)
+            continue
+        # Genuine miss (or today not practiced yet) — the streak stops here.
+        break
 
     _set_streak(discord_id, streak)
 

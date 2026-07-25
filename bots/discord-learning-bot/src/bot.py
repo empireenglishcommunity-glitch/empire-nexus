@@ -1238,6 +1238,23 @@ async def heartbeat():
     """
     database.set_setting("last_heartbeat", datetime.datetime.now(_zone()).isoformat())
 
+    # Auto-resume: if a maintenance window elapsed while still flagged active,
+    # end it and announce "we're back" exactly once (self-heals a forgotten
+    # /maintenance end within ~2 min of the window closing).
+    try:
+        await maintenance_mod.check_and_handle_auto_resume(bot)
+    except Exception:
+        pass
+
+    # While maintenance is active, record today's date so the streak logic
+    # bridges it (a maintenance day never breaks a student's streak). Cheap;
+    # dedupes internally. Also catches a window that spans midnight.
+    try:
+        if maintenance_mod.is_active():
+            maintenance_mod.mark_active_day()
+    except Exception:
+        pass
+
     # Check maintenance mode and update presence. Uses the unified
     # maintenance module (honors both the rich /maintenance state and the
     # legacy maintenance_mode flag set by deploy.py), so presence self-heals
