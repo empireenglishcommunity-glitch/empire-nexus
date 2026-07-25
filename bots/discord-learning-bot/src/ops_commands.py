@@ -232,6 +232,65 @@ async def handle_announce(args: str, bot) -> str:
 
 
 # ============================================================
+#  /approve, /deny — owner gate for student-initiated resets
+# ============================================================
+
+@command("/approve")
+async def handle_approve(args: str, bot) -> str:
+    """Approve a student's pending history-reset request (performs the reset)."""
+    try:
+        rid = int(args.strip())
+    except (ValueError, TypeError):
+        return ops_hub.escape_markdown("Usage: /approve <request number>")
+    res = database.approve_pending_reset(rid, decided_by="telegram-ops")
+    if res is None:
+        return ops_hub.escape_markdown(f"No pending reset request #{rid}.")
+    if res.get("error"):
+        return ops_hub.escape_markdown(f"Request #{rid} is already {res['status']} — no action taken.")
+    try:
+        user = bot.get_user(int(res["discord_id"]))
+        if user is None:
+            user = await bot.fetch_user(int(res["discord_id"]))
+        if user:
+            await user.send(
+                f"🧾 Your history reset was approved and completed (record #{res['consent_id']}). "
+                f"Fresh start — good luck! 🌱"
+            )
+    except Exception:
+        pass
+    return ops_hub.escape_markdown(
+        f"✅ Approved reset #{rid} for {res['discord_name']} (record #{res['consent_id']}). "
+        f"Undo in Discord: !restore-student {res['consent_id']}"
+    )
+
+
+@command("/deny")
+async def handle_deny(args: str, bot) -> str:
+    """Deny a student's pending history-reset request (nothing is deleted)."""
+    try:
+        rid = int(args.strip())
+    except (ValueError, TypeError):
+        return ops_hub.escape_markdown("Usage: /deny <request number>")
+    res = database.deny_pending_reset(rid, decided_by="telegram-ops")
+    if res is None:
+        return ops_hub.escape_markdown(f"No pending reset request #{rid}.")
+    if res.get("error"):
+        return ops_hub.escape_markdown(f"Request #{rid} is already {res['status']} — no action taken.")
+    try:
+        user = bot.get_user(int(res["discord_id"]))
+        if user is None:
+            user = await bot.fetch_user(int(res["discord_id"]))
+        if user:
+            await user.send(
+                "Your history reset request was not approved this time. If you still want it, "
+                "please contact the team."
+            )
+    except Exception:
+        pass
+    return ops_hub.escape_markdown(f"🚫 Denied reset #{rid} for {res['discord_name']}. Nothing was deleted.")
+
+
+# ============================================================
 #  /help — list available commands
 # ============================================================
 #  /maintenance — toggle maintenance mode (student-facing)

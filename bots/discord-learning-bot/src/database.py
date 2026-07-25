@@ -459,6 +459,24 @@ CREATE TABLE IF NOT EXISTS reset_consent_log (
     created_at       TEXT NOT NULL DEFAULT (datetime('now')),
     created_at_local TEXT NOT NULL DEFAULT ''
 );
+
+-- Owner-approval gate for STUDENT-initiated resets. A `!resetme` (after the
+-- student's consent) creates a 'pending' row here instead of wiping; the owner
+-- then /approve or /deny it. Nothing is deleted until approval. Linked to the
+-- consent ledger via consent_id once approved.
+CREATE TABLE IF NOT EXISTS pending_resets (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id    TEXT NOT NULL,
+    discord_name  TEXT NOT NULL DEFAULT '',
+    consent_text  TEXT NOT NULL DEFAULT '',
+    affirmation   TEXT NOT NULL DEFAULT '',
+    reason        TEXT NOT NULL DEFAULT '',
+    status        TEXT NOT NULL DEFAULT 'pending',  -- pending|approved|denied|expired|superseded
+    requested_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    decided_by    TEXT NOT NULL DEFAULT '',
+    decided_at    TEXT DEFAULT NULL,
+    consent_id    INTEGER DEFAULT NULL
+);
 """
 
 
@@ -622,6 +640,127 @@ def restore_member_from_consent(consent_id: int) -> Optional[dict]:
                 restored[table] = n
         conn.commit()
         return restored
+    finally:
+        conn.close()
+
+
+# ---- Owner-approval gate for student-initiated resets --------------------
+
+PENDING_RESET_TTL_DAYS = 7
+
+
+def create_pending_reset(discord_id: str, discord_name: str, consent_text: str,
+                         affirmation: str, reason: str = "") -> int:
+    """Record a student's consented reset request as PENDING owner approval
+    (nothing is deleted yet). Supersedes any earlier still-pending request
+    from the same student so the queue can't be spammed. Returns the id."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE pending_resets SET status='superseded', decided_at=datetime('now') "
+            "WHERE discord_id=? AND status='pending'",
+            (discord_id,),
+        )
+        cur = conn.execute(
+            "INSERT INTO pending_resets (discord_id, discord_name, consent_text, "
+            "affirmation, reason) VALUES (?, ?, ?, ?, ?)",
+            (discord_id, discord_name, consent_text, affirmation, reason),
+        )
+        conn.commit()
+        return cur.lastrowid
+    finally:
+        conn.close()
+
+
+def get_pending_reset(request_id: int) -> Optional[dict]:
+    conn = _connect()
+    try:
+        r = conn.execute("SELECT * FROM pending_resets WHERE id=?", (request_id,)).fetchone()
+        return dict(r) if r else None
+    finally:
+        conn.close()
+
+
+def list_pending_resets() -> list:
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM pending_resets WHERE status='pending' ORDER BY id"
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def approve_pending_reset(request_id: int, decided_by: str) -> Optional[dict]:
+    """Approve a pending request → actually performs the reset (records consent
+    + snapshot + wipes history). Returns a result dict, {'error':...} if not
+    pending, or None if the request id is unknown."""
+    req = get_pending_reset(request_id)
+    if not req:
+        return None
+    if req["status"] != "pending":
+        return {"error": "not_pending", "status": req["status"]}
+    result = reset_member_history(
+        req["discord_id"],
+        initiated_by=f"student-approved:{decided_by}",
+        consent_text=req["consent_text"],
+        affirmation=f"{req['affirmation']} | approved by {decided_by}",
+        reason=req["reason"] or "student self-service (approved)",
+    )
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE pending_resets SET status='approved', decided_by=?, "
+            "decided_at=datetime('now'), consent_id=? WHERE id=?",
+            (decided_by, (result or {}).get("consent_id"), request_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return {
+        "request_id": request_id,
+        "discord_id": req["discord_id"],
+        "discord_name": req["discord_name"],
+        "consent_id": (result or {}).get("consent_id"),
+        "deleted": (result or {}).get("deleted"),
+    }
+
+
+def deny_pending_reset(request_id: int, decided_by: str) -> Optional[dict]:
+    """Deny a pending request — nothing is deleted. Returns a small dict,
+    {'error':...} if not pending, or None if unknown."""
+    req = get_pending_reset(request_id)
+    if not req:
+        return None
+    if req["status"] != "pending":
+        return {"error": "not_pending", "status": req["status"]}
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE pending_resets SET status='denied', decided_by=?, "
+            "decided_at=datetime('now') WHERE id=?",
+            (decided_by, request_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return {"request_id": request_id, "discord_id": req["discord_id"],
+            "discord_name": req["discord_name"]}
+
+
+def expire_old_pending_resets(ttl_days: int = PENDING_RESET_TTL_DAYS) -> int:
+    """Mark still-pending requests older than ttl_days as expired. Returns
+    how many were expired."""
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            "UPDATE pending_resets SET status='expired', decided_at=datetime('now') "
+            "WHERE status='pending' AND requested_at < datetime('now', ?)",
+            (f"-{int(ttl_days)} days",),
+        )
+        conn.commit()
+        return cur.rowcount
     finally:
         conn.close()
 

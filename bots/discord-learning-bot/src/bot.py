@@ -2722,29 +2722,27 @@ async def cmd_resetme(ctx):
         await ctx.send("✅ Cancelled — your history is safe. / اتلغى، سجلك محفوظ.")
         return
 
-    result = database.reset_member_history(
-        did, initiated_by="student", consent_text=RESET_CONSENT_TEXT,
-        affirmation=reply.content.strip(), reason="student self-service (!resetme)",
+    # Owner-approval gate: record the consented request as PENDING. NOTHING is
+    # deleted until an admin approves (/approve or !approve-reset).
+    m = database.get_member(did)
+    rid = database.create_pending_reset(
+        did, (m or {}).get("discord_name", ""), RESET_CONSENT_TEXT,
+        reply.content.strip(), "student self-service (!resetme)",
     )
-    rid = result["consent_id"]
-    stamp = datetime.datetime.now().isoformat(timespec="seconds")
+    await ctx.send(
+        f"✅ Your reset request is recorded and **pending team approval** "
+        f"(request #{rid}). We'll confirm here once it's reviewed — **nothing has "
+        f"been deleted yet**.\n"
+        f"طلبك اتسجّل و**في انتظار موافقة الفريق** (طلب #{rid}). هنأكدلك أول ما "
+        f"يتراجع، ولسه **مفيش حاجة اتمسحت**."
+    )
     try:
-        await ctx.author.send(
-            f"🧾 **Empire English — reset receipt**\n"
-            f"Record #: **{rid}**\nWhen: {stamp}\n"
-            f"Your learning history was reset **at your request** (you replied RESET). "
-            f"Your account is active and you're starting fresh. Good luck! 🌱"
-        )
-    except discord.HTTPException:
-        pass
-    await ctx.send(f"✅ Done — your history has been reset (record #{rid}). Fresh start! 🌱")
-    try:
-        m = database.get_member(did)
         await ops_hub.send_ops_alert(
-            "Student history reset",
-            f"{(m or {}).get('discord_name', '?')} ({did}) reset their OWN history via "
-            f"!resetme. Consent record #{rid}. Reversible: !restore-student {rid}.",
-            severity="info",
+            "Reset request — awaiting your approval",
+            f"{(m or {}).get('discord_name', '?')} ({did}) requested a history reset "
+            f"(request #{rid}).\n\nApprove:  /approve {rid}\nDeny:  /deny {rid}\n"
+            f"(In Discord: !approve-reset {rid}  /  !deny-reset {rid})",
+            severity="warning",
         )
     except Exception:
         pass
@@ -2804,6 +2802,70 @@ async def cmd_restore_student(ctx, consent_id: int = None):
         )
     except Exception:
         pass
+
+
+async def notify_student_reset_decision(discord_id: str, approved: bool, consent_id=None):
+    """DM the student the outcome of their pending reset request. Best-effort;
+    used by both the Discord (!approve-reset) and Telegram (/approve) paths."""
+    try:
+        user = bot.get_user(int(discord_id))
+        if user is None:
+            user = await bot.fetch_user(int(discord_id))
+        if user is None:
+            return
+        if approved:
+            await user.send(
+                f"🧾 Your history reset was **approved** and completed (record #{consent_id}). "
+                f"Your account is active and you're starting fresh — good luck! 🌱\n"
+                f"تمّت الموافقة على إعادة ضبط سجلّك وخلصت (سجل #{consent_id}). بالتوفيق!"
+            )
+        else:
+            await user.send(
+                "Your history reset request was **not approved** this time. If you still "
+                "want it, please contact the team.\n"
+                "طلب إعادة ضبط سجلّك مااتوافقش عليه دلوقتي. لو لسه عايز، كلّم الفريق."
+            )
+    except Exception:
+        pass
+
+
+@bot.command(name="approve-reset")
+@commands.has_permissions(manage_guild=True)
+async def cmd_approve_reset(ctx, request_id: int = None):
+    """(Admin) Approve a student's pending reset request → performs the reset."""
+    if request_id is None:
+        await ctx.send("Usage: `!approve-reset <request#>`")
+        return
+    res = database.approve_pending_reset(request_id, decided_by=f"discord:{ctx.author.id}")
+    if res is None:
+        await ctx.send(f"No pending reset request #{request_id}.")
+        return
+    if res.get("error"):
+        await ctx.send(f"Request #{request_id} is already **{res['status']}** — no action taken.")
+        return
+    await ctx.send(
+        f"✅ Approved reset #{request_id} for **{res['discord_name']}** "
+        f"(record #{res['consent_id']}). Undo: `!restore-student {res['consent_id']}`"
+    )
+    await notify_student_reset_decision(res["discord_id"], True, res["consent_id"])
+
+
+@bot.command(name="deny-reset")
+@commands.has_permissions(manage_guild=True)
+async def cmd_deny_reset(ctx, request_id: int = None):
+    """(Admin) Deny a student's pending reset request → nothing is deleted."""
+    if request_id is None:
+        await ctx.send("Usage: `!deny-reset <request#>`")
+        return
+    res = database.deny_pending_reset(request_id, decided_by=f"discord:{ctx.author.id}")
+    if res is None:
+        await ctx.send(f"No pending reset request #{request_id}.")
+        return
+    if res.get("error"):
+        await ctx.send(f"Request #{request_id} is already **{res['status']}** — no action taken.")
+        return
+    await ctx.send(f"🚫 Denied reset #{request_id} for **{res['discord_name']}**. Nothing was deleted.")
+    await notify_student_reset_decision(res["discord_id"], False)
 
 
 @bot.command(name="testwelcome")
