@@ -141,8 +141,10 @@ def start_message(status: dict) -> str:
                      "for a few minutes.")
     if reason:
         lines.append(f"• {reason}")
-    if eta:
-        lines.append(f"🕒 Expected back: **{eta}**")
+    # No ETA / promised time on purpose: maintenance "might take minutes, maybe
+    # longer", so we never commit to a duration in the student-facing notice.
+    # The minutes passed to /maintenance still drive the silent auto-resume
+    # failsafe window; students just never see a promised time.
     lines.append("🔒 Your streak & progress are 100% safe.")
     lines.append("")
     lines.append("— — —")
