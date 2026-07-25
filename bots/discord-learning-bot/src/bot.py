@@ -596,8 +596,10 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
             )
 
         if result.get("new"):
-            # Darb Phase 2: mastery recording for reaction-based completions
-            if task_id in database.PRACTICE_EXERCISES:
+            # Darb Phase 2: mastery recording for reaction-based completions.
+            # CALENDAR_EXERCISES incl. speaking (E1) so a speaking completion
+            # via Discord also counts toward the day's calendar green.
+            if task_id in database.CALENDAR_EXERCISES:
                 try:
                     from . import darb as darb_mod
                     wk_day = darb_mod.today_week_day(str(payload.user_id))
@@ -1971,9 +1973,10 @@ async def cmd_done(ctx, task: str = None):
 
     # Darb Phase 2: record practice mastery for the student's current
     # calendar day (same once-per-day tier logic the practice page uses).
-    # Only for the 4 practice-page exercises; speaking/writing/community
-    # are Discord-only tasks and don't map to the practice calendar.
-    if task in database.PRACTICE_EXERCISES:
+    # CALENDAR_EXERCISES = the 5 practice-page exercises incl. speaking (E1),
+    # so `!done speaking` also advances the calendar; writing/community stay
+    # Discord-only and don't map to the practice calendar.
+    if task in database.CALENDAR_EXERCISES:
         try:
             from . import darb as darb_mod
             wk_day = darb_mod.today_week_day(str(ctx.author.id))

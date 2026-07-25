@@ -273,7 +273,8 @@ def build_calendar(discord_id: str) -> dict | None:
             "day": day,
             "state": state,
             "day_tier": (m["day_tier"] if m else 0),
-            "exercises": (m["exercises"] if m else {ex: 0 for ex in database.PRACTICE_EXERCISES}),
+            "exercises": (m["exercises"] if m
+                          else {ex: 0 for ex in database.required_exercises_for_date(d_date)}),
         })
 
     return {

@@ -83,6 +83,15 @@ DAILY_TASK_HOUR = int(os.getenv("DAILY_TASK_HOUR", "6") or "6")
 WEEKLY_ASSESSMENT_HOUR = int(os.getenv("WEEKLY_ASSESSMENT_HOUR", "10") or "10")
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Dubai")
 
+# ---- Speaking as the 5th required practice exercise (calendar green) ----
+# Speaking (E1) is a 5th practice-page exercise. A practice day whose calendar
+# DATE is on/after SPEAKING_LAUNCH_DATE requires all 5 exercises (accent, vocab,
+# shadow, listening, speaking) to turn "green"; every day BEFORE it is
+# grandfathered at the original 4 and can NEVER be un-greened (protects historic
+# streaks). Set to a far-future date (e.g. "2099-01-01") to disable the 5th
+# requirement entirely. Format: YYYY-MM-DD.
+SPEAKING_LAUNCH_DATE = os.getenv("SPEAKING_LAUNCH_DATE", "2026-07-25")
+
 # ============================================================
 #  PRACTICE PLATFORM (empireenglishcommunity-glitch/empire-dojo)
 # ============================================================
