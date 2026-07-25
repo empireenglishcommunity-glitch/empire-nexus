@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -3212,9 +3212,11 @@ async def cmd_maintenance(ctx, *, arg: str = ""):
         return
 
     if sub == "end":
-        changelog = " ".join(parts[1:]).strip()
+        note = " ".join(parts[1:]).strip()
+        if note:
+            changelog_mod.add_entry(note)   # publish to "What's New"
         maintenance_mod.end()
-        result = await maintenance_mod.broadcast_end(ctx.bot, changelog)
+        result = await maintenance_mod.broadcast_end(ctx.bot, note)
         await ctx.send(
             f"✅ Maintenance **ENDED** — system is LIVE.\n"
             f"Announced → Discord: {'✅' if result.get('discord') else '❌'} · "

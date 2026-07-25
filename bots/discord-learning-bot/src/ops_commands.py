@@ -15,7 +15,7 @@ from typing import Optional
 
 import discord
 
-from . import config, database, ops_hub, maintenance
+from . import config, database, ops_hub, maintenance, changelog
 
 logger = logging.getLogger("empire-bot.ops_commands")
 
@@ -287,9 +287,11 @@ async def handle_maintenance(args: str, bot) -> str:
         )
 
     if sub == "end":
-        changelog = " ".join(parts[1:]).strip()
+        note = " ".join(parts[1:]).strip()
+        if note:
+            changelog.add_entry(note)   # publish to "What's New"
         maintenance.end()
-        result = await maintenance.broadcast_end(bot, changelog)
+        result = await maintenance.broadcast_end(bot, note)
         d_ok = "✅" if result.get("discord") else "❌"
         return (
             f"✅ Maintenance *ENDED* — system is LIVE\\.\n"
@@ -299,6 +301,41 @@ async def handle_maintenance(args: str, bot) -> str:
     return ("❓ Use `/maintenance status`, "
             "`/maintenance start [soft|hard] [min] [reason]`, "
             "or `/maintenance end [what's new]`")
+
+
+# ============================================================
+#  /changelog — publish / list "What's New" entries
+# ============================================================
+
+@command("/changelog")
+async def handle_changelog(args: str, bot) -> str:
+    """Publish or list student-facing 'What's New' entries.
+
+    /changelog                 — list the latest entries
+    /changelog add <text>      — publish a new entry (shows on the page +
+                                 guide; also broadcast the next time you end
+                                 maintenance with a note)
+    """
+    esc = ops_hub.escape_markdown
+    parts = args.split(maxsplit=1)
+    sub = parts[0].lower() if parts else "list"
+
+    if sub == "add":
+        text = parts[1].strip() if len(parts) > 1 else ""
+        if not text:
+            return "Usage: `/changelog add <what changed>`"
+        entry = changelog.add_entry(text)
+        if not entry:
+            return "❌ Could not save the entry\\."
+        return f"✨ Published to *What's New*:\n{esc(text)}"
+
+    entries = changelog.get_entries(limit=5)
+    if not entries:
+        return "📝 No changelog entries yet\\. Add one: `/changelog add <text>`"
+    lines = ["📝 *Latest 'What's New' entries*", "━━━━━━━━━━━━━━━━━━━━"]
+    for e in entries:
+        lines.append(f"• {esc(e.get('date', ''))}: {esc(e.get('text', ''))}")
+    return "\n".join(lines)
 
 
 # ============================================================
@@ -316,6 +353,7 @@ async def handle_help(args: str, bot) -> str:
         "`/flag <name> on/off` — Toggle a specific flag",
         "`/announce <msg>` — Post to \\#announcements",
         "`/maintenance` — Status / `start [soft|hard] [min] [reason]` / `end`",
+        "`/changelog` — List / `add <text>` publish a 'What's New' entry",
         "`/help` — This message",
     ]
     return "\n".join(lines)
