@@ -395,3 +395,30 @@ def test_build_weekly_assessment_ignores_submissions_outside_window():
     result = tasks.build_weekly_assessment("u1", days=7)
     assert result["scores"]["speaking"] == 0.0
     assert "speaking" not in result["submitted_tasks"]
+
+
+
+def test_format_daily_post_chunks_shows_five_plus_two_framing():
+    """Phase 3: the post must make the 5-on-page + 2-on-Discord = 7 split
+    explicit — section counts plus a summary line — so students always see
+    it's 7 tasks total, not just the 5 practice items."""
+    joined = "\n\n".join(tasks.format_daily_post_chunks(_sample_task_data()))
+    # Section labels carry their counts.
+    assert "(5 tasks" in joined
+    assert "(2 tasks" in joined
+    # Explicit summary line.
+    assert "on your page" in joined
+    assert "here on Discord" in joined
+    assert "= your 7 today" in joined
+
+
+def test_format_daily_post_chunks_framing_absent_when_no_discord_tasks():
+    """The 5+2 summary line only appears when both sections exist (so a
+    partial task set never renders a nonsensical '... + 0 here')."""
+    task_data = {
+        "date": "2026-07-12", "day_name": "Saturday", "level": "L0", "week": 1,
+        "tasks": [{"id": "vocab", "title": "Vocab", "content": "short", "duration_min": 10}],
+        "total_minutes": 10,
+    }
+    joined = "\n\n".join(tasks.format_daily_post_chunks(task_data))
+    assert "= your" not in joined
