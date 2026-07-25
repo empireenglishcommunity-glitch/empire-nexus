@@ -52,6 +52,7 @@ import os
 import sys
 import shutil
 import glob
+import re
 from datetime import datetime
 
 # Make src/ importable regardless of the current working directory this
@@ -103,7 +104,24 @@ def backup(backup_dir: str = None, tag: str = None) -> str:
     # ── Rotate old backups ───────────────────────────────────────────────
     # Tagged and untagged backups share one rotation pool, deliberately
     # (see the module docstring) -- glob matches both filename shapes.
-    existing = sorted(glob.glob(os.path.join(backup_dir, "empire_english_*.db")))
+    #
+    # Sort by the YYYYMMDD_HHMMSS timestamp embedded at the END of each
+    # filename, NOT by the raw filename. Both shapes carry it:
+    #   empire_english_20260725_031002.db
+    #   empire_english_pre-deploy-7dc2461_20260719_134702.db
+    # Raw-filename sorting was a real bug: the "pre-deploy-" tag makes tagged
+    # names sort AFTER date-prefixed daily names ('2' < 'p'), so the freshly
+    # created daily backup was always the one deleted while stale tagged
+    # snapshots were kept forever -- leaving ZERO rolling daily coverage.
+    # Sorting on the embedded timestamp is truly chronological for both shapes.
+    def _ts_key(path):
+        stamps = re.findall(r"\d{8}_\d{6}", os.path.basename(path))
+        return stamps[-1] if stamps else ""
+
+    existing = sorted(
+        glob.glob(os.path.join(backup_dir, "empire_english_*.db")),
+        key=_ts_key,
+    )
     if len(existing) > MAX_BACKUPS:
         to_delete = existing[: len(existing) - MAX_BACKUPS]
         for old_file in to_delete:
