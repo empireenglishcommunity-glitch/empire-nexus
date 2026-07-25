@@ -33,6 +33,7 @@ import logging
 from typing import Optional
 
 import discord
+from discord import app_commands
 from discord.ext import commands, tasks
 
 from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod
@@ -49,6 +50,10 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix=config.BOT_PREFIX, intents=intents, help_command=None)
+
+# One-shot guard so admin slash commands are synced to the guild only once
+# (on_ready can fire again on reconnects).
+_slash_synced = False
 
 # Per-user locks for !done's cooldown check. Found via rapid-fire/
 # concurrency stress testing: verification.check_cooldown() and
@@ -322,6 +327,21 @@ async def on_ready():
                      "ops poller, restart notification, and the API server "
                      "-- ghost bot only needs manual command invocation.")
         return
+
+    # Register admin slash commands to THIS guild (instant, guild-scoped) so
+    # /reset-student etc. get a native full-guild user picker and are auto-
+    # hidden from non-admins. Guarded so it runs once, not on every reconnect.
+    global _slash_synced
+    if not _slash_synced and config.GUILD_ID:
+        try:
+            guild_obj = discord.Object(id=config.GUILD_ID)
+            bot.tree.copy_global_to(guild=guild_obj)
+            synced = await bot.tree.sync(guild=guild_obj)
+            _slash_synced = True
+            logger.info(f"Slash commands synced to guild {config.GUILD_ID}: "
+                        f"{[c.name for c in synced]}")
+        except Exception as e:
+            logger.warning(f"Slash command sync failed (will retry next on_ready): {e}")
 
     if not daily_task_post.is_running():
         daily_task_post.start()
@@ -2800,6 +2820,174 @@ async def cmd_restore_student(ctx, consent_id: int = None):
             f"{ctx.author} restored consent record #{consent_id}. Tables: {restored}",
             severity="info",
         )
+    except Exception:
+        pass
+
+
+# ============================================================
+#  ADMIN SLASH COMMANDS (native user picker; auto-hidden from
+#  non-admins)
+# ============================================================
+# These mirror the !reset-student / !restore-student / !setlevel / !find
+# prefix commands (which stay as fallbacks). The reason they exist:
+# Discord's plain @-mention typeahead only lists members who can SEE the
+# current channel, so from the private #admin-commands channel students
+# never appear. A slash command's USER option instead searches the WHOLE
+# guild (via the members intent), so students are selectable from anywhere.
+# `default_permissions(manage_guild=True)` also makes Discord auto-hide
+# these from students in the UI, and an explicit check enforces it server-
+# side. All replies are ephemeral (only the admin who ran it sees them).
+
+def _search_registered_students(guild, query: str):
+    """Return up to 15 (discord_id, member_row, server_nick_or_None) tuples
+    for registered students whose registered name / server nickname / id
+    matches `query` (case-insensitive, partial). Shared search used by /find."""
+    q = (query or "").strip().casefold()
+    members = database.all_active_members()
+    by_id = {str(m["discord_id"]): m for m in members}
+    out = {}
+    for m in members:
+        if q in (m.get("discord_name") or "").casefold():
+            out[str(m["discord_id"])] = (m, None)
+    if guild:
+        for gm in guild.members:
+            if gm.bot:
+                continue
+            did = str(gm.id)
+            if did in by_id and q in f"{gm.display_name} {gm.name}".casefold():
+                out.setdefault(did, (by_id[did], gm.display_name))
+    if query and query.strip().isdigit() and query.strip() in by_id:
+        out.setdefault(query.strip(), (by_id[query.strip()], None))
+    return list(out.items())[:15], len(out)
+
+
+_LEVEL_CHOICES = [
+    app_commands.Choice(name=f"{k} — {v.get('name', k)}", value=k)
+    for k, v in config.LEVELS.items()
+]
+
+
+@bot.tree.command(name="reset-student",
+                  description="Reset a student's learning history (records consent + snapshot; reversible).")
+@app_commands.describe(student="The student to reset (search any member)",
+                       reason="Why — optional, logged with the consent record")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_reset_student(interaction: discord.Interaction,
+                              student: discord.Member, reason: str = ""):
+    await interaction.response.defer(ephemeral=True)
+    did = str(student.id)
+    data = database.get_member(did)
+    if not data:
+        await interaction.followup.send("That user isn't a registered student.", ephemeral=True)
+        return
+    result = database.reset_member_history(
+        did, initiated_by=f"owner:{interaction.user.id}", consent_text=RESET_CONSENT_TEXT,
+        affirmation="(owner-initiated on the student's request)",
+        reason=reason or "(no reason given)",
+    )
+    rid = result["consent_id"]
+    await interaction.followup.send(
+        f"✅ Reset **{student.display_name}**'s history (record #{rid}).\n"
+        f"Undo: `/restore-student record_id:{rid}` (or `!restore-student {rid}`)",
+        ephemeral=True,
+    )
+    try:
+        await ops_hub.send_ops_alert(
+            "Student history reset (owner-initiated, via /reset-student)",
+            f"{interaction.user} reset {data.get('discord_name', '?')} ({did}). "
+            f"Reason: {reason or '—'}. Consent record #{rid}. Reversible: !restore-student {rid}.",
+            severity="warning",
+        )
+    except Exception:
+        pass
+
+
+@bot.tree.command(name="restore-student",
+                  description="Undo a reset by restoring the snapshot from a consent record number.")
+@app_commands.describe(record_id="The record # shown when the reset was done")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_restore_student(interaction: discord.Interaction, record_id: int):
+    await interaction.response.defer(ephemeral=True)
+    restored = database.restore_member_from_consent(record_id)
+    if restored is None:
+        await interaction.followup.send(f"No consent record #{record_id} found.", ephemeral=True)
+        return
+    summary = ", ".join(f"{k}={v}" for k, v in restored.items()) or "(nothing to restore)"
+    await interaction.followup.send(f"✅ Restored from record #{record_id}: {summary}", ephemeral=True)
+    try:
+        await ops_hub.send_ops_alert(
+            "Student history restored (via /restore-student)",
+            f"{interaction.user} restored consent record #{record_id}. Tables: {restored}",
+            severity="info",
+        )
+    except Exception:
+        pass
+
+
+@bot.tree.command(name="setlevel", description="Set a student's level (L0–L3).")
+@app_commands.describe(student="The student", level="New level")
+@app_commands.choices(level=_LEVEL_CHOICES)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_setlevel(interaction: discord.Interaction,
+                         student: discord.Member, level: app_commands.Choice[str]):
+    await interaction.response.defer(ephemeral=True)
+    lvl = level.value
+    if lvl not in config.LEVELS:
+        await interaction.followup.send("❌ Invalid level.", ephemeral=True)
+        return
+    database.set_level(str(student.id), lvl)
+    await _assign_level_role(student, lvl)
+    li = config.LEVELS[lvl]
+    await interaction.followup.send(
+        f"✅ {student.display_name} is now **{lvl}** — {li['emoji']} {li['name']}", ephemeral=True)
+
+
+@bot.tree.command(name="find", description="Find registered students by name and show their IDs.")
+@app_commands.describe(query="Part of a name (or a user ID)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_find(interaction: discord.Interaction, query: str):
+    await interaction.response.defer(ephemeral=True)
+    rows, total = _search_registered_students(interaction.guild, query)
+    if not rows:
+        await interaction.followup.send(
+            f"🔍 No registered student matches **{query}**.", ephemeral=True)
+        return
+    lines = [f"**🔍 {total} match(es) for “{query}”:**\n"]
+    for did, (m, nick) in rows:
+        lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
+        name = m.get("discord_name") or "(unknown)"
+        nick_str = f" _(server name: {nick})_" if nick and nick != name else ""
+        lines.append(
+            f"{lvl['emoji']} **{name}**{nick_str} — {m['level']} | {m['total_points']} pts\n"
+            f"   🆔 `{did}`"
+        )
+    if total > len(rows):
+        lines.append(f"\n... and {total - len(rows)} more — narrow your search.")
+    await interaction.followup.send("\n".join(lines), ephemeral=True)
+
+
+@bot.tree.error
+async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    """Keep permission/other failures quiet + ephemeral (no ugly tracebacks,
+    no leaking command existence to non-admins)."""
+    if isinstance(error, (app_commands.MissingPermissions, app_commands.CheckFailure)):
+        msg = "🔒 You don't have permission for this command."
+    else:
+        logger.exception("Slash command error", exc_info=error)
+        msg = "⚠️ Something went wrong running that command."
+    try:
+        if interaction.response.is_done():
+            await interaction.followup.send(msg, ephemeral=True)
+        else:
+            await interaction.response.send_message(msg, ephemeral=True)
     except Exception:
         pass
 
