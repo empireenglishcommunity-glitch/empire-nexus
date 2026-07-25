@@ -297,9 +297,9 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "title": "✍️ Writing Practice",
         "content": (
             f"**{bl('Prompt', 'المطلوب')}:** {writing_prompt}\n\n"
-            f"1️⃣ {bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')} "
+            f"• {bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')} "
             f"{bl('No translator — do your best.', 'من غير مترجم — اعمل قد ما تقدر.')}\n"
-            f"2️⃣ {bl('Post it in', 'حطها في')} #l{level[1]}-text-practice"
+            f"• {bl('Post it in', 'حطها في')} #l{level[1]}-text-practice"
         ),
         "duration_min": 7 if level == "L0" else 20,
     })
@@ -310,8 +310,8 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "title": "💬 Community Participation",
         "content": (
             f"{bl('Do BOTH', 'اعمل الاتنين معاً')}:\n"
-            f"1️⃣ {bl('Join a voice lounge for 10+ minutes', 'ادخل غرفة صوتية 10 دقائق على الأقل')}\n"
-            f"2️⃣ {bl('Send a message in #general-chat (in English)', 'اكتب رسالة في #general-chat (بالإنجليزي)')}\n\n"
+            f"• {bl('Join a voice lounge for 10+ minutes', 'ادخل غرفة صوتية 10 دقائق على الأقل')}\n"
+            f"• {bl('Send a message in #general-chat (in English)', 'اكتب رسالة في #general-chat (بالإنجليزي)')}\n\n"
             f"🏛️ {bl('The community grows when YOU participate.', 'المجتمع بيكبر لما إنت تشارك.')}"
         ),
         "duration_min": 10 if level == "L0" else 15,
