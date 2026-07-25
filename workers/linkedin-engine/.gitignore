@@ -1,8 +1,0 @@
-# Secrets — never commit
-.dev.vars
-.env
-
-# Wrangler / build
-.wrangler/
-node_modules/
-dist/
