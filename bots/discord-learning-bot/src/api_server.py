@@ -259,6 +259,18 @@ async def get_progress(request: web.Request) -> web.Response:
 
     progress = database.get_progress_for_token(token)
     if not progress:
+        # Fall back to the Darb session token (the current system): the page
+        # sends its signed session token here, which the legacy link-token
+        # lookup doesn't recognise. Accept it when the signature is valid AND
+        # its device session is still active (same bar as every Darb endpoint),
+        # so the header can show the student's real Discord streak instead of a
+        # device-local guess. This was returning 404 for every Darb student.
+        from . import darb
+        payload = darb.verify_session(token)
+        if payload and database.is_device_session_active(payload.get("sid", "")):
+            progress = database.get_progress_for_discord_id(payload.get("did", ""))
+
+    if not progress:
         return web.json_response({"error": "invalid token"}, status=404)
 
     _touch_token(token)
