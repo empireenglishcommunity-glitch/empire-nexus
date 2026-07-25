@@ -46,6 +46,13 @@ IS_GHOST_INSTANCE = os.getenv("IS_GHOST_INSTANCE", "false").strip().lower() in (
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
 GUILD_ID = int(os.getenv("GUILD_ID", "0") or "0")
 
+# Command channels (real guild defaults; overridable via env). Student
+# commands are used in #bot-commands; admin/owner commands are consolidated
+# into the private #admin-commands channel. If ADMIN_COMMANDS_CHANNEL_ID is 0,
+# the admin-channel gate is disabled (fail-open) so nothing can break.
+BOT_COMMANDS_CHANNEL_ID = int(os.getenv("BOT_COMMANDS_CHANNEL_ID", "1519798081833537657") or "0")
+ADMIN_COMMANDS_CHANNEL_ID = int(os.getenv("ADMIN_COMMANDS_CHANNEL_ID", "1529207979302195291") or "0")
+
 # ============================================================
 #  AI PROVIDERS
 # ============================================================
