@@ -227,6 +227,24 @@ async def options_status(request: web.Request) -> web.Response:
     return web.Response(status=204, headers=_cors_headers(request))
 
 
+@routes.get("/api/changelog")
+async def get_changelog(request: web.Request) -> web.Response:
+    """Public 'What's New' feed — recent release notes. Used by the practice
+    page (one-time toast) and the guide's 'Latest updates' section."""
+    try:
+        from . import changelog
+        entries = changelog.get_entries(limit=10)
+    except Exception as e:
+        logger.warning(f"/api/changelog failed: {e}")
+        entries = []
+    return web.json_response({"entries": entries}, headers=_cors_headers(request))
+
+
+@routes.options("/api/changelog")
+async def options_changelog(request: web.Request) -> web.Response:
+    return web.Response(status=204, headers=_cors_headers(request))
+
+
 # ============================================================
 
 @routes.get("/api/progress")
