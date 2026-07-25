@@ -1388,19 +1388,80 @@ def is_quiet_hours(discord_id: str) -> bool:
 #  SPACED REPETITION (Tatawwur Phase T2)
 # ============================================================
 
-def add_word_to_srs(discord_id: str, word: str):
-    """Add a word to the SRS queue (idempotent — skips if exists)."""
+def add_word_to_srs(discord_id: str, word: str, next_review: str = None):
+    """Add a word to the SRS queue (idempotent — skips if it already exists).
+    If `next_review` (YYYY-MM-DD) is given it overrides the table default
+    (+1 day), so already-studied words backfilled into review can be made due
+    immediately."""
     conn = _connect()
     try:
-        conn.execute(
-            "INSERT INTO vocab_srs (discord_id, word) VALUES (?, ?)",
-            (discord_id, word),
-        )
+        if next_review:
+            conn.execute(
+                "INSERT INTO vocab_srs (discord_id, word, next_review) VALUES (?, ?, ?)",
+                (discord_id, word, next_review),
+            )
+        else:
+            conn.execute(
+                "INSERT INTO vocab_srs (discord_id, word) VALUES (?, ?)",
+                (discord_id, word),
+            )
         conn.commit()
     except sqlite3.IntegrityError:
         pass  # already in SRS
     finally:
         conn.close()
+
+
+def enroll_day_vocab_in_srs(discord_id: str, level: str, week: int, day: int,
+                            next_review: str = None) -> int:
+    """Enroll the vocabulary words a student studied on a content-day
+    (level/week/day) into their SRS "Review Past Words" queue.
+
+    `day` is 1-7; the curriculum split uses a 0-based index and matches the
+    practice page's vocab EXACTLY (get_vocabulary_for_day == the same
+    vocab[(day-1)*n : day*n] slice generate.py bakes into the page). Idempotent
+    — returns the number of words enrolled."""
+    from . import curriculum
+    try:
+        words = curriculum.get_vocabulary_for_day(week, day - 1, level)
+    except Exception:
+        return 0
+    n = 0
+    for w in words:
+        term = (w.get("word") if isinstance(w, dict) else str(w)) or ""
+        term = term.strip()
+        if term:
+            add_word_to_srs(discord_id, term, next_review=next_review)
+            n += 1
+    return n
+
+
+def backfill_srs_recent_vocab(discord_id: str, lookback_days: int = 7) -> int:
+    """One-time catch-up: enroll vocab from days the student ALREADY completed
+    within the last `lookback_days` into their SRS queue, so 'Review Past
+    Words' isn't empty for students who studied before enrollment was wired.
+    Those words are made due TODAY (learned days ago → genuinely ready to
+    review). Idempotent. Returns words enrolled (attempted)."""
+    member = get_member(discord_id)
+    if not member:
+        return 0
+    level = member.get("level", "L0")
+    cutoff = (_today_local() - datetime.timedelta(days=lookback_days)).isoformat()
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT DISTINCT week, day FROM practice_mastery "
+            "WHERE discord_id=? AND exercise='vocab' AND last_completed_date>=?",
+            (discord_id, cutoff),
+        ).fetchall()
+    finally:
+        conn.close()
+    due_today = _today_local().isoformat()
+    total = 0
+    for r in rows:
+        total += enroll_day_vocab_in_srs(discord_id, level, r["week"], r["day"],
+                                         next_review=due_today)
+    return total
 
 
 def get_due_reviews(discord_id: str, limit: int = 3) -> list[dict]:
@@ -2289,9 +2350,22 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
             else:
                 incremented = False  # same-day repeat: no tier change
         conn.commit()
-        return {"exercise_tier": count, "incremented": incremented}
+        result = {"exercise_tier": count, "incremented": incremented}
     finally:
         conn.close()
+
+    # Feed the SRS "Review Past Words" queue: the first time a student completes
+    # the day's Vocabulary, enroll that day's words for spaced review (they come
+    # due tomorrow, per the vocab_srs default). Best-effort and on a FRESH
+    # connection AFTER the mastery write is committed + closed, so it can never
+    # break or lock the mastery recording. This is the single choke point every
+    # completion path funnels through (page checkbox, !done, reactions).
+    if exercise == "vocab" and result.get("incremented"):
+        try:
+            enroll_day_vocab_in_srs(discord_id, level, week, day)
+        except Exception:
+            pass  # never let SRS enrichment break mastery recording
+    return result
 
 
 def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:

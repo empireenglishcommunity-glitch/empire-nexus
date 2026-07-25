@@ -447,3 +447,70 @@ def test_get_srs_review_data_returns_due_words():
 
 def test_get_srs_review_data_unknown_member():
     assert database.get_srs_review_data("999999999") == {"streak": 0, "srs_due": 0, "srs_words": []}
+
+
+
+# ============================================================
+#  SRS "Review Past Words" enrollment (previously never wired)
+# ============================================================
+
+def test_enroll_day_vocab_in_srs_adds_words(monkeypatch):
+    _member()
+    from src import curriculum
+    monkeypatch.setattr(curriculum, "get_vocabulary_for_day",
+                        lambda week, day_index, level="L0": [{"word": "apple"}, {"word": "banana"}])
+    n = database.enroll_day_vocab_in_srs("u1", "L0", 1, 1)
+    assert n == 2
+    conn = database._connect()
+    words = {r["word"] for r in conn.execute(
+        "SELECT word FROM vocab_srs WHERE discord_id='u1'").fetchall()}
+    conn.close()
+    assert words == {"apple", "banana"}
+
+
+def test_record_practice_mastery_vocab_enrolls_srs(monkeypatch):
+    """The fix: completing vocab now feeds the SRS review queue."""
+    _member()
+    from src import curriculum
+    monkeypatch.setattr(curriculum, "get_vocabulary_for_day",
+                        lambda week, day_index, level="L0": [{"word": "serendipity"}])
+    database.record_practice_mastery("u1", "L0", 1, 1, "vocab", today="2026-07-10")
+    conn = database._connect()
+    n = conn.execute("SELECT COUNT(*) c FROM vocab_srs WHERE discord_id='u1'").fetchone()["c"]
+    conn.close()
+    assert n == 1
+
+
+def test_record_practice_mastery_non_vocab_does_not_enroll(monkeypatch):
+    _member()
+    from src import curriculum
+    called = {"n": 0}
+    def _fake(week, day_index, level="L0"):
+        called["n"] += 1
+        return [{"word": "x"}]
+    monkeypatch.setattr(curriculum, "get_vocabulary_for_day", _fake)
+    database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
+    assert called["n"] == 0  # non-vocab must not touch the SRS queue
+    conn = database._connect()
+    n = conn.execute("SELECT COUNT(*) c FROM vocab_srs WHERE discord_id='u1'").fetchone()["c"]
+    conn.close()
+    assert n == 0
+
+
+def test_backfill_srs_recent_vocab_makes_words_due_today(monkeypatch):
+    _member()
+    from src import curriculum
+    monkeypatch.setattr(curriculum, "get_vocabulary_for_day",
+                        lambda week, day_index, level="L0": [{"word": "past-word"}])
+    today = database._today_local().isoformat()
+    conn = database._connect()
+    conn.execute(
+        "INSERT INTO practice_mastery (discord_id, level, week, day, exercise, "
+        "completion_count, first_completed_date, last_completed_date) "
+        "VALUES ('u1','L0',1,1,'vocab',1,?,?)", (today, today))
+    conn.commit()
+    conn.close()
+    total = database.backfill_srs_recent_vocab("u1", lookback_days=7)
+    assert total == 1
+    # Backfilled words are due TODAY (studied earlier) → show up in due reviews.
+    assert any(d["word"] == "past-word" for d in database.get_due_reviews("u1"))
