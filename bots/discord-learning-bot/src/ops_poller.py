@@ -124,14 +124,31 @@ async def _handle_update(update: dict, bot) -> None:
     if not message:
         return
 
-    chat_id = str(message.get("chat", {}).get("id", ""))
+    chat = message.get("chat", {})
+    chat_id = str(chat.get("id", ""))
+    text = message.get("text", "") or ""
+
+    # /chatid — utility that works in ANY chat the bot is a member of
+    # (e.g. a student group). Replies with that chat's numeric ID and logs
+    # it, so the ID can be added to MAINTENANCE_TG_CHAT_IDS for the
+    # maintenance broadcast. Handled BEFORE the owner-only filter below
+    # (that's the whole point — it must answer in groups too). Harmless:
+    # a chat ID is not sensitive.
+    if text.strip().startswith("/chatid"):
+        title = chat.get("title") or chat.get("username") or chat.get("type", "chat")
+        logger.info(f"ops_poller: /chatid in '{title}' -> chat_id={chat_id}")
+        try:
+            await _send_to(chat_id, f"Chat ID: {chat_id}\n({title})")
+        except Exception:
+            pass
+        return
+
     if chat_id != str(config.OPS_CHAT_ID):
         # Ignore messages from anyone/anywhere other than the owner's
         # configured chat — this bot is single-owner by design (see
         # design.md "Privacy" note).
         return
 
-    text = message.get("text", "")
     if not text:
         return
 
@@ -140,6 +157,20 @@ async def _handle_update(update: dict, bot) -> None:
     # subsystem, so a plain reply (or any non-command text) is ignored.
     if text.startswith("/"):
         await _handle_command(text, bot)
+
+
+async def _send_to(chat_id: str, text: str) -> None:
+    """Send a plain-text Telegram message to an arbitrary chat via the ops
+    bot token (used by /chatid to reply inside groups)."""
+    url = f"https://api.telegram.org/bot{config.OPS_BOT_TOKEN}/sendMessage"
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+            url, json={"chat_id": chat_id, "text": text},
+            timeout=aiohttp.ClientTimeout(total=10),
+        ) as resp:
+            if resp.status != 200:
+                body = await resp.text()
+                logger.warning(f"ops_poller: _send_to {chat_id} failed {resp.status}: {body[:150]}")
 
 
 async def _handle_command(text: str, bot) -> None:
