@@ -171,7 +171,10 @@ def test_mastery_increments_once_per_new_day_and_caps_at_5():
     assert tiers == [1, 2, 3, 4, 5, 5, 5]  # caps at 5 (Diamond)
 
 
-def test_day_tier_is_min_across_four_and_done_needs_all_four():
+def test_day_tier_is_min_across_four_and_done_needs_all_four(monkeypatch):
+    # Pin the member's day BEFORE the speaking launch → grandfathered
+    # 4-core rule applies (speaking not required to be green).
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2099-01-01")
     _member()
     # Only 3 of 4 exercises done → day not done, tier 0.
     for ex in ("accent", "vocab", "shadow"):
@@ -184,10 +187,44 @@ def test_day_tier_is_min_across_four_and_done_needs_all_four():
     cal = database.get_calendar_mastery("u1", "L0")
     assert cal[(1, 1)]["done"] is True
     assert cal[(1, 1)]["day_tier"] == 1
+    # Only the 4 core appear for a pre-launch day.
+    assert set(cal[(1, 1)]["exercises"]) == set(database.PRACTICE_EXERCISES)
     # Push accent to silver on a new day → day tier stays min (1).
     database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-11")
     cal = database.get_calendar_mastery("u1", "L0")
     assert cal[(1, 1)]["day_tier"] == 1
+
+
+def test_done_requires_speaking_on_or_after_launch(monkeypatch):
+    """On/after SPEAKING_LAUNCH_DATE a day needs all 5 (incl. speaking) to be
+    green; the original 4 alone are no longer 'done', and the calendar day
+    exposes all 5 exercises (so the page shows done/5)."""
+    _member(joined_at="2026-08-01")
+    # (week1,day1) anchors to the join date = the launch date → needs 5.
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2026-08-01")
+    for ex in ("accent", "vocab", "shadow", "listening"):
+        database.record_practice_mastery("u1", "L0", 1, 1, ex, today="2026-08-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal[(1, 1)]["done"] is False  # 4/5 is not enough
+    assert set(cal[(1, 1)]["exercises"]) == set(database.CALENDAR_EXERCISES)
+    # Add speaking → the day is now green.
+    database.record_practice_mastery("u1", "L0", 1, 1, "speaking", today="2026-08-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal[(1, 1)]["done"] is True
+    assert cal[(1, 1)]["day_tier"] == 1
+
+
+def test_pre_launch_day_grandfathered_at_four(monkeypatch):
+    """A day BEFORE the launch stays green at 4/4 even after speaking exists —
+    historic streak days are never un-greened."""
+    _member(joined_at="2026-07-01")
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2026-08-01")
+    # (week1,day1) = 2026-07-01, well before launch → 4-core rule.
+    for ex in ("accent", "vocab", "shadow", "listening"):
+        database.record_practice_mastery("u1", "L0", 1, 1, ex, today="2026-07-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal[(1, 1)]["done"] is True
+    assert set(cal[(1, 1)]["exercises"]) == set(database.PRACTICE_EXERCISES)
 
 
 # ============================================================
@@ -195,6 +232,8 @@ def test_day_tier_is_min_across_four_and_done_needs_all_four():
 # ============================================================
 
 def test_calendar_states(monkeypatch):
+    # Pin before launch so this test is purely about day STATES (4-core rule).
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2099-01-01")
     _member(level="L0", joined_at="2026-07-10")
     # Fix "today" to 3 days after join → today_index == 3.
     monkeypatch.setattr(darb, "_today_local", lambda: datetime.date(2026, 7, 12))

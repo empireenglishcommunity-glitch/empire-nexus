@@ -2042,12 +2042,37 @@ def set_journey_coverage(discord_id: str, **flags) -> None:
 #  SQLite's own datetime('now') (UTC) to avoid Python/SQL clock skew.
 # ============================================================
 
-# The 4 practice-platform exercises whose completion drives the calendar
-# (a day is "done/green" when all 4 have completion_count >= 1). The 3
-# Discord tasks (speaking/writing/community) are tracked via
-# daily_submissions for streak/points, not here.
+# The 4 ORIGINAL practice-platform exercises. Days practised BEFORE
+# config.SPEAKING_LAUNCH_DATE are "done/green" when all 4 have
+# completion_count >= 1 (grandfathered — never un-greened).
 PRACTICE_EXERCISES = ("accent", "vocab", "shadow", "listening")
+SPEAKING_EXERCISE = "speaking"
+# The FULL practice-page set once Speaking is required (E1). Days practised
+# on/after config.SPEAKING_LAUNCH_DATE need all 5 of these to turn green.
+CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond
+
+
+def speaking_launch_date() -> Optional[datetime.date]:
+    """The date Speaking became the 5th REQUIRED calendar exercise, from
+    config (env-overridable). None if unset/unparseable → 5th requirement
+    disabled (calendar stays 4-core)."""
+    raw = getattr(config, "SPEAKING_LAUNCH_DATE", "") or ""
+    try:
+        return datetime.date.fromisoformat(str(raw)[:10])
+    except (ValueError, TypeError):
+        return None
+
+
+def required_exercises_for_date(d: datetime.date) -> tuple:
+    """Which exercises must ALL be complete for the practice day on date `d`
+    to be green. On/after the speaking launch → the 5 CALENDAR_EXERCISES;
+    before it (or if disabled) → the original 4 PRACTICE_EXERCISES. This is
+    what grandfathers historic days so they're never un-greened."""
+    launch = speaking_launch_date()
+    if launch is not None and d >= launch:
+        return CALENDAR_EXERCISES
+    return PRACTICE_EXERCISES
 
 
 # ---- Claim codes (one-time bridge from !link to a web session) ----
@@ -2339,9 +2364,15 @@ def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:
 def get_calendar_mastery(discord_id: str, level: str) -> dict:
     """Return per-content-day mastery for a student+level, for the
     calendar. Keyed by (week, day) → {exercises: {ex: tier}, day_tier,
-    done}. A day is `done` when all 4 PRACTICE_EXERCISES have tier>=1;
-    `day_tier` is the MINIMUM tier across the 4 (so a Gold day means all
-    four exercises reached Gold), else 0."""
+    done}.
+
+    A day is `done` when every REQUIRED exercise for that day's calendar
+    DATE has tier>=1 — 5 exercises (incl. speaking) on/after
+    SPEAKING_LAUNCH_DATE, or the original 4 before it (grandfathered, so a
+    historic 4/4 day is never un-greened). `day_tier` is the MINIMUM tier
+    across the required set (Gold day = all required reached Gold), else 0.
+    `exercises` contains exactly the required set for that day, so its size
+    is the "N" the page shows as done/N (4 or 5)."""
     conn = _connect()
     try:
         rows = conn.execute(
@@ -2351,15 +2382,33 @@ def get_calendar_mastery(discord_id: str, level: str) -> dict:
         ).fetchall()
     finally:
         conn.close()
+
+    # Anchor (week,day) → real calendar date so we know which days require
+    # speaking. Falls back to the 4-core rule if the member/anchor is
+    # unknown (fail-safe: never invents a stricter requirement).
+    member = get_member(discord_id)
+    try:
+        anchor = (datetime.date.fromisoformat(level_anchor_iso(member)[:10])
+                  if member else None)
+    except (ValueError, TypeError):
+        anchor = None
+
     by_day: dict = {}
     for r in rows:
         by_day.setdefault((r["week"], r["day"]), {})[r["exercise"]] = r["completion_count"]
     result: dict = {}
     for key, exmap in by_day.items():
-        tiers = [exmap.get(ex, 0) for ex in PRACTICE_EXERCISES]
-        done = all(t >= 1 for t in tiers)
+        week, day = key
+        if anchor is not None:
+            cal_index = (week - 1) * 7 + (day - 1)  # 0-based offset from anchor
+            d_date = anchor + datetime.timedelta(days=cal_index)
+            required = required_exercises_for_date(d_date)
+        else:
+            required = PRACTICE_EXERCISES
+        tiers = [exmap.get(ex, 0) for ex in required]
+        done = bool(tiers) and all(t >= 1 for t in tiers)
         result[key] = {
-            "exercises": {ex: exmap.get(ex, 0) for ex in PRACTICE_EXERCISES},
+            "exercises": {ex: exmap.get(ex, 0) for ex in required},
             "day_tier": (min(tiers) if done else 0),
             "done": done,
         }
