@@ -441,7 +441,189 @@ CREATE TABLE IF NOT EXISTS journey_coverage (
     updated_at          TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Student-history reset CONSENT LEDGER (governance / proof).
+-- APPEND-ONLY: nothing in the reset path ever updates or deletes rows here.
+-- Deliberately has NO foreign key to members, so the proof survives even a
+-- full account deletion. Stores the exact consent shown + the student's
+-- affirmation + a full pre-deletion snapshot (which also enables restore).
+CREATE TABLE IF NOT EXISTS reset_consent_log (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id       TEXT NOT NULL,
+    discord_name     TEXT NOT NULL DEFAULT '',
+    initiated_by     TEXT NOT NULL DEFAULT '',
+    consent_text     TEXT NOT NULL DEFAULT '',
+    affirmation      TEXT NOT NULL DEFAULT '',
+    reason           TEXT NOT NULL DEFAULT '',
+    snapshot_json    TEXT NOT NULL DEFAULT '',
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at_local TEXT NOT NULL DEFAULT ''
+);
 """
+
+
+# ============================================================
+#  STUDENT HISTORY RESET + CONSENT LEDGER (governance)
+# ============================================================
+#
+# Two data classes, deliberately separated:
+#   • LEARNING HISTORY (submissions, mastery, SRS, points, streaks, ...) — the
+#     thing a student can ask us to wipe.
+#   • CONSENT RECORD — the append-only PROOF that a wipe was authorized. It is
+#     never touched by the reset, and it carries a full pre-deletion snapshot
+#     so a reset is also fully REVERSIBLE (this is what would have saved the
+#     Balqees case).
+
+# Tables wiped on a history reset (all keyed by discord_id). KEPT (not wiped):
+# members (counters reset, account preserved), notification_preferences,
+# link_tokens + device_sessions (so a reset never logs the student out), and
+# reset_consent_log (the proof).
+RESET_WIPE_TABLES = (
+    "daily_submissions", "streaks", "assessments", "points_log",
+    "notification_log", "vocab_srs", "practice_mastery", "voice_minutes",
+    "nour_conversations", "pronunciation_scores", "nour_growth_letters",
+    "consumed_proof_messages", "done_cooldowns", "token_ip_log",
+    "student_journey", "journey_coverage", "claim_codes",
+)
+
+
+def _tables_with_discord_id(conn) -> list:
+    out = []
+    for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall():
+        t = r["name"]
+        if t == "reset_consent_log":
+            continue  # never snapshot the proof ledger itself (avoids recursion)
+        cols = [c["name"] for c in conn.execute(f"PRAGMA table_info({t})").fetchall()]
+        if "discord_id" in cols:
+            out.append(t)
+    return out
+
+
+def snapshot_member_data(discord_id: str) -> dict:
+    """Full export of every row keyed to this student across ALL tables that
+    have a discord_id column (dynamic, so future tables are covered). Used as
+    the pre-deletion proof AND to make a reset reversible."""
+    conn = _connect()
+    try:
+        data = {}
+        for t in _tables_with_discord_id(conn):
+            rows = conn.execute(f"SELECT * FROM {t} WHERE discord_id=?", (discord_id,)).fetchall()
+            if rows:
+                data[t] = [dict(r) for r in rows]
+        return data
+    finally:
+        conn.close()
+
+
+def log_reset_consent(discord_id: str, discord_name: str, initiated_by: str,
+                      consent_text: str, affirmation: str, reason: str,
+                      snapshot: dict) -> int:
+    """Append (never update/delete) a consent record to the reset ledger,
+    including the full pre-deletion snapshot as proof + for restore."""
+    import json as _json
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            "INSERT INTO reset_consent_log (discord_id, discord_name, initiated_by, "
+            "consent_text, affirmation, reason, snapshot_json, created_at_local) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (discord_id, discord_name, initiated_by, consent_text, affirmation,
+             reason, _json.dumps(snapshot, ensure_ascii=False), _today_local().isoformat()),
+        )
+        conn.commit()
+        return cur.lastrowid
+    finally:
+        conn.close()
+
+
+def get_reset_consent_records(discord_id: str = None) -> list:
+    """Retrieve consent proof (metadata only, not the heavy snapshot blob)."""
+    conn = _connect()
+    try:
+        q = ("SELECT id, discord_id, discord_name, initiated_by, affirmation, "
+             "reason, created_at, created_at_local FROM reset_consent_log")
+        if discord_id:
+            rows = conn.execute(q + " WHERE discord_id=? ORDER BY id", (discord_id,)).fetchall()
+        else:
+            rows = conn.execute(q + " ORDER BY id").fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def reset_member_history(discord_id: str, *, initiated_by: str,
+                         consent_text: str = "", affirmation: str = "",
+                         reason: str = "") -> Optional[dict]:
+    """Wipe a student's learning history (fresh start), KEEPING their account.
+
+    Records consent + a full snapshot FIRST (so proof and restore exist even
+    if the deletion is interrupted), then deletes the history tables and
+    resets the member's progress counters + calendar anchor. NEVER touches
+    reset_consent_log. Returns {consent_id, deleted:{table:rows}} or None if
+    the member is unknown."""
+    member = get_member(discord_id)
+    if not member:
+        return None
+    snapshot = snapshot_member_data(discord_id)  # BEFORE any deletion
+    consent_id = log_reset_consent(
+        discord_id, member.get("discord_name", ""), initiated_by,
+        consent_text, affirmation, reason, snapshot,
+    )
+    conn = _connect()
+    try:
+        deleted = {}
+        for t in RESET_WIPE_TABLES:
+            try:
+                cur = conn.execute(f"DELETE FROM {t} WHERE discord_id=?", (discord_id,))
+                deleted[t] = cur.rowcount
+            except sqlite3.OperationalError:
+                pass  # table may not exist in an older DB — skip safely
+        # Clean slate but keep the account usable: fresh calendar + default difficulty.
+        conn.execute(
+            "UPDATE members SET total_points=0, current_streak=0, longest_streak=0, "
+            "level_started_at=datetime('now'), difficulty_level=2 WHERE discord_id=?",
+            (discord_id,),
+        )
+        conn.commit()
+        return {"consent_id": consent_id, "deleted": deleted}
+    finally:
+        conn.close()
+
+
+def restore_member_from_consent(consent_id: int) -> Optional[dict]:
+    """Reverse a reset by re-inserting the snapshot captured in a consent
+    record. Makes resets recoverable. Returns {table: rows_restored} or None
+    if the consent id is unknown."""
+    import json as _json
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT discord_id, snapshot_json FROM reset_consent_log WHERE id=?",
+            (consent_id,),
+        ).fetchone()
+        if not row:
+            return None
+        snap = _json.loads(row["snapshot_json"] or "{}")
+        restored = {}
+        for table, rows in snap.items():
+            n = 0
+            for r in rows:
+                cols = list(r.keys())
+                placeholders = ", ".join("?" for _ in cols)
+                try:
+                    conn.execute(
+                        f"INSERT OR REPLACE INTO {table} ({', '.join(cols)}) VALUES ({placeholders})",
+                        tuple(r[c] for c in cols),
+                    )
+                    n += 1
+                except sqlite3.OperationalError:
+                    pass
+            if n:
+                restored[table] = n
+        conn.commit()
+        return restored
+    finally:
+        conn.close()
 
 
 # ============================================================
