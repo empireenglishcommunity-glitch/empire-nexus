@@ -22,7 +22,7 @@ from pathlib import Path
 
 from aiohttp import web
 
-from . import database
+from . import database, maintenance
 
 logger = logging.getLogger("empire-bot.api")
 
@@ -204,6 +204,29 @@ async def _log_ip_and_check(token: str, request: web.Request) -> None:
 
 # ============================================================
 #  EXISTING ENDPOINTS (Sahel S6)
+# ============================================================
+#  Maintenance-mode: public system status (no token — the practice page
+#  polls this on load to show a maintenance banner/overlay).
+# ============================================================
+
+@routes.get("/api/status")
+async def get_status(request: web.Request) -> web.Response:
+    """Public system status for the practice page. No auth: it carries no
+    student data, and the page must be able to read it even mid-maintenance.
+    Fail-open by design (if this is unreachable the page assumes 'live')."""
+    try:
+        status = maintenance.get_status()
+    except Exception as e:
+        logger.warning(f"/api/status failed, reporting live: {e}")
+        status = {"state": "live"}
+    return web.json_response(status, headers=_cors_headers(request))
+
+
+@routes.options("/api/status")
+async def options_status(request: web.Request) -> web.Response:
+    return web.Response(status=204, headers=_cors_headers(request))
+
+
 # ============================================================
 
 @routes.get("/api/progress")
