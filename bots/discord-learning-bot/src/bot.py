@@ -2959,20 +2959,67 @@ _LEVEL_CHOICES = [
 ]
 
 
+async def _student_autocomplete(interaction: discord.Interaction, current: str):
+    """Bot-supplied student list for slash `student` options.
+
+    Discord's native user-picker is scoped to members who can VIEW the current
+    channel, so from the private #admin-commands channel students never show.
+    Autocomplete choices are supplied by the BOT instead, so every registered
+    student always appears regardless of channel visibility.
+    """
+    cur = (current or "").strip().casefold()
+    out = []
+    for m in database.all_active_members():
+        name = m.get("discord_name") or "(unknown)"
+        did = str(m["discord_id"])
+        if cur and cur not in name.casefold() and cur not in did:
+            continue
+        label = f"{name} — {m.get('level', '?')}"
+        out.append(app_commands.Choice(name=label[:100], value=did))
+        if len(out) >= 25:
+            break
+    return out
+
+
+async def _resolve_student_arg(interaction: discord.Interaction, value: str):
+    """Turn a slash `student` value (a discord_id from autocomplete, or a
+    free-typed name) into (discord_id, member_or_None, db_row_or_None)."""
+    v = (value or "").strip()
+    if v.isdigit():
+        did = v
+    else:
+        rows, total = _search_registered_students(interaction.guild, v)
+        if total != 1:
+            return None, None, None
+        did = rows[0][0]
+    row = database.get_member(did)
+    member = None
+    if interaction.guild and did.isdigit():
+        member = interaction.guild.get_member(int(did))
+        if member is None:
+            try:
+                member = await interaction.guild.fetch_member(int(did))
+            except Exception:
+                member = None
+    return did, member, row
+
+
 @bot.tree.command(name="reset-student",
                   description="Reset a student's learning history (records consent + snapshot; reversible).")
-@app_commands.describe(student="The student to reset (search any member)",
+@app_commands.describe(student="Start typing a student's name, then pick them from the list",
                        reason="Why — optional, logged with the consent record")
+@app_commands.autocomplete(student=_student_autocomplete)
 @app_commands.default_permissions(manage_guild=True)
 @app_commands.checks.has_permissions(manage_guild=True)
 @app_commands.guild_only()
 async def slash_reset_student(interaction: discord.Interaction,
-                              student: discord.Member, reason: str = ""):
+                              student: str, reason: str = ""):
     await interaction.response.defer(ephemeral=True)
-    did = str(student.id)
-    data = database.get_member(did)
+    did, member, data = await _resolve_student_arg(interaction, student)
     if not data:
-        await interaction.followup.send("That user isn't a registered student.", ephemeral=True)
+        await interaction.followup.send(
+            "Couldn't identify that student. Start typing the name and **pick from the list**.",
+            ephemeral=True)
         return
     result = database.reset_member_history(
         did, initiated_by=f"owner:{interaction.user.id}", consent_text=RESET_CONSENT_TEXT,
@@ -2980,8 +3027,9 @@ async def slash_reset_student(interaction: discord.Interaction,
         reason=reason or "(no reason given)",
     )
     rid = result["consent_id"]
+    name = member.display_name if member else data.get("discord_name", did)
     await interaction.followup.send(
-        f"✅ Reset **{student.display_name}**'s history (record #{rid}).\n"
+        f"✅ Reset **{name}**'s history (record #{rid}).\n"
         f"Undo: `/restore-student record_id:{rid}` (or `!restore-student {rid}`)",
         ephemeral=True,
     )
@@ -3021,23 +3069,35 @@ async def slash_restore_student(interaction: discord.Interaction, record_id: int
 
 
 @bot.tree.command(name="setlevel", description="Set a student's level (L0–L3).")
-@app_commands.describe(student="The student", level="New level")
+@app_commands.describe(student="Start typing a student's name, then pick them", level="New level")
+@app_commands.autocomplete(student=_student_autocomplete)
 @app_commands.choices(level=_LEVEL_CHOICES)
 @app_commands.default_permissions(manage_guild=True)
 @app_commands.checks.has_permissions(manage_guild=True)
 @app_commands.guild_only()
 async def slash_setlevel(interaction: discord.Interaction,
-                         student: discord.Member, level: app_commands.Choice[str]):
+                         student: str, level: app_commands.Choice[str]):
     await interaction.response.defer(ephemeral=True)
     lvl = level.value
     if lvl not in config.LEVELS:
         await interaction.followup.send("❌ Invalid level.", ephemeral=True)
         return
-    database.set_level(str(student.id), lvl)
-    await _assign_level_role(student, lvl)
+    did, member, data = await _resolve_student_arg(interaction, student)
+    if not data:
+        await interaction.followup.send(
+            "Couldn't identify that student. Start typing the name and **pick from the list**.",
+            ephemeral=True)
+        return
+    database.set_level(did, lvl)
+    role_note = ""
+    if member:
+        await _assign_level_role(member, lvl)
+    else:
+        role_note = " _(level saved; Discord role not updated — member not reachable)_"
     li = config.LEVELS[lvl]
+    name = member.display_name if member else data.get("discord_name", did)
     await interaction.followup.send(
-        f"✅ {student.display_name} is now **{lvl}** — {li['emoji']} {li['name']}", ephemeral=True)
+        f"✅ {name} is now **{lvl}** — {li['emoji']} {li['name']}{role_note}", ephemeral=True)
 
 
 @bot.tree.command(name="find", description="Find registered students by name and show their IDs.")
