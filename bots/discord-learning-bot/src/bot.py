@@ -2676,6 +2676,136 @@ async def cmd_tutorial(ctx):
         await ctx.send("❌ مقدرش أبعتلك DM. افتح الرسائل الخاصة.")
 
 
+# ============================================================
+#  STUDENT HISTORY RESET (governance) — Phase 2 commands
+# ============================================================
+# `!resetme` (student self-service, two-step authenticated consent),
+# `!reset-student` (owner, on a student's request), `!restore-student` (undo).
+# Every path records consent + a full snapshot via database.reset_member_history
+# BEFORE anything is deleted, and pings the ops Telegram. Fully reversible.
+RESET_CONSENT_TEXT = (
+    "⚠️ **Reset your history — read carefully.**\n"
+    "This permanently deletes your learning progress: points, streak, completed "
+    "tasks, calendar progress, vocabulary review, and assessment scores. Your "
+    "account stays active — you start fresh from today. **You cannot undo this "
+    "yourself.** By confirming, you **request and authorize** Empire English to "
+    "delete this data, and agree it was done at your request.\n"
+    "Reply **`RESET`** to confirm, or **`CANCEL`** to stop.\n\n"
+    "⚠️ **إعادة ضبط سجلّك — اقرأ بعناية.**\n"
+    "ده هيمسح تقدّمك نهائيًا: النقاط، سلسلة الأيام، المهام المكتملة، تقدّم التقويم، "
+    "مراجعة المفردات، ودرجات التقييم. حسابك هيفضل شغّال وتبدأ من جديد من النهارده. "
+    "**مش هتقدر تتراجع بنفسك.** بتأكيدك، إنت بتطلب وبتصرّح لـ Empire English بمسح "
+    "البيانات دي، وبتوافق إن ده تم بناءً على طلبك.\n"
+    "اكتب **`RESET`** للتأكيد، أو **`CANCEL`** للإلغاء."
+)
+
+
+@bot.command(name="resetme")
+async def cmd_resetme(ctx):
+    """Student self-service: reset your OWN learning history (with consent)."""
+    did = str(ctx.author.id)
+    if not database.get_member(did):
+        await ctx.send("You don't have any history yet — use `!join` to start. / لسه مبدأتش.")
+        return
+    await ctx.send(RESET_CONSENT_TEXT)
+
+    def _check(m):
+        return m.author.id == ctx.author.id and m.channel.id == ctx.channel.id
+
+    try:
+        reply = await bot.wait_for("message", check=_check, timeout=120)
+    except asyncio.TimeoutError:
+        await ctx.send("⌛ Timed out — nothing was changed. / خلص الوقت، مفيش حاجة اتغيّرت.")
+        return
+
+    if reply.content.strip().upper() != "RESET":
+        await ctx.send("✅ Cancelled — your history is safe. / اتلغى، سجلك محفوظ.")
+        return
+
+    result = database.reset_member_history(
+        did, initiated_by="student", consent_text=RESET_CONSENT_TEXT,
+        affirmation=reply.content.strip(), reason="student self-service (!resetme)",
+    )
+    rid = result["consent_id"]
+    stamp = datetime.datetime.now().isoformat(timespec="seconds")
+    try:
+        await ctx.author.send(
+            f"🧾 **Empire English — reset receipt**\n"
+            f"Record #: **{rid}**\nWhen: {stamp}\n"
+            f"Your learning history was reset **at your request** (you replied RESET). "
+            f"Your account is active and you're starting fresh. Good luck! 🌱"
+        )
+    except discord.HTTPException:
+        pass
+    await ctx.send(f"✅ Done — your history has been reset (record #{rid}). Fresh start! 🌱")
+    try:
+        m = database.get_member(did)
+        await ops_hub.send_ops_alert(
+            "Student history reset",
+            f"{(m or {}).get('discord_name', '?')} ({did}) reset their OWN history via "
+            f"!resetme. Consent record #{rid}. Reversible: !restore-student {rid}.",
+            severity="info",
+        )
+    except Exception:
+        pass
+
+
+@bot.command(name="reset-student")
+@commands.has_permissions(manage_guild=True)
+async def cmd_reset_student(ctx, member: discord.Member = None, *, reason: str = ""):
+    """(Admin) Reset a student's history on their request. Logs consent + snapshot."""
+    if member is None:
+        await ctx.send("Usage: `!reset-student @user [reason]`")
+        return
+    did = str(member.id)
+    data = database.get_member(did)
+    if not data:
+        await ctx.send("That user isn't a registered student.")
+        return
+    result = database.reset_member_history(
+        did, initiated_by=f"owner:{ctx.author.id}", consent_text=RESET_CONSENT_TEXT,
+        affirmation="(owner-initiated on the student's request)",
+        reason=reason or "(no reason given)",
+    )
+    rid = result["consent_id"]
+    await ctx.send(
+        f"✅ Reset **{member.display_name}**'s history (record #{rid}). "
+        f"Reversible: `!restore-student {rid}`"
+    )
+    try:
+        await ops_hub.send_ops_alert(
+            "Student history reset (owner-initiated)",
+            f"{ctx.author} reset {data.get('discord_name', '?')} ({did}). "
+            f"Reason: {reason or '—'}. Consent record #{rid}. Reversible: !restore-student {rid}.",
+            severity="warning",
+        )
+    except Exception:
+        pass
+
+
+@bot.command(name="restore-student")
+@commands.has_permissions(manage_guild=True)
+async def cmd_restore_student(ctx, consent_id: int = None):
+    """(Admin) Undo a reset by restoring the snapshot from a consent record."""
+    if consent_id is None:
+        await ctx.send("Usage: `!restore-student <record_id>`")
+        return
+    restored = database.restore_member_from_consent(consent_id)
+    if restored is None:
+        await ctx.send(f"No consent record #{consent_id} found.")
+        return
+    summary = ", ".join(f"{k}={v}" for k, v in restored.items()) or "(nothing to restore)"
+    await ctx.send(f"✅ Restored from record #{consent_id}: {summary}")
+    try:
+        await ops_hub.send_ops_alert(
+            "Student history restored",
+            f"{ctx.author} restored consent record #{consent_id}. Tables: {restored}",
+            severity="info",
+        )
+    except Exception:
+        pass
+
+
 @bot.command(name="testwelcome")
 @commands.has_permissions(manage_guild=True)
 async def cmd_testwelcome(ctx):
