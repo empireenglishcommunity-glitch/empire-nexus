@@ -94,12 +94,22 @@ async def _call_groq(prompt: str, temperature: float = 0.8) -> Optional[str]:
 
 
 async def _call_llm(prompt: str, temperature: float = 0.8) -> Optional[str]:
-    """Call primary LLM (Gemini) with Groq fallback."""
-    result = await _call_gemini(prompt, temperature)
+    """Call primary LLM (Groq) with Gemini fallback.
+
+    Groq is PRIMARY because it is the provider actually provisioned and
+    working in production. The Gemini project is currently denied access
+    by Google (HTTP 403 PERMISSION_DENIED on generateContent), so Gemini
+    is kept only as a dormant fallback: it will start being used
+    automatically the moment a working key from a non-blocked Google
+    project is configured, with no further code change. Ordering Groq
+    first also avoids a failed Gemini round-trip (and its error log) on
+    every single AI request.
+    """
+    result = await _call_groq(prompt, temperature)
     if result:
         return result
-    logger.info("Gemini failed, trying Groq fallback...")
-    return await _call_groq(prompt, temperature)
+    logger.info("Groq failed, trying Gemini fallback...")
+    return await _call_gemini(prompt, temperature)
 
 
 def _extract_json(text: str) -> Optional[dict]:
