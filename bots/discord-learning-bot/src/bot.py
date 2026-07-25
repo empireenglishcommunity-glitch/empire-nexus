@@ -50,6 +50,63 @@ intents.members = True
 
 bot = commands.Bot(command_prefix=config.BOT_PREFIX, intents=intents, help_command=None)
 
+
+class AdminChannelOnly(commands.CheckFailure):
+    """Raised when an admin runs an admin command outside #admin-commands."""
+
+
+def _is_admin_command(command) -> bool:
+    """True if a prefix command is permission-gated (manage_guild/administrator)
+    — detected generically so we don't have to hand-maintain a name list."""
+    for chk in getattr(command, "checks", []):
+        if "has_permissions" in getattr(chk, "__qualname__", ""):
+            return True
+    return False
+
+
+def _author_is_admin(ctx_or_author, guild=None) -> bool:
+    """True if the user has manage_guild — works in-guild and in DMs (by
+    looking the member up in the configured guild)."""
+    author = getattr(ctx_or_author, "author", ctx_or_author)
+    perms = getattr(author, "guild_permissions", None)
+    if perms is not None and perms.manage_guild:
+        return True
+    g = guild or bot.get_guild(config.GUILD_ID)
+    if g is not None:
+        m = g.get_member(getattr(author, "id", 0))
+        if m is not None and m.guild_permissions.manage_guild:
+            return True
+    return False
+
+
+@bot.check
+async def _admin_commands_channel_gate(ctx):
+    """Keep admin commands consolidated in #admin-commands.
+
+    - Student/public commands: allowed anywhere (unchanged).
+    - Admin commands in DMs or in #admin-commands: allowed.
+    - Admin commands run by an ACTUAL admin in any other channel: blocked with
+      a self-deleting nudge (so a stray admin command can't be seen by
+      students in a public channel).
+    - Admin commands attempted by a NON-admin: fall through here and get
+      silently rejected by the command's own permission check (see
+      on_command_error) — so we never reveal the command exists.
+    """
+    cmd = ctx.command
+    if cmd is None or not _is_admin_command(cmd):
+        return True
+    if ctx.guild is None:
+        return True  # DMs are fine
+    if not config.ADMIN_COMMANDS_CHANNEL_ID:
+        return True  # gate disabled / unconfigured -> fail open
+    if ctx.channel.id == config.ADMIN_COMMANDS_CHANNEL_ID:
+        return True
+    # Only enforce (and nudge) for real admins; non-admins fall through to the
+    # silent permission rejection so command existence isn't leaked.
+    if _author_is_admin(ctx):
+        raise AdminChannelOnly()
+    return True
+
 # Per-user locks for !done's cooldown check. Found via rapid-fire/
 # concurrency stress testing: verification.check_cooldown() and
 # record_done_time() are separated by genuine async work (verify_task()'s
@@ -447,8 +504,26 @@ async def on_member_join(member: discord.Member):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
+    if isinstance(error, AdminChannelOnly):
+        # An admin ran an admin command outside #admin-commands. Nudge them
+        # (self-deleting so it doesn't linger in a student-visible channel)
+        # and try to remove their invoking message. Command did NOT run.
+        chan = f"<#{config.ADMIN_COMMANDS_CHANNEL_ID}>" if config.ADMIN_COMMANDS_CHANNEL_ID else "#admin-commands"
+        try:
+            await ctx.send(f"🔒 Please run admin commands in {chan}.", delete_after=8)
+        except Exception:
+            pass
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
+        return
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("🔒 You don't have permission for this command.")
+        # Silent by design: replying "you don't have permission" would confirm
+        # to a student that the admin command exists. Say nothing.
+        return
+    if isinstance(error, commands.CheckFailure):
+        # Any other check failure — stay silent (no command-existence leak).
         return
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"❌ Missing argument: `{error.param.name}`. Type `!help` for usage.")
@@ -2333,8 +2408,9 @@ async def cmd_assess(ctx):
 
 @bot.command(name="help")
 async def cmd_help(ctx):
-    """Show all available commands."""
-    await ctx.send(
+    """Show available commands — role-aware: students see only student
+    commands; admins additionally see the Admin section."""
+    student_help = (
         "**🏛️ Empire English Bot — Commands**\n\n"
         "**Learning:**\n"
         "`!join <goal>` — Register and set your goal\n"
@@ -2357,21 +2433,36 @@ async def cmd_help(ctx):
         "✍️ `!done writing` — write in #text-practice first (20+ chars)\n"
         "💬 `!done community` — post in #general-chat or 10min voice\n"
         "⏳ 5 min cooldown between each `!done`\n\n"
-        "**Admin:**\n"
+        "**Account:**\n"
+        "`!delete` — Request deletion of all your data\n"
+        "`!resetme` — Reset your learning history (with your consent)\n"
+    )
+
+    admin_help = (
+        "\n**🔒 Admin (owner/staff only — use in #admin-commands):**\n"
         "`!status` — Bot status\n"
         "`!attention` — Ranked list of who needs a human right now (inactive, declining, buddy load)\n"
+        "`!members` — List all members (with IDs)\n"
+        "`!find <name>` — Find a student + their ID\n"
         "`!setlevel @user L0/L1/L2/L3` — Set someone's level\n"
         "`!announce <message>` — Broadcast announcement\n"
-        "`!members` — List all members\n"
+        "`!reset-student @user [reason]` — Reset a student's history (reversible)\n"
+        "`!restore-student <record#>` — Undo a reset\n"
+        "`!approve-reset <request#>` / `!deny-reset <request#>` — Decide a student's reset request\n"
         "`!orient <date/time>` — Send orientation invite\n"
         "`!recruit ar/en` — Get recruitment message template\n"
         "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
         "`!flag list/enable/disable/beta` — Feature flag management\n"
         "`!maintenance start [soft|hard] [min] [reason]` — pause/warn + notify students\n"
-        "`!maintenance end [what's new]` — back online + announce\n\n"
-        "**Account:**\n"
-        "`!delete` — Request deletion of all your data\n"
+        "`!maintenance end [what's new]` — back online + announce\n"
+        "\n**Slash commands (native user picker, work from #admin-commands):**\n"
+        "`/reset-student` · `/restore-student` · `/setlevel` · `/find`\n"
     )
+
+    msg = student_help
+    if _author_is_admin(ctx):
+        msg += admin_help
+    await ctx.send(msg)
 
 
 @bot.command(name="helpar")
