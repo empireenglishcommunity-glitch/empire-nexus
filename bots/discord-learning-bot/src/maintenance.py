@@ -58,10 +58,11 @@ def get_status() -> dict:
 
     auto_end = _parse_iso(database.get_setting("maintenance_auto_end_at", ""))
     if auto_end and _now_utc() >= auto_end:
-        try:
-            _clear()
-        except Exception:
-            pass
+        # Window elapsed: report live to the page/API immediately. The actual
+        # clear + "we're back" broadcast is done once by
+        # check_and_handle_auto_resume() (run from the heartbeat), so we do
+        # NOT clear here — clearing here would race that detection and the
+        # auto-resume announcement would never fire.
         return {"state": "live", "auto_ended": True}
 
     level = database.get_setting("maintenance_level", "soft")
@@ -92,6 +93,7 @@ def start(level: str = "soft", reason: str = "", eta: str = "",
     database.set_setting("maintenance_eta", eta or "")
     database.set_setting("maintenance_started_at", now.isoformat())
     database.set_setting("maintenance_auto_end_at", auto_end.isoformat())
+    mark_active_day()
     logger.info(
         f"maintenance START level={level} reason={reason!r} eta={eta!r} "
         f"auto_end={auto_end.isoformat()}"
@@ -109,6 +111,63 @@ def end() -> dict:
 def _clear() -> None:
     database.set_setting("maintenance_active", "0")
     database.set_setting("maintenance_mode", "off")  # keep legacy key in sync
+
+
+# ============================================================
+#  Phase 3 — maintenance-day tracking (for streak protection) +
+#  auto-resume detection/announcement.
+# ============================================================
+
+import json  # noqa: E402
+
+_MAINT_DAYS_KEY = "maintenance_days"
+_MAINT_DAYS_KEEP = 90  # keep the most recent N dates only
+
+
+def mark_active_day() -> None:
+    """Record today's (Asia/Dubai) date as a maintenance day so the streak
+    logic can BRIDGE it — a maintenance day must never break a student's
+    streak (R5.1). Called on start() and periodically by the heartbeat while
+    active, so a window spanning midnight records both dates."""
+    try:
+        today = database._today_local().isoformat()
+        try:
+            days = set(json.loads(database.get_setting(_MAINT_DAYS_KEY, "[]")))
+        except Exception:
+            days = set()
+        if today not in days:
+            days.add(today)
+            pruned = sorted(days)[-_MAINT_DAYS_KEEP:]
+            database.set_setting(_MAINT_DAYS_KEY, json.dumps(pruned))
+    except Exception as e:
+        logger.warning(f"maintenance: mark_active_day failed: {e}")
+
+
+def get_active_days() -> set:
+    """Set of ISO date strings on which maintenance was active."""
+    try:
+        return set(json.loads(database.get_setting(_MAINT_DAYS_KEY, "[]")))
+    except Exception:
+        return set()
+
+
+async def check_and_handle_auto_resume(bot) -> bool:
+    """If maintenance is still flagged active but its auto-resume window has
+    elapsed, end it and announce 'we're back' — exactly once. Returns True
+    only on the transition. Called from the heartbeat loop so a forgotten
+    `end` self-heals within ~2 minutes of the window closing."""
+    if database.get_setting("maintenance_active", "0") != "1":
+        return False
+    auto_end = _parse_iso(database.get_setting("maintenance_auto_end_at", ""))
+    if not (auto_end and _now_utc() >= auto_end):
+        return False
+    logger.info("maintenance: auto-resume window elapsed -> ending + announcing")
+    end()
+    try:
+        await broadcast_end(bot, changelog="")
+    except Exception as e:
+        logger.warning(f"maintenance: auto-resume broadcast failed: {e}")
+    return True
     # Descriptive fields are left as-is; they're ignored while inactive and
     # overwritten on the next start().
 
