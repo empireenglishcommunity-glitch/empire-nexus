@@ -107,6 +107,9 @@ def test_messages_are_bilingual_and_safe():
     m = maintenance.start_message({"level": "hard", "reason": "deploy", "eta": "~20 min"})
     assert "🔒" in m and "safe" in m.lower()
     assert "صيانة" in m  # Arabic present
+    # No promised time in the student-facing broadcast, even when an ETA is set.
+    assert "~20 min" not in m
+    assert "Expected back" not in m
     e = maintenance.end_message("Faster vocab quiz")
     assert "back" in e.lower()
     assert "Faster vocab quiz" in e
