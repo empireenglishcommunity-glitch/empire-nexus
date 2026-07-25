@@ -112,6 +112,12 @@ def test_messages_are_bilingual_and_safe():
     # No promised time in the student-facing broadcast, even when an ETA is set.
     assert "~20 min" not in m
     assert "Expected back" not in m
+    # No duration-implying words (agreed: never imply how long it takes).
+    assert "Quick" not in m and "quick" not in m
+    assert "سريعة" not in m
+    # A soft notice must not say the page is 'paused'.
+    soft = maintenance.start_message({"level": "soft"})
+    assert "keep practicing" in soft.lower()
     e = maintenance.end_message("Faster vocab quiz")
     assert "back" in e.lower()
     assert "Faster vocab quiz" in e
