@@ -297,9 +297,9 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         "title": "✍️ Writing Practice",
         "content": (
             f"**{bl('Prompt', 'المطلوب')}:** {writing_prompt}\n\n"
-            f"{bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')}\n"
-            f"{bl('No translator! Do your best.', 'من غير مترجم! اعمل قد ما تقدر.')}\n\n"
-            f"📝 {bl('Post in', 'حط في')} #l{level[1]}-text-practice"
+            f"1️⃣ {bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')} "
+            f"{bl('No translator — do your best.', 'من غير مترجم — اعمل قد ما تقدر.')}\n"
+            f"2️⃣ {bl('Post it in', 'حطها في')} #l{level[1]}-text-practice"
         ),
         "duration_min": 7 if level == "L0" else 20,
     })
@@ -512,7 +512,7 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     practice_present = [tid for tid in PRACTICE_IDS if tid in task_by_id]
     if practice_present:
         practice_lines = [
-            f"🌐 **{bl('Open your calendar', 'افتح تقويمك')}:** {config.PRACTICE_PLATFORM_URL}",
+            f"🌐 **{bl('Open your calendar', 'افتح تقويمك')} ({len(practice_present)} {bl('tasks', 'مهام')}):** {config.PRACTICE_PLATFORM_URL}",
             bl("Your calendar always shows exactly where YOU are — not "
                "today's date, YOUR day.",
                "التقويم بتاعك دايمًا بيوريك يومك الحقيقي إنت — مش تاريخ "
@@ -538,15 +538,21 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
                 f"{NUM_EMOJI[num_by_id[tid]]} **{t['title']}** ({t['duration_min']} min)\n{t['content']}"
             )
     if discord_blocks:
-        blocks.append(f"💬 **{bl('Here on Discord', 'هنا في Discord')}:**")
+        blocks.append(f"💬 **{bl('Here on Discord', 'هنا في Discord')} ({len(discord_blocks)} {bl('tasks', 'مهام')}):**")
         blocks.extend(discord_blocks)
 
-    footer = "\n".join([
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')}",
-        f"✅ {bl('Log each when done:', 'لما تخلص كل مهمة اكتب:')} `!done` / `!1`-`!7` {bl('in', 'في')} #daily-check-in",
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-    ])
+    footer_lines = ["━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"]
+    # Explicit "5 on the page + 2 here = 7" framing so the split is unmistakable
+    # (only when both sections are present; counts are dynamic).
+    if practice_present and discord_blocks:
+        _np, _nd = len(practice_present), len(discord_blocks)
+        footer_lines.append(
+            f"📊 {bl(f'{_np} on your page + {_nd} here on Discord = your {_np + _nd} today', f'{_np} على صفحتك + {_nd} هنا على Discord = {_np + _nd} مهام النهاردة')}"
+        )
+    footer_lines.append(f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')}")
+    footer_lines.append(f"✅ {bl('Log each when done:', 'لما تخلص كل مهمة اكتب:')} `!done` / `!1`-`!7` {bl('in', 'في')} #daily-check-in")
+    footer_lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    footer = "\n".join(footer_lines)
 
     # Daily conversational pattern (Tatawwur T1 / Sahel S3), if present
     pattern = task_data.get("daily_pattern")
