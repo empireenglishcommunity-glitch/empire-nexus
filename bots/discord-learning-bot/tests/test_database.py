@@ -655,3 +655,33 @@ def test_record_practice_mastery_default_today_uses_today_local():
         result = database.record_practice_mastery("u1", "L0", 1, 1, "accent")
     assert result["exercise_tier"] == 1
     assert result["incremented"] is True
+
+
+
+def test_get_progress_for_discord_id_returns_payload():
+    """The Darb-session progress path builds the same payload shape the
+    legacy link-token path returns."""
+    database.register_member("u1", "Alice")
+    p = database.get_progress_for_discord_id("u1")
+    assert p is not None
+    assert p["discord_id"] == "u1"
+    # Same core fields the practice page's header reads.
+    for key in ("level", "week", "streak", "tasks_today", "tasks_today_count"):
+        assert key in p
+
+
+def test_get_progress_for_discord_id_unknown_returns_none():
+    assert database.get_progress_for_discord_id("ghost-unknown") is None
+
+
+def test_get_progress_for_token_delegates_to_discord_id():
+    """Legacy link-token lookup still works after the refactor."""
+    database.register_member("u1", "Alice")
+    conn = database._connect()
+    conn.execute(
+        "INSERT INTO link_tokens (discord_id, token) VALUES ('u1', 'tok-abc')"
+    )
+    conn.commit()
+    conn.close()
+    p = database.get_progress_for_token("tok-abc")
+    assert p is not None and p["discord_id"] == "u1"

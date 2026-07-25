@@ -1509,12 +1509,21 @@ def get_member_by_token(token: str) -> dict | None:
 
 
 def get_progress_for_token(token: str) -> dict | None:
-    """Get progress data for the practice platform given a link token."""
+    """Get progress data for the practice platform given a legacy link token."""
     member = get_member_by_token(token)
     if not member:
         return None
+    return get_progress_for_discord_id(member["discord_id"])
 
-    discord_id = member["discord_id"]
+
+def get_progress_for_discord_id(discord_id: str) -> dict | None:
+    """Practice-platform progress for a student by discord_id. Shared by the
+    legacy link-token path (get_progress_for_token) and the Darb-session path
+    (api_server.get_progress), so both return an identical payload."""
+    member = get_member(discord_id)
+    if not member:
+        return None
+
     today = _today_local().isoformat()
 
     # Get today's completed tasks
