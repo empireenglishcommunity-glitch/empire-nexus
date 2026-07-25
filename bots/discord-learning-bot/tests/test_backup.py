@@ -212,3 +212,34 @@ def test_backup_uses_config_db_path_not_a_hardcoded_path(monkeypatch):
     from src import config
     reloaded = importlib.reload(backup_module)
     assert reloaded.DB_PATH == str(config.DB_PATH)
+
+
+
+def test_backup_rotation_keeps_fresh_daily_over_older_tagged(isolate_backup_paths):
+    """Production regression: a freshly-created daily backup
+    ('empire_english_<today>_...') must NOT be rotated out in favour of
+    OLDER 'pre-deploy-' tagged snapshots.
+
+    Raw-filename sorting was the bug: 'empire_english_2026...' sorts before
+    'empire_english_pre-deploy-...' ('2' < 'p'), so the new daily backup was
+    always the one deleted while stale tagged snapshots were kept forever.
+    Rotation on the embedded YYYYMMDD_HHMMSS timestamp keeps the newest.
+    """
+    fake_db, fake_backup_dir = isolate_backup_paths
+    _make_fake_db(fake_db)
+    os.makedirs(fake_backup_dir, exist_ok=True)
+
+    # MAX_BACKUPS older tagged snapshots (2025 timestamps → older than "now").
+    for i in range(backup_module.MAX_BACKUPS):
+        name = f"empire_english_pre-deploy-tag{i:03d}_20250101_{i:06d}.db"
+        with open(os.path.join(fake_backup_dir, name), "wb") as f:
+            f.write(b"x")
+
+    result = backup_module.backup()  # fresh daily backup, timestamp = now (2026)
+
+    remaining = {os.path.basename(p) for p in glob.glob(
+        os.path.join(str(fake_backup_dir), "empire_english_*.db")
+    )}
+    assert len(remaining) == backup_module.MAX_BACKUPS
+    # The fresh daily backup survived; an older tagged snapshot was dropped.
+    assert os.path.basename(result) in remaining
