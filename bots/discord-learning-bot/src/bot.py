@@ -35,7 +35,7 @@ from typing import Optional
 import discord
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -1238,10 +1238,12 @@ async def heartbeat():
     """
     database.set_setting("last_heartbeat", datetime.datetime.now(_zone()).isoformat())
 
-    # Check maintenance mode and update presence
-    maintenance = database.get_setting("maintenance_mode", "off")
+    # Check maintenance mode and update presence. Uses the unified
+    # maintenance module (honors both the rich /maintenance state and the
+    # legacy maintenance_mode flag set by deploy.py), so presence self-heals
+    # within 2 min after a restart and auto-resumes when the window elapses.
     try:
-        if maintenance == "on":
+        if maintenance_mod.is_active():
             await bot.change_presence(
                 activity=discord.Game(name="\U0001f527 Updating... / \u0628\u064a\u062a\u0645 \u0627\u0644\u062a\u062d\u062f\u064a\u062b"),
                 status=discord.Status.idle,
@@ -2345,7 +2347,8 @@ async def cmd_help(ctx):
         "`!recruit ar/en` — Get recruitment message template\n"
         "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
         "`!flag list/enable/disable/beta` — Feature flag management\n"
-        "`!maintenance on/off` — Toggle maintenance mode (deploy presence)\n\n"
+        "`!maintenance start [soft|hard] [min] [reason]` — pause/warn + notify students\n"
+        "`!maintenance end [what's new]` — back online + announce\n\n"
         "**Account:**\n"
         "`!delete` — Request deletion of all your data\n"
     )
@@ -3137,45 +3140,72 @@ async def cmd_flag(ctx, action: str = None, name: str = None, *members: discord.
 
 @bot.command(name="maintenance")
 @commands.has_permissions(manage_guild=True)
-async def cmd_maintenance(ctx, mode: str = None):
-    """Toggle maintenance mode (changes bot presence during deploys).
+async def cmd_maintenance(ctx, *, arg: str = ""):
+    """Maintenance mode — pauses/soft-warns the whole ecosystem + notifies students.
 
     Usage:
-      !maintenance on   — show "Updating..." presence (idle status)
-      !maintenance off  — restore normal presence (online status)
-      !maintenance      — show current state
+      !maintenance                          — show current status
+      !maintenance start [soft|hard] [min] [reason...]
+      !maintenance end [what's new...]
+      !maintenance on                       — alias for `start soft`
+      !maintenance off                      — alias for `end`
 
-    Aegis Phase 5: deploy.py sets this flag automatically before a
-    deploy (via docker exec) so students see a deliberate "updating"
-    status rather than the bot just disappearing and reappearing. The
-    heartbeat loop (every 2 min) picks up the flag and updates presence.
-    This command lets an admin toggle it manually for longer maintenance
-    windows or testing.
+    Soft = dismissible banner on the practice page (page stays usable).
+    Hard = full-screen overlay (page paused). Both announce to
+    #announcements (+ Telegram groups if configured) and set the bot's
+    presence. A 2h auto-resume failsafe prevents a forgotten `end`.
     """
-    if mode not in ("on", "off", None):
-        await ctx.send("Usage: `!maintenance on` or `!maintenance off`")
+    parts = arg.split()
+    sub = parts[0].lower() if parts else "status"
+    # Legacy aliases
+    if sub == "on":
+        sub, parts = "start", ["start", "soft"] + parts[1:]
+    elif sub == "off":
+        sub = "end"; parts = ["end"] + parts[1:]
+
+    if sub == "status":
+        s = maintenance_mod.get_status()
+        if s.get("state") != "maintenance":
+            await ctx.send("✅ **System is LIVE** — no maintenance active.")
+        else:
+            await ctx.send(
+                f"🔧 **Maintenance: {s.get('level', 'soft').upper()}**\n"
+                f"Reason: {s.get('reason') or '—'}\n"
+                f"ETA: {s.get('eta') or '—'}")
         return
 
-    if mode is None:
-        current = database.get_setting("maintenance_mode", "off")
-        status_text = "\U0001f527 **Maintenance mode is ON**" if current == "on" else "\u2705 **Maintenance mode is OFF** (normal)"
-        await ctx.send(status_text)
+    if sub == "start":
+        rest = parts[1:]
+        level = "soft"
+        if rest and rest[0].lower() in ("soft", "hard"):
+            level = rest[0].lower(); rest = rest[1:]
+        eta = ""; window = maintenance_mod.DEFAULT_WINDOW_MINUTES
+        if rest and rest[0].isdigit():
+            mins = int(rest[0]); rest = rest[1:]
+            eta = f"~{mins} min"; window = max(mins + 15, 15)
+        reason = " ".join(rest).strip()
+        maintenance_mod.start(level=level, reason=reason, eta=eta, window_minutes=window)
+        result = await maintenance_mod.broadcast_start(ctx.bot, maintenance_mod.get_status())
+        surface = "full-screen overlay" if level == "hard" else "banner"
+        await ctx.send(
+            f"🔧 Maintenance **STARTED** ({level}). Students now see the {surface}.\n"
+            f"Announced → Discord: {'✅' if result.get('discord') else '❌'} · "
+            f"Telegram groups: {result.get('telegram_groups', 0)}\n"
+            f"Auto-resumes in {window} min if you forget `!maintenance end`.")
         return
 
-    database.set_setting("maintenance_mode", mode)
+    if sub == "end":
+        changelog = " ".join(parts[1:]).strip()
+        maintenance_mod.end()
+        result = await maintenance_mod.broadcast_end(ctx.bot, changelog)
+        await ctx.send(
+            f"✅ Maintenance **ENDED** — system is LIVE.\n"
+            f"Announced → Discord: {'✅' if result.get('discord') else '❌'} · "
+            f"Telegram groups: {result.get('telegram_groups', 0)}")
+        return
 
-    if mode == "on":
-        await bot.change_presence(
-            activity=discord.Game(name="\U0001f527 Updating... / \u0628\u064a\u062a\u0645 \u0627\u0644\u062a\u062d\u064a\u062b"),
-            status=discord.Status.idle,
-        )
-        await ctx.send("\U0001f527 Maintenance mode **ON** — bot presence updated to 'Updating...'")
-    else:
-        await bot.change_presence(
-            activity=discord.Game(name="\U0001f3db\ufe0f Empire English | !help"),
-            status=discord.Status.online,
-        )
-        await ctx.send("\u2705 Maintenance mode **OFF** — bot presence restored to normal.")
+    await ctx.send("Usage: `!maintenance start [soft|hard] [min] [reason]` / "
+                   "`!maintenance end [what's new]` / `!maintenance` (status)")
 
 
 @bot.command(name="announce")

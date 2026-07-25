@@ -65,3 +65,92 @@ def test_auto_resume_failsafe_reports_live_and_clears():
     assert s.get("auto_ended") is True
     # Flag was lazily cleared.
     assert database.get_setting("maintenance_active", "0") == "0"
+
+
+
+# ============================================================
+#  Phase 2 — broadcast + messages + legacy-key unification
+# ============================================================
+
+import asyncio
+import types
+
+import pytest
+
+from src import config
+
+
+def test_legacy_maintenance_mode_is_honored():
+    """deploy.py sets maintenance_mode=on before a deploy — get_status must
+    treat that as maintenance (so the page banner + presence reflect it)."""
+    _reset()
+    database.set_setting("maintenance_mode", "off")
+    assert maintenance.get_status()["state"] == "live"
+    database.set_setting("maintenance_mode", "on")
+    try:
+        assert maintenance.get_status()["state"] == "maintenance"
+        assert maintenance.is_active() is True
+    finally:
+        database.set_setting("maintenance_mode", "off")
+
+
+def test_start_end_keep_both_keys_in_sync():
+    maintenance.start(level="soft")
+    assert database.get_setting("maintenance_active", "0") == "1"
+    assert database.get_setting("maintenance_mode", "off") == "on"
+    maintenance.end()
+    assert database.get_setting("maintenance_active", "0") == "0"
+    assert database.get_setting("maintenance_mode", "off") == "off"
+
+
+def test_messages_are_bilingual_and_safe():
+    m = maintenance.start_message({"level": "hard", "reason": "deploy", "eta": "~20 min"})
+    assert "🔒" in m and "safe" in m.lower()
+    assert "صيانة" in m  # Arabic present
+    e = maintenance.end_message("Faster vocab quiz")
+    assert "back" in e.lower()
+    assert "Faster vocab quiz" in e
+    assert "رجعنا" in e  # Arabic present
+
+
+class _FakeChannel:
+    def __init__(self): self.name = "announcements"; self.sent = []
+    async def send(self, text): self.sent.append(text)
+
+
+class _FakeGuild:
+    def __init__(self, ch): self.text_channels = [ch]
+
+
+class _FakeBot:
+    def __init__(self, ch):
+        self._guild = _FakeGuild(ch)
+        self.presence = None
+    def get_guild(self, gid): return self._guild
+    async def change_presence(self, **kwargs): self.presence = kwargs
+
+
+@pytest.mark.asyncio
+async def test_broadcast_start_posts_to_announcements_and_sets_presence(monkeypatch):
+    ch = _FakeChannel()
+    bot = _FakeBot(ch)
+    monkeypatch.setattr(config, "GUILD_ID", 123456789)
+    monkeypatch.setattr(config, "MAINTENANCE_TG_CHAT_IDS", [])  # no TG groups
+    maintenance.start(level="hard", reason="test", eta="~5 min")
+    result = await maintenance.broadcast_start(bot, maintenance.get_status())
+    maintenance.end()
+    assert result["discord"] is True
+    assert len(ch.sent) == 1
+    assert "🔒" in ch.sent[0]
+    assert bot.presence is not None  # presence was set
+
+
+@pytest.mark.asyncio
+async def test_broadcast_end_announces_and_restores(monkeypatch):
+    ch = _FakeChannel()
+    bot = _FakeBot(ch)
+    monkeypatch.setattr(config, "GUILD_ID", 123456789)
+    monkeypatch.setattr(config, "MAINTENANCE_TG_CHAT_IDS", [])
+    result = await maintenance.broadcast_end(bot, "New feature X")
+    assert result["discord"] is True
+    assert "New feature X" in ch.sent[0]

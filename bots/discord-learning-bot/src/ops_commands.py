@@ -15,7 +15,7 @@ from typing import Optional
 
 import discord
 
-from . import config, database, ops_hub
+from . import config, database, ops_hub, maintenance
 
 logger = logging.getLogger("empire-bot.ops_commands")
 
@@ -234,6 +234,74 @@ async def handle_announce(args: str, bot) -> str:
 # ============================================================
 #  /help — list available commands
 # ============================================================
+#  /maintenance — toggle maintenance mode (student-facing)
+# ============================================================
+
+@command("/maintenance")
+async def handle_maintenance(args: str, bot) -> str:
+    """Toggle maintenance mode + auto-announce to students.
+
+    /maintenance                     — show status
+    /maintenance status              — show status
+    /maintenance start [soft|hard] [minutes] [reason...]
+    /maintenance end [what's new...]
+    """
+    esc = ops_hub.escape_markdown
+    parts = args.split()
+    sub = parts[0].lower() if parts else "status"
+
+    if sub == "status":
+        s = maintenance.get_status()
+        if s.get("state") != "maintenance":
+            return "🟢 System is *LIVE* — no maintenance active\\."
+        return (
+            f"🔧 Maintenance: *{esc(s.get('level', 'soft').upper())}*\n"
+            f"Reason: {esc(s.get('reason') or '—')}\n"
+            f"ETA: {esc(s.get('eta') or '—')}\n"
+            f"Since: {esc((s.get('started_at') or '')[:16])}"
+        )
+
+    if sub == "start":
+        rest = parts[1:]
+        level = "soft"
+        if rest and rest[0].lower() in ("soft", "hard"):
+            level = rest[0].lower()
+            rest = rest[1:]
+        eta = ""
+        window = maintenance.DEFAULT_WINDOW_MINUTES
+        if rest and rest[0].isdigit():
+            mins = int(rest[0])
+            rest = rest[1:]
+            eta = f"~{mins} min"
+            window = max(mins + 15, 15)
+        reason = " ".join(rest).strip()
+        maintenance.start(level=level, reason=reason, eta=eta, window_minutes=window)
+        result = await maintenance.broadcast_start(bot, maintenance.get_status())
+        surface = "overlay" if level == "hard" else "banner"
+        d_ok = "✅" if result.get("discord") else "❌"
+        return (
+            f"🔧 Maintenance *STARTED* \\({esc(level)}\\)\\.\n"
+            f"Students now see the {surface}\\.\n"
+            f"Announced → Discord {d_ok} · Telegram groups: {result.get('telegram_groups', 0)}\n"
+            f"Auto\\-resumes in {window} min if you forget `/maintenance end`\\."
+        )
+
+    if sub == "end":
+        changelog = " ".join(parts[1:]).strip()
+        maintenance.end()
+        result = await maintenance.broadcast_end(bot, changelog)
+        d_ok = "✅" if result.get("discord") else "❌"
+        return (
+            f"✅ Maintenance *ENDED* — system is LIVE\\.\n"
+            f"Announced → Discord {d_ok} · Telegram groups: {result.get('telegram_groups', 0)}"
+        )
+
+    return ("❓ Use `/maintenance status`, "
+            "`/maintenance start [soft|hard] [min] [reason]`, "
+            "or `/maintenance end [what's new]`")
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -247,6 +315,7 @@ async def handle_help(args: str, bot) -> str:
         "`/flag` — List/toggle feature flags",
         "`/flag <name> on/off` — Toggle a specific flag",
         "`/announce <msg>` — Post to \\#announcements",
+        "`/maintenance` — Status / `start [soft|hard] [min] [reason]` / `end`",
         "`/help` — This message",
     ]
     return "\n".join(lines)

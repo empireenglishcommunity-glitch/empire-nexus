@@ -129,6 +129,15 @@ TELEGRAM_ALERT_CHAT_ID = os.getenv("TELEGRAM_ALERT_CHAT_ID", "")
 OPS_BOT_TOKEN = os.getenv("OPS_BOT_TOKEN", "")
 OPS_CHAT_ID = os.getenv("OPS_CHAT_ID", "")  # Owner's private chat with the ops bot
 
+# Maintenance-mode student broadcast: comma-separated Telegram chat IDs of the
+# student groups (paid + free) the ops bot should post maintenance start/end
+# notices to. The ops bot MUST be a member/admin of each group. Empty = skip
+# Telegram groups (Discord #announcements broadcast still fires). E.g.
+# MAINTENANCE_TG_CHAT_IDS="-1001234567890,-1009876543210"
+MAINTENANCE_TG_CHAT_IDS = [
+    c.strip() for c in os.getenv("MAINTENANCE_TG_CHAT_IDS", "").split(",") if c.strip()
+]
+
 # ============================================================
 #  AQL (Nour Intelligence Core, Initiative #15) — ROLE RESOLUTION
 # ============================================================
