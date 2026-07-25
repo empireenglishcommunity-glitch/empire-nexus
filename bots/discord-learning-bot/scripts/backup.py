@@ -103,7 +103,18 @@ def backup(backup_dir: str = None, tag: str = None) -> str:
     # ── Rotate old backups ───────────────────────────────────────────────
     # Tagged and untagged backups share one rotation pool, deliberately
     # (see the module docstring) -- glob matches both filename shapes.
-    existing = sorted(glob.glob(os.path.join(backup_dir, "empire_english_*.db")))
+    #
+    # Sort by MODIFICATION TIME (oldest first), NOT by filename. Filename
+    # sorting was a real bug: date-prefixed daily backups
+    # ("empire_english_20260725_...") sort lexicographically BEFORE
+    # letter-prefixed tagged ones ("empire_english_pre-deploy-..."), so the
+    # freshly-created daily backup was always the one deleted while stale
+    # tagged snapshots were kept forever — leaving zero rolling daily
+    # coverage. mtime keeps the most RECENT MAX_BACKUPS regardless of name.
+    existing = sorted(
+        glob.glob(os.path.join(backup_dir, "empire_english_*.db")),
+        key=os.path.getmtime,
+    )
     if len(existing) > MAX_BACKUPS:
         to_delete = existing[: len(existing) - MAX_BACKUPS]
         for old_file in to_delete:
