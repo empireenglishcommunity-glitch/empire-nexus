@@ -188,29 +188,32 @@ def start_message(status: dict) -> str:
     """Bilingual 'we're doing maintenance' notice for students."""
     hard = status.get("level") == "hard"
     reason = status.get("message") or status.get("reason") or ""
-    eta = status.get("eta") or ""
-    head = ("🔧 **Quick maintenance in progress**" if hard
-            else "🔧 **Minor updates in progress**")
-    lines = [head]
+    # Wording distinguishes soft vs hard by whether the page is USABLE — never
+    # by time. No "quick"/"briefly"/"right back" (or Arabic سريعة/لحظات/حالًا):
+    # maintenance "might take minutes, maybe longer", so we never imply a
+    # duration. The minutes on /maintenance only drive the silent auto-resume.
     if hard:
-        lines.append("The practice page is briefly paused while we ship an "
-                     "improvement. We'll be right back.")
+        head, body = ("🔧 **Maintenance in progress**",
+                      "The practice page is paused while we make an "
+                      "improvement. It'll be back as soon as it's ready.")
+        head_ar, body_ar = ("🔧 **جاري الصيانة**",
+                            "الصفحة متوقفة مؤقتًا وإحنا بنعمل تحسين، "
+                            "وهترجع أول ما تجهز.")
     else:
-        lines.append("You can keep practicing — you might see small glitches "
-                     "for a few minutes.")
+        head, body = ("🔧 **Updates in progress**",
+                      "You can keep practicing — you may notice small changes "
+                      "while we improve things.")
+        head_ar, body_ar = ("🔧 **جاري التحديث**",
+                            "تقدر تكمّل تمرينك عادي، وممكن تلاحظ تغييرات بسيطة "
+                            "وإحنا بنطوّر.")
+    lines = [head, body]
     if reason:
         lines.append(f"• {reason}")
-    # No ETA / promised time on purpose: maintenance "might take minutes, maybe
-    # longer", so we never commit to a duration in the student-facing notice.
-    # The minutes passed to /maintenance still drive the silent auto-resume
-    # failsafe window; students just never see a promised time.
     lines.append("🔒 Your streak & progress are 100% safe.")
     lines.append("")
     lines.append("— — —")
-    lines.append("🔧 **صيانة سريعة**")
-    lines.append("إحنا بنطوّر حاجة بسيطة دلوقتي" +
-                 ("، والصفحة متوقفة لحظات وهنرجع حالًا." if hard
-                  else "، تقدر تكمّل تمرينك عادي."))
+    lines.append(head_ar)
+    lines.append(body_ar)
     lines.append("🔒 تقدّمك وسلسلة أيامك محفوظة بالكامل.")
     return "\n".join(lines)
 
