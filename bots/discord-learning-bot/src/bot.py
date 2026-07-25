@@ -3476,18 +3476,91 @@ async def cmd_members(ctx):
     if not members:
         await ctx.send("No registered members yet.")
         return
-    lines = [f"**👥 Members ({len(members)})**\n"]
+    lines = [f"**👥 Members ({len(members)})**"]
+    lines.append("_ID shown so you can target from #admin-commands (e.g. `!reset-student <id>`)._\n")
     for m in members[:20]:
         lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
         streak_str = f"🔥{m['current_streak']}" if m["current_streak"] > 0 else ""
-        lines.append(f"{lvl['emoji']} {m['discord_name']} — {m['level']} | {m['total_points']} pts {streak_str}")
+        lines.append(
+            f"{lvl['emoji']} {m['discord_name']} — {m['level']} | {m['total_points']} pts {streak_str}\n"
+            f"   🆔 `{m['discord_id']}`"
+        )
     if len(members) > 20:
-        lines.append(f"\n... and {len(members) - 20} more")
+        lines.append(f"\n... and {len(members) - 20} more — use `!find <name>` to look someone up.")
     try:
         await ctx.author.send("\n".join(lines))
         await ctx.send("📩 Members list sent to your DMs.", delete_after=5)
     except discord.Forbidden:
         await ctx.send("\n".join(lines))
+
+
+@bot.command(name="find")
+@commands.has_permissions(manage_guild=True)
+async def cmd_find(ctx, *, query: str = ""):
+    """Find registered students by (partial) name and show their IDs + a
+    ready-to-paste reset line. Works from #admin-commands even though the
+    Discord @-picker there can't see students (it's filtered by channel
+    visibility). Usage: `!find balqees`"""
+    query = query.strip()
+    if not query:
+        await ctx.send("Usage: `!find <name or part of a name>`")
+        return
+
+    q = query.casefold()
+    members = database.all_active_members()
+    by_id = {str(m["discord_id"]): m for m in members}
+
+    matches = {}  # discord_id -> (db_row, guild_display_name or None)
+
+    # 1) match on the registered discord_name
+    for m in members:
+        if q in (m.get("discord_name") or "").casefold():
+            matches[str(m["discord_id"])] = (m, None)
+
+    # 2) also match on the current server nickname / display name, and only
+    #    include people who are actually registered students (in the DB)
+    if ctx.guild:
+        for gm in ctx.guild.members:
+            if gm.bot:
+                continue
+            did = str(gm.id)
+            if did not in by_id:
+                continue
+            hay = f"{gm.display_name} {gm.name}".casefold()
+            if q in hay:
+                matches.setdefault(did, (by_id[did], gm.display_name))
+
+    # allow looking up directly by a pasted ID too
+    if query.isdigit() and query in by_id:
+        matches.setdefault(query, (by_id[query], None))
+
+    if not matches:
+        await ctx.send(
+            f"🔍 No registered student matches **{query}**. "
+            f"Try fewer letters, or `!members` to see everyone."
+        )
+        return
+
+    rows = list(matches.items())[:15]
+    lines = [f"**🔍 {len(rows)} match(es) for “{query}”:**\n"]
+    for did, (m, nick) in rows:
+        lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
+        name = m.get("discord_name") or "(unknown)"
+        nick_str = f" _(server name: {nick})_" if nick and nick != name else ""
+        lines.append(
+            f"{lvl['emoji']} **{name}**{nick_str} — {m['level']} | {m['total_points']} pts\n"
+            f"   🆔 `{did}`\n"
+            f"   ↪ reset: `!reset-student {did} <reason>`"
+        )
+    if len(matches) > 15:
+        lines.append(f"\n... and {len(matches) - 15} more — narrow your search.")
+
+    out = "\n".join(lines)
+    try:
+        await ctx.author.send(out)
+        await ctx.send("📩 Sent the matches to your DMs.", delete_after=5)
+    except discord.Forbidden:
+        await ctx.send(out)
 
 
 
