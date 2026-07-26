@@ -80,6 +80,9 @@ REGISTRY = [
 
     # ── HAFIZ (motivational engagement) ──
     ("hafiz_motivation", "Phase F (E4): AI-generated, always-varied motivational replies in #lN-text-practice + #lN-showcase, correction-free, throttled", "hafiz", False),
+
+    # ── ITQAN (weekly mastery assessment) ──
+    ("itqan_weekly_assessment", "Weekly Assessment (Itqan): calendar-gated, timed weekly mastery test on the practice page (5 skills, spiral, two-dimension pass, public Champions celebration / private support)", "itqan", False),
 ]
 
 # Initiative display names and emoji
@@ -95,6 +98,7 @@ INITIATIVES = {
     "masar": ("🧭", "MASAR", "personal growth narrative"),
     "hissar": ("🏰", "HISSAR", "security / anti-cheat / copyright"),
     "hafiz": ("🎉", "HAFIZ", "motivational engagement"),
+    "itqan": ("🎓", "ITQAN", "weekly mastery assessment"),
 }
 
 
