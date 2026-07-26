@@ -477,6 +477,61 @@ CREATE TABLE IF NOT EXISTS pending_resets (
     decided_at    TEXT DEFAULT NULL,
     consent_id    INTEGER DEFAULT NULL
 );
+
+-- Itqan (weekly mastery assessment). One row per attempt at a week's test.
+CREATE TABLE IF NOT EXISTS assessment_attempts (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id        TEXT NOT NULL,
+    level             TEXT NOT NULL,
+    week              INTEGER NOT NULL,
+    attempt_no        INTEGER NOT NULL DEFAULT 1,
+    started_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    finished_at       TEXT DEFAULT NULL,
+    status            TEXT NOT NULL DEFAULT 'in_progress',  -- in_progress|scored|flagged
+    consistency_pct   REAL DEFAULT NULL,
+    mastery_pct       REAL DEFAULT NULL,
+    result            TEXT DEFAULT NULL,                    -- mastered|distinction|not_yet
+    time_expired      INTEGER NOT NULL DEFAULT 0,
+    integrity_flags   TEXT NOT NULL DEFAULT '{}',           -- JSON: tab-aways, paste attempts, ...
+    seed              TEXT NOT NULL DEFAULT '',             -- deterministic item draw per attempt
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_assessment_attempts_member ON assessment_attempts(discord_id, level, week);
+
+-- One row per question in an attempt (feeds per-item feedback + "most-missed"
+-- owner reporting). discord_id is denormalized so reset/backup stay simple.
+CREATE TABLE IF NOT EXISTS assessment_items (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    attempt_id    INTEGER NOT NULL,
+    discord_id    TEXT NOT NULL,
+    item_no       INTEGER NOT NULL,
+    skill         TEXT NOT NULL,                -- listening|vocab|pronunciation|speaking|writing
+    source_week   INTEGER NOT NULL,
+    prompt_ref    TEXT NOT NULL DEFAULT '',
+    expected      TEXT NOT NULL DEFAULT '',
+    answer        TEXT NOT NULL DEFAULT '',
+    auto_score    REAL DEFAULT NULL,
+    ai_score      REAL DEFAULT NULL,
+    correct       INTEGER DEFAULT NULL,
+    feedback      TEXT NOT NULL DEFAULT '',
+    FOREIGN KEY (attempt_id) REFERENCES assessment_attempts(id)
+);
+CREATE INDEX IF NOT EXISTS idx_assessment_items_attempt ON assessment_items(attempt_id);
+CREATE INDEX IF NOT EXISTS idx_assessment_items_member ON assessment_items(discord_id);
+
+-- Durable "Week Mastered" record + badge source of truth (one row per student
+-- per content week once they've mastered it).
+CREATE TABLE IF NOT EXISTS week_mastery (
+    discord_id      TEXT NOT NULL,
+    level           TEXT NOT NULL,
+    week            INTEGER NOT NULL,
+    mastered        INTEGER NOT NULL DEFAULT 0,
+    distinction     INTEGER NOT NULL DEFAULT 0,
+    mastered_at     TEXT DEFAULT NULL,
+    best_attempt_id INTEGER DEFAULT NULL,
+    PRIMARY KEY (discord_id, level, week),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 
@@ -502,6 +557,7 @@ RESET_WIPE_TABLES = (
     "nour_conversations", "pronunciation_scores", "nour_growth_letters",
     "consumed_proof_messages", "done_cooldowns", "token_ip_log",
     "student_journey", "journey_coverage", "claim_codes",
+    "assessment_attempts", "assessment_items", "week_mastery",
 )
 
 
@@ -1228,6 +1284,50 @@ def set_setting(key: str, value: str):
     )
     conn.commit()
     conn.close()
+
+
+# ============================================================
+#  ITQAN (weekly assessment) — owner-tunable config
+# ============================================================
+#
+# Thresholds/config live in `settings` so the owner can tune them without a
+# redeploy. Defaults per design §2; a missing/blank setting falls back to the
+# default, and a bad value is ignored (falls back) so config can never crash
+# the assessment engine.
+
+ITQAN_CONFIG_DEFAULTS = {
+    "itqan_mastery_pass_pct": 70,        # int: mastery score needed to pass
+    "itqan_consistency_pass_pct": 70,    # int: daily-work score needed to pass
+    "itqan_distinction_pct": 90,         # int: mastery score for a ⭐ Distinction
+    "itqan_retake_cooldown_min": 720,    # int: minutes to wait before a retake
+    "itqan_spiral_recent_weight": 0.65,  # float: share of items from the newest week
+    "itqan_time_limit_min": 15,          # int: overall time limit
+}
+
+
+def get_itqan_config() -> dict:
+    """Return the Itqan config, reading `settings` overrides over the defaults.
+    Never raises: blank/invalid values fall back to the default."""
+    cfg = {}
+    for key, default in ITQAN_CONFIG_DEFAULTS.items():
+        raw = get_setting(key, "")
+        if raw == "":
+            cfg[key] = default
+            continue
+        try:
+            cfg[key] = type(default)(raw)
+        except (ValueError, TypeError):
+            cfg[key] = default
+    return cfg
+
+
+def set_itqan_config(key: str, value) -> bool:
+    """Set one Itqan config value (owner tuning). Returns False for unknown
+    keys so callers can reject typos rather than write junk settings."""
+    if key not in ITQAN_CONFIG_DEFAULTS:
+        return False
+    set_setting(key, str(value))
+    return True
 
 
 # ============================================================
