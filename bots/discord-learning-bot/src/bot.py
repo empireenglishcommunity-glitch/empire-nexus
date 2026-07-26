@@ -2,7 +2,7 @@
 
 The operational heart of the Learning Operating System. Handles:
   - Scheduled daily task delivery (6 AM) to level-specific channels
-  - Scheduled weekly assessment prompts (Sunday 10 AM)
+  - Scheduled weekly recap (Sunday 10 AM)
   - Member commands: !done, !progress, !streak, !top, !level, !help
   - Writing feedback pipeline (auto-evaluates submissions in #writing-feedback)
   - Streak tracking and leaderboard updates
@@ -17,7 +17,6 @@ Commands:
   !streaks             Leaderboard (streaks)
   !level               View your level info and advancement progress
   !week                View this week's curriculum focus
-  !assess              Calculate this week's assessment score
   !help                Show all commands
 
 Admin:
@@ -181,7 +180,6 @@ ARABIC_COMMAND_ALIASES = {
     "سلسلة": "streak",
     "مستوى": "level",
     "أسبوع": "week",
-    "تقييم": "assess",
     "ترتيب": "top",
     "سلسلات": "streaks",
     "صيانة": "maintenance",
@@ -419,8 +417,8 @@ async def on_ready():
 
     if not daily_task_post.is_running():
         daily_task_post.start()
-    if not weekly_assessment.is_running():
-        weekly_assessment.start()
+    if not weekly_recap.is_running():
+        weekly_recap.start()
     if not streak_update.is_running():
         streak_update.start()
     if not friday_feedback_survey.is_running():
@@ -1076,9 +1074,19 @@ async def streak_at_risk():
 
 
 @tasks.loop(time=datetime.time(hour=config.WEEKLY_ASSESSMENT_HOUR, tzinfo=_zone()))
-async def weekly_assessment():
-    """Send weekly assessment prompts every Sunday."""
+async def weekly_recap():
+    """Honest weekly recap every Sunday — real activity numbers only, no
+    scores or grades.
+
+    Replaces the old weekly "assessment", whose scoring gave 0 or 100 per
+    skill purely on whether a task was submitted (attendance dressed up as a
+    skill grade) and then labeled students Excellent…Critical — misleading
+    and unprofessional. This simply reflects back what the student actually
+    did this week; the owner promotes levels manually.
+    """
     if _now().weekday() != 6:  # 6 = Sunday
+        return
+    if config.IS_GHOST_INSTANCE:
         return
 
     guild = bot.get_guild(config.GUILD_ID)
@@ -1086,7 +1094,7 @@ async def weekly_assessment():
         return
 
     members = database.all_active_members()
-    scored = 0
+    sent = 0
     for member_data in members:
         discord_id = member_data["discord_id"]
         discord_member = guild.get_member(int(discord_id))
@@ -1094,61 +1102,36 @@ async def weekly_assessment():
             continue
 
         week_num = database.member_week_number(discord_id)
-
-        # Empire Reset 1c: the system now scores the week AUTOMATICALLY from
-        # the work already on record — the SAME computation the old !assess
-        # command did (build_weekly_assessment → save_assessment → points
-        # once/week). Students no longer need to run any command. (This also
-        # fixes a long-standing gap: save_assessment previously had no
-        # production caller, so !progress's "Last assessment" and !attention's
-        # trend detection never had data.)
-        result = task_engine.build_weekly_assessment(discord_id)
-        submitted = result.get("submitted_tasks", [])
+        subs = database.get_submissions_since(discord_id, days=7)
+        exercises = len(subs)
+        active_days = len({s["date"] for s in subs})
+        current, longest = database.get_streak(discord_id)
 
         try:
-            if not submitted:
-                # Nothing to score yet — encourage instead of sending a 0%.
-                await discord_member.send(
-                    f"📊 **Weekly check-in — Week {week_num}**\n"
+            if exercises == 0:
+                msg = (
+                    f"📅 **Your week — Week {week_num}**\n"
                     f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-                    f"No practice on record this week yet — a few minutes today counts!\n"
-                    f"Open your practice page with `!link`, or do ✍️ writing (`!6`) / 💬 community (`!7`).\n\n"
-                    f"لسه مفيش تمارين الأسبوع ده — ابدأ من `!link`. حتى شوية النهاردة بيفرقوا! 💪"
+                    f"No practice logged this week yet — a fresh start begins today! 🌱\n"
+                    f"Open your practice page with `!link`.\n\n"
+                    f"لسه مفيش تمارين الأسبوع ده — ابدأ النهاردة من `!link`. 💪"
                 )
-                continue
-
-            already = database.get_assessment_for_week(discord_id, week_num) is not None
-            database.save_assessment(
-                discord_id, week_num, result["scores"], result["overall"], result["rating"],
-            )
-            if not already:
-                database.add_points(discord_id, config.POINTS_ASSESSMENT, "weekly_assessment")
-
-            dim_lines = [
-                f"  {dim['name']}: **{result['scores'].get(dim['id'], 0):.0f}%**"
-                for dim in config.ASSESSMENT_DIMENSIONS
-            ]
-            missing = [
-                t for t in ("speaking", "listening", "vocab", "accent", "writing")
-                if t not in submitted
-            ]
-            missing_note = (
-                f"\n⚠️ Not done this week: {', '.join(f'`{t}`' for t in missing)}"
-                if missing else "\n✅ All assessment areas covered this week!"
-            )
-            await discord_member.send(
-                f"📊 **Your Weekly Assessment — Week {week_num}**\n"
-                f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                f"Overall: **{result['overall']:.0f}%** ({result['rating']})\n"
-                + "\n".join(dim_lines)
-                + missing_note
-                + f"\n\n🧭 Full details any time in `!progress`. Keep it up! 🏛️"
-            )
-            scored += 1
+            else:
+                msg = (
+                    f"📅 **Your week — Week {week_num}**\n"
+                    f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                    f"✅ Exercises completed: **{exercises}**\n"
+                    f"📆 Days practiced: **{active_days}/7**\n"
+                    f"🔥 Current streak: **{current}** days (best: {longest})\n\n"
+                    f"Great consistency — keep going! 🏛️\n"
+                    f"استمر على المداومة! 💪"
+                )
+            await discord_member.send(msg)
+            sent += 1
         except (discord.Forbidden, discord.HTTPException):
             pass
 
-    logger.info(f"Weekly assessment: auto-scored {scored}/{len(members)} member(s)")
+    logger.info(f"Weekly recap: sent to {sent} member(s)")
 
 
 @tasks.loop(hours=1)
@@ -1715,7 +1698,7 @@ async def nabd_weekly_summary():
 async def nabd_absence_check():
     """Nabd N5: daily absence recovery check (10:05 AM).
 
-    D022 fix (Hisn H4.6): staggered 5 minutes after weekly_assessment
+    D022 fix (Hisn H4.6): staggered 5 minutes after weekly_recap
     (also 10:00 Sunday) to avoid sending 2 individual DMs to the same
     student within the same instant every Sunday.
     """
@@ -1743,7 +1726,7 @@ async def nour_growth_letter_task():
 
     Runs every WEDNESDAY at 11 AM Dubai time. Deliberately placed on a
     different DAY than every other once-a-week task in this codebase
-    (markaz_weekly_report 09:00 Sun, weekly_assessment 10:00 Sun,
+    (markaz_weekly_report 09:00 Sun, weekly_recap 10:00 Sun,
     nour_weekly_review 10:00 Sun all cluster on Sunday) — not just a
     different minute on the same day, to actually spread the weekly
     notification load across the week rather than bunching 4 separate
@@ -2272,9 +2255,6 @@ async def cmd_progress(ctx):
     cal_done = len([t for t in completed_today if t in features.CALENDAR_TASK_IDS])
     disc_done = len([t for t in completed_today if t in features.DISCORD_ONLY_TASK_IDS])
 
-    latest = database.get_latest_assessment(str(ctx.author.id))
-    score_line = f"📊 Last assessment: **{latest['overall_score']:.0f}%** ({latest['rating']})" if latest else "📊 No assessment yet"
-
     msg = (
         f"**{ctx.author.display_name}'s Progress**\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -2284,7 +2264,6 @@ async def cmd_progress(ctx):
         f"🏆 Points: **{member['total_points']}**\n"
         f"🔥 Streak: **{member['current_streak']}** days (best: {member['longest_streak']})\n"
         f"📈 Completion rate (7 days): **{completion}%**\n"
-        f"{score_line}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"Today [{bar}] {len(completed_today)}/7  "
         f"(🌐 calendar {cal_done}/{len(features.CALENDAR_TASK_IDS)} + 💬 Discord {disc_done}/{len(features.DISCORD_ONLY_TASK_IDS)})\n"
@@ -2327,8 +2306,8 @@ async def cmd_progress(ctx):
                     f"{threshold - member['current_streak']} to go")
             break
     if level_info.get("advancement_score"):
-        msg += (f"\n🚀 To advance: keep your weekly `!assess` around "
-                f"{level_info['advancement_score']}%+ — your coach promotes you when you're ready.")
+        msg += ("\n🚀 To advance: keep practicing daily — your coach promotes "
+                "you when you're ready.")
 
     await ctx.send(msg)
 
@@ -2430,69 +2409,6 @@ async def cmd_week(ctx):
     await ctx.send("\n".join(lines))
 
 
-@bot.command(name="assess")
-async def cmd_assess(ctx):
-    """Calculate and save this week's assessment score.
-
-    This command never existed until now, even though weekly_assessment()'s
-    Sunday DM explicitly instructs every member to run `!assess` when done,
-    and !help/the module docstring both documented it — found via
-    adversarial-input stress testing on database.save_assessment(), which
-    turned out to have zero production callers anywhere in the bot. As a
-    result !progress's "Last assessment" line and !attention's
-    declining-assessment-trend detection always silently showed
-    "No assessment yet" / never fired in any real deployment.
-
-    Scores each config.ASSESSMENT_DIMENSIONS entry from real data already
-    on record this week (see task_engine.build_weekly_assessment's
-    docstring for exactly how) — this does not ask the member anything or
-    call the AI a second time, it just totals up what verification.py and
-    the #writing-feedback pipeline already confirmed. Awards
-    POINTS_ASSESSMENT once per week (re-running !assess later the same
-    week refreshes the stored score, e.g. after a late writing submission,
-    without double-awarding points).
-    """
-    member = database.get_member(str(ctx.author.id))
-    if not member:
-        await ctx.send("Not registered. Use `!join` first.")
-        return
-
-    week = database.member_week_number(str(ctx.author.id))
-    already_assessed = database.get_assessment_for_week(str(ctx.author.id), week) is not None
-
-    result = task_engine.build_weekly_assessment(str(ctx.author.id))
-    database.save_assessment(
-        str(ctx.author.id), week, result["scores"], result["overall"], result["rating"],
-    )
-
-    if not already_assessed:
-        database.add_points(str(ctx.author.id), config.POINTS_ASSESSMENT, "weekly_assessment")
-
-    dim_lines = []
-    for dim in config.ASSESSMENT_DIMENSIONS:
-        score = result["scores"].get(dim["id"], 0)
-        dim_lines.append(f"  {dim['name']}: **{score:.0f}%**")
-
-    missing = [
-        t for t in ("speaking", "listening", "vocab", "accent", "writing")
-        if t not in result["submitted_tasks"]
-    ]
-    missing_note = (
-        f"\n⚠️ Not completed this week: {', '.join(f'`{t}`' for t in missing)}"
-        if missing else "\n✅ All assessment tasks completed this week!"
-    )
-    bonus_note = f"\n🏆 +{config.POINTS_ASSESSMENT} assessment points!" if not already_assessed else ""
-
-    await ctx.send(
-        f"📊 **Week {week} Assessment — {ctx.author.display_name}**\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        + "\n".join(dim_lines) +
-        f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"**Overall: {result['overall']:.0f}% — {result['rating']}**"
-        f"{missing_note}{bonus_note}"
-    )
-
-
 @bot.command(name="help")
 async def cmd_help(ctx):
     """Show available commands — role-aware: students see only student
@@ -2512,7 +2428,7 @@ async def cmd_help(ctx):
         "`!link` — open your practice page\n"
         "`!top` — leaderboard\n"
         "`!week` · `!words` — this week's focus · your vocabulary\n"
-        "_(your weekly assessment is calculated automatically every Sunday)_\n\n"
+        "_(you'll get an honest weekly recap of your activity every Sunday)_\n\n"
         "**Account:**\n"
         "`!join <goal>` — set your learning goal\n"
         "`!notifications` — notification settings\n"
@@ -2575,7 +2491,7 @@ async def cmd_helpar(ctx):
         "`!link` — افتح منصة التمرين\n"
         "`!ترتيب` — لوحة النقاط\n"
         "`!أسبوع` · `!كلماتي` — محتوى الأسبوع · مفرداتك\n"
-        "_(تقييمك الأسبوعي بيتحسب تلقائيًا كل أحد)_\n"
+        "_(هتوصلك خلاصة أسبوعية بنشاطك كل يوم أحد)_\n"
         "`!مساعدة` — الصفحة دي\n\n"
         "**⚡ طريقة الاستخدام:**\n"
         "1️⃣ التمارين الخمسة الأساسية → على منصة التمرين (`!link`) وبتتسجّل لوحدها\n"
@@ -3571,7 +3487,7 @@ async def cmd_status(ctx):
         f"🚀 L2: {active_levels['L2']} | 👑 L3: {active_levels['L3']}\n"
         f"Submissions today: **{today_subs}**\n"
         f"Daily tasks: {'🟢 Running' if daily_task_post.is_running() else '🔴 Stopped'}\n"
-        f"Assessments: {'🟢 Running' if weekly_assessment.is_running() else '🔴 Stopped'}\n"
+        f"Weekly recap: {'🟢 Running' if weekly_recap.is_running() else '🔴 Stopped'}\n"
         f"Gemini: {'🟢' if config.GEMINI_API_KEY else '🔴'} | "
         f"Groq: {'🟢' if config.GROQ_API_KEY else '⚪'}\n"
         f"Timezone: {config.TIMEZONE}\n"

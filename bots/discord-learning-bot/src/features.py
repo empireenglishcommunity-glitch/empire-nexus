@@ -268,7 +268,6 @@ async def send_weekly_progress_report(guild: discord.Guild):
         completion = task_engine.calculate_completion_rate(m["discord_id"])
         current_streak, longest = database.get_streak(m["discord_id"])
         week = database.member_week_number(m["discord_id"])
-        latest = database.get_latest_assessment(m["discord_id"])
 
         # Build visual bars
         comp_bar = "█" * int(completion / 10) + "░" * (10 - int(completion / 10))
@@ -280,9 +279,6 @@ async def send_weekly_progress_report(guild: discord.Guild):
             f"🔥 Streak: **{current_streak}** يوم (أطول: {longest})\n"
             f"🏆 النقاط: **{m['total_points']}**\n"
         )
-
-        if latest:
-            msg += f"📝 آخر تقييم: **{latest['overall_score']:.0f}%** ({latest.get('rating', '')})\n"
 
         # Encouragement based on performance
         if completion >= 80:
