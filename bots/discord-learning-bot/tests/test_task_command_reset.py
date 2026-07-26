@@ -93,3 +93,48 @@ def test_only_67_reactions_added_constant():
     # Sanity: index mapping still writing=5, community=6.
     assert config.DAILY_TASKS[5]["id"] == "writing"
     assert config.DAILY_TASKS[6]["id"] == "community"
+
+
+
+# ============================================================
+#  Phase 1b — view-command consolidation
+# ============================================================
+
+@pytest.mark.asyncio
+async def test_difficulty_reset_via_arg():
+    """`!difficulty reset` (merged from the old !difficulty_reset) resets."""
+    database.register_member("600", "T")
+    ctx = _SimpleCtx("600")
+    await bot_mod.cmd_difficulty.callback(ctx, "reset")
+    ctx.send.assert_awaited_once()
+    assert "Normal" in ctx.send.await_args[0][0]
+
+
+@pytest.mark.asyncio
+async def test_difficulty_no_arg_shows_view():
+    database.register_member("601", "T")
+    ctx = _SimpleCtx("601")
+    await bot_mod.cmd_difficulty.callback(ctx, "")
+    msg = ctx.send.await_args[0][0]
+    assert "Difficulty" in msg or "صعوبة" in msg
+
+
+@pytest.mark.asyncio
+async def test_difficulty_reset_command_removed():
+    """The standalone !difficulty_reset command must no longer exist."""
+    assert not hasattr(bot_mod, "cmd_difficulty_reset")
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("cmd_name,hint", [
+    ("cmd_streak", "!progress"),
+    ("cmd_level", "!progress"),
+    ("cmd_streaks", "!top"),
+])
+async def test_folded_view_commands_redirect(cmd_name, hint):
+    """!streak/!level now point to !progress; !streaks points to !top."""
+    database.register_member("602", "T")
+    ctx = _SimpleCtx("602")
+    await getattr(bot_mod, cmd_name).callback(ctx)
+    ctx.send.assert_awaited_once()
+    assert hint in ctx.send.await_args[0][0]
