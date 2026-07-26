@@ -295,3 +295,228 @@ def score_attempt(item_scores: list, consistency_pct: float,
         "distinction": distinction,
         "status": status,
     }
+
+
+
+# ============================================================
+#  ATTEMPT LIFECYCLE (Phase 3) — server-side anti-cheat
+# ============================================================
+#
+# start / submit / finish, with the integrity rules enforced on the SERVER
+# (never trusting the client): unlock gate, one in-progress attempt, cooldown
+# between retakes, the time limit, and a fresh item draw per attempt.
+
+import json as _json
+import datetime as _dt
+import logging as _logging
+
+_alog = _logging.getLogger("empire-bot.itqan")
+
+
+def _utcnow() -> "_dt.datetime":
+    """Naive UTC 'now' — matches SQLite's naive-UTC datetime('now') strings
+    so the two can be compared directly (and avoids the deprecated utcnow())."""
+    return _dt.datetime.now(_dt.timezone.utc).replace(tzinfo=None)
+
+
+def week_unlocked(discord_id: str, level: str, week: int):
+    """Unlock rule (R1): every day of the week completed at least once
+    (day is green). Returns (unlocked: bool, days_remaining: list[int])."""
+    cal = database.get_calendar_mastery(discord_id, level)
+    remaining = [d for d in range(1, 8)
+                 if (cal.get((week, d)) or {}).get("day_tier", 0) < 1]
+    return (len(remaining) == 0, remaining)
+
+
+def _cooldown_until(last_finished: dict, cfg: dict):
+    if not last_finished or not last_finished.get("finished_at"):
+        return None
+    try:
+        fin = _dt.datetime.fromisoformat(last_finished["finished_at"])
+    except (ValueError, TypeError):
+        return None
+    return fin + _dt.timedelta(minutes=cfg["itqan_retake_cooldown_min"])
+
+
+def get_week_state(discord_id: str, level: str, week: int) -> dict:
+    """State for the calendar/page: locked | available | in_progress |
+    cooldown | not_yet | mastered."""
+    if database.itqan_is_mastered(discord_id, level, week):
+        return {"state": "mastered"}
+    unlocked, remaining = week_unlocked(discord_id, level, week)
+    if not unlocked:
+        return {"state": "locked", "days_remaining": remaining}
+    active = database.itqan_active_attempt(discord_id, level, week)
+    if active:
+        return {"state": "in_progress", "attempt_id": active["id"]}
+    cfg = database.get_itqan_config()
+    last = database.itqan_last_finished(discord_id, level, week)
+    cd = _cooldown_until(last, cfg)
+    if cd and _utcnow() < cd:
+        return {"state": "cooldown", "cooldown_until": cd.isoformat(),
+                "last_result": last.get("result")}
+    if last:
+        return {"state": "not_yet", "available": True, "last_result": last.get("result")}
+    return {"state": "available"}
+
+
+def _public_payload(skill: str, payload: dict) -> dict:
+    """Strip the answer before sending an item to the client."""
+    if skill == "vocab":
+        return {"prompt_ar": payload.get("prompt_ar", "")}
+    if skill == "listening":
+        return {"say_en": payload.get("say_en", "")}
+    if skill == "pronunciation":
+        return {"word": payload.get("word", ""), "pronunciation": payload.get("pronunciation", "")}
+    # speaking / writing: prompts + hints are fine to show
+    return {k: v for k, v in payload.items() if k != "expected"}
+
+
+def start_attempt(discord_id: str, level: str, week: int) -> dict:
+    """Create a new attempt if allowed. Returns {ok, attempt_id, time_limit_min,
+    items:[public]} or {ok:False, error}."""
+    if not database.is_feature_enabled("itqan_weekly_assessment", discord_id):
+        return {"ok": False, "error": "disabled"}
+    if database.itqan_is_mastered(discord_id, level, week):
+        return {"ok": False, "error": "already_mastered"}
+    unlocked, remaining = week_unlocked(discord_id, level, week)
+    if not unlocked:
+        return {"ok": False, "error": "locked", "days_remaining": remaining}
+    if database.itqan_active_attempt(discord_id, level, week):
+        return {"ok": False, "error": "attempt_in_progress"}
+    cfg = database.get_itqan_config()
+    last = database.itqan_last_finished(discord_id, level, week)
+    cd = _cooldown_until(last, cfg)
+    if cd and _utcnow() < cd:
+        return {"ok": False, "error": "cooldown", "cooldown_until": cd.isoformat()}
+
+    # fresh seed per attempt → re-draw (anti-memorization)
+    seed = f"{discord_id}:{level}:{week}:{_utcnow().timestamp()}"
+    bp = generate_blueprint(discord_id, level, week, seed=seed)
+    attempt = database.itqan_create_attempt(discord_id, level, week, seed)
+    database.itqan_insert_items(attempt["id"], discord_id, bp["items"])
+    return {
+        "ok": True,
+        "attempt_id": attempt["id"],
+        "attempt_no": attempt["attempt_no"],
+        "time_limit_min": bp["time_limit_min"],
+        "items": [
+            {"item_no": it["item_no"], "skill": it["skill"],
+             "source_week": it["source_week"],
+             "payload": _public_payload(it["skill"], it.get("payload", {}))}
+            for it in bp["items"]
+        ],
+    }
+
+
+async def submit_item(discord_id: str, attempt_id: int, item_no: int,
+                      answer: str = "", audio_bytes: bytes = None) -> dict:
+    """Score and store one item's answer. Objective items compare to the stored
+    expected; audio items (pronunciation/speaking) are transcribed via Whisper
+    then scored; writing scores the text. Graceful on transcription failure."""
+    attempt = database.itqan_get_attempt(attempt_id)
+    if not attempt or str(attempt["discord_id"]) != str(discord_id):
+        return {"ok": False, "error": "not_found"}
+    if attempt["status"] != "in_progress":
+        return {"ok": False, "error": "not_in_progress"}
+    items = {i["item_no"]: i for i in database.itqan_get_items(attempt_id)}
+    row = items.get(item_no)
+    if not row:
+        return {"ok": False, "error": "bad_item"}
+    payload = _json.loads(row["prompt_ref"] or "{}")
+    skill = row["skill"]
+
+    if skill in ("vocab", "listening"):
+        res = score_objective({"payload": payload}, answer)
+        database.itqan_save_item(attempt_id, item_no, answer,
+                                 auto_score=res["auto_score"], correct=res["correct"],
+                                 feedback=res["feedback"])
+        return {"ok": True}
+
+    if skill in ("pronunciation", "speaking"):
+        transcript = None
+        if audio_bytes:
+            try:
+                from . import pronunciation_scorer
+                transcript = await pronunciation_scorer.transcribe_audio(audio_bytes)
+            except Exception as e:
+                _alog.warning(f"itqan transcription error: {e}")
+                transcript = None
+        if transcript is None:
+            # graceful: keep the attempt, mark for owner review at finish
+            database.itqan_save_item(attempt_id, item_no, "", ai_score=None,
+                                     feedback="__pending_review__")
+            return {"ok": True, "pending_review": True}
+        if skill == "pronunciation":
+            res = score_pronunciation(payload.get("expected", ""), transcript)
+        else:
+            res = score_speaking(payload.get("target_words", []), transcript)
+        database.itqan_save_item(attempt_id, item_no, transcript,
+                                 ai_score=res["ai_score"], correct=res["correct"],
+                                 feedback=res["feedback"])
+        return {"ok": True}
+
+    # writing
+    res = score_writing(payload.get("target_words", []), answer)
+    database.itqan_save_item(attempt_id, item_no, answer,
+                             ai_score=res["ai_score"], correct=res["correct"],
+                             feedback=res["feedback"])
+    return {"ok": True}
+
+
+def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = None) -> dict:
+    """Aggregate item scores + consistency → verdict; persist; on mastery
+    upsert week_mastery. Returns the results payload."""
+    attempt = database.itqan_get_attempt(attempt_id)
+    if not attempt or str(attempt["discord_id"]) != str(discord_id):
+        return {"ok": False, "error": "not_found"}
+    if attempt["status"] != "in_progress":
+        return {"ok": False, "error": "not_in_progress"}
+
+    level, week = attempt["level"], attempt["week"]
+    items = database.itqan_get_items(attempt_id)
+    item_scores = []
+    has_ai_error = False
+    per_item = []
+    for it in items:
+        if it.get("feedback") == "__pending_review__":
+            has_ai_error = True
+            score = 0.0
+        else:
+            score = it["auto_score"] if it["auto_score"] is not None else \
+                    (it["ai_score"] if it["ai_score"] is not None else 0.0)
+        item_scores.append(score)
+        per_item.append({"item_no": it["item_no"], "skill": it["skill"],
+                         "correct": it["correct"], "feedback": it["feedback"],
+                         "expected": it["expected"]})
+
+    consistency = compute_consistency(discord_id, level, week)
+    cfg = database.get_itqan_config()
+    verdict = score_attempt(item_scores, consistency, has_ai_error=has_ai_error, cfg=cfg)
+
+    # time limit (server-side)
+    time_expired = False
+    try:
+        started = _dt.datetime.fromisoformat(attempt["started_at"])
+        time_expired = (_utcnow() - started) > _dt.timedelta(
+            minutes=cfg["itqan_time_limit_min"] + 1)  # +1 min grace
+    except (ValueError, TypeError, KeyError):
+        pass
+
+    # persist integrity flags
+    if integrity_flags:
+        conn = database._connect()
+        conn.execute("UPDATE assessment_attempts SET integrity_flags=? WHERE id=?",
+                     (_json.dumps(integrity_flags), attempt_id))
+        conn.commit()
+        conn.close()
+
+    database.itqan_finish_attempt(
+        attempt_id, verdict["mastery_pct"], verdict["consistency_pct"],
+        verdict["result"], verdict["distinction"], verdict["status"], time_expired)
+
+    if verdict["result"] == "mastered" and verdict["status"] == "scored":
+        database.itqan_upsert_mastery(discord_id, level, week,
+                                      verdict["distinction"], attempt_id)
+
+    return {"ok": True, "verdict": verdict, "items": per_item}

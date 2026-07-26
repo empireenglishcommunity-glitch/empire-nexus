@@ -1325,6 +1325,189 @@ async def post_darb_srs_review(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  ITQAN (weekly assessment) — attempt lifecycle API  (Phase 3)
+# ============================================================
+#
+# All four endpoints are Darb-session authed AND gated behind the
+# `itqan_weekly_assessment` flag (OFF until Phase 9). The scoring, unlock
+# gate, cooldown, single-attempt and time-limit rules all live server-side
+# in `assessment.py` — the client is never trusted.
+
+def _itqan_gate(request: web.Request):
+    """Shared auth + flag gate. Returns (payload, None) on success, or
+    (None, web.Response) with the error to return."""
+    payload = _session_from_request(request)
+    if not payload:
+        return None, web.json_response({"ok": False, "error": "unauthorized"},
+                                       status=401, headers=_cors_headers(request))
+    if not database.is_feature_enabled("itqan_weekly_assessment", payload["did"]):
+        return None, web.json_response({"ok": False, "enabled": False,
+                                        "error": "disabled"},
+                                       status=403, headers=_cors_headers(request))
+    return payload, None
+
+
+def _itqan_week_arg(raw, level: str):
+    """Parse + range-check a week value. Returns int or None."""
+    from . import curriculum
+    try:
+        week = int(raw)
+    except (TypeError, ValueError):
+        return None
+    if not (1 <= week <= curriculum.max_week_for_level(level)):
+        return None
+    return week
+
+
+@routes.get("/api/assessment/status")
+async def get_assessment_status(request: web.Request) -> web.Response:
+    """State for the page/calendar. With ?week=N: that week's state
+    (locked | available | in_progress | cooldown | not_yet | mastered).
+    Without it: the enabled flag + the set of already-mastered weeks."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    cfg = database.get_itqan_config()
+    thresholds = {
+        "mastery_pass_pct": cfg["itqan_mastery_pass_pct"],
+        "consistency_pass_pct": cfg["itqan_consistency_pass_pct"],
+        "distinction_pct": cfg["itqan_distinction_pct"],
+        "time_limit_min": cfg["itqan_time_limit_min"],
+    }
+    raw_week = request.query.get("week")
+    if raw_week is not None:
+        week = _itqan_week_arg(raw_week, level)
+        if week is None:
+            return web.json_response({"ok": False, "error": "bad week"},
+                                     status=400, headers=_cors_headers(request))
+        state = assessment.get_week_state(discord_id, level, week)
+        return web.json_response({"ok": True, "enabled": True, "week": week,
+                                  "config": thresholds, **state},
+                                 headers=_cors_headers(request))
+    return web.json_response({
+        "ok": True, "enabled": True, "config": thresholds,
+        "mastered_weeks": sorted(database.itqan_mastered_weeks(discord_id, level)),
+    }, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/start")
+async def post_assessment_start(request: web.Request) -> web.Response:
+    """Begin a new attempt for a week (if unlocked, no active attempt, and
+    off cooldown). Returns the drawn items with answers stripped."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    week = _itqan_week_arg(body.get("week"), level)
+    if week is None:
+        return web.json_response({"ok": False, "error": "bad week"},
+                                 status=400, headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+    result = assessment.start_attempt(discord_id, level, week)
+    status = 200 if result.get("ok") else 409
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/item")
+async def post_assessment_item(request: web.Request) -> web.Response:
+    """Submit one item's answer. Text items send JSON
+    {attempt_id, item_no, answer}; recording items send multipart/form-data
+    with an `audio` part plus `attempt_id` and `item_no` fields. Scoring is
+    stored server-side; the correctness is intentionally NOT returned during
+    the test."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+
+    attempt_id = item_no = None
+    answer = ""
+    audio_bytes = None
+    ctype = request.headers.get("Content-Type", "")
+
+    if ctype.startswith("multipart/"):
+        try:
+            reader = await request.multipart()
+        except Exception:
+            return web.json_response({"ok": False, "error": "multipart required"},
+                                     status=400, headers=_cors_headers(request))
+        while True:
+            part = await reader.next()
+            if part is None:
+                break
+            if part.name == "audio":
+                audio_bytes = await part.read()
+            elif part.name == "answer":
+                answer = (await part.text()).strip()
+            elif part.name == "attempt_id":
+                try:
+                    attempt_id = int(await part.text())
+                except (ValueError, TypeError):
+                    pass
+            elif part.name == "item_no":
+                try:
+                    item_no = int(await part.text())
+                except (ValueError, TypeError):
+                    pass
+    else:
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        answer = (body.get("answer") or "").strip()
+        try:
+            attempt_id = int(body.get("attempt_id"))
+            item_no = int(body.get("item_no"))
+        except (TypeError, ValueError):
+            attempt_id = item_no = None
+
+    if attempt_id is None or item_no is None:
+        return web.json_response({"ok": False, "error": "attempt_id and item_no required"},
+                                 status=400, headers=_cors_headers(request))
+    database.touch_device_session(payload["sid"])
+    result = await assessment.submit_item(discord_id, attempt_id, item_no,
+                                          answer=answer, audio_bytes=audio_bytes)
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/finish")
+async def post_assessment_finish(request: web.Request) -> web.Response:
+    """Finalize an attempt: aggregate → verdict → persist (and record
+    Week Mastered on a pass). Returns the full results payload."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    try:
+        attempt_id = int(body.get("attempt_id"))
+    except (TypeError, ValueError):
+        return web.json_response({"ok": False, "error": "attempt_id required"},
+                                 status=400, headers=_cors_headers(request))
+    integrity_flags = body.get("integrity_flags")
+    if integrity_flags is not None and not isinstance(integrity_flags, dict):
+        integrity_flags = None
+    database.touch_device_session(payload["sid"])
+    result = assessment.finish_attempt(discord_id, attempt_id, integrity_flags=integrity_flags)
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 

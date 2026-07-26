@@ -8,6 +8,7 @@ and level advancement tracking described in the Learning System blueprint.
 """
 import sqlite3
 import datetime
+import json
 from typing import Optional
 
 from . import config
@@ -2922,3 +2923,153 @@ def get_calendar_mastery(discord_id: str, level: str) -> dict:
             "done": done,
         }
     return result
+
+
+
+# ============================================================
+#  ITQAN (weekly assessment) — attempt lifecycle
+# ============================================================
+
+def itqan_attempts_count(discord_id: str, level: str, week: int) -> int:
+    conn = _connect()
+    n = conn.execute(
+        "SELECT COUNT(*) c FROM assessment_attempts WHERE discord_id=? AND level=? AND week=?",
+        (discord_id, level, week),
+    ).fetchone()["c"]
+    conn.close()
+    return n
+
+
+def itqan_active_attempt(discord_id: str, level: str, week: int):
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM assessment_attempts WHERE discord_id=? AND level=? AND week=? "
+        "AND status='in_progress' ORDER BY id DESC LIMIT 1",
+        (discord_id, level, week),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def itqan_get_attempt(attempt_id: int):
+    conn = _connect()
+    row = conn.execute("SELECT * FROM assessment_attempts WHERE id=?", (attempt_id,)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def itqan_create_attempt(discord_id: str, level: str, week: int, seed: str) -> dict:
+    """Create an in_progress attempt; returns {id, attempt_no}."""
+    attempt_no = itqan_attempts_count(discord_id, level, week) + 1
+    conn = _connect()
+    cur = conn.execute(
+        "INSERT INTO assessment_attempts (discord_id, level, week, attempt_no, seed) "
+        "VALUES (?,?,?,?,?)",
+        (discord_id, level, week, attempt_no, seed),
+    )
+    aid = cur.lastrowid
+    conn.commit()
+    conn.close()
+    return {"id": aid, "attempt_no": attempt_no}
+
+
+def itqan_insert_items(attempt_id: int, discord_id: str, items: list):
+    """Persist blueprint items (server-side expected answer + payload)."""
+    conn = _connect()
+    for it in items:
+        conn.execute(
+            "INSERT INTO assessment_items (attempt_id, discord_id, item_no, skill, "
+            "source_week, prompt_ref, expected) VALUES (?,?,?,?,?,?,?)",
+            (attempt_id, discord_id, it["item_no"], it["skill"], it["source_week"],
+             json.dumps(it.get("payload", {}), ensure_ascii=False),
+             str(it.get("payload", {}).get("expected", ""))),
+        )
+    conn.commit()
+    conn.close()
+
+
+def itqan_get_items(attempt_id: int) -> list:
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM assessment_items WHERE attempt_id=? ORDER BY item_no", (attempt_id,)
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def itqan_save_item(attempt_id: int, item_no: int, answer: str,
+                    auto_score=None, ai_score=None, correct=None, feedback: str = ""):
+    conn = _connect()
+    conn.execute(
+        "UPDATE assessment_items SET answer=?, auto_score=?, ai_score=?, correct=?, "
+        "feedback=? WHERE attempt_id=? AND item_no=?",
+        (answer, auto_score, ai_score,
+         (None if correct is None else (1 if correct else 0)),
+         feedback, attempt_id, item_no),
+    )
+    conn.commit()
+    conn.close()
+
+
+def itqan_finish_attempt(attempt_id: int, mastery_pct: float, consistency_pct: float,
+                         result: str, distinction: bool, status: str, time_expired: bool):
+    conn = _connect()
+    conn.execute(
+        "UPDATE assessment_attempts SET finished_at=datetime('now'), status=?, "
+        "mastery_pct=?, consistency_pct=?, result=?, time_expired=? WHERE id=?",
+        (status, mastery_pct, consistency_pct, result,
+         1 if time_expired else 0, attempt_id),
+    )
+    if distinction:
+        # store distinction implicitly via result label for the attempt
+        conn.execute("UPDATE assessment_attempts SET result=? WHERE id=?",
+                     ("distinction", attempt_id))
+    conn.commit()
+    conn.close()
+
+
+def itqan_last_finished(discord_id: str, level: str, week: int):
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM assessment_attempts WHERE discord_id=? AND level=? AND week=? "
+        "AND finished_at IS NOT NULL ORDER BY finished_at DESC LIMIT 1",
+        (discord_id, level, week),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def itqan_is_mastered(discord_id: str, level: str, week: int) -> bool:
+    conn = _connect()
+    row = conn.execute(
+        "SELECT mastered FROM week_mastery WHERE discord_id=? AND level=? AND week=?",
+        (discord_id, level, week),
+    ).fetchone()
+    conn.close()
+    return bool(row and row["mastered"])
+
+
+def itqan_upsert_mastery(discord_id: str, level: str, week: int,
+                         distinction: bool, best_attempt_id: int):
+    conn = _connect()
+    conn.execute(
+        "INSERT INTO week_mastery (discord_id, level, week, mastered, distinction, "
+        "mastered_at, best_attempt_id) VALUES (?,?,?,1,?,datetime('now'),?) "
+        "ON CONFLICT(discord_id, level, week) DO UPDATE SET mastered=1, "
+        "distinction=MAX(distinction, excluded.distinction), "
+        "mastered_at=COALESCE(mastered_at, excluded.mastered_at), "
+        "best_attempt_id=excluded.best_attempt_id",
+        (discord_id, level, week, 1 if distinction else 0, best_attempt_id),
+    )
+    conn.commit()
+    conn.close()
+
+
+def itqan_mastered_weeks(discord_id: str, level: str) -> set:
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT week FROM week_mastery WHERE discord_id=? AND level=? AND mastered=1",
+        (discord_id, level),
+    ).fetchall()
+    conn.close()
+    return {r["week"] for r in rows}
