@@ -2282,36 +2282,32 @@ async def cmd_progress(ctx):
             f" — نشاطك الأسبوعي{f' / {momentum_label_ar}' if momentum_label_ar else ''}"
         )
 
+    # Empire Reset 1b: fold the old standalone !streak (next-milestone) and
+    # !level (how-to-advance) hints into the one dashboard so students have a
+    # single place to look.
+    for threshold, bonus in sorted(config.STREAK_BONUS_POINTS.items()):
+        if member["current_streak"] < threshold:
+            msg += (f"\n🎯 Next streak bonus: **{threshold} days** (+{bonus} pts) — "
+                    f"{threshold - member['current_streak']} to go")
+            break
+    if level_info.get("advancement_score"):
+        msg += (f"\n🚀 To advance: keep your weekly `!assess` around "
+                f"{level_info['advancement_score']}%+ — your coach promotes you when you're ready.")
+
     await ctx.send(msg)
 
 
 @bot.command(name="streak")
 async def cmd_streak(ctx):
-    """View your streak details."""
-    # Aql (#15) Phase A6.4: actually viewing !streak is the real
-    # signal that this student now knows the streak system exists --
-    # a genuinely observed behavior, not a scripted checkpoint. See
-    # cmd_done's comment above for why this coexists with the
-    # unrelated nour_journey.py FSM with zero user-visible effect today.
+    """Empire Reset 1b: folded into !progress (which now shows your streak
+    and how far to your next bonus). Kept as a gentle signpost."""
+    # Aql (#15) Phase A6.4: viewing your streak is still a real signal that
+    # the student knows the streak system exists.
     database.set_journey_coverage(str(ctx.author.id), knows_streaks=True)
-
-    current, longest = database.get_streak(str(ctx.author.id))
-    completed = database.tasks_completed_today(str(ctx.author.id))
-    bar = "█" * len(completed) + "░" * (7 - len(completed))
-
-    msg = (
-        f"🔥 **{ctx.author.display_name}'s Streak**\n\n"
-        f"Current: **{current}** days\n"
-        f"Longest ever: **{longest}** days\n"
-        f"Today: [{bar}] {len(completed)}/7\n"
+    await ctx.send(
+        "🔥 سلسلتك (وكام يوم فاضل لأقرب مكافأة) دلوقتي في `!progress`.\n"
+        "🔥 Your streak — and your next bonus — is now in `!progress`."
     )
-    # Show next milestone
-    for threshold, bonus in sorted(config.STREAK_BONUS_POINTS.items()):
-        if current < threshold:
-            msg += f"\n🎯 Next bonus: **{threshold}-day streak** (+{bonus} pts) — {threshold - current} days away"
-            break
-
-    await ctx.send(msg)
 
 
 
@@ -2332,49 +2328,21 @@ async def cmd_top(ctx):
 
 @bot.command(name="streaks")
 async def cmd_streaks(ctx):
-    """Streak leaderboard."""
-    rows = database.streak_leaderboard(10)
-    if not rows:
-        await ctx.send("No streaks yet. Start today — open your practice with `!link`! 🔥")
-        return
-    medals = ["🥇", "🥈", "🥉"] + ["🔹"] * 7
-    lines = ["🔥 **Streak Leaderboard**\n"]
-    for i, row in enumerate(rows):
-        lines.append(f"{medals[i]} {row['discord_name']} — {row['current_streak']} days (best: {row['longest_streak']})")
-    await ctx.send("\n".join(lines))
+    """Empire Reset 1b: one leaderboard now — see !top."""
+    await ctx.send(
+        "🏆 في لوحة ترتيب واحدة بس دلوقتي — اكتب `!top`.\n"
+        "🏆 There's a single leaderboard now — use `!top`."
+    )
 
 
 @bot.command(name="level")
 async def cmd_level(ctx):
-    """View your level info and what's needed to advance."""
-    member = database.get_member(str(ctx.author.id))
-    if not member:
-        await ctx.send("Not registered. Use `!join` first.")
-        return
-
-    level = member["level"]
-    level_info = config.LEVELS[level]
-    week = database.member_week_number(str(ctx.author.id))
-
-    msg = (
-        f"{level_info['emoji']} **Your Level: {level} — {level_info['name']}**\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"📅 You're in week **{week}**\n"
-        f"📖 Vocabulary target: {level_info['vocab_target']} words\n"
-        f"🎙️ Speaking target: {level_info['speaking_target_seconds']} seconds\n"
-        f"⏱️ Daily time ({member['track']}): ~{level_info['daily_minutes_core']} min\n"
+    """Empire Reset 1b: folded into !progress (which shows your level, week,
+    and how to advance). Kept as a gentle signpost."""
+    await ctx.send(
+        "ℹ️ مستواك وأسبوعك وطريقة الترقية دلوقتي كلها في `!progress`.\n"
+        "ℹ️ Your level, week, and how to advance are now all in `!progress`."
     )
-    if level_info["advancement_score"]:
-        msg += (
-            f"\n**To advance to the next level:**\n"
-            f"• Keep your weekly assessment strong (aim for {level_info['advancement_score']}%+ — run `!assess`)\n"
-            f"• Reachable from week {level_info['duration_weeks'][0]} onwards\n"
-            f"• Your coach promotes you when you're ready — just keep practicing daily! 🏛️"
-        )
-    else:
-        msg += "\n👑 Level 3 is the mastery level — no advancement. Pursue quarterly certification!"
-
-    await ctx.send(msg)
 
 
 @bot.command(name="week")
@@ -2504,10 +2472,10 @@ async def cmd_help(ctx):
         "💬 `!7` — community (post in #general-chat or 10 min in voice)\n\n"
         "**Track your progress:**\n"
         "`!today` — what's left today\n"
-        "`!progress` — your full dashboard\n"
+        "`!progress` — your dashboard (level, week, streak, points, how to advance)\n"
         "`!link` — open your practice page\n"
-        "`!streak` — your streak · `!top` — leaderboard\n"
-        "`!level` · `!week` · `!assess` · `!words` — level · week focus · weekly score · vocab\n"
+        "`!top` — leaderboard\n"
+        "`!week` · `!words` · `!assess` — week focus · vocab · weekly score\n"
         "`!systemstatus` — system health\n\n"
         "**Account:**\n"
         "`!join <goal>` — set your learning goal\n"
@@ -2567,10 +2535,10 @@ async def cmd_helpar(ctx):
         "`!7` — 💬 المجتمع (اكتب في #general-chat أو ١٠ دقايق voice)\n\n"
         "**📊 تابع تقدمك:**\n"
         "`!اليوم` — اللي فاضل النهاردة\n"
-        "`!تقدم` — لوحة تقدمك\n"
+        "`!تقدم` — لوحة تقدمك (مستواك، أسبوعك، سلسلتك، نقاطك)\n"
         "`!link` — افتح منصة التمرين\n"
-        "`!سلسلة` — الـ streak بتاعك · `!ترتيب` — لوحة النقاط\n"
-        "`!مستوى` · `!أسبوع` · `!تقييم` — مستواك · محتوى الأسبوع · تقييم الأسبوع\n"
+        "`!ترتيب` — لوحة النقاط\n"
+        "`!أسبوع` · `!تقييم` — محتوى الأسبوع · تقييم الأسبوع\n"
         "`!مساعدة` — الصفحة دي\n\n"
         "**⚡ طريقة الاستخدام:**\n"
         "1️⃣ التمارين الخمسة الأساسية → على منصة التمرين (`!link`) وبتتسجّل لوحدها\n"
@@ -4023,14 +3991,21 @@ async def cmd_resources(ctx, level: str = "L0"):
 # ============================================================
 
 @bot.command(name="difficulty")
-async def cmd_difficulty(ctx):
-    """View or reset your adaptive difficulty level."""
+async def cmd_difficulty(ctx, action: str = ""):
+    """View your adaptive difficulty, or `!difficulty reset` to set it back
+    to Normal. Empire Reset 1b: the old separate `!difficulty_reset` command
+    is merged in here as the `reset` argument."""
     from . import adaptive_engine
 
     discord_id = str(ctx.author.id)
     member = database.get_member(discord_id)
     if not member:
         await ctx.send("You're not registered yet. Use `!join` to start.")
+        return
+
+    if action.strip().lower() == "reset":
+        database.update_member(discord_id, difficulty_level=2)
+        await ctx.send("✅ Difficulty reset to **Normal / عادي**.")
         return
 
     difficulty = member.get("difficulty_level", 2)
@@ -4052,17 +4027,6 @@ async def cmd_difficulty(ctx):
         f"💡 To reset to Normal: `!difficulty reset`"
     )
     await ctx.send(msg)
-
-
-@bot.command(name="difficulty_reset")
-async def cmd_difficulty_reset(ctx):
-    """Reset difficulty to Normal."""
-    discord_id = str(ctx.author.id)
-    member = database.get_member(discord_id)
-    if not member:
-        return
-    database.update_member(discord_id, difficulty_level=2)
-    await ctx.send("✅ Difficulty reset to **Normal / عادي**.")
 
 
 # ============================================================
