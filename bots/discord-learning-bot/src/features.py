@@ -509,7 +509,6 @@ async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
     # new student might not be able to read English yet.
     if database.is_feature_enabled("bawaba_buddy_prompt"):
         # Get today's first task for L0 (the new member's level)
-        first_task = config.DAILY_TASKS[0]  # accent drill (always first)
         try:
             await buddy.send(
                 f"👋 **عضو جديد انضم: {new_member.display_name}**\n"
@@ -517,8 +516,8 @@ async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
                 f"انت الـ buddy بتاعه. **ابعتله رسالة صوتية** بالعربي\n"
                 f"(اضغط مع الاستمرار على المايك في DM) وقوله:\n\n"
                 f"• أهلاً بيك، أنا هساعدك\n"
-                f"• أول مهمة ليك النهاردة: **{first_task['name_ar']}** ({first_task['name']})\n"
-                f"• لما تخلصها اكتب `!1` في #bot-commands\n"
+                f"• تمارينه الأساسية على منصة التمرين — يفتحها بأمر `!link`، وبتتسجّل لوحدها\n"
+                f"• الكتابة يكتب `!6` والمجتمع يكتب `!7` في #bot-commands\n"
                 f"• لو تايه اكتب `!مساعدة` أو كلمني\n\n"
                 f"💡 *ليه صوتية؟ ممكن يكون أول مرة يتعلم إنجليزي —\n"
                 f"رسالة صوتية بالعربي أسهل عليه من نص مكتوب.*\n\n"
@@ -1107,6 +1106,8 @@ async def show_today(ctx):
 
     total_min = 0
 
+    _num_hint = {"writing": "!6", "community": "!7"}
+
     def _task_line(task):
         nonlocal total_min
         tid = task["id"]
@@ -1114,7 +1115,11 @@ async def show_today(ctx):
             return f"  ✅ ~~{task['emoji']} {task['name_ar']}~~"
         mins = 10 if member.get("level", "L0") == "L0" else 15
         total_min += mins
-        return f"  ⬜ {task['emoji']} {task['name_ar']} — `!done {tid}`"
+        # Empire Reset: the 5 practice-page exercises auto-log when finished
+        # on the page; only writing (!6) + community (!7) are logged here.
+        if tid in DISCORD_ONLY_TASK_IDS:
+            return f"  ⬜ {task['emoji']} {task['name_ar']} — `{_num_hint.get(tid, '')}`"
+        return f"  ⬜ {task['emoji']} {task['name_ar']} — 🌐 `!link`"
 
     # Section 1 — the practice-page calendar tasks. (R6.2: explicit label
     # so a student who greened their calendar understands that's THIS
@@ -1282,7 +1287,7 @@ VOICE_SCHEDULE = """🔊 **جدول الجلسات الصوتية — Voice Sess
 حتى لو جملة واحدة — ده أحسن من سكوت. 🏛️
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*Voice sessions count as `!done community`*"""
+*Voice sessions count as community — log it with `!7`*"""
 
 
 # ============================================================
@@ -1416,11 +1421,11 @@ TUTORIAL_STEPS = {
     },
     5: {
         "prompt": (
-            "**الخطوة 5 (الأخيرة):** اكتب `!1` — ده هيبقى نفس الأمر\n"
-            "اللي تكتبه بكرة لما تخلص أول مهمة.\n\n"
-            "*(ده مجرد تمرين — مش هيسجل مهمة فعلية)*"
+            "**الخطوة 5 (الأخيرة):** اكتب `!link` — ده هيفتحلك منصة التمرين\n"
+            "اللي هتعمل عليها تمارينك الأساسية كل يوم (وبتتسجّل تلقائيًا).\n\n"
+            "*(الكتابة والمجتمع بتسجّلهم هنا في Discord بـ `!6` و `!7`)*"
         ),
-        "accept": lambda msg: msg.strip() in ("!1", "!تم", "!تم 1", "!done", "!done accent"),
+        "accept": lambda msg: msg.strip() in ("!link", "!6", "!7", "!1", "!تم", "!done"),
         "response": None,  # handled specially (completion message)
     },
 }
@@ -1430,9 +1435,9 @@ TUTORIAL_COMPLETION_MSG = (
     "━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     "🏆 **+15 نقطة** — أول نقاط ليك!\n\n"
     "**ملخص اللي اتعلمته:**\n"
-    "• `!1` إلى `!7` — لتسجيل المهام اليومية\n"
-    "• `!تقدم` — لمتابعة نقاطك\n"
-    "• `!مساعدة` — لكل الأوامر بالعربي\n\n"
+    "• تمارينك الأساسية على منصة التمرين — `!link` (بتتسجّل تلقائيًا)\n"
+    "• الكتابة `!6` والمجتمع `!7` هنا في Discord\n"
+    "• `!تقدم` — لمتابعة نقاطك · `!مساعدة` — لكل الأوامر\n\n"
     "**بكرة الساعة 6 الصبح:**\n"
     "هتلاقي مهام مرقمة في `#l0-daily-tasks`.\n"
     "اعمل المهمة → اكتب رقمها → خلاص! 🔥\n\n"
@@ -1592,7 +1597,8 @@ START_HERE_MESSAGE = """🏛️ **ابدأ من هنا — Empire English**
 └ 7 مهام مرقمة (كل مهمة 10 دقايق)
 
 **3️⃣ سجّل إنك خلصت**
-└ اكتب رقم المهمة: `!1` أو `!2` ... إلخ
+└ التمارين الأساسية على منصة التمرين (`!link`) بتتسجّل لوحدها
+└ الكتابة اكتب `!6` والمجتمع اكتب `!7`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1604,9 +1610,9 @@ START_HERE_MESSAGE = """🏛️ **ابدأ من هنا — Empire English**
 
 🎯 **أوامر مهمة:**
 • `!انضم` — سجل نفسك
-• `!1` إلى `!7` — سجل مهمة
-• `!تقدم` — شوف نقاطك
-• `!مساعدة` — كل الأوامر
+• `!link` — افتح منصة التمرين (تمارينك الأساسية)
+• `!6` / `!7` — سجل الكتابة / المجتمع
+• `!تقدم` — شوف نقاطك · `!مساعدة` — كل الأوامر
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 *System over instructor. Common Sense First.* 🏛️"""
@@ -1730,14 +1736,16 @@ async def check_absence_recovery(guild):
                     "💬 **مرحبًا {name}**\n\n"
                     "غبت عنا أسبوع كامل. كل حاجة لسه في مكانها — مستواك، نقاطك، كل شيء.\n"
                     "لو محتاج مساعدة أو عايز تتكلم، كلمنا في `#support`.\n\n"
-                    "لو عايز ترجع — اكتب `!1` وابدأ من جديد. 🏛️"
+                    "لو عايز ترجع — افتح تمارينك بأمر `!link`، أو اكتب جملة في "
+                    "`#general-chat` واكتب `!7`. 🏛️"
                 ).format(name=m["discord_name"])
             else:
                 msg = (
                     "💬 **Hey {name}**\n\n"
                     "It's been a full week. Everything is still here — your level, your points, everything.\n"
                     "If you need help or want to talk, reach out in `#support`.\n\n"
-                    "To come back — just type `!1` and start fresh. 🏛️"
+                    "To come back — open your practice with `!link`, or post a "
+                    "line in `#general-chat` and type `!7`. 🏛️"
                 ).format(name=m["discord_name"])
             try:
                 await discord_member.send(msg)
@@ -1787,9 +1795,9 @@ async def check_absence_recovery(guild):
         # Day 2: gentle bot DM
         elif days_inactive >= 2 and not database.was_notification_sent(discord_id, "absence_day2", today):
             if phase == "arabic":
-                msg = "👋 **مفتقدينك!**\n\nحتى مهمة واحدة النهاردة أحسن من لا شيء.\nاكتب `!1` وابدأ. 💪"
+                msg = "👋 **مفتقدينك!**\n\nحتى مهمة واحدة النهاردة أحسن من لا شيء.\nافتح تمارينك بأمر `!link` وابدأ. 💪"
             else:
-                msg = "👋 **We miss you!**\n\nEven one task today is better than none.\nType `!1` to start. 💪"
+                msg = "👋 **We miss you!**\n\nEven one task today is better than none.\nOpen your practice with `!link` to start. 💪"
             try:
                 await discord_member.send(msg)
                 database.log_notification(discord_id, "absence_day2", today)

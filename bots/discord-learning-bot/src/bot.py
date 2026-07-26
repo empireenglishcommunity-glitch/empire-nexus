@@ -150,6 +150,22 @@ _daily_task_messages: set[int] = set()
 _TASK_NUMBER_EMOJIS = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣"]
 _EMOJI_TO_TASK_INDEX = {e: i for i, e in enumerate(_TASK_NUMBER_EMOJIS)}
 
+# Empire Reset (session-33): the 5 core exercises (accent, vocab, shadowing,
+# listening, speaking) are logged AUTOMATICALLY when a student finishes them
+# on the practice page (via /api/practice-complete + /api/submit-recording).
+# So in Discord we only log the two Discord-side tasks — writing (!6) and
+# community (!7). Any attempt to log one of the 5 core tasks in Discord (via
+# !done, !1-!5, or a 1️⃣-5️⃣ reaction) shows this gentle bilingual signpost
+# instead of a dead "unknown command".
+_TASK_REDIRECT_MSG = (
+    "✅ التمارين الخمسة الأساسية (النطق، المفردات، المحاكاة، الاستماع، الكلام) "
+    "بتتسجّل **تلقائيًا** أول ما تخلّصها على منصة التمرين — افتحها بأمر `!link`.\n"
+    "هنا في Discord بتسجّل بس: ✍️ الكتابة `!6` و 💬 المجتمع `!7`.\n\n"
+    "✅ The 5 core exercises log **automatically** when you finish them on the "
+    "practice page — open it with `!link`. In Discord you only log "
+    "✍️ writing (`!6`) and 💬 community (`!7`)."
+)
+
 # Maps Arabic command words to their English equivalents. The rewriting
 # happens in on_message BEFORE bot.process_commands() runs, so every
 # existing command handler works with Arabic input for free — no
@@ -311,7 +327,8 @@ async def _send_onboarding_media(member: discord.Member):
             "3️⃣  **اعمل المهمة**\n"
             "    └ كل مهمة 10 دقايق: نطق، مفردات، استماع...\n\n"
             "4️⃣  **سجّل إنك خلصت**\n"
-            "    └ اكتب رقم المهمة: `!1` أو `!2` ... إلخ\n\n"
+            "    └ التمارين الأساسية على منصة التمرين (`!link`) بتتسجّل لوحدها\n"
+            "    └ الكتابة اكتب `!6` والمجتمع اكتب `!7`\n\n"
             "5️⃣  **شوف تقدمك يكبر 🔥**\n"
             "    └ اكتب `!تقدم` — نقاطك هتزيد كل يوم\n\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -645,7 +662,7 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
                 "انت دلوقتي في **Level 0** — مبتدئ.\n"
                 "كل يوم الساعة 6 الصبح هتلاقي مهام في قناة `#l0-daily-tasks`.\n\n"
                 "اكتب `!مساعدة` في `#bot-commands` لو محتاج مساعدة.\n"
-                "أو اكتب `!1` لما تخلص أول مهمة. بالتوفيق! 💪"
+                "أو افتح تمارينك بأمر `!link` وابدأ. بالتوفيق! 💪"
             )
         except discord.Forbidden:
             pass
@@ -656,6 +673,11 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
     if emoji_str in _EMOJI_TO_TASK_INDEX and payload.message_id in _daily_task_messages:
         task_index = _EMOJI_TO_TASK_INDEX[emoji_str]
         task_id = config.DAILY_TASKS[task_index]["id"]
+        # Empire Reset (session-33): only writing + community are logged in
+        # Discord; the 5 core exercises auto-log on the practice page. Ignore
+        # a 1️⃣-5️⃣ reaction (the daily post no longer adds those anyway).
+        if task_id not in features.DISCORD_ONLY_TASK_IDS:
+            return
         member = guild.get_member(payload.user_id)
         if not member or member.bot:
             return
@@ -789,7 +811,11 @@ async def daily_task_post():
                 if database.is_feature_enabled("bawaba_reactions") and sent_messages:
                     first_msg = sent_messages[0]
                     _daily_task_messages.add(first_msg.id)
-                    for emoji in _TASK_NUMBER_EMOJIS[:7]:
+                    # Empire Reset (session-33): only add the 6️⃣/7️⃣ reactions
+                    # (writing + community). The 5 core exercises log
+                    # automatically on the practice page, so reacting 1️⃣-5️⃣
+                    # here is no longer a completion path.
+                    for emoji in _TASK_NUMBER_EMOJIS[5:7]:
                         try:
                             await first_msg.add_reaction(emoji)
                         except discord.HTTPException:
@@ -872,7 +898,7 @@ async def morning_kickstart():
                 f"{streak_text}\n\n"
                 f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629: **{first_task['name_ar']}** {first_task['emoji']}\n"
                 f"\U0001f310 \u0627\u062a\u0645\u0631\u0646 \u0623\u0648\u0646\u0644\u0627\u064a\u0646: {practice_url_with_token}\n\n"
-                f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 \U0001f4aa"
+                f"تمارينك الأساسية بتتسجّل لوحدها على الصفحة. الكتابة `!6` والمجتمع `!7` \U0001f4aa"
             )
         elif phase == "bilingual_ar":
             streak_text = f"\U0001f525 \u0633\u0644\u0633\u0644\u0629 (Streak): **{streak}** \u064a\u0648\u0645" if streak > 0 else "\U0001f331 \u0627\u0628\u062f\u0623 \u0633\u0644\u0633\u0644\u0629 \u062c\u062f\u064a\u062f\u0629! (Start a new streak!)"
@@ -882,7 +908,7 @@ async def morning_kickstart():
                 f"{streak_text}\n\n"
                 f"\u0623\u0648\u0644 \u0645\u0647\u0645\u0629 (First task): **{first_task['name_ar']}** ({first_task['name']}) {first_task['emoji']}\n"
                 f"\U0001f310 Practice online: {practice_url_with_token}\n\n"
-                f"\u0627\u0643\u062a\u0628 `!1` \u0644\u0645\u0627 \u062a\u062e\u0644\u0635 (type `!1` when done) \U0001f4aa"
+                f"تمارينك بتتسجّل لوحدها على الصفحة (auto-logged). الكتابة `!6` والمجتمع `!7` \U0001f4aa"
             )
         else:
             streak_text = f"\U0001f525 Streak: **{streak}** days" if streak > 0 else "\U0001f331 Start a new streak today!"
@@ -892,7 +918,7 @@ async def morning_kickstart():
                 f"{streak_text}\n\n"
                 f"First task: **{first_task['name']}** {first_task['emoji']}\n"
                 f"\U0001f310 Practice online: {practice_url_with_token}\n\n"
-                f"Type `!1` when done \U0001f4aa"
+                f"Your page exercises log automatically. For writing/community type `!6` / `!7` \U0001f4aa"
             )
 
         try:
@@ -1995,25 +2021,27 @@ async def _score_pronunciation(ctx, task_id: str):
 
 @bot.command(name="done")
 async def cmd_done(ctx, task: str = None):
-    """Mark a task as completed (with verification). Usage: !done accent / !done speaking / etc."""
+    """Log a Discord-side task. Empire Reset (session-33): the 5 core
+    exercises (accent, vocab, shadowing, listening, speaking) are logged
+    AUTOMATICALLY when finished on the practice page, so only the two
+    Discord-side tasks are logged here — writing (`!6`) and community
+    (`!7`). Every other invocation (no task, unknown task, or one of the
+    5 auto-logged exercises) gently points the student to the right place.
+    """
     valid_tasks = [t["id"] for t in config.DAILY_TASKS]
 
-    if not task:
-        completed = database.tasks_completed_today(str(ctx.author.id))
-        remaining = [t for t in valid_tasks if t not in completed]
-        if not remaining:
-            await ctx.send("🎉 All tasks done today! Amazing!")
-            return
-        await ctx.send(
-            f"Which task? Use: `!done <task>`\n"
-            f"Remaining: {', '.join(f'`{t}`' for t in remaining)}\n"
-            f"Completed: {len(completed)}/7"
-        )
-        return
+    # Normalize a numeric arg (e.g. "!done 6" or the Arabic "!تم 6" which
+    # rewrites to "!done 6") to its task id, so numbers and names behave
+    # identically here.
+    _num_to_task = {str(i + 1): t["id"] for i, t in enumerate(config.DAILY_TASKS)}
+    if task:
+        task = task.lower().strip()
+        task = _num_to_task.get(task, task)
 
-    task = task.lower().strip()
-    if task not in valid_tasks:
-        await ctx.send(f"❌ Unknown task. Valid: {', '.join(f'`{t}`' for t in valid_tasks)}")
+    # Only writing + community are logged in Discord. No task, an unknown
+    # task, or any of the 5 practice-page exercises → signpost, don't log.
+    if (not task) or (task not in valid_tasks) or (task in features.CALENDAR_TASK_IDS):
+        await ctx.send(_TASK_REDIRECT_MSG)
         return
 
     # GRADUAL INTRO: Check if this task is unlocked for new members
@@ -2307,7 +2335,7 @@ async def cmd_streaks(ctx):
     """Streak leaderboard."""
     rows = database.streak_leaderboard(10)
     if not rows:
-        await ctx.send("No streaks yet. Start with `!done`! 🔥")
+        await ctx.send("No streaks yet. Start today — open your practice with `!link`! 🔥")
         return
     medals = ["🥇", "🥈", "🥉"] + ["🔹"] * 7
     lines = ["🔥 **Streak Leaderboard**\n"]
@@ -2467,30 +2495,25 @@ async def cmd_help(ctx):
     commands; admins additionally see the Admin section."""
     student_help = (
         "**🏛️ Empire English Bot — Commands**\n\n"
-        "**Learning:**\n"
-        "`!join <goal>` — Register and set your goal\n"
-        "`!done <task>` — Mark a task done (with verification)\n"
-        "`!today` — See your remaining tasks for today\n"
-        "`!progress` — Your full progress dashboard\n"
-        "`!streak` — Your streak details\n"
-        "`!level` — Your level info and advancement requirements\n"
-        "`!week` — This week's curriculum focus\n"
-        "`!assess` — Calculate this week's assessment score\n"
-        "`!top` — Points leaderboard\n"
-        "`!streaks` — Streak leaderboard\n"
-        "`!systemstatus` — Check system health (public)\n\n"
-        "**How `!done` works (verification):**\n"
-        "🎯 `!done accent` — upload audio in #showcase first\n"
-        "📖 `!done vocab` — bot asks you a word quiz\n"
-        "🎧 `!done shadow` — upload 30s+ audio in #showcase first\n"
-        "🎙️ `!done speaking` — upload audio in #showcase first\n"
-        "👂 `!done listening` — bot asks a comprehension question\n"
-        "✍️ `!done writing` — write in #text-practice first (20+ chars)\n"
-        "💬 `!done community` — post in #general-chat or 10min voice\n"
-        "⏳ 5 min cooldown between each `!done`\n\n"
+        "**📅 Your daily tasks:**\n"
+        "The 5 core exercises (accent, vocabulary, shadowing, listening, "
+        "speaking) are done on the **practice page** — open it with `!link`. "
+        "They log **automatically** when you finish them.\n"
+        "In Discord you log the 2 community tasks:\n"
+        "✍️ `!6` — writing (write in #text-practice first, 20+ chars)\n"
+        "💬 `!7` — community (post in #general-chat or 10 min in voice)\n\n"
+        "**Track your progress:**\n"
+        "`!today` — what's left today\n"
+        "`!progress` — your full dashboard\n"
+        "`!link` — open your practice page\n"
+        "`!streak` — your streak · `!top` — leaderboard\n"
+        "`!level` · `!week` · `!assess` · `!words` — level · week focus · weekly score · vocab\n"
+        "`!systemstatus` — system health\n\n"
         "**Account:**\n"
-        "`!delete` — Request deletion of all your data\n"
-        "`!resetme` — Reset your learning history (with your consent)\n"
+        "`!join <goal>` — set your learning goal\n"
+        "`!notifications` — notification settings\n"
+        "`!delete` — request deletion of all your data\n"
+        "`!resetme` — reset your learning history (with your consent)\n"
     )
 
     admin_help = (
@@ -2535,34 +2558,24 @@ async def cmd_helpar(ctx):
 
     await ctx.send(
         "**🏛️ أوامر البوت — Empire English**\n\n"
-        "**📋 أوامر بالأرقام (الأسهل):**\n"
-        "`!1` — تم مهمة النطق\n"
-        "`!2` — تم مهمة المفردات\n"
-        "`!3` — تم مهمة المحاكاة\n"
-        "`!4` — تم مهمة الكلام\n"
-        "`!5` — تم مهمة الاستماع\n"
-        "`!6` — تم مهمة الكتابة\n"
-        "`!7` — تم مهمة المجتمع\n\n"
-        "**📋 أوامر بالعربي:**\n"
-        "`!انضم <هدفك>` — سجل نفسك وحط هدفك\n"
-        "`!تم` أو `!تم 1` — سجل إنك خلصت مهمة\n"
-        "`!تقدم` — شوف تقدمك\n"
-        "`!سلسلة` — شوف الـ streak بتاعك\n"
-        "`!مستوى` — معلومات عن مستواك\n"
-        "`!أسبوع` — محتوى الأسبوع ده\n"
-        "`!تقييم` — احسب تقييم الأسبوع\n"
-        "`!ترتيب` — لوحة النقاط\n"
-        "`!حالة` — حالة النظام\n"
+        "**📅 مهامك اليومية:**\n"
+        "التمارين الخمسة الأساسية (النطق، المفردات، المحاكاة، الاستماع، الكلام) "
+        "بتعملها على **منصة التمرين** — افتحها بأمر `!link` — وبتتسجّل **تلقائيًا** "
+        "أول ما تخلّصها.\n"
+        "هنا في Discord بتسجّل مهمتين بس:\n"
+        "`!6` — ✍️ الكتابة (اكتب في #text-practice الأول، ٢٠ حرف+)\n"
+        "`!7` — 💬 المجتمع (اكتب في #general-chat أو ١٠ دقايق voice)\n\n"
+        "**📊 تابع تقدمك:**\n"
+        "`!اليوم` — اللي فاضل النهاردة\n"
+        "`!تقدم` — لوحة تقدمك\n"
+        "`!link` — افتح منصة التمرين\n"
+        "`!سلسلة` — الـ streak بتاعك · `!ترتيب` — لوحة النقاط\n"
+        "`!مستوى` · `!أسبوع` · `!تقييم` — مستواك · محتوى الأسبوع · تقييم الأسبوع\n"
         "`!مساعدة` — الصفحة دي\n\n"
         "**⚡ طريقة الاستخدام:**\n"
-        "1️⃣ كل يوم الساعة 6 الصبح هتلاقي مهام مرقمة 1-7\n"
-        "2️⃣ اعمل المهمة\n"
-        "3️⃣ اكتب رقمها: `!1` أو `!2` ... إلخ\n"
-        "4️⃣ البوت هيتأكد ويديك النقاط ✅\n\n"
-        "**🎯 أسماء المهام بالعربي (لو حبيت):**\n"
-        "`!تم نطق` | `!تم مفردات` | `!تم محاكاة` | `!تم كلام`\n"
-        "`!تم استماع` | `!تم كتابة` | `!تم مجتمع`\n\n"
-        "💡 *كل الأوامر بالإنجليزي لسه شغالة عادي: `!done accent` إلخ*"
+        "1️⃣ التمارين الخمسة الأساسية → على منصة التمرين (`!link`) وبتتسجّل لوحدها\n"
+        "2️⃣ الكتابة → اكتب في #text-practice وبعدين اكتب `!6`\n"
+        "3️⃣ المجتمع → شارك في #general-chat أو voice وبعدين اكتب `!7`\n"
     )
 
 
@@ -3363,7 +3376,7 @@ async def cmd_words(ctx):
     if stats["total"] == 0:
         await ctx.send(
             "📖 **لسه مفيش كلمات في نظام التكرار.**\n\n"
-            "لما تخلص مهام المفردات (`!2` أو `!done vocab`)، الكلمات هتتضاف أوتوماتيك.\n"
+            "لما تعمل تمارين المفردات على منصة التمرين (`!link`)، الكلمات هتتضاف أوتوماتيك.\n"
             "النظام هيراجعلك الكلمات القديمة عشان متنساهاش! 🧠"
         )
         return

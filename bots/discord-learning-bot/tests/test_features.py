@@ -609,11 +609,11 @@ async def test_show_today_breakdown_reflects_completed_calendar_tasks():
     assert "🌐 تقويمك 5/5" in sent
     assert "💬 Discord 0/2" in sent
     assert "5/7" in sent
-    # The 2 remaining Discord tasks must still be listed as not-done.
-    assert "!done writing" in sent
-    assert "!done community" in sent
-    # The 5 completed calendar tasks must NOT be listed as pending.
-    assert "!done accent" not in sent
+    # Empire Reset: the 2 remaining Discord tasks are logged via !6 / !7.
+    assert "!6" in sent
+    assert "!7" in sent
+    # All 5 calendar tasks are done, so no pending "open the page" hint appears.
+    assert "🌐 `!link`" not in sent
 
 
 @pytest.mark.asyncio
