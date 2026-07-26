@@ -429,6 +429,8 @@ async def on_ready():
         midnight_voice_reset.start()
     if not nour_journey_daily_check.is_running():
         nour_journey_daily_check.start()
+    if not onboarding_gate_check.is_running():
+        onboarding_gate_check.start()
     if not markaz_daily_digest.is_running():
         markaz_daily_digest.start()
     if not markaz_weekly_report.is_running():
@@ -612,6 +614,17 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 
     # --- Flow 1: ✅ reaction → auto-register ---
     if emoji_str == "✅":
+        # Session-33 hardening: when the role-gate is active, the ONLY
+        # sanctioned registration path is accepting the rules in #rules
+        # (handled above by role_gate.handle_reaction_gate, which grants
+        # the gateway role AND starts the guided journey). This legacy
+        # "✅ anywhere → auto-register" path would register a member
+        # WITHOUT the gateway role and WITHOUT the journey — a silent
+        # onboarding bypass. Skip it entirely while the gate is on.
+        # (Reactions in #rules already returned above; this only ever
+        # concerns a ✅ left on some other visible message, e.g. #welcome.)
+        if database.is_feature_enabled("hissar_role_gate"):
+            return
         member = guild.get_member(payload.user_id)
         if not member or member.bot:
             return
@@ -1499,6 +1512,27 @@ async def nour_journey_daily_check():
     conn.close()
     for row in rows:
         await nour_journey.check_advancement(row["discord_id"], "day_passed", bot)
+
+
+@tasks.loop(time=datetime.time(hour=3, minute=0, tzinfo=_zone()))
+async def onboarding_gate_check():
+    """Onboarding safety net (session-33). Once daily (03:00 Dubai) run a
+    read-only audit of every active student against the two onboarding
+    signals — the #rules gateway role and a guided-journey row — and alert
+    the owner via Empire Ops if anyone is in the server without the gate
+    (a bypass) or holds the role but never started the journey. Alerts only
+    when the flagged set CHANGES (no daily spam) and NEVER DMs a student.
+    This is the tripwire that would have caught the session-23 gap.
+    """
+    if config.IS_GHOST_INSTANCE:
+        return
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+    try:
+        await role_gate.run_onboarding_reconciliation(guild)
+    except Exception as e:
+        logger.error(f"onboarding_gate_check failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
@@ -3442,6 +3476,14 @@ async def cmd_postgate(ctx):
 async def cmd_setupgate(ctx):
     """Auto-configure channel permissions for role-gate (Hissar P1.2). Run ONCE."""
     await role_gate.cmd_setupgate(ctx)
+
+
+@bot.command(name="checkgate")
+@commands.has_permissions(administrator=True)
+async def cmd_checkgate(ctx):
+    """Onboarding audit (session-33): who passed the gate / has a guided
+    journey, and flags anyone who slipped past either. Read-only."""
+    await role_gate.cmd_checkgate(ctx)
 
 
 @bot.command(name="revoke")

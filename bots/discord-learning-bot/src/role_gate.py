@@ -377,3 +377,173 @@ async def cmd_setupgate(ctx) -> bool:
     await ctx.send(result)
     logger.info(f"Role-gate setup: {modified} channels modified, {retroactive} existing members granted, {errors} errors")
     return True
+
+
+
+# ============================================================
+#  ONBOARDING SAFETY NET — read-only reconciliation
+# ============================================================
+#
+#  Session-33 hardening. The role-gate + guided journey can only be
+#  *skipped* if (a) a member ends up in the server without the gateway
+#  role, or (b) they hold the role but no journey ever started. This
+#  audit detects both, so a regression like the session-23 gap (14/15
+#  students with NO_JOURNEY) would be caught automatically instead of
+#  by chance. It ONLY reads + alerts the owner — it never DMs students
+#  or changes any state.
+
+
+def audit_onboarding(guild: discord.Guild) -> dict:
+    """Classify every ACTIVE student against the two onboarding signals:
+    the Discord gateway role (passed the #rules gate) and a
+    student_journey row (the guided journey started).
+
+    Read-only. Returns a dict of member-dict lists:
+      - ok                : has the role AND a journey (fully onboarded)
+      - gated_no_journey  : has the role but NO journey (legacy/grandfathered)
+      - no_gate           : in the guild but WITHOUT the role (a real bypass)
+      - not_in_guild      : active in the DB but not currently in the guild
+    """
+    active = database.all_active_members()
+    conn = database._connect()
+    journeyed = {
+        str(r["discord_id"])
+        for r in conn.execute("SELECT discord_id FROM student_journey").fetchall()
+    }
+    conn.close()
+
+    ok, gated_no_journey, no_gate, not_in_guild = [], [], [], []
+    for m in active:
+        did = str(m.get("discord_id", ""))
+        member = guild.get_member(int(did)) if did.isdigit() else None
+        if member is None:
+            not_in_guild.append(m)
+            continue
+        if not has_student_role(member):
+            no_gate.append(m)
+        elif did not in journeyed:
+            gated_no_journey.append(m)
+        else:
+            ok.append(m)
+
+    return {
+        "total": len(active),
+        "ok": ok,
+        "gated_no_journey": gated_no_journey,
+        "no_gate": no_gate,
+        "not_in_guild": not_in_guild,
+    }
+
+
+def format_onboarding_audit(audit: dict) -> str:
+    """Plain-text (bilingual-labelled) summary of audit_onboarding().
+    Suitable for both the Empire Ops alert body and an in-channel report.
+    Kept free of Markdown — ops_hub.send_ops_alert escapes it for us."""
+
+    def _names(lst, n=15):
+        rows = [
+            f"- {(m.get('discord_name') or m.get('discord_id'))} ({m.get('level', '?')})"
+            for m in lst[:n]
+        ]
+        if len(lst) > n:
+            rows.append(f"... +{len(lst) - n} more")
+        return "\n".join(rows) if rows else "-"
+
+    lines = [
+        f"Active students: {audit['total']}",
+        f"Fully onboarded (gate + journey): {len(audit['ok'])}",
+        "",
+    ]
+    if audit["no_gate"]:
+        lines += [
+            f"[!] In the server WITHOUT the gate role ({len(audit['no_gate'])}) "
+            f"| بدون دور البوابة — investigate:",
+            _names(audit["no_gate"]),
+            "",
+        ]
+    if audit["gated_no_journey"]:
+        lines += [
+            f"Gated but no guided journey ({len(audit['gated_no_journey'])}) "
+            f"| legacy/grandfathered:",
+            _names(audit["gated_no_journey"]),
+            "",
+        ]
+    if audit["not_in_guild"]:
+        lines += [
+            f"Active in DB but not currently in the server "
+            f"({len(audit['not_in_guild'])}):",
+            _names(audit["not_in_guild"]),
+            "",
+        ]
+    if not audit["no_gate"] and not audit["gated_no_journey"]:
+        lines.append(
+            "OK: every active student passed the gate and has a guided journey."
+        )
+    return "\n".join(lines).strip()
+
+
+async def run_onboarding_reconciliation(
+    guild: discord.Guild, force: bool = False
+) -> Optional[dict]:
+    """Run the onboarding audit and alert the owner via Empire Ops ONLY
+    when the set of flagged students changes (so a daily loop doesn't spam
+    the same known-legacy members every day). `force=True` sends a report
+    regardless (used by the on-demand !checkgate command).
+
+    Returns the audit dict (or None if the role-gate feature is off).
+    Never raises for an alert failure and never DMs a student.
+    """
+    if not database.is_feature_enabled("hissar_role_gate"):
+        return None
+
+    audit = audit_onboarding(guild)
+
+    problem_ids = sorted(
+        [str(m.get("discord_id")) for m in audit["no_gate"]]
+        + [str(m.get("discord_id")) for m in audit["gated_no_journey"]]
+    )
+    fingerprint = ",".join(problem_ids)
+    last = database.get_setting("onboarding_recon_fingerprint", "")
+    changed = fingerprint != last
+
+    if force or (problem_ids and changed):
+        try:
+            from . import ops_hub
+            severity = "critical" if audit["no_gate"] else "warning"
+            await ops_hub.send_ops_alert(
+                "Onboarding gate check",
+                format_onboarding_audit(audit),
+                severity=severity,
+            )
+        except Exception as e:  # never let an alert failure crash the loop
+            logger.error(f"run_onboarding_reconciliation: ops alert failed: {e}")
+
+    # Record the fingerprint even when we didn't alert, so a later change
+    # (someone entering/leaving a flagged state) is what triggers the next one.
+    database.set_setting("onboarding_recon_fingerprint", fingerprint)
+    return audit
+
+
+async def cmd_checkgate(ctx) -> bool:
+    """Admin command: on-demand onboarding audit, reported in-channel.
+
+    Usage: !checkgate  (admin-only, admin-channel-gated via bot.py)
+    Also refreshes the reconciliation fingerprint so the next scheduled
+    run only alerts on genuinely new changes.
+    """
+    guild = getattr(ctx, "guild", None)
+    if guild is None:
+        await ctx.send("Run `!checkgate` inside the server.", delete_after=15)
+        return True
+
+    audit = audit_onboarding(guild)
+    report = format_onboarding_audit(audit)
+    # Keep the stored fingerprint in sync with what the owner just saw.
+    problem_ids = sorted(
+        [str(m.get("discord_id")) for m in audit["no_gate"]]
+        + [str(m.get("discord_id")) for m in audit["gated_no_journey"]]
+    )
+    database.set_setting("onboarding_recon_fingerprint", ",".join(problem_ids))
+
+    await ctx.send(f"**Onboarding gate check | فحص البوابة**\n```\n{report}\n```")
+    return True
