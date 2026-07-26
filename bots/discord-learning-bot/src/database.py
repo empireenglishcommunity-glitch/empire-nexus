@@ -2645,7 +2645,8 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
             "WHERE discord_id=? AND level=? AND week=? AND day=? AND exercise=?",
             (discord_id, level, week, day, exercise),
         ).fetchone()
-        if row is None:
+        first_time = row is None
+        if first_time:
             count = 1
             conn.execute(
                 "INSERT INTO practice_mastery "
@@ -2656,22 +2657,24 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
             )
             incremented = True
         else:
-            count = row["completion_count"]
-            last = row["last_completed_date"]
-            if last is None or last < today:
-                count = min(count + 1, MASTERY_MAX_TIER)
-                conn.execute(
-                    "UPDATE practice_mastery SET completion_count=?, "
-                    "last_completed_date=?, "
-                    "first_completed_date=COALESCE(first_completed_date, ?) "
-                    "WHERE discord_id=? AND level=? AND week=? AND day=? AND exercise=?",
-                    (count, today, today, discord_id, level, week, day, exercise),
-                )
-                incremented = True
-            else:
-                incremented = False  # same-day repeat: no tier change
+            # Empire "instant tiers" model: every GENUINE completion levels the
+            # tier up by one, capped at Diamond — no once-per-day lock. The
+            # caller only reaches here on a real completion (a recording sent,
+            # or the flashcards/quiz actually re-done), so this reflects real
+            # practice, not button-spam. incremented is False only when already
+            # at the max tier (nothing left to gain today).
+            prev = row["completion_count"]
+            count = min(prev + 1, MASTERY_MAX_TIER)
+            incremented = count > prev
+            conn.execute(
+                "UPDATE practice_mastery SET completion_count=?, "
+                "last_completed_date=?, "
+                "first_completed_date=COALESCE(first_completed_date, ?) "
+                "WHERE discord_id=? AND level=? AND week=? AND day=? AND exercise=?",
+                (count, today, today, discord_id, level, week, day, exercise),
+            )
         conn.commit()
-        result = {"exercise_tier": count, "incremented": incremented}
+        result = {"exercise_tier": count, "incremented": incremented, "first_time": first_time}
     finally:
         conn.close()
 
@@ -2681,7 +2684,9 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
     # connection AFTER the mastery write is committed + closed, so it can never
     # break or lock the mastery recording. This is the single choke point every
     # completion path funnels through (page checkbox, !done, reactions).
-    if exercise == "vocab" and result.get("incremented"):
+    # Enroll on the FIRST-ever vocab completion only — a redo must not
+    # re-enroll (which would reset the spaced-repetition intervals).
+    if exercise == "vocab" and result.get("first_time"):
         try:
             enroll_day_vocab_in_srs(discord_id, level, week, day)
         except Exception:

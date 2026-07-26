@@ -154,12 +154,16 @@ def test_mastery_first_completion_is_bronze():
     assert r["incremented"] is True
 
 
-def test_mastery_same_day_repeat_does_not_increment():
+def test_mastery_instant_tiers_same_day_repeat_increments():
+    """Instant-tiers model: a genuine repeat (even same day) levels up now —
+    no once-per-day lock. First call = first_time; repeats are not."""
     _member()
-    database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
-    r = database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
-    assert r["exercise_tier"] == 1
-    assert r["incremented"] is False
+    r1 = database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
+    assert r1["exercise_tier"] == 1 and r1["incremented"] is True and r1["first_time"] is True
+    r2 = database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
+    assert r2["exercise_tier"] == 2 and r2["incremented"] is True and r2["first_time"] is False
+    r3 = database.record_practice_mastery("u1", "L0", 1, 1, "accent", today="2026-07-10")
+    assert r3["exercise_tier"] == 3 and r3["incremented"] is True
 
 
 def test_mastery_increments_once_per_new_day_and_caps_at_5():
