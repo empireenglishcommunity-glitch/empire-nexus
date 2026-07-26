@@ -277,7 +277,7 @@ def build_calendar(discord_id: str) -> dict | None:
                           else {ex: 0 for ex in database.required_exercises_for_date(d_date)}),
         })
 
-    return {
+    result = {
         "level": level,
         "join_date": join_date.isoformat(),
         "today_index": today_index,
@@ -286,3 +286,19 @@ def build_calendar(discord_id: str) -> dict | None:
         "tier_names": TIER_NAMES,
         "days": days,
     }
+
+    # Itqan weekly assessment — add a per-week assessment "stop" (its unlock
+    # state) to the calendar. ONLY when the flag is on, so with it off the
+    # payload is byte-for-byte unchanged and the dojo shows nothing new.
+    if database.is_feature_enabled("itqan_weekly_assessment", discord_id):
+        from . import assessment
+        stops = []
+        for w in range(1, max_week + 1):
+            st = assessment.get_week_state(discord_id, level, w)
+            entry = {"week": w, "state": st["state"]}
+            if "days_remaining" in st:
+                entry["days_remaining"] = st["days_remaining"]
+            stops.append(entry)
+        result["assessments"] = stops
+
+    return result
