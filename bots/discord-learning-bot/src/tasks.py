@@ -550,7 +550,10 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
             f"📊 {bl(f'{_np} on your page + {_nd} here on Discord = your {_np + _nd} today', f'{_np} على صفحتك + {_nd} هنا على Discord = {_np + _nd} مهام النهاردة')}"
         )
     footer_lines.append(f"⏱️ **{bl('Total', 'المجموع')}:** ~{task_data['total_minutes']} {bl('min', 'دقيقة')}")
-    footer_lines.append(f"✅ {bl('Log each when done:', 'لما تخلص كل مهمة اكتب:')} `!done` / `!1`-`!7` {bl('in', 'في')} #daily-check-in")
+    footer_lines.append(
+        f"✅ {bl('The page exercises log automatically. Here in Discord log only:', 'تمارين الصفحة بتتسجّل تلقائيًا. هنا في Discord سجّل بس:')} "
+        f"✍️ `!6` {bl('writing', 'كتابة')} · 💬 `!7` {bl('community', 'مجتمع')}"
+    )
     footer_lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     footer = "\n".join(footer_lines)
 

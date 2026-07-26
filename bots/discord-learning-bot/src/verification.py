@@ -223,7 +223,7 @@ async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[
 
     return False, (
         f"لازم تكتب 10 حروف على الأقل في `#{channel_name}` الأول.\n"
-        f"اكتب تمرين الكتابة هناك، وبعدين ارجع اكتب `!done writing`"
+        f"اكتب تمرين الكتابة هناك، وبعدين ارجع اكتب `!6`"
     )
 
 
@@ -323,7 +323,7 @@ async def verify_community(member: discord.Member, guild: discord.Guild) -> tupl
         "مهمة المجتمع تتطلب **الاثنين معاً**:\n"
         f"{v_mark} اقضِ **10 دقائق** على الأقل في غرفة صوتية {v_detail}\n"
         f"{c_mark} اكتب رسالة في `#general-chat`\n\n"
-        "أكمل الناقص ثم اكتب `!done community` مرة أخرى.\n"
+        "أكمل الناقص ثم اكتب `!7` مرة أخرى.\n"
         "_(The community task needs BOTH: 10+ min in voice AND a message in "
         "#general-chat.)_"
     )

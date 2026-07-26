@@ -140,7 +140,8 @@ async def check_command_typo(message: discord.Message) -> bool:
             f"💡 {name}، يبدو أنك تريد كتابة أمر!\n\n"
             f"الأوامر يجب أن تبدأ بعلامة `!` — أي اكتب `{correct_command}` وليس `{text.split()[0]}`\n\n"
             f"جرّب في `#bot-commands`:\n"
-            f"```\n!done accent\n```\n"
+            f"```\n!6\n```\n"
+            f"(الكتابة `!6` والمجتمع `!7` — وباقي التمارين على منصة التمرين `!link`)\n"
             f"أو اكتب `!مساعدة` إذا أردت رؤية جميع الأوامر 😊"
         )
         _mark_helped(discord_id, "command_typo")
