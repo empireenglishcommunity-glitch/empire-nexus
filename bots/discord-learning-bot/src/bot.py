@@ -184,7 +184,6 @@ ARABIC_COMMAND_ALIASES = {
     "تقييم": "assess",
     "ترتيب": "top",
     "سلسلات": "streaks",
-    "حالة": "systemstatus",
     "صيانة": "maintenance",
     "اليوم": "today",
     "تعليم": "tutorial",
@@ -1087,32 +1086,69 @@ async def weekly_assessment():
         return
 
     members = database.all_active_members()
+    scored = 0
     for member_data in members:
-        discord_member = guild.get_member(int(member_data["discord_id"]))
+        discord_id = member_data["discord_id"]
+        discord_member = guild.get_member(int(discord_id))
         if not discord_member:
             continue
 
-        week_num = database.member_week_number(member_data["discord_id"])
+        week_num = database.member_week_number(discord_id)
+
+        # Empire Reset 1c: the system now scores the week AUTOMATICALLY from
+        # the work already on record — the SAME computation the old !assess
+        # command did (build_weekly_assessment → save_assessment → points
+        # once/week). Students no longer need to run any command. (This also
+        # fixes a long-standing gap: save_assessment previously had no
+        # production caller, so !progress's "Last assessment" and !attention's
+        # trend detection never had data.)
+        result = task_engine.build_weekly_assessment(discord_id)
+        submitted = result.get("submitted_tasks", [])
 
         try:
-            await discord_member.send(
-                f"📊 **WEEKLY ASSESSMENT — Week {week_num}**\n"
-                f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-                f"Complete these tasks today (30 min total):\n\n"
-                f"1️⃣ **SPEAKING** (5 min)\n"
-                f"Record 60 seconds answering: \"What did you learn this week?\"\n\n"
-                f"2️⃣ **WRITING** (8 min)\n"
-                f"Write 5 sentences about your week in English.\n\n"
-                f"3️⃣ **VOCABULARY** (5 min)\n"
-                f"Type 10 words you learned this week with their meanings.\n\n"
-                f"Submit everything in #writing-feedback or #speaking-feedback.\n"
-                f"Use `!assess` when done to calculate your score.\n\n"
-                f"⏰ Due by: Sunday 11:59 PM"
+            if not submitted:
+                # Nothing to score yet — encourage instead of sending a 0%.
+                await discord_member.send(
+                    f"📊 **Weekly check-in — Week {week_num}**\n"
+                    f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                    f"No practice on record this week yet — a few minutes today counts!\n"
+                    f"Open your practice page with `!link`, or do ✍️ writing (`!6`) / 💬 community (`!7`).\n\n"
+                    f"لسه مفيش تمارين الأسبوع ده — ابدأ من `!link`. حتى شوية النهاردة بيفرقوا! 💪"
+                )
+                continue
+
+            already = database.get_assessment_for_week(discord_id, week_num) is not None
+            database.save_assessment(
+                discord_id, week_num, result["scores"], result["overall"], result["rating"],
             )
+            if not already:
+                database.add_points(discord_id, config.POINTS_ASSESSMENT, "weekly_assessment")
+
+            dim_lines = [
+                f"  {dim['name']}: **{result['scores'].get(dim['id'], 0):.0f}%**"
+                for dim in config.ASSESSMENT_DIMENSIONS
+            ]
+            missing = [
+                t for t in ("speaking", "listening", "vocab", "accent", "writing")
+                if t not in submitted
+            ]
+            missing_note = (
+                f"\n⚠️ Not done this week: {', '.join(f'`{t}`' for t in missing)}"
+                if missing else "\n✅ All assessment areas covered this week!"
+            )
+            await discord_member.send(
+                f"📊 **Your Weekly Assessment — Week {week_num}**\n"
+                f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                f"Overall: **{result['overall']:.0f}%** ({result['rating']})\n"
+                + "\n".join(dim_lines)
+                + missing_note
+                + f"\n\n🧭 Full details any time in `!progress`. Keep it up! 🏛️"
+            )
+            scored += 1
         except (discord.Forbidden, discord.HTTPException):
             pass
 
-    logger.info(f"Weekly assessments sent to {len(members)} members")
+    logger.info(f"Weekly assessment: auto-scored {scored}/{len(members)} member(s)")
 
 
 @tasks.loop(hours=1)
@@ -2475,8 +2511,8 @@ async def cmd_help(ctx):
         "`!progress` — your dashboard (level, week, streak, points, how to advance)\n"
         "`!link` — open your practice page\n"
         "`!top` — leaderboard\n"
-        "`!week` · `!words` · `!assess` — week focus · vocab · weekly score\n"
-        "`!systemstatus` — system health\n\n"
+        "`!week` · `!words` — this week's focus · your vocabulary\n"
+        "_(your weekly assessment is calculated automatically every Sunday)_\n\n"
         "**Account:**\n"
         "`!join <goal>` — set your learning goal\n"
         "`!notifications` — notification settings\n"
@@ -2538,7 +2574,8 @@ async def cmd_helpar(ctx):
         "`!تقدم` — لوحة تقدمك (مستواك، أسبوعك، سلسلتك، نقاطك)\n"
         "`!link` — افتح منصة التمرين\n"
         "`!ترتيب` — لوحة النقاط\n"
-        "`!أسبوع` · `!تقييم` — محتوى الأسبوع · تقييم الأسبوع\n"
+        "`!أسبوع` · `!كلماتي` — محتوى الأسبوع · مفرداتك\n"
+        "_(تقييمك الأسبوعي بيتحسب تلقائيًا كل أحد)_\n"
         "`!مساعدة` — الصفحة دي\n\n"
         "**⚡ طريقة الاستخدام:**\n"
         "1️⃣ التمارين الخمسة الأساسية → على منصة التمرين (`!link`) وبتتسجّل لوحدها\n"
@@ -3545,51 +3582,6 @@ async def cmd_status(ctx):
         await ctx.send("📩 Status sent to your DMs.", delete_after=5)
     except discord.Forbidden:
         await ctx.send(msg)
-
-
-@bot.command(name="systemstatus")
-async def cmd_systemstatus(ctx):
-    """Public, read-only system health check — anyone can run this.
-
-    Aegis Phase 5: now enabled for everyone (previously gated behind the
-    'systemstatus' feature flag during Phase 1 development). Shows no
-    admin-sensitive facts (no AI-key presence, no per-level member
-    breakdown), just "is the system healthy right now" — reinforcing the
-    professional/reliable brand for paying students without a new paid
-    service. Distinct from the existing admin-only !status.
-    """
-    if not database.is_feature_enabled("systemstatus", str(ctx.author.id)):
-        return  # still respects the kill switch if an admin explicitly
-                # disables it via !flag disable systemstatus
-
-    checks = []
-    all_ok = True
-
-    try:
-        database.member_count()
-        checks.append("✅ Database")
-    except Exception:
-        checks.append("❌ Database")
-        all_ok = False
-
-    checks.append("✅ Discord connection" if bot.is_ready() else "❌ Discord connection")
-    all_ok = all_ok and bot.is_ready()
-
-    try:
-        weeks_loaded = curriculum.stats()["weeks_loaded"]
-        checks.append(f"✅ Curriculum ({weeks_loaded} weeks loaded)" if weeks_loaded == 38 else f"⚠️ Curriculum ({weeks_loaded}/38 weeks)")
-    except Exception:
-        checks.append("❌ Curriculum")
-        all_ok = False
-
-    database.set_setting("last_systemstatus_check", datetime.datetime.now().isoformat())
-
-    header = "✅ **All systems operational**" if all_ok else "⚠️ **Some systems need attention**"
-    await ctx.send(
-        f"{header}\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        + "\n".join(checks)
-    )
 
 
 @bot.command(name="setlevel")
