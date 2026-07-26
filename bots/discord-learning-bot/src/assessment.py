@@ -138,3 +138,160 @@ def generate_blueprint(discord_id: str, level: str, week: int,
         "level": level, "week": week, "seed": seed,
         "time_limit_min": time_limit, "items": items,
     }
+
+
+
+# ============================================================
+#  SCORING (Phase 2)
+# ============================================================
+#
+# Pure, testable scoring. Objective items are graded here directly; for the
+# recording-based items (pronunciation, speaking) the caller supplies the
+# Whisper transcript and writing supplies the text — so this module stays free
+# of network/audio concerns and is fully unit-testable. Grading is deliberately
+# LENIENT for beginners: a genuine attempt is rewarded; we are not marking
+# native-level grammar.
+
+import re
+
+_BORDERLINE_MARGIN = 5.0  # within ±5 of the pass line → flag for the owner
+
+
+def _canon(s: str) -> str:
+    """Lowercase, strip, drop punctuation/extra spaces — forgiving compare."""
+    s = (s or "").strip().lower()
+    s = re.sub(r"[^\w\s]", "", s, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _levenshtein(a: str, b: str) -> int:
+    if a == b:
+        return 0
+    if not a:
+        return len(b)
+    if not b:
+        return len(a)
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+
+def _forgiving_equal(a: str, b: str) -> bool:
+    ca, cb = _canon(a), _canon(b)
+    if not ca or not cb:
+        return False
+    if ca == cb:
+        return True
+    # tolerate a single-character typo for words longer than 3 letters
+    return len(cb) > 3 and _levenshtein(ca, cb) <= 1
+
+
+def score_objective(item: dict, answer: str) -> dict:
+    """Grade a vocab/listening item. Returns {auto_score, correct, feedback}."""
+    expected = item.get("payload", {}).get("expected", "")
+    correct = _forgiving_equal(answer, expected)
+    return {
+        "auto_score": 100.0 if correct else 0.0,
+        "correct": correct,
+        "feedback": "" if correct else f"Correct answer: {expected}",
+    }
+
+
+def score_pronunciation(expected_word: str, transcript: str) -> dict:
+    """Lenient pronunciation score from a Whisper transcript."""
+    ct = _canon(transcript)
+    tokens = ct.split()
+    if _forgiving_equal(expected_word, transcript) or _canon(expected_word) in tokens:
+        return {"ai_score": 100.0, "correct": True, "feedback": ""}
+    # partial credit if any token is close
+    ce = _canon(expected_word)
+    if any(len(ce) > 3 and _levenshtein(ce, t) <= 2 for t in tokens):
+        return {"ai_score": 60.0, "correct": False,
+                "feedback": f"Close — keep practicing “{expected_word}”."}
+    return {"ai_score": 0.0, "correct": False,
+            "feedback": f"Target word: “{expected_word}”."}
+
+
+def _coverage(target_words: list, text: str) -> float:
+    if not target_words:
+        return 1.0
+    toks = set(_canon(text).split())
+    hit = sum(1 for w in target_words if _canon(w) in toks)
+    return hit / len(target_words)
+
+
+def score_speaking(target_words: list, transcript: str, min_words: int = 5) -> dict:
+    """Lenient speaking score: reward a real attempt, add for target-word use."""
+    words = _canon(transcript).split()
+    if len(words) < 2:  # essentially silent / no real attempt
+        return {"ai_score": 0.0, "correct": False,
+                "feedback": "No speech detected — try recording again."}
+    base = 40.0 if len(words) >= min_words else 25.0
+    score = min(100.0, base + 60.0 * _coverage(target_words, transcript))
+    return {"ai_score": round(score, 1), "correct": score >= 60,
+            "feedback": "Nice effort — keep using this week's words." if score < 100 else ""}
+
+
+def score_writing(target_words: list, text: str, min_chars: int = 40) -> dict:
+    """Lenient writing score: reward length + target-word use."""
+    clean = (text or "").strip()
+    if len(clean) < 10:
+        return {"ai_score": 0.0, "correct": False,
+                "feedback": "Too short — write a couple of sentences."}
+    base = 40.0 if len(clean) >= min_chars else 25.0
+    score = min(100.0, base + 60.0 * _coverage(target_words, text))
+    return {"ai_score": round(score, 1), "correct": score >= 60,
+            "feedback": "Good — try to include more of this week's words." if score < 100 else ""}
+
+
+def compute_consistency(discord_id: str, level: str, week: int) -> float:
+    """How consistently the student did week `week`'s daily core work — the
+    'were they actually active' dimension. % of (day × core-exercise) cells
+    completed at least once for the week."""
+    cal = database.get_calendar_mastery(discord_id, level)
+    core = database.PRACTICE_EXERCISES
+    expected = 7 * len(core)
+    if expected == 0:
+        return 0.0
+    done = 0
+    for day in range(1, 8):
+        ex = (cal.get((week, day)) or {}).get("exercises", {})
+        for c in core:
+            if ex.get(c, 0) >= 1:
+                done += 1
+    return round(100.0 * done / expected, 1)
+
+
+def score_attempt(item_scores: list, consistency_pct: float,
+                  has_ai_error: bool = False, cfg: dict = None) -> dict:
+    """Combine per-item scores + consistency into the final verdict.
+
+    Returns {mastery_pct, consistency_pct, result, distinction, status}.
+    - result: 'mastered' | 'not_yet'
+    - status: 'scored' | 'flagged'  (flagged = owner should decide:
+      an AI item errored, or the mastery score sits right on the pass line)
+    """
+    cfg = cfg or database.get_itqan_config()
+    mastery_pass = cfg["itqan_mastery_pass_pct"]
+    consistency_pass = cfg["itqan_consistency_pass_pct"]
+    distinction_pct = cfg["itqan_distinction_pct"]
+
+    mastery_pct = round(sum(item_scores) / len(item_scores), 1) if item_scores else 0.0
+
+    passed = (mastery_pct >= mastery_pass) and (consistency_pct >= consistency_pass)
+    distinction = passed and (mastery_pct >= distinction_pct)
+
+    borderline = abs(mastery_pct - mastery_pass) <= _BORDERLINE_MARGIN
+    status = "flagged" if (has_ai_error or borderline) else "scored"
+
+    return {
+        "mastery_pct": mastery_pct,
+        "consistency_pct": round(consistency_pct, 1),
+        "result": "mastered" if passed else "not_yet",
+        "distinction": distinction,
+        "status": status,
+    }
