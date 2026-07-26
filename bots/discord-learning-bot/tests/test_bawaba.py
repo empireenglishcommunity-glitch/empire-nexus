@@ -50,11 +50,6 @@ def test_rewrite_arabic_streak():
     assert result == "!streak"
 
 
-def test_rewrite_arabic_assess():
-    result = _rewrite_arabic_command("!تقييم", "!")
-    assert result == "!assess"
-
-
 def test_rewrite_arabic_level():
     result = _rewrite_arabic_command("!مستوى", "!")
     assert result == "!level"

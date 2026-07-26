@@ -1,10 +1,10 @@
-"""Empire Reset (session-33) — Phase 1c.
+"""Empire Reset (session-33) — Phase 1c + assessment removal.
 
 - !systemstatus removed.
-- !assess is no longer needed: the weekly_assessment Sunday job now scores
-  each student AUTOMATICALLY (build_weekly_assessment → save_assessment →
-  points once), and DMs them the result. Students with no data get an
-  encouraging nudge instead of a 0%.
+- The old weekly "assessment" scoring (attendance dressed up as a skill grade,
+  Excellent…Critical labels) was misleading/unprofessional and is GONE. The
+  Sunday job is now an honest `weekly_recap`: real activity only (exercises
+  done, days practiced, streak) — no scores, no saved assessment, no points.
 """
 import datetime as dt
 from unittest.mock import AsyncMock, MagicMock
@@ -12,18 +12,21 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from src import bot as bot_mod
-from src import database
 
 
 def test_systemstatus_command_removed():
     assert not hasattr(bot_mod, "cmd_systemstatus")
 
 
-def _wire_common(monkeypatch, submitted):
-    """Point the Sunday job at a single fake member + fake guild, and stub
-    build_weekly_assessment. Returns (member_send_mock, calls dict)."""
-    # 2026-07-26 is a Sunday, so the weekday guard passes.
-    monkeypatch.setattr(bot_mod, "_now", lambda: dt.datetime(2026, 7, 26))
+def test_assess_command_removed():
+    assert not hasattr(bot_mod, "cmd_assess")
+
+
+def _wire(monkeypatch, subs):
+    """Point the Sunday recap at one fake member + guild. Returns
+    (member_send_mock, calls dict) — calls tracks that NO scoring happens."""
+    monkeypatch.setattr(bot_mod, "_now", lambda: dt.datetime(2026, 7, 26))  # Sunday
+    monkeypatch.setattr(bot_mod.config, "IS_GHOST_INSTANCE", False)
     member = MagicMock()
     member.send = AsyncMock()
     guild = MagicMock()
@@ -31,11 +34,9 @@ def _wire_common(monkeypatch, submitted):
     monkeypatch.setattr(bot_mod.bot, "get_guild", lambda gid: guild)
     monkeypatch.setattr(bot_mod.database, "all_active_members", lambda: [{"discord_id": "700"}])
     monkeypatch.setattr(bot_mod.database, "member_week_number", lambda did: 3)
-    monkeypatch.setattr(bot_mod.task_engine, "build_weekly_assessment", lambda did: {
-        "scores": {}, "overall": 82.0, "rating": "Strong", "submitted_tasks": submitted,
-    })
+    monkeypatch.setattr(bot_mod.database, "get_submissions_since", lambda did, days=7: subs)
+    monkeypatch.setattr(bot_mod.database, "get_streak", lambda did: (4, 9))
     calls = {"saved": False, "points": False}
-    monkeypatch.setattr(bot_mod.database, "get_assessment_for_week", lambda did, w: None)
     monkeypatch.setattr(bot_mod.database, "save_assessment",
                         lambda *a, **k: calls.__setitem__("saved", True))
     monkeypatch.setattr(bot_mod.database, "add_points",
@@ -44,21 +45,29 @@ def _wire_common(monkeypatch, submitted):
 
 
 @pytest.mark.asyncio
-async def test_weekly_job_autoscores_when_data_present(monkeypatch):
-    member, calls = _wire_common(monkeypatch, submitted=["writing", "vocab"])
-    await bot_mod.weekly_assessment.coro()
-    assert calls["saved"] is True
-    assert calls["points"] is True
+async def test_weekly_recap_shows_real_numbers_no_grade(monkeypatch):
+    subs = [
+        {"date": "2026-07-20", "task_id": "accent"},
+        {"date": "2026-07-20", "task_id": "vocab"},
+        {"date": "2026-07-21", "task_id": "shadow"},
+    ]
+    member, calls = _wire(monkeypatch, subs)
+    await bot_mod.weekly_recap.coro()
     member.send.assert_awaited()
-    assert "82%" in member.send.await_args[0][0]
+    msg = member.send.await_args[0][0]
+    assert "Exercises completed: **3**" in msg
+    assert "Days practiced: **2/7**" in msg
+    assert "**4** days" in msg  # current streak
+    # No grade/score and no scoring side effects.
+    assert "%" not in msg
+    assert calls["saved"] is False and calls["points"] is False
 
 
 @pytest.mark.asyncio
-async def test_weekly_job_encourages_when_no_data(monkeypatch):
-    member, calls = _wire_common(monkeypatch, submitted=[])
-    await bot_mod.weekly_assessment.coro()
-    # No score saved, no points, and the DM is the encouraging nudge.
-    assert calls["saved"] is False
-    assert calls["points"] is False
-    member.send.assert_awaited()
-    assert "!link" in member.send.await_args[0][0]
+async def test_weekly_recap_encourages_when_no_activity(monkeypatch):
+    member, calls = _wire(monkeypatch, [])
+    await bot_mod.weekly_recap.coro()
+    msg = member.send.await_args[0][0]
+    assert "!link" in msg
+    assert "%" not in msg
+    assert calls["saved"] is False and calls["points"] is False
