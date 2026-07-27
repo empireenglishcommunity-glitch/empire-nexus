@@ -533,6 +533,24 @@ CREATE TABLE IF NOT EXISTS week_mastery (
     PRIMARY KEY (discord_id, level, week),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Itqan Phase 9: retain assessment audio recordings for OWNER review only
+-- (speaking/pronunciation). Private, owner-gated via !itqan-review, and
+-- auto-purged after a retention window (default 14 days) or on reset.
+CREATE TABLE IF NOT EXISTS assessment_recordings (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    attempt_id   INTEGER NOT NULL,
+    discord_id   TEXT NOT NULL,
+    item_no      INTEGER NOT NULL,
+    skill        TEXT NOT NULL DEFAULT '',
+    filename     TEXT NOT NULL DEFAULT 'recording.webm',
+    audio        BLOB NOT NULL,
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (attempt_id, item_no),
+    FOREIGN KEY (attempt_id) REFERENCES assessment_attempts(id)
+);
+CREATE INDEX IF NOT EXISTS idx_assessment_recordings_attempt ON assessment_recordings(attempt_id);
+CREATE INDEX IF NOT EXISTS idx_assessment_recordings_created ON assessment_recordings(created_at);
 """
 
 
@@ -559,6 +577,7 @@ RESET_WIPE_TABLES = (
     "consumed_proof_messages", "done_cooldowns", "token_ip_log",
     "student_journey", "journey_coverage", "claim_codes",
     "assessment_attempts", "assessment_items", "week_mastery",
+    "assessment_recordings",
 )
 
 
@@ -3201,6 +3220,9 @@ def itqan_reset(discord_id: str, level: str, week: int) -> dict:
         items_deleted = conn.execute(
             f"DELETE FROM assessment_items WHERE attempt_id IN ({qmarks})",
             attempts).rowcount
+        conn.execute(
+            f"DELETE FROM assessment_recordings WHERE attempt_id IN ({qmarks})",
+            attempts)
     attempts_deleted = conn.execute(
         "DELETE FROM assessment_attempts WHERE discord_id=? AND level=? AND week=?",
         (discord_id, level, week)).rowcount
@@ -3270,3 +3292,49 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
         "distinction_count": distinction_count,
         "completed_at": completed_at,
     }
+
+
+
+# ============================================================
+#  ITQAN — audio recording retention for owner review (Phase 9)
+# ============================================================
+
+def itqan_save_recording(attempt_id: int, discord_id: str, item_no: int,
+                         skill: str, filename: str, audio: bytes) -> None:
+    """Persist one assessment recording for owner review (upsert per item)."""
+    if not audio:
+        return
+    conn = _connect()
+    conn.execute(
+        "INSERT INTO assessment_recordings (attempt_id, discord_id, item_no, skill, filename, audio) "
+        "VALUES (?,?,?,?,?,?) "
+        "ON CONFLICT(attempt_id, item_no) DO UPDATE SET "
+        "filename=excluded.filename, audio=excluded.audio, created_at=datetime('now')",
+        (attempt_id, discord_id, item_no, skill, filename, sqlite3.Binary(audio)),
+    )
+    conn.commit()
+    conn.close()
+
+
+def itqan_get_recordings(attempt_id: int) -> list:
+    """All recordings for an attempt (item_no, skill, filename, audio bytes)."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT item_no, skill, filename, audio FROM assessment_recordings "
+        "WHERE attempt_id=? ORDER BY item_no", (attempt_id,)
+    ).fetchall()
+    conn.close()
+    return [{"item_no": r["item_no"], "skill": r["skill"],
+             "filename": r["filename"], "audio": bytes(r["audio"])} for r in rows]
+
+
+def itqan_purge_recordings(days: int = 14) -> int:
+    """Delete recordings older than `days` (retention policy). Returns count."""
+    cutoff = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%Y-%m-%d %H:%M:%S")
+    conn = _connect()
+    n = conn.execute(
+        "DELETE FROM assessment_recordings WHERE created_at < ?", (cutoff,)
+    ).rowcount
+    conn.commit()
+    conn.close()
+    return n

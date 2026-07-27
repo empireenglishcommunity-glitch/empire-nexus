@@ -41,7 +41,7 @@ async def deliver_outcome(discord_id: str, level: str, week: int,
         # Borderline / AI-error → the owner decides (student sees "being
         # reviewed"). We do NOT celebrate or send a not-yet DM here.
         if status == "flagged":
-            await _notify_owner_flagged(discord_id, level, week, verdict)
+            await _notify_owner_flagged(discord_id, level, week, attempt_id, verdict)
             return
 
         if result == "mastered":
@@ -270,14 +270,20 @@ async def _support_dm(discord_id: str, level: str, week: int, verdict: dict,
 #  flagged — owner notification (Empire Ops)
 # ============================================================
 
-async def _notify_owner_flagged(discord_id: str, level: str, week: int, verdict: dict) -> None:
+async def _notify_owner_flagged(discord_id: str, level: str, week: int,
+                                attempt_id: int, verdict: dict) -> None:
     from . import ops_hub
     name = (database.get_member(discord_id) or {}).get("discord_name", str(discord_id))
+    reason = {
+        "ai_error": "an AI/recording item couldn't be scored — please re-check",
+        "near_miss": "a near-miss just below the pass line — a rescue candidate",
+    }.get(verdict.get("flag_reason"), "needs your judgement")
     body = (
         f"{name} — {level} Week {week}\n"
         f"Mastery {verdict.get('mastery_pct')}% · Consistency {verdict.get('consistency_pct')}%\n"
-        f"This attempt needs your call (borderline score or an AI item to review). "
-        f"Use the Itqan owner report / overrides to pass or reset it."
+        f"Reason: {reason}.\n"
+        f"See the full breakdown + recordings:  !itqan-review {attempt_id}\n"
+        f"Then decide:  !itqan-pass @{name} {week}  |  !itqan-reset @{name} {week}"
     )
     try:
         await ops_hub.send_ops_alert("Itqan: attempt needs review", body, severity="warning")

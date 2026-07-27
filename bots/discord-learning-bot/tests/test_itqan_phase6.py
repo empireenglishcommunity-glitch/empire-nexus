@@ -31,8 +31,8 @@ def recorders(monkeypatch):
     async def _dm(discord_id, level, week, verdict, missed, production_missed):
         calls["dm"].append({"missed": missed, "production_missed": production_missed})
 
-    async def _flag(discord_id, level, week, verdict):
-        calls["flag"].append((discord_id, level, week))
+    async def _flag(discord_id, level, week, attempt_id, verdict):
+        calls["flag"].append((discord_id, level, week, attempt_id))
 
     monkeypatch.setattr(itqan_outcomes, "_celebrate_champion", _celebrate)
     monkeypatch.setattr(itqan_outcomes, "_support_dm", _dm)
