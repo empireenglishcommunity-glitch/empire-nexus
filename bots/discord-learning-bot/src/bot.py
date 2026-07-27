@@ -2987,33 +2987,44 @@ async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
         f"{r['attempts_deleted']} attempt(s) cleared. They can retake it.")
 
 
-@bot.command(name="itqan-review")
-@commands.has_permissions(manage_guild=True)
-async def cmd_itqan_review(ctx, attempt_id: int = None):
-    """(Admin) Full breakdown of one flagged attempt + its audio recordings.
-    Usage: !itqan-review <attempt_id>  (the id is in the flag alert)."""
-    if attempt_id is None:
-        await ctx.send("Usage: `!itqan-review <attempt_id>`")
-        return
+async def _build_itqan_review(attempt_id: int):
+    """Shared builder for the review coaching-brief + audio files. Returns
+    {chunks:[str], files:[discord.File], n:int} or None if the attempt is gone."""
     from . import assessment
     import io
     att = database.itqan_get_attempt(attempt_id)
     if not att:
-        await ctx.send(f"No attempt #{attempt_id}.")
-        return
+        return None
     items = database.itqan_get_items(attempt_id)
     recs = database.itqan_get_recordings(attempt_id)
     member = database.get_member(att["discord_id"]) or {}
     name = (member.get("discord_name") or str(att["discord_id"])).split("#")[0]
+    note = await assessment.build_coaching_note(att, items)   # AI paragraph (or '')
     text = assessment.format_attempt_review(
-        att, items, name=name, rec_item_nos=[r["item_no"] for r in recs])
-    for chunk in _itqan_report_chunks(text):
+        att, items, name=name, rec_item_nos=[r["item_no"] for r in recs], coaching_note=note)
+    files = [discord.File(io.BytesIO(r["audio"]),
+                          filename=f"item{r['item_no']}_{r['skill']}_{r['filename']}")
+             for r in recs[:10]]
+    return {"chunks": _itqan_report_chunks(text), "files": files, "n": len(recs)}
+
+
+@bot.command(name="itqan-review")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan_review(ctx, attempt_id: int = None):
+    """(Admin) Coaching brief for one attempt + its audio recordings.
+    Usage: !itqan-review <attempt_id>  (the id is in the flag alert).
+    Tip: from #admin-commands, /itqan-review lets you pick the student by name."""
+    if attempt_id is None:
+        await ctx.send("Usage: `!itqan-review <attempt_id>`  ·  or use `/itqan-review` to pick a student.")
+        return
+    rev = await _build_itqan_review(attempt_id)
+    if rev is None:
+        await ctx.send(f"No attempt #{attempt_id}.")
+        return
+    for chunk in rev["chunks"]:
         await ctx.send(chunk)
-    if recs:
-        files = [discord.File(io.BytesIO(r["audio"]),
-                              filename=f"item{r['item_no']}_{r['skill']}_{r['filename']}")
-                 for r in recs[:10]]
-        await ctx.send(f"🎧 {len(files)} recording(s) — listen to judge:", files=files)
+    if rev["files"]:
+        await ctx.send(f"🎧 {rev['n']} recording(s) — listen to judge:", files=rev["files"])
     else:
         await ctx.send("🎧 No recordings retained (text-only items, or past the 14-day window).")
 
@@ -3226,6 +3237,94 @@ async def slash_find(interaction: discord.Interaction, query: str):
     if total > len(rows):
         lines.append(f"\n... and {total - len(rows)} more — narrow your search.")
     await interaction.followup.send("\n".join(lines), ephemeral=True)
+
+
+@bot.tree.command(name="itqan-review",
+                  description="Coaching brief + recordings for a student's weekly assessment.")
+@app_commands.describe(student="Start typing a student's name, then pick them",
+                       week="Which week (optional — defaults to their latest attempt)")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_itqan_review(interaction: discord.Interaction, student: str, week: int = None):
+    await interaction.response.defer(ephemeral=True)
+    did, member, data = await _resolve_student_arg(interaction, student)
+    if not data:
+        await interaction.followup.send(
+            "Couldn't identify that student. Start typing the name and **pick from the list**.",
+            ephemeral=True)
+        return
+    level = data.get("level", "L0")
+    aid = database.itqan_latest_attempt_id(did, level, week)
+    if not aid:
+        await interaction.followup.send(
+            f"No finished assessment for **{data.get('discord_name', did)}**"
+            f"{f' in Week {week}' if week else ''} yet.", ephemeral=True)
+        return
+    rev = await _build_itqan_review(aid)
+    if rev is None:
+        await interaction.followup.send("Couldn't load that attempt.", ephemeral=True)
+        return
+    for chunk in rev["chunks"]:
+        await interaction.followup.send(chunk, ephemeral=True)
+    if rev["files"]:
+        await interaction.followup.send(f"🎧 {rev['n']} recording(s) — listen to judge:",
+                                        files=rev["files"], ephemeral=True)
+    else:
+        await interaction.followup.send(
+            "🎧 No recordings retained (text-only items, or past the 14-day window).",
+            ephemeral=True)
+
+
+@bot.tree.command(name="itqan-pass",
+                  description="Mark a student's week as mastered (resolves a flagged/near-miss attempt).")
+@app_commands.describe(student="Start typing a student's name, then pick them", week="Which week")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_itqan_pass(interaction: discord.Interaction, student: str, week: int):
+    await interaction.response.defer(ephemeral=True)
+    did, member, data = await _resolve_student_arg(interaction, student)
+    if not data:
+        await interaction.followup.send(
+            "Couldn't identify that student. Pick from the list.", ephemeral=True)
+        return
+    level = data.get("level", "L0")
+    database.itqan_admin_pass(did, level, week)
+    name = member.display_name if member else data.get("discord_name", did)
+    await interaction.followup.send(
+        f"✅ Marked **{name}** as mastered for **{level} Week {week}**.", ephemeral=True)
+    try:
+        await ops_hub.send_ops_alert(
+            "Itqan override: manual pass",
+            f"{interaction.user} marked {data.get('discord_name', '?')} mastered for {level} Week {week}.",
+            severity="info")
+    except Exception:
+        pass
+
+
+@bot.tree.command(name="itqan-reset",
+                  description="Clear a student's attempts for a week so they can retake.")
+@app_commands.describe(student="Start typing a student's name, then pick them", week="Which week")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_itqan_reset(interaction: discord.Interaction, student: str, week: int):
+    await interaction.response.defer(ephemeral=True)
+    did, member, data = await _resolve_student_arg(interaction, student)
+    if not data:
+        await interaction.followup.send(
+            "Couldn't identify that student. Pick from the list.", ephemeral=True)
+        return
+    level = data.get("level", "L0")
+    r = database.itqan_reset(did, level, week)
+    name = member.display_name if member else data.get("discord_name", did)
+    await interaction.followup.send(
+        f"♻️ Reset **{name}**'s {level} Week {week} assessment — "
+        f"{r['attempts_deleted']} attempt(s) cleared. They can retake it.", ephemeral=True)
 
 
 @bot.tree.error

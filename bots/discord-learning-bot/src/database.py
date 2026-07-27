@@ -3338,3 +3338,24 @@ def itqan_purge_recordings(days: int = 14) -> int:
     conn.commit()
     conn.close()
     return n
+
+
+
+def itqan_latest_attempt_id(discord_id: str, level: str, week: int = None):
+    """The most recent finished attempt id for a student (optionally a specific
+    week). Used by the slash /itqan-review student+week path. Returns int|None."""
+    conn = _connect()
+    if week is not None:
+        row = conn.execute(
+            "SELECT id FROM assessment_attempts WHERE discord_id=? AND level=? AND week=? "
+            "AND finished_at IS NOT NULL ORDER BY finished_at DESC LIMIT 1",
+            (discord_id, level, week),
+        ).fetchone()
+    else:
+        row = conn.execute(
+            "SELECT id FROM assessment_attempts WHERE discord_id=? AND level=? "
+            "AND finished_at IS NOT NULL ORDER BY finished_at DESC LIMIT 1",
+            (discord_id, level),
+        ).fetchone()
+    conn.close()
+    return row["id"] if row else None

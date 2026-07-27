@@ -93,8 +93,25 @@ def test_format_attempt_review(student):
     att = database.itqan_get_attempt(aid)
     items = database.itqan_get_items(aid)
     text = assessment.format_attempt_review(att, items, name="BioRoMa", rec_item_nos=[1])
-    assert "Itqan review — BioRoMa" in text
-    assert "[audio attached]" in text          # item 1 has a recording
-    assert 'heard: "i read a book"' in text     # speaking transcript labelled 'heard'
-    assert 'expected: "book"' in text           # wrong vocab shows the answer
+    assert "ITQAN REVIEW — BioRoMa" in text
+    assert "WHAT WENT WRONG" in text
+    assert "WHAT TO SAY TO THE STUDENT" in text
+    assert "🎧" in text                          # item 1 has a recording marker
+    assert 'heard "i read a book"' in text        # speaking transcript labelled 'heard'
+    assert 'expected "book"' in text              # wrong vocab shows the answer
     assert "!itqan-pass @BioRoMa 1" in text
+
+
+def test_format_attempt_review_uses_ai_coaching_note_when_given():
+    from src import database as db
+    db.register_member("s2", "Sara", "L0")
+    aid = db.itqan_create_attempt("s2", "L0", 1, "seed")["id"]
+    db.itqan_insert_items(aid, "s2", [{"item_no": 1, "skill": "vocab",
+                                        "source_week": 1, "payload": {"expected": "book"}}])
+    db.itqan_save_item(aid, 1, "buk", auto_score=0.0, correct=False)
+    db.itqan_finish_attempt(aid, 40.0, 90.0, "not_yet", False, "flagged", False)
+    att = db.itqan_get_attempt(aid)
+    items = db.itqan_get_items(aid)
+    text = assessment.format_attempt_review(att, items, name="Sara",
+                                            coaching_note="Great effort — focus on vocab this week.")
+    assert "Great effort — focus on vocab this week." in text
