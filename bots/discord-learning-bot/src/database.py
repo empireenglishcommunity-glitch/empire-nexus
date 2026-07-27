@@ -3430,3 +3430,34 @@ def itqan_status_report(level: str = None) -> dict:
             "label": label,
         })
     return {"level": level, "rows": rows, "counts": counts, "total_students": len(members)}
+
+
+
+def itqan_gate_baseline(discord_id: str, level: str, current_week: int) -> int:
+    """Grandfather baseline for the progression gate (R16.4): the week a student
+    had already reached when the gate first applied to them. Stamped ONCE
+    (per student+level) so enabling the gate never locks anyone out of content
+    they'd already reached. Weeks at/below the baseline stay open; the gate only
+    governs openings beyond it."""
+    key = f"itqan_gate_baseline_{discord_id}_{level}"
+    raw = get_setting(key, "")
+    if raw:
+        try:
+            return int(raw)
+        except (ValueError, TypeError):
+            pass
+    baseline = max(1, int(current_week))
+    set_setting(key, str(baseline))
+    return baseline
+
+
+def itqan_allowed_week(discord_id: str, level: str, current_week: int) -> int:
+    """Highest week whose content the gate allows open: the grandfather baseline,
+    extended by each consecutively-mastered week from the baseline. Passing week
+    W opens W+1. (Lock-only: never opens a week before its calendar date.)"""
+    baseline = itqan_gate_baseline(discord_id, level, current_week)
+    mastered = itqan_mastered_weeks(discord_id, level)
+    allowed = baseline
+    while allowed in mastered:
+        allowed += 1
+    return allowed

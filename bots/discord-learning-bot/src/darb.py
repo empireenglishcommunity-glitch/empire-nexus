@@ -251,6 +251,15 @@ def build_calendar(discord_id: str) -> dict | None:
     total_days = max_week * 7
     mastery = database.get_calendar_mastery(discord_id, level)
 
+    # Itqan R16 progression gate: weeks beyond `allowed_week` stay locked until
+    # the student passes the preceding week's assessment. Lock-only (never opens
+    # a week before its date); existing students are grandfathered via a baseline.
+    gate_on = database.is_feature_enabled("itqan_progression_gate", discord_id)
+    allowed_week = max_week
+    if gate_on:
+        cur_week = min(max_week, max(1, (today_index - 1) // 7 + 1))
+        allowed_week = database.itqan_allowed_week(discord_id, level, cur_week)
+
     days = []
     for d in range(1, total_days + 1):
         d_date = join_date + datetime.timedelta(days=d - 1)
@@ -258,7 +267,10 @@ def build_calendar(discord_id: str) -> dict | None:
         day = (d - 1) % 7 + 1
         m = mastery.get((week, day))
         done = bool(m and m["done"])
-        if done:
+        if gate_on and week > allowed_week and not done:
+            # Behind the mastery gate: locked until the previous week is passed.
+            state = "gate_locked"
+        elif done:
             state = "done"
         elif d > today_index:
             state = "locked"
@@ -286,6 +298,9 @@ def build_calendar(discord_id: str) -> dict | None:
         "tier_names": TIER_NAMES,
         "days": days,
     }
+
+    if gate_on:
+        result["gate"] = {"enabled": True, "allowed_week": allowed_week}
 
     # Itqan weekly assessment — add a per-week assessment "stop" (its unlock
     # state) to the calendar. ONLY when the flag is on, so with it off the
