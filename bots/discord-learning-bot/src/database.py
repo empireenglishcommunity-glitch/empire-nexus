@@ -3211,3 +3211,62 @@ def itqan_reset(discord_id: str, level: str, week: int) -> dict:
     conn.close()
     return {"attempts_deleted": attempts_deleted, "items_deleted": items_deleted,
             "mastery_deleted": mastery_deleted}
+
+
+
+# ============================================================
+#  ITQAN — progress map + certificate data (Phase 8)
+# ============================================================
+
+def itqan_progress(discord_id: str, level: str) -> dict:
+    """Weeks-mastered progress for a level: total mastered, % of the level,
+    the consecutive streak from week 1, and whether the level is complete."""
+    from . import curriculum
+    mastered = itqan_mastered_weeks(discord_id, level)
+    total = curriculum.max_week_for_level(level)
+    # Streak = consecutive mastered weeks starting at week 1 (how deep their
+    # unbroken mastery runs — the "progress" streak, not a time streak).
+    streak = 0
+    w = 1
+    while w in mastered:
+        streak += 1
+        w += 1
+    count = len(mastered)
+    return {
+        "mastered_count": count,
+        "total_weeks": total,
+        "pct": round(100.0 * count / total, 1) if total else 0.0,
+        "streak": streak,
+        "mastered_weeks": sorted(mastered),
+        "level_complete": bool(total) and count >= total,
+    }
+
+
+def itqan_certificate_data(discord_id: str, level: str) -> dict:
+    """Data for the level-completion certificate page. `eligible` is True only
+    when every week of the level has been mastered."""
+    from . import curriculum, config
+    prog = itqan_progress(discord_id, level)
+    member = get_member(discord_id) or {}
+    name = (member.get("discord_name") or "Student").split("#")[0]
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT distinction, mastered_at FROM week_mastery "
+        "WHERE discord_id=? AND level=? AND mastered=1",
+        (discord_id, level),
+    ).fetchall()
+    conn.close()
+    distinction_count = sum(1 for r in rows if r["distinction"])
+    dates = [r["mastered_at"] for r in rows if r["mastered_at"]]
+    completed_at = max(dates) if dates else None
+    level_name = (config.LEVELS.get(level, {}) or {}).get("name", level)
+    return {
+        "eligible": prog["level_complete"],
+        "name": name,
+        "level": level,
+        "level_name": level_name,
+        "weeks_mastered": prog["mastered_count"],
+        "total_weeks": prog["total_weeks"],
+        "distinction_count": distinction_count,
+        "completed_at": completed_at,
+    }
