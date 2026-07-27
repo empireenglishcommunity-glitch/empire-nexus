@@ -282,11 +282,111 @@ async def _notify_owner_flagged(discord_id: str, level: str, week: int,
         f"Student: {name}  ·  {level} Week {week}\n"
         f"Mastery {verdict.get('mastery_pct')}% · Consistency {verdict.get('consistency_pct')}%\n"
         f"Reason: {reason}.\n\n"
-        f"Review (breakdown + recordings):  !itqan-review {attempt_id}\n"
-        f"Then in #admin-commands pick {name} + Week {week} with:\n"
-        f"  /itqan-pass   (mark mastered)   ·   /itqan-reset   (let them retake)"
+        f"Paste any of these in #admin-commands (! = paste-ready):\n"
+        f"  !itqan-review {attempt_id}\n"
+        f"  !itqan-pass {discord_id} {week}\n"
+        f"  !itqan-reset {discord_id} {week}\n"
+        f"(or use the /itqan-… menu versions and pick {name})"
     )
     try:
-        await ops_hub.send_ops_alert("Itqan: attempt needs review", body, severity="warning")
+        res = await ops_hub.send_ops_alert("Itqan: attempt needs review", body, severity="warning")
+        logger.info(f"itqan: flagged owner alert sent for attempt {attempt_id} ({name} {level} W{week}) "
+                    f"-> {'ok' if res else 'no-op/None'}")
     except Exception as e:
         logger.warning(f"itqan: owner flag notify failed: {e}")
+
+
+# ============================================================
+#  manual owner pass — celebrate the student like an earned pass (A2)
+# ============================================================
+
+async def deliver_manual_pass(discord_id: str, level: str, week: int) -> None:
+    """After an owner override marks a week mastered, tell + celebrate the
+    student exactly like an earned pass (they'd otherwise never know)."""
+    try:
+        await _manual_pass_dm(discord_id, level, week)
+        # Reuse the earned-pass celebration: Champions post + streak line, and
+        # the level certificate if this completed the level.
+        await _celebrate_champion(discord_id, level, week, {"distinction": False})
+    except Exception as e:  # pragma: no cover - safety net
+        logger.error(f"itqan deliver_manual_pass failed: {e}")
+
+
+async def _manual_pass_dm(discord_id: str, level: str, week: int) -> None:
+    from . import bot as bot_mod
+    b = getattr(bot_mod, "bot", None)
+    if not b:
+        return
+    try:
+        user = b.get_user(int(discord_id))
+        if user is None:
+            user = await b.fetch_user(int(discord_id))
+    except Exception:
+        user = None
+    if not user:
+        return
+    msg = (
+        f"🏅 **Great news — you passed Week {week}!**\n"
+        f"Your teacher reviewed your test and confirmed it. Well done — keep going! 👑\n"
+        f"━━━━━━━━━━\n"
+        f"🏅 **مبروك — عدّيت اختبار الأسبوع {week}!**\n"
+        f"المعلّم راجع اختبارك وأكّده. شغل ممتاز — كمّل! 👑"
+    )
+    try:
+        await user.send(msg)
+        logger.info(f"itqan: manual-pass DM sent to {discord_id} ({level} W{week})")
+    except Exception as e:
+        logger.warning(f"itqan: manual-pass DM failed: {e}")
+
+
+
+# ============================================================
+#  due-assessment nudge (R17.2) — Arabic, once per due week
+# ============================================================
+
+async def nudge_due_students() -> int:
+    """DM (Arabic, motivational) each student who has a DUE assessment — a week
+    whose days are done but the test isn't passed — at most ONCE per due week.
+    Only students the flag is enabled for. Returns how many were nudged."""
+    from . import bot as bot_mod
+    b = getattr(bot_mod, "bot", None)
+    if not b:
+        return 0
+    try:
+        data = database.itqan_status_report()
+    except Exception as e:
+        logger.warning(f"itqan: nudge status report failed: {e}")
+        return 0
+    base = database.get_setting("practice_base_url", "https://practice.empireenglish.online")
+    n = 0
+    for r in data.get("rows", []):
+        if r.get("state") != "due" or not r.get("due_week"):
+            continue
+        did, level, week = r["discord_id"], r["level"], r["due_week"]
+        if not database.is_feature_enabled("itqan_weekly_assessment", did):
+            continue
+        key = f"itqan_nudged_{did}_{level}_{week}"
+        if database.get_setting(key, ""):
+            continue  # already nudged for this due week
+        try:
+            user = b.get_user(int(did))
+            if user is None:
+                user = await b.fetch_user(int(did))
+        except Exception:
+            user = None
+        if not user:
+            continue
+        msg = (
+            f"📝 **اختبار الأسبوع {week} جاهز ومستنّيك!**\n"
+            f"إنت خلّصت أيام الأسبوع — فاضل تختبر نفسك وتثبت إتقانك.\n"
+            f"افتح التقويم وابدأ الاختبار: {base}/\n"
+            f"إنت قدّها 💪 — النتيجة الحقيقية بتيجي بالخطوة دي."
+        )
+        try:
+            await user.send(msg)
+            database.set_setting(key, database._today_local().isoformat())
+            n += 1
+            logger.info(f"itqan: due-nudge sent to {did} ({level} W{week})")
+        except Exception as e:
+            logger.warning(f"itqan: due nudge failed for {did}: {e}")
+    return n
