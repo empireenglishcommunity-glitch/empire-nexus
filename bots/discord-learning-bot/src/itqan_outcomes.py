@@ -279,11 +279,12 @@ async def _notify_owner_flagged(discord_id: str, level: str, week: int,
         "near_miss": "a near-miss just below the pass line — a rescue candidate",
     }.get(verdict.get("flag_reason"), "needs your judgement")
     body = (
-        f"{name} — {level} Week {week}\n"
+        f"Student: {name}  ·  {level} Week {week}\n"
         f"Mastery {verdict.get('mastery_pct')}% · Consistency {verdict.get('consistency_pct')}%\n"
-        f"Reason: {reason}.\n"
-        f"See the full breakdown + recordings:  !itqan-review {attempt_id}\n"
-        f"Then decide:  !itqan-pass @{name} {week}  |  !itqan-reset @{name} {week}"
+        f"Reason: {reason}.\n\n"
+        f"Review (breakdown + recordings):  !itqan-review {attempt_id}\n"
+        f"Then in #admin-commands pick {name} + Week {week} with:\n"
+        f"  /itqan-pass   (mark mastered)   ·   /itqan-reset   (let them retake)"
     )
     try:
         await ops_hub.send_ops_alert("Itqan: attempt needs review", body, severity="warning")

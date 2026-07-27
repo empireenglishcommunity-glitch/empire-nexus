@@ -603,12 +603,21 @@ def format_itqan_report(data: dict) -> str:
 
 
 
+_SKILL_COACHING = {
+    "listening": "Listening needs daily reps — play the word, say the meaning out loud, then type it. Try slowing the audio.",
+    "pronunciation": "Have them record, then compare to the model and repeat the target sounds a few times.",
+    "speaking": "Push for longer answers that actually use this week's words — even 3–4 sentences.",
+    "writing": "Ask for 2–3 written sentences a day using the target words.",
+    "vocab": "Review this week's flashcards and the SRS 'Review Past Words' — quick and daily.",
+}
+
+
 def format_attempt_review(attempt: dict, items: list, name: str = "",
-                          rec_item_nos=None) -> str:
-    """Full owner-review breakdown of one attempt (plain text for a code block):
-    scores, why-flagged, integrity signals, and every item with the student's
-    answer/transcript vs the expected answer. `rec_item_nos` = items that have
-    an audio recording attached."""
+                          rec_item_nos=None, coaching_note: str = "") -> str:
+    """A sectioned owner **coaching brief** for one attempt: the scores + why it
+    flagged, what the student did well, exactly what went wrong (grouped by
+    skill), the skill to focus on, ready talking points for the student, and
+    the recordings + action commands. `coaching_note` = an optional AI paragraph."""
     rec_item_nos = set(rec_item_nos or [])
     who = name or attempt.get("discord_id", "?")
     level = attempt.get("level", "?")
@@ -618,36 +627,129 @@ def format_attempt_review(attempt: dict, items: list, name: str = "",
         fl = _json.loads(flags) if isinstance(flags, str) else (flags or {})
     except Exception:
         fl = {}
-    integ = (f"tab-aways {fl.get('tab_aways', 0)} · blur {fl.get('blur_events', 0)} · "
-             f"paste {fl.get('paste_blocked', 0)} · timer_expired {bool(attempt.get('time_expired'))}")
 
-    lines = [
-        f"Itqan review — {who} · {level} Week {week} (attempt #{attempt.get('id')})",
-        (f"Result: {attempt.get('result')} · status {attempt.get('status')} · "
-         f"Mastery {attempt.get('mastery_pct')}% / Consistency {attempt.get('consistency_pct')}%"),
-        f"Finished: {attempt.get('finished_at')} · integrity: {integ}",
-        "",
-        "Items:",
-    ]
+    def _ok(it):
+        return it.get("correct") in (1, True)
+
+    # Group by skill in a stable order.
+    order = ["listening", "vocab", "pronunciation", "speaking", "writing"]
+    by_skill = {}
     for it in items:
-        skill = it["skill"]
-        ok = "✓" if it.get("correct") in (1, True) else "✗"
-        score = it.get("auto_score") if it.get("auto_score") is not None else it.get("ai_score")
-        given = (it.get("answer") or "").strip()
-        label = "heard" if skill in ("pronunciation", "speaking") else "answer"
-        rec = " [audio attached]" if it["item_no"] in rec_item_nos else ""
-        line = f"  #{it['item_no']} {skill} (wk{it.get('source_week')}) {ok} score={score}{rec}"
-        lines.append(line)
-        if given:
-            lines.append(f"       {label}: \"{given[:120]}\"")
-        exp = (it.get("expected") or "").strip()
-        if exp and it.get("correct") not in (1, True):
-            lines.append(f"       expected: \"{exp}\"")
-        fb = (it.get("feedback") or "").strip()
-        if fb and fb != "__pending_review__":
-            lines.append(f"       note: {fb[:120]}")
-    lines += [
-        "",
-        f"Actions:  !itqan-pass @{who} {week}   |   !itqan-reset @{who} {week}",
-    ]
-    return "\n".join(lines)
+        by_skill.setdefault(it["skill"], []).append(it)
+    skills_sorted = [s for s in order if s in by_skill] + \
+                    [s for s in by_skill if s not in order]
+
+    strong, weak = [], []
+    for s in skills_sorted:
+        its = by_skill[s]
+        c = sum(1 for i in its if _ok(i))
+        (strong if c == len(its) else weak).append((s, c, len(its)))
+
+    reason = {"ai_error": "an AI/recording item couldn't be scored — check it manually",
+              "near_miss": "a near-miss just below the pass line"}.get(
+        attempt.get("result") != "mastered" and _flag_reason_of(attempt), "")
+
+    L = []
+    L.append(f"ITQAN REVIEW — {who} · {level} Week {week}  (attempt #{attempt.get('id')})")
+    L.append("=" * 44)
+    L.append(f"Result: {str(attempt.get('result')).upper()} · "
+             f"Mastery {attempt.get('mastery_pct')}% · Consistency {attempt.get('consistency_pct')}%")
+    if attempt.get("status") == "flagged":
+        L.append(f"⚑ Flagged for you{(' — ' + reason) if reason else ''}.")
+    L.append(f"Finished {attempt.get('finished_at')} · integrity: "
+             f"tab-aways {fl.get('tab_aways', 0)}, blur {fl.get('blur_events', 0)}, "
+             f"paste {fl.get('paste_blocked', 0)}, timer-expired {bool(attempt.get('time_expired'))}")
+
+    # ✅ Strengths
+    if strong:
+        L.append("")
+        L.append("✅ STRONG: " + ", ".join(f"{s} {c}/{t}" for s, c, t in strong))
+
+    # ⚠️ What went wrong (per weak skill, with the missed items)
+    if weak:
+        L.append("")
+        L.append("⚠️ WHAT WENT WRONG:")
+        for s, c, t in weak:
+            L.append(f"  • {s} — {c}/{t} correct")
+            for it in by_skill[s]:
+                if _ok(it):
+                    continue
+                given = (it.get("answer") or "").strip()
+                exp = (it.get("expected") or "").strip()
+                lbl = "heard" if s in ("pronunciation", "speaking") else "typed"
+                bit = f"      #{it['item_no']}"
+                if exp:
+                    bit += f" expected \"{exp}\""
+                if given:
+                    bit += f" · {lbl} \"{given[:60]}\""
+                if it["item_no"] in rec_item_nos:
+                    bit += " 🎧"
+                L.append(bit)
+
+    # 🎯 Needs attention
+    if weak:
+        focus = ", ".join(s for s, _c, _t in weak)
+        L.append("")
+        L.append(f"🎯 NEEDS ATTENTION: {focus}")
+
+    # 🗣️ What to say (AI note if present, else heuristic talking points)
+    L.append("")
+    L.append("🗣️ WHAT TO SAY TO THE STUDENT:")
+    if coaching_note:
+        for ln in coaching_note.strip().splitlines():
+            L.append(f"  {ln.strip()}")
+    else:
+        passed = attempt.get("result") == "mastered"
+        if passed:
+            L.append("  Celebrate — they cleared the bar. Nudge them toward distinction next time.")
+        else:
+            mp = attempt.get("mastery_pct") or 0
+            L.append(f"  Start positive: their consistency was {attempt.get('consistency_pct')}% — the effort is there.")
+            L.append(f"  They're at {mp}% mastery. Name the ONE skill to fix, then invite a retake:")
+        for s, _c, _t in weak[:2]:
+            L.append(f"  • {_SKILL_COACHING.get(s, 'Review this skill together.')}")
+
+    # 🎧 Recordings + actions
+    L.append("")
+    if rec_item_nos:
+        L.append(f"🎧 {len(rec_item_nos)} recording(s) attached — listen before deciding.")
+    L.append(f"ACTIONS:  !itqan-pass @{who} {week}   |   !itqan-reset @{who} {week}")
+    return "\n".join(L)
+
+
+def _flag_reason_of(attempt: dict) -> str:
+    """Best-effort flag reason (attempts table doesn't store it, so infer from
+    status; callers that have the verdict can pass it in the note instead)."""
+    return "near_miss" if attempt.get("status") == "flagged" else ""
+
+
+async def build_coaching_note(attempt: dict, items: list) -> str:
+    """A short, warm, specific coaching paragraph the teacher can relay to the
+    student. Uses the shared LLM; returns '' on any failure (heuristic bullets
+    then cover it) so review is never blocked."""
+    try:
+        from . import ai_engine
+    except Exception:
+        return ""
+
+    def _ok(it):
+        return it.get("correct") in (1, True)
+    missed = [it for it in items if not _ok(it)]
+    missed_desc = "; ".join(
+        f"{it['skill']} (expected '{(it.get('expected') or '').strip()}')"
+        for it in missed[:6]) or "nothing major"
+    prompt = (
+        "You are a kind English teacher for Arabic-speaking beginners. In 2-3 short, "
+        "warm, specific sentences, tell me (the teacher) what to say to a student about "
+        "their weekly test so I can coach them. Be encouraging, name what to practise, "
+        "avoid jargon.\n"
+        f"Result: {attempt.get('result')} · mastery {attempt.get('mastery_pct')}% · "
+        f"consistency {attempt.get('consistency_pct')}%.\n"
+        f"They struggled with: {missed_desc}.\n"
+        "Write only the coaching message."
+    )
+    try:
+        out = await ai_engine._call_llm(prompt, temperature=0.6)
+        return (out or "").strip()
+    except Exception:
+        return ""
