@@ -229,3 +229,48 @@ On `finish`:
 2. **Certificate rendering** via the existing `html2img` service vs. a static
    template — decide in the certificate phase.
 3. **Champion teaching clip** — include in v1 or defer as a fast follow.
+
+
+---
+
+## 13. Post-pilot design additions (R16, R17, amendments)
+
+### 13.1 Mastery-based progression gate (R16)
+- New config/flag `itqan_progression_gate` (owner-toggle, default OFF until
+  rolled out with the feature).
+- `darb.build_calendar` gains a **highest-unlocked-week** computation when the
+  gate is on: week 1 always open; week `W+1` opens only once
+  `week_mastery(W).mastered` is true. Days of a locked future week render
+  `state: "gate-locked"` with an Arabic-first reason ("pass Week W's test").
+- **Grandfather migration:** on first enable, for each active member set a
+  per-member baseline `itqan_gate_baseline_week = ` the week they've already
+  reached by the existing date-based calendar, and never lock at/below the
+  baseline. The gate only governs openings **beyond** the baseline. Stored in
+  `settings`/member field so it's a one-time, reversible stamp.
+- Safety valves unchanged (R7/R8): retakes, near-miss rescue, `!itqan-pass`
+  override — a pass (earned or manual) immediately opens the next week.
+- The daily loop itself is untouched *within* an open week (R15); the gate only
+  decides **when the next week opens**.
+
+### 13.2 Full status report + due nudges (R17)
+- `database.itqan_status_report(level=None)` → per active student: current week,
+  days-done for that week, and assessment state derived from
+  `get_calendar_mastery` × `week_mastery` × latest attempt:
+  `locked | due | passed | not_yet | flagged`. **DUE** = week's 7 days done AND
+  not passed AND (no in-progress attempt).
+- Surfaced via `!itqan-due` (Discord, chunked) and `/itqan-due` (Telegram).
+- **Nudge job:** a daily task DMs (Arabic, motivational) each student whose state
+  is DUE, guarded by a per-(student,week) settings stamp
+  (`itqan_nudged_{did}_{level}_{week}`) so it fires **at most once per due week**.
+
+### 13.3 Manual-pass celebration (A2)
+- `itqan_admin_pass` stays a pure DB write, but the command/slash handlers now
+  call `itqan_outcomes.deliver_manual_pass(...)` after it: DM the student the
+  good news, post to `🏅 Week Champions`, and (if it completes the level) send
+  the certificate — reusing the earned-pass outcome path.
+
+### 13.4 Flagged alert commands (R17.3)
+- The alert body lists paste-ready `!` commands using the **discord id**
+  (`!itqan-pass <id> <week>` etc. — `MemberConverter` resolves an id anywhere),
+  and notes the `/itqan-…` menu equivalents. `_notify_owner_flagged` logs a
+  **success line** so every send is verifiable.
