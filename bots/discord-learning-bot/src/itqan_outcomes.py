@@ -174,6 +174,54 @@ async def _celebrate_champion(discord_id: str, level: str, week: int, verdict: d
     except Exception as e:
         logger.warning(f"itqan: champions post failed: {e}")
 
+    # Did this pass complete the WHOLE level? → send the certificate DM (once).
+    if _is_level_complete(level, mastered):
+        await _maybe_certificate_dm(discord_id, level)
+
+
+def _is_level_complete(level: str, mastered_weeks) -> bool:
+    """True when every week of the level has been mastered."""
+    from . import curriculum
+    total = curriculum.max_week_for_level(level)
+    return bool(total) and len(mastered_weeks) >= total
+
+
+async def _maybe_certificate_dm(discord_id: str, level: str) -> None:
+    """DM the student their level-completion certificate link, once per level."""
+    key = f"itqan_cert_sent_{discord_id}_{level}"
+    if database.get_setting(key, ""):
+        return  # already sent — don't repeat on a later re-pass
+    from . import bot as bot_mod, config
+    b = getattr(bot_mod, "bot", None)
+    if not b:
+        return
+    try:
+        user = b.get_user(int(discord_id))
+        if user is None:
+            user = await b.fetch_user(int(discord_id))
+    except Exception:
+        user = None
+    if not user:
+        return
+    base = database.get_setting("practice_base_url", "https://practice.empireenglish.online")
+    link = f"{base}/assessment/certificate/?level={level}"
+    level_name = (config.LEVELS.get(level, {}) or {}).get("name", level)
+    msg = (
+        f"🎓 **Level Complete — {level} {level_name}!**\n"
+        f"You've mastered every week of {level}. That's a huge achievement — "
+        f"real, proven progress. 👑\n\n"
+        f"View & save your certificate:\n{link}\n"
+        f"━━━━━━━━━━\n"
+        f"🎓 **أكملت المستوى — {level}!**\n"
+        f"أتقنت كل أسابيع {level}. إنجاز كبير وتقدّم حقيقي. شوف واحفظ شهادتك من اللينك فوق. 👑"
+    )
+    try:
+        await user.send(msg)
+        database.set_setting(key, database._today_local().isoformat())
+        logger.info(f"itqan: sent level-complete certificate DM ({level}) to {discord_id}")
+    except Exception as e:
+        logger.warning(f"itqan: certificate DM failed: {e}")
+
 
 # ============================================================
 #  not_yet — private, encouraging DM

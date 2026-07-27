@@ -300,5 +300,7 @@ def build_calendar(discord_id: str) -> dict | None:
                 entry["days_remaining"] = st["days_remaining"]
             stops.append(entry)
         result["assessments"] = stops
+        # Weeks-mastered progress map (Phase 8) — same flag gate.
+        result["itqan_progress"] = database.itqan_progress(discord_id, level)
 
     return result

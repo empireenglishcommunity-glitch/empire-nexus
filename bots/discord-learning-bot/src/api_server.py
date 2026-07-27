@@ -495,6 +495,12 @@ async def get_dashboard(request: web.Request) -> web.Response:
     if momentum is not None:
         dashboard["momentum"] = momentum
 
+    # Itqan weekly-assessment progress (weeks mastered / total / streak).
+    # Flag-gated + conditionally added (never null) so the frontend's fallback
+    # needs no special-casing and this stays instantly revertible.
+    if database.is_feature_enabled("itqan_weekly_assessment", discord_id):
+        dashboard["itqan"] = database.itqan_progress(discord_id, current_level)
+
     return web.json_response(dashboard, headers=_cors_headers())
 
 
@@ -1391,6 +1397,19 @@ async def get_assessment_status(request: web.Request) -> web.Response:
         "ok": True, "enabled": True, "config": thresholds,
         "mastered_weeks": sorted(database.itqan_mastered_weeks(discord_id, level)),
     }, headers=_cors_headers(request))
+
+
+@routes.get("/api/assessment/certificate")
+async def get_assessment_certificate(request: web.Request) -> web.Response:
+    """Level-completion certificate data for the dojo certificate page.
+    `eligible` is True only when every week of the level is mastered."""
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    data = database.itqan_certificate_data(discord_id, level)
+    return web.json_response({"ok": True, **data}, headers=_cors_headers(request))
 
 
 @routes.post("/api/assessment/start")
