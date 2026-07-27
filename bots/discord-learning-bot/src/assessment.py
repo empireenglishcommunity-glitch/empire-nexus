@@ -32,8 +32,10 @@ def _vocab_item(v: dict, source_week: int, skill: str) -> dict:
         payload = {"prompt_ar": arabic, "expected": word,
                    "direction": "ar_to_en", "pronunciation": pron}
     elif skill == "listening":
-        # Kokoro says the English word; student gives the meaning.
-        payload = {"say_en": word, "expected": arabic, "pronunciation": pron}
+        # Dictation: Kokoro says the English word; the student types the English
+        # word they heard (a true listening/spelling check — fair for beginners
+        # and no fuzzy Arabic-meaning matching). `arabic` kept only as a hint.
+        payload = {"say_en": word, "expected": word, "hint_ar": arabic, "pronunciation": pron}
     else:  # pronunciation
         # Word shown + modeled by Kokoro; student records; Whisper scores.
         payload = {"word": word, "expected": word, "pronunciation": pron}
