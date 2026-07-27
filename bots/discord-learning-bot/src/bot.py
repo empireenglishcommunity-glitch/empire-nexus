@@ -451,6 +451,8 @@ async def on_ready():
         markaz_weekly_report.start()
     if not itqan_weekly_report.is_running():
         itqan_weekly_report.start()
+    if not itqan_due_nudge.is_running():
+        itqan_due_nudge.start()
     if not markaz_monthly_summary.is_running():
         markaz_monthly_summary.start()
     # Markaz M2: start the Telegram reply-forwarding poller exactly
@@ -1535,6 +1537,19 @@ async def itqan_weekly_report():
         await ops_hub.send_ops_message(f"```\n{text}\n```")
     except Exception as e:
         logger.error(f"itqan_weekly_report failed: {e}")
+
+
+@tasks.loop(time=datetime.time(hour=17, minute=0, tzinfo=_zone()))
+async def itqan_due_nudge():
+    """Nudge students who have a DUE weekly assessment (Arabic, once per due
+    week). Per-member flag-gated inside, so it's silent outside the pilot."""
+    try:
+        from . import itqan_outcomes
+        n = await itqan_outcomes.nudge_due_students()
+        if n:
+            logger.info(f"itqan: nudged {n} student(s) with a due assessment")
+    except Exception as e:
+        logger.warning(f"itqan due-nudge loop failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=9, minute=30, tzinfo=_zone()))
@@ -2957,7 +2972,13 @@ async def cmd_itqan_pass(ctx, member: discord.Member = None, week: int = None):
         return
     level = data.get("level", "L0")
     database.itqan_admin_pass(str(member.id), level, week)
-    await ctx.send(f"✅ Marked **{member.display_name}** as mastered for **{level} Week {week}**.")
+    await ctx.send(f"✅ Marked **{member.display_name}** as mastered for **{level} Week {week}** "
+                   f"— notifying + celebrating them now.")
+    try:
+        from . import itqan_outcomes
+        await itqan_outcomes.deliver_manual_pass(str(member.id), level, week)
+    except Exception:
+        pass
     try:
         await ops_hub.send_ops_alert(
             "Itqan override: manual pass",
@@ -3027,6 +3048,21 @@ async def cmd_itqan_review(ctx, attempt_id: int = None):
         await ctx.send(f"🎧 {rev['n']} recording(s) — listen to judge:", files=rev["files"])
     else:
         await ctx.send("🎧 No recordings retained (text-only items, or past the 14-day window).")
+
+
+@bot.command(name="itqan-due")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan_due(ctx, level: str = None):
+    """(Admin) Full weekly-assessment status — who has a due test.
+    Usage: !itqan-due [L0/L1/L2/L3]"""
+    from . import assessment
+    lvl = level.upper() if level else None
+    if lvl and lvl not in config.LEVELS:
+        await ctx.send("Usage: `!itqan-due [L0/L1/L2/L3]`")
+        return
+    data = database.itqan_status_report(lvl)
+    for chunk in _itqan_report_chunks(assessment.format_itqan_due(data)):
+        await ctx.send(chunk)
 
 
 # ============================================================
@@ -3294,8 +3330,14 @@ async def slash_itqan_pass(interaction: discord.Interaction, student: str, week:
     level = data.get("level", "L0")
     database.itqan_admin_pass(did, level, week)
     name = member.display_name if member else data.get("discord_name", did)
+    try:
+        from . import itqan_outcomes
+        await itqan_outcomes.deliver_manual_pass(did, level, week)
+    except Exception:
+        pass
     await interaction.followup.send(
-        f"✅ Marked **{name}** as mastered for **{level} Week {week}**.", ephemeral=True)
+        f"✅ Marked **{name}** as mastered for **{level} Week {week}** — "
+        f"the student has been notified + celebrated.", ephemeral=True)
     try:
         await ops_hub.send_ops_alert(
             "Itqan override: manual pass",
@@ -3325,6 +3367,19 @@ async def slash_itqan_reset(interaction: discord.Interaction, student: str, week
     await interaction.followup.send(
         f"♻️ Reset **{name}**'s {level} Week {week} assessment — "
         f"{r['attempts_deleted']} attempt(s) cleared. They can retake it.", ephemeral=True)
+
+
+@bot.tree.command(name="itqan-due",
+                  description="Weekly-assessment status for all students (who has a due test).")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_itqan_due(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    from . import assessment
+    data = database.itqan_status_report(None)
+    for chunk in _itqan_report_chunks(assessment.format_itqan_due(data)):
+        await interaction.followup.send(chunk, ephemeral=True)
 
 
 @bot.tree.error

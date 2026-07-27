@@ -755,3 +755,28 @@ async def build_coaching_note(attempt: dict, items: list) -> str:
         return (out or "").strip()
     except Exception:
         return ""
+
+
+
+def format_itqan_due(data: dict) -> str:
+    """Plain-text full status report (R17.1) for !itqan-due / /itqan-due,
+    with DUE + flagged students surfaced first."""
+    lvl = data.get("level")
+    c = data.get("counts", {})
+    scope = lvl if lvl else "all levels"
+    lines = [
+        f"Itqan — status ({scope})",
+        (f"Students: {data.get('total_students', 0)} | "
+         f"⏳ due {c.get('due', 0)} · ⚑ flagged {c.get('flagged', 0)} · "
+         f"▶ in-progress {c.get('in_progress', 0)} · ✅ up-to-date {c.get('up_to_date', 0)}"),
+    ]
+    icon = {"due": "⏳", "flagged": "⚑", "in_progress": "▶", "up_to_date": "✅"}
+    for state in ("flagged", "due", "in_progress", "up_to_date"):
+        group = [r for r in data.get("rows", []) if r["state"] == state]
+        if not group:
+            continue
+        lines.append("")
+        lines.append(f"{icon[state]} {state.replace('_', ' ').upper()}:")
+        for r in group:
+            lines.append(f"  [{r['level']}] {r['name']} — {r['label']} · mastered {r['mastered_count']}")
+    return "\n".join(lines)

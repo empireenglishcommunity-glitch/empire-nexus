@@ -3359,3 +3359,74 @@ def itqan_latest_attempt_id(discord_id: str, level: str, week: int = None):
         ).fetchone()
     conn.close()
     return row["id"] if row else None
+
+
+
+def itqan_status_report(level: str = None) -> dict:
+    """Full weekly-assessment status per student (R17.1). For each active
+    student: current week, days-done, and a single actionable state:
+      due       — a completed week whose assessment isn't passed yet
+      flagged   — that due week's latest attempt awaits owner review
+      in_progress — current week's days not all done yet
+      up_to_date  — nothing due
+    Returns {level, rows, counts, total_students}."""
+    from . import curriculum
+    conn = _connect()
+    if level:
+        members = conn.execute(
+            "SELECT discord_id, discord_name, level FROM members "
+            "WHERE status='active' AND level=? ORDER BY level, discord_name", (level,)).fetchall()
+    else:
+        members = conn.execute(
+            "SELECT discord_id, discord_name, level FROM members "
+            "WHERE status='active' ORDER BY level, discord_name").fetchall()
+    members = [dict(m) for m in members]
+    conn.close()
+
+    counts = {"due": 0, "flagged": 0, "in_progress": 0, "up_to_date": 0}
+    rows = []
+    for m in members:
+        did, lvl = m["discord_id"], m["level"]
+        maxw = curriculum.max_week_for_level(lvl)
+        cur_week = min(max(1, member_week_number(did)), maxw)
+        cal = get_calendar_mastery(did, lvl)
+        mastered = itqan_mastered_weeks(did, lvl)
+
+        def _week_done(w):
+            return all((cal.get((w, d)) or {}).get("day_tier", 0) >= 1 for d in range(1, 8))
+
+        due_week = None
+        for w in range(1, cur_week + 1):
+            if w not in mastered and _week_done(w):
+                due_week = w
+                break
+
+        done_days = sum(1 for d in range(1, 8)
+                        if (cal.get((cur_week, d)) or {}).get("day_tier", 0) >= 1)
+
+        if due_week is not None:
+            last = itqan_last_finished(did, lvl, due_week)
+            if last and last.get("status") == "flagged":
+                state, label = "flagged", f"Week {due_week} — flagged, needs your review"
+                counts["flagged"] += 1
+            else:
+                state, label = "due", f"Week {due_week} test not done"
+                counts["due"] += 1
+        elif not _week_done(cur_week):
+            state, label = "in_progress", f"Week {cur_week}: {done_days}/7 days"
+            counts["in_progress"] += 1
+        else:
+            state, label = "up_to_date", "up to date"
+            counts["up_to_date"] += 1
+
+        rows.append({
+            "discord_id": did,
+            "name": (m["discord_name"] or "?").split("#")[0],
+            "level": lvl,
+            "current_week": cur_week,
+            "mastered_count": len(mastered),
+            "due_week": due_week,
+            "state": state,
+            "label": label,
+        })
+    return {"level": level, "rows": rows, "counts": counts, "total_students": len(members)}

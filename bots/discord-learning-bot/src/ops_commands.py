@@ -445,6 +445,22 @@ async def handle_itqan_review(args: str, bot) -> str:
 
 
 # ============================================================
+#  /itqan-due — full status: who has a due assessment
+# ============================================================
+
+@command("/itqan-due")
+async def handle_itqan_due(args: str, bot) -> str:
+    """Full weekly-assessment status for all students. Usage: /itqan-due [L0-L3]."""
+    from . import assessment
+    lvl = args.strip().upper() or None
+    if lvl and lvl not in ("L0", "L1", "L2", "L3"):
+        return "Usage: `/itqan\\-due [L0|L1|L2|L3]`"
+    data = database.itqan_status_report(lvl)
+    text = assessment.format_itqan_due(data).replace("`", "'")
+    return f"```\n{text}\n```"
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -462,6 +478,7 @@ async def handle_help(args: str, bot) -> str:
         "`/changelog` — List / `add <text>` publish a 'What's New' entry",
         "`/itqan` — Weekly assessment report \\[L0\\-L3\\]",
         "`/itqan-review <id>` — Full breakdown of a flagged attempt",
+        "`/itqan-due` — Who has a due weekly assessment",
         "`/check` — Detailed status for one student",
         "`/help` — This message",
     ]
