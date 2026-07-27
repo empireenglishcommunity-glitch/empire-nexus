@@ -1503,6 +1503,21 @@ async def post_assessment_finish(request: web.Request) -> web.Response:
         integrity_flags = None
     database.touch_device_session(payload["sid"])
     result = assessment.finish_attempt(discord_id, attempt_id, integrity_flags=integrity_flags)
+
+    # Fire the outcome (Phase 6): 🏅 Champions post on a pass, private support
+    # DM + SRS re-inject on a not-yet, owner alert on a flagged attempt. This
+    # is best-effort — scoring is already persisted, so a failed Discord post
+    # must never turn a successful finish into an error.
+    if result.get("ok"):
+        try:
+            from . import itqan_outcomes
+            att = database.itqan_get_attempt(attempt_id)
+            if att:
+                await itqan_outcomes.deliver_outcome(
+                    discord_id, att["level"], att["week"], attempt_id, result["verdict"])
+        except Exception as e:
+            logger.warning(f"itqan: outcome delivery error: {e}")
+
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
 
