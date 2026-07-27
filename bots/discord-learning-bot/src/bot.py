@@ -1497,6 +1497,13 @@ async def markaz_daily_digest():
     removed = database.cleanup_expired_tokens(days=30)
     if removed > 0:
         logger.info(f"Wuslah: cleaned up {removed} expired link token(s)")
+    # Itqan: purge assessment recordings past the retention window (owner-review only).
+    try:
+        purged = database.itqan_purge_recordings(days=14)
+        if purged > 0:
+            logger.info(f"Itqan: purged {purged} assessment recording(s) older than 14 days")
+    except Exception as e:
+        logger.warning(f"Itqan: recording purge failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=9, minute=0, tzinfo=_zone()))
@@ -2978,6 +2985,37 @@ async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
     await ctx.send(
         f"♻️ Reset **{member.display_name}**'s {level} Week {week} assessment — "
         f"{r['attempts_deleted']} attempt(s) cleared. They can retake it.")
+
+
+@bot.command(name="itqan-review")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan_review(ctx, attempt_id: int = None):
+    """(Admin) Full breakdown of one flagged attempt + its audio recordings.
+    Usage: !itqan-review <attempt_id>  (the id is in the flag alert)."""
+    if attempt_id is None:
+        await ctx.send("Usage: `!itqan-review <attempt_id>`")
+        return
+    from . import assessment
+    import io
+    att = database.itqan_get_attempt(attempt_id)
+    if not att:
+        await ctx.send(f"No attempt #{attempt_id}.")
+        return
+    items = database.itqan_get_items(attempt_id)
+    recs = database.itqan_get_recordings(attempt_id)
+    member = database.get_member(att["discord_id"]) or {}
+    name = (member.get("discord_name") or str(att["discord_id"])).split("#")[0]
+    text = assessment.format_attempt_review(
+        att, items, name=name, rec_item_nos=[r["item_no"] for r in recs])
+    for chunk in _itqan_report_chunks(text):
+        await ctx.send(chunk)
+    if recs:
+        files = [discord.File(io.BytesIO(r["audio"]),
+                              filename=f"item{r['item_no']}_{r['skill']}_{r['filename']}")
+                 for r in recs[:10]]
+        await ctx.send(f"🎧 {len(files)} recording(s) — listen to judge:", files=files)
+    else:
+        await ctx.send("🎧 No recordings retained (text-only items, or past the 14-day window).")
 
 
 # ============================================================

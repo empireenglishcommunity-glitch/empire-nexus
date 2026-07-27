@@ -270,10 +270,19 @@ def score_attempt(item_scores: list, consistency_pct: float,
                   has_ai_error: bool = False, cfg: dict = None) -> dict:
     """Combine per-item scores + consistency into the final verdict.
 
-    Returns {mastery_pct, consistency_pct, result, distinction, status}.
+    Returns {mastery_pct, consistency_pct, result, distinction, status, flag_reason}.
     - result: 'mastered' | 'not_yet'
-    - status: 'scored' | 'flagged'  (flagged = owner should decide:
-      an AI item errored, or the mastery score sits right on the pass line)
+    - status: 'scored' | 'flagged'
+    - flag_reason: '' | 'ai_error' | 'near_miss'
+
+    A **clear pass just passes** (celebrated immediately — no review limbo). We
+    only ask a human to look when the student did NOT pass AND a human might
+    fairly change the outcome:
+      • 'ai_error'  — an AI/transcription item couldn't be scored, so the score
+        is unreliable and may be understated; or
+      • 'near_miss' — they did the daily work (consistency met) but landed just
+        below the mastery line (within the margin) — a rescue candidate.
+    A clear not-yet (well below, work not done) is scored normally → supportive.
     """
     cfg = cfg or database.get_itqan_config()
     mastery_pass = cfg["itqan_mastery_pass_pct"]
@@ -285,8 +294,15 @@ def score_attempt(item_scores: list, consistency_pct: float,
     passed = (mastery_pct >= mastery_pass) and (consistency_pct >= consistency_pass)
     distinction = passed and (mastery_pct >= distinction_pct)
 
-    borderline = abs(mastery_pct - mastery_pass) <= _BORDERLINE_MARGIN
-    status = "flagged" if (has_ai_error or borderline) else "scored"
+    flag_reason = ""
+    if not passed:
+        near_miss = (consistency_pct >= consistency_pass
+                     and 0 <= (mastery_pass - mastery_pct) <= _BORDERLINE_MARGIN)
+        if has_ai_error:
+            flag_reason = "ai_error"
+        elif near_miss:
+            flag_reason = "near_miss"
+    status = "flagged" if flag_reason else "scored"
 
     return {
         "mastery_pct": mastery_pct,
@@ -294,6 +310,7 @@ def score_attempt(item_scores: list, consistency_pct: float,
         "result": "mastered" if passed else "not_yet",
         "distinction": distinction,
         "status": status,
+        "flag_reason": flag_reason,
     }
 
 
@@ -410,10 +427,13 @@ def start_attempt(discord_id: str, level: str, week: int) -> dict:
 
 
 async def submit_item(discord_id: str, attempt_id: int, item_no: int,
-                      answer: str = "", audio_bytes: bytes = None) -> dict:
+                      answer: str = "", audio_bytes: bytes = None,
+                      audio_filename: str = "recording.webm") -> dict:
     """Score and store one item's answer. Objective items compare to the stored
     expected; audio items (pronunciation/speaking) are transcribed via Whisper
-    then scored; writing scores the text. Graceful on transcription failure."""
+    then scored; writing scores the text. Graceful on transcription failure.
+
+    Audio recordings are retained (owner-only) for review via itqan_save_recording."""
     attempt = database.itqan_get_attempt(attempt_id)
     if not attempt or str(attempt["discord_id"]) != str(discord_id):
         return {"ok": False, "error": "not_found"}
@@ -434,6 +454,13 @@ async def submit_item(discord_id: str, attempt_id: int, item_no: int,
         return {"ok": True}
 
     if skill in ("pronunciation", "speaking"):
+        # Retain the recording for owner review (best-effort; never blocks scoring).
+        if audio_bytes:
+            try:
+                database.itqan_save_recording(attempt_id, discord_id, item_no,
+                                              skill, audio_filename, audio_bytes)
+            except Exception as e:
+                _alog.warning(f"itqan: save recording failed: {e}")
         transcript = None
         if audio_bytes:
             try:
@@ -572,4 +599,55 @@ def format_itqan_report(data: dict) -> str:
             what = mm.get("expected") or f"({mm['skill']})"
             lines.append(f"  {what} [{mm['skill']} W{mm['source_week']}] x{mm['misses']}")
 
+    return "\n".join(lines)
+
+
+
+def format_attempt_review(attempt: dict, items: list, name: str = "",
+                          rec_item_nos=None) -> str:
+    """Full owner-review breakdown of one attempt (plain text for a code block):
+    scores, why-flagged, integrity signals, and every item with the student's
+    answer/transcript vs the expected answer. `rec_item_nos` = items that have
+    an audio recording attached."""
+    rec_item_nos = set(rec_item_nos or [])
+    who = name or attempt.get("discord_id", "?")
+    level = attempt.get("level", "?")
+    week = attempt.get("week", "?")
+    flags = attempt.get("integrity_flags") or "{}"
+    try:
+        fl = _json.loads(flags) if isinstance(flags, str) else (flags or {})
+    except Exception:
+        fl = {}
+    integ = (f"tab-aways {fl.get('tab_aways', 0)} · blur {fl.get('blur_events', 0)} · "
+             f"paste {fl.get('paste_blocked', 0)} · timer_expired {bool(attempt.get('time_expired'))}")
+
+    lines = [
+        f"Itqan review — {who} · {level} Week {week} (attempt #{attempt.get('id')})",
+        (f"Result: {attempt.get('result')} · status {attempt.get('status')} · "
+         f"Mastery {attempt.get('mastery_pct')}% / Consistency {attempt.get('consistency_pct')}%"),
+        f"Finished: {attempt.get('finished_at')} · integrity: {integ}",
+        "",
+        "Items:",
+    ]
+    for it in items:
+        skill = it["skill"]
+        ok = "✓" if it.get("correct") in (1, True) else "✗"
+        score = it.get("auto_score") if it.get("auto_score") is not None else it.get("ai_score")
+        given = (it.get("answer") or "").strip()
+        label = "heard" if skill in ("pronunciation", "speaking") else "answer"
+        rec = " [audio attached]" if it["item_no"] in rec_item_nos else ""
+        line = f"  #{it['item_no']} {skill} (wk{it.get('source_week')}) {ok} score={score}{rec}"
+        lines.append(line)
+        if given:
+            lines.append(f"       {label}: \"{given[:120]}\"")
+        exp = (it.get("expected") or "").strip()
+        if exp and it.get("correct") not in (1, True):
+            lines.append(f"       expected: \"{exp}\"")
+        fb = (it.get("feedback") or "").strip()
+        if fb and fb != "__pending_review__":
+            lines.append(f"       note: {fb[:120]}")
+    lines += [
+        "",
+        f"Actions:  !itqan-pass @{who} {week}   |   !itqan-reset @{who} {week}",
+    ]
     return "\n".join(lines)

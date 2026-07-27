@@ -1451,6 +1451,7 @@ async def post_assessment_item(request: web.Request) -> web.Response:
     attempt_id = item_no = None
     answer = ""
     audio_bytes = None
+    audio_filename = "recording.webm"
     ctype = request.headers.get("Content-Type", "")
 
     if ctype.startswith("multipart/"):
@@ -1465,6 +1466,13 @@ async def post_assessment_item(request: web.Request) -> web.Response:
                 break
             if part.name == "audio":
                 audio_bytes = await part.read()
+                ct = part.headers.get("Content-Type", "audio/webm")
+                if "mp4" in ct or "m4a" in ct:
+                    audio_filename = "recording.m4a"
+                elif "ogg" in ct:
+                    audio_filename = "recording.ogg"
+                else:
+                    audio_filename = "recording.webm"
             elif part.name == "answer":
                 answer = (await part.text()).strip()
             elif part.name == "attempt_id":
@@ -1494,7 +1502,8 @@ async def post_assessment_item(request: web.Request) -> web.Response:
                                  status=400, headers=_cors_headers(request))
     database.touch_device_session(payload["sid"])
     result = await assessment.submit_item(discord_id, attempt_id, item_no,
-                                          answer=answer, audio_bytes=audio_bytes)
+                                          answer=answer, audio_bytes=audio_bytes,
+                                          audio_filename=audio_filename)
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
 

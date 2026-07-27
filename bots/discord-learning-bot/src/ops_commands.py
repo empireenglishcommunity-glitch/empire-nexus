@@ -419,6 +419,32 @@ async def handle_itqan(args: str, bot) -> str:
 
 
 # ============================================================
+#  /itqan-review — full breakdown of one flagged attempt
+# ============================================================
+
+@command("/itqan-review")
+async def handle_itqan_review(args: str, bot) -> str:
+    """Full owner-review breakdown of one attempt. Usage: /itqan-review <attempt id>.
+    (Audio recordings are attached in Discord via !itqan-review.)"""
+    from . import assessment
+    try:
+        aid = int(args.strip())
+    except (ValueError, TypeError):
+        return "Usage: `/itqan\\-review <attempt id>`"
+    att = database.itqan_get_attempt(aid)
+    if not att:
+        return f"No attempt \\#{aid}\\."
+    items = database.itqan_get_items(aid)
+    recs = database.itqan_get_recordings(aid)
+    member = database.get_member(att["discord_id"]) or {}
+    name = (member.get("discord_name") or str(att["discord_id"])).split("#")[0]
+    text = assessment.format_attempt_review(
+        att, items, name=name, rec_item_nos=[r["item_no"] for r in recs]).replace("`", "'")
+    note = f"\n\n🎧 {len(recs)} recording(s) — listen in Discord: !itqan-review {aid}" if recs else ""
+    return f"```\n{text}{note}\n```"
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -435,6 +461,7 @@ async def handle_help(args: str, bot) -> str:
         "`/maintenance` — Status / `start [soft|hard] [min] [reason]` / `end`",
         "`/changelog` — List / `add <text>` publish a 'What's New' entry",
         "`/itqan` — Weekly assessment report \\[L0\\-L3\\]",
+        "`/itqan-review <id>` — Full breakdown of a flagged attempt",
         "`/check` — Detailed status for one student",
         "`/help` — This message",
     ]

@@ -87,12 +87,35 @@ def test_verdict_not_yet_when_inconsistent_even_if_smart():
     assert v["result"] == "not_yet"
 
 
-def test_verdict_flagged_on_borderline():
-    # Mastery right on the pass line → owner decides.
+def test_verdict_clear_pass_is_not_flagged():
+    # Right on the line = a clear pass → celebrate immediately, no review limbo.
     v = assessment.score_attempt([70, 70, 70, 70], consistency_pct=90, cfg=CFG)
-    assert v["status"] == "flagged"
+    assert v["result"] == "mastered"
+    assert v["status"] == "scored"
+    assert v["flag_reason"] == ""
 
 
-def test_verdict_flagged_on_ai_error():
-    v = assessment.score_attempt([90, 90, 90], consistency_pct=90, has_ai_error=True, cfg=CFG)
+def test_verdict_flagged_on_near_miss_below_line():
+    # Did the daily work (consistency met) but landed just below the line → rescue candidate.
+    v = assessment.score_attempt([66, 66, 66, 66], consistency_pct=90, cfg=CFG)
+    assert v["result"] == "not_yet"
     assert v["status"] == "flagged"
+    assert v["flag_reason"] == "near_miss"
+
+
+def test_verdict_clear_not_yet_is_not_flagged():
+    # Well below the line → honest not-yet, supportive path (no owner review).
+    v = assessment.score_attempt([50, 50, 50, 50], consistency_pct=90, cfg=CFG)
+    assert v["result"] == "not_yet"
+    assert v["status"] == "scored"
+    assert v["flag_reason"] == ""
+
+
+def test_verdict_flagged_on_ai_error_only_when_not_passed():
+    # AI item errored AND they didn't clearly pass → flag for owner re-score.
+    v = assessment.score_attempt([50, 50, 50], consistency_pct=90, has_ai_error=True, cfg=CFG)
+    assert v["status"] == "flagged"
+    assert v["flag_reason"] == "ai_error"
+    # But a clear pass despite an AI error just passes (their score cleared the bar).
+    v2 = assessment.score_attempt([90, 90, 90], consistency_pct=90, has_ai_error=True, cfg=CFG)
+    assert v2["status"] == "scored"
