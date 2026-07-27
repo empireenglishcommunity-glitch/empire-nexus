@@ -520,3 +520,56 @@ def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = Non
                                       verdict["distinction"], attempt_id)
 
     return {"ok": True, "verdict": verdict, "items": per_item}
+
+
+
+# ============================================================
+#  OWNER REPORT FORMATTING (Phase 7)
+# ============================================================
+#
+# Turns database.itqan_report_data() into plain text that is safe to drop
+# inside a Discord/Telegram code block (no Markdown, no backticks), so both
+# surfaces can share one formatter.
+
+def _pct(v) -> str:
+    return "—" if v is None else f"{round(v)}%"
+
+
+def format_itqan_report(data: dict) -> str:
+    """Plain-text owner report for `!itqan` / Telegram `/itqan`."""
+    lvl = data.get("level")
+    c = data.get("counts", {})
+    scope = lvl if lvl else "all levels"
+    lines = [
+        f"Itqan — Weekly Assessment report ({scope})",
+        (f"Students: {data.get('total_students', 0)} | "
+         f"mastered {c.get('mastered', 0)} · not-yet {c.get('not_yet', 0)} · "
+         f"flagged {c.get('flagged', 0)} · no-attempt {c.get('none', 0)}"),
+        "",
+        "Per student:",
+    ]
+    for s in data.get("per_student", []):
+        lt = s.get("latest")
+        if lt:
+            tag = "FLAGGED" if lt.get("status") == "flagged" else (lt.get("result") or "?")
+            detail = (f"W{lt.get('week')} {tag} "
+                      f"(m {_pct(lt.get('mastery_pct'))} / c {_pct(lt.get('consistency_pct'))})")
+        else:
+            detail = "no attempts yet"
+        lines.append(f"  [{s['level']}] {s['name']}: {detail} · mastered {s['mastered_count']}")
+
+    if data.get("flagged"):
+        lines += ["", "Needs your call (flagged):"]
+        for f in data["flagged"]:
+            lines.append(
+                f"  {f['name']} — {f['level']} W{f['week']} "
+                f"(m {_pct(f.get('mastery_pct'))} / c {_pct(f.get('consistency_pct'))}) "
+                f"→ !itqan-pass @{f['name']} {f['week']}  |  !itqan-reset @{f['name']} {f['week']}")
+
+    if data.get("most_missed"):
+        lines += ["", "Most-missed:"]
+        for mm in data["most_missed"]:
+            what = mm.get("expected") or f"({mm['skill']})"
+            lines.append(f"  {what} [{mm['skill']} W{mm['source_week']}] x{mm['misses']}")
+
+    return "\n".join(lines)

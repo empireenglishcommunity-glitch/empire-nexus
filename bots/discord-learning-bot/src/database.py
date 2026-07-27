@@ -3073,3 +3073,141 @@ def itqan_mastered_weeks(discord_id: str, level: str) -> set:
     ).fetchall()
     conn.close()
     return {r["week"] for r in rows}
+
+
+
+# ============================================================
+#  ITQAN — owner report + overrides (Phase 7)
+# ============================================================
+
+def itqan_report_data(level: str = None) -> dict:
+    """Aggregate the owner-facing weekly-assessment report.
+
+    Returns {level, per_student, flagged, most_missed, counts, total_students}.
+    `level` optionally restricts to one level (else all active students)."""
+    conn = _connect()
+    if level:
+        members = conn.execute(
+            "SELECT discord_id, discord_name, level FROM members "
+            "WHERE status='active' AND level=? ORDER BY level, discord_name", (level,)
+        ).fetchall()
+    else:
+        members = conn.execute(
+            "SELECT discord_id, discord_name, level FROM members "
+            "WHERE status='active' ORDER BY level, discord_name"
+        ).fetchall()
+
+    per_student = []
+    counts = {"mastered": 0, "not_yet": 0, "flagged": 0, "none": 0}
+    for m in members:
+        did = m["discord_id"]
+        latest = conn.execute(
+            "SELECT week, result, status, mastery_pct, consistency_pct, finished_at "
+            "FROM assessment_attempts WHERE discord_id=? AND finished_at IS NOT NULL "
+            "ORDER BY finished_at DESC LIMIT 1", (did,)
+        ).fetchone()
+        mastered_count = conn.execute(
+            "SELECT COUNT(*) c FROM week_mastery WHERE discord_id=? AND mastered=1", (did,)
+        ).fetchone()["c"]
+        per_student.append({
+            "discord_id": did,
+            "name": (m["discord_name"] or "?").split("#")[0],
+            "level": m["level"],
+            "mastered_count": mastered_count,
+            "latest": dict(latest) if latest else None,
+        })
+        if latest is None:
+            counts["none"] += 1
+        elif latest["status"] == "flagged":
+            counts["flagged"] += 1
+        elif latest["result"] in ("mastered", "distinction"):
+            counts["mastered"] += 1
+        else:
+            counts["not_yet"] += 1
+
+    # Flagged queue — attempts awaiting an owner decision.
+    fq = ("SELECT a.id attempt_id, a.discord_id, a.level, a.week, a.mastery_pct, "
+          "a.consistency_pct, a.finished_at, m.discord_name "
+          "FROM assessment_attempts a LEFT JOIN members m ON m.discord_id=a.discord_id "
+          "WHERE a.status='flagged'")
+    fq_params = ()
+    if level:
+        fq += " AND a.level=?"
+        fq_params = (level,)
+    fq += " ORDER BY a.finished_at DESC"
+    flagged = []
+    for r in conn.execute(fq, fq_params).fetchall():
+        d = dict(r)
+        d["name"] = (d.pop("discord_name") or "?").split("#")[0]
+        flagged.append(d)
+
+    # Most-missed items/skills (from wrong answers).
+    if level:
+        mm = ("SELECT i.skill, i.source_week, i.expected, COUNT(*) misses "
+              "FROM assessment_items i JOIN assessment_attempts a ON a.id=i.attempt_id "
+              "WHERE i.correct=0 AND a.level=? "
+              "GROUP BY i.skill, i.expected ORDER BY misses DESC LIMIT 10")
+        mm_params = (level,)
+    else:
+        mm = ("SELECT skill, source_week, expected, COUNT(*) misses "
+              "FROM assessment_items WHERE correct=0 "
+              "GROUP BY skill, expected ORDER BY misses DESC LIMIT 10")
+        mm_params = ()
+    most_missed = [dict(r) for r in conn.execute(mm, mm_params).fetchall()]
+
+    conn.close()
+    return {
+        "level": level,
+        "per_student": per_student,
+        "flagged": flagged,
+        "most_missed": most_missed,
+        "counts": counts,
+        "total_students": len(members),
+    }
+
+
+def itqan_admin_pass(discord_id: str, level: str, week: int,
+                     distinction: bool = False) -> dict:
+    """Owner override: mark a week mastered manually (resolving a flagged or
+    borderline attempt). Marks the latest attempt scored+mastered and upserts
+    week_mastery. Returns {best_attempt_id}."""
+    conn = _connect()
+    latest = conn.execute(
+        "SELECT id FROM assessment_attempts WHERE discord_id=? AND level=? AND week=? "
+        "ORDER BY id DESC LIMIT 1", (discord_id, level, week)
+    ).fetchone()
+    best_id = latest["id"] if latest else None
+    if best_id is not None:
+        conn.execute(
+            "UPDATE assessment_attempts SET status='scored', result=? WHERE id=?",
+            ("distinction" if distinction else "mastered", best_id),
+        )
+        conn.commit()
+    conn.close()
+    itqan_upsert_mastery(discord_id, level, week, distinction, best_id)
+    return {"best_attempt_id": best_id}
+
+
+def itqan_reset(discord_id: str, level: str, week: int) -> dict:
+    """Owner override: clear a student's attempts + items + mastery for a week
+    so they can retake it from scratch. Returns deletion counts."""
+    conn = _connect()
+    attempts = [r["id"] for r in conn.execute(
+        "SELECT id FROM assessment_attempts WHERE discord_id=? AND level=? AND week=?",
+        (discord_id, level, week)).fetchall()]
+    items_deleted = 0
+    if attempts:
+        qmarks = ",".join("?" * len(attempts))
+        items_deleted = conn.execute(
+            f"DELETE FROM assessment_items WHERE attempt_id IN ({qmarks})",
+            attempts).rowcount
+    attempts_deleted = conn.execute(
+        "DELETE FROM assessment_attempts WHERE discord_id=? AND level=? AND week=?",
+        (discord_id, level, week)).rowcount
+    mastery_deleted = conn.execute(
+        "DELETE FROM week_mastery WHERE discord_id=? AND level=? AND week=?",
+        (discord_id, level, week)).rowcount
+    conn.commit()
+    conn.close()
+    return {"attempts_deleted": attempts_deleted, "items_deleted": items_deleted,
+            "mastery_deleted": mastery_deleted}

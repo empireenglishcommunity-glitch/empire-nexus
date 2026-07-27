@@ -449,6 +449,8 @@ async def on_ready():
         markaz_daily_digest.start()
     if not markaz_weekly_report.is_running():
         markaz_weekly_report.start()
+    if not itqan_weekly_report.is_running():
+        itqan_weekly_report.start()
     if not markaz_monthly_summary.is_running():
         markaz_monthly_summary.start()
     # Markaz M2: start the Telegram reply-forwarding poller exactly
@@ -1507,6 +1509,25 @@ async def markaz_weekly_report():
     if now.weekday() != 6:  # 6 = Sunday
         return
     await ops_monitoring.send_weekly_report()
+
+
+@tasks.loop(time=datetime.time(hour=9, minute=45, tzinfo=_zone()))
+async def itqan_weekly_report():
+    """Itqan weekly-assessment owner summary (Sunday). Stays completely silent
+    while the itqan_weekly_assessment flag is off, so it produces nothing until
+    the feature is piloted (Phase 9)."""
+    now = datetime.datetime.now(_zone())
+    if now.weekday() != 6:  # Sunday only
+        return
+    if not database.is_feature_enabled("itqan_weekly_assessment"):
+        return
+    try:
+        from . import assessment
+        data = database.itqan_report_data()
+        text = assessment.format_itqan_report(data).replace("`", "'")
+        await ops_hub.send_ops_message(f"```\n{text}\n```")
+    except Exception as e:
+        logger.error(f"itqan_weekly_report failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=9, minute=30, tzinfo=_zone()))
@@ -2882,6 +2903,81 @@ async def cmd_restore_student(ctx, consent_id: int = None):
         )
     except Exception:
         pass
+
+
+# ============================================================
+#  ITQAN — owner report + overrides (Phase 7)
+# ============================================================
+
+def _itqan_report_chunks(text: str, limit: int = 1900):
+    """Split a plain-text report into Discord-safe code-block chunks."""
+    chunks, buf = [], ""
+    for line in text.split("\n"):
+        if len(buf) + len(line) + 1 > limit:
+            chunks.append(f"```\n{buf}\n```")
+            buf = ""
+        buf += (line + "\n")
+    if buf.strip():
+        chunks.append(f"```\n{buf}\n```")
+    return chunks or ["```\n(no data)\n```"]
+
+
+@bot.command(name="itqan")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan(ctx, level: str = None):
+    """(Admin) Weekly-assessment report. Usage: !itqan [L0/L1/L2/L3]"""
+    from . import assessment
+    lvl = level.upper() if level else None
+    if lvl and lvl not in config.LEVELS:
+        await ctx.send("Usage: `!itqan [L0/L1/L2/L3]`")
+        return
+    data = database.itqan_report_data(lvl)
+    text = assessment.format_itqan_report(data)
+    for chunk in _itqan_report_chunks(text):
+        await ctx.send(chunk)
+
+
+@bot.command(name="itqan-pass")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan_pass(ctx, member: discord.Member = None, week: int = None):
+    """(Admin) Manually mark a week mastered. Usage: !itqan-pass @user <week>"""
+    if member is None or week is None:
+        await ctx.send("Usage: `!itqan-pass @user <week>`")
+        return
+    data = database.get_member(str(member.id))
+    if not data:
+        await ctx.send("That user isn't a registered student.")
+        return
+    level = data.get("level", "L0")
+    database.itqan_admin_pass(str(member.id), level, week)
+    await ctx.send(f"✅ Marked **{member.display_name}** as mastered for **{level} Week {week}**.")
+    try:
+        await ops_hub.send_ops_alert(
+            "Itqan override: manual pass",
+            f"{ctx.author} marked {data.get('discord_name', '?')} mastered for {level} Week {week}.",
+            severity="info",
+        )
+    except Exception:
+        pass
+
+
+@bot.command(name="itqan-reset")
+@commands.has_permissions(manage_guild=True)
+async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
+    """(Admin) Clear a student's attempts for a week so they can retry.
+    Usage: !itqan-reset @user <week>"""
+    if member is None or week is None:
+        await ctx.send("Usage: `!itqan-reset @user <week>`")
+        return
+    data = database.get_member(str(member.id))
+    if not data:
+        await ctx.send("That user isn't a registered student.")
+        return
+    level = data.get("level", "L0")
+    r = database.itqan_reset(str(member.id), level, week)
+    await ctx.send(
+        f"♻️ Reset **{member.display_name}**'s {level} Week {week} assessment — "
+        f"{r['attempts_deleted']} attempt(s) cleared. They can retake it.")
 
 
 # ============================================================
