@@ -83,6 +83,7 @@ REGISTRY = [
 
     # ── ITQAN (weekly mastery assessment) ──
     ("itqan_weekly_assessment", "Weekly Assessment (Itqan): calendar-gated, timed weekly mastery test on the practice page (5 skills, spiral, two-dimension pass, public Champions celebration / private support)", "itqan", False),
+    ("itqan_progression_gate", "Itqan R16: mastery-based progression — the next week's content stays locked until the current week's assessment is passed (grandfathers existing students; safety valves keep nobody stuck)", "itqan", False),
 ]
 
 # Initiative display names and emoji
