@@ -398,6 +398,27 @@ async def handle_changelog(args: str, bot) -> str:
 
 
 # ============================================================
+#  /itqan — weekly-assessment owner report
+# ============================================================
+
+@command("/itqan")
+async def handle_itqan(args: str, bot) -> str:
+    """Weekly-assessment report: per-student result, flagged queue, most-missed.
+
+    Usage: /itqan [L0|L1|L2|L3]
+    """
+    from . import assessment
+    lvl = args.strip().upper() or None
+    if lvl and lvl not in ("L0", "L1", "L2", "L3"):
+        return "Usage: `/itqan [L0|L1|L2|L3]`"
+    data = database.itqan_report_data(lvl)
+    text = assessment.format_itqan_report(data).replace("`", "'")
+    # A MarkdownV2 fenced code block renders monospace and needs no inner
+    # escaping (we've already stripped backticks).
+    return f"```\n{text}\n```"
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -413,6 +434,8 @@ async def handle_help(args: str, bot) -> str:
         "`/announce <msg>` — Post to \\#announcements",
         "`/maintenance` — Status / `start [soft|hard] [min] [reason]` / `end`",
         "`/changelog` — List / `add <text>` publish a 'What's New' entry",
+        "`/itqan` — Weekly assessment report \\[L0\\-L3\\]",
+        "`/check` — Detailed status for one student",
         "`/help` — This message",
     ]
     return "\n".join(lines)
