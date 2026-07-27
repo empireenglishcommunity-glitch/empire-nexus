@@ -110,3 +110,43 @@ Legend: **[nexus]** = bot/API repo · **[dojo]** = practice site repo.
 - Flag stays OFF through Phase 8; nothing student-visible ships until Phase 9.
 - After each merge: deploy + **live-verify** (never assume green = shipped).
 - Update `SYSTEM-MAP.md` and checkpoint `empire-chronicle` at the end.
+
+
+---
+
+## Phase 10 — Owner polish (post-pilot) · [nexus]
+From the live pilot. Lean, non-disruptive, all owner-facing.
+- [ ] Flagged Telegram alert: paste-ready `!` commands (discord id + week +
+      attempt id) + clear `!` vs `/` note; add a **success log** to the flagged
+      notify so sends are verifiable.
+- [ ] **Manual pass celebrates (A2):** `!itqan-pass` / `/itqan-pass` notify +
+      celebrate the student like an earned pass (DM + Champions + certificate if
+      the level is complete).
+- [ ] **`/itqan-due` + `!itqan-due`** full status report (R17.1): per student —
+      current week, days-done, state (locked/due/passed/not_yet/flagged), DUE
+      highlighted.
+- [ ] **Arabic due-assessment nudge (R17.2):** daily job DMs DUE students once
+      per due week (guarded).
+- [ ] Tests (report states, due detection, nudge-once guard, manual-pass
+      celebration). **Verify:** suite green; deploy; live-check the report + a
+      manual pass celebrating.
+
+## Phase 11 — Mastery-based progression gate (R16) · [nexus] + [dojo]
+The one change that governs the daily flow — spec'd, gated, migrated.
+- [ ] `itqan_progression_gate` config/flag (default OFF).
+- [ ] `darb.build_calendar`: highest-unlocked-week = week 1 + every subsequent
+      week whose predecessor is `mastered`; future weeks `gate-locked` with an
+      Arabic-first reason. **Grandfather** existing students via a one-time
+      baseline stamp so nobody is locked out of content already reached.
+- [ ] A pass (earned or manual `!itqan-pass`) immediately opens the next week.
+- [ ] dojo calendar renders the gate-locked reason ("pass Week W's test to open
+      Week W+1"), bilingual.
+- [ ] Tests: gate locks W+1 until W passed; pass opens W+1; grandfather baseline
+      never locks reached weeks; gate OFF = today's behavior; safety valves
+      (retake/override) still open progression.
+- [ ] **Verify:** suite green; deploy (dojo + bot); enable for the pilot
+      allowlist first; confirm no existing student is locked out; then roll out.
+
+## Guardrails (unchanged)
+- Full suite green before every push; owner merges every PR; deploy + live-verify;
+  flag/gate stays pilot-allowlisted until the owner okays full rollout.

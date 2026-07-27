@@ -256,3 +256,70 @@ Acceptance criteria:
 3. THE SYSTEM SHALL keep a single week assessment to ~10–15 minutes.
 4. THE SYSTEM SHALL be delivered in **owner-merge-gated phases**, each tested and
    live-verified with zero student disruption.
+
+
+---
+
+## R16 — Mastery-based progression gate (no skipping)
+**User story:** As the owner, I want students to move to the next week only
+after they **pass** the current week's assessment, so progress reflects real
+mastery and nobody skips ahead — our mission is to *push* students to their
+goals, not just monitor them.
+
+Acceptance criteria:
+1. THE SYSTEM SHALL keep **week 1 always open**, and unlock **week W+1's
+   content only after week W's assessment is PASSED (Mastered).**
+2. WHILE week W is not passed, THE SYSTEM SHALL keep week W+1 **locked**, with a
+   clear Arabic-first message ("pass Week W's test to open Week W+1").
+3. THE SYSTEM SHALL preserve the R7/R8 safety valves — **unlimited retakes**
+   (with cooldown), **near-miss owner rescue**, and **owner override** — so a
+   student is never permanently stuck.
+4. THE SYSTEM SHALL **grandfather existing students** on enable: weeks already
+   reached under the prior date-based calendar stay open; the gate applies to
+   **new** week-openings going forward.
+5. THE SYSTEM SHALL make the gate **flag/config-controlled** (toggle
+   `itqan_progression_gate`) so it can be turned off instantly.
+
+## R17 — Full status report + due-assessment nudges
+**User story:** As the owner, I want to see who has a **due** assessment they
+haven't done, and have those students nudged automatically, so I push
+completion.
+
+Acceptance criteria:
+1. THE SYSTEM SHALL provide an **on-demand full report** (Discord `!itqan-due` +
+   Telegram `/itqan-due`) of every student's assessment status: current week,
+   days-done, and state (**locked / due / passed / not-yet / flagged**),
+   highlighting **DUE = week's days complete but assessment not yet passed.**
+2. THE SYSTEM SHALL send a **private Arabic motivational DM** to students with a
+   due assessment, **at most once per due week** (no daily nagging).
+3. THE SYSTEM SHALL include, in the flagged-attempt owner alert, the **exact
+   copy-paste commands for that specific student** (`!` prefix + discord id) and
+   make the **`!` vs `/`** distinction clear (`!` = paste-ready, `/` = menu picker).
+
+---
+
+## Amendments (post-pilot, session 33)
+
+These refine earlier requirements from real pilot data (BioRoMa) and are the
+current source of truth where they differ:
+
+- **A1 (refines R13.2 flagging):** the system flags an attempt for the owner
+  **only when the student did NOT pass** AND a human might fairly change it —
+  i.e. an **AI/recording error** or a **near-miss just below** the mastery line.
+  A **clear pass is never held for review** (it celebrates immediately). A clear
+  not-yet is scored normally (supportive path).
+- **A2 (refines R6/R7 + R11 overrides):** an **owner manual pass** (`!itqan-pass`
+  / `/itqan-pass`) SHALL notify + celebrate the student **the same as an earned
+  pass** — private DM + `🏅 Week Champions` post + level certificate if it
+  completes the level. A reset lets them retake.
+- **A3 (refines Constraint 6 privacy):** assessment **recordings are RETAINED
+  (owner-review only)** for a short window (**default 14 days**) then
+  auto-purged (and wiped on reset) — needed so the owner can *listen* during a
+  review. Still private; never shown to other students.
+- **A4 (refines R3 listening):** the listening item is **dictation** — Kokoro
+  says the English word, the student **types the English word they heard** (a
+  true listening/spelling check; no fuzzy Arabic-meaning matching).
+- **A5 (owner review workbench, extends R10/R11):** `!itqan-review <id>` /
+  `/itqan-review` produce a **sectioned coaching brief** (strengths · what went
+  wrong · needs attention · what to say to the student, incl. an AI paragraph)
+  and **attach the student's audio recordings**.
