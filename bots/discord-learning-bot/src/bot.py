@@ -1566,6 +1566,12 @@ async def itqan_due_nudge():
         n = await itqan_outcomes.nudge_due_students()
         if n:
             logger.info(f"itqan: nudged {n} student(s) with a due assessment")
+        # G4: also nudge students who are 1–2 days short of completing a week
+        # (so finishing those day(s) unlocks that week's test). Once per
+        # (student, week); no rule change to the unlock bar itself.
+        n2 = await itqan_outcomes.nudge_almost_done_students()
+        if n2:
+            logger.info(f"itqan: nudged {n2} student(s) who are 1–2 days from unlocking a test")
     except Exception as e:
         logger.warning(f"itqan due-nudge loop failed: {e}")
 
