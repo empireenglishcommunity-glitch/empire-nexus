@@ -267,10 +267,14 @@ def build_calendar(discord_id: str) -> dict | None:
         day = (d - 1) % 7 + 1
         m = mastery.get((week, day))
         done = bool(m and m["done"])
-        if gate_on and week > allowed_week and not done:
-            # Behind the mastery gate: locked until the previous week is passed.
-            state = "gate_locked"
-        elif done:
+        # Owner decision 2026-07-28: the progression gate NO LONGER freezes
+        # daily practice. Daily days always follow the date-based states below,
+        # so a student who hasn't yet passed a week's test is never locked out
+        # of their daily habit (protects the engagement flow; avoids the looming
+        # lockout for students behind on the test). "No skipping" is still
+        # enforced where it matters — weekly mastery, the 🏅 Champions post and
+        # the level certificate all require actually passing each week's test.
+        if done:
             state = "done"
         elif d > today_index:
             state = "locked"

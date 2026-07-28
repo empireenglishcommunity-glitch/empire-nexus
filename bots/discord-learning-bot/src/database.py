@@ -3235,6 +3235,18 @@ def itqan_reset(discord_id: str, level: str, week: int) -> dict:
             "mastery_deleted": mastery_deleted}
 
 
+def itqan_delete_attempt(attempt_id: int) -> None:
+    """Delete a single attempt + its items + recordings. Used to VOID an
+    abandoned/blank attempt (student opened the test and left, timer lapsed)
+    so it is never scored as a fail and never starts a retake cooldown."""
+    conn = _connect()
+    conn.execute("DELETE FROM assessment_items WHERE attempt_id=?", (attempt_id,))
+    conn.execute("DELETE FROM assessment_recordings WHERE attempt_id=?", (attempt_id,))
+    conn.execute("DELETE FROM assessment_attempts WHERE id=?", (attempt_id,))
+    conn.commit()
+    conn.close()
+
+
 
 # ============================================================
 #  ITQAN — progress map + certificate data (Phase 8)
