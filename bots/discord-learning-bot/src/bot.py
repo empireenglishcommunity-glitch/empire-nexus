@@ -441,8 +441,11 @@ async def on_ready():
         missed_day_report.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
-    if not nour_journey_daily_check.is_running():
-        nour_journey_daily_check.start()
+    # Nour retired (owner decision 2026-07-28): all Nour scheduled jobs are
+    # disabled so no Nour-voiced DMs/reports go out. Task defs are kept for
+    # history but are never started.
+    # if not nour_journey_daily_check.is_running():
+    #     nour_journey_daily_check.start()
     if not onboarding_gate_check.is_running():
         onboarding_gate_check.start()
     if not markaz_daily_digest.is_running():
@@ -482,13 +485,12 @@ async def on_ready():
         nabd_weekly_summary.start()
     if not nabd_absence_check.is_running():
         nabd_absence_check.start()
-    # Nour N5.1: weekly self-review (Sunday 10 AM)
-    if not nour_weekly_review.is_running():
-        nour_weekly_review.start()
-    # Masar M2.2: Nour's Weekly Growth Letter (Wednesday 11 AM,
-    # deliberately staggered against Sunday's cluster of weekly tasks)
-    if not nour_growth_letter_task.is_running():
-        nour_growth_letter_task.start()
+    # Nour retired (owner decision 2026-07-28): weekly self-review + weekly
+    # growth letter disabled (were the source of the "رسالة نور الأسبوعية" DM).
+    # if not nour_weekly_review.is_running():
+    #     nour_weekly_review.start()
+    # if not nour_growth_letter_task.is_running():
+    #     nour_growth_letter_task.start()
     # Audit fix (E5 robustness): voice minutes are persisted on voice-LEAVE
     # (verification.on_voice_leave). If the bot restarts while a student is
     # already sitting in a voice channel, there was no join event for that
@@ -1138,26 +1140,42 @@ async def weekly_recap():
     logger.info(f"Weekly recap: sent to {sent} member(s)")
 
 
-@tasks.loop(hours=1)
+@tasks.loop(time=datetime.time(hour=16, minute=0, tzinfo=_zone()))
 async def streak_update():
-    """Hourly check for streak updates and inactive member interventions."""
+    """Daily (4 PM) gentle nudge to members who've gone inactive.
+
+    Fixed 2026-07-28: this used to run @tasks.loop(hours=1), so an inactive
+    student received the SAME "haven't been active" DM every hour, all day
+    long (the owner's "coming a lot" complaint). It now runs once per day,
+    and a per-student per-day guard in the `settings` table makes a repeat
+    send impossible even if on_ready restarts the loop after a gateway
+    reconnect.
+    """
     inactive = task_engine.check_inactive_members()
     guild = bot.get_guild(config.GUILD_ID)
     if not guild:
         return
 
+    today = _now().date().isoformat()
     for action, members in inactive.items():
-        if action == "dm_reminder":
-            for m in members[:5]:  # Limit batch size
-                discord_member = guild.get_member(int(m["discord_id"]))
-                if discord_member:
-                    try:
-                        await discord_member.send(
-                            f"👋 Hey {m['discord_name']}! We noticed you haven't been active. "
-                            f"Even one task today keeps your streak alive. You got this! 🏛️"
-                        )
-                    except (discord.Forbidden, discord.HTTPException):
-                        pass
+        if action != "dm_reminder":
+            continue
+        for m in members:
+            did = str(m["discord_id"])
+            key = f"streak_nudged_{did}"
+            if database.get_setting(key, "") == today:
+                continue  # already nudged today — never double-send
+            discord_member = guild.get_member(int(did))
+            if not discord_member:
+                continue
+            try:
+                await discord_member.send(
+                    f"👋 Hey {m['discord_name']}! We noticed you haven't been active. "
+                    f"Even one task today keeps your streak alive. You got this! 🏛️"
+                )
+                database.set_setting(key, today)
+            except (discord.Forbidden, discord.HTTPException):
+                pass
 
 
 def _now():

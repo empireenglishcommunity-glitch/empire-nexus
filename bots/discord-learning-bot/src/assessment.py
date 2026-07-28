@@ -504,6 +504,23 @@ def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = Non
 
     level, week = attempt["level"], attempt["week"]
     items = database.itqan_get_items(attempt_id)
+
+    # Void an abandoned/blank attempt instead of scoring a 0% fail + starting a
+    # 12h retake cooldown. An attempt with ZERO answered items was never really
+    # taken (the student opened the test and left; the client auto-finishes it
+    # when the timer has lapsed on their return). Fixed 2026-07-28 after Mai's
+    # week-1 attempt was auto-scored 0% "not_yet" from an abandoned session.
+    answered = sum(
+        1 for it in items
+        if it.get("auto_score") is not None
+        or it.get("ai_score") is not None
+        or it.get("feedback") == "__pending_review__"
+        or (it.get("answer") or "").strip()
+    )
+    if answered == 0:
+        database.itqan_delete_attempt(attempt_id)
+        return {"ok": True, "voided": True}
+
     item_scores = []
     has_ai_error = False
     per_item = []

@@ -279,6 +279,10 @@ async def test_cannot_submit_after_finish(student, monkeypatch):
     monkeypatch.setattr("src.pronunciation_scorer.transcribe_audio", _fake_transcribe_echo)
     start = assessment.start_attempt(student, "L0", 2)
     aid = start["attempt_id"]
+    # Answer one item first so this is a REAL attempt — an empty attempt is now
+    # voided (deleted) by finish_attempt, which would make the post-finish
+    # submit return 'not_found' instead of 'not_in_progress'.
+    await assessment.submit_item(student, aid, 1, answer="x")
     assessment.finish_attempt(student, aid)
     res = await assessment.submit_item(student, aid, 1, answer="x")
     assert res["ok"] is False and res["error"] == "not_in_progress"
