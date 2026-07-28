@@ -357,9 +357,14 @@ def test_calendar_uses_level_anchor_after_promotion():
     assert cal["days"][0]["state"] == "today"
 
 
-def test_backfill_marks_past_days_done():
+def test_backfill_marks_past_days_done(monkeypatch):
     """Historical daily_submissions are reconstructed into calendar
     mastery so past active days show green, not 'missed'."""
+    # Pin before the speaking launch so the 4-core rule applies (this scenario
+    # is a pre-speaking-launch historic day). Without this pin the test is
+    # date-fragile: once "3 days ago" drifts on/after the real launch date, the
+    # day would need speaking too and the 4 inserted exercises wouldn't green it.
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2099-01-01")
     # Joined 3 days ago so days 1-3 are in the past / today.
     join = (datetime.date.today() - datetime.timedelta(days=3)).isoformat() + " 09:00:00"
     _member(joined_at=join, level="L0")
