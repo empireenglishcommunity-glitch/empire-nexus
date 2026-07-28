@@ -390,3 +390,91 @@ async def nudge_due_students() -> int:
         except Exception as e:
             logger.warning(f"itqan: due nudge failed for {did}: {e}")
     return n
+
+
+
+# ============================================================
+#  "almost there" nudge (G4) — encourage students 1–2 days from
+#  unlocking a week's test. NO rule change: the unlock bar is still
+#  "all 7 days done"; this just nudges the students who are close.
+# ============================================================
+
+def _almost_done_week(discord_id: str, level: str):
+    """Return (week, [missing_day_ints]) for the EARLIEST week that is 1–2 days
+    short of complete (5–6 of its 7 days done) — so finishing those day(s)
+    unlocks that week's Weekly Test. Returns None if no week qualifies.
+
+    Pure/testable: delegates the per-week "which days are still undone" decision
+    to assessment.week_unlocked (the SAME gate the test itself uses), so this can
+    never disagree with the real unlock rule.
+    """
+    from . import assessment, curriculum
+    max_week = curriculum.max_week_for_level(level)
+    for w in range(1, max_week + 1):
+        ok, remaining = assessment.week_unlocked(discord_id, level, w)
+        if ok:
+            continue  # already unlocked (0 days remaining) — nothing to nudge
+        if 1 <= len(remaining) <= 2:
+            return (w, remaining)
+    return None
+
+
+async def nudge_almost_done_students() -> int:
+    """DM (friendly, bilingual) each student who is 1–2 days short of completing
+    a week, so finishing those day(s) unlocks that week's Weekly Test. At most
+    ONCE per (student, week) — a `settings` guard makes a repeat impossible even
+    across restarts, so this never nags. Flag-gated (silent unless Itqan is on
+    for that student); respects quiet hours. Returns how many were nudged.
+
+    Deliberately NOT Nour-voiced (Nour is retired) — a plain, warm bot message.
+    """
+    from . import bot as bot_mod
+    b = getattr(bot_mod, "bot", None)
+    if not b:
+        return 0
+    n = 0
+    for m in database.all_active_members():
+        did = m["discord_id"]
+        level = m.get("level", "L0")
+        if not database.is_feature_enabled("itqan_weekly_assessment", did):
+            continue
+        target = _almost_done_week(did, level)
+        if not target:
+            continue
+        week, remaining = target
+        key = f"itqan_almost_nudged_{did}_{level}_{week}"
+        if database.get_setting(key, ""):
+            continue  # already nudged for this week — never repeat
+        try:
+            if database.is_quiet_hours(did):
+                continue
+        except Exception:
+            pass
+        try:
+            user = b.get_user(int(did))
+            if user is None:
+                user = await b.fetch_user(int(did))
+        except Exception:
+            user = None
+        if not user:
+            continue
+        done = 7 - len(remaining)
+        days_en = " & ".join(f"Day {d}" for d in remaining)
+        days_ar = " و ".join(f"يوم {d}" for d in remaining)
+        msg = (
+            f"🌟 You're almost there! You've done **{done}/7** days of Week {week}. "
+            f"Finish **{days_en}** and your **Weekly Test** unlocks — your shot at "
+            f"the 🏅 Week Champion badge. You've got this! 💪\n"
+            f"━━━━━━━━━━\n"
+            f"🌟 قربت خلاص! خلّصت **{done}/7** أيام من الأسبوع {week}. "
+            f"كمّل **{days_ar}** وهيفتح لك **اختبار الأسبوع** — فرصتك تكسب شارة "
+            f"🏅 بطل الأسبوع. إنت قدّها! 💪"
+        )
+        try:
+            await user.send(msg)
+            database.set_setting(key, database._today_local().isoformat())
+            n += 1
+            logger.info(f"itqan: almost-done nudge sent to {did} ({level} W{week}, {done}/7)")
+        except Exception as e:
+            logger.warning(f"itqan: almost-done nudge failed for {did}: {e}")
+    return n
