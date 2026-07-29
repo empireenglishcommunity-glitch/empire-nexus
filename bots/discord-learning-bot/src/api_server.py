@@ -14,6 +14,7 @@ Endpoints:
   POST /api/complete-exercise              — web-to-Discord task confirmation (W2)
   POST /api/notifications                  — update notification preferences (W5)
 """
+import asyncio
 import json
 import logging
 import time
@@ -1111,6 +1112,26 @@ async def post_practice_complete(request: web.Request) -> web.Response:
 #  DARB Phase 4 — Submit Recording → #showcase + auto-complete
 # ============================================================
 
+# Nutq (pronunciation-feedback spec): curriculum day-name convention is
+# Saturday=0 .. Friday=6 (same as tasks.generate_daily_tasks). day is 1-7.
+_NUTQ_DAY_NAMES = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+
+
+def _pronunciation_expected_text(week: int, day: int, level: str) -> str:
+    """The target sentence to score an accent/shadow recording against for
+    (week, day, level). Both accent and shadowing practise the accent drill's
+    'record_this' line (same source the daily post + the old !done scorer used).
+    Returns "" if there's no target text (→ scoring is skipped, per the spec)."""
+    from . import curriculum
+    try:
+        day_index = max(0, min(6, int(day) - 1))
+        day_name = _NUTQ_DAY_NAMES[day_index]
+        daily = curriculum.get_daily_content(int(week), day_name, day_index, level)
+        return ((daily.get("accent_drill") or {}).get("record_this") or "").strip()
+    except Exception:
+        return ""
+
+
 @routes.post("/api/submit-recording")
 async def post_submit_recording(request: web.Request) -> web.Response:
     """Flow D: upload a recording from the practice page → bot posts it
@@ -1227,6 +1248,44 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     # Get updated day state for tier feedback
     day_state = database.get_calendar_mastery(discord_id, level).get((week, day), {})
 
+    # Nutq (pronunciation-feedback spec) Phase 1: best-effort pronunciation
+    # scoring for accent/shadow recordings. Runs AFTER completion + the
+    # #showcase post above, so it can NEVER block or undo them. Flag-gated
+    # (tatawwur_pronunciation), bounded by a timeout, and fully wrapped: any
+    # failure/timeout/disable → {"scored": false} and the exercise still
+    # completes exactly as before. Feedback is private to this authenticated
+    # response (never posted publicly).
+    pronunciation = {"scored": False}
+    try:
+        if exercise in ("accent", "shadow") and \
+                database.is_feature_enabled("tatawwur_pronunciation", discord_id):
+            expected_text = _pronunciation_expected_text(week, day, level)
+            if expected_text:
+                from . import pronunciation_scorer
+                res = await asyncio.wait_for(
+                    pronunciation_scorer.score_recording_bytes(
+                        audio_data, audio_filename, expected_text,
+                        discord_id, exercise, level,
+                    ),
+                    timeout=8.0,
+                )
+                if res and res.success:
+                    pronunciation = {
+                        "scored": True,
+                        "is_beginner_grace": res.is_beginner_grace,
+                        "feedback_en": res.feedback_en,
+                        "feedback_ar": res.feedback_ar,
+                        "missed_words": res.missed_words,
+                        "transcript": res.transcript,
+                        "expected": expected_text,
+                    }
+                    if not res.is_beginner_grace:
+                        pronunciation["score"] = round(res.score)
+    except asyncio.TimeoutError:
+        logger.info("submit-recording: pronunciation scoring timed out — completion unaffected")
+    except Exception as e:
+        logger.warning(f"submit-recording: pronunciation scoring failed (non-fatal): {e}")
+
     return web.json_response({
         "ok": True,
         "posted": posted,
@@ -1235,6 +1294,7 @@ async def post_submit_recording(request: web.Request) -> web.Response:
         "day_tier": day_state.get("day_tier", 0),
         "day_done": day_state.get("done", False),
         "already_done": not result.get("new", True),
+        "pronunciation": pronunciation,
     }, headers=_cors_headers(request))
 
 
