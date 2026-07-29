@@ -358,7 +358,7 @@ async def score_recording(audio_url: str, expected_text: str,
 async def score_recording_bytes(audio_bytes: bytes, filename: str,
                                  expected_text: str, discord_id: str,
                                  task_id: str, level: str = "L0",
-                                 audio_url: str = "") -> ScoringResult:
+                                 audio_url: str = "", store: bool = True) -> ScoringResult:
     """Full pronunciation scoring pipeline on already-obtained audio BYTES —
     the practice-page path (no Discord CDN download needed). Nutq
     (pronunciation-feedback spec) Phase 1.
@@ -396,20 +396,22 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
         level=level, is_beginner=is_beginner
     )
 
-    # Step 5: Store (use the bot's local "today", consistent with the rest of
-    # the DB's date handling — not the server clock).
-    today = database._today_local().isoformat()
-    database.store_pronunciation_score(
-        discord_id=discord_id,
-        date=today,
-        task_id=task_id,
-        score=score,
-        expected_text=expected_text,
-        transcript=transcript,
-        missed_words=json.dumps(missed_words),
-        feedback=feedback_en,
-        audio_url=audio_url,
-    )
+    # Step 5: Store (unless store=False — the Phase-3 "try again" re-check is
+    # private practice feedback that must NOT persist / affect the trend or the
+    # beginner-grace count). Uses the bot's local "today", not the server clock.
+    if store:
+        today = database._today_local().isoformat()
+        database.store_pronunciation_score(
+            discord_id=discord_id,
+            date=today,
+            task_id=task_id,
+            score=score,
+            expected_text=expected_text,
+            transcript=transcript,
+            missed_words=json.dumps(missed_words),
+            feedback=feedback_en,
+            audio_url=audio_url,
+        )
 
     logger.info(f"Pronunciation scored: {discord_id} {task_id} → {score:.0f}% "
                 f"(raw={raw_score:.0f}%, missed={len(missed_words)}, beginner={is_beginner})")

@@ -1298,6 +1298,107 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     }, headers=_cors_headers(request))
 
 
+@routes.post("/api/pronunciation-check")
+async def post_pronunciation_check(request: web.Request) -> web.Response:
+    """Nutq (pronunciation-feedback spec) Phase 3: score-ONLY re-check for the
+    "try again" practice loop. Transcribes + scores + returns feedback, but does
+    NOT post to #showcase, complete the exercise, touch mastery/points/streak,
+    or persist a score. Private practice feedback only. Flag-gated; accent/shadow
+    only; bounded by a timeout and fully wrapped so it never errors the client."""
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"ok": False, "error": "unauthorized"},
+                                 status=401, headers=_cors_headers(request))
+    discord_id = payload["did"]
+    level = payload.get("lvl", "L0")
+
+    if not database.is_feature_enabled("tatawwur_pronunciation", discord_id):
+        # Feature off → nothing to check (client shows nothing).
+        return web.json_response({"ok": True, "pronunciation": {"scored": False}},
+                                 headers=_cors_headers(request))
+
+    try:
+        reader = await request.multipart()
+    except Exception:
+        return web.json_response({"ok": False, "error": "multipart required"},
+                                 status=400, headers=_cors_headers(request))
+
+    audio_data = None
+    audio_filename = "recording.webm"
+    exercise = None
+    week = None
+    day = None
+    while True:
+        part = await reader.next()
+        if part is None:
+            break
+        if part.name == "audio":
+            audio_data = await part.read()
+            ct = part.headers.get("Content-Type", "audio/webm")
+            if "mp4" in ct or "m4a" in ct:
+                audio_filename = "recording.m4a"
+            elif "ogg" in ct:
+                audio_filename = "recording.ogg"
+            else:
+                audio_filename = "recording.webm"
+        elif part.name == "exercise":
+            exercise = (await part.text()).strip()
+        elif part.name == "week":
+            try:
+                week = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+        elif part.name == "day":
+            try:
+                day = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+
+    if not audio_data:
+        return web.json_response({"ok": False, "error": "no audio file"},
+                                 status=400, headers=_cors_headers(request))
+    if exercise not in ("accent", "shadow"):
+        return web.json_response({"ok": False, "error": "bad exercise"},
+                                 status=400, headers=_cors_headers(request))
+    from . import curriculum
+    if not week or not day or not (1 <= week <= curriculum.max_week_for_level(level)) \
+            or not (1 <= day <= 7):
+        return web.json_response({"ok": False, "error": "week/day out of range"},
+                                 status=400, headers=_cors_headers(request))
+
+    pronunciation = {"scored": False}
+    try:
+        expected_text = _pronunciation_expected_text(week, day, level)
+        if expected_text:
+            from . import pronunciation_scorer
+            res = await asyncio.wait_for(
+                pronunciation_scorer.score_recording_bytes(
+                    audio_data, audio_filename, expected_text,
+                    discord_id, exercise, level, store=False,  # private re-check
+                ),
+                timeout=8.0,
+            )
+            if res and res.success:
+                pronunciation = {
+                    "scored": True,
+                    "is_beginner_grace": res.is_beginner_grace,
+                    "feedback_en": res.feedback_en,
+                    "feedback_ar": res.feedback_ar,
+                    "missed_words": res.missed_words,
+                    "transcript": res.transcript,
+                    "expected": expected_text,
+                }
+                if not res.is_beginner_grace:
+                    pronunciation["score"] = round(res.score)
+    except asyncio.TimeoutError:
+        logger.info("pronunciation-check: scoring timed out")
+    except Exception as e:
+        logger.warning(f"pronunciation-check failed (non-fatal): {e}")
+
+    return web.json_response({"ok": True, "pronunciation": pronunciation},
+                             headers=_cors_headers(request))
+
+
 async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
                                        exercise: str, week: int, day: int,
                                        audio_data: bytes, filename: str) -> bool:

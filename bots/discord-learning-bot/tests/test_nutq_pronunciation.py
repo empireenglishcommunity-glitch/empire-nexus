@@ -111,6 +111,31 @@ async def test_score_bytes_transcription_failure_is_graceful(member, monkeypatch
 
 
 @pytest.mark.asyncio
+async def test_score_bytes_store_false_does_not_persist(member, monkeypatch):
+    # Phase 3: the "try again" re-check passes store=False → the score must
+    # NOT be persisted (no trend pollution, no beginner-grace count change).
+    async def fake_transcribe(b, f):
+        return "hello world"
+
+    async def fake_feedback(*a, **k):
+        return ("ok", "تمام")
+
+    monkeypatch.setattr(ps, "transcribe_audio", fake_transcribe)
+    monkeypatch.setattr(ps, "generate_feedback", fake_feedback)
+    monkeypatch.setattr(database, "get_recent_scores", lambda did, days=30: [1, 2, 3])
+
+    res = await ps.score_recording_bytes(
+        b"A", "r.webm", "hello world", member, "accent", "L0", store=False)
+    assert res.success is True
+
+    conn = database._connect()
+    n = conn.execute(
+        "SELECT COUNT(*) FROM pronunciation_scores WHERE discord_id=?", (member,)).fetchone()[0]
+    conn.close()
+    assert n == 0  # store=False → nothing persisted
+
+
+@pytest.mark.asyncio
 async def test_url_path_still_delegates_to_bytes(member, monkeypatch):
     # The legacy URL entry should download then reuse the same pipeline.
     async def fake_download(url):
