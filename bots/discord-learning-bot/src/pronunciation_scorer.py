@@ -336,18 +336,12 @@ async def score_recording(audio_url: str, expected_text: str,
                           discord_id: str, task_id: str,
                           level: str = "L0",
                           filename: str = "recording.webm") -> ScoringResult:
-    """Full pronunciation scoring pipeline with fairness adjustments.
-
-    1. Download audio from Discord CDN
-    2. Transcribe via Groq Whisper
-    3. Fair word comparison (fuzzy + stop-word tolerant + level-aware)
-    4. Check beginner grace period (first 3 recordings)
-    5. Generate encouraging feedback
-    6. Store result in database
+    """Score a recording given a Discord CDN URL: download, then delegate to
+    score_recording_bytes (the shared pipeline). Kept for the Discord-side
+    caller; the practice page uses score_recording_bytes directly.
 
     Returns ScoringResult (always — even on failure).
     """
-    # Step 1: Download
     audio_bytes = await download_audio(audio_url)
     if not audio_bytes:
         return ScoringResult(
@@ -355,8 +349,31 @@ async def score_recording(audio_url: str, expected_text: str,
             missed_words=[], feedback_en="", feedback_ar="",
             success=False, error="Could not download audio"
         )
+    return await score_recording_bytes(
+        audio_bytes, filename, expected_text, discord_id, task_id,
+        level=level, audio_url=audio_url,
+    )
 
-    # Step 2: Transcribe
+
+async def score_recording_bytes(audio_bytes: bytes, filename: str,
+                                 expected_text: str, discord_id: str,
+                                 task_id: str, level: str = "L0",
+                                 audio_url: str = "") -> ScoringResult:
+    """Full pronunciation scoring pipeline on already-obtained audio BYTES —
+    the practice-page path (no Discord CDN download needed). Nutq
+    (pronunciation-feedback spec) Phase 1.
+
+    1. Transcribe via Groq Whisper
+    2. Fair word comparison (fuzzy + stop-word tolerant + level-aware)
+    3. Beginner grace period (first 3 recordings)
+    4. Encouraging bilingual feedback
+    5. Store result
+
+    Returns ScoringResult (always — even on failure). Scoring math is
+    unchanged; this only removes the URL-download assumption so the page's
+    uploaded bytes can be scored directly.
+    """
+    # Step 1: Transcribe
     transcript = await transcribe_audio(audio_bytes, filename)
     if not transcript:
         return ScoringResult(
@@ -365,23 +382,23 @@ async def score_recording(audio_url: str, expected_text: str,
             success=False, error="Transcription failed"
         )
 
-    # Step 3: Fair comparison
+    # Step 2: Fair comparison
     score, missed_words = compare_words(transcript, expected_text, level)
 
-    # Step 4: Check beginner grace period
+    # Step 3: Beginner grace period (first 3 recordings)
     recent_scores = database.get_recent_scores(discord_id, days=30)
     is_beginner = len(recent_scores) < 3
     raw_score = score  # Store raw for analytics
 
-    # Step 5: Generate feedback
+    # Step 4: Encouraging feedback
     feedback_en, feedback_ar = await generate_feedback(
         score, expected_text, transcript, missed_words,
         level=level, is_beginner=is_beginner
     )
 
-    # Step 6: Store in database
-    import datetime
-    today = datetime.date.today().isoformat()
+    # Step 5: Store (use the bot's local "today", consistent with the rest of
+    # the DB's date handling — not the server clock).
+    today = database._today_local().isoformat()
     database.store_pronunciation_score(
         discord_id=discord_id,
         date=today,
