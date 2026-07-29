@@ -3,8 +3,8 @@
 Covers the bytes-based scoring path (score_recording_bytes) and the API's
 expected-text lookup. Scoring MATH is already covered by
 test_pronunciation_scorer.py; here we test the new plumbing: bytes → score,
-beginner grace, graceful transcription failure, persistence, and the
-(week, day) → target-sentence mapping.
+real-score-from-attempt-1 (beginner grace removed), graceful transcription
+failure, persistence, and the (week, day) → target-sentence mapping.
 """
 import pytest
 
@@ -81,19 +81,28 @@ async def test_score_bytes_happy_path_non_beginner(member, monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_score_bytes_beginner_grace(member, monkeypatch):
+async def test_score_bytes_new_student_gets_real_score_no_grace(member, monkeypatch):
+    # Nutq: the former beginner grace was REMOVED. Even a brand-new student
+    # (0 prior scores) gets a real score + correction from recording #1 — kept
+    # kind by the 40% floor / Arabic-sound tolerance / level bonus.
     async def fake_transcribe(b, f):
         return "hello"
+
+    async def fake_feedback(*a, **k):
+        return ("Nice try — focus on 'world'.", "محاولة حلوة — ركز على 'world'.")
+
     monkeypatch.setattr(ps, "transcribe_audio", fake_transcribe)
-    # <3 prior scores → beginner grace (encouragement only, no number).
+    monkeypatch.setattr(ps, "generate_feedback", fake_feedback)
+    # 0 prior scores — would have triggered grace before; must NOT now.
     monkeypatch.setattr(database, "get_recent_scores", lambda did, days=30: [])
 
     res = await ps.score_recording_bytes(
         b"AUDIO", "r.webm", "hello world", member, "shadow", "L0")
 
     assert res.success is True
-    assert res.is_beginner_grace is True
-    assert res.feedback_en and res.feedback_ar  # grace message present
+    assert res.is_beginner_grace is False   # grace removed
+    assert res.score >= 40.0                # real, floored score present
+    assert res.feedback_en and res.feedback_ar
 
 
 @pytest.mark.asyncio
