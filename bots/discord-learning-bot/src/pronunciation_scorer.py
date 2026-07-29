@@ -11,8 +11,14 @@ DESIGN PRINCIPLES:
 - Stop words (the, a, in, to) don't penalize the student
 - Fuzzy matching: close pronunciations count (Levenshtein ≤ 2)
 - Minimum floor: never show below 40% (reframe as progress)
-- Beginner grace: first 3 recordings get encouragement only, no number
 - Level-aware: L0 is generous, L3 is strict
+
+NOTE (Nutq pilot): the former "beginner grace" (hide the score + correction
+for a student's first 3 recordings) was REMOVED. Live pilot feedback showed it
+made the feature feel unresponsive — students read wrong on purpose yet got
+only a generic encouragement with no number and no correction. Every recording
+now returns a real score + correction from attempt #1; kindness is preserved by
+the 40% floor, Arabic-sound tolerance, and the level bonus above.
 
 All operations are async and designed to run as background tasks
 (never block the !done response). All failures degrade gracefully
@@ -41,7 +47,7 @@ class ScoringResult:
     missed_words: list[str]
     feedback_en: str
     feedback_ar: str
-    is_beginner_grace: bool = False  # First 3 recordings — no score shown
+    is_beginner_grace: bool = False  # Deprecated (Nutq): grace removed — always False; kept for response-shape/back-compat
     success: bool = True
     error: str = ""
 
@@ -260,20 +266,14 @@ def compare_words(transcript: str, expected: str, level: str = "L0") -> tuple[fl
 # ============================================================
 
 async def generate_feedback(score: float, expected: str, transcript: str,
-                            missed_words: list[str], level: str = "L0",
-                            is_beginner: bool = False) -> tuple[str, str]:
+                            missed_words: list[str], level: str = "L0") -> tuple[str, str]:
     """Generate encouraging bilingual feedback via Gemini.
 
     Returns (feedback_en, feedback_ar). Falls back to template if Gemini fails.
+    Every recording gets a real, score-based correction (the former beginner
+    grace was removed — see the module docstring).
     """
     from . import ai_engine
-
-    # Beginner grace period — only encouragement, no corrections
-    if is_beginner:
-        return (
-            "Great job recording yourself! The more you practice, the better you'll get. Keep it up!",
-            "أحسنت إنك سجلت نفسك! كل ما تتمرن أكتر، هتتحسن أكتر. استمر!"
-        )
 
     if score >= 90:
         return ("Excellent! Your pronunciation is very clear. Native speakers would understand you perfectly!",
@@ -365,9 +365,8 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
 
     1. Transcribe via Groq Whisper
     2. Fair word comparison (fuzzy + stop-word tolerant + level-aware)
-    3. Beginner grace period (first 3 recordings)
-    4. Encouraging bilingual feedback
-    5. Store result
+    3. Encouraging bilingual feedback (real score + correction from attempt #1)
+    4. Store result
 
     Returns ScoringResult (always — even on failure). Scoring math is
     unchanged; this only removes the URL-download assumption so the page's
@@ -384,21 +383,18 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
 
     # Step 2: Fair comparison
     score, missed_words = compare_words(transcript, expected_text, level)
-
-    # Step 3: Beginner grace period (first 3 recordings)
-    recent_scores = database.get_recent_scores(discord_id, days=30)
-    is_beginner = len(recent_scores) < 3
     raw_score = score  # Store raw for analytics
 
-    # Step 4: Encouraging feedback
+    # Step 3: Encouraging feedback. Every recording gets a real score +
+    # correction from attempt #1 (beginner grace removed — see module docstring).
+    # Kindness is preserved by the 40% floor / Arabic-sound tolerance / level bonus.
     feedback_en, feedback_ar = await generate_feedback(
-        score, expected_text, transcript, missed_words,
-        level=level, is_beginner=is_beginner
+        score, expected_text, transcript, missed_words, level=level
     )
 
-    # Step 5: Store (unless store=False — the Phase-3 "try again" re-check is
-    # private practice feedback that must NOT persist / affect the trend or the
-    # beginner-grace count). Uses the bot's local "today", not the server clock.
+    # Step 4: Store (unless store=False — the Phase-3 "try again" re-check is
+    # private practice feedback that must NOT persist / affect the trend).
+    # Uses the bot's local "today", not the server clock.
     if store:
         today = database._today_local().isoformat()
         database.store_pronunciation_score(
@@ -414,7 +410,7 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
         )
 
     logger.info(f"Pronunciation scored: {discord_id} {task_id} → {score:.0f}% "
-                f"(raw={raw_score:.0f}%, missed={len(missed_words)}, beginner={is_beginner})")
+                f"(raw={raw_score:.0f}%, missed={len(missed_words)})")
 
     return ScoringResult(
         score=score,
@@ -424,5 +420,5 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
         missed_words=missed_words,
         feedback_en=feedback_en,
         feedback_ar=feedback_ar,
-        is_beginner_grace=is_beginner,
+        is_beginner_grace=False,
     )

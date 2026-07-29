@@ -1272,15 +1272,14 @@ async def post_submit_recording(request: web.Request) -> web.Response:
                 if res and res.success:
                     pronunciation = {
                         "scored": True,
-                        "is_beginner_grace": res.is_beginner_grace,
+                        "is_beginner_grace": False,  # Nutq: grace removed — always a real score
+                        "score": round(res.score),
                         "feedback_en": res.feedback_en,
                         "feedback_ar": res.feedback_ar,
                         "missed_words": res.missed_words,
                         "transcript": res.transcript,
                         "expected": expected_text,
                     }
-                    if not res.is_beginner_grace:
-                        pronunciation["score"] = round(res.score)
     except asyncio.TimeoutError:
         logger.info("submit-recording: pronunciation scoring timed out — completion unaffected")
     except Exception as e:
@@ -1381,15 +1380,14 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
             if res and res.success:
                 pronunciation = {
                     "scored": True,
-                    "is_beginner_grace": res.is_beginner_grace,
+                    "is_beginner_grace": False,  # Nutq: grace removed — "try again" shows a real score too
+                    "score": round(res.score),
                     "feedback_en": res.feedback_en,
                     "feedback_ar": res.feedback_ar,
                     "missed_words": res.missed_words,
                     "transcript": res.transcript,
                     "expected": expected_text,
                 }
-                if not res.is_beginner_grace:
-                    pronunciation["score"] = round(res.score)
     except asyncio.TimeoutError:
         logger.info("pronunciation-check: scoring timed out")
     except Exception as e:

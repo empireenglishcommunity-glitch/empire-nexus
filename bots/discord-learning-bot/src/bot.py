@@ -2011,26 +2011,18 @@ async def _score_pronunciation(ctx, task_id: str):
             logger.warning(f"Pronunciation scoring failed for {discord_id}: {result.error}")
             return
 
-        # DM the student with their score
+        # DM the student with their score (beginner grace removed — Nutq:
+        # every recording gets a real score + correction from attempt #1)
         try:
-            if result.is_beginner_grace:
-                # First 3 recordings: encouragement only, no number
-                await ctx.author.send(
-                    f"🎙️ **Recording received!**\n\n"
-                    f"💬 {result.feedback_en}\n"
-                    f"💬 {result.feedback_ar}\n\n"
-                    f"_Detailed scoring starts after your first 3 recordings._"
-                )
-            else:
-                score_emoji = "🟢" if result.score >= 80 else "🟡" if result.score >= 60 else "🟠"
-                stars = "⭐" * int(result.score / 20)  # 0-5 stars
-                await ctx.author.send(
-                    f"🎯 **Pronunciation Score** {stars}\n\n"
-                    f"{score_emoji} **{result.score:.0f}%**\n\n"
-                    f"💬 {result.feedback_en}\n"
-                    f"💬 {result.feedback_ar}"
-                    + (f"\n\n🔑 **Focus on:** {', '.join(result.missed_words[:3])}" if result.missed_words else "")
-                )
+            score_emoji = "🟢" if result.score >= 80 else "🟡" if result.score >= 60 else "🟠"
+            stars = "⭐" * int(result.score / 20)  # 0-5 stars
+            await ctx.author.send(
+                f"🎯 **Pronunciation Score** {stars}\n\n"
+                f"{score_emoji} **{result.score:.0f}%**\n\n"
+                f"💬 {result.feedback_en}\n"
+                f"💬 {result.feedback_ar}"
+                + (f"\n\n🔑 **Focus on:** {', '.join(result.missed_words[:3])}" if result.missed_words else "")
+            )
         except (discord.Forbidden, discord.HTTPException):
             pass  # DMs disabled
 
