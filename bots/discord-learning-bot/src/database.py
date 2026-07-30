@@ -1462,6 +1462,58 @@ def set_feature_flag(name: str, enabled: bool, allowed_ids: str = "", updated_by
     conn.close()
 
 
+def feature_flag_status(name: str) -> dict:
+    """Current state of a flag: {enabled, allowed_ids (set), everyone}.
+    `everyone` is True when enabled with an empty allowlist (on for all)."""
+    conn = _connect()
+    row = conn.execute("SELECT enabled, allowed_ids FROM feature_flags WHERE name=?",
+                       (name,)).fetchone()
+    conn.close()
+    enabled = bool(row and row["enabled"])
+    allowed = {a.strip() for a in ((row["allowed_ids"] if row else "") or "").split(",") if a.strip()}
+    return {"enabled": enabled, "allowed_ids": allowed, "everyone": enabled and not allowed}
+
+
+def feature_flag_grant(name: str, discord_id: str, updated_by: str = "") -> str:
+    """Give ONE student access to a flag (WHO control). Enables the flag and
+    adds them to the allowlist. Returns:
+      - 'everyone'  → flag is already on for all; no change (they already have it)
+      - 'already'   → already in the allowlist
+      - 'granted'   → added
+    """
+    st = feature_flag_status(name)
+    did = str(discord_id)
+    if st["everyone"]:
+        return "everyone"
+    if did in st["allowed_ids"]:
+        return "already"
+    ids = set(st["allowed_ids"]); ids.add(did)
+    set_feature_flag(name, True, ",".join(sorted(ids)), updated_by)
+    return "granted"
+
+
+def feature_flag_revoke(name: str, discord_id: str, updated_by: str = "") -> str:
+    """Remove ONE student's access (WHO control). Returns:
+      - 'everyone'         → flag is on for ALL; can't remove just one (caller warns)
+      - 'not_present'      → they weren't on the allowlist
+      - 'revoked'          → removed; others remain
+      - 'revoked_now_off'  → removed the last student → flag turned OFF (fail-safe:
+                             removing the last person never silently opens it to all)
+    """
+    st = feature_flag_status(name)
+    did = str(discord_id)
+    if st["everyone"]:
+        return "everyone"
+    if did not in st["allowed_ids"]:
+        return "not_present"
+    ids = set(st["allowed_ids"]); ids.discard(did)
+    if ids:
+        set_feature_flag(name, True, ",".join(sorted(ids)), updated_by)
+        return "revoked"
+    set_feature_flag(name, False, "", updated_by)
+    return "revoked_now_off"
+
+
 def list_feature_flags() -> list[dict]:
     """List all feature flags that have ever been set, most recently
     updated first."""
