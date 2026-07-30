@@ -69,10 +69,20 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")
 
-# Nutq 2 — self-hosted phoneme pronunciation scorer (services/nutq-scorer).
+# Nutq — self-hosted phoneme pronunciation scorer (services/nutq-scorer).
+# This is the FALLBACK engine (used when Azure is unavailable / usage guard trips).
 # Internal Docker-network URL; empty disables the call (→ best-effort skip).
 NUTQ_SCORER_URL = os.getenv("NUTQ_SCORER_URL", "http://nutq-scorer:8080")
 NUTQ_SCORER_TOKEN = os.getenv("NUTQ_SCORER_TOKEN", "")
+
+# Nutq — Azure Pronunciation Assessment (PRIMARY engine). Key + region come from
+# the free Azure Speech (F0) resource; empty key → Azure disabled (→ local fallback).
+AZURE_SPEECH_KEY = os.getenv("AZURE_SPEECH_KEY", "")
+AZURE_SPEECH_REGION = os.getenv("AZURE_SPEECH_REGION", "")
+NUTQ_AZURE_ENABLED = os.getenv("NUTQ_AZURE_ENABLED", "true").strip().lower() in ("1", "true", "yes")
+# Free tier is ~5 audio hours/month; guard switches to the local engine at 90%.
+NUTQ_AZURE_FREE_SECONDS = int(os.getenv("NUTQ_AZURE_FREE_SECONDS", str(5 * 3600)) or str(5 * 3600))
+NUTQ_AZURE_GUARD_FRACTION = float(os.getenv("NUTQ_AZURE_GUARD_FRACTION", "0.9") or "0.9")
 
 # ============================================================
 #  GOOGLE SHEETS CRM
