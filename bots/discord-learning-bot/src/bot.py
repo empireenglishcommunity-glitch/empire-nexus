@@ -3291,6 +3291,146 @@ async def slash_find(interaction: discord.Interaction, query: str):
     await interaction.followup.send("\n".join(lines), ephemeral=True)
 
 
+# ── /nutq — pronunciation feature controls (slash; ! prefix is disabled in
+#    the admin channel, so these are slash subcommands) ──────────────────────
+_NUTQ_FLAG = "tatawwur_pronunciation"
+
+nutq_group = app_commands.Group(
+    name="nutq",
+    description="Pronunciation feature — who gets it + how many official grades/day.",
+    default_permissions=discord.Permissions(manage_guild=True),
+    guild_only=True,
+)
+
+
+@nutq_group.command(name="status",
+                    description="Who has the pronunciation feature + their daily-grade caps.")
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_status(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    st = database.feature_flag_status(_NUTQ_FLAG)
+    default_cap = config.NUTQ_AZURE_MAX_CALLS_PER_DAY
+    if not st["enabled"]:
+        head = "🔴 OFF for everyone"
+    elif st["everyone"]:
+        head = "🟢 ON for EVERYONE"
+    else:
+        head = f"🟢 ON for {len(st['allowed_ids'])} student(s)"
+    lines = [f"**🗣️ Nutq pronunciation** — {head}", ""]
+    if st["enabled"] and not st["everyone"]:
+        for did in sorted(st["allowed_ids"]):
+            row = database.get_member(did)
+            nm = (row.get("discord_name") if row else did) or did
+            cap = database.nutq_daily_cap_override(did)
+            cap_txt = f"{cap}/day" if cap is not None else f"{default_cap}/day (default)"
+            lines.append(f"• {nm} — {cap_txt}")
+        lines.append("")
+    lines.append(f"Default cap: **{default_cap}**/day")
+    lines.append("Manage: `/nutq grant` · `revoke` · `everyone` · `off` · `cap` · `capreset`")
+    await interaction.followup.send("\n".join(lines), ephemeral=True)
+
+
+async def _nutq_pick(interaction: discord.Interaction, student: str):
+    """Resolve + report failure. Returns (did, name) or (None, None)."""
+    did, member, data = await _resolve_student_arg(interaction, student)
+    if not data and not (did and str(did).isdigit()):
+        await interaction.followup.send(
+            "Couldn't identify that student. Start typing the name and **pick from the list**.",
+            ephemeral=True)
+        return None, None
+    name = (member.display_name if member else (data or {}).get("discord_name", did)) or did
+    return did, name
+
+
+@nutq_group.command(name="grant", description="Give a student the pronunciation feature.")
+@app_commands.describe(student="Start typing a student's name, then pick them")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_grant(interaction: discord.Interaction, student: str):
+    await interaction.response.defer(ephemeral=True)
+    did, name = await _nutq_pick(interaction, student)
+    if not did:
+        return
+    r = database.feature_flag_grant(_NUTQ_FLAG, did, updated_by=f"discord:{interaction.user.id}")
+    msg = {
+        "everyone": f"ℹ️ It's already ON for everyone — **{name}** already has it.",
+        "already": f"✅ **{name}** already has it.",
+        "granted": f"🟢 Granted the pronunciation feature to **{name}**.",
+    }[r]
+    await interaction.followup.send(msg, ephemeral=True)
+
+
+@nutq_group.command(name="revoke", description="Remove a student's access to the pronunciation feature.")
+@app_commands.describe(student="Start typing a student's name, then pick them")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_revoke(interaction: discord.Interaction, student: str):
+    await interaction.response.defer(ephemeral=True)
+    did, name = await _nutq_pick(interaction, student)
+    if not did:
+        return
+    r = database.feature_flag_revoke(_NUTQ_FLAG, did, updated_by=f"discord:{interaction.user.id}")
+    msg = {
+        "everyone": ("⚠️ It's ON for **everyone** right now, so I can't remove just one. "
+                     "Use `/nutq off`, or grant specific students to switch to an allowlist."),
+        "not_present": f"ℹ️ **{name}** wasn't on the list.",
+        "revoked": f"🟠 Removed **{name}** from the pronunciation feature.",
+        "revoked_now_off": f"🔴 Removed **{name}** — the last student, so the feature is now **OFF**.",
+    }[r]
+    await interaction.followup.send(msg, ephemeral=True)
+
+
+@nutq_group.command(name="everyone", description="Turn the pronunciation feature ON for ALL students.")
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_everyone(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    database.set_feature_flag(_NUTQ_FLAG, enabled=True, allowed_ids="",
+                              updated_by=f"discord:{interaction.user.id}")
+    await interaction.followup.send("🟢 Pronunciation feature is now **ON for everyone**.", ephemeral=True)
+
+
+@nutq_group.command(name="off", description="Turn the pronunciation feature OFF for everyone.")
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_off(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    database.set_feature_flag(_NUTQ_FLAG, enabled=False, updated_by=f"discord:{interaction.user.id}")
+    await interaction.followup.send("🔴 Pronunciation feature is now **OFF** for everyone.", ephemeral=True)
+
+
+@nutq_group.command(name="cap", description="Set a student's official grades per day.")
+@app_commands.describe(student="Start typing a student's name, then pick them",
+                       grades="Official Azure grades per day (0–20)")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_cap(interaction: discord.Interaction, student: str,
+                   grades: app_commands.Range[int, 0, 20]):
+    await interaction.response.defer(ephemeral=True)
+    did, name = await _nutq_pick(interaction, student)
+    if not did:
+        return
+    database.set_nutq_daily_cap_override(did, int(grades))
+    await interaction.followup.send(
+        f"✅ **{name}** can now earn **{int(grades)}** official grade(s)/day.", ephemeral=True)
+
+
+@nutq_group.command(name="capreset", description="Revert a student to the default daily grade cap.")
+@app_commands.describe(student="Start typing a student's name, then pick them")
+@app_commands.autocomplete(student=_student_autocomplete)
+@app_commands.checks.has_permissions(manage_guild=True)
+async def nutq_capreset(interaction: discord.Interaction, student: str):
+    await interaction.response.defer(ephemeral=True)
+    did, name = await _nutq_pick(interaction, student)
+    if not did:
+        return
+    database.clear_nutq_daily_cap_override(did)
+    await interaction.followup.send(
+        f"✅ **{name}** now uses the default **{config.NUTQ_AZURE_MAX_CALLS_PER_DAY}**/day.",
+        ephemeral=True)
+
+
+bot.tree.add_command(nutq_group)
+
+
 @bot.tree.command(name="itqan-review",
                   description="Coaching brief + recordings for a student's weekly assessment.")
 @app_commands.describe(student="Start typing a student's name, then pick them",

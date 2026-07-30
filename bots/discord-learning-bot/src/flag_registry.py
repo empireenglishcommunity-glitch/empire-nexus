@@ -43,7 +43,7 @@ REGISTRY = [
     # ── TATAWWUR (system evolution) ──
     ("tatawwur_patterns", "Daily conversational patterns in tasks", "tatawwur", True),
     ("tatawwur_srs", "Spaced repetition for vocabulary recall", "tatawwur", True),
-    ("tatawwur_pronunciation", "AI pronunciation scoring (Groq Whisper)", "tatawwur", False),
+    ("tatawwur_pronunciation", "Pronunciation 'Grade my best read' (Azure + free fallback)", "tatawwur", False),
     ("tatawwur_showcase", "Auto-post success stories to showcase channels", "tatawwur", True),
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
 

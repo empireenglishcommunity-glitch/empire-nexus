@@ -202,6 +202,137 @@ async def handle_flag(args: str, bot) -> str:
 
 
 # ============================================================
+#  /nutq — pronunciation feature controls (WHO + HOW MANY)
+# ============================================================
+
+NUTQ_FLAG = "tatawwur_pronunciation"
+
+
+def _nutq_resolve(q: str) -> list:
+    """Resolve a student query (discord_id or a name substring) to a list of
+    (discord_id, name) matches. A digit query is taken as an id verbatim."""
+    q = (q or "").strip()
+    if not q:
+        return []
+    if q.isdigit():
+        row = database.get_member(q)
+        return [(q, (row.get("discord_name") if row else q) or q)]
+    ql = q.casefold()
+    return [(str(m["discord_id"]), m.get("discord_name") or "?")
+            for m in database.all_active_members()
+            if ql in (m.get("discord_name") or "").casefold()]
+
+
+def _nutq_name(discord_id: str) -> str:
+    row = database.get_member(discord_id)
+    return (row.get("discord_name") if row else discord_id) or discord_id
+
+
+@command("/nutq")
+async def handle_nutq(args: str, bot) -> str:
+    """Control the pronunciation ('Grade my best read') feature.
+
+    /nutq                         — who has it + daily-grade caps
+    /nutq grant <name|id>         — give it to a student
+    /nutq revoke <name|id>        — take it away from a student
+    /nutq everyone                — turn it on for ALL students
+    /nutq off                     — turn it off for everyone
+    /nutq cap <name|id> <n>       — set that student's grades/day
+    /nutq cap <name|id> default   — revert to the global default
+    """
+    em = ops_hub.escape_markdown
+    parts = (args or "").strip().split()
+    sub = parts[0].lower() if parts else "status"
+
+    # ── status (default) ────────────────────────────────────────────────
+    if sub in ("", "status", "who", "list"):
+        st = database.feature_flag_status(NUTQ_FLAG)
+        default_cap = config.NUTQ_AZURE_MAX_CALLS_PER_DAY
+        lines = ["*🗣️ Nutq — pronunciation feature*", "━━━━━━━━━━━━━━━━━━━━", ""]
+        if not st["enabled"]:
+            lines.append("Status: 🔴 *OFF* for everyone")
+        elif st["everyone"]:
+            lines.append("Status: 🟢 *ON for EVERYONE*")
+        else:
+            lines.append(f"Status: 🟢 ON for *{len(st['allowed_ids'])}* student\\(s\\):")
+            for did in sorted(st["allowed_ids"]):
+                cap = database.nutq_daily_cap_override(did)
+                cap_txt = f"{cap}/day" if cap is not None else f"{default_cap}/day \\(default\\)"
+                lines.append(f"  • {em(_nutq_name(did))} — {em(cap_txt)}")
+        lines.append("")
+        lines.append(f"Default cap: *{default_cap}* grade\\(s\\)/day")
+        lines.append("")
+        lines.append("`/nutq grant <name>` · `/nutq revoke <name>`")
+        lines.append("`/nutq everyone` · `/nutq off`")
+        lines.append("`/nutq cap <name> <n>` · `/nutq cap <name> default`")
+        return "\n".join(lines)
+
+    # ── everyone / off ──────────────────────────────────────────────────
+    if sub in ("everyone", "all"):
+        database.set_feature_flag(NUTQ_FLAG, enabled=True, allowed_ids="", updated_by="telegram_ops")
+        return "🟢 Pronunciation feature is now *ON for everyone*\\."
+    if sub in ("off", "disable", "nobody"):
+        database.set_feature_flag(NUTQ_FLAG, enabled=False, updated_by="telegram_ops")
+        return "🔴 Pronunciation feature is now *OFF* for everyone\\."
+
+    # ── grant / revoke ──────────────────────────────────────────────────
+    if sub in ("grant", "add", "on", "revoke", "deny", "remove"):
+        if len(parts) < 2:
+            return "Usage: `/nutq grant <name or id>` \\(or `revoke`\\)\\."
+        matches = _nutq_resolve(" ".join(parts[1:]))
+        if not matches:
+            return "❓ No student matched\\. Try their exact name or discord id\\."
+        if len(matches) > 1:
+            names = ", ".join(em(n) for _, n in matches[:8])
+            return f"⚠️ That matched *{len(matches)}* students \\({names}\\)\\. Be more specific or use the id\\."
+        did, name = matches[0]
+        if sub in ("grant", "add", "on"):
+            r = database.feature_flag_grant(NUTQ_FLAG, did, updated_by="telegram_ops")
+            if r == "everyone":
+                return f"ℹ️ It's already ON for everyone, so *{em(name)}* already has it\\."
+            if r == "already":
+                return f"✅ *{em(name)}* already has it\\."
+            return f"🟢 Granted the pronunciation feature to *{em(name)}*\\."
+        else:
+            r = database.feature_flag_revoke(NUTQ_FLAG, did, updated_by="telegram_ops")
+            if r == "everyone":
+                return ("⚠️ It's ON for *everyone* right now, so I can't remove just one\\. "
+                        "Use `/nutq off`, or grant specific students to switch to an allowlist\\.")
+            if r == "not_present":
+                return f"ℹ️ *{em(name)}* wasn't on the list\\."
+            if r == "revoked_now_off":
+                return f"🔴 Removed *{em(name)}* — they were the last one, so the feature is now *OFF*\\."
+            return f"🟠 Removed *{em(name)}* from the pronunciation feature\\."
+
+    # ── cap ─────────────────────────────────────────────────────────────
+    if sub in ("cap", "limit"):
+        if len(parts) < 3:
+            return "Usage: `/nutq cap <name or id> <number>` \\(or `default`\\)\\."
+        value = parts[-1].lower()
+        matches = _nutq_resolve(" ".join(parts[1:-1]))
+        if not matches:
+            return "❓ No student matched\\. Try their exact name or discord id\\."
+        if len(matches) > 1:
+            names = ", ".join(em(n) for _, n in matches[:8])
+            return f"⚠️ That matched *{len(matches)}* students \\({names}\\)\\. Be more specific or use the id\\."
+        did, name = matches[0]
+        if value in ("default", "reset", "clear"):
+            database.clear_nutq_daily_cap_override(did)
+            return (f"✅ *{em(name)}* now uses the default "
+                    f"*{config.NUTQ_AZURE_MAX_CALLS_PER_DAY}*/day\\.")
+        if not value.isdigit():
+            return "❓ Give a number \\(e\\.g\\. `3`\\) or `default`\\."
+        n = int(value)
+        if n > 20:
+            return "⚠️ That's a lot — cap it at 20/day to protect the free tier\\."
+        database.set_nutq_daily_cap_override(did, n)
+        return f"✅ *{em(name)}* can now earn *{n}* official grade\\(s\\)/day\\."
+
+    return ("❓ Unknown `/nutq` action\\. Try: `status`, `grant`, `revoke`, "
+            "`everyone`, `off`, `cap`\\.")
+
+
+# ============================================================
 #  /announce — post to Discord #announcements
 # ============================================================
 
