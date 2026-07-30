@@ -1,0 +1,23 @@
+# Nutq 2 scorer — standalone service definition.
+#
+# For the PILOT (Phase 4) this block is merged into the server's existing
+# compose stack so the bot can reach it at http://nutq-scorer:8080 on the
+# internal network. It publishes NO ports (internal-only) and is memory-capped
+# so it can never starve the bot or the other containers (R4).
+services:
+  nutq-scorer:
+    build: .
+    image: nutq-scorer:latest
+    container_name: nutq-scorer
+    restart: unless-stopped
+    # Hard memory cap — measured footprint is ~0.8–0.95 GB; 1.2 GB leaves margin.
+    mem_limit: 1200m
+    environment:
+      # Shared secret the bot sends as X-Nutq-Token. Set a real value in prod.
+      - NUTQ_SCORER_TOKEN=${NUTQ_SCORER_TOKEN:-changeme-dev}
+      - PORT=8080
+    # Internal only — do NOT publish ports to the host.
+    expose:
+      - "8080"
+    # Attach to the same network as the bot at integration time, e.g.:
+    # networks: [empire-net]
