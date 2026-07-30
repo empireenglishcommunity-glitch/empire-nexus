@@ -56,6 +56,7 @@ async def test_azure_used_when_eligible(member, azure_on, monkeypatch):
     res = await ps.score_recording_bytes(b"A", "r.webm", "I walk through the park",
                                           member, "shadow", "L0")
     assert res.success and res.score == 88.0
+    assert res.engine == "azure"                            # engine tag → grade-best-read
     assert res.transcript == "i walk through the park"      # Azure readable "we heard"
     assert "through" in res.missed_words
     assert "th" in res.feedback_en.lower() or "teeth" in res.feedback_en.lower()

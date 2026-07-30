@@ -1277,45 +1277,32 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     # failure/timeout/disable → {"scored": false} and the exercise still
     # completes exactly as before. Feedback is private to this authenticated
     # response (never posted publicly).
+    # Nutq (grade-best-read model): a "Send to Discord" — INCLUDING the up-to-5
+    # tier redos — is PRACTICE. It never spends Azure and shows NO number
+    # (Option A): the only score a student ever sees is the accurate Azure
+    # "official grade", earned on demand via /api/grade-best-read. Here we just
+    # tell the flag-enabled student the grade button is available and whether
+    # today's grade is already used. Completion + #showcase already happened
+    # above and are never affected.
     pronunciation = {"scored": False}
     try:
         if exercise == "shadow" and \
                 database.is_feature_enabled("tatawwur_pronunciation", discord_id):
             expected_text = _pronunciation_expected_text(week, day, level)
-            if not expected_text:
-                logger.info(f"submit-recording: no shadow target text for w{week}d{day} "
-                            f"{level} — scoring skipped")
             if expected_text:
-                from . import pronunciation_scorer
-                logger.info(f"submit-recording: scoring shadow w{week}d{day} {level} "
-                            f"(target {len(expected_text)} chars, audio {len(audio_data)} bytes)")
-                res = await asyncio.wait_for(
-                    pronunciation_scorer.score_recording_bytes(
-                        audio_data, audio_filename, expected_text,
-                        discord_id, exercise, level,
-                    ),
-                    timeout=config.NUTQ_SCORE_BUDGET_SECONDS,
-                )
-                if res and res.success:
-                    pronunciation = {
-                        "scored": True,
-                        "is_beginner_grace": False,  # Nutq: grace removed — always a real score
-                        "score": round(res.score),
-                        "feedback_en": res.feedback_en,
-                        "feedback_ar": res.feedback_ar,
-                        "missed_words": res.missed_words,
-                        "transcript": res.transcript,
-                        "expected": expected_text,
-                    }
-    except asyncio.TimeoutError:
-        logger.info("submit-recording: pronunciation scoring timed out — completion unaffected")
+                today = database._today_local().isoformat()
+                cap = _nutq_daily_cap(discord_id)
+                pronunciation = {
+                    "scored": False,          # Option A: no practice number
+                    "practice": True,         # → frontend shows encouragement + grade button
+                    "can_official_grade": True,
+                    "official_grade_used": database.azure_calls_today(discord_id, today) >= cap,
+                }
+            else:
+                logger.info(f"submit-recording: no shadow target text for w{week}d{day} "
+                            f"{level} — grade button hidden")
     except Exception as e:
-        logger.warning(f"submit-recording: pronunciation scoring failed (non-fatal): {e}")
-
-    # Nutq — owner oversight: post the daily score to the private teacher feed
-    # (best-effort; student's own feedback already returned in the response).
-    if pronunciation.get("scored"):
-        await _post_teacher_feed(name, exercise, week, day, pronunciation)
+        logger.warning(f"submit-recording: pronunciation setup failed (non-fatal): {e}")
 
     return web.json_response({
         "ok": True,
@@ -1425,6 +1412,151 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
         logger.info("pronunciation-check: scoring timed out")
     except Exception as e:
         logger.warning(f"pronunciation-check failed (non-fatal): {e}")
+
+    return web.json_response({"ok": True, "pronunciation": pronunciation},
+                             headers=_cors_headers(request))
+
+
+def _nutq_daily_cap(discord_id: str) -> int:
+    """The per-student daily official-grade cap. Defaults to the global
+    NUTQ_AZURE_MAX_CALLS_PER_DAY (owner-controlled, strict 1/day by default).
+    PR3 will let the owner override this for specific students via /nutq cap."""
+    try:
+        override = database.nutq_daily_cap_override(discord_id)
+        if override is not None:
+            return int(override)
+    except Exception:
+        pass
+    return config.NUTQ_AZURE_MAX_CALLS_PER_DAY
+
+
+@routes.post("/api/grade-best-read")
+async def post_grade_best_read(request: web.Request) -> web.Response:
+    """Nutq (grade-best-read model): the student's ONE official pronunciation
+    grade per day. Scores the submitted take with Azure (accurate) — atomically
+    capped at N/day (default 1, PR1) — stores it, and posts it to the private
+    teacher feed. Falls back to the free local engine only when Azure is
+    unavailable (usage guard / not configured), and still consumes the daily
+    slot so the button stays strictly 1/day regardless of engine.
+
+    Deliberately does NOT post to #showcase, complete the exercise, or touch
+    mastery/points/streak — completion is /api/submit-recording's job. This is
+    purely the accurate score-of-record. Flag-gated; shadow only; bounded by a
+    timeout and fully wrapped so it never errors the client."""
+    payload = _session_from_request(request)
+    if not payload:
+        return web.json_response({"ok": False, "error": "unauthorized"},
+                                 status=401, headers=_cors_headers(request))
+    discord_id = payload["did"]
+    level = payload.get("lvl", "L0")
+
+    if not database.is_feature_enabled("tatawwur_pronunciation", discord_id):
+        return web.json_response({"ok": True, "pronunciation": {"scored": False}},
+                                 headers=_cors_headers(request))
+
+    try:
+        reader = await request.multipart()
+    except Exception:
+        return web.json_response({"ok": False, "error": "multipart required"},
+                                 status=400, headers=_cors_headers(request))
+
+    audio_data = None
+    audio_filename = "recording.webm"
+    exercise = None
+    week = None
+    day = None
+    while True:
+        part = await reader.next()
+        if part is None:
+            break
+        if part.name == "audio":
+            audio_data = await part.read()
+            ct = part.headers.get("Content-Type", "audio/webm")
+            if "mp4" in ct or "m4a" in ct:
+                audio_filename = "recording.m4a"
+            elif "ogg" in ct:
+                audio_filename = "recording.ogg"
+            else:
+                audio_filename = "recording.webm"
+        elif part.name == "exercise":
+            exercise = (await part.text()).strip()
+        elif part.name == "week":
+            try:
+                week = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+        elif part.name == "day":
+            try:
+                day = int(await part.text())
+            except (ValueError, TypeError):
+                pass
+
+    if not audio_data:
+        return web.json_response({"ok": False, "error": "no audio file"},
+                                 status=400, headers=_cors_headers(request))
+    if exercise != "shadow":
+        return web.json_response({"ok": False, "error": "bad exercise"},
+                                 status=400, headers=_cors_headers(request))
+    from . import curriculum
+    if not week or not day or not (1 <= week <= curriculum.max_week_for_level(level)) \
+            or not (1 <= day <= 7):
+        return web.json_response({"ok": False, "error": "week/day out of range"},
+                                 status=400, headers=_cors_headers(request))
+
+    today = database._today_local().isoformat()
+    cap = _nutq_daily_cap(discord_id)
+    # Already used today's official grade → tell the client (button shows "graded
+    # today"); never call Azure again.
+    if database.azure_calls_today(discord_id, today) >= cap:
+        return web.json_response(
+            {"ok": True, "already_graded": True,
+             "pronunciation": {"scored": False, "official_grade_used": True}},
+            headers=_cors_headers(request))
+
+    pronunciation = {"scored": False}
+    try:
+        expected_text = _pronunciation_expected_text(week, day, level)
+        if expected_text:
+            from . import pronunciation_scorer
+            logger.info(f"grade-best-read: Azure-grading shadow w{week}d{day} {level} "
+                        f"for {discord_id} (audio {len(audio_data)} bytes)")
+            res = await asyncio.wait_for(
+                pronunciation_scorer.score_recording_bytes(
+                    audio_data, audio_filename, expected_text,
+                    discord_id, exercise, level, allow_azure=True,
+                ),
+                timeout=config.NUTQ_SCORE_BUDGET_SECONDS,
+            )
+            if res and res.success:
+                # If the official grade fell back to the free engine (Azure
+                # unavailable at scale), still consume today's slot so the
+                # button is strictly 1/day regardless of engine. (When Azure
+                # WAS used, score_recording_bytes already reserved the slot.)
+                if res.engine != "azure":
+                    database.reserve_azure_call_today(discord_id, today, cap)
+                pronunciation = {
+                    "scored": True,
+                    "official": True,
+                    "is_beginner_grace": False,
+                    "score": round(res.score),
+                    "feedback_en": res.feedback_en,
+                    "feedback_ar": res.feedback_ar,
+                    "missed_words": res.missed_words,
+                    "transcript": res.transcript,
+                    "expected": expected_text,
+                    "official_grade_used": True,
+                }
+    except asyncio.TimeoutError:
+        logger.info("grade-best-read: scoring timed out")
+    except Exception as e:
+        logger.warning(f"grade-best-read failed (non-fatal): {e}")
+
+    # Owner oversight: the official grade (and only the official grade) goes to
+    # the private teacher feed.
+    if pronunciation.get("scored"):
+        member_data = database.get_member(discord_id) or {}
+        name = member_data.get("discord_name", "Student")
+        await _post_teacher_feed(name, exercise, week, day, pronunciation)
 
     return web.json_response({"ok": True, "pronunciation": pronunciation},
                              headers=_cors_headers(request))
