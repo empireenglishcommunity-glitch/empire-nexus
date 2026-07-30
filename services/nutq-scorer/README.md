@@ -17,8 +17,9 @@ recording      --allosaurus----> recognized phonemes
 ```
 - **Beginner-kind but honest:** known Arabic-speaker substitutions (p/b, f/v, θ/s,
   ð/d, …) get *partial* credit; a genuinely wrong read still scores low.
-- **Calibration** (`scorer.calibrate`) is tuned on real Arabic-accented samples in
-  Phase 3; Phase 1 ships an honest near-identity default.
+- **Calibration** (`scorer.calibrate`) is fitted on **real Arabic-accented English**
+  (Speech Accent Archive): correct accented reads land ~78–95, wrong reads stay
+  low. Feedback gives **sound-specific** tips (th, p/b, v/f, r, l, …) in EN + Arabic.
 
 ## API (internal only)
 - `GET /health` → `{ok, model_loaded}`

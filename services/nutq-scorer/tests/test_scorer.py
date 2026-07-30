@@ -100,3 +100,44 @@ def test_sub_cost_matrix():
     assert scorer._sub_cost("p", "p") == 0.0
     assert scorer._sub_cost("p", "b") == scorer.COST_PARTIAL   # Arabic pair
     assert scorer._sub_cost("p", "z") == scorer.COST_SUB       # unrelated
+
+
+# ── Phase 3: calibration (fitted on real Arabic-accented samples) ────────
+def test_calibrate_endpoints_and_monotonic():
+    assert scorer.calibrate(0) == 0.0
+    assert scorer.calibrate(100) == 100.0
+    # monotonic non-decreasing
+    prev = -1
+    for x in range(0, 101, 5):
+        y = scorer.calibrate(x)
+        assert y >= prev
+        prev = y
+
+
+def test_calibrate_lifts_midrange_but_keeps_wrong_low():
+    # a genuine accented correct read (~66 raw) should feel encouraging…
+    assert 72 <= scorer.calibrate(66) <= 85
+    # …while a wrong read stays low
+    assert scorer.calibrate(10) < 25
+    assert scorer.calibrate(0) == 0.0
+
+
+# ── Phase 3: sound-specific feedback ─────────────────────────────────────
+def test_score_from_phonemes_reports_weak_phonemes():
+    # ref "think" ~ [θ,i,n,k]; hyp says [s,i,n,k] (θ→s, a classic Arabic error)
+    r = scorer.score_from_phonemes(["θ", "i", "n", "k"], [0, 0, 0, 0], ["think"],
+                                   ["s", "i", "n", "k"])
+    pw = r["per_word"][0]
+    assert "weak_phonemes" in pw
+
+
+def test_weak_phoneme_picks_a_tipped_sound():
+    per_word = [{"word": "think", "accuracy": 0.5, "weak_phonemes": ["θ", "θ"]},
+                {"word": "cat", "accuracy": 1.0, "weak_phonemes": []}]
+    assert scorer.weak_phoneme(per_word) == "θ"
+
+
+def test_feedback_uses_sound_specific_tip():
+    en, ar = scorer.make_feedback(60, ["think"], weak="θ")
+    assert "th" in en.lower()          # names the 'th' sound
+    assert en and ar and en != ar
