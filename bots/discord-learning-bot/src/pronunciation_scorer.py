@@ -51,6 +51,7 @@ class ScoringResult:
     is_beginner_grace: bool = False  # Deprecated (Nutq): grace removed — always False; kept for response-shape/back-compat
     success: bool = True
     error: str = ""
+    engine: str = "local"  # which engine produced this score: "azure" | "local"
 
 
 # Words that don't penalize the student if missing/extra
@@ -453,7 +454,7 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
                     score=score, raw_score=float(az.get("accuracy", score) or score),
                     transcript=heard, expected_text=expected_text,
                     missed_words=missed_words, feedback_en=feedback_en,
-                    feedback_ar=feedback_ar, is_beginner_grace=False)
+                    feedback_ar=feedback_ar, is_beginner_grace=False, engine="azure")
             # Azure failed after reserving → refund the slot so the student keeps
             # their one daily grade, then fall through to the local engine.
             database.release_azure_call_today(discord_id, today)
@@ -487,7 +488,8 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
         score=score, raw_score=raw_score,
         transcript="",  # local engine → phonemes, not a readable "we heard"
         expected_text=expected_text, missed_words=missed_words,
-        feedback_en=feedback_en, feedback_ar=feedback_ar, is_beginner_grace=False)
+        feedback_en=feedback_en, feedback_ar=feedback_ar, is_beginner_grace=False,
+        engine="local")
 
 
 def _azure_available(task_id: str) -> bool:

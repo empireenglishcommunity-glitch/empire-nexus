@@ -572,6 +572,13 @@ CREATE TABLE IF NOT EXISTS azure_shadow_calls (
     count          INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (discord_id, date)
 );
+-- Nutq: per-student override of the daily official-grade cap. Absent row =
+-- use the global default (NUTQ_AZURE_MAX_CALLS_PER_DAY). Owner-managed via the
+-- /nutq cap command (PR3) so specific students can get more/fewer grades/day.
+CREATE TABLE IF NOT EXISTS nutq_daily_cap_overrides (
+    discord_id     TEXT PRIMARY KEY,
+    cap            INTEGER NOT NULL
+);
 """
 
 
@@ -2308,6 +2315,36 @@ def release_azure_call_today(discord_id: str, date: str) -> None:
     conn.execute(
         "UPDATE azure_shadow_calls SET count = MAX(count - 1, 0) WHERE discord_id=? AND date=?",
         (discord_id, date))
+    conn.commit()
+    conn.close()
+
+
+def nutq_daily_cap_override(discord_id: str):
+    """The student's per-day official-grade cap override, or None if they use
+    the global default. Owner-set via /nutq cap (PR3)."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT cap FROM nutq_daily_cap_overrides WHERE discord_id=?",
+        (discord_id,)).fetchone()
+    conn.close()
+    return int(row["cap"]) if row else None
+
+
+def set_nutq_daily_cap_override(discord_id: str, cap: int) -> None:
+    """Set (upsert) a student's per-day official-grade cap override."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO nutq_daily_cap_overrides (discord_id, cap) VALUES (?, ?)
+           ON CONFLICT(discord_id) DO UPDATE SET cap = excluded.cap""",
+        (discord_id, max(0, int(cap))))
+    conn.commit()
+    conn.close()
+
+
+def clear_nutq_daily_cap_override(discord_id: str) -> None:
+    """Remove a student's override → they revert to the global default cap."""
+    conn = _connect()
+    conn.execute("DELETE FROM nutq_daily_cap_overrides WHERE discord_id=?", (discord_id,))
     conn.commit()
     conn.close()
 
