@@ -95,6 +95,10 @@ NUTQ_SCORE_BUDGET_SECONDS = float(os.getenv("NUTQ_SCORE_BUDGET_SECONDS", "15") o
 # each Azure check cheap so many students stay within the free tier, while every
 # student still gets the ACCURATE Azure score on their first N seconds.
 NUTQ_AZURE_MAX_AUDIO_SECONDS = int(os.getenv("NUTQ_AZURE_MAX_AUDIO_SECONDS", "20") or "20")
+# Nutq — private "teacher feed": a Discord channel (owner-only, students not in it)
+# where the bot posts each student's daily pronunciation score for oversight.
+# Student still sees their own feedback privately on the page. 0 = disabled.
+NUTQ_TEACHER_FEED_CHANNEL_ID = int(os.getenv("NUTQ_TEACHER_FEED_CHANNEL_ID", "0") or "0")
 
 # ============================================================
 #  GOOGLE SHEETS CRM
