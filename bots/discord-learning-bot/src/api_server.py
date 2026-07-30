@@ -1117,17 +1117,39 @@ async def post_practice_complete(request: web.Request) -> web.Response:
 _NUTQ_DAY_NAMES = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 
+def _drill_primary_text(drill) -> str:
+    """The exact sentence/passage the practice page SHOWS the student to record,
+    for a given accent drill. Mirrors empire-dojo scripts/generate.py
+    normalize_drill().primary_text so scoring targets exactly what was displayed
+    (Nutq 2 R10 — closes the accent/shadow/day-7 drift):
+      - review drill (day 6):     record_this (fallback: first challenge sentence)
+      - assessment drill (day 7): test_yourself.passage
+      - normal drill:             record_this (fallback: first sentence_practice)
+    Returns "" when there's no scoreable target (→ scoring cleanly skips)."""
+    if not isinstance(drill, dict):
+        return ""
+    dtype = drill.get("type")
+    if dtype == "review":
+        cs = drill.get("challenge_sentences") or []
+        return (drill.get("record_this") or (cs[0] if cs else "") or "").strip()
+    if dtype == "assessment":
+        ty = drill.get("test_yourself") if isinstance(drill.get("test_yourself"), dict) else {}
+        return (ty.get("passage") or "").strip()
+    sp = drill.get("sentence_practice") or []
+    return (drill.get("record_this") or (sp[0] if sp else "") or "").strip()
+
+
 def _pronunciation_expected_text(week: int, day: int, level: str) -> str:
-    """The target sentence to score an accent/shadow recording against for
-    (week, day, level). Both accent and shadowing practise the accent drill's
-    'record_this' line (same source the daily post + the old !done scorer used).
-    Returns "" if there's no target text (→ scoring is skipped, per the spec)."""
+    """The target text to score an accent/shadow recording against for
+    (week, day, level) — the SAME text the page displays (see _drill_primary_text;
+    both the accent and shadowing pages render the normalized accent drill's
+    primary_text). Returns "" if there's no target text (→ scoring skipped)."""
     from . import curriculum
     try:
         day_index = max(0, min(6, int(day) - 1))
         day_name = _NUTQ_DAY_NAMES[day_index]
         daily = curriculum.get_daily_content(int(week), day_name, day_index, level)
-        return ((daily.get("accent_drill") or {}).get("record_this") or "").strip()
+        return _drill_primary_text(daily.get("accent_drill"))
     except Exception:
         return ""
 

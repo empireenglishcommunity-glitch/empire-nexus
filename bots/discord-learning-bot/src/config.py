@@ -69,6 +69,11 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")
 
+# Nutq 2 — self-hosted phoneme pronunciation scorer (services/nutq-scorer).
+# Internal Docker-network URL; empty disables the call (→ best-effort skip).
+NUTQ_SCORER_URL = os.getenv("NUTQ_SCORER_URL", "http://nutq-scorer:8080")
+NUTQ_SCORER_TOKEN = os.getenv("NUTQ_SCORER_TOKEN", "")
+
 # ============================================================
 #  GOOGLE SHEETS CRM
 # ============================================================
