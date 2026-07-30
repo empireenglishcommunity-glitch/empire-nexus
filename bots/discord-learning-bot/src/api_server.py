@@ -23,7 +23,7 @@ from pathlib import Path
 
 from aiohttp import web
 
-from . import database, maintenance
+from . import database, maintenance, config
 
 logger = logging.getLogger("empire-bot.api")
 
