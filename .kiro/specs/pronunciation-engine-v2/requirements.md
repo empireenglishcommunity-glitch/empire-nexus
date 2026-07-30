@@ -1,139 +1,120 @@
-# Nutq 2 — Accurate Self-Hosted Pronunciation Engine — Requirements
+# Nutq — Pronunciation Feedback — Requirements (CONSOLIDATED, FINAL)
 
-**Codename:** Nutq 2 (نُطق) — the accurate engine behind the shipped Nutq feature.
-**Status:** DRAFT — awaiting owner approval before any implementation.
-**Supersedes:** the *scoring engine* of `pronunciation-feedback` (Nutq 1). It does
-**not** replace Nutq 1's delivery pipeline (page recorder → endpoint → flag →
-on-page panel → heard-vs-target → try-again → storage), which is kept and reused.
+**Codename:** Nutq (نُطق). This is the single source of truth for the whole Nutq
+feature. It supersedes the earlier drafts of this spec (self-hosted-only) and the
+`pronunciation-feedback` spec (Whisper-based). See `decision-log.md` for the three
+pivots and the evidence behind them.
 
----
-
-## Background (why this exists — verified, not assumed)
-
-Nutq 1 shipped and was piloted with BioRoMa + Mai. The pilot did its job: it
-exposed that the scoring **feels unreal**. Root cause, confirmed by reading the
-code and by a live test against the pilot student's real data:
-
-- The engine scores with **Groq Whisper transcription + word comparison**. Whisper
-  is engineered to output clean, correct text, so when a learner mispronounces, it
-  quietly "hears" the intended words. The result: reading **wrong** still scored
-  well and returned praise ("feedback based on what I said"). The pronunciation
-  signal (dropped sounds, wrong stress, accent errors) is discarded at the
-  transcription step, and the word-comparison layer then adds even more leniency
-  (40% floor, +level bonus, fuzzy + accent tolerance).
-- **Conclusion:** the current approach measures *"did you say roughly the right
-  words?"*, not *"how well did you pronounce them?"*. No tuning fixes this — the
-  needed signal is gone before scoring begins.
-
-**Owner decisions locked (2026-07):**
-- Build a **real pronunciation engine** that scores **acoustically at the
-  phoneme/word level** against each day's task text.
-- It must be **free on the long run and fully owned** — **self-hosted**, no
-  per-use vendor fee, no quota that grows with student count.
-- Build it on the **current server** for the pilot (measured: 2 vCPU, ~2 GB free
-  RAM, no GPU); **grow hardware only when real growth demands it** (Hetzner rescale
-  / cheaper-region migration is a separate, later decision — not required now).
-- Keep the **Nutq 1 delivery pipeline** and the same on-page experience.
+**Status:** DRAFT — awaiting owner approval. **No code until approved.**
 
 ---
 
-## Requirements (EARS-style acceptance criteria)
+## What we are building (in one line)
+Accurate, professional, bilingual pronunciation feedback on the practice page,
+powered by **Azure Pronunciation Assessment** (primary) with the **free local
+self-hosted engine as fallback**, kept **$0/month at current scale** by a strict
+cost policy + a hard usage guard.
 
-### R1 — Real phoneme-level scoring against the day's task (core)
-WHEN a student records an **accent** or **shadowing** exercise on the practice
-page, THE SYSTEM SHALL score their pronunciation by comparing the **sounds they
-produced** against the **expected sounds of that exercise's exact target text for
-that specific week/day/level**, and return an accuracy score (0–100) plus the
-specific words/sounds that were mispronounced.
-
-### R2 — Correctly detects a wrong read
-WHEN a student reads the target **incorrectly** (wrong or badly mispronounced
-words), THE SYSTEM SHALL return a **meaningfully lower** score and identify the
-failed word(s)/sound(s); WHEN a student reads it **well**, THE SYSTEM SHALL return
-a **high** score. (This is the acceptance test the pilot failed.)
-
-### R3 — Self-hosted, free, and owned
-THE SYSTEM SHALL run the scoring engine on Empire's **own infrastructure** using
-**open-source** models, with **no per-request cost** and **no external
-pronunciation-scoring vendor**. Groq/LLM MAY be used only for optional warm
-feedback wording, never for the score itself, and the score MUST work if that
-optional call is unavailable.
-
-### R4 — Fits the current server, capped, and cannot starve the bot
-THE SYSTEM SHALL run within a **hard memory limit** sized to fit the current
-server (target ≤ ~1 GB RSS for the scorer), isolated from the student-facing bot
-(its own process/container), so that heavy audio work can never exhaust RAM/CPU
-for the bot or the other 8 containers.
-
-### R5 — Best-effort and NEVER blocks the core flow
-THE SYSTEM SHALL record exercise completion and post to `#showcase` **before**
-scoring, and IF scoring is slow, fails, or is disabled, THE SYSTEM SHALL still
-complete the exercise and post normally, showing a neutral "saved — couldn't score
-this time" note (never an error, never a lost completion). Scoring SHALL run within
-a bounded time budget (target ≤ ~8 s) with a visible "🎧 checking…" indicator.
-
-### R6 — Beginner-kind, but honest (Arabic L0 fairness)
-THE SYSTEM SHALL be fair to Arabic L0 learners — giving **partial credit** for
-known Arabic-speaker sound substitutions (e.g. /p/↔/b/, /v/↔/f/, θ/ð) and using
-warm, encouragement-first wording — **without** hiding a genuinely low score for a
-wrong read. Fairness thresholds SHALL be **calibrated on real Arabic-accented
-samples** (a dedicated tuning phase), not guessed.
-
-### R7 — Reuse the Nutq 1 delivery pipeline unchanged
-THE SYSTEM SHALL plug into the existing `POST /api/submit-recording` and
-`POST /api/pronunciation-check` paths and return the **same `pronunciation` JSON
-shape** already consumed by the dojo UI (`scored`, `score`, `feedback_en`,
-`feedback_ar`, `missed_words`, `transcript`/heard, `expected`), so the on-page
-panel, heard-vs-target, and "try again" require **no dojo change**.
-
-### R8 — Actionable bilingual feedback
-WHEN a score is shown, THE SYSTEM SHALL name the specific word(s)/sound(s) to work
-on and give **one** short, actionable tip, in English + Egyptian Arabic,
-encouragement-first, NOT Nour-voiced, and SHALL NOT critique grammar/content.
-
-### R9 — Scope: accent + shadowing only
-THE SYSTEM SHALL score only **accent** and **shadowing** (exact target text).
-Free-form **speaking** (a prompt, no exact words) is explicitly OUT of scope for
-accuracy scoring here.
-
-### R10 — Score against exactly what the student saw
-THE SYSTEM SHALL score against the **same target text the page displayed** for that
-exercise/day, eliminating drift between the page and the server. WHERE a day has no
-scoreable target (e.g. an assessment-day passage with no `record_this`), THE SYSTEM
-SHALL score the shown passage or cleanly skip (R5), never score against a different
-sentence.
-
-### R11 — Persistence + existing progress intact
-THE SYSTEM SHALL store each score to `pronunciation_scores` so `!progress`
-continues to work, with no breaking schema change (a read-only/additive column for
-phoneme detail is allowed).
-
-### R12 — Privacy
-Pronunciation feedback SHALL remain private to the student's own authenticated
-session, never posted publicly. `#showcase` posting behavior is unchanged.
-
-### R13 — Flag-gated pilot → rollout
-THE SYSTEM SHALL gate the new engine behind `tatawwur_pronunciation` (currently
-OFF), pilot on BioRoMa + Mai, live-verify R1/R2, then enable for all students.
-
-### R14 — Designed to scale (portable, horizontal)
-THE SYSTEM SHALL be **stateless and horizontally scalable** — scoring capacity
-grows by running additional identical scorer instances and/or moving to a larger
-host — with **no rewrite** required as the student count grows.
+## Why (verified, not assumed — see decision-log.md)
+- **Nutq 1 (Whisper + word match):** Whisper "hears" intended words, so it can't
+  detect mispronunciation — reading wrong still scored high ("felt unreal").
+- **Nutq 2 (self-hosted allosaurus phonemes):** too noisy on real recordings —
+  native-like reads scored 41–66 and it flagged sounds the student said correctly.
+  Proven on the owner's own recordings.
+- **Conclusion:** professional accuracy needs a purpose-built pronunciation
+  engine. Azure's is accurate, handles natural/accented speech, and is **free at
+  our scale**. The self-hosted engine (already built) becomes the safety-net.
 
 ---
 
-## Non-goals (explicitly out of scope)
-- Free-form speaking-accuracy / fluency scoring (future spec).
-- Prosody/intonation scoring in v1 (may be a later enhancement).
-- Re-enabling adaptive difficulty (`tatawwur_adaptive`).
-- Any change to completion/points/streak/mastery, or to `#showcase` posting.
-- Hardware upgrade / server migration (separate decision; not required for v1).
+## Requirements (EARS-style)
+
+### R1 — Accurate, professional scoring (primary = Azure)
+WHEN a student records the **shadow** exercise, THE SYSTEM SHALL score it with
+**Azure Pronunciation Assessment** against that day's exact shadow target text,
+returning Accuracy + Fluency + Completeness and **per-word / per-phoneme** detail.
+
+### R2 — Trustworthy behaviour
+WHEN a student reads **well** (even with an Arabic accent), THE SYSTEM SHALL
+return a **high** score; WHEN they read **wrong / mispronounce**, THE SYSTEM SHALL
+return a **lower** score and identify the **correct** failed sound(s). The named
+sound MUST be right (the Nutq 2 failure of flagging correctly-said sounds must not
+recur).
+
+### R3 — Cost policy: $0/month at current scale, capped as we grow
+THE SYSTEM SHALL bound Azure usage so it stays within the free tier for the
+current cohort:
+- Azure-score **only the shadow task**, **once per student per day** (the graded submission).
+- Allow at most **2** Azure "try-again" re-checks per student per day.
+- Azure-score **one** reading in the **weekly assessment** (progress checkpoint).
+- Accent/other tasks are NOT Azure-scored.
+
+### R4 — Hard usage guard (never a surprise bill)
+THE SYSTEM SHALL track Azure audio-seconds used this calendar month; WHEN usage
+reaches **~90% of the free monthly allowance (~5 audio hours)**, THE SYSTEM SHALL
+stop calling Azure for the rest of the month and use the **fallback engine**.
+
+### R5 — Fallback = the free local engine
+WHEN Azure is unavailable/slow/errors OR the usage guard has tripped, THE SYSTEM
+SHALL score with the **free self-hosted engine (`nutq-scorer` / allosaurus)** so
+the student still gets feedback. Fallback feedback SHALL be honest/coarser (a band
++ encouragement, **without** naming a specific sound, since the local per-phoneme
+detail is not reliable).
+
+### R6 — Best-effort; NEVER blocks the core flow
+THE SYSTEM SHALL complete the exercise and post to `#showcase` **before** scoring;
+IF all scoring paths fail/time out, THE SYSTEM SHALL still complete normally and
+show a neutral "saved — couldn't score this time" note (never an error, never a
+lost completion). Bounded by a timeout with a "🎧 checking…" indicator.
+
+### R7 — Reuse the Nutq delivery pipeline unchanged
+THE SYSTEM SHALL keep the shipped page recorder → `/api/submit-recording` +
+`/api/pronunciation-check` → flag gate → on-page panel → try-again → storage, and
+return the **same `pronunciation` JSON shape**, so the dojo UI needs **no change**.
+
+### R8 — Reliable, actionable bilingual feedback
+WHEN Azure scores a recording, THE SYSTEM SHALL name the specific word(s)/sound(s)
+to improve and give **one** short, correct, actionable tip in **English + Egyptian
+Arabic**, encouragement-first, NOT Nour-voiced, no grammar/content critique.
+
+### R9 — Score exactly what the page shows
+THE SYSTEM SHALL score the shadow recording against the exact passage the page
+displayed for that week/day/level (drift already closed via `_drill_primary_text`).
+
+### R10 — Persistence + progress + usage accounting
+THE SYSTEM SHALL store each score to `pronunciation_scores` (so `!progress` keeps
+working) and record Azure audio-seconds for the usage guard (additive, no breaking
+schema change). It SHALL record which engine produced each score.
+
+### R11 — Privacy
+Feedback SHALL remain private to the student's own authenticated session; nothing
+posted publicly. `#showcase` posting is unchanged.
+
+### R12 — Flag-gated pilot → rollout
+THE SYSTEM SHALL gate behind `tatawwur_pronunciation` (currently OFF), pilot on
+BioRoMa + Mai, live-verify R1/R2/R8, then enable for all students.
+
+### R13 — Secrets & safety
+Azure key + region SHALL come from environment (`.env`), never committed. The
+usage guard SHALL make runaway cost impossible. Deploys backed up + verified.
+
+### R14 — Scale
+Cost SHALL grow modestly and remain **capped** by the guard; the design SHALL be
+portable so the engine can later be brought fully in-house if scale ever justifies
+it, with no change to the delivery pipeline.
+
+---
+
+## Non-goals
+- Azure-scoring the accent/speaking tasks (shadow only for now).
+- Free-form speaking/fluency grading (future).
+- Prosody/grammar/topic scoring (Azure can, but out of scope for v1).
+- Re-enabling adaptive difficulty.
+- Any change to completion/points/streak/mastery or `#showcase`.
 
 ## Constraints
-- Open-source, self-hosted, CPU-only (no GPU on the current box).
-- Hard memory cap; best-effort; flag-gated; bilingual (EN + Egyptian Arabic).
-- Same safe-deploy discipline: own PR per phase, tests green, owner-merged,
-  backup before server change, live-verify, zero disruption to the daily flow.
-- **No guessing:** a feasibility spike measures model RAM/latency/accuracy on the
-  real server before we commit to the full build.
+- **$0/month at current (17-student) scale**; capped thereafter by R4.
+- Bilingual EN + Egyptian Arabic; not Nour-voiced.
+- Same safe-deploy discipline: own PR per phase, tests green, owner-merged, backup
+  before server change, live-verify, zero disruption to the daily flow.
+- No guessing — behaviour verified live on real recordings before rollout.

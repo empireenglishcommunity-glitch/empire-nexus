@@ -1,76 +1,64 @@
-# Nutq 2 — Implementation Plan (Tasks)
+# Nutq — Implementation Plan (CONSOLIDATED, FINAL)
 
-**Status:** DRAFT — awaiting owner approval. **No implementation starts until the
-owner approves this spec.** Every phase: own feature branch → full test suite green
-→ owner merges → deploy → live-verify → check off here. The
-`tatawwur_pronunciation` flag stays OFF (already off) until Phase 4.
-
-Legend: [ ] not started · [~] in progress · [x] done
+**Status:** DRAFT — awaiting owner approval. **No code until approved.** Each phase:
+own PR → tests green → owner merges → deploy → live-verify → check off. Flag stays
+OFF until the pilot (Phase A4). Legend: [ ] todo · [~] wip · [x] done.
 
 ---
 
-## Phase 0 — Feasibility spike (measure, don't guess) — R2, R3, R4
-- [ ] 0.1 In an **isolated** throwaway environment (not the live bot), benchmark
-      the top-2 model candidates (quantized wav2vec2-phoneme ONNX; allosaurus) on
-      real Arabic-accented English clips: **RSS memory, latency on 2 vCPU, and
-      does-it-catch-a-wrong-read**.
-- [ ] 0.2 Validate the G2P → model phoneme-set mapping (eSpeak/phonemizer vs model).
-- [ ] 0.3 **Go/No-Go report to owner:** chosen model + measured numbers vs R4, plus
-      a sample "read wrong → low / read well → high" demonstration. Owner confirms
-      before Phase 1. (If neither fits the current box, we pause and revisit
-      hardware — no silent compromise.)
+## Already shipped (Nutq 1 + 2 — the reusable pipeline + fallback engine)
+- [x] Page recorder → `/api/submit-recording` + `/api/pronunciation-check`
+- [x] On-page score panel, heard-vs-target, "try again", storage, flag-gating
+- [x] Beginner-grace removed
+- [x] `_pronunciation_expected_text` mirrors the shown passage (drift closed)
+- [x] `services/nutq-scorer` self-hosted engine — **kept as the fallback**
 
-## Phase 1 — `nutq-scorer` service — R1, R3, R4, R14
-- [ ] 1.1 New containerized service: loads the chosen model once; `POST /score`
-      {audio, reference_text, level} → {score, per_word, missed_sounds, heard}.
-- [ ] 1.2 Pipeline: G2P → phoneme recognition → alignment → per-word/overall score
-      (§3 of design). Deterministic, offline.
-- [ ] 1.3 Hard `mem_limit` (~1 GB), internal-only networking, shared-secret auth,
-      `restart: unless-stopped`, healthcheck.
-- [ ] 1.4 Unit tests for the scoring math (exact read = high; wrong read = low;
-      Arabic substitution = partial credit; empty/garbage = graceful).
+## Phase 0 — Approval + free Azure resource
+- [ ] 0.1 Owner approves this consolidated spec.
+- [ ] 0.2 Owner creates a **free Azure Speech resource (F0)** — I guide click-by-click —
+      and provides `AZURE_SPEECH_KEY` + `AZURE_SPEECH_REGION`.
 
-## Phase 2 — Wire into the bot behind the flag — R5, R7, R9, R10
-- [ ] 2.1 Replace `score_recording_bytes()` internals with a call to `nutq-scorer`,
-      returning the same `ScoringResult`; keep the best-effort wrapper, ≤8s timeout,
-      flag gate, `store` flag, accent/shadow scope **unchanged**.
-- [ ] 2.2 Fix `_pronunciation_expected_text()` so shadow scores the shadow passage
-      and day-7 scores the shown passage (or cleanly skips) — close the drift gaps.
-- [ ] 2.3 Tests: endpoint returns the `pronunciation` object when flag on /
-      `scored:false` when off/timeout/scorer-down; **completion + #showcase always
-      succeed** even if the scorer errors or times out. Full suite green.
-- [ ] 2.4 Confirm the dojo UI needs **no change** (same JSON shape).
+## Phase A1 — Azure client (R1, R2, R8, R13)
+- [ ] A1.1 `src/pronunciation_azure.py`: REST call to Pronunciation Assessment
+      (ReferenceText, HundredMark, Phoneme granularity, Comprehensive), parse
+      Accuracy/Fluency/Completeness + per-word + per-phoneme.
+- [ ] A1.2 Map result → `ScoringResult` (same shape) + pick worst phoneme → tip.
+- [ ] A1.3 `config.py`: `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `NUTQ_AZURE_ENABLED`.
+- [ ] A1.4 Tests with a mocked Azure response (well/wrong/accented → correct mapping).
 
-## Phase 3 — Calibrate fairness for Arabic L0 — R6, R8
-- [ ] 3.1 Assemble a small labelled set of real Arabic-accented reads (good / wrong)
-      and tune thresholds: partial-credit for known substitutions, the kindness
-      floor/tone, per-word sensitivity — kind but honest (a wrong read stays low).
-- [ ] 3.2 Finalise bilingual template feedback keyed to phoneme errors (EN + Egyptian
-      Arabic), encouragement-first, not Nour-voiced.
-- [ ] 3.3 Owner reviews sample outputs and signs off the "feel".
+## Phase A2 — Engine selector + usage guard + cost policy (R3, R4, R5)
+- [ ] A2.1 `src/pronunciation_engine.py`: choose Azure vs local per request.
+- [ ] A2.2 Cost policy: shadow-only; 1 graded/day/student; ≤2 try-again/day; weekly
+      checkpoint. DB counters (discord_id, date) + (discord_id, iso-week).
+- [ ] A2.3 Usage guard: `azure_usage(month, audio_seconds)`; stop Azure at ~90% of
+      5 h/month; per-clip duration cap. Record engine used per score.
+- [ ] A2.4 Wire `score_recording_bytes` to call the selector (Azure → else local).
+- [ ] A2.5 Tests: policy limits, guard trip → local, Azure-down → local, local-down
+      → scored:false, completion always succeeds. Full suite green.
 
-## Phase 4 — Pilot — R13
-- [ ] 4.1 Deploy `nutq-scorer` (additive container; bot unaffected if it's down).
-      Back up first; verify all containers healthy.
-- [ ] 4.2 Enable `tatawwur_pronunciation` for BioRoMa + Mai only.
-- [ ] 4.3 **Live-verify with the owner from BioRoMa:** read wrong → low score + the
-      failed sound named; read well → high score; try-again works; completion +
-      #showcase unaffected; score stored; `!progress` moves. Owner confirms it now
-      "feels real".
+## Phase A3 — Feedback polish (R8, R5)
+- [ ] A3.1 Reliable bilingual per-sound tips from Azure phonemes (EN + Egyptian Arabic).
+- [ ] A3.2 Fallback (local) feedback = band + encouragement, no specific sound named.
+- [ ] A3.3 Owner reviews sample outputs (Azure + fallback) and signs off the "feel".
 
-## Phase 5 — Rollout + record — R13
-- [ ] 5.1 Enable for all students (empty allowlist); re-verify a couple.
-- [ ] 5.2 Update `empire-chronicle` STATUS + SYSTEM-MAP: Nutq 2 engine live
-      (self-hosted phoneme scorer), Nutq 1 pipeline reused, flag re-enabled.
-- [ ] 5.3 Document the scale playbook (add a replica / move to a bigger host).
+## Phase A4 — Pilot (R12)
+- [ ] A4.1 Add Azure key/region to `.env`; deploy bot; verify health + Azure reachable.
+- [ ] A4.2 Enable `tatawwur_pronunciation` for BioRoMa + Mai.
+- [ ] A4.3 **Live-verify with owner from BioRoMa:** read well → high + CORRECT sound;
+      read wrong → low + the real sound; try-again cap works; usage counter moves;
+      completion + #showcase unaffected. Owner confirms it "feels professional".
+
+## Phase A5 — Rollout + LOCK-DOWN
+- [ ] A5.1 Enable for all students; re-verify a couple.
+- [ ] A5.2 **Lock-down master doc** in `empire-chronicle` — the full Nutq story
+      (Nutq 1 → 2 → 3), final architecture, cost policy, and ops runbook.
+- [ ] A5.3 Update SYSTEM-MAP + STATUS: Nutq live (Azure primary + local fallback).
 
 ---
 
-## Cross-cutting guardrails (every phase)
-- Flag OFF until 4.2; completion/points/streak/mastery and #showcase never touched.
-- Self-hosted, open-source, CPU-only, hard memory cap; scorer isolated from the bot.
-- Best-effort everywhere: any scorer failure/timeout → `scored:false`, never an
-  error, never a lost completion.
+## Cross-cutting guardrails
+- Flag OFF until A4.2; completion/points/streak/mastery + #showcase never touched.
+- Best-effort chain: Azure → local → scored:false. Never an error, never a lost day.
+- Usage guard makes runaway cost impossible; secrets only in `.env`.
 - Backup before any server change; own PR per phase; tests green; owner-merged;
-  live-verify the daily flow after each deploy.
-- No guessing — Phase 0 measurement gates the whole build.
+  live-verify; no guessing — verified on real recordings before rollout.
