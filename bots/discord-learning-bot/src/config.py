@@ -85,6 +85,10 @@ NUTQ_AZURE_FREE_SECONDS = int(os.getenv("NUTQ_AZURE_FREE_SECONDS", str(5 * 3600)
 NUTQ_AZURE_GUARD_FRACTION = float(os.getenv("NUTQ_AZURE_GUARD_FRACTION", "0.9") or "0.9")
 # Cost policy: max Azure shadow scorings per student per day (1 graded + 2 try-again).
 NUTQ_AZURE_MAX_CALLS_PER_DAY = int(os.getenv("NUTQ_AZURE_MAX_CALLS_PER_DAY", "3") or "3")
+# Best-effort scoring time budget (seconds). Long shadow passages need more than
+# the original 8s (Azure processes the whole utterance); still bounded so the
+# page's "Send" never hangs. Completion + #showcase happen BEFORE scoring anyway.
+NUTQ_SCORE_BUDGET_SECONDS = float(os.getenv("NUTQ_SCORE_BUDGET_SECONDS", "15") or "15")
 
 # ============================================================
 #  GOOGLE SHEETS CRM

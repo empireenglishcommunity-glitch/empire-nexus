@@ -58,8 +58,10 @@ def to_wav16k(audio_bytes: bytes, filename: str = "rec.webm") -> Optional[bytes]
     try:
         with open(src, "wb") as f:
             f.write(audio_bytes)
+        # Cap to 55s: Azure short-audio REST has a ~60s limit, and it keeps the
+        # scoring budget bounded for long assessment-day passages.
         subprocess.run(
-            [_ffmpeg(), "-y", "-i", src, "-ar", "16000", "-ac", "1", "-f", "wav", dst],
+            [_ffmpeg(), "-y", "-i", src, "-t", "55", "-ar", "16000", "-ac", "1", "-f", "wav", dst],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         with open(dst, "rb") as f:
             return f.read()
@@ -161,7 +163,7 @@ async def call_azure(wav_bytes: bytes, reference_text: str) -> Optional[dict]:
         async with aiohttp.ClientSession() as session:
             async with session.post(_endpoint(), params={"language": "en-US"},
                                     data=wav_bytes, headers=headers,
-                                    timeout=aiohttp.ClientTimeout(total=7)) as resp:
+                                    timeout=aiohttp.ClientTimeout(total=12)) as resp:
                 if resp.status != 200:
                     body = await resp.text()
                     logger.info("Azure PA HTTP %s: %s", resp.status, body[:200])

@@ -1282,14 +1282,19 @@ async def post_submit_recording(request: web.Request) -> web.Response:
         if exercise == "shadow" and \
                 database.is_feature_enabled("tatawwur_pronunciation", discord_id):
             expected_text = _pronunciation_expected_text(week, day, level)
+            if not expected_text:
+                logger.info(f"submit-recording: no shadow target text for w{week}d{day} "
+                            f"{level} — scoring skipped")
             if expected_text:
                 from . import pronunciation_scorer
+                logger.info(f"submit-recording: scoring shadow w{week}d{day} {level} "
+                            f"(target {len(expected_text)} chars, audio {len(audio_data)} bytes)")
                 res = await asyncio.wait_for(
                     pronunciation_scorer.score_recording_bytes(
                         audio_data, audio_filename, expected_text,
                         discord_id, exercise, level,
                     ),
-                    timeout=8.0,
+                    timeout=config.NUTQ_SCORE_BUDGET_SECONDS,
                 )
                 if res and res.success:
                     pronunciation = {
@@ -1397,7 +1402,7 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
                     audio_data, audio_filename, expected_text,
                     discord_id, exercise, level, store=False,  # private re-check
                 ),
-                timeout=8.0,
+                timeout=config.NUTQ_SCORE_BUDGET_SECONDS,
             )
             if res and res.success:
                 pronunciation = {
