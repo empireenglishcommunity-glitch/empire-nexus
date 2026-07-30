@@ -58,10 +58,13 @@ def to_wav16k(audio_bytes: bytes, filename: str = "rec.webm") -> Optional[bytes]
     try:
         with open(src, "wb") as f:
             f.write(audio_bytes)
-        # Cap to 55s: Azure short-audio REST has a ~60s limit, and it keeps the
-        # scoring budget bounded for long assessment-day passages.
+        # Grade only the first N seconds (config.NUTQ_AZURE_MAX_AUDIO_SECONDS):
+        # keeps each Azure check cheap (more students stay free) + within Azure's
+        # ~60s short-audio limit, while still giving an accurate score. The free
+        # local engine (used for "try again") scores the full recording.
         subprocess.run(
-            [_ffmpeg(), "-y", "-i", src, "-t", "55", "-ar", "16000", "-ac", "1", "-f", "wav", dst],
+            [_ffmpeg(), "-y", "-i", src, "-t", str(config.NUTQ_AZURE_MAX_AUDIO_SECONDS),
+             "-ar", "16000", "-ac", "1", "-f", "wav", dst],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         with open(dst, "rb") as f:
             return f.read()

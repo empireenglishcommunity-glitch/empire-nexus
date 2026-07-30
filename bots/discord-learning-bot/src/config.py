@@ -89,6 +89,10 @@ NUTQ_AZURE_MAX_CALLS_PER_DAY = int(os.getenv("NUTQ_AZURE_MAX_CALLS_PER_DAY", "3"
 # the original 8s (Azure processes the whole utterance); still bounded so the
 # page's "Send" never hangs. Completion + #showcase happen BEFORE scoring anyway.
 NUTQ_SCORE_BUDGET_SECONDS = float(os.getenv("NUTQ_SCORE_BUDGET_SECONDS", "15") or "15")
+# Azure grades only the first N seconds of a recording (owner decision): keeps
+# each Azure check cheap so many students stay within the free tier, while every
+# student still gets the ACCURATE Azure score on their first N seconds.
+NUTQ_AZURE_MAX_AUDIO_SECONDS = int(os.getenv("NUTQ_AZURE_MAX_AUDIO_SECONDS", "20") or "20")
 
 # ============================================================
 #  GOOGLE SHEETS CRM
