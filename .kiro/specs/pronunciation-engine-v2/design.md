@@ -1,145 +1,90 @@
-# Nutq 2 — Design
+# Nutq — Design (CONSOLIDATED, FINAL)
 
-**Status:** DRAFT — awaiting owner approval. No code until approved.
-Traceability: every section maps to R1–R14 in `requirements.md`.
-
----
-
-## 1. Guiding idea: swap the brain, keep the body
-
-Nutq 1 is two layers. We keep one and replace the other:
-
-- **KEEP — the delivery pipeline (body):** page recorder → `POST /api/submit-recording`
-  / `POST /api/pronunciation-check` → flag gate → on-page score panel →
-  heard-vs-target → "try again" → `pronunciation_scores` storage. Proven and live.
-- **REPLACE — the scoring brain:** today's *Whisper transcription + word
-  comparison* becomes a **self-hosted, phoneme-level acoustic scorer**.
-
-Because the JSON contract (`pronunciation {...}`) stays identical (R7), **the dojo
-needs no change.**
+**Status:** DRAFT — awaiting owner approval. Traceability → R1–R14 in
+`requirements.md`. Pivot history → `decision-log.md`.
 
 ---
 
-## 2. Architecture (R3, R4, R14)
+## 1. Idea: keep the body, use the best available brain (with a safety-net brain)
 
 ```
- Practice page (dojo, unchanged)
-        │  audio + week/day/exercise
+ Practice page (dojo, UNCHANGED)
+        │ audio + week/day/exercise
         ▼
- empire-english-bot  ── api_server.py
-   score_recording_bytes()  ── best-effort, ≤8s timeout, flag-gated (unchanged wrapper)
-        │  HTTP (internal Docker network)
+ empire-english-bot / api_server.py
+   submit-recording / pronunciation-check   (best-effort, ≤8s, flag-gated — UNCHANGED wrappers)
         ▼
- nutq-scorer   (NEW, separate container)
-   • loads the phoneme model ONCE at startup
-   • POST /score {audio_b64, reference_text, level} → JSON result
-   • hard mem_limit (~1 GB), CPU-only, stateless
+   ┌─────────────────  ENGINE SELECTOR  ─────────────────┐
+   │ eligible? (flag on · task=shadow · within cost policy)│
+   │   ├─ usage-guard OK & Azure reachable → AZURE (primary)│
+   │   └─ else                              → LOCAL (fallback)│
+   └──────────────────────────────────────────────────────┘
+        ▼                                   ▼
+   Azure Pronunciation Assessment      nutq-scorer (allosaurus)
+   (REST, accurate per-phoneme)        (already deployed, dormant)
+        └───────────────► same ScoringResult / pronunciation JSON ◄───────┘
 ```
 
-- **Separate container** (`nutq-scorer`) so the ML runtime is isolated from the
-  bot; a crash/slowness there can never take RAM/CPU from the bot (R4). Docker
-  `mem_limit` + `restart: unless-stopped`.
-- **Stateless** → scale by running more replicas or moving to a bigger host, no
-  rewrite (R14). For the pilot: a single instance on the current box.
-- **Internal-only** networking (not exposed publicly); the bot calls it over the
-  compose network. Auth via a shared secret header.
+Everything downstream (on-page panel, try-again, storage) is unchanged (R7).
 
----
+## 2. Azure Pronunciation Assessment client (R1, R2, R8, R13)
+- **REST** (short-audio endpoint) — no heavy SDK/native deps in the bot container.
+  `POST https://{region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1`
+  with header `Pronunciation-Assessment: <base64 JSON {ReferenceText, GradingSystem:HundredMark, Granularity:Phoneme, Dimension:Comprehensive}>`,
+  `Ocp-Apim-Subscription-Key: $AZURE_SPEECH_KEY`, audio body (16k mono wav; we already
+  convert via ffmpeg).
+- Parse `NBest[0]`: `PronunciationAssessment` (AccuracyScore, FluencyScore,
+  CompletenessScore, PronScore) + `Words[]` (word, AccuracyScore, ErrorType) +
+  per-word `Phonemes[]` (Phoneme, AccuracyScore).
+- Map → `ScoringResult`: score = PronScore (or AccuracyScore); missed_words = words
+  with ErrorType∈{Mispronunciation,Omission} or low AccuracyScore; the worst
+  phoneme → the specific tip (now RELIABLE).
+- Config: `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `NUTQ_AZURE_ENABLED`.
+- Timeout < the endpoint's 8s budget; any failure → return None → selector falls
+  back to local (R5/R6).
 
-## 3. Scoring pipeline (R1, R2, R6, R10)
+## 3. Engine selector + cost policy (R3, R5)
+A small module decides, per request, whether to use Azure or local:
+1. Only for **shadow** (R3/R8). Accent → local or unscored.
+2. **Daily graded:** first shadow submission of the day per student → Azure-eligible.
+3. **Try-again:** allow ≤2 Azure re-checks/day/student; further re-checks → local.
+4. **Weekly assessment:** one Azure-eligible scored reading.
+5. If not Azure-eligible for any reason → local engine.
+Counters live in the DB keyed by (discord_id, local-date) and (discord_id, iso-week).
 
-1. **Reference → expected phonemes (G2P).** Convert the day's exact target text to
-   a phoneme sequence using an open-source grapheme-to-phoneme step
-   (eSpeak-NG / `phonemizer`, or `g2p_en`). Cached per (text) — small.
-2. **Audio → recognized phonemes (acoustic model).** Run the recording through the
-   chosen open-source **phoneme recognizer** (candidates in §4).
-3. **Align** expected vs recognized with a weighted edit-distance alignment
-   (Needleman–Wunsch) → per-phoneme: correct / substituted / deleted / inserted.
-4. **Score.** Accuracy = weighted % of correctly produced phonemes, aggregated to
-   **per-word** accuracy, then an overall 0–100. (Optional later: a Completeness
-   sub-score = fraction of reference words attempted.)
-5. **Map to words.** Words with failed phonemes become the "focus on" list and the
-   heard-vs-target highlight (R7/R8) — now driven by *sounds*, not word identity.
-6. **Fairness (R6).** Known Arabic-speaker substitutions (/p/↔/b/, /v/↔/f/, θ/ð, …)
-   score as **partial credit**, not zero. A gentle floor + level leniency are
-   applied to the *wording/tone*, but a wrong read still yields a low number (R2).
-   All thresholds are **calibrated** in Phase 3, not guessed.
+## 4. Usage guard (R4) — never a surprise bill
+- New table `azure_usage(month TEXT PRIMARY KEY, audio_seconds REAL)`.
+- Before an Azure call: if `audio_seconds >= 0.9 * 5*3600` (16,200 s) → skip Azure,
+  use local. After a successful call: add the clip's duration.
+- Also cap any single clip sent to Azure (e.g., trim/limit to ~30 s) so a stuck
+  mic can't burn quota.
 
-**Output contract (identical to Nutq 1, R7):**
-```json
-{ "scored": true, "score": 63, "is_beginner_grace": false,
-  "feedback_en": "...", "feedback_ar": "...",
-  "missed_words": ["through"], "transcript": "<phoneme-informed 'we heard'>",
-  "expected": "<target text>" }
-```
+## 5. Feedback (R8) — reliable now
+- From Azure's per-phoneme AccuracyScores, pick the lowest-scoring phoneme in a
+  mispronounced word → map to the bilingual `PHONEME_TIP` (th, p/b, v/f, r, l, …),
+  which is now backed by a **reliable** signal.
+- **Fallback (local) feedback (R5):** show the band (Excellent / Good / Keep
+  practising) + warm encouragement, **without** naming a specific sound (local
+  per-phoneme detail is unreliable) — honest, not misleading.
 
----
+## 6. Where the code lives
+- Bot: `src/pronunciation_azure.py` (REST client + parser), `src/pronunciation_engine.py`
+  (selector + guard + policy), small edits to `score_recording_bytes` to call the
+  selector. `config.py` gets the Azure envs + free-tier constant. DB helpers for
+  counters + usage.
+- Local fallback: the existing `services/nutq-scorer` (unchanged; used via its
+  HTTP client already wired in Phase 2).
 
-## 4. Model candidates (Phase 0 measures + selects — R3, R4)
+## 7. Safety & rollout (R6, R11, R12)
+- Backup before any server change. `.env` gets the Azure key/region (owner-created
+  free resource). Flag OFF → pilot BioRoMa/Mai → live-verify accuracy → all.
+- Best-effort everywhere: Azure fail → local; local fail → scored:false; completion
+  + #showcase always proceed.
 
-CPU-only, ≤~1 GB RAM, short-clip latency target ≤~4 s on 2 vCPU:
-
-| Candidate | Approach | Footprint | Notes |
-|---|---|---|---|
-| **wav2vec2-phoneme (base), quantized to ONNX int8** | acoustic phoneme CTC | ~0.1–0.3 GB | Fast on CPU via ONNX Runtime; strong quality; recommended primary |
-| **allosaurus** | universal phoneme recognizer | ~0.2–0.4 GB | Very light, simple API; good fallback |
-| wav2vec2-phoneme (large) | acoustic phoneme CTC | ~1–2 GB | Best quality but likely too heavy for the current box — deferred to a bigger host |
-
-**Selection rule:** Phase 0 benchmarks the top two on real Arabic-accented English
-clips for (a) RSS memory, (b) latency, (c) does-it-catch-a-wrong-read. We commit to
-whichever passes R4 with the best R2 behavior. No model choice is finalized before
-that measurement.
-
----
-
-## 5. Integration points (R5, R7, R9)
-
-- `pronunciation_scorer.py`: replace the internals of `score_recording_bytes()`
-  (transcription + `compare_words`) with a call to the `nutq-scorer` service,
-  returning the **same `ScoringResult`** shape. The best-effort wrapper, timeout,
-  flag gate, `store` flag, and accent/shadow scope in `api_server.py` are
-  **unchanged**.
-- `_pronunciation_expected_text()` extended so shadow scores against the shadow
-  passage and day-7 assessment scores against the shown passage (or cleanly skips)
-  — closing the drift gaps found in review (R10).
-- Groq Whisper is retained only as an optional "we heard" transcript for display
-  and (later) for the out-of-scope speaking task — never for the score.
-
----
-
-## 6. Feedback generation (R8)
-Warm bilingual feedback is generated from the phoneme error list via **templates**
-(deterministic, free, offline): e.g. "Great rhythm! Focus on the **th** in
-*through* — put your tongue between your teeth." + Egyptian-Arabic equivalent. An
-LLM refinement is optional and must degrade to the template if unavailable (R3).
-
----
-
-## 7. Storage & scale (R11, R14)
-- Reuse `pronunciation_scores` (score, missed_words, feedback, expected, heard).
-  Optional additive column `phoneme_detail` (JSON) for future insight — read-only,
-  non-breaking.
-- Scorer is stateless; horizontal scale = more replicas behind the internal call.
-  A load-based "run another instance / bigger host" playbook is documented, not
-  built, for v1.
-
----
-
-## 8. Safety & rollout (R5, R12, R13)
-- Backup before any server change; scorer deployed as an additive container (the
-  bot keeps working even if the scorer isn't up — best-effort).
-- Flag OFF → pilot BioRoMa + Mai → live-verify R1/R2 (read wrong → low + sound
-  correction; read well → high) → enable all.
-- Privacy unchanged; nothing posted publicly.
-
----
-
-## 9. Risks & honest tradeoffs
-- **Accuracy ceiling on a small box:** a light model is "very good + tunable," not
-  "absolute best." If Phase 0/3 shows it's not good enough for Arabic L0, the
-  documented next step is a bigger host (separate cost decision) — the design is
-  portable so that's a config change, not a rewrite.
-- **Latency:** CPU inference is a few seconds; mitigated by the existing async
-  best-effort pattern and the "🎧 checking…" indicator.
-- **G2P/phoneme mismatch:** eSpeak phoneme set vs the model's phoneme set must
-  align; Phase 0 validates the mapping.
+## 8. Honest trade-offs
+- Uses a managed API (not fully self-hosted). Chosen because it's the only path to
+  professional accuracy that is **$0 now** and cheaper than a capable self-hosted
+  setup until large scale (decision-log.md). The guard caps cost; the local engine
+  guarantees continuity if we ever stop Azure.
+- Fallback quality is lower (that's why its feedback is coarser) — it's a safety
+  net, not the main experience.
