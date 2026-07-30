@@ -22,6 +22,29 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  nutq-scorer:
+    # Nutq 2 — self-hosted phoneme pronunciation scorer (../../services/nutq-scorer).
+    # Additive + internal-only: the bot calls it best-effort at
+    # http://nutq-scorer:8080 on this project network. If it is down/slow/errors,
+    # the bot degrades to scored:false — the student flow is never affected.
+    build: ../../services/nutq-scorer
+    image: nutq-scorer:latest
+    container_name: nutq-scorer
+    restart: unless-stopped
+    environment:
+      - NUTQ_SCORER_TOKEN=${NUTQ_SCORER_TOKEN:-}
+      - PORT=8080
+    expose:
+      - "8080"
+    # Hard caps so the scorer can never starve the bot on the small box.
+    mem_limit: 1200m
+    cpus: "1.0"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 volumes:
   bot-data:
   bot-backups:
