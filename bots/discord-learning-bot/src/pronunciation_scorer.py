@@ -24,6 +24,7 @@ All operations are async and designed to run as background tasks
 (never block the !done response). All failures degrade gracefully
 (log + skip, never crash the bot).
 """
+import base64
 import json
 import logging
 import re
@@ -329,6 +330,46 @@ async def generate_feedback(score: float, expected: str, transcript: str,
 
 
 # ============================================================
+#  NUTQ 2 — self-hosted phoneme scorer client
+# ============================================================
+
+async def _call_nutq_scorer(audio_bytes: bytes, expected_text: str,
+                            level: str, filename: str) -> Optional[dict]:
+    """Call the self-hosted nutq-scorer service (services/nutq-scorer).
+
+    Returns the parsed JSON result on success, or None on any failure/timeout
+    (best-effort — the caller degrades gracefully and the student flow is never
+    affected). Inner timeout is < the endpoint's outer 8s wait_for.
+    """
+    url = (config.NUTQ_SCORER_URL or "").rstrip("/")
+    if not url:
+        logger.info("NUTQ_SCORER_URL not set — skipping pronunciation scoring")
+        return None
+    payload = {
+        "audio_b64": base64.b64encode(audio_bytes).decode("ascii"),
+        "reference_text": expected_text,
+        "level": level,
+        "filename": filename,
+    }
+    headers = {}
+    if config.NUTQ_SCORER_TOKEN:
+        headers["X-Nutq-Token"] = config.NUTQ_SCORER_TOKEN
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"{url}/score", json=payload, headers=headers,
+                                    timeout=aiohttp.ClientTimeout(total=7)) as resp:
+                data = await resp.json()
+                if resp.status != 200 or not data.get("ok"):
+                    logger.info(f"nutq-scorer non-ok (HTTP {resp.status}): "
+                                f"{data.get('error') if isinstance(data, dict) else ''}")
+                    return None
+                return data
+    except Exception as e:  # noqa: BLE001 — best-effort, never raise to caller
+        logger.warning(f"nutq-scorer call failed (non-fatal): {e}")
+        return None
+
+
+# ============================================================
 #  FULL SCORING PIPELINE
 # ============================================================
 
@@ -360,41 +401,39 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
                                  task_id: str, level: str = "L0",
                                  audio_url: str = "", store: bool = True) -> ScoringResult:
     """Full pronunciation scoring pipeline on already-obtained audio BYTES —
-    the practice-page path (no Discord CDN download needed). Nutq
-    (pronunciation-feedback spec) Phase 1.
+    the practice-page path. Nutq 2 (pronunciation-engine-v2 spec):
 
-    1. Transcribe via Groq Whisper
-    2. Fair word comparison (fuzzy + stop-word tolerant + level-aware)
-    3. Encouraging bilingual feedback (real score + correction from attempt #1)
-    4. Store result
+    1. Send bytes + the day's target text to the self-hosted phoneme scorer
+       (services/nutq-scorer) — real per-sound accuracy, not word matching.
+    2. Map the result to ScoringResult (SAME shape the dojo already consumes).
+    3. Store result.
 
-    Returns ScoringResult (always — even on failure). Scoring math is
-    unchanged; this only removes the URL-download assumption so the page's
-    uploaded bytes can be scored directly.
+    Returns ScoringResult (always — even on failure). Fully best-effort: if the
+    scorer is unreachable/slow/errors, returns success=False and the caller
+    surfaces `scored:false` while completion + #showcase proceed untouched.
+
+    NOTE: the phoneme engine has no word-level transcript, so `transcript`
+    (the UI "we heard" line) is left empty; the recognized phonemes are stored
+    for analytics. A readable "we heard" via optional Whisper can be added later.
     """
-    # Step 1: Transcribe
-    transcript = await transcribe_audio(audio_bytes, filename)
-    if not transcript:
+    result = await _call_nutq_scorer(audio_bytes, expected_text, level, filename)
+    if not result:
         return ScoringResult(
             score=0, raw_score=0, transcript="", expected_text=expected_text,
             missed_words=[], feedback_en="", feedback_ar="",
-            success=False, error="Transcription failed"
+            success=False, error="scorer unavailable"
         )
 
-    # Step 2: Fair comparison
-    score, missed_words = compare_words(transcript, expected_text, level)
-    raw_score = score  # Store raw for analytics
+    score = float(result.get("score", 0.0))
+    raw_score = float(result.get("raw_score", score))
+    missed_words = result.get("missed_words", []) or []
+    feedback_en = result.get("feedback_en", "") or ""
+    feedback_ar = result.get("feedback_ar", "") or ""
+    heard_phonemes = result.get("heard_phonemes", "") or ""
 
-    # Step 3: Encouraging feedback. Every recording gets a real score +
-    # correction from attempt #1 (beginner grace removed — see module docstring).
-    # Kindness is preserved by the 40% floor / Arabic-sound tolerance / level bonus.
-    feedback_en, feedback_ar = await generate_feedback(
-        score, expected_text, transcript, missed_words, level=level
-    )
-
-    # Step 4: Store (unless store=False — the Phase-3 "try again" re-check is
-    # private practice feedback that must NOT persist / affect the trend).
-    # Uses the bot's local "today", not the server clock.
+    # Store (unless store=False — the "try again" re-check is private practice
+    # feedback that must NOT persist / affect the trend). Store the recognized
+    # phonemes in the transcript column for analytics (not shown to students).
     if store:
         today = database._today_local().isoformat()
         database.store_pronunciation_score(
@@ -403,19 +442,19 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
             task_id=task_id,
             score=score,
             expected_text=expected_text,
-            transcript=transcript,
+            transcript=heard_phonemes,
             missed_words=json.dumps(missed_words),
             feedback=feedback_en,
             audio_url=audio_url,
         )
 
-    logger.info(f"Pronunciation scored: {discord_id} {task_id} → {score:.0f}% "
+    logger.info(f"Pronunciation scored (nutq2): {discord_id} {task_id} → {score:.0f}% "
                 f"(raw={raw_score:.0f}%, missed={len(missed_words)})")
 
     return ScoringResult(
         score=score,
         raw_score=raw_score,
-        transcript=transcript,
+        transcript="",  # phoneme engine → no readable "we heard" line
         expected_text=expected_text,
         missed_words=missed_words,
         feedback_en=feedback_en,
