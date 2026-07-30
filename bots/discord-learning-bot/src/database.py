@@ -551,6 +551,22 @@ CREATE TABLE IF NOT EXISTS assessment_recordings (
 );
 CREATE INDEX IF NOT EXISTS idx_assessment_recordings_attempt ON assessment_recordings(attempt_id);
 CREATE INDEX IF NOT EXISTS idx_assessment_recordings_created ON assessment_recordings(created_at);
+
+-- Nutq: Azure Pronunciation Assessment cost controls.
+--  * azure_usage: monthly audio-seconds sent to Azure — the usage GUARD reads
+--    this and switches to the free local engine at ~90% of the free tier.
+--  * azure_shadow_calls: per-student per-day Azure call count — the cost POLICY
+--    (1 graded + up to 2 try-again re-checks per day) reads this.
+CREATE TABLE IF NOT EXISTS azure_usage (
+    month          TEXT PRIMARY KEY,            -- local 'YYYY-MM'
+    audio_seconds  REAL NOT NULL DEFAULT 0
+);
+CREATE TABLE IF NOT EXISTS azure_shadow_calls (
+    discord_id     TEXT NOT NULL,
+    date           TEXT NOT NULL,               -- local 'YYYY-MM-DD'
+    count          INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (discord_id, date)
+);
 """
 
 
@@ -2193,6 +2209,47 @@ def store_pronunciation_score(discord_id: str, date: str, task_id: str,
         (discord_id, date, task_id, score, expected_text, transcript,
          missed_words, feedback, audio_url),
     )
+    conn.commit()
+    conn.close()
+
+
+def azure_usage_seconds(month: str) -> float:
+    """Total Azure audio-seconds used in a month (for the usage guard)."""
+    conn = _connect()
+    row = conn.execute("SELECT audio_seconds FROM azure_usage WHERE month=?", (month,)).fetchone()
+    conn.close()
+    return float(row["audio_seconds"]) if row else 0.0
+
+
+def add_azure_usage(month: str, seconds: float) -> None:
+    """Add audio-seconds to a month's Azure usage total (upsert)."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO azure_usage (month, audio_seconds) VALUES (?, ?)
+           ON CONFLICT(month) DO UPDATE SET audio_seconds = audio_seconds + excluded.audio_seconds""",
+        (month, max(0.0, float(seconds))),
+    )
+    conn.commit()
+    conn.close()
+
+
+def azure_calls_today(discord_id: str, date: str) -> int:
+    """How many Azure shadow scorings this student has had today (cost policy)."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT count FROM azure_shadow_calls WHERE discord_id=? AND date=?",
+        (discord_id, date)).fetchone()
+    conn.close()
+    return int(row["count"]) if row else 0
+
+
+def incr_azure_calls_today(discord_id: str, date: str) -> None:
+    """Increment today's Azure shadow-call count for a student (upsert)."""
+    conn = _connect()
+    conn.execute(
+        """INSERT INTO azure_shadow_calls (discord_id, date, count) VALUES (?, ?, 1)
+           ON CONFLICT(discord_id, date) DO UPDATE SET count = count + 1""",
+        (discord_id, date))
     conn.commit()
     conn.close()
 

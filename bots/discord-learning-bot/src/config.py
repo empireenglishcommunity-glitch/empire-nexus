@@ -83,6 +83,8 @@ NUTQ_AZURE_ENABLED = os.getenv("NUTQ_AZURE_ENABLED", "true").strip().lower() in 
 # Free tier is ~5 audio hours/month; guard switches to the local engine at 90%.
 NUTQ_AZURE_FREE_SECONDS = int(os.getenv("NUTQ_AZURE_FREE_SECONDS", str(5 * 3600)) or str(5 * 3600))
 NUTQ_AZURE_GUARD_FRACTION = float(os.getenv("NUTQ_AZURE_GUARD_FRACTION", "0.9") or "0.9")
+# Cost policy: max Azure shadow scorings per student per day (1 graded + 2 try-again).
+NUTQ_AZURE_MAX_CALLS_PER_DAY = int(os.getenv("NUTQ_AZURE_MAX_CALLS_PER_DAY", "3") or "3")
 
 # ============================================================
 #  GOOGLE SHEETS CRM

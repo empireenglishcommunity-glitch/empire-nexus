@@ -1279,7 +1279,7 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     # response (never posted publicly).
     pronunciation = {"scored": False}
     try:
-        if exercise in ("accent", "shadow") and \
+        if exercise == "shadow" and \
                 database.is_feature_enabled("tatawwur_pronunciation", discord_id):
             expected_text = _pronunciation_expected_text(week, day, level)
             if expected_text:
@@ -1378,7 +1378,7 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
     if not audio_data:
         return web.json_response({"ok": False, "error": "no audio file"},
                                  status=400, headers=_cors_headers(request))
-    if exercise not in ("accent", "shadow"):
+    if exercise != "shadow":
         return web.json_response({"ok": False, "error": "bad exercise"},
                                  status=400, headers=_cors_headers(request))
     from . import curriculum

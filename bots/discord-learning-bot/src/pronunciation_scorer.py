@@ -400,64 +400,105 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
                                  expected_text: str, discord_id: str,
                                  task_id: str, level: str = "L0",
                                  audio_url: str = "", store: bool = True) -> ScoringResult:
-    """Full pronunciation scoring pipeline on already-obtained audio BYTES —
-    the practice-page path. Nutq 2 (pronunciation-engine-v2 spec):
+    """Full pronunciation scoring pipeline (Nutq final — pronunciation-engine-v2):
 
-    1. Send bytes + the day's target text to the self-hosted phoneme scorer
-       (services/nutq-scorer) — real per-sound accuracy, not word matching.
-    2. Map the result to ScoringResult (SAME shape the dojo already consumes).
-    3. Store result.
+    Engine selector:
+      • PRIMARY = Azure Pronunciation Assessment (accurate per-phoneme) — used
+        when eligible (Azure on + key set + task=shadow + usage guard OK + within
+        the per-day cost cap). On success, records usage + the daily call count.
+      • FALLBACK = the free local self-hosted engine (services/nutq-scorer) — used
+        when Azure is ineligible/unavailable. Its per-sound detail is unreliable,
+        so its feedback is coarse (a band + encouragement, no specific sound).
 
-    Returns ScoringResult (always — even on failure). Fully best-effort: if the
-    scorer is unreachable/slow/errors, returns success=False and the caller
-    surfaces `scored:false` while completion + #showcase proceed untouched.
-
-    NOTE: the phoneme engine has no word-level transcript, so `transcript`
-    (the UI "we heard" line) is left empty; the recognized phonemes are stored
-    for analytics. A readable "we heard" via optional Whisper can be added later.
+    Best-effort: if BOTH fail, returns success=False → caller shows scored:false;
+    completion + #showcase always proceed. Same ScoringResult/JSON shape as before
+    (dojo unchanged); `transcript` carries Azure's readable "we heard" (empty for
+    the local engine, whose output is phonemes).
     """
+    today = database._today_local().isoformat()
+    month = database._today_local().strftime("%Y-%m")
+
+    # ── PRIMARY: Azure ────────────────────────────────────────────────
+    if _azure_eligible(discord_id, task_id):
+        from . import pronunciation_azure
+        az = await pronunciation_azure.score(audio_bytes, filename, expected_text)
+        if az:
+            database.add_azure_usage(month, float(az.get("duration_s", 0.0)))
+            database.incr_azure_calls_today(discord_id, today)
+            score = float(az.get("score", 0.0))
+            missed_words = az.get("missed_words", []) or []
+            heard = az.get("display_text", "") or ""
+            feedback_en, feedback_ar = pronunciation_azure.build_feedback(
+                score, missed_words, az.get("worst_phoneme"))
+            if store:
+                database.store_pronunciation_score(
+                    discord_id=discord_id, date=today, task_id=task_id, score=score,
+                    expected_text=expected_text, transcript=heard,
+                    missed_words=json.dumps(missed_words), feedback=feedback_en,
+                    audio_url=audio_url)
+            logger.info(f"Pronunciation scored (azure): {discord_id} {task_id} → "
+                        f"{score:.0f}% missed={len(missed_words)}")
+            return ScoringResult(
+                score=score, raw_score=float(az.get("accuracy", score) or score),
+                transcript=heard, expected_text=expected_text,
+                missed_words=missed_words, feedback_en=feedback_en,
+                feedback_ar=feedback_ar, is_beginner_grace=False)
+
+    # ── FALLBACK: free local engine ───────────────────────────────────
     result = await _call_nutq_scorer(audio_bytes, expected_text, level, filename)
     if not result:
         return ScoringResult(
             score=0, raw_score=0, transcript="", expected_text=expected_text,
             missed_words=[], feedback_en="", feedback_ar="",
-            success=False, error="scorer unavailable"
-        )
+            success=False, error="scorer unavailable")
 
     score = float(result.get("score", 0.0))
     raw_score = float(result.get("raw_score", score))
     missed_words = result.get("missed_words", []) or []
-    feedback_en = result.get("feedback_en", "") or ""
-    feedback_ar = result.get("feedback_ar", "") or ""
     heard_phonemes = result.get("heard_phonemes", "") or ""
+    # Local per-sound detail is unreliable → coarse, honest feedback (no sound named).
+    feedback_en, feedback_ar = _local_feedback(score)
 
-    # Store (unless store=False — the "try again" re-check is private practice
-    # feedback that must NOT persist / affect the trend). Store the recognized
-    # phonemes in the transcript column for analytics (not shown to students).
     if store:
-        today = database._today_local().isoformat()
         database.store_pronunciation_score(
-            discord_id=discord_id,
-            date=today,
-            task_id=task_id,
-            score=score,
-            expected_text=expected_text,
-            transcript=heard_phonemes,
-            missed_words=json.dumps(missed_words),
-            feedback=feedback_en,
-            audio_url=audio_url,
-        )
+            discord_id=discord_id, date=today, task_id=task_id, score=score,
+            expected_text=expected_text, transcript=heard_phonemes,
+            missed_words=json.dumps(missed_words), feedback=feedback_en,
+            audio_url=audio_url)
 
-    logger.info(f"Pronunciation scored (nutq2): {discord_id} {task_id} → {score:.0f}% "
+    logger.info(f"Pronunciation scored (local): {discord_id} {task_id} → {score:.0f}% "
                 f"(raw={raw_score:.0f}%, missed={len(missed_words)})")
 
     return ScoringResult(
-        score=score,
-        raw_score=raw_score,
-        transcript="",  # phoneme engine → no readable "we heard" line
-        expected_text=expected_text,
-        missed_words=missed_words,
-        feedback_en=feedback_en,
-        feedback_ar=feedback_ar,
-        is_beginner_grace=False,
-    )
+        score=score, raw_score=raw_score,
+        transcript="",  # local engine → phonemes, not a readable "we heard"
+        expected_text=expected_text, missed_words=missed_words,
+        feedback_en=feedback_en, feedback_ar=feedback_ar, is_beginner_grace=False)
+
+
+def _azure_eligible(discord_id: str, task_id: str) -> bool:
+    """Cost policy + usage guard: Azure only for shadow, only while enabled +
+    configured, only under the monthly usage guard, and only within the per-day
+    call cap (1 graded + up to 2 try-again)."""
+    if not (config.NUTQ_AZURE_ENABLED and config.AZURE_SPEECH_KEY and config.AZURE_SPEECH_REGION):
+        return False
+    if task_id != "shadow":
+        return False
+    month = database._today_local().strftime("%Y-%m")
+    if database.azure_usage_seconds(month) >= config.NUTQ_AZURE_FREE_SECONDS * config.NUTQ_AZURE_GUARD_FRACTION:
+        return False  # usage guard → free local engine for the rest of the month
+    today = database._today_local().isoformat()
+    if database.azure_calls_today(discord_id, today) >= config.NUTQ_AZURE_MAX_CALLS_PER_DAY:
+        return False  # per-day cap reached → local
+    return True
+
+
+def _local_feedback(score: float):
+    """Coarse, honest bilingual feedback for the fallback engine — a band +
+    encouragement, WITHOUT naming a specific sound (local detail is unreliable)."""
+    if score >= 85:
+        return ("Great job! Keep practicing daily.", "أحسنت! استمر في التمرين كل يوم.")
+    if score >= 60:
+        return ("Good effort — keep practicing!", "مجهود كويس — استمر في التمرين!")
+    return ("Keep practicing — listen to the model again and record once more.",
+            "استمر في التمرين — اسمع النموذج تاني وسجّل مرة كمان.")
