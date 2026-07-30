@@ -82,48 +82,59 @@ def wav_duration_seconds(wav_bytes: bytes) -> float:
 
 
 # ── parsing (pure, unit-tested) ───────────────────────────────────────────────
+def _field(obj: dict, name: str):
+    """Read an assessment field. Azure's short-audio REST returns the scores FLAT
+    on each object (verified live); older/SDK shapes nest them under
+    'PronunciationAssessment'. Support both (flat first, nested fallback)."""
+    if name in obj:
+        return obj[name]
+    return (obj.get("PronunciationAssessment") or {}).get(name)
+
+
 def parse_azure_response(data: dict) -> Optional[dict]:
     """Azure Pronunciation Assessment JSON → normalized dict, or None if unusable.
 
-    Returns: {score, accuracy, fluency, completeness, missed_words[], per_word[],
-              worst_phoneme}.
+    Headline `score` = **AccuracyScore** (pronunciation quality). We deliberately
+    do NOT use PronScore as the headline: PronScore folds in fluency, which unfairly
+    penalizes L0 beginners for reading slowly (verified live — an accented but
+    correct read scored Accuracy 89 while PronScore was dragged to 50 by fluency).
+    Returns: {score, accuracy, pron_score, fluency, completeness, missed_words[],
+              per_word[], worst_phoneme}.
     """
     try:
-        if not isinstance(data, dict):
-            return None
-        if data.get("RecognitionStatus") != "Success":
+        if not isinstance(data, dict) or data.get("RecognitionStatus") != "Success":
             return None
         nbest = data.get("NBest") or []
         if not nbest:
             return None
         top = nbest[0]
-        pa = top.get("PronunciationAssessment", {}) or {}
-        score = pa.get("PronScore", pa.get("AccuracyScore"))
-        if score is None:
+        accuracy = _field(top, "AccuracyScore")
+        if accuracy is None:
             return None
 
         missed, per_word = [], []
         worst_phoneme, worst_acc = None, 101.0
         for w in (top.get("Words") or []):
-            wa = w.get("PronunciationAssessment", {}) or {}
-            acc = wa.get("AccuracyScore", 100.0)
-            etype = wa.get("ErrorType", "None")
+            acc = _field(w, "AccuracyScore")
+            acc = 100.0 if acc is None else acc
+            etype = _field(w, "ErrorType") or "None"
             word = w.get("Word", "")
             per_word.append({"word": word, "accuracy": acc, "error": etype})
             needs_work = (etype in _MISS_ERROR_TYPES) or (acc < _WORD_MISS_THRESHOLD)
-            if needs_work and word:
-                if etype != "Insertion":  # inserted words aren't in the target
-                    missed.append(word)
+            if needs_work and word and etype != "Insertion":  # inserted words aren't targets
+                missed.append(word)
                 for ph in (w.get("Phonemes") or []):
-                    pacc = (ph.get("PronunciationAssessment", {}) or {}).get("AccuracyScore", 100.0)
+                    pacc = _field(ph, "AccuracyScore")
+                    pacc = 100.0 if pacc is None else pacc
                     if pacc < worst_acc:
                         worst_acc, worst_phoneme = pacc, ph.get("Phoneme", "")
 
         return {
-            "score": round(float(score), 1),
-            "accuracy": pa.get("AccuracyScore"),
-            "fluency": pa.get("FluencyScore"),
-            "completeness": pa.get("CompletenessScore"),
+            "score": round(float(accuracy), 1),          # AccuracyScore = fair-for-L0 headline
+            "accuracy": accuracy,
+            "pron_score": _field(top, "PronScore"),
+            "fluency": _field(top, "FluencyScore"),
+            "completeness": _field(top, "CompletenessScore"),
             "missed_words": missed[:5],
             "per_word": per_word,
             "worst_phoneme": worst_phoneme,
