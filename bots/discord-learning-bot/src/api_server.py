@@ -1406,6 +1406,7 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
                 pronunciation_scorer.score_recording_bytes(
                     audio_data, audio_filename, expected_text,
                     discord_id, exercise, level, store=False,  # private re-check
+                    allow_azure=False,  # try-again = free engine only (never spend the daily Azure grade)
                 ),
                 timeout=config.NUTQ_SCORE_BUDGET_SECONDS,
             )

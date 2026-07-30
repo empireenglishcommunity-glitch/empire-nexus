@@ -399,7 +399,8 @@ async def score_recording(audio_url: str, expected_text: str,
 async def score_recording_bytes(audio_bytes: bytes, filename: str,
                                  expected_text: str, discord_id: str,
                                  task_id: str, level: str = "L0",
-                                 audio_url: str = "", store: bool = True) -> ScoringResult:
+                                 audio_url: str = "", store: bool = True,
+                                 allow_azure: bool = True) -> ScoringResult:
     """Full pronunciation scoring pipeline (Nutq final — pronunciation-engine-v2):
 
     Engine selector:
@@ -419,30 +420,43 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
     month = database._today_local().strftime("%Y-%m")
 
     # ── PRIMARY: Azure ────────────────────────────────────────────────
-    if _azure_eligible(discord_id, task_id):
-        from . import pronunciation_azure
-        az = await pronunciation_azure.score(audio_bytes, filename, expected_text)
-        if az:
-            database.add_azure_usage(month, float(az.get("duration_s", 0.0)))
-            database.incr_azure_calls_today(discord_id, today)
-            score = float(az.get("score", 0.0))
-            missed_words = az.get("missed_words", []) or []
-            heard = az.get("display_text", "") or ""
-            feedback_en, feedback_ar = pronunciation_azure.build_feedback(
-                score, missed_words, az.get("worst_phoneme"))
-            if store:
-                database.store_pronunciation_score(
-                    discord_id=discord_id, date=today, task_id=task_id, score=score,
-                    expected_text=expected_text, transcript=heard,
-                    missed_words=json.dumps(missed_words), feedback=feedback_en,
-                    audio_url=audio_url)
-            logger.info(f"Pronunciation scored (azure): {discord_id} {task_id} → "
-                        f"{score:.0f}% missed={len(missed_words)}")
-            return ScoringResult(
-                score=score, raw_score=float(az.get("accuracy", score) or score),
-                transcript=heard, expected_text=expected_text,
-                missed_words=missed_words, feedback_en=feedback_en,
-                feedback_ar=feedback_ar, is_beginner_grace=False)
+    # allow_azure=False (the "try again" re-check) → free engine only, so
+    # practice reps never spend the student's one daily Azure grade. When Azure
+    # is available we ATOMICALLY reserve the daily slot BEFORE calling out, so a
+    # double-tap / retry can't sneak in a second paid call (strict N/day).
+    if allow_azure and _azure_available(task_id):
+        cap = config.NUTQ_AZURE_MAX_CALLS_PER_DAY
+        if database.reserve_azure_call_today(discord_id, today, cap):
+            from . import pronunciation_azure
+            az = None
+            try:
+                az = await pronunciation_azure.score(audio_bytes, filename, expected_text)
+            except Exception as e:  # pragma: no cover - defensive
+                logger.warning(f"Azure scoring raised, falling back to local: {e}")
+                az = None
+            if az:
+                database.add_azure_usage(month, float(az.get("duration_s", 0.0)))
+                score = float(az.get("score", 0.0))
+                missed_words = az.get("missed_words", []) or []
+                heard = az.get("display_text", "") or ""
+                feedback_en, feedback_ar = pronunciation_azure.build_feedback(
+                    score, missed_words, az.get("worst_phoneme"))
+                if store:
+                    database.store_pronunciation_score(
+                        discord_id=discord_id, date=today, task_id=task_id, score=score,
+                        expected_text=expected_text, transcript=heard,
+                        missed_words=json.dumps(missed_words), feedback=feedback_en,
+                        audio_url=audio_url)
+                logger.info(f"Pronunciation scored (azure): {discord_id} {task_id} → "
+                            f"{score:.0f}% missed={len(missed_words)}")
+                return ScoringResult(
+                    score=score, raw_score=float(az.get("accuracy", score) or score),
+                    transcript=heard, expected_text=expected_text,
+                    missed_words=missed_words, feedback_en=feedback_en,
+                    feedback_ar=feedback_ar, is_beginner_grace=False)
+            # Azure failed after reserving → refund the slot so the student keeps
+            # their one daily grade, then fall through to the local engine.
+            database.release_azure_call_today(discord_id, today)
 
     # ── FALLBACK: free local engine ───────────────────────────────────
     result = await _call_nutq_scorer(audio_bytes, expected_text, level, filename)
@@ -476,10 +490,15 @@ async def score_recording_bytes(audio_bytes: bytes, filename: str,
         feedback_en=feedback_en, feedback_ar=feedback_ar, is_beginner_grace=False)
 
 
-def _azure_eligible(discord_id: str, task_id: str) -> bool:
-    """Cost policy + usage guard: Azure only for shadow, only while enabled +
-    configured, only under the monthly usage guard, and only within the per-day
-    call cap (1 graded + up to 2 try-again)."""
+def _azure_available(task_id: str) -> bool:
+    """Cheap gates for using Azure: only for shadow, only while enabled +
+    configured, and only under the monthly usage guard.
+
+    The per-day per-student cap is intentionally NOT checked here — that is
+    claimed atomically via database.reserve_azure_call_today() right before the
+    call, which is race-safe (see that function). Splitting the cheap gates from
+    the atomic reservation avoids an extra DB read on the ineligible paths.
+    """
     if not (config.NUTQ_AZURE_ENABLED and config.AZURE_SPEECH_KEY and config.AZURE_SPEECH_REGION):
         return False
     if task_id != "shadow":
@@ -487,9 +506,6 @@ def _azure_eligible(discord_id: str, task_id: str) -> bool:
     month = database._today_local().strftime("%Y-%m")
     if database.azure_usage_seconds(month) >= config.NUTQ_AZURE_FREE_SECONDS * config.NUTQ_AZURE_GUARD_FRACTION:
         return False  # usage guard → free local engine for the rest of the month
-    today = database._today_local().isoformat()
-    if database.azure_calls_today(discord_id, today) >= config.NUTQ_AZURE_MAX_CALLS_PER_DAY:
-        return False  # per-day cap reached → local
     return True
 
 

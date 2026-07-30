@@ -145,6 +145,77 @@ def test_local_feedback_is_coarse_no_sound():
         # coarse: never quotes a specific sound/word (that detail is unreliable locally)
         assert "'" not in en and "'" not in ar
 
-def test_azure_eligible_respects_flag_and_task(member, azure_on):
-    assert ps._azure_eligible(member, "shadow") is True
-    assert ps._azure_eligible(member, "accent") is False
+def test_azure_available_respects_flag_and_task(member, azure_on):
+    # _azure_available checks the cheap gates only (flag/key/task/usage guard);
+    # the per-day cap is claimed separately via reserve_azure_call_today.
+    assert ps._azure_available("shadow") is True
+    assert ps._azure_available("accent") is False
+
+
+
+# ── Strict per-day cap: atomic reserve/release (the count=3-vs-cap-1 bug) ───
+def test_reserve_is_strict_at_cap(member):
+    today = database._today_local().isoformat()
+    # cap=1 → first reserve granted, all later ones denied (no over-count).
+    assert database.reserve_azure_call_today(member, today, 1) is True
+    assert database.reserve_azure_call_today(member, today, 1) is False
+    assert database.reserve_azure_call_today(member, today, 1) is False
+    assert database.azure_calls_today(member, today) == 1  # never climbs past cap
+
+
+def test_reserve_honours_higher_cap(member):
+    today = database._today_local().isoformat()
+    assert database.reserve_azure_call_today(member, today, 3) is True
+    assert database.reserve_azure_call_today(member, today, 3) is True
+    assert database.reserve_azure_call_today(member, today, 3) is True
+    assert database.reserve_azure_call_today(member, today, 3) is False
+    assert database.azure_calls_today(member, today) == 3
+
+
+def test_reserve_cap_zero_denies(member):
+    today = database._today_local().isoformat()
+    assert database.reserve_azure_call_today(member, today, 0) is False
+    assert database.azure_calls_today(member, today) == 0
+
+
+def test_release_refunds_slot(member):
+    today = database._today_local().isoformat()
+    database.reserve_azure_call_today(member, today, 1)
+    assert database.azure_calls_today(member, today) == 1
+    database.release_azure_call_today(member, today)
+    assert database.azure_calls_today(member, today) == 0
+    # floors at 0 — a stray extra release can't go negative
+    database.release_azure_call_today(member, today)
+    assert database.azure_calls_today(member, today) == 0
+
+
+# ── try-again (allow_azure=False) must never spend the daily Azure grade ────
+@pytest.mark.asyncio
+async def test_try_again_never_calls_azure(member, azure_on, monkeypatch):
+    called = {"azure": False}
+    from src import pronunciation_azure
+
+    async def spy(audio_bytes, filename, reference_text):
+        called["azure"] = True
+        return _azure_payload()
+
+    monkeypatch.setattr(pronunciation_azure, "score", spy)
+    monkeypatch.setattr(ps, "_call_nutq_scorer", _fake_local(LOCAL_RESULT))
+    res = await ps.score_recording_bytes(
+        b"A", "r.webm", "hi", member, "shadow", "L0", store=False, allow_azure=False)
+    assert called["azure"] is False          # free engine only
+    assert res.score == 70.0
+    today = database._today_local().isoformat()
+    assert database.azure_calls_today(member, today) == 0  # daily grade untouched
+
+
+# ── Azure failure after reserving must refund the slot (retry can still grade) ─
+@pytest.mark.asyncio
+async def test_azure_failure_refunds_daily_slot(member, azure_on, monkeypatch):
+    from src import pronunciation_azure
+    monkeypatch.setattr(pronunciation_azure, "score", _fake_azure(None))  # Azure fails
+    monkeypatch.setattr(ps, "_call_nutq_scorer", _fake_local(LOCAL_RESULT))
+    res = await ps.score_recording_bytes(b"A", "r.webm", "hi", member, "shadow", "L0")
+    assert res.score == 70.0                 # fell back to local
+    today = database._today_local().isoformat()
+    assert database.azure_calls_today(member, today) == 0  # slot refunded
