@@ -23,6 +23,11 @@ def _connect() -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA foreign_keys=ON")
+    # Wait (up to 5s) instead of erroring when another connection holds the
+    # write lock. Required for the atomic BEGIN IMMEDIATE reservation below so
+    # simultaneous submits (double-tap / client retry) queue rather than raise
+    # "database is locked".
+    conn.execute("PRAGMA busy_timeout=5000")
     return conn
 
 
@@ -2244,11 +2249,64 @@ def azure_calls_today(discord_id: str, date: str) -> int:
 
 
 def incr_azure_calls_today(discord_id: str, date: str) -> None:
-    """Increment today's Azure shadow-call count for a student (upsert)."""
+    """Increment today's Azure shadow-call count for a student (upsert).
+
+    NOTE: Prefer reserve_azure_call_today() in the scoring hot path — it does
+    the cap check + increment atomically. This plain increment is kept for
+    back-compat / non-capped callers.
+    """
     conn = _connect()
     conn.execute(
         """INSERT INTO azure_shadow_calls (discord_id, date, count) VALUES (?, ?, 1)
            ON CONFLICT(discord_id, date) DO UPDATE SET count = count + 1""",
+        (discord_id, date))
+    conn.commit()
+    conn.close()
+
+
+def reserve_azure_call_today(discord_id: str, date: str, cap: int) -> bool:
+    """Atomically claim ONE Azure shadow-call slot for today, iff the student is
+    still under `cap`. Returns True (and increments the counter) when a slot is
+    granted, False when the daily cap is already reached.
+
+    This replaces the old check-then-act pattern (read count, later increment)
+    that let two near-simultaneous submits (double-tap "Send" / a client retry)
+    both pass the cap before either incremented — the bug that pushed the
+    counter to 3 while the cap was 1. The read + increment run inside a single
+    BEGIN IMMEDIATE transaction, so concurrent reservations serialize and the
+    strict N/day guarantee holds even under races.
+    """
+    if cap <= 0:
+        return False
+    conn = _connect()
+    try:
+        conn.isolation_level = None  # take manual control of the transaction
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(
+            "SELECT count FROM azure_shadow_calls WHERE discord_id=? AND date=?",
+            (discord_id, date)).fetchone()
+        current = int(row["count"]) if row else 0
+        if current >= cap:
+            conn.execute("COMMIT")
+            return False
+        conn.execute(
+            """INSERT INTO azure_shadow_calls (discord_id, date, count) VALUES (?, ?, 1)
+               ON CONFLICT(discord_id, date) DO UPDATE SET count = count + 1""",
+            (discord_id, date))
+        conn.execute("COMMIT")
+        return True
+    finally:
+        conn.close()
+
+
+def release_azure_call_today(discord_id: str, date: str) -> None:
+    """Refund one reserved Azure slot (floor 0). Called when the Azure call
+    fails AFTER a slot was reserved, so a transient error never burns the
+    student's one graded read for the day — they fall back to the local engine
+    and can still earn their Azure grade on a retry."""
+    conn = _connect()
+    conn.execute(
+        "UPDATE azure_shadow_calls SET count = MAX(count - 1, 0) WHERE discord_id=? AND date=?",
         (discord_id, date))
     conn.commit()
     conn.close()
