@@ -1312,6 +1312,11 @@ async def post_submit_recording(request: web.Request) -> web.Response:
     except Exception as e:
         logger.warning(f"submit-recording: pronunciation scoring failed (non-fatal): {e}")
 
+    # Nutq — owner oversight: post the daily score to the private teacher feed
+    # (best-effort; student's own feedback already returned in the response).
+    if pronunciation.get("scored"):
+        await _post_teacher_feed(name, exercise, week, day, pronunciation)
+
     return web.json_response({
         "ok": True,
         "posted": posted,
@@ -1470,6 +1475,34 @@ async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
     except Exception as e:
         logger.error(f"submit-recording: Discord post failed: {e}")
         return False
+
+
+async def _post_teacher_feed(name: str, exercise: str, week: int, day: int,
+                             pronunciation: dict) -> None:
+    """Nutq — post a student's daily pronunciation score to the owner-only
+    'teacher feed' channel (config.NUTQ_TEACHER_FEED_CHANNEL_ID) for oversight.
+    Student still sees their own feedback privately on the page. Best-effort:
+    disabled when the channel id is 0; never raises to the caller."""
+    try:
+        cid = config.NUTQ_TEACHER_FEED_CHANNEL_ID
+        if not cid or not (pronunciation or {}).get("scored"):
+            return
+        from . import bot as bot_mod
+        discord_bot = bot_mod.bot
+        if not discord_bot or not discord_bot.is_ready():
+            return
+        channel = discord_bot.get_channel(cid)
+        if channel is None:
+            channel = await discord_bot.fetch_channel(cid)
+        missed = ", ".join(pronunciation.get("missed_words", []) or []) or "—"
+        msg = (f"🎯 **Pronunciation** — **{name}** · Week {week} Day {day} · {exercise}\n"
+               f"Score: **{pronunciation.get('score')}%**\n"
+               f"Focus: {missed}\n"
+               f"💬 {pronunciation.get('feedback_en', '')}")
+        await channel.send(msg)
+        logger.info(f"teacher-feed: posted score for {name} (w{week}d{day})")
+    except Exception as e:  # noqa: BLE001 — oversight extra, never break the flow
+        logger.warning(f"teacher-feed post failed (non-fatal): {e}")
 
 
 # ============================================================
