@@ -87,11 +87,17 @@ async def handle_score(request: web.Request) -> web.Response:
 
 
 def _warm_model():
-    """Load the model once at startup so the first request isn't slow."""
+    """Load the model AND the G2P library once at startup, so the very first
+    real request isn't slow (a cold G2P load could otherwise exceed the caller's
+    timeout and make the first recording after a restart fail-safe)."""
     try:
         logger.info("warming phoneme model…")
         scorer._get_recognizer()
-        logger.info("model loaded.")
+        try:
+            scorer.ref_phonemes("warm up the grapheme to phoneme")
+        except Exception as e:  # noqa: BLE001
+            logger.warning("g2p warm failed (first request may be slow): %s", e)
+        logger.info("model + g2p loaded.")
     except Exception as e:  # noqa: BLE001
         logger.error("model warm failed (will lazy-load on first request): %s", e)
 
