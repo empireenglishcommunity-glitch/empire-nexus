@@ -44,8 +44,9 @@ recur).
 ### R3 — Cost policy: $0/month at current scale, capped as we grow
 THE SYSTEM SHALL bound Azure usage so it stays within the free tier for the
 current cohort:
-- Azure-score **only the shadow task**, **once per student per day** (the graded submission).
-- Allow at most **2** Azure "try-again" re-checks per student per day.
+- Azure-score **only the shadow task**, **strictly once per student per day** (the
+  daily graded read). **"Try again" uses the free local engine** (zero extra Azure
+  cost) — owner decision, tightened from the earlier 1+2.
 - Azure-score **one** reading in the **weekly assessment** (progress checkpoint).
 - Accent/other tasks are NOT Azure-scored.
 
