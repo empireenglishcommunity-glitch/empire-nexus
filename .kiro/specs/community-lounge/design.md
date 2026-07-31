@@ -158,9 +158,9 @@ All creation is idempotent, permission-checked, try/except with fallback.
    deletes the `voice-lounge` anchor.
 
 ### D. Community Hour (R6/R7)
-1. `community_hour_loop` detects the window start (schedule in `settings`,
-   guild TZ), guarded by a once-per-window fingerprint (dedup like
-   `onboarding_gate_check`).
+1. `community_hour_loop` detects the window start (schedule in `settings`, in
+   **`Africa/Cairo` / Egypt time** — NOT the Dubai daily-task TZ), guarded by a
+   once-per-window fingerprint (dedup like `onboarding_gate_check`).
 2. Post rally to `#community-live` + **one** Telegram broadcast to the student
    group(s) (reuse `maintenance._send_telegram_groups` pattern) with the
    topic-of-the-day + lounge jump link.
@@ -183,8 +183,10 @@ limits.
 | `beacon_cooldown_min` | 40 | min minutes between beacons per lounge |
 | `beacon_ttl_min` | 20 | auto-expire a beacon after this |
 | `majlis_reap_grace_min` | 3 | empty dynamic lounge grace before delete |
-| `community_hour` | {days, "20:00", 30} | schedule (guild TZ) |
-| `community_hour_minutes` | 30 | window length |
+| `community_hour_start` | "21:00" | start time (in `community_hour_tz`) |
+| `community_hour_tz` | "Africa/Cairo" | **Egypt time** — students are Egyptian; independent of the `Asia/Dubai` daily-task TZ |
+| `community_hour_days` | all days | which days the window runs |
+| `community_hour_minutes` | 60 | window length (9–10 PM Egypt) |
 | `together_reward_points` | 0 (off) | optional bonus for together completion |
 
 All reads via a `get_community_config()` with `COMMUNITY_CONFIG_DEFAULTS` (mirror

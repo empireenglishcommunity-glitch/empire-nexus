@@ -178,8 +178,12 @@ so meeting people isn't left to luck.
 
 Acceptance criteria:
 1. THE SYSTEM SHALL support an owner-configurable **Community Hour** schedule
-   (days + start time in the guild timezone, default e.g. 20:00 Dubai, duration
-   `community_hour_minutes` default 30).
+   (days + start time + timezone). **Owner-confirmed default: 21:00–22:00 Egypt
+   time (`Africa/Cairo`), i.e. `community_hour_start = "21:00"`,
+   `community_hour_minutes = 60`.** NOTE: the students are Egyptian, so
+   Community Hour is scheduled in **`Africa/Cairo`** — deliberately independent
+   of the daily-task schedule, which runs on `Asia/Dubai`. The scheduler MUST
+   use the configured Community Hour timezone, not the daily-task timezone.
 2. AT the window start, THE SYSTEM SHALL post a rally in `#community-live` **and**
    broadcast **once** to the student Telegram group(s) (the single high-signal
    Telegram path), bilingual, with a topic prompt and a lounge jump link.

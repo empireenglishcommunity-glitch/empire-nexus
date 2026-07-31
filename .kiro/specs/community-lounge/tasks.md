@@ -1,5 +1,26 @@
 # Implementation Plan — Community Lounge ("Majlis")
 
+## Status — PLAN APPROVED, BUILD NOT STARTED (2026-07-31)
+
+Owner reviewed and approved the direction; **implementation has not begun** —
+the owner is taking a break and will resume later. This document is the agreed
+plan to pick up from.
+
+**Owner-confirmed decisions:**
+- ✅ **Majlis** direction approved.
+- ✅ Pod capacity = **6**; together-time = **5 min**.
+- ✅ **Community Hour = 9–10 PM Egypt time** (`Africa/Cairo`, `21:00`, 60 min).
+  Scheduled in Egypt time, independent of the Dubai daily-task TZ.
+- ⏸️ Build sequence: **not decided yet** — resume after the break. The
+  **fast-relief option** (Phases 0+1 first) remains recommended if the owner
+  wants the "sit alone" complaint eased before the full experience is built.
+
+**Open items to confirm when resuming (not blockers to start Phase 0):**
+- Which days Community Hour runs (default = every day).
+- Whether to enable the optional togetherness reward (Phase 6) and its points.
+
+---
+
 Build order. **Every phase is its own owner-merged PR, fully tested, and
 deployed + live-verified with zero disruption to the 16 students.** Every
 capability is behind its own flag (default OFF), so nothing is visible until we
@@ -73,8 +94,10 @@ Legend: **[nexus]** = bot/API repo · **[dojo]** = practice site repo ·
 - **Verify:** suite green; deploy; live-verify opt-in/out + a knock.
 
 ## Phase 5 — Community Hour + Telegram rally + topic-of-the-day · [nexus] (+ [dojo] optional)
-- [ ] `community_hour_loop`: detect window start (schedule in `settings`, guild
-      TZ), once-per-window fingerprint dedup; rally in `#community-live` + **one**
+- [ ] `community_hour_loop`: detect window start (schedule in `settings`, in
+      **`Africa/Cairo`/Egypt time** — default 21:00–22:00, 60 min — NOT the Dubai
+      daily-task TZ), once-per-window fingerprint dedup; rally in
+      `#community-live` + **one**
       Telegram broadcast to student group(s) (reuse `_send_telegram_groups`);
       include topic-of-the-day + lounge jump link. Behind `community_power_hour`.
 - [ ] Curated bilingual topic-prompt list (owner-editable in `settings`).
