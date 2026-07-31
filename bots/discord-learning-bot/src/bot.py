@@ -2468,10 +2468,63 @@ async def cmd_week(ctx):
     await ctx.send("\n".join(lines))
 
 
+# ── Guide deep-links: a topic keyword (EN or Arabic) → student-guide anchor.
+#    Powers `!help <topic>` and `!guide <topic>` so anyone can be sent straight
+#    to the exact section (e.g. practice.empireenglish.online/guide#streaks). ──
+_GUIDE_TOPICS = {
+    "start": "quickstart", "quickstart": "quickstart", "ابدأ": "quickstart", "بداية": "quickstart",
+    "link": "access", "access": "access", "login": "access", "دخول": "access", "كود": "access", "ربط": "access",
+    "task": "tasks", "tasks": "tasks", "مهام": "tasks", "مهمة": "tasks",
+    "channel": "server", "channels": "server", "قناة": "server", "قنوات": "server",
+    "calendar": "calendar", "تقويم": "calendar",
+    "streak": "streaks", "streaks": "streaks", "سلسلة": "streaks",
+    "point": "points", "points": "points", "نقاط": "points", "ترتيب": "points", "leaderboard": "points",
+    "level": "levels", "levels": "levels", "مستوى": "levels", "مستويات": "levels",
+    "pronunciation": "pronunciation", "نطق": "pronunciation", "grade": "pronunciation", "محاكاة": "pronunciation",
+    "itqan": "itqan", "assessment": "itqan", "اختبار": "itqan",
+    "notification": "notifications", "notifications": "notifications",
+    "تنبيه": "notifications", "تنبيهات": "notifications", "اشعارات": "notifications", "إشعارات": "notifications",
+    "privacy": "privacy", "data": "privacy", "خصوصية": "privacy", "بيانات": "privacy",
+    "install": "install", "app": "install", "تطبيق": "install",
+    "trouble": "troubleshoot", "problem": "troubleshoot", "مشكلة": "troubleshoot", "مشاكل": "troubleshoot",
+    "command": "commands", "commands": "commands", "اوامر": "commands", "أوامر": "commands",
+    "word": "review", "words": "review", "srs": "review", "كلمات": "review", "مراجعة": "review",
+    "glossary": "glossary", "قاموس": "glossary", "مصطلحات": "glossary",
+    "rules": "rules", "قواعد": "rules",
+    "rights": "rights", "حقوق": "rights",
+}
+
+
+def _guide_link(anchor: str = "") -> str:
+    base = config.PRACTICE_PLATFORM_URL.rstrip("/") + "/guide"
+    return (base + "#" + anchor) if anchor else base
+
+
+async def _send_guide_topic(ctx, topic: str) -> None:
+    """Reply with a deep link to the guide section for `topic` (or options)."""
+    anchor = _GUIDE_TOPICS.get(topic)
+    if anchor:
+        await ctx.send(
+            f"📖 كل التفاصيل عن **{topic}** في دليلك:\n{_guide_link(anchor)}\n"
+            f"— الدليل الكامل: {_guide_link()}"
+        )
+    else:
+        await ctx.send(
+            "📖 مش لاقي الموضوع ده. جرّب مثلاً: "
+            "`streaks` · `points` · `levels` · `tasks` · `pronunciation` · "
+            "`notifications` · `itqan` · `privacy` · `install` · `commands`\n"
+            f"أو افتح الدليل الكامل: {_guide_link()}"
+        )
+
+
 @bot.command(name="help")
-async def cmd_help(ctx):
-    """Show available commands — role-aware: students see only student
-    commands; admins additionally see the Admin section."""
+async def cmd_help(ctx, *, topic: str = ""):
+    """Show commands, or deep-link to a guide section with `!help <topic>`.
+    Role-aware: admins also see the Admin section."""
+    topic = (topic or "").strip().lower()
+    if topic:
+        await _send_guide_topic(ctx, topic)
+        return
     student_help = (
         "**🏛️ Empire English Bot — Commands**\n\n"
         "**📅 Your daily tasks:**\n"
@@ -2487,6 +2540,7 @@ async def cmd_help(ctx):
         "`!link` — open your practice page\n"
         "`!top` — leaderboard\n"
         "`!week` · `!words` — this week's focus · your vocabulary\n"
+        "`!guide` — open your full guide · `!help <topic>` — jump to a section (e.g. `!help streaks`)\n"
         "_(you'll get an honest weekly recap of your activity every Sunday)_\n\n"
         "**Account:**\n"
         "`!join <goal>` — set your learning goal\n"
@@ -2520,6 +2574,18 @@ async def cmd_help(ctx):
     if _author_is_admin(ctx):
         msg += admin_help
     await ctx.send(msg)
+
+
+@bot.command(name="guide")
+async def cmd_guide(ctx, *, topic: str = ""):
+    """Open the student guide, optionally jumping to a section: `!guide [topic]`."""
+    topic = (topic or "").strip().lower()
+    anchor = _GUIDE_TOPICS.get(topic, "") if topic else ""
+    await ctx.send(f"📗 دليلك الكامل: {_guide_link(anchor)}")
+
+
+# Arabic alias for !guide
+ARABIC_COMMAND_ALIASES["دليل"] = "guide"
 
 
 @bot.command(name="helpar")
