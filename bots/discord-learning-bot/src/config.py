@@ -12,7 +12,7 @@ load_dotenv()
 # ============================================================
 #  BOT IDENTITY
 # ============================================================
-BOT_VERSION = "1.0.0"
+BOT_VERSION = "1.0.1"
 BOT_NAME = "Empire English Community Bot"
 BOT_PREFIX = os.getenv("BOT_PREFIX", "!")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")

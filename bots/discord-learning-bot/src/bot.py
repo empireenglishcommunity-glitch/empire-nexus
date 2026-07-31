@@ -2387,7 +2387,16 @@ async def cmd_streak(ctx):
 
 @bot.command(name="top")
 async def cmd_top(ctx):
-    """Points leaderboard."""
+    """Points leaderboard — the top 10, PLUS the requester's own standing
+    when they're outside that slice.
+
+    Before this, `!top` only ever showed the top 10 by points, so with 16
+    students the lower ~6 saw a board they weren't on and reported being
+    "not listed". This appends a personal "your rank" line for anyone not
+    already shown — mirroring the web `/api/leaderboard`, which has always
+    returned `your_rank`/`your_points`. Purely additive: the top-10 board
+    is unchanged, and it stays a top-N board (passes the 5-year/10x scale
+    test — we never dump all members)."""
     rows = database.leaderboard(10)
     if not rows:
         await ctx.send("No members yet. Be the first to `!join`! 🌱")
@@ -2397,6 +2406,40 @@ async def cmd_top(ctx):
     for i, row in enumerate(rows):
         lvl = config.LEVELS.get(row["level"], config.LEVELS["L0"])
         lines.append(f"{medals[i]} {row['discord_name']} — {row['total_points']} pts {lvl['emoji']}")
+
+    # If the requester isn't in the shown top slice, append their own rank
+    # so nobody is left feeling "not listed". get_member_rank() is 1-indexed
+    # over ALL active members by points; None => not an active member (never
+    # !join'd), in which case we gently point them in rather than show
+    # nothing. Wrapped defensively — a leaderboard read must never crash.
+    try:
+        author_id = str(ctx.author.id)
+        shown_ids = {str(r["discord_id"]) for r in rows}
+        if author_id not in shown_ids:
+            rank = database.get_member_rank(author_id)
+            if rank:
+                me = database.get_member(author_id) or {}
+                lvl = config.LEVELS.get(me.get("level"), config.LEVELS["L0"])
+                total = database.member_count()
+                name = me.get("discord_name") or ctx.author.display_name
+                pos = f"#{rank}/{total}" if total else f"#{rank}"
+                # Arabic-only label line, then a name-first data line so an
+                # Arabic display name sits at the edge (a single RTL->LTR
+                # transition) rather than sandwiched between LTR groups —
+                # per the project's bidi rule.
+                lines.append("⋯")
+                lines.append("📍 **ترتيبك دلوقتي:**")
+                lines.append(
+                    f"**{name}** — {pos} · {me.get('total_points', 0)} pts {lvl['emoji']}"
+                )
+            else:
+                lines.append("⋯")
+                lines.append("📍 لسه مش في اللوحة — اعمل `!join` وابدأ تجمّع نقاط 🌱")
+                lines.append("📍 You're not on the board yet — use `!join` to start earning points 🌱")
+    except Exception:
+        # Never let the personal-rank enrichment break the core board.
+        pass
+
     await ctx.send("\n".join(lines))
 
 
