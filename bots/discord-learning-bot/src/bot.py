@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -441,6 +441,8 @@ async def on_ready():
         missed_day_report.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
+    if not beacon_cleanup_loop.is_running():
+        beacon_cleanup_loop.start()
     # Nour retired (owner decision 2026-07-28): all Nour scheduled jobs are
     # disabled so no Nour-voiced DMs/reports go out. Task defs are kept for
     # history but are never started.
@@ -598,6 +600,22 @@ async def on_voice_state_update(member, before, after):
             verification.on_together_check(member.guild)
         except Exception:
             pass
+
+    # Majlis Phase 2: beacon lifecycle — fire on join (when in band),
+    # clear on leave (when lounge empties). Best-effort, flag-gated internally.
+    try:
+        # Determine which Majlis lounge was affected
+        joined_channel = after.channel if (before.channel is None or
+            (before.channel != after.channel and after.channel is not None)) else None
+        left_channel = before.channel if (after.channel is None or
+            (before.channel != after.channel and before.channel is not None)) else None
+
+        if joined_channel and community.is_majlis_channel(joined_channel):
+            await community.maybe_post_beacon(member.guild, joined_channel)
+        if left_channel and community.is_majlis_channel(left_channel):
+            await community.maybe_clear_beacon(member.guild, left_channel)
+    except Exception:
+        pass
 
 
 @bot.event
@@ -1615,6 +1633,20 @@ async def midnight_voice_reset():
     """
     verification.reset_daily_voice()
     verification.reset_daily_together()
+    community.reset_beacons()
+
+
+@tasks.loop(minutes=5)
+async def beacon_cleanup_loop():
+    """Majlis Phase 2: clean up expired beacon messages every 5 minutes.
+    Flag-gated internally (community.cleanup_expired_beacons checks the flag).
+    Best-effort — never crashes."""
+    try:
+        guild = bot.get_guild(config.GUILD_ID)
+        if guild:
+            await community.cleanup_expired_beacons(guild)
+    except Exception:
+        pass
 
 
 @tasks.loop(time=datetime.time(hour=1, minute=0, tzinfo=_zone()))
