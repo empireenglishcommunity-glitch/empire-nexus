@@ -361,6 +361,11 @@ async def maybe_post_beacon(guild, lounge_channel) -> None:
     lounge_name = getattr(lounge_channel, "name", MAJLIS_ANCHOR_NAME)
     text = build_beacon_text(member_ids, lounge_name, lounge_id)
 
+    # Phase 4: prepend @-mention for opted-in members (if flag is ON)
+    mention = build_beacon_mention(guild)
+    if mention:
+        text = mention + text
+
     try:
         msg = await live_ch.send(text)
         record_beacon(lounge_id, msg.id, live_ch.id)
@@ -621,3 +626,171 @@ def find_best_lounge(guild) -> Optional[str]:
 def reset_empty_since():
     """Clear the empty-since tracking (for testing)."""
     _empty_since.clear()
+
+
+# ============================================================
+#  OPT-IN PINGS + KNOCK (Phase 4)
+# ============================================================
+#
+# A `community-pings` role that students toggle themselves. Only opted-in
+# members get @-mentioned by beacons and Knock. Shy learners never get
+# pinged unless they choose to.
+
+COMMUNITY_PINGS_ROLE = "community-pings"
+_PINGS_ROLE_KEY = "community_pings_role_id"
+
+# Knock rate-limit: {discord_id: last_knock_timestamp}
+_knock_cooldown: dict[str, float] = {}
+KNOCK_COOLDOWN_SEC = 300  # 5 minutes between knocks per member
+
+
+async def get_or_create_pings_role(guild) -> Optional[object]:
+    """Find or create the community-pings opt-in role. Idempotent."""
+    import discord as dlib
+
+    # Try stored ID
+    stored = database.get_setting(_PINGS_ROLE_KEY, "")
+    if stored.isdigit():
+        role = guild.get_role(int(stored))
+        if role:
+            return role
+
+    # Try by name
+    role = dlib.utils.get(guild.roles, name=COMMUNITY_PINGS_ROLE)
+    if role:
+        database.set_setting(_PINGS_ROLE_KEY, str(role.id))
+        return role
+
+    # Create (mentionable so beacons can ping it, not hoisted)
+    try:
+        role = await guild.create_role(
+            name=COMMUNITY_PINGS_ROLE,
+            mentionable=True,
+            reason="Majlis Phase 4: opt-in community presence pings"
+        )
+        database.set_setting(_PINGS_ROLE_KEY, str(role.id))
+        logger.info(f"community: created role '{COMMUNITY_PINGS_ROLE}' ({role.id})")
+        return role
+    except Exception as e:
+        logger.warning(f"community: couldn't create pings role: {e}")
+        return None
+
+
+def has_pings_role(member) -> bool:
+    """Check if a member has the community-pings role."""
+    return any(r.name == COMMUNITY_PINGS_ROLE for r in getattr(member, "roles", []))
+
+
+async def toggle_pings_role(member, guild) -> str:
+    """Toggle the community-pings role for a member.
+    Returns 'added' or 'removed'."""
+    if not database.is_feature_enabled("community_pings_optin", str(member.id)):
+        return "disabled"
+
+    role = await get_or_create_pings_role(guild)
+    if not role:
+        return "error"
+
+    try:
+        if has_pings_role(member):
+            await member.remove_roles(role, reason="Majlis: student opted out of pings")
+            return "removed"
+        else:
+            await member.add_roles(role, reason="Majlis: student opted in to pings")
+            return "added"
+    except Exception as e:
+        logger.warning(f"community: toggle pings role failed for {member.id}: {e}")
+        return "error"
+
+
+def build_beacon_mention(guild) -> str:
+    """Build the @-mention for the pings role, or empty string if the flag
+    is OFF or role doesn't exist. Used by beacon messages."""
+    if not database.is_feature_enabled("community_pings_optin"):
+        return ""
+    stored = database.get_setting(_PINGS_ROLE_KEY, "")
+    if stored.isdigit():
+        return f"<@&{stored}> "
+    return ""
+
+
+def can_knock(discord_id: str) -> tuple[bool, int]:
+    """Check if a member can knock (rate-limited). Returns (allowed, seconds_remaining)."""
+    now = _time.time()
+    last = _knock_cooldown.get(discord_id, 0)
+    elapsed = now - last
+    if elapsed >= KNOCK_COOLDOWN_SEC:
+        return True, 0
+    return False, int(KNOCK_COOLDOWN_SEC - elapsed)
+
+
+def record_knock(discord_id: str) -> None:
+    """Record a knock for rate-limiting."""
+    _knock_cooldown[discord_id] = _time.time()
+
+
+async def do_knock(member, guild) -> str:
+    """Execute a Knock: ping opted-in members via #community-live.
+    Returns a status string for the caller to display.
+
+    Rate-limited, quiet-hours aware, flag-gated.
+    """
+    if not database.is_feature_enabled("community_pings_optin", str(member.id)):
+        return "disabled"
+
+    # Must be in a Majlis lounge to knock
+    in_majlis = False
+    for vc in guild.voice_channels:
+        if is_majlis_channel(vc):
+            if any(m.id == member.id for m in vc.members):
+                in_majlis = True
+                break
+    if not in_majlis:
+        return "not_in_majlis"
+
+    # Quiet hours
+    if _is_global_quiet_hours():
+        return "quiet_hours"
+
+    # Rate limit
+    allowed, remaining = can_knock(str(member.id))
+    if not allowed:
+        return f"cooldown:{remaining}"
+
+    # Get #community-live
+    live_ch = await get_or_create_community_live(guild)
+    if not live_ch:
+        return "error"
+
+    # Build knock message
+    mention = build_beacon_mention(guild)
+    member_name = getattr(member, "display_name", str(member.id))
+    text = (
+        f"👋 **{member_name}** في المجلس ومستنّي حد — تعالوا!\n"
+        f"**{member_name}** is in the Majlis and looking for company — join!\n"
+        f"{mention}👉 <#{guild.voice_channels[0].id if guild.voice_channels else '0'}>"
+    )
+
+    # Find which lounge they're in for the jump link
+    for vc in guild.voice_channels:
+        if is_majlis_channel(vc) and any(m.id == member.id for m in vc.members):
+            text = (
+                f"👋 **{member_name}** في المجلس ومستنّي حد — تعالوا!\n"
+                f"**{member_name}** is in the Majlis and looking for company — join!\n"
+                f"{mention}👉 <#{vc.id}>"
+            )
+            break
+
+    try:
+        await live_ch.send(text)
+        record_knock(str(member.id))
+        logger.info(f"community: knock by {member.id}")
+        return "sent"
+    except Exception as e:
+        logger.warning(f"community: knock send failed: {e}")
+        return "error"
+
+
+def reset_knock_cooldown():
+    """Clear knock cooldowns (for testing)."""
+    _knock_cooldown.clear()
