@@ -2529,6 +2529,62 @@ async def cmd_level(ctx):
     )
 
 
+@bot.command(name="ping-me", aliases=["pingme", "إشعارات-المجلس"])
+async def cmd_ping_me(ctx):
+    """Majlis Phase 4: toggle the community-pings opt-in role.
+    Opted-in members get @-mentioned by beacons and Knock."""
+    result = await community.toggle_pings_role(ctx.author, ctx.guild)
+    if result == "added":
+        await ctx.send(
+            "✅ فعّلت إشعارات المجلس — هتوصلك إشعارات لما حد يكون في اللاونج.\n"
+            "✅ Community pings ON — you'll be notified when someone's in the Majlis."
+        )
+    elif result == "removed":
+        await ctx.send(
+            "🔕 ألغيت إشعارات المجلس — مش هتوصلك إشعارات.\n"
+            "🔕 Community pings OFF — you won't be pinged anymore."
+        )
+    elif result == "disabled":
+        await ctx.send(
+            "⚠️ الميزة مش مفعّلة دلوقتي.\n"
+            "⚠️ This feature isn't enabled yet."
+        )
+    else:
+        await ctx.send("⚠️ حصل خطأ — جرّب تاني. | Something went wrong — try again.")
+
+
+@bot.command(name="knock", aliases=["طق"])
+async def cmd_knock(ctx):
+    """Majlis Phase 4: Knock — ping opted-in members that you're in the
+    Majlis and looking for company. Rate-limited, quiet-hours aware."""
+    result = await community.do_knock(ctx.author, ctx.guild)
+    if result == "sent":
+        await ctx.send("👋 تم! بعتنا إشعار للمشتركين. | Done! Pinged opted-in members.")
+    elif result == "not_in_majlis":
+        await ctx.send(
+            "⚠️ لازم تكون في المجلس (voice-lounge) الأول عشان تعمل Knock.\n"
+            "⚠️ You need to be in the Majlis first to Knock."
+        )
+    elif result == "quiet_hours":
+        await ctx.send(
+            "🌙 دلوقتي ساعات هدوء — جرّب بعدين.\n"
+            "🌙 It's quiet hours right now — try later."
+        )
+    elif result.startswith("cooldown:"):
+        sec = result.split(":")[1]
+        await ctx.send(
+            f"⏳ استنّى {sec} ثانية قبل ما تعمل Knock تاني.\n"
+            f"⏳ Wait {sec}s before knocking again."
+        )
+    elif result == "disabled":
+        await ctx.send(
+            "⚠️ الميزة مش مفعّلة دلوقتي.\n"
+            "⚠️ This feature isn't enabled yet."
+        )
+    else:
+        await ctx.send("⚠️ حصل خطأ — جرّب تاني. | Something went wrong — try again.")
+
+
 @bot.command(name="week")
 async def cmd_week(ctx):
     """View this week's curriculum focus (phonemes, vocab theme, etc.).
