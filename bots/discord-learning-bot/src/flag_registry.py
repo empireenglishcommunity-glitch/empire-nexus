@@ -84,6 +84,14 @@ REGISTRY = [
     # ── ITQAN (weekly mastery assessment) ──
     ("itqan_weekly_assessment", "Weekly Assessment (Itqan): calendar-gated, timed weekly mastery test on the practice page (5 skills, spiral, two-dimension pass, public Champions celebration / private support)", "itqan", False),
     ("itqan_progression_gate", "Itqan R16: mastery-based progression — the next week's content stays locked until the current week's assessment is passed (grandfathers existing students; safety valves keep nobody stuck)", "itqan", False),
+
+    # ── MAJLIS (community lounge) ──
+    ("community_together_credit", "Majlis R1: company-aware task #7 — voice half satisfied by 5 min together-time in a Majlis lounge (OR the existing 10 min any-voice path; nobody worse off)", "majlis", False),
+    ("community_lounge_beacon", "Majlis R2: smart, self-cleaning presence beacon in #community-live when a Majlis lounge is in the lonely/lively band", "majlis", False),
+    ("community_dynamic_rooms", "Majlis R4: join-to-create overflow pods — auto-spawn capped Majlis lounges and auto-reap when empty", "majlis", False),
+    ("community_pings_optin", "Majlis R5: opt-in community-pings role + Knock button — only opted-in members get @-mentioned by beacons", "majlis", False),
+    ("community_power_hour", "Majlis R6: scheduled Community Hour (9-10 PM Egypt) with rally in #community-live + one Telegram broadcast", "majlis", False),
+    ("community_together_reward", "Majlis R8: optional bonus points/acknowledgement when task #7 is completed via the together path", "majlis", False),
 ]
 
 # Initiative display names and emoji
@@ -100,6 +108,7 @@ INITIATIVES = {
     "hissar": ("🏰", "HISSAR", "security / anti-cheat / copyright"),
     "hafiz": ("🎉", "HAFIZ", "motivational engagement"),
     "itqan": ("🎓", "ITQAN", "weekly mastery assessment"),
+    "majlis": ("🏛️", "MAJLIS", "community lounge"),
 }
 
 

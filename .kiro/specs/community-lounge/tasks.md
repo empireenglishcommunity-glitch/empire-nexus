@@ -1,5 +1,18 @@
 # Implementation Plan — Community Lounge ("Majlis")
 
+## Status — PLAN APPROVED, Phase 0 IN PROGRESS (2026-07-31 → resumed)
+
+Owner reviewed and approved the direction. Implementation begins with Phase 0.
+
+**Owner-confirmed decisions:**
+- ✅ **Majlis** direction approved.
+- ✅ Pod capacity = **6**; together-time = **5 min**.
+- ✅ **Community Hour = 9–10 PM Egypt time** (`Africa/Cairo`, `21:00`, 60 min).
+  Scheduled in Egypt time, independent of the Dubai daily-task TZ.
+- ✅ Build the **full sequence** (Phases 0–7 in order).
+
+---
+
 Build order. **Every phase is its own owner-merged PR, fully tested, and
 deployed + live-verified with zero disruption to the 16 students.** Every
 capability is behind its own flag (default OFF), so nothing is visible until we
@@ -73,8 +86,10 @@ Legend: **[nexus]** = bot/API repo · **[dojo]** = practice site repo ·
 - **Verify:** suite green; deploy; live-verify opt-in/out + a knock.
 
 ## Phase 5 — Community Hour + Telegram rally + topic-of-the-day · [nexus] (+ [dojo] optional)
-- [ ] `community_hour_loop`: detect window start (schedule in `settings`, guild
-      TZ), once-per-window fingerprint dedup; rally in `#community-live` + **one**
+- [ ] `community_hour_loop`: detect window start (schedule in `settings`,
+      **`Africa/Cairo` / Egypt time, 21:00–22:00, 60 min** — NOT the Dubai
+      daily-task TZ), once-per-window fingerprint dedup; rally in
+      `#community-live` + **one**
       Telegram broadcast to student group(s) (reuse `_send_telegram_groups`);
       include topic-of-the-day + lounge jump link. Behind `community_power_hour`.
 - [ ] Curated bilingual topic-prompt list (owner-editable in `settings`).
