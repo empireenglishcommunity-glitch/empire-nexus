@@ -3786,6 +3786,60 @@ async def slash_itqan_due(interaction: discord.Interaction):
         await interaction.followup.send(chunk, ephemeral=True)
 
 
+@bot.tree.command(name="majlis",
+                  description="Community Lounge (Majlis) — live status + config.")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_majlis(interaction: discord.Interaction):
+    """Show Majlis flag states, config, and live lounge occupancy."""
+    await interaction.response.defer(ephemeral=True)
+
+    # Flag states
+    flags = [
+        "community_together_credit",
+        "community_lounge_beacon",
+        "community_dynamic_rooms",
+        "community_pings_optin",
+        "community_power_hour",
+        "community_together_reward",
+    ]
+    flag_lines = []
+    for f in flags:
+        st = database.feature_flag_status(f)
+        icon = "✅" if st["enabled"] else "❌"
+        scope = "everyone" if st["everyone"] else (f"{len(st['allowed_ids'])} students" if st["allowed_ids"] else "off")
+        flag_lines.append(f"  {icon} `{f}`: {scope}")
+
+    # Config
+    cfg = community.get_config()
+
+    # Live occupancy
+    guild = interaction.guild
+    occ = community.lounge_occupancy(guild) if guild else {}
+    occ_lines = []
+    for ch_id, members in occ.items():
+        ch = guild.get_channel(int(ch_id))
+        name = ch.name if ch else ch_id
+        occ_lines.append(f"  🎙️ {name}: {len(members)} people")
+    if not occ_lines:
+        occ_lines.append("  (empty)")
+
+    text = (
+        "🏛️ **Majlis — Community Lounge**\n\n"
+        "**Flags:**\n" + "\n".join(flag_lines) + "\n\n"
+        "**Config:**\n"
+        f"  together_minutes: {cfg.get('community_together_minutes', 5)}\n"
+        f"  lounge_capacity: {cfg.get('community_lounge_capacity', 6)}\n"
+        f"  beacon_max_occ: {cfg.get('community_beacon_max_occupancy', 4)}\n"
+        f"  beacon_cooldown: {cfg.get('community_beacon_cooldown_min', 40)} min\n"
+        f"  hour: {cfg.get('community_hour_start', '21:00')} {cfg.get('community_hour_tz', 'Africa/Cairo')} ({cfg.get('community_hour_minutes', 60)} min)\n"
+        f"  reward_points: {cfg.get('community_together_reward_points', 0)}\n\n"
+        "**Live Lounges:**\n" + "\n".join(occ_lines)
+    )
+    await interaction.followup.send(text, ephemeral=True)
+
+
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     """Keep permission/other failures quiet + ephemeral (no ugly tracebacks,
