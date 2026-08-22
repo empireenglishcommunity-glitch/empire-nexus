@@ -797,6 +797,73 @@ def reset_knock_cooldown():
 
 
 # ============================================================
+#  TOGETHER REWARD (Phase 6)
+# ============================================================
+#
+# Optional bonus when task #7 is completed via the together path.
+# Once per day per student, abuse-resistant (requires distinct other members).
+# Behind community_together_reward flag. Bonus points default 0 (off).
+
+_TOGETHER_REWARD_KEY_PREFIX = "community_together_rewarded_"
+
+
+def check_together_reward_eligible(discord_id: str) -> bool:
+    """Check if a student is eligible for the together reward today.
+    Returns True if they haven't already been rewarded today."""
+    if not database.is_feature_enabled("community_together_reward", discord_id):
+        return False
+    cfg = get_config()
+    bonus = cfg.get("community_together_reward_points", 0)
+    if bonus <= 0:
+        return False
+    # Dedup: once per day
+    import datetime as dt
+    try:
+        from zoneinfo import ZoneInfo
+        from . import config as _cfg
+        tz = ZoneInfo(getattr(_cfg, "TIMEZONE", "Asia/Dubai") or "Asia/Dubai")
+        today = dt.datetime.now(tz).strftime("%Y-%m-%d")
+    except Exception:
+        today = dt.date.today().isoformat()
+    key = _TOGETHER_REWARD_KEY_PREFIX + today
+    rewarded_ids = database.get_setting(key, "")
+    return discord_id not in rewarded_ids.split(",")
+
+
+def grant_together_reward(discord_id: str) -> int:
+    """Grant the together reward (bonus points). Records the grant so it
+    won't fire again today. Returns the points granted (0 if not eligible)."""
+    if not check_together_reward_eligible(discord_id):
+        return 0
+    cfg = get_config()
+    bonus = cfg.get("community_together_reward_points", 0)
+    if bonus <= 0:
+        return 0
+    # Grant points
+    try:
+        database.add_points(discord_id, bonus, "community:together_reward")
+    except Exception:
+        return 0
+    # Record dedup
+    import datetime as dt
+    try:
+        from zoneinfo import ZoneInfo
+        from . import config as _cfg
+        tz = ZoneInfo(getattr(_cfg, "TIMEZONE", "Asia/Dubai") or "Asia/Dubai")
+        today = dt.datetime.now(tz).strftime("%Y-%m-%d")
+    except Exception:
+        today = dt.date.today().isoformat()
+    key = _TOGETHER_REWARD_KEY_PREFIX + today
+    existing = database.get_setting(key, "")
+    if existing:
+        database.set_setting(key, existing + "," + discord_id)
+    else:
+        database.set_setting(key, discord_id)
+    logger.info(f"community: together reward granted to {discord_id} (+{bonus} pts)")
+    return bonus
+
+
+# ============================================================
 #  COMMUNITY HOUR (Phase 5)
 # ============================================================
 #

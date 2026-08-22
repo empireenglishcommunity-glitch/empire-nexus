@@ -421,6 +421,13 @@ async def verify_community(member: discord.Member, guild: discord.Guild) -> tupl
                 break
 
     if voice_half_ok and chat_ok:
+        # Phase 6: if completed via the together path, grant optional reward
+        if together_ok:
+            try:
+                from . import community as _comm
+                _comm.grant_together_reward(discord_id)
+            except Exception:
+                pass
         return True, ""
 
     # Build a checklist showing what's done vs pending.
