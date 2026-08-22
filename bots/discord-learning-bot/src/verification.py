@@ -158,6 +158,94 @@ def on_voice_leave(discord_id: str):
         _voice_sessions[discord_id] = {"join_time": None}
 
 
+# ============================================================
+#  TOGETHER-TIME TRACKING (Majlis Phase 1)
+# ============================================================
+#
+# Tracks minutes a student spends in a Majlis lounge WITH at least one other
+# member present. Used for the company-aware task #7 credit:
+#   voice half = (10 min any voice) OR (together_minutes in a Majlis with company)
+#
+# Pattern mirrors voice-minutes: in-memory dict + persisted per-day in DB.
+# The key difference: together-time only accrues while >=2 non-bot members
+# are in the SAME Majlis lounge simultaneously.
+#
+# Together sessions are keyed by discord_id. Each entry has:
+#   "together_start": datetime | None  — when this member's "with company" window began
+#
+# Lifecycle:
+#   - on_together_check(guild): called from on_voice_state_update after every
+#     join/leave/switch. For each Majlis lounge, if occupancy >= 2 and a member
+#     doesn't have a running together_start, start one. If occupancy drops to 1
+#     (or member left), persist elapsed and clear.
+#
+# This is intentionally decoupled from the voice-minutes tracker (which credits
+# ALL voice channels) — together-time only counts in Majlis lounges.
+
+_together_sessions: dict[str, dict] = {}
+
+
+def on_together_check(guild) -> None:
+    """Recompute together-time state for all members in Majlis lounges.
+
+    Called after every voice state change. For each Majlis lounge:
+    - If >=2 non-bot members present, ensure each has a running together_start.
+    - If a member was accruing but is now alone (or left), persist their elapsed
+      together-time and clear their session.
+
+    `guild` is the Discord Guild object (provides voice_channels + members).
+    """
+    from . import community
+
+    # Gather who's currently in a Majlis with company
+    occ = community.lounge_occupancy(guild)  # {ch_id: [member_ids]}
+    currently_with_company: set[str] = set()
+    for _ch_id, member_ids in occ.items():
+        if len(member_ids) >= 2:
+            currently_with_company.update(member_ids)
+
+    now = datetime.datetime.now()
+
+    # Start sessions for members who just gained company
+    for mid in currently_with_company:
+        session = _together_sessions.get(mid)
+        if not session or not session.get("together_start"):
+            _together_sessions[mid] = {"together_start": now}
+
+    # Persist + clear sessions for members who lost company (or left)
+    for mid in list(_together_sessions.keys()):
+        if mid not in currently_with_company:
+            session = _together_sessions[mid]
+            if session and session.get("together_start"):
+                elapsed = (now - session["together_start"]).total_seconds() / 60
+                if elapsed > 0:
+                    try:
+                        database.add_together_minutes(mid, elapsed)
+                    except Exception:
+                        pass
+            _together_sessions[mid] = {"together_start": None}
+
+
+def get_together_minutes_today(discord_id: str) -> float:
+    """Total together-minutes today = persisted (survives restarts) +
+    any ongoing (currently-with-company) session time."""
+    total = 0.0
+    try:
+        total = database.get_together_minutes(discord_id)
+    except Exception:
+        total = 0.0
+    session = _together_sessions.get(discord_id, {})
+    if session.get("together_start"):
+        total += (datetime.datetime.now() - session["together_start"]).total_seconds() / 60
+    return total
+
+
+def reset_daily_together():
+    """Clear in-memory together sessions at midnight (called alongside
+    reset_daily_voice). Persisted per-day minutes live in the DB."""
+    _together_sessions.clear()
+
+
 def _local_day_start() -> datetime.datetime:
     """Start of 'today' in the bot's configured timezone (Asia/Dubai), as a
     tz-aware datetime.
@@ -294,10 +382,30 @@ async def verify_community(member: discord.Member, guild: discord.Guild) -> tupl
     """E5: the community task now requires BOTH mandatory sub-tasks:
       (1) 10+ minutes in a voice lounge today, AND
       (2) a message in #general-chat today.
+
+    Majlis Phase 1 (community_together_credit flag): the voice half gains an
+    OR path — satisfied by (10 min any voice) OR (together_minutes in a Majlis
+    with company). Nobody is ever worse off than the original 10-min path.
+
     Returns a clear bilingual checklist of what's done / still pending."""
-    # (1) Voice: 10+ minutes today (persistent + ongoing)
-    voice_min = get_voice_minutes_today(str(member.id))
+    discord_id = str(member.id)
+
+    # (1) Voice half — two paths (OR)
+    voice_min = get_voice_minutes_today(discord_id)
     voice_ok = voice_min >= 10
+
+    # Majlis Phase 1: company-aware fast path (flag-gated)
+    together_ok = False
+    together_min = 0.0
+    together_threshold = 5  # default; overridden from config when flag is on
+    if not voice_ok and database.is_feature_enabled("community_together_credit", discord_id):
+        from . import community
+        together_threshold = community.get_together_minutes_threshold()
+        together_min = get_together_minutes_today(discord_id)
+        together_ok = together_min >= together_threshold
+
+    # Voice half satisfied by EITHER path
+    voice_half_ok = voice_ok or together_ok
 
     # (2) A message in #general-chat today
     chat_ok = False
@@ -312,13 +420,40 @@ async def verify_community(member: discord.Member, guild: discord.Guild) -> tupl
                 chat_ok = True
                 break
 
-    if voice_ok and chat_ok:
+    if voice_half_ok and chat_ok:
         return True, ""
 
-    # Build a checklist showing what's done vs pending
-    v_mark = "✅" if voice_ok else "⬜"
+    # Build a checklist showing what's done vs pending.
+    # Show the path that's CLOSER to completion (together if they have some
+    # together-time, else the classic 10-min path).
     c_mark = "✅" if chat_ok else "⬜"
-    v_detail = f"({int(voice_min)}/10 دقيقة)" if not voice_ok else ""
+
+    if voice_half_ok:
+        v_mark = "✅"
+        v_detail = ""
+    elif together_ok:
+        # Shouldn't reach here (voice_half_ok would be True), but defensive
+        v_mark = "✅"
+        v_detail = ""
+    elif database.is_feature_enabled("community_together_credit", discord_id) and together_min > 0:
+        # Show together path (they have SOME together-time — closer)
+        v_mark = "⬜"
+        v_detail = f"({int(together_min)}/{together_threshold} دقيقة مع حد)"
+        return False, (
+            "مهمة المجتمع تتطلب **الاثنين معاً**:\n"
+            f"{v_mark} اقضِ وقت في **المجلس** مع حد تاني {v_detail}\n"
+            f"   _أو_ 10 دقائق في أي غرفة صوتية ({int(voice_min)}/10)\n"
+            f"{c_mark} اكتب رسالة في `#general-chat`\n\n"
+            "أكمل الناقص ثم اكتب `!7` مرة أخرى.\n"
+            "_(Community task needs BOTH: voice time AND a message in "
+            "#general-chat. Voice = 10 min in any voice OR "
+            f"{together_threshold} min in the Majlis with someone.)_"
+        )
+    else:
+        # Classic path (no together-time yet, or flag off)
+        v_mark = "⬜"
+        v_detail = f"({int(voice_min)}/10 دقيقة)" if not voice_ok else ""
+
     return False, (
         "مهمة المجتمع تتطلب **الاثنين معاً**:\n"
         f"{v_mark} اقضِ **10 دقائق** على الأقل في غرفة صوتية {v_detail}\n"

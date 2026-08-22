@@ -586,6 +586,18 @@ async def on_voice_state_update(member, before, after):
     # Left a voice channel
     elif before.channel is not None and after.channel is None:
         verification.on_voice_leave(str(member.id))
+    # Switched channels (left one, joined another in same event)
+    elif before.channel is not None and after.channel is not None and before.channel != after.channel:
+        verification.on_voice_leave(str(member.id))
+        verification.on_voice_join(str(member.id))
+
+    # Majlis Phase 1: recompute together-time state after any voice change.
+    # Best-effort — never crash the event handler.
+    if database.is_feature_enabled("community_together_credit"):
+        try:
+            verification.on_together_check(member.guild)
+        except Exception:
+            pass
 
 
 @bot.event
@@ -1602,6 +1614,7 @@ async def midnight_voice_reset():
     boundary with no reset in between.
     """
     verification.reset_daily_voice()
+    verification.reset_daily_together()
 
 
 @tasks.loop(time=datetime.time(hour=1, minute=0, tzinfo=_zone()))
