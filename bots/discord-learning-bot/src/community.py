@@ -141,3 +141,282 @@ def get_lounge_capacity() -> int:
 def get_beacon_max_occupancy() -> int:
     """Beacon only fires when lounge occupancy ≤ this."""
     return get_config().get("community_beacon_max_occupancy", 4)
+
+
+# ============================================================
+#  BEACON LIFECYCLE (Phase 2)
+# ============================================================
+#
+# A "beacon" is a short, self-cleaning message posted to #community-live
+# when someone is waiting in a mostly-empty Majlis lounge. It:
+#   - Fires only when occupancy is in [1, beacon_max_occupancy] ("lonely/lively")
+#   - Does NOT fire when the room is healthy (≥ beacon_max_occupancy) — no spam
+#   - Does NOT address the person who just joined (they're the one waiting)
+#   - Is deduped per lounge per beacon_cooldown_min
+#   - Self-cleans (deleted) when the lounge empties or beacon expires
+#   - Respects global quiet hours (23:00–05:00 bot timezone)
+#
+# State is in-memory (best-effort; a beacon surviving a restart isn't
+# critical — the next join just fires a new one).
+
+import datetime as _dt
+import time as _time
+
+# {lounge_channel_id: {"message_id": int, "posted_at": float (unix), "channel_id": int}}
+_active_beacons: dict[str, dict] = {}
+
+# Channel name for beacon posts
+COMMUNITY_LIVE_CHANNEL = "community-live"
+
+# Global quiet hours (beacon-specific; same window as the default student prefs)
+_QUIET_START = (23, 0)  # 11 PM
+_QUIET_END = (5, 0)     # 5 AM
+
+
+def _is_global_quiet_hours() -> bool:
+    """Check if the current time (in bot timezone) is within global quiet hours."""
+    try:
+        from zoneinfo import ZoneInfo
+        from . import config
+        tz = ZoneInfo(getattr(config, "TIMEZONE", "Asia/Dubai") or "Asia/Dubai")
+        now = _dt.datetime.now(tz).time()
+    except Exception:
+        now = _dt.datetime.now().time()
+
+    start = _dt.time(*_QUIET_START)
+    end = _dt.time(*_QUIET_END)
+    if start <= end:
+        return start <= now <= end
+    else:
+        return now >= start or now <= end
+
+
+def should_beacon(lounge_channel_id: str, occupancy: int, joiner_id: str = None) -> bool:
+    """Determine whether a beacon should fire for this lounge right now.
+
+    Returns True only when ALL conditions are met:
+    - occupancy is in [1, beacon_max_occupancy]
+    - not in global quiet hours
+    - no active (non-expired) beacon for this lounge within cooldown
+    """
+    cfg = get_config()
+    max_occ = cfg.get("community_beacon_max_occupancy", 4)
+    cooldown_min = cfg.get("community_beacon_cooldown_min", 40)
+    ttl_min = cfg.get("community_beacon_ttl_min", 20)
+
+    # Not in the lonely/lively band
+    if occupancy < 1 or occupancy > max_occ:
+        return False
+
+    # Quiet hours
+    if _is_global_quiet_hours():
+        return False
+
+    # Cooldown: is there a recent beacon for this lounge?
+    existing = _active_beacons.get(lounge_channel_id)
+    if existing:
+        age_min = (_time.time() - existing["posted_at"]) / 60
+        if age_min < cooldown_min:
+            return False
+
+    return True
+
+
+def record_beacon(lounge_channel_id: str, message_id: int, text_channel_id: int) -> None:
+    """Record that a beacon was just posted (for dedup/cleanup)."""
+    _active_beacons[lounge_channel_id] = {
+        "message_id": message_id,
+        "posted_at": _time.time(),
+        "channel_id": text_channel_id,
+    }
+
+
+def get_active_beacon(lounge_channel_id: str) -> Optional[dict]:
+    """Get the active beacon state for a lounge, or None."""
+    return _active_beacons.get(lounge_channel_id)
+
+
+def clear_beacon(lounge_channel_id: str) -> Optional[dict]:
+    """Remove and return the beacon state for a lounge (so the caller can
+    delete the Discord message). Returns None if no active beacon."""
+    return _active_beacons.pop(lounge_channel_id, None)
+
+
+def get_expired_beacons() -> list[dict]:
+    """Return a list of beacon states that have exceeded their TTL.
+    Caller should delete the Discord messages and call clear_beacon."""
+    cfg = get_config()
+    ttl_min = cfg.get("community_beacon_ttl_min", 20)
+    now = _time.time()
+    expired = []
+    for lounge_id, state in list(_active_beacons.items()):
+        age_min = (now - state["posted_at"]) / 60
+        if age_min >= ttl_min:
+            expired.append({"lounge_id": lounge_id, **state})
+    return expired
+
+
+def build_beacon_text(members_in_lounge: list[str], lounge_name: str,
+                      lounge_id: str) -> str:
+    """Build the bilingual beacon message text.
+
+    Shows who's waiting (up to 3 names) + a jump link to the lounge.
+    Arabic-first per project rules.
+    """
+    # Jump link to the voice channel
+    jump = f"<#{lounge_id}>"
+
+    if len(members_in_lounge) == 1:
+        # One person waiting
+        return (
+            f"🎙️ في حد في **{lounge_name}** دلوقتي — تعالوا!\n"
+            f"Someone's in **{lounge_name}** right now — join them!\n"
+            f"👉 {jump}"
+        )
+    else:
+        count = len(members_in_lounge)
+        return (
+            f"🎙️ في **{count}** في **{lounge_name}** دلوقتي — تعالوا!\n"
+            f"**{count}** people in **{lounge_name}** right now — join!\n"
+            f"👉 {jump}"
+        )
+
+
+def reset_beacons():
+    """Clear all beacon state (e.g. on daily reset or for testing)."""
+    _active_beacons.clear()
+
+
+# ============================================================
+#  #COMMUNITY-LIVE CHANNEL (Phase 2)
+# ============================================================
+
+_COMMUNITY_LIVE_KEY = "community_live_channel_id"
+
+
+async def get_or_create_community_live(guild) -> Optional[object]:
+    """Find (by stored ID, then by name) or create #community-live in the
+    COMMUNITY category. Idempotent, permission-guarded, never crashes.
+
+    Returns the TextChannel or None on failure.
+    """
+    import discord as dlib
+
+    # Try stored ID first
+    stored = database.get_setting(_COMMUNITY_LIVE_KEY, "")
+    if stored.isdigit():
+        ch = guild.get_channel(int(stored))
+        if ch:
+            return ch
+
+    # Try by name
+    ch = dlib.utils.get(guild.text_channels, name=COMMUNITY_LIVE_CHANNEL)
+    if ch:
+        database.set_setting(_COMMUNITY_LIVE_KEY, str(ch.id))
+        return ch
+
+    # Create in the COMMUNITY category (find it by the anchor voice-lounge's parent)
+    try:
+        anchor = dlib.utils.get(guild.voice_channels, name=MAJLIS_ANCHOR_NAME)
+        category = anchor.category if anchor else None
+        ch = await guild.create_text_channel(
+            COMMUNITY_LIVE_CHANNEL,
+            category=category,
+            topic="🎙️ من في المجلس دلوقتي — إشعارات تلقائية | Who's in the Majlis — live presence")
+        database.set_setting(_COMMUNITY_LIVE_KEY, str(ch.id))
+        logger.info(f"community: created #{COMMUNITY_LIVE_CHANNEL} ({ch.id})")
+        return ch
+    except Exception as e:
+        logger.warning(f"community: couldn't create #{COMMUNITY_LIVE_CHANNEL}: {e}")
+        return None
+
+
+# ============================================================
+#  BEACON BOT ACTIONS (Phase 2 — called from bot.py wiring)
+# ============================================================
+
+async def maybe_post_beacon(guild, lounge_channel) -> None:
+    """If conditions are met, post a beacon to #community-live for this lounge.
+
+    Called from on_voice_state_update after a join. Handles all checks
+    internally (band, quiet-hours, cooldown, flag). Best-effort.
+    """
+    if not database.is_feature_enabled("community_lounge_beacon"):
+        return
+
+    lounge_id = str(lounge_channel.id)
+    occ = lounge_occupancy(guild)
+    member_ids = occ.get(lounge_id, [])
+    occupancy = len(member_ids)
+
+    if not should_beacon(lounge_id, occupancy):
+        return
+
+    # Get or create #community-live
+    live_ch = await get_or_create_community_live(guild)
+    if not live_ch:
+        return
+
+    # Build and send the beacon
+    lounge_name = getattr(lounge_channel, "name", MAJLIS_ANCHOR_NAME)
+    text = build_beacon_text(member_ids, lounge_name, lounge_id)
+
+    try:
+        msg = await live_ch.send(text)
+        record_beacon(lounge_id, msg.id, live_ch.id)
+        logger.info(f"community: beacon posted for {lounge_name} (occ={occupancy})")
+    except Exception as e:
+        logger.warning(f"community: beacon send failed: {e}")
+
+
+async def maybe_clear_beacon(guild, lounge_channel) -> None:
+    """If the lounge just emptied, delete its beacon message (self-clean).
+
+    Called from on_voice_state_update after a leave.
+    """
+    if not database.is_feature_enabled("community_lounge_beacon"):
+        return
+
+    lounge_id = str(lounge_channel.id)
+    occ = lounge_occupancy(guild)
+    member_ids = occ.get(lounge_id, [])
+
+    # Only clear if the lounge is now empty
+    if member_ids:
+        return
+
+    beacon = clear_beacon(lounge_id)
+    if not beacon:
+        return
+
+    # Delete the Discord message (best-effort)
+    try:
+        ch = guild.get_channel(beacon["channel_id"])
+        if ch:
+            msg = await ch.fetch_message(beacon["message_id"])
+            await msg.delete()
+            logger.info(f"community: beacon cleared for lounge {lounge_id}")
+    except Exception:
+        pass  # message already deleted, permissions, etc. — never crash
+
+
+async def cleanup_expired_beacons(guild) -> None:
+    """Delete beacon messages that have exceeded their TTL.
+    Called from a periodic loop (e.g. every 5 min)."""
+    if not database.is_feature_enabled("community_lounge_beacon"):
+        return
+
+    expired = get_expired_beacons()
+    for info in expired:
+        lounge_id = info["lounge_id"]
+        beacon = clear_beacon(lounge_id)
+        if not beacon:
+            continue
+        try:
+            ch = guild.get_channel(beacon["channel_id"])
+            if ch:
+                msg = await ch.fetch_message(beacon["message_id"])
+                await msg.delete()
+                logger.info(f"community: expired beacon cleaned for {lounge_id}")
+        except Exception:
+            pass
