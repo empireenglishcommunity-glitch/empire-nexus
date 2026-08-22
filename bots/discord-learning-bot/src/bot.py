@@ -443,6 +443,8 @@ async def on_ready():
         midnight_voice_reset.start()
     if not beacon_cleanup_loop.is_running():
         beacon_cleanup_loop.start()
+    if not community_hour_loop.is_running():
+        community_hour_loop.start()
 
     # Majlis Phase 3: set anchor capacity + ensure hub channel on startup.
     # Best-effort, flag-gated internally.
@@ -1667,6 +1669,20 @@ async def beacon_cleanup_loop():
         if guild:
             await community.cleanup_expired_beacons(guild)
             await community.reap_empty_majlis_rooms(guild)
+    except Exception:
+        pass
+
+
+@tasks.loop(minutes=1)
+async def community_hour_loop():
+    """Majlis Phase 5: fire the Community Hour rally when the window starts.
+    Checks every minute; fires once per day (deduped in community.py).
+    Flag-gated internally. Best-effort — never crashes."""
+    try:
+        if community.community_hour_due():
+            guild = bot.get_guild(config.GUILD_ID)
+            if guild:
+                await community.run_community_hour(guild)
     except Exception:
         pass
 
