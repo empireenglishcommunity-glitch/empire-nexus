@@ -794,3 +794,168 @@ async def do_knock(member, guild) -> str:
 def reset_knock_cooldown():
     """Clear knock cooldowns (for testing)."""
     _knock_cooldown.clear()
+
+
+# ============================================================
+#  COMMUNITY HOUR (Phase 5)
+# ============================================================
+#
+# A scheduled daily window (default 9-10 PM Egypt / Africa/Cairo) when
+# everyone aims to show up together. At window start:
+# - Rally message in #community-live with a topic-of-the-day + lounge link
+# - ONE Telegram broadcast to student groups (the single high-signal TG path)
+# - Deduped: fires once per calendar day (settings fingerprint)
+#
+# All behind community_power_hour flag.
+
+_COMMUNITY_HOUR_LAST_KEY = "community_hour_last_fired"
+
+# Curated bilingual topic prompts (cycled daily). Owner can override via settings.
+_DEFAULT_TOPICS = [
+    "💬 What's one new word you learned this week? شاركنا كلمة جديدة تعلمتها هالأسبوع",
+    "🎯 What's your English goal for this month? إيه هدفك بالإنجليزي الشهر ده؟",
+    "🌍 If you could travel anywhere, where would you go? لو تسافر لأي مكان، تروح فين؟",
+    "📚 What's the hardest thing about learning English? إيه أصعب حاجة في تعلم الإنجليزي؟",
+    "🎬 What's a movie/show you watched in English? فيلم أو مسلسل شفته بالإنجليزي؟",
+    "🍕 Describe your favorite food in English! وصّف أكلتك المفضلة بالإنجليزي",
+    "🏆 What achievement are you most proud of? إيه أكتر إنجاز فخور/ة بيه؟",
+]
+
+_TOPICS_KEY = "community_hour_topics"
+
+
+def get_topics() -> list[str]:
+    """Get the topic-of-the-day list (owner-editable via settings)."""
+    raw = database.get_setting(_TOPICS_KEY, "")
+    if raw:
+        try:
+            topics = json.loads(raw)
+            if isinstance(topics, list) and topics:
+                return topics
+        except (json.JSONDecodeError, TypeError):
+            pass
+    return _DEFAULT_TOPICS
+
+
+def get_today_topic() -> str:
+    """Get today's topic (cycles through the list by day-of-year)."""
+    import datetime as dt
+    topics = get_topics()
+    day_of_year = dt.date.today().timetuple().tm_yday
+    return topics[day_of_year % len(topics)]
+
+
+def community_hour_due() -> bool:
+    """Check if it's time to fire the Community Hour rally.
+
+    Returns True if:
+    - Current time in community_hour_tz is within [start, start+5min]
+      (a 5-min detection window so the loop doesn't miss the exact minute)
+    - AND we haven't already fired today (dedup by date fingerprint)
+    """
+    cfg = get_config()
+    hour_start = cfg.get("community_hour_start", "21:00")
+    tz_name = cfg.get("community_hour_tz", "Africa/Cairo")
+    days_str = cfg.get("community_hour_days", "0,1,2,3,4,5,6")
+
+    try:
+        from zoneinfo import ZoneInfo
+        import datetime as dt
+        tz = ZoneInfo(tz_name)
+        now = dt.datetime.now(tz)
+    except Exception:
+        return False
+
+    # Check if today's weekday is in the allowed days
+    allowed_days = {int(d.strip()) for d in days_str.split(",") if d.strip().isdigit()}
+    if now.weekday() not in allowed_days:
+        return False
+
+    # Check if within the 5-min detection window after start
+    try:
+        start_h, start_m = map(int, hour_start.split(":"))
+        start_time = now.replace(hour=start_h, minute=start_m, second=0, microsecond=0)
+        window_end = start_time + dt.timedelta(minutes=5)
+        if not (start_time <= now <= window_end):
+            return False
+    except Exception:
+        return False
+
+    # Dedup: check if already fired today
+    today_str = now.strftime("%Y-%m-%d")
+    last_fired = database.get_setting(_COMMUNITY_HOUR_LAST_KEY, "")
+    if last_fired == today_str:
+        return False
+
+    return True
+
+
+def record_community_hour_fired() -> None:
+    """Record that the Community Hour rally fired today (dedup)."""
+    try:
+        from zoneinfo import ZoneInfo
+        import datetime as dt
+        cfg = get_config()
+        tz = ZoneInfo(cfg.get("community_hour_tz", "Africa/Cairo"))
+        today_str = dt.datetime.now(tz).strftime("%Y-%m-%d")
+    except Exception:
+        import datetime as dt
+        today_str = dt.date.today().isoformat()
+    database.set_setting(_COMMUNITY_HOUR_LAST_KEY, today_str)
+
+
+def build_community_hour_text(topic: str, lounge_id: str) -> str:
+    """Build the Community Hour rally message (bilingual, Arabic-first)."""
+    return (
+        "🕘 **وقت المجلس — Community Hour!**\n\n"
+        f"📍 تعالوا المجلس دلوقتي — الكل يجي!\n"
+        f"📍 It's Community Hour — everyone come join!\n\n"
+        f"💬 **موضوع اليوم:**\n{topic}\n\n"
+        f"👉 <#{lounge_id}>"
+    )
+
+
+async def run_community_hour(guild) -> dict:
+    """Execute the Community Hour rally: post to #community-live + Telegram.
+
+    Returns {'discord': bool, 'telegram_groups': int} for logging.
+    Called from community_hour_loop in bot.py.
+    """
+    if not database.is_feature_enabled("community_power_hour"):
+        return {"discord": False, "telegram_groups": 0}
+
+    import discord as dlib
+    from . import maintenance
+
+    # Find the anchor lounge for the jump link
+    anchor = dlib.utils.get(guild.voice_channels, name=MAJLIS_ANCHOR_NAME)
+    lounge_id = str(anchor.id) if anchor else "0"
+
+    topic = get_today_topic()
+    text = build_community_hour_text(topic, lounge_id)
+
+    # Post to #community-live
+    discord_ok = False
+    try:
+        live_ch = await get_or_create_community_live(guild)
+        if live_ch:
+            # Include opt-in mention if available
+            mention = build_beacon_mention(guild)
+            await live_ch.send(mention + text)
+            discord_ok = True
+    except Exception as e:
+        logger.warning(f"community: Community Hour Discord post failed: {e}")
+
+    # Telegram broadcast (one message to student groups)
+    tg_text = (
+        "🕘 وقت المجلس — Community Hour!\n\n"
+        "تعالوا المجلس دلوقتي على الديسكورد — الكل يجي!\n"
+        "It's Community Hour on Discord — everyone come join!\n\n"
+        f"💬 موضوع اليوم:\n{topic}"
+    )
+    tg_sent = await maintenance._send_telegram_groups(tg_text)
+
+    record_community_hour_fired()
+    logger.info(f"community: Community Hour fired — discord={discord_ok}, tg={tg_sent}")
+
+    return {"discord": discord_ok, "telegram_groups": tg_sent}
