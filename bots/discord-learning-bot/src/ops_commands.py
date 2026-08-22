@@ -592,6 +592,62 @@ async def handle_itqan_due(args: str, bot) -> str:
 
 
 # ============================================================
+#  /majlis — Community Lounge status + config (Phase 7)
+# ============================================================
+
+@command("/majlis")
+async def handle_majlis(args: str, bot) -> str:
+    """Community Lounge (Majlis) status and configuration.
+
+    /majlis          — current flag states + config
+    /majlis config   — full config table
+    """
+    from . import community
+
+    # Flag states
+    flags = [
+        "community_together_credit",
+        "community_lounge_beacon",
+        "community_dynamic_rooms",
+        "community_pings_optin",
+        "community_power_hour",
+        "community_together_reward",
+    ]
+    flag_lines = []
+    for f in flags:
+        st = database.feature_flag_status(f)
+        icon = "✅" if st["enabled"] else "❌"
+        scope = "everyone" if st["everyone"] else (f"{len(st['allowed_ids'])} students" if st["allowed_ids"] else "off")
+        flag_lines.append(f"  {icon} {f}: {scope}")
+
+    # Config
+    cfg = community.get_config()
+
+    lines = [
+        "*🏛️ Majlis — Community Lounge*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        "",
+        "*Flags:*",
+        *flag_lines,
+        "",
+        "*Config:*",
+        f"  together\\_minutes: {cfg.get('community_together_minutes', 5)}",
+        f"  lounge\\_capacity: {cfg.get('community_lounge_capacity', 6)}",
+        f"  beacon\\_max\\_occ: {cfg.get('community_beacon_max_occupancy', 4)}",
+        f"  beacon\\_cooldown: {cfg.get('community_beacon_cooldown_min', 40)} min",
+        f"  beacon\\_ttl: {cfg.get('community_beacon_ttl_min', 20)} min",
+        f"  reap\\_grace: {cfg.get('community_reap_grace_min', 3)} min",
+        f"  hour\\_start: {cfg.get('community_hour_start', '21:00')} ({cfg.get('community_hour_tz', 'Africa/Cairo')})",
+        f"  hour\\_minutes: {cfg.get('community_hour_minutes', 60)}",
+        f"  reward\\_points: {cfg.get('community_together_reward_points', 0)}",
+        "",
+        "_Use `/flag <name> on` to enable flags._",
+        "_Config: `!flag` in Discord admin channel._",
+    ]
+    return "\n".join(lines)
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -610,6 +666,7 @@ async def handle_help(args: str, bot) -> str:
         "`/itqan` — Weekly assessment report \\[L0\\-L3\\]",
         "`/itqan-review <id>` — Full breakdown of a flagged attempt",
         "`/itqan-due` — Who has a due weekly assessment",
+        "`/majlis` — Community lounge status \\+ config",
         "`/check` — Detailed status for one student",
         "`/help` — This message",
     ]
