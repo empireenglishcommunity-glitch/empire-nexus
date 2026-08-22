@@ -420,3 +420,204 @@ async def cleanup_expired_beacons(guild) -> None:
                 logger.info(f"community: expired beacon cleaned for {lounge_id}")
         except Exception:
             pass
+
+
+# ============================================================
+#  DYNAMIC PODS — CAPACITY CAPS + OVERFLOW ROOMS (Phase 3)
+# ============================================================
+#
+# Design:
+# - The anchor voice-lounge gets a user_limit = lounge_capacity (default 6).
+# - A "➕ افتح مجلس | New Room" hub channel: joining it auto-spawns a new
+#   capped Majlis lounge ("Majlis N") and moves the member into it.
+# - Bot-created lounges auto-reap when empty (grace period).
+# - The anchor is NEVER deleted.
+# - All behind the `community_dynamic_rooms` flag.
+
+# Hub channel name (join-to-create)
+MAJLIS_HUB_NAME = "➕ افتح مجلس | New Room"
+_MAJLIS_HUB_KEY = "majlis_hub_channel_id"
+
+# Track when dynamic rooms became empty (for grace-period reaping)
+# {channel_id_str: empty_since_timestamp}
+_empty_since: dict[str, float] = {}
+
+
+def next_majlis_number() -> int:
+    """Determine the next number for a dynamically created Majlis room.
+    Looks at the registry to find the highest existing N and returns N+1."""
+    ids = get_majlis_room_ids()
+    # The anchor is "Majlis 1" conceptually; dynamic start at 2
+    return len(ids) + 2
+
+
+def is_majlis_hub(channel) -> bool:
+    """Return True if `channel` is the join-to-create hub."""
+    name = getattr(channel, "name", None) or ""
+    return name == MAJLIS_HUB_NAME
+
+
+async def ensure_hub_channel(guild) -> Optional[object]:
+    """Find or create the join-to-create hub voice channel in the COMMUNITY
+    category. Idempotent, permission-guarded."""
+    import discord as dlib
+
+    # Try stored ID
+    stored = database.get_setting(_MAJLIS_HUB_KEY, "")
+    if stored.isdigit():
+        ch = guild.get_channel(int(stored))
+        if ch:
+            return ch
+
+    # Try by name
+    ch = dlib.utils.get(guild.voice_channels, name=MAJLIS_HUB_NAME)
+    if ch:
+        database.set_setting(_MAJLIS_HUB_KEY, str(ch.id))
+        return ch
+
+    # Create in COMMUNITY category
+    try:
+        anchor = dlib.utils.get(guild.voice_channels, name=MAJLIS_ANCHOR_NAME)
+        category = anchor.category if anchor else None
+        ch = await guild.create_voice_channel(
+            MAJLIS_HUB_NAME,
+            category=category,
+            user_limit=1,  # one person at a time triggers the spawn
+        )
+        database.set_setting(_MAJLIS_HUB_KEY, str(ch.id))
+        logger.info(f"community: created hub channel '{MAJLIS_HUB_NAME}' ({ch.id})")
+        return ch
+    except Exception as e:
+        logger.warning(f"community: couldn't create hub channel: {e}")
+        return None
+
+
+async def ensure_anchor_capacity(guild) -> None:
+    """Set the anchor voice-lounge's user_limit to lounge_capacity if not
+    already set. Idempotent, best-effort."""
+    import discord as dlib
+
+    anchor = dlib.utils.get(guild.voice_channels, name=MAJLIS_ANCHOR_NAME)
+    if not anchor:
+        return
+
+    capacity = get_lounge_capacity()
+    if anchor.user_limit != capacity:
+        try:
+            await anchor.edit(user_limit=capacity)
+            logger.info(f"community: set {MAJLIS_ANCHOR_NAME} user_limit={capacity}")
+        except Exception as e:
+            logger.warning(f"community: couldn't set anchor capacity: {e}")
+
+
+async def handle_hub_join(member, guild) -> None:
+    """Called when a member joins the hub channel. Spawns a new Majlis lounge
+    and moves the member into it. Flag-gated."""
+    if not database.is_feature_enabled("community_dynamic_rooms"):
+        return
+
+    import discord as dlib
+
+    capacity = get_lounge_capacity()
+    num = next_majlis_number()
+    room_name = f"Majlis {num}"
+
+    try:
+        # Find the COMMUNITY category
+        anchor = dlib.utils.get(guild.voice_channels, name=MAJLIS_ANCHOR_NAME)
+        category = anchor.category if anchor else None
+
+        # Create the new capped lounge
+        new_ch = await guild.create_voice_channel(
+            room_name,
+            category=category,
+            user_limit=capacity,
+        )
+        register_majlis_room(str(new_ch.id))
+        logger.info(f"community: spawned {room_name} ({new_ch.id}), cap={capacity}")
+
+        # Move the member into the new room
+        await member.move_to(new_ch)
+        logger.info(f"community: moved {member.id} into {room_name}")
+
+    except Exception as e:
+        logger.warning(f"community: hub-join spawn/move failed: {e}")
+
+
+async def reap_empty_majlis_rooms(guild) -> None:
+    """Delete bot-created Majlis rooms that have been empty past the grace
+    period. NEVER deletes the anchor. Called from the periodic reaper loop."""
+    if not database.is_feature_enabled("community_dynamic_rooms"):
+        return
+
+    cfg = get_config()
+    grace_min = cfg.get("community_reap_grace_min", 3)
+    grace_sec = grace_min * 60
+    now = _time.time()
+
+    registered_ids = get_majlis_room_ids()
+    if not registered_ids:
+        return
+
+    for ch_id_str in list(registered_ids):
+        ch = guild.get_channel(int(ch_id_str))
+
+        if ch is None:
+            # Channel was manually deleted — clean up the registry
+            unregister_majlis_room(ch_id_str)
+            _empty_since.pop(ch_id_str, None)
+            continue
+
+        # Count non-bot members
+        non_bot_members = [m for m in ch.members if not m.bot]
+
+        if non_bot_members:
+            # Room has people — clear the empty-since timer
+            _empty_since.pop(ch_id_str, None)
+            continue
+
+        # Room is empty — start or check the grace timer
+        if ch_id_str not in _empty_since:
+            _empty_since[ch_id_str] = now
+            continue
+
+        # Check if grace period has elapsed
+        empty_duration = now - _empty_since[ch_id_str]
+        if empty_duration < grace_sec:
+            continue
+
+        # Grace expired — reap the room
+        try:
+            await ch.delete(reason="Majlis dynamic room: empty past grace period")
+            unregister_majlis_room(ch_id_str)
+            _empty_since.pop(ch_id_str, None)
+            logger.info(f"community: reaped empty Majlis room {ch.name} ({ch_id_str})")
+        except Exception as e:
+            logger.warning(f"community: couldn't reap room {ch_id_str}: {e}")
+
+
+def find_best_lounge(guild) -> Optional[str]:
+    """Find the best lounge to suggest to a newcomer: a Majlis with
+    occupancy in the "lively but not full" range. Returns the channel ID
+    string, or None if all are full/empty.
+
+    Used by the beacon (Phase 2) to point newcomers to the right room
+    when multiple Majlis lounges exist."""
+    occ = lounge_occupancy(guild)
+    capacity = get_lounge_capacity()
+    best_id = None
+    best_occ = 0
+
+    for ch_id, member_ids in occ.items():
+        count = len(member_ids)
+        # "Lively but not full" = has people but under capacity
+        if 0 < count < capacity and count > best_occ:
+            best_id = ch_id
+            best_occ = count
+
+    return best_id
+
+
+def reset_empty_since():
+    """Clear the empty-since tracking (for testing)."""
+    _empty_since.clear()

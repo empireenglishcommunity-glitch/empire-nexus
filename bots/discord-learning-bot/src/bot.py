@@ -443,6 +443,17 @@ async def on_ready():
         midnight_voice_reset.start()
     if not beacon_cleanup_loop.is_running():
         beacon_cleanup_loop.start()
+
+    # Majlis Phase 3: set anchor capacity + ensure hub channel on startup.
+    # Best-effort, flag-gated internally.
+    if database.is_feature_enabled("community_dynamic_rooms"):
+        try:
+            _guild = bot.get_guild(config.GUILD_ID)
+            if _guild:
+                await community.ensure_anchor_capacity(_guild)
+                await community.ensure_hub_channel(_guild)
+        except Exception as e:
+            logger.warning(f"community: Phase 3 startup setup failed: {e}")
     # Nour retired (owner decision 2026-07-28): all Nour scheduled jobs are
     # disabled so no Nour-voiced DMs/reports go out. Task defs are kept for
     # history but are never started.
@@ -614,6 +625,16 @@ async def on_voice_state_update(member, before, after):
             await community.maybe_post_beacon(member.guild, joined_channel)
         if left_channel and community.is_majlis_channel(left_channel):
             await community.maybe_clear_beacon(member.guild, left_channel)
+    except Exception:
+        pass
+
+    # Majlis Phase 3: join-to-create hub — if the member joined the hub
+    # channel, spawn a new room and move them. Best-effort, flag-gated.
+    try:
+        joined = after.channel if (before.channel is None or
+            (before.channel != after.channel and after.channel is not None)) else None
+        if joined and community.is_majlis_hub(joined):
+            await community.handle_hub_join(member, member.guild)
     except Exception:
         pass
 
@@ -1638,13 +1659,14 @@ async def midnight_voice_reset():
 
 @tasks.loop(minutes=5)
 async def beacon_cleanup_loop():
-    """Majlis Phase 2: clean up expired beacon messages every 5 minutes.
-    Flag-gated internally (community.cleanup_expired_beacons checks the flag).
+    """Majlis Phase 2+3: clean up expired beacon messages + reap empty
+    dynamic Majlis rooms every 5 minutes. Flag-gated internally.
     Best-effort — never crashes."""
     try:
         guild = bot.get_guild(config.GUILD_ID)
         if guild:
             await community.cleanup_expired_beacons(guild)
+            await community.reap_empty_majlis_rooms(guild)
     except Exception:
         pass
 

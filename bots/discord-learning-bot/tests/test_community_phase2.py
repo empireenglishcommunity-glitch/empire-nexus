@@ -42,12 +42,14 @@ def setup_function():
 
 def test_should_beacon_fires_at_occupancy_1():
     """Beacon should fire when 1 person is waiting (lonely)."""
-    assert community.should_beacon("100", occupancy=1) is True
+    with patch.object(community, '_is_global_quiet_hours', return_value=False):
+        assert community.should_beacon("100", occupancy=1) is True
 
 
 def test_should_beacon_fires_at_max_occupancy():
     """Beacon fires at the max_occupancy boundary (default 4)."""
-    assert community.should_beacon("100", occupancy=4) is True
+    with patch.object(community, '_is_global_quiet_hours', return_value=False):
+        assert community.should_beacon("100", occupancy=4) is True
 
 
 def test_should_beacon_not_when_healthy():
@@ -67,7 +69,8 @@ def test_should_beacon_not_when_empty():
 def test_should_beacon_deduped_within_cooldown():
     """A recent beacon for this lounge blocks a new one (cooldown)."""
     community.record_beacon("100", message_id=999, text_channel_id=200)
-    assert community.should_beacon("100", occupancy=2) is False
+    with patch.object(community, '_is_global_quiet_hours', return_value=False):
+        assert community.should_beacon("100", occupancy=2) is False
 
 
 def test_should_beacon_fires_after_cooldown():
@@ -75,13 +78,15 @@ def test_should_beacon_fires_after_cooldown():
     community.record_beacon("100", message_id=999, text_channel_id=200)
     # Fake the posted_at to be well past the cooldown (41 min ago)
     community._active_beacons["100"]["posted_at"] = time.time() - (41 * 60)
-    assert community.should_beacon("100", occupancy=2) is True
+    with patch.object(community, '_is_global_quiet_hours', return_value=False):
+        assert community.should_beacon("100", occupancy=2) is True
 
 
 def test_should_beacon_different_lounge_not_blocked():
     """A beacon for lounge A doesn't block lounge B."""
     community.record_beacon("100", message_id=999, text_channel_id=200)
-    assert community.should_beacon("200", occupancy=2) is True
+    with patch.object(community, '_is_global_quiet_hours', return_value=False):
+        assert community.should_beacon("200", occupancy=2) is True
 
 
 # ============================================================
