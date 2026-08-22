@@ -183,8 +183,10 @@ limits.
 | `beacon_cooldown_min` | 40 | min minutes between beacons per lounge |
 | `beacon_ttl_min` | 20 | auto-expire a beacon after this |
 | `majlis_reap_grace_min` | 3 | empty dynamic lounge grace before delete |
-| `community_hour` | {days, "20:00", 30} | schedule (guild TZ) |
-| `community_hour_minutes` | 30 | window length |
+| `community_hour_start` | "21:00" | start time (in `community_hour_tz`) |
+| `community_hour_tz` | "Africa/Cairo" | Egypt time — students are Egyptian |
+| `community_hour_days` | [0,1,2,3,4,5,6] | all days (Mon=0…Sun=6) |
+| `community_hour_minutes` | 60 | window length (9–10 PM Egypt) |
 | `together_reward_points` | 0 (off) | optional bonus for together completion |
 
 All reads via a `get_community_config()` with `COMMUNITY_CONFIG_DEFAULTS` (mirror

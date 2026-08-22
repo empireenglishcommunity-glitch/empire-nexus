@@ -579,6 +579,19 @@ CREATE TABLE IF NOT EXISTS nutq_daily_cap_overrides (
     discord_id     TEXT PRIMARY KEY,
     cap            INTEGER NOT NULL
 );
+
+-- Majlis Phase 0: persistent together-minutes per day. Tracks how many
+-- minutes a student spent in a Majlis lounge WITH at least one other member
+-- present. Same pattern as voice_minutes (upsert, keyed by discord_id+date).
+-- Used for the company-aware task #7 credit (R1): voice half done if
+-- voice_min >= 10 OR together_min >= community_together_minutes.
+CREATE TABLE IF NOT EXISTS together_minutes (
+    discord_id  TEXT NOT NULL,
+    date        TEXT NOT NULL,
+    minutes     REAL NOT NULL DEFAULT 0,
+    PRIMARY KEY (discord_id, date),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 
@@ -605,7 +618,7 @@ RESET_WIPE_TABLES = (
     "consumed_proof_messages", "done_cooldowns", "token_ip_log",
     "student_journey", "journey_coverage", "claim_codes",
     "assessment_attempts", "assessment_items", "week_mastery",
-    "assessment_recordings",
+    "assessment_recordings", "together_minutes",
 )
 
 
@@ -1379,6 +1392,53 @@ def set_itqan_config(key: str, value) -> bool:
 
 
 # ============================================================
+#  COMMUNITY LOUNGE ("MAJLIS") CONFIG
+# ============================================================
+
+# All tunables for the Majlis community-lounge feature (Phases 0–7).
+# Stored in `settings`; a missing/blank value falls back to the default.
+# Owner tunes via /majlis config (Phase 7); nothing crashes on bad values.
+COMMUNITY_CONFIG_DEFAULTS = {
+    "community_together_minutes": 5,          # int: min together-time for fast #7 path
+    "community_lounge_capacity": 6,           # int: hard cap per Majlis lounge
+    "community_beacon_max_occupancy": 4,      # int: beacon only when occupancy ≤ this
+    "community_beacon_cooldown_min": 40,      # int: min minutes between beacons per lounge
+    "community_beacon_ttl_min": 20,           # int: auto-expire a beacon after this
+    "community_reap_grace_min": 3,            # int: empty dynamic lounge grace before delete
+    "community_hour_start": "21:00",          # str: start time (in community_hour_tz)
+    "community_hour_tz": "Africa/Cairo",      # str: Egypt time — students are Egyptian
+    "community_hour_days": "0,1,2,3,4,5,6",  # str: comma-sep weekday ints (Mon=0…Sun=6)
+    "community_hour_minutes": 60,             # int: window length
+    "community_together_reward_points": 0,    # int: optional bonus (0 = off)
+}
+
+
+def get_community_config() -> dict:
+    """Return the Majlis community config, reading `settings` overrides over
+    the defaults. Never raises: blank/invalid values fall back to the default."""
+    cfg = {}
+    for key, default in COMMUNITY_CONFIG_DEFAULTS.items():
+        raw = get_setting(key, "")
+        if raw == "":
+            cfg[key] = default
+            continue
+        try:
+            cfg[key] = type(default)(raw)
+        except (ValueError, TypeError):
+            cfg[key] = default
+    return cfg
+
+
+def set_community_config(key: str, value) -> bool:
+    """Set one Majlis config value (owner tuning). Returns False for unknown
+    keys so callers can reject typos rather than write junk settings."""
+    if key not in COMMUNITY_CONFIG_DEFAULTS:
+        return False
+    set_setting(key, str(value))
+    return True
+
+
+# ============================================================
 #  FEATURE FLAGS (Aegis Phase 1 — decouple deploy from release)
 # ============================================================
 
@@ -1740,6 +1800,45 @@ def get_voice_minutes(discord_id: str, date: str = None) -> float:
     try:
         row = conn.execute(
             "SELECT minutes FROM voice_minutes WHERE discord_id=? AND date=?",
+            (discord_id, date),
+        ).fetchone()
+        return row["minutes"] if row else 0.0
+    finally:
+        conn.close()
+
+
+# ============================================================
+#  TOGETHER-MINUTES (Majlis Phase 0)
+# ============================================================
+
+def add_together_minutes(discord_id: str, minutes: float, date: str = None) -> None:
+    """Majlis Phase 0: persistently add together-time minutes for a day
+    (upsert). Together-time = minutes spent in a Majlis lounge WITH at least
+    one other member present. Same semantics as add_voice_minutes."""
+    if minutes <= 0:
+        return
+    if date is None:
+        date = _today_local().isoformat()
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT INTO together_minutes (discord_id, date, minutes) VALUES (?, ?, ?) "
+            "ON CONFLICT(discord_id, date) DO UPDATE SET minutes = minutes + excluded.minutes",
+            (discord_id, date, minutes),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_together_minutes(discord_id: str, date: str = None) -> float:
+    """Persistent together-minutes for a student on a given day (default today)."""
+    if date is None:
+        date = _today_local().isoformat()
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT minutes FROM together_minutes WHERE discord_id=? AND date=?",
             (discord_id, date),
         ).fetchone()
         return row["minutes"] if row else 0.0
