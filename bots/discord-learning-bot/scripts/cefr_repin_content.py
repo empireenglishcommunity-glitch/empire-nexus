@@ -63,11 +63,14 @@ class Repinner(discord.Client):
             await self.close()
 
     async def _bot_guide_msg(self, channel):
-        """Return the bot's existing 'guide' message in the channel (a long bot
-        message among the last few), or None. Matches setup_server's check."""
+        """Return the bot's existing PINNED message in the channel, or None.
+        We check the channel's pinned messages (not recent history): the guide
+        we post is always pinned, so a pinned bot message is the reliable
+        'already has a guide' signal — correct even on busy channels like
+        #general-chat where the old pin is far back in history."""
         try:
-            async for m in channel.history(limit=8):
-                if m.author.id == self.user.id and len(m.content) > 100:
+            for m in await channel.pins():
+                if m.author.id == self.user.id:
                     return m
         except discord.Forbidden:
             return None
@@ -77,6 +80,8 @@ class Repinner(discord.Client):
         print("\n[1/2] Pin guides on channels that don't have one yet")
         pinned = skipped = missing = 0
         for ch_name, text in CHANNEL_GUIDES.items():
+            if ch_name in _REFRESH:
+                continue  # welcome/rules/roles-info are handled by the refresh step
             channel = discord.utils.get(guild.text_channels, name=ch_name)
             if not channel:
                 missing += 1
