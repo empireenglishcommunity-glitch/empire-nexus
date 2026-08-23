@@ -1999,6 +1999,87 @@ async def post_monthly_finish(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  ADVANCEMENT EXAM API (Taqdeem Phase 4)
+# ============================================================
+
+@routes.get("/api/assessment/advancement/status")
+async def get_advancement_status(request: web.Request) -> web.Response:
+    """Advancement Exam state: disabled | locked | available | cooldown | passed."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    state = assessment.get_advancement_state(discord_id, level)
+    return web.json_response({"ok": True, **state}, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/advancement/start")
+async def post_advancement_start(request: web.Request) -> web.Response:
+    """Begin a new Advancement Exam attempt (Part A)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    result = assessment.start_advancement_attempt(discord_id, level)
+    status = 200 if result.get("ok") else 409
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/advancement/item")
+async def post_advancement_item(request: web.Request) -> web.Response:
+    """Submit an answer for an advancement exam item (Part A)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        return web.json_response({"ok": False, "error": "bad_json"},
+                                 status=400, headers=_cors_headers(request))
+    attempt_id = body.get("attempt_id")
+    item_no = body.get("item_no")
+    answer = body.get("answer", "")
+    if not attempt_id or item_no is None:
+        return web.json_response({"ok": False, "error": "missing fields"},
+                                 status=400, headers=_cors_headers(request))
+    result = await assessment.submit_item(discord_id, int(attempt_id), int(item_no),
+                                          answer=answer)
+    return web.json_response(result, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/advancement/finish-a")
+async def post_advancement_finish_a(request: web.Request) -> web.Response:
+    """Finalize Part A of the advancement exam. Returns Part A scores;
+    does NOT determine final pass/fail (that's after Part B)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    attempt_id = body.get("attempt_id")
+    if not attempt_id:
+        return web.json_response({"ok": False, "error": "missing attempt_id"},
+                                 status=400, headers=_cors_headers(request))
+    integrity_flags = body.get("integrity_flags", {})
+    result = assessment.finish_advancement_part_a(discord_id, int(attempt_id),
+                                                  integrity_flags=integrity_flags)
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 

@@ -328,4 +328,10 @@ def build_calendar(discord_id: str) -> dict | None:
         monthly_state = assessment.get_monthly_state(discord_id, level)
         result["monthly_review"] = monthly_state
 
+    # Taqdeem Phase 4: Advancement Exam stop on the calendar.
+    if database.is_feature_enabled("assessment_advancement_exam", discord_id):
+        from . import assessment
+        adv_state = assessment.get_advancement_state(discord_id, level)
+        result["advancement_exam"] = adv_state
+
     return result
