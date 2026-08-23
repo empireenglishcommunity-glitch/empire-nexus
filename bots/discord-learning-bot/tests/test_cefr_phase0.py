@@ -94,14 +94,18 @@ def test_loader_still_loads_legacy():
 
 
 def test_loader_tolerates_unauthored_cefr_levels():
-    # CEFR levels are authored one at a time (A1, then A2, ...). Levels not yet
-    # written simply have no week files on disk; load_all must not raise and
-    # just loads no weeks for them. (A1–C1 ARE authored now, so we assert
-    # against a level that is still unauthored — C2 — to keep testing the
-    # tolerance.)
+    # CEFR levels were authored one at a time (A1 → C2). Now the whole ladder
+    # A1–C2 is authored, so the loader must (a) not raise, and (b) still degrade
+    # gracefully when asked for content that does not exist — an unknown level
+    # or an out-of-range week — returning empty rather than erroring. This keeps
+    # the original "loader is tolerant of missing content" guarantee under test.
     curriculum.load_all()
-    c2 = [k for k in curriculum._weekly_data if k.startswith("C2_")]
-    assert c2 == []  # C2 not authored yet — loader tolerates it, no error
+    # There is no level above C2 (no C3/D1/D2); none should ever load.
+    stray = [k for k in curriculum._weekly_data if k[:2] in ("C3", "D1", "D2")]
+    assert stray == []
+    # Requests for non-existent content degrade to empty, not exceptions.
+    assert curriculum.get_vocabulary_for_week(999, "C2") == []
+    assert curriculum.get_vocabulary_for_week(1, "ZZ") == []
 
 
 # ============================================================

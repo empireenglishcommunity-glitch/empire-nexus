@@ -152,5 +152,36 @@
       {"code": "C1.M.4", "en": "Can synthesise information and arguments from a number of sources into a coherent whole.", "ar": "يقدر يجمع المعلومات والحجج من عدّة مصادر في كلٍّ متماسك."}
     ]
   },
-  "C2": {}
+  "C2": {
+    "overview_en": "Can understand with ease virtually everything heard or read. Can summarise information from different spoken and written sources, reconstructing arguments and accounts in a coherent presentation. Can express him/herself spontaneously, very fluently and precisely, differentiating finer shades of meaning even in the most complex situations.",
+    "overview_ar": "يقدر يفهم بسهولة تقريبًا كل ما يسمعه أو يقرأه. يقدر يلخّص المعلومات من مصادر شفهية ومكتوبة مختلفة، ويعيد بناء الحجج والروايات في عرض متماسك. يقدر يعبّر عن نفسه بعفوية وطلاقة ودقّة عالية، ويميّز أدقّ الفروق في المعنى حتى في أعقد المواقف.",
+    "reception": [
+      {"code": "C2.R.1", "en": "Can understand with ease virtually any form of spoken language, whether live or broadcast, delivered at fast native speed.", "ar": "يقدر يفهم بسهولة تقريبًا أيّ شكل من الكلام المنطوق، مباشرًا كان أو مذاعًا، وبسرعة المتحدّث الأصلي."},
+      {"code": "C2.R.2", "en": "Can read with ease virtually all forms of the written language, including abstract, structurally complex, or highly colloquial literary and non-literary texts.", "ar": "يقدر يقرأ بسهولة تقريبًا كل أشكال اللغة المكتوبة، بما فيها النصوص المجرّدة والمعقّدة تركيبيًا والعامّية الأدبية وغير الأدبية."},
+      {"code": "C2.R.3", "en": "Can appreciate fine points, humour, irony and implicit cultural meaning in demanding texts.", "ar": "يقدر يتذوّق النقاط الدقيقة والفكاهة والسخرية والمعنى الثقافي الضمني في النصوص الصعبة."},
+      {"code": "C2.R.4", "en": "Can distinguish finer shades of meaning, attitude and stance even where these are conveyed only through subtle stylistic choices.", "ar": "يقدر يميّز أدقّ الفروق في المعنى والموقف والنبرة حتى لو عُبّر عنها فقط عبر اختيارات أسلوبية دقيقة."},
+      {"code": "C2.R.5", "en": "Can extract and reconstruct precise detail and subtle distinctions from highly specialised, complex or fragmented sources.", "ar": "يقدر يستخلص ويعيد بناء التفاصيل الدقيقة والفروق الطفيفة من مصادر عالية التخصص أو معقّدة أو مجزّأة."}
+    ],
+    "production": [
+      {"code": "C2.P.1", "en": "Can produce clear, smoothly flowing, well-structured speech with an effective logical structure that helps the listener notice and remember significant points.", "ar": "يقدر ينتج كلامًا واضحًا وسلسًا ومنظّمًا ببنية منطقية فعّالة تساعد المستمع على ملاحظة النقاط المهمّة وتذكّرها."},
+      {"code": "C2.P.2", "en": "Can write clear, smoothly flowing, complex texts in an appropriate and effective style with a logical structure that helps the reader find significant points.", "ar": "يقدر يكتب نصوصًا واضحة وسلسة ومعقّدة بأسلوب مناسب وفعّال وببنية منطقية تساعد القارئ على إيجاد النقاط المهمّة."},
+      {"code": "C2.P.3", "en": "Can give clear, well-structured expositions of complex subjects, developing and supporting points with subsidiary detail, reasons and relevant examples.", "ar": "يقدر يقدّم عرضًا واضحًا ومنظّمًا لمواضيع معقّدة، مع تطوير النقاط ودعمها بتفاصيل فرعية وأسباب وأمثلة ذات صلة."},
+      {"code": "C2.P.4", "en": "Can express ideas precisely, differentiating finer shades of meaning even in the most complex situations.", "ar": "يقدر يعبّر عن أفكاره بدقّة، ويميّز أدقّ الفروق في المعنى حتى في أعقد المواقف."},
+      {"code": "C2.P.5", "en": "Can select an appropriate style and register for virtually any context, with full and deliberate control of stylistic and rhetorical devices.", "ar": "يقدر يختار الأسلوب والمستوى اللغوي المناسب لأيّ سياق تقريبًا، مع تحكّم كامل ومقصود في الأدوات الأسلوبية والبلاغية."},
+      {"code": "C2.P.6", "en": "Can summarise and reconstruct information and arguments from a number of sources into a coherent, concise and precise whole.", "ar": "يقدر يلخّص ويعيد بناء المعلومات والحجج من عدّة مصادر في كلٍّ متماسك وموجز ودقيق."}
+    ],
+    "interaction": [
+      {"code": "C2.I.1", "en": "Can take part effortlessly in any conversation or discussion, with good familiarity with idiomatic expressions and colloquialisms.", "ar": "يقدر يشارك بلا عناء في أيّ محادثة أو نقاش، مع إلمام جيّد بالتعابير الاصطلاحية والعامّية."},
+      {"code": "C2.I.2", "en": "Can express him/herself spontaneously and very fluently, conveying finer shades of meaning precisely.", "ar": "يقدر يعبّر عن نفسه بعفوية وطلاقة عالية، وينقل أدقّ الفروق في المعنى بدقّة."},
+      {"code": "C2.I.3", "en": "Can interweave his/her contribution skilfully into the joint discourse with natural turn-taking, referencing and allusion.", "ar": "يقدر يدمج مساهمته بمهارة في الحوار المشترك بتبادل أدوار وإحالة وتلميح طبيعي."},
+      {"code": "C2.I.4", "en": "If a difficulty is encountered, can backtrack and restructure around it so smoothly the interlocutor is hardly aware of it.", "ar": "لو واجه صعوبة، يقدر يتراجع ويعيد الصياغة حولها بسلاسة بحيث لا يكاد محدّثه يلاحظ ذلك."},
+      {"code": "C2.I.5", "en": "Can convey nuance, emphasis, irony and emotion precisely and appropriately in interaction.", "ar": "يقدر ينقل الدلالة الدقيقة والتوكيد والسخرية والعاطفة بدقّة وملاءمة أثناء التفاعل."}
+    ],
+    "mediation": [
+      {"code": "C2.M.1", "en": "Can summarise information from different spoken and written sources, reconstructing arguments and accounts in a coherent presentation.", "ar": "يقدر يلخّص المعلومات من مصادر شفهية ومكتوبة مختلفة، ويعيد بناء الحجج والروايات في عرض متماسك."},
+      {"code": "C2.M.2", "en": "Can reformulate and relay complex or specialised material precisely and appropriately for different audiences.", "ar": "يقدر يعيد صياغة ونقل المواد المعقّدة أو المتخصّصة بدقّة وملاءمة لجماهير مختلفة."},
+      {"code": "C2.M.3", "en": "Can mediate effectively and diplomatically, conveying subtle nuance and managing sensitive or contentious exchanges.", "ar": "يقدر يتوسّط بفعالية ودبلوماسية، وينقل الدلالات الدقيقة ويدير المواقف الحسّاسة أو الخلافية."},
+      {"code": "C2.M.4", "en": "Can explain and clarify complex, ambiguous or implicit points, differentiating finer shades of meaning for the listener.", "ar": "يقدر يشرح ويوضّح النقاط المعقّدة أو الغامضة أو الضمنية، ويميّز أدقّ الفروق في المعنى للمستمع."}
+    ]
+  }
 }
