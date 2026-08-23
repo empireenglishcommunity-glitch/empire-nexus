@@ -614,6 +614,19 @@ CREATE TABLE IF NOT EXISTS monthly_reviews (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 
+-- Mi'yar Phase 0: CEFR migration snapshots (reversible). One row per student
+-- per migration run, holding a full pre-migration snapshot for rollback.
+CREATE TABLE IF NOT EXISTS cefr_migration_log (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id    TEXT NOT NULL,
+    from_level    TEXT NOT NULL,
+    to_level      TEXT NOT NULL,
+    snapshot_json TEXT NOT NULL,
+    migrated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    rolled_back   INTEGER NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_cefr_migration_member ON cefr_migration_log(discord_id);
+
 -- Taqdeem Phase 0: Level Advancement Exam tracking.
 CREATE TABLE IF NOT EXISTS advancement_exams (
     discord_id      TEXT NOT NULL,
@@ -3569,6 +3582,157 @@ def advancement_attempts_count(discord_id: str, level: str) -> int:
     ).fetchone()
     conn.close()
     return row["c"] if row else 0
+
+
+# ============================================================
+#  MI'YAR — silent, zero-loss CEFR migration (Phase 0)
+# ============================================================
+#
+# Remaps a student from a legacy level (L0–L3) to a CEFR level (A1–C2)
+# WITHOUT losing anything. It:
+#   • snapshots the full member record first (reversible),
+#   • changes the `level` string on `members` AND on every per-student table
+#     that carries a `level` column (week_mastery, assessment_attempts,
+#     monthly_reviews, advancement_exams, …) — found dynamically so history
+#     stays attached to the new level key,
+#   • PRESERVES level_started_at (calendar anchor → identical week position),
+#     streak, points, SRS, tokens/sessions, prefs — everything else untouched,
+#   • is idempotent (a member already on a CEFR level is skipped),
+#   • is dry-run-able (compute + report, write nothing),
+#   • is reversible per student (rollback_cefr_migration).
+
+def _tables_with_level_column(conn) -> list:
+    """Tables (besides members) that have BOTH discord_id and level columns —
+    these must have their `level` remapped so a student's history follows them
+    to the new CEFR key. Discovered dynamically so future tables are covered."""
+    out = []
+    for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall():
+        t = r["name"]
+        if t in ("members", "cefr_migration_log", "reset_consent_log"):
+            continue
+        cols = {c["name"] for c in conn.execute(f"PRAGMA table_info({t})").fetchall()}
+        if "discord_id" in cols and "level" in cols:
+            out.append(t)
+    return out
+
+
+def migrate_member_to_cefr(discord_id: str, dry_run: bool = True) -> dict:
+    """Migrate ONE member legacy→CEFR. Returns a report dict describing what
+    changed (or would change, in dry-run). Idempotent + reversible."""
+    from . import config as _cfg
+    member = get_member(discord_id)
+    if not member:
+        return {"discord_id": discord_id, "status": "not_found"}
+
+    cur_level = member.get("level", "L0")
+
+    # Idempotent: already a CEFR level → nothing to do.
+    if cur_level in _cfg.CEFR_LEVELS:
+        return {"discord_id": discord_id, "status": "already_cefr",
+                "level": cur_level, "name": member.get("discord_name", "")}
+
+    new_level = _cfg.LEGACY_LEVEL_MAP.get(cur_level)
+    if not new_level:
+        return {"discord_id": discord_id, "status": "no_mapping",
+                "level": cur_level}
+
+    conn = _connect()
+    try:
+        level_tables = _tables_with_level_column(conn)
+        # Count rows that will be remapped in each table (for the report).
+        remap_counts = {}
+        for t in level_tables:
+            c = conn.execute(
+                f"SELECT COUNT(*) c FROM {t} WHERE discord_id=? AND level=?",
+                (discord_id, cur_level)).fetchone()
+            if c and c["c"]:
+                remap_counts[t] = c["c"]
+
+        report = {
+            "discord_id": discord_id,
+            "name": member.get("discord_name", ""),
+            "from_level": cur_level,
+            "to_level": new_level,
+            "preserved": {
+                "current_streak": member.get("current_streak", 0),
+                "longest_streak": member.get("longest_streak", 0),
+                "total_points": member.get("total_points", 0),
+                "level_started_at": member.get("level_started_at"),
+            },
+            "remapped_tables": remap_counts,
+            "status": "would_migrate" if dry_run else "migrated",
+        }
+
+        if dry_run:
+            return report
+
+        # --- WRITE PATH ---
+        # 1. Snapshot first (reversible).
+        snapshot = snapshot_member_data(discord_id)
+        import json as _json
+        conn.execute(
+            "INSERT INTO cefr_migration_log (discord_id, from_level, to_level, snapshot_json) "
+            "VALUES (?, ?, ?, ?)",
+            (discord_id, cur_level, new_level, _json.dumps(snapshot, ensure_ascii=False)),
+        )
+        # 2. Remap the member's level ONLY (preserve level_started_at + all counters).
+        conn.execute("UPDATE members SET level=? WHERE discord_id=?", (new_level, discord_id))
+        # 3. Remap level on every per-student table so history follows them.
+        for t in level_tables:
+            conn.execute(
+                f"UPDATE {t} SET level=? WHERE discord_id=? AND level=?",
+                (new_level, discord_id, cur_level))
+        conn.commit()
+        return report
+    finally:
+        conn.close()
+
+
+def migrate_to_cefr(dry_run: bool = True, discord_id: str = None) -> dict:
+    """Migrate all active members (or one) legacy→CEFR. Returns a summary +
+    per-student reports. Safe to run repeatedly (idempotent)."""
+    if discord_id:
+        targets = [discord_id]
+    else:
+        targets = [m["discord_id"] for m in all_active_members()]
+
+    reports = [migrate_member_to_cefr(d, dry_run=dry_run) for d in targets]
+    summary = {}
+    for r in reports:
+        summary[r["status"]] = summary.get(r["status"], 0) + 1
+    return {"dry_run": dry_run, "count": len(reports),
+            "summary": summary, "reports": reports}
+
+
+def rollback_cefr_migration(discord_id: str) -> dict:
+    """Restore a member to their pre-migration state from the most recent
+    (non-rolled-back) snapshot. Reverses the level remap on members + all
+    per-student tables. Returns a status dict."""
+    import json as _json
+    from . import config as _cfg
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT * FROM cefr_migration_log WHERE discord_id=? AND rolled_back=0 "
+            "ORDER BY id DESC LIMIT 1", (discord_id,)).fetchone()
+        if not row:
+            return {"discord_id": discord_id, "status": "no_snapshot"}
+
+        from_level = row["from_level"]
+        to_level = row["to_level"]
+
+        # Reverse the level remap (CEFR → legacy) on members + per-student tables.
+        conn.execute("UPDATE members SET level=? WHERE discord_id=?", (from_level, discord_id))
+        for t in _tables_with_level_column(conn):
+            conn.execute(
+                f"UPDATE {t} SET level=? WHERE discord_id=? AND level=?",
+                (from_level, discord_id, to_level))
+        conn.execute("UPDATE cefr_migration_log SET rolled_back=1 WHERE id=?", (row["id"],))
+        conn.commit()
+        return {"discord_id": discord_id, "status": "rolled_back",
+                "restored_level": from_level}
+    finally:
+        conn.close()
 
 
 

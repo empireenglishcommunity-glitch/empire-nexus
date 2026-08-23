@@ -1,0 +1,9 @@
+{
+  "_comment": "Mi'yar — CEFR can-do descriptor library. Curated bilingual (EN/AR) descriptors from the Council of Europe Companion Volume (2020), keyed by level then mode. Populated per level during the Mi'yar rollout (Phase 1 = A1, etc.). Modes: reception (listening/reading), production (spoken/written), interaction, mediation.",
+  "A1": {},
+  "A2": {},
+  "B1": {},
+  "B2": {},
+  "C1": {},
+  "C2": {}
+}

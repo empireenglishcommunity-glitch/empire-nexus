@@ -274,6 +274,101 @@ LEVELS = {
     },
 }
 
+# ============================================================
+#  CEFR LEVEL MODEL (Mi'yar) — the six official CEFR levels
+# ============================================================
+#
+# Additive + backwards-compatible: the legacy LEVELS dict (L0–L3) is left
+# untouched so nothing breaks while Mi'yar is built behind the
+# `cefr_curriculum` flag. Once a student is migrated (Phase 2), their
+# member.level becomes a CEFR key (A1–C2) and code resolves display info via
+# level_info() below, which accepts BOTH legacy and CEFR keys.
+
+CEFR_LEVELS = {
+    "A1": {
+        "cefr": "A1", "title": "Breakthrough",
+        "name": "Beginner", "name_ar": "مبتدئ",
+        "emoji": "🌱", "color": 0xA8E6CF,
+        "order": 0, "weeks": 10,
+        "vocab_target": 750, "speaking_target_seconds": 60,
+        "advancement_score": 70,
+    },
+    "A2": {
+        "cefr": "A2", "title": "Waystage",
+        "name": "Elementary", "name_ar": "أساسي",
+        "emoji": "🌿", "color": 0x2ECC71,
+        "order": 1, "weeks": 12,
+        "vocab_target": 1500, "speaking_target_seconds": 90,
+        "advancement_score": 72,
+    },
+    "B1": {
+        "cefr": "B1", "title": "Threshold",
+        "name": "Intermediate", "name_ar": "متوسط",
+        "emoji": "🚀", "color": 0x3498DB,
+        "order": 2, "weeks": 14,
+        "vocab_target": 3250, "speaking_target_seconds": 120,
+        "advancement_score": 75,
+    },
+    "B2": {
+        "cefr": "B2", "title": "Vantage",
+        "name": "Upper-Intermediate", "name_ar": "فوق المتوسط",
+        "emoji": "💪", "color": 0x9B59B6,
+        "order": 3, "weeks": 16,
+        "vocab_target": 5000, "speaking_target_seconds": 180,
+        "advancement_score": 75,
+    },
+    "C1": {
+        "cefr": "C1", "title": "Effective Operational Proficiency",
+        "name": "Advanced", "name_ar": "متقدّم",
+        "emoji": "🏆", "color": 0xE67E22,
+        "order": 4, "weeks": 18,
+        "vocab_target": 8000, "speaking_target_seconds": 240,
+        "advancement_score": 78,
+    },
+    "C2": {
+        "cefr": "C2", "title": "Mastery",
+        "name": "Proficiency", "name_ar": "إتقان",
+        "emoji": "👑", "color": 0xC0392B,
+        "order": 5, "weeks": 20,
+        "vocab_target": 10000, "speaking_target_seconds": 300,
+        "advancement_score": 80,
+    },
+}
+
+# Legacy → CEFR mapping (used by the silent migration + backwards reads).
+LEGACY_LEVEL_MAP = {"L0": "A1", "L1": "A2", "L2": "B1", "L3": "B2"}
+CEFR_TO_LEGACY = {v: k for k, v in LEGACY_LEVEL_MAP.items()}
+CEFR_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"]
+
+
+def is_cefr_level(level: str) -> bool:
+    """True if `level` is a CEFR key (A1–C2)."""
+    return level in CEFR_LEVELS
+
+
+def next_cefr_level(level: str) -> str:
+    """The CEFR level after `level`, or None at the top (C2). Accepts a legacy
+    key too (maps it first)."""
+    cefr = level if level in CEFR_LEVELS else LEGACY_LEVEL_MAP.get(level)
+    if cefr not in CEFR_ORDER:
+        return None
+    i = CEFR_ORDER.index(cefr)
+    return CEFR_ORDER[i + 1] if i + 1 < len(CEFR_ORDER) else None
+
+
+def level_info(level: str) -> dict:
+    """Resolve display/config info for a level key, accepting BOTH CEFR
+    (A1–C2) and legacy (L0–L3) keys. This is the single lookup that lets the
+    codebase work during and after the migration. Falls back to A1/L0."""
+    if level in CEFR_LEVELS:
+        return CEFR_LEVELS[level]
+    if level in LEVELS:
+        # Legacy key: return the legacy dict but annotate its CEFR equivalent.
+        info = dict(LEVELS[level])
+        info["cefr"] = LEGACY_LEVEL_MAP.get(level, "A1")
+        return info
+    return CEFR_LEVELS["A1"]
+
 # Daily task structure (7 tasks in fixed order — same every level)
 DAILY_TASKS = [
     {"id": "accent", "name": "Accent/Phoneme Drill", "name_ar": "تدريب النطق", "emoji": "🎯"},
