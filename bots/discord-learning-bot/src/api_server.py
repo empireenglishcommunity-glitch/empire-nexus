@@ -2079,6 +2079,48 @@ async def post_advancement_finish_a(request: web.Request) -> web.Response:
     return web.json_response(result, status=status, headers=_cors_headers(request))
 
 
+@routes.get("/api/assessment/advancement/part-b")
+async def get_advancement_part_b(request: web.Request) -> web.Response:
+    """Get the Part B prompt for the student's level."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    level = payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    prompt = assessment.get_part_b_prompt(level)
+    return web.json_response({"ok": True, **prompt}, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/advancement/finish-b")
+async def post_advancement_finish_b(request: web.Request) -> web.Response:
+    """Submit Part B recording transcript and get the FINAL advancement verdict.
+    The client transcribes via Whisper (or sends raw audio — but for now we
+    expect a transcript string from the existing recording infrastructure)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        return web.json_response({"ok": False, "error": "bad_json"},
+                                 status=400, headers=_cors_headers(request))
+    attempt_id = body.get("attempt_id")
+    transcript = body.get("transcript", "")
+    if not attempt_id:
+        return web.json_response({"ok": False, "error": "missing attempt_id"},
+                                 status=400, headers=_cors_headers(request))
+    if not transcript.strip():
+        return web.json_response({"ok": False, "error": "empty transcript"},
+                                 status=400, headers=_cors_headers(request))
+    result = assessment.finish_advancement_final(discord_id, int(attempt_id), transcript)
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
 # ============================================================
 #  CORS preflight handler
 # ============================================================

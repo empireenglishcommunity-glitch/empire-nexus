@@ -1510,3 +1510,288 @@ def finish_advancement_part_a(discord_id: str, attempt_id: int,
         "status": verdict["status"],
         "flag_reason": verdict["flag_reason"],
     }
+
+
+
+# ============================================================
+#  ADVANCEMENT EXAM PART B — integrated production task (Phase 5)
+# ============================================================
+#
+# A real-world production scenario: L0 = 60-second self-introduction.
+# Scored by AI on 4 dimensions (each 0-25 = 100 total):
+#   fluency, accuracy, vocabulary range, pronunciation clarity.
+# Combined with Part A for the final pass/fail determination.
+
+# Per-level integrated task prompts (owner-configurable in future)
+_PART_B_PROMPTS = {
+    "L0": {
+        "prompt_en": (
+            "Record yourself for 60 seconds. Introduce yourself in English: "
+            "your name, where you're from, what you do, and why you're learning English."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك ٦٠ ثانية. عرّف نفسك بالإنجليزي: "
+            "اسمك، من فين، شغلك إيه، وليه بتتعلم إنجليزي."
+        ),
+        "duration_sec": 60,
+        "prep_time_sec": 60,
+    },
+    "L1": {
+        "prompt_en": (
+            "Record yourself for 60 seconds. Describe your typical day "
+            "from morning to night in English."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك ٦٠ ثانية. وصّف يومك العادي من الصبح للّيل بالإنجليزي."
+        ),
+        "duration_sec": 60,
+        "prep_time_sec": 60,
+    },
+    "L2": {
+        "prompt_en": (
+            "Record yourself for 60 seconds. You're at a café — order a drink, "
+            "ask about the Wi-Fi, and make small talk with the barista."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك ٦٠ ثانية. إنت في كافيه — اطلب مشروب، اسأل عن الواي فاي، "
+            "واعمل محادثة خفيفة مع الباريستا."
+        ),
+        "duration_sec": 60,
+        "prep_time_sec": 60,
+    },
+    "L3": {
+        "prompt_en": (
+            "Record yourself for 90 seconds. Give a short presentation: "
+            "explain something you're passionate about and why others should care."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك ٩٠ ثانية. قدّم عرض قصير: "
+            "اشرح حاجة بتحبها وليه الناس لازم تهتم بيها."
+        ),
+        "duration_sec": 90,
+        "prep_time_sec": 60,
+    },
+}
+
+
+def get_part_b_prompt(level: str) -> dict:
+    """Get the Part B integrated task prompt for a level."""
+    return _PART_B_PROMPTS.get(level, _PART_B_PROMPTS["L0"])
+
+
+def score_part_b(transcript: str, level: str, cfg: dict | None = None) -> dict:
+    """Score Part B from a Whisper transcript using rule-based heuristics.
+
+    Scores 4 dimensions (each 0-25, total 100):
+    - Fluency: length + smoothness (word count, sentence structure)
+    - Accuracy: basic grammar patterns (for the level)
+    - Vocabulary range: unique words / total words ratio + absolute count
+    - Pronunciation clarity: word confidence (Whisper transcribes clearly
+      spoken words more accurately — garbled speech = shorter/fragmented)
+
+    Returns {total, fluency, accuracy, vocab_range, pronunciation, feedback}.
+    """
+    words = transcript.strip().split() if transcript else []
+    word_count = len(words)
+
+    if word_count < 5:
+        return {
+            "total": 0, "fluency": 0, "accuracy": 0,
+            "vocab_range": 0, "pronunciation": 0,
+            "feedback": "No speech detected — please try recording again.",
+            "feedback_ar": "مفيش كلام اتسمع — جرّب تسجّل تاني.",
+        }
+
+    # --- Fluency (0-25): based on word count for a 60s recording ---
+    # L0 beginner: 30+ words in 60s = good pace; 60+ = excellent
+    if word_count >= 60:
+        fluency = 25
+    elif word_count >= 40:
+        fluency = 20
+    elif word_count >= 25:
+        fluency = 15
+    elif word_count >= 15:
+        fluency = 10
+    else:
+        fluency = 5
+
+    # --- Accuracy (0-25): sentence-like structure ---
+    # Simple heuristic: count periods/commas/question marks as sentence breaks
+    import re
+    sentences = re.split(r'[.!?]+', transcript)
+    sentences = [s.strip() for s in sentences if len(s.strip()) > 3]
+    # More complete sentences = better grammar structure
+    if len(sentences) >= 5:
+        accuracy = 25
+    elif len(sentences) >= 3:
+        accuracy = 20
+    elif len(sentences) >= 2:
+        accuracy = 15
+    elif len(sentences) >= 1:
+        accuracy = 10
+    else:
+        accuracy = 5
+
+    # --- Vocabulary range (0-25): unique words / total ---
+    unique = set(w.lower().strip(".,!?;:\"'") for w in words)
+    ratio = len(unique) / max(1, word_count)
+    if ratio >= 0.7 and len(unique) >= 25:
+        vocab_range = 25
+    elif ratio >= 0.6 and len(unique) >= 18:
+        vocab_range = 20
+    elif ratio >= 0.5 and len(unique) >= 12:
+        vocab_range = 15
+    elif len(unique) >= 8:
+        vocab_range = 10
+    else:
+        vocab_range = 5
+
+    # --- Pronunciation clarity (0-25): proxy via word length consistency ---
+    # Well-pronounced speech → Whisper transcribes clearly → real English words
+    # Garbled → short fragments, non-words
+    avg_word_len = sum(len(w) for w in words) / max(1, word_count)
+    if avg_word_len >= 4.5 and word_count >= 20:
+        pronunciation = 25
+    elif avg_word_len >= 4.0 and word_count >= 15:
+        pronunciation = 20
+    elif avg_word_len >= 3.5:
+        pronunciation = 15
+    elif avg_word_len >= 3.0:
+        pronunciation = 10
+    else:
+        pronunciation = 5
+
+    total = fluency + accuracy + vocab_range + pronunciation
+
+    # Feedback
+    if total >= 80:
+        feedback = "Excellent production! Clear, fluent, and well-structured."
+        feedback_ar = "إنتاج ممتاز! واضح وسلس ومنظّم."
+    elif total >= 60:
+        feedback = "Good effort — solid foundation. Keep practising fluency."
+        feedback_ar = "مجهود كويس — أساس متين. كمّل تمرين الطلاقة."
+    elif total >= 40:
+        feedback = "A real attempt — focus on speaking more and using varied words."
+        feedback_ar = "محاولة حقيقية — ركّز على إنك تتكلم أكتر وتستخدم كلمات متنوّعة."
+    else:
+        feedback = "Keep trying — speak more, use the words you've learned."
+        feedback_ar = "كمّل محاولة — اتكلم أكتر واستخدم الكلمات اللي اتعلمتها."
+
+    return {
+        "total": total,
+        "fluency": fluency,
+        "accuracy": accuracy,
+        "vocab_range": vocab_range,
+        "pronunciation": pronunciation,
+        "feedback": feedback,
+        "feedback_ar": feedback_ar,
+    }
+
+
+def compute_advancement_final(part_a_score: float, part_b_score: float,
+                              per_skill: dict, cfg: dict | None = None) -> dict:
+    """Compute the final advancement pass/fail from Part A + Part B.
+
+    Returns {overall_pct, passed, part_a_weighted, part_b_weighted,
+             failed_skills, part_b_met, reason_if_failed}.
+    """
+    cfg = cfg or database.get_progression_config()
+    a_weight = cfg.get("progression_advancement_part_a_weight", 0.6)
+    b_weight = cfg.get("progression_advancement_part_b_weight", 0.4)
+    overall_pass = cfg.get("progression_advancement_pass_pct", 75)
+    skill_min = cfg.get("progression_advancement_skill_min_pct", 60)
+    part_b_min = cfg.get("progression_advancement_part_b_min_pct", 50)
+
+    # Part B as percentage (out of 100)
+    part_b_pct = part_b_score  # already 0-100
+
+    # Weighted overall
+    overall_pct = round(part_a_score * a_weight + part_b_pct * b_weight, 1)
+
+    # Checks
+    failed_skills = [s for s, pct in per_skill.items() if pct < skill_min]
+    skill_mins_met = len(failed_skills) == 0
+    part_b_met = part_b_pct >= part_b_min
+    overall_met = overall_pct >= overall_pass
+
+    passed = overall_met and skill_mins_met and part_b_met
+
+    reason = ""
+    if not passed:
+        if not overall_met:
+            reason = f"overall {overall_pct}% < {overall_pass}%"
+        elif not skill_mins_met:
+            reason = f"skills below {skill_min}%: {', '.join(failed_skills)}"
+        elif not part_b_met:
+            reason = f"Part B {part_b_pct}% < {part_b_min}%"
+
+    return {
+        "overall_pct": overall_pct,
+        "passed": passed,
+        "part_a_weighted": round(part_a_score * a_weight, 1),
+        "part_b_weighted": round(part_b_pct * b_weight, 1),
+        "part_b_pct": part_b_pct,
+        "failed_skills": failed_skills,
+        "skill_mins_met": skill_mins_met,
+        "part_b_met": part_b_met,
+        "reason_if_failed": reason,
+    }
+
+
+def finish_advancement_final(discord_id: str, attempt_id: int,
+                             part_b_transcript: str) -> dict:
+    """Finalize the full advancement exam (Part A already scored + Part B recording).
+    Computes final verdict. Returns the complete result."""
+    # Get Part A data
+    conn = database._connect()
+    adv = conn.execute(
+        "SELECT * FROM advancement_exams WHERE attempt_id=?", (attempt_id,)).fetchone()
+    conn.close()
+
+    if not adv:
+        return {"ok": False, "error": "not_found"}
+    if adv["passed"]:
+        return {"ok": False, "error": "already_passed"}
+
+    level = adv["level"]
+    part_a_score = adv["part_a_score"] or 0.0
+
+    # Score Part B
+    part_b_result = score_part_b(part_b_transcript, level)
+    part_b_score = part_b_result["total"]  # 0-100
+
+    # Load per-skill from Part A
+    try:
+        per_skill = _json.loads(adv["skill_mins"] or "{}")
+    except Exception:
+        per_skill = {}
+
+    # Compute final verdict
+    final = compute_advancement_final(part_a_score, part_b_score, per_skill)
+
+    # Update advancement_exams
+    conn = database._connect()
+    try:
+        conn.execute(
+            "UPDATE advancement_exams SET part_b_score=?, overall_score=?, "
+            "passed=?, promoted=0 WHERE attempt_id=?",
+            (part_b_score, final["overall_pct"], 1 if final["passed"] else 0, attempt_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    _alog.info(f"advancement: {discord_id} FINAL → overall={final['overall_pct']}% "
+               f"passed={final['passed']} (A={part_a_score}, B={part_b_score})")
+
+    return {
+        "ok": True,
+        "passed": final["passed"],
+        "overall_pct": final["overall_pct"],
+        "part_a_score": part_a_score,
+        "part_b_score": part_b_score,
+        "part_b_detail": part_b_result,
+        "per_skill": per_skill,
+        "failed_skills": final["failed_skills"],
+        "reason_if_failed": final["reason_if_failed"],
+    }
