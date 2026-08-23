@@ -383,11 +383,13 @@ It is a complete **Learning Operating System.**
 ✅ غرف صوتية للممارسة الحقيقية مع المجتمع
 ✅ الترقية بين المستويات بناءً على الكفاءة الفعلية
 
-**رحلتك عبر المستويات:**
-🌱 المستوى صفر: مبتدئ تمامًا (٨-١٢ أسبوعًا)
-💪 المستوى الأول: إنجليزية النجاة (١٠-١٤ أسبوعًا)
-🚀 المستوى الثاني: التواصل (١٢-١٦ أسبوعًا)
-👑 المستوى الثالث: الطلاقة ولهجة قريبة من الأصلية (تطوّر مستمر)
+**رحلتك عبر المستويات (متوافقة مع الإطار الأوروبي CEFR):**
+🌱 A1 — مبتدئ (١٠ أسابيع)
+🌿 A2 — أساسي (١٢ أسبوعًا)
+🚀 B1 — متوسط (١٤ أسبوعًا)
+💪 B2 — فوق المتوسط (١٦ أسبوعًا)
+🏆 C1 — متقدّم (١٨ أسبوعًا)
+👑 C2 — إتقان (٢٠ أسبوعًا)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -411,8 +413,8 @@ RULES_MESSAGE = """🏛️ **EMPIRE ENGLISH — COMMUNITY RULES**
 
 🗣️ **RULE 1: English Only**
 All text and voice channels are English-only.
-Exception: #l0-questions (one-sentence Arabic clarifications).
-L0-L1: gentle reminders. L2+: enforcement applies.
+Exception: your level's questions channel (e.g. #a1-questions) — one-sentence Arabic clarifications.
+A1-A2: gentle reminders. B1+: enforcement applies.
 
 📚 **RULE 2: Complete Your Daily Tasks**
 The system works when YOU work it.
@@ -459,27 +461,34 @@ ROLES_INFO_MESSAGE = """🏛️ **HOW LEVELS WORK**
 
 Every member starts at their placement level.
 You advance ONLY by passing the Level Exit Exam.
+Our six levels are aligned to the CEFR (A1–C2).
 No shortcuts. No exceptions. The system works because the standards are real.
 
-🌱 **LEVEL 0 — Absolute Beginner**
-• 0-500 words | All 44 English sounds
+🌱 **A1 — Breakthrough (Beginner)**
+• ~340 active words | English sounds, greetings, family, numbers
 • Goal: 60-second self-introduction
-• Duration: 8-12 weeks
+• Duration: 10 weeks
 
-💪 **LEVEL 1 — Survival English**
-• 500-1,500 words | Daily conversations
-• Goal: 2-minute unscripted monologue
-• Duration: 10-14 weeks
+🌿 **A2 — Waystage (Elementary)**
+• Past tense, comparisons, future plans, everyday situations
+• Goal: a short personal story (past + present + future)
+• Duration: 12 weeks
 
-🚀 **LEVEL 2 — Communication**
-• 1,500-3,000 words | Complex topics
-• Goal: 5-minute presentation on any topic
-• Duration: 12-16 weeks
+🚀 **B1 — Threshold (Intermediate)**
+• Handle situations independently; express opinions & experiences
+• Duration: 14 weeks
 
-👑 **LEVEL 3 — Fluency & Native Accent**
-• 3,000-5,000+ words | Native-like flow
-• Ongoing mastery with quarterly certification
-• Duration: Lifetime membership
+💪 **B2 — Vantage (Upper-Intermediate)**
+• Greater fluency; discuss and argue with detail
+• Duration: 16 weeks
+
+🏆 **C1 — Effective Operational Proficiency (Advanced)**
+• Flexible, effective language across a wide range of contexts
+• Duration: 18 weeks
+
+👑 **C2 — Mastery (Proficiency)**
+• Near-complete mastery with native-like flow
+• Duration: 20 weeks
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
