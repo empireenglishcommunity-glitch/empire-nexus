@@ -1,0 +1,117 @@
+# A2 (Elementary / Waystage) — CEFR Alignment Rationale
+
+> **Owner approval gate.** This document states exactly how the A2 level maps
+> to the CEFR, so the alignment is auditable before A2 goes live. A2 content
+> loads into the engine but nothing changes for students until they naturally
+> complete A1 and pass the A1 exit exam — and until you sign off on A2.
+
+## Truth-in-labelling
+
+A2 content is **CEFR-aligned** (built to the official CEFR A2 descriptors). On
+completion, Empire English issues its own certificate: *"Empire English
+certifies that [name] has demonstrated proficiency at CEFR Level A2."* We do
+**not** claim "CEFR certified" — CEFR has no certifying body.
+
+## What CEFR says A2 is (the target)
+
+> *Can understand sentences and frequently used expressions related to areas of
+> most immediate relevance (e.g. very basic personal and family information,
+> shopping, local geography, employment). Can communicate in simple and routine
+> tasks requiring a simple and direct exchange of information on familiar and
+> routine matters. Can describe in simple terms aspects of their background,
+> immediate environment and matters in areas of immediate need.*
+> — Council of Europe, CEFR global scale, A2.
+
+## How this A2 course delivers that
+
+### 1. Can-Do objectives (learning outcomes)
+`can_do.json` → `A2` holds 18 curated descriptors across all four CEFR modes:
+- **Reception** (5): understand high-frequency phrases; catch the main point of
+  short clear messages/announcements; find specific info in everyday material
+  (ads, menus, timetables); follow short personal narratives; follow simple
+  directions.
+- **Production** (6): describe family / living conditions / background / job;
+  tell a simple story about past events; describe plans and intentions; compare
+  people/places/things; write linked sentences with connectors; write short
+  personal messages and a simple personal letter.
+- **Interaction** (4): handle short social exchanges + routine information
+  tasks; ask/give directions + get travel/shopping/service info; make and
+  respond to invitations/suggestions/apologies + arrange to meet; express
+  feelings, likes/dislikes, agreement/disagreement.
+- **Mediation** (3): convey the main points of short everyday texts; make an
+  idea clearer with simple examples + checking questions; collaborate on a
+  simple shared task.
+
+Every week references the specific descriptors it targets (its `can_do` codes).
+
+### 2. Grammar syllabus (A2 structures only)
+`grammar_syllabus.json` → `A2`, one point per week, all firmly A2 per the
+English Grammar Profile:
+
+| Week | Grammar |
+|------|---------|
+| 1 | Past simple — regular verbs (*-ed*) + time expressions |
+| 2 | Past simple — irregular verbs + *did/didn't* questions & negatives |
+| 3 | Comparative adjectives (*-er / more … than*) |
+| 4 | Superlative adjectives (*the -est / the most*) |
+| 5 | Future: *be going to* (plans and intentions) |
+| 6 | Future: *will* (decisions, predictions, offers) |
+| 7 | Present continuous (now) vs present simple (habits) |
+| 8 | Countable/uncountable + quantifiers (*much/many/a lot of/a few/a little*) |
+| 9 | Adverbs of manner (*well, quickly, carefully*) |
+| 10 | Present perfect for experience (*ever/never, been*) |
+| 11 | Obligation & advice: *have to / must / should* |
+| 12 | Connectors (*because, so, but, when, before/after*) + review |
+
+This builds directly on A1 (which ended at *was/were*) and stops at the A2
+ceiling: no present perfect continuous, no past continuous, no first/second
+conditional, no passive, no reported speech — those are B1+.
+
+### 3. Vocabulary band (A2)
+~390 active words across the 12 weeks, all high-frequency A2 items selected
+against public CEFR-mapped references (Oxford 3000/5000 A2 tags, English
+Vocabulary Profile A2). Stored as **our own list** (word, pronunciation, Arabic
+gloss, POS, example) — no third-party list is copied. Themes are the classic
+A2 "immediate relevance" domains: past events & trips, comparing places, future
+plans, weather/predictions, present activities, food & recipes, health & the
+body, life experiences, work & rules, and a personal-story capstone.
+
+CEFR guidance puts A2 vocabulary at roughly 1,000–1,500 words *receptive*; a
+~390-word curated **active** production layer for a 12-week elementary course,
+stacked on the ~340 A1 words, is a sound A2 core (assessments test production).
+
+### 4. Skills coverage (all five, every week)
+Each week file provides: **vocabulary**, **listening** (dictation items),
+**pronunciation/phonology** (`phoneme_focus` — e.g. regular *-ed* endings,
+weak forms, *going to* → /ɡənə/, *-ing* endings), **speaking** (7 daily
+missions, 25–60s, rising in demand across the week), and **writing** (7
+prompts). This matches CEFR A2's balanced reception + production + interaction
++ light mediation expectations.
+
+### 5. Progression logic
+The 12 weeks build a coherent A2 arc: **narrate the past** (regular → irregular)
+→ **compare** (comparatives → superlatives) → **talk about the future**
+(*going to* → *will*) → **describe the present moment** → **manage quantities**
+(food/recipes) → **describe manner** (health) → **relate experience** (present
+perfect) → **express obligation & advice** (work) → **connect ideas into a
+personal narrative** (capstone). Week 12 is an explicit review + an
+8-sentence "My Story" capstone (past + present + future) that previews the A2
+exit exam.
+
+## Assessment alignment (handled by the Taqdeem engine)
+- **Weekly** tests that week's can-do objectives + vocab + grammar.
+- **Monthly** tests retention across the A2 weeks.
+- **A2 exit exam** (Part A skills + Part B: a short spoken narrative combining
+  past, present and future) tests the A2 can-do set as a whole; passing
+  certifies the student at **CEFR A2** and promotes them to B1.
+
+## What to review / sign off
+- [ ] Themes + week order feel right for your elementary students.
+- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [ ] Grammar sequence is correct and A2-appropriate (builds on A1, stops below B1).
+- [ ] Speaking/writing tasks match your students' ability.
+- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+
+A2 needs **no migration** — students move from A1 to A2 naturally by passing
+the A1 exit exam. Once you approve, A2 is ready the moment a student completes
+A1.

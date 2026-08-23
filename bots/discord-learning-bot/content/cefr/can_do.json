@@ -27,7 +27,36 @@
       {"code": "A1.M.2", "en": "Can use a single word or a short phrase, with gesture, to signal understanding or ask for help.", "ar": "يقدر يستخدم كلمة أو جملة قصيرة، مع الإشارة، عشان يوضّح فهمه أو يطلب مساعدة."}
     ]
   },
-  "A2": {},
+  "A2": {
+    "overview_en": "Can understand sentences and frequently used expressions related to areas of most immediate relevance (basic personal and family information, shopping, local geography, employment). Can communicate in simple and routine tasks requiring a simple and direct exchange of information on familiar matters. Can describe in simple terms aspects of their background, immediate environment and matters in areas of immediate need.",
+    "overview_ar": "يقدر يفهم جمل وتعبيرات شائعة عن المواضيع الأقرب ليه (معلومات شخصية وعائلية، تسوّق، أماكن قريبة، شغل). يقدر يتواصل في مهام بسيطة وروتينية بتبادل مباشر للمعلومات عن مواضيع مألوفة. يقدر يوصف بكلمات بسيطة خلفيته ومحيطه واحتياجاته اليومية.",
+    "reception": [
+      {"code": "A2.R.1", "en": "Can understand phrases and the highest-frequency vocabulary related to areas of most immediate personal relevance (e.g. family, shopping, local area, work).", "ar": "يقدر يفهم الجمل والكلمات الشائعة عن المواضيع القريبة منه (العائلة، التسوّق، المنطقة، الشغل)."},
+      {"code": "A2.R.2", "en": "Can catch the main point in short, clear, simple messages and announcements.", "ar": "يقدر يلتقط الفكرة الأساسية في رسائل وإعلانات قصيرة وواضحة وبسيطة."},
+      {"code": "A2.R.3", "en": "Can find specific, predictable information in simple everyday material such as advertisements, menus, timetables and short letters.", "ar": "يقدر يلاقي معلومة محددة ومتوقّعة في مواد يومية بسيطة زي الإعلانات والمنيو والجداول والرسائل القصيرة."},
+      {"code": "A2.R.4", "en": "Can understand short simple personal narratives and descriptions about past events and everyday activities.", "ar": "يقدر يفهم قصص ووصف شخصي بسيط وقصير عن أحداث ماضية وأنشطة يومية."},
+      {"code": "A2.R.5", "en": "Can follow simple directions and short sets of instructions.", "ar": "يقدر يتبع إرشادات بسيطة ومجموعة تعليمات قصيرة."}
+    ],
+    "production": [
+      {"code": "A2.P.1", "en": "Can describe their family, living conditions, educational background and present or most recent job in a series of simple phrases and sentences.", "ar": "يقدر يوصف عائلته وظروف سكنه ودراسته وشغله الحالي أو الأخير بجمل بسيطة متتابعة."},
+      {"code": "A2.P.2", "en": "Can tell a simple story or describe past events and personal experiences in a series of sentences.", "ar": "يقدر يحكي قصة بسيطة أو يوصف أحداث ماضية وخبرات شخصية بسلسلة جمل."},
+      {"code": "A2.P.3", "en": "Can give short, basic descriptions of events, plans and future intentions.", "ar": "يقدر يدّي وصف قصير وأساسي للأحداث والخطط والنوايا المستقبلية."},
+      {"code": "A2.P.4", "en": "Can compare people, places and things using simple language (bigger, better, the best).", "ar": "يقدر يقارن بين الناس والأماكن والحاجات بلغة بسيطة (أكبر، أحسن، الأفضل)."},
+      {"code": "A2.P.5", "en": "Can write a series of simple phrases and sentences linked with connectors like 'and', 'but', 'because', 'so' and 'when'.", "ar": "يقدر يكتب سلسلة جمل بسيطة مربوطة بروابط زي and وbut وbecause وso وwhen."},
+      {"code": "A2.P.6", "en": "Can write very short, basic personal messages, notes and a simple personal letter (e.g. thanking, inviting, apologising).", "ar": "يقدر يكتب رسائل شخصية قصيرة جدًا وملاحظات وخطاب شخصي بسيط (شكر، دعوة، اعتذار)."}
+    ],
+    "interaction": [
+      {"code": "A2.I.1", "en": "Can handle short social exchanges and communicate in simple, routine tasks requiring a direct exchange of information on familiar topics and activities.", "ar": "يقدر يدير محادثات اجتماعية قصيرة ويتواصل في مهام روتينية بتبادل مباشر للمعلومات عن مواضيع مألوفة."},
+      {"code": "A2.I.2", "en": "Can ask for and give directions, make and respond to simple requests, and get simple information for travel, shopping and services.", "ar": "يقدر يسأل ويدّي اتجاهات، ويعمل ويرد على طلبات بسيطة، وياخد معلومات للسفر والتسوّق والخدمات."},
+      {"code": "A2.I.3", "en": "Can make and respond to invitations, suggestions and apologies, and discuss what to do, where to go and arrange to meet.", "ar": "يقدر يعمل ويرد على الدعوات والاقتراحات والاعتذارات، ويتناقش في يعمل إيه ويروح فين ويرتّب لقاء."},
+      {"code": "A2.I.4", "en": "Can express how they feel, likes and dislikes, agreement and disagreement in simple terms.", "ar": "يقدر يعبّر عن مشاعره وعمّا يحبه ومايحبهوش، والموافقة والاعتراض بشكل بسيط."}
+    ],
+    "mediation": [
+      {"code": "A2.M.1", "en": "Can convey the main point(s) of short, simple everyday texts and messages to others, in the same or another language.", "ar": "يقدر ينقل النقاط الأساسية لنصوص ورسائل يومية قصيرة وبسيطة للآخرين."},
+      {"code": "A2.M.2", "en": "Can help make an idea clearer by giving simple examples and asking simple questions to check understanding.", "ar": "يقدر يوضّح فكرة بأمثلة بسيطة وأسئلة بسيطة للتأكد من الفهم."},
+      {"code": "A2.M.3", "en": "Can collaborate on a simple shared task, inviting others to contribute and reacting to their suggestions.", "ar": "يقدر يتعاون في مهمة مشتركة بسيطة، ويشجّع الآخرين على المشاركة ويتفاعل مع اقتراحاتهم."}
+    ]
+  },
   "B1": {},
   "B2": {},
   "C1": {},
