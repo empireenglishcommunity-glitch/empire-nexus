@@ -1,0 +1,86 @@
+name: deploy discord-learning-bot
+
+# Auto-deploy the Discord learning bot to the production server whenever the
+# bot's code or content lands on main (i.e. when a PR is merged). This removes
+# the sandbox from the deploy path entirely: merge -> deploy, no manual SSH,
+# no keys to re-add after a sandbox reset.
+#
+# Requires ONE repository secret:
+#   DEPLOY_SSH_KEY  -> the private half of the 'empire-ci-deploy' ed25519 key
+#                      (its public half is already in the server's
+#                      /root/.ssh/authorized_keys).
+#
+# The server host, user and pinned host key are non-secret and set below.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "bots/discord-learning-bot/**"
+      - ".github/workflows/deploy-learning-bot.yml"
+  workflow_dispatch: {}   # allow manual "Run workflow" from the Actions tab
+
+concurrency:
+  group: deploy-learning-bot
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: "77.42.43.250"
+  DEPLOY_USER: "root"
+  DEPLOY_PATH: "/opt/empire-english-bot"
+  COMPOSE_SERVICE: "empire-english-bot"
+  # Pinned server host key (public — safe to commit). Prevents man-in-the-middle.
+  SERVER_HOST_KEY: "77.42.43.250 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICcuZBY58cKkrjHY5y6FnSllTTgHlnKkr1DQg/qzkyII"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH (key + pinned host)
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SERVER_HOST_KEY" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy (pull latest + rebuild container)
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=yes \
+              -o ConnectTimeout=20 \
+              "${DEPLOY_USER}@${DEPLOY_HOST}" \
+              "DEPLOY_PATH='${DEPLOY_PATH}' COMPOSE_SERVICE='${COMPOSE_SERVICE}' bash -s" <<'REMOTE'
+          set -euo pipefail
+          cd "$DEPLOY_PATH"
+          echo "::group::git pull"
+          BEFORE="$(git rev-parse --short HEAD)"
+          git pull --ff-only origin main
+          AFTER="$(git rev-parse --short HEAD)"
+          echo "moved $BEFORE -> $AFTER"
+          echo "::endgroup::"
+          echo "::group::docker build + up"
+          docker compose up -d --build "$COMPOSE_SERVICE"
+          echo "::endgroup::"
+          REMOTE
+
+      - name: Verify container is healthy
+        run: |
+          sleep 12
+          ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=yes \
+              -o ConnectTimeout=20 \
+              "${DEPLOY_USER}@${DEPLOY_HOST}" \
+              "COMPOSE_SERVICE='${COMPOSE_SERVICE}' bash -s" <<'REMOTE'
+          set -euo pipefail
+          STATUS="$(docker inspect -f '{{.State.Status}}' "$COMPOSE_SERVICE")"
+          echo "container status: $STATUS"
+          if [ "$STATUS" != "running" ]; then
+            echo "::error::container '$COMPOSE_SERVICE' is not running (status=$STATUS)"
+            docker logs --tail 40 "$COMPOSE_SERVICE" 2>&1 || true
+            exit 1
+          fi
+          # Surface the curriculum load summary from startup logs.
+          docker logs --tail 80 "$COMPOSE_SERVICE" 2>&1 | grep -iE "curriculum loaded|total weeks" | tail -3 || true
+          echo "deploy verified OK"
+          REMOTE
