@@ -95,13 +95,13 @@ def test_loader_still_loads_legacy():
 
 def test_loader_tolerates_unauthored_cefr_levels():
     # CEFR levels are authored one at a time (A1, then A2, ...). Levels not yet
-    # written (e.g. B1) simply have no week files on disk; load_all must not
-    # raise and just loads no weeks for them. (A1 and A2 ARE authored now, so we
-    # assert against a level that is still unauthored to keep testing the
+    # written simply have no week files on disk; load_all must not raise and
+    # just loads no weeks for them. (A1–C1 ARE authored now, so we assert
+    # against a level that is still unauthored — C2 — to keep testing the
     # tolerance.)
     curriculum.load_all()
-    c1 = [k for k in curriculum._weekly_data if k.startswith("C1_")]
-    assert c1 == []  # C1 not authored yet — loader tolerates it, no error
+    c2 = [k for k in curriculum._weekly_data if k.startswith("C2_")]
+    assert c2 == []  # C2 not authored yet — loader tolerates it, no error
 
 
 # ============================================================
