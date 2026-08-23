@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w5",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 5,
+  "pattern_name": "Present simple (I/you/we/they)",
+  "pattern_name_ar": "المضارع البسيط مع I/you/we/they",
+  "formula": "Subject + base verb + object   |   Negative: Subject + don't + base verb",
+  "formula_visual": "[I] + [get up] + [at seven]",
+  "when_to_use": "Use the present simple for daily routines, habits and things that are always true.",
+  "when_to_use_ar": "نستخدم المضارع البسيط للروتين اليومي والعادات والحقائق الدائمة.",
+  "why_arabic_speakers_struggle": "Arabic conjugates the verb itself for every person, so learners look for an ending on English verbs too. With I/you/we/they the English verb takes NO ending at all.",
+  "examples": [
+    {"en": "I get up at seven.", "ar": "أصحى الساعة سبعة", "structure": "[I] + [get up] + [at seven]"},
+    {"en": "We eat breakfast together.", "ar": "نفطر مع بعض", "structure": "[We] + [eat] + [breakfast]"},
+    {"en": "They don't work on Friday.", "ar": "لا يعملون يوم الجمعة", "structure": "[They] + [don't] + [work]"},
+    {"en": "You study every day.", "ar": "تدرس كل يوم", "structure": "[You] + [study] + [every day]"},
+    {"en": "I don't drink coffee.", "ar": "لا أشرب قهوة", "structure": "[I] + [don't] + [drink]"}
+  ],
+  "common_errors": [
+    {"wrong": "I am go to work.", "correct": "I go to work.", "explanation": "Do not add 'am' before a normal verb."},
+    {"wrong": "They not work.", "correct": "They don't work.", "explanation": "Negatives need DON'T + base verb."},
+    {"wrong": "I gets up early.", "correct": "I get up early.", "explanation": "Only he/she/it add -s (next week)."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (wake) up at six.", "answer": "wake"},
+    {"sentence": "We ___ (not eat) meat.", "answer": "don't eat"},
+    {"sentence": "They ___ (study) English.", "answer": "study"},
+    {"sentence": "You ___ (work) very hard.", "answer": "work"},
+    {"sentence": "I ___ (not like) tea.", "answer": "don't like"}
+  ],
+  "quick_rule": "I/you/we/they + base verb (no ending). Negative = don't + base verb.",
+  "quick_rule_ar": "I/you/we/they مع الفعل المجرد بدون إضافة. والنفي بـ don't + الفعل.",
+  "mnemonic": "No -s for I, YOU, WE, THEY.",
+  "connect_to_speaking": "Describe your day: 'I get up at seven, I eat breakfast and I go to work. I don't watch TV in the morning.'"
+}

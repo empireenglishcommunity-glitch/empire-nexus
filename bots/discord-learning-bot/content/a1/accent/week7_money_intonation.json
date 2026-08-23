@@ -1,0 +1,189 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 7,
+  "focus": "/ʌ/ (money, much) vs /ɒ/ (shop, cost) · /aɪ/ (buy, price) vs /eɪ/ (pay) · rising vs falling intonation in questions · prices: -teen vs -ty again · /ʃ/ (shop) vs /s/ (size)",
+  "focus_ar": "/ʌ/ مقابل /ɒ/، و /aɪ/ مقابل /eɪ/، ونغمة السؤال الصاعدة والهابطة، والأسعار، و /ʃ/ مقابل /s/",
+  "arabic_challenge": "/ʌ/ has no direct Arabic equivalent and is often replaced by /a/ or /o/. Intonation is the big one this week: Arabic question intonation differs, and a flat 'How much is it?' can sound abrupt or unclear to an English ear.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/ʌ/", "/ɒ/"],
+      "isolation": {
+        "instructions": "/ʌ/ (money, much, some) = short, central, relaxed — a quick grunt with the mouth barely open. /ɒ/ (shop, cost, not) = rounder lips, tongue further back and lower.",
+        "instructions_ar": "/ʌ/ قصير ومركزي والفم مفتوح شوية صغيرة. /ɒ/ الشفاه مدوّرة أكثر واللسان لورا وتحت.",
+        "practice": ["uh uh uh (central)", "o o o (rounded, back)", "cup-cop-cup-cop"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cup", "cop"], "meaning": ["كوب", "شرطي"]},
+        {"pair": ["hut", "hot"], "meaning": ["كوخ", "ساخن"]},
+        {"pair": ["luck", "lock"], "meaning": ["حظ", "قفل"]},
+        {"pair": ["nut", "not"], "meaning": ["مكسّرات", "ليس"]},
+        {"pair": ["sung", "song"], "meaning": ["غُنّي", "أغنية"]}
+      ],
+      "word_practice": {
+        "uh_sound": ["money", "much", "some", "bus", "hundred", "cus-tomer", "sun", "up"],
+        "o_sound": ["shop", "cost", "not", "dollar", "pocket", "watch", "long", "on"]
+      },
+      "sentence_practice": [
+        "How much money?",
+        "It costs a hundred pounds.",
+        "The shop is not open."
+      ],
+      "record_this": "How much money do you have? It costs one hundred pounds. The shop is not open, so some customers are waiting.",
+      "self_check": "Say 'cup' then 'cop'. Are your lips rounder for the second one?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/aɪ/", "/eɪ/"],
+      "isolation": {
+        "instructions": "/aɪ/ (buy, price, five) starts wide open and glides to /ɪ/. /eɪ/ (pay, eight) starts half open and glides to /ɪ/. Both move upward, but /aɪ/ starts much lower.",
+        "instructions_ar": "/aɪ/ يبدأ مفتوح جدًا ويتحرك لأعلى. /eɪ/ يبدأ نص مفتوح ويتحرك لأعلى. الاتنين متحركين لكن /aɪ/ يبدأ أوطى.",
+        "practice": ["ah-ee → aɪ (buy)", "eh-ee → eɪ (pay)", "buy-bay-buy-bay"]
+      },
+      "minimal_pairs": [
+        {"pair": ["buy", "bay"], "meaning": ["يشتري", "خليج"]},
+        {"pair": ["my", "may"], "meaning": ["ملكي", "قد/مايو"]},
+        {"pair": ["like", "lake"], "meaning": ["يحب", "بحيرة"]},
+        {"pair": ["right", "rate"], "meaning": ["صحيح", "سعر/معدل"]},
+        {"pair": ["wide", "wade"], "meaning": ["عريض", "يخوض"]}
+      ],
+      "word_practice": {
+        "eye_sound": ["buy", "price", "five", "nine", "size", "like", "nice", "right"],
+        "ay_sound": ["pay", "eight", "sale", "change", "may", "take", "wait", "later"]
+      },
+      "sentence_practice": [
+        "I want to buy five.",
+        "What is the price? I will pay.",
+        "The sale is on today."
+      ],
+      "record_this": "I want to buy five, please. What is the price? I will pay now and take the change later.",
+      "self_check": "Say 'buy' and 'bay'. The first should start with your mouth clearly wider open."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["Rising vs falling intonation"],
+      "isolation": {
+        "instructions": "Yes/No questions RISE at the end: 'Do you have this?↗' Wh- questions FALL at the end: 'How much is it?↘' Getting this backwards sounds unnatural or even rude.",
+        "instructions_ar": "أسئلة نعم/لا نغمتها صاعدة في الآخر ↗. وأسئلة (how/what/where) نغمتها هابطة ↘. العكس بيبقى غريب أو جاف.",
+        "practice": ["Do you have it? ↗ (voice goes UP)", "How much is it? ↘ (voice goes DOWN)", "alternate: up, down, up, down"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Do you have it?↗", "Do you have it?↘"], "meaning": ["سؤال طبيعي ✅", "يبدو جاف ❌"]},
+        {"pair": ["How much is it?↘", "How much is it?↗"], "meaning": ["صحيح ✅", "غريب ❌"]},
+        {"pair": ["Is it cheap?↗", "Is it cheap?↘"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["What size?↘", "What size?↗"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["Can I pay?↗", "Can I pay?↘"], "meaning": ["صحيح ✅", "خطأ ❌"]}
+      ],
+      "word_practice": ["How much is it?", "Do you have this?", "What size?", "Can I pay by card?", "Is it cheap?", "Where is the shop?", "How many?", "Do you accept cash?", "What is the price?", "Is there a sale?"],
+      "sentence_practice": [
+        "How much is it? ↘",
+        "Do you have a bigger size? ↗",
+        "Can I pay by card? ↗"
+      ],
+      "record_this": "How much is it? Do you have a bigger size? Can I pay by card, or do you accept only cash?",
+      "self_check": "Hum the tune of each question without words. Does the yes/no one rise and the wh- one fall?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Prices: -teen vs -ty (revisited)"],
+      "isolation": {
+        "instructions": "This week the -teen/-ty difference costs real money. fifTEEN pounds (15) vs FIFty pounds (50). Stress the last syllable for -teen, the first for -ty, and keep the -ty ending short.",
+        "instructions_ar": "الفرق بين -teen و -ty هنا بيغيّر السعر. fifTEEN (١٥) مقابل FIFty (٥٠). النبر على الآخر في -teen وعلى الأول في -ty.",
+        "practice": ["fifTEEN / FIFty", "thirTEEN / THIRty", "eighTEEN / EIGHty"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fifTEEN pounds", "FIFty pounds"], "meaning": ["١٥ جنيه", "٥٠ جنيه"]},
+        {"pair": ["thirTEEN", "THIRty"], "meaning": ["١٣", "٣٠"]},
+        {"pair": ["fourTEEN", "FORty"], "meaning": ["١٤", "٤٠"]},
+        {"pair": ["sixTEEN", "SIXty"], "meaning": ["١٦", "٦٠"]},
+        {"pair": ["nineTEEN", "NINEty"], "meaning": ["١٩", "٩٠"]}
+      ],
+      "word_practice": ["fifteen", "fifty", "thirteen", "thirty", "fourteen", "forty", "sixteen", "sixty", "hundred", "thousand"],
+      "sentence_practice": [
+        "It costs fifTEEN, not FIFty.",
+        "I have THIRty pounds.",
+        "That is FORty-five."
+      ],
+      "record_this": "It costs fifteen pounds, not fifty. I only have thirty pounds with me. The total is forty-five, and the shirt was nineteen.",
+      "self_check": "Say a price and have someone write it. Did they write the number you meant?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ʃ/", "/s/"],
+      "isolation": {
+        "instructions": "/ʃ/ (shop, cash) = tongue pulled back, lips slightly rounded, a full 'shhh'. /s/ (size, cost) = tongue forward behind the teeth, a thin, sharp hiss.",
+        "instructions_ar": "/ʃ/ اللسان لورا والشفاه مدوّرة شوية (شhhh). /s/ اللسان لقدام خلف الأسنان وصفير رقيق حاد.",
+        "practice": ["shhhh (round lips)", "sssss (thin hiss)", "shh-sss-shh-sss"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ship", "sip"], "meaning": ["سفينة", "رشفة"]},
+        {"pair": ["she", "see"], "meaning": ["هي", "يرى"]},
+        {"pair": ["shell", "sell"], "meaning": ["قوقعة", "يبيع"]},
+        {"pair": ["shed", "said"], "meaning": ["سقيفة", "قال"]},
+        {"pair": ["wash", "was"], "meaning": ["يغسل", "كان"]}
+      ],
+      "word_practice": {
+        "sh_sound": ["shop", "shirt", "shoes", "cash", "cheap? no", "expensive? no", "shopping", "short"],
+        "s_sound": ["size", "sale", "cost", "price", "spend", "customer", "sell", "some"]
+      },
+      "sentence_practice": [
+        "I go shopping for shoes and shirts.",
+        "What size and what price?",
+        "I will pay cash at the shop."
+      ],
+      "record_this": "I go shopping for shoes and shirts. What size is this, and what is the price? I will pay cash at the shop and save some money.",
+      "self_check": "Say 'she' then 'see'. Are your lips rounded for the first and spread for the second?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 7 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["cup", "cop"], ["buy", "bay"], ["ship", "sip"],
+        ["fifTEEN", "FIFty"], ["luck", "lock"], ["she", "see"]
+      ],
+      "challenge_sentences": [
+        "How much money do you have? ↘",
+        "Do you have this in a bigger size? ↗",
+        "It costs fifteen pounds, not fifty.",
+        "I go shopping and pay cash."
+      ],
+      "record_this": "How much money do you have? Do you have this shirt in a bigger size? It costs fifteen pounds, not fifty. I go shopping every week and I always pay cash.",
+      "self_check": "Check the intonation: does every yes/no question rise and every wh- question fall?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself acting out a shopping conversation. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تعمل حوار شراء، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "Excuse me, how much is this shirt? Fifteen pounds? Not fifty? That is cheap. Do you have it in a bigger size? I like this colour. I want to buy two, please. Can I pay by card, or do you accept only cash? Here is one hundred pounds. How much change do I get? Thank you very much. The shop is nice and the prices are good.",
+        "sounds_to_check": {
+          "/ʌ/ vs /ɒ/": "much, money, hundred, colour — shop, not, cost, dollar",
+          "/aɪ/ vs /eɪ/": "buy, price, size, like, five, nine — pay, eight, sale, change",
+          "intonation": "How much is this?↘  Do you have it?↗  Can I pay by card?↗",
+          "-teen vs -ty": "fifTEEN vs FIFty, thirTEEN vs THIRty",
+          "/ʃ/ vs /s/": "shirt, shop, cash, shopping — size, sale, cost, price"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Prices are unambiguous and question tunes are natural. Ready for week 8.",
+        "70_89": "Sounds fine; intonation occasionally flat.",
+        "50_69": "15/50 confusion, or all questions on one flat tune. Repeat days 3-4.",
+        "below_50": "Redo days 1-5, humming the question tunes before adding words."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Intonation carries politeness in English. A flat question can sound abrupt even when every sound is correct.",
+      "/ʌ/ is not /a/ and not /o/ — it is short, central and relaxed.",
+      "The -teen/-ty stress difference is a money risk. Over-emphasise it when shopping.",
+      "Keep /ʃ/ and /s/ distinct: 'she sells' should have two clearly different hisses."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

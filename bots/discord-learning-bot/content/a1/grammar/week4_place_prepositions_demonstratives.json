@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w4",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 4,
+  "pattern_name": "Place prepositions + 'this/that/these/those'",
+  "pattern_name_ar": "حروف المكان وأسماء الإشارة",
+  "formula": "in / on / under / next to / behind / between + place   |   this·that (singular) · these·those (plural)",
+  "formula_visual": "[The book] + [is on] + [the table]",
+  "when_to_use": "Use place prepositions to say WHERE something is, and this/that/these/those to point at things near or far.",
+  "when_to_use_ar": "نستخدم حروف المكان لتحديد مكان الشيء، وأسماء الإشارة للإشارة للقريب والبعيد.",
+  "why_arabic_speakers_struggle": "Arabic demonstratives agree with gender (هذا/هذه) but not with distance in the same way, and Arabic uses fewer place prepositions, so 'on/in/at' get interchanged.",
+  "examples": [
+    {"en": "The book is on the table.", "ar": "الكتاب على الطاولة", "structure": "[on] + [the table]"},
+    {"en": "This is my room.", "ar": "هذه غرفتي", "structure": "[This] + [is] + [my room]"},
+    {"en": "Those are my shoes.", "ar": "تلك أحذيتي", "structure": "[Those] + [are] + [my shoes]"},
+    {"en": "The car is behind the house.", "ar": "السيارة خلف المنزل", "structure": "[behind] + [the house]"},
+    {"en": "The chair is between the bed and the window.", "ar": "الكرسي بين السرير والنافذة", "structure": "[between] + [A and B]"}
+  ],
+  "common_errors": [
+    {"wrong": "This are my shoes.", "correct": "These are my shoes.", "explanation": "Plural needs THESE (near) or THOSE (far)."},
+    {"wrong": "The book is in the table.", "correct": "The book is on the table.", "explanation": "ON a surface, IN a container."},
+    {"wrong": "I am in home.", "correct": "I am at home.", "explanation": "'At home' is a fixed expression."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The keys are ___ the bag.", "answer": "in"},
+    {"sentence": "___ is my new phone (near me).", "answer": "This"},
+    {"sentence": "___ are my books (far from me).", "answer": "Those"},
+    {"sentence": "The garden is ___ the house.", "answer": "behind"},
+    {"sentence": "The sofa is ___ to the window.", "answer": "next"}
+  ],
+  "quick_rule": "Near → this/these · Far → that/those. IN a box, ON a surface, AT a place.",
+  "quick_rule_ar": "القريب this/these والبعيد that/those. و IN للداخل و ON للسطح و AT للمكان.",
+  "mnemonic": "THIS is close, THAT is far. Add -SE for more than one.",
+  "connect_to_speaking": "Describe your room: 'This is my bed. The lamp is on the table, next to the window.'"
+}

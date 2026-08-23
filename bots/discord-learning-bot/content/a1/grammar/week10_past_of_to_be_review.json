@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w10",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 10,
+  "pattern_name": "Past of 'to be' (was/were) + A1 review",
+  "pattern_name_ar": "ماضي فعل الكينونة (was/were) ومراجعة A1",
+  "formula": "I/he/she/it + was   |   you/we/they + were   |   Negative: wasn't / weren't",
+  "formula_visual": "[I] + [was] + [at home]",
+  "when_to_use": "Use was/were to talk about the past: where you were, how you felt, what things were like. Then review every A1 pattern together.",
+  "when_to_use_ar": "نستخدم was/were للكلام عن الماضي: كنت فين، وحسيت بإيه. وبعدين نراجع كل قواعد A1.",
+  "why_arabic_speakers_struggle": "Arabic past nominal sentences use كان and agree differently, so was/were get swapped — especially 'they was'. Remember: only you/we/they take WERE.",
+  "examples": [
+    {"en": "I was at home yesterday.", "ar": "كنت في البيت أمس", "structure": "[I] + [was] + [at home]"},
+    {"en": "They were happy.", "ar": "كانوا سعداء", "structure": "[They] + [were] + [happy]"},
+    {"en": "Where were you?", "ar": "كنت فين؟", "structure": "[Where] + [were] + [you]?"},
+    {"en": "She wasn't at school.", "ar": "لم تكن في المدرسة", "structure": "[She] + [wasn't] + [at school]"},
+    {"en": "We weren't late.", "ar": "لم نكن متأخرين", "structure": "[We] + [weren't] + [late]"}
+  ],
+  "common_errors": [
+    {"wrong": "They was happy.", "correct": "They were happy.", "explanation": "you/we/they always take WERE."},
+    {"wrong": "I were at home.", "correct": "I was at home.", "explanation": "I takes WAS."},
+    {"wrong": "Where you were?", "correct": "Where were you?", "explanation": "In questions, 'were' comes before the subject."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ at work yesterday.", "answer": "was"},
+    {"sentence": "They ___ very kind.", "answer": "were"},
+    {"sentence": "She ___ (not) at home.", "answer": "wasn't"},
+    {"sentence": "Where ___ you last night?", "answer": "were"},
+    {"sentence": "It ___ a good day.", "answer": "was"}
+  ],
+  "quick_rule": "I/he/she/it → WAS · you/we/they → WERE. Same split as am/is vs are.",
+  "quick_rule_ar": "I/he/she/it مع was، و you/we/they مع were. نفس تقسيم am/is و are.",
+  "mnemonic": "IS → WAS. ARE → WERE.",
+  "connect_to_speaking": "Tell a short past story, then review: 'Yesterday I was at home. My family were with me. I am a student, I have got two brothers, and I can swim.'"
+}

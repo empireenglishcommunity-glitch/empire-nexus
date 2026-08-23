@@ -1,0 +1,188 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 1,
+  "focus": "/h/ (hello, how) · /b/ vs /p/ (bye, please) · /ɪ/ (it) vs /iː/ (eat) · nasals /m/ /n/ · /eɪ/ (name) vs /e/ (ten)",
+  "focus_ar": "صوت /h/، والفرق بين /b/ و /p/، وحرف العلة القصير /ɪ/ مقابل الطويل /iː/، والأنفية /m/ /n/، و /eɪ/ مقابل /e/",
+  "arabic_challenge": "Arabic has no /p/, so 'pen' often becomes 'Ben'. Arabic does not use vowel LENGTH the way English does, so 'it' and 'eat' can sound identical. Egyptian speakers may also drop /h/ inside a word (be-hind) even though Arabic has ه.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/h/"],
+      "isolation": {
+        "instructions": "/h/ is just a puff of breath — no tongue, no lips, no voice. Breathe out on a mirror and fog it: that is /h/. Keep it audible at the START of every word that is spelled with h.",
+        "instructions_ar": "/h/ مجرد نفخة هواء — بدون لسان أو شفاه أو صوت. زي ما تنفخ على مراية. المهم إنك تنطقه في أول كل كلمة فيها h.",
+        "practice": ["h-h-h-h-h (puff, puff)", "ha ha ha ha", "hee hoo hay high"]
+      },
+      "minimal_pairs": [
+        {"pair": ["hi", "eye"], "meaning": ["مرحبًا", "عين"]},
+        {"pair": ["hat", "at"], "meaning": ["قبعة", "عند"]},
+        {"pair": ["hear", "ear"], "meaning": ["يسمع", "أذن"]},
+        {"pair": ["hold", "old"], "meaning": ["يمسك", "قديم"]},
+        {"pair": ["heart", "art"], "meaning": ["قلب", "فن"]}
+      ],
+      "word_practice": ["hello", "hi", "how", "he", "his", "her", "have", "here", "behind", "perhaps"],
+      "sentence_practice": [
+        "Hello! How are you?",
+        "He is here. His name is Hany.",
+        "How have you been?"
+      ],
+      "record_this": "Hello! How are you? My name is Hana. He is here and his hat is behind him.",
+      "self_check": "Hold your hand in front of your mouth. Do you feel a warm puff of air on every h-word?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/b/", "/p/"],
+      "isolation": {
+        "instructions": "Both close the lips. /b/ has VOICE (throat vibrates, little air). /p/ has NO voice and a strong PUFF of air. Hold a tissue in front of your lips: it must move for /p/, stay still for /b/.",
+        "instructions_ar": "الاتنين بيقفلوا الشفاه. /b/ فيه صوت (اهتزاز في الحلق). /p/ بدون صوت + نفخة هواء قوية. حِط منديل قصاد فمك: لازم يتحرك مع /p/ ويثبت مع /b/.",
+        "b_description": "/b/ = lips closed → voice ON → soft release (like Arabic ب)",
+        "p_description": "/p/ = lips closed → voice OFF → strong air puff (does NOT exist in Arabic)",
+        "practice": ["buh buh buh (hand on throat — feel it)", "puh puh puh (tissue moves)", "buh puh buh puh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pen", "Ben"], "meaning": ["قلم", "بن (اسم)"]},
+        {"pair": ["pie", "buy"], "meaning": ["فطيرة", "يشتري"]},
+        {"pair": ["pack", "back"], "meaning": ["يحزم", "ظهر"]},
+        {"pair": ["cap", "cab"], "meaning": ["قبعة", "تاكسي"]},
+        {"pair": ["pin", "bin"], "meaning": ["دبوس", "سلة"]}
+      ],
+      "word_practice": ["please", "people", "Egypt", "happy", "bye", "about", "goodbye", "big", "problem", "possible"],
+      "sentence_practice": [
+        "Please repeat, people!",
+        "Bye! I am happy to be here.",
+        "Ben has a big pen."
+      ],
+      "record_this": "Please repeat. Bye, Ben! I am happy. People in Egypt are polite and my big pen is in the bin.",
+      "self_check": "Say 'pen' then 'Ben'. Does the tissue move for only the FIRST one?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/ɪ/", "/iː/"],
+      "isolation": {
+        "instructions": "/iː/ (eat) is LONG with lips spread in a smile. /ɪ/ (it) is SHORT and relaxed — lips almost neutral, tongue a little lower. The difference is length AND mouth shape.",
+        "instructions_ar": "/iː/ طويل والشفاه مبسوطة زي الابتسامة. /ɪ/ قصير ومسترخي. الفرق في الطول وشكل الفم.",
+        "practice": ["eeeeee (long smile)", "ih ih ih (short, relaxed)", "eat-it-eat-it-eat-it"]
+      },
+      "minimal_pairs": [
+        {"pair": ["eat", "it"], "meaning": ["يأكل", "هو/هي (للأشياء)"]},
+        {"pair": ["seat", "sit"], "meaning": ["مقعد", "يجلس"]},
+        {"pair": ["these", "this"], "meaning": ["هؤلاء", "هذا"]},
+        {"pair": ["leave", "live"], "meaning": ["يغادر", "يعيش"]},
+        {"pair": ["feel", "fill"], "meaning": ["يشعر", "يملأ"]}
+      ],
+      "word_practice": {
+        "long_ee": ["he", "she", "we", "meet", "please", "three", "eat", "see"],
+        "short_i": ["is", "it", "this", "in", "his", "with", "sit", "big"]
+      },
+      "sentence_practice": [
+        "Nice to meet you. This is Ali.",
+        "He is in. She is with me.",
+        "Please sit in this seat."
+      ],
+      "record_this": "Nice to meet you! This is Ali and he is my friend. Please sit in this seat and we can eat.",
+      "self_check": "Say 'eat' then 'it'. Is the first one clearly longer, with a wider smile?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/m/", "/n/"],
+      "isolation": {
+        "instructions": "Both are nasal — air goes through the NOSE. /m/ = lips closed. /n/ = tongue tip on the ridge behind the upper teeth, lips OPEN. Hold each for three seconds and feel your nose buzz.",
+        "instructions_ar": "الاتنين أنفية — الهوا يطلع من المناخير. /m/ الشفاه مقفولة. /n/ طرف اللسان على الحافة خلف الأسنان والشفاه مفتوحة.",
+        "practice": ["mmmmm (lips closed, nose buzzes)", "nnnnn (lips open, tongue up)", "mm-nn-mm-nn"]
+      },
+      "minimal_pairs": [
+        {"pair": ["some", "sun"], "meaning": ["بعض", "شمس"]},
+        {"pair": ["seem", "seen"], "meaning": ["يبدو", "شوهد"]},
+        {"pair": ["ram", "ran"], "meaning": ["كبش", "جرى"]},
+        {"pair": ["dime", "dine"], "meaning": ["عملة", "يتعشّى"]},
+        {"pair": ["gum", "gun"], "meaning": ["لبان", "مسدس"]}
+      ],
+      "word_practice": ["my", "name", "morning", "am", "meet", "nice", "no", "nine", "afternoon", "evening"],
+      "sentence_practice": [
+        "Good morning! My name is Mona.",
+        "Nice to meet you. I am from Egypt.",
+        "Good afternoon and good evening."
+      ],
+      "record_this": "Good morning! My name is Mona and I am from Egypt. Nice to meet you this evening.",
+      "self_check": "Pinch your nose and try to say 'my name'. It should sound blocked — that proves the air is going through your nose."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/eɪ/", "/e/"],
+      "isolation": {
+        "instructions": "/eɪ/ (name, day) is a MOVING vowel: it starts open and glides up to /ɪ/ — your jaw closes a little. /e/ (ten, hello) does NOT move: one short, steady sound.",
+        "instructions_ar": "/eɪ/ صوت متحرك (يبدأ مفتوح ويتحرك لأعلى) — الفك يقفل شوية. /e/ صوت واحد قصير ثابت مش متحرك.",
+        "practice": ["ay-ay-ay (jaw closes)", "eh eh eh (steady, no movement)", "ay-eh-ay-eh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["late", "let"], "meaning": ["متأخر", "يسمح"]},
+        {"pair": ["main", "men"], "meaning": ["رئيسي", "رجال"]},
+        {"pair": ["pain", "pen"], "meaning": ["ألم", "قلم"]},
+        {"pair": ["sale", "sell"], "meaning": ["تخفيضات", "يبيع"]},
+        {"pair": ["tail", "tell"], "meaning": ["ذيل", "يقول"]}
+      ],
+      "word_practice": {
+        "ay_sound": ["name", "day", "eight", "they", "say", "great", "later", "today"],
+        "eh_sound": ["hello", "ten", "well", "yes", "friend", "seven", "very", "help"]
+      },
+      "sentence_practice": [
+        "Hello! What is your name?",
+        "See you later. Have a great day!",
+        "Yes, my friend is very well."
+      ],
+      "record_this": "Hello, what is your name? Say it again, please. Have a great day and see you later, my friend!",
+      "self_check": "Put a finger on your chin and say 'name'. Does your jaw move upward? Now say 'ten' — it should stay still."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["hi", "eye"], ["pen", "Ben"], ["eat", "it"],
+        ["some", "sun"], ["late", "let"], ["seat", "sit"]
+      ],
+      "challenge_sentences": [
+        "Hello! My name is Hana and I am happy to meet you.",
+        "Please sit in this seat, Ben.",
+        "Good morning — have a great day!",
+        "He is my friend. She is here with me."
+      ],
+      "record_this": "Hello! My name is Hana. I am happy to meet you today. Please sit in this seat. He is my friend and she is here with me. Have a great day!",
+      "self_check": "Record all six pairs. Play it back — can YOU hear a clear difference in each pair?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this introduction aloud. Then listen back and tick each sound group below.",
+        "instructions_ar": "سجّل نفسك وانت تقرأ التعريف ده بصوت عالي، وبعدين اسمعه وراجع كل مجموعة أصوات.",
+        "passage": "Hello! Good morning. My name is Hana and I am from Egypt. I am happy to be here today. Nice to meet you. He is my friend Ben and she is my sister. Please sit in this seat. We can eat at eight. See you later — have a great day!",
+        "sounds_to_check": {
+          "/h/": "hello, happy, here, he, have",
+          "/b/ vs /p/": "Ben, be — please, happy",
+          "/ɪ/ vs /iː/": "is, it, this, sit, in — he, she, we, meet, eat, seat",
+          "/m/ vs /n/": "my, name, morning, am — nice, name, sister",
+          "/eɪ/ vs /e/": "name, day, eight, great, later — hello, seven, friend, yes"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every /p/ has a clear puff, and 'eat' vs 'it' is obviously different. Ready for week 2.",
+        "70_89": "Mostly clear. One or two slips, usually /p/→/b/ or a short /iː/.",
+        "50_69": "/p/ and /b/ still sound the same, or vowel length is inconsistent. Repeat days 2 and 3.",
+        "below_50": "Go back through days 1-5 slowly, one day at a time, with the tissue and mirror checks."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "/p/ does not exist in Arabic — this is the single most important sound this week. Use the tissue test every day.",
+      "English distinguishes words by vowel LENGTH (eat/it, seat/sit). In Arabic this contrast does not change meaning, so it needs conscious practice.",
+      "Do not add a vowel before consonant clusters: say 'please', not 'be-please'.",
+      "/eɪ/ is a glide, not a long /e/. 'Name' has movement; 'ten' does not."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line every day. Compare your day 7 recording with day 1 — the progress is usually very audible."
+  }
+}

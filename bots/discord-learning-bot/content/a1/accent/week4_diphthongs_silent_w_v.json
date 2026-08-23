@@ -1,0 +1,189 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 4,
+  "focus": "/aʊ/ (house) vs /əʊ/ (home) · /uː/ (room) vs /ʊ/ (book) · unstressed /ɪ/ (kitchen) · silent letters (two, know) · /w/ vs /v/ (window, very)",
+  "focus_ar": "/aʊ/ مقابل /əʊ/، و /uː/ مقابل /ʊ/، و /ɪ/ غير المنبورة، والحروف الصامتة، و /w/ مقابل /v/",
+  "arabic_challenge": "Arabic has no /əʊ/ or /aʊ/ as single gliding vowels, so 'house' and 'home' get flattened. Arabic /w/ exists but learners often merge English /w/ and /v/. Silent letters (two, know, write) are purely a spelling trap.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/aʊ/", "/əʊ/"],
+      "isolation": {
+        "instructions": "/aʊ/ (house) starts wide open like /æ/ and glides to /ʊ/ — jaw closes, lips round. /əʊ/ (home) starts in the middle and glides to /ʊ/ — lips round from earlier. Both MOVE; neither is a single flat vowel.",
+        "instructions_ar": "/aʊ/ يبدأ مفتوح وينتهي بشفاه مدوّرة. /əʊ/ يبدأ من النص وينتهي مدوّر. الاتنين أصوات متحركة مش ثابتة.",
+        "practice": ["ah-oo → aʊ (house)", "uh-oo → əʊ (home)", "house-home-house-home"]
+      },
+      "minimal_pairs": [
+        {"pair": ["now", "no"], "meaning": ["الآن", "لا"]},
+        {"pair": ["town", "tone"], "meaning": ["مدينة", "نغمة"]},
+        {"pair": ["house", "hose"], "meaning": ["منزل", "خرطوم"]},
+        {"pair": ["loud", "load"], "meaning": ["عالي الصوت", "حِمل"]},
+        {"pair": ["found", "phoned"], "meaning": ["وجد", "اتصل"]}
+      ],
+      "word_practice": {
+        "ow_sound": ["house", "out", "down", "about", "town", "now", "how", "around"],
+        "oh_sound": ["home", "go", "no", "so", "phone", "window", "sofa", "over"]
+      },
+      "sentence_practice": [
+        "My house is in the old town.",
+        "Go home now.",
+        "The phone is on the sofa."
+      ],
+      "record_this": "My house is in the old town. I go home now and the phone is on the sofa near the window.",
+      "self_check": "Say 'now' and 'no'. Does your jaw clearly move for both — and do they sound different from each other?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/uː/", "/ʊ/"],
+      "isolation": {
+        "instructions": "/uː/ (room, two) is LONG with tightly rounded, pushed-forward lips. /ʊ/ (book, good) is SHORT with relaxed, barely-rounded lips. Length and tension both matter.",
+        "instructions_ar": "/uː/ طويل والشفاه مدوّرة ومدفوعة للأمام. /ʊ/ قصير والشفاه مسترخية. الفرق في الطول والشد.",
+        "practice": ["oooo (long, tight lips)", "uh uh (short, relaxed)", "food-foot-food-foot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fool", "full"], "meaning": ["أحمق", "ممتلئ"]},
+        {"pair": ["pool", "pull"], "meaning": ["حوض سباحة", "يسحب"]},
+        {"pair": ["Luke", "look"], "meaning": ["لوك (اسم)", "ينظر"]},
+        {"pair": ["suit", "soot"], "meaning": ["بدلة", "سُخام"]},
+        {"pair": ["wooed", "wood"], "meaning": ["تودّد", "خشب"]}
+      ],
+      "word_practice": {
+        "long_oo": ["room", "two", "food", "school", "bathroom", "living", "who", "move"],
+        "short_oo": ["book", "good", "look", "cook", "put", "bookshelf", "would", "could"]
+      },
+      "sentence_practice": [
+        "There are two rooms and one bathroom.",
+        "Look at the good book.",
+        "I cook food in the kitchen."
+      ],
+      "record_this": "There are two rooms and one bathroom in my house. Look at the good book on the bookshelf. I cook food in the kitchen.",
+      "self_check": "Say 'fool' then 'full'. Are your lips tighter and the sound longer for the first one?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["unstressed /ɪ/ and /ə/"],
+      "isolation": {
+        "instructions": "In long words, only ONE syllable is strong; the rest shrink. KIT-chen, GAR-den, BUILD-ing, FUR-ni-ture. The weak syllables become a tiny /ɪ/ or /ə/ — do not give every syllable equal weight.",
+        "instructions_ar": "في الكلمات الطويلة مقطع واحد بس قوي والباقي يتقلّص: KIT-chen، GAR-den. المقاطع الخفيفة تبقى صوت صغير جدًا — مش كل مقطع بنفس القوة.",
+        "practice": ["KIT-chen (strong-weak)", "GAR-den (strong-weak)", "BUILD-ing, BED-room, BATH-room"]
+      },
+      "minimal_pairs": [
+        {"pair": ["KIT-chen", "kit-CHEN ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["GAR-den", "gar-DEN ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["BED-room", "bed-ROOM ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["BUILD-ing", "build-ING ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["A-part-ment", "a-part-MENT ❌"], "meaning": ["النبر على الثاني ✅", "خطأ"]}
+      ],
+      "word_practice": ["kitchen", "garden", "building", "bedroom", "bathroom", "living", "furniture", "apartment", "village", "city"],
+      "sentence_practice": [
+        "The kitchen is next to the living room.",
+        "There is a garden behind the building.",
+        "My apartment has new furniture."
+      ],
+      "record_this": "The kitchen is next to the living room. There is a small garden behind the building, and my apartment has new furniture.",
+      "self_check": "Tap the table only on the STRONG syllable. Should be one tap per word, not two or three."
+    },
+    {
+      "day": 4,
+      "target_sounds": "Silent letters",
+      "isolation": {
+        "instructions": "Some letters are written but never spoken: two (no /w/), know/knife (no /k/), write (no /w/), hour (no /h/), walk/talk (no /l/), half (no /l/), listen (no /t/). Say the word, not the spelling.",
+        "instructions_ar": "في حروف تُكتب ولا تُنطق: two (بدون w)، know (بدون k)، write (بدون w)، hour (بدون h)، walk (بدون l). انطق الكلمة مش الإملاء.",
+        "practice": ["two = 'too'", "know = 'no'", "walk = 'wawk'", "hour = 'our'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["two", "t-woo ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["know", "k-now ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["walk", "wal-k ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["hour", "h-our ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["listen", "lis-ten ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["two", "know", "write", "hour", "walk", "talk", "half", "listen", "knife", "wrong"],
+      "sentence_practice": [
+        "I know there are two rooms.",
+        "Walk for half an hour.",
+        "Listen — do not talk."
+      ],
+      "record_this": "I know there are two rooms in this house. I walk for half an hour every day. Please listen and do not talk.",
+      "self_check": "Does 'know' sound exactly like 'no'? It should."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/w/", "/v/"],
+      "isolation": {
+        "instructions": "/w/ = both lips round and push forward, NO teeth involved (like Arabic و). /v/ = top TEETH touch the bottom lip. If your teeth touch your lip for 'window', it is wrong.",
+        "instructions_ar": "/w/ الشفاه مدوّرة للأمام والأسنان مش مشاركة (زي و). /v/ الأسنان العليا تلمس الشفة السفلى. لو أسنانك لمست شفتك في 'window' يبقى غلط.",
+        "practice": ["wuh wuh wuh (lips only)", "vvv (teeth on lip)", "wuh-vvv-wuh-vvv"]
+      },
+      "minimal_pairs": [
+        {"pair": ["west", "vest"], "meaning": ["غرب", "صديري"]},
+        {"pair": ["wine", "vine"], "meaning": ["نبيذ", "كرمة"]},
+        {"pair": ["wet", "vet"], "meaning": ["مبلول", "طبيب بيطري"]},
+        {"pair": ["worse", "verse"], "meaning": ["أسوأ", "بيت شعر"]},
+        {"pair": ["wary", "vary"], "meaning": ["حَذِر", "يتنوع"]}
+      ],
+      "word_practice": {
+        "w_sound": ["window", "wall", "wardrobe", "where", "with", "we", "walk", "water"],
+        "v_sound": ["very", "village", "living", "have", "move", "over", "every", "TV"]
+      },
+      "sentence_practice": [
+        "The window is in the wall.",
+        "We live in a very small village.",
+        "Where is the water?"
+      ],
+      "record_this": "The window is in the wall next to the wardrobe. We live in a very small village and I walk to the water every evening.",
+      "self_check": "Say 'window' — your teeth must NOT touch your lip. Then say 'very' — they must."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["now", "no"], ["fool", "full"], ["west", "vest"],
+        ["house", "hose"], ["Luke", "look"], ["wine", "vine"]
+      ],
+      "challenge_sentences": [
+        "My house has two bedrooms and a kitchen.",
+        "Look out of the window at the garden.",
+        "I know we live in a very old town.",
+        "Walk home now — it is half an hour."
+      ],
+      "record_this": "My house has two bedrooms and a kitchen. Look out of the window at the garden. I know we live in a very old town, so walk home now — it takes half an hour.",
+      "self_check": "Check three things: do 'now/no' differ, is 'two' free of any /w/, and do your teeth stay off your lip for /w/?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing a home. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت توصف بيت، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "This is my house. It is in a small town, not in the city. There are two bedrooms, one bathroom and a big living room. The kitchen is next to the living room, and there is a garden behind the house. I look out of the window every morning. We have new furniture and a good bookshelf full of books. I know it is old, but I love my home. It takes half an hour to walk into town.",
+        "sounds_to_check": {
+          "/aʊ/ vs /əʊ/": "house, town, out, now, around — home, go, no, window, sofa, old",
+          "/uː/ vs /ʊ/": "two, room, bathroom, food — book, look, good, full, bookshelf",
+          "word stress": "KIT-chen, GAR-den, BED-room, BUILD-ing, FUR-ni-ture",
+          "silent letters": "two, know, walk, half, hour, listen",
+          "/w/ vs /v/": "window, wall, walk, we — very, living, have, love"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Gliding vowels clearly move, /w/ and /v/ never merge. Ready for week 5.",
+        "70_89": "Good; occasional flattening of /əʊ/ or a slipped silent letter.",
+        "50_69": "'house/home' or 'fool/full' still merge. Repeat days 1-2.",
+        "below_50": "Redo days 1-5, using the mirror to watch your lips move on the gliding vowels."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "/aʊ/ and /əʊ/ are MOVING vowels. If your mouth stays still, the word will sound wrong.",
+      "Long vs short /uː/-/ʊ/ changes meaning (fool/full). Arabic vowel length does not work the same way.",
+      "/w/ uses lips only. Never let the teeth touch the lip — that turns 'window' into 'vindow'.",
+      "Silent letters are a spelling trap, not a pronunciation choice: 'two' is simply 'too'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily and compare day 7 with day 1."
+  }
+}

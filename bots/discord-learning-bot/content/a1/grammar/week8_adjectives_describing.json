@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w8",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 8,
+  "pattern_name": "Adjectives + describing people and things",
+  "pattern_name_ar": "الصفات ووصف الأشخاص والأشياء",
+  "formula": "Adjective + noun   |   Subject + be + adjective   |   What/Who/Where/How + ...?",
+  "formula_visual": "[a tall] + [man]   ·   [The car] + [is] + [fast]",
+  "when_to_use": "Put the adjective BEFORE the noun, or after the verb 'be'. Use question words to ask for descriptions.",
+  "when_to_use_ar": "الصفة تأتي قبل الاسم أو بعد فعل الكينونة. ونستخدم أدوات السؤال لطلب الوصف.",
+  "why_arabic_speakers_struggle": "In Arabic the adjective comes AFTER the noun and agrees in gender and number ('بيت كبير' = 'house big'). In English it comes BEFORE and never changes form.",
+  "examples": [
+    {"en": "She has long hair.", "ar": "شعرها طويل", "structure": "[long] + [hair]"},
+    {"en": "The car is fast.", "ar": "السيارة سريعة", "structure": "[The car] + [is] + [fast]"},
+    {"en": "What is he like?", "ar": "كيف هو (شخصيته)؟", "structure": "[What] + [is he like]?"},
+    {"en": "Where is she from?", "ar": "من أين هي؟", "structure": "[Where] + [is she from]?"},
+    {"en": "They are friendly people.", "ar": "هم أشخاص ودودون", "structure": "[friendly] + [people]"}
+  ],
+  "common_errors": [
+    {"wrong": "a house big", "correct": "a big house", "explanation": "English adjectives go BEFORE the noun."},
+    {"wrong": "two bigs houses", "correct": "two big houses", "explanation": "English adjectives never take a plural -s."},
+    {"wrong": "How is he like?", "correct": "What is he like?", "explanation": "'What ... like?' asks for a description."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "She has a ___ (beautiful) smile.", "answer": "beautiful"},
+    {"sentence": "They are ___ (tall) men.", "answer": "tall"},
+    {"sentence": "___ is your favourite colour?", "answer": "What"},
+    {"sentence": "The room is very ___ (small).", "answer": "small"},
+    {"sentence": "___ is that woman?", "answer": "Who"}
+  ],
+  "quick_rule": "Adjective BEFORE noun, and never add -s to an adjective.",
+  "quick_rule_ar": "الصفة قبل الاسم، وما نضيفش -s للصفة أبدًا.",
+  "mnemonic": "BIG house — not 'house big'.",
+  "connect_to_speaking": "Describe a friend: 'He is a tall, friendly man. He has short black hair. What is he like? He is very kind.'"
+}

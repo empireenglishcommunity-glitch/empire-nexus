@@ -41,14 +41,25 @@ def test_max_week_for_level_unknown_defaults_to_l0():
 
 
 def test_accent_and_grammar_content_covers_all_levels():
-    """As of 2026-07-11 all four levels have accent/grammar content
-    authored (previously only L0 did). If a future change accidentally
-    removes a level's content folder, this should fail loudly instead of
-    curriculum.py's has_accent_content()/has_grammar_content() silently
-    returning False for real students."""
+    """All four legacy levels have accent/grammar content authored (since
+    2026-07-11), and CEFR levels gain it as each level's phonology ships
+    (A1 first). If a future change accidentally removes a level's content
+    folder, this should fail loudly instead of curriculum.py's
+    has_accent_content()/has_grammar_content() silently returning False for
+    real students.
+
+    Asserted as a SUBSET rather than an exact list so that authoring the next
+    CEFR level's phonology does not require editing this test — while still
+    failing loudly if any covered level disappears.
+    """
     stats = curriculum.stats()
-    assert stats["accent_levels_covered"] == ["L0", "L1", "L2", "L3"]
-    assert stats["grammar_levels_covered"] == ["L0", "L1", "L2", "L3"]
+    required = {"L0", "L1", "L2", "L3", "A1"}
+    assert required <= set(stats["accent_levels_covered"]), (
+        f"missing accent content for: {required - set(stats['accent_levels_covered'])}"
+    )
+    assert required <= set(stats["grammar_levels_covered"]), (
+        f"missing grammar content for: {required - set(stats['grammar_levels_covered'])}"
+    )
 
 
 def test_has_accent_content_and_has_grammar_content():

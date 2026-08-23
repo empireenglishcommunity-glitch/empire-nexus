@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w2",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 2,
+  "pattern_name": "Possessive adjectives + 'have got'",
+  "pattern_name_ar": "صفات الملكية و have got",
+  "formula": "Subject + have got / has got + object   |   my / your / his / her / our / their + noun",
+  "formula_visual": "[He] + [has got] + [two brothers]",
+  "when_to_use": "Use possessive adjectives to show who something belongs to, and have got / has got to talk about family and belongings.",
+  "when_to_use_ar": "نستخدم صفات الملكية لبيان مين صاحب الشيء، و have got / has got للكلام عن العائلة والممتلكات.",
+  "why_arabic_speakers_struggle": "Arabic attaches possession as a suffix (كتابي = 'book-my'), so the separate word order 'my book' feels reversed. Also Arabic uses 'عندي' (at me) rather than a 'have' verb.",
+  "examples": [
+    {"en": "This is my sister.", "ar": "هذه أختي", "structure": "[my] + [sister]"},
+    {"en": "He has got two brothers.", "ar": "عنده أخوان", "structure": "[He] + [has got] + [two brothers]"},
+    {"en": "Their house is big.", "ar": "بيتهم كبير", "structure": "[Their] + [house] + [is big]"},
+    {"en": "I have got a small family.", "ar": "عندي عائلة صغيرة", "structure": "[I] + [have got] + [a small family]"},
+    {"en": "Her mother is a doctor.", "ar": "أمها طبيبة", "structure": "[Her] + [mother] + [is a doctor]"}
+  ],
+  "common_errors": [
+    {"wrong": "The sister my is tall.", "correct": "My sister is tall.", "explanation": "The possessive comes BEFORE the noun in English."},
+    {"wrong": "He have got two sons.", "correct": "He has got two sons.", "explanation": "he/she/it use HAS got."},
+    {"wrong": "I have got a brother his name Ali.", "correct": "I have got a brother. His name is Ali.", "explanation": "Do not drop 'is' — see week 1."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "This is ___ father (of me).", "answer": "my"},
+    {"sentence": "She ___ got three children.", "answer": "has"},
+    {"sentence": "___ house is near the school (of them).", "answer": "Their"},
+    {"sentence": "We ___ got a big family.", "answer": "have"},
+    {"sentence": "What is ___ name (of you)?", "answer": "your"}
+  ],
+  "quick_rule": "Possessive BEFORE the noun. I/you/we/they → have got · he/she/it → has got.",
+  "quick_rule_ar": "صفة الملكية قبل الاسم. و has got مع he/she/it فقط.",
+  "mnemonic": "MY book, not 'book my'.",
+  "connect_to_speaking": "Describe your family: 'I have got two sisters. My father is a teacher. Their names are ___.'"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w7",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 7,
+  "pattern_name": "'How much / how many' + shopping language",
+  "pattern_name_ar": "how much / how many ولغة الشراء",
+  "formula": "How much + uncountable   |   How many + countable plural   |   I'd like + noun",
+  "formula_visual": "[How many] + [apples] + [do you want]?",
+  "when_to_use": "Use 'how much' for price and for things you cannot count, 'how many' for things you can count, and 'I'd like' to order politely.",
+  "when_to_use_ar": "نستخدم how much للسعر وللأشياء غير المعدودة، و how many للمعدودة، و I'd like للطلب بأدب.",
+  "why_arabic_speakers_struggle": "Arabic uses 'كم' for both countable and uncountable, so the much/many split must be learned. Also 'I want' is normal in Arabic but sounds blunt in English shops — 'I'd like' is the polite form.",
+  "examples": [
+    {"en": "How much is this?", "ar": "بكم هذا؟", "structure": "[How much] + [is this]?"},
+    {"en": "How many apples?", "ar": "كم تفاحة؟", "structure": "[How many] + [apples]?"},
+    {"en": "I'd like two, please.", "ar": "أريد اثنين لو سمحت", "structure": "[I'd like] + [two]"},
+    {"en": "How much money do you have?", "ar": "كم معك من نقود؟", "structure": "[How much] + [money]"},
+    {"en": "It costs fifteen pounds.", "ar": "سعره خمسة عشر جنيهًا", "structure": "[It costs] + [15 pounds]"}
+  ],
+  "common_errors": [
+    {"wrong": "How much apples?", "correct": "How many apples?", "explanation": "Apples are countable → HOW MANY."},
+    {"wrong": "How many money?", "correct": "How much money?", "explanation": "Money is uncountable → HOW MUCH."},
+    {"wrong": "I want two.", "correct": "I'd like two, please.", "explanation": "'I'd like' is the polite shop form."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "How ___ is this shirt?", "answer": "much"},
+    {"sentence": "How ___ people are there?", "answer": "many"},
+    {"sentence": "How ___ water do you drink?", "answer": "much"},
+    {"sentence": "I ___ like one kilo, please.", "answer": "'d"},
+    {"sentence": "How ___ eggs do we need?", "answer": "many"}
+  ],
+  "quick_rule": "Can you count it? → HOW MANY. Can't count it (money, water, rice)? → HOW MUCH.",
+  "quick_rule_ar": "لو ينفع تعدّه → how many. لو مش ينفع (فلوس، ماء، أرز) → how much.",
+  "mnemonic": "MANY = numbers. MUCH = amounts.",
+  "connect_to_speaking": "Role-play a shop: 'How much is this? I'd like two, please. How many do you have?'"
+}

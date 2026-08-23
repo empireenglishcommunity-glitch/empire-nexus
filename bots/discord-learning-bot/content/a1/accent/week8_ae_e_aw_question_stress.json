@@ -1,0 +1,189 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 8,
+  "focus": "/æ/ (bad, hat) vs /e/ (bed) · /ɔː/ (tall, short) vs /ɒ/ (hot) · question-word stress (WHAT, WHERE) · /ɜː/ (girl, shirt) vs /ɔː/ (short) · adjective + noun stress and linking",
+  "focus_ar": "/æ/ مقابل /e/، و /ɔː/ مقابل /ɒ/، ونبر أدوات السؤال، و /ɜː/ مقابل /ɔː/، ونبر الصفة مع الاسم",
+  "arabic_challenge": "Arabic has no /æ/, /e/ distinction of this kind and no /ɜː/ at all, so 'bad/bed' and 'girl/goal' collapse. Question words also carry heavy stress in English — flattening them makes questions hard to follow.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/æ/", "/e/"],
+      "isolation": {
+        "instructions": "/æ/ (bad, hat, black) = mouth WIDE open, tongue flat and low at the front. /e/ (bed, red, best) = mouth half open, tongue a little higher. This pair changes meaning constantly.",
+        "instructions_ar": "/æ/ الفم مفتوح واسع واللسان مسطح تحت. /e/ الفم نص مفتوح واللسان أعلى شوية. الفرق بيغيّر المعنى كثير.",
+        "practice": ["aaa (wide, dentist mouth)", "eh eh (half open)", "bad-bed-bad-bed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bad", "bed"], "meaning": ["سيء", "سرير"]},
+        {"pair": ["had", "head"], "meaning": ["كان لديه", "رأس"]},
+        {"pair": ["sad", "said"], "meaning": ["حزين", "قال"]},
+        {"pair": ["man", "men"], "meaning": ["رجل", "رجال"]},
+        {"pair": ["pan", "pen"], "meaning": ["مقلاة", "قلم"]}
+      ],
+      "word_practice": {
+        "a_sound": ["bad", "hat", "black", "fat", "thin? no", "happy", "handsome", "that"],
+        "eh_sound": ["bed", "red", "best", "friendly", "very", "yellow", "seven", "well"]
+      },
+      "sentence_practice": [
+        "He is a handsome man.",
+        "The red bed is very big.",
+        "That black hat is bad."
+      ],
+      "record_this": "He is a handsome man and he is very friendly. That black hat is bad, but the red bed is the best.",
+      "self_check": "Say 'bad' then 'bed'. Put a finger on your chin — it should drop lower for 'bad'."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ɔː/", "/ɒ/"],
+      "isolation": {
+        "instructions": "/ɔː/ (tall, short, all, four) = LONG, lips firmly rounded and pushed forward. /ɒ/ (hot, not, long) = SHORT, lips only lightly rounded.",
+        "instructions_ar": "/ɔː/ طويل والشفاه مدوّرة بقوة للأمام. /ɒ/ قصير والشفاه مدوّرة بخفة.",
+        "practice": ["awww (long, tight round)", "o o (short, light)", "caught-cot-caught-cot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["caught", "cot"], "meaning": ["أمسك", "سرير أطفال"]},
+        {"pair": ["port", "pot"], "meaning": ["ميناء", "قدر"]},
+        {"pair": ["sport", "spot"], "meaning": ["رياضة", "مكان/نقطة"]},
+        {"pair": ["walk", "wok"], "meaning": ["يمشي", "مقلاة صينية"]},
+        {"pair": ["bought", "bot"], "meaning": ["اشترى", "روبوت"]}
+      ],
+      "word_practice": {
+        "aw_sound": ["tall", "short", "small", "all", "four", "your", "more", "before"],
+        "o_sound": ["hot", "not", "long", "got", "top", "box", "watch", "shop"]
+      },
+      "sentence_practice": [
+        "He is tall and she is short.",
+        "It is not hot today.",
+        "All four are small."
+      ],
+      "record_this": "He is tall and she is short. All four boxes are small. It is not very hot today, so I want more water before I walk.",
+      "self_check": "Say 'caught' then 'cot'. The first must be noticeably longer with tighter lips."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["Question-word stress"],
+      "isolation": {
+        "instructions": "English questions put strong stress on the question word AND on the key content word: 'WHAT is he LIKE?' 'WHERE is your HOUSE?' The little words between them stay weak.",
+        "instructions_ar": "الأسئلة الإنجليزية النبر فيها على أداة السؤال وعلى الكلمة المهمة: 'WHAT is he LIKE?'. والكلمات الصغيرة بينهم تبقى خفيفة.",
+        "practice": ["WHAT is he LIKE?", "WHERE is she FROM?", "WHO is that MAN?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["WHAT is he like?", "what IS he like? ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["WHERE is it?", "where IS it? ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["WHO is she?", "who IS she? ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["HOW tall is he?", "how TALL IS HE ❌ (all equal)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["WHICH one?", "which ONE? (both ok)"], "meaning": ["شائع", "ممكن للتأكيد"]}
+      ],
+      "word_practice": ["what", "where", "who", "which", "how", "why", "when", "whose", "how tall", "what colour"],
+      "sentence_practice": [
+        "WHAT is he LIKE?",
+        "WHERE is the tall MAN?",
+        "WHAT COLOUR is your car?"
+      ],
+      "record_this": "What is he like? Where is the tall man? What colour is your new car? Who is that friendly woman?",
+      "self_check": "Clap on the stressed words only. Two claps per question — the question word and the key word."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/ɜː/", "/ɔː/"],
+      "isolation": {
+        "instructions": "/ɜː/ (girl, shirt, first, work) = tongue in the MIDDLE, lips NEUTRAL (not rounded) — a long, flat 'er'. /ɔː/ (short, four) = lips ROUNDED. Arabic has neither, so the lips decide it.",
+        "instructions_ar": "/ɜː/ اللسان في النص والشفاه محايدة (مش مدوّرة) — صوت 'إر' طويل مسطح. /ɔː/ الشفاه مدوّرة. الشفاه هي الفيصل.",
+        "practice": ["errrr (flat lips, no rounding)", "awww (rounded)", "bird-board-bird-board"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bird", "board"], "meaning": ["طائر", "لوح"]},
+        {"pair": ["shirt", "short"], "meaning": ["قميص", "قصير"]},
+        {"pair": ["work", "walk"], "meaning": ["يعمل", "يمشي"]},
+        {"pair": ["burn", "born"], "meaning": ["يحرق", "وُلد"]},
+        {"pair": ["curl", "call"], "meaning": ["تجعيدة", "ينادي"]}
+      ],
+      "word_practice": {
+        "er_sound": ["girl", "shirt", "first", "work", "her", "person", "birthday", "learn"],
+        "aw_sound": ["short", "four", "your", "more", "tall", "small", "before", "morning"]
+      },
+      "sentence_practice": [
+        "The girl wears a short shirt.",
+        "Her first birthday is in the morning.",
+        "I work before I walk."
+      ],
+      "record_this": "The girl is wearing a short shirt. Her first birthday is tomorrow morning. I work early and then I walk to the small shop.",
+      "self_check": "In a mirror, say 'shirt' — your lips must stay flat. Then 'short' — they must round."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Adjective + noun stress and linking"],
+      "isolation": {
+        "instructions": "When you describe something, BOTH the adjective and the noun usually carry stress, and they link smoothly: a BLACK CAR, a TALL MAN, a BIG OLD HOUSE. Comparatives end weakly: TALL-er, BIGG-er (the -er is a tiny /ə/).",
+        "instructions_ar": "في الوصف، الصفة والاسم الاتنين منبورين وبيتوصّلوا: a BLACK CAR. والمقارنة نهايتها خفيفة: TALL-er.",
+        "practice": ["a BLACK CAR", "a TALL MAN", "TALL-er, SHORT-er, BIGG-er (weak ending)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a BLACK CAR ✅", "a black CAR (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["TALL-er ✅", "tall-ER ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["BIGG-er ✅", "bigg-ER ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["an OLD HOUSE ✅", "an old house (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["MORE beautiful ✅", "more BEAUtiful (both ok)"], "meaning": ["شائع", "ممكن"]}
+      ],
+      "word_practice": ["tall", "short", "big", "small", "old", "young", "new", "beautiful", "taller", "bigger"],
+      "sentence_practice": [
+        "She has a beautiful new car.",
+        "He is taller than his brother.",
+        "That old house is bigger."
+      ],
+      "record_this": "She has a beautiful new car. He is taller than his brother, and that old house is much bigger than mine.",
+      "self_check": "Say 'taller'. Is the ending a light /ə/, not a strong 'ERR'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 8 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["bad", "bed"], ["caught", "cot"], ["shirt", "short"],
+        ["man", "men"], ["work", "walk"], ["bird", "board"]
+      ],
+      "challenge_sentences": [
+        "WHAT is he LIKE? He is tall and friendly.",
+        "The girl has a short red shirt.",
+        "That black hat is bad, but the bed is very good.",
+        "He is taller than all four men."
+      ],
+      "record_this": "What is he like? He is tall, handsome and very friendly. The girl has a short red shirt. That black hat is bad, but the bed is good. He is taller than all four men.",
+      "self_check": "Check the lips: flat for /ɜː/ (shirt, work), rounded for /ɔː/ (short, walk)."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing people and things. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت توصف أشخاص وأشياء، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "What is your brother like? He is tall and handsome, and he is very friendly. He always wears a black shirt and a red hat. My sister is shorter than him, and she has long hair. Where do they work? They work in a big old building near the small shop. What colour is your car? It is white, and it is bigger than my old one. All four of us are happy.",
+        "sounds_to_check": {
+          "/æ/ vs /e/": "black, hat, handsome, has — red, bed, very, friendly, seven",
+          "/ɔː/ vs /ɒ/": "tall, all, four, short, more — hot, not, long, shop, got",
+          "/ɜː/ vs /ɔː/": "shirt, work, girl, first, her — short, four, more, walk",
+          "question-word stress": "WHAT is he LIKE?  WHERE do they WORK?  WHAT COLOUR is it?",
+          "adjective + noun": "a BLACK SHIRT, a BIG OLD BUILDING, TALL-er, SHORT-er"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'bad/bed' and 'shirt/short' are clearly distinct and questions are well stressed. Ready for week 9.",
+        "70_89": "Good; /ɜː/ occasionally drifts toward a rounded vowel.",
+        "50_69": "'bad/bed' still merges, or questions sound flat. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5 with the mirror, watching lip rounding carefully."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "/æ/ vs /e/ (bad/bed) is one of the highest-frequency meaning-changing pairs in English. Widen the mouth for /æ/.",
+      "/ɜː/ (shirt, work) needs FLAT lips. If you round them you will say 'short' instead.",
+      "Question-word stress is what makes a question sound like a question, alongside intonation.",
+      "Comparative -er is weak: 'taller' not 'tall-ERR'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

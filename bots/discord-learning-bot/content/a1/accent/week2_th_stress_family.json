@@ -1,0 +1,182 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 2,
+  "focus": "/ð/ (mother, this) vs /d/ (daughter) · /ð/ vs /z/ · word stress in FA-ther, SIS-ter · /ʌ/ (brother) vs /æ/ (family) · plural endings /s/ /z/ /ɪz/",
+  "focus_ar": "صوت /ð/ مقابل /d/ و /z/، ونبر الكلمة في FA-ther و SIS-ter، و /ʌ/ مقابل /æ/، ونهايات الجمع",
+  "arabic_challenge": "Arabic has ذ (/ð/), so the sound itself is familiar — but many learners replace it with /d/ or /z/ in English words (this → dis / zis). English also puts strong stress on the FIRST syllable of family words, which Arabic does not.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/ð/", "/d/"],
+      "isolation": {
+        "instructions": "/ð/ = tongue tip between the teeth, voice on, air flows continuously (like Arabic ذ). /d/ = tongue tip BEHIND the teeth, air stops completely then bursts.",
+        "instructions_ar": "/ð/ طرف اللسان بين الأسنان والهوا مستمر (زي ذ العربية). /d/ طرف اللسان خلف الأسنان والهوا يتوقف تمامًا.",
+        "practice": ["thh-thh-thh (tongue out, keep the air going)", "d-d-d (tongue behind teeth, air stops)", "thh-d-thh-d"]
+      },
+      "minimal_pairs": [
+        {"pair": ["they", "day"], "meaning": ["هم", "يوم"]},
+        {"pair": ["then", "den"], "meaning": ["ثم", "عرين"]},
+        {"pair": ["breathe", "breed"], "meaning": ["يتنفس", "يربّي"]},
+        {"pair": ["other", "udder"], "meaning": ["آخر", "ضرع"]},
+        {"pair": ["worthy", "wordy"], "meaning": ["جدير", "مطوّل"]}
+      ],
+      "word_practice": ["mother", "father", "brother", "this", "that", "they", "the", "these", "there", "together"],
+      "sentence_practice": [
+        "This is my mother and that is my father.",
+        "They live together.",
+        "These are my brothers."
+      ],
+      "record_this": "This is my mother and that is my father. They live together with my brother and my other sister.",
+      "self_check": "Look in a mirror. Can you SEE your tongue tip between your teeth on every 'th' word?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ð/", "/z/"],
+      "isolation": {
+        "instructions": "The most common Arabic-speaker slip: /ð/ becoming /z/. For /ð/ the tongue is OUTSIDE (between the teeth). For /z/ the tongue is INSIDE, behind the teeth, and the sound is sharper.",
+        "instructions_ar": "أشهر خطأ: تحويل /ð/ إلى /z/. في /ð/ اللسان بره بين الأسنان. في /z/ اللسان جوه خلف الأسنان والصوت أحدّ.",
+        "practice": ["thh (tongue visible)", "zzz (tongue hidden, sharp)", "thh-zzz-thh-zzz"]
+      },
+      "minimal_pairs": [
+        {"pair": ["those", "zoos"], "meaning": ["تلك", "حدائق حيوان"]},
+        {"pair": ["then", "Zen"], "meaning": ["ثم", "زِن"]},
+        {"pair": ["breathe", "breeze"], "meaning": ["يتنفس", "نسمة"]},
+        {"pair": ["with", "whizz"], "meaning": ["مع", "يمر بسرعة"]},
+        {"pair": ["clothe", "close"], "meaning": ["يلبس", "يغلق"]}
+      ],
+      "word_practice": ["this", "these", "those", "with", "brother", "mother", "another", "either", "weather", "rather"],
+      "sentence_practice": [
+        "These are my parents and those are my cousins.",
+        "I live with my mother.",
+        "My brother has another daughter."
+      ],
+      "record_this": "These are my parents and those are my cousins. I live with my mother and my brother has another daughter.",
+      "self_check": "Say 'those' and 'zoos'. If they sound the same, push your tongue further out for 'those'."
+    },
+    {
+      "day": 3,
+      "target_sounds": "Word stress in family nouns (first syllable)",
+      "isolation": {
+        "instructions": "Almost every two-syllable family word is stressed on the FIRST syllable: FA-ther, MO-ther, SIS-ter, BRO-ther, DAUGH-ter, PA-rents, HUS-band, CHIL-dren. Say the first part LOUDER and LONGER, then let the second part fall away weakly.",
+        "instructions_ar": "أغلب كلمات العائلة النبر فيها على المقطع الأول: FA-ther, MO-ther, SIS-ter. اضغط على الجزء الأول وخفّف الجزء الثاني.",
+        "practice": ["DA-da DA-da DA-da (clap on the first beat)", "FA-ther, MO-ther, SIS-ter, BRO-ther", "GRAND-fa-ther (stress the FIRST of three)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["FA-ther", "fa-THER"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["SIS-ter", "sis-TER"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["PA-rents", "pa-RENTS"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["CHIL-dren", "chil-DREN"], "meaning": ["صحيح ✅", "خطأ ❌"]},
+        {"pair": ["HUS-band", "hus-BAND"], "meaning": ["صحيح ✅", "خطأ ❌"]}
+      ],
+      "word_practice": ["father", "mother", "sister", "brother", "daughter", "parents", "husband", "children", "grandfather", "grandmother"],
+      "sentence_practice": [
+        "My FA-ther and my MO-ther are teachers.",
+        "I have one SIS-ter and two BRO-thers.",
+        "Her GRAND-mo-ther lives with her PA-rents."
+      ],
+      "record_this": "My father and my mother are teachers. I have one sister and two brothers. My grandmother lives with my parents and their children.",
+      "self_check": "Clap once on each stressed syllable as you read. Does the clap always land on the FIRST part of the family word?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/ʌ/", "/æ/"],
+      "isolation": {
+        "instructions": "/ʌ/ (brother, son, uncle) is short and central — mouth relaxed, tongue in the MIDDLE, like a quick grunt. /æ/ (family, aunt, has) is open and FRONT — mouth wide like at the dentist, tongue flat and low.",
+        "instructions_ar": "/ʌ/ قصير ومركزي — الفم مسترخي واللسان في النص. /æ/ مفتوح وأمامي — الفم واسع زي عند الدكتور.",
+        "practice": ["uh uh uh (relaxed, central)", "aaa aaa (wide, front)", "uh-aaa-uh-aaa"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cup", "cap"], "meaning": ["كوب", "قبعة"]},
+        {"pair": ["run", "ran"], "meaning": ["يجري", "جرى"]},
+        {"pair": ["hut", "hat"], "meaning": ["كوخ", "قبعة"]},
+        {"pair": ["uncle", "ankle"], "meaning": ["عم/خال", "كاحل"]},
+        {"pair": ["bun", "ban"], "meaning": ["كعكة", "يمنع"]}
+      ],
+      "word_practice": {
+        "uh_sound": ["brother", "mother", "son", "uncle", "cousin", "husband", "young", "much"],
+        "a_sound": ["family", "aunt", "has", "dad", "grandad", "married", "happy", "man"]
+      },
+      "sentence_practice": [
+        "My brother and my uncle are young.",
+        "My family has a happy dad.",
+        "My cousin's husband is a young man."
+      ],
+      "record_this": "My brother and my uncle are young. My family is happy and my aunt has one son. My cousin's husband is a good man.",
+      "self_check": "Say 'cup' then 'cap'. For the second one your mouth should open noticeably wider."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/s/", "/z/", "/ɪz/ (plural endings)"],
+      "isolation": {
+        "instructions": "Plural -s has THREE sounds. After a voiceless sound (p, t, k, f) say /s/: parents. After a voiced sound or vowel say /z/: brothers, families. After s, z, sh, ch, ge say /ɪz/: nurses, cousins? no — /ɪz/ examples: nieces, houses, villages.",
+        "instructions_ar": "نهاية الجمع لها ٣ أصوات: /s/ بعد الأصوات المهموسة، /z/ بعد المجهورة وحروف العلة، و /ɪz/ بعد s/z/sh/ch/ge.",
+        "practice": ["parents, aunts, uncles? → /s/: parents, aunts", "/z/: brothers, sisters, families, sons", "/ɪz/: nieces, houses, villages"]
+      },
+      "minimal_pairs": [
+        {"pair": ["parents /s/", "brothers /z/"], "meaning": ["مهموس", "مجهور"]},
+        {"pair": ["aunts /s/", "sons /z/"], "meaning": ["مهموس", "مجهور"]},
+        {"pair": ["cats /s/", "dogs /z/"], "meaning": ["مهموس", "مجهور"]},
+        {"pair": ["nieces /ɪz/", "sisters /z/"], "meaning": ["مقطع زائد", "بدون مقطع"]},
+        {"pair": ["houses /ɪz/", "homes /z/"], "meaning": ["مقطع زائد", "بدون مقطع"]}
+      ],
+      "word_practice": ["parents", "aunts", "brothers", "sisters", "sons", "families", "daughters", "cousins", "nieces", "houses"],
+      "sentence_practice": [
+        "My parents have three daughters.",
+        "My brothers and sisters live near us.",
+        "Both families have two houses."
+      ],
+      "record_this": "My parents have three daughters and two sons. My brothers and sisters live near us, and both families have big houses.",
+      "self_check": "Does 'houses' have an extra beat (HOU-siz) while 'homes' has only one?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["they", "day"], ["those", "zoos"], ["cup", "cap"],
+        ["other", "udder"], ["breathe", "breeze"], ["uncle", "ankle"]
+      ],
+      "challenge_sentences": [
+        "This is my mother and these are my brothers.",
+        "My FA-ther and my SIS-ter live with my PA-rents.",
+        "My uncle has a young son.",
+        "Those families have many children."
+      ],
+      "record_this": "This is my mother and these are my brothers. My father and my sister live with my parents. My uncle has a young son, and those families have many children.",
+      "self_check": "Check two things in your recording: is every 'th' made with the tongue between the teeth, and does the stress land on the FIRST syllable of family words?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing a family. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن العائلة، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "This is my family. My father is a teacher and my mother is a nurse. I have one sister and two brothers. My sister is young and my brothers are older than me. These are my parents, and those are my cousins. My uncle and my aunt live in another house with their children. We are all very happy together.",
+        "sounds_to_check": {
+          "/ð/ (not /d/ or /z/)": "this, that, they, these, those, mother, father, brother, another, together",
+          "word stress (first syllable)": "FA-ther, MO-ther, SIS-ter, BRO-thers, PA-rents, CHIL-dren, TEA-cher",
+          "/ʌ/ vs /æ/": "brother, mother, uncle, young — family, aunt, has",
+          "plural endings": "brothers /z/, parents /s/, cousins /z/, houses /ɪz/, children (irregular)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every 'th' is dental and voiced, stress is consistently first-syllable. Ready for week 3.",
+        "70_89": "Mostly accurate; occasional /ð/ → /z/ under speed.",
+        "50_69": "'th' regularly becomes /d/ or /z/, or stress drifts to the second syllable. Repeat days 1-3.",
+        "below_50": "Work through days 1-5 again with the mirror check for every 'th'."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Arabic HAS ذ, so /ð/ is available to you — the challenge is habit, not ability. Slow down and let the tongue come out.",
+      "First-syllable stress is the biggest 'accent giveaway' in family words. FA-ther, never fa-THER.",
+      "/ʌ/ is not a long vowel. 'Brother' is short and relaxed, not 'bro-ther' with a long o.",
+      "Do not add a vowel between the plural consonants: 'parents', not 'paren-tis'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily and compare day 7 with day 1."
+  }
+}

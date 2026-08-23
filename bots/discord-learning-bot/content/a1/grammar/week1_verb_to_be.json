@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w1",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 1,
+  "pattern_name": "Verb 'to be' + subject pronouns",
+  "pattern_name_ar": "فعل الكينونة (am/is/are) مع الضمائر",
+  "formula": "Subject + am / is / are + (complement)",
+  "formula_visual": "[I] + [am] + [a student]",
+  "when_to_use": "Use am/is/are to say who someone is, where they are from, and what they are like. It is the first verb you need for every introduction.",
+  "when_to_use_ar": "نستخدم am/is/are لنقول مين الشخص، ومن فين، وإيه صفته. أول فعل تحتاجه في أي تعريف بنفسك.",
+  "why_arabic_speakers_struggle": "Arabic nominal sentences have NO verb ('أنا طالب' = 'I student'), so learners often drop 'am/is/are' completely in English. English always needs the verb.",
+  "examples": [
+    {"en": "I am from Egypt.", "ar": "أنا من مصر", "structure": "[I] + [am] + [from Egypt]"},
+    {"en": "She is a student.", "ar": "هي طالبة", "structure": "[She] + [is] + [a student]"},
+    {"en": "Are you a teacher?", "ar": "هل أنت مدرس؟", "structure": "[Are] + [you] + [a teacher]?"},
+    {"en": "They are my friends.", "ar": "هم أصدقائي", "structure": "[They] + [are] + [my friends]"},
+    {"en": "He is not here.", "ar": "هو ليس هنا", "structure": "[He] + [is not] + [here]"}
+  ],
+  "common_errors": [
+    {"wrong": "I student.", "correct": "I am a student.", "explanation": "English always needs the verb 'to be' — Arabic does not."},
+    {"wrong": "She are nice.", "correct": "She is nice.", "explanation": "he/she/it take 'is'; you/we/they take 'are'."},
+    {"wrong": "You is my friend.", "correct": "You are my friend.", "explanation": "'You' always takes 'are', even for one person."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ from Cairo.", "answer": "am"},
+    {"sentence": "He ___ my brother.", "answer": "is"},
+    {"sentence": "We ___ students.", "answer": "are"},
+    {"sentence": "___ you happy?", "answer": "Are"},
+    {"sentence": "It ___ a big house.", "answer": "is"}
+  ],
+  "quick_rule": "I → am · he/she/it → is · you/we/they → are. Never leave it out.",
+  "quick_rule_ar": "I مع am، و he/she/it مع is، و you/we/they مع are. ومتشيلهاش أبدًا.",
+  "mnemonic": "I AM one. HE IS one. THEY ARE many.",
+  "connect_to_speaking": "Use it in your first speaking mission: 'Hello, I am ___. I am from ___. I am a ___.'"
+}
