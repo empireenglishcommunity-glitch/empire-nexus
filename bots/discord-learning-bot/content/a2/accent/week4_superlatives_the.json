@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 4,
+  "focus": "'the' /ðə/ before consonants vs /ðiː/ before vowels · -est ending /ɪst/ · 'the most' + adjective · superlative sentence stress · irregular superlatives",
+  "focus_ar": "'the' /ðə/ قبل الساكن و /ðiː/ قبل حرف العلة، ونهاية -est، و 'the most'، ونبر جملة التفضيل، والتفضيل الشاذ",
+  "arabic_challenge": "Arabic has one definite article (ال) with no vowel change, so learners use a single pronunciation for 'the'. English switches to /ðiː/ before a vowel sound (the oldest, the easiest), and the -est ending weakens to /ɪst/.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'the' /ðə/ vs /ðiː/"],
+      "isolation": {
+        "instructions": "Before a CONSONANT sound 'the' is weak: /ðə/ — the best, the biggest. Before a VOWEL sound it becomes /ðiː/ — the oldest, the easiest, the only. Listen to the next sound, not the spelling.",
+        "instructions_ar": "قبل الساكن 'the' تكون /ðə/. وقبل حرف العلة تكون /ðiː/ (the oldest). المهم الصوت اللي بعدها مش الإملاء.",
+        "practice": ["/ðə/ best, /ðə/ biggest", "/ðiː/ oldest, /ðiː/ easiest", "alternate: the best / the oldest"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/ðə/ best", "/ðiː/ oldest"], "meaning": ["قبل ساكن", "قبل حرف علة"]},
+        {"pair": ["/ðə/ biggest", "/ðiː/ easiest"], "meaning": ["قبل ساكن", "قبل حرف علة"]},
+        {"pair": ["/ðə/ worst", "/ðiː/ only"], "meaning": ["قبل ساكن", "قبل حرف علة"]},
+        {"pair": ["/ðə/ cheapest", "/ðiː/ oldest"], "meaning": ["قبل ساكن", "قبل حرف علة"]},
+        {"pair": ["/ðiː/ hour", "/ðə/ house"], "meaning": ["h صامتة → حرف علة", "h منطوقة → ساكن"]}
+      ],
+      "word_practice": ["the best", "the worst", "the biggest", "the cheapest", "the oldest", "the easiest", "the only", "the most", "the hottest", "the earliest"],
+      "sentence_practice": [
+        "It is the best and the easiest way.",
+        "That is the oldest building.",
+        "This is the cheapest hotel."
+      ],
+      "record_this": "It is the best and the easiest way to travel. That is the oldest building in the city, and this is the cheapest hotel near the beach.",
+      "self_check": "Say 'the oldest'. Does 'the' sound like /ðiː/ (thee) rather than /ðə/?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["-est = /ɪst/"],
+      "isolation": {
+        "instructions": "The superlative -est weakens to /ɪst/ — a short, unstressed ending. BIGG-ist, CHEAP-ist, HOTT-ist. The stress stays on the first syllable.",
+        "instructions_ar": "نهاية التفضيل -est بتخف لـ /ɪst/ — نهاية قصيرة غير منبورة. والنبر يفضل على المقطع الأول.",
+        "practice": ["BIGG-ist, CHEAP-ist", "HOTT-ist, OLD-ist", "weaken the ending"]
+      },
+      "minimal_pairs": [
+        {"pair": ["BIGG-ist ✅", "bigg-EST ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["CHEAP-ist ✅", "cheap-EST ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["HOTT-ist ✅", "hott-EST ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["biggest", "bigger"], "meaning": ["الأكبر", "أكبر من"]},
+        {"pair": ["cheapest", "cheaper"], "meaning": ["الأرخص", "أرخص من"]}
+      ],
+      "word_practice": ["biggest", "cheapest", "hottest", "coldest", "oldest", "fastest", "smallest", "safest", "busiest", "easiest"],
+      "sentence_practice": [
+        "It is the biggest city in Egypt.",
+        "That was the hottest day.",
+        "This is the easiest question."
+      ],
+      "record_this": "Cairo is the biggest city in Egypt. Yesterday was the hottest day of the year, and this is the easiest question on the test.",
+      "self_check": "Is the -est ending short and weak, with the stress on the first syllable?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'the most' + adjective"],
+      "isolation": {
+        "instructions": "For long adjectives: the most expensive, the most beautiful. 'The most' flows as one weak unit and the adjective keeps its stress: the-most-ex-PEN-sive.",
+        "instructions_ar": "للصفات الطويلة: the most expensive. و 'the most' تسيل كوحدة خفيفة والصفة تحتفظ بنبرها.",
+        "practice": ["the-most-ex-PEN-sive", "the-most-BEAU-ti-ful", "the-most-IN-ter-est-ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the most expensive ✅", "the expensivest ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the most beautiful ✅", "the beautifulest ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the biggest ✅", "the most big ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the best ✅", "the most good ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the worst ✅", "the most bad ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["the most expensive", "the most beautiful", "the most interesting", "the most popular", "the most important", "the most difficult", "the most crowded", "the most famous", "the most modern", "the most delicious"],
+      "sentence_practice": [
+        "It is the most beautiful place I know.",
+        "That was the most difficult exam.",
+        "This is the most popular restaurant."
+      ],
+      "record_this": "It is the most beautiful place I know. That was the most difficult exam of the year, and this is the most popular restaurant in the city.",
+      "self_check": "Does 'the most' stay light while the adjective carries the stress?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Superlative sentence stress"],
+      "isolation": {
+        "instructions": "Stress the superlative adjective and the noun: 'the BIGGEST CITY', 'the BEST DAY of my LIFE'. The little words (the, in, of) stay weak.",
+        "instructions_ar": "النبر على صفة التفضيل وعلى الاسم: 'the BIGGEST CITY'. والكلمات الصغيرة (the, in, of) تبقى خفيفة.",
+        "practice": ["the BIGGEST CITY", "the BEST DAY of my LIFE", "clap on the strong words only"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the BIGGEST CITY ✅", "THE biggest city ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the BEST DAY ✅", "the best day (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["one of the BEST ✅", "ONE OF THE BEST ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["in the WORLD ✅", "IN THE world ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["of my LIFE ✅", "OF MY life ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["in the world", "in Egypt", "of the year", "of my life", "one of the best", "one of the worst", "in my city", "of all", "in history", "on earth"],
+      "sentence_practice": [
+        "It is the BIGGEST city in the WORLD.",
+        "That was the BEST day of my LIFE.",
+        "He is one of the BEST players."
+      ],
+      "record_this": "It is one of the biggest cities in the world. That was the best day of my life, and he is one of the best players in the country.",
+      "self_check": "Count your claps. Two or three strong words per sentence, not every word."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Irregular superlatives"],
+      "isolation": {
+        "instructions": "Learn these by sound, not by rule: good→the best, bad→the worst, far→the furthest, many→the most, little→the least. Note 'worst' uses /ɜː/ with FLAT lips.",
+        "instructions_ar": "اتعلّمهم بالسمع مش بالقاعدة: good→the best، bad→the worst، far→the furthest. ولاحظ 'worst' فيها /ɜː/ بشفاه مسطحة.",
+        "practice": ["good-better-the best", "bad-worse-the worst", "far-further-the furthest"]
+      },
+      "minimal_pairs": [
+        {"pair": ["worst", "worse"], "meaning": ["الأسوأ", "أسوأ من"]},
+        {"pair": ["best", "beast"], "meaning": ["الأفضل", "وحش"]},
+        {"pair": ["worst", "west"], "meaning": ["الأسوأ", "غرب"]},
+        {"pair": ["least", "list"], "meaning": ["الأقل", "قائمة"]},
+        {"pair": ["furthest", "fastest"], "meaning": ["الأبعد", "الأسرع"]}
+      ],
+      "word_practice": ["the best", "the worst", "the furthest", "the most", "the least", "better", "worse", "further", "more", "less"],
+      "sentence_practice": [
+        "That was the best food and the worst service.",
+        "It is the furthest city from here.",
+        "He has the most experience."
+      ],
+      "record_this": "That restaurant had the best food but the worst service. It is the furthest city from here, and my brother has the most experience of all of us.",
+      "self_check": "Say 'worst'. Are your lips FLAT (not rounded)? Otherwise it becomes 'worst/warst'."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/ðə/ best", "/ðiː/ oldest"], ["BIGG-ist", "bigg-EST ❌"], ["worst", "worse"],
+        ["the most expensive", "the expensivest ❌"], ["the biggest", "the most big ❌"], ["best", "beast"]
+      ],
+      "challenge_sentences": [
+        "Cairo is the biggest city in Egypt.",
+        "That is the oldest and the most beautiful building.",
+        "It was the best day and the worst night.",
+        "This is the cheapest and the easiest option."
+      ],
+      "record_this": "Cairo is the biggest city in Egypt. That is the oldest and the most beautiful building I have seen. It was the best day but the worst night of the trip. This is the cheapest and the easiest option for us.",
+      "self_check": "Check: does 'the' change to /ðiː/ before 'oldest' and 'easiest'?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing bests and worsts. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن الأفضل والأسوأ، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me tell you about the best and the worst things in my city. Cairo is the biggest city in Egypt and one of the most crowded in the world. The traffic is the worst problem, but the museums are the most interesting I have visited. The oldest part of the city is also the most beautiful. Summer is the hottest season and winter is the easiest time to walk around. The cheapest food is the most delicious, and the most expensive restaurants are not always the best. For me, the friendliest people live here, and that is the most important thing.",
+        "sounds_to_check": {
+          "'the' /ðə/ vs /ðiː/": "/ðə/ best, biggest, worst, cheapest — /ðiː/ oldest, easiest, most? (no: /ðə/)",
+          "-est = /ɪst/ (weak)": "biggest, oldest, hottest, cheapest, easiest, friendliest",
+          "'the most' + adjective": "the most crowded, the most interesting, the most beautiful, the most important",
+          "irregular superlatives": "the best, the worst",
+          "sentence stress": "the BIGGEST CITY in EGYPT, the WORST PROBLEM"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'the' switches correctly before vowels, -est stays weak. Ready for week 5.",
+        "70_89": "Good; 'the' occasionally uniform.",
+        "50_69": "-est pronounced as strong 'EST', or 'the most big' errors. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, listening for the sound after 'the' each time."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'The' has two pronunciations in English. Choose by the SOUND that follows, not the letter.",
+      "-est is weak (/ɪst/), never a strong 'EST'.",
+      "Short adjective → the -est. Long adjective → the most. Irregulars: the best, the worst.",
+      "'Worst' needs FLAT lips for /ɜː/ — rounding them changes the word."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w10",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 10,
+  "pattern_name": "Present perfect for experience (ever / never, been)",
+  "pattern_name_ar": "المضارع التام للخبرة (ever / never, been)",
+  "formula": "Subject + have/has + past participle · ever (?) · never (−) · been to",
+  "formula_visual": "[I] + [have been] + [to Cairo]",
+  "when_to_use": "Talk about life experiences without saying WHEN: have/has + past participle; ever in questions, never in negatives.",
+  "when_to_use_ar": "للكلام عن خبرات الحياة بدون تحديد الوقت: have/has + التصريف الثالث؛ ever في السؤال، never في النفي.",
+  "why_arabic_speakers_struggle": "The present perfect has no direct Arabic equivalent, so learners use the past simple ('Did you ever go…?') and confuse 'been' (visited and returned) with 'gone' (went and still there).",
+  "examples": [
+    {"en": "Have you ever been to London?", "ar": "هل سبق أن ذهبت إلى لندن؟", "structure": "[Have] + [ever been]?"},
+    {"en": "I have never eaten sushi.", "ar": "لم يسبق أن أكلت سوشي", "structure": "[have never eaten]"},
+    {"en": "She has been to three countries.", "ar": "زارت ثلاث دول", "structure": "[has been to]"},
+    {"en": "We've seen that film.", "ar": "شاهدنا ذلك الفيلم", "structure": "[have seen]"},
+    {"en": "He has just arrived.", "ar": "لقد وصل للتو", "structure": "[has just arrived]"}
+  ],
+  "common_errors": [
+    {"wrong": "Did you ever been there?", "correct": "Have you ever been there?", "explanation": "Experience → present perfect, not did."},
+    {"wrong": "I have ever eaten sushi.", "correct": "I have never eaten sushi.", "explanation": "'ever' is for questions; 'never' for negatives."},
+    {"wrong": "She has gone to Cairo. (and is back)", "correct": "She has been to Cairo.", "explanation": "'been' = visited & returned; 'gone' = still there."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ you ever ___ (be) to Aswan?", "answer": "Have / been"},
+    {"sentence": "I have ___ (never) tried sushi.", "answer": "never"},
+    {"sentence": "She ___ (has) been to Turkey.", "answer": "has"},
+    {"sentence": "We ___ (see) that film already.", "answer": "have seen"},
+    {"sentence": "He has just ___ (arrive).", "answer": "arrived"}
+  ],
+  "quick_rule": "Experience (no time) → have/has + past participle. ever (?), never (−), been (there & back).",
+  "quick_rule_ar": "خبرة بدون وقت → have/has + التصريف الثالث. ever للسؤال، never للنفي، been (راح ورجع).",
+  "mnemonic": "Life experience, no 'when' → HAVE + past participle.",
+  "connect_to_speaking": "Ask a partner: 'Have you ever travelled abroad?' 'Yes, I've been to two countries, but I've never flown alone.'"
+}

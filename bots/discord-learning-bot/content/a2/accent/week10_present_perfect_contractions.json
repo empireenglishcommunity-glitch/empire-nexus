@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 10,
+  "focus": "Contractions 've /v/ (I've, we've) and 's /z/ (she's been) · 'been' /biːn/ vs 'bin' /bɪn/ · 'ever/never' stress · weak 'have' /həv/ in questions · linking 'have you ever'",
+  "focus_ar": "الاختصارات 've و 's، و 'been' مقابل 'bin'، ونبر ever/never، و 'have' الخفيفة في السؤال",
+  "arabic_challenge": "The present perfect has no direct Arabic equivalent, and its contracted auxiliaries ('I've', 'she's') are often expanded or dropped. 'Been' is frequently shortened to 'bin', and the /v/ of 'have/'ve' is hard because Arabic has no /v/.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["contraction 've = /v/"],
+      "isolation": {
+        "instructions": "'Have' contracts to 've = a single /v/ on the pronoun: I've /aɪv/, we've /wiːv/, they've /ðeɪv/, you've /juːv/. Feel the top teeth touch the bottom lip and buzz.",
+        "instructions_ar": "'have' بتتقلّص لـ 've = /v/ على الضمير: I've، we've، they've. الأسنان العليا على الشفة السفلى مع طنين.",
+        "practice": ["I've, we've, they've, you've", "vvv (teeth on lip, buzz)", "I've-been, we've-seen"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've /aɪv/", "I ❌ (dropped 've)"], "meaning": ["لقد", "ناقص"]},
+        {"pair": ["we've /wiːv/", "weave"], "meaning": ["لقد نحن", "ينسج"]},
+        {"pair": ["they've /ðeɪv/", "they ❌"], "meaning": ["لقد هم", "ناقص"]},
+        {"pair": ["I've /v/", "I'd /d/"], "meaning": ["لقد (have)", "would/had"]},
+        {"pair": ["you've /juːv/", "you ❌"], "meaning": ["لقد أنت", "ناقص"]}
+      ],
+      "word_practice": ["I've", "we've", "they've", "you've", "I've been", "we've seen", "they've done", "you've had", "I've never", "we've always"],
+      "sentence_practice": [
+        "I've been to Cairo.",
+        "We've seen that film.",
+        "They've never tried it."
+      ],
+      "record_this": "I've been to Cairo many times. We've seen that film before, but they've never tried Egyptian food.",
+      "self_check": "Say 'I've been'. Is there a clear /v/ buzz, with teeth touching lip?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["contraction 's = /z/ (she's been)"],
+      "isolation": {
+        "instructions": "With he/she/it, 'has' contracts to 's = /z/: she's been, he's done, it's been. Careful: 's can be 'is' OR 'has' — the past participle after it tells you it's 'has' (she's been = she HAS been).",
+        "instructions_ar": "مع he/she/it تتقلّص 'has' لـ 's = /z/: she's been. انتبه: 's ممكن 'is' أو 'has' — التصريف الثالث بعدها يدل إنها 'has'.",
+        "practice": ["she's-been, he's-done, it's-been", "zzz (buzz)", "she's been = she HAS been"]
+      },
+      "minimal_pairs": [
+        {"pair": ["she's been (has)", "she's tired (is)"], "meaning": ["has + been", "is + صفة"]},
+        {"pair": ["he's done (has)", "he's happy (is)"], "meaning": ["has", "is"]},
+        {"pair": ["it's rained (has)", "it's cold (is)"], "meaning": ["has", "is"]},
+        {"pair": ["she's /z/", "she ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["he's seen ✅", "he seen ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["she's been", "he's done", "it's been", "she's seen", "he's had", "she's never", "he's always", "it's rained", "she's finished", "he's gone"],
+      "sentence_practice": [
+        "She's been to London.",
+        "He's done his homework.",
+        "It's rained all day."
+      ],
+      "record_this": "She's been to London twice. He's already done his homework, and it's rained all day, so she's decided to stay home.",
+      "self_check": "In 'she's been', can you tell it means 'she HAS been' from the participle 'been'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'been' /biːn/ vs 'bin' /bɪn/"],
+      "isolation": {
+        "instructions": "In careful speech 'been' is /biːn/ with a long /iː/. Do not shorten it to 'bin' /bɪn/ (a rubbish bin). The present perfect leans on this word, so keep the vowel long.",
+        "instructions_ar": "'been' في الكلام المتأني /biːn/ بحرف علة طويل. متقصّرهاش لـ 'bin' /bɪn/ (سلة). المضارع التام بيعتمد عليها.",
+        "practice": ["beeen (long)", "bin (short) — different word", "I've beeen, she's beeen"]
+      },
+      "minimal_pairs": [
+        {"pair": ["been /biːn/", "bin /bɪn/"], "meaning": ["كان/ذهب", "سلة مهملات"]},
+        {"pair": ["I've been", "I've bin ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["been there", "bin there ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["seen /siːn/", "sin /sɪn/"], "meaning": ["شوهد", "ذنب"]},
+        {"pair": ["been /iː/", "bean /iː/"], "meaning": ["كان (نفس النطق)", "فاصوليا"]}
+      ],
+      "word_practice": ["been", "been to", "been there", "been here", "have been", "has been", "I've been", "she's been", "never been", "ever been"],
+      "sentence_practice": [
+        "Have you ever been to Alexandria?",
+        "I've been there twice.",
+        "She's never been abroad."
+      ],
+      "record_this": "Have you ever been to Alexandria? I've been there twice, and it's beautiful. My sister has never been abroad, but she's been to many cities in Egypt.",
+      "self_check": "Say 'been'. Is the vowel long like 'bean', not short like 'bin'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'ever' and 'never' stress"],
+      "isolation": {
+        "instructions": "'Ever' and 'never' carry meaning, so they are stressed: 'Have you EVER…?', 'I've NEVER…'. EV-er and NEV-er both stress the first syllable. Do not swallow them.",
+        "instructions_ar": "'ever' و 'never' بيحملوا معنى فبيتنبروا: 'Have you EVER…?'. النبر على المقطع الأول في الاتنين.",
+        "practice": ["EV-er, NEV-er", "Have you EVER…?", "I've NEV-er…"]
+      },
+      "minimal_pairs": [
+        {"pair": ["EV-er ✅", "ev-ER ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["NEV-er ✅", "nev-ER ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["ever /ˈevə/", "over /ˈəʊvə/"], "meaning": ["في أي وقت", "فوق/انتهى"]},
+        {"pair": ["never", "nervous ❌"], "meaning": ["أبدًا", "متوتر"]},
+        {"pair": ["Have you EVER ✅", "have YOU ever ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["ever", "never", "always", "already", "just", "yet", "before", "recently", "so far", "lately"],
+      "sentence_practice": [
+        "Have you ever eaten sushi?",
+        "I've never seen snow.",
+        "She's always wanted to travel."
+      ],
+      "record_this": "Have you ever eaten sushi? I've never tried it, but I've always wanted to. My friend has just returned from Japan, and she's never been so happy.",
+      "self_check": "Are 'EVER' and 'NEVER' clearly stressed on the first syllable and easy to hear?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["weak 'have' /həv/ + linking 'have you ever'"],
+      "isolation": {
+        "instructions": "In questions, 'have' is weak: /həv/ or /əv/. 'Have you ever been…?' flows as 'həv-you-EV-er-BEEN'. The stress lands on 'ever' and the participle, not on 'have'.",
+        "instructions_ar": "في السؤال 'have' خفيفة: /həv/. 'Have you ever been…?' → həv-you-EV-er-BEEN. النبر على ever والتصريف الثالث.",
+        "practice": ["həv-you-ever", "əv-you-been", "Have you ever BEEN there?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["həv you ever ✅", "HAVE you ever ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["həv you been ✅", "have you BIN ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["what've you done ✅", "what HAVE you done ~"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["have /həv/ (aux)", "have /hæv/ (own = possess)"], "meaning": ["مساعد خفيف", "يملك قوي"]},
+        {"pair": ["həv-you ✅", "have. you. ❌"], "meaning": ["موصول", "مقطّع"]}
+      ],
+      "word_practice": ["have you ever", "have you been", "have you seen", "have you tried", "have you done", "has she ever", "has he been", "have they finished", "have we met", "what have you"],
+      "sentence_practice": [
+        "Have you ever been to another country?",
+        "Have you seen this film?",
+        "Has she ever tried Egyptian food?"
+      ],
+      "record_this": "Have you ever been to another country? Have you seen this new film? Has your sister ever tried Egyptian food? I've done all three, but you haven't yet.",
+      "self_check": "Say 'Have you ever been?' as one flow. Does 'have' stay weak, with stress on 'ever' and 'been'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 10 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I've /v/", "I'd /d/"], ["been /biːn/", "bin /bɪn/"], ["she's been (has)", "she's tired (is)"],
+        ["EV-er", "ev-ER ❌"], ["həv you ever ✅", "HAVE you ever ❌"], ["we've /wiːv/", "weave"]
+      ],
+      "challenge_sentences": [
+        "Have you ever been to Alexandria?",
+        "I've been there but I've never seen the sea in winter.",
+        "She's just finished and he's already gone.",
+        "We've always wanted to travel abroad."
+      ],
+      "record_this": "Have you ever been to Alexandria? I've been there twice, but I've never seen the sea in winter. My sister has just finished her exams and my brother has already gone to work. We've always wanted to travel abroad together.",
+      "self_check": "Three checks: 've/'s contractions present, 'been' long, and 'ever/never' stressed."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about your life experiences. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن خبراتك في الحياة، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I've had many interesting experiences in my life. I've been to several cities in Egypt, and I've always loved travelling. Have you ever been to Aswan? It's beautiful. I've tried a lot of different foods, but I've never eaten sushi. My sister has just come back from Turkey, and she's been telling everyone about it. My brother has already visited five countries — he's never afraid to travel alone. So far, I've learnt three languages, and I've recently started a new one. Have you ever studied a language just for fun? I think experiences like these have made my life richer.",
+        "sounds_to_check": {
+          "'ve = /v/": "I've had, I've been, I've tried, I've learnt, I've recently",
+          "'s = /z/ (has)": "she's been, he's never, she's just come",
+          "'been' /biːn/ (long)": "I've been to, have you ever been, she's been telling",
+          "ever/never stress": "have you EVER, I've NEVER, he's NEVER",
+          "weak 'have' in questions": "have you ever been, have you ever studied"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Contractions clear, 'been' long, questions flow with weak 'have'. Ready for week 11.",
+        "70_89": "Good; occasional dropped 've/'s.",
+        "50_69": "'been' → 'bin', or auxiliaries dropped. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping the /v/ buzz and the long 'been'."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The present perfect always needs its auxiliary — 'I've been', never 'I been'.",
+      "'been' has a long vowel (like 'bean'); shortening it to 'bin' changes the word.",
+      "'ve is /v/ (teeth on lip, buzz) — Arabic has no /v/, so practise the buzz.",
+      "'ever' and 'never' are stressed; 'have' in questions stays weak."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

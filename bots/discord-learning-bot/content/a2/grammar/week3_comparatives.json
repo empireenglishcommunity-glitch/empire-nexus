@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w3",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 3,
+  "pattern_name": "Comparative adjectives (-er / more … than)",
+  "pattern_name_ar": "صفات المقارنة (-er / more … than)",
+  "formula": "Short adj + -er + than · Long adj: more + adj + than",
+  "formula_visual": "[Cairo] + [is bigger than] + [Aswan]",
+  "when_to_use": "Compare two things: short adjectives take -er, longer adjectives take 'more', and both are followed by 'than'.",
+  "when_to_use_ar": "للمقارنة بين شيئين: الصفات القصيرة تأخذ -er، والطويلة تأخذ more، والاتنين يتبعهم than.",
+  "why_arabic_speakers_struggle": "Arabic uses one comparative pattern (أكبر من) for all adjectives, so learners mix '-er' and 'more' (e.g. 'more bigger') and sometimes drop 'than'.",
+  "examples": [
+    {"en": "Cairo is bigger than Aswan.", "ar": "القاهرة أكبر من أسوان", "structure": "[bigger than]"},
+    {"en": "This book is more interesting than that one.", "ar": "هذا الكتاب أكثر تشويقًا", "structure": "[more … than]"},
+    {"en": "She is taller than me.", "ar": "هي أطول مني", "structure": "[taller than]"},
+    {"en": "Today is hotter than yesterday.", "ar": "اليوم أحرّ من أمس", "structure": "[hotter than]"},
+    {"en": "Flying is more expensive than the train.", "ar": "الطيران أغلى من القطار", "structure": "[more expensive than]"}
+  ],
+  "common_errors": [
+    {"wrong": "Cairo is more big than Aswan.", "correct": "Cairo is bigger than Aswan.", "explanation": "Short adjective → -er, not 'more'."},
+    {"wrong": "This is more interesting that that.", "correct": "This is more interesting than that.", "explanation": "Use 'than', not 'that', in comparisons."},
+    {"wrong": "She is more taller.", "correct": "She is taller.", "explanation": "Never use 'more' with an -er adjective."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Summer is ___ (hot) than winter.", "answer": "hotter"},
+    {"sentence": "This film is ___ (interesting) than that one.", "answer": "more interesting"},
+    {"sentence": "My brother is ___ (old) than me.", "answer": "older"},
+    {"sentence": "The city is ___ (crowded) than my village.", "answer": "more crowded"},
+    {"sentence": "This hotel is ___ (cheap) ___ that one.", "answer": "cheaper / than"}
+  ],
+  "quick_rule": "1-2 syllables → -er. 3+ syllables → more. Always + than. Never both.",
+  "quick_rule_ar": "مقطع أو اثنان → -er. ثلاثة أو أكثر → more. ودائمًا + than. ومتستخدمش الاتنين.",
+  "mnemonic": "Short word → -ER. Long word → MORE. Never MORE + -ER.",
+  "connect_to_speaking": "Compare two places you know: 'My city is bigger and busier, but the village is quieter and more beautiful.'"
+}

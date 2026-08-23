@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w2",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 2,
+  "pattern_name": "Past simple — irregular verbs + did/didn't",
+  "pattern_name_ar": "الماضي البسيط — الأفعال الشاذة و did/didn't",
+  "formula": "Positive: irregular past (went, saw) · Negative: didn't + base · Question: Did + subject + base?",
+  "formula_visual": "[Did] + [you] + [see]? → [I] + [saw]",
+  "when_to_use": "Use irregular past forms for finished actions; use did/didn't (+ base verb) for questions and negatives.",
+  "when_to_use_ar": "نستخدم صيغ الماضي الشاذة للأحداث المنتهية، و did/didn't مع الفعل المجرد للأسئلة والنفي.",
+  "why_arabic_speakers_struggle": "Learners add -ed to irregular verbs ('goed') and keep the past form after 'did' ('Did you went?'). After did/didn't the verb must return to its base form.",
+  "examples": [
+    {"en": "I went to Cairo.", "ar": "ذهبت إلى القاهرة", "structure": "[went] (irregular)"},
+    {"en": "Did you see him?", "ar": "هل رأيته؟", "structure": "[Did] + [you] + [see]?"},
+    {"en": "They didn't come.", "ar": "لم يأتوا", "structure": "[didn't] + [come]"},
+    {"en": "She bought a ticket.", "ar": "اشترت تذكرة", "structure": "[bought] (irregular)"},
+    {"en": "We took the train.", "ar": "أخذنا القطار", "structure": "[took] (irregular)"}
+  ],
+  "common_errors": [
+    {"wrong": "I goed home.", "correct": "I went home.", "explanation": "'Go' is irregular: go → went, no -ed."},
+    {"wrong": "Did you went?", "correct": "Did you go?", "explanation": "After 'did', use the BASE verb."},
+    {"wrong": "She didn't came.", "correct": "She didn't come.", "explanation": "After 'didn't', use the base verb."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (go) to the market.", "answer": "went"},
+    {"sentence": "___ you ___ (see) the film?", "answer": "Did / see"},
+    {"sentence": "They ___ (not come) to the party.", "answer": "didn't come"},
+    {"sentence": "She ___ (buy) a new phone.", "answer": "bought"},
+    {"sentence": "We ___ (take) a taxi.", "answer": "took"}
+  ],
+  "quick_rule": "Irregular = new word (went, saw, bought). After did/didn't → base verb.",
+  "quick_rule_ar": "الشاذ = كلمة جديدة (went, saw). وبعد did/didn't → الفعل المجرد.",
+  "mnemonic": "DID/DIDN'T → base verb, always.",
+  "connect_to_speaking": "Ask and answer: 'Did you go out yesterday?' 'Yes, I went to a café and saw a friend.'"
+}

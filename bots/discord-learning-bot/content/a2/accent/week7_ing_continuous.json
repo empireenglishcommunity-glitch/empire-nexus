@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 7,
+  "focus": "-ing ending /ɪŋ/ without a hard /g/ (working, playing) · /ɪŋ/ vs /ɪn/ · weak 'am/is/are' in continuous · linking 'is + -ing' · /ŋ/ before /k/ (thinking)",
+  "focus_ar": "نهاية -ing /ɪŋ/ بدون /g/ صريحة، و /ɪŋ/ مقابل /ɪn/، وضعف am/is/are، ووصل is بالفعل+ing",
+  "arabic_challenge": "Arabic learners often add a hard /g/ after -ing ('workin-g') or replace /ŋ/ with /n/ ('workin'). Also, the auxiliary am/is/are in the continuous is weak and often contracted ('she's working'), but learners tend to stress it or drop it entirely.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["-ing = /ɪŋ/ (no hard /g/)"],
+      "isolation": {
+        "instructions": "-ing ends in a single nasal /ŋ/ made at the BACK of the mouth — there is NO separate /g/ after it. 'working' = WOR-kiŋ, not 'wor-king-g'.",
+        "instructions_ar": "-ing تنتهي بصوت أنفي واحد /ŋ/ في مؤخرة الفم — مفيش /g/ منفصلة بعده. 'working' = WOR-kiŋ.",
+        "practice": ["ŋŋŋ (back of mouth, nose)", "workiŋ, playiŋ, goiŋ", "no hard g at the end"]
+      },
+      "minimal_pairs": [
+        {"pair": ["working /ŋ/", "working-g ❌"], "meaning": ["صحيح", "خطأ (g زائدة)"]},
+        {"pair": ["sing /sɪŋ/", "sing-g ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["going /ɡəʊɪŋ/", "going-g ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["ring /rɪŋ/", "ring-g ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["playing /ŋ/", "playin-g ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["working", "playing", "going", "reading", "eating", "sitting", "cooking", "watching", "studying", "sleeping"],
+      "sentence_practice": [
+        "I am working and my sister is reading.",
+        "The children are playing outside.",
+        "He is cooking dinner now."
+      ],
+      "record_this": "Right now I am working and my sister is reading. The children are playing outside, and my mother is cooking dinner in the kitchen.",
+      "self_check": "Say 'working' and hold the end. Is it a soft nasal, with NO hard 'g' popping out?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ɪŋ/ vs /ɪn/"],
+      "isolation": {
+        "instructions": "The full ending is /ɪŋ/ (back of mouth). Dropping it to /ɪn/ (tongue tip forward) — 'workin', 'goin' — is a strong accent marker. For clear A2 speech, keep the /ŋ/.",
+        "instructions_ar": "النهاية الكاملة /ɪŋ/ (مؤخرة الفم). تحويلها لـ /ɪn/ ('workin') علامة لهجة واضحة. للكلام الواضح حافظ على /ŋ/.",
+        "practice": ["workiŋ (not workin)", "goiŋ (not goin)", "ŋ at the back, not n at the front"]
+      },
+      "minimal_pairs": [
+        {"pair": ["working /ɪŋ/", "workin /ɪn/"], "meaning": ["واضح", "لهجة عامية"]},
+        {"pair": ["thing /θɪŋ/", "thin /θɪn/"], "meaning": ["شيء", "رفيع"]},
+        {"pair": ["sing /sɪŋ/", "sin /sɪn/"], "meaning": ["يغني", "ذنب"]},
+        {"pair": ["wing /wɪŋ/", "win /wɪn/"], "meaning": ["جناح", "يفوز"]},
+        {"pair": ["running /ɪŋ/", "runnin /ɪn/"], "meaning": ["واضح", "عامية"]}
+      ],
+      "word_practice": ["something", "nothing", "morning", "evening", "shopping", "swimming", "running", "waiting", "having", "living"],
+      "sentence_practice": [
+        "I am doing something this morning.",
+        "Nothing is happening this evening.",
+        "We are having lunch and waiting for you."
+      ],
+      "record_this": "I am doing something important this morning. Nothing much is happening this evening, so we are having lunch and waiting for you at home.",
+      "self_check": "Say 'morning'. Does it end at the back of the mouth (/ŋ/), not the front (/n/)?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak & contracted 'am/is/are'"],
+      "isolation": {
+        "instructions": "The continuous auxiliary is weak and usually contracted: I'm working, she's reading, they're playing. It is never stressed, but it must not be dropped.",
+        "instructions_ar": "الفعل المساعد في المضارع المستمر خفيف وغالبًا مختصر: I'm working, she's reading. مش بيتنبر لكن مش بيتشال.",
+        "practice": ["I'm workiŋ, she's readiŋ", "they're playiŋ, we're eatiŋ", "weak but present"]
+      },
+      "minimal_pairs": [
+        {"pair": ["she's working ✅", "she working ❌ (dropped 's)"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["they're playing ✅", "they playing ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["I'm eating ✅", "I eating ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["he's /hiːz/ ✅", "HE IS (over-full) ~"], "meaning": ["طبيعي", "توكيد"]},
+        {"pair": ["we're /wɪə/ ✅", "WE ARE ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]}
+      ],
+      "word_practice": ["I'm working", "she's reading", "he's cooking", "they're playing", "we're eating", "it's raining", "you're doing", "I'm going", "she's coming", "they're waiting"],
+      "sentence_practice": [
+        "I'm working while she's studying.",
+        "They're playing and we're watching.",
+        "It's raining, so he's staying home."
+      ],
+      "record_this": "I'm working at my desk while my sister is studying. The kids are playing and we're watching them. It's raining outside, so he's staying home today.",
+      "self_check": "Is the auxiliary contracted and light ('she's'), never dropped and never shouted?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Linking 'is/are + -ing'"],
+      "isolation": {
+        "instructions": "Glue the auxiliary to the verb so the phrase flows: 'she's-READ-ing', 'they're-PLAY-ing'. The stress is on the main verb. Present continuous should sound smooth, not chopped.",
+        "instructions_ar": "الزق الفعل المساعد بالفعل: she's-READ-ing. النبر على الفعل الرئيسي، والزمن يبان سلس مش مقطّع.",
+        "practice": ["she's-READ-ing", "they're-PLAY-ing", "I'm-COOK-ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["she's READing ✅", "she's reading (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["they're PLAYing ✅", "THEY'RE playing ❌"], "meaning": ["النبر على الفعل", "خطأ"]},
+        {"pair": ["I'm-COOKing ✅", "I. am. cooking. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["what're you DOing ✅", "what ARE you doing ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["he's WORKing ✅", "he working ❌"], "meaning": ["صحيح", "ناقص"]}
+      ],
+      "word_practice": ["what are you doing", "where are you going", "who's coming", "why is he waiting", "she's getting ready", "they're leaving now", "I'm looking for", "we're trying to", "it's getting late", "you're doing well"],
+      "sentence_practice": [
+        "What are you doing right now?",
+        "Where are they going?",
+        "It's getting late and I'm getting tired."
+      ],
+      "record_this": "What are you doing right now? Where are they going this evening? It's getting late and I'm getting tired, but we're still waiting for the bus.",
+      "self_check": "Say 'What are you doing?' smoothly. Does it flow with the stress on 'doing', not on 'are'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ŋ/ before /k/ (thinking, drinking)"],
+      "isolation": {
+        "instructions": "In 'thinking', 'drinking', 'banking' the /ŋ/ leads straight into a /k/ — this is the ONE place a hard stop follows the nasal. Contrast with 'singing', which has no /k/.",
+        "instructions_ar": "في 'thinking' و'drinking' الـ /ŋ/ يليها /k/ — ده المكان الوحيد اللي بييجي فيه وقفة بعد الأنفي. بعكس 'singing'.",
+        "practice": ["thiŋ-kiŋ (ŋ then k, then ŋ)", "driŋ-kiŋ, baŋ-kiŋ", "compare: siŋ-iŋ (no k)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["thinking /ŋk/", "thinning /n/"], "meaning": ["يفكر", "يخفّ"]},
+        {"pair": ["drinking /ŋk/", "driving /v/"], "meaning": ["يشرب", "يسوق"]},
+        {"pair": ["sinking /ŋk/", "singing /ŋ/"], "meaning": ["يغرق", "يغني"]},
+        {"pair": ["banking /ŋk/", "banging /ŋ/"], "meaning": ["أعمال بنكية", "يطرق بعنف"]},
+        {"pair": ["ranking /ŋk/", "ringing /ŋ/"], "meaning": ["ترتيب", "يرن"]}
+      ],
+      "word_practice": ["thinking", "drinking", "working? (no k)", "talking", "walking", "looking", "cooking", "making", "taking", "asking"],
+      "sentence_practice": [
+        "I'm thinking about the trip.",
+        "She's drinking tea and looking at photos.",
+        "We're talking and walking together."
+      ],
+      "record_this": "I'm thinking about our next trip while I'm drinking my tea. She's looking at old photos, and we're talking and walking in the park.",
+      "self_check": "Say 'thinking' and 'singing'. Only 'thinking' should have a /k/ in the middle."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 7 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["working /ŋ/", "working-g ❌"], ["thing /ɪŋ/", "thin /ɪn/"], ["she's working ✅", "she working ❌"],
+        ["thinking /ŋk/", "thinning ❌"], ["morning /ŋ/", "mornin /ɪn/"], ["they're PLAYing", "THEY'RE playing ❌"]
+      ],
+      "challenge_sentences": [
+        "Right now I'm working and she's studying.",
+        "The children are playing and running outside.",
+        "I'm thinking about it while I'm drinking my coffee.",
+        "What are you doing this evening?"
+      ],
+      "record_this": "Right now I'm working at my desk and my sister is studying for her exam. The children are playing and running outside. I'm thinking about the weekend while I'm drinking my coffee. What are you doing this evening?",
+      "self_check": "Three checks: no hard /g/ on -ing, the auxiliary is contracted not dropped, and 'thinking' keeps its /k/."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing what people are doing right now. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت توصف اللي بيحصل دلوقتي، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me tell you what everyone is doing right now. I'm sitting at my desk and writing this. My mother is cooking lunch and my father is reading the newspaper. My little brother is playing a game and my sister is talking on the phone. Outside, the neighbours are working in their garden and some children are running in the street. It's raining a little, so people are walking quickly. I'm thinking about going out later, but I'm also feeling a bit lazy. What are you doing at the moment? I'm guessing you're studying English!",
+        "sounds_to_check": {
+          "-ing = /ɪŋ/ (no hard g)": "sitting, writing, cooking, reading, playing, talking, running, walking",
+          "/ɪŋ/ not /ɪn/": "morning? evening? — writing, playing, feeling, guessing, studying",
+          "weak/contracted auxiliary": "I'm sitting, she's talking, they're working, it's raining, you're studying",
+          "linking is + -ing": "mother is COOKing, father is READing",
+          "/ŋk/ (thinking)": "thinking about going out"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "No hard /g/ on -ing, auxiliaries contracted and present. Ready for week 8.",
+        "70_89": "Good; occasional -in for -ing under speed.",
+        "50_69": "Hard /g/ added, or auxiliary dropped ('she working'). Repeat days 1 and 3.",
+        "below_50": "Redo days 1-4, holding the soft /ŋ/ at the end of each -ing word."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "-ing is a single soft nasal /ŋ/ — no hard /g/ afterwards ('working', not 'working-g').",
+      "Keep the full /ɪŋ/; dropping to /ɪn/ ('workin') is a strong accent marker.",
+      "The continuous needs its auxiliary: 'she IS working' → 'she's working', never 'she working'.",
+      "Only before /k/ (thinking, drinking) does a stop follow the nasal."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

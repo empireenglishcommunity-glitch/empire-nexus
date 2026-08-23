@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w8",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 8,
+  "pattern_name": "Countable/uncountable + quantifiers",
+  "pattern_name_ar": "المعدود/غير المعدود ومحدّدات الكمية",
+  "formula": "many / a few + countable plural · much / a little + uncountable · a lot of + both",
+  "formula_visual": "[a few] + [apples] · [a little] + [sugar]",
+  "when_to_use": "Choose the quantifier by the noun: countable (apples) vs uncountable (water, sugar, money).",
+  "when_to_use_ar": "اختر محدّد الكمية حسب الاسم: معدود (تفاح) مقابل غير معدود (ماء، سكر، فلوس).",
+  "why_arabic_speakers_struggle": "Arabic doesn't split nouns into countable/uncountable the same way, so learners say 'many money' or 'much people' and use 'a few' with uncountables.",
+  "examples": [
+    {"en": "There isn't much sugar.", "ar": "مافيش سكر كتير", "structure": "[much] + [uncountable]"},
+    {"en": "I have a few friends.", "ar": "عندي بعض الأصدقاء", "structure": "[a few] + [countable]"},
+    {"en": "How many eggs do we need?", "ar": "كم بيضة نحتاج؟", "structure": "[How many] + [countable]"},
+    {"en": "We have a little time.", "ar": "عندنا وقت قليل", "structure": "[a little] + [uncountable]"},
+    {"en": "There's a lot of water.", "ar": "يوجد ماء كثير", "structure": "[a lot of] + [uncountable]"}
+  ],
+  "common_errors": [
+    {"wrong": "I have many money.", "correct": "I have a lot of money.", "explanation": "Money is uncountable → much / a lot of."},
+    {"wrong": "There are much people.", "correct": "There are many people.", "explanation": "People is countable → many."},
+    {"wrong": "A few water.", "correct": "A little water.", "explanation": "Uncountable → a little, not a few."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "How ___ (much/many) eggs do we need?", "answer": "many"},
+    {"sentence": "There isn't ___ (much/many) milk.", "answer": "much"},
+    {"sentence": "I have ___ (a few/a little) close friends.", "answer": "a few"},
+    {"sentence": "Add ___ (a few/a little) salt.", "answer": "a little"},
+    {"sentence": "We have ___ (a lot of) work today.", "answer": "a lot of"}
+  ],
+  "quick_rule": "Countable → many / a few. Uncountable → much / a little. Both → a lot of.",
+  "quick_rule_ar": "معدود → many / a few. غير معدود → much / a little. الاتنين → a lot of.",
+  "mnemonic": "Can you count it? MANY/A FEW. Can't? MUCH/A LITTLE.",
+  "connect_to_speaking": "Talk about your kitchen: 'There are a few eggs and a lot of rice, but not much sugar.'"
+}

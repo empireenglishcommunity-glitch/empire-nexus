@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w1",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 1,
+  "pattern_name": "Past simple — regular verbs (-ed)",
+  "pattern_name_ar": "الماضي البسيط — الأفعال المنتظمة (-ed)",
+  "formula": "Subject + verb-ed + (object) + past time expression",
+  "formula_visual": "[I] + [worked] + [yesterday]",
+  "when_to_use": "Use the past simple with -ed for finished actions at a definite time in the past (yesterday, last week, in 2019).",
+  "when_to_use_ar": "نستخدم الماضي البسيط بـ -ed للأحداث المنتهية في وقت محدد في الماضي.",
+  "why_arabic_speakers_struggle": "Arabic marks the past inside the verb, so learners forget the -ed ending in English ('I work yesterday') or spell it but drop it in speech.",
+  "examples": [
+    {"en": "I watched a film yesterday.", "ar": "شاهدت فيلمًا أمس", "structure": "[watched] + [yesterday]"},
+    {"en": "We played football last week.", "ar": "لعبنا كرة القدم الأسبوع الماضي", "structure": "[played] + [last week]"},
+    {"en": "She worked late.", "ar": "عملت لوقت متأخر", "structure": "[She] + [worked] + [late]"},
+    {"en": "They lived in Cairo.", "ar": "عاشوا في القاهرة", "structure": "[lived] + [in Cairo]"},
+    {"en": "I wanted to help.", "ar": "أردت أن أساعد", "structure": "[wanted] + [to help]"}
+  ],
+  "common_errors": [
+    {"wrong": "I work yesterday.", "correct": "I worked yesterday.", "explanation": "Finished past action needs -ed."},
+    {"wrong": "She played not.", "correct": "She didn't play.", "explanation": "Negatives use didn't + base verb (week 2)."},
+    {"wrong": "I watchd a film.", "correct": "I watched a film.", "explanation": "Keep the -ed; pronounce it as /t/ here."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Yesterday I ___ (work) all day.", "answer": "worked"},
+    {"sentence": "We ___ (watch) a film last night.", "answer": "watched"},
+    {"sentence": "She ___ (want) to travel.", "answer": "wanted"},
+    {"sentence": "They ___ (play) in the park.", "answer": "played"},
+    {"sentence": "He ___ (live) here in 2019.", "answer": "lived"}
+  ],
+  "quick_rule": "Regular past = verb + -ed, for a finished action at a known past time.",
+  "quick_rule_ar": "الماضي المنتظم = الفعل + -ed، لحدث منتهٍ في وقت ماضٍ معروف.",
+  "mnemonic": "Finished + when → add -ED.",
+  "connect_to_speaking": "Tell me about yesterday: 'I worked, then I watched TV and cooked dinner.'"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w12",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 12,
+  "pattern_name": "Connectors + review (because, so, but, when, before/after)",
+  "pattern_name_ar": "أدوات الربط + مراجعة (because, so, but, when, before/after)",
+  "formula": "reason: because · result: so · contrast: but · time: when / before / after",
+  "formula_visual": "[I stayed home] + [because] + [I was tired]",
+  "when_to_use": "Join short sentences into longer ones: because (reason), so (result), but (contrast), when/before/after (time).",
+  "when_to_use_ar": "لربط الجمل القصيرة في جمل أطول: because (سبب)، so (نتيجة)، but (تضاد)، when/before/after (زمن).",
+  "why_arabic_speakers_struggle": "Learners overuse 'and', confuse 'because' (reason) with 'so' (result), and sometimes use both 'because' and 'so' in one clause.",
+  "examples": [
+    {"en": "I stayed home because I was tired.", "ar": "بقيت في البيت لأني كنت متعبًا", "structure": "[because] + [reason]"},
+    {"en": "It was late, so we left.", "ar": "كان الوقت متأخرًا، لذلك غادرنا", "structure": "[so] + [result]"},
+    {"en": "I called when I arrived.", "ar": "اتصلت عندما وصلت", "structure": "[when] + [time]"},
+    {"en": "I was tired but happy.", "ar": "كنت متعبًا لكن سعيدًا", "structure": "[but] + [contrast]"},
+    {"en": "Wash your hands before you eat.", "ar": "اغسل يديك قبل أن تأكل", "structure": "[before] + [time]"}
+  ],
+  "common_errors": [
+    {"wrong": "Because I was tired, so I stayed home.", "correct": "Because I was tired, I stayed home.", "explanation": "Use because OR so, not both."},
+    {"wrong": "I was tired so happy.", "correct": "I was tired but happy.", "explanation": "Contrast → but, not so."},
+    {"wrong": "I called when I will arrive.", "correct": "I called when I arrived.", "explanation": "Keep the tense consistent in the past."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I stayed home ___ I was ill.", "answer": "because"},
+    {"sentence": "It was raining, ___ we took a taxi.", "answer": "so"},
+    {"sentence": "The film was long ___ interesting.", "answer": "but"},
+    {"sentence": "Call me ___ you arrive.", "answer": "when"},
+    {"sentence": "Brush your teeth ___ you go to bed.", "answer": "before"}
+  ],
+  "quick_rule": "because = reason · so = result · but = contrast · when/before/after = time. Never because + so together.",
+  "quick_rule_ar": "because سبب · so نتيجة · but تضاد · when/before/after زمن. ومتجمعش because و so مع بعض.",
+  "mnemonic": "REASON → because. RESULT → so. Never both.",
+  "connect_to_speaking": "Tell a short story with connectors: 'I woke up late because I was tired, so I missed the bus, but I still arrived on time.'"
+}

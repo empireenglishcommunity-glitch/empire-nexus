@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w9",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 9,
+  "pattern_name": "Adverbs of manner (well, quickly, carefully)",
+  "pattern_name_ar": "ظروف الحال (well, quickly, carefully)",
+  "formula": "adjective + -ly → adverb · irregular: good → well · usually after the verb/object",
+  "formula_visual": "[She] + [speaks] + [English] + [well]",
+  "when_to_use": "Use adverbs of manner to describe HOW an action is done; most add -ly, but 'good' becomes 'well'.",
+  "when_to_use_ar": "نستخدم ظروف الحال لوصف كيفية أداء الفعل؛ معظمها بـ -ly، لكن 'good' تصير 'well'.",
+  "why_arabic_speakers_struggle": "Arabic often uses the adjective form for manner, so learners say 'She speaks good' instead of 'well', and place the adverb before the verb.",
+  "examples": [
+    {"en": "She speaks English well.", "ar": "تتحدث الإنجليزية جيدًا", "structure": "[speaks] + [well]"},
+    {"en": "He drives carefully.", "ar": "يقود بحذر", "structure": "[drives] + [carefully]"},
+    {"en": "Please walk quickly.", "ar": "من فضلك امشِ بسرعة", "structure": "[walk] + [quickly]"},
+    {"en": "They worked hard.", "ar": "عملوا بجد", "structure": "[worked] + [hard]"},
+    {"en": "She sang beautifully.", "ar": "غنّت بشكل جميل", "structure": "[sang] + [beautifully]"}
+  ],
+  "common_errors": [
+    {"wrong": "She speaks English good.", "correct": "She speaks English well.", "explanation": "Manner of a verb → adverb 'well', not 'good'."},
+    {"wrong": "He carefully drives fast.", "correct": "He drives carefully.", "explanation": "Manner adverb usually goes after the verb/object."},
+    {"wrong": "They worked hardly.", "correct": "They worked hard.", "explanation": "'hardly' means 'almost not' — a different word."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "She sings very ___ (good).", "answer": "well"},
+    {"sentence": "Please speak ___ (slow).", "answer": "slowly"},
+    {"sentence": "He drives ___ (careful).", "answer": "carefully"},
+    {"sentence": "They worked ___ (hard) all day.", "answer": "hard"},
+    {"sentence": "She answered ___ (quick) and ___ (correct).", "answer": "quickly / correctly"}
+  ],
+  "quick_rule": "How? → adjective + -ly (after the verb). Irregular: good → well; hard stays 'hard'.",
+  "quick_rule_ar": "كيف؟ → الصفة + -ly (بعد الفعل). والشاذ: good → well؛ و 'hard' تبقى كما هي.",
+  "mnemonic": "Describe a VERB → add -LY (good → WELL).",
+  "connect_to_speaking": "Describe how you do things: 'I speak slowly but clearly. My brother drives carefully and works hard.'"
+}
