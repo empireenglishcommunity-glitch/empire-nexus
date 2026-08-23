@@ -1179,3 +1179,334 @@ def finish_monthly_attempt(discord_id: str, attempt_id: int,
         "skill_breakdown": skill_breakdown,
         "review_list": review_list,
     }
+
+
+
+# ============================================================
+#  ADVANCEMENT EXAM PART A — generation + scoring (Taqdeem Phase 4)
+# ============================================================
+#
+# Full-level structured skills test: 5 skills × 3-4 items = ~18 items,
+# covering ALL weeks of the student's current level. SRS-weighted toward
+# weak areas. 20 minutes. The first half of the level-up gate.
+
+
+def generate_advancement_blueprint_a(discord_id: str, level: str,
+                                     seed: str | None = None,
+                                     total_items: int = 18) -> dict:
+    """Build Part A of the Advancement Exam: structured skills across the
+    full level. 5 skills each get 3-4 items, SRS-biased toward weak spots.
+
+    Returns: {level, type: 'advancement_a', seed, time_limit_min,
+              items: [{item_no, skill, source_week, payload}, ...]}
+    """
+    cfg = database.get_progression_config()
+    time_limit = cfg.get("progression_advancement_time_limit_part_a_min", 20)
+    max_week = curriculum.max_week_for_level(level)
+
+    if seed is None:
+        seed = f"adv_a:{discord_id}:{level}:{random.randint(1, 1_000_000)}"
+    rng = random.Random(seed)
+
+    # Gather vocab from ALL weeks of the level
+    all_vocab: list[dict] = []
+    for w in range(1, max_week + 1):
+        for v in _week_vocab(level, w):
+            item = dict(v)
+            item["_week"] = w
+            all_vocab.append(item)
+
+    if not all_vocab:
+        return {"level": level, "type": "advancement_a", "seed": seed,
+                "time_limit_min": time_limit, "items": []}
+
+    # SRS bias
+    due_words = {d.get("word") for d in database.get_due_reviews(discord_id, limit=300)}
+    weak = [v for v in all_vocab if v.get("word") in due_words]
+    rest = [v for v in all_vocab if v.get("word") not in due_words]
+    rng.shuffle(weak)
+    rng.shuffle(rest)
+    pool = weak + rest
+
+    # Distribute items across 5 skills (3-4 each, totaling ~18)
+    skills = ["vocab", "listening", "pronunciation", "speaking", "writing"]
+    items_per_skill = total_items // len(skills)  # 3 each = 15, remainder = 3 more
+    remainder = total_items - (items_per_skill * len(skills))
+
+    items: list[dict] = []
+    pool_idx = 0
+
+    for skill_idx, skill in enumerate(skills):
+        count = items_per_skill + (1 if skill_idx < remainder else 0)
+        for _ in range(count):
+            if pool_idx >= len(pool):
+                break
+            v = pool[pool_idx]
+            pool_idx += 1
+            source_week = v.get("_week", 1)
+
+            if skill in ("vocab", "listening", "pronunciation"):
+                items.append(_vocab_item(v, source_week, skill))
+            elif skill == "speaking":
+                theme = curriculum.get_theme(source_week, level) or "your practice"
+                items.append({
+                    "skill": "speaking", "source_week": source_week,
+                    "payload": {
+                        "prompt_en": f"Say a sentence using '{v.get('word', '')}'.",
+                        "prompt_ar": f"قول جملة باستخدام '{v.get('word', '')}'.",
+                        "target_words": [v.get("word", "")], "min_seconds": 10,
+                    },
+                })
+            else:  # writing
+                items.append({
+                    "skill": "writing", "source_week": source_week,
+                    "payload": {
+                        "prompt_en": f"Write a sentence using '{v.get('word', '')}'.",
+                        "prompt_ar": f"اكتب جملة باستخدام '{v.get('word', '')}'.",
+                        "target_words": [v.get("word", "")], "min_chars": 20,
+                    },
+                })
+
+    rng.shuffle(items)
+    for idx, it in enumerate(items, start=1):
+        it["item_no"] = idx
+
+    return {
+        "level": level, "type": "advancement_a", "seed": seed,
+        "time_limit_min": time_limit, "items": items,
+    }
+
+
+def score_advancement_part_a(items: list[dict], item_scores: list[float],
+                             has_ai_error: bool = False,
+                             cfg: dict | None = None) -> dict:
+    """Score Part A of the Advancement Exam.
+
+    Returns {overall_pct, per_skill: {skill: pct}, skill_mins_met: bool,
+             failed_skills: [skills below 60%], status, flag_reason}.
+    """
+    cfg = cfg or database.get_progression_config()
+    skill_min = cfg.get("progression_advancement_skill_min_pct", 60)
+
+    # Per-skill breakdown
+    skill_totals: dict[str, list[float]] = {}
+    for i, item in enumerate(items):
+        skill = item.get("skill", "unknown")
+        if i < len(item_scores):
+            if skill not in skill_totals:
+                skill_totals[skill] = []
+            skill_totals[skill].append(item_scores[i])
+
+    per_skill = {
+        skill: round(sum(scores) / len(scores), 1) if scores else 0.0
+        for skill, scores in skill_totals.items()
+    }
+
+    # Overall Part A score
+    overall_pct = round(sum(item_scores) / len(item_scores), 1) if item_scores else 0.0
+
+    # Skill minimum check
+    failed_skills = [s for s, pct in per_skill.items() if pct < skill_min]
+    skill_mins_met = len(failed_skills) == 0
+
+    # Flagging
+    flag_reason = ""
+    if has_ai_error:
+        flag_reason = "ai_error"
+
+    status = "flagged" if flag_reason else "scored"
+
+    return {
+        "overall_pct": overall_pct,
+        "per_skill": per_skill,
+        "skill_mins_met": skill_mins_met,
+        "failed_skills": failed_skills,
+        "status": status,
+        "flag_reason": flag_reason,
+    }
+
+
+# ============================================================
+#  ADVANCEMENT EXAM — attempt lifecycle (Taqdeem Phase 4)
+# ============================================================
+
+
+def get_advancement_state(discord_id: str, level: str) -> dict:
+    """State for the calendar: disabled | locked | available | cooldown | passed."""
+    if not database.is_feature_enabled("assessment_advancement_exam", discord_id):
+        return {"state": "disabled"}
+
+    if not database.advancement_exam_due(discord_id):
+        # Check if already passed
+        conn = database._connect()
+        passed = conn.execute(
+            "SELECT * FROM advancement_exams WHERE discord_id=? AND level=? AND passed=1",
+            (discord_id, level)).fetchone()
+        conn.close()
+        if passed:
+            return {"state": "passed"}
+        return {"state": "locked"}
+
+    # Check cooldown (7 days)
+    cfg = database.get_progression_config()
+    cooldown_days = cfg.get("progression_advancement_retake_cooldown_days", 7)
+    conn = database._connect()
+    last = conn.execute(
+        "SELECT attempted_at FROM advancement_exams WHERE discord_id=? AND level=? "
+        "ORDER BY attempt_num DESC LIMIT 1", (discord_id, level)).fetchone()
+    conn.close()
+    if last:
+        try:
+            fin = _dt.datetime.fromisoformat(last["attempted_at"])
+            cd_until = fin + _dt.timedelta(days=cooldown_days)
+            if _utcnow() < cd_until:
+                return {"state": "cooldown", "cooldown_until": cd_until.isoformat()}
+        except (ValueError, TypeError):
+            pass
+
+    return {"state": "available"}
+
+
+def start_advancement_attempt(discord_id: str, level: str) -> dict:
+    """Create a new advancement exam attempt (Part A).
+    Returns {ok, attempt_id, time_limit_min, items:[public]} or {ok:False, error}."""
+    if not database.is_feature_enabled("assessment_advancement_exam", discord_id):
+        return {"ok": False, "error": "disabled"}
+
+    state = get_advancement_state(discord_id, level)
+    if state["state"] == "passed":
+        return {"ok": False, "error": "already_passed"}
+    if state["state"] == "locked":
+        return {"ok": False, "error": "locked"}
+    if state["state"] == "cooldown":
+        return {"ok": False, "error": "cooldown", "cooldown_until": state.get("cooldown_until")}
+    if state["state"] != "available":
+        return {"ok": False, "error": state["state"]}
+
+    # Generate Part A blueprint
+    seed = f"adv_a:{discord_id}:{level}:{_utcnow().timestamp()}"
+    bp = generate_advancement_blueprint_a(discord_id, level, seed=seed)
+
+    # Create attempt
+    attempt_num = database.advancement_attempts_count(discord_id, level) + 1
+    conn = database._connect()
+    try:
+        cur = conn.execute(
+            "INSERT INTO assessment_attempts (discord_id, level, week, attempt_no, seed, type) "
+            "VALUES (?, ?, ?, ?, ?, 'advancement')",
+            (discord_id, level, 0, attempt_num, seed),
+        )
+        attempt_id = cur.lastrowid
+        conn.commit()
+    finally:
+        conn.close()
+
+    # Insert items
+    database.itqan_insert_items(attempt_id, discord_id, bp["items"])
+
+    # Record in advancement_exams
+    conn = database._connect()
+    try:
+        conn.execute(
+            "INSERT INTO advancement_exams (discord_id, level, attempt_num, attempt_id) "
+            "VALUES (?, ?, ?, ?)",
+            (discord_id, level, attempt_num, attempt_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    return {
+        "ok": True,
+        "attempt_id": attempt_id,
+        "attempt_num": attempt_num,
+        "time_limit_min": bp["time_limit_min"],
+        "items": [
+            {"item_no": it["item_no"], "skill": it["skill"],
+             "source_week": it["source_week"],
+             "payload": _public_payload(it["skill"], it.get("payload", {}))}
+            for it in bp["items"]
+        ],
+    }
+
+
+def finish_advancement_part_a(discord_id: str, attempt_id: int,
+                              integrity_flags: dict = None) -> dict:
+    """Score Part A of the advancement exam. Does NOT determine final pass/fail
+    (that comes after Part B in Phase 5). Returns Part A scores for the page
+    to display before Part B begins."""
+    attempt = database.itqan_get_attempt(attempt_id)
+    if not attempt or str(attempt["discord_id"]) != str(discord_id):
+        return {"ok": False, "error": "not_found"}
+    if attempt.get("type") != "advancement":
+        return {"ok": False, "error": "wrong_type"}
+    if attempt["status"] != "in_progress":
+        return {"ok": False, "error": "not_in_progress"}
+
+    # Gather item scores
+    items_rows = database.itqan_get_items(attempt_id)
+    item_scores = []
+    items_data = []
+    has_ai_error = False
+    for row in sorted(items_rows, key=lambda r: r["item_no"]):
+        score = row.get("score")
+        if score is None:
+            score = 0.0
+            has_ai_error = True
+        item_scores.append(float(score))
+        try:
+            payload = _json.loads(row.get("prompt_ref") or "{}")
+        except Exception:
+            payload = {}
+        items_data.append({
+            "skill": row.get("skill", ""),
+            "source_week": row.get("source_week", 0),
+            "payload": payload,
+        })
+
+    # Void empty attempts
+    if not item_scores or all(s == 0 for s in item_scores):
+        conn = database._connect()
+        conn.execute("DELETE FROM assessment_attempts WHERE id=?", (attempt_id,))
+        conn.execute("DELETE FROM assessment_items WHERE attempt_id=?", (attempt_id,))
+        conn.execute("DELETE FROM advancement_exams WHERE attempt_id=?", (attempt_id,))
+        conn.commit()
+        conn.close()
+        return {"ok": True, "voided": True, "reason": "no_answers"}
+
+    # Score Part A
+    verdict = score_advancement_part_a(items_data, item_scores, has_ai_error=has_ai_error)
+
+    # Update attempt
+    conn = database._connect()
+    try:
+        conn.execute(
+            "UPDATE assessment_attempts SET finished_at=datetime('now'), status=?, "
+            "mastery_pct=?, result='part_a_done' WHERE id=?",
+            (verdict["status"], verdict["overall_pct"], attempt_id),
+        )
+        if integrity_flags:
+            conn.execute("UPDATE assessment_attempts SET integrity_flags=? WHERE id=?",
+                         (_json.dumps(integrity_flags), attempt_id))
+        # Store Part A score in advancement_exams
+        conn.execute(
+            "UPDATE advancement_exams SET part_a_score=?, skill_mins=? "
+            "WHERE attempt_id=?",
+            (verdict["overall_pct"], _json.dumps(verdict["per_skill"]), attempt_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    _alog.info(f"advancement: {discord_id} Part A → {verdict['overall_pct']}% "
+               f"(skills_met={verdict['skill_mins_met']})")
+
+    return {
+        "ok": True,
+        "part_a_score": verdict["overall_pct"],
+        "per_skill": verdict["per_skill"],
+        "skill_mins_met": verdict["skill_mins_met"],
+        "failed_skills": verdict["failed_skills"],
+        "status": verdict["status"],
+        "flag_reason": verdict["flag_reason"],
+    }
