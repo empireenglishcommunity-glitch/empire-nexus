@@ -109,7 +109,7 @@ CHANNEL_GUIDES: dict[str, str] = {
     "roles-info": (
         "🎓 **ما هذه القناة؟**\n"
         "هنا شرح نظام المستويات — كيف تترقى من مستوى إلى آخر.\n\n"
-        "✅ اقرأ لتفهم المستويات الأربعة ومتطلبات كل واحد\n"
+        "✅ اقرأ لتفهم مستوياتك الستة (من المبتدئ للإتقان) ومتطلبات كل واحد\n"
         "✅ الترقية تتم فقط عبر اختبار نهاية المستوى\n"
         "❌ لا تكتب هنا — لو عندك سؤال عن مستواك الحالي، اسأل في `#support`\n\n"
         "لا أحد يترقى بدون أن يثبت كفاءته — هذا ما يجعل الشهادة حقيقية."
@@ -176,8 +176,11 @@ CHANNEL_GUIDES: dict[str, str] = {
     ),
 
     # ── LEVEL 0-3 ZONES ──
+    # One pinned guide per channel in each of the six CEFR zones (A1–C2).
+    # Channel prefixes are the CEFR slug (a1 … c2), matching the zones that
+    # setup_server._cefr_zone_configs() creates.
     **{
-        f"l{level}-daily-tasks": (
+        f"{slug}-daily-tasks": (
             f"📅 **ما هذه القناة؟**\n"
             f"هنا تُنشر مهامك اليومية (7 مهام) — هذا هو قلب نظام التعلّم اليومي الخاص بك.\n\n"
             f"✅ افتح القناة كل يوم وأدِّ المهام بالترتيب\n"
@@ -186,10 +189,10 @@ CHANNEL_GUIDES: dict[str, str] = {
             f"❌ لا تكتب هنا — هذه القناة لعرض المهام فقط، والكتابة تكون في `#bot-commands`\n\n"
             f"تُنشر المهام تلقائيًا الساعة 6 صباحًا كل يوم."
         )
-        for level in ("0", "1", "2", "3")
+        for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
     },
     **{
-        f"l{level}-text-practice": (
+        f"{slug}-text-practice": (
             f"✍️ **ما هذه القناة؟**\n"
             f"مكانك لتمارين الكتابة الخاصة بمستواك — اكتب وتدرّب بالإنجليزية.\n\n"
             f"✅ اكتب تمرينك هنا بعد إنهاء مهمة الكتابة اليومية\n"
@@ -197,49 +200,33 @@ CHANNEL_GUIDES: dict[str, str] = {
             f"❌ لا تستخدم مترجمًا — الهدف أن تفكر بالإنجليزية مباشرة\n\n"
             f"قد يقدّم لك البوت أو الذكاء الاصطناعي ملاحظات على كتابتك."
         )
-        for level in ("0", "1", "2", "3")
+        for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
     },
-    # NOTE: only L0/L1/L2 have a dedicated "-questions" channel in
-    # setup_server.py's LEVEL 3 category -- L3 deliberately does NOT
-    # (confirmed live during Sahin Phase 1's actual execution: the
-    # script's own "not found -- skipped" warning caught this exact
-    # mismatch). L3 students use #l3-mentorship for this instead, which
-    # already has its own guide below. Do NOT add "l3-questions" back
-    # into this loop without first adding the actual channel to
-    # setup_server.py's CATEGORIES_CONFIG -- this loop must always
-    # mirror real server structure, never assume symmetry across
-    # levels.
+    # Every CEFR zone has its own -questions channel. Arabic is allowed as a
+    # one-line exception in A1 (the beginner level) only.
     **{
-        f"l{level}-questions": (
+        f"{slug}-questions": (
             f"❓ **ما هذه القناة؟**\n"
-            f"أسئلتك عن محتوى المستوى {level} — القواعد، المفردات، وأي شيء غير واضح.\n\n"
+            f"أسئلتك عن محتوى مستوى {slug.upper()} — القواعد، المفردات، وأي شيء غير واضح.\n\n"
             f"✅ اسأل بحرية عن أي جزء من مادة هذا المستوى\n"
-            + ("✅ يُسمح بالعربية هنا (استثناء خاص بالمستوى 0)\n" if level == "0" else "")
+            + ("✅ يُسمح بالعربية هنا (استثناء خاص بمستوى A1)\n" if slug == "a1" else "")
             + "❌ للمساعدة الشخصية الأشمل، اذهب إلى `#ask-nour`\n\n"
             "قد يرد عليك زملاؤك في نفس المستوى أيضًا، فلا تخف من السؤال!"
         )
-        for level in ("0", "1", "2")
+        for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
     },
     **{
-        f"l{level}-showcase": (
+        f"{slug}-showcase": (
             f"🎙️ **ما هذه القناة؟**\n"
-            f"هنا تشارك تسجيلاتك الصوتية وتحتفل بتقدمك في المستوى {level}.\n\n"
+            f"هنا تشارك تسجيلاتك الصوتية وتحتفل بتقدمك في مستوى {slug.upper()}.\n\n"
             f"✅ ارفع تسجيلك بعد إنهاء المهمة الصوتية اليومية\n"
             f"✅ رد على زملائك بكلام إيجابي (بالإنجليزية!)\n"
             f"❌ لا تكتب نصًا أو أسئلة هنا — استخدم قناة أخرى لذلك:\n"
             f"`#ask-nour` — `#support`\n\n"
             f"يسجّل البوت تقدمك تلقائيًا عند رفع تسجيلك 🔥"
         )
-        for level in ("0", "1", "2", "3")
+        for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
     },
-    "l3-mentorship": (
-        "🌟 **ما هذه القناة؟**\n"
-        "هذه القناة مخصصة لطلاب المستوى 3 لمساعدة المبتدئين ومشاركة تجربتهم.\n\n"
-        "✅ شارك نصائحك أو تجربتك الشخصية في التعلّم\n"
-        "✅ رد على أسئلة الطلاب في المستويات الأدنى إذا كان لهم سؤال هنا\n"
-        "❌ هذا ليس مكانًا لتمارين المستوى 3 نفسها — استخدم `#l3-text-practice`\n\n"
-        "المشاركة هنا اختيارية بالكامل، ولكنها تُحدث فرقًا حقيقيًا مع المبتدئين."
-    ),
 
     # ── COMMUNITY ──
     "general-chat": (

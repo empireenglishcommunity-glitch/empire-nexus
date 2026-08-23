@@ -8,10 +8,10 @@
 - **AI-powered feedback** on writing submissions (Gemini + Groq fallback)
 - **Streak tracking** with gamification (points, leaderboards, bonuses)
 - **Weekly assessments** with scored dimensions
-- **Level progression** (L0 → L1 → L2 → L3) with advancement exams — submissions persist to the database and admins are notified via DM to resolve with `!examresult`
+- **Level progression** across the six CEFR levels (A1 → A2 → B1 → B2 → C1 → C2) with advancement exams — submissions persist to the database and admins are notified via DM to resolve with `!examresult`
 - **Automatic server setup** (roles, channels, permissions via setup script)
 - **Arabic-first** instruction with bilingual support
-- **Full 38-week curriculum** across all 4 levels (vocabulary, speaking, writing, accent drills, grammar cards) — see `data/README.md` for the exact word/lesson counts per level
+- **CEFR-aligned curriculum** (Mi'yar): six levels A1–C2 (A1=10, A2=12, B1=14, B2=16, C1=18, C2=20 weeks). A1 + A2 authored; B1–C2 in progress. Legacy L0–L3 content (38 weeks) is retained/archived. See `data/README.md` + `content/cefr/*-ALIGNMENT.md`.
 
 ## Quick Start
 
@@ -67,13 +67,13 @@ src/
 
 content/            ← AI prompt library (25 prompts) + per-level accent/grammar drill content
                       (content/{l0,l1,l2,l3}/{accent,grammar}/weekN_*.json)
-data/               ← Per-level vocabulary/speaking/writing content, ALL 4 levels, 38 weeks total
+data/               ← Per-level vocabulary/speaking/writing content: CEFR A1–C2 (a1_week*.json …) + legacy L0–L3
                       (see data/README.md for exact counts and the content pipeline explained)
 scripts/            ← setup_server.py (auto-configures Discord server)
                       backup.py (SQLite database backup + rotation)
 ```
 
-> **Content status:** all 4 levels (L0-L3, 38 weeks) have real, verified curriculum content as of 2026-07-11. See `data/README.md` for the full breakdown and history of what was previously missing/templated.
+> **Content status:** migrating to the CEFR model (Mi'yar). CEFR A1 (10 weeks) + A2 (12 weeks) are authored and live; B1–C2 are being authored. The legacy L0–L3 content (38 weeks) remains for reference. See `data/README.md` + `content/cefr/`.
 
 ## Running the tests
 
