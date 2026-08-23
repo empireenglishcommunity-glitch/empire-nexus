@@ -14,8 +14,9 @@ from . import database
 
 logger = logging.getLogger("empire-bot.advancement")
 
-# Level progression map
-_NEXT_LEVEL = {"L0": "L1", "L1": "L2", "L2": "L3", "L3": None}
+# Level progression now uses the CEFR chain (A1→A2→…→C2) via
+# config.next_cefr_level(), so promotion walks all six levels, not the legacy
+# four. (The old hardcoded _NEXT_LEVEL {L0→L1…} is gone.)
 
 
 # ============================================================
@@ -42,9 +43,35 @@ async def deliver_advancement_outcome(discord_id: str, level: str,
 #  PASS → auto-promote + celebrate
 # ============================================================
 
+async def _reassign_discord_role(discord_id: str, new_level: str) -> None:
+    """Give the student their new level's Discord role (and strip the old one),
+    so an auto-promotion actually moves them into the next CEFR zone. Reuses
+    the bot's single role-assignment helper. Best-effort: never blocks the
+    promotion if the member isn't reachable."""
+    from . import bot as bot_mod, config
+    b = getattr(bot_mod, "bot", None)
+    if not b or not getattr(config, "GUILD_ID", 0):
+        return
+    guild = b.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+    try:
+        member = guild.get_member(int(discord_id))
+    except (ValueError, TypeError):
+        return
+    if not member:
+        return
+    try:
+        await bot_mod._assign_level_role(member, new_level)
+        logger.info(f"advancement: reassigned {discord_id} to {new_level} role/zone")
+    except Exception as e:
+        logger.warning(f"advancement: role reassign failed for {discord_id}: {e}")
+
+
 async def _promote_and_celebrate(discord_id: str, level: str, result: dict) -> None:
     """The big moment: promote the student to the next level."""
-    next_level = _NEXT_LEVEL.get(level)
+    from . import config
+    next_level = config.next_cefr_level(level)
     if not next_level:
         logger.info(f"advancement: {discord_id} passed {level} but no next level (max)")
         return
@@ -52,6 +79,11 @@ async def _promote_and_celebrate(discord_id: str, level: str, result: dict) -> N
     # 1. Promote (sets level + resets calendar anchor)
     database.set_level(discord_id, next_level)
     logger.info(f"advancement: PROMOTED {discord_id} from {level} to {next_level}")
+
+    # 1b. Move them to the new level's Discord role + zone (this was previously
+    #     never done on auto-promotion — the DB level advanced but the student
+    #     kept their old role/zone).
+    await _reassign_discord_role(discord_id, next_level)
 
     # 2. Mark as promoted in advancement_exams
     conn = database._connect()
