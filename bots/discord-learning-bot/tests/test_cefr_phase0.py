@@ -187,3 +187,113 @@ def test_migration_summary_counts():
     rep = database.migrate_to_cefr(dry_run=True)
     # At least our two seeded students show as would_migrate
     assert rep["summary"].get("would_migrate", 0) >= 2
+
+
+
+# ============================================================
+#  REGRESSION: snapshot must tolerate raw BLOB columns
+#  (assessment_recordings.audio) — a student with a voice
+#  recording previously crashed the real migration AND any
+#  history reset with "Object of type bytes is not JSON
+#  serializable" the moment json.dumps hit the audio bytes.
+# ============================================================
+
+_FAKE_AUDIO = b"\x00\x01OggS_fake_webm_audio\xff\xfe" * 64  # raw bytes, like a real recording
+
+
+def _give_student_a_recording(uid, level="L0", week=1):
+    """Attach a real audio BLOB to a seeded student (via an assessment attempt),
+    reproducing the production data shape that broke json.dumps."""
+    conn = database._connect()
+    cur = conn.execute(
+        "INSERT INTO assessment_attempts (discord_id, level, week, attempt_no, seed) "
+        "VALUES (?, ?, ?, 99, 'rec')", (uid, level, week))
+    attempt_id = cur.lastrowid
+    conn.execute(
+        "INSERT INTO assessment_recordings (attempt_id, discord_id, item_no, skill, filename, audio) "
+        "VALUES (?, ?, 1, 'speaking', 'rec.webm', ?)", (attempt_id, uid, _FAKE_AUDIO))
+    conn.commit()
+    conn.close()
+
+
+def test_snapshot_serializes_audio_blob():
+    """snapshot_member_data + _dumps_snapshot must not raise on a raw-bytes
+    (BLOB) column, and the audio must round-trip through JSON back to the exact
+    same bytes."""
+    import json
+    _seed_full_student("recser", "L0")
+    _give_student_a_recording("recser")
+
+    snap = database.snapshot_member_data("recser")  # include_blobs=True
+    payload = database._dumps_snapshot(snap)         # must NOT raise
+    reloaded = json.loads(payload)
+
+    audio_row = reloaded["assessment_recordings"][0]
+    decoded = database._decode_snapshot_value(audio_row["audio"])
+    assert decoded == _FAKE_AUDIO  # exact round-trip
+
+
+def test_real_migration_succeeds_for_student_with_recording():
+    """The exact case that failed live: migrating a student who has a voice
+    recording must complete (level remapped, counters preserved), not crash."""
+    _seed_full_student("recmig", "L0", week=3)
+    _give_student_a_recording("recmig")
+
+    rep = database.migrate_to_cefr(dry_run=False, discord_id="recmig")
+    assert rep["reports"][0]["status"] == "migrated"
+    assert database.get_member("recmig")["level"] == "A1"
+    # The recording row's level column followed the student too.
+    assert database.itqan_mastered_weeks("recmig", "A1") == {1, 2}
+    assert database.itqan_mastered_weeks("recmig", "L0") == set()
+
+
+def test_migration_log_snapshot_omits_raw_audio():
+    """The migration log keeps a proof snapshot but must NOT duplicate the
+    (potentially megabytes of) audio BLOB — it stores a lightweight marker
+    instead, since rollback reverses the level column directly."""
+    import json
+    _seed_full_student("reclean", "L0")
+    _give_student_a_recording("reclean")
+    database.migrate_to_cefr(dry_run=False, discord_id="reclean")
+
+    conn = database._connect()
+    row = conn.execute(
+        "SELECT snapshot_json FROM cefr_migration_log WHERE discord_id=? "
+        "ORDER BY id DESC LIMIT 1", ("reclean",)).fetchone()
+    conn.close()
+    snap = json.loads(row["snapshot_json"])
+    audio_val = snap["assessment_recordings"][0]["audio"]
+    # Marker present; no base64 audio payload bloating the log.
+    assert isinstance(audio_val, dict)
+    assert database._BLOB_OMITTED_MARKER in audio_val
+    assert audio_val[database._BLOB_OMITTED_MARKER]["bytes"] == len(_FAKE_AUDIO)
+    assert database._BYTES_MARKER not in row["snapshot_json"]
+
+
+def test_reset_and_restore_roundtrips_audio():
+    """A history reset snapshots the student (incl. audio) and a restore must
+    re-insert the EXACT audio bytes — proving the base64 round-trip works
+    end-to-end through the reset ledger."""
+    _seed_full_student("recreset", "L0")
+    _give_student_a_recording("recreset")
+
+    res = database.reset_member_history(
+        "recreset", initiated_by="test", consent_text="ok",
+        affirmation="DELETE", reason="regression test")
+    assert res is not None
+    consent_id = res["consent_id"]
+    # Audio was wiped by the reset.
+    conn = database._connect()
+    n = conn.execute("SELECT COUNT(*) c FROM assessment_recordings WHERE discord_id=?",
+                     ("recreset",)).fetchone()["c"]
+    conn.close()
+    assert n == 0
+
+    database.restore_member_from_consent(consent_id)
+    conn = database._connect()
+    got = conn.execute("SELECT audio FROM assessment_recordings WHERE discord_id=?",
+                       ("recreset",)).fetchone()
+    conn.close()
+    assert got is not None
+    # Restored audio is the exact original bytes.
+    assert bytes(got["audio"]) == _FAKE_AUDIO
