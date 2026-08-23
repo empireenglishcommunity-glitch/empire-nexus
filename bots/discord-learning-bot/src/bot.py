@@ -259,9 +259,10 @@ def _zone():
 
 
 def _level_role_name(level: str) -> str:
-    """Get the Discord role name for a level."""
-    role_map = {"L0": "\U0001f331 Level 0 | \u0645\u0628\u062a\u062f\u0626", "L1": "\U0001f4aa Level 1 | \u0645\u062a\u0642\u062f\u0645", "L2": "\U0001f680 Level 2 | \u0645\u062a\u0648\u0627\u0635\u0644", "L3": "\U0001f451 Level 3 | \u0637\u0644\u064a\u0642"}
-    return role_map.get(level, "\U0001f331 Level 0 | \u0645\u0628\u062a\u062f\u0626")
+    """Get the Discord role name for a level — CEFR-driven single source of
+    truth (config.level_role_name), so it stays in lockstep with the roles
+    setup_server.py creates. Accepts CEFR (A1–C2) or legacy (L0–L3) keys."""
+    return config.level_role_name(level)
 
 
 async def _get_or_create_role(guild: discord.Guild, role_name: str) -> discord.Role:
@@ -273,11 +274,15 @@ async def _get_or_create_role(guild: discord.Guild, role_name: str) -> discord.R
 
 
 async def _assign_level_role(member: discord.Member, new_level: str):
-    """Remove old level roles and assign the new one."""
+    """Remove any stale level role (CEFR or legacy) and assign the CEFR role
+    for new_level. Strips every managed level role except the target, so a
+    student never carries two level roles (and a leftover legacy L0–L3 role is
+    cleaned up on their first CEFR (re)assignment)."""
     guild = member.guild
-    # Remove all level roles
-    for lvl in ["L0", "L1", "L2", "L3"]:
-        role_name = _level_role_name(lvl)
+    new_name = config.level_role_name(new_level)
+    for role_name in config.all_managed_level_role_names():
+        if role_name == new_name:
+            continue  # don't strip the role we're about to add
         role = discord.utils.get(guild.roles, name=role_name)
         if role and role in member.roles:
             try:
@@ -285,7 +290,7 @@ async def _assign_level_role(member: discord.Member, new_level: str):
             except discord.Forbidden:
                 pass
     # Add new level role
-    new_role = await _get_or_create_role(guild, _level_role_name(new_level))
+    new_role = await _get_or_create_role(guild, new_name)
     try:
         await member.add_roles(new_role)
     except discord.Forbidden:
@@ -827,7 +832,7 @@ async def daily_task_post():
     # Bawaba B1: clear yesterday's tracked message IDs
     _daily_task_messages.clear()
 
-    for level_key in ["L0", "L1", "L2", "L3"]:
+    for level_key in config.CEFR_ORDER:
         members = database.members_at_level(level_key)
         if not members:
             continue
@@ -851,8 +856,8 @@ async def daily_task_post():
         # likely silently failing to post for most level/week combinations.
         message_chunks = task_engine.format_daily_post_chunks(task_data)
 
-        # Find the channel
-        channel_name = f"l{level_key[1]}-daily-tasks"
+        # Find the channel (CEFR slug: a1-daily-tasks, …)
+        channel_name = f"{config.level_slug(level_key)}-daily-tasks"
         channel = _find_channel(guild, channel_name)
         if channel:
             try:
@@ -1303,7 +1308,7 @@ async def vocab_cheat_sheet_delivery():
         logger.warning("vocab_cheat_sheet_delivery: #cheat-sheets channel not found")
         return
 
-    for level_key in ["L0", "L1", "L2", "L3"]:
+    for level_key in config.CEFR_ORDER:
         members = database.members_at_level(level_key)
         if not members:
             continue
@@ -1346,7 +1351,7 @@ async def grammar_card_delivery():
         logger.warning("grammar_card_delivery: #cheat-sheets channel not found")
         return
 
-    for level_key in ["L0", "L1", "L2", "L3"]:
+    for level_key in config.CEFR_ORDER:
         members = database.members_at_level(level_key)
         if not members:
             continue
