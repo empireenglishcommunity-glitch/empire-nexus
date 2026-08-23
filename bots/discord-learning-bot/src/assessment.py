@@ -797,3 +797,191 @@ def format_itqan_due(data: dict) -> str:
         for r in group:
             lines.append(f"  [{r['level']}] {r['name']} — {r['label']} · mastered {r['mastered_count']}")
     return "\n".join(lines)
+
+
+
+# ============================================================
+#  MONTHLY REVIEW — generation + scoring (Taqdeem Phase 1)
+# ============================================================
+#
+# Unlike the weekly assessment (65% recent / 35% spiral), the monthly review
+# draws EQUALLY from all weeks in the review period, SRS-biased toward items
+# the student is most likely to have forgotten. Production (speaking + writing)
+# is weighted ≥ 50% of items — because production proves real acquisition, not
+# just recognition.
+
+
+def generate_monthly_blueprint(discord_id: str, level: str,
+                               weeks_covered: list[int],
+                               seed: str | None = None,
+                               total_items: int = 16) -> dict:
+    """Build the blueprint for a Monthly Progress Review.
+
+    Draws equally from all `weeks_covered`, SRS-biased toward weak items,
+    with ≥ 50% production items (speaking + writing).
+
+    Returns: {level, weeks_covered, seed, time_limit_min, type: 'monthly',
+              items: [{item_no, skill, source_week, payload}, ...]}
+    """
+    cfg = database.get_progression_config()
+    time_limit = 20  # fixed for monthly
+
+    if seed is None:
+        seed = f"monthly:{discord_id}:{level}:{'-'.join(map(str, weeks_covered))}:{random.randint(1, 1_000_000)}"
+    rng = random.Random(seed)
+
+    # Gather vocabulary from all covered weeks
+    all_vocab: list[dict] = []
+    for w in weeks_covered:
+        for v in _week_vocab(level, w):
+            item = dict(v)
+            item["_week"] = w
+            all_vocab.append(item)
+
+    if not all_vocab:
+        return {"level": level, "weeks_covered": weeks_covered, "seed": seed,
+                "time_limit_min": time_limit, "type": "monthly", "items": []}
+
+    # SRS bias: prioritize weak/due items
+    due_words = {d.get("word") for d in database.get_due_reviews(discord_id, limit=200)}
+    weak = [v for v in all_vocab if v.get("word") in due_words]
+    rest = [v for v in all_vocab if v.get("word") not in due_words]
+    rng.shuffle(weak)
+    rng.shuffle(rest)
+    pool = weak + rest  # weak items first
+
+    # Determine production vs objective split (≥ 50% production)
+    production_count = max(total_items // 2, 8)  # at least half
+    objective_count = total_items - production_count
+
+    items: list[dict] = []
+
+    # Production items: cycle speaking/writing across different weeks
+    production_skills = ["speaking", "writing"]
+    for i in range(production_count):
+        if i >= len(pool):
+            break
+        v = pool[i]
+        source_week = v.get("_week", weeks_covered[0])
+        skill = production_skills[i % 2]
+        theme = curriculum.get_theme(source_week, level) or "your practice"
+        target_words = [v.get("word", "")]
+
+        if skill == "speaking":
+            items.append({
+                "skill": "speaking", "source_week": source_week,
+                "payload": {
+                    "prompt_en": f"Say a sentence using the word '{v.get('word', '')}'.",
+                    "prompt_ar": f"قول جملة باستخدام كلمة '{v.get('word', '')}'.",
+                    "target_words": target_words, "min_seconds": 10,
+                },
+            })
+        else:
+            items.append({
+                "skill": "writing", "source_week": source_week,
+                "payload": {
+                    "prompt_en": f"Write a sentence using '{v.get('word', '')}'.",
+                    "prompt_ar": f"اكتب جملة باستخدام '{v.get('word', '')}'.",
+                    "target_words": target_words, "min_chars": 20,
+                },
+            })
+
+    # Objective items: cycle vocab/listening/pronunciation from remaining pool
+    obj_pool = pool[production_count:]
+    for i in range(objective_count):
+        if i >= len(obj_pool):
+            break
+        v = obj_pool[i]
+        skill = _OBJECTIVE_SKILLS[i % len(_OBJECTIVE_SKILLS)]
+        items.append(_vocab_item(v, v.get("_week", weeks_covered[0]), skill))
+
+    # Shuffle to mix production and objective (but keep a deterministic order)
+    rng.shuffle(items)
+
+    for idx, it in enumerate(items, start=1):
+        it["item_no"] = idx
+
+    return {
+        "level": level, "weeks_covered": weeks_covered, "seed": seed,
+        "time_limit_min": time_limit, "type": "monthly", "items": items,
+    }
+
+
+def score_monthly_attempt(item_scores: list[float],
+                          has_ai_error: bool = False,
+                          cfg: dict | None = None) -> dict:
+    """Score a Monthly Review attempt.
+
+    Single dimension: Retention Score = average of item scores.
+    Simpler than the weekly's two-dimension (consistency already proven by
+    passing the 4 weeklies that triggered this review).
+
+    Returns {retention_pct, result, status, flag_reason, skill_breakdown}.
+    - result: 'passed' | 'not_yet'
+    - status: 'scored' | 'flagged'
+    """
+    cfg = cfg or database.get_progression_config()
+    pass_pct = cfg.get("progression_monthly_pass_pct", 65)
+
+    retention_pct = round(sum(item_scores) / len(item_scores), 1) if item_scores else 0.0
+    passed = retention_pct >= pass_pct
+
+    flag_reason = ""
+    if not passed:
+        near_miss = 0 <= (pass_pct - retention_pct) <= _BORDERLINE_MARGIN
+        if has_ai_error:
+            flag_reason = "ai_error"
+        elif near_miss:
+            flag_reason = "near_miss"
+    status = "flagged" if flag_reason else "scored"
+
+    return {
+        "retention_pct": retention_pct,
+        "result": "passed" if passed else "not_yet",
+        "status": status,
+        "flag_reason": flag_reason,
+    }
+
+
+def build_skill_breakdown(items: list[dict], item_scores: list[float]) -> dict:
+    """Build a per-skill breakdown from scored items.
+
+    Returns {skill: average_score} for each skill that appeared in the items.
+    Used for the diagnostic output (student sees which skills are strong/weak).
+    """
+    skill_totals: dict[str, list[float]] = {}
+    for i, item in enumerate(items):
+        skill = item.get("skill", "unknown")
+        if i < len(item_scores):
+            if skill not in skill_totals:
+                skill_totals[skill] = []
+            skill_totals[skill].append(item_scores[i])
+
+    return {
+        skill: round(sum(scores) / len(scores), 1) if scores else 0.0
+        for skill, scores in skill_totals.items()
+    }
+
+
+def build_review_list(items: list[dict], item_scores: list[float],
+                      threshold: float = 60.0) -> list[dict]:
+    """Build a specific review list of items the student got wrong or weak on.
+
+    Returns [{skill, source_week, word, score}, ...] for items below threshold.
+    This is what gives the student actionable "go review week 2 Day 3 vocab".
+    """
+    review = []
+    for i, item in enumerate(items):
+        if i >= len(item_scores):
+            break
+        if item_scores[i] < threshold:
+            word = item.get("payload", {}).get("expected", "") or \
+                   item.get("payload", {}).get("word", "") or \
+                   (item.get("payload", {}).get("target_words", [""])[0] if item.get("payload", {}).get("target_words") else "")
+            review.append({
+                "skill": item.get("skill", ""),
+                "source_week": item.get("source_week", 0),
+                "word": word,
+                "score": item_scores[i],
+            })
+    return review
