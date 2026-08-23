@@ -1903,6 +1903,88 @@ async def post_assessment_finish(request: web.Request) -> web.Response:
 
 
 # ============================================================
+#  MONTHLY REVIEW API (Taqdeem Phase 2)
+# ============================================================
+
+@routes.get("/api/assessment/monthly/status")
+async def get_monthly_status(request: web.Request) -> web.Response:
+    """Monthly Review state: not_due | available | in_progress | cooldown | passed."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    state = assessment.get_monthly_state(discord_id, level)
+    return web.json_response({"ok": True, **state}, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/monthly/start")
+async def post_monthly_start(request: web.Request) -> web.Response:
+    """Begin a new Monthly Review attempt (if due and not on cooldown)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    database.touch_device_session(payload["sid"])
+    result = assessment.start_monthly_attempt(discord_id, level)
+    status = 200 if result.get("ok") else 409
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/monthly/item")
+async def post_monthly_item(request: web.Request) -> web.Response:
+    """Submit an answer for a monthly review item. Reuses the same item
+    scoring as weekly (Whisper for audio, AI for text, objective for vocab)."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        return web.json_response({"ok": False, "error": "bad_json"},
+                                 status=400, headers=_cors_headers(request))
+    attempt_id = body.get("attempt_id")
+    item_no = body.get("item_no")
+    answer = body.get("answer", "")
+    if not attempt_id or item_no is None:
+        return web.json_response({"ok": False, "error": "missing fields"},
+                                 status=400, headers=_cors_headers(request))
+    # Reuse the same submit_item (it works on any attempt_id regardless of type)
+    result = await assessment.submit_item(discord_id, int(attempt_id), int(item_no),
+                                          answer=answer)
+    return web.json_response(result, headers=_cors_headers(request))
+
+
+@routes.post("/api/assessment/monthly/finish")
+async def post_monthly_finish(request: web.Request) -> web.Response:
+    """Finalize a monthly review attempt and get the verdict."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    attempt_id = body.get("attempt_id")
+    if not attempt_id:
+        return web.json_response({"ok": False, "error": "missing attempt_id"},
+                                 status=400, headers=_cors_headers(request))
+    integrity_flags = body.get("integrity_flags", {})
+    result = assessment.finish_monthly_attempt(discord_id, int(attempt_id),
+                                               integrity_flags=integrity_flags)
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
+
+
+# ============================================================
 #  CORS preflight handler
 # ============================================================
 
