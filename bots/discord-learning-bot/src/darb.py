@@ -322,4 +322,10 @@ def build_calendar(discord_id: str) -> dict | None:
         # Weeks-mastered progress map (Phase 8) — same flag gate.
         result["itqan_progress"] = database.itqan_progress(discord_id, level)
 
+    # Taqdeem Phase 2: Monthly Review stop on the calendar.
+    if database.is_feature_enabled("assessment_monthly_review", discord_id):
+        from . import assessment
+        monthly_state = assessment.get_monthly_state(discord_id, level)
+        result["monthly_review"] = monthly_state
+
     return result

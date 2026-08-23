@@ -985,3 +985,197 @@ def build_review_list(items: list[dict], item_scores: list[float],
                 "score": item_scores[i],
             })
     return review
+
+
+
+# ============================================================
+#  MONTHLY REVIEW — attempt lifecycle (Taqdeem Phase 2)
+# ============================================================
+
+
+def get_monthly_state(discord_id: str, level: str) -> dict:
+    """State for the calendar/page: not_due | available | in_progress |
+    cooldown | passed."""
+    if not database.is_feature_enabled("assessment_monthly_review", discord_id):
+        return {"state": "disabled"}
+
+    if not database.monthly_review_due(discord_id):
+        # Check if already passed the currently-due review
+        taken = database.monthly_reviews_taken(discord_id, level)
+        passed = database.monthly_reviews_passed(discord_id, level)
+        if passed > 0 and passed >= taken:
+            return {"state": "passed", "reviews_passed": passed}
+        if taken > passed:
+            # Has a failed attempt — check cooldown
+            cfg = database.get_progression_config()
+            cooldown_hours = cfg.get("progression_monthly_retake_cooldown_hours", 72)
+            conn = database._connect()
+            last = conn.execute(
+                "SELECT reviewed_at FROM monthly_reviews WHERE discord_id=? AND level=? "
+                "ORDER BY review_number DESC LIMIT 1", (discord_id, level)).fetchone()
+            conn.close()
+            if last:
+                try:
+                    fin = _dt.datetime.fromisoformat(last["reviewed_at"])
+                    cd_until = fin + _dt.timedelta(hours=cooldown_hours)
+                    if _utcnow() < cd_until:
+                        return {"state": "cooldown", "cooldown_until": cd_until.isoformat()}
+                except (ValueError, TypeError):
+                    pass
+            return {"state": "available", "review_number": taken + 1}
+        return {"state": "not_due"}
+
+    # Due and not yet taken
+    taken = database.monthly_reviews_taken(discord_id, level)
+    return {"state": "available", "review_number": taken + 1}
+
+
+def start_monthly_attempt(discord_id: str, level: str) -> dict:
+    """Create a new monthly review attempt if allowed.
+    Returns {ok, attempt_id, time_limit_min, items:[public]} or {ok:False, error}."""
+    if not database.is_feature_enabled("assessment_monthly_review", discord_id):
+        return {"ok": False, "error": "disabled"}
+
+    state = get_monthly_state(discord_id, level)
+    if state["state"] not in ("available",):
+        return {"ok": False, "error": state["state"]}
+
+    # Determine which weeks to cover
+    mastered = sorted(database.itqan_mastered_weeks(discord_id, level))
+    cfg = database.get_progression_config()
+    weeks_per = cfg.get("progression_monthly_weeks_per_review", 4)
+    taken = database.monthly_reviews_taken(discord_id, level)
+    # Cover the most recent `weeks_per` mastered weeks for this review
+    start_idx = taken * weeks_per
+    weeks_covered = mastered[start_idx:start_idx + weeks_per]
+    if not weeks_covered:
+        weeks_covered = mastered[-weeks_per:] if mastered else [1]
+
+    # Generate blueprint
+    seed = f"monthly:{discord_id}:{level}:{taken+1}:{_utcnow().timestamp()}"
+    bp = generate_monthly_blueprint(discord_id, level, weeks_covered, seed=seed)
+
+    # Create the attempt in assessment_attempts (type='monthly')
+    review_number = taken + 1
+    conn = database._connect()
+    try:
+        cur = conn.execute(
+            "INSERT INTO assessment_attempts (discord_id, level, week, attempt_no, seed, type) "
+            "VALUES (?, ?, ?, ?, ?, 'monthly')",
+            (discord_id, level, review_number, 1, seed),
+        )
+        attempt_id = cur.lastrowid
+        conn.commit()
+    finally:
+        conn.close()
+
+    # Insert items
+    database.itqan_insert_items(attempt_id, discord_id, bp["items"])
+
+    return {
+        "ok": True,
+        "attempt_id": attempt_id,
+        "review_number": review_number,
+        "weeks_covered": weeks_covered,
+        "time_limit_min": bp["time_limit_min"],
+        "items": [
+            {"item_no": it["item_no"], "skill": it["skill"],
+             "source_week": it["source_week"],
+             "payload": _public_payload(it["skill"], it.get("payload", {}))}
+            for it in bp["items"]
+        ],
+    }
+
+
+def finish_monthly_attempt(discord_id: str, attempt_id: int,
+                           integrity_flags: dict = None) -> dict:
+    """Score and finalize a monthly review attempt.
+    Returns {ok, retention_pct, result, skill_breakdown, review_list}."""
+    attempt = database.itqan_get_attempt(attempt_id)
+    if not attempt or str(attempt["discord_id"]) != str(discord_id):
+        return {"ok": False, "error": "not_found"}
+    if attempt.get("type") != "monthly":
+        return {"ok": False, "error": "wrong_type"}
+    if attempt["status"] != "in_progress":
+        return {"ok": False, "error": "not_in_progress"}
+
+    # Gather item scores
+    items_rows = database.itqan_get_items(attempt_id)
+    item_scores = []
+    items_data = []
+    has_ai_error = False
+    for row in sorted(items_rows, key=lambda r: r["item_no"]):
+        score = row.get("score")
+        if score is None:
+            score = 0.0
+            has_ai_error = True
+        item_scores.append(float(score))
+        try:
+            payload = _json.loads(row.get("prompt_ref") or "{}")
+        except Exception:
+            payload = {}
+        items_data.append({
+            "skill": row.get("skill", ""),
+            "source_week": row.get("source_week", 0),
+            "payload": payload,
+        })
+
+    # Void empty attempts (same as Itqan)
+    if not item_scores or all(s == 0 for s in item_scores):
+        conn = database._connect()
+        conn.execute("DELETE FROM assessment_attempts WHERE id=?", (attempt_id,))
+        conn.execute("DELETE FROM assessment_items WHERE attempt_id=?", (attempt_id,))
+        conn.commit()
+        conn.close()
+        return {"ok": True, "voided": True, "reason": "no_answers"}
+
+    # Score
+    verdict = score_monthly_attempt(item_scores, has_ai_error=has_ai_error)
+    skill_breakdown = build_skill_breakdown(items_data, item_scores)
+    review_list = build_review_list(items_data, item_scores)
+
+    # Update the attempt row
+    conn = database._connect()
+    try:
+        conn.execute(
+            "UPDATE assessment_attempts SET finished_at=datetime('now'), status=?, "
+            "mastery_pct=?, result=? WHERE id=?",
+            (verdict["status"], verdict["retention_pct"], verdict["result"], attempt_id),
+        )
+        if integrity_flags:
+            conn.execute("UPDATE assessment_attempts SET integrity_flags=? WHERE id=?",
+                         (_json.dumps(integrity_flags), attempt_id))
+        conn.commit()
+    finally:
+        conn.close()
+
+    # Record in monthly_reviews table
+    review_number = attempt.get("week", 1)  # we stored review_number in the week column
+    level = attempt["level"]
+    conn = database._connect()
+    try:
+        conn.execute(
+            "INSERT OR REPLACE INTO monthly_reviews "
+            "(discord_id, level, review_number, attempt_id, passed, retention_score, skill_breakdown) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (discord_id, level, review_number, attempt_id,
+             1 if verdict["result"] == "passed" else 0,
+             verdict["retention_pct"],
+             _json.dumps(skill_breakdown)),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    _alog.info(f"monthly: {discord_id} review #{review_number} → "
+               f"{verdict['result']} ({verdict['retention_pct']}%)")
+
+    return {
+        "ok": True,
+        "retention_pct": verdict["retention_pct"],
+        "result": verdict["result"],
+        "status": verdict["status"],
+        "flag_reason": verdict["flag_reason"],
+        "skill_breakdown": skill_breakdown,
+        "review_list": review_list,
+    }
