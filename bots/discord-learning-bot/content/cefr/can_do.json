@@ -88,7 +88,38 @@
       {"code": "B1.M.3", "en": "Can help a discussion along on familiar ground by inviting others to join, restating points and summarising where the group has got to.", "ar": "يقدر يدفع النقاش للأمام في موضوع مألوف بدعوة الآخرين للمشاركة وإعادة صياغة النقاط وتلخيص ما وصلوا إليه."}
     ]
   },
-  "B2": {},
+  "B2": {
+    "overview_en": "Can understand the main ideas of complex text on both concrete and abstract topics, including technical discussions in their field of specialisation. Can interact with a degree of fluency and spontaneity that makes regular interaction with native speakers quite possible without strain for either party. Can produce clear, detailed text on a wide range of subjects and explain a viewpoint on a topical issue giving the advantages and disadvantages of various options.",
+    "overview_ar": "يقدر يفهم الأفكار الرئيسية في نصوص معقّدة عن مواضيع ملموسة ومجرّدة، بما في ذلك النقاشات التقنية في مجال تخصصه. يقدر يتفاعل بطلاقة وعفوية تسمح بمحادثة منتظمة مع الناطقين الأصليين دون توتر للطرفين. يقدر ينتج نصًا واضحًا ومفصّلًا عن مجموعة واسعة من المواضيع ويشرح وجهة نظره في قضية مطروحة مع عرض مزايا وعيوب الخيارات.",
+    "reception": [
+      {"code": "B2.R.1", "en": "Can understand extended speech and lectures and follow complex lines of argument on reasonably familiar topics.", "ar": "يقدر يفهم كلامًا مطوّلًا ومحاضرات ويتابع خطوط حجّة معقّدة عن مواضيع مألوفة نسبيًا."},
+      {"code": "B2.R.2", "en": "Can understand most TV news and current-affairs programmes and the majority of films in standard dialect.", "ar": "يقدر يفهم معظم نشرات الأخبار وبرامج الشؤون الجارية وأغلب الأفلام باللهجة القياسية."},
+      {"code": "B2.R.3", "en": "Can read articles and reports concerned with contemporary problems in which writers adopt particular attitudes or viewpoints.", "ar": "يقدر يقرأ مقالات وتقارير عن قضايا معاصرة يتبنّى فيها الكُتّاب مواقف أو وجهات نظر معيّنة."},
+      {"code": "B2.R.4", "en": "Can quickly identify the content and relevance of news items, articles and reports, deciding whether closer study is worthwhile.", "ar": "يقدر يحدد بسرعة محتوى وأهمية الأخبار والمقالات والتقارير، ويقرّر إن كانت تستحق قراءة أعمق."},
+      {"code": "B2.R.5", "en": "Can understand contemporary literary prose and distinguish between literal and implied meaning.", "ar": "يقدر يفهم النثر الأدبي المعاصر ويميّز بين المعنى الحرفي والمعنى الضمني."}
+    ],
+    "production": [
+      {"code": "B2.P.1", "en": "Can give clear, detailed descriptions on a wide range of subjects related to their field of interest.", "ar": "يقدر يدّي أوصافًا واضحة ومفصّلة عن مجموعة واسعة من المواضيع في مجال اهتمامه."},
+      {"code": "B2.P.2", "en": "Can develop an argument systematically, giving reasons in support of or against a point of view.", "ar": "يقدر يطوّر حجّة بشكل منهجي، ويدّي أسبابًا مؤيّدة أو معارضة لوجهة نظر."},
+      {"code": "B2.P.3", "en": "Can explain a viewpoint on a topical issue giving the advantages and disadvantages of various options.", "ar": "يقدر يشرح وجهة نظر في قضية مطروحة مع عرض مزايا وعيوب الخيارات المختلفة."},
+      {"code": "B2.P.4", "en": "Can write clear, detailed text on a wide range of subjects, synthesising and evaluating information from different sources.", "ar": "يقدر يكتب نصًا واضحًا ومفصّلًا عن مواضيع متنوّعة، ويجمع ويقيّم المعلومات من مصادر مختلفة."},
+      {"code": "B2.P.5", "en": "Can write an essay or report that develops an argument, giving reasons and relevant examples.", "ar": "يقدر يكتب مقالًا أو تقريرًا يطوّر حجّة، ويدّي أسبابًا وأمثلة ذات صلة."},
+      {"code": "B2.P.6", "en": "Can write letters conveying degrees of emotion and highlighting the personal significance of events and experiences.", "ar": "يقدر يكتب رسائل تنقل درجات من المشاعر وتُبرز الأهمية الشخصية للأحداث والخبرات."}
+    ],
+    "interaction": [
+      {"code": "B2.I.1", "en": "Can interact with a degree of fluency and spontaneity that makes regular interaction with native speakers quite possible.", "ar": "يقدر يتفاعل بطلاقة وعفوية تجعل المحادثة المنتظمة مع الناطقين الأصليين ممكنة."},
+      {"code": "B2.I.2", "en": "Can take an active part in discussion in familiar contexts, accounting for and sustaining their views.", "ar": "يقدر يشارك بفعالية في نقاش في سياقات مألوفة، ويشرح آراءه ويدافع عنها."},
+      {"code": "B2.I.3", "en": "Can present clear arguments, expand and support points with reasons and examples, and respond to counter-arguments.", "ar": "يقدر يعرض حججًا واضحة، ويطوّرها ويدعمها بأسباب وأمثلة، ويردّ على الحجج المضادة."},
+      {"code": "B2.I.4", "en": "Can convey degrees of emotion and highlight the personal significance of events, and comment on others' views.", "ar": "يقدر ينقل درجات من المشاعر ويُبرز أهمية الأحداث، ويعلّق على آراء الآخرين."},
+      {"code": "B2.I.5", "en": "Can help along the progress of the work by inviting others to join in, saying what they think, and negotiating a compromise.", "ar": "يقدر يدفع العمل للأمام بدعوة الآخرين للمشاركة، وقول رأيه، والتفاوض للوصول لحلّ وسط."}
+    ],
+    "mediation": [
+      {"code": "B2.M.1", "en": "Can summarise a wide range of factual and imaginative texts, commenting on and contrasting differing viewpoints.", "ar": "يقدر يلخّص مجموعة واسعة من النصوص الواقعية والأدبية، ويعلّق على وجهات النظر المختلفة ويقارنها."},
+      {"code": "B2.M.2", "en": "Can convey detailed information reliably, and explain the significance of what others have said.", "ar": "يقدر ينقل معلومات مفصّلة بدقة، ويشرح دلالة ما قاله الآخرون."},
+      {"code": "B2.M.3", "en": "Can reformulate and paraphrase to clarify meaning and help a discussion move forward.", "ar": "يقدر يعيد الصياغة والتوضيح لتبسيط المعنى ودفع النقاش للأمام."},
+      {"code": "B2.M.4", "en": "Can help bridge a difference of opinion by asking questions, restating positions and suggesting a way forward.", "ar": "يقدر يساعد في تجسير الخلاف بطرح الأسئلة وإعادة صياغة المواقف واقتراح طريق للأمام."}
+    ]
+  },
   "C1": {},
   "C2": {}
 }
