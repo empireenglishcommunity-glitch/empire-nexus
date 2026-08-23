@@ -110,6 +110,13 @@ def _migrate(conn: sqlite3.Connection):
     if "last_used" not in lt_cols:
         conn.execute("ALTER TABLE link_tokens ADD COLUMN last_used TEXT DEFAULT NULL")
 
+    # Taqdeem Phase 0: add `type` column to assessment_attempts so the same table
+    # can hold weekly, monthly, and advancement attempts. Default 'weekly' means
+    # all existing rows (from Itqan) remain correctly typed without data migration.
+    aa_cols = {row["name"] for row in conn.execute("PRAGMA table_info(assessment_attempts)")}
+    if "type" not in aa_cols:
+        conn.execute("ALTER TABLE assessment_attempts ADD COLUMN type TEXT NOT NULL DEFAULT 'weekly'")
+
     conn.commit()
 
 
@@ -592,6 +599,38 @@ CREATE TABLE IF NOT EXISTS together_minutes (
     PRIMARY KEY (discord_id, date),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Taqdeem Phase 0: Monthly Progress Review tracking.
+CREATE TABLE IF NOT EXISTS monthly_reviews (
+    discord_id      TEXT NOT NULL,
+    review_number   INTEGER NOT NULL,    -- 1st, 2nd monthly for this level
+    level           TEXT NOT NULL,
+    attempt_id      INTEGER DEFAULT NULL,-- FK to assessment_attempts
+    passed          INTEGER NOT NULL DEFAULT 0,
+    retention_score REAL DEFAULT NULL,
+    skill_breakdown TEXT DEFAULT '',      -- JSON: {listening: 72, vocab: 85, ...}
+    reviewed_at     TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, level, review_number),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
+-- Taqdeem Phase 0: Level Advancement Exam tracking.
+CREATE TABLE IF NOT EXISTS advancement_exams (
+    discord_id      TEXT NOT NULL,
+    level           TEXT NOT NULL,       -- the level being tested (e.g. 'L0')
+    attempt_num     INTEGER NOT NULL,    -- 1, 2, 3...
+    attempt_id      INTEGER DEFAULT NULL,-- FK to assessment_attempts (Part A)
+    part_b_recording TEXT DEFAULT '',    -- path/URL to the Part B recording
+    part_a_score    REAL DEFAULT NULL,
+    part_b_score    REAL DEFAULT NULL,
+    overall_score   REAL DEFAULT NULL,
+    skill_mins      TEXT DEFAULT '',     -- JSON: per-skill scores for min check
+    passed          INTEGER NOT NULL DEFAULT 0,
+    promoted        INTEGER NOT NULL DEFAULT 0,
+    attempted_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, level, attempt_num),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 
@@ -619,6 +658,7 @@ RESET_WIPE_TABLES = (
     "student_journey", "journey_coverage", "claim_codes",
     "assessment_attempts", "assessment_items", "week_mastery",
     "assessment_recordings", "together_minutes",
+    "monthly_reviews", "advancement_exams",
 )
 
 
@@ -1433,6 +1473,49 @@ def set_community_config(key: str, value) -> bool:
     """Set one Majlis config value (owner tuning). Returns False for unknown
     keys so callers can reject typos rather than write junk settings."""
     if key not in COMMUNITY_CONFIG_DEFAULTS:
+        return False
+    set_setting(key, str(value))
+    return True
+
+
+# ============================================================
+#  ASSESSMENT PROGRESSION ("TAQDEEM") CONFIG
+# ============================================================
+
+PROGRESSION_CONFIG_DEFAULTS = {
+    "progression_monthly_pass_pct": 65,              # int: retention score to pass monthly
+    "progression_monthly_retake_cooldown_hours": 72, # int: hours before monthly retake
+    "progression_monthly_weeks_per_review": 4,       # int: weekly passes that trigger a review
+    "progression_advancement_pass_pct": 75,          # int: overall % to pass advancement
+    "progression_advancement_skill_min_pct": 60,     # int: minimum per-skill % in Part A
+    "progression_advancement_part_b_min_pct": 50,    # int: minimum Part B score %
+    "progression_advancement_part_a_weight": 0.6,    # float: Part A weight in overall
+    "progression_advancement_part_b_weight": 0.4,    # float: Part B weight in overall
+    "progression_advancement_retake_cooldown_days": 7,  # int: days before advancement retake
+    "progression_advancement_time_limit_part_a_min": 20, # int: Part A time limit
+    "progression_advancement_time_limit_part_b_min": 10, # int: Part B time limit
+}
+
+
+def get_progression_config() -> dict:
+    """Return the Taqdeem progression config, reading settings overrides over
+    defaults. Never raises: blank/invalid values fall back to the default."""
+    cfg = {}
+    for key, default in PROGRESSION_CONFIG_DEFAULTS.items():
+        raw = get_setting(key, "")
+        if raw == "":
+            cfg[key] = default
+            continue
+        try:
+            cfg[key] = type(default)(raw)
+        except (ValueError, TypeError):
+            cfg[key] = default
+    return cfg
+
+
+def set_progression_config(key: str, value) -> bool:
+    """Set one Taqdeem config value (owner tuning). Returns False for unknown keys."""
+    if key not in PROGRESSION_CONFIG_DEFAULTS:
         return False
     set_setting(key, str(value))
     return True
@@ -3395,6 +3478,97 @@ def itqan_mastered_weeks(discord_id: str, level: str) -> set:
     ).fetchall()
     conn.close()
     return {r["week"] for r in rows}
+
+
+
+# ============================================================
+#  TAQDEEM — trigger helpers (Phase 0)
+# ============================================================
+
+def monthly_reviews_passed(discord_id: str, level: str) -> int:
+    """Count how many Monthly Reviews this student has passed for this level."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) c FROM monthly_reviews WHERE discord_id=? AND level=? AND passed=1",
+        (discord_id, level),
+    ).fetchone()
+    conn.close()
+    return row["c"] if row else 0
+
+
+def monthly_reviews_taken(discord_id: str, level: str) -> int:
+    """Count total Monthly Reviews attempted for this level (passed or not)."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) c FROM monthly_reviews WHERE discord_id=? AND level=?",
+        (discord_id, level),
+    ).fetchone()
+    conn.close()
+    return row["c"] if row else 0
+
+
+def monthly_review_due(discord_id: str) -> bool:
+    """Check if a Monthly Review is due for this student.
+
+    Due when: (number of weekly passes) >= (reviews_taken + 1) * weeks_per_review
+    e.g. with weeks_per_review=4: first review due after 4 weeklies, second after 8.
+    Also checks the flag is ON.
+    """
+    if not is_feature_enabled("assessment_monthly_review", discord_id):
+        return False
+    member = get_member(discord_id)
+    if not member:
+        return False
+    level = member["level"]
+    mastered = itqan_mastered_weeks(discord_id, level)
+    taken = monthly_reviews_taken(discord_id, level)
+
+    cfg = get_progression_config()
+    weeks_per = cfg.get("progression_monthly_weeks_per_review", 4)
+
+    # Due if they've passed enough weeklies for the NEXT review
+    needed = (taken + 1) * weeks_per
+    return len(mastered) >= needed
+
+
+def advancement_exam_due(discord_id: str) -> bool:
+    """Check if the Level Advancement Exam is available for this student.
+
+    Available when:
+    - All weekly assessments for the level are passed
+    - At least 1 Monthly Review is passed
+    - Flag is ON
+    """
+    if not is_feature_enabled("assessment_advancement_exam", discord_id):
+        return False
+    member = get_member(discord_id)
+    if not member:
+        return False
+    level = member["level"]
+
+    # Need all weeks mastered for this level
+    from . import curriculum
+    total_weeks = curriculum.max_week_for_level(level)
+    mastered = itqan_mastered_weeks(discord_id, level)
+    if len(mastered) < total_weeks:
+        return False
+
+    # Need at least 1 monthly review passed
+    if monthly_reviews_passed(discord_id, level) < 1:
+        return False
+
+    return True
+
+
+def advancement_attempts_count(discord_id: str, level: str) -> int:
+    """Count advancement exam attempts for this student+level."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT COUNT(*) c FROM advancement_exams WHERE discord_id=? AND level=?",
+        (discord_id, level),
+    ).fetchone()
+    conn.close()
+    return row["c"] if row else 0
 
 
 

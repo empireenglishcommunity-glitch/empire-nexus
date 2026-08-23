@@ -92,6 +92,10 @@ REGISTRY = [
     ("community_pings_optin", "Majlis R5: opt-in community-pings role + Knock button — only opted-in members get @-mentioned by beacons", "majlis", False),
     ("community_power_hour", "Majlis R6: scheduled Community Hour (9-10 PM Egypt) with rally in #community-live + one Telegram broadcast", "majlis", False),
     ("community_together_reward", "Majlis R8: optional bonus points/acknowledgement when task #7 is completed via the together path", "majlis", False),
+
+    # ── TAQDEEM (assessment progression) ──
+    ("assessment_monthly_review", "Taqdeem: Monthly Progress Review — retention-focused assessment after every 4 weekly passes (diagnostic + prerequisite for advancement)", "taqdeem", False),
+    ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", False),
 ]
 
 # Initiative display names and emoji
@@ -109,6 +113,7 @@ INITIATIVES = {
     "hafiz": ("🎉", "HAFIZ", "motivational engagement"),
     "itqan": ("🎓", "ITQAN", "weekly mastery assessment"),
     "majlis": ("🏛️", "MAJLIS", "community lounge"),
+    "taqdeem": ("🎓", "TAQDEEM", "assessment progression"),
 }
 
 
