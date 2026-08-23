@@ -46,7 +46,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src import config, database, curriculum  # noqa: E402
 
-EXPECTED_WEEKS = 38  # L0=8 + L1=10 + L2=12 + L3=8, per curriculum.py's LEVEL_WEEK_COUNTS
+# Curriculum size is now dynamic: legacy L0–L3 (38) + any authored CEFR levels
+# (Mi'yar A1–C2). curriculum.expected_week_count() counts the week files that
+# should exist on disk, so this auto-adapts as CEFR levels ship while still
+# catching a file that fails to load (loaded < expected).
+MIN_LEGACY_WEEKS = 38  # L0=8 + L1=10 + L2=12 + L3=8 — the floor that must always load
 MIN_EXPECTED_COMMANDS = 24  # as of Aegis Phase 1 (!flag/!systemstatus added); bump this
                             # deliberately whenever a real new command is added, so it
                             # stays a meaningful floor rather than a stale number nobody
@@ -68,9 +72,12 @@ def check_curriculum() -> tuple[bool, str]:
         curriculum.load_all()
         stats = curriculum.stats()
         weeks = stats.get("weeks_loaded", 0)
-        if weeks == EXPECTED_WEEKS:
-            return True, f"Curriculum loaded ({weeks}/{EXPECTED_WEEKS} weeks)"
-        return False, f"Curriculum incomplete ({weeks}/{EXPECTED_WEEKS} weeks loaded)"
+        expected = curriculum.expected_week_count()
+        # Healthy when every curriculum file on disk loaded AND we're at or
+        # above the legacy floor (never silently below 38).
+        if weeks == expected and weeks >= MIN_LEGACY_WEEKS:
+            return True, f"Curriculum loaded ({weeks}/{expected} weeks)"
+        return False, f"Curriculum incomplete ({weeks}/{expected} weeks loaded)"
     except Exception as e:
         return False, f"Curriculum check failed: {e}"
 

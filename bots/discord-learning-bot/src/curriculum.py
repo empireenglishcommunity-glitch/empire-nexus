@@ -42,6 +42,24 @@ def max_week_for_level(level: str) -> int:
     return LEVEL_WEEK_COUNTS.get(level, LEVEL_WEEK_COUNTS["L0"])
 
 
+def expected_week_count() -> int:
+    """Total number of week data files that SHOULD exist on disk across all
+    known levels (legacy L0–L3 + any authored CEFR levels A1–C2). The health
+    check compares this to how many actually loaded, so it auto-adapts as CEFR
+    levels are added yet still catches a file that failed to parse (loaded <
+    expected). Only counts levels whose files are actually present, so an
+    unauthored CEFR level (no files yet) doesn't inflate the expectation."""
+    from . import config as _cfg
+    total = 0
+    all_counts = dict(LEVEL_WEEK_COUNTS)
+    all_counts.update(CEFR_WEEK_COUNTS)
+    for level, max_week in all_counts.items():
+        for week in range(1, max_week + 1):
+            if (DATA_DIR / f"{level.lower()}_week{week}.json").exists():
+                total += 1
+    return total
+
+
 _WEEK_NUM_RE = re.compile(r"^week(\d+)")
 
 

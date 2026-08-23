@@ -66,7 +66,10 @@ def test_all_weekly_data_json_files_parse():
     before it reaches production."""
     base = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     files = glob.glob(os.path.join(base, "data", "*_week*.json"))
-    assert len(files) == 38  # 8 + 10 + 12 + 8, per LEVEL_WEEK_COUNTS
+    # Legacy L0–L3 = 38 week files; Mi'yar CEFR levels add more (A1 = +10, etc.).
+    # Assert the legacy floor is always present rather than an exact count that
+    # would need editing every time a CEFR level ships.
+    assert len(files) >= 38  # 8 + 10 + 12 + 8 legacy, per LEVEL_WEEK_COUNTS
     for path in files:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
