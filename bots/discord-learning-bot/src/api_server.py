@@ -2117,6 +2117,18 @@ async def post_advancement_finish_b(request: web.Request) -> web.Response:
         return web.json_response({"ok": False, "error": "empty transcript"},
                                  status=400, headers=_cors_headers(request))
     result = assessment.finish_advancement_final(discord_id, int(attempt_id), transcript)
+
+    # Fire outcome delivery: auto-promote on pass, private feedback on not-pass,
+    # owner notified on every attempt. Best-effort.
+    if result.get("ok"):
+        try:
+            from . import advancement_outcomes
+            level = payload.get("lvl", "L0")
+            await advancement_outcomes.deliver_advancement_outcome(
+                discord_id, level, int(attempt_id), result)
+        except Exception as e:
+            logger.warning(f"advancement: outcome delivery error: {e}")
+
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
 
