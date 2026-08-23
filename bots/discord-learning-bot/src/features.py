@@ -337,7 +337,17 @@ def format_grammar_card(week: int, level: str = "L0") -> str:
     if examples:
         lines.append("**Examples:**")
         for ex in examples[:5]:
-            lines.append(f"  • {ex}")
+            # Examples are authored as dicts ({en, ar, structure}) in every
+            # level's grammar files, but this used to interpolate the dict
+            # directly -- printing a raw Python repr into the student-facing
+            # card. Render the bilingual pair properly, while still tolerating
+            # a plain string.
+            if isinstance(ex, dict):
+                en = ex.get("en", "")
+                ar = ex.get("ar", "")
+                lines.append(f"  • {en}" + (f" — {ar}" if ar else ""))
+            else:
+                lines.append(f"  • {ex}")
         lines.append("")
 
     common_errors = grammar.get("common_errors", [])

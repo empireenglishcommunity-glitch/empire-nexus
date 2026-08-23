@@ -1,0 +1,192 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 6,
+  "focus": "/iː/ (meat) vs /ɪ/ (chicken) · /tʃ/ (cheese) vs /ʃ/ (fish) · /dʒ/ (juice) vs /j/ (yes) · third-person /s/ /z/ /ɪz/ with food verbs · /æ/ (apple) vs /e/ (bread)",
+  "focus_ar": "/iː/ مقابل /ɪ/، و /tʃ/ مقابل /ʃ/، و /dʒ/ مقابل /j/، ونهايات الغائب مع أفعال الأكل، و /æ/ مقابل /e/",
+  "arabic_challenge": "Egyptian Arabic uses /ʒ/ or /g/ for ج, so English /dʒ/ (juice) can drift. Arabic has ش and no /tʃ/, so 'chicken' may become 'shicken'. The /iː/-/ɪ/ contrast returns in high-frequency food words.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/iː/", "/ɪ/"],
+      "isolation": {
+        "instructions": "/iː/ = long, lips spread (meat, tea, cheese). /ɪ/ = short, relaxed (chicken, fish, milk). These are the two most common vowels on a menu.",
+        "instructions_ar": "/iː/ طويل والشفاه مبسوطة (meat, tea). /ɪ/ قصير ومسترخي (chicken, fish). أشهر صوتين في قائمة الأكل.",
+        "practice": ["eeee (long)", "ih ih (short)", "meat-mit, cheese-chis"]
+      },
+      "minimal_pairs": [
+        {"pair": ["eat", "it"], "meaning": ["يأكل", "هو (للأشياء)"]},
+        {"pair": ["meal", "mill"], "meaning": ["وجبة", "مطحنة"]},
+        {"pair": ["cheap", "chip"], "meaning": ["رخيص", "شيبسي"]},
+        {"pair": ["bean", "bin"], "meaning": ["فاصوليا", "سلة"]},
+        {"pair": ["feast", "fist"], "meaning": ["وليمة", "قبضة"]}
+      ],
+      "word_practice": {
+        "long_ee": ["meat", "tea", "cheese", "eat", "beef", "sweet", "coffee", "please"],
+        "short_i": ["chicken", "fish", "milk", "dinner", "drink", "bit", "biscuit", "kitchen"]
+      },
+      "sentence_practice": [
+        "I eat meat and cheese.",
+        "I drink milk with dinner.",
+        "The chicken is cheap."
+      ],
+      "record_this": "I eat meat and cheese and I drink tea with dinner. The chicken and the fish are both cheap.",
+      "self_check": "Say 'cheap' then 'chip'. Clearly different? The first is longer with a wider smile."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/tʃ/", "/ʃ/"],
+      "isolation": {
+        "instructions": "/ʃ/ (fish) is a long, continuous hiss — air flows the whole time. /tʃ/ (cheese) STARTS with a /t/ stop then bursts into /ʃ/. Feel the tiny stop at the beginning of /tʃ/.",
+        "instructions_ar": "/ʃ/ صفير مستمر (زي ش). /tʃ/ يبدأ بوقفة /t/ وبعدها ينفجر لـ /ʃ/. حس بالوقفة الصغيرة في أول /tʃ/.",
+        "practice": ["shhhh (continuous)", "ch-ch-ch (stop then burst)", "shh-ch-shh-ch"]
+      },
+      "minimal_pairs": [
+        {"pair": ["chip", "ship"], "meaning": ["شيبسي", "سفينة"]},
+        {"pair": ["chair", "share"], "meaning": ["كرسي", "يشارك"]},
+        {"pair": ["watch", "wash"], "meaning": ["يشاهد", "يغسل"]},
+        {"pair": ["catch", "cash"], "meaning": ["يلتقط", "نقود"]},
+        {"pair": ["cheap", "sheep"], "meaning": ["رخيص", "خروف"]}
+      ],
+      "word_practice": {
+        "ch_sound": ["chicken", "cheese", "lunch", "sandwich", "chocolate", "much", "kitchen", "chips"],
+        "sh_sound": ["fish", "sugar", "delicious", "dish", "fresh", "shop", "she", "wash"]
+      },
+      "sentence_practice": [
+        "I eat chicken for lunch.",
+        "The fish is fresh and delicious.",
+        "I wash the dishes in the kitchen."
+      ],
+      "record_this": "I eat chicken and cheese for lunch. The fish is fresh and delicious. I wash the dishes in the kitchen after every meal.",
+      "self_check": "Say 'chip' and 'ship'. Only the first should have a hard stop at the start."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/dʒ/", "/j/"],
+      "isolation": {
+        "instructions": "/dʒ/ (juice, orange) is the VOICED partner of /tʃ/ — a stop then a buzzing burst. /j/ (yes, yogurt) has no stop at all; the tongue just glides. Do not swap them.",
+        "instructions_ar": "/dʒ/ (juice) هو النسخة المجهورة من /tʃ/ — وقفة ثم انفجار بطنين. /j/ (yes) مفيهاش وقفة خالص، اللسان بيزحلق بس.",
+        "practice": ["j-j-j (stop + buzz)", "yuh yuh yuh (smooth glide)", "j-yuh-j-yuh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["jam", "yam"], "meaning": ["مربى", "بطاطا"]},
+        {"pair": ["jet", "yet"], "meaning": ["طائرة", "بعد"]},
+        {"pair": ["joke", "yoke"], "meaning": ["نكتة", "نير"]},
+        {"pair": ["juice", "use"], "meaning": ["عصير", "يستخدم"]},
+        {"pair": ["major", "mayor"], "meaning": ["رئيسي", "عمدة"]}
+      ],
+      "word_practice": {
+        "j_sound": ["juice", "orange", "vegetable", "jam", "sugar? no", "large", "generous", "cabbage"],
+        "y_sound": ["yes", "yogurt", "yellow", "you", "your", "yesterday", "young", "year"]
+      },
+      "sentence_practice": [
+        "I drink orange juice every day.",
+        "Yes, I like yogurt.",
+        "I eat vegetables and jam."
+      ],
+      "record_this": "I drink orange juice every day. Yes, I like yogurt and vegetables. Yesterday I had jam with my bread.",
+      "self_check": "Say 'jam' then 'yam'. The first must begin with a firm stop, the second must glide."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Third-person endings with food verbs"],
+      "isolation": {
+        "instructions": "Apply last week's rule to eating verbs: eats /s/, likes /s/, drinks /s/, wants /s/ — but washes /ɪz/ and finishes /ɪz/ gain a syllable, and loves /z/, has (irregular).",
+        "instructions_ar": "طبّق قاعدة الأسبوع اللي فات على أفعال الأكل: eats /s/، likes /s/، لكن washes /ɪz/ بمقطع زائد.",
+        "practice": ["eats, likes, drinks, wants (one syllable)", "washes, finishes (two syllables)", "loves, has"]
+      },
+      "minimal_pairs": [
+        {"pair": ["eats /s/", "loves /z/"], "meaning": ["مهموس", "مجهور"]},
+        {"pair": ["likes /s/", "washes /ɪz/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["drinks /s/", "finishes /ɪz/"], "meaning": ["مقطع واحد", "٣ مقاطع"]},
+        {"pair": ["wants /s/", "needs /z/"], "meaning": ["مهموس", "مجهور"]},
+        {"pair": ["cooks /s/", "prefers /z/"], "meaning": ["مهموس", "مجهور"]}
+      ],
+      "word_practice": ["eats", "likes", "drinks", "wants", "cooks", "loves", "needs", "prefers", "washes", "finishes"],
+      "sentence_practice": [
+        "He eats rice and drinks water.",
+        "She likes cheese but prefers fish.",
+        "My mother cooks and washes the dishes."
+      ],
+      "record_this": "He eats rice and drinks water. She likes cheese but prefers fish. My mother cooks the food and washes the dishes.",
+      "self_check": "Only 'washes' and 'finishes' should gain a syllable. Check the rest are single-syllable."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/æ/", "/e/"],
+      "isolation": {
+        "instructions": "/æ/ (apple, sandwich, salad) = mouth wide open, tongue flat and forward. /e/ (bread, egg, breakfast) = mouth half open, a shorter and higher sound. Arabic learners often merge these.",
+        "instructions_ar": "/æ/ الفم مفتوح واسع (apple). /e/ الفم نص مفتوح والصوت أقصر وأعلى (bread). كتير بيدمجوا الاتنين.",
+        "practice": ["aaa (wide open)", "eh eh (half open)", "apple-egg-apple-egg"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bad", "bed"], "meaning": ["سيء", "سرير"]},
+        {"pair": ["had", "head"], "meaning": ["كان لديه", "رأس"]},
+        {"pair": ["sad", "said"], "meaning": ["حزين", "قال"]},
+        {"pair": ["pan", "pen"], "meaning": ["مقلاة", "قلم"]},
+        {"pair": ["man", "men"], "meaning": ["رجل", "رجال"]}
+      ],
+      "word_practice": {
+        "a_sound": ["apple", "sandwich", "salad", "have", "jam", "banana", "carrot", "cabbage"],
+        "eh_sound": ["bread", "egg", "breakfast", "vegetable", "lemon", "seven", "very", "yes"]
+      },
+      "sentence_practice": [
+        "I have bread and eggs for breakfast.",
+        "I eat an apple and a salad.",
+        "Please pass the jam and the lemon."
+      ],
+      "record_this": "I have bread and eggs for breakfast. For lunch I eat an apple, a sandwich and a salad. Please pass the jam and the lemon.",
+      "self_check": "Say 'bad' then 'bed'. Your mouth must be noticeably wider for the first."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["cheap", "chip"], ["chip", "ship"], ["jam", "yam"],
+        ["bad", "bed"], ["watch", "wash"], ["bean", "bin"]
+      ],
+      "challenge_sentences": [
+        "I eat chicken and cheese for lunch.",
+        "The fish is fresh and delicious.",
+        "Yes, I drink orange juice with breakfast.",
+        "She washes the dishes and finishes the salad."
+      ],
+      "record_this": "I eat chicken and cheese for lunch. The fish is fresh and delicious. Yes, I drink orange juice with my bread and eggs at breakfast. She washes the dishes and finishes the salad.",
+      "self_check": "Check the four risky sounds: /tʃ/ vs /ʃ/, /dʒ/ vs /j/, /iː/ vs /ɪ/, /æ/ vs /e/."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about food. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن الأكل، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "I like food very much. For breakfast I have bread, eggs and cheese, and I drink tea. For lunch I eat chicken with rice, or fish with a salad. My mother cooks delicious meals and washes all the dishes. In the evening I have a sandwich and an apple, and I drink orange juice. Yes, chicken is my favourite. The fish in this shop is fresh and cheap.",
+        "sounds_to_check": {
+          "/iː/ vs /ɪ/": "eat, meat, tea, cheese, cheap — chicken, fish, milk, dinner, this",
+          "/tʃ/ vs /ʃ/": "chicken, cheese, lunch, sandwich, much — fish, fresh, shop, delicious, washes",
+          "/dʒ/ vs /j/": "juice, orange, vegetable — yes, yogurt, your",
+          "third-person endings": "eats /s/, likes /s/, drinks /s/, cooks /s/ — washes /ɪz/, finishes /ɪz/",
+          "/æ/ vs /e/": "apple, sandwich, salad, have — bread, eggs, breakfast, very"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'chicken' and 'fish' are clearly distinct, 'juice' is never 'yuice'. Ready for week 7.",
+        "70_89": "Mostly clear; occasional /tʃ/ → /ʃ/ at speed.",
+        "50_69": "'chip/ship' or 'bad/bed' still merge. Repeat days 2 and 5.",
+        "below_50": "Redo days 1-5 slowly with the mirror."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "/tʃ/ does not exist in Arabic. Build it as /t/ + /ʃ/ said quickly together.",
+      "Egyptian ج is often /g/ or /ʒ/ — English 'juice' needs the /dʒ/ stop-plus-buzz.",
+      "/æ/ vs /e/ (bad/bed) is a meaning-changing pair. Widen the mouth for /æ/.",
+      "Keep the third-person -s automatic — 'he eat' is the most common A1 slip."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

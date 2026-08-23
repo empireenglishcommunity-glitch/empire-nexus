@@ -1,0 +1,183 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 5,
+  "focus": "Third-person endings /s/ (gets) · /z/ (goes) · /ɪz/ (watches) · /iː/ (eat, sleep) vs /ɪ/ (dinner, finish) · weak forms & linking in routine phrases",
+  "focus_ar": "نهايات الغائب المفرد /s/ و /z/ و /ɪz/، و /iː/ مقابل /ɪ/، والصور الخفيفة والوصل في عبارات الروتين",
+  "arabic_challenge": "Arabic has no third-person -s ending, so it is often dropped entirely ('he go') or given a full extra syllable ('he go-es'). The three different sounds of -s must become automatic. Arabic also does not reduce unstressed words, so 'gets up at seven' can sound over-pronounced and unnatural.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/s/ ending (after voiceless sounds)"],
+      "isolation": {
+        "instructions": "After a VOICELESS sound (p, t, k, f, θ) the -s is pronounced /s/ — a light hiss, NO extra syllable. gets = one syllable: 'gets'.",
+        "instructions_ar": "بعد الأصوات المهموسة (p, t, k, f) النهاية تُنطق /s/ — صفير خفيف بدون مقطع زائد. 'gets' مقطع واحد.",
+        "practice": ["get-s, wake-s, work-s (one syllable each)", "sss (light hiss)", "gets gets gets"]
+      },
+      "minimal_pairs": [
+        {"pair": ["gets", "get-iz ❌"], "meaning": ["صحيح (مقطع واحد)", "خطأ"]},
+        {"pair": ["works", "work-iz ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["wakes", "wake-iz ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["eats", "eat-iz ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["starts", "start-iz ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["gets", "wakes", "works", "starts", "stops", "eats", "sleeps", "walks", "takes", "helps"],
+      "sentence_practice": [
+        "He gets up at seven.",
+        "She works and then sleeps.",
+        "He eats breakfast and walks to work."
+      ],
+      "record_this": "He gets up at seven o'clock. He eats breakfast, walks to work and starts at eight.",
+      "self_check": "Count the syllables in 'gets'. It must be ONE."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/z/ ending (after voiced sounds and vowels)"],
+      "isolation": {
+        "instructions": "After a VOICED sound (b, d, g, m, n, l, r, v) or any vowel, the -s is pronounced /z/ — buzzing, still NO extra syllable. goes = one syllable.",
+        "instructions_ar": "بعد الأصوات المجهورة أو حروف العلة النهاية تُنطق /z/ — بطنين، وبرضه بدون مقطع زائد.",
+        "practice": ["goe-s, read-s, come-s (buzz at the end)", "zzz (buzzing)", "goes goes goes"]
+      },
+      "minimal_pairs": [
+        {"pair": ["goes /z/", "gets /s/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["reads /z/", "eats /s/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["comes /z/", "helps /s/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["lives /z/", "sleeps /s/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["plays /z/", "walks /s/"], "meaning": ["مجهور", "مهموس"]}
+      ],
+      "word_practice": ["goes", "does", "reads", "comes", "lives", "plays", "opens", "arrives", "studies", "prays"],
+      "sentence_practice": [
+        "She goes to work at eight.",
+        "He reads and studies in the evening.",
+        "My brother comes home late."
+      ],
+      "record_this": "She goes to work at eight and comes home at five. In the evening she reads, studies and plays with her children.",
+      "self_check": "Put a hand on your throat for 'goes'. You should feel a buzz at the very end."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/ɪz/ ending (after s, z, sh, ch, ge)"],
+      "isolation": {
+        "instructions": "After a HISSING sound (s, z, sh, ch, ge) the -s adds a WHOLE EXTRA SYLLABLE: /ɪz/. watches = WATCH-iz (two syllables). This is the only case where a syllable is added.",
+        "instructions_ar": "بعد الأصوات الصفيرية (s, z, sh, ch, ge) النهاية تضيف مقطع كامل /ɪz/: watches = WATCH-iz. ده الحالة الوحيدة اللي بيتزود فيها مقطع.",
+        "practice": ["watch-iz, wash-iz, finish-iz", "brush-iz, dress-iz, teach-iz", "two beats each"]
+      },
+      "minimal_pairs": [
+        {"pair": ["watches (2)", "watch (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["washes (2)", "wash (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["finishes (3)", "finish (2)"], "meaning": ["٣ مقاطع", "مقطعين"]},
+        {"pair": ["brushes (2)", "brush (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["teaches (2)", "teach (1)"], "meaning": ["مقطعين", "مقطع واحد"]}
+      ],
+      "word_practice": ["watches", "washes", "finishes", "brushes", "dresses", "teaches", "catches", "uses", "closes", "relaxes"],
+      "sentence_practice": [
+        "He brushes his teeth and washes his face.",
+        "She watches TV and then finishes her work.",
+        "My father teaches and my mother relaxes."
+      ],
+      "record_this": "He brushes his teeth and washes his face. She watches television, finishes her work and relaxes at night.",
+      "self_check": "Clap the syllables of 'watches'. Two claps — WATCH-iz."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/iː/", "/ɪ/"],
+      "isolation": {
+        "instructions": "Back to the long/short contrast, now inside routine words. /iː/ = long with a smile (eat, sleep, evening). /ɪ/ = short and relaxed (dinner, finish, minute).",
+        "instructions_ar": "رجوع للفرق بين الطويل والقصير جوه كلمات الروتين. /iː/ طويل بابتسامة. /ɪ/ قصير ومسترخي.",
+        "practice": ["eeee (long)", "ih ih (short)", "eat-it, sleep-slip, meet-minute"]
+      },
+      "minimal_pairs": [
+        {"pair": ["eat", "it"], "meaning": ["يأكل", "هو (للأشياء)"]},
+        {"pair": ["sleep", "slip"], "meaning": ["ينام", "يتزحلق"]},
+        {"pair": ["feel", "fill"], "meaning": ["يشعر", "يملأ"]},
+        {"pair": ["least", "list"], "meaning": ["الأقل", "قائمة"]},
+        {"pair": ["week", "wick"], "meaning": ["أسبوع", "فتيل"]}
+      ],
+      "word_practice": {
+        "long_ee": ["eat", "sleep", "evening", "week", "meet", "clean", "leave", "three"],
+        "short_i": ["dinner", "finish", "minute", "in", "this", "kitchen", "morning", "sixty"]
+      },
+      "sentence_practice": [
+        "I eat dinner and then I sleep.",
+        "In the evening I finish in thirty minutes.",
+        "This week I clean the kitchen."
+      ],
+      "record_this": "I eat dinner in the evening and then I sleep. I finish my work in thirty minutes and this week I clean the kitchen.",
+      "self_check": "'Sleep' and 'slip' must sound clearly different. Say both twice."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Weak forms and linking"],
+      "isolation": {
+        "instructions": "In natural speech, small words shrink and words link together. 'gets up' → 'get-sup'. 'at seven' → 'at-seven' with a weak /ə/. Do not pronounce every word with full force — connect them.",
+        "instructions_ar": "في الكلام الطبيعي الكلمات الصغيرة تتقلّص وتتوصّل. 'gets up' تبقى 'get-sup'. مش كل كلمة بنفس القوة — وصّلهم.",
+        "practice": ["gets-up (link the s to up)", "at-a-quarter-past", "goes-to-work (weak 'to' = /tə/)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["get-sup ✅", "gets. up. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["/tə/ work ✅", "TWO work ❌"], "meaning": ["'to' خفيفة", "خطأ"]},
+        {"pair": ["/ət/ seven ✅", "AT seven ❌"], "meaning": ["'at' خفيفة", "مضغوطة زيادة"]},
+        {"pair": ["/ənd/ then ✅", "AND then ❌"], "meaning": ["'and' خفيفة", "مضغوطة زيادة"]},
+        {"pair": ["wake-sup ✅", "wakes. up. ❌"], "meaning": ["موصول", "مقطّع"]}
+      ],
+      "word_practice": ["gets up", "wakes up", "goes to", "comes home", "at seven", "in the morning", "and then", "before work", "after dinner", "every day"],
+      "sentence_practice": [
+        "He gets up at seven and goes to work.",
+        "She comes home after work and then eats dinner.",
+        "Every day I wake up in the morning."
+      ],
+      "record_this": "He gets up at seven in the morning and goes to work. She comes home after work and then eats dinner every day.",
+      "self_check": "Say the sentence smoothly, as ONE flowing line. If it sounds like separate words, link them more."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["gets /s/", "goes /z/"], ["watches /ɪz/", "works /s/"], ["eat", "it"],
+        ["sleep", "slip"], ["washes (2)", "wash (1)"], ["reads /z/", "eats /s/"]
+      ],
+      "challenge_sentences": [
+        "He gets up early and goes to work.",
+        "She watches TV and finishes her homework.",
+        "My brother eats breakfast and reads the news.",
+        "Every evening I sleep at eleven."
+      ],
+      "record_this": "He gets up early and goes to work. She watches television and finishes her homework. My brother eats breakfast, reads the news and then walks to school. Every evening I sleep at eleven.",
+      "self_check": "Check every third-person verb: is the ending /s/, /z/ or /ɪz/ — and did you add a syllable ONLY for the /ɪz/ ones?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing someone's daily routine. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت توصف روتين يومي، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "My brother gets up at six o'clock every morning. He brushes his teeth, washes his face and eats breakfast. Then he goes to work by bus. He starts at eight and finishes at four. In the evening he comes home, watches television and reads a book. He studies English for thirty minutes. He sleeps at eleven. He never wakes up late, and he always helps my mother in the kitchen.",
+        "sounds_to_check": {
+          "/s/ endings": "gets, eats, starts, sleeps, wakes, helps",
+          "/z/ endings": "goes, comes, reads, studies",
+          "/ɪz/ endings (extra syllable)": "brushes, washes, finishes, watches",
+          "/iː/ vs /ɪ/": "eat, sleep, three, evening — dinner, finish, minute, kitchen",
+          "linking / weak forms": "gets-up, goes-to-work, at-six, and-then"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every third-person -s is present and correctly voiced; only the /ɪz/ verbs gain a syllable. Ready for week 6.",
+        "70_89": "Endings present, with occasional wrong voicing (e.g. 'goes' with /s/).",
+        "50_69": "Endings sometimes dropped, or an extra syllable added everywhere. Repeat days 1-3.",
+        "below_50": "Go back to day 1 and build up one ending type per day."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Arabic has no third-person -s. Dropping it ('he go') is the most noticeable A1 grammar-and-sound error — make it automatic here.",
+      "Only s/z/sh/ch/ge verbs add a whole syllable (watches). All others keep one syllable (gets, goes).",
+      "Voicing matters: after a voiced sound the ending buzzes (/z/); after a voiceless sound it hisses (/s/).",
+      "Linking makes you sound fluent. 'gets up' should flow as one unit."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

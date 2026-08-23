@@ -1,0 +1,183 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 3,
+  "focus": "/θ/ (three, thirty) vs /t/ and /s/ · -TEEN vs -ty stress · final clusters (six, twelfth) · /v/ vs /f/ (five, four) · days of the week /deɪ/",
+  "focus_ar": "صوت /θ/ مقابل /t/ و /s/، والفرق في النبر بين -teen و -ty، والتجمعات الساكنة في النهاية، و /v/ مقابل /f/، وأيام الأسبوع",
+  "arabic_challenge": "Arabic has ث (/θ/) but learners often substitute /t/ or /s/ in English (three → tree/sree). Arabic has no /v/, so 'five' becomes 'fife'. The -teen/-ty stress difference decides whether you say 13 or 30 — a real-world money and time problem.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/θ/", "/t/", "/s/"],
+      "isolation": {
+        "instructions": "/θ/ = tongue tip between the teeth, NO voice, air flows continuously (like Arabic ث). /t/ stops the air completely. /s/ keeps the tongue behind the teeth with a sharp hiss.",
+        "instructions_ar": "/θ/ طرف اللسان بين الأسنان، بدون صوت، والهوا مستمر (زي ث). /t/ يوقف الهوا. /s/ اللسان خلف الأسنان وصفير حاد.",
+        "practice": ["thhh (tongue out, no voice)", "t-t-t (air stops)", "sss (sharp hiss)", "thh-t-s-thh-t-s"]
+      },
+      "minimal_pairs": [
+        {"pair": ["three", "tree"], "meaning": ["ثلاثة", "شجرة"]},
+        {"pair": ["think", "sink"], "meaning": ["يفكر", "حوض"]},
+        {"pair": ["thin", "sin"], "meaning": ["رفيع", "ذنب"]},
+        {"pair": ["path", "pass"], "meaning": ["مسار", "يمر"]},
+        {"pair": ["mouth", "mouse"], "meaning": ["فم", "فأر"]}
+      ],
+      "word_practice": ["three", "third", "thirteen", "thirty", "thousand", "month", "fourth", "fifth", "sixth", "birthday"],
+      "sentence_practice": [
+        "Three plus three is six.",
+        "My birthday is the third of the month.",
+        "I need thirty, not thirteen."
+      ],
+      "record_this": "Three plus three is six. My birthday is on the third of this month, and I have thirty-three books.",
+      "self_check": "Say 'three'. If you can't see your tongue in a mirror, you are probably saying 'tree'."
+    },
+    {
+      "day": 2,
+      "target_sounds": "-TEEN vs -ty stress",
+      "isolation": {
+        "instructions": "13-19 end in -TEEN with stress on the LAST syllable: thir-TEEN. 30-90 end in -ty with stress on the FIRST syllable and a short, weak ending: THIR-ty. Getting this wrong changes the number.",
+        "instructions_ar": "الأرقام 13-19 النبر على الآخر: thir-TEEN. والأرقام 30-90 النبر على الأول والنهاية خفيفة: THIR-ty. الخطأ هنا يغيّر الرقم.",
+        "practice": ["thir-TEEN / THIR-ty", "four-TEEN / FOR-ty", "fif-TEEN / FIF-ty", "six-TEEN / SIX-ty"]
+      },
+      "minimal_pairs": [
+        {"pair": ["thirTEEN", "THIRty"], "meaning": ["١٣", "٣٠"]},
+        {"pair": ["fourTEEN", "FORty"], "meaning": ["١٤", "٤٠"]},
+        {"pair": ["fifTEEN", "FIFty"], "meaning": ["١٥", "٥٠"]},
+        {"pair": ["sixTEEN", "SIXty"], "meaning": ["١٦", "٦٠"]},
+        {"pair": ["eighTEEN", "EIGHty"], "meaning": ["١٨", "٨٠"]}
+      ],
+      "word_practice": ["thirteen", "thirty", "fourteen", "forty", "fifteen", "fifty", "sixteen", "sixty", "eighteen", "eighty"],
+      "sentence_practice": [
+        "I am thirTEEN, not THIRty.",
+        "It costs FIFty pounds, not fifTEEN.",
+        "There are SIXty minutes in an hour."
+      ],
+      "record_this": "I am thirteen years old, not thirty. It costs fifty pounds, not fifteen. There are sixty minutes in one hour.",
+      "self_check": "Ask a friend to write the number they hear. Did they write 13 or 30 — the one you meant?"
+    },
+    {
+      "day": 3,
+      "target_sounds": "Final consonant clusters",
+      "isolation": {
+        "instructions": "English lets consonants pile up at the end: six /ks/, seven /vn/, twelfth /lfθ/, first /rst/, months /nθs/. Arabic usually breaks these up with a vowel — resist that. Say the consonants together, quickly and lightly.",
+        "instructions_ar": "الإنجليزي بيجمع سواكن في آخر الكلمة: six، twelfth، first، months. العربي بيفصلها بحركة — قاوم ده ونطقها ورا بعض بسرعة وخِفّة.",
+        "practice": ["si-ks (not si-kis)", "fir-st (not fir-sit)", "mon-ths (not mon-this)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["six", "si-kis ❌"], "meaning": ["صحيح", "خطأ (حركة زائدة)"]},
+        {"pair": ["first", "fir-sit ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["next", "nek-sit ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["months", "mon-this ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["twelfth", "twel-fith ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["six", "seven", "twelve", "twelfth", "first", "next", "months", "weeks", "eighth", "asked"],
+      "sentence_practice": [
+        "Six weeks and seven months.",
+        "The first and the twelfth.",
+        "What is next?"
+      ],
+      "record_this": "Six weeks and seven months. My exam is on the first, and the next one is on the twelfth.",
+      "self_check": "Count the syllables in 'months'. It must be ONE, not two."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/v/", "/f/"],
+      "isolation": {
+        "instructions": "Both use the top teeth on the bottom lip. /f/ has NO voice (just air). /v/ has VOICE — the throat buzzes. Arabic has no /v/, so 'five' often becomes 'fife'.",
+        "instructions_ar": "الاتنين الأسنان العليا على الشفة السفلى. /f/ بدون صوت. /v/ بصوت — الحلق يهتز. العربي مفيهاش /v/ فـ 'five' تبقى 'fife'.",
+        "practice": ["fff (air only)", "vvv (hand on throat — feel the buzz)", "fff-vvv-fff-vvv"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fan", "van"], "meaning": ["مروحة", "شاحنة صغيرة"]},
+        {"pair": ["few", "view"], "meaning": ["قليل", "منظر"]},
+        {"pair": ["ferry", "very"], "meaning": ["معدية", "جدًا"]},
+        {"pair": ["leaf", "leave"], "meaning": ["ورقة شجر", "يغادر"]},
+        {"pair": ["safe", "save"], "meaning": ["آمن", "يوفّر"]}
+      ],
+      "word_practice": {
+        "v_sound": ["five", "seven", "eleven", "twelve", "very", "every", "have", "November"],
+        "f_sound": ["four", "fourteen", "fifty", "first", "fifth", "after", "before", "half"]
+      },
+      "sentence_practice": [
+        "Five, seven, eleven, twelve.",
+        "Four, fourteen, forty, fifty.",
+        "I have seven, not four."
+      ],
+      "record_this": "Five, seven, eleven and twelve. I have seven books, not four. Every November has thirty days.",
+      "self_check": "Put a hand on your throat and say 'five'. You must feel a buzz at the END of the word."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Days of the week + /eɪ/", "weak endings"],
+      "isolation": {
+        "instructions": "Days are stressed on the FIRST syllable: MON-day, TUES-day. In natural speech the '-day' ending is often weak (/di/), not a strong 'DAY'. Say MON-di, not mon-DAY.",
+        "instructions_ar": "أيام الأسبوع النبر على المقطع الأول: MON-day. وفي الكلام الطبيعي نهاية -day تبقى خفيفة، مش مضغوطة.",
+        "practice": ["MON-day, TUES-day, WED-nes-day", "THURS-day, FRI-day, SA-tur-day, SUN-day", "clap on the FIRST syllable only"]
+      },
+      "minimal_pairs": [
+        {"pair": ["MON-day", "mon-DAY ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["SUN-day", "sun-DAY ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["today", "TO-day"], "meaning": ["النبر على الآخر ✅", "خطأ ❌"]},
+        {"pair": ["WED-nes-day", "wed-NES-day ❌"], "meaning": ["صحيح (٣ مقاطع)", "خطأ"]},
+        {"pair": ["SA-tur-day", "sa-tur-DAY ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "today", "tomorrow", "yesterday"],
+      "sentence_practice": [
+        "Today is Monday and tomorrow is Tuesday.",
+        "I work from Sunday to Thursday.",
+        "On Friday and Saturday I rest."
+      ],
+      "record_this": "Today is Monday and tomorrow is Tuesday. I work from Sunday to Thursday, and on Friday and Saturday I rest at home.",
+      "self_check": "Note that 'Wednesday' has only THREE syllables (WED-nes-day) — the first 'd' is silent."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["three", "tree"], ["thirTEEN", "THIRty"], ["fan", "van"],
+        ["think", "sink"], ["fifTEEN", "FIFty"], ["leaf", "leave"]
+      ],
+      "challenge_sentences": [
+        "Three, thirteen, thirty — say each one clearly.",
+        "Five plus seven is twelve.",
+        "My birthday is the fourth of this month.",
+        "Today is Thursday, the twelfth."
+      ],
+      "record_this": "Three, thirteen and thirty. Five plus seven is twelve. My birthday is the fourth of this month. Today is Thursday the twelfth, and I have thirty-five books.",
+      "self_check": "Have someone write down every number they hear. Do their numbers match yours exactly?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this aloud. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تقرأ ده بصوت عالي، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "Today is Thursday, the third of the month. I get up at seven and I finish work at five. There are sixty minutes in an hour and twenty-four hours in a day. I am thirteen years old — not thirty! Next month I will be fourteen. My class has fifteen students, and the school has fifty teachers. Five plus seven is twelve.",
+        "sounds_to_check": {
+          "/θ/ (not /t/ or /s/)": "Thursday, third, month, thirteen, thirty, three",
+          "-TEEN vs -ty": "thirTEEN vs THIRty, fourTEEN vs FORty, fifTEEN vs FIFty, SIXty, TWENty",
+          "final clusters": "months, first, next, six, twelfth, asked",
+          "/v/ vs /f/": "five, seven, twelve, eleven — four, fourteen, fifty, finish",
+          "day stress": "THURS-day, MON-day, to-DAY"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Numbers are unambiguous and every /θ/ is dental. Ready for week 4.",
+        "70_89": "Clear overall; occasional /v/ → /f/ or a rushed cluster.",
+        "50_69": "13/30 confusion persists, or 'three' sounds like 'tree'. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, focusing on the mirror check and the throat-buzz check."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "You already have ث — use it. 'Three' needs the tongue visible between the teeth.",
+      "/v/ does not exist in Arabic. Practise the throat buzz: fff (silent) → vvv (buzzing).",
+      "The -teen/-ty stress difference is a real-life risk with prices, ages and times. Over-emphasise it at first.",
+      "Never insert a vowel to break up a final cluster: 'six', not 'si-kis'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 compare against day 1."
+  }
+}

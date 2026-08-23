@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w6",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 6,
+  "pattern_name": "Present simple (he/she/it) -s + some/any",
+  "pattern_name_ar": "إضافة -s للغائب المفرد و some/any",
+  "formula": "He/She/It + verb + S   |   Questions: Does + he/she/it + base verb   |   some (+) / any (− ?)",
+  "formula_visual": "[She] + [likes] + [tea]",
+  "when_to_use": "Add -s to the verb for he/she/it. Use 'some' in positive sentences and 'any' in negatives and questions.",
+  "when_to_use_ar": "نضيف -s للفعل مع he/she/it. ونستخدم some في الإثبات و any في النفي والسؤال.",
+  "why_arabic_speakers_struggle": "The third-person -s has no Arabic equivalent and is the most commonly dropped ending at A1. Also, once 'does' is used, learners often keep the -s twice ('does she likes').",
+  "examples": [
+    {"en": "She likes tea.", "ar": "هي تحب الشاي", "structure": "[She] + [likes] + [tea]"},
+    {"en": "Does he eat meat?", "ar": "هل يأكل لحم؟", "structure": "[Does] + [he] + [eat]?"},
+    {"en": "We have some bread.", "ar": "عندنا بعض الخبز", "structure": "[some] + [bread]"},
+    {"en": "There isn't any milk.", "ar": "مافيش لبن", "structure": "[isn't] + [any] + [milk]"},
+    {"en": "He doesn't drink coffee.", "ar": "هو لا يشرب قهوة", "structure": "[He] + [doesn't] + [drink]"}
+  ],
+  "common_errors": [
+    {"wrong": "She like tea.", "correct": "She likes tea.", "explanation": "he/she/it need the -s ending."},
+    {"wrong": "Does she likes tea?", "correct": "Does she like tea?", "explanation": "After DOES the verb goes back to base form."},
+    {"wrong": "I don't have some money.", "correct": "I don't have any money.", "explanation": "Use ANY in negatives and questions."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "He ___ (eat) rice every day.", "answer": "eats"},
+    {"sentence": "___ she like fish?", "answer": "Does"},
+    {"sentence": "She ___ (not want) sugar.", "answer": "doesn't want"},
+    {"sentence": "We have ___ apples.", "answer": "some"},
+    {"sentence": "Is there ___ water?", "answer": "any"}
+  ],
+  "quick_rule": "he/she/it → verb + S. After DOES/DOESN'T → base verb. SOME in (+), ANY in (−) and (?).",
+  "quick_rule_ar": "he/she/it تأخذ الفعل + S. وبعد does/doesn't الفعل يرجع مجرد. some في الإثبات و any في النفي والسؤال.",
+  "mnemonic": "He, She, It — don't forget the S!",
+  "connect_to_speaking": "Describe a family member's routine: 'My brother works in a shop. He doesn't eat meat. Does he like tea? Yes, he drinks some every day.'"
+}

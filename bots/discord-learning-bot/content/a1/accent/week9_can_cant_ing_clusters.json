@@ -1,0 +1,183 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 9,
+  "focus": "can /kən/ (weak) vs can't /kɑːnt/ · -ing endings /ɪŋ/ and /ŋ/ vs /n/ · initial clusters (play, from, swim) · /juː/ (music) vs /uː/ (food) · /ð/ /θ/ in with, think",
+  "focus_ar": "can الخفيفة مقابل can't، ونهايات -ing، والتجمعات الساكنة في البداية، و /juː/ مقابل /uː/",
+  "arabic_challenge": "Arabic does not allow consonant clusters at the start of a word, so 'play' becomes 'be-lay' and 'swim' becomes 'se-wim'. The can/can't contrast is also hard because English weakens 'can' but stresses 'can't' — the vowel, not just the /t/, carries the difference.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["can /kən/", "can't /kɑːnt/"],
+      "isolation": {
+        "instructions": "In a positive sentence, 'can' is WEAK and quick: /kən/ — 'I can swim' sounds like 'I k'n swim'. 'Can't' is STRESSED with a long, full vowel: /kɑːnt/. Listen for the VOWEL, not just the /t/.",
+        "instructions_ar": "في الجملة المثبتة 'can' خفيفة وسريعة /kən/. أما 'can't' فمنبورة وحرف العلة فيها طويل. الفرق في حرف العلة مش بس في /t/.",
+        "practice": ["I k'n swim (weak, fast)", "I CAN'T swim (strong, long)", "alternate: can, can't, can, can't"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I can swim", "I can't swim"], "meaning": ["أقدر أعوم", "مش أقدر أعوم"]},
+        {"pair": ["She can cook", "She can't cook"], "meaning": ["تقدر تطبخ", "مش تقدر"]},
+        {"pair": ["We can go", "We can't go"], "meaning": ["نقدر نروح", "مش نقدر"]},
+        {"pair": ["He can drive", "He can't drive"], "meaning": ["يقدر يسوق", "مش يقدر"]},
+        {"pair": ["They can read", "They can't read"], "meaning": ["يقدروا يقرأوا", "مش يقدروا"]}
+      ],
+      "word_practice": ["can swim", "can't swim", "can cook", "can't cook", "can drive", "can't drive", "can play", "can't play", "can speak", "can't speak"],
+      "sentence_practice": [
+        "I can swim but I can't drive.",
+        "She can cook but she can't sing.",
+        "We can play football but we can't play tennis."
+      ],
+      "record_this": "I can swim but I can't drive. She can cook very well but she can't sing. We can play football but we can't play tennis.",
+      "self_check": "Ask a friend to say whether they heard 'can' or 'can't'. Were they right every time?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ŋ/", "/n/"],
+      "isolation": {
+        "instructions": "/ŋ/ (-ing) is made at the BACK of the mouth — the same place as /k/ and /g/ — with air through the nose. /n/ is at the FRONT, tongue tip up. 'Reading' must end in /ɪŋ/, never /ɪn/.",
+        "instructions_ar": "/ŋ/ بيتعمل في مؤخرة الفم (نفس مكان /k/) والهوا من المناخير. /n/ في المقدمة وطرف اللسان لأعلى. 'reading' لازم تنتهي بـ /ɪŋ/.",
+        "practice": ["ng-ng-ng (back of mouth)", "n-n-n (tongue tip front)", "sing-sin-sing-sin"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sing", "sin"], "meaning": ["يغني", "ذنب"]},
+        {"pair": ["thing", "thin"], "meaning": ["شيء", "رفيع"]},
+        {"pair": ["wing", "win"], "meaning": ["جناح", "يفوز"]},
+        {"pair": ["bang", "ban"], "meaning": ["طرقة", "يمنع"]},
+        {"pair": ["tongue", "ton"], "meaning": ["لسان", "طن"]}
+      ],
+      "word_practice": ["reading", "playing", "swimming", "cooking", "singing", "running", "watching", "listening", "shopping", "sleeping"],
+      "sentence_practice": [
+        "I like reading and singing.",
+        "She is playing and running.",
+        "We enjoy swimming and cooking."
+      ],
+      "record_this": "I like reading and singing in my free time. She is playing football and running in the park. We enjoy swimming and cooking together.",
+      "self_check": "Say 'sing' and hold the last sound. Is it made at the BACK of your mouth?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["Initial consonant clusters"],
+      "isolation": {
+        "instructions": "English starts words with two or three consonants together: play, please, from, free, swim, sport, study. Arabic inserts a vowel — resist it. Say the consonants back-to-back with no vowel between.",
+        "instructions_ar": "الإنجليزي يبدأ الكلمة بساكنين أو تلاتة: play، from، swim. العربي بيحشر حركة — قاوم. نطقهم ورا بعض بدون حركة.",
+        "practice": ["p-l-ay → play (not be-lay)", "s-w-im → swim (not se-wim)", "f-r-om → from (not fe-rom)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["play", "be-lay ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["swim", "se-wim ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["from", "fe-rom ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["study", "se-tudy ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["free", "fe-ree ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["play", "please", "practice", "from", "free", "friend", "swim", "sport", "study", "street"],
+      "sentence_practice": [
+        "I play sport in my free time.",
+        "Please practice every day.",
+        "My friend can swim."
+      ],
+      "record_this": "I play sport in my free time and I practice every day. Please come with my friend — we can swim and study together.",
+      "self_check": "Count the syllables in 'play'. Exactly ONE. If you hear two, you added a vowel."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/juː/", "/uː/"],
+      "isolation": {
+        "instructions": "/juː/ (music, use, beautiful, computer) begins with a /j/ glide — 'yoo'. /uː/ (food, school) has no /j/. Adding or dropping the /j/ changes the word.",
+        "instructions_ar": "/juː/ (music) بتبدأ بزحلقة /j/ — 'يو'. /uː/ (food) مفيهاش /j/. إضافة أو حذف /j/ بيغيّر الكلمة.",
+        "practice": ["yoo yoo yoo (music, use)", "oooo (food, school)", "cute-coot-cute-coot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cute", "coot"], "meaning": ["لطيف", "طائر مائي"]},
+        {"pair": ["use", "ooze"], "meaning": ["يستخدم", "يرشح"]},
+        {"pair": ["beauty", "booty"], "meaning": ["جمال", "غنيمة"]},
+        {"pair": ["feud", "food"], "meaning": ["خصام", "طعام"]},
+        {"pair": ["mute", "moot"], "meaning": ["صامت", "قابل للجدل"]}
+      ],
+      "word_practice": {
+        "yoo_sound": ["music", "use", "beautiful", "computer", "usually", "you", "few", "menu"],
+        "oo_sound": ["food", "school", "room", "two", "swimming pool", "book? no", "move", "soon"]
+      },
+      "sentence_practice": [
+        "I usually listen to music.",
+        "I use my computer at school.",
+        "The food is beautiful."
+      ],
+      "record_this": "I usually listen to beautiful music in my free time. I use my computer at school, and soon I will move to a new room.",
+      "self_check": "Say 'music'. Does it start with a clear 'yoo' glide?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ð/", "/θ/ (revisited in free-time phrases)"],
+      "isolation": {
+        "instructions": "Both put the tongue between the teeth. /θ/ (think, thing, three) has NO voice. /ð/ (with, they, the, other) HAS voice. Free-time language uses both constantly: 'I think I'll go with them.'",
+        "instructions_ar": "الاتنين اللسان بين الأسنان. /θ/ بدون صوت (think). /ð/ بصوت (with, they). لغة وقت الفراغ فيها الاتنين كتير.",
+        "practice": ["thhh (no voice) — think", "thhh (with voice) — with", "think-with-think-with"]
+      },
+      "minimal_pairs": [
+        {"pair": ["think", "sink"], "meaning": ["يفكر", "حوض"]},
+        {"pair": ["thing", "sing"], "meaning": ["شيء", "يغني"]},
+        {"pair": ["with", "wiz ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["they", "day"], "meaning": ["هم", "يوم"]},
+        {"pair": ["three", "tree"], "meaning": ["ثلاثة", "شجرة"]}
+      ],
+      "word_practice": ["think", "thing", "three", "with", "they", "the", "other", "together", "birthday", "nothing"],
+      "sentence_practice": [
+        "I think I can do three things.",
+        "I play with my friends.",
+        "They do nothing together."
+      ],
+      "record_this": "I think I can do three things in my free time: read, swim and play with my friends. They usually do nothing on their birthday.",
+      "self_check": "Say 'with them'. Both 'th' sounds must be voiced, with the tongue visible."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["can", "can't"], ["sing", "sin"], ["play", "be-lay ❌"],
+        ["cute", "coot"], ["think", "sink"], ["thing", "thin"]
+      ],
+      "challenge_sentences": [
+        "I can swim but I can't drive.",
+        "I like reading, singing and playing sport.",
+        "I usually listen to music with my friends.",
+        "I think I can play three games."
+      ],
+      "record_this": "I can swim but I can't drive. I like reading, singing and playing sport in my free time. I usually listen to beautiful music with my friends, and I think I can play three different games.",
+      "self_check": "Check three things: is 'can' weak and 'can't' strong, does every -ing end at the back of the mouth, and are clusters vowel-free?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about abilities and free time. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن قدراتك ووقت فراغك، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "I can speak Arabic and English, but I can't speak French. In my free time I like reading, swimming and playing football. I usually listen to music on my computer. My friend can play the guitar but she can't sing. We often study together and practice English. I think free time is important. On Friday we go swimming in the pool, and then we watch a beautiful film.",
+        "sounds_to_check": {
+          "can vs can't": "I can speak / I can't speak — she can play / she can't sing",
+          "-ing /ɪŋ/": "reading, swimming, playing, listening, studying, watching",
+          "initial clusters": "speak, free, playing, French, study, practice, swimming",
+          "/juː/ vs /uː/": "music, usually, computer, beautiful — pool, food, school",
+          "/θ/ vs /ð/": "think, three, Friday? no — with, they, together, the"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "can/can't is unmistakable, every -ing is /ɪŋ/, no inserted vowels. Ready for week 10.",
+        "70_89": "Good; occasional -ing → -in under speed.",
+        "50_69": "can/can't confusable, or vowels inserted into clusters. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5, slowing the clusters right down before speeding up."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Arabic forbids initial clusters — this is a structural habit, so it needs deliberate slow practice, not just awareness.",
+      "'can' is weak in positive sentences; 'can't' is strong with a long vowel. Listeners rely on the VOWEL more than the /t/.",
+      "-ing must end at the BACK of the mouth (/ŋ/). Ending with /n/ is a very audible accent marker.",
+      "Do not drop the /j/ in 'music' or 'computer'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

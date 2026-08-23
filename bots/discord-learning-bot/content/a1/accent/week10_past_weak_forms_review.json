@@ -1,0 +1,183 @@
+{
+  "level": "A1",
+  "cefr": "A1",
+  "week": 10,
+  "focus": "was /wɒz/-/wəz/ vs were /wɜː/-/wə/ · past -ed endings /t/ /d/ /ɪd/ · weak forms & connected speech · full A1 vowel review · full A1 consonant review",
+  "focus_ar": "was مقابل were والصور الخفيفة، ونهايات الماضي -ed، والكلام المتصل، ومراجعة شاملة لحروف العلة والسواكن في A1",
+  "arabic_challenge": "Arabic does not reduce vowels in unstressed words, so 'was' and 'were' get pronounced at full strength, which sounds heavy and unnatural. The -ed ending has three sounds and is often given a full extra syllable everywhere ('worked' → 'work-ed').",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["was", "were"],
+      "isolation": {
+        "instructions": "Strong forms: was /wɒz/, were /wɜː/. But in normal speech they WEAKEN: was → /wəz/, were → /wə/. 'I was at home' sounds like 'I wəz at home'. Only stress them for emphasis or contradiction.",
+        "instructions_ar": "الصورة القوية was /wɒz/ و were /wɜː/. لكن في الكلام العادي بتخف: was → /wəz/. مانضغط عليهم إلا للتوكيد.",
+        "practice": ["I wəz at home (weak)", "I WAS at home! (strong, emphatic)", "They wə happy (weak)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was /wəz/ (weak)", "WAS /wɒz/ (strong)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["were /wə/ (weak)", "WERE /wɜː/ (strong)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["I was", "I were ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["they were", "they was ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["wasn't", "weren't"], "meaning": ["لم يكن (مفرد)", "لم يكونوا"]}
+      ],
+      "word_practice": ["was", "were", "wasn't", "weren't", "I was", "he was", "we were", "they were", "was at", "were in"],
+      "sentence_practice": [
+        "I was at home yesterday.",
+        "They were very happy.",
+        "She wasn't at school."
+      ],
+      "record_this": "I was at home yesterday and my brothers were at school. She wasn't very happy, but they weren't sad either.",
+      "self_check": "Say 'I was at home' quickly. Does 'was' almost disappear into the sentence?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["-ed endings /t/ /d/ /ɪd/"],
+      "isolation": {
+        "instructions": "Past -ed has three sounds. After voiceless (k, p, s, sh, ch, f) → /t/: worked. After voiced or a vowel → /d/: played. ONLY after /t/ or /d/ → /ɪd/ (extra syllable): wanted, needed.",
+        "instructions_ar": "نهاية -ed لها ٣ أصوات: /t/ بعد المهموس (worked)، /d/ بعد المجهور (played)، و /ɪd/ بمقطع زائد بعد /t/ أو /d/ فقط (wanted).",
+        "practice": ["worked, watched, finished (one syllable, /t/)", "played, lived, opened (one syllable, /d/)", "wanted, needed, started (TWO syllables, /ɪd/)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["worked /t/", "wanted /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["played /d/", "needed /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["watched /t/", "started /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["lived /d/", "visited /ɪd/"], "meaning": ["مقطع واحد", "٣ مقاطع"]},
+        {"pair": ["finished /t/", "waited /ɪd/"], "meaning": ["مقطعين", "مقطعين"]}
+      ],
+      "word_practice": ["worked", "watched", "finished", "played", "lived", "opened", "wanted", "needed", "started", "visited"],
+      "sentence_practice": [
+        "I worked and watched television.",
+        "She played and lived here.",
+        "We wanted and needed help."
+      ],
+      "record_this": "Yesterday I worked all day and then watched television. She played outside and I visited my family. We wanted to help but we needed more time.",
+      "self_check": "Only 'wanted', 'needed', 'started', 'visited' should gain a syllable. Check the others stay short."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["Weak forms and connected speech"],
+      "isolation": {
+        "instructions": "Function words shrink in real speech: to /tə/, at /ət/, and /ən/, of /əv/, for /fə/, you /jə/. 'Did you' becomes /dɪdʒə/. This is not lazy — it is correct, natural English.",
+        "instructions_ar": "الكلمات الوظيفية بتتقلّص في الكلام الحقيقي: to /tə/، and /ən/، of /əv/. و'did you' تبقى /dɪdʒə/. ده مش إهمال — ده الإنجليزي الطبيعي.",
+        "practice": ["Did you? → /dɪdʒə/", "want to → /wɒnə/", "fish and chips → fish 'n' chips"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/dɪdʒə/ go? ✅", "DID YOU GO? ❌ (over-stressed)"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["a cup /əv/ tea ✅", "a cup OF tea ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["went /tə/ school ✅", "went TWO school ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["fish 'n' chips ✅", "fish AND chips ❌"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["/fə/ me ✅", "FOR me (emphasis only)"], "meaning": ["طبيعي", "للتوكيد"]}
+      ],
+      "word_practice": ["did you", "want to", "going to", "a cup of", "fish and chips", "at home", "for me", "some of", "waiting for", "listen to"],
+      "sentence_practice": [
+        "Did you go to school yesterday?",
+        "I want to have a cup of tea.",
+        "We were waiting for you at home."
+      ],
+      "record_this": "Did you go to school yesterday? I wanted to have a cup of tea and some fish and chips. We were waiting for you at home all evening.",
+      "self_check": "Say the whole line as one smooth flow. If each word sounds separate and equal, reduce the small words more."
+    },
+    {
+      "day": 4,
+      "target_sounds": "Full A1 vowel review",
+      "isolation": {
+        "instructions": "Run through every vowel contrast from weeks 1-9, two at a time. Say each pair three times, then check yourself in a mirror for lip shape and jaw position.",
+        "instructions_ar": "مراجعة كل حروف العلة من الأسبوع ١ لـ ٩، اتنين اتنين. كل زوج ٣ مرات، وراجع شكل شفايفك وفكك في المراية.",
+        "practice": ["iː/ɪ, æ/e, ʌ/æ, ɔː/ɒ, uː/ʊ, ɜː/ɔː", "aɪ/eɪ, aʊ/əʊ", "all with mirror check"]
+      },
+      "minimal_pairs": [
+        {"pair": ["eat", "it"], "meaning": ["/iː/ مقابل /ɪ/"]},
+        {"pair": ["bad", "bed"], "meaning": ["/æ/ مقابل /e/"]},
+        {"pair": ["cup", "cap"], "meaning": ["/ʌ/ مقابل /æ/"]},
+        {"pair": ["caught", "cot"], "meaning": ["/ɔː/ مقابل /ɒ/"]},
+        {"pair": ["fool", "full"], "meaning": ["/uː/ مقابل /ʊ/"]},
+        {"pair": ["shirt", "short"], "meaning": ["/ɜː/ مقابل /ɔː/"]}
+      ],
+      "word_practice": ["eat", "it", "bad", "bed", "cup", "cap", "caught", "cot", "fool", "full", "shirt", "short", "buy", "bay", "now", "no"],
+      "sentence_practice": [
+        "I eat it. The bad bed. A cup and a cap.",
+        "He caught the cot. The fool is full.",
+        "My shirt is short. I buy at the bay."
+      ],
+      "record_this": "I eat it every day. The bad bed is in the small room. He is tall but his shirt is short. I want to buy two now, not later.",
+      "self_check": "Record all six pairs. Play back — is every pair clearly two DIFFERENT words?"
+    },
+    {
+      "day": 5,
+      "target_sounds": "Full A1 consonant review",
+      "isolation": {
+        "instructions": "Run through every consonant challenge from weeks 1-9: /p/ vs /b/, /θ/ and /ð/, /v/ vs /f/, /w/ vs /v/, /tʃ/ vs /ʃ/, /dʒ/ vs /j/, /ŋ/ vs /n/, and initial clusters.",
+        "instructions_ar": "مراجعة كل السواكن الصعبة من الأسبوع ١ لـ ٩، بالإضافة للتجمعات الساكنة في البداية.",
+        "practice": ["pen/Ben, three/tree, fan/van", "west/vest, chip/ship, jam/yam", "sing/sin, play (no extra vowel)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pen", "Ben"], "meaning": ["/p/ مقابل /b/"]},
+        {"pair": ["three", "tree"], "meaning": ["/θ/ مقابل /t/"]},
+        {"pair": ["fan", "van"], "meaning": ["/f/ مقابل /v/"]},
+        {"pair": ["west", "vest"], "meaning": ["/w/ مقابل /v/"]},
+        {"pair": ["chip", "ship"], "meaning": ["/tʃ/ مقابل /ʃ/"]},
+        {"pair": ["sing", "sin"], "meaning": ["/ŋ/ مقابل /n/"]}
+      ],
+      "word_practice": ["pen", "Ben", "three", "tree", "fan", "van", "west", "vest", "chip", "ship", "jam", "yam", "sing", "sin", "play", "swim"],
+      "sentence_practice": [
+        "Ben has a pen. Three trees.",
+        "The van has a fan. My vest is in the west.",
+        "A chip and a ship. Jam, not yam."
+      ],
+      "record_this": "Ben has a pen and I can see three trees. The van has a fan inside. I like jam, not yam. I can sing and I can swim, and I play every day.",
+      "self_check": "Ask a friend to point at which word of each pair you said. Were they right every time?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review — full A1 consolidation",
+      "type": "review",
+      "mixed_pairs": [
+        ["was /wəz/", "WAS /wɒz/"], ["worked /t/", "wanted /ɪd/"], ["eat", "it"],
+        ["pen", "Ben"], ["three", "tree"], ["can", "can't"]
+      ],
+      "challenge_sentences": [
+        "Yesterday I was at home and my family were with me.",
+        "I worked all day and then I watched television.",
+        "I can swim but I can't drive.",
+        "Did you go to school? I wanted to come with you."
+      ],
+      "record_this": "Yesterday I was at home and my family were with me. I worked all day and then I watched television. I can swim but I can't drive. Did you go to school? I wanted to come with you but I needed more time.",
+      "self_check": "This line contains almost every A1 challenge. Play it back and mark any sound you want to keep practising."
+    },
+    {
+      "day": 7,
+      "target_sounds": "A1 final self-assessment",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is your A1 pronunciation exit check. Record the whole passage, then compare it with your week-1 day-1 recording. The difference is your progress.",
+        "instructions_ar": "ده اختبار النطق النهائي للمستوى A1. سجّل النص كله وقارنه بتسجيلك في أول أسبوع — الفرق هو تقدّمك.",
+        "passage": "Hello! My name is Hana and I am from Egypt. I live in a small house with my family. My father is a teacher and my mother is a nurse. I have one sister and two brothers. Every day I get up at seven, eat breakfast and go to work. I finish at five. I can speak Arabic and English, but I can't speak French. In my free time I like reading, swimming and listening to music. Yesterday I was at home. I worked in the morning and then I watched a film. It cost fifteen pounds, not fifty. Thank you very much — have a great day!",
+        "sounds_to_check": {
+          "/p/ vs /b/, /v/ vs /f/, /w/ vs /v/": "people, brothers — five, father — work, very",
+          "/θ/ and /ð/": "three, thank, thirty — this, father, mother, brothers, with",
+          "/iː/ vs /ɪ/, /æ/ vs /e/, /ʌ/, /ɔː/, /ɜː/": "eat, sleep — it, finish — family, bad — bed, seven — much — tall — work",
+          "third-person and past endings": "gets, goes, finishes — worked, watched, wanted",
+          "can vs can't, -ing, clusters": "I can speak / I can't speak — reading, swimming — free, speak, small",
+          "-teen vs -ty, weak forms": "fifTEEN vs FIFty — I wəz at home, went tə work"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Excellent A1 pronunciation. Every meaning-changing contrast is clear. Ready for A2.",
+        "70_89": "Solid A1. A few contrasts slip at speed — note them and keep drilling those two or three.",
+        "50_69": "Understandable but several contrasts still merge. Revisit the specific weeks for those sounds before moving on.",
+        "below_50": "Work through weeks 1-9 again, one week at a time. Progress is normal but needs the daily recording habit."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Weak forms are the single biggest step toward sounding fluent. Arabic gives every word full value; English does not.",
+      "-ed adds a syllable ONLY after /t/ or /d/ (wanted, needed). Everywhere else it is just /t/ or /d/.",
+      "Compare your week-10 recording with week 1. Students are usually surprised by how much has changed.",
+      "Any contrast still merging after this week is your personal priority list for A2."
+    ],
+    "daily_time": "15-20 minutes (review week)",
+    "recording_requirement": "Record the day-7 passage and keep it. It is your A1 pronunciation baseline for the next level."
+  }
+}

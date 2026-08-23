@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w3",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 3,
+  "pattern_name": "Numbers, 'there is/are' + time prepositions (at/in/on)",
+  "pattern_name_ar": "الأرقام و there is/are وحروف الوقت (at/in/on)",
+  "formula": "There is + singular   |   There are + plural   |   at TIME · on DAY · in MONTH/YEAR",
+  "formula_visual": "[There are] + [seven days] + [in a week]",
+  "when_to_use": "Use there is / there are to say that something exists, and at/on/in to place events in time.",
+  "when_to_use_ar": "نستخدم there is/are للتعبير عن وجود شيء، و at/on/in لتحديد الوقت.",
+  "why_arabic_speakers_struggle": "Arabic uses 'يوجد/في' for existence without number agreement, so is/are gets mixed. Arabic also uses 'في' for almost every time expression, while English splits it into at, on and in.",
+  "examples": [
+    {"en": "There are seven days in a week.", "ar": "يوجد سبعة أيام في الأسبوع", "structure": "[There are] + [seven days]"},
+    {"en": "The class is at three o'clock.", "ar": "الحصة في الساعة الثالثة", "structure": "[at] + [3 o'clock]"},
+    {"en": "My birthday is in June.", "ar": "عيد ميلادي في يونيو", "structure": "[in] + [June]"},
+    {"en": "I work on Monday.", "ar": "أعمل يوم الاثنين", "structure": "[on] + [Monday]"},
+    {"en": "There is a book on the table.", "ar": "يوجد كتاب على الطاولة", "structure": "[There is] + [a book]"}
+  ],
+  "common_errors": [
+    {"wrong": "There is seven days.", "correct": "There are seven days.", "explanation": "Plural noun needs 'there ARE'."},
+    {"wrong": "I work in Monday.", "correct": "I work on Monday.", "explanation": "Days take ON, not IN."},
+    {"wrong": "The class is in three o'clock.", "correct": "The class is at three o'clock.", "explanation": "Clock times take AT."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "There ___ twelve months in a year.", "answer": "are"},
+    {"sentence": "There ___ one kitchen in my house.", "answer": "is"},
+    {"sentence": "I get up ___ seven o'clock.", "answer": "at"},
+    {"sentence": "My birthday is ___ March.", "answer": "in"},
+    {"sentence": "We have a test ___ Sunday.", "answer": "on"}
+  ],
+  "quick_rule": "AT a clock time · ON a day/date · IN a month/year. There IS + one, there ARE + many.",
+  "quick_rule_ar": "AT للساعة، ON لليوم، IN للشهر/السنة. و there is للمفرد و there are للجمع.",
+  "mnemonic": "Smallest to biggest: AT (time) → ON (day) → IN (month).",
+  "connect_to_speaking": "Say your schedule: 'There are five lessons. My class is at nine on Sunday.'"
+}

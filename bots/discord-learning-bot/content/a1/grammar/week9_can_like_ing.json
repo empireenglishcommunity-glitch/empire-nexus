@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a1_w9",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 9,
+  "pattern_name": "'can/can't' (ability) + like/love + -ing",
+  "pattern_name_ar": "can/can't للقدرة و like/love مع الفعل+ing",
+  "formula": "Subject + can / can't + base verb   |   Subject + like / love / hate + verb-ing",
+  "formula_visual": "[I] + [can] + [swim]   ·   [She] + [likes] + [reading]",
+  "when_to_use": "Use can/can't for ability, and like/love/hate + -ing to talk about hobbies and preferences.",
+  "when_to_use_ar": "نستخدم can/can't للقدرة، و like/love/hate مع الفعل+ing للكلام عن الهوايات والتفضيلات.",
+  "why_arabic_speakers_struggle": "Learners often add 'to' after can ('I can to swim') because Arabic uses a subjunctive linker. After like/love the English verb takes -ing, not the infinitive.",
+  "examples": [
+    {"en": "I can swim.", "ar": "أقدر أعوم", "structure": "[I] + [can] + [swim]"},
+    {"en": "He can't drive.", "ar": "هو لا يقدر يسوق", "structure": "[He] + [can't] + [drive]"},
+    {"en": "She likes reading.", "ar": "هي تحب القراءة", "structure": "[She] + [likes] + [reading]"},
+    {"en": "We love playing football.", "ar": "نحب لعب الكرة", "structure": "[We] + [love] + [playing]"},
+    {"en": "Can you speak English?", "ar": "هل تتكلم إنجليزي؟", "structure": "[Can] + [you] + [speak]?"}
+  ],
+  "common_errors": [
+    {"wrong": "I can to swim.", "correct": "I can swim.", "explanation": "Never put 'to' after can/can't."},
+    {"wrong": "He can swims.", "correct": "He can swim.", "explanation": "After can, the verb has no -s."},
+    {"wrong": "I like to swimming.", "correct": "I like swimming.", "explanation": "like + verb-ing (no 'to')."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (can) play the guitar.", "answer": "can"},
+    {"sentence": "She ___ (not can) cook.", "answer": "can't"},
+    {"sentence": "They love ___ (swim).", "answer": "swimming"},
+    {"sentence": "___ you speak Arabic?", "answer": "Can"},
+    {"sentence": "He likes ___ (read) books.", "answer": "reading"}
+  ],
+  "quick_rule": "can + base verb (no 'to', no -s). like/love/hate + verb-ing.",
+  "quick_rule_ar": "can مع الفعل المجرد (بدون to وبدون s). و like/love مع الفعل+ing.",
+  "mnemonic": "CAN + bare verb. LIKE + -ING.",
+  "connect_to_speaking": "Talk about yourself: 'I can swim but I can't drive. I love reading and I like playing football.'"
+}
