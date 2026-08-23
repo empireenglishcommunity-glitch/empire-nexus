@@ -369,6 +369,83 @@ def level_info(level: str) -> dict:
         return info
     return CEFR_LEVELS["A1"]
 
+
+# ============================================================
+#  CEFR harmonization helpers — the SINGLE source of truth for how a
+#  student's level becomes a display label, a Discord role name, or a
+#  channel/URL slug. Every module (bot displays, role assignment, daily-task
+#  routing, practice API, setup script) must go through these rather than
+#  hardcoding L0–L3 or reaching into config.LEVELS directly, so the whole
+#  system stays in harmony on the six CEFR levels.
+# ============================================================
+
+# Exact legacy L0–L3 Discord role names (pre-CEFR). Retained ONLY so the
+# migration / role-reassignment can find and strip a student's stale legacy
+# role before granting their CEFR role. Do NOT use for new assignments.
+LEGACY_ROLE_NAMES = {
+    "L0": "🌱 Level 0 | مبتدئ",
+    "L1": "💪 Level 1 | متقدم",
+    "L2": "🚀 Level 2 | متواصل",
+    "L3": "👑 Level 3 | طليق",
+}
+
+# Cumulative points (XP) to be considered "in" each CEFR level — drives the
+# gamified progress bar on the practice dashboard (CEFR replacement for the
+# old hardcoded {"L0":0,"L1":2000,"L2":5000,"L3":10000}).
+CEFR_XP_THRESHOLDS = {"A1": 0, "A2": 2000, "B1": 5000, "B2": 10000, "C1": 18000, "C2": 30000}
+
+
+def level_slug(level: str) -> str:
+    """Lowercase channel/URL slug for a level: 'A1' -> 'a1' (and legacy
+    'L0' -> 'l0'). Used for Discord channel names (a1-daily-tasks) and
+    practice-site paths (/a1/week1/day1/)."""
+    return (level or "A1").lower()
+
+
+def cefr_key(level: str) -> str:
+    """Normalize ANY level key to its CEFR key (A1–C2). A CEFR key returns
+    itself; a legacy key maps via LEGACY_LEVEL_MAP; anything else -> 'A1'.
+    Role names, display labels and slugs are all derived from the CEFR level's
+    OWN data via this, so a legacy key renders identically to its CEFR level
+    (no drift between 'L0' and 'A1')."""
+    if level in CEFR_LEVELS:
+        return level
+    return LEGACY_LEVEL_MAP.get(level, "A1")
+
+
+def level_display(level: str) -> str:
+    """Short student-facing label for a level, e.g. '🌱 A1 · Breakthrough'.
+    Accepts CEFR or legacy keys (both render as the CEFR level)."""
+    info = CEFR_LEVELS[cefr_key(level)]
+    return f"{info['emoji']} {info['cefr']} · {info['title']}".strip()
+
+
+def level_role_name(level: str) -> str:
+    """Discord role name for a level, CEFR-driven and bilingual:
+    '<emoji> <CEFR> | <arabic name>' (e.g. '🌱 A1 | مبتدئ'). Accepts legacy
+    keys (rendered as their CEFR equivalent)."""
+    info = CEFR_LEVELS[cefr_key(level)]
+    return f"{info['emoji']} {info['cefr']} | {info['name_ar']}".strip()
+
+
+def all_cefr_role_names() -> list:
+    """The six CEFR level role names, in order A1→C2."""
+    return [level_role_name(lvl) for lvl in CEFR_ORDER]
+
+
+def all_managed_level_role_names() -> list:
+    """Every level role the bot manages: the six CEFR roles PLUS the four
+    legacy L0–L3 role names. Used when assigning a new level role so ANY
+    stale level role (CEFR or legacy) is stripped first."""
+    return all_cefr_role_names() + list(LEGACY_ROLE_NAMES.values())
+
+
+def level_xp_threshold(level: str) -> int:
+    """Cumulative points needed to be 'in' this level (0 for A1). Accepts
+    legacy keys (mapped to their CEFR equivalent)."""
+    return CEFR_XP_THRESHOLDS.get(cefr_key(level), 0)
+
+
 # Daily task structure (7 tasks in fixed order — same every level)
 DAILY_TASKS = [
     {"id": "accent", "name": "Accent/Phoneme Drill", "name_ar": "تدريب النطق", "emoji": "🎯"},
