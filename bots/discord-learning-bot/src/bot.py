@@ -3219,8 +3219,8 @@ async def cmd_itqan(ctx, level: str = None):
     """(Admin) Weekly-assessment report. Usage: !itqan [L0/L1/L2/L3]"""
     from . import assessment
     lvl = level.upper() if level else None
-    if lvl and lvl not in config.LEVELS:
-        await ctx.send("Usage: `!itqan [L0/L1/L2/L3]`")
+    if lvl and lvl not in config.CEFR_LEVELS:
+        await ctx.send("Usage: `!itqan [A1/A2/B1/B2/C1/C2]`")
         return
     data = database.itqan_report_data(lvl)
     text = assessment.format_itqan_report(data)
@@ -3270,13 +3270,13 @@ async def cmd_advance(ctx, member: discord.Member = None):
     if not data:
         await ctx.send("That user isn't a registered student.")
         return
-    level = data.get("level", "L0")
-    next_levels = {"L0": "L1", "L1": "L2", "L2": "L3"}
-    next_level = next_levels.get(level)
+    level = data.get("level", "A1")
+    next_level = config.next_cefr_level(level)
     if not next_level:
         await ctx.send(f"**{member.display_name}** is already at the highest level ({level}).")
         return
     database.set_level(str(member.id), next_level)
+    await _assign_level_role(member, next_level)  # move them to the new CEFR role + zone
     await ctx.send(
         f"🎓 **{member.display_name}** manually promoted from **{level}** to **{next_level}**!\n"
         f"Calendar reset. They'll start {next_level} from Week 1."
@@ -3359,8 +3359,8 @@ async def cmd_itqan_due(ctx, level: str = None):
     Usage: !itqan-due [L0/L1/L2/L3]"""
     from . import assessment
     lvl = level.upper() if level else None
-    if lvl and lvl not in config.LEVELS:
-        await ctx.send("Usage: `!itqan-due [L0/L1/L2/L3]`")
+    if lvl and lvl not in config.CEFR_LEVELS:
+        await ctx.send("Usage: `!itqan-due [A1/A2/B1/B2/C1/C2]`")
         return
     data = database.itqan_status_report(lvl)
     for chunk in _itqan_report_chunks(assessment.format_itqan_due(data)):
@@ -3405,8 +3405,8 @@ def _search_registered_students(guild, query: str):
 
 
 _LEVEL_CHOICES = [
-    app_commands.Choice(name=f"{k} — {v.get('name', k)}", value=k)
-    for k, v in config.LEVELS.items()
+    app_commands.Choice(name=f"{k} — {v.get('title', v.get('name', k))}", value=k)
+    for k, v in config.CEFR_LEVELS.items()
 ]
 
 
@@ -3519,7 +3519,7 @@ async def slash_restore_student(interaction: discord.Interaction, record_id: int
         pass
 
 
-@bot.tree.command(name="setlevel", description="Set a student's level (L0–L3).")
+@bot.tree.command(name="setlevel", description="Set a student's level (A1–C2).")
 @app_commands.describe(student="Start typing a student's name, then pick them", level="New level")
 @app_commands.autocomplete(student=_student_autocomplete)
 @app_commands.choices(level=_LEVEL_CHOICES)
@@ -3530,7 +3530,7 @@ async def slash_setlevel(interaction: discord.Interaction,
                          student: str, level: app_commands.Choice[str]):
     await interaction.response.defer(ephemeral=True)
     lvl = level.value
-    if lvl not in config.LEVELS:
+    if lvl not in config.CEFR_LEVELS:
         await interaction.followup.send("❌ Invalid level.", ephemeral=True)
         return
     did, member, data = await _resolve_student_arg(interaction, student)
@@ -3545,7 +3545,7 @@ async def slash_setlevel(interaction: discord.Interaction,
         await _assign_level_role(member, lvl)
     else:
         role_note = " _(level saved; Discord role not updated — member not reachable)_"
-    li = config.LEVELS[lvl]
+    li = config.level_info(lvl)
     name = member.display_name if member else data.get("discord_name", did)
     await interaction.followup.send(
         f"✅ {name} is now **{lvl}** — {li['emoji']} {li['name']}{role_note}", ephemeral=True)
@@ -4289,16 +4289,16 @@ async def cmd_status(ctx):
 async def cmd_setlevel(ctx, member: discord.Member = None, level: str = None):
     """Set a member's level. Usage: !setlevel @user L1"""
     if not member or not level:
-        await ctx.send("Usage: `!setlevel @user L0/L1/L2/L3`")
+        await ctx.send("Usage: `!setlevel @user A1/A2/B1/B2/C1/C2`")
         return
     level = level.upper()
-    if level not in config.LEVELS:
-        await ctx.send("❌ Invalid level. Use: L0, L1, L2, L3")
+    if level not in config.CEFR_LEVELS:
+        await ctx.send("❌ Invalid level. Use: A1, A2, B1, B2, C1, C2")
         return
 
     database.set_level(str(member.id), level)
     await _assign_level_role(member, level)
-    level_info = config.LEVELS[level]
+    level_info = config.level_info(level)
     await ctx.send(f"✅ {member.display_name} is now **{level}** — {level_info['emoji']} {level_info['name']}")
 
 

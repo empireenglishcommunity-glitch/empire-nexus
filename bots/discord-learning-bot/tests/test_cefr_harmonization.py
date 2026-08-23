@@ -148,3 +148,28 @@ def test_dashboard_xp_progress_tops_out_at_c2():
     # Top of the ladder: no next level -> full bar, never "stuck at L0".
     pct, nxt = _dashboard_level_pct("C2", 40000)
     assert pct == 100 and nxt is None
+
+
+
+# ============================================================
+#  Step 5 — admin + advancement span all six CEFR levels
+# ============================================================
+
+def test_promotion_ladder_spans_all_six_levels():
+    """Auto-promotion (advancement_outcomes) and !advance walk
+    config.next_cefr_level — which must climb the FULL six-level CEFR ladder,
+    not the legacy four."""
+    ladder, lvl = [], "A1"
+    while lvl:
+        ladder.append(lvl)
+        lvl = config.next_cefr_level(lvl)
+    assert ladder == ["A1", "A2", "B1", "B2", "C1", "C2"]
+
+
+def test_setlevel_accepts_cefr_rejects_legacy_as_choice_source():
+    """setlevel choices/validation are keyed on CEFR_LEVELS (A1–C2), so all six
+    are assignable and the legacy L0–L3 are no longer the selectable set."""
+    assert set(config.CEFR_LEVELS) == set(config.CEFR_ORDER)
+    assert len(config.CEFR_LEVELS) == 6
+    for legacy in ("L0", "L1", "L2", "L3"):
+        assert legacy not in config.CEFR_LEVELS
