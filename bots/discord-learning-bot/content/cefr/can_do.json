@@ -120,6 +120,37 @@
       {"code": "B2.M.4", "en": "Can help bridge a difference of opinion by asking questions, restating positions and suggesting a way forward.", "ar": "يقدر يساعد في تجسير الخلاف بطرح الأسئلة وإعادة صياغة المواقف واقتراح طريق للأمام."}
     ]
   },
-  "C1": {},
+  "C1": {
+    "overview_en": "Can understand a wide range of demanding, longer texts, and recognise implicit meaning. Can express ideas fluently and spontaneously without much obvious searching for expressions. Can use language flexibly and effectively for social, academic and professional purposes. Can produce clear, well-structured, detailed text on complex subjects, showing controlled use of organisational patterns, connectors and cohesive devices.",
+    "overview_ar": "يقدر يفهم مجموعة واسعة من النصوص الطويلة والصعبة، ويدرك المعنى الضمني. يقدر يعبّر عن أفكاره بطلاقة وعفوية دون بحث واضح عن الكلمات. يقدر يستخدم اللغة بمرونة وفعالية للأغراض الاجتماعية والأكاديمية والمهنية. يقدر ينتج نصًا واضحًا ومنظّمًا ومفصّلًا عن مواضيع معقّدة، مع تحكّم في أنماط التنظيم والروابط وأدوات الترابط.",
+    "reception": [
+      {"code": "C1.R.1", "en": "Can understand extended speech even when it is not clearly structured and when relationships are only implied and not signalled explicitly.", "ar": "يقدر يفهم كلامًا مطوّلًا حتى لو كان غير منظّم بوضوح والعلاقات فيه ضمنية غير مصرّح بها."},
+      {"code": "C1.R.2", "en": "Can follow films employing a considerable degree of slang and idiomatic usage.", "ar": "يقدر يتابع أفلامًا تستخدم قدرًا كبيرًا من العامية والتعابير الاصطلاحية."},
+      {"code": "C1.R.3", "en": "Can understand in detail lengthy, complex texts, whether or not they relate to their own area of speciality.", "ar": "يقدر يفهم بالتفصيل نصوصًا طويلة ومعقّدة، سواء كانت في مجال تخصصه أو لا."},
+      {"code": "C1.R.4", "en": "Can recognise the attitude and implied opinions of a writer, distinguishing tone, irony and register.", "ar": "يقدر يتعرّف على موقف الكاتب وآرائه الضمنية، ويميّز النبرة والسخرية والأسلوب."},
+      {"code": "C1.R.5", "en": "Can obtain information, ideas and opinions from highly specialised sources within their field.", "ar": "يقدر يستخلص المعلومات والأفكار والآراء من مصادر عالية التخصص في مجاله."}
+    ],
+    "production": [
+      {"code": "C1.P.1", "en": "Can give clear, detailed descriptions and presentations on complex subjects, integrating sub-themes and developing particular points.", "ar": "يقدر يدّي أوصافًا وعروضًا واضحة ومفصّلة عن مواضيع معقّدة، مع دمج المواضيع الفرعية وتطوير نقاط معيّنة."},
+      {"code": "C1.P.2", "en": "Can develop a clear, well-structured argument, expanding and supporting points with subsidiary points and relevant examples.", "ar": "يقدر يطوّر حجّة واضحة ومنظّمة، ويوسّعها ويدعمها بنقاط ثانوية وأمثلة ذات صلة."},
+      {"code": "C1.P.3", "en": "Can write clear, well-structured texts on complex subjects, underlining the relevant salient issues.", "ar": "يقدر يكتب نصوصًا واضحة ومنظّمة عن مواضيع معقّدة، مع إبراز القضايا البارزة ذات الصلة."},
+      {"code": "C1.P.4", "en": "Can select an appropriate style and register, and use a variety of linking words and cohesive devices efficiently.", "ar": "يقدر يختار الأسلوب والمستوى اللغوي المناسب، ويستخدم روابط وأدوات ترابط متنوّعة بكفاءة."},
+      {"code": "C1.P.5", "en": "Can write about complex subjects in a letter, essay or report, expanding and supporting points of view at length.", "ar": "يقدر يكتب عن مواضيع معقّدة في خطاب أو مقال أو تقرير، مع توسيع ودعم وجهات النظر باستفاضة."},
+      {"code": "C1.P.6", "en": "Can express themselves fluently and spontaneously, almost effortlessly, with a smooth flow of language.", "ar": "يقدر يعبّر عن نفسه بطلاقة وعفوية وبأقل جهد، مع تدفّق سلس للغة."}
+    ],
+    "interaction": [
+      {"code": "C1.I.1", "en": "Can express themselves fluently and spontaneously without much obvious searching for expressions.", "ar": "يقدر يعبّر بطلاقة وعفوية دون بحث واضح عن الكلمات."},
+      {"code": "C1.I.2", "en": "Can use language flexibly and effectively for social and professional purposes, formulating ideas precisely.", "ar": "يقدر يستخدم اللغة بمرونة وفعالية للأغراض الاجتماعية والمهنية، ويصوغ أفكاره بدقّة."},
+      {"code": "C1.I.3", "en": "Can relate their own contribution skilfully to those of other speakers, and select a suitable phrase to hold the floor.", "ar": "يقدر يربط مساهمته بمهارة بمساهمات الآخرين، ويختار عبارة مناسبة ليحتفظ بدوره في الكلام."},
+      {"code": "C1.I.4", "en": "Can argue a case on a complex issue, adjusting what they say and the means of expressing it to the situation.", "ar": "يقدر يدافع عن موقف في قضية معقّدة، ويكيّف ما يقوله وطريقة تعبيره حسب الموقف."},
+      {"code": "C1.I.5", "en": "Can backtrack and restructure around a difficulty so smoothly that others are hardly aware of it.", "ar": "يقدر يتراجع ويعيد صياغة كلامه حول صعوبة بسلاسة بحيث لا يكاد الآخرون يلاحظون."}
+    ],
+    "mediation": [
+      {"code": "C1.M.1", "en": "Can summarise long, demanding texts, and relay detailed information clearly and reliably.", "ar": "يقدر يلخّص نصوصًا طويلة وصعبة، وينقل معلومات مفصّلة بوضوح ودقّة."},
+      {"code": "C1.M.2", "en": "Can explain complex ideas and clarify sensitive points, adapting language for the audience.", "ar": "يقدر يشرح أفكارًا معقّدة ويوضّح النقاط الحسّاسة، ويكيّف لغته حسب الجمهور."},
+      {"code": "C1.M.3", "en": "Can act effectively as a mediator in discussion, steering it diplomatically and helping resolve misunderstandings.", "ar": "يقدر يعمل كوسيط فعّال في النقاش، يوجّهه بدبلوماسية ويساعد في حلّ سوء الفهم."},
+      {"code": "C1.M.4", "en": "Can synthesise information and arguments from a number of sources into a coherent whole.", "ar": "يقدر يجمع المعلومات والحجج من عدّة مصادر في كلٍّ متماسك."}
+    ]
+  },
   "C2": {}
 }
