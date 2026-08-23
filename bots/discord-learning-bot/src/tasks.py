@@ -119,7 +119,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
     # missions, and writing prompts every single day).
     daily = curriculum.get_daily_content(week, day_name, day_index, level)
     vocab_theme = daily["theme"]
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
+    level_info = config.level_info(level)
 
     # Dhaka' A1: adaptive difficulty adjustments
     # (dormant until tatawwur_adaptive flag is enabled AND student has scores)
@@ -483,7 +483,7 @@ def format_daily_post_chunks(task_data: dict) -> list[str]:
     # everyone today. Task numbers still map to !1-!7 and the reaction
     # emojis (they index into config.DAILY_TASKS, independent of display).
     level = task_data["level"]
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
+    level_info = config.level_info(level)
 
     task_by_id = {t["id"]: t for t in task_data["tasks"]}
     num_by_id = {t["id"]: i + 1 for i, t in enumerate(config.DAILY_TASKS)}

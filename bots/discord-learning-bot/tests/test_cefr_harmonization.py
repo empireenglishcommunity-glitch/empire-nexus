@@ -112,3 +112,39 @@ def test_xp_thresholds_monotonic_and_start_at_zero():
     assert len(set(thresholds)) == 6         # all distinct
     # Legacy key resolves to its CEFR threshold.
     assert config.level_xp_threshold("L1") == config.level_xp_threshold("A2")
+
+
+
+# ============================================================
+#  Step 3 — practice-dashboard XP-progress contract
+#  (locks the CEFR-aware math api_server.get_dashboard now uses, so a
+#  migrated student is never measured against the old L0 thresholds again)
+# ============================================================
+
+def _dashboard_level_pct(level: str, total_points: int):
+    """Replicates api_server.get_dashboard's CEFR level-progress block, so the
+    behavior is unit-tested without spinning up the web server."""
+    cefr = config.cefr_key(level)
+    nxt = config.next_cefr_level(cefr)
+    if nxt:
+        cur_t = config.level_xp_threshold(cefr)
+        nxt_t = config.level_xp_threshold(nxt)
+        return min(100, round((total_points - cur_t) / max(nxt_t - cur_t, 1) * 100, 1)), nxt
+    return 100, None
+
+
+def test_dashboard_xp_progress_is_cefr_aware():
+    # A1 student with 1000 pts: measured against A1(0)->A2(2000) = 50%.
+    pct, nxt = _dashboard_level_pct("A1", 1000)
+    assert nxt == "A2" and pct == 50.0
+    # A migrated legacy 'L0' record behaves identically to A1 (no L0 thresholds).
+    assert _dashboard_level_pct("L0", 1000) == _dashboard_level_pct("A1", 1000)
+    # B1 student measured against B1(5000)->B2(10000), NOT treated as L0/index-0.
+    pct_b1, nxt_b1 = _dashboard_level_pct("B1", 7500)
+    assert nxt_b1 == "B2" and pct_b1 == 50.0
+
+
+def test_dashboard_xp_progress_tops_out_at_c2():
+    # Top of the ladder: no next level -> full bar, never "stuck at L0".
+    pct, nxt = _dashboard_level_pct("C2", 40000)
+    assert pct == 100 and nxt is None

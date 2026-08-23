@@ -4002,7 +4002,7 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
     distinction_count = sum(1 for r in rows if r["distinction"])
     dates = [r["mastered_at"] for r in rows if r["mastered_at"]]
     completed_at = max(dates) if dates else None
-    level_name = (config.LEVELS.get(level, {}) or {}).get("name", level)
+    level_name = config.level_info(level).get("name", level)
     return {
         "eligible": prog["level_complete"],
         "name": name,

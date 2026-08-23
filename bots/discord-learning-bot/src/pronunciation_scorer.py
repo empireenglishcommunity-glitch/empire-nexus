@@ -253,8 +253,9 @@ def compare_words(transcript: str, expected: str, level: str = "L0") -> tuple[fl
 
     raw_score = (earned_weight / total_weight) * 100 if total_weight > 0 else 100.0
 
-    # Level-aware bonus: L0 gets +10, L1 gets +5, L2/L3 get raw
-    level_bonus = {"L0": 10, "L1": 5, "L2": 2, "L3": 0}.get(level, 10)
+    # Level-aware bonus (CEFR): A1 +10, A2 +5, B1 +2, B2+ raw. Legacy keys are
+    # normalized to their CEFR level first (L0->A1, L1->A2, ...).
+    level_bonus = {"A1": 10, "A2": 5, "B1": 2, "B2": 0, "C1": 0, "C2": 0}.get(config.cefr_key(level), 0)
     adjusted_score = min(100.0, raw_score + level_bonus)
 
     # Floor: never below 40% (reframe as "good start")

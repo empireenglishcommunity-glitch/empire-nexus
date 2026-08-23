@@ -423,16 +423,17 @@ async def get_dashboard(request: web.Request) -> web.Response:
     # --- Difficulty level (Dhaka' adaptive engine) ---
     difficulty_level = member.get("difficulty_level", 2)
 
-    # --- Level progress ---
-    # Simple XP-based progress: total_points relative to thresholds
-    level_thresholds = {"L0": 0, "L1": 2000, "L2": 5000, "L3": 10000}
-    current_level = member.get("level", "L0")
-    levels_ordered = ["L0", "L1", "L2", "L3"]
-    current_idx = levels_ordered.index(current_level) if current_level in levels_ordered else 0
-    if current_idx < len(levels_ordered) - 1:
-        next_level = levels_ordered[current_idx + 1]
-        current_threshold = level_thresholds.get(current_level, 0)
-        next_threshold = level_thresholds.get(next_level, 10000)
+    # --- Level progress (CEFR-aware) ---
+    # Gamified XP bar: total_points relative to the CEFR level thresholds
+    # (config.CEFR_XP_THRESHOLDS). Any level key works — a legacy record (L0-L3)
+    # is normalized to its CEFR level via config.cefr_key(), and at the top of
+    # the ladder (C2, no next level) the bar reads 100%.
+    current_level = member.get("level", "A1")
+    cefr = config.cefr_key(current_level)
+    next_level = config.next_cefr_level(cefr)
+    if next_level:
+        current_threshold = config.level_xp_threshold(cefr)
+        next_threshold = config.level_xp_threshold(next_level)
         xp_in_level = member["total_points"] - current_threshold
         xp_needed = next_threshold - current_threshold
         level_pct = min(100, round(xp_in_level / max(xp_needed, 1) * 100, 1))

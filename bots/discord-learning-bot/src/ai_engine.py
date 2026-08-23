@@ -176,7 +176,7 @@ async def generate_speaking_mission(level: str, week: int, day_name: str,
     instructions_ar, guiding_questions, target_duration_seconds,
     target_phrases, phoneme_focus, example_response
     """
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
+    level_info = config.level_info(level)
     phoneme_info = config.PHONEME_WEEKS.get(week, config.PHONEME_WEEKS[1])
 
     prompt = f"""You are the AI engine for Empire English Community — a system-driven English learning program for Arabic speakers focused on American accent mastery.
@@ -237,7 +237,7 @@ async def evaluate_writing(submission: str, original_prompt: str,
     organization_score, task_completion_score, feedback_en, feedback_ar,
     corrected_version, one_thing_to_practice, rating
     """
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
+    level_info = config.level_info(level)
 
     prompt = f"""You are a supportive English writing tutor for Empire English Community. The learner is an Arabic speaker at {level} ({level_info['name']}).
 
@@ -298,8 +298,8 @@ async def generate_vocabulary_sheet(level: str, week: int,
     Returns list of word objects with: word, pronunciation, arabic,
     part_of_speech, example_sentence, common_mistake, collocation
     """
-    level_info = config.LEVELS.get(level, config.LEVELS["L0"])
-    words_per_day = 8 if level == "L0" else 10
+    level_info = config.level_info(level)
+    words_per_day = 8 if config.cefr_key(level) == "A1" else 10
 
     prompt = f"""Generate a vocabulary set for Empire English Community.
 
