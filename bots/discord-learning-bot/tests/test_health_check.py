@@ -24,10 +24,14 @@ def test_check_database_ok_on_initialized_db():
     assert "Database reachable" in message
 
 
-def test_check_curriculum_ok_when_all_38_weeks_loaded():
+def test_check_curriculum_ok_when_all_weeks_loaded():
+    from src import curriculum
     ok, message = health_check.check_curriculum()
     assert ok is True
-    assert "38/38" in message
+    # Dynamic count (legacy 38 + authored CEFR levels); message reads "N/N".
+    expected = curriculum.expected_week_count()
+    assert f"{expected}/{expected}" in message
+    assert expected >= 38
 
 
 def test_check_commands_ok_when_above_minimum():

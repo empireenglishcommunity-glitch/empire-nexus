@@ -1,6 +1,32 @@
 {
-  "_comment": "Mi'yar — CEFR can-do descriptor library. Curated bilingual (EN/AR) descriptors from the Council of Europe Companion Volume (2020), keyed by level then mode. Populated per level during the Mi'yar rollout (Phase 1 = A1, etc.). Modes: reception (listening/reading), production (spoken/written), interaction, mediation.",
-  "A1": {},
+  "_comment": "Mi'yar — CEFR can-do descriptor library. Curated bilingual (EN/AR) descriptors adapted from the Council of Europe CEFR Companion Volume (2020), keyed by level then mode. Modes: reception (listening/reading), production (spoken/written), interaction, mediation. Codes: <LEVEL>.<MODE>.<n>. These are the learning objectives; weeks map to a subset and assessments test them.",
+  "A1": {
+    "overview_en": "Can understand and use familiar everyday expressions and very basic phrases aimed at the satisfaction of needs of a concrete type. Can introduce themselves and others and can ask and answer questions about personal details. Can interact in a simple way provided the other person talks slowly and clearly and is prepared to help.",
+    "overview_ar": "يقدر يفهم ويستخدم تعبيرات يومية مألوفة وجمل بسيطة جدًا لتلبية احتياجات ملموسة. يقدر يعرّف نفسه والآخرين ويسأل ويجاوب عن معلومات شخصية. يقدر يتفاعل ببساطة لو الطرف التاني بيتكلم ببطء ووضوح ومستعد يساعد.",
+    "reception": [
+      {"code": "A1.R.1", "en": "Can recognise familiar words and very basic phrases about themselves, their family and immediate surroundings when people speak slowly and clearly.", "ar": "يقدر يتعرّف على كلمات وجمل بسيطة عن نفسه وعائلته ومحيطه لما الناس تتكلم ببطء ووضوح."},
+      {"code": "A1.R.2", "en": "Can understand simple instructions and short, simple directions.", "ar": "يقدر يفهم تعليمات بسيطة وإرشادات قصيرة."},
+      {"code": "A1.R.3", "en": "Can understand numbers, prices, dates and times when spoken slowly.", "ar": "يقدر يفهم الأرقام والأسعار والتواريخ والأوقات لما تتقال ببطء."},
+      {"code": "A1.R.4", "en": "Can understand very short, simple texts a single phrase at a time, picking up familiar names, words and basic phrases.", "ar": "يقدر يفهم نصوص قصيرة جدًا وبسيطة جملة جملة، ويلتقط الأسماء والكلمات المألوفة."}
+    ],
+    "production": [
+      {"code": "A1.P.1", "en": "Can give simple information about themselves (name, age, where they live, nationality).", "ar": "يقدر يقول معلومات بسيطة عن نفسه (الاسم، العمر، مكان السكن، الجنسية)."},
+      {"code": "A1.P.2", "en": "Can describe their family, other people, and where they live using simple words and phrases.", "ar": "يقدر يوصف عائلته والناس ومكان سكنه بكلمات وجمل بسيطة."},
+      {"code": "A1.P.3", "en": "Can produce simple mainly isolated phrases about people and places.", "ar": "يقدر ينتج جمل بسيطة ومنفصلة عن الناس والأماكن."},
+      {"code": "A1.P.4", "en": "Can write simple phrases and sentences about themselves and imaginary people, where they live and what they do.", "ar": "يقدر يكتب جمل بسيطة عن نفسه وعن ناس، ومكان سكنهم وشغلهم."},
+      {"code": "A1.P.5", "en": "Can write short, simple notes and messages relating to matters in areas of immediate need.", "ar": "يقدر يكتب رسائل وملاحظات قصيرة وبسيطة عن احتياجات يومية."}
+    ],
+    "interaction": [
+      {"code": "A1.I.1", "en": "Can introduce themselves and use basic greetings and leave-taking expressions.", "ar": "يقدر يعرّف نفسه ويستخدم تحيّات أساسية وعبارات وداع."},
+      {"code": "A1.I.2", "en": "Can ask and answer simple questions about personal details (name, home, family, things they own).", "ar": "يقدر يسأل ويجاوب أسئلة بسيطة عن التفاصيل الشخصية (الاسم، البيت، العائلة، ممتلكاته)."},
+      {"code": "A1.I.3", "en": "Can handle numbers, quantities, cost and time in simple everyday transactions.", "ar": "يقدر يتعامل مع الأرقام والكميات والأسعار والوقت في المعاملات اليومية البسيطة."},
+      {"code": "A1.I.4", "en": "Can ask for and give things, and ask and answer questions about likes and abilities.", "ar": "يقدر يطلب ويدّي حاجات، ويسأل ويجاوب عن اللي بيحبه وعن قدراته."}
+    ],
+    "mediation": [
+      {"code": "A1.M.1", "en": "Can convey simple, predictable information of immediate relevance (a name, a number, a price, a time) to another person.", "ar": "يقدر ينقل معلومة بسيطة ومتوقّعة (اسم، رقم، سعر، وقت) لشخص تاني."},
+      {"code": "A1.M.2", "en": "Can use a single word or a short phrase, with gesture, to signal understanding or ask for help.", "ar": "يقدر يستخدم كلمة أو جملة قصيرة، مع الإشارة، عشان يوضّح فهمه أو يطلب مساعدة."}
+    ]
+  },
   "A2": {},
   "B1": {},
   "B2": {},

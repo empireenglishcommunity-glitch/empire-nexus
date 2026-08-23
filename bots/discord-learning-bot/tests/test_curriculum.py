@@ -14,7 +14,12 @@ from src import config, curriculum
 
 def test_all_four_levels_loaded():
     stats = curriculum.stats()
-    assert stats["weeks_loaded"] == 38  # 8 + 10 + 12 + 8, per LEVEL_WEEK_COUNTS
+    # Dynamic: legacy L0–L3 (38) + any authored CEFR levels (Mi'yar A1–C2).
+    # expected_week_count() counts the week files present on disk, so this
+    # stays correct as CEFR levels ship while still catching a file that
+    # failed to parse (loaded < expected).
+    assert stats["weeks_loaded"] == curriculum.expected_week_count()
+    assert stats["weeks_loaded"] >= 38  # legacy floor must always be present
 
 
 def test_level_week_counts_matches_loaded_weeks():
