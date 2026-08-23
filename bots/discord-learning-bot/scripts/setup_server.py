@@ -789,7 +789,8 @@ class ServerSetup(discord.Client):
         # Print key channel IDs for n8n webhook configuration
         print("\n  📌 KEY CHANNEL IDs (for n8n/webhook config):")
         key_channels = [
-            "l0-daily-tasks", "l1-daily-tasks", "l2-daily-tasks", "l3-daily-tasks",
+            f"{config.level_slug(lvl)}-daily-tasks" for lvl in config.CEFR_ORDER
+        ] + [
             "cheat-sheets", "leaderboard", "streak-tracker", "daily-word",
             "announcements", "bot-logs", "speaking-feedback", "writing-feedback",
         ]
@@ -800,7 +801,7 @@ class ServerSetup(discord.Client):
 
         # Check bot can assign level roles
         bot_role = guild.self_role
-        level_roles = ["🌱 Level 0 | مبتدئ", "💪 Level 1 | متقدم", "🚀 Level 2 | متواصل", "👑 Level 3 | طليق"]
+        level_roles = config.all_cefr_role_names()
         can_assign = all(
             bot_role.position > self.created_roles[n].position
             for n in level_roles if n in self.created_roles
