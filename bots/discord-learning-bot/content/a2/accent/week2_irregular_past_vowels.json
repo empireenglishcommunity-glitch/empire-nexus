@@ -1,0 +1,186 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 2,
+  "focus": "/əʊ/ (home, go, wrote) · /ɔː/ (bought, thought, saw) · irregular past vowel changes · /ʊ/ (took) vs /uː/ (flew) · /eɪ/ (came) vs /e/ (went)",
+  "focus_ar": "/əʊ/ و /ɔː/، وتغيّر حروف العلة في الأفعال الشاذة، و /ʊ/ مقابل /uː/، و /eɪ/ مقابل /e/",
+  "arabic_challenge": "Irregular past forms change the VOWEL rather than adding an ending, and several of those vowels (/əʊ/, /ɔː/, /ʊ/) do not exist in Arabic. Learners often flatten them all toward /o/ or /u/, making 'bought', 'boat' and 'but' sound alike.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/əʊ/"],
+      "isolation": {
+        "instructions": "/əʊ/ (home, go, wrote, drove) is a GLIDE: it starts in the middle of the mouth and finishes with rounded lips. Your lips must move. It is not a flat Arabic /o/.",
+        "instructions_ar": "/əʊ/ صوت متحرك: يبدأ من نص الفم وينتهي بشفاه مدوّرة. الشفاه لازم تتحرك. مش /o/ عربية ثابتة.",
+        "practice": ["uh-oo → əʊ (watch your lips round)", "go, home, wrote", "hold the glide: gooooo"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go", "gore"], "meaning": ["يذهب", "ينخز"]},
+        {"pair": ["home", "harm"], "meaning": ["بيت", "ضرر"]},
+        {"pair": ["wrote", "rot"], "meaning": ["كتب", "يتعفّن"]},
+        {"pair": ["woke", "walk"], "meaning": ["استيقظ", "يمشي"]},
+        {"pair": ["road", "rod"], "meaning": ["طريق", "قضيب"]}
+      ],
+      "word_practice": ["went", "home", "go", "wrote", "drove", "spoke", "rode", "broke", "hotel", "photo"],
+      "sentence_practice": [
+        "We drove home and I wrote a letter.",
+        "He spoke slowly on the phone.",
+        "I woke up and went to the hotel."
+      ],
+      "record_this": "Last month we drove home from the coast. I wrote a postcard and spoke to my brother on the phone before we woke early.",
+      "self_check": "In a mirror, say 'home'. Do your lips round at the END of the vowel?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/ɔː/"],
+      "isolation": {
+        "instructions": "/ɔː/ (bought, thought, saw, caught) is LONG with firmly rounded lips and the tongue low and back. It does NOT glide — it holds steady, unlike /əʊ/.",
+        "instructions_ar": "/ɔː/ طويل بشفاه مدوّرة بقوة واللسان تحت ولورا. وهو ثابت مش متحرك، بعكس /əʊ/.",
+        "practice": ["awwww (long, steady, rounded)", "bought, thought, saw", "compare: boat (glide) vs bought (steady)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bought", "boat"], "meaning": ["اشترى", "قارب"]},
+        {"pair": ["thought", "thought? → taught"], "meaning": ["فكّر", "علّم"]},
+        {"pair": ["saw", "so"], "meaning": ["رأى", "لذلك"]},
+        {"pair": ["caught", "coat"], "meaning": ["أمسك", "معطف"]},
+        {"pair": ["walked", "woke"], "meaning": ["مشى", "استيقظ"]}
+      ],
+      "word_practice": ["bought", "thought", "saw", "caught", "taught", "brought", "walked", "talked", "all", "morning"],
+      "sentence_practice": [
+        "I bought a ticket and thought about the trip.",
+        "We saw the sea and caught a boat.",
+        "She taught me and brought a map."
+      ],
+      "record_this": "I bought a ticket and thought carefully about the trip. We saw the sea, caught a small boat and talked all morning.",
+      "self_check": "Say 'bought' then 'boat'. The first must be steady and long; the second must glide."
+    },
+    {
+      "day": 3,
+      "target_sounds": ["Irregular past vowel changes"],
+      "isolation": {
+        "instructions": "Irregular verbs change the VOWEL, not the ending. Drill the pairs out loud so the change becomes automatic: go→went, buy→bought, think→thought, see→saw, take→took.",
+        "instructions_ar": "الأفعال الشاذة تغيّر حرف العلة مش النهاية. كرّر الأزواج بصوت عالي لحد ما التغيير يبقى تلقائي.",
+        "practice": ["go→went, buy→bought, think→thought", "see→saw, take→took, eat→ate", "say present then past, ten times"]
+      },
+      "minimal_pairs": [
+        {"pair": ["go", "went"], "meaning": ["يذهب", "ذهب"]},
+        {"pair": ["buy", "bought"], "meaning": ["يشتري", "اشترى"]},
+        {"pair": ["think", "thought"], "meaning": ["يفكر", "فكّر"]},
+        {"pair": ["see", "saw"], "meaning": ["يرى", "رأى"]},
+        {"pair": ["take", "took"], "meaning": ["يأخذ", "أخذ"]}
+      ],
+      "word_practice": ["went", "bought", "thought", "saw", "took", "ate", "came", "gave", "found", "left"],
+      "sentence_practice": [
+        "I went to the station and bought a ticket.",
+        "We saw the museum and took photos.",
+        "She came late and left early."
+      ],
+      "record_this": "I went to the station, bought a ticket and took the early train. We saw an old museum, ate lunch nearby and came home late.",
+      "self_check": "Say each pair aloud. Is the vowel change clear, with no -ed added by mistake?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["/ʊ/", "/uː/"],
+      "isolation": {
+        "instructions": "/ʊ/ (took, stood, could) is SHORT with relaxed lips. /uː/ (flew, grew, threw) is LONG with tight, pushed-forward lips. Several irregular pasts hinge on this.",
+        "instructions_ar": "/ʊ/ قصير والشفاه مسترخية (took). /uː/ طويل والشفاه مشدودة للأمام (flew).",
+        "practice": ["uh (short) — took, stood", "oooo (long) — flew, grew", "took-two, stood-stewed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["took", "two"], "meaning": ["أخذ", "اثنان"]},
+        {"pair": ["stood", "stewed"], "meaning": ["وقف", "مطهو"]},
+        {"pair": ["full", "fool"], "meaning": ["ممتلئ", "أحمق"]},
+        {"pair": ["could", "cooed"], "meaning": ["استطاع", "هدل"]},
+        {"pair": ["pull", "pool"], "meaning": ["يسحب", "حوض"]}
+      ],
+      "word_practice": {
+        "short_oo": ["took", "stood", "could", "would", "put", "looked", "book", "good"],
+        "long_oo": ["flew", "grew", "threw", "two", "food", "room", "knew", "moved"]
+      },
+      "sentence_practice": [
+        "We took a taxi and stood at the door.",
+        "The plane flew and we knew the way.",
+        "I put the book in my room."
+      ],
+      "record_this": "We took a taxi to the airport and stood in a long queue. The plane flew for two hours, and I knew the food would be good.",
+      "self_check": "Say 'took' then 'two'. Are the lips relaxed for the first and tight for the second?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/eɪ/", "/e/"],
+      "isolation": {
+        "instructions": "/eɪ/ (came, made, gave, paid) glides upward — the jaw closes. /e/ (went, met, spent, left) is short and steady. Many irregular pasts sit in one group or the other.",
+        "instructions_ar": "/eɪ/ صوت متحرك لأعلى (came). /e/ قصير وثابت (went). الأفعال الشاذة بتتوزع على الاتنين.",
+        "practice": ["ay (glide) — came, made", "eh (steady) — went, met", "came-went, made-met"]
+      },
+      "minimal_pairs": [
+        {"pair": ["came", "come"], "meaning": ["جاء", "يأتي"]},
+        {"pair": ["made", "med? → met"], "meaning": ["صنع", "قابل"]},
+        {"pair": ["paid", "pad"], "meaning": ["دفع", "وسادة"]},
+        {"pair": ["gave", "gav? → get"], "meaning": ["أعطى", "يحصل"]},
+        {"pair": ["late", "let"], "meaning": ["متأخر", "يسمح"]}
+      ],
+      "word_practice": {
+        "ay_sound": ["came", "made", "gave", "paid", "stayed", "played", "took? no", "became"],
+        "eh_sound": ["went", "met", "spent", "left", "said", "sent", "slept", "kept"]
+      },
+      "sentence_practice": [
+        "I came late and met my friend.",
+        "We made a plan and spent the day together.",
+        "She gave me a map and left."
+      ],
+      "record_this": "I came late but I met my friend at the station. We made a plan, spent the whole day together and she gave me a map before she left.",
+      "self_check": "Does your jaw move for 'came' but stay still for 'went'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 sounds",
+      "type": "review",
+      "mixed_pairs": [
+        ["bought", "boat"], ["saw", "so"], ["took", "two"],
+        ["came", "come"], ["home", "harm"], ["full", "fool"]
+      ],
+      "challenge_sentences": [
+        "I went home and wrote about the trip.",
+        "We bought tickets and thought about the plan.",
+        "She took photos and we saw the old city.",
+        "They came late, ate quickly and left."
+      ],
+      "record_this": "I went home and wrote about our trip. We bought tickets, thought carefully about the plan and took the early train. She took photos while we saw the old city. They came late, ate quickly and left before dark.",
+      "self_check": "Check the three risky vowels: does /əʊ/ glide, does /ɔː/ hold steady, and is /ʊ/ clearly short?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling the story of a trip. Then listen back and check each sound group.",
+        "instructions_ar": "سجّل نفسك وانت تحكي عن رحلة، وبعدين اسمع وراجع كل مجموعة أصوات.",
+        "passage": "Last summer we went on a trip to the coast. I bought the tickets online and we took the early train. When we arrived, we saw the sea for the first time and I thought it was beautiful. We stayed in a small hotel near the beach. On the first day we walked for hours and talked about everything. My brother took photos and I wrote in my notebook. We ate fresh fish, drank tea and slept very well. On the last morning we woke early, paid the bill and came home. I never forgot that week.",
+        "sounds_to_check": {
+          "/əʊ/ (gliding)": "home, wrote, woke, photos, hotel, coast",
+          "/ɔː/ (long, steady)": "bought, thought, saw, walked, talked, morning",
+          "/ʊ/ vs /uː/": "took, could, book — flew, two, food, drank? no",
+          "/eɪ/ vs /e/": "came, paid, stayed — went, met, slept, left",
+          "irregular pasts (vowel change, no -ed)": "went, bought, thought, saw, took, ate, came, wrote, woke, slept"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Irregular pasts are automatic and 'bought/boat' never merge. Ready for week 3.",
+        "70_89": "Good; occasional flattening of /əʊ/.",
+        "50_69": "/ɔː/ and /əʊ/ still merge, or -ed is added to irregular verbs. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, using the mirror for lip movement."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Never add -ed to an irregular verb ('goed', 'buyed'). The vowel change IS the past marker.",
+      "/əʊ/ glides (home); /ɔː/ holds (bought). Confusing them makes 'boat' and 'bought' identical.",
+      "/ʊ/ is short and relaxed — 'took' is not 'two'.",
+      "Drill the present→past pairs aloud daily until they need no thinking time."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

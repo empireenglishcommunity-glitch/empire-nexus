@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 1,
+  "focus": "Regular past -ed endings: /t/ (worked) · /d/ (played) · /ɪd/ (wanted) · past time expressions · final clusters with -ed",
+  "focus_ar": "نهايات الماضي المنتظم: /t/ و /d/ و /ɪd/، وتعبيرات الزمن الماضي، والتجمعات الساكنة مع -ed",
+  "arabic_challenge": "Arabic marks the past inside the verb, so the English -ed ending is often dropped ('I work yesterday') or given a full extra syllable everywhere ('work-ed'). In reality -ed adds a syllable ONLY after /t/ or /d/.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["-ed = /t/ (after voiceless sounds)"],
+      "isolation": {
+        "instructions": "After a voiceless sound (k, p, s, ʃ, tʃ, f) the -ed is just /t/ — NO extra syllable. 'worked' is ONE syllable: workt.",
+        "instructions_ar": "بعد الأصوات المهموسة (k, p, s, sh, ch, f) تُنطق -ed مجرد /t/ بدون مقطع زائد. 'worked' مقطع واحد.",
+        "practice": ["workt, watcht, finisht (one syllable each)", "stopt, cookt, helpt", "say them fast, no extra vowel"]
+      },
+      "minimal_pairs": [
+        {"pair": ["worked", "work-ed ❌"], "meaning": ["صحيح (مقطع واحد)", "خطأ"]},
+        {"pair": ["watched", "watch-ed ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["stopped", "stop-ed ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["finished", "finish-ed ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["helped", "help-ed ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["worked", "watched", "finished", "stopped", "cooked", "helped", "walked", "asked", "washed", "looked"],
+      "sentence_practice": [
+        "I worked all day and watched a film.",
+        "She cooked and washed the dishes.",
+        "We stopped and asked for help."
+      ],
+      "record_this": "Last weekend I worked all day, then I watched a film. My sister cooked dinner and washed the dishes.",
+      "self_check": "Clap the syllables of 'worked'. ONE clap only."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["-ed = /d/ (after voiced sounds and vowels)"],
+      "isolation": {
+        "instructions": "After a voiced sound (b, g, m, n, l, r, v, z) or any vowel, -ed is /d/ — still NO extra syllable. 'played' is ONE syllable: playd.",
+        "instructions_ar": "بعد الأصوات المجهورة أو حروف العلة تُنطق -ed مجرد /d/ وبرضه بدون مقطع زائد.",
+        "practice": ["playd, livd, opend (one syllable)", "cleand, stayd, listend", "feel the buzz at the end"]
+      },
+      "minimal_pairs": [
+        {"pair": ["played /d/", "worked /t/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["lived /d/", "helped /t/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["cleaned /d/", "washed /t/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["stayed /d/", "stopped /t/"], "meaning": ["مجهور", "مهموس"]},
+        {"pair": ["opened /d/", "looked /t/"], "meaning": ["مجهور", "مهموس"]}
+      ],
+      "word_practice": ["played", "lived", "opened", "cleaned", "stayed", "listened", "travelled", "arrived", "enjoyed", "called"],
+      "sentence_practice": [
+        "I played football and listened to music.",
+        "We stayed at home and cleaned the house.",
+        "They arrived and called me."
+      ],
+      "record_this": "Yesterday I played football and listened to music. We stayed at home, cleaned the house and called our friends.",
+      "self_check": "Put a hand on your throat for 'played'. Do you feel a buzz at the very end?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["-ed = /ɪd/ (after /t/ and /d/ only)"],
+      "isolation": {
+        "instructions": "ONLY after /t/ or /d/ does -ed add a whole syllable: /ɪd/. 'wanted' = WANT-id (two syllables). This is the exception, not the rule.",
+        "instructions_ar": "فقط بعد /t/ أو /d/ تضيف -ed مقطعًا كاملًا /ɪd/: wanted = WANT-id. ده الاستثناء مش القاعدة.",
+        "practice": ["want-id, need-id, start-id (two syllables)", "visit-id, wait-id, decid-id", "count the beats"]
+      },
+      "minimal_pairs": [
+        {"pair": ["wanted (2)", "worked (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["needed (2)", "played (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["started (2)", "stopped (1)"], "meaning": ["مقطعين", "مقطع واحد"]},
+        {"pair": ["visited (3)", "watched (1)"], "meaning": ["٣ مقاطع", "مقطع واحد"]},
+        {"pair": ["waited (2)", "washed (1)"], "meaning": ["مقطعين", "مقطع واحد"]}
+      ],
+      "word_practice": ["wanted", "needed", "started", "visited", "waited", "decided", "invited", "painted", "ended", "repeated"],
+      "sentence_practice": [
+        "I wanted to go but I needed to work.",
+        "We visited my aunt and waited for the bus.",
+        "The film started and ended late."
+      ],
+      "record_this": "Last week I wanted to travel but I needed to work. We visited my aunt, waited for the bus and decided to walk home.",
+      "self_check": "Clap 'wanted' — TWO claps. Then 'worked' — ONE clap."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Mixed -ed sorting + past time expressions"],
+      "isolation": {
+        "instructions": "Now mix all three. Sort each verb by ear, then add the time expression with its natural stress: YES-ter-day, last WEEK, two days a-GO.",
+        "instructions_ar": "اخلط التلاتة. صنّف كل فعل بالسمع، وبعدين أضف تعبير الزمن بنبره الطبيعي.",
+        "practice": ["/t/: worked, watched | /d/: played, lived | /ɪd/: wanted, needed", "yesterday, last week, two days ago", "sort by ear, then say the sentence"]
+      },
+      "minimal_pairs": [
+        {"pair": ["worked /t/", "wanted /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["lived /d/", "visited /ɪd/"], "meaning": ["مقطع واحد", "٣ مقاطع"]},
+        {"pair": ["finished /t/", "started /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["enjoyed /d/", "needed /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["asked /t/", "waited /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]}
+      ],
+      "word_practice": ["yesterday", "last week", "last night", "two days ago", "last month", "in 2020", "this morning", "last weekend", "a year ago", "then"],
+      "sentence_practice": [
+        "Yesterday I worked and then I relaxed.",
+        "Last week we visited my family.",
+        "Two days ago she started a new job."
+      ],
+      "record_this": "Yesterday I worked in the morning and relaxed in the evening. Last week we visited my family, and two days ago my sister started a new job.",
+      "self_check": "In your recording, does every -ed sound right — and did you add a syllable only for the /ɪd/ verbs?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Final clusters with -ed"],
+      "isolation": {
+        "instructions": "-ed often creates a hard consonant cluster: asked /skt/, watched /tʃt/, finished /ʃt/, helped /lpt/. Do not break them with a vowel — say the consonants lightly, back to back.",
+        "instructions_ar": "-ed بتعمل تجمعات ساكنة صعبة: asked، watched، helped. متفصلهاش بحركة — نطقهم ورا بعض بخِفّة.",
+        "practice": ["asked = a-skt (not as-kid)", "helped = helpt (not hel-pid)", "watched = wotcht"]
+      },
+      "minimal_pairs": [
+        {"pair": ["asked", "as-kid ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["helped", "hel-pid ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["watched", "watch-id ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["finished", "finish-id ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["walked", "wal-kid ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["asked", "helped", "watched", "finished", "walked", "washed", "laughed", "danced", "practised", "worked"],
+      "sentence_practice": [
+        "I asked and she helped.",
+        "We watched, laughed and danced.",
+        "He finished and walked home."
+      ],
+      "record_this": "I asked my friend for help and she helped me immediately. We watched a comedy, laughed a lot and then walked home together.",
+      "self_check": "Say 'asked'. If you hear two syllables, you inserted a vowel — try again lighter and faster."
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 endings",
+      "type": "review",
+      "mixed_pairs": [
+        ["worked /t/", "played /d/"], ["wanted /ɪd/", "watched /t/"], ["needed (2)", "lived (1)"],
+        ["asked", "as-kid ❌"], ["started (2)", "stopped (1)"], ["visited (3)", "washed (1)"]
+      ],
+      "challenge_sentences": [
+        "Yesterday I worked, cooked and cleaned.",
+        "We wanted to travel but we needed money.",
+        "She played football and then watched TV.",
+        "I asked, he helped, and we finished early."
+      ],
+      "record_this": "Yesterday I worked all morning, cooked lunch and cleaned the kitchen. We wanted to travel but we needed more money. My sister played football and then watched television. I asked for help, my brother helped me, and we finished early.",
+      "self_check": "Count: how many of your -ed verbs gained a syllable? Only the ones after /t/ or /d/ should have."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling the story of last weekend. Then listen back and check each ending group.",
+        "instructions_ar": "سجّل نفسك وانت تحكي عن آخر أسبوع، وبعدين اسمع وراجع كل مجموعة نهايات.",
+        "passage": "Last weekend was very busy. On Saturday I worked in the morning and finished at two. Then I walked to the shop and asked about a new phone. In the afternoon I played football with my friends and we enjoyed the game. I wanted to go to the cinema, but I needed to study, so I stayed at home. On Sunday we visited my grandmother. She cooked a big lunch and we talked for hours. I helped her clean the kitchen and then we watched television together. The weekend ended too quickly.",
+        "sounds_to_check": {
+          "-ed = /t/ (one syllable)": "worked, finished, walked, asked, helped, watched",
+          "-ed = /d/ (one syllable)": "played, enjoyed, stayed, cleaned, talked? (no: /t/)",
+          "-ed = /ɪd/ (extra syllable)": "wanted, needed, visited, ended",
+          "final clusters": "asked, helped, watched, finished, walked",
+          "past time expressions": "last weekend, on Saturday, in the morning, then"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every -ed is present and correctly sorted; only /t/-/d/ verbs gain a syllable. Ready for week 2.",
+        "70_89": "Endings present with occasional wrong voicing.",
+        "50_69": "Endings dropped, or an extra syllable added everywhere. Repeat days 1-3.",
+        "below_50": "Go back to day 1 and build one ending type per day."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Dropping -ed is the most common A2 past-tense error, and it changes the tense completely.",
+      "The rule in one line: extra syllable ONLY after /t/ or /d/ (wanted, needed).",
+      "Voicing follows the sound before it: voiceless → /t/, voiced → /d/.",
+      "Resist inserting a vowel into clusters like 'asked' and 'helped'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 6,
+  "focus": "Contraction 'll /l/ (I'll, we'll, it'll) · 'won't' /wəʊnt/ vs 'want' /wɒnt/ · weak 'will' /wl/ · linking 'I'll + verb' · 'shall/'ll' in offers",
+  "focus_ar": "الاختصار 'll، و 'won't' مقابل 'want'، و 'will' الخفيفة، ووصل I'll بالفعل، والعروض",
+  "arabic_challenge": "The contracted 'll is just a dark /l/ attached to the pronoun (I'll = /aɪl/), which Arabic learners often expand back to 'I will' or drop entirely. 'Won't' and 'want' are a classic confusion because the vowels /əʊ/ and /ɒ/ both feel foreign.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["contraction 'll = /l/"],
+      "isolation": {
+        "instructions": "'Will' contracts to a single /l/ glued to the pronoun: I'll /aɪl/, we'll /wiːl/, he'll /hiːl/, it'll /ɪtl/, they'll /ðeɪl/. It is one syllable — do not say 'I will'.",
+        "instructions_ar": "'will' بتتقلّص لـ /l/ ملزوقة بالضمير: I'll /aɪl/، we'll، he'll. مقطع واحد — متقولش 'I will'.",
+        "practice": ["I'll, we'll, he'll, she'll", "it'll, they'll, you'll", "one syllable each"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll /aɪl/", "aisle"], "meaning": ["سوف أفعل", "ممر"]},
+        {"pair": ["we'll /wiːl/", "wheel"], "meaning": ["سوف نفعل", "عجلة"]},
+        {"pair": ["he'll /hiːl/", "heal"], "meaning": ["سوف يفعل", "يشفي"]},
+        {"pair": ["I'll go ✅", "I will go (over-full)"], "meaning": ["طبيعي", "توكيد فقط"]},
+        {"pair": ["they'll /ðeɪl/", "they ❌ (dropped 'll)"], "meaning": ["صحيح", "ناقص"]}
+      ],
+      "word_practice": ["I'll", "we'll", "he'll", "she'll", "it'll", "they'll", "you'll", "that'll", "I'll go", "we'll see"],
+      "sentence_practice": [
+        "I'll call you later.",
+        "We'll see what happens.",
+        "They'll arrive tomorrow."
+      ],
+      "record_this": "I'll call you later and we'll decide together. He'll be here soon, and they'll arrive tomorrow morning.",
+      "self_check": "Say 'I'll'. Is it one syllable that rhymes with 'aisle', not two words?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'won't' /wəʊnt/ vs 'want' /wɒnt/"],
+      "isolation": {
+        "instructions": "'Won't' (will not) has the GLIDING /əʊ/ — like 'phone'. 'Want' has the SHORT /ɒ/ — like 'hot'. Mixing them reverses your meaning entirely.",
+        "instructions_ar": "'won't' فيها /əʊ/ المتحركة (زي phone). 'want' فيها /ɒ/ القصيرة (زي hot). الخلط بينهم بيقلب المعنى.",
+        "practice": ["woh-nt (glide) — won't", "wo-nt (short) — want", "won't-want-won't-want"]
+      },
+      "minimal_pairs": [
+        {"pair": ["won't", "want"], "meaning": ["لن", "يريد"]},
+        {"pair": ["won't go", "want to go"], "meaning": ["لن يذهب", "يريد الذهاب"]},
+        {"pair": ["I won't", "I want"], "meaning": ["لن أفعل", "أنا أريد"]},
+        {"pair": ["won't /əʊ/", "wont /ʌ/ (habit)"], "meaning": ["لن", "معتاد (نادرة)"]},
+        {"pair": ["she won't", "she wants"], "meaning": ["لن", "تريد"]}
+      ],
+      "word_practice": ["won't", "want", "won't go", "won't stay", "won't work", "want to", "want it", "won't rain", "won't help", "won't be"],
+      "sentence_practice": [
+        "I won't be late.",
+        "I want to help but I won't have time.",
+        "It won't rain today."
+      ],
+      "record_this": "I won't be late tonight. I want to help you, but I won't have much time. Don't worry — it won't rain today.",
+      "self_check": "Say 'won't' then 'want'. Does the first glide like 'phone' and the second stay short like 'hot'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'will' /wl/ in questions and statements"],
+      "isolation": {
+        "instructions": "When 'will' is not contracted, it is still usually WEAK: 'Will you help?' sounds like 'wl-you-help'. Only stress it for strong promises or contradiction.",
+        "instructions_ar": "لما 'will' متتقلّصش، بتفضل خفيفة غالبًا: 'Will you help?' → wl-you-help. مانضغط عليها إلا للوعد القوي.",
+        "practice": ["wl-you-help?", "wl-it-work?", "wl-they-come?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["wl you help? ✅", "WILL you help? ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["I WILL do it (promise)", "I'll do it (normal)"], "meaning": ["وعد قوي", "عادي"]},
+        {"pair": ["wl it work? ✅", "WILL it work? ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["when wl you go? ✅", "when WILL you go? ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["they'll ✅", "they will (over-full)"], "meaning": ["عادي", "توكيد"]}
+      ],
+      "word_practice": ["will you", "will it", "will they", "when will", "what will", "will he", "will she", "will we", "will there", "how will"],
+      "sentence_practice": [
+        "Will you help me later?",
+        "When will they arrive?",
+        "What will happen next?"
+      ],
+      "record_this": "Will you help me later? When will they arrive, and what will happen next? I think it will be fine.",
+      "self_check": "In 'Will you help?', does 'will' stay light, with the stress on 'help'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Linking 'I'll + verb'"],
+      "isolation": {
+        "instructions": "Glue the contraction to the verb: I'll-GO, we'll-SEE, I'll-HELP. The stress is on the verb. Make on-the-spot decisions sound instant and smooth.",
+        "instructions_ar": "الزق الاختصار بالفعل: I'll-GO, we'll-SEE. النبر على الفعل. خلي القرارات اللحظية تبان سريعة وسلسة.",
+        "practice": ["I'll-GO", "we'll-SEE", "I'll-TAKE-it"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll GO ✅", "I'll go (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["we'll SEE ✅", "WE'LL see ❌"], "meaning": ["النبر على الفعل", "خطأ"]},
+        {"pair": ["I'll-take-it ✅", "I will take it (slow) ~"], "meaning": ["قرار سريع", "بطيء"]},
+        {"pair": ["I'll HELP ✅", "I help ❌ (missing 'll)"], "meaning": ["صحيح", "زمن غلط"]},
+        {"pair": ["that'll WORK ✅", "that will work (over-full)"], "meaning": ["طبيعي", "توكيد"]}
+      ],
+      "word_practice": ["I'll go", "I'll help", "I'll take it", "we'll see", "I'll call", "we'll manage", "I'll try", "I'll pay", "we'll win", "I'll come"],
+      "sentence_practice": [
+        "That's heavy — I'll help you.",
+        "OK, I'll take it.",
+        "Don't worry, we'll manage."
+      ],
+      "record_this": "That box is heavy — I'll help you carry it. OK, I'll take this one. Don't worry, we'll manage, and I'll call you if there's a problem.",
+      "self_check": "Say 'I'll help you' as an instant offer. Is it smooth and fast, stressed on 'help'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["'ll and 'shall' in offers"],
+      "isolation": {
+        "instructions": "Offers and quick decisions use 'll: 'I'll get it', 'I'll pay'. In questions, 'Shall I…?' /ʃəl aɪ/ offers help. Keep both light and friendly, rising at the end for offers.",
+        "instructions_ar": "العروض والقرارات السريعة بـ 'll: 'I'll get it'. وفي السؤال 'Shall I…?' لعرض المساعدة. خليهم خفاف وودودين بنغمة صاعدة.",
+        "practice": ["I'll get it! I'll pay!", "Shall I help? ↗", "Shall we go? ↗"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Shall I /ʃəl aɪ/", "Shall I (full /ʃæl/) ~"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["I'll get it ✅", "I get it (wrong tense) ❌"], "meaning": ["عرض", "خطأ"]},
+        {"pair": ["Shall we? ↗", "Shall we? ↘"], "meaning": ["عرض ودود", "جاف"]},
+        {"pair": ["I'll pay ✅", "I will pay (firm)"], "meaning": ["عرض عادي", "إصرار"]},
+        {"pair": ["shall /ʃ/", "sell /s/"], "meaning": ["سـ (عرض)", "يبيع"]}
+      ],
+      "word_practice": ["I'll get it", "I'll pay", "shall I", "shall we", "I'll do it", "I'll drive", "shall I help", "shall we go", "I'll bring", "I'll wait"],
+      "sentence_practice": [
+        "The phone's ringing — I'll get it.",
+        "Shall I help you with that?",
+        "Shall we go now?"
+      ],
+      "record_this": "The phone is ringing — I'll get it! Shall I help you with those bags? I'll pay for the taxi, and shall we go now before it rains?",
+      "self_check": "Do your offers rise gently at the end and sound friendly, not flat?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I'll /aɪl/", "aisle"], ["won't", "want"], ["we'll /wiːl/", "wheel"],
+        ["wl you help ✅", "WILL you help ❌"], ["he'll /hiːl/", "heal"], ["Shall I ↗", "Shall I ↘"]
+      ],
+      "challenge_sentences": [
+        "I'll help you and we'll finish quickly.",
+        "I won't be late, I promise.",
+        "Will you call me when you arrive?",
+        "Shall I get the door? I'll pay for lunch."
+      ],
+      "record_this": "Don't worry — I'll help you and we'll finish quickly. I won't be late, I promise. Will you call me when you arrive? Shall I get the door? And I'll pay for lunch today.",
+      "self_check": "Three checks: 'll is one syllable, 'won't' glides (not 'want'), and 'will you' stays weak."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself making predictions and offers. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت بتعمل توقعات وعروض، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I think tomorrow will be a good day. The weather won't be too hot, so we'll go to the park. I'll bring some food and you'll bring the drinks. If it rains, we won't stay outside — we'll go to a café instead. Shall I call the others? I'm sure they'll want to come. Don't worry about the cost; I'll pay this time and you'll pay next time. It'll be fun. I won't be late, I promise, and we'll have a great afternoon together.",
+        "sounds_to_check": {
+          "contraction 'll = /l/": "we'll, I'll, you'll, they'll, it'll",
+          "'won't' /əʊ/ vs 'want'": "won't be, won't stay, won't be late",
+          "weak 'will'": "tomorrow will be, they'll want (not WILL)",
+          "linking 'I'll + verb'": "I'll BRING, I'll PAY, we'll GO",
+          "offers": "Shall I call the others? ↗"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'ll is a clean single syllable, 'won't/want' never merge, offers sound friendly. Ready for week 7.",
+        "70_89": "Good; occasional 'I will' where 'I'll' is natural.",
+        "50_69": "'won't' and 'want' still merge, or 'll is dropped. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, gluing each 'll to its verb."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'ll is a single dark /l/ on the pronoun — 'I'll' rhymes with 'aisle', one syllable.",
+      "'won't' glides like 'phone'; 'want' is short like 'hot'. This pair reverses your meaning.",
+      "Use 'll for on-the-spot decisions and offers (I'll get it); it makes you sound natural and quick.",
+      "'Will you…?' and 'Shall I…?' stay light and rise gently — that is what makes them polite."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

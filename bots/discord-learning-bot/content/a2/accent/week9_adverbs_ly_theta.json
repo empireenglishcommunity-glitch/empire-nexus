@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 9,
+  "focus": "-ly ending /li/ (quickly, slowly) · /θ/ in health, teeth, mouth · /f/ (cough) & /t/ (walked) in body words · adverb stress placement · irregular 'well' /wel/ vs 'good'",
+  "focus_ar": "نهاية -ly، و /θ/ في health/teeth، وأصوات كلمات الجسم، ونبر ظرف الحال، و 'well' مقابل 'good'",
+  "arabic_challenge": "The -ly adverb ending is a weak /li/ that learners often stress or turn into 'lay'. Health and body vocabulary is full of /θ/ (health, teeth, mouth, throat), which Arabic learners may replace with /t/ or /s/.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["-ly = /li/"],
+      "isolation": {
+        "instructions": "The adverb ending -ly is a weak, quick /li/: QUICK-ly, SLOW-ly, CARE-ful-ly. The stress stays on the adjective part; -ly just tags on lightly. Do not say 'quick-LY' or 'quick-lay'.",
+        "instructions_ar": "نهاية الظرف -ly خفيفة وسريعة /li/: QUICK-ly. النبر يفضل على الصفة و -ly تتلزق بخِفّة. مش 'quick-LAY'.",
+        "practice": ["QUICK-li, SLOW-li", "CARE-ful-li, EAS-i-li", "weak tag, don't stress it"]
+      },
+      "minimal_pairs": [
+        {"pair": ["QUICK-ly ✅", "quick-LAY ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["SLOW-ly ✅", "slow-LEE ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["quick (adj)", "quickly (adv)"], "meaning": ["سريع", "بسرعة"]},
+        {"pair": ["careful (adj)", "carefully (adv)"], "meaning": ["حَذِر", "بحذر"]},
+        {"pair": ["easy (adj)", "easily (adv)"], "meaning": ["سهل", "بسهولة"]}
+      ],
+      "word_practice": ["quickly", "slowly", "carefully", "easily", "quietly", "loudly", "badly", "happily", "suddenly", "clearly"],
+      "sentence_practice": [
+        "Please speak slowly and clearly.",
+        "He drives carefully.",
+        "She finished quickly and easily."
+      ],
+      "record_this": "Please speak slowly and clearly so I can understand. He drives very carefully, and she finished the test quickly and easily.",
+      "self_check": "Say 'quickly'. Is -ly a light /li/ tag, with the stress on 'QUICK'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["/θ/ in health words"],
+      "isolation": {
+        "instructions": "Health and body words are full of /θ/: health, teeth, mouth, throat, thumb, thigh. Tongue tip between the teeth, NO voice, air flows. Do not use /t/ or /s/.",
+        "instructions_ar": "كلمات الصحة والجسم مليانة /θ/: health, teeth, mouth, throat. طرف اللسان بين الأسنان، بدون صوت، والهوا مستمر.",
+        "practice": ["thhh (tongue out, no voice)", "health, teeth, mouth", "throat, thumb, thigh"]
+      },
+      "minimal_pairs": [
+        {"pair": ["teeth", "teet ❌"], "meaning": ["أسنان", "خطأ"]},
+        {"pair": ["thick", "sick"], "meaning": ["سميك", "مريض"]},
+        {"pair": ["thigh", "tie"], "meaning": ["فخذ", "ربطة عنق"]},
+        {"pair": ["mouth", "mouse"], "meaning": ["فم", "فأر"]},
+        {"pair": ["three", "tree"], "meaning": ["ثلاثة", "شجرة"]}
+      ],
+      "word_practice": ["health", "healthy", "teeth", "mouth", "throat", "thumb", "thigh", "breath", "tooth", "thin"],
+      "sentence_practice": [
+        "Brush your teeth for good health.",
+        "Open your mouth and say 'ah'.",
+        "My throat hurts and I feel thin."
+      ],
+      "record_this": "Brush your teeth twice a day for good health. Open your mouth and say 'ah'. My throat hurts a little, and I need to take a deep breath.",
+      "self_check": "Say 'teeth' and 'health'. Is your tongue visible between your teeth for /θ/?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["consonants in body/health verbs"],
+      "isolation": {
+        "instructions": "Health verbs bring back earlier sounds: cough /kɒf/ (silent 'gh' → /f/!), walked /wɔːkt/, rest /rest/, breathe /briːð/ (voiced th!). Note 'cough' ends in /f/, and 'breathe' ends in voiced /ð/.",
+        "instructions_ar": "أفعال الصحة بترجّع أصوات قديمة: cough تنتهي بـ /f/ (gh صامتة)، و breathe تنتهي بـ /ð/ مجهورة.",
+        "practice": ["cough = 'coff' (/f/)", "breathe = /briːð/ (voiced)", "walked = 'wawkt'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cough /kɒf/", "cough (with gh) ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["breathe /ð/", "breath /θ/"], "meaning": ["يتنفس (فعل)", "نَفَس (اسم)"]},
+        {"pair": ["walked /kt/", "wal-kid ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["ache /eɪk/", "ash ❌"], "meaning": ["ألم", "رماد"]},
+        {"pair": ["sore /sɔː/", "saw /sɔː/"], "meaning": ["ملتهب", "رأى"]}
+      ],
+      "word_practice": ["cough", "breathe", "breath", "ache", "sore", "rest", "sick", "hurt", "medicine", "fever"],
+      "sentence_practice": [
+        "I have a cough and a sore throat.",
+        "Breathe deeply and rest.",
+        "My head aches and I feel sick."
+      ],
+      "record_this": "I have a bad cough and a sore throat. The doctor said to breathe deeply, take some medicine and rest. My head aches and I feel a little sick.",
+      "self_check": "Say 'cough'. Does it end in /f/ (like 'off'), with no /g/ sound?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["adverb stress placement in sentences"],
+      "isolation": {
+        "instructions": "Adverbs of manner usually come after the verb/object and are lightly stressed: 'He speaks English FLU-ently', 'She runs QUICK-ly'. The main verb keeps the strongest stress.",
+        "instructions_ar": "ظروف الحال بتيجي بعد الفعل/المفعول وبتتنبر بخِفّة. الفعل الرئيسي يحتفظ بأقوى نبر.",
+        "practice": ["He SPEAKS fluently", "She RUNS quickly", "I SLEPT badly"]
+      },
+      "minimal_pairs": [
+        {"pair": ["speaks FLUently ✅", "SPEAKS FLUENTLY (all strong) ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["works HARD ✅", "works hardly ❌ (= بالكاد)"], "meaning": ["يعمل بجد", "معنى مختلف"]},
+        {"pair": ["good (adj)", "well (adv)"], "meaning": ["جيد", "جيدًا"]},
+        {"pair": ["She sings well ✅", "She sings good ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["arrived late (adv)", "the late bus (adj)"], "meaning": ["وصل متأخرًا", "الباص المتأخر"]}
+      ],
+      "word_practice": ["fluently", "carefully", "slowly", "well", "hard", "late", "early", "badly", "quietly", "politely"],
+      "sentence_practice": [
+        "He speaks English fluently.",
+        "She works hard and sleeps well.",
+        "Please drive slowly and carefully."
+      ],
+      "record_this": "He speaks English fluently and writes carefully. She works hard all day and usually sleeps well. Please drive slowly and carefully in the rain.",
+      "self_check": "Note: 'works hard' (a lot) is different from 'hardly works' (almost none). Did you mean the right one?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["irregular 'well' vs 'good'"],
+      "isolation": {
+        "instructions": "'Good' is the adjective (a good doctor); 'well' is the adverb (she sings well) AND means 'healthy' (I feel well). 'Well' uses /w/ + short /e/ + /l/ — do not say 'wall' or 'will'.",
+        "instructions_ar": "'good' صفة و 'well' ظرف (sings well) وتعني كمان 'بصحة جيدة'. 'well' فيها /w/ + /e/ + /l/ — مش 'wall' ولا 'will'.",
+        "practice": ["well /wel/ (not wall, not will)", "a GOOD singer / sings WELL", "I feel well"]
+      },
+      "minimal_pairs": [
+        {"pair": ["well /wel/", "will /wɪl/"], "meaning": ["جيدًا/بصحة", "سوف"]},
+        {"pair": ["well /wel/", "wall /wɔːl/"], "meaning": ["جيدًا", "حائط"]},
+        {"pair": ["sings well ✅", "sings good ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["a good doctor ✅", "a well doctor ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["I feel well (healthy)", "I feel good (fine)"], "meaning": ["بصحة", "بخير"]}
+      ],
+      "word_practice": ["good", "well", "better", "best", "healthy", "fine", "badly", "worse", "feel well", "sleep well"],
+      "sentence_practice": [
+        "She is a good doctor and she explains well.",
+        "I don't feel well today.",
+        "He plays well but he trained badly."
+      ],
+      "record_this": "She is a very good doctor and she explains everything well. I don't feel well today — I have a cough. He plays football well, but last week he trained badly.",
+      "self_check": "Say 'well'. Is it clearly /wel/, not 'will' or 'wall'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["QUICK-ly", "quick-LAY ❌"], ["teeth", "teet ❌"], ["breathe /ð/", "breath /θ/"],
+        ["well /wel/", "will /wɪl/"], ["sings well ✅", "sings good ❌"], ["thick", "sick"]
+      ],
+      "challenge_sentences": [
+        "Brush your teeth carefully for good health.",
+        "I don't feel well — I have a cough and a sore throat.",
+        "She speaks slowly and clearly.",
+        "Breathe deeply and rest well."
+      ],
+      "record_this": "Brush your teeth carefully every day for good health. I don't feel well today — I have a bad cough and a sore throat. The doctor speaks slowly and clearly. She told me to breathe deeply and rest well.",
+      "self_check": "Three checks: weak -ly, dental /θ/ in health words, and 'well' vs 'good' used correctly."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about health and habits. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن الصحة والعادات، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "To stay healthy, I try to live carefully. I eat slowly, brush my teeth twice a day, and sleep well every night. I usually feel well, but last week I wasn't good — I had a bad cough and a sore throat, and my head ached badly. The doctor spoke to me calmly and clearly. She told me to breathe deeply, rest quietly and drink plenty of water. She's a very good doctor and she explains everything well. Now I feel much better. I've learnt that if you look after your health carefully, your body works well.",
+        "sounds_to_check": {
+          "-ly = weak /li/": "carefully, slowly, calmly, clearly, quietly, badly",
+          "/θ/ in health words": "healthy, health, teeth, throat, breathe? (no: /ð/)",
+          "body/health consonants": "cough /f/, breathe /ð/, ached, sore",
+          "adverb placement": "eat SLOWLY, sleep WELL, ached BADLY, explains WELL",
+          "'well' vs 'good'": "feel well, sleep well, a good doctor, explains well"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "-ly is light, /θ/ dental, and 'well/good' used correctly. A2 phonology is solid — ready for week 11.",
+        "70_89": "Good; occasional 'sings good' or stressed -ly.",
+        "50_69": "'teeth' → 'teet', or good/well confused. Repeat days 2 and 5.",
+        "below_50": "Redo days 1-5, watching the tongue for /θ/ and keeping -ly light."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "-ly is a weak tag (/li/), never stressed and never 'lay'.",
+      "You have ث — use it for health, teeth, mouth, throat.",
+      "'cough' ends in /f/; 'breathe' (verb) ends in voiced /ð/, 'breath' (noun) in /θ/.",
+      "'good' is the adjective, 'well' the adverb: 'she sings well', not 'sings good'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

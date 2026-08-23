@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w5",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 5,
+  "pattern_name": "Future: 'be going to' (plans and intentions)",
+  "pattern_name_ar": "المستقبل: be going to (الخطط والنوايا)",
+  "formula": "Subject + am/is/are + going to + base verb",
+  "formula_visual": "[I] + [am going to] + [visit] + [my family]",
+  "when_to_use": "Use 'be going to' for plans and intentions you have already decided.",
+  "when_to_use_ar": "نستخدم be going to للخطط والنوايا اللي قررناها بالفعل.",
+  "why_arabic_speakers_struggle": "Learners drop the 'be' verb ('I going to travel') or use the base form as future without any marker, because Arabic forms the future with a single prefix (سـ).",
+  "examples": [
+    {"en": "I'm going to visit my family.", "ar": "سأزور عائلتي", "structure": "[am going to] + [visit]"},
+    {"en": "We're going to travel in summer.", "ar": "سنسافر في الصيف", "structure": "[are going to] + [travel]"},
+    {"en": "Are you going to study tonight?", "ar": "هل ستذاكر الليلة؟", "structure": "[Are] + [you going to study]?"},
+    {"en": "She's going to start a new job.", "ar": "ستبدأ عملًا جديدًا", "structure": "[is going to] + [start]"},
+    {"en": "It's going to rain.", "ar": "ستمطر", "structure": "[is going to] + [rain]"}
+  ],
+  "common_errors": [
+    {"wrong": "I going to travel.", "correct": "I'm going to travel.", "explanation": "Don't drop 'am/is/are'."},
+    {"wrong": "She going to starts.", "correct": "She's going to start.", "explanation": "After 'going to' use the base verb."},
+    {"wrong": "I'm going to home.", "correct": "I'm going home.", "explanation": "'go to a place' ≠ 'going to + verb'; here it's just 'go home'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ going to study tonight.", "answer": "am"},
+    {"sentence": "We ___ going to travel.", "answer": "are"},
+    {"sentence": "She's going to ___ (start) a job.", "answer": "start"},
+    {"sentence": "___ you going to help?", "answer": "Are"},
+    {"sentence": "It's going to ___ (rain) later.", "answer": "rain"}
+  ],
+  "quick_rule": "am/is/are + going to + base verb, for a decided plan.",
+  "quick_rule_ar": "am/is/are + going to + الفعل المجرد، لخطة مقررة.",
+  "mnemonic": "Plan already decided → BE + GOING TO + verb.",
+  "connect_to_speaking": "Share your plans: 'This weekend I'm going to rest, and next month we're going to travel.'"
+}

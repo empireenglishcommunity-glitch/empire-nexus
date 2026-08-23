@@ -1,0 +1,183 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 8,
+  "focus": "/ʃ/ (sugar, delicious) vs /tʃ/ (chicken, kitchen) · schwa in 'a lot of' /ə lɒt əv/ · weak 'of' /əv/ · 'a few / a little' rhythm · /ʒ/ (usually, measure)",
+  "focus_ar": "/ʃ/ مقابل /tʃ/، والشوا في 'a lot of'، و 'of' الخفيفة، وإيقاع 'a few / a little'، و /ʒ/",
+  "arabic_challenge": "Arabic has ش (/ʃ/) but no /tʃ/, so 'chicken' can become 'shicken'. Quantifier phrases like 'a lot of' and 'a little' are full of weak schwas that Arabic learners tend to pronounce as full vowels, making the phrase sound heavy.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["/ʃ/", "/tʃ/"],
+      "isolation": {
+        "instructions": "/ʃ/ (sugar, sure, delicious) is a long continuous hiss — like Arabic ش. /tʃ/ (chicken, cheese, kitchen) STARTS with a /t/ stop, then bursts into /ʃ/. Feel the little stop at the start of /tʃ/.",
+        "instructions_ar": "/ʃ/ صفير مستمر (زي ش). /tʃ/ يبدأ بوقفة /t/ وبعدها ينفجر لـ /ʃ/. حس بالوقفة الصغيرة في أول /tʃ/.",
+        "practice": ["shhhh (continuous)", "ch-ch-ch (stop then burst)", "shop-chop-shop-chop"]
+      },
+      "minimal_pairs": [
+        {"pair": ["shop", "chop"], "meaning": ["محل", "يقطّع"]},
+        {"pair": ["ships", "chips"], "meaning": ["سفن", "شيبسي"]},
+        {"pair": ["wash", "watch"], "meaning": ["يغسل", "يشاهد"]},
+        {"pair": ["cash", "catch"], "meaning": ["نقود", "يمسك"]},
+        {"pair": ["sheep", "cheap"], "meaning": ["خروف", "رخيص"]}
+      ],
+      "word_practice": {
+        "sh_sound": ["sugar", "sure", "delicious", "fresh", "dish", "fish", "sharp", "shall"],
+        "ch_sound": ["chicken", "kitchen", "cheese", "lunch", "sandwich", "chop", "much", "chocolate"]
+      },
+      "sentence_practice": [
+        "I add sugar to fresh chicken.",
+        "The cheese sandwich is delicious.",
+        "I wash the dishes in the kitchen."
+      ],
+      "record_this": "I add a little sugar to the fresh chicken. The cheese sandwich is delicious, and I always wash the dishes in the kitchen after lunch.",
+      "self_check": "Say 'shop' then 'chop'. Only the second should begin with a hard stop."
+    },
+    {
+      "day": 2,
+      "target_sounds": ["schwa in 'a lot of' /ə lɒt əv/"],
+      "isolation": {
+        "instructions": "'A lot of' is three weak-strong-weak beats: /ə lɒt əv/. Only 'lot' is stressed; 'a' and 'of' are tiny schwas. It flows as one quantifier chunk before a noun.",
+        "instructions_ar": "'a lot of' ثلاث نبرات: خفيف-قوي-خفيف /ə lɒt əv/. 'lot' بس منبورة، و 'a' و 'of' شوا صغيرة.",
+        "practice": ["ə-LOT-əv", "a lot of sugar, a lot of people", "one smooth chunk"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ə-LOT-əv ✅", "A LOT OF (all strong) ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["a lot of /əv/", "a lot OF ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["lots of /əv/", "lots OF ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["a lot of sugar", "a lot of sugars ❌"], "meaning": ["غير معدود", "خطأ"]},
+        {"pair": ["a LOT ✅", "A lot ❌"], "meaning": ["النبر على lot", "خطأ"]}
+      ],
+      "word_practice": ["a lot of sugar", "a lot of people", "a lot of water", "a lot of food", "a lot of time", "lots of fun", "a lot of money", "a lot of work", "a lot of friends", "a lot of rice"],
+      "sentence_practice": [
+        "There is a lot of sugar in this.",
+        "We have a lot of food for the party.",
+        "It takes a lot of time."
+      ],
+      "record_this": "There is a lot of sugar in this cake. We have a lot of food and a lot of drinks for the party, but it took a lot of time to cook.",
+      "self_check": "Say 'a lot of food' as one chunk. Is only 'lot' stressed, with tiny 'a' and 'of'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'of' /əv/"],
+      "isolation": {
+        "instructions": "'Of' is almost never /ɒv/. It weakens to /əv/ or just /ə/: a cup of tea = 'cuppa tea', a piece of cake = 'piece-ə-cake'. Never stress it.",
+        "instructions_ar": "'of' نادرًا تكون /ɒv/. بتخف لـ /əv/ أو /ə/: a cup of tea → cuppa tea. ومش بتتنبر.",
+        "practice": ["cup-ə tea", "piece-ə cake", "kind-ə, lots-ə, plenty-ə"]
+      },
+      "minimal_pairs": [
+        {"pair": ["cup of /əv/ tea ✅", "cup OF tea ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["piece of /əv/ cake ✅", "piece OF cake ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["kind of /ə/ ✅", "kind OF ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["glass of /əv/ water", "glass OF water ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["of /əv/", "off /ɒf/"], "meaning": ["مِن (ملكية)", "بعيدًا"]}
+      ],
+      "word_practice": ["cup of tea", "glass of water", "piece of cake", "bottle of juice", "kilo of rice", "bit of bread", "lots of fruit", "plenty of time", "kind of food", "type of tea"],
+      "sentence_practice": [
+        "I'd like a cup of tea and a piece of cake.",
+        "We need a kilo of rice and a bottle of oil.",
+        "There's plenty of time."
+      ],
+      "record_this": "I'd like a cup of tea and a piece of cake, please. We also need a kilo of rice and a bottle of oil, but there's plenty of time to shop.",
+      "self_check": "Say 'cup of tea' fast. Does 'of' shrink to /ə/, sounding like 'cuppa'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'a few / a little' rhythm"],
+      "isolation": {
+        "instructions": "'A few' (countable) and 'a little' (uncountable) are quantifier chunks: a-FEW, a-LITTLE. 'A' is weak; the stress is on few/little. Use 'a few' with plurals, 'a little' with uncountables.",
+        "instructions_ar": "'a few' (معدود) و 'a little' (غير معدود) وحدات: a-FEW, a-LITTLE. 'a' خفيفة والنبر على few/little.",
+        "practice": ["a-FEW apples", "a-LITTLE sugar", "few = countable, little = uncountable"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a few apples ✅", "a little apples ❌"], "meaning": ["معدود", "خطأ"]},
+        {"pair": ["a little water ✅", "a few water ❌"], "meaning": ["غير معدود", "خطأ"]},
+        {"pair": ["a few /ə fjuː/", "a view /ə vjuː/"], "meaning": ["قليل", "منظر"]},
+        {"pair": ["a little ✅", "a-LITTLE (over-strong a) ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["few (not many)", "a few (some)"], "meaning": ["قليل جدًا", "بعض"]}
+      ],
+      "word_practice": ["a few apples", "a few friends", "a few days", "a few minutes", "a little sugar", "a little water", "a little time", "a little money", "a few things", "a little help"],
+      "sentence_practice": [
+        "I have a few friends and a little time.",
+        "Add a little salt and a few olives.",
+        "Wait a few minutes, please."
+      ],
+      "record_this": "I have a few close friends and a little free time this week. For the recipe, add a little salt and a few olives, then wait a few minutes.",
+      "self_check": "Are you using 'a few' with countables (friends) and 'a little' with uncountables (time, salt)?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["/ʒ/ (usually, measure, television)"],
+      "isolation": {
+        "instructions": "/ʒ/ is the VOICED partner of /ʃ/ — a soft buzzing 'zh' as in 'usually', 'measure', 'television', 'decision'. Arabic has no /ʒ/ in standard form, so it often becomes /z/ or /dʒ/.",
+        "instructions_ar": "/ʒ/ هو النسخة المجهورة من /ʃ/ — صوت 'ژ' ناعم زي 'usually'. العربية الفصحى مفيهاش /ʒ/ فبتتحول لـ /z/ أو /dʒ/.",
+        "practice": ["zh-zh-zh (voiced sh)", "u-zhu-ally, mea-zhure", "televi-zhun, deci-zhun"]
+      },
+      "minimal_pairs": [
+        {"pair": ["measure /ʒ/", "major /dʒ/"], "meaning": ["يقيس", "رئيسي"]},
+        {"pair": ["usually /ʒ/", "you sually ❌"], "meaning": ["عادةً", "خطأ"]},
+        {"pair": ["vision /ʒ/", "vishon /ʃ/ ❌"], "meaning": ["رؤية", "خطأ"]},
+        {"pair": ["Asia /ʒ/", "Asha ❌"], "meaning": ["آسيا", "خطأ"]},
+        {"pair": ["leisure /ʒ/", "lezer ❌"], "meaning": ["وقت فراغ", "خطأ"]}
+      ],
+      "word_practice": ["usually", "measure", "television", "decision", "vision", "pleasure", "leisure", "occasion", "Asia", "casual"],
+      "sentence_practice": [
+        "I usually watch television in the evening.",
+        "It was a pleasure to meet you.",
+        "That was a good decision."
+      ],
+      "record_this": "I usually watch television in the evening for leisure. It was a real pleasure to meet you, and I think you made a good decision.",
+      "self_check": "Say 'usually'. Is the middle a soft buzzing /ʒ/, not a hard /dʒ/ (like 'j') or /z/?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 8 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["shop", "chop"], ["ships", "chips"], ["measure /ʒ/", "major /dʒ/"],
+        ["a lot of /əv/", "a lot OF ❌"], ["a few apples", "a little apples ❌"], ["wash", "watch"]
+      ],
+      "challenge_sentences": [
+        "There's a lot of sugar and a little salt.",
+        "I usually cook chicken with fresh cheese.",
+        "We need a few onions and a bottle of oil.",
+        "The fish and chips were delicious."
+      ],
+      "record_this": "There's a lot of sugar and a little salt in this dish. I usually cook chicken with fresh cheese. We need a few onions and a bottle of oil. The fish and chips at that shop were delicious.",
+      "self_check": "Check: /ʃ/ vs /tʃ/ (shop/chop), weak 'of', and 'a few' vs 'a little' with the right nouns."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about food and cooking. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن الأكل والطبخ، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I usually cook at home because restaurant food has a lot of sugar and a lot of salt. My favourite dish is chicken with rice. First I wash the chicken, then I add a little oil, a few onions and some fresh spices. I don't use much sugar, just a little. For dessert I make a cheese cake — it's delicious. I usually drink a cup of tea after lunch. Cooking is a pleasure for me, and it's my favourite way to relax during my leisure time. On special occasions I make fish and chips for the whole family.",
+        "sounds_to_check": {
+          "/ʃ/ vs /tʃ/": "wash, fresh, delicious, fish — chicken, cheese, cheesecake, chips",
+          "'a lot of' schwa": "a lot of sugar, a lot of salt",
+          "weak 'of'": "cup of tea, way of relaxing",
+          "'a few / a little'": "a few onions, a little oil, a little sugar",
+          "/ʒ/": "usually, pleasure, leisure, occasions"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'chicken' is never 'shicken', quantifier chunks flow with weak schwas. Ready for week 9.",
+        "70_89": "Good; occasional heavy 'of' or 'a lot of'.",
+        "50_69": "/tʃ/ → /ʃ/, or quantifiers over-stressed. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, saying each quantifier phrase as one smooth chunk."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "You have ش (/ʃ/); /tʃ/ is /t/ + /ʃ/ said together — build 'chicken' from that, not from ش.",
+      "Quantifier chunks ('a lot of', 'a little') are mostly weak schwas — only the middle word is stressed.",
+      "'of' is /əv/ or /ə/, never a strong 'OFF'.",
+      "'a few' + countable (onions); 'a little' + uncountable (oil, sugar)."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

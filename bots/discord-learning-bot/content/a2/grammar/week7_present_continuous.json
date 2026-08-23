@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w7",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 7,
+  "pattern_name": "Present continuous (now) vs present simple",
+  "pattern_name_ar": "المضارع المستمر (الآن) مقابل المضارع البسيط",
+  "formula": "Now: am/is/are + verb-ing · Routine: present simple (base / -s)",
+  "formula_visual": "[I usually walk], but [I'm taking the bus now]",
+  "when_to_use": "Use the present continuous for actions happening now; use the present simple for habits and routines.",
+  "when_to_use_ar": "نستخدم المضارع المستمر للأحداث اللي بتحصل دلوقتي، والبسيط للعادات والروتين.",
+  "why_arabic_speakers_struggle": "Arabic uses one present form for both, so learners say 'I read now' for a current action or 'I am going every day' for a habit.",
+  "examples": [
+    {"en": "I usually walk, but today I'm taking the bus.", "ar": "عادةً أمشي، لكن اليوم أركب الأتوبيس", "structure": "[usually walk] vs [am taking]"},
+    {"en": "She is cooking now.", "ar": "هي بتطبخ دلوقتي", "structure": "[is cooking] (now)"},
+    {"en": "What are you doing?", "ar": "ماذا تفعل؟", "structure": "[are] + [you doing]?"},
+    {"en": "He works in a bank.", "ar": "هو يعمل في بنك", "structure": "[works] (routine)"},
+    {"en": "They are studying at the moment.", "ar": "هم بيذاكروا الآن", "structure": "[are studying]"}
+  ],
+  "common_errors": [
+    {"wrong": "I read now.", "correct": "I'm reading now.", "explanation": "Action happening now → continuous."},
+    {"wrong": "I am going to the gym every day.", "correct": "I go to the gym every day.", "explanation": "Habit → present simple."},
+    {"wrong": "She is knowing the answer.", "correct": "She knows the answer.", "explanation": "State verbs (know, like, want) are not usually continuous."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Be quiet — the baby ___ (sleep).", "answer": "is sleeping"},
+    {"sentence": "I ___ (go) to work by bus every day.", "answer": "go"},
+    {"sentence": "What ___ you ___ (do) right now?", "answer": "are / doing"},
+    {"sentence": "She usually ___ (drink) tea, but today she ___ (drink) coffee.", "answer": "drinks / is drinking"},
+    {"sentence": "They ___ (watch) TV at the moment.", "answer": "are watching"}
+  ],
+  "quick_rule": "Now → am/is/are + -ing. Every day/usually → present simple.",
+  "quick_rule_ar": "دلوقتي → am/is/are + -ing. كل يوم/عادةً → المضارع البسيط.",
+  "mnemonic": "RIGHT NOW → -ING. USUALLY → simple.",
+  "connect_to_speaking": "Contrast now and usually: 'I usually study at night, but right now I'm relaxing.'"
+}

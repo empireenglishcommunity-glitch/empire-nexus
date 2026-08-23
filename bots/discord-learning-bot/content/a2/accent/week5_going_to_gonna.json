@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 5,
+  "focus": "'going to' → /ɡənə/ (gonna) in connected speech · weak 'to' /tə/ · 'want to' → /wɒnə/ · linking 'going to + verb' · full form vs relaxed form",
+  "focus_ar": "'going to' تصير /ɡənə/ في الكلام المتصل، و 'to' الخفيفة، و 'want to' → /wɒnə/، ووصل going to بالفعل",
+  "arabic_challenge": "Arabic keeps every word fully articulated, so learners say 'going TO' with a strong /tuː/ every time. Natural English reduces 'going to + verb' to /ɡənə/. Understanding fast native speech depends on recognising this reduction.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'to' /tə/"],
+      "isolation": {
+        "instructions": "'To' before a verb is almost never /tuː/. It weakens to /tə/: 'want to go' = wanna-go, 'need to work' = need-tə-work. The vowel shrinks to a schwa.",
+        "instructions_ar": "'to' قبل الفعل نادرًا تكون /tuː/. بتخف لـ /tə/: 'need to work' → need-tə-work.",
+        "practice": ["/tə/ go, /tə/ work, /tə/ see", "need-tə, have-tə, like-tə", "never a strong TOO"]
+      },
+      "minimal_pairs": [
+        {"pair": ["need /tə/ go ✅", "need TWO go ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["like /tə/ read ✅", "like TOO read ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["want /tə/ ✅", "want TOO ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["/tə/ (before verb)", "/tuː/ (I have two)"], "meaning": ["خفيفة", "قوية للعدد"]},
+        {"pair": ["try /tə/ help ✅", "try TWO help ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["to go", "to work", "to see", "to stay", "to visit", "to travel", "to study", "to help", "to buy", "to relax"],
+      "sentence_practice": [
+        "I need to go to work.",
+        "I want to visit my family.",
+        "We plan to travel in summer."
+      ],
+      "record_this": "I need to go to work early, but I want to visit my family later. We plan to travel and to relax in the summer.",
+      "self_check": "Say 'need to go' quickly. Does 'to' become a tiny /tə/, not a strong 'too'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'going to' → /ɡənə/"],
+      "isolation": {
+        "instructions": "'Going to' + verb reduces to /ɡənə/ (gonna) in speech: 'I'm going to study' = I'm-gonna-study. Use it before a VERB. (Before a place — 'going to Cairo' — it stays full.)",
+        "instructions_ar": "'going to' + فعل بتتقلّص لـ /ɡənə/ في الكلام: 'I'm going to study' → I'm-gonna-study. قبل الفعل فقط.",
+        "practice": ["gonna study, gonna work, gonna travel", "I'm-gonna, we're-gonna, they're-gonna", "before a verb only"]
+      },
+      "minimal_pairs": [
+        {"pair": ["gonna study ✅", "going TWO study ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["gonna work ✅", "going TO work ❌"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["going to Cairo (full)", "gonna Cairo ❌"], "meaning": ["مكان → كاملة", "خطأ"]},
+        {"pair": ["I'm gonna ✅", "I gonna ❌ (needs 'm)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["gonna /ɡənə/", "gunner /ɡʌnə/"], "meaning": ["سوف", "مدفعجي"]}
+      ],
+      "word_practice": ["gonna study", "gonna work", "gonna travel", "gonna help", "gonna stay", "gonna visit", "gonna buy", "gonna start", "gonna finish", "gonna try"],
+      "sentence_practice": [
+        "I'm going to study tonight.",
+        "We're going to travel next month.",
+        "She's going to start a new job."
+      ],
+      "record_this": "Tonight I'm going to study, and tomorrow I'm going to help my mother. Next month we're going to travel, and my sister is going to start a new job.",
+      "self_check": "Say 'I'm going to study' fast. Does 'going to' become 'gonna'? (Keep it full before a place.)"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'want to' → /wɒnə/"],
+      "isolation": {
+        "instructions": "'Want to' reduces to /wɒnə/ (wanna): 'I want to go' = I-wanna-go. Same relaxed pattern as gonna. This is normal, correct speech — not slang to avoid.",
+        "instructions_ar": "'want to' بتتقلّص لـ /wɒnə/ (wanna): 'I want to go' → I-wanna-go. نفس نمط gonna، وده كلام صحيح مش عامية.",
+        "practice": ["wanna go, wanna see, wanna try", "I wanna, we wanna, they wanna", "he/she → 'wants to' (not wanna)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I wanna go ✅", "I want TWO go ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["wanna see ✅", "want TO see (over-full)"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["I wanna ✅", "he wanna ❌ (→ wants to)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["wanna /wɒnə/", "wander /wɒndə/"], "meaning": ["أريد أن", "يتجوّل"]},
+        {"pair": ["we wanna stay ✅", "we want TWO stay ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["wanna go", "wanna see", "wanna try", "wanna stay", "wanna learn", "wanna travel", "wanna help", "wanna visit", "wanna buy", "wanna rest"],
+      "sentence_practice": [
+        "I want to see the pyramids.",
+        "We want to try the local food.",
+        "They want to stay another day."
+      ],
+      "record_this": "I want to see the pyramids and I want to try the local food. We want to stay another day, but they want to travel to the coast.",
+      "self_check": "'I want to go' → does it flow as 'I wanna go'? Remember: 'he wants to' stays full."
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Linking 'going to + verb'"],
+      "isolation": {
+        "instructions": "Link the whole plan into one smooth phrase: I'm-gonna-go, we're-gonna-stay. The stress lands on the main verb, not on 'gonna'. Practise saying the plan as one breath.",
+        "instructions_ar": "اربط الخطة كلها في عبارة واحدة سلسة، والنبر على الفعل الرئيسي مش على 'gonna'.",
+        "practice": ["I'm-gonna-STUDY", "we're-gonna-TRAVEL", "she's-gonna-START"]
+      },
+      "minimal_pairs": [
+        {"pair": ["gonna STUDY ✅", "GONNA study ❌"], "meaning": ["النبر على الفعل", "خطأ"]},
+        {"pair": ["gonna TRAVEL ✅", "gonna travel (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["I'm-gonna-go ✅", "I. am. going. to. go. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["we're-gonna-stay ✅", "we are going two stay ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["she's-gonna-help ✅", "she gonna help ❌"], "meaning": ["صحيح", "ناقص 's"]}
+      ],
+      "word_practice": ["I'm gonna go", "we're gonna stay", "she's gonna start", "they're gonna travel", "he's gonna help", "I'm gonna study", "we're gonna visit", "it's gonna rain", "I'm gonna try", "we're gonna win"],
+      "sentence_practice": [
+        "I'm gonna study and then I'm gonna rest.",
+        "We're gonna travel and stay near the sea.",
+        "It's going to rain later."
+      ],
+      "record_this": "Tonight I'm going to study and then I'm going to rest. This weekend we're going to travel and stay near the sea. They say it's going to rain later.",
+      "self_check": "Say the plan as one smooth line. Does the stress land on the main verb (STUDY, TRAVEL)?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["Full form vs relaxed form"],
+      "isolation": {
+        "instructions": "Both are correct. Use the FULL form ('going to') when speaking slowly, formally, or for emphasis; use the RELAXED form ('gonna') in normal, fast speech. Train your ear to recognise both.",
+        "instructions_ar": "الشكلان صحيحان. استخدم الكامل في الكلام الرسمي أو البطيء، والمخفّف في الكلام السريع الطبيعي. درّب أذنك على الاتنين.",
+        "practice": ["slow/formal: 'I am going to explain'", "fast/normal: 'I'm gonna explain'", "listen for both in songs and films"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'm going to (formal)", "I'm gonna (relaxed)"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["We are going to win (emphasis)", "We're gonna win (normal)"], "meaning": ["توكيد", "عادي"]},
+        {"pair": ["going to the shop (place, full)", "gonna the shop ❌"], "meaning": ["مكان → كاملة", "خطأ"]},
+        {"pair": ["Is it going to rain? (careful)", "Is it gonna rain? (casual)"], "meaning": ["متأنٍّ", "عفوي"]},
+        {"pair": ["I'm not going to (firm)", "I'm not gonna (casual)"], "meaning": ["حازم", "عفوي"]}
+      ],
+      "word_practice": ["going to explain", "going to decide", "going to change", "going to happen", "going to arrive", "gonna explain", "gonna decide", "gonna happen", "gonna change", "gonna arrive"],
+      "sentence_practice": [
+        "I am going to explain the plan clearly.",
+        "Everything is going to change.",
+        "What are you going to do?"
+      ],
+      "record_this": "Let me be clear: I am going to explain the plan. Everything is going to change this year. So, what are you going to do about it?",
+      "self_check": "Read it once slowly (full form) and once fast (gonna). Can you switch smoothly between the two?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["gonna study", "going TWO study ❌"], ["wanna go", "want TWO go ❌"], ["need /tə/", "need TWO ❌"],
+        ["gonna /ɡənə/", "gunner ❌"], ["going to Cairo (full)", "gonna Cairo ❌"], ["I'm gonna", "I gonna ❌"]
+      ],
+      "challenge_sentences": [
+        "I'm going to study tonight and I want to rest tomorrow.",
+        "We're going to travel and we want to see the sea.",
+        "It's going to rain, so we need to stay home.",
+        "What are you going to do next weekend?"
+      ],
+      "record_this": "I'm going to study tonight because I want to pass the test. Tomorrow we're going to travel and I want to see the sea. They say it's going to rain, so we need to stay home. What are you going to do next weekend?",
+      "self_check": "Does 'going to + verb' reduce to gonna, while 'going to + place' stays full?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about your plans. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن خططك، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I have big plans for this year. Next month I'm going to start a new course, and I want to improve my English. In the summer we're going to travel to the coast, and I want to swim every day. My brother is going to get married, so the whole family is going to celebrate. I'm going to save some money because I want to buy a laptop. If it's going to rain on the weekend, we're going to stay home and watch films. What are you going to do? I really want to hear your plans.",
+        "sounds_to_check": {
+          "weak 'to' /tə/": "want to improve, going to start, need to save",
+          "'going to' → /ɡənə/ (before verb)": "going to start, going to travel, going to celebrate, going to save, going to stay",
+          "'going to' full (before place)": "going to the coast",
+          "'want to' → /wɒnə/": "want to improve, want to swim, want to buy, want to hear",
+          "he/she keeps full": "my brother is going to get married (not 'gonna' without 's)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'gonna' and 'wanna' flow naturally before verbs; full form kept before places. Ready for week 6.",
+        "70_89": "Good; occasional over-full 'going TO'.",
+        "50_69": "Every 'to' is a strong 'two'. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, saying each plan as one connected phrase."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'gonna' and 'wanna' are correct, natural English — not careless slang. Native speech reduces them constantly.",
+      "Reduce 'going to' before a VERB (gonna study); keep it full before a PLACE (going to Cairo).",
+      "Recognising these reductions is essential for understanding fast speech, films and songs.",
+      "he/she needs 'wants to' / 'is going to' — the reduction still needs the -s / 's."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

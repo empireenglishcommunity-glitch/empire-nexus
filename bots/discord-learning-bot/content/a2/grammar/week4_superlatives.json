@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w4",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 4,
+  "pattern_name": "Superlative adjectives (the -est / the most)",
+  "pattern_name_ar": "صفات التفضيل (the -est / the most)",
+  "formula": "the + short adj + -est · the most + long adj · one of the + superlative + plural",
+  "formula_visual": "[It] + [is the biggest] + [city]",
+  "when_to_use": "Say which is number one in a group: short adjectives take 'the -est', longer ones take 'the most'.",
+  "when_to_use_ar": "للتعبير عن الأعلى في مجموعة: الصفات القصيرة the -est، والطويلة the most.",
+  "why_arabic_speakers_struggle": "Learners omit 'the' before superlatives (Arabic marks it differently) and mix '-est' with 'most' ('the most biggest').",
+  "examples": [
+    {"en": "It is the biggest city.", "ar": "هي أكبر مدينة", "structure": "[the biggest]"},
+    {"en": "This is the most beautiful place.", "ar": "هذا أجمل مكان", "structure": "[the most beautiful]"},
+    {"en": "He is one of the best players.", "ar": "هو من أفضل اللاعبين", "structure": "[one of the best]"},
+    {"en": "That was the worst day.", "ar": "كان أسوأ يوم", "structure": "[the worst] (irregular)"},
+    {"en": "It's the cheapest hotel here.", "ar": "هو أرخص فندق هنا", "structure": "[the cheapest]"}
+  ],
+  "common_errors": [
+    {"wrong": "It is biggest city.", "correct": "It is the biggest city.", "explanation": "Superlatives need 'the'."},
+    {"wrong": "The most biggest.", "correct": "The biggest.", "explanation": "Use either -est OR most, never both."},
+    {"wrong": "He is the most good.", "correct": "He is the best.", "explanation": "'Good' is irregular: the best."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It is ___ (big) city in Egypt.", "answer": "the biggest"},
+    {"sentence": "That was ___ (interesting) film I've seen.", "answer": "the most interesting"},
+    {"sentence": "This is ___ (cheap) option.", "answer": "the cheapest"},
+    {"sentence": "He is ___ (good) student in the class.", "answer": "the best"},
+    {"sentence": "It was ___ (bad) day of my life.", "answer": "the worst"}
+  ],
+  "quick_rule": "the + -est (short) / the most (long). Irregulars: the best, the worst.",
+  "quick_rule_ar": "the + -est للقصيرة / the most للطويلة. والشاذ: the best, the worst.",
+  "mnemonic": "Number one → THE + -EST or THE MOST.",
+  "connect_to_speaking": "Describe your favourites: 'The best day of my week is Friday. Cairo is the most crowded city I know.'"
+}

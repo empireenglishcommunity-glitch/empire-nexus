@@ -21,7 +21,7 @@ CONTENT = config.BASE_DIR / "content"
 
 # Levels whose accent/grammar content has been authored so far. Add a level
 # here as its phonology content ships (that makes the coverage explicit).
-AUTHORED = ["A1"]
+AUTHORED = ["A1", "A2"]
 
 _PLACEHOLDER = "I am practicing English."
 

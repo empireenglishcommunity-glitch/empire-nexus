@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w6",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 6,
+  "pattern_name": "Future: 'will' (decisions, predictions, offers)",
+  "pattern_name_ar": "المستقبل: will (القرارات والتوقعات والعروض)",
+  "formula": "Subject + will ('ll) + base verb · Negative: won't + base verb",
+  "formula_visual": "[I] + [will help] + [you]",
+  "when_to_use": "Use 'will' for on-the-spot decisions, predictions, and offers; 'won't' for the negative.",
+  "when_to_use_ar": "نستخدم will للقرارات اللحظية والتوقعات والعروض؛ و won't للنفي.",
+  "why_arabic_speakers_struggle": "Learners add 'to' after will ('I will to help') or use 'will' for pre-made plans where 'going to' is more natural.",
+  "examples": [
+    {"en": "I think it will rain.", "ar": "أعتقد أنها ستمطر", "structure": "[will] + [rain]"},
+    {"en": "I'll help you.", "ar": "سأساعدك", "structure": "['ll] + [help]"},
+    {"en": "She won't be late.", "ar": "لن تتأخر", "structure": "[won't] + [be]"},
+    {"en": "We'll see what happens.", "ar": "سنرى ما يحدث", "structure": "['ll] + [see]"},
+    {"en": "They'll arrive tomorrow.", "ar": "سيصلون غدًا", "structure": "['ll] + [arrive]"}
+  ],
+  "common_errors": [
+    {"wrong": "I will to help.", "correct": "I will help.", "explanation": "No 'to' after will — use the base verb."},
+    {"wrong": "She will helps.", "correct": "She will help.", "explanation": "After 'will' the verb has no -s."},
+    {"wrong": "I willn't go.", "correct": "I won't go.", "explanation": "The negative of will is 'won't'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "That bag is heavy — I ___ help you.", "answer": "will/'ll"},
+    {"sentence": "I think it ___ (be) sunny tomorrow.", "answer": "will be"},
+    {"sentence": "Don't worry, she ___ (not) be late.", "answer": "won't"},
+    {"sentence": "We ___ (see) what happens.", "answer": "will see"},
+    {"sentence": "They ___ (arrive) soon.", "answer": "will arrive"}
+  ],
+  "quick_rule": "will/'ll + base verb (decisions, predictions, offers). Negative = won't.",
+  "quick_rule_ar": "will/'ll + الفعل المجرد (قرارات، توقعات، عروض). والنفي won't.",
+  "mnemonic": "Decide NOW / predict / offer → WILL + verb.",
+  "connect_to_speaking": "Make predictions and offers: 'I think the team will win. That's heavy — I'll carry it for you.'"
+}

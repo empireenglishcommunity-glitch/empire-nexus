@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 12,
+  "focus": "Weak 'because' /bɪkəz/ · weak 'and' /ən/ · weak 'but' /bət/ · 'so' /səʊ/ · linking connectors in connected speech · full A2 review",
+  "focus_ar": "'because' الخفيفة، و 'and' الخفيفة، و 'but' الخفيفة، و 'so'، ووصل الروابط في الكلام المتصل، ومراجعة A2",
+  "arabic_challenge": "Connectors are function words that English weakens heavily: 'and' → /ən/, 'because' → /bɪkəz/ or even /kəz/, 'but' → /bət/. Arabic speakers tend to give each its full value, which makes connected speech sound like a list of separate words.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'and' /ən/"],
+      "isolation": {
+        "instructions": "'And' almost never sounds like /ænd/. It reduces to /ən/ or just /n/: 'fish and chips' = 'fish-n-chips', 'you and me' = 'you-n-me'. It links the two words it joins.",
+        "instructions_ar": "'and' نادرًا تكون /ænd/. بتخف لـ /ən/ أو /n/: 'fish and chips' → 'fish-n-chips'.",
+        "practice": ["fish-n-chips", "you-n-me", "bread-n-butter"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fish 'n' chips ✅", "fish AND chips ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["you 'n' me ✅", "you AND me ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["and /ən/", "and /ænd/ (emphasis only)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["bread 'n' butter ✅", "bread AND butter ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["black 'n' white ✅", "black AND white ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["and", "fish and chips", "you and me", "bread and butter", "here and there", "now and then", "up and down", "salt and pepper", "back and forth", "day and night"],
+      "sentence_practice": [
+        "I like tea and coffee.",
+        "We went up and down the street.",
+        "It's black and white."
+      ],
+      "record_this": "I like tea and coffee in the morning, and bread and butter for breakfast. We walked up and down the street, back and forth, all day and night.",
+      "self_check": "Say 'fish and chips'. Does 'and' shrink to a tiny /ən/ or /n/?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'because' /bɪkəz/"],
+      "isolation": {
+        "instructions": "'Because' has the stress on the SECOND syllable and a weak first syllable: /bɪˈkəz/. In fast speech it can shorten to 'cause' /kəz/. The 'a' in the middle is a schwa, not a full vowel.",
+        "instructions_ar": "'because' النبر على المقطع الثاني والأول خفيف: /bɪˈkəz/. وفي الكلام السريع تبقى 'cause' /kəz/.",
+        "practice": ["bi-KƏZ", "'cause /kəz/", "because I was tired"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bi-KƏZ ✅", "BE-cause ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["because /kəz/", "because /kɔːz/ ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["'cause (casual)", "because (full)"], "meaning": ["عفوي", "عادي"]},
+        {"pair": ["because", "cause (reason, noun)"], "meaning": ["لأن", "سبب"]},
+        {"pair": ["bi-kəz I ✅", "be-KAWZ I ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["because", "because I", "because we", "because it", "because of", "'cause", "because he", "because she", "because they", "because there"],
+      "sentence_practice": [
+        "I stayed home because I was tired.",
+        "We left because it was late.",
+        "She's happy because she passed."
+      ],
+      "record_this": "I stayed home because I was tired. We left early because it was getting late, and she's really happy because she passed her exam.",
+      "self_check": "Say 'because'. Is the stress on the second syllable, with a weak first syllable?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'but' /bət/ and 'so' /səʊ/"],
+      "isolation": {
+        "instructions": "'But' weakens to /bət/: 'small but strong' = 'small-bət-strong'. 'So' /səʊ/ stays fuller because it glides, but it isn't heavily stressed. Both link clauses smoothly.",
+        "instructions_ar": "'but' بتخف لـ /bət/. 'so' /səʊ/ بتفضل أوضح شوية لأنها متحركة لكن مش منبورة بقوة.",
+        "practice": ["small-bət-strong", "tired-bət-happy", "so /səʊ/ (glide)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bət /bət/ ✅", "BUT /bʌt/ ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["so /səʊ/", "saw /sɔː/"], "meaning": ["لذلك", "رأى"]},
+        {"pair": ["but /bət/", "boot /buːt/"], "meaning": ["لكن", "حذاء"]},
+        {"pair": ["so /səʊ/ (glide)", "so (flat) ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["tired but happy ✅", "tired BUT happy ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["but", "so", "but I", "but we", "so I", "so we", "but it", "so it", "but then", "and so"],
+      "sentence_practice": [
+        "I was tired but happy.",
+        "It was raining, so we stayed home.",
+        "It's small but comfortable."
+      ],
+      "record_this": "I was tired but very happy after the trip. It was raining, so we stayed home and watched a film. My room is small but comfortable.",
+      "self_check": "Say 'tired but happy'. Does 'but' shrink to /bət/ between the two adjectives?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["linking connectors in connected speech"],
+      "isolation": {
+        "instructions": "Connectors glue clauses together. Keep them weak and let the CONTENT words carry the stress: 'I was TIRED, so I WENT to BED because it was LATE.' The connectors almost disappear between the strong words.",
+        "instructions_ar": "الروابط بتلزق الجُمَل ببعض. خليها خفيفة وخلي الكلمات المهمة تحمل النبر، فالروابط تكاد تختفي.",
+        "practice": ["I was TIRED so I WENT to BED", "weak: so, and, because", "strong: tired, went, bed, late"]
+      },
+      "minimal_pairs": [
+        {"pair": ["so-I-went ✅", "SO I WENT ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["and-then-we ✅", "AND THEN WE ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["because-it-was ✅", "BECAUSE IT WAS ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["when-I-arrived ✅", "WHEN I ARRIVED ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["before-we-left ✅", "BEFORE WE LEFT ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["and then", "so I", "because it", "but we", "when I", "before we", "after that", "and so", "so that", "even though"],
+      "sentence_practice": [
+        "I was tired, so I went to bed early.",
+        "We waited because the bus was late.",
+        "When I arrived, everyone had left."
+      ],
+      "record_this": "I was very tired, so I went to bed early. We waited a long time because the bus was late. When I finally arrived, everyone had already left, but I didn't mind.",
+      "self_check": "Read the sentence with only the content words strong. Do the connectors sink between them?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["A2 sound review — endings & weak forms"],
+      "isolation": {
+        "instructions": "Pull together the A2 story so far: -ed endings (/t/ /d/ /ɪd/), -ing (/ɪŋ/), contractions ('ll, 've, 's), and weak forms (to, of, and, than, because). Read a mixed passage focusing on all of them.",
+        "instructions_ar": "لمّ خيوط A2: نهايات -ed و -ing، والاختصارات، والصور الخفيفة. اقرأ مقطعًا مختلطًا مركّزًا على كلها.",
+        "practice": ["worked /t/, played /d/, wanted /ɪd/", "I'll, I've, she's", "to /tə/, of /əv/, and /ən/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["worked /t/", "wanted /ɪd/"], "meaning": ["مقطع واحد", "مقطعين"]},
+        {"pair": ["I'll /aɪl/", "I've /aɪv/"], "meaning": ["سأفعل", "لقد"]},
+        {"pair": ["gonna study", "going TWO study ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["hafta go", "have TWO go ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["because /kəz/", "BE-cause ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["worked", "played", "wanted", "working", "I'll", "I've", "she's", "gonna", "hafta", "because"],
+      "sentence_practice": [
+        "I've worked hard because I want to pass.",
+        "She's going to travel and I'll stay home.",
+        "We wanted to help but we had to work."
+      ],
+      "record_this": "I've worked hard this year because I want to pass my exams. My sister's going to travel in summer, but I'll probably stay home. We wanted to help our parents, but we had to work.",
+      "self_check": "In one sentence, check an -ed ending, a contraction, and a weak connector. All three natural?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 12 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["fish 'n' chips ✅", "fish AND chips ❌"], ["bi-KƏZ ✅", "BE-cause ❌"], ["but /bət/", "boot"],
+        ["so /səʊ/", "saw /sɔː/"], ["so-I-went ✅", "SO I WENT ❌"], ["because /kəz/", "because /kɔːz/ ❌"]
+      ],
+      "challenge_sentences": [
+        "I was tired, so I went home and rested.",
+        "We stayed because it was raining, but we didn't mind.",
+        "She works hard and she's going to succeed.",
+        "I've studied a lot, so I'll pass the test."
+      ],
+      "record_this": "I was really tired, so I went home and rested. We stayed inside because it was raining, but we didn't mind at all. My sister works hard and she's going to succeed. I've studied a lot this month, so I'll definitely pass the test.",
+      "self_check": "Do all your connectors (and, so, but, because) stay weak while the content words carry the stress?"
+    },
+    {
+      "day": 7,
+      "target_sounds": "A2 final self-assessment",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is your A2 pronunciation exit check. Record the whole passage, then compare it with your A2 week-1 recording. The difference is your progress.",
+        "instructions_ar": "ده اختبار النطق النهائي للمستوى A2. سجّل النص كله وقارنه بتسجيلك في أول أسبوع من A2 — الفرق هو تقدّمك.",
+        "passage": "Let me tell you my story. Last year I decided to improve my English because I wanted a better job. It wasn't easy, but I worked hard every day. I studied in the morning and practised in the evening. I've made a lot of progress, and now I can speak more fluently than before. Next year I'm going to take an exam, so I have to keep studying. My teacher says I should be proud of myself. I've learnt that if you want something, you have to work for it. It was difficult, but it was worth it, and I'll never stop learning.",
+        "sounds_to_check": {
+          "-ed endings /t/ /d/ /ɪd/": "worked, practised, studied — improved, learnt? — wanted, decided",
+          "-ing & contractions": "morning, evening, studying — I've made, I'm going, I'll never",
+          "weak connectors": "because I wanted, but I worked, so I have to, and now",
+          "reductions": "going to (gonna), have to (hafta), want(ed) to, than before",
+          "should / comparatives": "I should be proud, more fluently than before"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Excellent A2 pronunciation. Endings, contractions and weak forms all sound natural. Ready for B1.",
+        "70_89": "Solid A2. A few weak forms still come out full — note them and keep drilling.",
+        "50_69": "Understandable but connected speech is still word-by-word. Revisit the weak-form weeks (3, 5, 12).",
+        "below_50": "Work through A2 again, one week at a time, with the daily recording habit."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Connectors are function words: English weakens them heavily ('and' → /ən/, 'because' → /kəz/).",
+      "Fluent rhythm comes from strong content words + weak function words — not from equal stress.",
+      "This week ties together the whole A2 sound system: endings, contractions and reductions.",
+      "Compare your A2 week-12 recording with A2 week 1 — the jump in fluency is usually clear."
+    ],
+    "daily_time": "15-20 minutes (review week)",
+    "recording_requirement": "Record the day-7 passage and keep it as your A2 pronunciation baseline for B1."
+  }
+}

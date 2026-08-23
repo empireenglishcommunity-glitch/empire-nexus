@@ -1,0 +1,36 @@
+{
+  "id": "grammar_a2_w11",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 11,
+  "pattern_name": "Obligation & advice: have to / must / should",
+  "pattern_name_ar": "الإلزام والنصيحة: have to / must / should",
+  "formula": "have to / must + base (necessity) · don't have to (no obligation) · should + base (advice)",
+  "formula_visual": "[You] + [should] + [see] + [a doctor]",
+  "when_to_use": "Use have to / must for necessity, don't have to for no obligation, and should for advice.",
+  "when_to_use_ar": "نستخدم have to / must للضرورة، و don't have to لغياب الإلزام، و should للنصيحة.",
+  "why_arabic_speakers_struggle": "Learners add 'to' after must/should ('I must to go'), and confuse 'mustn't' (prohibited) with 'don't have to' (optional).",
+  "examples": [
+    {"en": "I have to work tomorrow.", "ar": "يجب أن أعمل غدًا", "structure": "[have to] + [work]"},
+    {"en": "You must wear a seatbelt.", "ar": "يجب أن ترتدي حزام الأمان", "structure": "[must] + [wear]"},
+    {"en": "You should see a doctor.", "ar": "يجب أن ترى طبيبًا (نصيحة)", "structure": "[should] + [see]"},
+    {"en": "We don't have to hurry.", "ar": "لسنا مضطرين للعجلة", "structure": "[don't have to] + [hurry]"},
+    {"en": "You mustn't smoke here.", "ar": "ممنوع أن تدخّن هنا", "structure": "[mustn't] + [smoke]"}
+  ],
+  "common_errors": [
+    {"wrong": "I must to go.", "correct": "I must go.", "explanation": "No 'to' after must/should."},
+    {"wrong": "You don't must be late.", "correct": "You mustn't be late.", "explanation": "Prohibition = mustn't."},
+    {"wrong": "You mustn't pay (it's optional).", "correct": "You don't have to pay.", "explanation": "No obligation = don't have to; mustn't = prohibited."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (have to) work on Saturday.", "answer": "have to"},
+    {"sentence": "You ___ (should) rest more.", "answer": "should"},
+    {"sentence": "You ___ (mustn't) smoke in here.", "answer": "mustn't"},
+    {"sentence": "We ___ (not have to) pay for children.", "answer": "don't have to"},
+    {"sentence": "She ___ (must) wear a uniform.", "answer": "must"}
+  ],
+  "quick_rule": "Necessity → have to / must. No obligation → don't have to. Prohibited → mustn't. Advice → should.",
+  "quick_rule_ar": "ضرورة → have to / must. لا إلزام → don't have to. ممنوع → mustn't. نصيحة → should.",
+  "mnemonic": "SHOULD = advice · MUST/HAVE TO = necessary · MUSTN'T = forbidden.",
+  "connect_to_speaking": "Give rules and advice: 'At work I have to arrive early, but I don't have to wear a suit. You should get more sleep.'"
+}

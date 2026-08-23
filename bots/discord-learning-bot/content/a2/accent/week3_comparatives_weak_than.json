@@ -1,0 +1,180 @@
+{
+  "level": "A2",
+  "cefr": "A2",
+  "week": 3,
+  "focus": "Schwa in comparative -er endings (bigger, cheaper) · weak 'than' /ðən/ · /ð/ in than/the · comparative sentence stress · 'more' + adjective linking",
+  "focus_ar": "الشوا في نهايات المقارنة -er، و 'than' الخفيفة، و /ð/، ونبر جملة المقارنة، ووصل more مع الصفة",
+  "arabic_challenge": "Arabic gives every syllable full value, so learners say 'bigg-ERR' with a strong final vowel instead of the tiny schwa /ə/. 'Than' is also usually pronounced at full strength, which makes comparisons sound heavy and unnatural.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["-er = /ə/ (schwa)"],
+      "isolation": {
+        "instructions": "The comparative -er is the WEAKEST sound in English: a tiny, relaxed /ə/. BIGG-er, CHEAP-er, HOTT-er. The stress stays on the first syllable and the ending almost disappears.",
+        "instructions_ar": "نهاية المقارنة -er هي أخف صوت في الإنجليزي: /ə/ صغيرة مسترخية. النبر يفضل على المقطع الأول والنهاية تكاد تختفي.",
+        "practice": ["BIGG-er (not bigg-ERR)", "CHEAP-er, HOTT-er, COLD-er", "whisper the ending"]
+      },
+      "minimal_pairs": [
+        {"pair": ["BIGG-er ✅", "bigg-ERR ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["CHEAP-er ✅", "cheap-ERR ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["HOTT-er ✅", "hott-ERR ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["OLD-er ✅", "old-ERR ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["FAST-er ✅", "fast-ERR ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["bigger", "cheaper", "hotter", "colder", "older", "faster", "smaller", "safer", "quieter", "busier"],
+      "sentence_practice": [
+        "Cairo is bigger and busier.",
+        "This hotel is cheaper and quieter.",
+        "The weather is hotter here."
+      ],
+      "record_this": "Cairo is bigger and busier than my village. This hotel is cheaper and much quieter, and the weather is hotter here.",
+      "self_check": "Say 'bigger'. Is the ending almost silent, with the weight on BIGG?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'than' /ðən/"],
+      "isolation": {
+        "instructions": "'Than' is a function word: it weakens to /ðən/ or even /ðn/. It is never stressed. 'bigger than me' flows as 'BIGG-er-thən-ME'.",
+        "instructions_ar": "'than' كلمة وظيفية بتخف لـ /ðən/ ومش بتتنبر أبدًا. 'bigger than me' بتسيل كوحدة واحدة.",
+        "practice": ["bigger-thən-me (one flow)", "cheaper-thən-that", "never say THAN loudly"]
+      },
+      "minimal_pairs": [
+        {"pair": ["bigger thən me ✅", "bigger THAN me ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["older thən you ✅", "older THAN you ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["cheaper thən this ✅", "cheaper THAN this ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["than /ðən/", "then /ðen/"], "meaning": ["من (للمقارنة)", "ثم"]},
+        {"pair": ["faster thən that ✅", "faster THAN that ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["than me", "than you", "than this", "than that", "than before", "than my city", "than last year", "than the other", "than ever", "than mine"],
+      "sentence_practice": [
+        "My brother is older than me.",
+        "This is cheaper than that.",
+        "Today is hotter than yesterday."
+      ],
+      "record_this": "My brother is older than me but I am taller than him. This hotel is cheaper than that one, and today is hotter than yesterday.",
+      "self_check": "Record it, then listen: does 'than' almost disappear between the two stressed words?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["/ð/ in than, the, this"],
+      "isolation": {
+        "instructions": "Comparisons are full of /ð/: than, the, this, that, they, there. Tongue tip between the teeth, voice ON. Do not let it become /d/ or /z/.",
+        "instructions_ar": "المقارنات مليانة /ð/: than, the, this, that. طرف اللسان بين الأسنان والصوت مشتغل. متخليهاش /d/ أو /z/.",
+        "practice": ["thh (voiced, tongue visible)", "than, the, this, that", "this is thicker than that"]
+      },
+      "minimal_pairs": [
+        {"pair": ["than", "Dan"], "meaning": ["من (مقارنة)", "دان (اسم)"]},
+        {"pair": ["they", "day"], "meaning": ["هم", "يوم"]},
+        {"pair": ["those", "zoos"], "meaning": ["تلك", "حدائق حيوان"]},
+        {"pair": ["there", "dare"], "meaning": ["هناك", "يجرؤ"]},
+        {"pair": ["this", "dis ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["than", "the", "this", "that", "they", "there", "these", "those", "other", "weather"],
+      "sentence_practice": [
+        "This city is bigger than that one.",
+        "The weather there is better.",
+        "These are cheaper than those."
+      ],
+      "record_this": "This city is bigger than that one, and the weather there is much better. These hotels are cheaper than those near the beach.",
+      "self_check": "Mirror check: is your tongue visible on 'than', 'this' and 'the'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["Comparative sentence stress"],
+      "isolation": {
+        "instructions": "In a comparison the stress falls on the ADJECTIVE and on the thing compared: 'Cairo is BIGGER than ASWAN.' Everything between them stays weak. That contrast is what makes the comparison clear.",
+        "instructions_ar": "في المقارنة النبر على الصفة وعلى الشيء المقارَن: 'Cairo is BIGGER than ASWAN'. واللي بينهم يبقى خفيف.",
+        "practice": ["Cairo is BIGGER than ASWAN", "This is CHEAPER than THAT", "clap on the two strong words"]
+      },
+      "minimal_pairs": [
+        {"pair": ["BIGGER than ASWAN ✅", "bigger than aswan (flat) ❌"], "meaning": ["طبيعي", "مسطح"]},
+        {"pair": ["CHEAPER than THAT ✅", "cheaper THAN that ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["MUCH better ✅", "much BETTER (both ok)"], "meaning": ["شائع", "ممكن"]},
+        {"pair": ["a LOT hotter ✅", "a lot HOTTER (both ok)"], "meaning": ["شائع", "ممكن"]},
+        {"pair": ["FAR cheaper ✅", "far CHEAPER (both ok)"], "meaning": ["شائع", "ممكن"]}
+      ],
+      "word_practice": ["much bigger", "a lot cheaper", "far better", "slightly older", "a bit hotter", "much quieter", "far safer", "a little colder", "much busier", "slightly smaller"],
+      "sentence_practice": [
+        "Cairo is much BIGGER than my town.",
+        "This hotel is far CHEAPER than that one.",
+        "The weather is a lot HOTTER in summer."
+      ],
+      "record_this": "Cairo is much bigger than my town, and the traffic is far worse. This hotel is a lot cheaper than that one, and the weather is much hotter in summer.",
+      "self_check": "Clap only on the strong words. Two or three claps per sentence, not one per word."
+    },
+    {
+      "day": 5,
+      "target_sounds": ["'more' + adjective linking"],
+      "isolation": {
+        "instructions": "For longer adjectives use 'more': more expensive, more beautiful, more interesting. 'More' links straight into the adjective, and the adjective keeps its own stress: more ex-PEN-sive.",
+        "instructions_ar": "للصفات الطويلة نستخدم more: more expensive. و more تتوصّل بالصفة والصفة تحتفظ بنبرها.",
+        "practice": ["more-ex-PEN-sive", "more-BEAU-ti-ful", "more-IN-ter-est-ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["more expensive ✅", "expensiver ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["more beautiful ✅", "beautifuller ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["bigger ✅", "more big ❌"], "meaning": ["صحيح (قصيرة)", "خطأ"]},
+        {"pair": ["better ✅", "more good ❌"], "meaning": ["صحيح (شاذ)", "خطأ"]},
+        {"pair": ["worse ✅", "more bad ❌"], "meaning": ["صحيح (شاذ)", "خطأ"]}
+      ],
+      "word_practice": ["more expensive", "more beautiful", "more interesting", "more crowded", "more modern", "more popular", "better", "worse", "further", "more comfortable"],
+      "sentence_practice": [
+        "This city is more beautiful than mine.",
+        "Flying is more expensive than the train.",
+        "The museum was more interesting than I expected."
+      ],
+      "record_this": "This city is more beautiful and more modern than mine. Flying is more expensive than the train, but the museum was more interesting than I expected.",
+      "self_check": "Short adjectives take -er; long ones take 'more'. Did you mix them anywhere?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["BIGG-er", "bigg-ERR ❌"], ["thən", "THAN ❌"], ["than", "Dan"],
+        ["more expensive", "expensiver ❌"], ["CHEAP-er", "cheap-ERR ❌"], ["they", "day"]
+      ],
+      "challenge_sentences": [
+        "Cairo is bigger and busier than my village.",
+        "This hotel is cheaper than that one.",
+        "Flying is more expensive but much faster.",
+        "The weather here is better than there."
+      ],
+      "record_this": "Cairo is bigger and busier than my village, but my village is much quieter. This hotel is cheaper than that one. Flying is more expensive but much faster, and the weather here is better than there.",
+      "self_check": "Three checks: weak -er endings, weak 'than', and stress on the adjectives."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself comparing two places. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تقارن بين مكانين، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I want to compare two cities. Cairo is much bigger and busier than my village. The traffic is far worse, and life there is more expensive. But Cairo is also more interesting: the museums are better and there are more things to do. My village is smaller, quieter and safer. The air is cleaner and the people are friendlier. Houses are cheaper than in the city. In summer the village is hotter, but in winter it is colder than Cairo. For me, my village is better than any big city, because it is home.",
+        "sounds_to_check": {
+          "-er = weak schwa": "bigger, busier, worse? (irregular), smaller, quieter, safer, cleaner, friendlier, cheaper, hotter, colder",
+          "weak 'than'": "than my village, than in the city, than Cairo, than any big city",
+          "/ð/ (not /d/ or /z/)": "than, the, there, they, this, that",
+          "'more' + long adjective": "more expensive, more interesting",
+          "sentence stress": "much BIGGER than my VILLAGE, far WORSE"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Endings are weak, 'than' disappears naturally, stress lands on the adjectives. Ready for week 4.",
+        "70_89": "Good; 'than' occasionally over-stressed.",
+        "50_69": "Endings pronounced as strong 'ERR', or every word equally stressed. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, whispering the endings until they feel light."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The schwa /ə/ is the most common sound in English and the weakest — Arabic has no true equivalent, so it must be practised deliberately.",
+      "'Than' should never be stressed. If a listener hears it clearly, it is too strong.",
+      "Short adjective → -er. Long adjective → more. Irregulars: good→better, bad→worse.",
+      "Stress the adjective and the compared noun; weaken everything between."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}
