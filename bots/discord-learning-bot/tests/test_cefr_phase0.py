@@ -100,8 +100,8 @@ def test_loader_tolerates_unauthored_cefr_levels():
     # assert against a level that is still unauthored to keep testing the
     # tolerance.)
     curriculum.load_all()
-    b1 = [k for k in curriculum._weekly_data if k.startswith("B1_")]
-    assert b1 == []  # B1 not authored yet — loader tolerates it, no error
+    b2 = [k for k in curriculum._weekly_data if k.startswith("B2_")]
+    assert b2 == []  # B2 not authored yet — loader tolerates it, no error
 
 
 # ============================================================
