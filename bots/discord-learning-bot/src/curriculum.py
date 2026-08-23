@@ -28,9 +28,17 @@ CONTENT_DIR = config.BASE_DIR / "content"
 # so L0/L1/L2/L3 never silently drift out of sync again.
 LEVEL_WEEK_COUNTS = {"L0": 8, "L1": 10, "L2": 12, "L3": 8}
 
+# Mi'yar (CEFR) week counts — the six CEFR levels. Used once CEFR content
+# exists + the cefr_curriculum flag is on. Legacy counts above remain the
+# source of truth for L0–L3 until each level is migrated.
+CEFR_WEEK_COUNTS = {"A1": 10, "A2": 12, "B1": 14, "B2": 16, "C1": 18, "C2": 20}
+
 
 def max_week_for_level(level: str) -> int:
-    """Number of curriculum weeks defined for a level (defaults to L0's 8)."""
+    """Number of curriculum weeks defined for a level. Accepts BOTH CEFR
+    (A1–C2) and legacy (L0–L3) keys (defaults to L0's 8)."""
+    if level in CEFR_WEEK_COUNTS:
+        return CEFR_WEEK_COUNTS[level]
     return LEVEL_WEEK_COUNTS.get(level, LEVEL_WEEK_COUNTS["L0"])
 
 
@@ -66,8 +74,14 @@ def load_all():
     """Load all curriculum data from JSON files. Call once at bot startup."""
     global _weekly_data, _accent_data, _grammar_data
 
-    # Load weekly data (vocab/speaking/writing) for ALL levels (L0-L3)
-    for level, max_week in LEVEL_WEEK_COUNTS.items():
+    # Load weekly data (vocab/speaking/writing) for ALL levels — legacy
+    # (L0–L3) AND CEFR (A1–C2). CEFR files (data/a1_weekN.json …) are added
+    # per level during the Mi'yar rollout; missing files are skipped safely,
+    # so this is a no-op until CEFR content exists. Keying by the level string
+    # means legacy and CEFR content coexist without collision during migration.
+    _all_week_counts = dict(LEVEL_WEEK_COUNTS)
+    _all_week_counts.update(CEFR_WEEK_COUNTS)
+    for level, max_week in _all_week_counts.items():
         for week in range(1, max_week + 1):
             path = DATA_DIR / f"{level.lower()}_week{week}.json"
             if path.exists():
@@ -91,7 +105,7 @@ def load_all():
     # A missing folder is NOT an error: it correctly results in an empty
     # dict for that level, which get_accent_drill()/get_grammar_pattern()
     # treat as "not available yet" rather than silently falling back to L0.
-    for level in LEVEL_WEEK_COUNTS:
+    for level in _all_week_counts:
         level_lower = level.lower()
         _accent_data[level] = {}
         accent_dir = CONTENT_DIR / level_lower / "accent"
