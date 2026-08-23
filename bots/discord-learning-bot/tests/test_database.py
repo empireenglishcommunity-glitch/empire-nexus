@@ -21,7 +21,8 @@ def test_register_member_existing_returns_false():
 def test_register_member_defaults():
     database.register_member("u1", "Alice")
     m = database.get_member("u1")
-    assert m["level"] == "L0"
+    # Mi'yar: new students start on the first CEFR level (A1), not legacy L0.
+    assert m["level"] == "A1"
     assert m["track"] == "Core"
     assert m["status"] == "active"
     assert m["total_points"] == 0

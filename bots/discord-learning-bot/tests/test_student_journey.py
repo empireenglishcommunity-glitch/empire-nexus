@@ -146,7 +146,8 @@ async def test_full_student_journey():
 
     member = database.get_member(MEMBER_ID)
     assert member is not None
-    assert member["level"] == "L0"
+    # Mi'yar: new students start on the first CEFR level (A1).
+    assert member["level"] == "A1"
     assert member["total_points"] == 0
     assert member["current_streak"] == 0
     assert member["longest_streak"] == 0

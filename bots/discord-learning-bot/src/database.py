@@ -1004,10 +1004,15 @@ def expire_old_pending_resets(ttl_days: int = PENDING_RESET_TTL_DAYS) -> int:
 #  MEMBER OPERATIONS
 # ============================================================
 
-def register_member(discord_id: str, name: str, level: str = "L0",
+def register_member(discord_id: str, name: str, level: str = "A1",
                     track: str = "Core", goal: str = "",
                     telegram_id: str = "") -> bool:
-    """Register a new member. Returns True if newly created, False if exists."""
+    """Register a new member. Returns True if newly created, False if exists.
+
+    Mi'yar: new students start on the first CEFR level (A1). The legacy L0–L3
+    keys still resolve everywhere via config.level_info()/cefr_key(), so any
+    pre-migration row keeps working.
+    """
     conn = _connect()
     try:
         conn.execute(
