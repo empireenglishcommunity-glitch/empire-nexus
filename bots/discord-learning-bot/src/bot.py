@@ -3253,6 +3253,39 @@ async def cmd_itqan_pass(ctx, member: discord.Member = None, week: int = None):
         pass
 
 
+@bot.command(name="advance")
+@commands.has_permissions(manage_guild=True)
+async def cmd_advance(ctx, member: discord.Member = None):
+    """(Admin) Manually promote a student to the next level.
+    Usage: !advance @user — bypasses the advancement exam (owner override)."""
+    if member is None:
+        await ctx.send("Usage: `!advance @user`")
+        return
+    data = database.get_member(str(member.id))
+    if not data:
+        await ctx.send("That user isn't a registered student.")
+        return
+    level = data.get("level", "L0")
+    next_levels = {"L0": "L1", "L1": "L2", "L2": "L3"}
+    next_level = next_levels.get(level)
+    if not next_level:
+        await ctx.send(f"**{member.display_name}** is already at the highest level ({level}).")
+        return
+    database.set_level(str(member.id), next_level)
+    await ctx.send(
+        f"🎓 **{member.display_name}** manually promoted from **{level}** to **{next_level}**!\n"
+        f"Calendar reset. They'll start {next_level} from Week 1."
+    )
+    try:
+        await ops_hub.send_ops_alert(
+            "Advancement: manual promotion",
+            f"{ctx.author} promoted {data.get('discord_name', '?')} from {level} to {next_level} (override).",
+            severity="info",
+        )
+    except Exception:
+        pass
+
+
 @bot.command(name="itqan-reset")
 @commands.has_permissions(manage_guild=True)
 async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
