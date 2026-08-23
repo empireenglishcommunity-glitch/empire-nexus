@@ -205,7 +205,7 @@ async def _maybe_certificate_dm(discord_id: str, level: str) -> None:
         return
     base = database.get_setting("practice_base_url", "https://practice.empireenglish.online")
     link = f"{base}/assessment/certificate/?level={level}"
-    level_name = (config.LEVELS.get(level, {}) or {}).get("name", level)
+    level_name = config.level_info(level).get("name", level)
     msg = (
         f"🎓 **Level Complete — {level} {level_name}!**\n"
         f"You've mastered every week of {level}. That's a huge achievement — "

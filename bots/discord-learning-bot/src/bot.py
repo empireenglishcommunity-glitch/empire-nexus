@@ -2332,7 +2332,7 @@ async def cmd_done(ctx, task: str = None):
     else:
         member_data = database.get_member(str(ctx.author.id))
         level = member_data.get("level", "L0") if member_data else "L0"
-        if level == "L0":
+        if config.cefr_key(level) == "A1":
             msg = features.get_done_response_ar(task, result)
         else:
             bar = "█" * result["tasks_today"] + "░" * (7 - result["tasks_today"])
@@ -2384,7 +2384,7 @@ async def cmd_progress(ctx):
         await ctx.send("You're not registered yet. Use `!join` to start.")
         return
 
-    level_info = config.LEVELS.get(member["level"], config.LEVELS["L0"])
+    level_info = config.level_info(member["level"])
     week = database.member_week_number(str(ctx.author.id))
     completion = task_engine.calculate_completion_rate(str(ctx.author.id))
     completed_today = database.tasks_completed_today(str(ctx.author.id))
@@ -2487,7 +2487,7 @@ async def cmd_top(ctx):
     medals = ["🥇", "🥈", "🥉"] + ["🔹"] * 7
     lines = ["🏆 **Points Leaderboard**\n"]
     for i, row in enumerate(rows):
-        lvl = config.LEVELS.get(row["level"], config.LEVELS["L0"])
+        lvl = config.level_info(row["level"])
         lines.append(f"{medals[i]} {row['discord_name']} — {row['total_points']} pts {lvl['emoji']}")
 
     # If the requester isn't in the shown top slice, append their own rank
@@ -2502,7 +2502,7 @@ async def cmd_top(ctx):
             rank = database.get_member_rank(author_id)
             if rank:
                 me = database.get_member(author_id) or {}
-                lvl = config.LEVELS.get(me.get("level"), config.LEVELS["L0"])
+                lvl = config.level_info(me.get("level"))
                 total = database.member_count()
                 name = me.get("discord_name") or ctx.author.display_name
                 pos = f"#{rank}/{total}" if total else f"#{rank}"
@@ -3560,7 +3560,7 @@ async def slash_find(interaction: discord.Interaction, query: str):
         return
     lines = [f"**🔍 {total} match(es) for “{query}”:**\n"]
     for did, (m, nick) in rows:
-        lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
+        lvl = config.level_info(m["level"])
         name = m.get("discord_name") or "(unknown)"
         nick_str = f" _(server name: {nick})_" if nick and nick != name else ""
         lines.append(
@@ -4529,7 +4529,7 @@ async def cmd_members(ctx):
     lines = [f"**👥 Members ({len(members)})**"]
     lines.append("_ID shown so you can target from #admin-commands (e.g. `!reset-student <id>`)._\n")
     for m in members[:20]:
-        lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
+        lvl = config.level_info(m["level"])
         streak_str = f"🔥{m['current_streak']}" if m["current_streak"] > 0 else ""
         lines.append(
             f"{lvl['emoji']} {m['discord_name']} — {m['level']} | {m['total_points']} pts {streak_str}\n"
@@ -4594,7 +4594,7 @@ async def cmd_find(ctx, *, query: str = ""):
     rows = list(matches.items())[:15]
     lines = [f"**🔍 {len(rows)} match(es) for “{query}”:**\n"]
     for did, (m, nick) in rows:
-        lvl = config.LEVELS.get(m["level"], config.LEVELS["L0"])
+        lvl = config.level_info(m["level"])
         name = m.get("discord_name") or "(unknown)"
         nick_str = f" _(server name: {nick})_" if nick and nick != name else ""
         lines.append(

@@ -674,7 +674,7 @@ async def post_leaderboard(guild: discord.Guild):
         "",
     ]
     for i, row in enumerate(rows):
-        lvl = config.LEVELS.get(row["level"], config.LEVELS["L0"])
+        lvl = config.level_info(row["level"])
         lines.append(f"{medals[i]} **{row['discord_name']}** — {row['total_points']} pts {lvl['emoji']}")
 
     try:
@@ -1109,7 +1109,7 @@ async def show_today(ctx):
         tid = task["id"]
         if tid in completed:
             return f"  ✅ ~~{task['emoji']} {task['name_ar']}~~"
-        mins = 10 if member.get("level", "L0") == "L0" else 15
+        mins = 10 if config.cefr_key(member.get("level", "A1")) == "A1" else 15
         total_min += mins
         # Empire Reset: the 5 practice-page exercises auto-log when finished
         # on the page; only writing (!6) + community (!7) are logged here.
