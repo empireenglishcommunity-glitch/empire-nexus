@@ -57,7 +57,37 @@
       {"code": "A2.M.3", "en": "Can collaborate on a simple shared task, inviting others to contribute and reacting to their suggestions.", "ar": "يقدر يتعاون في مهمة مشتركة بسيطة، ويشجّع الآخرين على المشاركة ويتفاعل مع اقتراحاتهم."}
     ]
   },
-  "B1": {},
+  "B1": {
+    "overview_en": "Can understand the main points of clear standard input on familiar matters regularly encountered in work, school, leisure, etc. Can deal with most situations likely to arise whilst travelling in an area where the language is spoken. Can produce simple connected text on topics which are familiar or of personal interest. Can describe experiences and events, dreams, hopes and ambitions and briefly give reasons and explanations for opinions and plans.",
+    "overview_ar": "يقدر يفهم النقاط الأساسية في كلام واضح وقياسي عن مواضيع مألوفة في الشغل والدراسة والترفيه. يقدر يتعامل مع معظم المواقف اللي ممكن تحصل أثناء السفر. يقدر ينتج نص بسيط ومترابط عن مواضيع مألوفة أو تهمّه. يقدر يوصف الخبرات والأحداث والأحلام والطموحات، ويدّي أسباب وتفسيرات مختصرة لآرائه وخططه.",
+    "reception": [
+      {"code": "B1.R.1", "en": "Can understand the main points of clear standard speech on familiar matters regularly encountered in work, school and leisure.", "ar": "يقدر يفهم النقاط الأساسية في كلام واضح وقياسي عن مواضيع مألوفة في الشغل والدراسة والترفيه."},
+      {"code": "B1.R.2", "en": "Can understand the main points of many radio or TV programmes on current affairs or topics of personal interest when delivered relatively slowly and clearly.", "ar": "يقدر يفهم النقاط الأساسية في كتير من برامج الراديو والتلفزيون عن الأحداث الجارية أو مواضيع تهمّه لما تكون بطيئة وواضحة نسبيًا."},
+      {"code": "B1.R.3", "en": "Can understand the description of events, feelings and wishes in personal letters and messages well enough to correspond regularly.", "ar": "يقدر يفهم وصف الأحداث والمشاعر والرغبات في الرسائل الشخصية كفاية للمراسلة المنتظمة."},
+      {"code": "B1.R.4", "en": "Can read straightforward factual texts on subjects related to their interests with a satisfactory level of comprehension.", "ar": "يقدر يقرأ نصوص معلوماتية مباشرة عن مواضيع تهمّه بمستوى فهم مُرضٍ."},
+      {"code": "B1.R.5", "en": "Can identify the main conclusions in clearly signalled argumentative texts and follow the line of an argument.", "ar": "يقدر يحدد الاستنتاجات الأساسية في النصوص الجدلية الواضحة ويتابع خط الحجة."}
+    ],
+    "production": [
+      {"code": "B1.P.1", "en": "Can connect phrases in a simple way to describe experiences and events, their dreams, hopes and ambitions.", "ar": "يقدر يربط الجمل ببساطة عشان يوصف خبراته وأحداثه وأحلامه وطموحاته."},
+      {"code": "B1.P.2", "en": "Can narrate a story or relate the plot of a book or film and describe their reactions.", "ar": "يقدر يحكي قصة أو يلخّص أحداث كتاب أو فيلم ويوصف انطباعاته."},
+      {"code": "B1.P.3", "en": "Can briefly give reasons and explanations for opinions, plans and actions.", "ar": "يقدر يدّي أسباب وتفسيرات مختصرة لآرائه وخططه وأفعاله."},
+      {"code": "B1.P.4", "en": "Can write simple connected text on topics which are familiar or of personal interest, linking ideas into a sequence.", "ar": "يقدر يكتب نص بسيط ومترابط عن مواضيع مألوفة أو تهمّه، ويربط الأفكار في تسلسل."},
+      {"code": "B1.P.5", "en": "Can write personal letters and messages describing experiences, feelings and events in some detail.", "ar": "يقدر يكتب رسائل شخصية يصف فيها خبراته ومشاعره وأحداثه ببعض التفصيل."},
+      {"code": "B1.P.6", "en": "Can write short, simple essays on topics of interest, and summarise / report information and give an opinion.", "ar": "يقدر يكتب مقالات قصيرة وبسيطة عن مواضيع تهمّه، ويلخّص ويعرض معلومات ويدّي رأيه."}
+    ],
+    "interaction": [
+      {"code": "B1.I.1", "en": "Can deal with most situations likely to arise while travelling (transport, accommodation, dealing with authorities).", "ar": "يقدر يتعامل مع معظم مواقف السفر (المواصلات، الإقامة، التعامل مع الجهات)."},
+      {"code": "B1.I.2", "en": "Can enter unprepared into conversation on familiar topics, express personal opinions and exchange information.", "ar": "يقدر يدخل محادثة غير محضّرة عن مواضيع مألوفة، ويعبّر عن آرائه ويتبادل المعلومات."},
+      {"code": "B1.I.3", "en": "Can express and respond to feelings such as surprise, happiness, sadness, interest and indifference.", "ar": "يقدر يعبّر ويرد على مشاعر زي الدهشة والسعادة والحزن والاهتمام واللامبالاة."},
+      {"code": "B1.I.4", "en": "Can explain why something is a problem, discuss what to do next, and compare and contrast alternatives.", "ar": "يقدر يشرح ليه حاجة تمثّل مشكلة، ويناقش الخطوة الجاية، ويقارن بين البدائل."},
+      {"code": "B1.I.5", "en": "Can give or seek personal views and opinions in discussing topics of interest, and politely agree or disagree.", "ar": "يقدر يدّي أو يطلب وجهات نظر في مناقشة مواضيع تهمّه، ويوافق أو يعترض بأدب."}
+    ],
+    "mediation": [
+      {"code": "B1.M.1", "en": "Can relay the main points made in clear texts or messages on familiar subjects, in the same or another language.", "ar": "يقدر ينقل النقاط الأساسية في نصوص أو رسائل واضحة عن مواضيع مألوفة."},
+      {"code": "B1.M.2", "en": "Can summarise and give their opinion about a short story, article, talk, discussion or interview.", "ar": "يقدر يلخّص ويدّي رأيه في قصة قصيرة أو مقال أو حديث أو نقاش أو مقابلة."},
+      {"code": "B1.M.3", "en": "Can help a discussion along on familiar ground by inviting others to join, restating points and summarising where the group has got to.", "ar": "يقدر يدفع النقاش للأمام في موضوع مألوف بدعوة الآخرين للمشاركة وإعادة صياغة النقاط وتلخيص ما وصلوا إليه."}
+    ]
+  },
   "B2": {},
   "C1": {},
   "C2": {}
