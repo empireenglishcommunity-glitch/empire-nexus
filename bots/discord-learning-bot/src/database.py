@@ -687,17 +687,71 @@ def _tables_with_discord_id(conn) -> list:
     return out
 
 
-def snapshot_member_data(discord_id: str) -> dict:
+# --- Snapshot (JSON) serialization helpers -------------------------------
+# Snapshots dump every row of every discord_id-keyed table to JSON. Some
+# columns are raw BLOBs (e.g. assessment_recordings.audio), which the stdlib
+# json encoder cannot serialize (`TypeError: Object of type bytes is not JSON
+# serializable`). These helpers make snapshots round-trip safely: bytes are
+# base64-encoded under a type marker on dump and decoded back to bytes on
+# restore.
+_BYTES_MARKER = "__bytes_b64__"
+_BLOB_OMITTED_MARKER = "__blob_omitted__"
+
+
+def _snapshot_json_default(o):
+    """json.dumps `default` hook: encode raw bytes as base64 under a marker so
+    a snapshot containing a BLOB (audio recordings, etc.) is serializable AND
+    fully reversible via _decode_snapshot_value()."""
+    import base64
+    if isinstance(o, (bytes, bytearray)):
+        return {_BYTES_MARKER: base64.b64encode(bytes(o)).decode("ascii")}
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+
+
+def _dumps_snapshot(snapshot: dict) -> str:
+    """Serialize a snapshot to JSON, tolerating raw-bytes columns."""
+    import json as _json
+    return _json.dumps(snapshot, ensure_ascii=False, default=_snapshot_json_default)
+
+
+def _decode_snapshot_value(v):
+    """Inverse of _snapshot_json_default: turn a base64 bytes-marker dict back
+    into raw bytes so a restored row re-inserts a real BLOB. Leaves any other
+    value (including omitted-blob markers) untouched."""
+    import base64
+    if isinstance(v, dict) and _BYTES_MARKER in v and len(v) == 1:
+        return base64.b64decode(v[_BYTES_MARKER])
+    return v
+
+
+def snapshot_member_data(discord_id: str, include_blobs: bool = True) -> dict:
     """Full export of every row keyed to this student across ALL tables that
     have a discord_id column (dynamic, so future tables are covered). Used as
-    the pre-deletion proof AND to make a reset reversible."""
+    the pre-deletion proof AND to make a reset reversible.
+
+    include_blobs=True  -> raw BLOB columns are preserved (base64-encoded at
+                           dump time via _dumps_snapshot) so the snapshot can
+                           fully restore the row.
+    include_blobs=False -> BLOB columns are replaced with a lightweight marker
+                           recording only their byte length. Used by callers
+                           (e.g. the CEFR migration log) that keep the snapshot
+                           purely as proof and never restore from it, so they
+                           don't bloat their log with megabytes of audio."""
     conn = _connect()
     try:
         data = {}
         for t in _tables_with_discord_id(conn):
             rows = conn.execute(f"SELECT * FROM {t} WHERE discord_id=?", (discord_id,)).fetchall()
             if rows:
-                data[t] = [dict(r) for r in rows]
+                out = []
+                for r in rows:
+                    row_dict = dict(r)
+                    if not include_blobs:
+                        for k, v in list(row_dict.items()):
+                            if isinstance(v, (bytes, bytearray)):
+                                row_dict[k] = {_BLOB_OMITTED_MARKER: {"bytes": len(v)}}
+                    out.append(row_dict)
+                data[t] = out
         return data
     finally:
         conn.close()
@@ -708,7 +762,6 @@ def log_reset_consent(discord_id: str, discord_name: str, initiated_by: str,
                       snapshot: dict) -> int:
     """Append (never update/delete) a consent record to the reset ledger,
     including the full pre-deletion snapshot as proof + for restore."""
-    import json as _json
     conn = _connect()
     try:
         cur = conn.execute(
@@ -716,7 +769,7 @@ def log_reset_consent(discord_id: str, discord_name: str, initiated_by: str,
             "consent_text, affirmation, reason, snapshot_json, created_at_local) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             (discord_id, discord_name, initiated_by, consent_text, affirmation,
-             reason, _json.dumps(snapshot, ensure_ascii=False), _today_local().isoformat()),
+             reason, _dumps_snapshot(snapshot), _today_local().isoformat()),
         )
         conn.commit()
         return cur.lastrowid
@@ -759,6 +812,13 @@ def reset_member_history(discord_id: str, *, initiated_by: str,
     )
     conn = _connect()
     try:
+        # We wipe ALL of this student's rows across every history table, so
+        # inter-table foreign keys (e.g. assessment_recordings -> attempts)
+        # would otherwise fail purely on DELETE ORDER (a parent deleted before
+        # its child). Since the whole set goes, disable FK enforcement for the
+        # duration — integrity holds once the loop completes. Must be set
+        # before the first DML opens a transaction.
+        conn.execute("PRAGMA foreign_keys=OFF")
         deleted = {}
         for t in RESET_WIPE_TABLES:
             try:
@@ -791,6 +851,11 @@ def restore_member_from_consent(consent_id: int) -> Optional[dict]:
         ).fetchone()
         if not row:
             return None
+        # Re-inserting a full, self-consistent snapshot: disable FK enforcement
+        # so INSERT ORDER across tables can't fail (a child restored before its
+        # parent). Integrity holds once every row is back. Set before the first
+        # DML opens a transaction.
+        conn.execute("PRAGMA foreign_keys=OFF")
         snap = _json.loads(row["snapshot_json"] or "{}")
         restored = {}
         for table, rows in snap.items():
@@ -801,7 +866,7 @@ def restore_member_from_consent(consent_id: int) -> Optional[dict]:
                 try:
                     conn.execute(
                         f"INSERT OR REPLACE INTO {table} ({', '.join(cols)}) VALUES ({placeholders})",
-                        tuple(r[c] for c in cols),
+                        tuple(_decode_snapshot_value(r[c]) for c in cols),
                     )
                     n += 1
                 except sqlite3.OperationalError:
@@ -3667,13 +3732,16 @@ def migrate_member_to_cefr(discord_id: str, dry_run: bool = True) -> dict:
             return report
 
         # --- WRITE PATH ---
-        # 1. Snapshot first (reversible).
-        snapshot = snapshot_member_data(discord_id)
-        import json as _json
+        # 1. Snapshot first (proof). Rollback reverses the level column
+        #    directly (it never re-inserts from this snapshot), so we omit
+        #    raw BLOBs (audio) to keep the migration log lean — while
+        #    _dumps_snapshot still guarantees the write can never crash on an
+        #    unexpected bytes value.
+        snapshot = snapshot_member_data(discord_id, include_blobs=False)
         conn.execute(
             "INSERT INTO cefr_migration_log (discord_id, from_level, to_level, snapshot_json) "
             "VALUES (?, ?, ?, ?)",
-            (discord_id, cur_level, new_level, _json.dumps(snapshot, ensure_ascii=False)),
+            (discord_id, cur_level, new_level, _dumps_snapshot(snapshot)),
         )
         # 2. Remap the member's level ONLY (preserve level_started_at + all counters).
         conn.execute("UPDATE members SET level=? WHERE discord_id=?", (new_level, discord_id))
