@@ -1980,6 +1980,20 @@ async def post_monthly_finish(request: web.Request) -> web.Response:
     integrity_flags = body.get("integrity_flags", {})
     result = assessment.finish_monthly_attempt(discord_id, int(attempt_id),
                                                integrity_flags=integrity_flags)
+
+    # Fire outcome delivery (Phase 3): DM the student + alert owner if needed.
+    # Best-effort — scoring already persisted.
+    if result.get("ok") and not result.get("voided"):
+        try:
+            from . import monthly_outcomes
+            att = database.itqan_get_attempt(int(attempt_id))
+            review_number = att["week"] if att else 1
+            level = payload.get("lvl", "L0")
+            await monthly_outcomes.deliver_monthly_outcome(
+                discord_id, level, review_number, result)
+        except Exception as e:
+            logger.warning(f"monthly: outcome delivery error: {e}")
+
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
 

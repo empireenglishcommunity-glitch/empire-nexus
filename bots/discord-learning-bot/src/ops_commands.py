@@ -648,6 +648,21 @@ async def handle_majlis(args: str, bot) -> str:
 
 
 # ============================================================
+#  /monthly — Monthly Review cohort report (Taqdeem Phase 3)
+# ============================================================
+
+@command("/monthly")
+async def handle_monthly(args: str, bot) -> str:
+    """Monthly Review status for all students. Usage: /monthly [L0-L3]."""
+    from . import monthly_outcomes
+    lvl = args.strip().upper() or None
+    if lvl and lvl not in ("L0", "L1", "L2", "L3"):
+        return "Usage: `/monthly [L0|L1|L2|L3]`"
+    text = monthly_outcomes.format_monthly_report(lvl)
+    return f"```\n{text}\n```"
+
+
+# ============================================================
 
 @command("/help")
 async def handle_help(args: str, bot) -> str:
@@ -667,6 +682,7 @@ async def handle_help(args: str, bot) -> str:
         "`/itqan-review <id>` — Full breakdown of a flagged attempt",
         "`/itqan-due` — Who has a due weekly assessment",
         "`/majlis` — Community lounge status \\+ config",
+        "`/monthly` — Monthly review status for all students",
         "`/check` — Detailed status for one student",
         "`/help` — This message",
     ]
