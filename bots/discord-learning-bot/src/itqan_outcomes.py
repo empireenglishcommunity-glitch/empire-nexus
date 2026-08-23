@@ -118,19 +118,21 @@ async def _champions_channel(guild, level: str):
     """Find (by stored id, then by name) or create the per-level Week Champions
     channel. The id is persisted in settings so we only create it once."""
     import discord as dlib
-    key = f"itqan_champions_channel_{level.lower()}"
+    from . import config
+    slug = config.level_slug(level)  # CEFR: 'a1' … 'c2'
+    key = f"itqan_champions_channel_{slug}"
     stored = database.get_setting(key, "")
     if stored.isdigit():
         ch = guild.get_channel(int(stored))
         if ch:
             return ch
-    name = f"l{level[1].lower()}-week-champions"
+    name = f"{slug}-week-champions"
     ch = dlib.utils.get(guild.text_channels, name=name)
     if ch:
         database.set_setting(key, str(ch.id))
         return ch
     try:
-        showcase = dlib.utils.get(guild.text_channels, name=f"l{level[1].lower()}-showcase")
+        showcase = dlib.utils.get(guild.text_channels, name=f"{slug}-showcase")
         category = showcase.category if showcase else None
         ch = await guild.create_text_channel(
             name, category=category,

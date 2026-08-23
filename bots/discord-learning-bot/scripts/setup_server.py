@@ -34,6 +34,23 @@ import discord
 from dotenv import load_dotenv
 
 from channel_guides import CHANNEL_GUIDES
+from src import config  # single source of truth for the CEFR level model
+
+
+def _cefr_level_role_configs():
+    """The six CEFR level roles (C2→A1 for hierarchy, highest first). Names +
+    colours come from config so they EXACTLY match config.level_role_name(),
+    which the bot uses to assign/strip them (a mismatch would orphan roles)."""
+    out = []
+    for lvl in reversed(config.CEFR_ORDER):  # C2 (top) … A1 (bottom)
+        info = config.CEFR_LEVELS[lvl]
+        out.append({
+            "name": config.level_role_name(lvl),
+            "color": info["color"],
+            "hoist": True,
+            "permissions": discord.Permissions.none(),
+        })
+    return out
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
@@ -80,30 +97,9 @@ ROLES_CONFIG = [
             connect=True, speak=True, priority_speaker=True,
         ),
     },
-    {
-        "name": "👑 Level 3 | طليق",
-        "color": 0xC27C0E,
-        "hoist": True,
-        "permissions": discord.Permissions.none(),
-    },
-    {
-        "name": "🚀 Level 2 | متواصل",
-        "color": 0x3498DB,
-        "hoist": True,
-        "permissions": discord.Permissions.none(),
-    },
-    {
-        "name": "💪 Level 1 | متقدم",
-        "color": 0x2ECC71,
-        "hoist": True,
-        "permissions": discord.Permissions.none(),
-    },
-    {
-        "name": "🌱 Level 0 | مبتدئ",
-        "color": 0xA8E6CF,
-        "hoist": True,
-        "permissions": discord.Permissions.none(),
-    },
+    # Six CEFR level roles (A1–C2), generated from config so they always match
+    # what the bot assigns. Replaces the legacy four (L0–L3).
+    *_cefr_level_role_configs(),
     {
         "name": "🤖 Empire Bot",
         "color": 0x2C3E50,
@@ -137,6 +133,43 @@ _VIEW_SEND_VOICE = _ow(view_channel=True, send_messages=True, read_message_histo
 _VOICE_ONLY = _ow(view_channel=True, connect=True, speak=True, use_voice_activation=True)
 _BOT_FULL = _ow(view_channel=True, send_messages=True, embed_links=True, attach_files=True, manage_messages=True, add_reactions=True, mention_everyone=True)
 _READ_ONLY_ADMIN = _ow(view_channel=True, send_messages=False, read_message_history=True, add_reactions=True)
+
+
+def _all_levels_ow(perm):
+    """{every CEFR level role name: perm} — used in SHARED areas (SYSTEM,
+    COMMUNITY, ACCOUNTABILITY, …) where all levels get the same access.
+    Replaces the old hand-listed four L0–L3 rows with all six CEFR roles."""
+    return {config.level_role_name(lvl): perm for lvl in config.CEFR_ORDER}
+
+
+def _cefr_zone_configs():
+    """The six per-level CEFR ZONE categories (A1→C2), each strictly isolated:
+    only that level's role (plus Ambassador + bot) can see it; every other
+    level role is denied. Channels are slug-prefixed (a1-daily-tasks, …) so the
+    bot's CEFR-aware routing (config.level_slug) posts to the right place."""
+    zones = []
+    for lvl in config.CEFR_ORDER:
+        info = config.CEFR_LEVELS[lvl]
+        slug = config.level_slug(lvl)          # 'a1'
+        own_role = config.level_role_name(lvl)
+        overwrites = {"@everyone": _DENY_ALL, "🌟 سفير | Ambassador": _VIEW_SEND_VOICE, "bot": _BOT_FULL}
+        for other in config.CEFR_ORDER:
+            overwrites[config.level_role_name(other)] = _VIEW_SEND_VOICE if other == lvl else _DENY_ALL
+        channels = [
+            {"name": f"{slug}-daily-tasks", "type": "text", "topic": f"📅 مهام {lvl} اليومية — تنزل الساعة 6 صباحًا"},
+            {"name": f"{slug}-text-practice", "type": "text", "topic": "✍️ تمارين الكتابة — اكتب هنا"},
+            {"name": f"{slug}-voice-1", "type": "voice"},
+            {"name": f"{slug}-voice-2", "type": "voice"},
+            {"name": f"{slug}-questions", "type": "text", "topic": f"❓ أسئلة عن محتوى {lvl}"},
+            {"name": f"{slug}-showcase", "type": "text", "topic": "🎙️ شارك تسجيلاتك واحتفل بتقدمك!"},
+        ]
+        zones.append({
+            "name": f"{info['emoji']} {lvl} ZONE | {info['name_ar']}",
+            "overwrites": overwrites,
+            "channels": channels,
+        })
+    return zones
+
 
 CATEGORIES_CONFIG = [
     # ── Category 1: WELCOME (visible to everyone, read-only) ──
@@ -180,17 +213,14 @@ CATEGORIES_CONFIG = [
         "name": "⚙️ الأوامر | SYSTEM",
         "overwrites": {
             "@everyone": _VIEW_SEND,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND,
-            "💪 Level 1 | متقدم": _VIEW_SEND,
-            "🚀 Level 2 | متواصل": _VIEW_SEND,
-            "👑 Level 3 | طليق": _VIEW_SEND,
+            **_all_levels_ow(_VIEW_SEND),
             "🌟 سفير | Ambassador": _VIEW_SEND,
             "bot": _BOT_FULL,
         },
         "channels": [
             {"name": "bot-commands", "type": "text", "topic": "⭐ اكتب الأوامر هنا: !join !done !progress !streak"},
             {"name": "leaderboard", "type": "text", "topic": "🏆 لوحة المتصدرين — تتحدث تلقائيًا",
-             "override": {"🌱 Level 0 | مبتدئ": _VIEW_ONLY, "💪 Level 1 | متقدم": _VIEW_ONLY, "🚀 Level 2 | متواصل": _VIEW_ONLY, "👑 Level 3 | طليق": _VIEW_ONLY}},
+             "override": {**_all_levels_ow(_VIEW_ONLY)}},
             {"name": "support", "type": "text", "topic": "🆘 محتاج مساعدة؟ اسأل هنا"},
             # Hisn D031: ask-nour was created manually, outside this
             # script, at some point after initial server setup -- it was
@@ -209,110 +239,21 @@ CATEGORIES_CONFIG = [
             {"name": "suggestions", "type": "text", "topic": "💡 عندك فكرة لتحسين المجتمع؟"},
         ],
     },
-    # ── Category 3: LEVEL 0 ZONE ──
-    # Strict level isolation: ONLY L0 students see this zone.
-    # @everyone is DENIED — a student must have the L0 role (assigned
-    # on !join or on_member_join) to see these channels. Higher-level
-    # students (L1/L2/L3) are explicitly denied so they only see their
-    # own level's zone, not levels below them.
-    {
-        "name": "🌱 المستوى 0 | LEVEL 0",
-        "overwrites": {
-            "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND_VOICE,
-            "💪 Level 1 | متقدم": _DENY_ALL,
-            "🚀 Level 2 | متواصل": _DENY_ALL,
-            "👑 Level 3 | طليق": _DENY_ALL,
-            "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
-            "bot": _BOT_FULL,
-        },
-        "channels": [
-            {"name": "l0-daily-tasks", "type": "text", "topic": "📅 المهام اليومية — تنزل الساعة 6 صباحًا كل يوم"},
-            {"name": "l0-text-practice", "type": "text", "topic": "✍️ تمارين الكتابة — اكتب هنا"},
-            {"name": "l0-voice-1", "type": "voice"},
-            {"name": "l0-voice-2", "type": "voice"},
-            {"name": "l0-questions", "type": "text", "topic": "❓ أسئلة — العربي مسموح هنا بس"},
-            {"name": "l0-showcase", "type": "text", "topic": "🎙️ شارك تسجيلاتك واحتفل بتقدمك!"},
-        ],
-    },
-    # ── Category 4: LEVEL 1 ZONE ──
-    # Strict level isolation: ONLY L1 students see this zone.
-    {
-        "name": "💪 المستوى 1 | LEVEL 1",
-        "overwrites": {
-            "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _DENY_ALL,
-            "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
-            "🚀 Level 2 | متواصل": _DENY_ALL,
-            "👑 Level 3 | طليق": _DENY_ALL,
-            "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
-            "bot": _BOT_FULL,
-        },
-        "channels": [
-            {"name": "l1-daily-tasks", "type": "text", "topic": "📅 مهام المستوى الأول اليومية"},
-            {"name": "l1-text-practice", "type": "text", "topic": "✍️ تمارين فقرات كاملة"},
-            {"name": "l1-voice-1", "type": "voice"},
-            {"name": "l1-voice-2", "type": "voice"},
-            {"name": "l1-questions", "type": "text", "topic": "❓ أسئلة عن محتوى Level 1"},
-            {"name": "l1-showcase", "type": "text", "topic": "🎙️ شارك تسجيلاتك وتقدمك"},
-        ],
-    },
-    # ── Category 5: LEVEL 2 ZONE ──
-    # Strict level isolation: ONLY L2 students see this zone.
-    {
-        "name": "🚀 المستوى 2 | LEVEL 2",
-        "overwrites": {
-            "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _DENY_ALL,
-            "💪 Level 1 | متقدم": _DENY_ALL,
-            "🚀 Level 2 | متواصل": _VIEW_SEND_VOICE,
-            "👑 Level 3 | طليق": _DENY_ALL,
-            "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
-            "bot": _BOT_FULL,
-        },
-        "channels": [
-            {"name": "l2-daily-tasks", "type": "text", "topic": "📅 مهام المستوى الثاني"},
-            {"name": "l2-text-practice", "type": "text", "topic": "✍️ مقالات وآراء وكتابة متقدمة"},
-            {"name": "l2-voice-1", "type": "voice"},
-            {"name": "l2-voice-2", "type": "voice"},
-            {"name": "l2-debate", "type": "voice"},
-            {"name": "l2-questions", "type": "text", "topic": "❓ أسئلة عن محتوى Level 2"},
-            {"name": "l2-showcase", "type": "text", "topic": "📝 شارك مقالاتك وعروضك"},
-        ],
-    },
-    # ── Category 6: LEVEL 3 ZONE ──
-    {
-        "name": "👑 المستوى 3 | LEVEL 3",
-        "overwrites": {
-            "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _DENY_ALL,
-            "💪 Level 1 | متقدم": _DENY_ALL,
-            "🚀 Level 2 | متواصل": _DENY_ALL,
-            "👑 Level 3 | طليق": _VIEW_SEND_VOICE,
-            "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
-            "bot": _BOT_FULL,
-        },
-        "channels": [
-            {"name": "l3-daily-tasks", "type": "text", "topic": "📅 مهام المستوى الثالث المتقدمة"},
-            {"name": "l3-text-practice", "type": "text", "topic": "✍️ كتابة متقدمة وأسلوب"},
-            {"name": "l3-voice-1", "type": "voice"},
-            {"name": "l3-voice-2", "type": "voice"},
-            {"name": "l3-debate", "type": "voice"},
-            {"name": "l3-mentorship", "type": "text", "topic": "🌟 ساعد المبتدئين وشارك تجربتك"},
-            {"name": "l3-showcase", "type": "text", "topic": "👑 أعمال متقدمة وعروض"},
-        ],
-    },
-    # ── Category 7: COMMUNITY (all members) ──
+    # ── Categories 3–8: the six CEFR level ZONES (A1→C2) ──
+    # Generated so they stay in lockstep with the CEFR roles. Each zone is
+    # strictly isolated: only its own level role (plus Ambassador + bot) can
+    # see it; every other level role is denied. Channels are slug-prefixed
+    # (a1-daily-tasks …) so the bot's CEFR routing posts to the right place.
+    # Replaces the legacy four L0–L3 zones.
+    *_cefr_zone_configs(),
+    # ── Category 9: COMMUNITY (all members) ──
     # NOTE: @everyone can view+send+voice here, same reasoning as SYSTEM
     # and LEVEL 0 above. Reconciled 2026-07-12.
     {
         "name": "🌍 المجتمع | COMMUNITY",
         "overwrites": {
             "@everyone": _VIEW_SEND_VOICE,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND_VOICE,
-            "💪 Level 1 | متقدم": _VIEW_SEND_VOICE,
-            "🚀 Level 2 | متواصل": _VIEW_SEND_VOICE,
-            "👑 Level 3 | طليق": _VIEW_SEND_VOICE,
+            **_all_levels_ow(_VIEW_SEND_VOICE),
             "🌟 سفير | Ambassador": _VIEW_SEND_VOICE,
             "bot": _BOT_FULL,
         },
@@ -331,17 +272,14 @@ CATEGORIES_CONFIG = [
         "name": "📊 المتابعة | ACCOUNTABILITY",
         "overwrites": {
             "@everyone": _VIEW_SEND,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND,
-            "💪 Level 1 | متقدم": _VIEW_SEND,
-            "🚀 Level 2 | متواصل": _VIEW_SEND,
-            "👑 Level 3 | طليق": _VIEW_SEND,
+            **_all_levels_ow(_VIEW_SEND),
             "🌟 سفير | Ambassador": _VIEW_SEND,
             "bot": _BOT_FULL,
         },
         "channels": [
             {"name": "daily-check-in", "type": "text", "topic": "☀️ الصبح: خطتك. 🌙 بالليل: إنجازك"},
             {"name": "streak-tracker", "type": "text", "topic": "🔥 متابعة الاستمرارية — تتحدث تلقائيًا",
-             "override": {"🌱 Level 0 | مبتدئ": _VIEW_ONLY, "💪 Level 1 | متقدم": _VIEW_ONLY, "🚀 Level 2 | متواصل": _VIEW_ONLY, "👑 Level 3 | طليق": _VIEW_ONLY}},
+             "override": {**_all_levels_ow(_VIEW_ONLY)}},
             {"name": "weekly-goals", "type": "text", "topic": "🎯 حدد أهداف الأسبوع كل إثنين"},
         ],
     },
@@ -352,10 +290,7 @@ CATEGORIES_CONFIG = [
         "name": "📚 المصادر | RESOURCES",
         "overwrites": {
             "@everyone": _VIEW_SEND,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND,
-            "💪 Level 1 | متقدم": _VIEW_SEND,
-            "🚀 Level 2 | متواصل": _VIEW_SEND,
-            "👑 Level 3 | طليق": _VIEW_SEND,
+            **_all_levels_ow(_VIEW_SEND),
             "🌟 سفير | Ambassador": _VIEW_SEND,
             "bot": _BOT_FULL,
         },
@@ -373,10 +308,7 @@ CATEGORIES_CONFIG = [
         "name": "💬 التقييم | FEEDBACK",
         "overwrites": {
             "@everyone": _VIEW_SEND,
-            "🌱 Level 0 | مبتدئ": _VIEW_SEND,
-            "💪 Level 1 | متقدم": _VIEW_SEND,
-            "🚀 Level 2 | متواصل": _VIEW_SEND,
-            "👑 Level 3 | طليق": _VIEW_SEND,
+            **_all_levels_ow(_VIEW_SEND),
             "🌟 سفير | Ambassador": _VIEW_SEND,
             "bot": _BOT_FULL,
         },
@@ -392,10 +324,7 @@ CATEGORIES_CONFIG = [
         "name": "🔒 الإدارة | ADMIN",
         "overwrites": {
             "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _DENY_ALL,
-            "💪 Level 1 | متقدم": _DENY_ALL,
-            "🚀 Level 2 | متواصل": _DENY_ALL,
-            "👑 Level 3 | طليق": _DENY_ALL,
+            **_all_levels_ow(_DENY_ALL),
             "🌟 سفير | Ambassador": _DENY_ALL,
             "⚔️ Moderator": _VIEW_SEND,
             "🛡️ Admin": _VIEW_SEND,
@@ -418,10 +347,7 @@ CATEGORIES_CONFIG = [
         "name": "👻 Ghost Testing",
         "overwrites": {
             "@everyone": _DENY_ALL,
-            "🌱 Level 0 | مبتدئ": _DENY_ALL,
-            "💪 Level 1 | متقدم": _DENY_ALL,
-            "🚀 Level 2 | متواصل": _DENY_ALL,
-            "👑 Level 3 | طليق": _DENY_ALL,
+            **_all_levels_ow(_DENY_ALL),
             "🌟 سفير | Ambassador": _DENY_ALL,
             "⚔️ Moderator": _VIEW_SEND,
             "🛡️ Admin": _VIEW_SEND,
