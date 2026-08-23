@@ -162,7 +162,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
         if accent_drill.get("record_this"):
             record_this_label = bl("Record this", "سجل ده")
             content_lines.append(f"\n**{record_this_label}:** \"{accent_drill['record_this']}\"")
-        content_lines.append(f"\n🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase")
+        content_lines.append(f"\n🎙️ {bl('Record and post in', 'سجل وحط في')} #{config.level_slug(level)}-showcase")
         practice_url = curriculum.practice_platform_task_url("accent", week, day_index, level)
         if practice_url:
             content_lines.append(f"🌐 {bl('Practice online (audio + drill)', 'اتمرن أونلاين (صوت + تدريب)')}: {practice_url}")
@@ -240,7 +240,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             f"3. {bl('Shadow 3 times (speak along, match rhythm)', 'كرر معاه ٣ مرات (اتكلم في نفس الوقت، بنفس الريتم)')}\n"
             f"4. {bl('Record attempt #3 (minimum 30 seconds)', 'سجل المحاولة الثالثة (٣٠ ثانية على الأقل)')}\n"
             f"5. {bl('Note 2 words where you differed most', 'لاحظ كلمتين اختلفت فيهم عن الأصل')}\n\n"
-            f"🎙️ {bl('Upload recording in', 'رفع التسجيل في')} #l{level[1]}-showcase"
+            f"🎙️ {bl('Upload recording in', 'رفع التسجيل في')} #{config.level_slug(level)}-showcase"
         ),
         "duration_min": 10 if level == "L0" else 20,
     })
@@ -255,7 +255,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             "content": (
                 f"**{bl('Task', 'المهمة')}:** {speaking['prompt']}\n\n"
                 f"⏱️ {bl('Target', 'الهدف')}: {target_sec} {bl('seconds', 'ثانية')}\n"
-                f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase"
+                f"🎙️ {bl('Record and post in', 'سجل وحط في')} #{config.level_slug(level)}-showcase"
             ),
             "duration_min": 10 if level == "L0" else 25,
         })
@@ -299,7 +299,7 @@ async def generate_daily_tasks(level: str, week: int) -> dict:
             f"**{bl('Prompt', 'المطلوب')}:** {writing_prompt}\n\n"
             f"• {bl('Write 4-5 sentences.', 'اكتب ٤-٥ جمل.') if level == 'L0' else bl('Write a paragraph (100+ words).', 'اكتب فقرة (١٠٠ كلمة أو أكتر).')} "
             f"{bl('No translator — do your best.', 'من غير مترجم — اعمل قد ما تقدر.')}\n"
-            f"• {bl('Post it in', 'حطها في')} #l{level[1]}-text-practice"
+            f"• {bl('Post it in', 'حطها في')} #{config.level_slug(level)}-text-practice"
         ),
         "duration_min": 7 if level == "L0" else 20,
     })
@@ -356,7 +356,7 @@ def _format_accent_drill(drill: dict) -> str:
         for s in drill["sentences"][:2]:
             lines.append(f"**{say_label}:** \"{s}\"")
     lines.append("")
-    lines.append(bl("🎙️ Record yourself saying the sentences. Post in #l0-showcase.", "سجل نفسك بتقول الجمل. حط التسجيل في #l0-showcase."))
+    lines.append(bl("🎙️ Record yourself saying the sentences. Post in your level's #…-showcase channel.", "سجل نفسك بتقول الجمل. حط التسجيل في قناة #…-showcase بتاعة مستواك."))
     return "\n".join(lines)
 
 
@@ -373,7 +373,7 @@ def _fallback_accent_task(level: str, week: int, phoneme_info: dict) -> dict:
             f"2. {bl('Practice with words that contain these sounds', 'اتمرن بكلمات فيها الأصوات دي')}\n"
             f"3. {bl('Say a sentence using these sounds', 'قول جملة فيها الأصوات دي')}\n"
             f"4. {bl('Record yourself and compare', 'سجل نفسك وقارن')}\n\n"
-            f"🎙️ {bl('Post your recording in', 'حط التسجيل في')} #l{level[1]}-showcase"
+            f"🎙️ {bl('Post your recording in', 'حط التسجيل في')} #{config.level_slug(level)}-showcase"
         ),
         "duration_min": 10,
     }
@@ -396,7 +396,7 @@ def _fallback_speaking_task(level: str, mission_type: str) -> dict:
         "content": (
             f"**{bl('Task', 'المهمة')}:** {prompts.get(mission_type, prompts['free_talk'])}\n\n"
             f"⏱️ {bl('Target', 'الهدف')}: {'45' if level == 'L0' else '90'} {bl('seconds', 'ثانية')}\n"
-            f"🎙️ {bl('Record and post in', 'سجل وحط في')} #l{level[1]}-showcase"
+            f"🎙️ {bl('Record and post in', 'سجل وحط في')} #{config.level_slug(level)}-showcase"
         ),
         "duration_min": 10,
     }

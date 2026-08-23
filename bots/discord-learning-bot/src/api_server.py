@@ -1583,7 +1583,7 @@ async def _post_recording_to_showcase(discord_id: str, level: str, name: str,
             logger.warning("submit-recording: guild not found")
             return False
 
-        channel_name = f"l{level[1].lower()}-showcase"
+        channel_name = f"{config.level_slug(level)}-showcase"
         channel = discord_lib.utils.get(guild.text_channels, name=channel_name)
         if not channel:
             logger.warning(f"submit-recording: channel {channel_name} not found")

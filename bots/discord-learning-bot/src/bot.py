@@ -720,8 +720,8 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
         try:
             await member.send(
                 "✅ **تم تسجيلك!** أهلاً بيك في Empire English 🏛️\n\n"
-                "انت دلوقتي في **Level 0** — مبتدئ.\n"
-                "كل يوم الساعة 6 الصبح هتلاقي مهام في قناة `#l0-daily-tasks`.\n\n"
+                "انت دلوقتي في **A1** — مبتدئ (Breakthrough).\n"
+                "كل يوم الساعة 6 الصبح هتلاقي مهام في قناة `#a1-daily-tasks`.\n\n"
                 "اكتب `!مساعدة` في `#bot-commands` لو محتاج مساعدة.\n"
                 "أو افتح تمارينك بأمر `!link` وابدأ. بالتوفيق! 💪"
             )
@@ -1996,7 +1996,7 @@ async def cmd_join(ctx, *, goal: str = ""):
         msg = f"🌱 Welcome {ctx.author.mention}! You're registered at **Level 0**."
         if goal:
             msg += f"\n🎯 Goal: **{goal}**"
-        msg += "\n\nYour daily tasks will appear in #l0-daily-tasks every morning."
+        msg += "\n\nYour daily tasks will appear in #a1-daily-tasks every morning."
     else:
         msg = f"✅ You're already registered, {ctx.author.mention}! Use `!progress` to check your status."
     await ctx.send(msg)
@@ -2742,14 +2742,14 @@ async def cmd_help(ctx, *, topic: str = ""):
         "`!attention` — Ranked list of who needs a human right now (inactive, declining, buddy load)\n"
         "`!members` — List all members (with IDs)\n"
         "`!find <name>` — Find a student + their ID\n"
-        "`!setlevel @user L0/L1/L2/L3` — Set someone's level\n"
+        "`!setlevel @user A1/A2/B1/B2/C1/C2` — Set someone's CEFR level\n"
         "`!announce <message>` — Broadcast announcement\n"
         "`!reset-student @user [reason]` — Reset a student's history (reversible)\n"
         "`!restore-student <record#>` — Undo a reset\n"
         "`!approve-reset <request#>` / `!deny-reset <request#>` — Decide a student's reset request\n"
         "`!orient <date/time>` — Send orientation invite\n"
         "`!recruit ar/en` — Get recruitment message template\n"
-        "`!resources L0/L1/L2/L3` — Post shadowing resources\n"
+        "`!resources A1/A2/B1/B2/C1/C2` — Post shadowing resources\n"
         "`!flag list/enable/disable/beta` — Feature flag management\n"
         "`!maintenance start [soft|hard] [min] [reason]` — pause/warn + notify students\n"
         "`!maintenance end [what's new]` — back online + announce\n"

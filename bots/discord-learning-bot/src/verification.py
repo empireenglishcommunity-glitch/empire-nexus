@@ -4,12 +4,12 @@ Strict verification for !done commands. Each task requires proof before
 points are awarded. Prevents gaming/cheating the streak system.
 
 Verification methods:
-- accent:     Audio in #l0-showcase (AI validates it's speech)
+- accent:     Audio in #<level>-showcase (AI validates it's speech)
 - vocab:      Bot asks quiz question, student must answer correctly
-- shadow:     Audio in #l0-showcase (min 30s)
-- speaking:   Audio in #l0-showcase (min target duration)
+- shadow:     Audio in #<level>-showcase (min 30s)
+- speaking:   Audio in #<level>-showcase (min target duration)
 - listening:  Bot asks comprehension question
-- writing:    Post in #l0-text-practice (min 20 chars)
+- writing:    Post in #<level>-text-practice (min 20 chars)
 - community:  Posted in #general-chat AND spent 10+ min in voice today (E5)
 """
 import datetime
@@ -19,7 +19,7 @@ from typing import Optional
 
 import discord
 
-from . import database
+from . import config, database
 
 logger = logging.getLogger("empire-bot.verify")
 
@@ -295,9 +295,9 @@ def reset_daily_voice():
 # ============================================================
 
 async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[bool, str]:
-    """Check if member posted 20+ chars in #l0-text-practice (or their level) in last 2 hours."""
+    """Check if member posted 20+ chars in #<level>-text-practice (or their level) in last 2 hours."""
     level = (database.get_member(str(member.id)) or {}).get("level", "L0")
-    channel_name = f"l{level[1]}-text-practice"
+    channel_name = f"{config.level_slug(level)}-text-practice"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 
     if not channel:
@@ -321,7 +321,7 @@ async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[
 
 async def verify_audio(member: discord.Member, guild: discord.Guild,
                        task_id: str, min_duration_hint: int = 0) -> tuple[bool, str]:
-    """Check if member uploaded audio in #l0-showcase in last 2 hours.
+    """Check if member uploaded audio in #<level>-showcase in last 2 hours.
 
     Hisn D028: this previously accepted ANY audio-looking attachment
     from the student in the window, for accent/speaking/shadow alike,
@@ -338,7 +338,7 @@ async def verify_audio(member: discord.Member, guild: discord.Guild,
     this task or a different one.
     """
     level = (database.get_member(str(member.id)) or {}).get("level", "L0")
-    channel_name = f"l{level[1]}-showcase"
+    channel_name = f"{config.level_slug(level)}-showcase"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 
     if not channel:
@@ -760,7 +760,7 @@ async def get_recent_audio_url(member: discord.Member, guild: discord.Guild,
     scorer to download the audio for transcription.
     """
     level = (database.get_member(str(member.id)) or {}).get("level", "L0")
-    channel_name = f"l{level[1]}-showcase"
+    channel_name = f"{config.level_slug(level)}-showcase"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 
     if not channel:

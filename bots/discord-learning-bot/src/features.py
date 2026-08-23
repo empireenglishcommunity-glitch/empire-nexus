@@ -575,9 +575,14 @@ async def check_english_only(message: discord.Message) -> bool:
         return False
 
     # Only enforce in text practice and community channels
+    # Mi'yar: enforce in the six CEFR text-practice channels (a1…c2) as well
+    # as the legacy l0–l3 ones (archived, but harmless to keep listed).
     enforce_channels = {
         "general-chat", "introductions", "daily-word", "events",
-        "l0-text-practice", "l1-text-practice", "l2-text-practice", "l3-text-practice",
+    } | {
+        f"{config.level_slug(lvl)}-text-practice" for lvl in config.CEFR_ORDER
+    } | {
+        f"l{i}-text-practice" for i in range(4)
     }
     if channel_name not in enforce_channels:
         return False
@@ -928,7 +933,7 @@ ORIENTATION_TEMPLATE = """🏛️ **جلسة التعريف — Empire English C
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📅 **الموعد:** {date_time}
-🔊 **المكان:** Voice channel `l0-voice-1`
+🔊 **المكان:** Voice channel `a1-voice-1`
 ⏱️ **المدة:** 30 دقيقة
 
 **جدول الجلسة:**
@@ -1233,7 +1238,12 @@ async def _post_to_showcase(guild: discord.Guild, member_name: str, days: int, b
 
     # Try to find the member's level to post to the right channel
     # (We only have member_name here, so try all showcase channels)
+    # Mi'yar: the six CEFR showcase channels (a1-showcase … c2-showcase),
+    # falling back to the legacy l0–l3 ones for any pre-migration server.
     showcase_channels = [
+        discord.utils.get(guild.text_channels, name=f"{config.level_slug(lvl)}-showcase")
+        for lvl in config.CEFR_ORDER
+    ] + [
         discord.utils.get(guild.text_channels, name=f"l{i}-showcase")
         for i in range(4)
     ]
@@ -1269,7 +1279,7 @@ VOICE_SCHEDULE = """🔊 **جدول الجلسات الصوتية — Voice Sess
 
 📅 **كل يوم أحد - خميس | Sunday - Thursday**
 🕗 **الساعة 8:00 مساءً (توقيت دبي)**
-📍 **المكان:** `l0-voice-1`
+📍 **المكان:** `a1-voice-1`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1435,7 +1445,7 @@ TUTORIAL_COMPLETION_MSG = (
     "• الكتابة `!6` والمجتمع `!7` هنا في Discord\n"
     "• `!تقدم` — لمتابعة نقاطك · `!مساعدة` — لكل الأوامر\n\n"
     "**بكرة الساعة 6 الصبح:**\n"
-    "هتلاقي مهام مرقمة في `#l0-daily-tasks`.\n"
+    "هتلاقي مهام مرقمة في `#a1-daily-tasks`.\n"
     "اعمل المهمة → اكتب رقمها → خلاص! 🔥\n\n"
     "*System over instructor. Common Sense First.* 🏛️"
 )
@@ -1589,7 +1599,7 @@ START_HERE_MESSAGE = """🏛️ **ابدأ من هنا — Empire English**
 └ أو اعمل ✅ على أي رسالة في السيرفر
 
 **2️⃣ شوف مهامك اليومية**
-└ كل يوم الساعة 6 الصبح في `#l0-daily-tasks`
+└ كل يوم الساعة 6 الصبح في `#a1-daily-tasks`
 └ 7 مهام مرقمة (كل مهمة 10 دقايق)
 
 **3️⃣ سجّل إنك خلصت**

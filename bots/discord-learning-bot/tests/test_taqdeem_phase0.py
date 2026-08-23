@@ -137,7 +137,7 @@ def test_monthly_review_due_after_4_weeklies():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_monthly_review", True, "", "test")
     database.register_member("m1", "Alice")
-    _seed_mastery("m1", "L0", [1, 2, 3, 4])
+    _seed_mastery("m1", "A1", [1, 2, 3, 4])
 
     assert database.monthly_review_due("m1") is True
 
@@ -147,7 +147,7 @@ def test_monthly_review_not_due_with_3_weeklies():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_monthly_review", True, "", "test")
     database.register_member("m2", "Alice")
-    _seed_mastery("m2", "L0", [1, 2, 3])
+    _seed_mastery("m2", "A1", [1, 2, 3])
 
     assert database.monthly_review_due("m2") is False
 
@@ -157,8 +157,8 @@ def test_monthly_review_not_due_after_taken():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_monthly_review", True, "", "test")
     database.register_member("m3", "Alice")
-    _seed_mastery("m3", "L0", [1, 2, 3, 4, 5])
-    _seed_monthly_passed("m3", "L0", 1)
+    _seed_mastery("m3", "A1", [1, 2, 3, 4, 5])
+    _seed_monthly_passed("m3", "A1", 1)
 
     # Only 5 weeklies, need 8 for the 2nd monthly
     assert database.monthly_review_due("m3") is False
@@ -169,8 +169,8 @@ def test_monthly_review_due_for_second():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_monthly_review", True, "", "test")
     database.register_member("m4", "Alice")
-    _seed_mastery("m4", "L0", [1, 2, 3, 4, 5, 6, 7, 8])
-    _seed_monthly_passed("m4", "L0", 1)
+    _seed_mastery("m4", "A1", [1, 2, 3, 4, 5, 6, 7, 8])
+    _seed_monthly_passed("m4", "A1", 1)
 
     assert database.monthly_review_due("m4") is True
 
@@ -180,7 +180,7 @@ def test_monthly_review_flag_off():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_monthly_review", False, "", "test")
     database.register_member("m5", "Alice")
-    _seed_mastery("m5", "L0", [1, 2, 3, 4, 5, 6, 7, 8])
+    _seed_mastery("m5", "A1", [1, 2, 3, 4, 5, 6, 7, 8])
 
     assert database.monthly_review_due("m5") is False
 
@@ -190,8 +190,8 @@ def test_advancement_exam_due_all_conditions():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_advancement_exam", True, "", "test")
     database.register_member("a1", "Bob")
-    _seed_mastery("a1", "L0", list(range(1, 9)))  # all 8 weeks
-    _seed_monthly_passed("a1", "L0", 1)
+    _seed_mastery("a1", "A1", list(range(1, 11)))  # all 10 A1 weeks
+    _seed_monthly_passed("a1", "A1", 1)
 
     assert database.advancement_exam_due("a1") is True
 
@@ -201,8 +201,8 @@ def test_advancement_not_due_missing_weekly():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_advancement_exam", True, "", "test")
     database.register_member("a2", "Bob")
-    _seed_mastery("a2", "L0", [1, 2, 3, 4, 5, 6, 7])  # only 7 of 8
-    _seed_monthly_passed("a2", "L0", 1)
+    _seed_mastery("a2", "A1", list(range(1, 10)))  # only 9 of 10
+    _seed_monthly_passed("a2", "A1", 1)
 
     assert database.advancement_exam_due("a2") is False
 
@@ -212,7 +212,7 @@ def test_advancement_not_due_no_monthly():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_advancement_exam", True, "", "test")
     database.register_member("a3", "Bob")
-    _seed_mastery("a3", "L0", list(range(1, 9)))  # all 8
+    _seed_mastery("a3", "A1", list(range(1, 11)))  # all 10
     # No monthly passed
 
     assert database.advancement_exam_due("a3") is False
@@ -223,8 +223,8 @@ def test_advancement_flag_off():
     database.sync_flag_registry()
     database.set_feature_flag("assessment_advancement_exam", False, "", "test")
     database.register_member("a4", "Bob")
-    _seed_mastery("a4", "L0", list(range(1, 9)))
-    _seed_monthly_passed("a4", "L0", 1)
+    _seed_mastery("a4", "A1", list(range(1, 11)))
+    _seed_monthly_passed("a4", "A1", 1)
 
     assert database.advancement_exam_due("a4") is False
 
@@ -235,9 +235,9 @@ def test_advancement_flag_off():
 
 def test_monthly_reviews_passed_count():
     database.register_member("c1", "Carol")
-    _seed_monthly_passed("c1", "L0", 1)
-    _seed_monthly_passed("c1", "L0", 2)
-    assert database.monthly_reviews_passed("c1", "L0") == 2
+    _seed_monthly_passed("c1", "A1", 1)
+    _seed_monthly_passed("c1", "A1", 2)
+    assert database.monthly_reviews_passed("c1", "A1") == 2
     assert database.monthly_reviews_passed("c1", "L1") == 0
 
 
@@ -246,11 +246,11 @@ def test_advancement_attempts_count():
     conn = database._connect()
     conn.execute(
         "INSERT INTO advancement_exams (discord_id, level, attempt_num, passed) "
-        "VALUES (?, ?, ?, ?)", ("c2", "L0", 1, 0))
+        "VALUES (?, ?, ?, ?)", ("c2", "A1", 1, 0))
     conn.execute(
         "INSERT INTO advancement_exams (discord_id, level, attempt_num, passed) "
-        "VALUES (?, ?, ?, ?)", ("c2", "L0", 2, 1))
+        "VALUES (?, ?, ?, ?)", ("c2", "A1", 2, 1))
     conn.commit()
     conn.close()
-    assert database.advancement_attempts_count("c2", "L0") == 2
+    assert database.advancement_attempts_count("c2", "A1") == 2
     assert database.advancement_attempts_count("c2", "L1") == 0
