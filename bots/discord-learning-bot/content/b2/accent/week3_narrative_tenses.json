@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 3,
+  "focus": "three-layer narrative rhythm · past simple as the spine (stressed) · past continuous as scenery · past perfect as backstory · pace and pausing in storytelling",
+  "focus_ar": "إيقاع السرد بثلاث طبقات: الماضي البسيط كالعمود الفقري (منبور)، والمستمر كالمشهد، والتام كالخلفية، مع السرعة والوقفات",
+  "arabic_challenge": "A B2 story constantly switches between three past tenses, and English signals which layer you are in through RHYTHM, not extra words: the spine is stressed, scenery flows, backstory drops. Arabic learners often say all three at the same volume and speed, so the listener loses the timeline.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["past simple as the stressed spine"],
+      "isolation": {
+        "instructions": "The past simple carries the story forward — these are your strongest, clearest beats: 'I WOKE up, GRABBED my bag and RAN.' Hit each verb firmly, with a small pause between events.",
+        "instructions_ar": "الماضي البسيط يحمل القصة للأمام — أقوى النبضات: 'I WOKE up, GRABBED my bag and RAN.'",
+        "practice": ["I WOKE, GRABBED, RAN", "strong even beats", "the story spine"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I WOKE up (spine)", "I was waking up (scenery)"], "meaning": ["حدث", "مشهد"]},
+        {"pair": ["grabbed /d/", "grabbed /ɪd/ ❌"], "meaning": ["نهاية صحيحة", "خطأ"]},
+        {"pair": ["ran (irregular)", "runned ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["walked /t/", "walked /ɪd/ ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["decided /ɪd/", "decided /d/ ❌"], "meaning": ["صحيح (بعد d)", "خطأ"]}
+      ],
+      "word_practice": ["woke up", "grabbed", "ran", "shouted", "opened", "arrived", "stopped", "decided", "looked", "left"],
+      "sentence_practice": [
+        "I woke up, grabbed my bag and ran.",
+        "She opened the door and looked outside.",
+        "We stopped, waited and then decided to go."
+      ],
+      "record_this": "I woke up late, grabbed my bag and ran to the bus stop. She opened the door slowly and looked outside. We stopped, waited a moment, and then decided to keep going.",
+      "self_check": "Say 'I woke up, grabbed my bag and ran.' Are all three verbs strong and clear, like separate steps?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["past continuous as flowing scenery"],
+      "isolation": {
+        "instructions": "The past continuous paints the scene, so it FLOWS rather than beats: 'the sun wəz SHINing, birds wə SINGing'. Weak was/were, smooth -ing, no hard stops.",
+        "instructions_ar": "الماضي المستمر يرسم المشهد فيتدفّق ولا ينبض: 'the sun wəz SHINing'. was/were خفيفة و-ing سلسة.",
+        "practice": ["the sun wəz SHINing", "birds wə SINGing", "flow, don't beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was shining (scenery, flowing)", "shone (spine, beat)"], "meaning": ["مشهد", "حدث"]},
+        {"pair": ["wəz (weak)", "WAS ❌ (stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["they were talking", "they talked"], "meaning": ["مستمر", "منتهي"]},
+        {"pair": ["wə /wə/ (were, weak)", "were /wɜː/ (strong)"], "meaning": ["خفيف", "قوي"]},
+        {"pair": ["it was raining", "it rained"], "meaning": ["مشهد", "حدث"]}
+      ],
+      "word_practice": ["was shining", "were singing", "was raining", "were talking", "was waiting", "were walking", "was sitting", "were laughing", "was thinking", "were playing"],
+      "sentence_practice": [
+        "The sun was shining and the birds were singing.",
+        "People were walking and talking everywhere.",
+        "I was sitting outside, thinking about the day."
+      ],
+      "record_this": "The sun was shining brightly and the birds were singing in the garden. People were walking and talking everywhere along the street. I was sitting outside on the step, thinking quietly about the day ahead.",
+      "self_check": "Say 'the sun was shining and the birds were singing'. Does it flow smoothly with weak was/were?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["past perfect as dropped backstory"],
+      "isolation": {
+        "instructions": "The past perfect is the oldest layer, so DROP it — lower pitch, faster, quieter: 'I realised I'd left my keys at home' (the 'd left' part almost disappears). Then come back up for the main line.",
+        "instructions_ar": "الماضي التام أقدم طبقة، فاخفضها — نبرة أوطى وأسرع: 'I realised I'd left my keys at home'.",
+        "practice": ["I REALised (up) → aɪd left my keys (down)", "drop the backstory", "lower + faster"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd left (dropped)", "I LEFT (spine)"], "meaning": ["خلفية", "حدث رئيسي"]},
+        {"pair": ["she'd forgotten", "she forgot"], "meaning": ["قبل ذلك", "وقتها"]},
+        {"pair": ["they'd already gone", "they already went ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["we'd booked it", "we booked it"], "meaning": ["أقدم", "حدث"]},
+        {"pair": ["he'd never seen it", "he never saw it"], "meaning": ["قبل تلك اللحظة", "أبدًا"]}
+      ],
+      "word_practice": ["I'd left", "she'd forgotten", "they'd gone", "we'd booked", "he'd never seen", "I'd locked it", "she'd told me", "we'd arranged", "they'd closed", "it had stopped"],
+      "sentence_practice": [
+        "I realised I'd left my keys at home.",
+        "She was upset because she'd forgotten his birthday.",
+        "When we got there, they'd already closed."
+      ],
+      "record_this": "Halfway to work I realised I'd left my keys at home. She was really upset because she'd completely forgotten his birthday. When we finally got there, they'd already closed for the evening.",
+      "self_check": "Say 'I realised I'd left my keys'. Does the 'I'd left' part drop lower and faster than 'realised'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["switching layers inside one sentence"],
+      "isolation": {
+        "instructions": "Now combine all three in a single breath: 'I wəz WALKing home (scenery) when I REALised (spine) I'd forgotten my phone (backstory).' Flow → beat → drop.",
+        "instructions_ar": "اجمع الثلاثة في نفس واحد: تدفّق (مستمر) ← نبضة (بسيط) ← هبوط (تام).",
+        "practice": ["wəz WALKing (flow)", "REALised (beat)", "aɪd forgotten (drop)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["flow → beat → drop ✅", "all the same volume ❌"], "meaning": ["ثلاث طبقات", "طبقة واحدة"]},
+        {"pair": ["was walking when I realised", "walked and realised"], "meaning": ["مقاطعة", "تسلسل"]},
+        {"pair": ["I'd forgotten (backstory)", "I forgot (spine)"], "meaning": ["خلفية", "حدث"]},
+        {"pair": ["when (short action)", "while (long action)"], "meaning": ["قصير", "طويل"]},
+        {"pair": ["as I was leaving", "as I left"], "meaning": ["أثناء", "لحظة"]}
+      ],
+      "word_practice": ["was walking when I realised", "were eating when he arrived", "was reading when it rang", "had forgotten", "had already left", "was driving when I saw", "were sleeping when it happened", "had never noticed", "was waiting when she called", "had just started"],
+      "sentence_practice": [
+        "I was walking home when I realised I'd forgotten my phone.",
+        "We were eating when he arrived, because he'd missed the train.",
+        "She was reading when the phone rang."
+      ],
+      "record_this": "I was walking home when I suddenly realised I'd forgotten my phone at the office. We were still eating when he finally arrived, because he'd missed the earlier train. She was reading quietly when the phone rang and startled her.",
+      "self_check": "Say the whole sentence. Can you hear three different layers — flowing, beating, and dropping?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["storytelling pace and dramatic pause"],
+      "isolation": {
+        "instructions": "Good storytelling uses SPEED changes. Run the scenery quickly, slow down on the key event, and pause just before the surprise: 'I opened the door and ... // it was empty.'",
+        "instructions_ar": "الحكي الجيد يغيّر السرعة: أسرع في المشهد، أبطأ في الحدث المهم، ووقفة قبل المفاجأة.",
+        "practice": ["fast scenery ... SLOW key event", "pause // before the surprise", "vary the pace"]
+      },
+      "minimal_pairs": [
+        {"pair": ["pause // before surprise ✅", "no pause ❌"], "meaning": ["تشويق", "بلا تأثير"]},
+        {"pair": ["fast scenery", "slow key event"], "meaning": ["سريع", "بطيء"]},
+        {"pair": ["suddenly (stressed)", "suddenly (flat) ❌"], "meaning": ["مؤثر", "بلا تأثير"]},
+        {"pair": ["and then ... (rising)", "and then (falling)"], "meaning": ["تشويق", "نهاية"]},
+        {"pair": ["I couldn't believe it!", "I couldn't believe it."], "meaning": ["انفعال", "عادي"]}
+      ],
+      "word_practice": ["suddenly", "all of a sudden", "and then", "at that moment", "before I knew it", "the next thing I knew", "to my surprise", "just as", "finally", "in the end"],
+      "sentence_practice": [
+        "I opened the door and ... it was completely empty.",
+        "Suddenly, the lights went out.",
+        "Just as we were leaving, the phone rang."
+      ],
+      "record_this": "I opened the door slowly and, to my complete surprise, the room was completely empty. Suddenly, without any warning, all the lights went out. Just as we were leaving the house, the phone rang again.",
+      "self_check": "Say 'I opened the door and ... it was empty.' Did you pause before the surprise and slow down on it?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I WOKE up (spine)", "I was waking up (scenery)"], ["wəz (weak)", "WAS ❌"], ["I'd left (dropped)", "I LEFT (spine)"],
+        ["flow → beat → drop ✅", "all same volume ❌"], ["pause // before surprise", "no pause ❌"], ["she'd forgotten", "she forgot"]
+      ],
+      "challenge_sentences": [
+        "I was walking home when I realised I'd forgotten my phone.",
+        "The sun was shining, and then suddenly it started to rain.",
+        "By the time we arrived, they'd already left.",
+        "I opened the door and ... the room was empty."
+      ],
+      "record_this": "I was walking home from work when I suddenly realised I'd forgotten my phone. The sun was shining beautifully, and then, out of nowhere, it started to rain heavily. By the time we finally arrived, they'd already left the building. I opened the door slowly and, to my surprise, the room was completely empty.",
+      "self_check": "Three checks: a strong past-simple spine, flowing weak-form scenery, and a dropped past-perfect backstory."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling a complete story with all three past tenses. Focus on making the timeline audible through rhythm alone. Then listen back and check each layer.",
+        "instructions_ar": "سجّل قصة كاملة بالأزمنة الثلاثة، واجعل التسلسل الزمني مسموعًا من الإيقاع وحده، وبعدين اسمع وراجع.",
+        "passage": "I'll never forget the day I lost my wallet. It was a warm evening and I was walking through the old market, looking at the stalls. People were shouting, music was playing, and the whole street smelled of grilled meat. I stopped to buy some dates. When I reached into my pocket, I realised my wallet had gone. My heart sank. I'd taken it out earlier to pay for a taxi, and I'd probably dropped it there. I ran back through the crowd, retracing my steps, but I couldn't find it anywhere. I'd almost given up when a young boy tapped my shoulder. He was holding my wallet. He'd found it near the taxi rank and had been looking for me for twenty minutes. Nothing was missing. I thanked him again and again, and I've never forgotten what he did.",
+        "sounds_to_check": {
+          "past simple spine (strong beats)": "stopped, realised, sank, ran, couldn't find, tapped, thanked",
+          "past continuous scenery (flowing, weak was/were)": "was walking, were shouting, was playing, was holding",
+          "past perfect backstory (dropped, lower)": "had gone, I'd taken it out, I'd dropped it, I'd almost given up, he'd found it",
+          "past perfect continuous": "had been looking for me",
+          "pace and pause": "slow on 'I realised my wallet had gone', pause before 'He was holding my wallet'"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Three clearly different layers; a listener could draw your timeline. Ready for week 4.",
+        "70_89": "Good; occasionally the backstory sits too high.",
+        "50_69": "All tenses at the same volume, so the timeline is unclear. Repeat days 1-4.",
+        "below_50": "Redo days 1-5: beat the spine, flow the scenery, drop the backstory."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "English marks story layers with rhythm, not extra words — this is the core B2 narrative skill.",
+      "Past simple = strong separate beats (the spine). Past continuous = smooth flow (scenery). Past perfect = dropped and fast (backstory).",
+      "If all three sound the same, your listener cannot reconstruct the order of events.",
+      "Vary your speed and pause before the surprise — that is what makes a story enjoyable, not just correct."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

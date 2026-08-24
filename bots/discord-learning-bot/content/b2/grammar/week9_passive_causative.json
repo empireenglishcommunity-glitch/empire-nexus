@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w9",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 9,
+  "pattern_name": "Passive (all tenses) + causative have/get something done",
+  "pattern_name_ar": "المبني للمجهول (كل الأزمنة) + الصيغة السببية have/get something done",
+  "formula": "be (any tense) + participle · is being / has been / had been / will be / to be / modal + be · have/get + object + participle",
+  "formula_visual": "[The road is being repaired] // [I had my hair cut]",
+  "when_to_use": "The passive works in every tense by changing 'be': is repaired, is being repaired, has been repaired, had been repaired, will be repaired, must be repaired, to be repaired. The causative 'have/get + object + participle' means you arranged for someone ELSE to do it: 'I had my hair cut.'",
+  "when_to_use_ar": "المجهول يعمل في كل الأزمنة بتغيير 'be'. والصيغة السببية 'have/get + مفعول + التصريف الثالث' تعني أنك رتّبت لشخص آخر أن يفعلها: 'I had my hair cut.'",
+  "why_arabic_speakers_struggle": "Arabic forms the passive by internal vowel change with no auxiliary, so learners drop 'be' or 'been'. The causative is harder still: 'I cut my hair' and 'I had my hair cut' both translate similarly, but in English the first means you did it yourself.",
+  "examples": [
+    {"en": "The road is being repaired at the moment.", "ar": "الطريق يُصلَح الآن", "structure": "[is being + participle] (present continuous passive)"},
+    {"en": "The house has already been sold.", "ar": "البيت بيع بالفعل", "structure": "[has been + participle] (perfect passive)"},
+    {"en": "The building had been abandoned for years.", "ar": "المبنى كان مهجورًا لسنوات", "structure": "[had been + participle] (past perfect passive)"},
+    {"en": "I had my hair cut yesterday.", "ar": "قصصت شعري أمس (الحلاق قصّه)", "structure": "[had + object + participle] (causative)"},
+    {"en": "I need to get my car fixed.", "ar": "أحتاج أن أصلّح سيارتي (شخص آخر)", "structure": "[get + object + participle] (informal causative)"}
+  ],
+  "common_errors": [
+    {"wrong": "The house built in 1990.", "correct": "The house was built in 1990.", "explanation": "The passive always needs a form of 'be' before the participle."},
+    {"wrong": "I cut my hair yesterday. (at the barber's)", "correct": "I had my hair cut yesterday.", "explanation": "If someone else did it for you, use the causative."},
+    {"wrong": "I had cut my hair.", "correct": "I had my hair cut.", "explanation": "Word order: have + OBJECT + participle. 'I had cut' is the past perfect, a different meaning."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The road ___ (repair) at the moment.", "answer": "is being repaired"},
+    {"sentence": "The house ___ (already / sell).", "answer": "has already been sold"},
+    {"sentence": "I ___ (have) my hair ___ (cut) yesterday.", "answer": "had / cut"},
+    {"sentence": "I need to ___ (get) my car ___ (fix).", "answer": "get / fixed"},
+    {"sentence": "All forms must ___ (complete) in ink.", "answer": "be completed"}
+  ],
+  "quick_rule": "Passive = be (in any tense) + participle. Causative = have/get + OBJECT + participle (someone else did it for you).",
+  "quick_rule_ar": "المجهول = be (بأي زمن) + التصريف الثالث. السببية = have/get + المفعول + التصريف الثالث (شخص آخر فعلها لك).",
+  "mnemonic": "No 'be', no passive. Object BEFORE the participle in causatives.",
+  "connect_to_speaking": "In accent week 9 you drilled flat auxiliary chains and causative stress. Say 'I had my hair CUT' with the stress on the final participle — that stress is what marks it as a service."
+}

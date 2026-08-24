@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w16",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 16,
+  "pattern_name": "Phrasal verbs, collocations and register — B2 review",
+  "pattern_name_ar": "الأفعال المركبة والمتلازمات والمقام — مراجعة B2",
+  "formula": "separable: verb + object + particle (pronoun MUST go in the middle) · inseparable: verb + particle + object · phrasal (informal) vs Latinate (formal) equivalents",
+  "formula_visual": "[turn it off] ✅ // [turn off it] ❌ // [put off] = informal, [postpone] = formal",
+  "when_to_use": "Separable phrasal verbs allow 'turn off the light' or 'turn the light off', but with a PRONOUN the particle must follow it: 'turn it off'. Inseparable verbs never split: 'look after him'. Choose phrasal verbs for conversation and their one-word Latinate equivalents (postpone, discover, investigate) for formal contexts.",
+  "when_to_use_ar": "الأفعال القابلة للفصل تسمح بالترتيبين، لكن مع الضمير يأتي حرف الجر بعده: 'turn it off'. وغير القابلة للفصل لا تنفصل. واختر المركّب للمحادثة والرسمي للمقامات الرسمية.",
+  "why_arabic_speakers_struggle": "Arabic verbs don't split, so 'turn off it' feels natural. Learners also treat phrasal verbs as informal-only and avoid them in speech (sounding stiff), or use them in formal writing (sounding too casual). Register control is the final B2 skill.",
+  "examples": [
+    {"en": "Could you turn it off, please?", "ar": "هل يمكنك إطفاؤه؟ (الضمير في المنتصف)", "structure": "[verb + pronoun + particle] ✅"},
+    {"en": "Turn off the light. / Turn the light off.", "ar": "أطفئ النور (كلا الترتيبين صحيح)", "structure": "[separable, both orders OK with a noun]"},
+    {"en": "I'll look after him.", "ar": "سأعتني به (غير قابل للفصل)", "structure": "[inseparable: verb + particle + object]"},
+    {"en": "We had to put off the meeting. / The meeting was postponed.", "ar": "أجّلنا الاجتماع (غير رسمي / رسمي)", "structure": "[phrasal] vs [Latinate]"},
+    {"en": "She handed out the handouts.", "ar": "وزّعت النشرات", "structure": "[verb 'hand OUT'] vs [noun 'HANDout']"}
+  ],
+  "common_errors": [
+    {"wrong": "Could you turn off it?", "correct": "Could you turn it off?", "explanation": "With a pronoun the particle must come after it."},
+    {"wrong": "I'll look him after.", "correct": "I'll look after him.", "explanation": "'look after' is inseparable and never splits."},
+    {"wrong": "The committee will look into the matter. (in a formal report)", "correct": "The committee will investigate the matter.", "explanation": "Formal writing prefers the one-word Latinate equivalent."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Could you turn ___ ___ , please? (it / off)", "answer": "it off"},
+    {"sentence": "I'll look ___ him while you're away.", "answer": "after"},
+    {"sentence": "We had to put ___ the meeting. (informal)", "answer": "off"},
+    {"sentence": "The meeting was ___ until March. (formal for 'put off')", "answer": "postponed"},
+    {"sentence": "She handed out the ___ . (noun from 'hand out')", "answer": "handouts"}
+  ],
+  "quick_rule": "Pronoun ALWAYS goes between verb and particle: 'turn it off'. Inseparable verbs never split. Phrasal = conversation, Latinate = formal.",
+  "quick_rule_ar": "الضمير دائمًا بين الفعل وحرف الجر: 'turn it off'. وغير القابل للفصل لا ينفصل. المركّب للمحادثة والرسمي للمقام الرسمي.",
+  "mnemonic": "Pronoun in the middle. Casual → phrasal · Formal → one word.",
+  "connect_to_speaking": "In accent week 16 you drilled particle stress and register rhythm. Say 'put it OFF' (fast, casual) against 'postPONE it' (measured, formal). This completes B2 — you now control not just accuracy but appropriacy."
+}

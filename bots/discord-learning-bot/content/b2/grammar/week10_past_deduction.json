@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w10",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 10,
+  "pattern_name": "Modals of past deduction (must/might/can't have + participle)",
+  "pattern_name_ar": "أفعال الاستنتاج في الماضي (must/might/can't have + التصريف الثالث)",
+  "formula": "must have + participle (sure it happened) · might/may/could have + participle (possible) · can't/couldn't have + participle (impossible)",
+  "formula_visual": "[He must have forgotten] // [She might have missed it] // [It can't have been him]",
+  "when_to_use": "To make deductions about the PAST based on present evidence. must have = I'm sure it happened. might/may/could have = it possibly happened. can't/couldn't have = it's impossible. All take 'have + past participle'.",
+  "when_to_use_ar": "للاستنتاج عن الماضي بناءً على دليل حاضر. must have متأكد، might/may/could have ممكن، can't/couldn't have مستحيل. كلها + have + التصريف الثالث.",
+  "why_arabic_speakers_struggle": "Learners confuse 'mustn't have' with \"can't have\" — in English 'mustn't' means prohibition, never impossibility. They also write 'must of' because that is exactly how /mʌstəv/ sounds, and they mix this up with the regret meaning of 'should have'.",
+  "examples": [
+    {"en": "He must have forgotten the meeting.", "ar": "لا بد أنه نسي الاجتماع", "structure": "[must have + participle] (certain)"},
+    {"en": "She might have missed the train.", "ar": "ربما فوّتت القطار", "structure": "[might have + participle] (possible)"},
+    {"en": "It can't have been him; he was abroad.", "ar": "مستحيل أن يكون هو؛ كان بالخارج", "structure": "[can't have been] (impossible)"},
+    {"en": "They couldn't have finished already.", "ar": "مستحيل أن يكونوا انتهوا بالفعل", "structure": "[couldn't have + participle]"},
+    {"en": "The lights are off, so they must have gone out.", "ar": "الأنوار مطفأة، فلا بد أنهم خرجوا", "structure": "evidence + so + [must have]"}
+  ],
+  "common_errors": [
+    {"wrong": "It mustn't have been him.", "correct": "It can't have been him.", "explanation": "For impossibility use \"can't have\"; 'mustn't' means prohibition."},
+    {"wrong": "He must of forgotten.", "correct": "He must have forgotten. / He must've forgotten.", "explanation": "'must've' is 'must have'; 'must of' is never correct in writing."},
+    {"wrong": "He must forgot the meeting.", "correct": "He must have forgotten the meeting.", "explanation": "Past deduction needs 'have + past participle' after the modal."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "He ___ (must / forget) the meeting.", "answer": "must have forgotten"},
+    {"sentence": "She ___ (might / miss) the train.", "answer": "might have missed"},
+    {"sentence": "It ___ (can't / be) him; he was abroad.", "answer": "can't have been"},
+    {"sentence": "They ___ (couldn't / finish) already.", "answer": "couldn't have finished"},
+    {"sentence": "The lights are off, so they ___ (must / go) out.", "answer": "must have gone"}
+  ],
+  "quick_rule": "must have (sure) · might/may/could have (maybe) · can't/couldn't have (impossible). Always + past participle. Never 'mustn't have' for impossibility.",
+  "quick_rule_ar": "must have (متأكد) · might/could have (ربما) · can't have (مستحيل). دائمًا + التصريف الثالث. ولا تستخدم mustn't have للاستحالة.",
+  "mnemonic": "Sure → must've · Maybe → might've · Impossible → can't have (NOT mustn't have).",
+  "connect_to_speaking": "In accent week 10 you drilled /mʌstəv/, /maɪtəv/ and /kɑːntəv/ with three different confidence tones. Your certainty must be audible — the same words said flat lose the meaning."
+}

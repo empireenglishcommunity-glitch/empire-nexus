@@ -1,0 +1,181 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 15,
+  "focus": "'It was X that...' cleft stress · 'What I need is...' cleft build-up · 'so ... that' / 'such a ... that' · emphatic 'do/did' · contrastive stress shifting",
+  "focus_ar": "نبر 'It was X that...'، وبناء 'What I need is...'، و'so...that' و'such a...that'، والتوكيد بـ do/did، ونقل النبر التقابلي",
+  "arabic_challenge": "English creates emphasis by RESTRUCTURING the sentence and moving the main stress, whereas Arabic often adds words (إنّ، فعلاً) or changes word order more freely. Learners who translate directly produce correct-but-flat English and can't highlight the point they care about.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'It was X that...' cleft — stress the highlighted element"],
+      "isolation": {
+        "instructions": "This structure spotlights ONE element and it takes the main stress: 'It was SARA that called' (not someone else). Everything after 'that' drops in pitch — it's already-known information.",
+        "instructions_ar": "هذا التركيب يسلّط الضوء على عنصر واحد يأخذ النبر الرئيسي: 'It was SARA that called'. وما بعد 'that' يهبط.",
+        "practice": ["It was SARa that called", "It was YESterday that we met", "spotlight + drop"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It was SARA that called", "It was Sara that CALLED ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["It was Sara that called", "Sara called"], "meaning": ["توكيد", "عادي"]},
+        {"pair": ["It was yesterday that we met", "We met yesterday"], "meaning": ["توكيد الوقت", "عادي"]},
+        {"pair": ["it was ... that ✅", "it was ... which ❌ (people)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["It wasn't me that did it", "I didn't do it"], "meaning": ["توكيد قوي", "عادي"]}
+      ],
+      "word_practice": ["it was Sara that called", "it was yesterday that we met", "it was money that mattered", "it was here that it happened", "it was John who told me", "it wasn't me that did it", "it was then that I realised", "it was the noise that woke me", "it was luck that saved us", "it was you who asked"],
+      "sentence_practice": [
+        "It was Sara that called, not Mona.",
+        "It was yesterday that we met, not today.",
+        "It wasn't me that broke it."
+      ],
+      "record_this": "It was Sara that called me last night, not Mona. It was yesterday that we met at the café, not today. Honestly, it wasn't me that broke the window.",
+      "self_check": "Say 'It was SARA that called.' Is the main stress on 'SARA', with everything after 'that' lower?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'What I need is...' cleft — build-up then landing"],
+      "isolation": {
+        "instructions": "This structure builds suspense: say 'What I really need is...' fairly flat and slightly rising, then LAND hard on the key word: 'What I need is a HOLiday.' The delay creates the emphasis.",
+        "instructions_ar": "هذا التركيب يبني تشويقًا: قل 'What I really need is...' بنبرة مسطحة صاعدة قليلاً، ثم انزل بقوة على الكلمة المفتاح.",
+        "practice": ["What I need is ... ə HOLiday", "What surprised me was ... the PRICE", "build up, then land"]
+      },
+      "minimal_pairs": [
+        {"pair": ["What I need is a HOLiday", "I need a holiday"], "meaning": ["توكيد", "عادي"]},
+        {"pair": ["build-up then land ✅", "flat throughout ❌"], "meaning": ["مؤثر", "بلا تأثير"]},
+        {"pair": ["What I need is ✅", "What I need it is ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["What happened was...", "That happened"], "meaning": ["تمهيد", "عادي"]},
+        {"pair": ["All I want is ...", "I want ..."], "meaning": ["توكيد", "عادي"]}
+      ],
+      "word_practice": ["what I need is", "what surprised me was", "what happened was", "all I want is", "what bothers me is", "what matters is", "the thing I like is", "what I don't understand is", "all we did was", "what she said was"],
+      "sentence_practice": [
+        "What I really need is a holiday.",
+        "What surprised me was the price.",
+        "All I want is a quiet evening."
+      ],
+      "record_this": "What I really need right now is a proper holiday. What genuinely surprised me was the price of the tickets. All I want this evening is a quiet cup of tea.",
+      "self_check": "Say 'What I need is a HOLiday.' Did the first part stay flat before landing hard on 'HOLiday'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'so ... that' and 'such a ... that'"],
+      "isolation": {
+        "instructions": "Both intensify, and the ADJECTIVE stretches: 'It was sooo COLD that the pipes froze.' Use 'so + adjective' and 'such a + adjective + noun'. Lengthening the vowel is what carries the intensity.",
+        "instructions_ar": "كلتاهما للتكثيف، والصفة تُمدّ: 'It was sooo COLD that...'. استخدم 'so + صفة' و'such a + صفة + اسم'.",
+        "practice": ["so COLD that...", "such a LONG day that...", "stretch the adjective"]
+      },
+      "minimal_pairs": [
+        {"pair": ["so cold ✅ (adjective)", "such cold ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["such a long day ✅ (adj + noun)", "so a long day ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["stretched adjective (intense)", "short adjective (flat)"], "meaning": ["مكثّف", "عادي"]},
+        {"pair": ["so many people", "so much noise"], "meaning": ["معدود", "غير معدود"]},
+        {"pair": ["such good news ✅ (uncount)", "such a good news ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["so cold that", "so tired that", "such a long day that", "such good news", "so many people", "so much noise", "such a mess", "so difficult that", "such an easy test", "so quickly that"],
+      "sentence_practice": [
+        "It was so cold that the pipes froze.",
+        "It was such a long day that I fell asleep.",
+        "There was so much noise that I couldn't think."
+      ],
+      "record_this": "It was so cold last night that the pipes actually froze. It had been such a long day that I fell asleep on the sofa. There was so much noise outside that I simply couldn't think.",
+      "self_check": "Say 'It was so cold that the pipes froze.' Did you stretch 'cold' to carry the intensity?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["emphatic 'do / did' (contradicting)"],
+      "isolation": {
+        "instructions": "Add a stressed auxiliary to insist or contradict: 'I DID tell you!', 'I DO like it!' Normally there's no auxiliary in positive statements — adding one is pure emphasis, and it must be stressed.",
+        "instructions_ar": "أضف مساعدًا منبورًا للإصرار أو التصحيح: 'I DID tell you!'. عادة لا يوجد مساعد في المثبت، فوجوده توكيد خالص.",
+        "practice": ["I DID tell you!", "I DO like it!", "stressed auxiliary = insistence"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I DID tell you!", "I told you"], "meaning": ["إصرار", "عادي"]},
+        {"pair": ["I DO like it!", "I like it"], "meaning": ["توكيد", "عادي"]},
+        {"pair": ["DID (stressed) ✅", "did (flat) ❌"], "meaning": ["توكيد", "بلا معنى"]},
+        {"pair": ["she DOES care", "she cares"], "meaning": ["توكيد", "عادي"]},
+        {"pair": ["do sit down (polite)", "sit down (direct)"], "meaning": ["مهذّب", "مباشر"]}
+      ],
+      "word_practice": ["I DID tell you", "I DO like it", "she DOES care", "we DID try", "he DOES know", "they DID come", "I DO understand", "it DID happen", "do sit down", "do come in"],
+      "sentence_practice": [
+        "I did tell you — you weren't listening!",
+        "I do like it, honestly.",
+        "She does care about you."
+      ],
+      "record_this": "I did tell you about it — you simply weren't listening! I do like it, honestly, I'm not just being polite. She does care about you, even if she doesn't say so.",
+      "self_check": "Say 'I DID tell you!' Is the auxiliary clearly stressed so it sounds like insistence?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["contrastive stress shifting"],
+      "isolation": {
+        "instructions": "Move the stress to change the meaning without changing a word: 'I didn't say HE stole it' (someone else did) vs 'I didn't SAY he stole it' (I implied it). Practise moving the stress deliberately.",
+        "instructions_ar": "انقل النبر لتغيّر المعنى بدون تغيير الكلمات: 'I didn't say HE stole it' مقابل 'I didn't SAY he stole it'.",
+        "practice": ["I didn't say HE stole it", "I didn't SAY he stole it", "I didn't say he STOLE it"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I didn't say HE stole it", "I didn't SAY he stole it"], "meaning": ["شخص آخر", "لم أقلها صراحة"]},
+        {"pair": ["I want THIS one", "I WANT this one"], "meaning": ["هذا تحديدًا", "أريده فعلاً"]},
+        {"pair": ["SHE told me", "she told ME"], "meaning": ["هي لا غيرها", "أنا لا غيري"]},
+        {"pair": ["I saw her YESterday", "I SAW her yesterday"], "meaning": ["الوقت", "فعلاً رأيتها"]},
+        {"pair": ["it's not MY fault", "it's not my FAULT"], "meaning": ["ليس أنا", "ليست غلطة"]}
+      ],
+      "word_practice": ["I didn't say HE stole it", "I didn't SAY he stole it", "I want THIS one", "SHE told me", "she told ME", "I saw her YESterday", "it's not MY fault", "we ASKED for it", "I THOUGHT you knew", "that's not what I MEANT"],
+      "sentence_practice": [
+        "I didn't say HE stole it.",
+        "I didn't SAY he stole it.",
+        "That's not what I MEANT."
+      ],
+      "record_this": "I didn't say HE stole it — I said somebody stole it. Actually, I didn't SAY he stole it; I only suggested it. That's honestly not what I MEANT at all.",
+      "self_check": "Say the same sentence three times with the stress in different places. Does the meaning genuinely change each time?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 15 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["It was SARA that called", "Sara called"], ["What I need is a HOLiday", "I need a holiday"], ["so cold ✅", "such cold ❌"],
+        ["I DID tell you!", "I told you"], ["I didn't say HE stole it", "I didn't SAY he stole it"], ["such a long day ✅", "so a long day ❌"]
+      ],
+      "challenge_sentences": [
+        "It was Sara that called, not Mona.",
+        "What I really need is a holiday.",
+        "It was so cold that the pipes froze.",
+        "I did tell you — you weren't listening!"
+      ],
+      "record_this": "It was Sara that called last night, not Mona. What I really need right now is a proper holiday. It was so cold that the pipes actually froze. And I did tell you about it — you simply weren't listening!",
+      "self_check": "Three checks: main stress on the spotlighted element, build-up before landing, and stressed emphatic 'do/did'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself correcting a misunderstanding and insisting on your version. Emphasis structures only work if the stress is right, so listen closely to WHERE your stress falls.",
+        "instructions_ar": "سجّل نفسك تصحّح سوء فهم وتصرّ على روايتك. تراكيب التوكيد لا تعمل إلا بنبر صحيح، فاسمع أين يقع نبرك.",
+        "passage": "Let me set the record straight, because what happened wasn't what people are saying. It was Karim who suggested the change, not me. I did raise concerns at the time — several people heard me. What I actually said was that the timing was risky, whereas the idea itself was fine. The meeting was so rushed that nobody wrote anything down. Consequently, it's now my word against his. What frustrates me most is the assumption that I stayed silent. I didn't stay silent; I was ignored. It was in that meeting that the mistake was made, and it was the rush that caused it. I do understand why people are confused. Nevertheless, what matters now isn't blame — it's fixing the problem before Friday.",
+        "sounds_to_check": {
+          "'It was X that/who' clefts": "It was KaRIM who suggested, it was in THAT MEETing that, it was the RUSH that caused it",
+          "'What...' clefts with build-up": "what HAPPened wasn't..., what I ACTually said was..., what FRUStrates me most is..., what MATters now isn't...",
+          "emphatic 'do/did'": "I DID raise concerns, I DO understand",
+          "'so ... that'": "so RUSHED that nobody wrote anything down",
+          "contrastive stress": "I didn't stay SILent; I was IGnored"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Emphasis lands exactly where intended; the correction is persuasive. Ready for week 16.",
+        "70_89": "Good; occasional stress on the wrong element.",
+        "50_69": "Cleft structures used but delivered flat, so no emphasis is heard. Repeat days 1-2 and 5.",
+        "below_50": "Redo days 1-5, focusing on WHERE the main stress falls in each structure."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "English emphasises by RESTRUCTURING the sentence and moving the main stress, not by adding words.",
+      "In 'It was X that...', X takes the main stress and everything after 'that' drops — it is old information.",
+      "In 'What I need is...', stay flat through the build-up and land hard on the key word.",
+      "'so + adjective' but 'such a + adjective + noun'. Stretch the adjective to carry intensity.",
+      "Emphatic 'do/did' only works if you STRESS it — unstressed, it is meaningless."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

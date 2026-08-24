@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 6,
+  "focus": "'d have' vs 'd be' in mixed conditionals · past cause → present result · present cause → past result · 'if I'd studied, I'd be' switch · time-frame stress",
+  "focus_ar": "'d have مقابل 'd be في الشروط المختلطة، وسبب ماضٍ ← نتيجة حاضرة، وسبب حاضر ← نتيجة ماضية، ونبر الإطار الزمني",
+  "arabic_challenge": "Mixed conditionals cross time frames, and the only audible signal is /dəv/ (past result) versus /dbi/ (present result): 'I'd have passed' vs 'I'd be a doctor'. Arabic learners who compress both to the same sound lose the distinction entirely.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'d be' /dbi/ (present result)"],
+      "isolation": {
+        "instructions": "When the RESULT is in the present, use 'd be' /dbi/: 'If I'd studied medicine, I'd BE a doctor now.' The past caused it, but you're describing today. Note the 'now'.",
+        "instructions_ar": "لو النتيجة في الحاضر، استخدم 'd be' /dbi/: 'If I'd studied medicine, I'd BE a doctor now.'",
+        "practice": ["/aɪdbi/ ə DOCtor now", "/ʃiːdbi/ HERE now", "present result"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd be a doctor (now)", "I'd have been a doctor (then)"], "meaning": ["نتيجة حاضرة", "نتيجة ماضية"]},
+        {"pair": ["/dbi/ (be)", "/dəv/ (have)"], "meaning": ["حاضر", "ماضٍ"]},
+        {"pair": ["I'd be rich now", "I'd have been rich then"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["she'd be here", "she'd have been here"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["we'd be living there", "we'd have lived there"], "meaning": ["الآن", "ماضٍ"]}
+      ],
+      "word_practice": ["I'd be a doctor", "I'd be rich", "she'd be here", "we'd be living there", "they'd be happier", "he'd be working", "you'd be tired", "I'd be fluent", "we'd be finished", "she'd be famous"],
+      "sentence_practice": [
+        "If I'd studied medicine, I'd be a doctor now.",
+        "If she'd taken that job, she'd be living in Paris.",
+        "If we'd saved more, we'd be able to buy a house."
+      ],
+      "record_this": "If I'd studied medicine at university, I'd be a doctor now. If she'd taken that job in France, she'd be living in Paris today. If we'd saved a bit more money, we'd be able to buy a house this year.",
+      "self_check": "Say 'I'd be a doctor now'. Is it /dbi/ with a present-time result, and did you include 'now'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'d have' /dəv/ (past result)"],
+      "isolation": {
+        "instructions": "When the RESULT is in the past, use 'd have' /dəv/: 'If I were more organised, I'd HAVE finished yesterday.' A permanent present quality caused a past outcome.",
+        "instructions_ar": "لو النتيجة في الماضي، استخدم 'd have' /dəv/: 'If I were more organised, I'd have finished yesterday.'",
+        "practice": ["/aɪdəv/ FINished yesterday", "/ʃiːdəv/ COME", "past result"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd have finished (past)", "I'd be finished (now)"], "meaning": ["نتيجة ماضية", "نتيجة حاضرة"]},
+        {"pair": ["/dəv/ FINished", "/dbi/ FINished"], "meaning": ["ماضٍ", "حاضر"]},
+        {"pair": ["if I were organised (always)", "if I'd been organised (then)"], "meaning": ["صفة دائمة", "وقتها"]},
+        {"pair": ["she'd have come", "she'd come"], "meaning": ["كانت جاءت", "كانت تجيء"]},
+        {"pair": ["I'd have known", "I'd know"], "meaning": ["ماضٍ", "حاضر"]}
+      ],
+      "word_practice": ["I'd have finished", "she'd have come", "we'd have noticed", "they'd have told us", "he'd have passed", "I'd have remembered", "you'd have enjoyed it", "we'd have arrived", "she'd have understood", "they'd have helped"],
+      "sentence_practice": [
+        "If I were more organised, I'd have finished yesterday.",
+        "If she weren't so shy, she'd have spoken up.",
+        "If he didn't work nights, he'd have come with us."
+      ],
+      "record_this": "If I were a more organised person, I'd have finished all of this yesterday. If she weren't so shy, she'd have spoken up in the meeting. If he didn't work nights, he'd have come to the cinema with us.",
+      "self_check": "Say 'I'd have finished yesterday'. Is it /dəv/ with a past result following a present condition?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["switching between /dbi/ and /dəv/"],
+      "isolation": {
+        "instructions": "Drill the switch directly: 'I'd BE a doctor' (now) vs 'I'd HAVE been a doctor' (then). Same opening /aɪd/, then either /bi/ or /əv/. This one sound sets the time frame.",
+        "instructions_ar": "تدرّب على التبديل: /aɪd/ ثم /bi/ أو /əv/. هذا الصوت الواحد يحدّد الإطار الزمني.",
+        "practice": ["/aɪdbi/ (now)", "/aɪdəv/ (then)", "one sound = the time frame"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/aɪdbi/ (now)", "/aɪdəv/ (then)"], "meaning": ["حاضر", "ماضٍ"]},
+        {"pair": ["I'd be there", "I'd have been there"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["we'd be married", "we'd have been married"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["he'd be angry", "he'd have been angry"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["they'd be here", "they'd have got here"], "meaning": ["الآن", "وصلوا"]}
+      ],
+      "word_practice": ["I'd be there / I'd have been there", "we'd be married / we'd have been married", "he'd be angry / he'd have been angry", "she'd be ready / she'd have been ready", "I'd be fine / I'd have been fine", "we'd be home / we'd have got home", "they'd be rich / they'd have been rich", "you'd be tired / you'd have been tired", "I'd be happy / I'd have been happy", "she'd be here / she'd have come"],
+      "sentence_practice": [
+        "If I'd left earlier, I'd be there by now.",
+        "If I'd left earlier, I'd have been there on time.",
+        "If she spoke English, she'd have got the job."
+      ],
+      "record_this": "If I'd left the house earlier, I'd be there by now. If I'd left earlier, I'd have been there right on time. If she spoke English fluently, she'd have got that job last month without any trouble.",
+      "self_check": "Say both versions back to back. Can you hear /bi/ for the present result and /əv/ for the past one?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'now' and 'yesterday' as time-frame anchors"],
+      "isolation": {
+        "instructions": "Mixed conditionals usually carry a time anchor, and it is STRESSED because it does the disambiguating work: 'I'd be a doctor NOW', 'I'd have finished YESterday'. Hit the anchor.",
+        "instructions_ar": "الشروط المختلطة تحمل مرساة زمنية منبورة لأنها توضّح المعنى: 'I'd be a doctor NOW'.",
+        "practice": ["a doctor NOW", "finished YESterday", "stress the anchor"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a doctor NOW (anchor)", "a doctor (no anchor)"], "meaning": ["واضح", "غامض"]},
+        {"pair": ["now (present anchor)", "yesterday (past anchor)"], "meaning": ["حاضر", "ماضٍ"]},
+        {"pair": ["by now", "by then"], "meaning": ["حتى الآن", "حتى وقتها"]},
+        {"pair": ["today", "that day"], "meaning": ["اليوم", "ذاك اليوم"]},
+        {"pair": ["still (continuing)", "already (completed)"], "meaning": ["لا يزال", "سابقًا"]}
+      ],
+      "word_practice": ["now", "by now", "today", "still", "these days", "yesterday", "back then", "at the time", "by then", "already"],
+      "sentence_practice": [
+        "I'd be a doctor now if I'd studied medicine.",
+        "We'd be home by now if we'd left earlier.",
+        "She'd have finished yesterday if she weren't so busy."
+      ],
+      "record_this": "I'd be a doctor now if I'd studied medicine at university. We'd be home by now if we'd left the party earlier. She'd have finished it yesterday if she weren't so incredibly busy at the moment.",
+      "self_check": "Say 'I'd be a doctor now'. Is 'NOW' clearly stressed as the time anchor?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full mixed conditional at natural speed"],
+      "isolation": {
+        "instructions": "Put it all together and speed it up: '/ɪfaɪd/ STUDied harder, /aɪdbi/ at UNiversity NOW.' Both halves compress; only the content words and the anchor are strong.",
+        "instructions_ar": "اجمع كل شيء وأسرع: النصفان يُدمجان، والكلمات المهمة والمرساة فقط قوية.",
+        "practice": ["/ɪfaɪd/ STUDied harder, /aɪdbi/ at UNiversity NOW", "compress both halves", "content words strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["compressed both halves ✅", "every word full ❌"], "meaning": ["طبيعي", "آلي"]},
+        {"pair": ["if I'd studied, I'd be", "if I studied, I'd be"], "meaning": ["مختلط", "شرط ثانٍ"]},
+        {"pair": ["I'd be at university now", "I'd have been at university"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["/ɪfaɪd/", "if I had (slow)"], "meaning": ["طبيعي", "بطيء"]},
+        {"pair": ["mixed (past → present)", "third (past → past)"], "meaning": ["مختلط", "ثالث"]}
+      ],
+      "word_practice": ["if I'd studied, I'd be", "if she'd stayed, she'd be", "if we'd invested, we'd be", "if he'd trained, he'd be", "if they'd moved, they'd be", "if I were braver, I'd have", "if she weren't shy, she'd have", "if he didn't smoke, he'd have", "if I spoke French, I'd have", "if we had money, we'd have"],
+      "sentence_practice": [
+        "If I'd studied harder, I'd be at university now.",
+        "If she'd stayed in Cairo, she'd be working there today.",
+        "If I weren't so tired, I'd have gone out last night."
+      ],
+      "record_this": "If I'd studied a lot harder at school, I'd be at university now. If she'd stayed in Cairo, she'd be working there today instead of abroad. If I weren't so tired all the time, I'd have gone out with them last night.",
+      "self_check": "Say the full sentence quickly. Do both halves compress, leaving only content words and the time anchor strong?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/dbi/ (be, now)", "/dəv/ (have, then)"], ["I'd be a doctor", "I'd have been a doctor"], ["a doctor NOW", "a doctor (no anchor)"],
+        ["if I'd studied, I'd be", "if I studied, I'd be"], ["mixed (past → present)", "third (past → past)"], ["we'd be home", "we'd have got home"]
+      ],
+      "challenge_sentences": [
+        "If I'd studied medicine, I'd be a doctor now.",
+        "If I weren't so tired, I'd have gone out last night.",
+        "If we'd left earlier, we'd be home by now.",
+        "If she spoke English, she'd have got that job."
+      ],
+      "record_this": "If I'd studied medicine at university, I'd be a doctor now. If I weren't so tired all the time, I'd have gone out with them last night. If we'd left the party earlier, we'd be home by now. If she spoke English fluently, she'd have got that job easily.",
+      "self_check": "Three checks: /dbi/ for present results, /dəv/ for past results, and a clearly stressed time anchor."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reflecting on how past choices shape your present, crossing time frames deliberately. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تتأمل كيف تُشكّل خياراتك الماضية حاضرك، متنقلًا بين الأزمنة، وبعدين اسمع وراجع.",
+        "passage": "Sometimes I think about how different things would be. If I'd accepted that scholarship, I'd probably be living abroad now, and I'd be speaking three languages instead of two. If my father hadn't encouraged me to study engineering, I wouldn't be doing this job today. On the other hand, if I weren't so stubborn, I'd have given up years ago, so my stubbornness has actually helped me. If I were better at saving money, I'd have bought a flat by now. And if I didn't enjoy teaching so much, I'd have changed careers a long time ago. It's strange: if any single one of those decisions had been different, I wouldn't be the person I am today, and I wouldn't have met the friends who matter most to me.",
+        "sounds_to_check": {
+          "'d be' /dbi/ (present result)": "I'd be living abroad now, I'd be speaking three languages, I wouldn't be doing this job, I wouldn't be the person",
+          "'d have' /dəv/ (past result)": "I'd have given up, I'd have bought a flat, I'd have changed careers, I wouldn't have met",
+          "'if I'd' (past condition)": "if I'd accepted, if my father hadn't encouraged, if any one had been different",
+          "present condition ('if I were / if I didn't')": "if I weren't so stubborn, if I were better at saving, if I didn't enjoy teaching",
+          "stressed time anchors": "abroad NOW, this job toDAY, by NOW, a long time aGO"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear /dbi/ vs /dəv/ and stressed anchors; time frames fully audible. Ready for week 7.",
+        "70_89": "Good; occasionally the two results blur together.",
+        "50_69": "/dbi/ and /dəv/ sound the same, so the time frames collapse. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, drilling 'I'd be' against 'I'd have been'."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Mixed conditionals cross time frames; the ONLY audible signal is /dbi/ (present result) vs /dəv/ (past result).",
+      "Past cause + present result → 'If I'd studied, I'd BE ... now.'",
+      "Present cause + past result → 'If I were ..., I'd HAVE done ... yesterday.'",
+      "Always stress the time anchor ('now', 'yesterday', 'by now') — it is what makes the time frame clear to your listener."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

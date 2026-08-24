@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w15",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 15,
+  "pattern_name": "Emphasis: cleft sentences and so/such ... that",
+  "pattern_name_ar": "التوكيد: الجُمل المشقوقة و so/such ... that",
+  "formula": "It + be + X + that/who ... · What + clause + be + X · All (that) + clause + be + X · so + adjective + that · such a + adjective + noun + that · emphatic do/did",
+  "formula_visual": "[It was Sara that called] // [What I need is a holiday]",
+  "when_to_use": "To highlight one part of a sentence. 'It was X that...' spotlights a person, time or thing. 'What... is...' delays and then reveals the key point. 'so/such... that' intensifies with a result. Emphatic 'do/did' insists or contradicts. These structures make speech persuasive rather than merely correct.",
+  "when_to_use_ar": "لتسليط الضوء على جزء من الجملة. 'It was X that' تُبرز شخصًا أو وقتًا. و'What... is...' تؤخّر ثم تكشف النقطة. و'so/such...that' للتكثيف مع نتيجة. و'do/did' للإصرار.",
+  "why_arabic_speakers_struggle": "Arabic emphasises with particles (إنّ) and flexible word order, so learners translate directly and produce flat English. They also confuse 'so' with 'such' because both map to جدًا, and they overlook emphatic 'do' entirely since Arabic has no equivalent auxiliary.",
+  "examples": [
+    {"en": "It was Sara that called, not Mona.", "ar": "سارة هي التي اتصلت، لا منى", "structure": "It + was + [X] + that + clause"},
+    {"en": "What I really need is a holiday.", "ar": "ما أحتاجه فعلاً هو عطلة", "structure": "What + [clause] + is + [X]"},
+    {"en": "It was so cold that the pipes froze.", "ar": "كان الجو باردًا جدًا حتى تجمّدت الأنابيب", "structure": "so + [adjective] + that + [result]"},
+    {"en": "It was such a long day that I fell asleep.", "ar": "كان يومًا طويلاً جدًا حتى نمت", "structure": "such a + [adj + noun] + that"},
+    {"en": "I did tell you — you weren't listening!", "ar": "لقد أخبرتك فعلاً — لم تكن تسمع!", "structure": "[emphatic did + verb]"}
+  ],
+  "common_errors": [
+    {"wrong": "It was such cold that the pipes froze.", "correct": "It was so cold that the pipes froze.", "explanation": "'so' goes with an adjective alone; 'such a' needs a noun."},
+    {"wrong": "It was so a long day that I fell asleep.", "correct": "It was such a long day that I fell asleep.", "explanation": "With adjective + noun use 'such a', not 'so'."},
+    {"wrong": "What I need it is a holiday.", "correct": "What I need is a holiday.", "explanation": "Don't add an extra pronoun — 'what' already stands for the object."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ was Sara that called, not Mona.", "answer": "It"},
+    {"sentence": "___ I really need is a holiday.", "answer": "What"},
+    {"sentence": "It was ___ cold that the pipes froze.", "answer": "so"},
+    {"sentence": "It was ___ a long day that I fell asleep.", "answer": "such"},
+    {"sentence": "I ___ tell you — you weren't listening!", "answer": "did"}
+  ],
+  "quick_rule": "It + be + X + that (spotlight) · What ... is (delay then reveal) · so + adjective / such a + adjective + noun · stressed do/did to insist.",
+  "quick_rule_ar": "It + be + X + that (إبراز) · What ... is (تأخير ثم كشف) · so + صفة / such a + صفة + اسم · do/did منبورة للإصرار.",
+  "mnemonic": "so + adjective alone · such a + adjective + noun. 'It was X that' puts the spotlight on X.",
+  "connect_to_speaking": "In accent week 15 you drilled where the main stress falls in each structure. These forms only work if you stress the spotlighted element — said flat, a cleft sentence carries no emphasis at all."
+}

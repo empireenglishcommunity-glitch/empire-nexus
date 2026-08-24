@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w12",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 12,
+  "pattern_name": "Gerunds and infinitives: advanced patterns and meaning change",
+  "pattern_name_ar": "المصدر الاسمي والمصدر: أنماط متقدمة وتغيّر المعنى",
+  "formula": "remember/forget/stop/go on/try + -ing vs to (meaning changes) · to have + participle (perfect infinitive) · to be + participle (passive infinitive) · not to / not -ing",
+  "formula_visual": "[stop smoking] = quit // [stop to smoke] = pause in order to smoke",
+  "when_to_use": "With some verbs the choice CHANGES THE MEANING: remember/forget + -ing = a memory; + to = a duty. stop + -ing = quit; + to = pause in order to. go on + -ing = continue; + to = move to a new topic. try + -ing = experiment; + to = attempt. Also: 'to have done' for an earlier action, 'to be done' for passive.",
+  "when_to_use_ar": "مع بعض الأفعال يغيّر الاختيار المعنى: remember + -ing ذكرى و+ to واجب؛ stop + -ing يقلع و+ to يتوقف ليفعل؛ go on + -ing يستمر و+ to ينتقل.",
+  "why_arabic_speakers_struggle": "At A2/B1 learners memorise which verbs take which form. At B2 that strategy breaks down, because BOTH forms are grammatical and the choice carries the meaning. Learners produce perfectly formed sentences that say the opposite of what they intended.",
+  "examples": [
+    {"en": "He stopped smoking last year.", "ar": "أقلع عن التدخين العام الماضي", "structure": "[stop + -ing] = quit"},
+    {"en": "We stopped to rest halfway.", "ar": "توقفنا لنرتاح في المنتصف", "structure": "[stop + to] = pause in order to"},
+    {"en": "I remember locking the door.", "ar": "أتذكر أنني أغلقت الباب (ذكرى)", "structure": "[remember + -ing] = memory"},
+    {"en": "Remember to lock the door.", "ar": "تذكّر أن تغلق الباب (واجب)", "structure": "[remember + to] = duty"},
+    {"en": "He seems to have forgotten our meeting.", "ar": "يبدو أنه نسي اجتماعنا", "structure": "[to have + participle] (earlier action)"}
+  ],
+  "common_errors": [
+    {"wrong": "He stopped to smoke last year. (meaning he quit)", "correct": "He stopped smoking last year.", "explanation": "'stop to smoke' means he paused in order to smoke — the opposite meaning."},
+    {"wrong": "Remember locking the door tonight. (as an instruction)", "correct": "Remember to lock the door tonight.", "explanation": "A future duty takes 'to'; '-ing' refers to a past memory."},
+    {"wrong": "He seems to forgot our meeting.", "correct": "He seems to have forgotten our meeting.", "explanation": "For an action earlier than the main verb, use the perfect infinitive."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "He stopped ___ (smoke) last year — he quit.", "answer": "smoking"},
+    {"sentence": "We stopped ___ (rest) halfway up the hill.", "answer": "to rest"},
+    {"sentence": "I remember ___ (lock) the door last night.", "answer": "locking"},
+    {"sentence": "Please remember ___ (lock) the door tonight.", "answer": "to lock"},
+    {"sentence": "He seems ___ (have / forget) our meeting.", "answer": "to have forgotten"}
+  ],
+  "quick_rule": "-ing looks BACK (memory, ongoing, quitting). 'to' looks FORWARD (duty, purpose, attempt). 'to have done' = earlier. 'to be done' = passive.",
+  "quick_rule_ar": "-ing تنظر للخلف (ذكرى، استمرار، إقلاع). 'to' تنظر للأمام (واجب، غرض، محاولة). 'to have done' أقدم. 'to be done' مجهول.",
+  "mnemonic": "-ing = backwards, 'to' = forwards. Check the meaning, not just the verb.",
+  "connect_to_speaking": "In accent week 12 you drilled these pairs plus /təv/ for 'to have'. Say 'stop SMOKing' against 'stop tə REST' — if you pick the wrong form, you say the opposite of what you mean."
+}

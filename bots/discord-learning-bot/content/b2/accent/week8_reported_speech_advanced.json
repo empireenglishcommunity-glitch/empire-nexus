@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 8,
+  "focus": "reporting-verb stress (admitted, denied, insisted) · weak 'to' in reported commands · reported questions without inversion · 'whether' /ˈweðə/ · attitude in the reporting verb",
+  "focus_ar": "نبر أفعال النقل (admitted, denied, insisted)، و'to' الخفيفة في الأوامر المنقولة، والأسئلة المنقولة بدون قلب، و'whether'، والموقف في فعل النقل",
+  "arabic_challenge": "At B2 the reporting verb carries the speaker's attitude ('he admitted' vs 'he claimed'), so it must be STRESSED. Arabic learners default to a flat 'he said that', losing the nuance, and they keep question inversion ('he asked where was it') because Arabic word order allows it.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["reporting-verb stress (attitude verbs)"],
+      "isolation": {
+        "instructions": "The reporting verb is where the meaning lives, so stress it: 'he adMITted', 'she deNIED', 'they inSISTed'. Each carries a different attitude. Don't bury them.",
+        "instructions_ar": "فعل النقل هو موضع المعنى، فانبره: 'he adMITted'، 'she deNIED'. كل واحد يحمل موقفًا مختلفًا.",
+        "practice": ["he adMITted", "she deNIED", "they inSISTed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he admitted (accepted guilt)", "he claimed (doubtful)"], "meaning": ["اعترف", "ادّعى"]},
+        {"pair": ["she denied", "she refused"], "meaning": ["أنكر", "رفض"]},
+        {"pair": ["they insisted", "they suggested"], "meaning": ["أصرّ", "اقترح"]},
+        {"pair": ["adMITted ✅", "ADmitted ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["he explained", "he complained"], "meaning": ["شرح", "اشتكى"]}
+      ],
+      "word_practice": ["admitted", "denied", "insisted", "claimed", "refused", "suggested", "explained", "complained", "promised", "warned"],
+      "sentence_practice": [
+        "He admitted that he was wrong.",
+        "She denied taking the money.",
+        "They insisted on paying."
+      ],
+      "record_this": "He finally admitted that he had been completely wrong. She firmly denied taking any of the money. They insisted on paying for the whole meal themselves.",
+      "self_check": "Say 'he admitted that he was wrong'. Is 'adMITted' clearly stressed on the second syllable?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["reported commands: verb + object + weak 'to'"],
+      "isolation": {
+        "instructions": "Commands become 'told/asked + person + tə + verb': 'she told me tə WAIT', 'he asked us tə LEAVE'. The 'to' is weak /tə/; the action verb takes the stress.",
+        "instructions_ar": "الأوامر تصبح 'told/asked + شخص + tə + فعل': 'she told me tə WAIT'. الـ to خفيفة والفعل منبور.",
+        "practice": ["she told me tə WAIT", "he asked us tə LEAVE", "weak tə, strong verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["told me tə wait ✅", "told me wait ❌"], "meaning": ["صحيح", "ناقص to"]},
+        {"pair": ["told me to wait", "told me not to wait"], "meaning": ["مثبت", "منفي"]},
+        {"pair": ["asked me tə (weak)", "asked me TO ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["told me to go (order)", "asked me to go (request)"], "meaning": ["أمر", "طلب"]},
+        {"pair": ["warned me not to", "warned me to"], "meaning": ["حذّرني ألا", "حذّرني أن"]}
+      ],
+      "word_practice": ["told me to wait", "asked us to leave", "warned me not to go", "advised her to rest", "reminded me to call", "persuaded him to stay", "encouraged us to try", "ordered them to stop", "invited me to come", "begged her to listen"],
+      "sentence_practice": [
+        "She told me to wait outside.",
+        "He asked us to leave quietly.",
+        "They warned me not to go alone."
+      ],
+      "record_this": "She told me to wait outside until she called. He politely asked us to leave the room quietly. They warned me not to go there alone after dark.",
+      "self_check": "Say 'she told me to wait'. Is 'to' a quick weak /tə/ with 'WAIT' stressed?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["reported questions: no inversion"],
+      "isolation": {
+        "instructions": "Reported questions drop the inversion and the question tone: 'He asked where the station WAS ↘' — statement order, falling pitch. It is no longer a question.",
+        "instructions_ar": "الأسئلة المنقولة تفقد القلب ونبرة السؤال: 'He asked where the station WAS ↘' — ترتيب خبري ونبرة هابطة.",
+        "practice": ["he asked where the station WAS ↘", "she asked what I WANTed ↘", "statement order, falling"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he asked where the station was ✅", "he asked where was the station ❌"], "meaning": ["صحيح", "خطأ قلب"]},
+        {"pair": ["asked what I wanted ↘", "what do I want? ↗"], "meaning": ["منقول", "سؤال مباشر"]},
+        {"pair": ["she asked if I was ready ✅", "she asked was I ready ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["falling ↘ (reported)", "rising ↗ (direct)"], "meaning": ["منقول", "مباشر"]},
+        {"pair": ["asked where he lived", "asked where does he live ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["asked where the station was", "asked what I wanted", "asked if I was ready", "asked how much it cost", "asked when we were leaving", "asked why I was late", "asked who had called", "asked whether it mattered", "wondered where she'd gone", "wanted to know what happened"],
+      "sentence_practice": [
+        "He asked where the station was.",
+        "She asked what I wanted for dinner.",
+        "They asked why I was late."
+      ],
+      "record_this": "He asked me where the nearest station was. She asked what I wanted for dinner this evening. They asked why I was so late to the meeting yesterday.",
+      "self_check": "Say 'he asked where the station was'. Is the word order a statement, with a falling tone?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'whether' /ˈweðə/ vs 'weather'"],
+      "isolation": {
+        "instructions": "'whether' (= if) is /ˈweðə/, identical to 'weather' in most accents, with a voiced /ð/. Use it for reported yes/no questions and choices: 'asked whether I'd COME'.",
+        "instructions_ar": "'whether' (= if) تُلفظ /ˈweðə/ بنفس نطق 'weather' مع /ð/ مجهورة، وتُستخدم للأسئلة المنقولة نعم/لا.",
+        "practice": ["/ˈweðə/ (voiced ð)", "asked whether I'd COME", "whether or not"]
+      },
+      "minimal_pairs": [
+        {"pair": ["whether (if)", "weather (climate)"], "meaning": ["إن كان", "الطقس"]},
+        {"pair": ["whether /ð/ ✅", "wether /d/ ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["whether or not", "if or not ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["asked whether I'd come", "asked did I come ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["whether (choice)", "if (condition)"], "meaning": ["أيًّا كان", "شرط"]}
+      ],
+      "word_practice": ["whether or not", "asked whether", "wondered whether", "whether it matters", "whether to go", "whether she knew", "whether they'd agree", "whether it's true", "whether I should", "regardless of whether"],
+      "sentence_practice": [
+        "He asked whether I'd come.",
+        "I wondered whether it mattered.",
+        "She asked whether or not we agreed."
+      ],
+      "record_this": "He asked whether I'd come to the meeting tomorrow. I honestly wondered whether it really mattered at all. She asked whether or not we actually agreed with the plan.",
+      "self_check": "Say 'asked whether I'd come'. Is the 'th' a voiced /ð/, sounding just like 'weather'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["conveying attitude through the reporting verb"],
+      "isolation": {
+        "instructions": "Change the reporting verb and you change the whole meaning — so match your TONE to it. 'He claimed...' said with slight scepticism; 'he admitted...' with weight; 'she boasted...' with a lift.",
+        "instructions_ar": "تغيير فعل النقل يغيّر المعنى كله، فاجعل نبرتك تناسبه: claimed بشكّ، admitted بثقل، boasted برفعة.",
+        "practice": ["he CLAIMED (sceptical)", "he adMITted (weighty)", "she BOASTed (lifted)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he claimed (sceptical)", "he said (neutral)"], "meaning": ["بشكّ", "محايد"]},
+        {"pair": ["he admitted (reluctant)", "he announced (proud)"], "meaning": ["اعترف", "أعلن"]},
+        {"pair": ["she muttered (quiet)", "she shouted (loud)"], "meaning": ["تمتم", "صرخ"]},
+        {"pair": ["they alleged", "they proved"], "meaning": ["زعموا", "أثبتوا"]},
+        {"pair": ["he boasted (lifted)", "he confessed (falling)"], "meaning": ["تفاخر", "اعترف"]}
+      ],
+      "word_practice": ["he claimed", "he admitted", "she announced", "they alleged", "he confessed", "she boasted", "he muttered", "she whispered", "they protested", "he acknowledged"],
+      "sentence_practice": [
+        "He claimed he'd never seen her before.",
+        "She admitted she'd made a mistake.",
+        "They announced they were getting married."
+      ],
+      "record_this": "He claimed he'd never seen her before in his life, though nobody believed him. She quietly admitted that she'd made a serious mistake. They proudly announced that they were getting married in the spring.",
+      "self_check": "Say 'he claimed...' then 'she admitted...'. Does your tone change to match each attitude?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 8 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["he admitted", "he claimed"], ["told me tə wait ✅", "told me wait ❌"], ["asked where the station was ✅", "asked where was the station ❌"],
+        ["whether (if)", "weather (climate)"], ["falling ↘ (reported)", "rising ↗ (direct)"], ["adMITted ✅", "ADmitted ❌"]
+      ],
+      "challenge_sentences": [
+        "He admitted that he'd been wrong.",
+        "She told me to wait outside.",
+        "They asked where the station was.",
+        "I wondered whether it really mattered."
+      ],
+      "record_this": "He finally admitted that he'd been completely wrong about it. She told me to wait outside until she was ready. They asked me where the nearest station was. I genuinely wondered whether any of it really mattered.",
+      "self_check": "Three checks: stressed reporting verb, weak 'to' in commands, and statement order with falling tone in reported questions."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reporting a disagreement, using varied reporting verbs to show each person's attitude. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تنقل خلافًا حدث، مستخدمًا أفعال نقل متنوعة تُظهر موقف كل شخص، وبعدين اسمع وراجع.",
+        "passage": "Let me tell you what happened at the meeting yesterday. The manager announced that the deadline had been moved forward, and asked whether we could finish by Thursday. My colleague immediately complained that it was impossible, and insisted that we needed at least another week. The manager denied that the change was his decision and claimed the client had demanded it. Someone asked why nobody had warned us earlier. He admitted that he'd known for several days but explained that he hadn't wanted to worry anyone. Then he told us to prioritise the main report and asked us not to start anything new. Finally he promised he'd speak to the client again, and suggested we meet on Friday to review progress. Honestly, I wondered whether anything would actually change.",
+        "sounds_to_check": {
+          "stressed reporting verbs": "anNOUNCED, comPLAINED, inSISTed, deNIED, CLAIMED, adMITted, exPLAINED, PROMised, sugGESTed",
+          "reported commands + weak 'to'": "told us tə prioritise, asked us not tə start",
+          "reported questions (no inversion, falling)": "asked whether we could finish, asked why nobody had warned us",
+          "'whether' /ˈweðə/": "asked whether we could finish, wondered whether anything would change",
+          "attitude matching": "denied/claimed slightly sceptical; admitted weighty; promised warm"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Reporting verbs stressed and coloured, weak 'to', no inversion. Ready for week 9.",
+        "70_89": "Good; occasional flat reporting verb.",
+        "50_69": "Everything reported as 'said that', or inversion kept in questions. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, stressing the reporting verb and using statement order."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "At B2 the reporting verb carries the attitude — stress it, and let your tone match it.",
+      "Reported commands need 'to': 'told me TO wait', with the 'to' weak /tə/.",
+      "Reported questions use statement word order and a FALLING tone — they are no longer questions.",
+      "'whether' sounds exactly like 'weather' and is used for yes/no questions and choices."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

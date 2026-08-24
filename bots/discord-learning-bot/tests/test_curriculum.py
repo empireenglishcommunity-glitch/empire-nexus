@@ -53,7 +53,7 @@ def test_accent_and_grammar_content_covers_all_levels():
     failing loudly if any covered level disappears.
     """
     stats = curriculum.stats()
-    required = {"L0", "L1", "L2", "L3", "A1", "A2", "B1"}
+    required = {"L0", "L1", "L2", "L3", "A1", "A2", "B1", "B2"}
     assert required <= set(stats["accent_levels_covered"]), (
         f"missing accent content for: {required - set(stats['accent_levels_covered'])}"
     )

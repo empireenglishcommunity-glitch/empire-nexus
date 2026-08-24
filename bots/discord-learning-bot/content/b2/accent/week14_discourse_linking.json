@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 14,
+  "focus": "'whereas' /weərˈæz/ · 'nevertheless' / 'nonetheless' stress · 'consequently' / 'therefore' · 'despite' + -ing vs 'although' + clause · discourse-marker pause and pitch reset",
+  "focus_ar": "'whereas'، ونبر 'nevertheless'، و'consequently/therefore'، والفرق بين 'despite + -ing' و'although + جملة'، ووقفة أدوات الربط وإعادة ضبط النبرة",
+  "arabic_challenge": "Formal linkers each need a pause AND a pitch reset — you finish one idea, drop, pause, then start the next idea at a fresh pitch. Arabic connects clauses more continuously with و/ف, so learners run linkers into the following clause and the structure of the argument disappears.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'whereas' /weərˈæz/ (direct contrast)"],
+      "isolation": {
+        "instructions": "'whereas' sets two facts side by side, stressed on the second syllable /weərˈæz/. Both halves get roughly equal weight, with a pause at the comma: 'I like tea, // whereas she prefers coffee.'",
+        "instructions_ar": "'whereas' تضع حقيقتين جنبًا إلى جنب، منبورة على المقطع الثاني، والنصفان متساويان تقريبًا مع وقفة.",
+        "practice": ["I like TEA, // whereas she prefers COFfee", "wherˈAZ", "balanced halves"]
+      },
+      "minimal_pairs": [
+        {"pair": ["whereas (contrast of facts)", "although (concession)"], "meaning": ["مقارنة", "تنازل"]},
+        {"pair": ["whereˈAS ✅", "WHEREas ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["whereas (formal)", "but (neutral)"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["balanced halves ✅", "one half rushed ❌"], "meaning": ["متوازن", "غير متوازن"]},
+        {"pair": ["whereas she prefers", "while she prefers"], "meaning": ["مقارنة", "مقارنة/أثناء"]}
+      ],
+      "word_practice": ["whereas she prefers", "whereas mine is", "whereas in the past", "whereas now", "whereas others believe", "whereas we agreed", "whereas he refused", "whereas the north is dry", "whereas the results show", "whereas theirs failed"],
+      "sentence_practice": [
+        "I like tea, whereas she prefers coffee.",
+        "The north is dry, whereas the south gets heavy rain.",
+        "He refused, whereas everyone else agreed."
+      ],
+      "record_this": "I like tea in the morning, whereas she much prefers coffee. The north of the country is dry, whereas the south gets heavy rain. He refused the offer, whereas everyone else agreed immediately.",
+      "self_check": "Say 'I like tea, whereas she prefers coffee.' Is the stress on 'wherˈAS' with both halves balanced?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'nevertheless / nonetheless' (strong concession)"],
+      "isolation": {
+        "instructions": "These are the most formal contrast markers, stressed on the LAST syllable: /nevəðəˈles/. They need a full stop before and a comma pause after: 'It was expensive. Nevertheless, // I bought it.'",
+        "instructions_ar": "أقوى أدوات التضاد الرسمية، منبورة على المقطع الأخير، وتحتاج نقطة قبلها ووقفة بعدها.",
+        "practice": ["nevəðəˈLES, //", "It was hard. Nevertheless, // we finished", "last-syllable stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["neverthelESS ✅", "NEVERtheless ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["Nevertheless, // (pause)", "Nevertheless ❌ (no pause)"], "meaning": ["مع وقفة", "بدون وقفة"]},
+        {"pair": ["nevertheless (very formal)", "however (formal)"], "meaning": ["رسمي جدًا", "رسمي"]},
+        {"pair": ["nonetheless", "nevertheless"], "meaning": ["نفس المعنى", "نفس المعنى"]},
+        {"pair": ["new sentence ✅", "comma splice ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["nevertheless", "nonetheless", "even so", "all the same", "having said that", "that said", "in spite of this", "regardless", "still", "yet"],
+      "sentence_practice": [
+        "It was expensive. Nevertheless, I bought it.",
+        "The task was hard. Nonetheless, we finished.",
+        "He apologised. Even so, she was angry."
+      ],
+      "record_this": "The jacket was expensive. Nevertheless, I decided to buy it. The whole task was extremely hard. Nonetheless, we finished it before the deadline. He apologised properly. Even so, she was still angry.",
+      "self_check": "Say 'Nevertheless, I bought it.' Is the stress on the last syllable, with a clear pause after the comma?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'consequently / therefore' (cause and result)"],
+      "isolation": {
+        "instructions": "Result markers: 'CONsequently' (first-syllable stress) and 'THEREfore' (first-syllable stress). Both need the pause: 'Sales fell. Consequently, // we closed two shops.'",
+        "instructions_ar": "أدوات النتيجة: 'CONsequently' و'THEREfore' منبورتان على المقطع الأول، وكلتاهما تحتاج وقفة.",
+        "practice": ["CONsequently, //", "THEREfore, //", "first-syllable stress + pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["CONsequently ✅", "conseQUENTly ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["therefore (result)", "however (contrast)"], "meaning": ["نتيجة", "تضاد"]},
+        {"pair": ["consequently (formal)", "so (neutral)"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["as a result, //", "as a result ❌"], "meaning": ["مع وقفة", "بدون"]},
+        {"pair": ["because (reason first)", "therefore (result first)"], "meaning": ["سبب", "نتيجة"]}
+      ],
+      "word_practice": ["consequently", "therefore", "as a result", "thus", "hence", "for this reason", "accordingly", "which is why", "so", "that's why"],
+      "sentence_practice": [
+        "Sales fell. Consequently, we closed two shops.",
+        "The evidence was weak. Therefore, the case collapsed.",
+        "It rained. As a result, the match was cancelled."
+      ],
+      "record_this": "Sales fell sharply last year. Consequently, we closed two of our shops. The evidence was extremely weak. Therefore, the whole case collapsed in court. It rained heavily all morning. As a result, the match was cancelled.",
+      "self_check": "Say 'Consequently, we closed two shops.' Is the stress on the FIRST syllable, with a pause after?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'despite / in spite of' + -ing vs 'although' + clause"],
+      "isolation": {
+        "instructions": "'despite' and 'in spite of' are followed by a NOUN or -ing, not a clause: 'despite the RAIN', 'despite BEing tired'. 'although' takes a full clause: 'although it RAINED'. Never 'despite it rained'.",
+        "instructions_ar": "'despite' و'in spite of' يتبعهما اسم أو -ing لا جملة: 'despite the rain'. و'although' يتبعها جملة كاملة.",
+        "practice": ["despite the RAIN (noun)", "despite BEing tired (-ing)", "although it RAINED (clause)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["despite the rain ✅", "despite it rained ❌"], "meaning": ["اسم", "خطأ"]},
+        {"pair": ["despite being tired ✅", "despite I was tired ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["although it rained ✅", "although the rain ❌"], "meaning": ["جملة", "خطأ"]},
+        {"pair": ["in spite of ✅", "in spite ❌"], "meaning": ["صحيح", "ناقص of"]},
+        {"pair": ["despite the fact that + clause ✅", "despite that + clause ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["despite the rain", "despite being tired", "in spite of the cost", "despite his age", "despite everything", "despite the fact that", "although it rained", "although he tried", "even though", "regardless of"],
+      "sentence_practice": [
+        "Despite the rain, we went out.",
+        "Despite being tired, she kept working.",
+        "Although it rained, we enjoyed it."
+      ],
+      "record_this": "Despite the heavy rain, we went out for a walk. Despite being completely exhausted, she kept working until midnight. Although it rained all afternoon, we genuinely enjoyed the trip.",
+      "self_check": "Say 'despite the rain' and 'although it rained'. Did you use a noun after 'despite' and a clause after 'although'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["pitch reset after a discourse marker"],
+      "isolation": {
+        "instructions": "This is the key skill: finish the first idea (fall ↘), pause, say the marker, then RESET your pitch UP to start the new idea. Without the reset, everything sounds like one long mumble.",
+        "instructions_ar": "المهارة الأساسية: أنهِ الفكرة الأولى (هبوط)، وقفة، قل الأداة، ثم أعد ضبط نبرتك للأعلى للفكرة الجديدة.",
+        "practice": ["idea one ↘ // marker // ↗ idea two", "fall, pause, reset up", "structure = audible"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fall ↘ pause reset ↗ ✅", "flat monotone ❌"], "meaning": ["بنية واضحة", "ممل وغامض"]},
+        {"pair": ["However, // ↗ (reset)", "However ↘ (no reset)"], "meaning": ["فكرة جديدة", "استمرار"]},
+        {"pair": ["two clear ideas", "one long mumble"], "meaning": ["واضح", "غير واضح"]},
+        {"pair": ["pause length: short", "pause length: none"], "meaning": ["طبيعي", "متسرّع"]},
+        {"pair": ["marker slightly stressed", "marker swallowed"], "meaning": ["واضح", "مفقود"]}
+      ],
+      "word_practice": ["However, ...", "Nevertheless, ...", "Consequently, ...", "Therefore, ...", "On the other hand, ...", "In contrast, ...", "Furthermore, ...", "Moreover, ...", "In addition, ...", "As a result, ..."],
+      "sentence_practice": [
+        "The plan was good. However, it failed.",
+        "Costs rose. Consequently, prices went up.",
+        "She studied hard. Furthermore, she got help."
+      ],
+      "record_this": "The original plan was genuinely good. However, it failed almost immediately. Costs rose steadily all year. Consequently, our prices went up. She studied extremely hard. Furthermore, she got help from a private tutor.",
+      "self_check": "Say 'The plan was good. However, it failed.' Did your pitch fall, pause, then reset upward after 'however'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 14 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["whereˈAS ✅", "WHEREas ❌"], ["neverthelESS ✅", "NEVERtheless ❌"], ["CONsequently ✅", "conseQUENTly ❌"],
+        ["despite the rain ✅", "despite it rained ❌"], ["fall-pause-reset ✅", "flat monotone ❌"], ["therefore (result)", "however (contrast)"]
+      ],
+      "challenge_sentences": [
+        "I like tea, whereas she prefers coffee.",
+        "It was expensive. Nevertheless, I bought it.",
+        "Sales fell. Consequently, we closed two shops.",
+        "Despite the rain, we went out."
+      ],
+      "record_this": "I like tea in the morning, whereas she much prefers coffee. The jacket was expensive. Nevertheless, I bought it anyway. Sales fell sharply. Consequently, we closed two of our shops. Despite the heavy rain, we still went out.",
+      "self_check": "Three checks: correct stress on each linker, a pause after it, and a genuine pitch reset for the new idea."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself presenting a balanced argument. This is essentially an exam speaking task — the goal is that a listener can hear the STRUCTURE of your argument, not just the words.",
+        "instructions_ar": "سجّل نفسك تعرض حجة متوازنة. هذه مهمة شبيهة بالامتحان — الهدف أن يسمع المستمع بنية حجتك لا كلماتك فقط.",
+        "passage": "Let me give you my view on remote work. On the one hand, working from home saves time and money. Employees avoid long commutes; consequently, they often feel less stressed. Furthermore, companies can hire talented people anywhere in the world. On the other hand, there are real costs. Junior staff learn far less without sitting near experienced colleagues, whereas senior staff usually manage perfectly well. Despite the obvious savings, many managers report that teams feel disconnected. Communication becomes slower; as a result, small problems grow before anyone notices. Although I personally prefer working remotely, I accept these criticisms. Nevertheless, I believe the solution isn't to force everyone back to an office. Therefore, my conclusion is simple: offer a genuine choice, and judge people on results rather than on hours spent at a desk.",
+        "sounds_to_check": {
+          "contrast linkers + stress": "wherˈAS senior staff, neverthelESS I believe, on the OTHer hand",
+          "result linkers + stress": "CONsequently they feel less stressed, as a reSULT small problems grow, THEREfore my conclusion",
+          "addition linkers": "FURtherMORE companies can hire",
+          "'despite' + noun vs 'although' + clause": "despite the obvious savings (noun), although I personally prefer (clause)",
+          "pitch reset": "each linker preceded by a fall and a pause, then a fresh higher start"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Correct linker stress plus audible argument structure through pitch resets. Ready for week 15.",
+        "70_89": "Good; occasional missing pause or reset.",
+        "50_69": "Linkers run into the next clause; the argument sounds like one block. Repeat days 1-3 and 5.",
+        "below_50": "Redo days 1-5, practising fall-pause-reset around every linker."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Each formal linker has fixed stress: whereˈAS, neverthelESS, CONsequently, THEREfore.",
+      "'despite' and 'in spite of' take a noun or -ing; 'although' takes a full clause. 'Despite it rained' is always wrong.",
+      "The pitch RESET after a marker is what makes your argument structure audible — this is heavily rewarded in speaking exams.",
+      "Fall, pause, marker, reset up. Without the reset, even correct linkers get lost."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

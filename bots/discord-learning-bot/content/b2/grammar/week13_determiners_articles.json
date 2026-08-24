@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w13",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 13,
+  "pattern_name": "Determiners, articles and quantifiers (advanced)",
+  "pattern_name_ar": "المحدِّدات والأدوات وكلمات الكمية (متقدّم)",
+  "formula": "a/an (first mention) · the (known/specific) · zero article (general plural & uncountable) · most/most of the · few vs a few · little vs a little · either/neither/both",
+  "formula_visual": "[Life] is hard (general) // [The life] of a nurse is hard (specific)",
+  "when_to_use": "Zero article for general plurals and uncountables ('Life is hard', 'I like music'). 'the' when the noun is specific or already known. 'most people' (general) but 'most of the people here' (specific group). 'few' = not many (negative); 'a few' = some (positive). Same for 'little' and 'a little'.",
+  "when_to_use_ar": "بدون أداة للجمع العام وغير المعدود ('Life is hard'). و'the' للمحدّد أو المعروف. و'most people' عام مقابل 'most of the people here' محدّد. و'few' قليل جدًا (سلبي) و'a few' بعض (إيجابي).",
+  "why_arabic_speakers_struggle": "Arabic ال is used for general statements ('الحياة صعبة'), so learners produce 'The life is hard'. Arabic also has no indefinite article, so 'a/an' gets dropped. And the 'few / a few' distinction has no Arabic equivalent, yet it flips the sentence from negative to positive.",
+  "examples": [
+    {"en": "Life is hard, but people are kind.", "ar": "الحياة صعبة لكن الناس طيبون (عام)", "structure": "[zero article] (general)"},
+    {"en": "The life of a nurse is hard.", "ar": "حياة الممرضة صعبة (محدّد)", "structure": "[the + specific noun]"},
+    {"en": "Most people agree, but most of the people here don't.", "ar": "معظم الناس يوافقون، لكن معظم الناس هنا لا (عام مقابل محدّد)", "structure": "[most + noun] vs [most of the + noun]"},
+    {"en": "Few people came, so it was quiet.", "ar": "جاء قليل جدًا من الناس (سلبي)", "structure": "[few] = not many (negative)"},
+    {"en": "A few friends came, which was lovely.", "ar": "جاء بعض الأصدقاء (إيجابي)", "structure": "[a few] = some (positive)"}
+  ],
+  "common_errors": [
+    {"wrong": "The life is hard.", "correct": "Life is hard.", "explanation": "General statements take NO article in English."},
+    {"wrong": "Most of people agree.", "correct": "Most people agree. / Most of the people agree.", "explanation": "Either 'most + noun' or 'most of THE + noun' — not 'most of people'."},
+    {"wrong": "I have few friends here, so I'm never lonely.", "correct": "I have a few friends here, so I'm never lonely.", "explanation": "'few' is negative (hardly any); 'a few' is positive (some)."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ life is hard, but people are kind. (general)", "answer": "(no article)"},
+    {"sentence": "___ life of a nurse is difficult. (specific)", "answer": "The"},
+    {"sentence": "Most ___ the students passed.", "answer": "of"},
+    {"sentence": "I have ___ few close friends, which I'm grateful for.", "answer": "a"},
+    {"sentence": "It took ___ hour to find ___ taxi.", "answer": "an / a"}
+  ],
+  "quick_rule": "General → no article. Specific/known → the. most + noun (general) / most of the + noun (specific). few = hardly any · a few = some.",
+  "quick_rule_ar": "عام → بدون أداة. محدّد/معروف → the. most + اسم (عام) / most of the + اسم (محدّد). few = قليل جدًا · a few = بعض.",
+  "mnemonic": "'Life is hard' not 'The life is hard'. The little 'a' flips 'few' from negative to positive.",
+  "connect_to_speaking": "In accent week 13 you drilled /ðə/ vs /ði/ by sound and the zero-article rhythm. Start straight on the noun for general ideas: 'LIFE is HARD' — no 'the' at all."
+}

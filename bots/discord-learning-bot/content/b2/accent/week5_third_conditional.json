@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 5,
+  "focus": "'would've' /wʊdəv/ · 'if I'd known' cluster · 'wouldn't have' /wʊdəntəv/ · 'could've / should've / might've' · regret intonation",
+  "focus_ar": "'would've' الخفيفة، ومجموعة 'if I'd known'، و'wouldn't have'، و'could've/should've/might've'، ونبرة الأسف",
+  "arabic_challenge": "The third conditional is the most compressed structure in English: 'If I'd known, I would've called' contains four reduced grammar words. Learners often say 'would of' as separate words, or expand everything ('I would have called'), which destroys the natural regretful rhythm.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'would've' /wʊdəv/"],
+      "isolation": {
+        "instructions": "'would have' becomes one word: /wʊdəv/. It is NOT 'would of' as two separate words — it is a single quick unit, then the participle is stressed: /wʊdəv/ CALLED.",
+        "instructions_ar": "'would have' تصبح كلمة واحدة: /wʊdəv/، ثم التصريف الثالث منبور: /wʊdəv/ CALLED.",
+        "practice": ["/wʊdəv/ CALLED", "/wʊdəv/ HELPED", "one unit, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["would've /wʊdəv/", "would have (slow)"], "meaning": ["طبيعي", "بطيء رسمي"]},
+        {"pair": ["would've called ✅", "would've call ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["would've helped", "would help"], "meaning": ["الشرط الثالث", "الشرط الثاني"]},
+        {"pair": ["/wʊdəv/ (one unit)", "would of ❌ (two words)"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["I would've gone", "I would go"], "meaning": ["ماضٍ غير واقعي", "حاضر غير واقعي"]}
+      ],
+      "word_practice": ["would've called", "would've helped", "would've come", "would've told you", "would've known", "would've stayed", "would've said", "would've gone", "would've waited", "would've tried"],
+      "sentence_practice": [
+        "I would've called you earlier.",
+        "She would've helped if she'd known.",
+        "We would've come to the party."
+      ],
+      "record_this": "I would've called you much earlier if I'd had your number. She would've helped us willingly if she'd known about the problem. We would've come to the party, but nobody actually invited us.",
+      "self_check": "Say 'I would've called'. Is 'would've' one quick unit /wʊdəv/, not 'would of'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'if I'd known' cluster"],
+      "isolation": {
+        "instructions": "The if-half compresses too: 'if I'd known' = /ɪfaɪd NOWN/. Weak 'if', tiny /d/ for 'had', then the stressed participle. This is the most common third-conditional opener in English.",
+        "instructions_ar": "نصف الشرط يُدمج أيضًا: 'if I'd known' = /ɪfaɪd NOWN/. if خفيفة و/d/ صغيرة والتصريف منبور.",
+        "practice": ["/ɪfaɪd/ NOWN", "/ɪfʃiːd/ ASKED", "weak if + tiny d"]
+      },
+      "minimal_pairs": [
+        {"pair": ["if I'd known (had)", "if I know"], "meaning": ["ماضٍ غير واقعي", "شرط واقعي"]},
+        {"pair": ["/ɪfaɪd/ (compressed)", "if I had (slow)"], "meaning": ["طبيعي", "بطيء"]},
+        {"pair": ["if I'd known ✅", "if I would've known ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["if she'd asked", "if she asked"], "meaning": ["ثالث", "ثانٍ"]},
+        {"pair": ["if we'd left earlier", "if we left earlier"], "meaning": ["ماضٍ", "حاضر"]}
+      ],
+      "word_practice": ["if I'd known", "if she'd asked", "if we'd left", "if they'd told me", "if he'd come", "if you'd said", "if I'd seen it", "if we'd booked", "if she'd waited", "if it'd rained"],
+      "sentence_practice": [
+        "If I'd known, I would've called.",
+        "If she'd asked, I would've helped.",
+        "If we'd left earlier, we wouldn't have missed it."
+      ],
+      "record_this": "If I'd known you were waiting, I would've called immediately. If she'd asked me directly, I would've helped without hesitating. If we'd left the house earlier, we wouldn't have missed that train.",
+      "self_check": "Say 'if I'd known'. Is 'if' weak with a tiny /d/, and did you avoid 'if I would've known'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'wouldn't have' /wʊdəntəv/"],
+      "isolation": {
+        "instructions": "The negative stacks even more: 'wouldn't have' = /wʊdəntəv/. Keep the /nt/ light and glide straight into /əv/, then stress the participle: /wʊdəntəv/ MISSED it.",
+        "instructions_ar": "النفي يجمع أكثر: 'wouldn't have' = /wʊdəntəv/. اجعل /nt/ خفيفة وانتقل إلى /əv/.",
+        "practice": ["/wʊdəntəv/ MISSED it", "/wʊdəntəv/ SAID that", "light /nt/, then /əv/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["wouldn't have /wʊdəntəv/", "would have /wʊdəv/"], "meaning": ["منفي", "مثبت"]},
+        {"pair": ["wouldn't have missed ✅", "wouldn't have miss ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["wouldn't have said", "wouldn't say"], "meaning": ["ثالث", "ثانٍ"]},
+        {"pair": ["hadn't /hædənt/", "had /həd/"], "meaning": ["منفي", "مثبت"]},
+        {"pair": ["if I hadn't known", "if I'd known"], "meaning": ["لو لم أعرف", "لو عرفت"]}
+      ],
+      "word_practice": ["wouldn't have missed", "wouldn't have said", "wouldn't have come", "wouldn't have known", "wouldn't have gone", "if I hadn't known", "if she hadn't left", "if we hadn't waited", "if they hadn't called", "if he hadn't helped"],
+      "sentence_practice": [
+        "I wouldn't have said that if I'd known.",
+        "If we hadn't waited, we wouldn't have met her.",
+        "She wouldn't have come if you hadn't invited her."
+      ],
+      "record_this": "I wouldn't have said any of that if I'd known she was listening. If we hadn't waited outside, we wouldn't have met her at all. She wouldn't have come to the wedding if you hadn't personally invited her.",
+      "self_check": "Say 'wouldn't have missed'. Is the /nt/ light and does it glide straight into /əv/?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'could've / should've / might've'"],
+      "isolation": {
+        "instructions": "The same /əv/ compression works with other modals: /kʊdəv/ (possibility), /ʃʊdəv/ (regret/criticism), /maɪtəv/ (uncertain). All are one unit + stressed participle.",
+        "instructions_ar": "نفس دمج /əv/ مع أفعال أخرى: /kʊdəv/ و/ʃʊdəv/ و/maɪtəv/. كلها وحدة واحدة + تصريف منبور.",
+        "practice": ["/kʊdəv/ HELPED", "/ʃʊdəv/ TOLD me", "/maɪtəv/ WORKED"]
+      },
+      "minimal_pairs": [
+        {"pair": ["could've /kʊdəv/", "should've /ʃʊdəv/"], "meaning": ["كان ممكنًا", "كان يجب"]},
+        {"pair": ["should've told me", "shouldn't have told me"], "meaning": ["كان لازم تقول", "ماكان لازم تقول"]},
+        {"pair": ["might've worked", "must've worked"], "meaning": ["ربما", "لا بد"]},
+        {"pair": ["could've /kʊdəv/", "could of ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["should've gone ✅", "should've go ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["could've helped", "should've told me", "might've worked", "must've forgotten", "shouldn't have said", "couldn't have known", "could've been", "should've asked", "might've missed", "must've left"],
+      "sentence_practice": [
+        "You should've told me earlier.",
+        "It could've been much worse.",
+        "He might've forgotten the meeting."
+      ],
+      "record_this": "You should've told me about this much earlier, honestly. It could've been a great deal worse than it actually was. He might've simply forgotten about the meeting, so let's not assume the worst.",
+      "self_check": "Say 'should've told me'. Is it /ʃʊdəv/ as one unit, not 'should of'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["regret intonation (falling, weighted)"],
+      "isolation": {
+        "instructions": "Third conditionals usually express REGRET, and English shows that with a falling, slightly heavy tone on the participle: 'I would've CALLED ↘'. Let your pitch drop and slow slightly at the end.",
+        "instructions_ar": "الشرط الثالث يعبّر عن الأسف، والإنجليزية تُظهر ذلك بنبرة هابطة وثقيلة على التصريف: 'I would've CALLED ↘'.",
+        "practice": ["I would've CALLED ↘", "I should've KNOWN ↘", "fall and slow = regret"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I would've called ↘ (regret)", "I would've called ↗ (question)"], "meaning": ["أسف", "استفهام"]},
+        {"pair": ["falling + slow (regret)", "flat + fast (neutral)"], "meaning": ["أسف", "محايد"]},
+        {"pair": ["I should've known ↘", "I should've known? ↗"], "meaning": ["أسف", "استغراب"]},
+        {"pair": ["what a shame ↘", "what a shame? ↗"], "meaning": ["أسف", "سؤال"]},
+        {"pair": ["if only I'd known ↘", "if I'd known ..."], "meaning": ["أسف قوي", "شرط عادي"]}
+      ],
+      "word_practice": ["I would've called", "I should've known", "if only I'd known", "what a shame", "I wish I had", "it's a pity", "I regret that", "I could've done more", "we should've tried", "I'd have loved to"],
+      "sentence_practice": [
+        "I would've called if I'd known.",
+        "I should've known better.",
+        "If only I'd listened to you."
+      ],
+      "record_this": "I would've called you straight away if I'd known the truth. Looking back, I should've known better than to trust him. If only I'd listened to your advice at the time, none of this would've happened.",
+      "self_check": "Say 'I should've known better'. Does your pitch fall and slow at the end, sounding genuinely regretful?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["would've /wʊdəv/", "would of ❌"], ["if I'd known ✅", "if I would've known ❌"], ["wouldn't have /wʊdəntəv/", "would have /wʊdəv/"],
+        ["could've /kʊdəv/", "should've /ʃʊdəv/"], ["I would've called ↘", "I would've called ↗"], ["would've helped", "would help"]
+      ],
+      "challenge_sentences": [
+        "If I'd known, I would've called you.",
+        "We wouldn't have missed the train if we'd left earlier.",
+        "You should've told me — I could've helped.",
+        "If only I'd listened to your advice."
+      ],
+      "record_this": "If I'd known about it earlier, I would've called you immediately. We wouldn't have missed that train if we'd left the house ten minutes earlier. You should've told me sooner, because I could've helped you easily. If only I'd listened to your advice at the time.",
+      "self_check": "Three checks: /wʊdəv/ as one unit, 'if I'd' not 'if I would've', and a falling regretful tone."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about a decision you regret, using third conditionals throughout. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تتكلم عن قرار تأسف عليه، مستخدمًا الشرط الثالث، وبعدين اسمع وراجع.",
+        "passage": "There's one decision I still think about. Years ago I was offered a place at a university abroad, and I turned it down. If I'd accepted it, my life would've been completely different. I would've learnt another language properly, and I would've built a network of friends all over the world. My parents said they would've supported me, but at the time I was afraid. If I hadn't been so nervous, I would've gone. Honestly, I should've trusted myself more. My cousin took a similar chance, and she says she wouldn't have got her current job if she hadn't studied overseas. She might not have met her husband either. Looking back, I could've done it. But I've learnt something: if that had worked out, I wouldn't have started the business I run today, and I wouldn't have met the people who matter most to me now.",
+        "sounds_to_check": {
+          "'would've' /wʊdəv/": "would've been, would've learnt, would've built, would've supported, would've gone",
+          "'if I'd' cluster": "if I'd accepted, if I hadn't been, if she hadn't studied, if that had worked out",
+          "negatives /wʊdəntəv/": "wouldn't have got, wouldn't have started, wouldn't have met",
+          "other modals + /əv/": "should've trusted, might not have met, could've done it",
+          "regret intonation": "falling and slowing on 'completely different', 'I should've trusted myself'"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Fully compressed modal + /əv/, correct if-half, audible regret. Ready for week 6.",
+        "70_89": "Good; occasional 'would of' or expanded 'would have'.",
+        "50_69": "'if I would've' appears, or everything is fully pronounced. Repeat days 1-3.",
+        "below_50": "Redo days 1-5: /wʊdəv/ as one unit, 'if I'd' in the condition half."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'would've' is /wʊdəv/ — one unit. Writing or saying 'would of' is the single most common B2 error here.",
+      "NEVER put 'would've' in the if-half: 'if I'd known', not 'if I would've known'.",
+      "The same /əv/ compression works for could've, should've, might've and must've.",
+      "Third conditionals carry regret — let your pitch fall and slow on the participle, or you'll sound indifferent."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 12,
+  "focus": "meaning-changing pairs (remember/forget/stop/go on) · 'to' /tə/ vs 'too' vs '-ing' · perfect infinitive 'to have done' · passive infinitive 'to be done' · negative 'not to' vs 'not -ing'",
+  "focus_ar": "أزواج تغيّر المعنى (remember/forget/stop/go on)، و'to' مقابل '-ing'، والمصدر التام 'to have done'، والمصدر المجهول، والنفي",
+  "arabic_challenge": "At B2 the -ing/to choice is no longer just a verb list — it CHANGES MEANING ('stop smoking' vs 'stop to smoke'). Learners who guess produce grammatical sentences with the wrong meaning. The perfect infinitive 'to have done' also compresses to /təvdʌn/, which is easy to miss.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'remember/forget' + -ing vs to"],
+      "isolation": {
+        "instructions": "'remember DOing' = a memory of the past. 'remember tə DO' = don't forget a duty. Stress the main verb and keep 'to' weak: 'remember tə LOCK it' vs 'remember LOCKing it'.",
+        "instructions_ar": "'remember doing' ذكرى ماضية، و'remember to do' لا تنسَ واجبًا. انبر الفعل الرئيسي وأبقِ to خفيفة.",
+        "practice": ["remember LOCKing it (memory)", "remember tə LOCK it (duty)", "same verb, two meanings"]
+      },
+      "minimal_pairs": [
+        {"pair": ["remember locking it (memory)", "remember to lock it (duty)"], "meaning": ["ذكرى", "واجب"]},
+        {"pair": ["forgot to post it (didn't do it)", "forgot posting it (don't recall)"], "meaning": ["نسي أن يفعل", "لا يتذكر أنه فعل"]},
+        {"pair": ["remember tə (weak)", "remember TO ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["I'll remember to call", "I remember calling"], "meaning": ["مستقبل/واجب", "ماضٍ/ذكرى"]},
+        {"pair": ["don't forget to lock ✅", "don't forget locking ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["remember locking it", "remember to lock it", "forgot to post it", "forgot posting it", "remember meeting her", "remember to call her", "forgot to pay", "remember paying", "don't forget to bring it", "I remember bringing it"],
+      "sentence_practice": [
+        "I remember locking the door, but please remember to lock it tonight.",
+        "I forgot to post your letter.",
+        "I'll never forget meeting her."
+      ],
+      "record_this": "I clearly remember locking the door last night, but please remember to lock it again tonight. I completely forgot to post your letter yesterday. I'll never forget meeting her for the first time.",
+      "self_check": "Say both 'remember locking it' and 'remember to lock it'. Do they sound different and mean different things?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'stop / go on / try' + -ing vs to"],
+      "isolation": {
+        "instructions": "'stop SMOKing' = quit. 'stop tə SMOKE' = pause in order to smoke. 'go on TALKing' = continue. 'go on tə TALK about...' = move to a new topic. The choice changes everything.",
+        "instructions_ar": "'stop smoking' يقلع، و'stop to smoke' يتوقف ليدخّن. 'go on talking' يستمر، و'go on to talk' ينتقل لموضوع جديد.",
+        "practice": ["stop SMOKing (quit)", "stop tə SMOKE (pause for)", "go on TALKing / go on tə TALK about"]
+      },
+      "minimal_pairs": [
+        {"pair": ["stop smoking (quit)", "stop to smoke (pause for)"], "meaning": ["يقلع", "يتوقف ليدخّن"]},
+        {"pair": ["go on talking (continue)", "go on to talk (new topic)"], "meaning": ["يستمر", "ينتقل"]},
+        {"pair": ["try calling (experiment)", "try to call (attempt)"], "meaning": ["يجرّب طريقة", "يحاول"]},
+        {"pair": ["stopped to rest", "stopped resting"], "meaning": ["توقف ليرتاح", "توقف عن الراحة"]},
+        {"pair": ["went on to become", "went on becoming"], "meaning": ["ثم أصبح", "استمر يصبح"]}
+      ],
+      "word_practice": ["stop smoking", "stop to smoke", "go on talking", "go on to talk about", "try calling", "try to call", "stopped to rest", "went on to become", "carried on working", "tried opening it"],
+      "sentence_practice": [
+        "He stopped smoking last year.",
+        "We stopped to rest halfway.",
+        "She went on to become a director."
+      ],
+      "record_this": "He stopped smoking completely last year, which was difficult. We stopped to rest about halfway up the mountain. She later went on to become a director of the whole company.",
+      "self_check": "Say 'stop smoking' then 'stop to rest'. Is the meaning difference clear from your form choice?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["perfect infinitive 'to have done' /təvdʌn/"],
+      "isolation": {
+        "instructions": "'to have + participle' compresses to /təv/: 'I'd like tə'v SEEN it', 'He seems tə'v forGOTten'. It refers to something EARLIER than the main verb. Keep /təv/ tiny.",
+        "instructions_ar": "'to have + التصريف' تُدمج إلى /təv/: 'He seems tə'v forGOTten'. تشير لشيء أقدم من الفعل الرئيسي.",
+        "practice": ["/təv/ SEEN it", "seems /təv/ forGOTten", "tiny /təv/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["seems to have forgotten (earlier)", "seems to forget (generally)"], "meaning": ["نسي قبلها", "ينسى عادةً"]},
+        {"pair": ["to have /təv/", "to of ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["I'd like to have seen it", "I'd like to see it"], "meaning": ["كنت أتمنى رؤيته", "أريد أن أراه"]},
+        {"pair": ["appears to have left", "appears to leave"], "meaning": ["غادر", "يغادر"]},
+        {"pair": ["claims to have met her", "claims to meet her"], "meaning": ["يدّعي أنه قابلها", "يدّعي أنه يقابلها"]}
+      ],
+      "word_practice": ["seems to have forgotten", "appears to have left", "claims to have met her", "is said to have died", "pretends to have read it", "would like to have seen it", "happens to have known", "is thought to have escaped", "seems to have worked", "expects to have finished"],
+      "sentence_practice": [
+        "He seems to have forgotten our meeting.",
+        "She appears to have left already.",
+        "He claims to have met the president."
+      ],
+      "record_this": "He seems to have completely forgotten about our meeting. She appears to have left the building already. He claims to have met the president once, though nobody believes him.",
+      "self_check": "Say 'seems to have forgotten'. Is 'to have' a tiny /təv/, not 'to of'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["passive infinitive 'to be done' / '-ing' passive"],
+      "isolation": {
+        "instructions": "'to be + participle' for passive infinitives: 'It needs tə be FIXED', 'I hate being INterrupted'. Note 'being' /biːɪŋ/ for the -ing passive. Both keep the auxiliary weak.",
+        "instructions_ar": "'to be + التصريف' للمصدر المجهول: 'It needs to be FIXED'، و'being' للمجهول -ing: 'I hate being interrupted'.",
+        "practice": ["needs tə be FIXED", "hate being INterrupted", "weak auxiliary, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["needs to be fixed (passive)", "needs to fix (active)"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["hate being interrupted", "hate interrupting"], "meaning": ["أن يقاطعوني", "أن أقاطع"]},
+        {"pair": ["wants to be told ✅", "wants to be tell ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["needs washing", "needs to be washed"], "meaning": ["نفس المعنى (غير رسمي)", "رسمي"]},
+        {"pair": ["being /biːɪŋ/", "been /bɪn/"], "meaning": ["مستمر", "تام"]}
+      ],
+      "word_practice": ["needs to be fixed", "hate being interrupted", "wants to be told", "needs washing", "expects to be paid", "avoid being seen", "hope to be chosen", "risk being caught", "deserves to be known", "likes being praised"],
+      "sentence_practice": [
+        "The tap needs to be fixed.",
+        "I hate being interrupted.",
+        "She expects to be paid on Friday."
+      ],
+      "record_this": "The kitchen tap really needs to be fixed properly. I absolutely hate being interrupted in the middle of a sentence. She expects to be paid on Friday as usual.",
+      "self_check": "Say 'needs to be fixed'. Is 'to be' weak with 'FIXED' stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["negatives: 'not to' vs 'not -ing'"],
+      "isolation": {
+        "instructions": "Negatives sit before the form: 'I decided NOT tə GO' and 'I regret NOT GOing'. 'not' is stressed because it reverses the meaning, then 'to' stays weak.",
+        "instructions_ar": "النفي يأتي قبل الصيغة: 'I decided NOT to go' و'I regret NOT going'. 'not' منبورة لأنها تعكس المعنى.",
+        "practice": ["decided NOT tə GO", "regret NOT GOing", "stress 'not'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["decided not to go ✅", "didn't decide to go"], "meaning": ["قرر ألا يذهب", "لم يقرر"]},
+        {"pair": ["regret not going", "regret going"], "meaning": ["يأسف لعدم الذهاب", "يأسف للذهاب"]},
+        {"pair": ["NOT (stressed)", "not (flat) ❌"], "meaning": ["واضح", "قد يُفهم خطأ"]},
+        {"pair": ["remember not to say it", "remember not saying it"], "meaning": ["لا تقلها", "لا تتذكر قولها"]},
+        {"pair": ["avoid not doing it", "avoid doing it"], "meaning": ["تجنّب عدم فعله", "تجنّب فعله"]}
+      ],
+      "word_practice": ["decided not to go", "regret not going", "remember not to say it", "prefer not to answer", "risk not finishing", "chose not to reply", "hope not to be late", "imagine not knowing", "promised not to tell", "worth not rushing"],
+      "sentence_practice": [
+        "I decided not to go in the end.",
+        "I regret not going to university.",
+        "He promised not to tell anyone."
+      ],
+      "record_this": "In the end I decided not to go to the party at all. I genuinely regret not going to university when I had the chance. He promised not to tell anyone what I'd said.",
+      "self_check": "Say 'I decided not to go'. Is 'NOT' clearly stressed, with 'to' still weak?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 12 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["remember locking it (memory)", "remember to lock it (duty)"], ["stop smoking (quit)", "stop to smoke (pause)"], ["to have /təv/", "to of ❌"],
+        ["needs to be fixed (passive)", "needs to fix (active)"], ["regret not going", "regret going"], ["go on talking", "go on to talk"]
+      ],
+      "challenge_sentences": [
+        "Remember to lock the door — I remember locking it last night.",
+        "He stopped smoking, then stopped to rest.",
+        "He seems to have forgotten our meeting.",
+        "I decided not to go, and now I regret not going."
+      ],
+      "record_this": "Please remember to lock the door, although I do remember locking it last night. He stopped smoking last year, and today he stopped to rest halfway up the hill. He seems to have completely forgotten about our meeting. I decided not to go, and now I honestly regret not going.",
+      "self_check": "Three checks: the right form for the right meaning, /təv/ for 'to have', and stressed 'not' in negatives."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about habits you changed. Use the meaning-changing pairs deliberately, and check that each one means what you intended.",
+        "instructions_ar": "سجّل نفسك تتكلم عن عادات غيّرتها، مستخدمًا الأزواج التي تغيّر المعنى بوعي، وتأكد أن كل واحدة تعني ما قصدته.",
+        "passage": "Two years ago I decided to change a few things. First, I stopped drinking coffee after four in the afternoon, which helped me sleep. I remember struggling for the first month, and I remember telling everyone how tired I was. Now I don't even think about it. I also tried getting up at six, but that didn't suit me, so I tried to find a compromise instead. I go on working late some nights, but I've learnt not to do it every day. My doctor advised me to take more exercise and warned me not to sit for hours. She said the habit needed to be broken gradually. I regret not starting earlier, and I'd like to have known all this at twenty. I seem to have wasted years feeling exhausted. If you're thinking of changing something, remember to start small, and don't forget to be patient with yourself.",
+        "sounds_to_check": {
+          "meaning pairs": "stopped DRINKing (quit) / remember STRUGGling (memory) / remember tə START (duty) / tried GETting up (experiment) / tried tə FIND (attempt)",
+          "'go on' + -ing": "I go on working late (continue)",
+          "perfect infinitive /təv/": "I'd like tə'v known, I seem tə'v wasted",
+          "passive infinitive": "the habit needed to be broken",
+          "stressed negatives": "learnt NOT to do it, warned me NOT to sit, regret NOT starting, don't forget tə be patient"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every form matches its intended meaning, /təv/ compressed, negatives stressed. Ready for week 13.",
+        "70_89": "Good; occasional wrong form where the meaning matters.",
+        "50_69": "Forms chosen at random, so some sentences mean the opposite. Repeat days 1-2.",
+        "below_50": "Redo days 1-5, focusing on the meaning-changing pairs."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "At B2 the -ing/to choice CHANGES MEANING — it is no longer just a verb list to memorise.",
+      "remember/forget + -ing = a memory · + to = a duty. stop + -ing = quit · + to = pause in order to.",
+      "'to have done' compresses to /təv/ and refers to something earlier than the main verb. Never 'to of'.",
+      "Stress 'NOT' in negative infinitives and gerunds — it reverses the meaning, so it must be heard."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

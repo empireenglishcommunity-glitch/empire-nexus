@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 9,
+  "focus": "'is being' /ɪzbiːɪŋ/ · 'has been' in passives · 'have something done' (causative) stress · 'get it done' · agent-less passive rhythm across tenses",
+  "focus_ar": "'is being' و'has been' في المبني للمجهول، ونبر 'have something done'، و'get it done'، وإيقاع المجهول بدون فاعل في كل الأزمنة",
+  "arabic_challenge": "B2 passives stack two or three weak auxiliaries ('it's being repaired', 'it had been sold'), and the causative 'have something done' puts the stress on the PARTICIPLE at the end, not the object. Arabic learners over-stress the auxiliaries and mis-stress the causative, which then sounds like a normal perfect tense.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'is/are being' + participle (present continuous passive)"],
+      "isolation": {
+        "instructions": "'is being' compresses to /ɪzbiːɪŋ/ — two weak auxiliaries in a row — then the participle is stressed: 'the road's being REPAIRED'. Don't stress either auxiliary.",
+        "instructions_ar": "'is being' تُدمج إلى /ɪzbiːɪŋ/ — مساعدان خفيفان — ثم التصريف الثالث منبور: 'the road's being REPAIRED'.",
+        "practice": ["/ɪzbiːɪŋ/ rePAIRED", "/ɑːbiːɪŋ/ BUILT", "two weak auxiliaries, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["is being repaired (now)", "is repaired (fact)"], "meaning": ["الآن", "حقيقة"]},
+        {"pair": ["is being built ✅", "is being build ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["are being cleaned", "were being cleaned"], "meaning": ["الآن", "وقتها"]},
+        {"pair": ["it's being done ✅", "it's being do ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["being /biːɪŋ/", "been /bɪn/"], "meaning": ["مستمر", "تام"]}
+      ],
+      "word_practice": ["is being repaired", "are being built", "is being cleaned", "are being replaced", "is being investigated", "are being tested", "is being renovated", "are being delivered", "is being discussed", "are being trained"],
+      "sentence_practice": [
+        "The road is being repaired at the moment.",
+        "New flats are being built near us.",
+        "The matter is being investigated."
+      ],
+      "record_this": "The main road is being repaired at the moment, so traffic is terrible. New flats are being built right next to our building. The whole matter is being investigated by an independent team.",
+      "self_check": "Say 'the road is being repaired'. Are both 'is' and 'being' weak, with 'rePAIRED' stressed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'has/had been' + participle (perfect passives)"],
+      "isolation": {
+        "instructions": "Perfect passives stack 'has/had' + 'been': 'it's been SOLD' /ɪtsbɪn/, 'it had been SOLD' /ɪtədbɪn/. All auxiliaries stay weak; only the participle is strong.",
+        "instructions_ar": "المجهول التام يجمع has/had + been: 'it's been SOLD'. كل المساعدات خفيفة والتصريف قوي.",
+        "practice": ["/ɪtsbɪn/ SOLD", "/ɪtədbɪn/ SOLD", "weak stack, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it's been sold (now)", "it had been sold (then)"], "meaning": ["حتى الآن", "قبل ذلك"]},
+        {"pair": ["been /bɪn/ (weak)", "BEEN ❌ (stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["has been finished ✅", "has been finish ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["it's been done", "it's being done"], "meaning": ["انتهى", "يُنجز الآن"]},
+        {"pair": ["had been built", "was built"], "meaning": ["قبل حدث ماضٍ", "ماضٍ بسيط"]}
+      ],
+      "word_practice": ["it's been sold", "has been finished", "have been sent", "had been built", "has been cancelled", "have been chosen", "had been stolen", "has been repaired", "have been informed", "had been forgotten"],
+      "sentence_practice": [
+        "The house has been sold already.",
+        "All the emails have been sent.",
+        "The building had been abandoned for years."
+      ],
+      "record_this": "The house has already been sold to a young family. All the emails have been sent out this morning. The old building had been abandoned for years before they restored it.",
+      "self_check": "Say 'it's been sold'. Do 's and 'been' both stay weak, with 'SOLD' carrying the stress?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["causative 'have something done' — stress the participle"],
+      "isolation": {
+        "instructions": "'I had my hair CUT' means someone else did it for me. Critically, the stress goes on the FINAL participle, not on 'hair'. Compare: 'I had my hair CUT' (service) vs 'I CUT my hair' (myself).",
+        "instructions_ar": "'I had my hair CUT' معناها شخص آخر فعلها لي، والنبر على التصريف الأخير لا على 'hair'.",
+        "practice": ["I had my hair CUT", "we had the car FIXED", "stress the final participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I had my hair cut (service)", "I cut my hair (myself)"], "meaning": ["حلاق قصّه", "قصصته بنفسي"]},
+        {"pair": ["had my hair CUT ✅", "had my HAIR cut ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["had the car fixed", "fixed the car"], "meaning": ["خدمة", "بنفسي"]},
+        {"pair": ["I had it cleaned", "I cleaned it"], "meaning": ["خدمة", "بنفسي"]},
+        {"pair": ["have it delivered", "deliver it"], "meaning": ["خدمة", "أنا أوصله"]}
+      ],
+      "word_practice": ["had my hair cut", "had the car fixed", "had it cleaned", "have it delivered", "had the house painted", "had my photo taken", "had the roof repaired", "had my eyes tested", "had the documents translated", "had my teeth checked"],
+      "sentence_practice": [
+        "I had my hair cut yesterday.",
+        "We're having the kitchen painted.",
+        "She had her eyes tested last week."
+      ],
+      "record_this": "I had my hair cut yesterday afternoon at the new place. We're having the whole kitchen painted next month. She had her eyes tested last week and needs new glasses.",
+      "self_check": "Say 'I had my hair cut'. Is the stress on 'CUT' at the end, making it clearly a service?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'get something done' (informal causative)"],
+      "isolation": {
+        "instructions": "'get' replaces 'have' in informal speech, with the same stress pattern: 'I need to get my car FIXED', 'let's get it DONE'. It often adds a sense of effort or urgency.",
+        "instructions_ar": "'get' تحلّ محل 'have' في الكلام غير الرسمي بنفس النبر: 'get my car FIXED'، وتضيف إحساس الجهد أو الاستعجال.",
+        "practice": ["get my car FIXED", "get it DONE", "informal, same stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["get it done (informal)", "have it done (neutral)"], "meaning": ["غير رسمي", "محايد"]},
+        {"pair": ["get my car FIXED ✅", "get my CAR fixed ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["get it done", "do it"], "meaning": ["شخص آخر", "بنفسي"]},
+        {"pair": ["got my phone repaired", "repaired my phone"], "meaning": ["خدمة", "بنفسي"]},
+        {"pair": ["get /get/", "got /gɒt/"], "meaning": ["مضارع", "ماضٍ"]}
+      ],
+      "word_practice": ["get it done", "get my car fixed", "get my phone repaired", "get it delivered", "get the shirt cleaned", "get my hair done", "get it checked", "get the door repaired", "get them printed", "get it sorted"],
+      "sentence_practice": [
+        "I need to get my car fixed.",
+        "Let's get it done today.",
+        "You should get that checked."
+      ],
+      "record_this": "I really need to get my car fixed before the weekend. Let's just get it done today and stop delaying. You should definitely get that cough checked by a doctor.",
+      "self_check": "Say 'get my car fixed'. Is the stress on 'FIXED' at the end?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["agent-less passive rhythm in formal description"],
+      "isolation": {
+        "instructions": "Formal English uses agent-less passives to sound objective: 'It has been decided', 'Applications will be reviewed'. Keep the auxiliary chain flat and light, then land firmly on the participle.",
+        "instructions_ar": "الإنجليزية الرسمية تستخدم المجهول بدون فاعل ليبدو موضوعيًا. اجعل سلسلة المساعدات مسطحة وخفيفة والتصريف قويًا.",
+        "practice": ["it has been deCIDed", "will be reVIEWED", "flat chain, firm landing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it has been decided (formal)", "we decided (direct)"], "meaning": ["رسمي موضوعي", "مباشر"]},
+        {"pair": ["will be reviewed ✅", "will be review ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["can be seen", "can see"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["must be completed", "must complete"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["is thought to be", "thinks"], "meaning": ["يُعتقد", "يعتقد"]}
+      ],
+      "word_practice": ["it has been decided", "will be reviewed", "can be seen", "must be completed", "should be avoided", "is thought to be", "are known to be", "has been confirmed", "will be announced", "may be required"],
+      "sentence_practice": [
+        "It has been decided that the office will close.",
+        "Applications will be reviewed next week.",
+        "All forms must be completed in ink."
+      ],
+      "record_this": "It has been decided that the office will close for renovation. All applications will be reviewed carefully next week. Every form must be completed in ink and signed at the bottom.",
+      "self_check": "Say 'it has been decided'. Is the auxiliary chain flat and light, landing firmly on 'deCIDed'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["is being repaired (now)", "is repaired (fact)"], ["being /biːɪŋ/", "been /bɪn/"], ["it's been sold", "it's being sold"],
+        ["had my hair CUT ✅", "had my HAIR cut ❌"], ["get it done (informal)", "have it done (neutral)"], ["it has been decided", "we decided"]
+      ],
+      "challenge_sentences": [
+        "The road is being repaired at the moment.",
+        "The house has already been sold.",
+        "I had my hair cut yesterday.",
+        "It has been decided that the office will close."
+      ],
+      "record_this": "The main road is being repaired at the moment. The house has already been sold to a young couple. I had my hair cut yesterday at the new salon. It has been decided that the office will close for two weeks.",
+      "self_check": "Three checks: weak auxiliary chains, 'being' vs 'been', and stress on the final participle in causatives."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing renovations to a building, mixing passive tenses with causatives. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تصف ترميم مبنى، ممزوجًا بين أزمنة المجهول والصيغة السببية، وبعدين اسمع وراجع.",
+        "passage": "Our building is finally being renovated after years of complaints. The roof had been leaking since long before we moved in, and nothing had ever been repaired properly. Last month it was announced that the work would begin in March. So far, the windows have been replaced and the stairwell has been repainted. At the moment the lift is being modernised, which means we're all walking up five floors. Each flat is being inspected individually, and we've been told to report any damage. I've already had my kitchen tap replaced and I'm getting the bathroom tiles redone next week. My neighbour had her whole flat rewired last year, so she's relaxed about it. It's been estimated that everything will be finished by autumn, though I suspect it'll be delayed.",
+        "sounds_to_check": {
+          "'is being' + participle": "is being renovated, is being modernised, is being inspected",
+          "perfect passives": "had been leaking, had been repaired, have been replaced, has been repainted, we've been told, it's been estimated",
+          "past simple passive": "it was announced",
+          "causative 'have/get something done'": "had my kitchen tap rePLACED, getting the bathroom tiles reDONE, had her whole flat reWIRED",
+          "modal passives": "would begin, will be finished, it'll be delayed"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Flat weak auxiliary chains, clear being/been, correct causative stress. Ready for week 10.",
+        "70_89": "Good; occasional stressed auxiliary.",
+        "50_69": "Causative stress on the object, or being/been confused. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping auxiliaries weak and stressing the final participle."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Passives stack weak auxiliaries — keep the whole chain light and land firmly on the participle only.",
+      "'being' /biːɪŋ/ = in progress; 'been' /bɪn/ = completed. Never swap them.",
+      "The causative 'have/get something DONE' stresses the FINAL participle — that is what marks it as a service someone did for you.",
+      "'get something done' is the informal version of 'have something done', often with a sense of urgency."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 11,
+  "focus": "non-defining clause comma intonation (parenthetical drop) · defining vs non-defining rhythm · reduced relatives (dropped 'who is') · 'which' referring to a whole clause · preposition + 'whom'",
+  "focus_ar": "نبرة الجملة الوصفية غير المحدِّدة (الهبوط الاعتراضي)، والفرق الإيقاعي بين المحدِّدة وغير المحدِّدة، والوصفية المختصرة، و'which' للجملة كلها، و'whom'",
+  "arabic_challenge": "Non-defining clauses must be spoken as a parenthesis — dropped in pitch and bracketed by pauses. Without that, 'My brother, who lives in Dubai, is visiting' sounds like 'the brother of mine who lives in Dubai (as opposed to my other brothers)'. Arabic doesn't use this pitch-bracketing, so the meaning distinction is lost.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["non-defining clause as a dropped parenthesis"],
+      "isolation": {
+        "instructions": "A non-defining clause is EXTRA information, so speak it like a parenthesis: pause, drop your pitch, say it faster, pause again, then return to your original pitch. 'My brother, // (who lives in Dubai) // is visiting.'",
+        "instructions_ar": "الجملة غير المحدِّدة معلومة إضافية، فقلها كجملة اعتراضية: وقفة، اخفض النبرة، أسرع، وقفة، ثم عُد لنبرتك.",
+        "practice": ["My brother, // (drop) who lives in Dubai, // (return) is visiting", "pause-drop-pause", "parenthesis"]
+      },
+      "minimal_pairs": [
+        {"pair": ["my brother, who lives in Dubai, ...", "my brother who lives in Dubai ..."], "meaning": ["أخي الوحيد (إضافة)", "أخي الذي في دبي (تحديد)"]},
+        {"pair": ["dropped pitch (extra info)", "level pitch (defining)"], "meaning": ["إضافي", "محدِّد"]},
+        {"pair": ["with pauses ✅", "no pauses ❌"], "meaning": ["غير محدِّدة", "محدِّدة"]},
+        {"pair": ["Cairo, which is huge, ...", "the city which is huge ..."], "meaning": ["إضافة", "تحديد"]},
+        {"pair": ["who (non-defining)", "that (defining only)"], "meaning": ["إضافي", "محدِّد"]}
+      ],
+      "word_practice": ["my brother, who...", "Cairo, which...", "my teacher, who...", "this book, which...", "her father, who...", "the manager, who...", "London, which...", "my flat, which...", "our neighbour, who...", "that film, which..."],
+      "sentence_practice": [
+        "My brother, who lives in Dubai, is visiting us.",
+        "Cairo, which is enormous, never sleeps.",
+        "My teacher, who is from Canada, speaks Arabic."
+      ],
+      "record_this": "My brother, who lives in Dubai, is visiting us next week. Cairo, which is absolutely enormous, never really sleeps. My teacher, who is originally from Canada, speaks Arabic fluently.",
+      "self_check": "Say 'My brother, who lives in Dubai, is visiting.' Did you pause, drop your pitch, then come back up?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["defining clause: no pause, level pitch"],
+      "isolation": {
+        "instructions": "A defining clause is ESSENTIAL — it says which one — so there is NO pause and NO pitch drop. It flows straight on: 'The man who lives next DOOR is a doctor.' One smooth unit.",
+        "instructions_ar": "الجملة المحدِّدة أساسية — تحدّد أيّهم — فلا وقفة ولا هبوط. تتصل مباشرة كوحدة واحدة.",
+        "practice": ["the man who lives next DOOR is a doctor", "no pause, no drop", "one smooth unit"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the man who lives next door (defining)", "my father, who lives next door (non-defining)"], "meaning": ["تحديد", "إضافة"]},
+        {"pair": ["no pause (defining)", "pauses (non-defining)"], "meaning": ["محدِّدة", "غير محدِّدة"]},
+        {"pair": ["that (defining ✅)", "that (non-defining ❌)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the book I read", "the book, which I read,"], "meaning": ["تحديد", "إضافة"]},
+        {"pair": ["people who smoke", "my uncle, who smokes,"], "meaning": ["فئة", "شخص معيّن"]}
+      ],
+      "word_practice": ["the man who lives next door", "the book I read", "people who smoke", "the woman that called", "the film we saw", "the house that burnt down", "students who work hard", "the shop that closed", "the email I sent", "anyone who wants to come"],
+      "sentence_practice": [
+        "The man who lives next door is a doctor.",
+        "The book I read last week was brilliant.",
+        "People who smoke should be careful."
+      ],
+      "record_this": "The man who lives next door to us is a doctor. The book I read last week was absolutely brilliant. People who smoke heavily should be careful about their health.",
+      "self_check": "Say 'the man who lives next door is a doctor'. Is it one smooth flow with no pause before 'who'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["reduced relatives (dropping 'who is / that is')"],
+      "isolation": {
+        "instructions": "Natural B2 speech often drops 'who is' or 'that was': 'the man standing over there' (= who is standing), 'the letter sent yesterday' (= that was sent). Keep the flow tight — nothing marks the gap.",
+        "instructions_ar": "الكلام الطبيعي في B2 يحذف 'who is' أو 'that was': 'the man standing over there'. حافظ على الاتصال — لا شيء يشير للحذف.",
+        "practice": ["the man standing over there", "the letter sent yesterday", "tight flow, no gap"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the man standing there", "the man who is standing there"], "meaning": ["مختصرة", "كاملة"]},
+        {"pair": ["the letter sent yesterday", "the letter that was sent yesterday"], "meaning": ["مختصرة", "كاملة"]},
+        {"pair": ["people living abroad", "people who live abroad"], "meaning": ["مختصرة", "كاملة"]},
+        {"pair": ["the girl wearing red", "the girl wears red ❌"], "meaning": ["مختصرة", "خطأ"]},
+        {"pair": ["-ing (active)", "-ed (passive)"], "meaning": ["معلوم", "مجهول"]}
+      ],
+      "word_practice": ["the man standing there", "the letter sent yesterday", "people living abroad", "the girl wearing red", "the car parked outside", "anyone interested", "the money spent", "students studying English", "the questions asked", "the road leading north"],
+      "sentence_practice": [
+        "The man standing over there is my uncle.",
+        "The letter sent yesterday hasn't arrived.",
+        "Anyone interested should call me."
+      ],
+      "record_this": "The man standing over there by the window is my uncle. The letter sent yesterday still hasn't arrived. Anyone interested in joining the trip should call me before Friday.",
+      "self_check": "Say 'the man standing over there'. Does it flow tightly, with no trace of the dropped 'who is'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'which' referring to a whole clause"],
+      "isolation": {
+        "instructions": "'which' can comment on an entire previous statement: 'He arrived late, which annoyed everyone.' Pause before 'which', drop slightly, and stress the comment: '...which anNOYED everyone.'",
+        "instructions_ar": "'which' يمكنها التعليق على الجملة كلها: 'He arrived late, which annoyed everyone.' وقفة قبلها واخفض قليلاً وانبر التعليق.",
+        "practice": ["He arrived late, // which anNOYED everyone", "pause + comment", "which = the whole idea"]
+      },
+      "minimal_pairs": [
+        {"pair": ["which annoyed everyone (comments on the clause)", "that annoyed everyone ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["..., which was nice", "the thing which was nice"], "meaning": ["تعليق", "تحديد"]},
+        {"pair": ["with pause ✅", "no pause ❌"], "meaning": ["تعليق", "غير واضح"]},
+        {"pair": ["which surprised me", "what surprised me"], "meaning": ["تعليق", "ما الذي"]},
+        {"pair": ["all of which", "all of that ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["which annoyed everyone", "which was lovely", "which surprised me", "which made things worse", "which explains a lot", "which is a shame", "which helped enormously", "which nobody expected", "all of which", "none of which"],
+      "sentence_practice": [
+        "He arrived late, which annoyed everyone.",
+        "She passed easily, which surprised nobody.",
+        "It rained all week, which was a shame."
+      ],
+      "record_this": "He arrived nearly an hour late, which annoyed absolutely everyone. She passed the exam easily, which surprised nobody who knew her. It rained solidly all week, which was a real shame for the holiday.",
+      "self_check": "Say 'He arrived late, which annoyed everyone.' Did you pause before 'which' and stress the comment?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["preposition + 'whom' / 'which' (formal register)"],
+      "isolation": {
+        "instructions": "In formal English the preposition moves to the front: 'the person to WHOM I spoke', 'the topic on WHICH we agreed'. Stress the question word lightly and keep it smooth — this is writing-like speech.",
+        "instructions_ar": "في الإنجليزية الرسمية يتقدّم حرف الجر: 'the person to whom I spoke'. أسلوب رسمي قريب من الكتابة.",
+        "practice": ["the person to WHOM I spoke", "the topic on WHICH we agreed", "formal, front-shifted"]
+      },
+      "minimal_pairs": [
+        {"pair": ["to whom I spoke (formal)", "who I spoke to (natural)"], "meaning": ["رسمي", "طبيعي"]},
+        {"pair": ["whom /huːm/", "who /huː/"], "meaning": ["مفعول رسمي", "فاعل"]},
+        {"pair": ["in which (formal)", "that ... in (natural)"], "meaning": ["رسمي", "طبيعي"]},
+        {"pair": ["with whom ✅", "with who ❌"], "meaning": ["صحيح رسمي", "خطأ"]},
+        {"pair": ["the reason why", "the reason for which"], "meaning": ["عادي", "رسمي"]}
+      ],
+      "word_practice": ["to whom I spoke", "with whom I work", "on which we agreed", "in which she lives", "for whom it matters", "about which we argued", "of whom I'm fond", "at which point", "by which time", "during which time"],
+      "sentence_practice": [
+        "The person to whom I spoke was very helpful.",
+        "The topic on which we agreed was funding.",
+        "The house in which she grew up is now a museum."
+      ],
+      "record_this": "The person to whom I spoke yesterday was extremely helpful. The only topic on which we finally agreed was funding. The house in which she grew up is now a small museum.",
+      "self_check": "Say 'the person to whom I spoke'. Is it smooth and formal, with 'whom' not replaced by 'who'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 11 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["my brother, who lives in Dubai,", "the man who lives next door"], ["dropped pitch (extra)", "level pitch (defining)"], ["the man standing there", "the man who is standing there"],
+        ["which annoyed everyone ✅", "that annoyed everyone ❌"], ["to whom I spoke (formal)", "who I spoke to (natural)"], ["with pauses (non-defining)", "no pause (defining)"]
+      ],
+      "challenge_sentences": [
+        "My brother, who lives in Dubai, is visiting us.",
+        "The man who lives next door is a doctor.",
+        "He arrived late, which annoyed everyone.",
+        "The man standing over there is my uncle."
+      ],
+      "record_this": "My brother, who lives in Dubai, is visiting us next week. The man who lives next door to us is a doctor. He arrived almost an hour late, which annoyed everyone. The man standing over there by the door is my uncle.",
+      "self_check": "Three checks: parenthetical drop for non-defining, smooth flow for defining, and a pause before commenting 'which'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing your family and neighbourhood, mixing both clause types. The test is whether a listener can HEAR which information is essential and which is extra.",
+        "instructions_ar": "سجّل نفسك تصف عائلتك وحيّك، ممزوجًا بين نوعي الجمل. الاختبار: هل يسمع المستمع أي معلومة أساسية وأيها إضافية؟",
+        "passage": "Let me describe where I live. My flat, which is on the fourth floor, looks out over a small square. The building was designed by an architect whose name I've forgotten, but people who know about architecture say it's unusual. My neighbour, who has lived here for forty years, remembers when the square was a garden. The shop on the corner, which used to be a bakery, is now a phone repair place. The family living above me have three children, which explains the noise. My landlord, to whom I pay far too much rent, refuses to fix the heating. The plumber we called last winter said the pipes installed in the sixties should have been replaced years ago, which nobody wants to hear. Still, the people who live here are friendly, and that matters more than the heating.",
+        "sounds_to_check": {
+          "non-defining (pause + pitch drop)": "My flat, which is on the fourth floor, / My neighbour, who has lived here forty years, / The shop on the corner, which used to be a bakery, / My landlord, to whom I pay rent,",
+          "defining (no pause, level)": "an architect whose name I've forgotten, people who know about architecture, the plumber we called, the people who live here",
+          "reduced relatives": "the family living above me, the pipes installed in the sixties",
+          "commenting 'which'": "which explains the noise, which nobody wants to hear",
+          "formal preposition + whom": "to whom I pay far too much rent"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Audible difference between essential and extra information. Ready for week 12.",
+        "70_89": "Good; occasional missing parenthetical drop.",
+        "50_69": "All clauses sound identical, so the meaning distinction is lost. Repeat days 1-2.",
+        "below_50": "Redo days 1-5, practising the pause-drop-pause bracket for non-defining clauses."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Non-defining = EXTRA info → pause, drop your pitch, speak faster, pause, return. It is spoken like a parenthesis.",
+      "Defining = ESSENTIAL info → no pause, no drop, one smooth unit.",
+      "This is not decoration: the same words mean different things depending on the intonation.",
+      "'that' can only be used in defining clauses; use 'who'/'which' for non-defining ones.",
+      "Reduced relatives ('the man standing there') are extremely common in natural speech — practise them for fluency."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}
