@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w5",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 5,
+  "pattern_name": "Third conditional (unreal past)",
+  "pattern_name_ar": "الشرط الثالث (الماضي غير الواقعي)",
+  "formula": "If + had + participle, ... would have + participle · wouldn't have · could/might have",
+  "formula_visual": "[If I'd known], [I would have called]",
+  "when_to_use": "For an imaginary past — something that did NOT happen, and its imaginary result. Used for regret, criticism and explanation. The if-clause takes the past perfect; the result takes 'would have + participle'. Swap 'would' for 'could' or 'might' to soften certainty.",
+  "when_to_use_ar": "لماضٍ خيالي — شيء لم يحدث ونتيجته المتخيّلة. يُستخدم للأسف والنقد والتفسير. جملة الشرط بالماضي التام والنتيجة would have + التصريف الثالث.",
+  "why_arabic_speakers_struggle": "Arabic uses لو + الماضي for both second and third conditionals, so learners can't feel the difference. The biggest error is putting 'would have' in the if-clause ('if I would have known'), and writing 'would of' because that is exactly how /wʊdəv/ sounds.",
+  "examples": [
+    {"en": "If I'd known, I would have called you.", "ar": "لو كنت أعرف، لكنت اتصلت بك", "structure": "If + [had + participle], [would have + participle]"},
+    {"en": "We wouldn't have missed the train if we'd left earlier.", "ar": "لم نكن سنفوّت القطار لو خرجنا أبكر", "structure": "[wouldn't have + participle] + if + [had + participle]"},
+    {"en": "You should have told me — I could have helped.", "ar": "كان عليك أن تخبرني — كنت أستطيع المساعدة", "structure": "[should have] / [could have + participle]"},
+    {"en": "If she hadn't helped me, I would have failed.", "ar": "لو لم تساعدني، لكنت فشلت", "structure": "If + [hadn't + participle], [would have]"},
+    {"en": "It might have worked if we'd tried harder.", "ar": "ربما كان سينجح لو حاولنا أكثر", "structure": "[might have + participle] + if + [had]"}
+  ],
+  "common_errors": [
+    {"wrong": "If I would have known, I would have called.", "correct": "If I'd known, I would have called.", "explanation": "The if-clause uses the past perfect only — never 'would have'."},
+    {"wrong": "I would of called you.", "correct": "I would have called you. / I would've called you.", "explanation": "'would've' is 'would have'; 'would of' does not exist in writing."},
+    {"wrong": "If I had known, I would call you.", "correct": "If I had known, I would have called you.", "explanation": "An unreal PAST result needs 'would have + participle', not 'would + verb'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If I ___ (know), I would have called.", "answer": "had known / 'd known"},
+    {"sentence": "We wouldn't have missed it if we ___ (leave) earlier.", "answer": "had left / 'd left"},
+    {"sentence": "You ___ (should / tell) me about it.", "answer": "should have told"},
+    {"sentence": "If she hadn't helped, I ___ (fail).", "answer": "would have failed"},
+    {"sentence": "It ___ (might / work) if we'd tried harder.", "answer": "might have worked"}
+  ],
+  "quick_rule": "If + HAD + participle, ... WOULD HAVE + participle. Never 'would have' in the if-half. Never write 'would of'.",
+  "quick_rule_ar": "If + HAD + التصريف الثالث، ... WOULD HAVE + التصريف الثالث. لا 'would have' في نصف الشرط، ولا تكتب 'would of'.",
+  "mnemonic": "Past that never happened: 'had' in the if-half, 'would have' in the result.",
+  "connect_to_speaking": "In accent week 5 you drilled /wʊdəv/ as one unit and 'if I'd known'. Say 'If I'd KNOWN, I would've CALLED ↘' with a falling regretful tone — and never let it become 'would of'."
+}

@@ -1,0 +1,181 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 16,
+  "focus": "phrasal-verb particle stress (put it OFF) · separable verbs with pronouns · noun vs verb stress shift (a HANDout / hand OUT) · formal vs informal register pairs · B2 course wrap-up",
+  "focus_ar": "نبر حرف الجر في الأفعال المركبة، والأفعال القابلة للفصل مع الضمائر، وتحوّل النبر بين الاسم والفعل، وأزواج الرسمي وغير الرسمي، وختام B2",
+  "arabic_challenge": "In phrasal verbs the PARTICLE usually takes the stress ('give UP', 'put it OFF'), which feels backwards to learners who stress the main verb. Pronouns must also sit between verb and particle ('turn it off', never 'turn off it'). Register choice — 'put off' vs 'postpone' — is the final B2 skill.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["particle stress in phrasal verbs"],
+      "isolation": {
+        "instructions": "In most phrasal verbs the PARTICLE carries the stress, not the verb: 'give UP', 'find OUT', 'put OFF'. This feels strange at first — practise until the particle naturally takes the beat.",
+        "instructions_ar": "في معظم الأفعال المركبة، حرف الجر هو المنبور لا الفعل: 'give UP'. تدرّب حتى يصبح طبيعيًا.",
+        "practice": ["give UP", "find OUT", "put OFF"]
+      },
+      "minimal_pairs": [
+        {"pair": ["give UP ✅", "GIVE up ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["find OUT", "look FOR"], "meaning": ["يكتشف", "يبحث عن"]},
+        {"pair": ["put OFF (postpone)", "put ON (wear)"], "meaning": ["يؤجّل", "يلبس"]},
+        {"pair": ["take OFF (plane/clothes)", "take UP (start a hobby)"], "meaning": ["يقلع/يخلع", "يبدأ هواية"]},
+        {"pair": ["get ON WITH (continue)", "get ON (board)"], "meaning": ["يستمر", "يركب"]}
+      ],
+      "word_practice": ["give up", "find out", "put off", "take off", "look after", "carry on", "work out", "turn down", "bring up", "come across"],
+      "sentence_practice": [
+        "Don't give up now.",
+        "I need to find out what happened.",
+        "We had to put off the meeting."
+      ],
+      "record_this": "Please don't give up now, you're almost there. I really need to find out exactly what happened yesterday. We had to put off the meeting until next Thursday.",
+      "self_check": "Say 'give up' and 'find out'. Does the PARTICLE carry the stress rather than the verb?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["separable verbs: pronoun goes in the middle"],
+      "isolation": {
+        "instructions": "With a pronoun the particle MUST come after it: 'turn it OFF', 'pick her UP', never 'turn off it'. The pronoun is weak and squeezed in; the particle still takes the stress.",
+        "instructions_ar": "مع الضمير يأتي حرف الجر بعده: 'turn it OFF' ولا نقول 'turn off it'. الضمير خفيف وحرف الجر منبور.",
+        "practice": ["turn it OFF ✅", "pick her UP ✅", "pronoun in the middle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["turn it off ✅", "turn off it ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["pick her up ✅", "pick up her ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["turn off the light ✅", "turn the light off ✅"], "meaning": ["كلاهما صحيح", "كلاهما صحيح"]},
+        {"pair": ["throw it away ✅", "throw away it ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["look after him ✅ (inseparable)", "look him after ❌"], "meaning": ["غير قابل للفصل", "خطأ"]}
+      ],
+      "word_practice": ["turn it off", "pick her up", "throw it away", "fill it in", "work it out", "give it back", "put them on", "take it off", "switch it on", "hand it in"],
+      "sentence_practice": [
+        "Please turn it off.",
+        "I'll pick her up at six.",
+        "Don't throw it away."
+      ],
+      "record_this": "Could you please turn it off before you leave? I'll pick her up from the station at about six. Don't throw it away — I might still need it later.",
+      "self_check": "Say 'turn it off'. Is the pronoun in the middle, with the stress still on 'OFF'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["noun vs verb stress shift"],
+      "isolation": {
+        "instructions": "Many phrasal verbs become nouns with the stress moved FORWARD: verb 'hand OUT' → noun 'a HANDout'; 'break DOWN' → 'a BREAKdown'. The stress tells you which one you mean.",
+        "instructions_ar": "كثير من الأفعال المركبة تصبح أسماء بنقل النبر للأمام: 'hand OUT' ← 'a HANDout'. النبر يحدّد المعنى.",
+        "practice": ["hand OUT (verb) → a HANDout (noun)", "break DOWN → a BREAKdown", "stress moves forward"]
+      },
+      "minimal_pairs": [
+        {"pair": ["hand OUT (verb)", "a HANDout (noun)"], "meaning": ["يوزّع", "نشرة"]},
+        {"pair": ["break DOWN (verb)", "a BREAKdown (noun)"], "meaning": ["يتعطّل", "انهيار"]},
+        {"pair": ["take OFF (verb)", "TAKEoff (noun)"], "meaning": ["يقلع", "إقلاع"]},
+        {"pair": ["work OUT (verb)", "a WORKout (noun)"], "meaning": ["يحلّ/يتمرّن", "تمرين"]},
+        {"pair": ["check IN (verb)", "CHECK-in (noun)"], "meaning": ["يسجّل", "تسجيل"]}
+      ],
+      "word_practice": ["hand out / a handout", "break down / a breakdown", "take off / takeoff", "work out / a workout", "check in / check-in", "print out / a printout", "set up / a setup", "back up / a backup", "turn out / turnout", "grow up / a grown-up"],
+      "sentence_practice": [
+        "She handed out the handouts.",
+        "The car broke down — it was a total breakdown.",
+        "After takeoff, we took off our jackets."
+      ],
+      "record_this": "The teacher handed out the handouts at the start of class. Our car broke down twice, which caused a complete breakdown in our plans. Shortly after takeoff, we took off our jackets and relaxed.",
+      "self_check": "Say 'hand OUT' then 'a HANDout'. Did the stress move forward for the noun?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["register pairs: phrasal (informal) vs Latinate (formal)"],
+      "isolation": {
+        "instructions": "Most phrasal verbs have a formal one-word equivalent: put off / postpone, find out / discover, give up / abandon, look into / investigate. Phrasal verbs stress the particle; formal verbs stress an inner syllable ('postPONE').",
+        "instructions_ar": "لمعظم الأفعال المركبة مقابل رسمي بكلمة واحدة: put off/postpone. المركّب ينبر الحرف والرسمي ينبر مقطعًا داخليًا.",
+        "practice": ["put OFF (informal) / postPONE (formal)", "find OUT / disCOVer", "give UP / aBANdon"]
+      },
+      "minimal_pairs": [
+        {"pair": ["put OFF (informal)", "postPONE (formal)"], "meaning": ["غير رسمي", "رسمي"]},
+        {"pair": ["find OUT", "disCOVer"], "meaning": ["غير رسمي", "رسمي"]},
+        {"pair": ["give UP", "aBANdon"], "meaning": ["غير رسمي", "رسمي"]},
+        {"pair": ["look INto", "inVEStigate"], "meaning": ["غير رسمي", "رسمي"]},
+        {"pair": ["go UP", "inCREASE"], "meaning": ["غير رسمي", "رسمي"]}
+      ],
+      "word_practice": ["put off / postpone", "find out / discover", "give up / abandon", "look into / investigate", "go up / increase", "cut down on / reduce", "set up / establish", "take part in / participate", "put up with / tolerate", "get rid of / eliminate"],
+      "sentence_practice": [
+        "We had to put off the meeting. / The meeting was postponed.",
+        "I found out the truth. / I discovered the truth.",
+        "They're looking into it. / They are investigating it."
+      ],
+      "record_this": "We had to put off the meeting, so officially it was postponed until March. I found out the truth by accident, and later we discovered the full story. They're looking into the complaint, and the committee is investigating it properly.",
+      "self_check": "Say 'put OFF' then 'postPONE'. Does the stress move from the particle to inside the formal word?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["choosing register in real situations"],
+      "isolation": {
+        "instructions": "Now choose deliberately. Speaking to a friend: 'Let's put it off.' In a presentation: 'I suggest we postpone it.' Match your whole rhythm — phrasal verbs run faster and more casually.",
+        "instructions_ar": "اختر بوعي. مع صديق: 'Let's put it off.' في عرض تقديمي: 'I suggest we postpone it.' واجعل إيقاعك يناسب المقام.",
+        "practice": ["friend: let's put it OFF (fast, casual)", "presentation: I suggest we postPONE it (measured)", "match the rhythm"]
+      },
+      "minimal_pairs": [
+        {"pair": ["let's put it off (casual, fast)", "I suggest we postpone it (measured)"], "meaning": ["ودّي", "رسمي"]},
+        {"pair": ["I'll sort it out", "I shall resolve the matter"], "meaning": ["عادي", "رسمي جدًا"]},
+        {"pair": ["we need to cut down", "we must reduce expenditure"], "meaning": ["عادي", "رسمي"]},
+        {"pair": ["thanks for putting up with me", "thank you for your tolerance"], "meaning": ["ودّي", "رسمي"]},
+        {"pair": ["casual rhythm (fast)", "formal rhythm (measured)"], "meaning": ["سريع", "متمهّل"]}
+      ],
+      "word_practice": ["let's put it off", "I suggest we postpone", "I'll sort it out", "I shall resolve it", "we need to cut down", "we must reduce", "thanks for putting up with me", "thank you for your patience", "let's carry on", "let us proceed"],
+      "sentence_practice": [
+        "Let's put it off till Monday.",
+        "I suggest we postpone the decision.",
+        "I'll sort it out this afternoon."
+      ],
+      "record_this": "Let's just put it off till Monday and enjoy the weekend. In the meeting I'd say: I suggest we postpone the decision until we have more data. Don't worry, I'll sort it out this afternoon.",
+      "self_check": "Say the casual version then the formal one. Does your whole rhythm change, not only the words?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 16 features + B2 course wrap-up",
+      "type": "review",
+      "mixed_pairs": [
+        ["give UP ✅", "GIVE up ❌"], ["turn it off ✅", "turn off it ❌"], ["hand OUT (verb)", "a HANDout (noun)"],
+        ["put OFF (informal)", "postPONE (formal)"], ["break DOWN (verb)", "a BREAKdown (noun)"], ["casual rhythm", "formal rhythm"]
+      ],
+      "challenge_sentences": [
+        "Don't give up — let's find out what happened.",
+        "Could you turn it off, please?",
+        "She handed out the handouts.",
+        "We put it off, so it was officially postponed."
+      ],
+      "record_this": "Don't give up now — let's find out exactly what happened. Could you turn it off before you leave, please? The teacher handed out the handouts at the beginning. We put it off, so officially the meeting was postponed until March.",
+      "self_check": "Three checks: particle stress, pronoun in the middle, and forward stress shift for nouns."
+    },
+    {
+      "day": 7,
+      "target_sounds": "B2 final self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record the same story twice: once casually to a friend, once formally in a meeting. Then compare. This is your B2 pronunciation checkpoint — register control is the final B2 skill.",
+        "instructions_ar": "سجّل نفس القصة مرتين: مرة بشكل ودّي لصديق، ومرة رسميًا في اجتماع، ثم قارن. هذه نقطة تقييم B2 — التحكم في المقام هو المهارة الأخيرة.",
+        "passage": "Informal version: So we were supposed to launch last month, but we had to put it off. We found out the supplier had messed up the order, and honestly I nearly gave up. Anyway, we sorted it out. We had to cut down on the extras and set up a new delivery system. It turned out fine in the end, though I've had to put up with a lot of complaints. Formal version: The launch was scheduled for last month but was postponed. We discovered that the supplier had failed to fulfil the order correctly, and I very nearly abandoned the project. However, the issue was resolved. We reduced the additional features and established a new distribution system. Ultimately the outcome was satisfactory, although I have had to tolerate considerable criticism.",
+        "sounds_to_check": {
+          "particle stress (informal)": "put it OFF, found OUT, gave UP, sorted it OUT, cut DOWN on, set UP, turned OUT, put UP WITH",
+          "pronouns in the middle": "put it off, sorted it out",
+          "formal verb stress": "postPONED, disCOVered, aBANdoned, reSOLVED, reDUCED, esTABlished, TOLerate",
+          "register rhythm": "informal faster and more connected; formal slower and more measured",
+          "B2 features returning": "past perfect (had failed), passives (was postponed, was resolved), linkers (However, Ultimately, although)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Particle stress correct, pronouns placed right, and two genuinely different registers. B2 pronunciation complete — ready for C1!",
+        "70_89": "Good; occasional verb-stressed phrasal verb or blurred register.",
+        "50_69": "'turn off it' appears, or both versions sound identical. Repeat days 1-2 and 4.",
+        "below_50": "Redo days 1-5, stressing the particle and keeping pronouns in the middle."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The PARTICLE takes the stress in phrasal verbs ('give UP') — this feels backwards but is essential.",
+      "Pronouns go BETWEEN verb and particle: 'turn it off', never 'turn off it'.",
+      "When a phrasal verb becomes a noun, the stress moves forward: 'hand OUT' → 'a HANDout'.",
+      "Every phrasal verb has a formal equivalent. Choosing correctly between 'put off' and 'postpone' is the final B2 skill.",
+      "This completes B2: you have moved from connected speech (B1) through narrative layering, compressed modal clusters, and now register control."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1 — and with your B1 week 1 recording to hear the progress."
+  }
+}

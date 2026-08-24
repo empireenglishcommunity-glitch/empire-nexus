@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 2,
+  "focus": "contracted 'd = had · 'd vs would disambiguation · 'had been' /ədbɪn/ · weak 'by the time' / 'before' · past-perfect backgrounding stress",
+  "focus_ar": "الاختصار 'd = had، والتمييز بينه وبين would، و'had been' الخفيفة، وربط 'by the time' و'before'، ونبر الخلفية في الماضي التام",
+  "arabic_challenge": "English contracts 'had' to a single /d/ — 'I'd finished' — which sounds exactly like 'I'd' from 'would'. Only the following verb form tells them apart (I'd finished vs I'd finish). Arabic has no such contraction, so learners either expand it unnaturally or lose the past perfect entirely.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["contracted 'd = had"],
+      "isolation": {
+        "instructions": "'had' contracts to just /d/ on the pronoun: 'I'd finished', 'she'd left', 'they'd gone'. It is a tiny sound, but it changes the whole time frame. Attach it tightly and stress the participle.",
+        "instructions_ar": "'had' تُختصر إلى /d/ فقط: 'I'd finished'. صوت صغير لكنه يغيّر الزمن كله. الصقها وانبر التصريف الثالث.",
+        "practice": ["aɪd FINished", "ʃiːd LEFT", "tiny /d/, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd finished ✅", "I finished"], "meaning": ["ماضٍ تام", "ماضٍ بسيط"]},
+        {"pair": ["she'd left", "she left"], "meaning": ["قبل حدث آخر", "حدث واحد"]},
+        {"pair": ["they'd gone ✅", "they gone ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["we'd eaten", "we ate"], "meaning": ["قبل ذلك", "وقتها"]},
+        {"pair": ["he'd arrived", "he arrived"], "meaning": ["ماضٍ تام", "ماضٍ بسيط"]}
+      ],
+      "word_practice": ["I'd finished", "she'd left", "they'd gone", "we'd eaten", "he'd arrived", "you'd forgotten", "it'd started", "I'd seen it", "she'd told me", "we'd booked"],
+      "sentence_practice": [
+        "By the time I arrived, she'd left.",
+        "They'd already eaten when we got there.",
+        "I'd never seen anything like it."
+      ],
+      "record_this": "By the time I arrived at the station, she'd already left. They'd finished eating when we finally got there. I'd never seen anything quite like it before that day.",
+      "self_check": "Say 'she'd left'. Can you hear a small /d/ on 'she', with the stress on 'LEFT'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'d = had vs 'd = would"],
+      "isolation": {
+        "instructions": "Same /d/, two meanings. The VERB FORM after it decides: 'I'd finished' (participle → had) vs 'I'd finish' (bare verb → would). Listen for the ending, not the contraction.",
+        "instructions_ar": "نفس /d/ ومعنيان. شكل الفعل بعده يحدّد: 'I'd finished' (had) مقابل 'I'd finish' (would).",
+        "practice": ["I'd FINished = had", "I'd FINish = would", "the verb form decides"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd finished (had)", "I'd finish (would)"], "meaning": ["ماضٍ تام", "شرطي"]},
+        {"pair": ["she'd gone (had)", "she'd go (would)"], "meaning": ["كانت ذهبت", "كانت ستذهب"]},
+        {"pair": ["they'd left (had)", "they'd leave (would)"], "meaning": ["ماضٍ تام", "شرطي"]},
+        {"pair": ["we'd seen it (had)", "we'd see it (would)"], "meaning": ["رأيناه", "كنا سنراه"]},
+        {"pair": ["he'd known (had)", "he'd know (would)"], "meaning": ["كان يعرف", "كان سيعرف"]}
+      ],
+      "word_practice": ["I'd finished / I'd finish", "she'd gone / she'd go", "they'd left / they'd leave", "we'd seen / we'd see", "he'd known / he'd know", "I'd taken / I'd take", "you'd said / you'd say", "it'd stopped / it'd stop", "we'd told / we'd tell", "I'd asked / I'd ask"],
+      "sentence_practice": [
+        "I'd finished before he called.",
+        "I'd finish it if I had time.",
+        "She'd gone by then; she'd go again tomorrow."
+      ],
+      "record_this": "I'd finished the work before he even called me. I'd finish it tonight if I had a bit more time. She'd already gone by then, though she'd go again tomorrow if we asked her.",
+      "self_check": "Say both 'I'd finished' and 'I'd finish'. Is the difference in the verb ending, with the /d/ identical?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'had been' /ədbɪn/ (past perfect continuous)"],
+      "isolation": {
+        "instructions": "The past perfect continuous stacks three weak sounds: /aɪd bɪn/ + -ing. 'I'd been waiting'. All three compress, and the -ing verb plus the duration take the stress.",
+        "instructions_ar": "الماضي التام المستمر يجمع ثلاثة أصوات خفيفة: /aɪd bɪn/ + -ing. الفعل والمدة هما المنبوران.",
+        "practice": ["/aɪdbɪn/ WAITing", "ʃiːd bɪn WORKing", "compress, then stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd been waiting", "I'd waited"], "meaning": ["مدة مستمرة", "منتهي"]},
+        {"pair": ["I'd been waiting (past)", "I've been waiting (now)"], "meaning": ["ماضٍ تام مستمر", "مضارع تام مستمر"]},
+        {"pair": ["she'd bɪn working ✅", "she'd BEEN working ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["they'd been living", "they were living"], "meaning": ["قبل حدث ماضٍ", "أثناء الماضي"]},
+        {"pair": ["we'd been driving", "we'd driven"], "meaning": ["نشاط", "نتيجة"]}
+      ],
+      "word_practice": ["I'd been waiting", "she'd been working", "they'd been living", "we'd been driving", "he'd been studying", "you'd been sleeping", "I'd been trying", "she'd been crying", "we'd been walking", "they'd been arguing"],
+      "sentence_practice": [
+        "I'd been waiting for an hour when she finally arrived.",
+        "He was tired because he'd been working all night.",
+        "They'd been living there for years before they moved."
+      ],
+      "record_this": "I'd been waiting for over an hour when she finally arrived. He looked exhausted because he'd been working all night. They'd been living in that flat for years before they moved out.",
+      "self_check": "Say 'I'd been waiting'. Do /d/ and /bɪn/ both stay weak, with stress on 'WAITing'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["weak 'by the time' / 'before' / 'after' + pause"],
+      "isolation": {
+        "instructions": "Time-ordering phrases are weak and run together: 'baɪðətaɪm', 'bɪfɔː', 'ɑːftə'. Say the phrase quickly, then take a small pause before the main clause: 'By the time I arrived, // she'd left.'",
+        "instructions_ar": "عبارات ترتيب الزمن خفيفة ومتصلة: 'baɪðətaɪm'. قلها بسرعة ثم وقفة صغيرة قبل الجملة الرئيسية.",
+        "practice": ["baɪðətaɪm I arrived, //", "bɪfɔː he came, //", "quick phrase, then pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["by the time (weak)", "BY THE TIME ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["before he came", "after he came"], "meaning": ["قبل", "بعد"]},
+        {"pair": ["by the time I arrived, // (pause)", "by the time I arrived ❌ (no pause)"], "meaning": ["مع وقفة", "بدون وقفة"]},
+        {"pair": ["by /baɪ/", "buy /baɪ/"], "meaning": ["بحلول", "يشتري"]},
+        {"pair": ["already /ɔːlˈredi/", "all ready"], "meaning": ["سابقًا", "جاهزون تمامًا"]}
+      ],
+      "word_practice": ["by the time", "before that", "after we left", "by then", "until then", "already gone", "just left", "never seen", "when I arrived", "as soon as we got there"],
+      "sentence_practice": [
+        "By the time we arrived, the film had started.",
+        "Before I met her, I'd never been abroad.",
+        "After they'd eaten, they went for a walk."
+      ],
+      "record_this": "By the time we arrived at the cinema, the film had already started. Before I met her, I'd never really been abroad on my own. After they'd eaten dinner, they went for a long walk by the river.",
+      "self_check": "Say 'By the time we arrived, the film had started'. Is the time phrase quick and weak, with a small pause at the comma?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["backgrounding stress (past perfect as the earlier layer)"],
+      "isolation": {
+        "instructions": "The past perfect is BACKGROUND — the earlier layer of the story. Say it slightly lower and faster, then lift your voice for the main past-simple event: 'She'd already left (background) when I ARRIVED (main).'",
+        "instructions_ar": "الماضي التام خلفية — الطبقة الأقدم في القصة. قلها أخفض وأسرع، وارفع صوتك للحدث الرئيسي.",
+        "practice": ["she'd already left (lower) → when I ARRIVED (lift)", "background then foreground", "two layers"]
+      },
+      "minimal_pairs": [
+        {"pair": ["she'd left when I arrived", "she left when I arrived"], "meaning": ["قبل وصولي", "وقت وصولي"]},
+        {"pair": ["background (lower, faster)", "main event (lifted)"], "meaning": ["خلفية", "الحدث الرئيسي"]},
+        {"pair": ["I'd eaten, so I wasn't hungry", "I ate, so I wasn't hungry"], "meaning": ["قبل ذلك", "تسلسل"]},
+        {"pair": ["the train had gone", "the train went"], "meaning": ["قبل وصولنا", "حدث"]},
+        {"pair": ["he'd forgotten (earlier)", "he forgot (then)"], "meaning": ["أقدم", "وقتها"]}
+      ],
+      "word_practice": ["she'd already left", "the train had gone", "I'd eaten", "they'd closed", "he'd forgotten", "we'd booked", "it had stopped", "I'd locked it", "she'd warned me", "they'd moved"],
+      "sentence_practice": [
+        "She'd already left when I arrived.",
+        "The train had gone by the time we reached the platform.",
+        "I wasn't hungry because I'd eaten earlier."
+      ],
+      "record_this": "She'd already left when I finally arrived at the office. The train had gone by the time we reached the platform, so we waited for the next one. I wasn't hungry at all because I'd eaten a big lunch earlier.",
+      "self_check": "Say 'She'd already left when I arrived'. Is the past-perfect part lower and faster, with your voice lifting on 'arrived'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I'd finished (had)", "I'd finish (would)"], ["she'd left", "she left"], ["I'd been waiting", "I'd waited"],
+        ["by the time (weak)", "BY THE TIME ❌"], ["she'd bɪn working", "she'd BEEN working ❌"], ["the train had gone", "the train went"]
+      ],
+      "challenge_sentences": [
+        "By the time I arrived, she'd already left.",
+        "I'd been waiting an hour when he finally called.",
+        "I'd finish it tonight if I had time.",
+        "Before I met her, I'd never been abroad."
+      ],
+      "record_this": "By the time I arrived at the restaurant, she'd already left. I'd been waiting nearly an hour when he finally called to apologise. I'd finish the whole thing tonight if I had a little more time. Before I met her, I'd never really been abroad alone.",
+      "self_check": "Three checks: a tiny /d/ for 'had', weak 'been' in 'd been, and the past perfect kept lower as background."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling a story about a trip that went wrong, using the past perfect for everything that happened earlier. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تحكي قصة رحلة فشلت، مستخدمًا الماضي التام لكل ما حدث قبلها، وبعدين اسمع وراجع.",
+        "passage": "Last summer we planned a short trip, and almost everything went wrong. By the time we reached the airport, the check-in desk had closed. I'd booked the tickets weeks earlier, but I'd written down the wrong departure time. My brother was furious because he'd woken up at four in the morning for nothing. We'd been planning that holiday for months, and we'd already paid for the hotel. When we finally got a later flight, we discovered our luggage hadn't arrived with us. It had been sitting in another airport for two days. By the time it reached us, the trip had almost finished. Looking back, I'd never made such a silly mistake before, and I haven't made it since.",
+        "sounds_to_check": {
+          "contracted 'd = had": "I'd booked, I'd written, he'd woken, we'd already paid, I'd never made",
+          "'d been' /dbɪn/": "we'd been planning, it had been sitting",
+          "full 'had' where needed": "the desk had closed, our luggage hadn't arrived, it had been sitting",
+          "weak time phrases + pause": "By the time we reached the airport, // By the time it reached us, //",
+          "backgrounding": "past perfect lower and faster, past simple lifted (went wrong, discovered, got)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear tiny /d/, weak 'been', and a real two-layer story. Ready for week 3.",
+        "70_89": "Good; occasional expanded 'had' or a flat background layer.",
+        "50_69": "Past perfect lost or over-pronounced, so the time order is unclear. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, contracting 'had' to /d/ and keeping the earlier layer lower."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'had' becomes a single /d/ on the pronoun — small sound, big change in time frame.",
+      "'d = had' and ''d = would' sound identical; only the verb form after it tells them apart.",
+      "In ''d been' both the /d/ and /bɪn/ stay weak; stress the -ing verb and the duration.",
+      "Keep the past perfect lower and faster — it is background. Lift your voice for the main past-simple event."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

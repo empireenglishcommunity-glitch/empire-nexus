@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w8",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 8,
+  "pattern_name": "Reported speech: questions, commands and reporting verbs",
+  "pattern_name_ar": "الكلام المنقول: الأسئلة والأوامر وأفعال النقل",
+  "formula": "asked + if/whether + statement order · asked + wh- + statement order · told/asked + person + to + verb · reporting verb + that / + -ing / + preposition",
+  "formula_visual": "\"Where is it?\" → [He asked where it was] // \"Wait!\" → [She told me to wait]",
+  "when_to_use": "Reported questions use statement word order with no auxiliary inversion and no question mark. Reported commands and requests use 'told/asked + person + to + verb'. At B2, choose a reporting verb that carries the speaker's attitude: admitted, denied, insisted, suggested, warned, refused.",
+  "when_to_use_ar": "الأسئلة المنقولة بترتيب الجملة الخبرية بدون قلب ولا علامة استفهام. والأوامر بـ told/asked + شخص + to + فعل. وفي B2 اختر فعل نقل يحمل موقف المتحدث.",
+  "why_arabic_speakers_struggle": "Arabic keeps question word order in reported speech, so 'he asked where is the bank' feels correct. Learners also default to 'said that' for everything, losing the nuance, and each reporting verb takes a different pattern (suggested + -ing, insisted on + -ing, refused + to) which must be learnt individually.",
+  "examples": [
+    {"en": "He asked where the station was.", "ar": "سأل أين كانت المحطة", "structure": "[asked + wh- + statement order]"},
+    {"en": "She asked whether I was ready.", "ar": "سألت إن كنت مستعدًا", "structure": "[asked + whether + statement order]"},
+    {"en": "She told me to wait outside.", "ar": "قالت لي أن أنتظر بالخارج", "structure": "[told + person + to + verb]"},
+    {"en": "He admitted that he'd been wrong.", "ar": "اعترف بأنه كان مخطئًا", "structure": "[admitted + that + clause]"},
+    {"en": "They suggested meeting on Friday.", "ar": "اقترحوا الاجتماع يوم الجمعة", "structure": "[suggested + -ing]"}
+  ],
+  "common_errors": [
+    {"wrong": "He asked where was the station.", "correct": "He asked where the station was.", "explanation": "Reported questions use statement word order — no inversion."},
+    {"wrong": "She suggested me to come.", "correct": "She suggested that I come. / She suggested coming.", "explanation": "'suggest' never takes 'person + to'; use 'that + clause' or '-ing'."},
+    {"wrong": "He said me to wait.", "correct": "He told me to wait.", "explanation": "'say' takes no person object; 'tell' does."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "\"Where is it?\" → He asked where it ___.", "answer": "was"},
+    {"sentence": "\"Are you ready?\" → She asked ___ I was ready.", "answer": "if / whether"},
+    {"sentence": "\"Wait outside.\" → She ___ me to wait outside.", "answer": "told"},
+    {"sentence": "\"Let's meet on Friday.\" → They suggested ___ (meet) on Friday.", "answer": "meeting"},
+    {"sentence": "\"I won't do it.\" → He refused ___ (do) it.", "answer": "to do"}
+  ],
+  "quick_rule": "Reported questions → statement order, no inversion. Commands → told/asked + person + to + verb. Choose a reporting verb that carries the attitude, and learn its pattern.",
+  "quick_rule_ar": "الأسئلة المنقولة → ترتيب خبري بدون قلب. الأوامر → told/asked + شخص + to + فعل. واختر فعل نقل يحمل الموقف وتعلّم نمطه.",
+  "mnemonic": "Reported questions lose their inversion AND their question mark.",
+  "connect_to_speaking": "In accent week 8 you drilled stressed reporting verbs and falling tone in reported questions. Say 'He adMITted that he was wrong' and 'He asked where it WAS ↘' — falling, not rising."
+}

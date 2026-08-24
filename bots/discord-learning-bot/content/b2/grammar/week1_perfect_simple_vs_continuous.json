@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w1",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 1,
+  "pattern_name": "Present perfect simple vs continuous (refined)",
+  "pattern_name_ar": "المضارع التام البسيط مقابل المستمر (تنقيح)",
+  "formula": "have/has + participle (result, completion, quantity) · have/has been + -ing (duration, activity, explanation)",
+  "formula_visual": "[I've painted the kitchen] (result) // [I've been painting] (activity)",
+  "when_to_use": "Perfect simple for a COMPLETED result, a finished quantity ('I've written three emails'), or an achievement. Perfect continuous for the ACTIVITY and its duration ('How long...?'), or to explain a present situation ('I'm tired — I've been running'). State verbs (know, own, be) take the simple only.",
+  "when_to_use_ar": "التام البسيط لنتيجة مكتملة أو كمية منتهية أو إنجاز. التام المستمر للنشاط ومدته، أو لتفسير حالة حاضرة. أفعال الحالة (know, own) تأخذ البسيط فقط.",
+  "why_arabic_speakers_struggle": "Both translate into similar Arabic, and the only difference in English is an unstressed 'been'. Learners also apply the continuous to state verbs ('I've been knowing him') and use the continuous with a quantity ('I've been writing three emails'), which is wrong because a number implies completion.",
+  "examples": [
+    {"en": "I've painted the kitchen — come and see.", "ar": "دهنت المطبخ — تعال وشاهد (نتيجة)", "structure": "[have + participle] (result)"},
+    {"en": "I've been painting all day, that's why I'm covered in paint.", "ar": "كنت أدهن طوال اليوم (نشاط ومدة)", "structure": "[have been + -ing] (activity)"},
+    {"en": "She's written three reports this week.", "ar": "كتبت ثلاثة تقارير هذا الأسبوع (كمية)", "structure": "[has + participle] + quantity"},
+    {"en": "How long have you been learning English?", "ar": "منذ متى تتعلم الإنجليزية؟ (مدة)", "structure": "How long + [have been + -ing]?"},
+    {"en": "I've known her for ten years.", "ar": "أعرفها منذ عشر سنوات (فعل حالة)", "structure": "[have known] (state verb)"}
+  ],
+  "common_errors": [
+    {"wrong": "I've been knowing him for years.", "correct": "I've known him for years.", "explanation": "State verbs (know, own, believe) use the simple, not the continuous."},
+    {"wrong": "I've been writing three emails.", "correct": "I've written three emails.", "explanation": "A specific quantity implies completion → perfect simple."},
+    {"wrong": "I've painted all day, that's why I'm tired.", "correct": "I've been painting all day, that's why I'm tired.", "explanation": "Explaining a present state through a recent activity → perfect continuous."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (paint) the kitchen — it looks great now.", "answer": "have painted / 've painted"},
+    {"sentence": "I ___ (paint) all day, so I'm exhausted.", "answer": "have been painting"},
+    {"sentence": "She ___ (write) four emails this morning.", "answer": "has written"},
+    {"sentence": "How long ___ you ___ (wait)?", "answer": "have / been waiting"},
+    {"sentence": "I ___ (know) him since school.", "answer": "have known"}
+  ],
+  "quick_rule": "Result / quantity / achievement → perfect simple. Duration / activity / explaining now → perfect continuous. State verbs → simple only.",
+  "quick_rule_ar": "نتيجة/كمية/إنجاز → تام بسيط. مدة/نشاط/تفسير الحاضر → تام مستمر. أفعال الحالة → بسيط فقط.",
+  "mnemonic": "Finished thing → simple. Ongoing doing → continuous. Countable result kills the -ing.",
+  "connect_to_speaking": "In accent week 1 you drilled weak 'been' /bɪn/ and result-vs-duration stress. Say 'I've PAINTed the kitchen' (stress the result) against 'I've bɪn PAINTing all DAY' (stress activity + time)."
+}

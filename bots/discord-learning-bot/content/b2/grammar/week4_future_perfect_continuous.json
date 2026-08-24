@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w4",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 4,
+  "pattern_name": "Future perfect and future continuous",
+  "pattern_name_ar": "المستقبل التام والمستقبل المستمر",
+  "formula": "will have + participle (completed before a future point) · will be + -ing (in progress at a future point) · by + time · this time next year",
+  "formula_visual": "[By Friday] [I'll have finished] // [At nine] [I'll be working]",
+  "when_to_use": "Future perfect for something COMPLETED before a future deadline — almost always with 'by' ('by Friday', 'by the time you arrive'). Future continuous for something IN PROGRESS at a future moment ('at nine tomorrow', 'this time next week').",
+  "when_to_use_ar": "المستقبل التام لشيء مكتمل قبل موعد مستقبلي، وغالبًا مع 'by'. والمستقبل المستمر لشيء مستمر في لحظة مستقبلية.",
+  "why_arabic_speakers_struggle": "Arabic rarely marks these distinctions explicitly, so learners use the simple future for everything. The forms also compress heavily in speech ('I'll have' → /aɪləv/), so learners who have only read them don't recognise them when heard.",
+  "examples": [
+    {"en": "By Friday I'll have finished the report.", "ar": "بحلول الجمعة سأكون أنهيت التقرير", "structure": "By + time, [will have + participle]"},
+    {"en": "At nine tomorrow I'll be working.", "ar": "التاسعة غدًا سأكون أعمل", "structure": "[will be + -ing]"},
+    {"en": "This time next week we'll be flying to Turkey.", "ar": "هذا الوقت الأسبوع القادم سنكون مسافرين لتركيا", "structure": "[will be + -ing] + future time"},
+    {"en": "By the time you arrive, we'll have eaten.", "ar": "بحلول وصولك سنكون قد أكلنا", "structure": "By the time + [present], [will have + participle]"},
+    {"en": "By next year she'll have graduated.", "ar": "بحلول العام القادم ستكون تخرّجت", "structure": "By + time, [will have + participle]"}
+  ],
+  "common_errors": [
+    {"wrong": "By Friday I will finish the report.", "correct": "By Friday I'll have finished the report.", "explanation": "'by + deadline' needs the future perfect for completion."},
+    {"wrong": "By the time you will arrive, we'll have eaten.", "correct": "By the time you arrive, we'll have eaten.", "explanation": "After 'by the time' use the present simple, never 'will'."},
+    {"wrong": "At nine tomorrow I'll work.", "correct": "At nine tomorrow I'll be working.", "explanation": "In progress at a specific future moment → future continuous."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "By Friday I ___ (finish) the report.", "answer": "will have finished / 'll have finished"},
+    {"sentence": "At nine tomorrow I ___ (work).", "answer": "will be working / 'll be working"},
+    {"sentence": "By the time you ___ (arrive), we'll have eaten.", "answer": "arrive"},
+    {"sentence": "This time next week we ___ (fly) to Turkey.", "answer": "will be flying"},
+    {"sentence": "By next year she ___ (graduate).", "answer": "will have graduated"}
+  ],
+  "quick_rule": "Completed by a deadline → will have + participle (use 'by'). In progress at a moment → will be + -ing (use 'at/this time').",
+  "quick_rule_ar": "مكتمل بحلول موعد → will have + التصريف الثالث (مع by). مستمر في لحظة → will be + -ing (مع at/this time).",
+  "mnemonic": "'by' → will have DONE. 'at' → will be DOING.",
+  "connect_to_speaking": "In accent week 4 you drilled /ləv/ for 'll have and /lbi/ for 'll be. Say 'By FRIday /aɪləv/ FINished' against 'At NINE /aɪlbi/ WORKing' — one sound sets the whole meaning."
+}

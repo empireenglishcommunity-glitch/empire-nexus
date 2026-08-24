@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w2",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 2,
+  "pattern_name": "Past perfect simple and continuous",
+  "pattern_name_ar": "الماضي التام البسيط والمستمر",
+  "formula": "had + participle (earlier completed event) · had been + -ing (earlier ongoing activity) · by the time / before / already / never",
+  "formula_visual": "[By the time I arrived], [she had already left]",
+  "when_to_use": "To mark an event as EARLIER than another past event. Past perfect simple for a completed earlier action ('she had left'); past perfect continuous for an earlier ongoing activity or its duration ('I had been waiting for an hour'). Common with by the time, before, already, never, just.",
+  "when_to_use_ar": "لتحديد حدث أقدم من حدث ماضٍ آخر. البسيط لفعل مكتمل أقدم، والمستمر لنشاط مستمر أقدم أو مدته. شائع مع by the time وbefore وalready.",
+  "why_arabic_speakers_struggle": "Arabic usually signals earlier events with كان قد or just context, so learners default to the past simple and the time order becomes ambiguous. The contracted 'd also sounds identical to 'would', so learners avoid it altogether.",
+  "examples": [
+    {"en": "By the time I arrived, she had already left.", "ar": "بحلول وصولي، كانت قد غادرت", "structure": "By the time + [past simple], [had + participle]"},
+    {"en": "I'd been waiting for an hour when he called.", "ar": "كنت أنتظر منذ ساعة عندما اتصل", "structure": "[had been + -ing] + when + [past simple]"},
+    {"en": "He was tired because he'd been working all night.", "ar": "كان متعبًا لأنه كان يعمل طوال الليل", "structure": "[past simple] + because + [had been + -ing]"},
+    {"en": "I'd never seen anything like it before.", "ar": "لم أرَ شيئًا كهذا قبل ذلك", "structure": "[had never + participle]"},
+    {"en": "They'd lived there for years before they moved.", "ar": "عاشوا هناك سنوات قبل أن ينتقلوا", "structure": "[had lived] + before + [past simple]"}
+  ],
+  "common_errors": [
+    {"wrong": "By the time I arrived, she already left.", "correct": "By the time I arrived, she had already left.", "explanation": "The earlier of two past events needs the past perfect."},
+    {"wrong": "I was waiting an hour when he called.", "correct": "I'd been waiting an hour when he called.", "explanation": "Duration completed before another past event → past perfect continuous."},
+    {"wrong": "I'd been knowing him for years before we worked together.", "correct": "I'd known him for years before we worked together.", "explanation": "State verbs take the simple form, even in the past perfect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "By the time we arrived, the film ___ (start).", "answer": "had started"},
+    {"sentence": "I ___ (wait) for an hour when she finally came.", "answer": "had been waiting / 'd been waiting"},
+    {"sentence": "He was exhausted because he ___ (work) all night.", "answer": "had been working"},
+    {"sentence": "I ___ (never / see) snow before that trip.", "answer": "had never seen"},
+    {"sentence": "They ___ (live) there for years before they moved.", "answer": "had lived"}
+  ],
+  "quick_rule": "Earlier completed event → had + participle. Earlier ongoing activity or duration → had been + -ing. State verbs → simple.",
+  "quick_rule_ar": "حدث أقدم مكتمل → had + التصريف الثالث. نشاط أقدم مستمر أو مدة → had been + -ing. أفعال الحالة → بسيط.",
+  "mnemonic": "Two past events? The earlier one gets 'had'.",
+  "connect_to_speaking": "In accent week 2 you drilled the contracted 'd = had and keeping the past perfect lower as background. Say 'By the time I arrived, // she'd already LEFT' — drop the backstory, lift the main event."
+}

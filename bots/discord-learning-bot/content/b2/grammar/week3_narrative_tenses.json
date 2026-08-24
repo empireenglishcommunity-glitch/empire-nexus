@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w3",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 3,
+  "pattern_name": "Narrative tenses together (past simple, continuous, perfect)",
+  "pattern_name_ar": "أزمنة السرد مجتمعة (البسيط، المستمر، التام)",
+  "formula": "past simple (main events) + past continuous (background scene) + past perfect (earlier backstory) + when / while / by the time",
+  "formula_visual": "[I was walking] (scene) + [when I realised] (event) + [I'd forgotten my phone] (backstory)",
+  "when_to_use": "In real storytelling all three work together: past continuous sets the scene, past simple carries the events forward, past perfect fills in what happened earlier. Choosing the right layer is what makes a narrative clear.",
+  "when_to_use_ar": "في الحكي الحقيقي تعمل الثلاثة معًا: المستمر يهيّئ المشهد، والبسيط يحمل الأحداث، والتام يوضّح ما حدث قبلها. اختيار الطبقة الصحيحة يجعل السرد واضحًا.",
+  "why_arabic_speakers_struggle": "Arabic narrative relies heavily on the past simple plus connectives, so learners tell whole stories in one tense. The result is grammatically acceptable but the listener cannot tell what happened first, what was ongoing, and what is background.",
+  "examples": [
+    {"en": "I was walking home when I realised I'd forgotten my phone.", "ar": "كنت أسير إلى البيت عندما أدركت أنني نسيت هاتفي", "structure": "[was + -ing] + when + [past simple] + [had + participle]"},
+    {"en": "The sun was shining and the birds were singing.", "ar": "كانت الشمس مشرقة والطيور تغرّد (مشهد)", "structure": "[was/were + -ing] (scene)"},
+    {"en": "She opened the door and looked outside.", "ar": "فتحت الباب ونظرت للخارج (أحداث)", "structure": "[past simple] + [past simple]"},
+    {"en": "When we arrived, they had already closed.", "ar": "عندما وصلنا، كانوا قد أغلقوا", "structure": "when + [past simple], [had + participle]"},
+    {"en": "He'd been driving for hours, so he was exhausted.", "ar": "كان يقود لساعات، فكان منهكًا", "structure": "[had been + -ing], so [past simple]"}
+  ],
+  "common_errors": [
+    {"wrong": "I walked home when I realised I forgot my phone.", "correct": "I was walking home when I realised I'd forgotten my phone.", "explanation": "Use the continuous for the ongoing scene and the past perfect for the earlier event."},
+    {"wrong": "While I was opening the door and I was looking outside...", "correct": "I opened the door and looked outside.", "explanation": "Sequential completed events take the past simple, not the continuous."},
+    {"wrong": "When we arrived, they already closed.", "correct": "When we arrived, they had already closed.", "explanation": "Something completed before your arrival needs the past perfect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (walk) home when it started to rain.", "answer": "was walking"},
+    {"sentence": "She ___ (open) the door and ___ (look) outside.", "answer": "opened / looked"},
+    {"sentence": "When we got there, the shop ___ (already / close).", "answer": "had already closed"},
+    {"sentence": "He was tired because he ___ (drive) for hours.", "answer": "had been driving"},
+    {"sentence": "While they ___ (eat), the phone rang.", "answer": "were eating"}
+  ],
+  "quick_rule": "Scene → was/were + -ing. Events → past simple. Earlier than the story → had + participle.",
+  "quick_rule_ar": "المشهد → was/were + -ing. الأحداث → ماضٍ بسيط. ما قبل القصة → had + التصريف الثالث.",
+  "mnemonic": "Set the scene (-ing), move the plot (past simple), fill the backstory (had).",
+  "connect_to_speaking": "In accent week 3 you drilled three-layer rhythm: flowing scenery, beating spine, dropped backstory. Tell this week's story out loud and check a listener could draw your timeline from the rhythm alone."
+}

@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 13,
+  "focus": "'the' /ðə/ before consonants vs /ði/ before vowels · emphatic 'the' /ðiː/ · 'a' /ə/ vs 'an' /ən/ · weak 'of' /əv/ in quantifier phrases · zero article rhythm",
+  "focus_ar": "'the' /ðə/ قبل الحروف الساكنة و/ði/ قبل المتحركة، و'the' التوكيدية /ðiː/، و'a' مقابل 'an'، و'of' الخفيفة، وإيقاع بدون أداة",
+  "arabic_challenge": "Arabic has ال but no indefinite article, and no vowel-sensitive alternation. So learners either drop 'the' entirely, insert it where English uses no article ('the life is hard'), or pronounce it as a full /ðiː/ every time — which sounds emphatic and unnatural in ordinary speech.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'the' /ðə/ before consonants, /ði/ before vowels"],
+      "isolation": {
+        "instructions": "'the' changes with the next SOUND: /ðə/ before a consonant ('the BOOK'), /ði/ before a vowel ('the APple'). It follows the sound, not the spelling: 'the hour' = /ði aʊə/ because 'hour' starts with a vowel sound.",
+        "instructions_ar": "'the' تتغيّر حسب الصوت التالي: /ðə/ قبل ساكن و/ði/ قبل متحرك، وتتبع الصوت لا الحرف: 'the hour' = /ði aʊə/.",
+        "practice": ["/ðə/ BOOK", "/ði/ APple", "/ði/ HOUR (vowel sound)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the book /ðə/", "the apple /ði/"], "meaning": ["قبل ساكن", "قبل متحرك"]},
+        {"pair": ["the hour /ði/ ✅", "the hour /ðə/ ❌"], "meaning": ["صوت متحرك", "خطأ"]},
+        {"pair": ["the university /ðə/ ✅", "the university /ði/ ❌"], "meaning": ["صوت /j/ ساكن", "خطأ"]},
+        {"pair": ["the end /ði/", "the door /ðə/"], "meaning": ["متحرك", "ساكن"]},
+        {"pair": ["the honest man /ði/", "the house /ðə/"], "meaning": ["h صامتة", "h منطوقة"]}
+      ],
+      "word_practice": ["the book", "the apple", "the hour", "the university", "the end", "the door", "the answer", "the idea", "the honest truth", "the office"],
+      "sentence_practice": [
+        "The book is on the table.",
+        "The apple and the orange are fresh.",
+        "I'll be there in the hour."
+      ],
+      "record_this": "The book you wanted is on the kitchen table. The apple and the orange in the bowl are both fresh. The answer to the question was at the end of the article.",
+      "self_check": "Say 'the book' then 'the apple'. Does 'the' change from /ðə/ to /ði/ based on the next sound?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["emphatic 'the' /ðiː/"],
+      "isolation": {
+        "instructions": "Stretching 'the' to a full /ðiː/ signals THE famous one, the definitive one: 'He's /ðiː/ expert on this.' Use it deliberately and rarely — otherwise it sounds odd.",
+        "instructions_ar": "مدّ 'the' إلى /ðiː/ يعني 'الأشهر' أو 'الأهم': 'He's /ðiː/ expert on this.' استخدمها بوعي ونادرًا.",
+        "practice": ["/ðiː/ EXpert (the famous one)", "/ðə/ expert (an ordinary one)", "rare and deliberate"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/ðiː/ expert (the famous)", "/ðə/ expert (ordinary)"], "meaning": ["الأشهر", "عادي"]},
+        {"pair": ["/ðiː/ place to go", "/ðə/ place to go"], "meaning": ["المكان الأفضل", "مكان"]},
+        {"pair": ["emphatic (rare)", "normal (usual)"], "meaning": ["توكيدي", "عادي"]},
+        {"pair": ["Are you /ðiː/ John Smith?", "Are you /ðə/ John Smith?"], "meaning": ["الشهير", "عادي"]},
+        {"pair": ["/ðiː/ question is...", "/ðə/ question is..."], "meaning": ["السؤال الجوهري", "السؤال"]}
+      ],
+      "word_practice": ["the expert", "the place to go", "the question", "the problem", "the best", "the one", "the reason", "the moment", "the person", "the answer"],
+      "sentence_practice": [
+        "He's the expert on this subject.",
+        "That's the place to go.",
+        "Are you the John Smith from the news?"
+      ],
+      "record_this": "He's genuinely the expert on this particular subject. That restaurant is the place to go if you want real food. Wait — are you the John Smith from the news?",
+      "self_check": "Say 'he's THE expert'. Did you stretch it to /ðiː/ to mean the definitive one?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'a' /ə/ vs 'an' /ən/ by sound"],
+      "isolation": {
+        "instructions": "'a' /ə/ before consonant sounds, 'an' /ən/ before vowel sounds — again by SOUND: 'a university' (/j/ sound) but 'an hour' (vowel sound). Both are weak and glued to the noun.",
+        "instructions_ar": "'a' قبل الصوت الساكن و'an' قبل المتحرك، حسب الصوت: 'a university' لكن 'an hour'. كلتاهما خفيفة وملتصقة.",
+        "practice": ["ə BOOK", "ən APple", "ən HOUR / ə UNiversity"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a university ✅", "an university ❌"], "meaning": ["صوت /j/", "خطأ"]},
+        {"pair": ["an hour ✅", "a hour ❌"], "meaning": ["h صامتة", "خطأ"]},
+        {"pair": ["a book /ə/", "an apple /ən/"], "meaning": ["ساكن", "متحرك"]},
+        {"pair": ["an honest man", "a house"], "meaning": ["h صامتة", "h منطوقة"]},
+        {"pair": ["a European ✅", "an European ❌"], "meaning": ["صوت /j/", "خطأ"]}
+      ],
+      "word_practice": ["a book", "an apple", "an hour", "a university", "an honest man", "a house", "a European", "an umbrella", "an MP", "a one-way street"],
+      "sentence_practice": [
+        "It took an hour to find a taxi.",
+        "She's a university student.",
+        "He's an honest man."
+      ],
+      "record_this": "It took us an hour just to find a taxi. She's a university student studying to be an engineer. He's an honest man with a difficult job.",
+      "self_check": "Say 'a university' and 'an hour'. Did you choose by SOUND rather than by spelling?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["weak 'of' /əv/ in quantifier phrases"],
+      "isolation": {
+        "instructions": "In quantifier phrases 'of' almost vanishes to /əv/ or even /ə/: 'a lot əv people', 'most əv them', 'plenty əv time'. The quantifier and noun are stressed; 'of' disappears.",
+        "instructions_ar": "في عبارات الكمية تكاد 'of' تختفي إلى /əv/: 'a lot əv people'. الكمية والاسم منبوران و'of' تختفي.",
+        "practice": ["a LOT əv PEOple", "MOST əv them", "PLENty əv TIME"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a lot əv (weak)", "a lot OF ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["most of them", "most people"], "meaning": ["مع of", "بدون of"]},
+        {"pair": ["all of the students", "all students"], "meaning": ["محدّد", "عام"]},
+        {"pair": ["a few of them", "a few people"], "meaning": ["منهم", "أشخاص"]},
+        {"pair": ["none of us", "no one"], "meaning": ["لا أحد منا", "لا أحد"]}
+      ],
+      "word_practice": ["a lot of people", "most of them", "plenty of time", "all of the students", "a few of them", "none of us", "both of us", "several of these", "the majority of", "a couple of days"],
+      "sentence_practice": [
+        "A lot of people came to the event.",
+        "Most of them had never been before.",
+        "We've got plenty of time."
+      ],
+      "record_this": "A lot of people came to the event on Saturday. Most of them had never actually been there before. Don't worry — we've got plenty of time to get ready.",
+      "self_check": "Say 'a lot of people'. Does 'of' almost disappear into /əv/?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["zero article rhythm (general statements)"],
+      "isolation": {
+        "instructions": "English uses NO article for general ideas: 'LIFE is HARD', 'I like MUsic', 'CHILDren need SLEEP'. The gap where Arabic would put ال is real and must be heard — start straight on the noun.",
+        "instructions_ar": "الإنجليزية لا تستخدم أداة للأفكار العامة: 'LIFE is HARD'. الفراغ الذي تضع فيه العربية 'ال' حقيقي — ابدأ بالاسم مباشرة.",
+        "practice": ["LIFE is HARD (no article)", "I like MUsic", "CHILDren need SLEEP"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Life is hard ✅", "The life is hard ❌"], "meaning": ["عام", "خطأ"]},
+        {"pair": ["I like music ✅", "I like the music ❌ (in general)"], "meaning": ["عام", "محدّد"]},
+        {"pair": ["Children need sleep", "The children need sleep"], "meaning": ["كل الأطفال", "هؤلاء الأطفال"]},
+        {"pair": ["I love coffee", "I love the coffee here"], "meaning": ["عام", "محدّد"]},
+        {"pair": ["go to school", "go to the school"], "meaning": ["للدراسة", "للمبنى"]}
+      ],
+      "word_practice": ["life is hard", "I like music", "children need sleep", "I love coffee", "go to school", "in hospital", "at home", "by car", "for breakfast", "history repeats itself"],
+      "sentence_practice": [
+        "Life is hard, but people are kind.",
+        "I like music and I love coffee.",
+        "Children need sleep more than adults."
+      ],
+      "record_this": "Life is hard sometimes, but people are generally kind. I like music a great deal and I absolutely love coffee. Children need sleep even more than adults do.",
+      "self_check": "Say 'Life is hard'. Did you start straight on 'LIFE' with no 'the'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 13 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["the book /ðə/", "the apple /ði/"], ["/ðiː/ expert (famous)", "/ðə/ expert (ordinary)"], ["a university ✅", "an university ❌"],
+        ["an hour ✅", "a hour ❌"], ["a lot əv (weak)", "a lot OF ❌"], ["Life is hard ✅", "The life is hard ❌"]
+      ],
+      "challenge_sentences": [
+        "The apple and the book are on the table.",
+        "It took an hour to find a taxi.",
+        "A lot of people came to the event.",
+        "Life is hard, but people are kind."
+      ],
+      "record_this": "The apple and the book are both on the kitchen table. It took us an hour just to find a taxi outside. A lot of people came to the event last Saturday. Life is hard sometimes, but most people are kind.",
+      "self_check": "Three checks: /ðə/ vs /ði/ by sound, 'a' vs 'an' by sound, and no article for general statements."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself giving general opinions mixed with specific references. Article choice is the hardest thing for Arabic speakers to hear in their own speech, so listen very carefully.",
+        "instructions_ar": "سجّل نفسك تعطي آراء عامة مع إشارات محدّدة. اختيار الأدوات أصعب شيء يسمعه العربي في كلامه، فاسمع بتركيز.",
+        "passage": "I want to talk about education, because I think it matters more than money. In my country, school is free, but the schools in rural areas often lack resources. Children need good teachers more than they need new buildings. I spent an hour last week reading a report on the subject, and the author made an interesting point: the best investment a government can make is in teacher training. Most of the teachers I know work extremely hard, but a lot of them feel undervalued. Life as a teacher is difficult. My aunt, who is the head of a primary school, says the problem isn't money — it's respect. She's the expert, so I believe her. In the end, education shapes society, and society decides the future.",
+        "sounds_to_check": {
+          "'the' /ðə/ vs /ði/": "/ðə/ schools, /ðə/ subject, /ði/ author, /ði/ end, /ði/ expert",
+          "emphatic 'the' /ðiː/": "she's THE expert",
+          "'a' vs 'an' by sound": "an hour, a report, an interesting point, a government, a primary school",
+          "weak 'of' /əv/": "most əv the teachers, a lot əv them, the head əv a primary school",
+          "zero article (general)": "education matters, school is free, children need good teachers, life as a teacher, education shapes society, society decides"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Sound-based article choice, weak 'of', correct zero article. Ready for week 14.",
+        "70_89": "Good; occasional 'the' inserted before a general noun.",
+        "50_69": "'the' added to general statements or always pronounced /ðiː/. Repeat days 1-3 and 5.",
+        "below_50": "Redo days 1-5, focusing on the zero article for general ideas."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'the' and 'a/an' change according to the next SOUND, not the spelling: 'an hour' but 'a university'.",
+      "A full /ðiː/ means 'the famous/definitive one' — using it every time sounds unnatural.",
+      "'of' in quantifier phrases almost vanishes: 'a lot əv people'.",
+      "General ideas take NO article in English. 'Life is hard', never 'The life is hard' — this is the single most persistent Arabic-speaker error."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

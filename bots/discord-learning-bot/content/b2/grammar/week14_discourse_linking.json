@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w14",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 14,
+  "pattern_name": "Linking and discourse: contrast, concession, cause and result",
+  "pattern_name_ar": "الربط والخطاب: التضاد والتنازل والسبب والنتيجة",
+  "formula": "whereas / while + clause (contrast) · although / even though + clause · despite / in spite of + noun or -ing · however / nevertheless + new sentence · consequently / therefore / as a result",
+  "formula_visual": "[Despite the rain], we went out // [It rained.] However, [we went out.]",
+  "when_to_use": "Choose by what FOLLOWS: 'although/even though/whereas' take a full clause; 'despite/in spite of' take a noun or -ing; 'however/nevertheless/therefore/consequently' start a NEW sentence and take a comma. Use them to structure an argument, which is heavily rewarded in speaking and writing exams.",
+  "when_to_use_ar": "اختر حسب ما يليها: although/whereas + جملة كاملة؛ despite/in spite of + اسم أو -ing؛ however/therefore + جملة جديدة وفاصلة. تُستخدم لبناء الحجة.",
+  "why_arabic_speakers_struggle": "Arabic connects clauses continuously with و/ف/لكن, so learners chain everything with 'but' and 'so'. They also produce 'despite it rained' (Arabic رغم أنّ takes a clause) and double up linkers as 'Although... but...', copying مع أن... لكن.",
+  "examples": [
+    {"en": "I like tea, whereas she prefers coffee.", "ar": "أحب الشاي، بينما تفضّل هي القهوة", "structure": "[clause], whereas + [clause]"},
+    {"en": "Although it rained, we went out.", "ar": "رغم أنها أمطرت، خرجنا", "structure": "Although + [clause], [clause]"},
+    {"en": "Despite the rain, we went out.", "ar": "رغم المطر، خرجنا", "structure": "Despite + [noun]"},
+    {"en": "It was expensive. Nevertheless, I bought it.", "ar": "كان غاليًا. مع ذلك، اشتريته", "structure": "[sentence]. Nevertheless, [sentence]."},
+    {"en": "Sales fell. Consequently, we closed two shops.", "ar": "انخفضت المبيعات. وبالتالي أغلقنا متجرين", "structure": "[sentence]. Consequently, [sentence]."}
+  ],
+  "common_errors": [
+    {"wrong": "Despite it rained, we went out.", "correct": "Despite the rain, we went out. / Although it rained, we went out.", "explanation": "'despite' takes a noun or -ing; a clause needs 'although'."},
+    {"wrong": "Although it was expensive, but I bought it.", "correct": "Although it was expensive, I bought it.", "explanation": "Use 'although' OR 'but', never both."},
+    {"wrong": "It was expensive, however I bought it.", "correct": "It was expensive. However, I bought it.", "explanation": "'however' starts a new sentence and takes a comma after it."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I like tea, ___ she prefers coffee.", "answer": "whereas / while"},
+    {"sentence": "___ the rain, we went out.", "answer": "Despite / In spite of"},
+    {"sentence": "___ it rained, we went out.", "answer": "Although / Even though"},
+    {"sentence": "Sales fell. ___, we closed two shops.", "answer": "Consequently / Therefore / As a result"},
+    {"sentence": "It was expensive. ___, I bought it.", "answer": "However / Nevertheless"}
+  ],
+  "quick_rule": "although/whereas + CLAUSE · despite/in spite of + NOUN or -ING · however/nevertheless/therefore + NEW SENTENCE + comma. Never double up 'although ... but'.",
+  "quick_rule_ar": "although/whereas + جملة · despite/in spite of + اسم أو -ing · however/therefore + جملة جديدة وفاصلة. ولا تجمع 'although ... but'.",
+  "mnemonic": "Check what comes NEXT: clause → although · noun → despite · new sentence → however.",
+  "connect_to_speaking": "In accent week 14 you drilled linker stress and the pitch RESET. Fall, pause, say the linker, then restart higher — that reset is what makes your argument structure audible to an examiner."
+}

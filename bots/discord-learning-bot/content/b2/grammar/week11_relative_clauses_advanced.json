@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w11",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 11,
+  "pattern_name": "Relative clauses: non-defining and reduced",
+  "pattern_name_ar": "جُمل الوصل: غير المحدِّدة والمختصرة",
+  "formula": "noun, who/which + clause, (non-defining, commas) · noun + who/that + clause (defining, no commas) · noun + -ing / -ed (reduced) · ..., which + comment · preposition + whom/which",
+  "formula_visual": "[My brother, who lives in Dubai, is visiting] // [the man standing there]",
+  "when_to_use": "Non-defining clauses add EXTRA information, take commas, and cannot use 'that'. Defining clauses identify which one and take no commas. Reduced relatives drop 'who is'/'that was' and leave just -ing (active) or -ed (passive). 'which' can also comment on a whole clause.",
+  "when_to_use_ar": "غير المحدِّدة تضيف معلومة إضافية بفواصل ولا تستخدم that. والمحدِّدة تحدّد أيّهم بدون فواصل. والمختصرة تحذف who is وتترك -ing أو -ed. و'which' يمكنها التعليق على الجملة كلها.",
+  "why_arabic_speakers_struggle": "Arabic relative clauses repeat the object pronoun (الرجل الذي رأيته), producing 'the man who I saw him'. Arabic also has no comma-based distinction between essential and extra information, so learners add or omit commas randomly, which changes the meaning in English.",
+  "examples": [
+    {"en": "My brother, who lives in Dubai, is visiting us.", "ar": "أخي، الذي يسكن في دبي، سيزورنا (إضافة)", "structure": "[noun], who ..., (non-defining)"},
+    {"en": "The man who lives next door is a doctor.", "ar": "الرجل الذي يسكن بالجوار طبيب (تحديد)", "structure": "[noun] + who ... (defining)"},
+    {"en": "The man standing over there is my uncle.", "ar": "الرجل الواقف هناك عمّي (مختصرة)", "structure": "[noun] + -ing (reduced active)"},
+    {"en": "He arrived late, which annoyed everyone.", "ar": "وصل متأخرًا، وهذا أزعج الجميع", "structure": "..., which + [comment on whole clause]"},
+    {"en": "The person to whom I spoke was helpful.", "ar": "الشخص الذي تحدثت إليه كان مفيدًا (رسمي)", "structure": "[preposition + whom] (formal)"}
+  ],
+  "common_errors": [
+    {"wrong": "The man who I saw him was tall.", "correct": "The man who I saw was tall.", "explanation": "Don't repeat the object pronoun after the relative pronoun."},
+    {"wrong": "My brother, that lives in Dubai, is visiting.", "correct": "My brother, who lives in Dubai, is visiting.", "explanation": "'that' cannot be used in non-defining clauses."},
+    {"wrong": "He arrived late, that annoyed everyone.", "correct": "He arrived late, which annoyed everyone.", "explanation": "Use 'which' to comment on a whole clause, never 'that'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "My brother, ___ lives in Dubai, is visiting.", "answer": "who"},
+    {"sentence": "The man ___ lives next door is a doctor.", "answer": "who / that"},
+    {"sentence": "He arrived late, ___ annoyed everyone.", "answer": "which"},
+    {"sentence": "The man ___ (stand) over there is my uncle. (reduced)", "answer": "standing"},
+    {"sentence": "The letter ___ (send) yesterday hasn't arrived. (reduced)", "answer": "sent"}
+  ],
+  "quick_rule": "Extra info → commas + who/which (never 'that'). Essential info → no commas. Reduced → drop 'who is', keep -ing (active) or -ed (passive). Comment on a clause → 'which'.",
+  "quick_rule_ar": "معلومة إضافية → فواصل + who/which (لا that). معلومة أساسية → بدون فواصل. المختصرة → احذف who is وأبقِ -ing أو -ed.",
+  "mnemonic": "Commas = extra, no commas = essential. 'that' only lives in defining clauses.",
+  "connect_to_speaking": "In accent week 11 you drilled the parenthetical pitch drop. Non-defining clauses must be SPOKEN as a parenthesis — pause, drop, pause — or your listener hears a defining clause and a different meaning."
+}

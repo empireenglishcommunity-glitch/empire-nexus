@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w7",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 7,
+  "pattern_name": "wish / if only (regrets and wishes)",
+  "pattern_name_ar": "wish / if only (الأماني والأسف)",
+  "formula": "wish + past simple (present wish) · wish + had + participle (past regret) · wish + would (annoyance) · wish + could (ability) · if only (emphatic)",
+  "formula_visual": "[I wish I knew] (now) // [I wish I'd known] (then) // [I wish he'd stop] (annoyance)",
+  "when_to_use": "'wish + past simple' for a present situation you want to be different. 'wish + past perfect' for regret about the past. 'wish + would' to complain about someone else's repeated behaviour. 'if only' is the emphatic version of all three. Use 'were' for all persons after wish.",
+  "when_to_use_ar": "'wish + ماضٍ بسيط' لوضع حاضر تريده مختلفًا. 'wish + ماضٍ تام' للأسف على الماضي. 'wish + would' للشكوى من سلوك متكرر. 'if only' الصيغة التوكيدية.",
+  "why_arabic_speakers_struggle": "Arabic يا ليت covers all of these with one structure, so learners don't shift the tense back. They also say 'I wish I would have known' by blending the wish and third-conditional patterns, and use 'wish + will' for the future.",
+  "examples": [
+    {"en": "I wish I knew the answer.", "ar": "أتمنى لو كنت أعرف الجواب (الآن)", "structure": "[wish + past simple] (present wish)"},
+    {"en": "I wish I'd studied harder at school.", "ar": "أتمنى لو درست بجد في المدرسة (أسف)", "structure": "[wish + had + participle] (past regret)"},
+    {"en": "I wish he'd stop making that noise.", "ar": "أتمنى لو يتوقف عن ذلك الضجيج (تضايق)", "structure": "[wish + would + verb] (annoyance)"},
+    {"en": "I wish I were taller.", "ar": "أتمنى لو كنت أطول", "structure": "[wish + were] (all persons)"},
+    {"en": "If only I'd listened to you!", "ar": "يا ليتني سمعت كلامك!", "structure": "[If only + had + participle] (emphatic)"}
+  ],
+  "common_errors": [
+    {"wrong": "I wish I would have known.", "correct": "I wish I'd known.", "explanation": "Past regret after 'wish' uses the past perfect, not 'would have'."},
+    {"wrong": "I wish I will pass the exam.", "correct": "I hope I'll pass the exam.", "explanation": "'wish' is not used for realistic future hopes — use 'hope'."},
+    {"wrong": "I wish I can come.", "correct": "I wish I could come.", "explanation": "After 'wish' the modal shifts back: can → could."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I wish I ___ (know) the answer.", "answer": "knew"},
+    {"sentence": "I wish I ___ (study) harder at school.", "answer": "had studied / 'd studied"},
+    {"sentence": "I wish he ___ (stop) making that noise.", "answer": "would stop / 'd stop"},
+    {"sentence": "I wish I ___ (be) taller.", "answer": "were"},
+    {"sentence": "I ___ (hope) I pass tomorrow. (realistic future)", "answer": "hope"}
+  ],
+  "quick_rule": "Present wish → wish + past. Past regret → wish + had + participle. Annoyance → wish + would. Realistic future → use 'hope', not 'wish'.",
+  "quick_rule_ar": "أمنية حاضرة → wish + ماضٍ. أسف ماضٍ → wish + had + التصريف. تضايق → wish + would. مستقبل واقعي → استخدم hope.",
+  "mnemonic": "Step the tense back one level. 'hope' for the real future, 'wish' for the unreal.",
+  "connect_to_speaking": "In accent week 7 you drilled /aɪwɪʃaɪd/ and regret prosody. Say 'I wish I'd STUDied harder ↘' with a breath first and a falling tone — the grammar alone won't sound like regret."
+}

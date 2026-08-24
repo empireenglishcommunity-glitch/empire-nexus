@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b2_w6",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 6,
+  "pattern_name": "Mixed conditionals (crossing time frames)",
+  "pattern_name_ar": "الشروط المختلطة (تقاطع الأزمنة)",
+  "formula": "If + had + participle, ... would + verb (past cause → present result) · If + past simple, ... would have + participle (present cause → past result)",
+  "formula_visual": "[If I'd studied medicine], [I'd be a doctor now] // [If I weren't so shy], [I'd have spoken up]",
+  "when_to_use": "When the condition and the result belong to DIFFERENT times. Type A: a past action with a present consequence — 'If I'd studied medicine, I'd be a doctor now.' Type B: a permanent present quality with a past consequence — 'If I weren't so shy, I'd have spoken up.' A time word ('now', 'yesterday') makes it clear.",
+  "when_to_use_ar": "عندما ينتمي الشرط والنتيجة لزمنين مختلفين. النوع الأول: فعل ماضٍ بنتيجة حاضرة. النوع الثاني: صفة حاضرة دائمة بنتيجة ماضية. وكلمة زمن توضّح المعنى.",
+  "why_arabic_speakers_struggle": "Learners memorise the three 'pure' conditionals as fixed templates, so mixing them feels like breaking a rule. In speech the distinction is only /dbi/ versus /dəv/, so even correct writing often comes out ambiguous when spoken.",
+  "examples": [
+    {"en": "If I'd studied medicine, I'd be a doctor now.", "ar": "لو درست الطب، لكنت طبيبًا الآن", "structure": "If + [had + participle], [would + verb] (present result)"},
+    {"en": "If she'd taken that job, she'd be living in Paris.", "ar": "لو أخذت تلك الوظيفة، لكانت تعيش في باريس", "structure": "If + [had], [would be + -ing]"},
+    {"en": "If I weren't so tired, I'd have gone out last night.", "ar": "لو لم أكن متعبًا، لكنت خرجت ليلة أمس", "structure": "If + [past simple], [would have + participle]"},
+    {"en": "If he didn't work nights, he'd have come with us.", "ar": "لو لم يعمل ليلاً، لكان جاء معنا", "structure": "If + [didn't + verb], [would have]"},
+    {"en": "If we'd saved more, we'd be able to buy a house.", "ar": "لو وفّرنا أكثر، لكنّا قادرين على شراء بيت", "structure": "If + [had], [would be able to]"}
+  ],
+  "common_errors": [
+    {"wrong": "If I'd studied medicine, I'd have been a doctor now.", "correct": "If I'd studied medicine, I'd be a doctor now.", "explanation": "'now' signals a present result → 'would be', not 'would have been'."},
+    {"wrong": "If I wasn't so tired, I'd go out last night.", "correct": "If I weren't so tired, I'd have gone out last night.", "explanation": "'last night' is a past result → 'would have gone'."},
+    {"wrong": "If I would have studied medicine, I'd be a doctor.", "correct": "If I'd studied medicine, I'd be a doctor.", "explanation": "The if-clause never takes 'would have'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If I'd studied medicine, I ___ (be) a doctor now.", "answer": "would be / 'd be"},
+    {"sentence": "If I weren't so tired, I ___ (go) out last night.", "answer": "would have gone / 'd have gone"},
+    {"sentence": "If we'd left earlier, we ___ (be) home by now.", "answer": "would be / 'd be"},
+    {"sentence": "If she ___ (speak) English, she'd have got the job.", "answer": "spoke"},
+    {"sentence": "If he'd trained harder, he ___ (be) in the team today.", "answer": "would be"}
+  ],
+  "quick_rule": "Past cause + present result → If + had + participle, would + verb. Present cause + past result → If + past simple, would have + participle. Add a time word.",
+  "quick_rule_ar": "سبب ماضٍ + نتيجة حاضرة → If + had، would + فعل. سبب حاضر + نتيجة ماضية → If + ماضٍ بسيط، would have + التصريف الثالث.",
+  "mnemonic": "Look at the RESULT's time, not the condition's: 'now' → would be · 'yesterday' → would have been.",
+  "connect_to_speaking": "In accent week 6 you drilled /dbi/ against /dəv/ and stressing the time anchor. Say 'I'd BE a doctor NOW' against 'I'd've BEEN a doctor' — the anchor tells your listener which time frame you mean."
+}

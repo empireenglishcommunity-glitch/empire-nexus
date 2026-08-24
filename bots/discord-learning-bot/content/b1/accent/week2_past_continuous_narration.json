@@ -111,7 +111,7 @@
         "practice": ["Suddenly, // the door OPENED", "and a MAN // walked IN", "pause at commas, stress key words"]
       },
       "minimal_pairs": [
-        {"pair": ["Suddenly, // ... ✅", "suddenlytheдoor... ❌"], "meaning": ["مع وقفة", "بلا وقفة"]},
+        {"pair": ["Suddenly, // ... ✅", "suddenlythedoor... ❌"], "meaning": ["مع وقفة", "بلا وقفة"]},
         {"pair": ["stressed story words ✅", "flat monotone ❌"], "meaning": ["حيّ", "ممل"]},
         {"pair": ["comma pause ✅", "no pause ❌"], "meaning": ["واضح", "غير واضح"]},
         {"pair": ["rising then falling ✅", "flat ❌"], "meaning": ["مشوّق", "ممل"]},

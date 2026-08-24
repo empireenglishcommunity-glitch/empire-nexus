@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 10,
+  "focus": "'must've' /mʌstəv/ · 'might've' /maɪtəv/ · \"can't have\" /kɑːntəv/ · 'couldn't have' · certainty-level intonation (confident fall vs uncertain rise-fall)",
+  "focus_ar": "'must've' و'might've' و\"can't have\" و'couldn't have'، ونبرة درجة اليقين (هبوط واثق مقابل تردّد)",
+  "arabic_challenge": "Past deduction reuses the /əv/ compression from week 5 but for a different purpose: guessing about the past rather than regretting it. The certainty level lives almost entirely in INTONATION — 'must've' falls confidently, 'might've' hedges. Arabic learners produce the right words with the wrong confidence.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'must've' /mʌstəv/ (confident deduction)"],
+      "isolation": {
+        "instructions": "'must have' = /mʌstəv/, one unit, meaning 'I'm sure that's what happened'. Say it with a firm FALLING tone: 'He must've forGOTten ↘'. Confidence is in the fall.",
+        "instructions_ar": "'must have' = /mʌstəv/ بمعنى 'أنا متأكد أن هذا ما حدث'. قلها بنبرة هابطة حازمة.",
+        "practice": ["/mʌstəv/ forGOTten ↘", "/mʌstəv/ LEFT ↘", "firm fall = sure"]
+      },
+      "minimal_pairs": [
+        {"pair": ["must've /mʌstəv/", "must of ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["must've forgotten (past)", "must forget (present)"], "meaning": ["ماضٍ", "حاضر"]},
+        {"pair": ["must've left ↘ (sure)", "might've left (unsure)"], "meaning": ["متأكد", "غير متأكد"]},
+        {"pair": ["must've been ✅", "must've be ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["he must've known", "he must know"], "meaning": ["كان يعرف", "يعرف الآن"]}
+      ],
+      "word_practice": ["must've forgotten", "must've left", "must've been", "must've known", "must've missed it", "must've fallen", "must've heard", "must've gone", "must've seen it", "must've cost a lot"],
+      "sentence_practice": [
+        "He must've forgotten the meeting.",
+        "She must've left already.",
+        "It must've been really expensive."
+      ],
+      "record_this": "He must've completely forgotten about the meeting this morning. She must've left already, because her coat is gone. That car must've been really expensive when it was new.",
+      "self_check": "Say 'he must've forgotten'. Is it /mʌstəv/ as one unit, with a confident falling tone?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'might've / may've / could've' (uncertain)"],
+      "isolation": {
+        "instructions": "For a guess, use /maɪtəv/ and hedge the tone — slightly rising then falling, lighter and less final: 'She might've misSED it ↗↘'. Uncertainty is audible.",
+        "instructions_ar": "للتخمين استخدم /maɪtəv/ مع نبرة متردّدة — صاعدة ثم هابطة، أخفّ وأقل حزمًا.",
+        "practice": ["/maɪtəv/ misSED it ↗↘", "/kʊdəv/ HAPpened ↗↘", "hedge = unsure"]
+      },
+      "minimal_pairs": [
+        {"pair": ["might've missed it ↗↘", "must've missed it ↘"], "meaning": ["ربما", "متأكد"]},
+        {"pair": ["might've /maɪtəv/", "might of ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["could've happened", "couldn't have happened"], "meaning": ["ممكن", "مستحيل"]},
+        {"pair": ["may've been", "must've been"], "meaning": ["ربما كان", "لا بد أنه كان"]},
+        {"pair": ["hedged tone (unsure)", "firm fall (sure)"], "meaning": ["متردّد", "واثق"]}
+      ],
+      "word_practice": ["might've missed it", "might've forgotten", "could've happened", "may've been", "might've gone", "could've been worse", "might've misunderstood", "may've changed", "might've overslept", "could've lost it"],
+      "sentence_practice": [
+        "She might've missed the train.",
+        "It could've been worse.",
+        "He may've misunderstood me."
+      ],
+      "record_this": "She might've missed the train, or perhaps she's just running late. Honestly, it could've been a lot worse than it was. He may've simply misunderstood what I meant.",
+      "self_check": "Say 'she might've missed the train'. Does your tone hedge rather than fall firmly?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["\"can't have\" /kɑːntəv/ (impossible)"],
+      "isolation": {
+        "instructions": "To say something is IMPOSSIBLE, use \"can't have\" /kɑːntəv/ with a strong emphatic fall: 'She CAN'T've seen me ↘'. Note: not 'mustn't have' — that is a different meaning entirely.",
+        "instructions_ar": "للمستحيل استخدم \"can't have\" /kɑːntəv/ بهبوط قوي. ملاحظة: ليست 'mustn't have' — معناها مختلف تمامًا.",
+        "practice": ["/kɑːntəv/ SEEN me ↘", "/kʊdəntəv/ KNOWN ↘", "emphatic fall = impossible"]
+      },
+      "minimal_pairs": [
+        {"pair": ["can't have seen ✅", "mustn't have seen ❌"], "meaning": ["مستحيل", "خطأ"]},
+        {"pair": ["can't have been", "must have been"], "meaning": ["مستحيل", "لا بد"]},
+        {"pair": ["couldn't have known", "could have known"], "meaning": ["مستحيل", "ممكن"]},
+        {"pair": ["can't've /kɑːntəv/", "can't of ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["can't have finished (deduction)", "can't finish (ability)"], "meaning": ["استنتاج", "قدرة"]}
+      ],
+      "word_practice": ["can't have seen", "can't have been", "can't have known", "couldn't have finished", "couldn't have heard", "can't have forgotten", "couldn't have guessed", "can't have gone far", "couldn't have done it", "can't have meant it"],
+      "sentence_practice": [
+        "She can't have seen me.",
+        "They couldn't have finished already.",
+        "He can't have meant that."
+      ],
+      "record_this": "She can't have seen me, because I was hidden behind the door. They couldn't possibly have finished the whole project already. He can't have meant that seriously — he was obviously joking.",
+      "self_check": "Say 'she can't have seen me'. Is it /kɑːntəv/ with an emphatic fall, and did you avoid 'mustn't have'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["the three certainty levels back to back"],
+      "isolation": {
+        "instructions": "Drill the full scale on one sentence: 'He must've left ↘ (sure) / He might've left ↗↘ (maybe) / He can't have left ↘! (impossible)'. Only the modal and the tone change.",
+        "instructions_ar": "تدرّب على السلّم كاملًا في جملة واحدة: must've (متأكد) / might've (ربما) / can't have (مستحيل).",
+        "practice": ["must've LEFT ↘", "might've LEFT ↗↘", "CAN'T've left ↘!"]
+      },
+      "minimal_pairs": [
+        {"pair": ["must've (100% yes)", "can't have (100% no)"], "meaning": ["متأكد نعم", "متأكد لا"]},
+        {"pair": ["might've (50%)", "must've (100%)"], "meaning": ["ربما", "متأكد"]},
+        {"pair": ["firm fall ↘", "hedged ↗↘"], "meaning": ["واثق", "متردّد"]},
+        {"pair": ["must've been him", "can't have been him"], "meaning": ["لا بد أنه هو", "مستحيل أنه هو"]},
+        {"pair": ["might've worked", "couldn't have worked"], "meaning": ["ربما نجح", "مستحيل ينجح"]}
+      ],
+      "word_practice": ["must've been him", "might've been him", "can't have been him", "must've known", "might've known", "couldn't have known", "must've heard", "might've heard", "can't have heard", "must've happened"],
+      "sentence_practice": [
+        "It must've been him — I recognised the voice.",
+        "It might've been him, but I'm not sure.",
+        "It can't have been him; he was abroad."
+      ],
+      "record_this": "It must've been him, because I clearly recognised the voice. It might've been him, but honestly I'm not completely sure. It can't have been him at all; he was abroad that entire week.",
+      "self_check": "Say all three versions. Does your tone genuinely change from confident to hedged to emphatic?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["deduction from evidence (linking the clue)"],
+      "isolation": {
+        "instructions": "Deduction usually names the evidence, and the clue is stressed too: 'The lights are OFF, so they must've GONE out.' Link the clue and the conclusion with a smooth 'so'.",
+        "instructions_ar": "الاستنتاج يذكر الدليل، والدليل منبور أيضًا: 'The lights are OFF, so they must've GONE out.'",
+        "practice": ["the lights are OFF, so they must've GONE", "clue + conclusion", "link with 'so'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["so (linking, weak)", "SO ❌ (over-stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["clue stressed ✅", "clue flat ❌"], "meaning": ["واضح", "غير واضح"]},
+        {"pair": ["that's why (conclusion)", "because (reason)"], "meaning": ["لذلك", "لأن"]},
+        {"pair": ["it looks like", "it must be"], "meaning": ["يبدو أن", "لا بد أن"]},
+        {"pair": ["apparently", "obviously"], "meaning": ["على ما يبدو", "بوضوح"]}
+      ],
+      "word_practice": ["so they must've gone", "that's why", "it looks like", "apparently", "obviously", "judging by", "which means", "in that case", "that would explain", "no wonder"],
+      "sentence_practice": [
+        "The lights are off, so they must've gone out.",
+        "Her coat's gone, so she must've left.",
+        "No wonder he's tired — he must've been working all night."
+      ],
+      "record_this": "All the lights are off, so they must've gone out for the evening. Her coat has gone from the hook, so she must've left already. No wonder he looks exhausted — he must've been working all night.",
+      "self_check": "Say 'the lights are off, so they must've gone out'. Are both the clue and the conclusion stressed, with a light 'so'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 10 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["must've /mʌstəv/", "must of ❌"], ["might've ↗↘ (maybe)", "must've ↘ (sure)"], ["can't have seen ✅", "mustn't have seen ❌"],
+        ["must've (100% yes)", "can't have (100% no)"], ["so (weak)", "SO ❌"], ["couldn't have known", "could have known"]
+      ],
+      "challenge_sentences": [
+        "He must've forgotten the meeting.",
+        "She might've missed the train.",
+        "It can't have been him; he was abroad.",
+        "The lights are off, so they must've gone out."
+      ],
+      "record_this": "He must've completely forgotten about the meeting. She might've missed the train, or perhaps she overslept. It can't have been him; he was abroad all week. All the lights are off, so they must've gone out somewhere.",
+      "self_check": "Three checks: modal + /əv/ as one unit, tone matching the certainty level, and \"can't have\" for impossibility."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself solving a small mystery out loud, moving between certainty levels. Then listen back and check whether your CONFIDENCE is audible, not just your grammar.",
+        "instructions_ar": "سجّل نفسك تحلّ لغزًا صغيرًا بصوت عالٍ، متنقلًا بين درجات اليقين، وتأكد أن ثقتك مسموعة لا نحوك فقط.",
+        "passage": "Something strange happened last night. When I got home, the kitchen window was open and there was water on the floor. At first I thought someone must've broken in, but nothing was missing, so that can't have been it. My flatmate might've left the window open before she went out — she often forgets. But the water is harder to explain. It could've come from the sink, though I'm fairly sure I turned the tap off. It might've rained heavily while we were out; that would explain the water near the window. Actually, thinking about it, the plant on the windowsill has fallen over, so a cat must've climbed in. It can't have been a person, because the gap is far too narrow. My flatmate must've seen the cat before, because she wasn't surprised at all when I told her.",
+        "sounds_to_check": {
+          "'must've' /mʌstəv/ + confident fall": "must've broken in, a cat must've climbed in, she must've seen the cat",
+          "'might've / could've' + hedged tone": "might've left the window open, could've come from the sink, it might've rained",
+          "\"can't have\" /kɑːntəv/ + emphatic fall": "that can't have been it, it can't have been a person",
+          "modal + /əv/ as one unit": "no 'must of', 'might of' or 'can't of'",
+          "evidence linking": "stressed clue, weak 'so', stressed conclusion (nothing was MISSing, so that CAN'T have been it)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Compressed modals plus genuinely different confidence tones. Ready for week 11.",
+        "70_89": "Good; occasionally all guesses sound equally certain.",
+        "50_69": "'must of' appears, or every deduction has the same tone. Repeat days 1-4.",
+        "below_50": "Redo days 1-5, drilling the three certainty levels with their distinct intonation."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Same /əv/ compression as week 5, but here it is GUESSING about the past, not regretting it.",
+      "must've = I'm sure (firm fall) · might've/could've = maybe (hedged) · can't have = impossible (emphatic fall).",
+      "Use \"can't have\", never 'mustn't have', for 'that's impossible'.",
+      "Your certainty must be audible in the tone — the same words with flat delivery lose the whole meaning."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

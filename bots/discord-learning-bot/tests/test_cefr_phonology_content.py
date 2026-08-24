@@ -21,7 +21,7 @@ CONTENT = config.BASE_DIR / "content"
 
 # Levels whose accent/grammar content has been authored so far. Add a level
 # here as its phonology content ships (that makes the coverage explicit).
-AUTHORED = ["A1", "A2", "B1"]
+AUTHORED = ["A1", "A2", "B1", "B2"]
 
 _PLACEHOLDER = "I am practicing English."
 
@@ -251,3 +251,54 @@ def test_legacy_levels_still_load():
     curriculum.load_all()
     for legacy, weeks in (("L0", 8), ("L1", 10), ("L2", 12), ("L3", 8)):
         assert len(curriculum._accent_data.get(legacy, {})) == weeks
+
+
+
+# ============================================================
+#  SCRIPT PURITY (stray-alphabet guard)
+# ============================================================
+
+def test_content_contains_no_stray_alphabets():
+    """Every content file must be written only in Latin (English + IPA) and
+    Arabic script.
+
+    This exists because two authored drills picked up stray Cyrillic
+    characters mid-word -- "had the <cyrillic>documents</cyrillic> translated"
+    and "suddenlythe<cyrillic>d</cyrillic>oor" -- which look almost identical
+    to their Latin counterparts in an editor but would have been rendered to
+    students and, worse, fed to the text-to-speech engine, which would have
+    mispronounced or skipped them. Nothing else in the suite would have
+    noticed: the JSON was valid and every schema check passed.
+
+    Allowed Unicode script families:
+      LATIN    - English text
+      ARABIC   - Arabic translations
+      MODIFIER - IPA modifier letters (e.g. the length mark in /juːstə/)
+      GREEK    - IPA theta/beta borrowings
+    """
+    import unicodedata
+
+    allowed = {"LATIN", "ARABIC", "MODIFIER", "GREEK"}
+    offenders = []
+
+    for path in sorted(CONTENT.glob("**/*.json")):
+        with open(path, encoding="utf-8") as fh:
+            for lineno, line in enumerate(fh, 1):
+                for ch in line:
+                    if not ch.isalpha():
+                        continue
+                    try:
+                        family = unicodedata.name(ch).split()[0]
+                    except ValueError:
+                        continue
+                    if family not in allowed:
+                        offenders.append(
+                            f"{path.relative_to(CONTENT)}:{lineno} "
+                            f"{family} {ch!r} (U+{ord(ch):04X})"
+                        )
+
+    assert not offenders, (
+        "Stray non-Latin/non-Arabic characters found in content files. These "
+        "render wrongly for students and break text-to-speech:\n  "
+        + "\n  ".join(offenders)
+    )

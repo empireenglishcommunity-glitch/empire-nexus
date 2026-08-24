@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 1,
+  "focus": "'ve been vs 've + participle · weak 'been' /bɪn/ · result-focus vs duration-focus stress · 'for/since' in fast speech · triple-cluster 'I've been'",
+  "focus_ar": "الفرق بين 've been و 've + التصريف الثالث، و'been' الخفيفة، ونبر النتيجة مقابل نبر المدة، وfor/since في الكلام السريع",
+  "arabic_challenge": "At B2 the difference between 'I've painted the kitchen' (result) and 'I've been painting the kitchen' (activity/duration) is carried almost entirely by an unstressed /bɪn/. Arabic learners either drop 'been' or over-stress it, so the two meanings collapse into one.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'been' /bɪn/ inside 've been"],
+      "isolation": {
+        "instructions": "In natural speech 'been' is weak: /bɪn/, not /biːn/. It hides between the auxiliary and the -ing verb: 'I've bɪn WORKing'. The -ing verb takes the stress.",
+        "instructions_ar": "في الكلام الطبيعي 'been' خفيفة: /bɪn/ مش /biːn/. تختفي بين المساعد والفعل: 'I've bɪn WORKing'.",
+        "practice": ["aɪv bɪn WORKing", "ʃiːz bɪn WAITing", "weak /bɪn/, stressed -ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["been /bɪn/ (weak)", "bean /biːn/"], "meaning": ["الشكل الخفيف", "فاصوليا"]},
+        {"pair": ["I've been working", "I've worked"], "meaning": ["مدة/نشاط", "نتيجة"]},
+        {"pair": ["she's bɪn waiting ✅", "she's BEEN waiting ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["I've been ✅", "I been ❌"], "meaning": ["صحيح", "ناقص المساعد"]},
+        {"pair": ["we've bɪn", "we bɪn ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["I've been", "she's been", "we've been", "they've been", "he's been", "you've been", "it's been", "I've been working", "she's been waiting", "we've been talking"],
+      "sentence_practice": [
+        "I've been working all morning.",
+        "She's been waiting for an hour.",
+        "It's been raining since Tuesday."
+      ],
+      "record_this": "I've been working all morning and I'm exhausted. She's been waiting for us for nearly an hour. It's been raining steadily since Tuesday afternoon.",
+      "self_check": "Say 'I've been working'. Is 'been' a quick weak /bɪn/, with the stress on 'WORKing'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["result-focus stress (perfect simple)"],
+      "isolation": {
+        "instructions": "The perfect simple points at a FINISHED result, so the stress lands on the completed thing: 'I've PAINTed the KITCHen' — it's done. No 'been', and the participle is strong.",
+        "instructions_ar": "المضارع التام البسيط يشير لنتيجة منتهية، فالنبر على الشيء المكتمل: 'I've PAINTed the KITCHen' — انتهى.",
+        "practice": ["aɪv PAINTed it", "ʃiːz FINished it", "stress the finished result"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've painted it (finished)", "I've been painting it (ongoing)"], "meaning": ["منتهي", "مستمر"]},
+        {"pair": ["I've read the report", "I've been reading the report"], "meaning": ["قرأته كله", "بقرأ فيه"]},
+        {"pair": ["she's written three ✅", "she's been writing three ❌"], "meaning": ["عدد = منتهي", "خطأ"]},
+        {"pair": ["we've eaten", "we've been eating"], "meaning": ["خلّصنا", "بناكل"]},
+        {"pair": ["I've done it", "I've been doing it"], "meaning": ["نتيجة", "نشاط"]}
+      ],
+      "word_practice": ["I've painted it", "she's finished", "we've eaten", "they've arrived", "he's written it", "I've read it", "we've decided", "she's sent it", "I've fixed it", "they've left"],
+      "sentence_practice": [
+        "I've painted the kitchen — come and look.",
+        "She's finished the report already.",
+        "We've eaten, thanks."
+      ],
+      "record_this": "I've painted the kitchen at last, so come and have a look. She's already finished the report and sent it to the manager. We've eaten, thanks, but a coffee would be lovely.",
+      "self_check": "Say 'I've painted the kitchen'. Is there no 'been', and does the stress sit on the finished result?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["duration-focus stress (perfect continuous)"],
+      "isolation": {
+        "instructions": "The perfect continuous points at the ACTIVITY and how long, so stress the -ing verb and the time phrase: 'I've been PAINTing ALL DAY'. The result may be unfinished — and you may look it.",
+        "instructions_ar": "المضارع التام المستمر يشير للنشاط والمدة، فانبر الفعل -ing وعبارة الزمن: 'I've been PAINTing ALL DAY'.",
+        "practice": ["aɪv bɪn PAINTing ALL DAY", "ʃiːz bɪn STUDYing since SIX", "stress -ing + time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've been painting all day", "I've painted the kitchen"], "meaning": ["مدة", "نتيجة"]},
+        {"pair": ["been PAINTing (activity)", "been painting ❌ (flat)"], "meaning": ["منبور", "بلا نبر"]},
+        {"pair": ["how long have you been ...?", "how many have you ...?"], "meaning": ["مدة", "عدد"]},
+        {"pair": ["I've been running (why I'm hot)", "I've run 5km (result)"], "meaning": ["تفسير الحالة", "إنجاز"]},
+        {"pair": ["been waiting ✅", "been wait ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["been painting all day", "been studying since six", "been running", "been waiting ages", "been trying", "been living here", "been working late", "been looking for it", "been thinking", "been travelling"],
+      "sentence_practice": [
+        "I've been painting all day — that's why I'm covered in paint.",
+        "How long have you been studying English?",
+        "She's been looking for her keys everywhere."
+      ],
+      "record_this": "I've been painting all day, which is why I'm covered in paint. How long have you been studying English at this school? She's been looking for her keys everywhere and she's getting frustrated.",
+      "self_check": "Say 'I've been painting all day'. Is the stress on 'PAINTing' and 'ALL DAY', with 'been' still weak?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'for' /fə/ and 'since' /sɪns/ in fast speech"],
+      "isolation": {
+        "instructions": "Time markers are weak and glued to what follows: 'fə TWO HOURS', 'sɪns MONday'. The NUMBER or the day carries the stress, never 'for' or 'since'.",
+        "instructions_ar": "علامات الزمن خفيفة وملتصقة بما بعدها: 'fə TWO HOURS'. الرقم أو اليوم هو المنبور.",
+        "practice": ["fə TWO HOURS", "sɪns MONday", "weak marker, stressed time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["for /fə/ (weak)", "four /fɔː/"], "meaning": ["لمدة", "أربعة"]},
+        {"pair": ["for two hours (period)", "since two o'clock (point)"], "meaning": ["مدة", "نقطة بداية"]},
+        {"pair": ["fə ages ✅", "FOR ages ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["since Monday ✅", "for Monday ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["for a week", "since last week"], "meaning": ["مدة", "نقطة"]}
+      ],
+      "word_practice": ["for two hours", "for ages", "for a week", "for months", "for a long time", "since Monday", "since 2020", "since I arrived", "since this morning", "since we met"],
+      "sentence_practice": [
+        "I've been here for two hours.",
+        "She's been away since Monday.",
+        "We've known each other for ages."
+      ],
+      "record_this": "I've been sitting here for two hours waiting for you. She's been away since Monday and comes back on Friday. We've known each other for ages, since we were at school together.",
+      "self_check": "Say 'for two hours'. Is 'for' a quick /fə/, with the stress on 'TWO HOURS'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the 'I've been' cluster at speed"],
+      "isolation": {
+        "instructions": "'I've been' squeezes three grammar words into one light beat: /aɪvbɪn/. Practise it as a single unit, then attach the stressed content: /aɪvbɪn/ + WAITing + fə AGES.",
+        "instructions_ar": "'I've been' تدمج ثلاث كلمات في نبضة واحدة خفيفة: /aɪvbɪn/. تدرّب عليها كوحدة واحدة.",
+        "practice": ["/aɪvbɪn/ (one beat)", "/aɪvbɪn/ WAITing fə AGES", "three words, one beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/aɪvbɪn/ (one beat)", "I have been (three beats)"], "meaning": ["سريع طبيعي", "بطيء رسمي"]},
+        {"pair": ["I've been waiting", "I was waiting"], "meaning": ["تام مستمر", "ماضٍ مستمر"]},
+        {"pair": ["what've you been doing?", "what did you do?"], "meaning": ["حتى الآن", "منتهي"]},
+        {"pair": ["they've bɪn", "they'd bɪn"], "meaning": ["مضارع تام", "ماضٍ تام"]},
+        {"pair": ["/aɪvbɪn/ ✅", "/aɪ bɪn/ ❌"], "meaning": ["صحيح", "ناقص 've"]}
+      ],
+      "word_practice": ["I've been waiting", "what've you been doing", "we've been meaning to", "they've been asking", "I've been meaning to call", "she's been telling me", "you've been busy", "it's been ages", "I've been wondering", "we've been discussing it"],
+      "sentence_practice": [
+        "I've been waiting for ages.",
+        "What have you been doing lately?",
+        "We've been meaning to call you."
+      ],
+      "record_this": "I've been waiting for ages, so let's go. What have you been doing lately — anything interesting? We've been meaning to call you for weeks, but things have been really busy.",
+      "self_check": "Say 'I've been waiting for ages'. Do 'I've been' and 'for' compress into light beats, leaving 'WAITing' and 'AGES' strong?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["been /bɪn/", "bean /biːn/"], ["I've painted it", "I've been painting it"], ["for /fə/", "four /fɔː/"],
+        ["since Monday ✅", "for Monday ❌"], ["/aɪvbɪn/ (one beat)", "I have been (three beats)"], ["I've read it", "I've been reading it"]
+      ],
+      "challenge_sentences": [
+        "I've been painting all day, and I've finally finished the kitchen.",
+        "She's been waiting for two hours since she arrived.",
+        "What have you been doing? I've been meaning to ask.",
+        "We've known each other for ages, since school."
+      ],
+      "record_this": "I've been painting all day, and I've finally finished the kitchen. She's been waiting for nearly two hours since she arrived. What have you been doing lately? I've been meaning to ask you for weeks. We've known each other for ages, since we were at school.",
+      "self_check": "Three checks: weak /bɪn/, the right stress for result versus duration, and weak 'for'/'since' before a stressed time phrase."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself catching up with an old friend, mixing finished results with ongoing activities. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم مع صديق قديم، ممزوجًا بين نتائج منتهية وأنشطة مستمرة، وبعدين اسمع وراجع.",
+        "passage": "It's been such a long time! I've been meaning to call you for months, but life has been hectic. I've changed jobs twice since we last met, and I've been working at a design studio since March. I've finished my diploma too, which I'm proud of, and I've been thinking about doing a master's next year. My sister has been living in Canada for two years now. She's visited us twice, and she's been trying to persuade me to move there. Honestly, I've been considering it. What about you? What have you been up to? I've heard you've bought a house — have you been decorating it yourself, or have you finished already?",
+        "sounds_to_check": {
+          "weak 'been' /bɪn/": "I've been meaning, been working, been thinking, been living, been trying",
+          "result-focus (perfect simple)": "I've changed jobs, I've finished my diploma, she's visited us twice, you've bought a house",
+          "duration-focus (perfect continuous)": "been working since March, been living for two years",
+          "weak 'for' /fə/ and 'since'": "for months, since we last met, since March, for two years",
+          "'I've been' cluster": "/aɪvbɪn/ meaning, /aɪvbɪn/ considering, what have you been up to"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Weak 'been', correct result-vs-duration stress, compressed clusters. Ready for week 2.",
+        "70_89": "Good; occasional strong 'been' or a flat time phrase.",
+        "50_69": "'been' stressed or dropped, so the two meanings sound identical. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping 'been' weak and stressing either the result or the -ing + time phrase."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The whole result-vs-duration distinction rides on an unstressed /bɪn/ — never drop it and never stress it.",
+      "Perfect simple → stress the finished result. Perfect continuous → stress the -ing verb and the time phrase.",
+      "'for' and 'since' are weak; the number or day after them takes the stress.",
+      "'I've been' is one light beat /aɪvbɪn/, not three separate words."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

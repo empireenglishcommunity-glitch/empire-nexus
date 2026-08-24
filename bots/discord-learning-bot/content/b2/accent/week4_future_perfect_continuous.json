@@ -1,0 +1,180 @@
+{
+  "level": "B2",
+  "cefr": "B2",
+  "week": 4,
+  "focus": "'ll have /ləv/ · 'll be /lbi/ · weak 'have' in future perfect · 'by' + future time · 'this time next year' rhythm",
+  "focus_ar": "'ll have و'll be الخفيفتان، و'have' الخفيفة في المستقبل التام، و'by' + وقت مستقبلي، وإيقاع 'this time next year'",
+  "arabic_challenge": "'I'll have finished' packs a contraction plus a weak 'have' /əv/ before the participle — three grammar sounds in one beat. Arabic learners tend to pronounce each fully ('I will have finished'), which sounds robotic, or drop 'have' entirely and lose the future perfect.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'ll have /ləv/ (future perfect)"],
+      "isolation": {
+        "instructions": "'I'll have' compresses to /aɪləv/ — the 'have' becomes a tiny /əv/. Then the participle takes the stress: /aɪləv/ FINished. Practise the cluster before adding the verb.",
+        "instructions_ar": "'I'll have' تُدمج إلى /aɪləv/ والـ have تصبح /əv/ صغيرة، والتصريف الثالث منبور.",
+        "practice": ["/aɪləv/ FINished", "/ʃiːləv/ LEFT", "tiny /əv/, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll have finished /aɪləv/", "I will have finished (slow)"], "meaning": ["طبيعي سريع", "بطيء رسمي"]},
+        {"pair": ["I'll have finished", "I'll finish"], "meaning": ["مستقبل تام", "مستقبل بسيط"]},
+        {"pair": ["she'll have left ✅", "she'll have leave ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["we'll have done it", "we'll do it"], "meaning": ["قبل وقت محدد", "في المستقبل"]},
+        {"pair": ["/ləv/ (have, weak)", "/hæv/ (strong)"], "meaning": ["خفيف طبيعي", "قوي رسمي"]}
+      ],
+      "word_practice": ["I'll have finished", "she'll have left", "we'll have done it", "they'll have arrived", "he'll have forgotten", "you'll have heard", "it'll have stopped", "I'll have gone", "we'll have eaten", "they'll have started"],
+      "sentence_practice": [
+        "By Friday I'll have finished the report.",
+        "She'll have left by then.",
+        "We'll have done everything by six."
+      ],
+      "record_this": "By Friday afternoon I'll have finished the whole report. She'll have left the office by then, so call her tomorrow. We'll have done absolutely everything by six o'clock this evening.",
+      "self_check": "Say 'I'll have finished'. Does it compress to /aɪləv/ with the stress on 'FINished'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'ll be + -ing (future continuous)"],
+      "isolation": {
+        "instructions": "'I'll be working' compresses to /aɪlbi/ + stressed -ing verb. This describes something in progress at a future moment. Keep 'll be' light and fast.",
+        "instructions_ar": "'I'll be working' تُدمج إلى /aɪlbi/ + الفعل المنبور. تصف شيئًا مستمرًا في لحظة مستقبلية.",
+        "practice": ["/aɪlbi/ WORKing", "/ʃiːlbi/ WAITing", "light 'll be, strong -ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll be working (in progress)", "I'll work (fact)"], "meaning": ["مستمر", "بسيط"]},
+        {"pair": ["I'll be /aɪlbi/", "I'll have /aɪləv/"], "meaning": ["مستمر", "تام"]},
+        {"pair": ["she'll be waiting ✅", "she'll be wait ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["we'll be flying", "we'll fly"], "meaning": ["مستمر", "بسيط"]},
+        {"pair": ["they'll be sleeping", "they'll sleep"], "meaning": ["في تلك اللحظة", "عادة/حقيقة"]}
+      ],
+      "word_practice": ["I'll be working", "she'll be waiting", "we'll be flying", "they'll be sleeping", "he'll be driving", "you'll be studying", "I'll be travelling", "we'll be eating", "she'll be teaching", "they'll be arriving"],
+      "sentence_practice": [
+        "At nine tomorrow I'll be working.",
+        "She'll be waiting at the airport.",
+        "This time next week we'll be flying to Turkey."
+      ],
+      "record_this": "At nine o'clock tomorrow morning I'll be working at my desk. She'll be waiting for you at the airport arrivals gate. This time next week we'll be flying to Turkey for our holiday.",
+      "self_check": "Say 'I'll be working'. Is 'll be' one quick light beat before the stressed '-ing' verb?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'ll have' vs 'll be' contrast"],
+      "isolation": {
+        "instructions": "Two futures, one tiny difference: /aɪləv/ FINished (completed before then) vs /aɪlbi/ FINishing (in progress then). Drill them back to back and feel the /əv/ vs /bi/.",
+        "instructions_ar": "مستقبلان وفرق صغير: /aɪləv/ FINished (منتهي قبلها) مقابل /aɪlbi/ FINishing (مستمر وقتها).",
+        "practice": ["/aɪləv/ FINished", "/aɪlbi/ FINishing", "/əv/ vs /bi/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll have finished", "I'll be finishing"], "meaning": ["منتهي قبلها", "مستمر وقتها"]},
+        {"pair": ["/ləv/", "/lbi/"], "meaning": ["have", "be"]},
+        {"pair": ["we'll have eaten", "we'll be eating"], "meaning": ["خلّصنا", "بناكل"]},
+        {"pair": ["she'll have arrived", "she'll be arriving"], "meaning": ["وصلت", "بتوصل"]},
+        {"pair": ["they'll have gone", "they'll be going"], "meaning": ["راحوا", "رايحين"]}
+      ],
+      "word_practice": ["I'll have finished / I'll be finishing", "we'll have eaten / we'll be eating", "she'll have arrived / she'll be arriving", "they'll have gone / they'll be going", "he'll have left / he'll be leaving", "I'll have started / I'll be starting", "you'll have heard / you'll be hearing", "it'll have ended / it'll be ending", "we'll have moved / we'll be moving", "I'll have slept / I'll be sleeping"],
+      "sentence_practice": [
+        "By eight I'll have eaten; at eight I'll be eating.",
+        "She'll have arrived by then, or she'll be arriving.",
+        "We'll have finished the meeting by three."
+      ],
+      "record_this": "By eight o'clock I'll have eaten already, but at eight exactly I'll be eating. She'll have arrived by then, or at least she'll be arriving. We'll have finished the whole meeting by three this afternoon.",
+      "self_check": "Say both forms. Can you hear /əv/ for 'have' and /bi/ for 'be', with everything else identical?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'by' + future time reference"],
+      "isolation": {
+        "instructions": "The future perfect almost always needs a deadline with 'by': 'baɪ FRIday', 'baɪ THEN', 'baɪ the TIME you arrive'. 'by' is weak; the time is stressed.",
+        "instructions_ar": "المستقبل التام يحتاج موعدًا مع 'by': 'baɪ FRIday'. 'by' خفيفة والوقت منبور.",
+        "practice": ["baɪ FRIday", "baɪ THEN", "weak by, stressed time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["by Friday (deadline)", "on Friday (day)"], "meaning": ["بحلول", "في"]},
+        {"pair": ["baɪ (weak)", "BY ❌ (stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["by then", "until then"], "meaning": ["بحلول ذلك", "حتى ذلك"]},
+        {"pair": ["by the time you arrive", "when you arrive"], "meaning": ["قبل وصولك", "عند وصولك"]},
+        {"pair": ["by next year", "in next year ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["by Friday", "by then", "by tomorrow", "by next week", "by the end of the month", "by the time you arrive", "by six o'clock", "by next year", "by that point", "by the weekend"],
+      "sentence_practice": [
+        "By Friday I'll have sent it.",
+        "By the time you arrive, we'll have eaten.",
+        "By next year she'll have graduated."
+      ],
+      "record_this": "By Friday morning I'll have sent you all the documents. By the time you arrive, we'll have eaten and cleared everything away. By next year she'll have graduated and started her first real job.",
+      "self_check": "Say 'by Friday I'll have sent it'. Is 'by' weak with 'FRIday' stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["long future time phrases as one rhythmic group"],
+      "isolation": {
+        "instructions": "Phrases like 'this time next year' and 'by the end of the month' are said as ONE group with one main stress: 'this time next YEAR', 'by the end of the MONTH'. Don't stress every word.",
+        "instructions_ar": "عبارات مثل 'this time next year' تُقال كمجموعة واحدة بنبر رئيسي واحد: 'this time next YEAR'.",
+        "practice": ["this time next YEAR", "by the end of the MONTH", "one group, one stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["this time next YEAR ✅", "THIS TIME NEXT YEAR ❌"], "meaning": ["مجموعة واحدة", "كل كلمة منبورة"]},
+        {"pair": ["by the end of the MONTH", "by the END of the MONTH ❌"], "meaning": ["نبر واحد", "نبر زائد"]},
+        {"pair": ["in five years' time", "for five years"], "meaning": ["بعد خمس سنوات", "لمدة خمس سنوات"]},
+        {"pair": ["a week from now", "a week ago"], "meaning": ["مستقبل", "ماضٍ"]},
+        {"pair": ["by this time tomorrow", "at this time tomorrow"], "meaning": ["بحلول", "في"]}
+      ],
+      "word_practice": ["this time next year", "by the end of the month", "in five years' time", "a week from now", "by this time tomorrow", "sometime next week", "at some point today", "before long", "in the near future", "by the end of the day"],
+      "sentence_practice": [
+        "This time next year I'll have graduated.",
+        "By the end of the month we'll have moved.",
+        "In five years' time she'll be running her own company."
+      ],
+      "record_this": "This time next year I'll have graduated and found a job. By the end of the month we'll have moved into the new flat completely. In five years' time she'll be running her own company, I'm sure of it.",
+      "self_check": "Say 'this time next year I'll have graduated'. Is the time phrase one smooth group with a single main stress?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I'll have finished", "I'll be finishing"], ["/ləv/", "/lbi/"], ["by Friday (deadline)", "on Friday (day)"],
+        ["baɪ (weak)", "BY ❌"], ["this time next YEAR ✅", "THIS TIME NEXT YEAR ❌"], ["we'll have eaten", "we'll be eating"]
+      ],
+      "challenge_sentences": [
+        "By Friday I'll have finished the report.",
+        "This time next week we'll be flying to Turkey.",
+        "By the time you arrive, we'll have eaten.",
+        "In five years she'll have started her own company."
+      ],
+      "record_this": "By Friday afternoon I'll have finished the entire report. This time next week we'll be flying to Turkey on holiday. By the time you arrive tonight, we'll have eaten and tidied up. In five years' time she'll have started her own company.",
+      "self_check": "Three checks: /ləv/ for 'll have, /lbi/ for 'll be, and weak 'by' before a stressed deadline."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing your plans and predictions for the next few years. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تصف خططك وتوقعاتك للسنوات القادمة، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me tell you where I hope to be in a few years. By the end of this year, I'll have completed my diploma and I'll have saved enough to travel. This time next year, I'll probably be working abroad, most likely in Dubai or Istanbul. By the time I turn thirty, I'll have worked in at least three countries, and I hope I'll have learnt another language properly. My sister says that in five years' time she'll be running her own business, and honestly I believe her. She'll have finished her MBA by then. Of course, plans change. This time next year I might be doing something completely different, and by the end of the decade I'll probably have changed direction twice. But that's fine — by then I'll have learnt to enjoy the uncertainty.",
+        "sounds_to_check": {
+          "'ll have /ləv/": "I'll have completed, I'll have saved, I'll have worked, she'll have finished, I'll have learnt",
+          "'ll be /lbi/ + -ing": "I'll be working, she'll be running, I might be doing",
+          "weak 'by' + stressed time": "by the end of this year, by the time I turn thirty, by then, by the end of the decade",
+          "long time phrases as one group": "this time next YEAR, in five years' TIME, by the end of the DECADE",
+          "the contrast": "I'll have worked (completed) vs I'll be working (in progress)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Compressed /ləv/ and /lbi/, weak 'by', smooth time-phrase grouping. Ready for week 5.",
+        "70_89": "Good; occasional fully pronounced 'will have'.",
+        "50_69": "'have' dropped or every word stressed, so the future perfect is lost. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, compressing 'll have to /ləv/ and 'll be to /lbi/."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'ll have' is /ləv/ and ''ll be' is /lbi/ — one light beat each, never three separate words.",
+      "The whole difference between the two futures is /əv/ versus /bi/; everything else is identical.",
+      "The future perfect needs a deadline: weak 'by' plus a stressed time phrase.",
+      "Long time phrases carry ONE main stress ('this time next YEAR'), not a stress on every word."
+    ],
+    "daily_time": "12-18 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}
