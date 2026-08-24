@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w6",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 6,
+  "pattern_name": "Modals of deduction (must / might / could / can't)",
+  "pattern_name_ar": "أفعال الاستنتاج (must / might / could / can't)",
+  "formula": "must + verb (sure it's true) · might / may / could + verb (possible) · can't + verb (sure it's false)",
+  "formula_visual": "[He must be tired] // [She might be at work] // [That can't be right]",
+  "when_to_use": "To say how CERTAIN you are about a present situation, based on evidence. must = I'm sure it's true. might/may/could = it's possible. can't = I'm sure it's not true. All are followed by the bare infinitive (no 'to').",
+  "when_to_use_ar": "للتعبير عن درجة اليقين في موقف حاضر بناءً على دليل. must = متأكد أنه صحيح. might/may/could = ممكن. can't = متأكد أنه غير صحيح. كلها + الفعل المجرد بدون to.",
+  "why_arabic_speakers_struggle": "Arabic expresses certainty with separate words (لا بد أن، ربما، مستحيل), so learners add 'to' after the modal ('must to be') or use 'mustn't' for impossibility instead of 'can't'.",
+  "examples": [
+    {"en": "He's been working all day — he must be tired.", "ar": "يعمل طوال اليوم — لا بد أنه متعب", "structure": "[must + be] (certain true)"},
+    {"en": "She might be at work now.", "ar": "ربما تكون في العمل الآن", "structure": "[might + be] (possible)"},
+    {"en": "That can't be right — check it again.", "ar": "مستحيل أن يكون هذا صحيحًا", "structure": "[can't + be] (certain false)"},
+    {"en": "The keys could be in the car.", "ar": "قد تكون المفاتيح في السيارة", "structure": "[could + be] (possible)"},
+    {"en": "They must know each other well.", "ar": "لا بد أنهما يعرفان بعضهما جيدًا", "structure": "[must + know]"}
+  ],
+  "common_errors": [
+    {"wrong": "He must to be tired.", "correct": "He must be tired.", "explanation": "Modals take the bare infinitive — no 'to'."},
+    {"wrong": "That mustn't be right.", "correct": "That can't be right.", "explanation": "For 'I'm sure it's NOT true' we use can't, not mustn't."},
+    {"wrong": "She maybe is at work.", "correct": "She might be at work.", "explanation": "'maybe' is an adverb; the modal pattern is might + verb."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The lights are off. They ___ (be) asleep. (I'm sure)", "answer": "must be"},
+    {"sentence": "I'm not certain, but she ___ (be) in the library. (possible)", "answer": "might be / may be / could be"},
+    {"sentence": "That ___ (be) his brother — he's an only child.", "answer": "can't be"},
+    {"sentence": "He speaks perfect French. He ___ (have) lived in Paris.", "answer": "must have"},
+    {"sentence": "It ___ (rain) later, so take an umbrella. (possible)", "answer": "might rain / could rain"}
+  ],
+  "quick_rule": "Sure yes → must. Maybe → might/may/could. Sure no → can't. Always + bare verb (no 'to').",
+  "quick_rule_ar": "متأكد نعم → must. ربما → might/may/could. متأكد لا → can't. دائمًا + فعل مجرد بدون to.",
+  "mnemonic": "must = 100% yes · might = 50% · can't = 100% no.",
+  "connect_to_speaking": "In accent week 6 you practised must/might/can't in deduction. Say: 'He must be tired' with a falling, confident tone, then 'She might be at work' with a lighter, uncertain tone."
+}

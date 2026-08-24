@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 1,
+  "focus": "Contractions 've /v/ and 's /z/ in connected speech · weak 'for' /fə/ and 'since' /sɪns/ · 'just/already/yet' stress · linking 'have you' → /həvjə/",
+  "focus_ar": "الاختصارات 've و 's في الكلام المتصل، و 'for' و 'since' الخفيفة، ونبر just/already/yet، ووصل have you",
+  "arabic_challenge": "At B1 the individual sounds are mostly mastered; the challenge is RHYTHM. Arabic gives every word equal weight, so the present perfect's contracted auxiliaries and weak 'for/since' get over-pronounced, breaking the natural stress-timed flow.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["contracted 've/'s in fast speech"],
+      "isolation": {
+        "instructions": "In connected speech the perfect auxiliary almost vanishes: 'I've finished' = /aɪv ˈfɪnɪʃt/, 'she's gone' = /ʃiːz ɡɒn/. Keep it present but unstressed — the stress lands on the participle.",
+        "instructions_ar": "في الكلام المتصل الفعل المساعد يكاد يختفي: 'I've finished'. خليه موجود بس غير منبور — النبر على التصريف الثالث.",
+        "practice": ["I've-FINished, she's-GONE", "we've-SEEN, they've-DONE", "auxiliary weak, participle strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've finished ✅", "I finished (past) "], "meaning": ["مضارع تام", "ماضٍ بسيط"]},
+        {"pair": ["she's gone (has)", "she's going (is)"], "meaning": ["has gone", "is going"]},
+        {"pair": ["we've done ✅", "we done ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["they've seen ✅", "they seen ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["it's changed (has)", "it changed (past)"], "meaning": ["مضارع تام", "ماضٍ"]}
+      ],
+      "word_practice": ["I've finished", "she's gone", "we've seen", "they've done", "he's arrived", "I've just", "we've already", "she's never", "they've recently", "it's changed"],
+      "sentence_practice": [
+        "I've just finished my work.",
+        "She's already gone home.",
+        "We've seen this news before."
+      ],
+      "record_this": "I've just finished a big project, and she's already gone home. We've seen this news before, but they've never heard it.",
+      "self_check": "Say 'I've finished'. Is the 've a light /v/, with the stress firmly on 'finished'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'for' /fə/ and 'since' /sɪns/"],
+      "isolation": {
+        "instructions": "'For' + a period weakens to /fə/: 'for two years' = /fə tuː jɪəz/. 'Since' + a point stays /sɪns/ but is unstressed. The time PHRASE carries the stress, not 'for/since'.",
+        "instructions_ar": "'for' + مدة تخف لـ /fə/. 'since' + نقطة زمنية تفضل /sɪns/ لكن غير منبورة. عبارة الزمن هي المنبورة.",
+        "practice": ["fə-two-YEARS", "since-two-thou-sand-TWENTY", "weak for/since, strong time phrase"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fə two years ✅", "FOR two years ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["for (period)", "since (point)"], "meaning": ["لمدة", "منذ"]},
+        {"pair": ["for /fə/", "four /fɔː/"], "meaning": ["لمدة", "أربعة"]},
+        {"pair": ["since 2020 ✅", "for 2020 ❌"], "meaning": ["نقطة", "خطأ"]},
+        {"pair": ["for a while ✅", "since a while ❌"], "meaning": ["مدة", "خطأ"]}
+      ],
+      "word_practice": ["for two years", "for a long time", "for ages", "for a while", "since 2020", "since Monday", "since I was young", "since then", "for months", "since this morning"],
+      "sentence_practice": [
+        "I've lived here for ten years.",
+        "She's worked there since 2020.",
+        "We haven't met for ages."
+      ],
+      "record_this": "I've lived in this city for ten years, and I've worked at the same company since 2020. We haven't met for ages, since we left school.",
+      "self_check": "Say 'for two years'. Does 'for' shrink to /fə/, with stress on 'years'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'just / already / yet' stress"],
+      "isolation": {
+        "instructions": "These adverbs carry meaning, so they are stressed: 'I've JUST arrived', 'She's alREADY left', 'Have you finished YET?'. 'Just' goes before the participle; 'yet' goes at the end.",
+        "instructions_ar": "الظروف دي بتحمل معنى فبتتنبر: 'I've JUST arrived'. 'just' قبل التصريف الثالث و 'yet' في الآخر.",
+        "practice": ["I've JUST arrived", "she's alREADY gone", "have you finished YET?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've JUST eaten", "I just ate ❌ (US ok)"], "meaning": ["مضارع تام", "ماضٍ"]},
+        {"pair": ["already (before now)", "yet (until now, ?/−)"], "meaning": ["بالفعل", "بعد/حتى الآن"]},
+        {"pair": ["finished YET? ✅", "YET finished? ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["JUST /dʒʌst/", "just /dʒəst/ (weak, filler)"], "meaning": ["للتو (منبورة)", "مجرد"]},
+        {"pair": ["already ✅", "all ready (separate)"], "meaning": ["بالفعل", "جاهز تمامًا"]}
+      ],
+      "word_practice": ["just", "already", "yet", "just arrived", "already done", "not yet", "just finished", "already seen", "finished yet", "just started"],
+      "sentence_practice": [
+        "I've just arrived at the office.",
+        "She's already finished the report.",
+        "Have you eaten yet?"
+      ],
+      "record_this": "I've just arrived at the office. My colleague has already finished the report, but I haven't started mine yet. Have you eaten yet?",
+      "self_check": "Are 'just', 'already' and 'yet' clearly stressed and in the right position?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["linking 'have you' → /həvjə/"],
+      "isolation": {
+        "instructions": "In questions the auxiliary weakens and links: 'Have you ever…?' = /həvjə ˈevə/, 'Has she…?' = /həʃi/. The stress lands on the key content word, never on 'have/has'.",
+        "instructions_ar": "في السؤال الفعل المساعد يخف ويتوصّل: 'Have you ever…?' → /həvjə/. النبر على الكلمة المهمة مش على have.",
+        "practice": ["həv-yə ever?", "həz-ʃi finished?", "həv-yə been there?"]
+      },
+      "minimal_pairs": [
+        {"pair": ["həvjə finished ✅", "HAVE YOU finished ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["həz-she gone ✅", "HAS SHE gone ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["what've you done ✅", "what HAVE you done ~"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["how long've you ✅", "how long HAVE you ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["have /həv/ (aux)", "have /hæv/ (possess)"], "meaning": ["مساعد خفيف", "يملك قوي"]}
+      ],
+      "word_practice": ["have you ever", "has she", "have you been", "how long have you", "what have you", "have they finished", "has he arrived", "have we met", "have you seen", "has it changed"],
+      "sentence_practice": [
+        "Have you ever been abroad?",
+        "How long have you worked here?",
+        "Has she finished yet?"
+      ],
+      "record_this": "Have you ever been abroad? How long have you worked here? Has your friend arrived yet, or have they missed the train again?",
+      "self_check": "Say 'Have you ever been?' as one smooth flow. Does 'have you' compress to /həvjə/?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["present perfect vs past simple rhythm"],
+      "isolation": {
+        "instructions": "Contrast the two tenses by rhythm and meaning: 'I've LIVED here for years' (perfect, still true) vs 'I LIVED there in 2010' (past, finished). The perfect keeps the weak auxiliary; the past does not.",
+        "instructions_ar": "قارن الزمنين بالإيقاع والمعنى: 'I've lived here for years' (تام، لسه) مقابل 'I lived there in 2010' (ماضٍ منتهٍ).",
+        "practice": ["I've LIVED here (perfect)", "I LIVED there in 2010 (past)", "alternate: perfect / past"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've lived here (still)", "I lived there (finished)"], "meaning": ["تام", "ماضٍ"]},
+        {"pair": ["she's worked (still)", "she worked (finished)"], "meaning": ["تام", "ماضٍ"]},
+        {"pair": ["for + perfect", "in 2010 + past"], "meaning": ["مدة مستمرة", "وقت محدد"]},
+        {"pair": ["I've been ✅", "I was (different meaning)"], "meaning": ["تام", "ماضٍ"]},
+        {"pair": ["have gone (result)", "went (event)"], "meaning": ["نتيجة", "حدث"]}
+      ],
+      "word_practice": ["I've lived", "I lived", "she's worked", "she worked", "we've been", "we went", "they've done", "they did", "it's changed", "it changed"],
+      "sentence_practice": [
+        "I've lived here for ten years, but I lived in Cairo before that.",
+        "She's worked here since 2020; she worked in a bank before.",
+        "We've been to Aswan, but we went there years ago."
+      ],
+      "record_this": "I've lived in this city for ten years, but I lived in Cairo before that. She's worked here since 2020; before that she worked in a bank. We've been to Aswan, but we actually went there years ago.",
+      "self_check": "Does the perfect keep its weak 'I've/she's', while the past simple drops it?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I've finished (perfect)", "I finished (past)"], ["fə two years", "FOR two years ❌"], ["JUST arrived", "just (weak)"],
+        ["həvjə ever ✅", "HAVE YOU ever ❌"], ["for (period)", "since (point)"], ["she's gone (has)", "she's going (is)"]
+      ],
+      "challenge_sentences": [
+        "I've just finished and she's already gone.",
+        "I've worked here for ten years, since 2014.",
+        "Have you ever been to Europe?",
+        "We've lived here for ages, but we haven't met the neighbours yet."
+      ],
+      "record_this": "I've just finished my work and she's already gone home. I've worked at this company for ten years, since 2014. Have you ever been to Europe? We've lived here for ages, but we haven't met the neighbours yet.",
+      "self_check": "Three checks: weak contracted auxiliaries, weak 'for/since', and stressed 'just/already/yet'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about recent experiences and news. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن خبرات وأخبار حديثة، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "A lot has happened recently. I've just started a new job, and I've already learnt so much. I've worked in three different companies since I graduated, but I've never enjoyed a job as much as this one. Have you heard the news? My sister has recently moved abroad — she's been there for two months now. We've spoken on the phone several times, and she's already made new friends. I haven't visited her yet, but I've promised to go soon. Life has changed a lot for both of us since last year.",
+        "sounds_to_check": {
+          "contracted 've/'s": "I've started, I've learnt, she's been, she's made, life has changed",
+          "weak 'for/since'": "for two months, since I graduated, since last year",
+          "just/already/yet stress": "I've JUST started, I've alREADY learnt, I haven't visited YET",
+          "linking 'have you'": "have you heard the news",
+          "perfect vs past": "has happened / has changed (perfect) vs I graduated (past)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Auxiliaries weak, for/since reduced, adverbs well placed — natural B1 rhythm. Ready for week 2.",
+        "70_89": "Good; occasional over-stressed 'for'.",
+        "50_69": "Word-by-word rhythm; auxiliaries too strong. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, focusing on weakening the small words."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "At B1 the goal shifts from individual sounds to RHYTHM: strong content words, weak function words.",
+      "The present perfect leans on a WEAK auxiliary ('I've', 'she's') — present but never stressed.",
+      "'for' + a length of time reduces to /fə/; the number+noun carries the stress.",
+      "'just/already/yet' carry meaning and ARE stressed — the opposite of the auxiliaries."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

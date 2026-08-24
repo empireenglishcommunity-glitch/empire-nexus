@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 11,
+  "focus": "Weak 'that' /ðət/ after reporting verbs · 'said' /sed/ vs 'told' /təʊld/ · weak 'to' in 'told me to' · reporting-verb stress · backshift rhythm",
+  "focus_ar": "'that' الخفيفة بعد أفعال النقل، و 'said' مقابل 'told'، و 'to' الخفيفة، ونبر فعل النقل",
+  "arabic_challenge": "Reported speech drops 'that' to a weak /ðət/ (or omits it), and confuses 'said' (no person) with 'told' (+ person). Arabic learners stress 'that' and mix said/told.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'that' /ðət/ after reporting verbs"],
+      "isolation": {
+        "instructions": "After 'said/told/thought' the linking 'that' is weak /ðət/ or dropped entirely: 'He said (that) he was tired'. Never stress it; the reported content carries the meaning.",
+        "instructions_ar": "بعد said/told/thought الـ 'that' خفيفة /ðət/ أو تُحذف. متتنبرش أبدًا.",
+        "practice": ["he said ðət he was TIRED", "she thought ðət it was TRUE", "weak or dropped 'that'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["said ðət he was ✅", "said THAT he was ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["that /ðət/ (linker)", "that /ðæt/ (demonstrative)"], "meaning": ["أنّ (خفيفة)", "ذلك (قوية)"]},
+        {"pair": ["he said he was tired (dropped)", "he said that he was tired (kept)"], "meaning": ["محذوف", "مذكور — الاتنين صح"]},
+        {"pair": ["thought ðət ✅", "thought THAT ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["explained that", "explained. that. ❌"], "meaning": ["موصول", "مقطّع"]}
+      ],
+      "word_practice": ["said that", "told me that", "thought that", "explained that", "knew that", "hoped that", "believed that", "mentioned that", "agreed that", "realised that"],
+      "sentence_practice": [
+        "He said that he was tired.",
+        "She thought that it was true.",
+        "They agreed that it was a good idea."
+      ],
+      "record_this": "He said that he was tired and wanted to rest. She thought that it was true, but she wasn't sure. In the end, they all agreed that it was a good idea.",
+      "self_check": "Say 'he said that he was tired'. Is 'that' weak /ðət/ (or droppable), never stressed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'said' /sed/ vs 'told' /təʊld/"],
+      "isolation": {
+        "instructions": "'Said' /sed/ (short /e/) takes NO person directly: 'he said (that)…'. 'Told' /təʊld/ needs a person: 'he told ME…'. Different verb, different pattern.",
+        "instructions_ar": "'said' /sed/ مش بتاخد شخص مباشرة: 'he said…'. 'told' /təʊld/ لازم شخص: 'he told me…'.",
+        "practice": ["he SAID (no one)", "he TOLD me", "said /sed/ short, told /təʊld/ glide"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he told me ✅", "he said me ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["he said (that) ✅", "he told (that) ❌ (needs person)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["said /sed/", "sad /sæd/"], "meaning": ["قال", "حزين"]},
+        {"pair": ["told /təʊld/", "tolled ❌"], "meaning": ["أخبر", "—"]},
+        {"pair": ["told me to go", "said me to go ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["he said", "she said", "they said", "he told me", "she told us", "they told him", "told everyone", "said hello", "told a story", "said sorry"],
+      "sentence_practice": [
+        "He said he was busy.",
+        "She told me the news.",
+        "They told us to wait."
+      ],
+      "record_this": "He said he was busy this week. She told me the good news yesterday. They told us to wait outside until the meeting finished.",
+      "self_check": "Do you use 'told' WITH a person (told me) and 'said' WITHOUT (he said)?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'to' in 'told me to …'"],
+      "isolation": {
+        "instructions": "Reported commands use 'told/asked + person + to + verb', with weak 'to' /tə/: 'She told me to WAIT'. Stress the person and the action verb.",
+        "instructions_ar": "الأوامر المنقولة: 'told/asked + شخص + to + فعل'، والـ 'to' خفيفة: 'She told me to WAIT'.",
+        "practice": ["told me tə WAIT", "asked him tə STAY", "weak to, strong verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["told me tə wait ✅", "told me TWO wait ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["asked me to help", "asked me for help"], "meaning": ["طلب مني أن أساعد", "طلب مساعدتي"]},
+        {"pair": ["told me to go ✅", "told me go ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["to /tə/ (weak)", "to /tuː/ (emphasis)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["warned me not to ✅", "warned me to not ~"], "meaning": ["طبيعي", "أقل شيوعًا"]}
+      ],
+      "word_practice": ["told me to wait", "asked him to stay", "told her to come", "asked us to help", "told them to leave", "advised me to rest", "warned us not to", "reminded me to call", "invited her to join", "encouraged him to try"],
+      "sentence_practice": [
+        "She told me to wait here.",
+        "He asked us to help him.",
+        "They advised me to rest."
+      ],
+      "record_this": "She told me to wait here until she got back. He asked us to help him move the boxes. The doctor advised me to rest and reminded me to take my medicine.",
+      "self_check": "Say 'told me to wait'. Does 'to' reduce to /tə/, with stress on 'wait'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["reporting-verb stress & rhythm"],
+      "isolation": {
+        "instructions": "The reporting frame ('he said', 'she told me') is usually light; the REPORTED message is stressed: 'He said he'd be LATE'. The listener cares about the message, not the frame.",
+        "instructions_ar": "إطار النقل ('he said') خفيف؛ الرسالة المنقولة هي المنبورة: 'He said he'd be LATE'.",
+        "practice": ["he said he'd be LATE", "she told me she was LEAVing", "frame weak, message strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he said he'd be late ✅", "HE SAID he'd be late ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["message stressed ✅", "frame stressed ❌"], "meaning": ["طبيعي", "غريب"]},
+        {"pair": ["she told me she'd come", "SHE TOLD ME she'd come ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["reporting frame (weak)", "reported clause (strong)"], "meaning": ["خفيف", "منبور"]},
+        {"pair": ["he mentioned he was tired", "HE MENTIONED ❌"], "meaning": ["طبيعي", "ثقيل"]}
+      ],
+      "word_practice": ["he said he'd", "she told me she", "they said they", "he mentioned he", "she explained she", "I thought you", "we heard they", "he promised he", "she admitted she", "they claimed they"],
+      "sentence_practice": [
+        "He said he'd be late.",
+        "She told me she was leaving.",
+        "They said they'd already eaten."
+      ],
+      "record_this": "He said he'd be late for the meeting. She told me she was leaving the company. They said they'd already eaten, so we didn't cook for them.",
+      "self_check": "Say 'he said he'd be late'. Is the frame light and 'late' the stressed word?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["backshift rhythm (present → past)"],
+      "isolation": {
+        "instructions": "When we report, the tense shifts back: 'I am tired' → 'He said he WAS tired'; 'I will call' → 'She said she WOULD call'. Say both aloud to feel the shift; keep the frame weak.",
+        "instructions_ar": "عند النقل الزمن يتراجع: 'I am tired' → 'He said he was tired'. كرّرهم بصوت عالي لتحس بالتحوّل.",
+        "practice": ["'I am tired' → he said he WAS tired", "'I will come' → she said she'd COME", "present → past"]
+      },
+      "minimal_pairs": [
+        {"pair": ["he said he was tired ✅", "he said he is tired ~"], "meaning": ["تراجع الزمن", "أحيانًا مقبول"]},
+        {"pair": ["she said she would ✅", "she said she will ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["they said they had done", "they said they have done ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["can → could", "will → would"], "meaning": ["تراجع", "تراجع"]},
+        {"pair": ["he said he could come", "he said he can come ~"], "meaning": ["تراجع", "أحيانًا"]}
+      ],
+      "word_practice": ["said he was", "said she would", "said they had", "said he could", "told me he was", "thought it would", "said she'd finished", "said he might", "told us they were", "said it was"],
+      "sentence_practice": [
+        "He said he was tired.",
+        "She said she would call later.",
+        "They said they had finished."
+      ],
+      "record_this": "He said he was tired and would go home early. She said she would call me later that evening. They said they had already finished the work, so there was nothing left to do.",
+      "self_check": "Report a present sentence as past: 'I am busy' → 'He said he was busy.' Did the tense shift back?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 11 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["said ðət he was ✅", "said THAT he was ❌"], ["he told me ✅", "he said me ❌"], ["told me tə wait", "told me TWO wait ❌"],
+        ["he said he'd be LATE ✅", "HE SAID he'd be late ❌"], ["said /sed/", "sad"], ["said he would ✅", "said he will ❌"]
+      ],
+      "challenge_sentences": [
+        "He said that he was tired and told me to go home.",
+        "She told me she would call later.",
+        "They said they had already eaten.",
+        "The teacher told us to be quiet."
+      ],
+      "record_this": "He said that he was tired and told me to go home without him. She told me she would call later that night. They said they had already eaten, so we relaxed. Earlier, the teacher told us to be quiet during the exam.",
+      "self_check": "Three checks: weak 'that', said-vs-told used correctly, and the tense shifted back."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reporting a conversation or some news. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تنقل محادثة أو خبرًا، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Yesterday I met an old friend, and he told me some surprising news. He said that he had left his job and was starting his own business. He told me he had been planning it for years. I asked him why, and he explained that he wanted more freedom. He said it would be difficult at first, but he thought it was worth it. He told me not to worry about him and asked me to visit his new office soon. I said I would come next week. He seemed happy, and he told me he had never felt so sure about anything.",
+        "sounds_to_check": {
+          "weak 'that'": "said that he had left, explained that he wanted, thought that it was worth",
+          "said vs told": "he told me, he said, I asked him, I said",
+          "weak 'to' in commands": "told me not to worry, asked me to visit",
+          "reporting frame weak, message strong": "he SAID he had LEFT his JOB",
+          "backshift": "had left, was starting, had been planning, wanted, would be, had never felt"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'that' weak, said/told correct, commands with weak 'to', backshift natural. Ready for week 12.",
+        "70_89": "Good; occasional 'said me' or stressed 'that'.",
+        "50_69": "said/told mixed, or tense not shifted. Repeat days 2 and 5.",
+        "below_50": "Redo days 1-5, reporting short sentences aloud with the tense shift."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The linking 'that' is weak /ðət/ and can be dropped — never stress it.",
+      "'told' needs a person (told me); 'said' does not (he said).",
+      "Reported commands: told/asked + person + weak 'to' + verb.",
+      "Report present as past (backshift): 'I am' → 'he said he was'; 'will' → 'would'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

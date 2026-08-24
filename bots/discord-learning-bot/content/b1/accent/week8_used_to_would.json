@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 8,
+  "focus": "'used to' /juːstə/ reduction · 'would' → 'd for repeated past · 'didn't use to' · weak 'to' in habits · past-habit rhythm",
+  "focus_ar": "'used to' /juːstə/، و 'would' → 'd للماضي المتكرر، و 'didn't use to'، و 'to' الخفيفة، وإيقاع العادات الماضية",
+  "arabic_challenge": "'Used to' is pronounced /juːstə/ (one blended unit, /s/ not /z/), which learners often say as 'used-too' with a full /tuː/. 'Would' for past habits reduces to 'd, and both need weak 'to'.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'used to' /juːstə/"],
+      "isolation": {
+        "instructions": "'Used to' blends into /juːstə/: the 'd' + 't' merge into a single /s...t/, and 'to' weakens. 'I used to play' = /aɪ juːstə pleɪ/. Not 'used-too'.",
+        "instructions_ar": "'used to' بتندمج في /juːstə/: الـ d+t بيبقوا /s..t/ و 'to' تخف. 'I used to play' = /juːstə/.",
+        "practice": ["yoos-tə play", "yoos-tə live", "one blended unit"]
+      },
+      "minimal_pairs": [
+        {"pair": ["used to /juːstə/ (habit)", "used to /juːzd tuː/ (accustomed)"], "meaning": ["كان يفعل", "معتاد على"]},
+        {"pair": ["yoos-tə play ✅", "used-TOO play ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["used to (past habit)", "use to ❌ (in +/statement)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["I used to live", "I use to live ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["/s/ in used to", "/z/ ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["used to play", "used to live", "used to be", "used to have", "used to go", "used to work", "used to like", "used to smoke", "used to walk", "used to visit"],
+      "sentence_practice": [
+        "I used to play football.",
+        "We used to live in Cairo.",
+        "She used to be very shy."
+      ],
+      "record_this": "When I was young, I used to play football every day. We used to live in Cairo, near the river. My sister used to be very shy, but now she's confident.",
+      "self_check": "Say 'used to play'. Is it a blended /juːstə/ with an /s/, not 'used-too'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'would' → 'd for repeated past"],
+      "isolation": {
+        "instructions": "For repeated past ACTIONS, 'would' works like 'used to' and reduces to 'd: 'Every summer we'd visit grandma'. (Use it for actions, not states.) Stress the main verb.",
+        "instructions_ar": "للأفعال المتكررة في الماضي، 'would' زي 'used to' وتخف لـ 'd: 'we'd visit'. (للأفعال مش الحالات.)",
+        "practice": ["we'd VISit", "he'd ALways come", "every summer we'd..."]
+      },
+      "minimal_pairs": [
+        {"pair": ["we'd visit (past habit)", "we'd visit (would, conditional)"], "meaning": ["عادة ماضية", "شرطية — السياق"]},
+        {"pair": ["he'd always come ✅", "he always come ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["would visit (action) ✅", "would be shy ❌ (state → used to)"], "meaning": ["فعل", "حالة"]},
+        {"pair": ["we'd /wiːd/", "weed"], "meaning": ["كنا", "عشب"]},
+        {"pair": ["they'd play", "they played (once)"], "meaning": ["متكرر", "مرة"]}
+      ],
+      "word_practice": ["we'd visit", "he'd come", "they'd play", "she'd sing", "we'd go", "I'd walk", "they'd meet", "he'd tell", "we'd stay", "she'd bring"],
+      "sentence_practice": [
+        "Every summer we'd visit my grandmother.",
+        "He'd always tell us stories.",
+        "On Fridays we'd go to the market."
+      ],
+      "record_this": "Every summer we'd visit my grandmother in the village. In the evenings she'd always tell us old stories. And on Fridays we'd all go to the market together.",
+      "self_check": "Say 'we'd visit'. Is 'would' contracted to 'd, with stress on 'visit'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'didn't use to' + questions"],
+      "isolation": {
+        "instructions": "Negative and question drop the 'd': 'didn't USE to' /juːs tə/ and 'Did you USE to…?'. Note it's 'use to' (no 'd') after 'did'. Say 'didn't yoos-tə'.",
+        "instructions_ar": "النفي والسؤال بيشيلوا الـ 'd': 'didn't use to' و 'Did you use to…?'. بعد 'did' تبقى 'use to' بدون d.",
+        "practice": ["didn't yoos-tə", "did you yoos-tə?", "no 'd' after did"]
+      },
+      "minimal_pairs": [
+        {"pair": ["didn't use to ✅", "didn't used to ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["Did you use to…? ✅", "Did you used to…? ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["use to /juːstə/", "used to /juːstə/"], "meaning": ["بعد did", "الإثبات"]},
+        {"pair": ["I didn't use to like it", "I used to like it"], "meaning": ["نفي", "إثبات"]},
+        {"pair": ["didn't /dɪdnt/", "didn't /dɪdənt/ (over-full)"], "meaning": ["طبيعي", "متكلّف"]}
+      ],
+      "word_practice": ["didn't use to", "did you use to", "didn't use to like", "did you use to live", "didn't use to work", "did she use to", "didn't use to have", "did they use to", "didn't use to go", "did he use to"],
+      "sentence_practice": [
+        "I didn't use to like coffee.",
+        "Did you use to live here?",
+        "She didn't use to work weekends."
+      ],
+      "record_this": "I didn't use to like coffee, but now I drink it every day. Did you use to live here as a child? My mother didn't use to work weekends, but things changed.",
+      "self_check": "Say 'didn't use to like'. Is it 'use to' (no 'd') after 'didn't'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'used to' vs 'be used to' (accustomed)"],
+      "isolation": {
+        "instructions": "Do not confuse: 'I used to smoke' /juːstə/ (past habit, now stopped) vs 'I'm used to the noise' /juːst tuː/ (accustomed, + noun/-ing). Different meaning, slightly different stress.",
+        "instructions_ar": "متخلطش: 'I used to smoke' (عادة ماضية) مقابل 'I'm used to the noise' (معتاد على، + اسم/-ing).",
+        "practice": ["I used to smoke (past)", "I'm used to the noise (accustomed)", "be/get used to + noun/-ing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["used to smoke (past habit)", "used to smoking (accustomed)"], "meaning": ["كان يدخّن", "معتاد على التدخين"]},
+        {"pair": ["I used to live", "I'm used to living"], "meaning": ["كنت أعيش", "معتاد على العيش"]},
+        {"pair": ["used to + base verb", "used to + noun/-ing"], "meaning": ["عادة ماضية", "معتاد على"]},
+        {"pair": ["did you use to work?", "are you used to the work?"], "meaning": ["عادة ماضية", "معتاد؟"]},
+        {"pair": ["got used to it", "used to it (past) ❌"], "meaning": ["اعتاد عليه", "خطأ"]}
+      ],
+      "word_practice": ["used to smoke", "used to smoking", "used to live", "used to living", "I'm used to", "get used to", "not used to", "used to the noise", "used to waking up", "used to the weather"],
+      "sentence_practice": [
+        "I used to live in a village.",
+        "Now I'm used to living in the city.",
+        "I'm not used to the noise yet."
+      ],
+      "record_this": "I used to live in a small village, so at first the city was strange. But now I'm used to living here, and I've got used to the traffic. I'm still not used to the noise at night, though.",
+      "self_check": "Can you tell your two 'used to' apart — past habit (+ base verb) vs accustomed (+ noun/-ing)?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["past-habit rhythm & contrast with now"],
+      "isolation": {
+        "instructions": "These stories contrast past and present: 'I USED to be shy, but NOW I'm confident'. Stress 'used to' lightly and put the weight on the contrast words (shy / now / confident).",
+        "instructions_ar": "القصص دي بتقارن الماضي بالحاضر: 'I used to be shy, but now...'. النبر على كلمات المقارنة.",
+        "practice": ["I used to be SHY, but NOW I'm CONfident", "we used to WALK, now we DRIVE", "stress the contrast"]
+      },
+      "minimal_pairs": [
+        {"pair": ["used to (then)", "now (present)"], "meaning": ["وقتها", "الآن"]},
+        {"pair": ["contrast stressed ✅", "flat ❌"], "meaning": ["واضح", "ممل"]},
+        {"pair": ["but NOW ✅", "but now (weak) ❌"], "meaning": ["توكيد المقارنة", "ضعيف"]},
+        {"pair": ["used to walk / now drive", "walk and drive (no contrast)"], "meaning": ["تغيّر", "بلا تباين"]},
+        {"pair": ["these days / nowadays", "used to (past)"], "meaning": ["هذه الأيام", "قديمًا"]}
+      ],
+      "word_practice": ["but now", "these days", "nowadays", "used to be", "now I'm", "back then", "in those days", "not anymore", "things have changed", "no longer"],
+      "sentence_practice": [
+        "I used to be shy, but now I'm confident.",
+        "We used to walk everywhere; now we drive.",
+        "People used to write letters; nowadays they text."
+      ],
+      "record_this": "I used to be really shy, but now I'm much more confident. We used to walk everywhere as kids; these days we just drive. People used to write long letters; nowadays they simply text.",
+      "self_check": "Does the contrast (used to … but now …) come through, with the change words stressed?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 8 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["yoos-tə play ✅", "used-TOO play ❌"], ["we'd visit (habit)", "we visit ❌"], ["didn't use to ✅", "didn't used to ❌"],
+        ["used to smoke (habit)", "used to smoking (accustomed)"], ["we'd /wiːd/", "weed"], ["but NOW ✅", "but now (flat) ❌"]
+      ],
+      "challenge_sentences": [
+        "I used to play football, and every weekend we'd have a match.",
+        "Did you use to live here?",
+        "I didn't use to like coffee, but now I love it.",
+        "I used to live in a village; now I'm used to the city."
+      ],
+      "record_this": "I used to play football when I was young, and every weekend we'd have a big match. Did you use to live in this area? I didn't use to like coffee, but now I love it. I used to live in a village; now I'm used to the busy city.",
+      "self_check": "Three checks: blended 'used to' /juːstə/, contracted 'we'd' for habits, and 'use to' (no d) after did/didn't."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself comparing your past life with now. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تقارن حياتك قديمًا بالآن، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Life used to be very different when I was a child. We used to live in a small village, and we didn't use to have much money, but we were happy. Every morning I'd walk to school with my friends, and after class we'd play in the fields until sunset. My grandmother used to cook for the whole family, and on special days she'd make my favourite dish. I didn't use to like vegetables, but she'd always find a way to make me eat them! These days everything has changed. I live in the city now, and I'm used to a faster life. Sometimes I miss how things used to be.",
+        "sounds_to_check": {
+          "'used to' /juːstə/": "used to be, used to live, used to cook",
+          "'would' → 'd (repeated past)": "I'd walk, we'd play, she'd make, she'd find",
+          "'didn't use to' (no d)": "didn't use to have, didn't use to like",
+          "'be used to' (accustomed)": "I'm used to a faster life",
+          "past/present contrast": "used to be different … these days everything has changed"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'used to' blended, 'would' contracted, negatives correct, contrast clear. Ready for week 9.",
+        "70_89": "Good; occasional 'used-too'.",
+        "50_69": "'used to' said as 'used-too', or 'didn't used to'. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5, blending 'used to' into /juːstə/."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'used to' blends into /juːstə/ (with /s/) — one unit, not 'used-too'.",
+      "'would' → 'd expresses repeated past ACTIONS (not states): 'we'd visit'.",
+      "After 'did/didn't' it's 'use to' (no 'd'): 'Did you use to…?', 'I didn't use to…'.",
+      "Don't confuse past-habit 'used to + verb' with accustomed 'be used to + noun/-ing'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

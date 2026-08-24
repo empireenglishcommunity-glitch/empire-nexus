@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 3,
+  "focus": "'going to' → /ɡənə/ and 'll /l/ in fast speech · stress on time words · 'present continuous for arrangements' rhythm · weak 'at/on/in' + time",
+  "focus_ar": "'going to' → /ɡənə/ و 'll في الكلام السريع، والنبر على كلمات الزمن، وإيقاع الترتيبات، وحروف الوقت الخفيفة",
+  "arabic_challenge": "B1 juggles three futures; the phonological risk is over-pronouncing 'going to' and stressing the auxiliary instead of the time/plan word. Time expressions ('at six', 'on Monday') also need weak prepositions.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'going to' → /ɡənə/ (before verb)"],
+      "isolation": {
+        "instructions": "Before a verb, 'going to' reduces to /ɡənə/: 'I'm gonna call'. Before a place it stays full: 'going to Cairo'. The main verb takes the stress.",
+        "instructions_ar": "قبل الفعل 'going to' → /ɡənə/. قبل المكان تفضل كاملة. النبر على الفعل الرئيسي.",
+        "practice": ["I'm-gonna-CALL", "we're-gonna-MEET", "going to Cairo (full)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["gonna call ✅", "going TWO call ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["gonna meet ✅", "gonna (before place) ❌"], "meaning": ["قبل فعل", "خطأ"]},
+        {"pair": ["I'm gonna ✅", "I gonna ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["going to Cairo (full)", "gonna Cairo ❌"], "meaning": ["مكان", "خطأ"]},
+        {"pair": ["gonna /ɡənə/", "gunner ❌"], "meaning": ["سوف", "—"]}
+      ],
+      "word_practice": ["gonna call", "gonna meet", "gonna start", "gonna finish", "gonna travel", "gonna study", "gonna help", "gonna leave", "gonna try", "gonna stay"],
+      "sentence_practice": [
+        "I'm going to call her tonight.",
+        "We're going to meet at six.",
+        "They're going to start next week."
+      ],
+      "record_this": "I'm going to call her tonight, and we're going to meet at six. They're going to start the project next week, so I'm going to prepare everything.",
+      "self_check": "Say 'I'm going to call'. Does 'going to' become 'gonna', stressed on 'call'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'ll /l/ for instant decisions"],
+      "isolation": {
+        "instructions": "'Will' contracts to 'll: 'I'll call you back'. Use it for on-the-spot decisions and predictions. One syllable, glued to the pronoun, stress on the verb.",
+        "instructions_ar": "'will' → 'll: 'I'll call'. للقرارات اللحظية والتوقعات. مقطع واحد ملزوق بالضمير، النبر على الفعل.",
+        "practice": ["I'll-CALL, we'll-SEE", "it'll-BE-fine", "one syllable + verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll /aɪl/", "aisle"], "meaning": ["سأفعل", "ممر"]},
+        {"pair": ["it'll /ɪtl/ be", "it will be (over-full)"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["we'll /wiːl/", "wheel"], "meaning": ["سنفعل", "عجلة"]},
+        {"pair": ["I'll call ✅", "I call ❌ (present)"], "meaning": ["مستقبل", "مضارع"]},
+        {"pair": ["they'll /ðeɪl/", "they ❌"], "meaning": ["صحيح", "ناقص"]}
+      ],
+      "word_practice": ["I'll call", "we'll see", "it'll be", "I'll help", "they'll come", "she'll know", "we'll manage", "I'll try", "it'll work", "you'll like it"],
+      "sentence_practice": [
+        "Don't worry, I'll help you.",
+        "It'll be fine.",
+        "OK, I'll call you later."
+      ],
+      "record_this": "Don't worry, I'll help you with that. It'll be fine, I promise. OK, I'll call you later and we'll decide together.",
+      "self_check": "Say 'I'll help'. Is it one smooth syllable + stressed verb, not 'I will help'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["stress on time words"],
+      "isolation": {
+        "instructions": "Future plans put the stress on WHEN: 'I'm meeting her at SIX', 'We're leaving on MONday'. The future marker stays weak; the time word is prominent.",
+        "instructions_ar": "خطط المستقبل النبر فيها على الزمن: 'at SIX'، 'on MONday'. علامة المستقبل خفيفة والزمن بارز.",
+        "practice": ["...at SIX", "on MONday", "next WEEK, toMORrow"]
+      },
+      "minimal_pairs": [
+        {"pair": ["at SIX ✅", "AT six ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["on MONday ✅", "ON monday ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["next WEEK ✅", "NEXT week ~"], "meaning": ["طبيعي", "ممكن"]},
+        {"pair": ["toMORow ✅", "TOmorrow ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["this EVEning ✅", "THIS evening ~"], "meaning": ["طبيعي", "ممكن"]}
+      ],
+      "word_practice": ["at six", "on Monday", "next week", "tomorrow", "this evening", "at the weekend", "in July", "on Friday night", "next month", "later today"],
+      "sentence_practice": [
+        "I'm meeting her at six.",
+        "We're leaving on Monday.",
+        "They're arriving next week."
+      ],
+      "record_this": "I'm meeting her at six this evening. We're leaving on Monday morning, and they're arriving next week, probably on Friday.",
+      "self_check": "Say 'I'm meeting her at six'. Is 'six' the strongest word?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["present continuous for arrangements"],
+      "isolation": {
+        "instructions": "Fixed arrangements use present continuous: 'I'm seeing the doctor tomorrow'. It sounds like now, but the time word makes it future. Auxiliary weak, verb + time stressed.",
+        "instructions_ar": "الترتيبات المؤكدة بالمضارع المستمر: 'I'm seeing the doctor tomorrow'. كلمة الزمن تخليها مستقبل.",
+        "practice": ["I'm SEEing the doctor toMORow", "we're MEETing at NINE", "arrangement = continuous + time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'm seeing him tomorrow (arrangement)", "I'm seeing him now"], "meaning": ["مستقبل مرتّب", "الآن"]},
+        {"pair": ["we're meeting at nine ✅", "we meet at nine (routine)"], "meaning": ["ترتيب", "عادة"]},
+        {"pair": ["I'm flying on Monday", "I fly on Monday (schedule)"], "meaning": ["ترتيب شخصي", "جدول ثابت"]},
+        {"pair": ["she's coming later", "she comes later ❌"], "meaning": ["ترتيب", "خطأ"]},
+        {"pair": ["they're leaving soon", "they leave soon (timetable)"], "meaning": ["ترتيب", "جدول"]}
+      ],
+      "word_practice": ["I'm seeing", "we're meeting", "she's coming", "they're leaving", "I'm flying", "we're having", "he's starting", "I'm visiting", "we're going", "she's arriving"],
+      "sentence_practice": [
+        "I'm seeing the doctor tomorrow.",
+        "We're meeting the team at nine.",
+        "She's coming to dinner tonight."
+      ],
+      "record_this": "I'm seeing the doctor tomorrow morning. We're meeting the whole team at nine, and she's coming to dinner tonight, so I'm cooking something special.",
+      "self_check": "Does the arrangement flow with a weak auxiliary and stress on the verb + time word?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["choosing the future form by rhythm"],
+      "isolation": {
+        "instructions": "Contrast all three: 'I'll get it' (instant decision), 'I'm going to study' (intention), 'I'm meeting her at six' (arrangement). Each keeps a weak marker and a stressed content word.",
+        "instructions_ar": "قارن الثلاثة: 'I'll get it' (قرار)، 'I'm gonna study' (نية)، 'I'm meeting her at six' (ترتيب). كلها علامة خفيفة + كلمة منبورة.",
+        "practice": ["I'll GET it (decision)", "I'm gonna STUDY (intention)", "I'm MEETing her at SIX (arrangement)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'll help (decision now)", "I'm going to help (plan)"], "meaning": ["قرار لحظي", "خطة"]},
+        {"pair": ["gonna study (intention)", "studying tonight (arrangement)"], "meaning": ["نية", "ترتيب"]},
+        {"pair": ["it'll rain (prediction)", "it's going to rain (evidence)"], "meaning": ["توقع", "دليل حاضر"]},
+        {"pair": ["we'll see (decision)", "we're seeing (arrangement)"], "meaning": ["قرار", "ترتيب"]},
+        {"pair": ["I think I'll... (spontaneous)", "I'm going to... (decided)"], "meaning": ["عفوي", "مقرر"]}
+      ],
+      "word_practice": ["I'll get it", "I'm going to study", "I'm meeting", "it'll rain", "it's going to rain", "we'll see", "we're seeing", "I'll try", "I'm going to try", "I'm leaving soon"],
+      "sentence_practice": [
+        "That's the phone — I'll get it.",
+        "I'm going to study medicine.",
+        "I'm meeting my friends at seven."
+      ],
+      "record_this": "That's the phone — I'll get it. Next year I'm going to study medicine. And tonight I'm meeting my friends at seven, so I'll probably be home late.",
+      "self_check": "Can you switch between 'I'll', 'gonna' and the continuous, each with a weak marker and stressed content?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["gonna call ✅", "going TWO call ❌"], ["I'll /aɪl/", "aisle"], ["at SIX ✅", "AT six ❌"],
+        ["I'm seeing (arrangement)", "I'm seeing (now)"], ["it'll rain", "it will rain (over-full)"], ["on MONday", "ON monday ❌"]
+      ],
+      "challenge_sentences": [
+        "I'm going to study tonight, but first I'll help you.",
+        "We're meeting at six on Monday.",
+        "It's going to rain, so I'll take an umbrella.",
+        "I'm flying to Cairo next week."
+      ],
+      "record_this": "I'm going to study tonight, but first I'll help you with your homework. We're meeting at six on Monday. Look at those clouds — it's going to rain, so I'll take an umbrella. By the way, I'm flying to Cairo next week.",
+      "self_check": "Three checks: 'gonna' before verbs, 'll for decisions, and stress on the time words."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about your plans and arrangements. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن خططك وترتيباتك، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Next month is going to be very busy. On Monday I'm meeting my new manager at nine, and on Wednesday I'm flying to Cairo for a conference. I'm going to give a presentation there, so this week I'll prepare my slides. I think it'll go well. In the evening I'm having dinner with an old friend — we're meeting at a restaurant near the river. After the trip, I'm going to take a short holiday. I'll probably travel to the coast, and I'm definitely going to relax. Don't worry, I'll send you photos while I'm away.",
+        "sounds_to_check": {
+          "'gonna' (intention)": "going to be busy, going to give, going to take, going to relax",
+          "'ll (decisions/predictions)": "I'll prepare, it'll go well, I'll probably travel, I'll send",
+          "present continuous (arrangements)": "I'm meeting, I'm flying, I'm having, we're meeting",
+          "stress on time words": "on MONday at NINE, on WEDNESday, next MONTH",
+          "full 'going to' before place": "flying to Cairo, travel to the coast"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Three futures used naturally, markers weak, time words stressed. Ready for week 4.",
+        "70_89": "Good; occasional over-full 'going to'.",
+        "50_69": "Auxiliaries too strong or 'gonna' before places. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping each future marker weak."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "All three futures keep a WEAK marker and stress the content/time word.",
+      "'gonna' before a verb; keep 'going to' full before a place.",
+      "'ll is for on-the-spot decisions and predictions; present continuous is for fixed arrangements.",
+      "Stress the WHEN — that is what makes a plan sound like a plan."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 12,
+  "focus": "Past participle endings · weak 'is/are/was/were' + participle · weak 'by' /baɪ/ + agent · passive rhythm (result-focus) · 'been' in passive",
+  "focus_ar": "نهايات التصريف الثالث، والـ be الخفيفة + التصريف الثالث، و 'by' الخفيفة + الفاعل، وإيقاع المبني للمجهول",
+  "arabic_challenge": "The passive stacks a weak 'be' + a participle ('is made', 'was built'), and 'by + agent' is optional and weak. Arabic learners stress the 'be' verb and over-pronounce 'by', breaking the result-focused rhythm.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["past participle endings in the passive"],
+      "isolation": {
+        "instructions": "The passive needs the correct participle: 'is MADE', 'was BUILT', 'are GROWN', 'was WRITTEN'. Regular ones end in -ed (/t/ /d/ /ɪd/ as before); irregulars change form. The participle is stressed.",
+        "instructions_ar": "المبني للمجهول يحتاج التصريف الثالث الصحيح: is made، was built. المنتظم -ed، والشاذ يتغيّر. التصريف منبور.",
+        "practice": ["is MADE, was BUILT", "are GROWN, was WRITTEN", "participle = stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was built ✅", "was builded ❌"], "meaning": ["صحيح (شاذ)", "خطأ"]},
+        {"pair": ["is made ✅", "is maked ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["was written ✅", "was wrote ❌"], "meaning": ["تصريف ثالث", "ماضٍ خطأ"]},
+        {"pair": ["are grown ✅", "are grew ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["was taken ✅", "was took ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["is made", "was built", "are grown", "was written", "is sold", "was taken", "are produced", "was found", "is known", "was chosen"],
+      "sentence_practice": [
+        "Coffee is grown in Brazil.",
+        "The bridge was built in 1990.",
+        "This song was written by my friend."
+      ],
+      "record_this": "Coffee is grown in Brazil and sold all over the world. The old bridge was built in 1990. This song was written by a friend of mine.",
+      "self_check": "Say 'was built'. Is it the participle 'built' (not 'builded' or 'build')?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'is/are' + participle (present passive)"],
+      "isolation": {
+        "instructions": "In the present passive the 'be' verb is weak; the participle is stressed: 'It's MADE in China', 'They're SOLD everywhere'. The auxiliary almost disappears.",
+        "instructions_ar": "في المضارع المجهول فعل be خفيف؛ التصريف الثالث منبور: 'It's MADE in China'.",
+        "practice": ["it's MADE here", "they're SOLD there", "weak be, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it's made ✅", "it makes ❌ (active)"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["they're sold ✅", "they sell ❌ (active)"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["is grown (weak is)", "IS grown ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["are produced ✅", "are produce ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["it's known ✅", "it knows ❌"], "meaning": ["مجهول", "خطأ"]}
+      ],
+      "word_practice": ["is made", "are sold", "is grown", "are produced", "is known", "are used", "is spoken", "are kept", "is served", "are exported"],
+      "sentence_practice": [
+        "These shoes are made in Italy.",
+        "English is spoken here.",
+        "The rooms are cleaned every day."
+      ],
+      "record_this": "These shoes are made in Italy and sold worldwide. English is spoken in this hotel. The rooms are cleaned every day and breakfast is served at seven.",
+      "self_check": "Say 'these shoes are made in Italy'. Is 'are' weak and 'made' stressed?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'was/were' + participle (past passive)"],
+      "isolation": {
+        "instructions": "Past passive: weak 'was/were' + participle: 'It was BUILT', 'They were FOUND'. Same rule — the auxiliary is light, the participle carries the stress.",
+        "instructions_ar": "الماضي المجهول: was/were الخفيفة + التصريف الثالث. المساعد خفيف والتصريف منبور.",
+        "practice": ["it wəz BUILT", "they wə FOUND", "weak was/were, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it wəz built ✅", "it WAS built ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["was built (passive)", "built (active past)"], "meaning": ["مجهول", "معلوم"]},
+        {"pair": ["were found ✅", "were find ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["was stolen ✅", "was stole ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["was made", "were made"], "meaning": ["مفرد", "جمع"]}
+      ],
+      "word_practice": ["was built", "were found", "was stolen", "were made", "was invented", "were destroyed", "was discovered", "were sent", "was painted", "were caught"],
+      "sentence_practice": [
+        "The pyramids were built long ago.",
+        "My car was stolen last night.",
+        "The results were sent yesterday."
+      ],
+      "record_this": "The pyramids were built thousands of years ago. My car was stolen last night, but it was found this morning. The exam results were sent to everyone yesterday.",
+      "self_check": "Say 'the car was stolen'. Is 'was' weak, with stress on 'stolen'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["weak 'by' /baɪ/ + agent"],
+      "isolation": {
+        "instructions": "When we mention the doer, 'by + agent' is added, usually weak: 'painted by PiCASSo'. The agent is stressed, 'by' is light. Often 'by...' is left out if the doer is unknown or unimportant.",
+        "instructions_ar": "لما نذكر الفاعل، 'by + الفاعل' غالبًا خفيفة: 'painted by PiCASSo'. الفاعل منبور و 'by' خفيفة.",
+        "practice": ["painted baɪ PiCASSo", "written baɪ SHAKEspeare", "by weak, agent strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["by /baɪ/ (agent)", "buy /baɪ/"], "meaning": ["بواسطة", "يشتري"]},
+        {"pair": ["painted by Picasso ✅", "painted BY Picasso ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["was written by...", "wrote (active)"], "meaning": ["مجهول + فاعل", "معلوم"]},
+        {"pair": ["made by hand", "made by machine"], "meaning": ["يدويًا", "بالآلة"]},
+        {"pair": ["stolen (no agent)", "stolen by someone"], "meaning": ["بدون فاعل", "مع فاعل"]}
+      ],
+      "word_practice": ["by Picasso", "by hand", "by a machine", "by the government", "by my friend", "by experts", "by mistake", "by a company", "by the teacher", "by nature"],
+      "sentence_practice": [
+        "This picture was painted by Picasso.",
+        "The bread is made by hand.",
+        "The law was passed by the government."
+      ],
+      "record_this": "This famous picture was painted by Picasso. The bread here is made by hand, not by a machine. The new law was passed by the government last month.",
+      "self_check": "Say 'painted by Picasso'. Is 'by' weak, with the agent 'Picasso' stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["passive rhythm (result-focus)"],
+      "isolation": {
+        "instructions": "We choose the passive to focus on the RESULT/thing, not the doer. So the stress sits on WHAT happened: 'The window was BROKEN', 'The report has been FINISHED'. Say it valuing the result.",
+        "instructions_ar": "نختار المجهول للتركيز على النتيجة/الشيء مش الفاعل. فالنبر على 'إيه اللي حصل'.",
+        "practice": ["the window was BROKen", "the report's been FINished", "stress the result"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the window was broken (result)", "someone broke the window (doer)"], "meaning": ["تركيز على النتيجة", "تركيز على الفاعل"]},
+        {"pair": ["has been finished ✅", "has been finish ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["is being repaired (now)", "is repaired (fact)"], "meaning": ["الآن", "حقيقة"]},
+        {"pair": ["been done ✅", "been do ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["it's been sold", "it sold ❌"], "meaning": ["مجهول تام", "خطأ"]}
+      ],
+      "word_practice": ["was broken", "has been finished", "is being repaired", "has been done", "was cancelled", "is being built", "has been sold", "was delivered", "is being cleaned", "has been changed"],
+      "sentence_practice": [
+        "The window was broken during the storm.",
+        "The report has been finished.",
+        "The road is being repaired."
+      ],
+      "record_this": "The window was broken during the storm last night. Good news — the report has been finished and sent. The main road is being repaired, so traffic is slow today.",
+      "self_check": "Say 'the report has been finished'. Does the stress fall on the result 'finished', with weak auxiliaries?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 12 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["was built ✅", "was builded ❌"], ["it's made (passive)", "it makes (active)"], ["it wəz built", "it WAS built ❌"],
+        ["by /baɪ/", "buy"], ["has been finished ✅", "has been finish ❌"], ["was written ✅", "was wrote ❌"]
+      ],
+      "challenge_sentences": [
+        "Coffee is grown in Brazil and exported worldwide.",
+        "The bridge was built in 1990 by a French company.",
+        "The report has been finished and sent.",
+        "My car was stolen but it was found this morning."
+      ],
+      "record_this": "Coffee is grown in Brazil and exported all over the world. The old bridge was built in 1990 by a French company. The report has been finished and sent to the manager. My car was stolen last night, but thankfully it was found this morning.",
+      "self_check": "Three checks: correct participles, weak 'be' auxiliaries, and weak 'by' before a stressed agent."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself explaining how something is made or was built. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تشرح كيف يُصنع شيء أو كيف بُني، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me explain how olive oil is made. First, the olives are picked by hand in autumn. Then they are washed and crushed into a paste. The paste is pressed, and the oil is separated from the water. Finally, the oil is stored in large tanks and later it is bottled and sold in shops. In my region, this process has been used for hundreds of years. The best oil is produced in small factories, where everything is still done carefully by hand. Last year, a new factory was built nearby, and now more oil is exported than ever before.",
+        "sounds_to_check": {
+          "participles": "picked, washed, crushed, pressed, separated, stored, bottled, sold, produced, built",
+          "weak present 'be' + participle": "olives are picked, oil is separated, it is bottled",
+          "weak past 'be' + participle": "a factory was built",
+          "weak 'by' + agent": "picked by hand, done by hand",
+          "result-focus rhythm": "the oil is STORED, has been USED, is exPORTED"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Correct participles, weak auxiliaries and 'by', clear result-focus. Ready for week 13.",
+        "70_89": "Good; occasional wrong participle.",
+        "50_69": "'be' stressed or wrong participle ('was builded'). Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping the 'be' weak and stressing the participle."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Passive = weak 'be' + STRESSED past participle. Get the participle right (built, written, made).",
+      "The 'be' auxiliary almost disappears; the participle carries the meaning and stress.",
+      "'by + agent' is optional and weak — use it only when the doer matters; the agent is stressed.",
+      "We choose the passive to focus on the result/thing, not on who did it."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 2,
+  "focus": "-ing /ɪŋ/ in connected narration · weak 'was' /wəz/ and 'were' /wə/ · weak 'when' /wən/ and 'while' /waɪl/ · narrative rhythm & pausing · 'was/were + -ing' linking",
+  "focus_ar": "-ing في السرد المتصل، و 'was/were' الخفيفة، و 'when/while' الخفيفة، وإيقاع السرد والوقف، ووصل was + -ing",
+  "arabic_challenge": "Storytelling needs a smooth flow of background (past continuous) and events (past simple). Arabic learners tend to stress 'was/were' fully, which chops the narrative into separate words instead of a flowing story.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'was' /wəz/ and 'were' /wə/"],
+      "isolation": {
+        "instructions": "In narration 'was' and 'were' are weak: 'I was walking' = /aɪ wəz ˈwɔːkɪŋ/, 'they were talking' = /ðeɪ wə ˈtɔːkɪŋ/. The -ing verb carries the stress.",
+        "instructions_ar": "في السرد 'was/were' خفيفة: 'I was walking'. الفعل+ing هو المنبور.",
+        "practice": ["I wəz WALKing", "they wə TALKing", "she wəz READing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I wəz walking ✅", "I WAS walking ❌"], "meaning": ["طبيعي", "توكيد زيادة"]},
+        {"pair": ["they wə talking ✅", "they WERE talking ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["was /wəz/ (weak)", "WAS /wɒz/ (emphatic)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["were /wə/", "we're /wɪə/"], "meaning": ["كانوا", "نحن (مضارع)"]},
+        {"pair": ["I was ✅", "I were ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["was walking", "was reading", "were talking", "were playing", "was cooking", "were waiting", "was sleeping", "were watching", "was studying", "were running"],
+      "sentence_practice": [
+        "I was walking home.",
+        "They were talking loudly.",
+        "She was cooking dinner."
+      ],
+      "record_this": "I was walking home in the rain. They were talking loudly in the street, and she was cooking dinner while the children were playing outside.",
+      "self_check": "Say 'I was walking'. Does 'was' reduce to /wəz/, with stress on 'walking'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["-ing /ɪŋ/ in flowing narration"],
+      "isolation": {
+        "instructions": "String several -ing verbs smoothly, each a soft /ɪŋ/ at the back of the mouth, no hard /g/: 'I was sitting, reading and waiting'. Keep the rhythm even.",
+        "instructions_ar": "اربط عدة أفعال -ing بسلاسة، كل واحد /ɪŋ/ ناعم بدون /g/. حافظ على الإيقاع.",
+        "practice": ["sitting, reading, waiting", "no hard g", "even rhythm"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sitting /ɪŋ/", "sitting-g ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["waiting /ɪŋ/", "waitin /ɪn/"], "meaning": ["واضح", "عامية"]},
+        {"pair": ["running", "runnin ❌"], "meaning": ["صحيح", "عامية"]},
+        {"pair": ["reading /ɪŋ/", "readin /ɪn/"], "meaning": ["واضح", "عامية"]},
+        {"pair": ["watching", "watchin ❌"], "meaning": ["صحيح", "عامية"]}
+      ],
+      "word_practice": ["sitting", "reading", "waiting", "watching", "running", "listening", "thinking", "walking", "raining", "shining"],
+      "sentence_practice": [
+        "I was sitting, reading and waiting.",
+        "The sun was shining and the birds were singing.",
+        "People were walking and talking everywhere."
+      ],
+      "record_this": "It was a beautiful morning. The sun was shining, the birds were singing, and people were walking and talking everywhere. I was sitting in the park, reading a book and waiting for a friend.",
+      "self_check": "In your recording, does every -ing end softly (/ɪŋ/), keeping the story flowing?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["weak 'when' /wən/ and 'while' /waɪl/"],
+      "isolation": {
+        "instructions": "'When' weakens to /wən/ and 'while' stays /waɪl/ but unstressed. They link the background to the event: 'I was cooking when the phone rang' — stress 'cooking' and 'rang', not 'when'.",
+        "instructions_ar": "'when' تخف لـ /wən/ و 'while' تفضل غير منبورة. بيربطوا الخلفية بالحدث؛ النبر على الفعلين.",
+        "practice": ["...COOKing wən the phone RANG", "WHILE we were TALKing", "weak connector"]
+      },
+      "minimal_pairs": [
+        {"pair": ["wən the phone rang ✅", "WHEN the phone rang ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["when (point event)", "while (ongoing)"], "meaning": ["لحظة حدث", "أثناء استمرار"]},
+        {"pair": ["when /wən/", "one /wʌn/"], "meaning": ["عندما", "واحد"]},
+        {"pair": ["while /waɪl/", "wile ❌"], "meaning": ["بينما", "—"]},
+        {"pair": ["...when I arrived ✅", "...WHEN I ARRIVED ❌"], "meaning": ["طبيعي", "ثقيل"]}
+      ],
+      "word_practice": ["when the phone rang", "when I arrived", "when it happened", "while we were talking", "while I was cooking", "while they slept", "when she called", "while it was raining", "when we met", "while he waited"],
+      "sentence_practice": [
+        "I was cooking when the phone rang.",
+        "While we were talking, it started to rain.",
+        "They were sleeping when I got home."
+      ],
+      "record_this": "I was cooking dinner when the phone rang. While we were talking, it suddenly started to rain. The children were sleeping when I finally got home.",
+      "self_check": "Say 'I was cooking when the phone rang'. Do 'was' and 'when' stay weak between the strong verbs?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'was/were + -ing' linking"],
+      "isolation": {
+        "instructions": "Glue the auxiliary to the verb: 'was-WALKing', 'were-TALKing'. The whole background clause flows as one unit, then the event interrupts it with a stressed past-simple verb.",
+        "instructions_ar": "الزق المساعد بالفعل: was-WALKing. جملة الخلفية تسيل كوحدة، وبعدين الحدث يقاطعها بفعل ماضٍ منبور.",
+        "practice": ["was-WALKing when it HAPPened", "were-WAITing when she CAME", "background flows, event stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was-walking ✅", "was. walking. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["were-waiting ✅", "WERE waiting ❌"], "meaning": ["طبيعي", "خطأ"]},
+        {"pair": ["background (continuous)", "event (simple)"], "meaning": ["مستمر", "بسيط"]},
+        {"pair": ["I was doing ✅", "I doing ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["they were leaving", "they left"], "meaning": ["مستمر", "منتهٍ"]}
+      ],
+      "word_practice": ["was walking when", "were waiting when", "was reading while", "were playing when", "was driving when", "were eating when", "was thinking while", "were leaving when", "was watching when", "were studying while"],
+      "sentence_practice": [
+        "I was driving home when I saw the accident.",
+        "We were eating when they arrived.",
+        "She was reading while the baby slept."
+      ],
+      "record_this": "I was driving home when I saw the accident on the bridge. We were eating dinner when our guests arrived early. She was reading quietly while the baby slept in the next room.",
+      "self_check": "Does the background clause flow smoothly, with the interrupting event clearly stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["narrative rhythm & pausing"],
+      "isolation": {
+        "instructions": "Good storytelling uses PAUSES at commas and stresses the key story words. 'Suddenly, // the door opened // and a man walked in.' Pause slightly at // and stress the bold words.",
+        "instructions_ar": "السرد الجيد يستخدم وقفات عند الفواصل ونبرًا على كلمات القصة المهمة. قف قليلًا عند // واضغط على المهم.",
+        "practice": ["Suddenly, // the door OPENED", "and a MAN // walked IN", "pause at commas, stress key words"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Suddenly, // ... ✅", "suddenlytheдoor... ❌"], "meaning": ["مع وقفة", "بلا وقفة"]},
+        {"pair": ["stressed story words ✅", "flat monotone ❌"], "meaning": ["حيّ", "ممل"]},
+        {"pair": ["comma pause ✅", "no pause ❌"], "meaning": ["واضح", "غير واضح"]},
+        {"pair": ["rising then falling ✅", "flat ❌"], "meaning": ["مشوّق", "ممل"]},
+        {"pair": ["All of a sudden... ✅", "flat delivery ❌"], "meaning": ["مؤثّر", "ضعيف"]}
+      ],
+      "word_practice": ["suddenly", "all of a sudden", "at that moment", "just then", "after a while", "a few minutes later", "in the end", "finally", "meanwhile", "eventually"],
+      "sentence_practice": [
+        "Suddenly, the door opened.",
+        "At that moment, everyone went quiet.",
+        "After a while, we decided to leave."
+      ],
+      "record_this": "It was late and everyone was tired. Suddenly, the door opened and a stranger walked in. At that moment, the whole room went quiet. After a while, he smiled, apologised, and quietly left.",
+      "self_check": "Are you pausing at the commas and stressing the dramatic words, so it sounds like a story?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I wəz walking ✅", "I WAS walking ❌"], ["wən the phone rang", "WHEN ... ❌"], ["sitting /ɪŋ/", "sittin ❌"],
+        ["was-walking ✅", "was. walking. ❌"], ["were /wə/", "we're /wɪə/"], ["while (ongoing)", "when (event)"]
+      ],
+      "challenge_sentences": [
+        "I was walking home when it started to rain.",
+        "While we were talking, the lights suddenly went out.",
+        "The sun was shining and the birds were singing.",
+        "They were sleeping when, all of a sudden, the alarm rang."
+      ],
+      "record_this": "I was walking home when it started to rain. While we were talking, the lights suddenly went out. Earlier, the sun was shining and the birds were singing. Everyone was sleeping when, all of a sudden, the alarm rang loudly.",
+      "self_check": "Three checks: weak 'was/were', soft -ing, and pausing/stress that makes it sound like a story."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling a short story. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تحكي قصة قصيرة، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "It was a quiet evening and I was sitting at home, reading a book. Outside, it was raining and the wind was blowing hard. While I was making some tea, I heard a strange noise. At first I thought I was imagining it, but the noise was getting louder. My heart was beating fast as I walked slowly to the door. Suddenly, the lights went out and everything went dark. I was standing there, holding my phone, when the door slowly opened. It was just my brother, who was laughing at my frightened face. We both laughed while the storm continued outside.",
+        "sounds_to_check": {
+          "weak 'was/were'": "I was sitting, it was raining, the wind was blowing, my heart was beating",
+          "-ing in narration": "sitting, reading, raining, blowing, making, getting, holding, laughing",
+          "weak 'when/while'": "while I was making, when the door opened, while the storm continued",
+          "was/were + -ing linking": "I was standing there when the door opened",
+          "narrative pausing & stress": "Suddenly, // the lights went out // and everything went dark"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Auxiliaries weak, -ing soft, clear pauses and stress — it sounds like a real story. Ready for week 3.",
+        "70_89": "Good; occasionally too flat.",
+        "50_69": "Word-by-word delivery; 'was/were' too strong. Repeat days 1 and 5.",
+        "below_50": "Redo days 1-5, telling the story aloud several times until it flows."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Narration = weak background auxiliaries ('was/were') + stressed event verbs.",
+      "Keep -ing soft (/ɪŋ/) and let several -ing verbs flow together.",
+      "Pausing at commas and stressing key words is what turns a list of facts into a STORY.",
+      "'when' introduces the event (point); 'while' introduces the ongoing background."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

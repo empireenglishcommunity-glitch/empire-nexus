@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w9",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 9,
+  "pattern_name": "Advanced comparatives and superlatives",
+  "pattern_name_ar": "المقارنة والتفضيل المتقدّمة",
+  "formula": "as + adj + as (equal) · not as + adj + as (less) · much/far/a bit + comparative · the + superlative + I've ever · the more ..., the better",
+  "formula_visual": "[as tall as] // [much better than] // [the best film I've ever seen]",
+  "when_to_use": "To compare precisely: 'as ... as' for equality, 'not as ... as' for less, modifiers (much, far, slightly, a bit) to show the SIZE of a difference, 'the + superlative + I've ever ...' for lifetime records, and 'the more ..., the more ...' for parallel change.",
+  "when_to_use_ar": "للمقارنة الدقيقة: 'as ... as' للتساوي، 'not as ... as' للأقل، ومعدّلات (much, far, a bit) لحجم الفرق، و'the + التفضيل + I've ever' للأفضل في العمر، و'the more..., the more...' للتغيّر المتوازي.",
+  "why_arabic_speakers_struggle": "Arabic uses أفعل من for all comparisons, so learners drop the second 'as' ('as tall than'), use 'more' with short adjectives ('more cheap'), say 'very better' instead of 'much better', and forget 'the' before superlatives.",
+  "examples": [
+    {"en": "He is as tall as his brother.", "ar": "هو بطول أخيه", "structure": "[as + adj + as] (equal)"},
+    {"en": "This phone isn't as expensive as that one.", "ar": "هذا الهاتف ليس بغلاء ذاك", "structure": "[not as + adj + as]"},
+    {"en": "My new job is much better than my old one.", "ar": "وظيفتي الجديدة أفضل بكثير من القديمة", "structure": "[much + comparative + than]"},
+    {"en": "It's the best film I've ever seen.", "ar": "إنه أفضل فيلم رأيته في حياتي", "structure": "[the + superlative + I've ever]"},
+    {"en": "The more you practise, the better you get.", "ar": "كلما تدرّبت أكثر، تحسّنت أكثر", "structure": "[the more ..., the better ...]"}
+  ],
+  "common_errors": [
+    {"wrong": "He is as tall than his brother.", "correct": "He is as tall as his brother.", "explanation": "Equality uses as ... as; 'than' belongs with comparatives."},
+    {"wrong": "It's very better than before.", "correct": "It's much better than before.", "explanation": "Comparatives take much/far/a lot, not 'very'."},
+    {"wrong": "It's best film I've ever seen.", "correct": "It's the best film I've ever seen.", "explanation": "Superlatives need 'the'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "She isn't ___ tall ___ her sister.", "answer": "as / as"},
+    {"sentence": "This car is ___ (much) faster than mine.", "answer": "much"},
+    {"sentence": "That was ___ (good) meal I've ever eaten.", "answer": "the best"},
+    {"sentence": "___ more you read, ___ more you learn.", "answer": "The / the"},
+    {"sentence": "Today is ___ (slightly) colder than yesterday.", "answer": "slightly"}
+  ],
+  "quick_rule": "Equal → as ... as. Bigger gap → much/far + comparative + than. Record → the + superlative + I've ever. Parallel → the more ..., the more ...",
+  "quick_rule_ar": "تساوي → as...as. فرق كبير → much/far + المقارنة + than. رقم قياسي → the + التفضيل + I've ever. تغيّر متوازي → the more..., the more...",
+  "mnemonic": "as–as for equal, than for different, 'the' for the best, 'much' not 'very'.",
+  "connect_to_speaking": "In accent week 9 you practised weak as...as, weak than, and 'the more the better' rhythm. Say: 'as TALL əz his BROther' and 'MUCH BETter thən MINE' — weak 'as' and 'than', stressed adjectives."
+}

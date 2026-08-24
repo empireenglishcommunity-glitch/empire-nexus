@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w10",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 10,
+  "pattern_name": "Relative clauses (who / which / that / where / whose)",
+  "pattern_name_ar": "جُمل الوصل (who / which / that / where / whose)",
+  "formula": "noun + who (people) / which (things) / that (both) / where (places) / whose (possession) + clause",
+  "formula_visual": "[the man] + [who lives next door] + [is a doctor]",
+  "when_to_use": "To add information about a noun inside one sentence instead of two: who for people, which for things, that for either (informal), where for places, whose for possession. Defining clauses take no commas; extra-information clauses take commas and cannot use 'that'.",
+  "when_to_use_ar": "لإضافة معلومة عن اسم داخل جملة واحدة بدل جملتين: who للأشخاص، which للأشياء، that للاثنين، where للأماكن، whose للملكية. الجملة المحدِّدة بدون فواصل، والإضافية بفواصل ولا تستخدم that.",
+  "why_arabic_speakers_struggle": "Arabic relative clauses repeat the object as a pronoun (الرجل الذي رأيته), so learners say 'the man who I saw him'. They also use 'which' for people and 'who' for things, and add commas to defining clauses.",
+  "examples": [
+    {"en": "The man who lives next door is a doctor.", "ar": "الرجل الذي يسكن بالجوار طبيب", "structure": "[noun] + who + [verb]"},
+    {"en": "This is the book which changed my life.", "ar": "هذا الكتاب الذي غيّر حياتي", "structure": "[noun] + which + [verb]"},
+    {"en": "That's the café where we first met.", "ar": "هذا المقهى الذي تقابلنا فيه أول مرة", "structure": "[place] + where + [clause]"},
+    {"en": "She's the student whose project won.", "ar": "هي الطالبة التي فاز مشروعها", "structure": "[noun] + whose + [noun]"},
+    {"en": "My brother, who lives in Dubai, is visiting us.", "ar": "أخي، الذي يسكن في دبي، سيزورنا", "structure": "[noun], who ..., (extra info)"}
+  ],
+  "common_errors": [
+    {"wrong": "The man who I saw him was tall.", "correct": "The man who I saw was tall.", "explanation": "Don't repeat the object pronoun after the relative pronoun."},
+    {"wrong": "The book who I read was great.", "correct": "The book which/that I read was great.", "explanation": "'who' is for people; things take which/that."},
+    {"wrong": "My brother, that lives in Dubai, is visiting.", "correct": "My brother, who lives in Dubai, is visiting.", "explanation": "'that' cannot be used in extra-information clauses with commas."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The woman ___ helped me was very kind.", "answer": "who / that"},
+    {"sentence": "This is the phone ___ I bought yesterday.", "answer": "which / that"},
+    {"sentence": "That's the hotel ___ we stayed last year.", "answer": "where"},
+    {"sentence": "He's the man ___ car was stolen.", "answer": "whose"},
+    {"sentence": "My teacher, ___ is from Canada, speaks Arabic too.", "answer": "who"}
+  ],
+  "quick_rule": "People → who · things → which · either → that · places → where · possession → whose. Never repeat the object pronoun.",
+  "quick_rule_ar": "أشخاص → who · أشياء → which · الاثنان → that · أماكن → where · ملكية → whose. لا تُعِد ضمير المفعول.",
+  "mnemonic": "One noun, one relative pronoun, no extra 'him/it'.",
+  "connect_to_speaking": "In accent week 10 you practised weak who/that inside the flow. Say: 'the MAN whu lives next DOOR' — the relative pronoun is light and unstressed, gluing the two ideas together."
+}

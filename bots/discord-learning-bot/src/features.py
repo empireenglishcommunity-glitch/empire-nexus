@@ -365,8 +365,24 @@ def format_grammar_card(week: int, level: str = "L0") -> str:
     practice = grammar.get("practice_fill_blank", [])
     if practice:
         lines.append("**Practice (fill the blank):**")
-        for p in practice[:3]:
-            lines.append(f"  {p}")
+        for i, p in enumerate(practice[:3], 1):
+            # Same trap as `examples` above: these are authored as dicts
+            # ({sentence, answer} and sometimes {hint}) in every level, and
+            # interpolating the dict directly leaked a raw Python repr like
+            # "{'sentence': ..., 'answer': ...}" into the student-facing card
+            # -- and handed the student the answer at the same time. Render
+            # the question, keep the answer spoiler-tagged, tolerate strings.
+            if isinstance(p, dict):
+                sentence = p.get("sentence", "")
+                lines.append(f"  {i}. {sentence}")
+                hint = p.get("hint", "")
+                if hint:
+                    lines.append(f"     _hint: {hint}_")
+                answer = p.get("answer", "")
+                if answer:
+                    lines.append(f"     answer: ||{answer}||")
+            else:
+                lines.append(f"  {i}. {p}")
         lines.append("")
 
     quick_rule = grammar.get("quick_rule", "")

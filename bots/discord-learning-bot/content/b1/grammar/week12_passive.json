@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w12",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 12,
+  "pattern_name": "The passive voice (present and past)",
+  "pattern_name_ar": "المبني للمجهول (المضارع والماضي)",
+  "formula": "am/is/are + past participle (present) · was/were + past participle (past) · by + agent (optional)",
+  "formula_visual": "[Coffee] + [is grown] + [in Brazil] // [The bridge] + [was built] + [in 1990]",
+  "when_to_use": "When the RESULT or the thing is more important than who did it, or the doer is unknown/obvious. Form: the correct form of 'be' + past participle. Add 'by + agent' only when the doer matters.",
+  "when_to_use_ar": "عندما تكون النتيجة أو الشيء أهم من الفاعل، أو الفاعل غير معروف/واضح. الصيغة: الشكل الصحيح من be + التصريف الثالث. أضف 'by + الفاعل' فقط إذا كان مهمًا.",
+  "why_arabic_speakers_struggle": "Arabic forms the passive by changing vowels inside the verb (كُتِبَ) with no auxiliary, so learners drop 'be' ('The house built in 1990') or use the past simple instead of the participle ('was wrote', 'was builded').",
+  "examples": [
+    {"en": "Coffee is grown in Brazil.", "ar": "تُزرع القهوة في البرازيل", "structure": "[is + participle] (present)"},
+    {"en": "The bridge was built in 1990.", "ar": "بُني الجسر في 1990", "structure": "[was + participle] (past)"},
+    {"en": "These shoes are made in Italy.", "ar": "تُصنع هذه الأحذية في إيطاليا", "structure": "[are + participle]"},
+    {"en": "This song was written by my friend.", "ar": "كُتبت هذه الأغنية بواسطة صديقي", "structure": "[was + participle] + by + [agent]"},
+    {"en": "The report has been finished.", "ar": "تم إنهاء التقرير", "structure": "[has been + participle]"}
+  ],
+  "common_errors": [
+    {"wrong": "The house built in 1990.", "correct": "The house was built in 1990.", "explanation": "The passive needs the 'be' auxiliary before the participle."},
+    {"wrong": "This song was wrote by my friend.", "correct": "This song was written by my friend.", "explanation": "Use the past participle (written), not the past simple (wrote)."},
+    {"wrong": "The bridge was builded in 1990.", "correct": "The bridge was built in 1990.", "explanation": "'build' is irregular — the participle is 'built', not 'builded'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Rice ___ (grow) in many Asian countries.", "answer": "is grown"},
+    {"sentence": "The pyramids ___ (build) thousands of years ago.", "answer": "were built"},
+    {"sentence": "My car ___ (steal) last night.", "answer": "was stolen"},
+    {"sentence": "English ___ (speak) in this hotel.", "answer": "is spoken"},
+    {"sentence": "The report ___ (has / finish) already.", "answer": "has been finished"}
+  ],
+  "quick_rule": "be + past participle. Present: am/is/are. Past: was/were. 'by + agent' only if the doer matters.",
+  "quick_rule_ar": "be + التصريف الثالث. المضارع: am/is/are. الماضي: was/were. 'by + الفاعل' فقط إذا كان مهمًا.",
+  "mnemonic": "No 'be', no passive. Third form, not second: written not wrote.",
+  "connect_to_speaking": "In accent week 12 you practised weak 'be' + stressed participle and weak 'by'. Say: 'the bridge wəz BUILT in 1990' and 'painted baɪ PiCASSo' — light auxiliary, strong participle and agent."
+}

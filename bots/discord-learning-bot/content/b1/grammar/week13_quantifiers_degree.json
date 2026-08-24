@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w13",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 13,
+  "pattern_name": "Quantifiers and degree (too / enough / a bit / too much-many)",
+  "pattern_name_ar": "كلمات الكمية والدرجة (too / enough / a bit / too much-many)",
+  "formula": "too + adj (+ to + verb) · adj + enough · enough + noun · too much + uncountable · too many + countable · a bit / a little + adj",
+  "formula_visual": "[too hot to drink] // [big enough] // [enough time] // [a bit tired]",
+  "when_to_use": "'too' = more than you want (a problem). 'enough' = the necessary amount: AFTER adjectives (big enough) but BEFORE nouns (enough time). 'too much' with uncountable nouns, 'too many' with countable. 'a bit / a little' softens an adjective.",
+  "when_to_use_ar": "'too' = أكثر من اللازم (مشكلة). 'enough' = الكمية الكافية: بعد الصفة (big enough) وقبل الاسم (enough time). 'too much' لغير المعدود و'too many' للمعدود. 'a bit / a little' تخفّف الصفة.",
+  "why_arabic_speakers_struggle": "Arabic uses جدًا for both 'very' and 'too', so learners say 'too good' when they mean 'very good'. They also put 'enough' before adjectives ('enough big') copying كفاية، and mix much/many because Arabic كثير covers both.",
+  "examples": [
+    {"en": "This coffee is too hot to drink.", "ar": "هذه القهوة ساخنة جدًا للشرب", "structure": "[too + adj + to + verb]"},
+    {"en": "The room isn't big enough.", "ar": "الغرفة ليست كبيرة بما يكفي", "structure": "[adj + enough]"},
+    {"en": "We don't have enough time.", "ar": "ليس لدينا وقت كافٍ", "structure": "[enough + noun]"},
+    {"en": "There were too many people there.", "ar": "كان هناك أشخاص كثيرون جدًا", "structure": "[too many + countable]"},
+    {"en": "I'm a bit tired today.", "ar": "أنا متعب قليلاً اليوم", "structure": "[a bit + adj]"}
+  ],
+  "common_errors": [
+    {"wrong": "The room isn't enough big.", "correct": "The room isn't big enough.", "explanation": "'enough' goes AFTER an adjective but before a noun."},
+    {"wrong": "The film was too good!", "correct": "The film was very good!", "explanation": "'too' means there is a problem; for praise use 'very'."},
+    {"wrong": "There was too many traffic.", "correct": "There was too much traffic.", "explanation": "'traffic' is uncountable → too much, not too many."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "This tea is ___ hot to drink.", "answer": "too"},
+    {"sentence": "He isn't old ___ to drive.", "answer": "enough"},
+    {"sentence": "We don't have ___ chairs for everyone.", "answer": "enough"},
+    {"sentence": "There's ___ (much/many) noise in this street.", "answer": "too much"},
+    {"sentence": "I'm ___ bit nervous about the exam.", "answer": "a"}
+  ],
+  "quick_rule": "too = a problem · very = just high · enough AFTER adjectives, BEFORE nouns · too much (uncountable) / too many (countable).",
+  "quick_rule_ar": "too = مشكلة · very = درجة عالية · enough بعد الصفة وقبل الاسم · too much لغير المعدود و too many للمعدود.",
+  "mnemonic": "Adjective first, then 'enough'. Noun last, after 'enough'. 'too' warns, 'very' praises.",
+  "connect_to_speaking": "In accent week 13 you practised strong 'too' /tuː/ vs weak 'to' /tə/ and 'enough' stress. Say: 'too TIRED tə WALK' — first word strong, second weak — and 'big eNOUGH' with second-syllable stress."
+}

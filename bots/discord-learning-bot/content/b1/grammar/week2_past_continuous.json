@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w2",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 2,
+  "pattern_name": "Past continuous + past simple (interrupted actions)",
+  "pattern_name_ar": "الماضي المستمر + الماضي البسيط (فعل يقطع فعلاً)",
+  "formula": "was/were + -ing (background/longer action) · past simple (interruption) · when / while",
+  "formula_visual": "[I was cooking] + [when] + [the phone rang]",
+  "when_to_use": "Past continuous (was/were + -ing) for a longer background action in progress; past simple for a shorter action that interrupts it. Use 'while' before the long action and 'when' before the short one.",
+  "when_to_use_ar": "الماضي المستمر (was/were + -ing) لفعل طويل مستمر في الخلفية؛ الماضي البسيط لفعل قصير يقطعه. 'while' قبل الطويل و'when' قبل القصير.",
+  "why_arabic_speakers_struggle": "Arabic often uses 'كان + يفعل' but learners forget the was/were auxiliary in English ('I cooking') and mix up when/while, or use past simple for both actions so the sequence is unclear.",
+  "examples": [
+    {"en": "I was cooking when the phone rang.", "ar": "كنت أطبخ عندما رنّ الهاتف", "structure": "[was cooking] + when + [rang]"},
+    {"en": "While she was studying, the lights went out.", "ar": "بينما كانت تذاكر، انطفأت الأنوار", "structure": "While + [was studying], [went out]"},
+    {"en": "They were playing football when it started to rain.", "ar": "كانوا يلعبون كرة عندما بدأت تمطر", "structure": "[were playing] + when + [started]"},
+    {"en": "What were you doing at 8 pm?", "ar": "ماذا كنت تفعل الساعة الثامنة مساءً؟", "structure": "[were + doing]?"},
+    {"en": "He was driving while she was sleeping.", "ar": "كان يقود بينما كانت نائمة", "structure": "[was driving] + while + [was sleeping]"}
+  ],
+  "common_errors": [
+    {"wrong": "I cooking when he called.", "correct": "I was cooking when he called.", "explanation": "Continuous needs was/were + -ing."},
+    {"wrong": "When I was walking, I was seeing an accident.", "correct": "While I was walking, I saw an accident.", "explanation": "The short interrupting action is past simple, not continuous."},
+    {"wrong": "While the phone rang, I cooked.", "correct": "While I was cooking, the phone rang.", "explanation": "'while' goes with the longer -ing action."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (watch) TV when you called.", "answer": "was watching"},
+    {"sentence": "While they ___ (drive), it started to snow.", "answer": "were driving"},
+    {"sentence": "She ___ (cook) when the guests arrived.", "answer": "was cooking"},
+    {"sentence": "What ___ you ___ (do) at midnight?", "answer": "were / doing"},
+    {"sentence": "The lights went out while we ___ (eat).", "answer": "were eating"}
+  ],
+  "quick_rule": "Long background action = was/were + -ing. Short interruption = past simple. while + long, when + short.",
+  "quick_rule_ar": "الفعل الطويل الخلفي = was/were + -ing. المقاطعة القصيرة = ماضٍ بسيط. while + الطويل، when + القصير.",
+  "mnemonic": "Picture the scene (-ing) → then something happens (past simple).",
+  "connect_to_speaking": "In accent week 2 you practised -ing narration and weak was/were. Say: 'I wəz cooking when the phone rang' — light 'was', clear '-ing', then the sharp past-simple 'rang'."
+}

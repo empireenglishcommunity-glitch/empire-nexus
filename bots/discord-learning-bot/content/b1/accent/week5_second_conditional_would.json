@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 5,
+  "focus": "'would' /wʊd/ and contraction 'd /d/ · 'if I were' linking · weak 'if' + hypothetical rhythm · 'wouldn't' /ˈwʊdnt/ · 'd + verb linking",
+  "focus_ar": "'would' و 'd الخفيفة، ووصل 'if I were'، وإيقاع الافتراض، و 'wouldn't'، ووصل 'd بالفعل",
+  "arabic_challenge": "The second conditional is imaginary, and its melody + contracted 'would' ('I'd travel') signal that. Arabic learners over-pronounce 'would' and the silent 'l', and often say 'if I was/will' instead of 'if I were / would'.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'would' /wʊd/ (silent l)"],
+      "isolation": {
+        "instructions": "'Would' is /wʊd/ — silent 'l', short /ʊ/ vowel (like 'good'). It is the marker of the imaginary result: 'I would travel'.",
+        "instructions_ar": "'would' تُنطق /wʊd/ — 'l' صامتة وحرف /ʊ/ قصير. علامة النتيجة المتخيّلة.",
+        "practice": ["wʊd (no l)", "would, could, should", "I would TRAVEL"]
+      },
+      "minimal_pairs": [
+        {"pair": ["would /wʊd/", "wood /wʊd/"], "meaning": ["افتراضية", "خشب (نفس النطق)"]},
+        {"pair": ["would /wʊd/", "wooed /wuːd/"], "meaning": ["افتراضية", "تودّد"]},
+        {"pair": ["would (silent l)", "woold ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["I would go", "I will go (real future)"], "meaning": ["افتراضي", "مستقبل واقعي"]},
+        {"pair": ["would you ✅", "wood you"], "meaning": ["هل تودّ", "—"]}
+      ],
+      "word_practice": ["would", "would go", "would travel", "would help", "would like", "would be", "would say", "would do", "would love", "would prefer"],
+      "sentence_practice": [
+        "I would travel the world.",
+        "She would help if she could.",
+        "We would love to come."
+      ],
+      "record_this": "If I had a lot of money, I would travel the world. She would help you if she could. We would love to come to your wedding.",
+      "self_check": "Say 'would'. Is the 'l' silent, with a short /ʊ/ like in 'good'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["contraction 'd /d/"],
+      "isolation": {
+        "instructions": "'Would' contracts to 'd on the pronoun: I'd /aɪd/, she'd /ʃiːd/, they'd /ðeɪd/. One syllable, then a stressed verb: 'I'd TRAVEL'.",
+        "instructions_ar": "'would' → 'd على الضمير: I'd، she'd، they'd. مقطع واحد + فعل منبور.",
+        "practice": ["I'd, she'd, they'd, we'd", "I'd-TRAVEL, she'd-HELP", "one syllable + verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd /aɪd/ (would)", "I'd /aɪd/ (had)"], "meaning": ["would", "had — السياق يحدّد"]},
+        {"pair": ["she'd help ✅", "she help ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["they'd /ðeɪd/", "they ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["I'd /aɪd/", "I /aɪ/"], "meaning": ["would/had", "أنا"]},
+        {"pair": ["we'd go ✅", "we go (present)"], "meaning": ["افتراضي", "مضارع"]}
+      ],
+      "word_practice": ["I'd go", "she'd help", "they'd come", "we'd love", "he'd say", "I'd like", "we'd prefer", "they'd win", "she'd know", "I'd travel"],
+      "sentence_practice": [
+        "I'd love to visit Japan.",
+        "She'd help if you asked.",
+        "They'd come if they had time."
+      ],
+      "record_this": "I'd love to visit Japan one day. She'd help you if you just asked her. They'd definitely come to the party if they had more time.",
+      "self_check": "Say 'I'd love'. Is it one syllable ('I'd') + stressed verb, not 'I would love'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'if I were' linking"],
+      "isolation": {
+        "instructions": "The formal second conditional uses 'were' for all persons: 'if I were you'. Link it smoothly: /ɪfaɪwə/. 'Were' is weak; 'you' is stressed. This is the classic advice pattern.",
+        "instructions_ar": "الشرط الثاني الرسمي يستخدم 'were' لكل الضمائر: 'if I were you'. وصلها بسلاسة، 'were' خفيفة و 'you' منبورة.",
+        "practice": ["ɪf-aɪ-wə YOU", "if I were RICH", "were = weak, content = strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["if I were you (formal)", "if I was you (informal)"], "meaning": ["رسمي", "عامي"]},
+        {"pair": ["if I were rich ✅", "if I am rich ❌"], "meaning": ["افتراضي", "خطأ"]},
+        {"pair": ["were /wə/ (weak)", "WERE /wɜː/ (emphasis)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["if I were you ✅", "if I would be you ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["ɪfaɪwə ✅", "if. I. were. ❌"], "meaning": ["موصول", "مقطّع"]}
+      ],
+      "word_practice": ["if I were you", "if I were rich", "if she were here", "if it were possible", "if we were younger", "if I were in charge", "if they were mine", "if he were taller", "if I were free", "if it were cheaper"],
+      "sentence_practice": [
+        "If I were you, I'd wait.",
+        "If I were rich, I'd travel.",
+        "If she were here, she'd know."
+      ],
+      "record_this": "If I were you, I'd wait a little longer. If I were rich, I'd travel everywhere. And if she were here right now, she'd know exactly what to do.",
+      "self_check": "Say 'if I were you'. Does it link smoothly, with stress landing on 'you'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'wouldn't' /ˈwʊdnt/"],
+      "isolation": {
+        "instructions": "The negative 'wouldn't' is /ˈwʊdnt/ — silent 'l', and the two d/t blend. 'I wouldn't do that'. Stress the first syllable and keep it crisp.",
+        "instructions_ar": "'wouldn't' /ˈwʊdnt/ — 'l' صامتة والـ d/t بيندمجوا. النبر على المقطع الأول.",
+        "practice": ["WUUD-nt (no l)", "I wouldn't DO that", "crisp, first syllable"]
+      },
+      "minimal_pairs": [
+        {"pair": ["wouldn't /ˈwʊdnt/", "wooden /ˈwʊdn/"], "meaning": ["لن (افتراضي)", "خشبي"]},
+        {"pair": ["I wouldn't ✅", "I would not (formal/emphatic)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["wouldn't (silent l)", "woold-nt ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["wouldn't", "couldn't"], "meaning": ["لن", "لم يستطع"]},
+        {"pair": ["I wouldn't say that", "I would say that"], "meaning": ["نفي", "إثبات"]}
+      ],
+      "word_practice": ["wouldn't", "wouldn't do", "wouldn't say", "wouldn't mind", "wouldn't be", "wouldn't work", "wouldn't help", "wouldn't want", "wouldn't dare", "wouldn't know"],
+      "sentence_practice": [
+        "I wouldn't do that if I were you.",
+        "She wouldn't mind at all.",
+        "It wouldn't work anyway."
+      ],
+      "record_this": "I wouldn't do that if I were you. Don't worry — she wouldn't mind at all. Honestly, it wouldn't work anyway, so we shouldn't waste time.",
+      "self_check": "Say 'wouldn't'. Is the 'l' silent and the ending crisp, distinct from 'wooden'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["hypothetical rhythm across both clauses"],
+      "isolation": {
+        "instructions": "Full pattern: 'If I had time, ↗ I'd learn the piano ↘'. 'If + past' clause rises to the comma; ''d + verb' result falls. Both 'if' and 'would' stay weak; the content words carry it.",
+        "instructions_ar": "النمط الكامل: 'If I had time, ↗ I'd learn the piano ↘'. الشرط يرتفع والنتيجة تهبط، و 'if/would' خفاف.",
+        "practice": ["If I HAD time, ↗ I'd LEARN piano ↘", "If we WON, ↗ we'd TRAVEL ↘", "rise then fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["If I had... I'd... (unreal)", "If I have... I'll... (real)"], "meaning": ["افتراضي", "واقعي"]},
+        {"pair": ["rise ↗ fall ↘ ✅", "flat ❌"], "meaning": ["افتراضي واضح", "ممل"]},
+        {"pair": ["if + past + would", "if + present + will"], "meaning": ["شرط ثانٍ", "شرط أول"]},
+        {"pair": ["I'd learn (result)", "I learned (past)"], "meaning": ["افتراضي", "ماضٍ"]},
+        {"pair": ["weak if & would ✅", "stressed if & would ❌"], "meaning": ["طبيعي", "ثقيل"]}
+      ],
+      "word_practice": ["if I had time", "if we won", "if I could", "if I knew", "if they offered", "I'd learn", "we'd travel", "I'd buy", "I'd tell", "we'd move"],
+      "sentence_practice": [
+        "If I had time, I'd learn the piano.",
+        "If we won the lottery, we'd travel.",
+        "If I knew the answer, I'd tell you."
+      ],
+      "record_this": "If I had more time, I'd learn to play the piano. If we won the lottery, we'd travel around the world. And if I knew the answer, I'd tell you straight away.",
+      "self_check": "Does the 'if' clause rise to the comma and the 'I'd' result fall, both markers weak?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["would /wʊd/", "wood"], ["I'd travel ✅", "I would travel (over-full)"], ["if I were you ✅", "if I was you (informal)"],
+        ["wouldn't /ˈwʊdnt/", "wooden"], ["If I had... I'd... (unreal)", "If I have... I'll... (real)"], ["ɪfaɪwə ✅", "if. I. were. ❌"]
+      ],
+      "challenge_sentences": [
+        "If I were you, I'd wait a bit longer.",
+        "If I had more money, I'd travel more.",
+        "I wouldn't do that if I were you.",
+        "If she knew, she'd definitely tell us."
+      ],
+      "record_this": "If I were you, I'd wait a bit longer before deciding. If I had more money, I'd travel much more. I wouldn't do that if I were you. And if she knew the truth, she'd definitely tell us.",
+      "self_check": "Three checks: silent-l 'would', contracted 'I'd', and the rise-fall hypothetical melody."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about dreams and imaginary situations. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن أحلام ومواقف خيالية، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I often dream about my perfect life. If I had all the money in the world, I wouldn't stop working — I'd start a school for children who couldn't afford one. If I were the leader of my country, I'd make education free for everyone. If I could live anywhere, I'd choose a quiet town near the sea, where I'd write books and grow my own food. I wouldn't waste my time on things that didn't matter. Of course, these are just dreams. But if I didn't dream, I wouldn't have any goals. And if you asked me what I really want, I'd say: a simple, happy life.",
+        "sounds_to_check": {
+          "'would' /wʊd/ (silent l)": "I would start, I'd make, I'd choose, I'd write",
+          "contraction 'd": "I'd start, I'd make, I'd choose, I'd say",
+          "'wouldn't'": "I wouldn't stop, I wouldn't waste, I wouldn't have",
+          "'if I were'": "if I were the leader",
+          "hypothetical melody": "If I had all the money, ↗ I wouldn't stop ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "'would'/'d natural, 'if I were' correct, clear unreal melody. Ready for week 6.",
+        "70_89": "Good; occasional 'if I was' or over-full 'would'.",
+        "50_69": "'l' sounded in would/wouldn't, or 'will' in the if-clause. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, contracting 'would' to 'd and keeping the melody."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'would' and 'wouldn't' have a SILENT 'l' and a short /ʊ/ vowel.",
+      "Contract it: 'I'd travel', not 'I would travel', in normal speech.",
+      "The formal second conditional uses 'were' for all persons: 'if I were you'.",
+      "Second conditional = if + PAST, would + base — the past form signals 'imaginary'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

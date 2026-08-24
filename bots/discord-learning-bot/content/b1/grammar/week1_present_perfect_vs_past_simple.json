@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w1",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 1,
+  "pattern_name": "Present perfect vs past simple (for / since)",
+  "pattern_name_ar": "المضارع التام مقابل الماضي البسيط (for / since)",
+  "formula": "have/has + past participle (unfinished/result now) · past simple (finished time) · for + period · since + point",
+  "formula_visual": "[I've lived here] + [for five years] // [I lived there] + [in 2019]",
+  "when_to_use": "Present perfect: an action connected to now (still true, or the result matters), often with for/since/just/already/yet. Past simple: a finished action at a finished time (yesterday, in 2019, last week).",
+  "when_to_use_ar": "المضارع التام: فعل متصل بالحاضر (لسه مستمر أو نتيجته مهمة)، وغالبًا مع for/since/just/already/yet. الماضي البسيط: فعل انتهى في وقت انتهى (yesterday، in 2019).",
+  "why_arabic_speakers_struggle": "Arabic has no present perfect, so learners use the past simple for everything ('I live here since 2019' or 'I lived here for five years' when they still live here). They also mix 'for' (a period) with 'since' (a starting point).",
+  "examples": [
+    {"en": "I have lived here for five years.", "ar": "أعيش هنا منذ خمس سنوات (ولسه)", "structure": "[have lived] + [for + period]"},
+    {"en": "She has worked here since 2020.", "ar": "تعمل هنا منذ 2020", "structure": "[has worked] + [since + point]"},
+    {"en": "We visited Cairo last summer.", "ar": "زرنا القاهرة الصيف الماضي", "structure": "[past simple] + [finished time]"},
+    {"en": "Have you finished your homework yet?", "ar": "هل أنهيت واجبك بعد؟", "structure": "[Have + finished] + yet?"},
+    {"en": "He has just left the office.", "ar": "لقد غادر المكتب للتو", "structure": "[has just left]"}
+  ],
+  "common_errors": [
+    {"wrong": "I live here since 2019.", "correct": "I have lived here since 2019.", "explanation": "Still true now → present perfect, not present simple."},
+    {"wrong": "I have seen him yesterday.", "correct": "I saw him yesterday.", "explanation": "'yesterday' is a finished time → past simple."},
+    {"wrong": "I have worked here since five years.", "correct": "I have worked here for five years.", "explanation": "'for' = a period; 'since' = a starting point."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (live) here for ten years and I'm still here.", "answer": "have lived"},
+    {"sentence": "We ___ (visit) Aswan last year.", "answer": "visited"},
+    {"sentence": "She has worked here ___ 2020.", "answer": "since"},
+    {"sentence": "They have been friends ___ many years.", "answer": "for"},
+    {"sentence": "___ you finished the report yet?", "answer": "Have"}
+  ],
+  "quick_rule": "Still connected to now → present perfect (for/since). Finished time (yesterday, in 2019) → past simple.",
+  "quick_rule_ar": "متصل بالحاضر → مضارع تام (for/since). وقت انتهى (yesterday) → ماضٍ بسيط.",
+  "mnemonic": "Finished time word → past simple. 'For a period, since a point' → present perfect.",
+  "connect_to_speaking": "In accent week 1 you practised 've/'s and weak for/since. Say: 'I've lived here for five years' — weak 've, weak for — then contrast: 'I lived in Cairo in 2019.'"
+}

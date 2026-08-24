@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 6,
+  "focus": "Weak 'must' /məst/ · 'might' /maɪt/ · 'can't' /kɑːnt/ vs 'can' /kən/ (deduction) · 'could' /kʊd/ · degrees-of-certainty stress",
+  "focus_ar": "'must' الخفيفة، و 'might'، و 'can't' مقابل 'can'، و 'could'، ونبر درجات اليقين",
+  "arabic_challenge": "Modals of deduction express certainty by STRESS and vowel length as much as by the word. 'He CAN'T be serious' (impossible) vs 'he can be serious' (ability). Arabic learners flatten these, losing the meaning difference.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'must' /məst/ (deduction, weak)"],
+      "isolation": {
+        "instructions": "For deduction (near-certain), 'must' is fairly weak and the main verb is stressed: 'He must be TIRED'. /məst/ before a verb. It means 'I'm sure', not obligation here.",
+        "instructions_ar": "للاستنتاج (شبه مؤكد) 'must' خفيفة والفعل منبور: 'He must be TIRED'. معناها 'متأكد'.",
+        "practice": ["he məst be TIRED", "she məst KNOW", "must = I'm sure"]
+      },
+      "minimal_pairs": [
+        {"pair": ["must be tired (deduction)", "must work (obligation)"], "meaning": ["استنتاج", "إلزام"]},
+        {"pair": ["məst be ✅", "MUST be ❌ (unless emphatic)"], "meaning": ["طبيعي", "توكيد"]},
+        {"pair": ["must /məst/", "most /məʊst/"], "meaning": ["لا بد", "معظم"]},
+        {"pair": ["he must know ✅", "he must knows ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["must be", "can't be"], "meaning": ["مؤكد", "مستحيل"]}
+      ],
+      "word_practice": ["must be", "must know", "must have", "must feel", "must think", "must want", "must like", "must live", "must work", "must cost"],
+      "sentence_practice": [
+        "He must be tired.",
+        "She must know the answer.",
+        "They must be very rich."
+      ],
+      "record_this": "Look at him — he must be exhausted. She answered instantly, so she must know the answer. Their house is huge; they must be very rich.",
+      "self_check": "Say 'he must be tired'. Is 'must' fairly light, with the stress on 'tired'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'might' /maɪt/ and 'could' /kʊd/ (possibility)"],
+      "isolation": {
+        "instructions": "For possibility (maybe), use 'might' /maɪt/ or 'could' /kʊd/: 'She might be at work', 'It could be true'. Both are light; the verb is stressed. Weaker certainty than 'must'.",
+        "instructions_ar": "للاحتمال (ممكن) نستخدم 'might' أو 'could': 'She might be at work'. أضعف يقينًا من 'must'.",
+        "practice": ["she maɪt be at WORK", "it kʊd be TRUE", "might/could = maybe"]
+      },
+      "minimal_pairs": [
+        {"pair": ["might be (possible)", "must be (certain)"], "meaning": ["محتمل", "مؤكد"]},
+        {"pair": ["could /kʊd/", "cooed /kuːd/"], "meaning": ["ربما", "هدل"]},
+        {"pair": ["might /maɪt/", "mite /maɪt/"], "meaning": ["ربما", "سوسة"]},
+        {"pair": ["it could be", "it couldn't be"], "meaning": ["ممكن", "مستحيل"]},
+        {"pair": ["she might know", "she might knows ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["might be", "might know", "might have", "could be", "could work", "could happen", "might come", "could mean", "might rain", "could help"],
+      "sentence_practice": [
+        "She might be at work.",
+        "It could be true.",
+        "They might come later."
+      ],
+      "record_this": "I'm not sure where she is — she might be at work. It could be true, but I doubt it. They might come later, or they could stay home; it depends on the weather.",
+      "self_check": "Do 'might' and 'could' sound lighter/less certain than 'must' from day 1?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'can't' /kɑːnt/ vs 'can' /kən/ (deduction)"],
+      "isolation": {
+        "instructions": "'Can't' (impossible) is STRESSED with a long vowel: 'That CAN'T be right'. 'Can' (weak /kən/) is not used for deduction the same way. The contrast of certainty lives in the vowel and stress.",
+        "instructions_ar": "'can't' (مستحيل) منبورة بحرف طويل: 'That CAN'T be right'. الفرق في اليقين في الحرف والنبر.",
+        "practice": ["that CAN'T be right", "he kən swim (ability)", "can't = impossible, stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["can't be (impossible)", "must be (certain)"], "meaning": ["مستحيل", "مؤكد"]},
+        {"pair": ["CAN'T /kɑːnt/", "can /kən/"], "meaning": ["مستحيل (منبورة)", "قدرة (خفيفة)"]},
+        {"pair": ["that can't be true", "that could be true"], "meaning": ["مستحيل", "ممكن"]},
+        {"pair": ["can't /kɑːnt/", "cant /kænt/ (US)"], "meaning": ["لا يمكن", "—"]},
+        {"pair": ["he can't be serious", "he can be serious (ability)"], "meaning": ["مستحيل أنه جاد", "قادر أن يكون جادًا"]}
+      ],
+      "word_practice": ["can't be", "can't be right", "can't be true", "can't know", "can't have", "can't mean", "can't work", "can't afford", "can't be serious", "can't be real"],
+      "sentence_practice": [
+        "That can't be right.",
+        "He can't be serious.",
+        "It can't be true."
+      ],
+      "record_this": "That can't be right — check it again. He can't be serious; he must be joking. The price can't be true, it's far too low. There must be a mistake.",
+      "self_check": "Say 'that can't be right'. Is 'can't' clearly stressed with a long vowel (impossible)?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["degrees-of-certainty stress ladder"],
+      "isolation": {
+        "instructions": "Arrange by certainty and hear the difference: 'It must be true' (sure) → 'It could/might be true' (maybe) → 'It can't be true' (impossible). Same sentence, different modal, different confidence.",
+        "instructions_ar": "رتّبها حسب اليقين: must (مؤكد) ← might/could (ربما) ← can't (مستحيل). نفس الجملة، ثقة مختلفة.",
+        "practice": ["must (100%) → might (50%) → can't (0%)", "It must / might / can't be true", "hear the ladder"]
+      },
+      "minimal_pairs": [
+        {"pair": ["must (sure)", "might (maybe)"], "meaning": ["مؤكد", "ربما"]},
+        {"pair": ["might (maybe)", "can't (impossible)"], "meaning": ["ربما", "مستحيل"]},
+        {"pair": ["must be true (100%)", "can't be true (0%)"], "meaning": ["أكيد", "مستحيل"]},
+        {"pair": ["could be (open)", "must be (closed)"], "meaning": ["مفتوح", "محسوم"]},
+        {"pair": ["might not (maybe not)", "can't (definitely not)"], "meaning": ["ربما لا", "قطعًا لا"]}
+      ],
+      "word_practice": ["must be", "might be", "could be", "can't be", "must have been", "might have been", "could have been", "can't have been", "definitely", "probably"],
+      "sentence_practice": [
+        "It must be true.",
+        "It might be true.",
+        "It can't be true."
+      ],
+      "record_this": "Let me think. It must be true, because I saw it myself. Well, it might be true, but I'm not certain. Actually, no — it can't be true, that's impossible.",
+      "self_check": "Read the three levels. Does your voice sound more certain for 'must' and more doubtful for 'might'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["past deduction: 'must have' /məstəv/"],
+      "isolation": {
+        "instructions": "For the past, 'have' reduces to /əv/: 'must have gone' = /məstəv ɡɒn/, 'can't have known' = /kɑːntəv/. Never 'must OF' in writing, but it SOUNDS like /əv/.",
+        "instructions_ar": "للماضي 'have' تخف لـ /əv/: 'must have gone' = /məstəv ɡɒn/. الصوت زي /əv/ لكن الكتابة 'have'.",
+        "practice": ["must-əv gone", "can't-əv known", "might-əv left"]
+      },
+      "minimal_pairs": [
+        {"pair": ["must've gone /məstəv/", "must go (present)"], "meaning": ["استنتاج ماضٍ", "مضارع"]},
+        {"pair": ["can't have known ✅", "can't knew ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["must've /əv/", "must of ❌ (spelling)"], "meaning": ["نطق", "إملاء خاطئ"]},
+        {"pair": ["might have left", "might left ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["should've /ʃʊdəv/", "should of ❌"], "meaning": ["نطق", "إملاء خاطئ"]}
+      ],
+      "word_practice": ["must have gone", "must have been", "can't have known", "might have left", "could have happened", "must've forgotten", "can't have seen", "might've missed", "could've helped", "should've called"],
+      "sentence_practice": [
+        "She must have left already.",
+        "They can't have known.",
+        "He might have forgotten."
+      ],
+      "record_this": "The lights are off, so she must have left already. They can't have known about the change — no one told them. He might have forgotten, or he could have missed the bus.",
+      "self_check": "Say 'must have gone'. Does 'have' reduce to /əv/, flowing as 'must-əv gone'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["must be (certain)", "might be (maybe)"], ["CAN'T be", "can /kən/"], ["could /kʊd/", "cooed"],
+        ["must've gone /əv/", "must of ❌"], ["might /maɪt/", "mite"], ["can't be true (0%)", "must be true (100%)"]
+      ],
+      "challenge_sentences": [
+        "He must be tired — he can't have slept.",
+        "She might be at work, or she could be at home.",
+        "That can't be right; there must be a mistake.",
+        "They must have left; they might have missed us."
+      ],
+      "record_this": "He must be tired — he can't have slept last night. She might be at work, or she could be at home; I'm not sure. That can't be right; there must be a mistake somewhere. They must have left already, or they might have missed us.",
+      "self_check": "Three checks: 'can't' stressed for impossible, 'might/could' light for maybe, and 'must've' with /əv/."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself making deductions about a mystery. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تعمل استنتاجات عن لغز، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Something strange happened at the office. When I arrived, the door was open and the lights were on. Someone must have come in early — but who? It can't have been the manager, because she's on holiday. It might have been the cleaner, or it could have been a colleague who forgot something. There's a coffee cup on my desk, so the person must like coffee. They can't have stayed long, because the cup is still warm. Honestly, I might never find out. But whoever it was, they must have had a key, so it can't have been a stranger.",
+        "sounds_to_check": {
+          "'must' (deduction)": "must have come, must like coffee, must have had a key",
+          "'might/could' (possibility)": "might have been the cleaner, could have been a colleague, might never find out",
+          "'can't' (impossible, stressed)": "can't have been the manager, can't have stayed long, can't have been a stranger",
+          "past deduction 'have' → /əv/": "must've come, might've been, could've been, can't've stayed",
+          "certainty ladder": "must (sure) vs might (maybe) vs can't (impossible)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Certainty is clear from stress: 'can't' strong, 'might' light, 'must've' reduced. Ready for week 7.",
+        "70_89": "Good; occasional flat 'can't'.",
+        "50_69": "All modals equal-stressed, so certainty is lost. Repeat days 3-4.",
+        "below_50": "Redo days 1-5, exaggerating the confidence difference."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Deduction shows certainty through STRESS: 'can't' (impossible) is strong; 'might/could' (maybe) are light.",
+      "'must' here means 'I'm sure', not obligation.",
+      "Past deduction reduces 'have' to /əv/: 'must've gone' — but always WRITE 'have', never 'of'.",
+      "Use the base verb after every modal (must be, might know), never a conjugated form."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

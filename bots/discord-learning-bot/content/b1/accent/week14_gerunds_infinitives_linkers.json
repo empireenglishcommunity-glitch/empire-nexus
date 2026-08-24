@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 14,
+  "focus": "verb + '-ing' /ɪŋ/ (gerund) · verb + weak 'to' /tə/ (infinitive) · linker 'although' /ɔːlˈðəʊ/ · linker 'however' + comma pause · smooth clause linking",
+  "focus_ar": "الفعل + '-ing' (المصدر الاسمي)، والفعل + 'to' الخفيفة (المصدر)، وأدوات الربط 'although' و 'however' مع وقفة الفاصلة، وربط الجُمل بسلاسة",
+  "arabic_challenge": "Some verbs take '-ing' (enjoy doing) and some take 'to' (want to do); the '-ing' ends in a clear /ŋ/ and the infinitive 'to' is weak /tə/. Linkers 'although' and 'however' organise contrast — 'however' needs a comma pause. Arabic learners drop the /ŋ/, stress 'to', and run linkers into the next clause.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["verb + '-ing' /ɪŋ/ (gerund)"],
+      "isolation": {
+        "instructions": "After verbs like enjoy, like, finish, keep, avoid, we use '-ing': 'enjoy READing', 'finish EATing'. End it with a clear nasal /ŋ/ — not /n/. The main verb keeps the stress.",
+        "instructions_ar": "بعد أفعال مثل enjoy, finish, keep نستخدم '-ing': 'enjoy READing'. اختم بـ /ŋ/ واضحة مش /n/.",
+        "practice": ["enjoy READ-ɪŋ", "finish EAT-ɪŋ", "clear /ŋ/ ending"]
+      },
+      "minimal_pairs": [
+        {"pair": ["readɪŋ /ŋ/ ✅", "readin /n/ ❌"], "meaning": ["نهاية صحيحة", "خطأ"]},
+        {"pair": ["enjoy reading ✅", "enjoy to read ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["finish eating ✅", "finish eat ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["keep trying ✅", "keep to try ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["avoid making ✅", "avoid to make ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["enjoy reading", "finish eating", "keep trying", "avoid making", "like swimming", "stop smoking", "practise speaking", "consider moving", "miss travelling", "suggest waiting"],
+      "sentence_practice": [
+        "I enjoy reading in the evening.",
+        "She finished eating quickly.",
+        "Keep trying and don't give up."
+      ],
+      "record_this": "I really enjoy reading in the evening before bed. She finished eating quickly because she was late. Keep trying and don't give up — practising speaking every day helps a lot.",
+      "self_check": "Say 'enjoy reading'. Does '-ing' end with a clear /ŋ/, not /n/, and did you avoid adding 'to'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["verb + weak 'to' /tə/ (infinitive)"],
+      "isolation": {
+        "instructions": "After verbs like want, need, decide, hope, plan, we use 'to + verb'; the 'to' is weak /tə/: 'want tə GO', 'need tə REST'. Don't stress 'to' — the main verbs carry the stress.",
+        "instructions_ar": "بعد أفعال مثل want, need, decide نستخدم 'to + فعل'؛ الـ 'to' خفيفة /tə/: 'want tə GO'.",
+        "practice": ["want tə GO", "need tə REST", "weak /tə/, strong verbs"]
+      },
+      "minimal_pairs": [
+        {"pair": ["want to go ✅", "want going ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["decide tə leave ✅", "decide leaving ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["want tə (weak)", "want TO ❌ (over-stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["need to rest ✅", "need rest ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["hope tə see ✅", "hope seeing ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["want to go", "need to rest", "decide to leave", "hope to see", "plan to travel", "promise to help", "learn to drive", "offer to pay", "agree to wait", "refuse to change"],
+      "sentence_practice": [
+        "I want to go home now.",
+        "We need to rest for a while.",
+        "They decided to leave early."
+      ],
+      "record_this": "I want to go home now because I'm tired. We need to rest for a while before we continue. They decided to leave early to avoid the traffic, and they hope to arrive before dark.",
+      "self_check": "Say 'want to go'. Is 'to' weak /tə/, with stress on 'want' and 'go'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'-ing' vs 'to' contrast (choosing correctly)"],
+      "isolation": {
+        "instructions": "Same sentence frame, different pattern: 'I like SWIMming' (gerund) vs 'I'd like tə SWIM' (infinitive). Feel the difference: clear /ŋ/ ending vs weak /tə/ before the verb.",
+        "instructions_ar": "نفس الإطار، نمط مختلف: 'I like swimming' مقابل 'I'd like tə swim'. /ŋ/ واضحة مقابل /tə/ خفيفة.",
+        "practice": ["I like SWIM-ɪŋ", "I'd like tə SWIM", "gerund vs infinitive"]
+      },
+      "minimal_pairs": [
+        {"pair": ["like swimming (in general)", "would like to swim (now)"], "meaning": ["بشكل عام", "الآن"]},
+        {"pair": ["stop smoking (quit)", "stop to smoke (pause for)"], "meaning": ["يقلع", "يتوقف ليدخّن"]},
+        {"pair": ["remember locking (past)", "remember to lock (future)"], "meaning": ["يتذكر أنه قفل", "يتذكر أن يقفل"]},
+        {"pair": ["swimmɪŋ /ŋ/", "tə swim /tə/"], "meaning": ["مصدر اسمي", "مصدر"]},
+        {"pair": ["try doing (experiment)", "try to do (attempt)"], "meaning": ["يجرّب", "يحاول"]}
+      ],
+      "word_practice": ["like swimming", "would like to swim", "stop smoking", "stop to smoke", "remember locking", "remember to lock", "try calling", "try to call", "start raining", "start to rain"],
+      "sentence_practice": [
+        "I like swimming, but today I'd like to rest.",
+        "He stopped smoking last year.",
+        "Remember to lock the door."
+      ],
+      "record_this": "I like swimming in general, but today I'd like to rest instead. He stopped smoking last year, which was hard. Please remember to lock the door — I remember locking it last night, but I'm not sure about this morning.",
+      "self_check": "Say 'like swimming' then 'would like to swim'. Can you hear the clear /ŋ/ versus the weak /tə/?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["linker 'although' /ɔːlˈðəʊ/"],
+      "isolation": {
+        "instructions": "'although' introduces a contrast inside one sentence, stressed on the second syllable /ɔːlˈðəʊ/ with the 'th' /ð/ voiced: 'Although it RAINED, we WENT'. No comma pause needed if it starts the second half.",
+        "instructions_ar": "'although' تُدخِل التضاد داخل الجملة، منبورة على المقطع الثاني /ɔːlˈðəʊ/ مع /ð/: 'Although it rained, we went'.",
+        "practice": ["ɔːlˈðəʊ (2nd-syllable stress)", "although it RAINED", "voiced /ð/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["alˈthough /ð/ ✅", "alˈtho /d/ ❌"], "meaning": ["/ð/ صحيح", "خطأ"]},
+        {"pair": ["although (contrast)", "because (reason)"], "meaning": ["رغم أن", "لأن"]},
+        {"pair": ["alˈthough (2nd stress)", "ALthough ❌ (1st stress)"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["although it rained ✅", "although but it rained ❌"], "meaning": ["صحيح", "خطأ (تكرار)"]},
+        {"pair": ["although (one sentence)", "however (two sentences)"], "meaning": ["داخل الجملة", "بين جملتين"]}
+      ],
+      "word_practice": ["although it rained", "although he tried", "although it's late", "although I was tired", "although they lost", "although it's expensive", "although she agreed", "although we hurried", "although it's small", "although he's young"],
+      "sentence_practice": [
+        "Although it rained, we went out.",
+        "Although he tried hard, he failed.",
+        "Although it's late, I'm not tired."
+      ],
+      "record_this": "Although it rained all morning, we still went out and had fun. Although he tried very hard, he didn't pass this time. Although it's quite late now, I'm honestly not tired at all.",
+      "self_check": "Say 'although it rained'. Is stress on the second syllable /ɔːlˈðəʊ/ with a voiced /ð/?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["linker 'however' + comma pause"],
+      "isolation": {
+        "instructions": "'however' contrasts two SEPARATE sentences and is followed by a comma pause: 'It was expensive. However, // I bought it.' Stress falls on the second syllable /haʊˈevə/, then pause before continuing.",
+        "instructions_ar": "'however' تربط جملتين منفصلتين وبعدها وقفة فاصلة: 'It was expensive. However, // I bought it.' النبر على المقطع الثاني.",
+        "practice": ["haʊˈevə, // (pause)", "However, I bought it", "comma pause after"]
+      },
+      "minimal_pairs": [
+        {"pair": ["However, // (pause)", "However ❌ (no pause)"], "meaning": ["مع وقفة", "بدون وقفة (خطأ)"]},
+        {"pair": ["however (between sentences)", "although (inside one)"], "meaning": ["بين جملتين", "داخل جملة"]},
+        {"pair": ["haʊˈever (2nd stress)", "HOWever ❌"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["However, I agree", "But I agree"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["however = but", "whatever = anything"], "meaning": ["لكن", "أيًّا كان"]}
+      ],
+      "word_practice": ["However, I agree", "However, it failed", "However, we stayed", "However, she left", "However, it worked", "However, I refused", "However, they won", "However, it's fine", "However, he came", "However, we tried"],
+      "sentence_practice": [
+        "It was expensive. However, I bought it.",
+        "He studied hard. However, he failed.",
+        "It rained. However, we still went."
+      ],
+      "record_this": "The jacket was expensive. However, I decided to buy it anyway. He studied very hard for the exam. However, he didn't pass. It rained heavily all day. However, we still went out and enjoyed ourselves.",
+      "self_check": "Say 'However, I bought it'. Did you pause at the comma after 'however', with stress on the second syllable?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 14 features + B1 course wrap-up",
+      "type": "review",
+      "mixed_pairs": [
+        ["readɪŋ /ŋ/ ✅", "readin /n/ ❌"], ["want tə go", "want TO go ❌"], ["like swimming", "would like to swim"],
+        ["alˈthough /ð/", "although /d/ ❌"], ["However, // (pause)", "However ❌ (no pause)"], ["although (inside)", "however (between)"]
+      ],
+      "challenge_sentences": [
+        "I enjoy reading, but tonight I want to rest.",
+        "Although it rained, we still went out.",
+        "It was expensive. However, I bought it.",
+        "Keep practising speaking, and don't stop trying."
+      ],
+      "record_this": "I really enjoy reading, but tonight I just want to rest. Although it rained all day, we still went out and enjoyed ourselves. The course was hard. However, I finished it. Keep practising speaking every day, and don't stop trying to improve.",
+      "self_check": "Four checks: clear '-ing' /ŋ/, weak infinitive 'to' /tə/, voiced 'although' /ð/, and a comma pause after 'however'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "B1 final self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record a short personal story that uses gerunds, infinitives, and both linkers. Then listen back and check every feature — this is your B1 pronunciation checkpoint.",
+        "instructions_ar": "سجّل قصة شخصية قصيرة تستخدم المصادر الاسمية والمصادر وأداتي الربط، وبعدين اسمع وراجع كل نقطة — دي نقطة تقييم B1.",
+        "passage": "This year I decided to change one habit. I used to spend hours watching videos, and although it was relaxing, it wasn't good for me. So I planned to read more instead. At first I found it hard to concentrate, and I kept checking my phone. However, I didn't give up. I started reading just ten minutes a day, and slowly I began to enjoy it. Although I still like watching a good film, I now prefer reading before bed. My advice is simple: choose one small thing you want to change, keep trying, and don't stop. It's difficult at the beginning. However, it becomes easier, and finishing a whole book feels amazing.",
+        "sounds_to_check": {
+          "gerunds '-ing' /ŋ/": "watching, checking, reading, watching, finishing",
+          "infinitives weak 'to' /tə/": "decided tə change, planned tə read, want tə change",
+          "'-ing' vs 'to' choice": "kept checking, began to enjoy, like watching, prefer reading",
+          "'although' /ɔːlˈðəʊ/ voiced /ð/": "although it was relaxing, although I still like",
+          "'however' + comma pause": "However, // I didn't give up; However, // it becomes easier"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear /ŋ/ gerunds, weak 'to', voiced 'although', paused 'however'. B1 pronunciation complete — ready for B2!",
+        "70_89": "Good; occasional /n/ for /ŋ/ or missing 'however' pause.",
+        "50_69": "'to' stressed, or 'although'/'however' run together. Repeat days 3-5.",
+        "below_50": "Redo days 1-5, keeping '-ing' clear, 'to' weak, and pausing after 'however'."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Some verbs take '-ing' (enjoy, finish, keep, avoid) and some take 'to' (want, need, decide, hope) — learn them in pairs.",
+      "The '-ing' ending is a clear nasal /ŋ/, not /n/; the infinitive 'to' is weak /tə/ and never stressed.",
+      "'although' joins a contrast INSIDE one sentence; 'however' joins two SEPARATE sentences and needs a comma pause.",
+      "This is the final B1 accent week — you have moved from single sounds (A1/A2) to connected speech, weak forms, and clause rhythm."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1 — and with your A1 week 1 recording to hear a year of progress."
+  }
+}

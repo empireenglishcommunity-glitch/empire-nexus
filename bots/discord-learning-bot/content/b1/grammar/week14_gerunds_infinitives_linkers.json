@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w14",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 14,
+  "pattern_name": "Gerunds and infinitives + linkers (although / however) — B1 review",
+  "pattern_name_ar": "المصدر الاسمي والمصدر + أدوات الربط (although / however) — مراجعة B1",
+  "formula": "verb + -ing (enjoy, finish, keep, avoid, mind) · verb + to + verb (want, need, decide, hope, plan) · although + clause (one sentence) · However, + sentence (two sentences)",
+  "formula_visual": "[I enjoy reading] // [I want to read] // [Although it rained, we went] // [It rained. However, we went.]",
+  "when_to_use": "Choose '-ing' after verbs like enjoy, finish, keep, avoid, mind, suggest; choose 'to + verb' after want, need, decide, hope, plan, promise, learn. Use 'although' to join a contrast INSIDE one sentence, and 'However,' to link two SEPARATE sentences.",
+  "when_to_use_ar": "استخدم '-ing' بعد أفعال مثل enjoy, finish, keep, avoid؛ و'to + فعل' بعد want, need, decide, hope, plan. 'although' تربط تضادًا داخل جملة واحدة، و'However,' تربط جملتين منفصلتين.",
+  "why_arabic_speakers_struggle": "Arabic uses أن + المضارع or المصدر for both patterns, so learners say 'I enjoy to read' or 'I want reading'. With linkers they double them ('Although ... but ...') copying مع أن ... لكن، and they forget the comma after 'however'.",
+  "examples": [
+    {"en": "I enjoy reading before bed.", "ar": "أستمتع بالقراءة قبل النوم", "structure": "[enjoy + -ing]"},
+    {"en": "I want to read this book.", "ar": "أريد قراءة هذا الكتاب", "structure": "[want + to + verb]"},
+    {"en": "He stopped smoking last year.", "ar": "أقلع عن التدخين العام الماضي", "structure": "[stop + -ing] (quit)"},
+    {"en": "Although it rained, we went out.", "ar": "رغم أنها أمطرت، خرجنا", "structure": "Although + [clause], [clause]"},
+    {"en": "It was expensive. However, I bought it.", "ar": "كان غاليًا. لكنني اشتريته", "structure": "[sentence]. However, [sentence]."}
+  ],
+  "common_errors": [
+    {"wrong": "I enjoy to read.", "correct": "I enjoy reading.", "explanation": "'enjoy' is always followed by the -ing form."},
+    {"wrong": "Although it rained, but we went out.", "correct": "Although it rained, we went out.", "explanation": "Use 'although' OR 'but', never both in one sentence."},
+    {"wrong": "It was expensive, however I bought it.", "correct": "It was expensive. However, I bought it.", "explanation": "'However' starts a new sentence and takes a comma after it."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I've finished ___ (read) that book.", "answer": "reading"},
+    {"sentence": "She decided ___ (leave) early.", "answer": "to leave"},
+    {"sentence": "Keep ___ (try) and you'll improve.", "answer": "trying"},
+    {"sentence": "___ he studied hard, he didn't pass.", "answer": "Although"},
+    {"sentence": "The hotel was full. ___, we found a room nearby.", "answer": "However"}
+  ],
+  "quick_rule": "enjoy/finish/keep/avoid → -ing · want/need/decide/hope → to + verb · although inside one sentence · However, between two sentences.",
+  "quick_rule_ar": "enjoy/finish/keep/avoid → -ing · want/need/decide/hope → to + فعل · although داخل جملة · However, بين جملتين.",
+  "mnemonic": "Feelings and finishing take -ing; wanting and planning take 'to'. Although joins, However separates.",
+  "connect_to_speaking": "In accent week 14 you practised clear '-ing' /ŋ/, weak 'to' /tə/, voiced 'although' /ð/, and the comma pause after 'however'. Say: 'I want tə go' and 'However, // I bought it.' This completes B1 — you are ready for B2."
+}

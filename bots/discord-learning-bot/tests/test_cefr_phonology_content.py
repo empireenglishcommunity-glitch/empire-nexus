@@ -21,7 +21,7 @@ CONTENT = config.BASE_DIR / "content"
 
 # Levels whose accent/grammar content has been authored so far. Add a level
 # here as its phonology content ships (that makes the coverage explicit).
-AUTHORED = ["A1", "A2"]
+AUTHORED = ["A1", "A2", "B1"]
 
 _PLACEHOLDER = "I am practicing English."
 
@@ -190,12 +190,22 @@ def test_grammar_card_renders_without_raw_dicts(level):
     for w in range(1, curriculum.CEFR_WEEK_COUNTS[level] + 1):
         card = features.format_grammar_card(w, level)
         assert card, f"{level} w{w} produced no grammar card"
-        assert "{'en'" not in card and '{"en"' not in card, (
-            f"{level} w{w} grammar card contains a raw dict repr"
-        )
-        # The card must show the English example text itself, not the
-        # internal 'structure' scaffolding field.
-        assert "'structure'" not in card and '"structure"' not in card
+        # Check for ANY leaked dict/list repr, not just the `examples` one.
+        # The original version of this test only looked for "{'en'", which is
+        # precisely why the same bug survived undetected in the
+        # practice_fill_blank section ("{'sentence': ..., 'answer': ...}").
+        for leak in ("{'", '{"'):
+            assert leak not in card, (
+                f"{level} w{w} grammar card contains a raw dict repr "
+                f"({leak!r}): {card!r}"
+            )
+        # The card must show the authored text itself, not the internal
+        # scaffolding field names.
+        for internal in ("structure", "sentence", "answer", "wrong", "correct"):
+            assert f"'{internal}'" not in card and f'"{internal}"' not in card, (
+                f"{level} w{w} grammar card leaks the internal "
+                f"{internal!r} key name"
+            )
 
 
 @pytest.mark.parametrize("level", AUTHORED)
