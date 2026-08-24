@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 10,
+  "focus": "Weak relatives 'who' /wə/, 'that' /ðət/, 'which' /wɪtʃ/ · smooth linking into the clause · defining-clause rhythm (no pause) · 'whose' /huːz/ · 'where' /weə/",
+  "focus_ar": "الضمائر الموصولة الخفيفة 'who/that/which'، والوصل السلس داخل الجملة، وإيقاع الجملة التعريفية (بلا وقفة)",
+  "arabic_challenge": "Relative pronouns are weak links, and a defining clause has NO pause before it: 'the man who lives next door'. Arabic learners stress the pronoun and pause before it, breaking the noun+clause into two pieces.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'who' /wə/ and 'that' /ðət/"],
+      "isolation": {
+        "instructions": "Relative 'who' weakens to /wə/ and 'that' to /ðət/. They glue the noun to its description with NO pause: 'the man who-lives-next-door'. The verb after them is stressed.",
+        "instructions_ar": "'who' تخف لـ /wə/ و 'that' لـ /ðət/. بيلزقوا الاسم بوصفه بدون وقفة. الفعل بعدهم منبور.",
+        "practice": ["the man wə LIVES there", "the book ðət I READ", "no pause, weak pronoun"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the man who lives ✅", "the man. WHO lives. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["that /ðət/ (relative)", "that /ðæt/ (demonstrative)"], "meaning": ["الذي (خفيفة)", "ذلك (قوية)"]},
+        {"pair": ["who /wə/ (relative)", "who /huː/ (question)"], "meaning": ["الذي", "مَن؟"]},
+        {"pair": ["the book that I read ✅", "the book. that I read. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["people who work ✅", "people WHO work ❌"], "meaning": ["طبيعي", "ثقيل"]}
+      ],
+      "word_practice": ["who lives", "who works", "that I read", "that she made", "who called", "that happened", "who helped", "that we saw", "who knows", "that matters"],
+      "sentence_practice": [
+        "The man who lives next door is a doctor.",
+        "This is the book that I told you about.",
+        "The woman who called was my sister."
+      ],
+      "record_this": "The man who lives next door is a doctor. This is the book that I told you about last week. The woman who called earlier was my sister.",
+      "self_check": "Say 'the man who lives next door'. Is there NO pause, with 'who' weak and 'lives' stressed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'which' /wɪtʃ/ (for things)"],
+      "isolation": {
+        "instructions": "'Which' (for things) is unstressed in defining clauses: 'the house which we bought'. It links smoothly; the verb is stressed. In speech 'that' is often used instead.",
+        "instructions_ar": "'which' (للأشياء) غير منبورة في الجملة التعريفية. بتتوصّل بسلاسة، والفعل منبور. وغالبًا 'that' بتحل محلها.",
+        "practice": ["the house wɪtʃ we BOUGHT", "the car ðət broke DOWN", "which/that = weak link"]
+      },
+      "minimal_pairs": [
+        {"pair": ["which we bought ✅", "WHICH we bought ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["which (things)", "who (people)"], "meaning": ["للأشياء", "للأشخاص"]},
+        {"pair": ["the car which/that broke", "the car who broke ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["which /wɪtʃ/", "witch /wɪtʃ/"], "meaning": ["الذي (للأشياء)", "ساحرة"]},
+        {"pair": ["the thing which matters", "the thing what matters ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["which we bought", "which happened", "which I like", "which broke", "which costs", "that works", "that matters", "which means", "that I need", "which arrived"],
+      "sentence_practice": [
+        "The house which we bought is old.",
+        "The car that broke down is fixed now.",
+        "This is the phone which I like most."
+      ],
+      "record_this": "The house which we bought last year is quite old. The car that broke down on the motorway is fixed now. This is the phone which I like the most.",
+      "self_check": "Say 'the house which we bought'. Is 'which' weak, linking straight into 'we bought'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["defining-clause rhythm (no pause)"],
+      "isolation": {
+        "instructions": "A DEFINING clause (essential info) has no commas and no pause: 'People who smoke risk their health'. The noun and its clause form one unit; the main verb comes after.",
+        "instructions_ar": "الجملة التعريفية (معلومة أساسية) بلا فواصل وبلا وقفة: 'People who smoke risk...'. الاسم وجملته وحدة واحدة.",
+        "practice": ["people-who-smoke RISK...", "the film-that-won was GREAT", "one unit, no pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["people who smoke risk ✅", "people, who smoke, risk ❌ (defining)"], "meaning": ["تعريفية بلا فواصل", "خطأ"]},
+        {"pair": ["defining (no pause)", "non-defining (pauses) — B2"], "meaning": ["أساسية", "إضافية"]},
+        {"pair": ["one unit ✅", "two chopped pieces ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["the man that I met ✅", "the man — that I met ❌"], "meaning": ["بلا وقفة", "خطأ"]},
+        {"pair": ["the key that opens it", "the key, that opens it ❌"], "meaning": ["تعريفية", "خطأ"]}
+      ],
+      "word_practice": ["people who smoke", "the film that won", "the man I met", "the house we saw", "the food they cooked", "the book I bought", "the friend who helped", "the day we met", "the reason it failed", "the person you need"],
+      "sentence_practice": [
+        "People who exercise stay healthy.",
+        "The film that won the prize was great.",
+        "The man I met yesterday called again."
+      ],
+      "record_this": "People who exercise regularly usually stay healthy. The film that won the prize was really great. The man I met yesterday called me again this morning.",
+      "self_check": "Say 'people who exercise stay healthy'. Is it one smooth unit with no pause before 'who'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'whose' /huːz/ and 'where' /weə/"],
+      "isolation": {
+        "instructions": "'Whose' /huːz/ (possession) and 'where' /weə/ (place) also link smoothly: 'the woman whose car…', 'the café where we met'. Unstressed, gluing noun to clause.",
+        "instructions_ar": "'whose' (ملكية) و 'where' (مكان) بيتوصّلوا بسلاسة كمان. غير منبورين، بيلزقوا الاسم بالجملة.",
+        "practice": ["the woman huːz car...", "the café weə we MET", "whose/where = weak link"]
+      },
+      "minimal_pairs": [
+        {"pair": ["whose /huːz/", "who's /huːz/ (who is)"], "meaning": ["الذي ملكه", "مَن هو (نفس النطق)"]},
+        {"pair": ["the café where we met ✅", "the café which we met ❌"], "meaning": ["مكان", "خطأ"]},
+        {"pair": ["where /weə/", "wear /weə/"], "meaning": ["حيث", "يرتدي"]},
+        {"pair": ["the man whose son ✅", "the man who's son ❌"], "meaning": ["ملكية", "خطأ"]},
+        {"pair": ["the place where ✅", "the place where that ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["whose car", "whose son", "whose house", "where we met", "where I work", "where it happened", "where they live", "whose idea", "where you were", "whose turn"],
+      "sentence_practice": [
+        "That's the woman whose car was stolen.",
+        "This is the café where we first met.",
+        "I know a place where they sell it."
+      ],
+      "record_this": "That's the woman whose car was stolen last night. This is the café where we first met. I know a great place where they sell fresh bread every morning.",
+      "self_check": "Say 'the café where we met'. Does 'where' link smoothly, unstressed, into the clause?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["omitting the relative (contact clauses)"],
+      "isolation": {
+        "instructions": "When the relative is the OBJECT, speakers often drop it: 'the book (that) I read', 'the man (who) I met'. The noun links straight to the subject: 'the-book-I-READ'. Even smoother.",
+        "instructions_ar": "لما الضمير الموصول مفعولًا، غالبًا بيتشال: 'the book I read'. الاسم يتوصّل بالفاعل مباشرة.",
+        "practice": ["the book I READ (no 'that')", "the man I MET", "object relative → droppable"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the book I read (dropped)", "the book that I read (kept)"], "meaning": ["محذوف", "مذكور — الاتنين صح"]},
+        {"pair": ["the man I met ✅", "the man met ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["object → droppable", "subject → keep (who lives)"], "meaning": ["يُحذف", "يبقى"]},
+        {"pair": ["the film we saw", "the film that we saw"], "meaning": ["محذوف", "مذكور"]},
+        {"pair": ["the food they made", "the food made ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["the book I read", "the man I met", "the film we saw", "the food they made", "the person I called", "the place we visited", "the thing you said", "the car I bought", "the song she sang", "the letter he wrote"],
+      "sentence_practice": [
+        "The book I read was excellent.",
+        "The man I met was very kind.",
+        "The film we saw was too long."
+      ],
+      "record_this": "The book I read last week was excellent. The man I met at the conference was very kind. The film we saw last night was good but far too long.",
+      "self_check": "Say 'the book I read'. Does the noun link straight to 'I' with no pronoun and no pause?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 10 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["the man wə lives ✅", "the man. WHO lives. ❌"], ["which we bought ✅", "WHICH we bought ❌"], ["whose /huːz/", "who's"],
+        ["people who smoke risk ✅", "people, who smoke, risk ❌"], ["where /weə/", "wear"], ["the book I read (dropped)", "the book that I read"]
+      ],
+      "challenge_sentences": [
+        "The man who lives next door is the doctor I told you about.",
+        "This is the café where we first met.",
+        "The book I read was written by a writer whose name I forgot.",
+        "People who exercise usually feel better."
+      ],
+      "record_this": "The man who lives next door is the doctor I told you about. This is the café where we first met. The book I read was written by a writer whose name I've forgotten. People who exercise regularly usually feel much better.",
+      "self_check": "Three checks: weak relative pronouns, no pause before defining clauses, and smooth object-relative dropping."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing people and places using relative clauses. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت توصف أشخاصًا وأماكن بجُمَل الوصل، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me describe my neighbourhood. The man who lives next door is a doctor who works at the hospital nearby. The café where I have breakfast is run by a woman whose coffee is the best in town. The park that I visit every morning is the place where I feel most relaxed. My favourite shop, the one I go to every week, sells books that you can't find anywhere else. The people I've met here are the kindest I know. It's a place that feels like home, and the friends I've made are the reason I'll never leave.",
+        "sounds_to_check": {
+          "weak 'who/that/which'": "who lives, who works, that I visit, that feels, books that you can't find",
+          "'whose' and 'where'": "whose coffee, where I have breakfast, where I feel relaxed",
+          "no pause before defining clause": "the man who lives, the park that I visit",
+          "dropped object relative": "the one I go to, the people I've met, the friends I've made",
+          "smooth linking noun+clause": "the man who lives next door is a doctor"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Relatives weak, no pause before defining clauses, natural dropping. Ready for week 11.",
+        "70_89": "Good; occasional stressed pronoun.",
+        "50_69": "Pauses before 'who/that', pronouns stressed. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5, linking each noun straight into its clause."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Relative pronouns are WEAK links — they glue a noun to its description with no pause.",
+      "A defining clause (essential info) has no commas and no pause before it.",
+      "'who' for people, 'which/that' for things, 'whose' for possession, 'where' for places.",
+      "When the relative is the object, you can drop it: 'the book I read' = 'the book that I read'."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

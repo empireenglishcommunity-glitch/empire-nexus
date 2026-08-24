@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w8",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 8,
+  "pattern_name": "used to / would for past habits",
+  "pattern_name_ar": "used to / would للعادات في الماضي",
+  "formula": "used to + verb (past habit or state, not now) · would + verb (repeated past action) · didn't use to / Did you use to ...?",
+  "formula_visual": "[I used to play] + [football every Friday]",
+  "when_to_use": "'used to + verb' describes a past habit or state that is no longer true. 'would + verb' also describes repeated past ACTIONS in a story or memory, but not past states. In negatives and questions the 'd' disappears: didn't use to / Did you use to ...?",
+  "when_to_use_ar": "'used to + فعل' لعادة أو حالة في الماضي لم تعد موجودة. 'would + فعل' لأفعال متكررة في الماضي (لا للحالات). في النفي والسؤال: didn't use to / Did you use to ...?",
+  "why_arabic_speakers_struggle": "Arabic uses كان + المضارع for both habits and states, so learners over-use 'would' for states ('I would have long hair') and add -ed twice ('didn't used to'). They also confuse 'used to + verb' with 'be used to + -ing' (= be accustomed).",
+  "examples": [
+    {"en": "I used to play football every Friday.", "ar": "كنت ألعب كرة القدم كل جمعة", "structure": "[used to + verb] (habit)"},
+    {"en": "She used to have long hair.", "ar": "كان شعرها طويلاً", "structure": "[used to + have] (state)"},
+    {"en": "Every summer we would visit my grandmother.", "ar": "كل صيف كنا نزور جدتي", "structure": "[would + verb] (repeated action)"},
+    {"en": "I didn't use to like coffee.", "ar": "لم أكن أحب القهوة", "structure": "[didn't use to] (negative)"},
+    {"en": "Did you use to walk to school?", "ar": "هل كنت تمشي إلى المدرسة؟", "structure": "[Did + use to]?"}
+  ],
+  "common_errors": [
+    {"wrong": "I didn't used to like it.", "correct": "I didn't use to like it.", "explanation": "After 'didn't' the base form is 'use to', without -d."},
+    {"wrong": "I would have long hair.", "correct": "I used to have long hair.", "explanation": "'would' works for repeated actions, not past states."},
+    {"wrong": "I am used to play football. (past habit)", "correct": "I used to play football.", "explanation": "'be used to' + -ing means 'accustomed to'; a past habit is 'used to + verb'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (use) to live in a small village.", "answer": "used"},
+    {"sentence": "Every winter my father ___ (take) us to the mountains.", "answer": "would take"},
+    {"sentence": "She ___ (not / use) to enjoy reading.", "answer": "didn't use"},
+    {"sentence": "___ you ___ (use) to play any sport at school?", "answer": "Did / use"},
+    {"sentence": "He ___ (use) to have a beard, but he shaved it.", "answer": "used"}
+  ],
+  "quick_rule": "Past habit or state, not now → used to + verb. Repeated past action in a memory → would + verb. Negative/question → use to.",
+  "quick_rule_ar": "عادة أو حالة ماضية انتهت → used to + فعل. فعل متكرر في الذكريات → would + فعل. النفي/السؤال → use to.",
+  "mnemonic": "States need 'used to'. Actions accept 'would'. After 'did', drop the 'd'.",
+  "connect_to_speaking": "In accent week 8 you practised 'used to' as /juːstə/ and would → 'd. Say: 'I used to play football' as 'I juːstə play' — one smooth weak group, stress on 'PLAY'."
+}

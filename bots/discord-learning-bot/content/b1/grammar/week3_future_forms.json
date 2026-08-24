@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w3",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 3,
+  "pattern_name": "Future forms: will / going to / present continuous",
+  "pattern_name_ar": "صيغ المستقبل: will / going to / المضارع المستمر",
+  "formula": "will + verb (decision now/prediction) · be going to + verb (plan/evidence) · am/is/are + -ing (arrangement)",
+  "formula_visual": "[I'll help] // [I'm going to study] // [I'm meeting Sara at 6]",
+  "when_to_use": "will: instant decisions and predictions ('I'll get it', 'It'll rain'). going to: plans and predictions from evidence ('I'm going to study medicine', 'Look — it's going to rain'). Present continuous: fixed arrangements with a time/place ('I'm meeting Sara at six').",
+  "when_to_use_ar": "will: قرار لحظي وتوقّع. going to: خطة وتوقّع من دليل. المضارع المستمر: ترتيب ثابت بوقت/مكان.",
+  "why_arabic_speakers_struggle": "Arabic marks the future mainly with سـ/سوف, so learners use 'will' for everything and rarely use 'going to' for plans or the present continuous for arrangements. They also say 'I will meeting' or 'I going to'.",
+  "examples": [
+    {"en": "The phone's ringing — I'll get it.", "ar": "الهاتف يرنّ — سأردّ أنا", "structure": "[will + verb] (instant decision)"},
+    {"en": "I'm going to study medicine.", "ar": "سأدرس الطب (خطة)", "structure": "[be going to + verb] (plan)"},
+    {"en": "Look at those clouds — it's going to rain.", "ar": "انظر للغيوم — ستمطر (دليل)", "structure": "[going to] (evidence)"},
+    {"en": "I'm meeting Sara at six tonight.", "ar": "سأقابل سارة السادسة الليلة (ترتيب)", "structure": "[am + -ing] (arrangement)"},
+    {"en": "I think our team will win.", "ar": "أعتقد أن فريقنا سيفوز (توقّع)", "structure": "[will] (prediction)"}
+  ],
+  "common_errors": [
+    {"wrong": "I will study medicine (a long-decided plan).", "correct": "I'm going to study medicine.", "explanation": "A plan you already decided → going to, not a spur-of-the-moment will."},
+    {"wrong": "I will meet Sara at six (fixed arrangement).", "correct": "I'm meeting Sara at six.", "explanation": "Fixed arrangement with a time → present continuous."},
+    {"wrong": "Look, it will rain now.", "correct": "Look, it's going to rain.", "explanation": "Prediction from present evidence → going to."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "That bag looks heavy. I ___ (help) you.", "answer": "will help / 'll help"},
+    {"sentence": "We ___ (visit) my grandmother next month. (plan)", "answer": "are going to visit"},
+    {"sentence": "I ___ (see) the doctor at 4 pm tomorrow. (arrangement)", "answer": "am seeing / 'm seeing"},
+    {"sentence": "Be careful! You ___ (drop) that.", "answer": "are going to drop / 're going to drop"},
+    {"sentence": "I think it ___ (be) a great year.", "answer": "will be / 'll be"}
+  ],
+  "quick_rule": "Decide now/predict → will. Plan or evidence → going to. Fixed arrangement (time+place) → present continuous.",
+  "quick_rule_ar": "قرار الآن/توقّع → will. خطة أو دليل → going to. ترتيب ثابت (وقت+مكان) → مضارع مستمر.",
+  "mnemonic": "Just decided → 'll. Already planned → going to. In my diary → -ing.",
+  "connect_to_speaking": "In accent week 3 you practised gonna and 'll and time-phrase stress. Say: 'I'm gonna study medicine' and 'I'll get it' — reduce 'going to' to 'gonna' and contract 'I will' to 'I'll'."
+}

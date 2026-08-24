@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w7",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 7,
+  "pattern_name": "Present perfect continuous (have been + -ing)",
+  "pattern_name_ar": "المضارع التام المستمر (have been + -ing)",
+  "formula": "have/has + been + verb-ing · for + period · since + point · How long ...?",
+  "formula_visual": "[I've been waiting] + [for two hours]",
+  "when_to_use": "For an action that started in the past and is still continuing (or just stopped, with a visible result). It emphasises the DURATION or the activity itself, often answering 'How long ...?'.",
+  "when_to_use_ar": "لفعل بدأ في الماضي ولا يزال مستمرًا (أو توقّف للتوّ ونتيجته ظاهرة). يركّز على المدة أو النشاط نفسه، وغالبًا يجيب على 'How long?'.",
+  "why_arabic_speakers_struggle": "There is no equivalent form in Arabic, so learners use the present simple ('I wait here since two hours') or drop 'been' ('I have waiting'). They also use it with state verbs like know/be, which prefer the simple present perfect.",
+  "examples": [
+    {"en": "I've been waiting for two hours.", "ar": "أنتظر منذ ساعتين", "structure": "[have been waiting] + [for]"},
+    {"en": "She's been studying since morning.", "ar": "تدرس منذ الصباح", "structure": "[has been studying] + [since]"},
+    {"en": "How long have you been learning English?", "ar": "منذ متى تتعلم الإنجليزية؟", "structure": "How long + [have been + -ing]?"},
+    {"en": "It's been raining all day.", "ar": "تمطر طوال اليوم", "structure": "[has been raining]"},
+    {"en": "Your eyes are red — have you been crying?", "ar": "عيناك حمراء — هل كنت تبكي؟", "structure": "[have been + -ing]? (visible result)"}
+  ],
+  "common_errors": [
+    {"wrong": "I am waiting here since two hours.", "correct": "I've been waiting here for two hours.", "explanation": "Duration up to now → have been + -ing, and 'for' with a period."},
+    {"wrong": "I have waiting for an hour.", "correct": "I have been waiting for an hour.", "explanation": "The form needs 'been' before the -ing verb."},
+    {"wrong": "I've been knowing her for years.", "correct": "I've known her for years.", "explanation": "State verbs (know, be, own) use the simple present perfect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (wait) for the bus for 20 minutes.", "answer": "have been waiting / 've been waiting"},
+    {"sentence": "She ___ (study) since eight o'clock.", "answer": "has been studying / 's been studying"},
+    {"sentence": "How long ___ you ___ (live) in this city?", "answer": "have / been living"},
+    {"sentence": "It ___ (rain) all morning and the streets are wet.", "answer": "has been raining"},
+    {"sentence": "I ___ (know) him for ten years. (state verb)", "answer": "have known"}
+  ],
+  "quick_rule": "Still going + how long → have/has BEEN + -ing (for a period, since a point). State verbs → simple present perfect.",
+  "quick_rule_ar": "مستمر + المدة → have/has BEEN + -ing (for للمدة، since للنقطة). أفعال الحالة → مضارع تام بسيط.",
+  "mnemonic": "'How long?' → have been + -ing. Don't forget BEEN.",
+  "connect_to_speaking": "In accent week 7 you practised 'been' and 'have been + -ing' as one weak group. Say: 'I've been waiting for two hours' — squeeze 've been into one light beat and stress 'WAITing' and 'TWO'."
+}

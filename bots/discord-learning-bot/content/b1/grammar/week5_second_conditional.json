@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w5",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 5,
+  "pattern_name": "Second conditional (unreal / hypothetical present)",
+  "pattern_name_ar": "الشرط الثاني (غير الواقعي / الافتراضي في الحاضر)",
+  "formula": "If + past simple, ... would + verb · If I were you, I'd ...",
+  "formula_visual": "[If I had money], [I would travel] // [If I were you], [I'd apologise]",
+  "when_to_use": "For imaginary, unlikely or impossible present/future situations, and for advice. The if-clause uses the PAST simple (with 'were' for all persons after if), and the result uses WOULD + verb.",
+  "when_to_use_ar": "لمواقف خيالية أو غير محتملة في الحاضر/المستقبل، وللنصيحة. جملة الشرط بالماضي البسيط (مع 'were' لكل الضمائر بعد if)، والنتيجة بـ would + فعل.",
+  "why_arabic_speakers_struggle": "The 'unreal' meaning is carried by a past-tense form that doesn't mean past time, which is confusing. Learners say 'If I would have money' or use 'was' instead of the recommended 'were' ('If I were you').",
+  "examples": [
+    {"en": "If I had a lot of money, I would travel the world.", "ar": "لو كان لديّ مال كثير، لسافرت حول العالم", "structure": "If + [past], [would]"},
+    {"en": "If I were you, I'd apologise.", "ar": "لو كنت مكانك، لاعتذرت", "structure": "If + were, [I'd]"},
+    {"en": "She would help if she had time.", "ar": "كانت ستساعد لو كان لديها وقت", "structure": "[would] + if + [past]"},
+    {"en": "What would you do if you won the lottery?", "ar": "ماذا كنت ستفعل لو ربحت اليانصيب؟", "structure": "[would + do] + if + [won]?"},
+    {"en": "If he studied more, he'd pass easily.", "ar": "لو ذاكر أكثر، لنجح بسهولة", "structure": "If + [past], [he'd]"}
+  ],
+  "common_errors": [
+    {"wrong": "If I would have money, I would travel.", "correct": "If I had money, I would travel.", "explanation": "The if-clause uses the past simple, never 'would'."},
+    {"wrong": "If I was you, I'd wait.", "correct": "If I were you, I'd wait.", "explanation": "In this fixed advice pattern we use 'were' for all persons."},
+    {"wrong": "If she has time, she would help. (imagining)", "correct": "If she had time, she would help.", "explanation": "Unreal present → past simple in the if-clause."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If I ___ (be) rich, I would buy a house by the sea.", "answer": "were"},
+    {"sentence": "She would travel more if she ___ (have) more holidays.", "answer": "had"},
+    {"sentence": "If I were you, I ___ (take) the job.", "answer": "would take / 'd take"},
+    {"sentence": "What would you do if you ___ (lose) your phone?", "answer": "lost"},
+    {"sentence": "If he ___ (study) harder, he'd get better marks.", "answer": "studied"}
+  ],
+  "quick_rule": "Imaginary now → If + PAST simple, ... WOULD + verb. Advice → 'If I were you, I'd ...'.",
+  "quick_rule_ar": "خيالي الآن → If + ماضٍ بسيط، ... WOULD + فعل. نصيحة → 'If I were you, I'd ...'.",
+  "mnemonic": "Dream world: past-tense 'if' + 'would' result. 'Were' for everyone in 'If I were you'.",
+  "connect_to_speaking": "In accent week 5 you practised weak would/'d and 'if I were'. Say: 'If I were you, I'd wait' — weak 'were', contracted 'I'd', stress on the advice verb."
+}

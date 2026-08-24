@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 7,
+  "focus": "'been' /biːn/ + -ing linking · weak 'have been' /əv bɪn/ · 'how long' stress · 'for/since' with duration · continuous rhythm",
+  "focus_ar": "'been' + -ing، و 'have been' الخفيفة، ونبر 'how long'، و 'for/since' مع المدة، وإيقاع الاستمرار",
+  "arabic_challenge": "The present perfect continuous stacks auxiliaries ('have been waiting'), and B1 learners tend to pronounce each fully. The natural form reduces to /əv bɪn ˈweɪtɪŋ/, with only 'waiting' stressed.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'been' + -ing linking"],
+      "isolation": {
+        "instructions": "'Been' /biːn/ links straight into the -ing verb: 'been WAITing', 'been WORKing'. Keep 'been' with a long vowel and unstressed; the -ing verb takes the stress.",
+        "instructions_ar": "'been' /biːn/ تتوصّل بالفعل+ing: 'been WAITing'. حرف طويل وغير منبورة، والفعل هو المنبور.",
+        "practice": ["been-WAITing", "been-WORKing", "been-STUDYing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["been waiting ✅", "been wait ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["been /biːn/", "bin /bɪn/"], "meaning": ["ظللت", "سلة"]},
+        {"pair": ["been working (duration)", "worked (finished)"], "meaning": ["مستمر", "منتهٍ"]},
+        {"pair": ["been studying", "been study ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["been living here", "lived here"], "meaning": ["مستمر", "خبرة/منتهٍ"]}
+      ],
+      "word_practice": ["been waiting", "been working", "been studying", "been living", "been trying", "been learning", "been raining", "been reading", "been running", "been practising"],
+      "sentence_practice": [
+        "I've been waiting for an hour.",
+        "She's been working all day.",
+        "It's been raining since morning."
+      ],
+      "record_this": "I've been waiting for an hour and I'm getting tired. She's been working all day without a break. It's been raining since early morning.",
+      "self_check": "Say 'been waiting'. Is 'been' long and light, with stress on 'waiting'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["weak 'have been' /əv bɪn/"],
+      "isolation": {
+        "instructions": "The whole auxiliary block reduces: 'I have been' → /aɪv bɪn/, 'they have been' → /ðeɪv bɪn/. Here 'been' can shorten toward /bɪn/ inside the fast cluster. Only the main verb is stressed.",
+        "instructions_ar": "كتلة المساعد كلها بتخف: 'I have been' → /aɪv bɪn/. الفعل الرئيسي بس المنبور.",
+        "practice": ["I've-bin-WAITing", "they've-bin-WORKing", "auxiliary block weak"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I've been ✅", "I been ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["they've been ✅", "they been ❌"], "meaning": ["صحيح", "ناقص"]},
+        {"pair": ["she's been (has)", "she's being ❌"], "meaning": ["ظلّت", "خطأ"]},
+        {"pair": ["we've been trying ✅", "we been trying ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["I've been waiting", "I'm waiting"], "meaning": ["مدة حتى الآن", "الآن"]}
+      ],
+      "word_practice": ["I've been", "they've been", "she's been", "we've been", "he's been", "you've been", "it's been", "I've been trying", "we've been working", "they've been waiting"],
+      "sentence_practice": [
+        "I've been trying to call you.",
+        "We've been working on this for weeks.",
+        "They've been waiting for ages."
+      ],
+      "record_this": "I've been trying to call you all morning. We've been working on this project for weeks. They've been waiting for ages, so let's not keep them any longer.",
+      "self_check": "Say 'I've been trying'. Does the whole 'I've been' compress, leaving 'trying' stressed?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'how long' stress in questions"],
+      "isolation": {
+        "instructions": "'How long' carries the question stress: 'How LONG have you been waiting?'. The auxiliary block ('have you been') stays weak between 'how long' and the verb.",
+        "instructions_ar": "'how long' بتحمل نبر السؤال. كتلة المساعد ('have you been') تفضل خفيفة.",
+        "practice": ["how LONG have you been WAITing?", "how LONG has she been HERE?", "stress the question phrase + verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["how LONG ✅", "HOW long ~"], "meaning": ["طبيعي", "ممكن"]},
+        {"pair": ["have you been ✅", "have you being ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["how long have you ✅", "HOW LONG HAVE YOU ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["been waiting", "been waited ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["how long've you /əv/", "how long HAVE you ❌"], "meaning": ["طبيعي", "خطأ"]}
+      ],
+      "word_practice": ["how long", "how long have you", "how long has she", "how long have they", "how long has it", "how long've you been", "how long has he", "how long have we", "how long has this", "for how long"],
+      "sentence_practice": [
+        "How long have you been waiting?",
+        "How long has she been studying English?",
+        "How long have they been married?"
+      ],
+      "record_this": "How long have you been waiting here? How long has she been studying English? And how long have your parents been married?",
+      "self_check": "Say 'How long have you been waiting?'. Is 'how long' clearly the strongest phrase, with the auxiliaries weak?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'for/since' with duration (revisited)"],
+      "isolation": {
+        "instructions": "Answers use weak 'for' /fə/ + a period, or 'since' + a start point: 'I've been waiting for TWENty minutes', 'since THREE o'clock'. Stress the number/time, not 'for/since'.",
+        "instructions_ar": "الإجابات بـ 'for' + مدة أو 'since' + نقطة: 'for TWENty minutes'، 'since THREE'. النبر على الوقت.",
+        "practice": ["fə TWENty minutes", "since THREE o'clock", "weak for/since"]
+      },
+      "minimal_pairs": [
+        {"pair": ["fə twenty minutes ✅", "FOR twenty minutes ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["for (period)", "since (start point)"], "meaning": ["مدة", "بداية"]},
+        {"pair": ["for two hours", "since two o'clock"], "meaning": ["مدة", "نقطة"]},
+        {"pair": ["for /fə/", "four /fɔː/"], "meaning": ["لمدة", "أربعة"]},
+        {"pair": ["since this morning ✅", "for this morning ❌"], "meaning": ["نقطة", "خطأ"]}
+      ],
+      "word_practice": ["for twenty minutes", "for two hours", "for a long time", "for days", "since three o'clock", "since this morning", "since last year", "since I arrived", "for weeks", "since 2020"],
+      "sentence_practice": [
+        "I've been waiting for twenty minutes.",
+        "She's been studying since three o'clock.",
+        "We've been living here for years."
+      ],
+      "record_this": "I've been waiting for twenty minutes. She's been studying since three o'clock this afternoon. We've been living in this neighbourhood for years, since 2018.",
+      "self_check": "Say 'for twenty minutes'. Does 'for' reduce to /fə/, with stress on 'twenty'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["continuous vs simple perfect rhythm"],
+      "isolation": {
+        "instructions": "Contrast: 'I've been reading' (activity, duration) vs 'I've read three books' (result, number). Continuous stresses the -ing activity; simple stresses the result/quantity.",
+        "instructions_ar": "قارن: 'I've been reading' (نشاط ومدة) مقابل 'I've read three books' (نتيجة وعدد).",
+        "practice": ["I've been READing (activity)", "I've read THREE books (result)", "activity vs result"]
+      },
+      "minimal_pairs": [
+        {"pair": ["been reading (activity)", "have read (result)"], "meaning": ["نشاط مستمر", "نتيجة"]},
+        {"pair": ["been working all day", "have finished the work"], "meaning": ["مدة", "إنجاز"]},
+        {"pair": ["been writing (ongoing)", "have written (done)"], "meaning": ["مستمر", "منتهٍ"]},
+        {"pair": ["how long (duration)", "how many (quantity)"], "meaning": ["مدة", "عدد"]},
+        {"pair": ["been trying (effort)", "have tried (attempts done)"], "meaning": ["نشاط", "محاولات"]}
+      ],
+      "word_practice": ["been reading", "have read", "been working", "have finished", "been writing", "have written", "been studying", "have learnt", "been cooking", "have made"],
+      "sentence_practice": [
+        "I've been reading all evening; I've read fifty pages.",
+        "She's been working hard; she's finished the report.",
+        "We've been cooking; we've made three dishes."
+      ],
+      "record_this": "I've been reading all evening, and so far I've read fifty pages. She's been working hard all week, and now she's finished the report. We've been cooking since noon, and we've already made three dishes.",
+      "self_check": "Does the continuous stress the -ing activity, while the simple perfect stresses the result/number?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 7 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["been waiting ✅", "been wait ❌"], ["I've been ✅", "I been ❌"], ["how LONG ✅", "HOW LONG HAVE YOU ❌"],
+        ["fə twenty minutes", "FOR twenty ❌"], ["been reading (activity)", "have read (result)"], ["been /biːn/", "bin"]
+      ],
+      "challenge_sentences": [
+        "How long have you been waiting?",
+        "I've been working here since 2019.",
+        "She's been studying for three hours.",
+        "We've been trying to call you all day."
+      ],
+      "record_this": "How long have you been waiting out here? I've been working at this company since 2019. She's been studying for three hours without a break. And we've been trying to call you all day.",
+      "self_check": "Three checks: 'been' + -ing linked, weak 'have been', and stressed 'how long' + time phrase."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about a skill or hobby you've developed. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن مهارة أو هواية طوّرتها، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I've been learning the guitar for about two years now. I've been practising almost every day, and I've already learnt more than thirty songs. At the beginning it was hard — my fingers have been hurting for months! But I've been improving steadily. Recently I've been playing with a small group of friends. We've been meeting every weekend, and we've written two of our own songs. People often ask me how long I've been playing, and they can't believe it's only been two years. I've been thinking about performing in public soon. I've worked hard for this, and I've never enjoyed anything so much.",
+        "sounds_to_check": {
+          "'been' + -ing": "been learning, been practising, been improving, been playing, been meeting, been thinking",
+          "weak 'have been'": "I've been, my fingers have been, we've been",
+          "'how long' stress": "how long I've been playing",
+          "for/since duration": "for about two years, for months",
+          "continuous vs simple": "been learning (activity) vs I've learnt thirty songs / we've written two songs (result)"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Auxiliary block reduced, -ing stressed, duration clear. Ready for week 8.",
+        "70_89": "Good; occasional full 'have been'.",
+        "50_69": "Each auxiliary pronounced fully; rhythm choppy. Repeat days 1-2.",
+        "below_50": "Redo days 1-4, compressing 'have been' before the -ing verb."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The whole auxiliary block ('have been') reduces to /əv bɪn/ — only the -ing verb is stressed.",
+      "'been' keeps a long vowel and links straight into the -ing verb.",
+      "Continuous = activity/duration (been reading); simple perfect = result/number (have read three books).",
+      "'how long' carries the question; the auxiliaries stay weak."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

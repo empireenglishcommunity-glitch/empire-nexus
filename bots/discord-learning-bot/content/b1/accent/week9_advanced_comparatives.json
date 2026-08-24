@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 9,
+  "focus": "Weak 'as ... as' /əz/ · weak 'than' /ðən/ · 'the more … the better' stress · 'much/far' + comparative · 'not as … as' rhythm",
+  "focus_ar": "'as ... as' الخفيفة، و 'than' الخفيفة، ونبر 'the more … the better'، و 'much/far' + المقارنة",
+  "arabic_challenge": "Advanced comparison structures pile up small function words ('as', 'as', 'than', 'the'), all weak. Arabic learners stress them, which buries the two content words the comparison actually depends on.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'as ... as' /əz/"],
+      "isolation": {
+        "instructions": "In 'as … as', both 'as' are weak /əz/; the ADJECTIVE between them is stressed: 'as TALL as me'. The frame disappears; the adjective stands out.",
+        "instructions_ar": "في 'as … as' الاتنين خفاف /əz/؛ الصفة بينهم منبورة: 'as TALL as me'.",
+        "practice": ["əz TALL əz me", "əz BIG əz that", "weak frame, strong adjective"]
+      },
+      "minimal_pairs": [
+        {"pair": ["əz tall əz ✅", "AS tall AS ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["as … as (equal)", "than (unequal)"], "meaning": ["تساوٍ", "تفاوت"]},
+        {"pair": ["as /əz/", "as /æz/ (emphasis)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["as big as ✅", "as big than ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["as good as ✅", "so good as ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["as tall as", "as big as", "as good as", "as fast as", "as old as", "as cheap as", "as easy as", "as busy as", "as strong as", "as important as"],
+      "sentence_practice": [
+        "He is as tall as his brother.",
+        "This is as good as that one.",
+        "It's as easy as before."
+      ],
+      "record_this": "He is as tall as his brother now. This phone is as good as that one, but cheaper. Honestly, the exam was as easy as the last one.",
+      "self_check": "Say 'as tall as me'. Do both 'as' stay weak, with stress on 'tall'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'not as … as' rhythm"],
+      "isolation": {
+        "instructions": "'Not as … as' means 'less than': 'It's not as EXPENSIVE as I thought'. 'Not' is stressed (it changes the meaning), the two 'as' stay weak, adjective stressed.",
+        "instructions_ar": "'not as … as' معناها 'أقل من': 'not as EXPENSIVE as...'. 'not' منبورة والـ as خفاف.",
+        "practice": ["NOT əz expensive əz", "NOT əz hard əz", "not = stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["not as … as (less)", "as … as (equal)"], "meaning": ["أقل", "متساوٍ"]},
+        {"pair": ["NOT as expensive ✅", "not AS expensive ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["not as good as", "worse than"], "meaning": ["أقل جودة", "أسوأ من"]},
+        {"pair": ["isn't as big as", "is smaller than"], "meaning": ["ليس بنفس الحجم", "أصغر من"]},
+        {"pair": ["not as … as I thought", "less … than expected"], "meaning": ["أقل مما ظننت", "مرادف"]}
+      ],
+      "word_practice": ["not as expensive as", "not as hard as", "not as big as", "not as good as", "not as far as", "not as bad as", "not as cold as", "not as busy as", "not as easy as", "not as tall as"],
+      "sentence_practice": [
+        "It's not as expensive as I thought.",
+        "This test isn't as hard as the last one.",
+        "It's not as cold as yesterday."
+      ],
+      "record_this": "It's not as expensive as I thought — actually it's quite cheap. This test isn't as hard as the last one. And today it's not as cold as yesterday, thankfully.",
+      "self_check": "Say 'not as expensive as'. Is 'not' clearly stressed, changing the meaning to 'less'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'much/far' + comparative"],
+      "isolation": {
+        "instructions": "Intensifiers 'much', 'far', 'a lot' strengthen a comparative and often take the stress: 'MUCH better', 'FAR cheaper', 'a lot BIGGER'. They sit right before the comparative.",
+        "instructions_ar": "المكثّفات 'much', 'far', 'a lot' بتقوّي المقارنة وغالبًا بتتنبر: 'MUCH better'.",
+        "practice": ["MUCH better", "FAR cheaper", "a lot BIGGer"]
+      },
+      "minimal_pairs": [
+        {"pair": ["much better ✅", "much gooder ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["far cheaper ✅", "far cheap ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["a lot bigger", "very bigger ❌"], "meaning": ["صحيح", "خطأ (مش 'very')"]},
+        {"pair": ["much more expensive ✅", "much expensiver ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["slightly better (small)", "much better (big)"], "meaning": ["أفضل قليلًا", "أفضل كثيرًا"]}
+      ],
+      "word_practice": ["much better", "far cheaper", "a lot bigger", "much more", "far worse", "a bit better", "slightly bigger", "much easier", "far more important", "a lot faster"],
+      "sentence_practice": [
+        "This one is much better.",
+        "The train is far cheaper than flying.",
+        "It's a lot bigger than I expected."
+      ],
+      "record_this": "This new phone is much better than my old one. The train is far cheaper than flying, and only a little slower. The room is a lot bigger than I expected.",
+      "self_check": "Say 'much better'. Is 'much' stressed, strengthening 'better'? (Never 'very better'.)"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'the more … the better' (double comparative)"],
+      "isolation": {
+        "instructions": "The 'the …-er, the …-er' structure links two changes: 'The MORE you practise, the BETTER you get'. Stress the two comparative words; the 'the' and pronouns stay weak.",
+        "instructions_ar": "تركيب 'the …-er, the …-er' يربط تغيّرين: 'The MORE you practise, the BETTER you get'.",
+        "practice": ["the MORE you PRACtise, the BETter you GET", "the BIGger, the BETter", "stress the comparatives"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the more … the better ✅", "more … better ❌ (no 'the')"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the MORE ✅", "THE more ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the sooner, the better", "sooner the better ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the harder … the more", "harder … more ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["two clauses ✅", "one clause ❌"], "meaning": ["جملتان", "ناقص"]}
+      ],
+      "word_practice": ["the more the better", "the sooner the better", "the bigger the better", "the harder you work", "the more you learn", "the faster the better", "the older I get", "the more I know", "the less the better", "the cheaper the better"],
+      "sentence_practice": [
+        "The more you practise, the better you get.",
+        "The sooner we leave, the better.",
+        "The harder you work, the more you earn."
+      ],
+      "record_this": "The more you practise, the better you get. The sooner we leave, the sooner we'll arrive. And in this job, the harder you work, the more you earn.",
+      "self_check": "Say 'the more you practise, the better you get'. Are both comparatives (more, better) stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["weak 'than' /ðən/ in longer comparisons"],
+      "isolation": {
+        "instructions": "In longer sentences 'than' still disappears: 'It's much more difficult THAN it looks' → 'thən-it-looks'. Keep the two compared ideas strong, 'than' invisible.",
+        "instructions_ar": "في الجُمَل الأطول 'than' تفضل تختفي: 'more difficult thən it looks'. الفكرتان المقارَنتان قويتان.",
+        "practice": ["more difficult thən it LOOKS", "better thən BEFORE", "than = invisible"]
+      },
+      "minimal_pairs": [
+        {"pair": ["thən it looks ✅", "THAN it looks ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["than /ðən/", "then /ðen/"], "meaning": ["من (مقارنة)", "ثم"]},
+        {"pair": ["better than before ✅", "better then before ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["more … than expected", "more … then expected ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["harder than I thought", "harder THAN I thought ❌"], "meaning": ["طبيعي", "ثقيل"]}
+      ],
+      "word_practice": ["than it looks", "than before", "than expected", "than I thought", "than usual", "than last year", "than anyone", "than ever", "than the others", "than we hoped"],
+      "sentence_practice": [
+        "It's harder than it looks.",
+        "She's doing better than before.",
+        "The trip was longer than expected."
+      ],
+      "record_this": "This job is much harder than it looks. She's doing far better than before. The trip was a lot longer than expected, but more interesting than we hoped.",
+      "self_check": "Say 'harder than it looks'. Does 'than' vanish between 'harder' and 'looks'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["əz tall əz ✅", "AS tall AS ❌"], ["NOT as expensive ✅", "not AS expensive ❌"], ["much better ✅", "much gooder ❌"],
+        ["the more … the better", "more … better ❌"], ["thən it looks", "THAN it looks ❌"], ["than /ðən/", "then /ðen/"]
+      ],
+      "challenge_sentences": [
+        "This one is much better and not as expensive.",
+        "He's as tall as his brother now.",
+        "The more you practise, the better you get.",
+        "It was far harder than it looked."
+      ],
+      "record_this": "This new laptop is much better than my old one, and it's not as expensive as I feared. My little brother is as tall as me now. Remember: the more you practise, the better you get. The exam was far harder than it looked.",
+      "self_check": "Three checks: weak 'as…as' and 'than', stressed 'much/far', and both comparatives strong in 'the more…the better'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself comparing lifestyles or choices. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تقارن بين أنماط حياة أو خيارات، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "City life and village life are very different. The city is much busier and far more expensive than the village, but it's not as peaceful. In the village, life is a lot slower and much cheaper, though it isn't as convenient. I've noticed that the busier my life gets, the less time I have for myself. People say the more money you earn, the happier you are, but I don't think that's as true as it sounds. For me, a simple life is far better than a stressful one. The older I get, the more I value quiet days.",
+        "sounds_to_check": {
+          "weak 'as … as'": "not as peaceful, isn't as convenient, as true as it sounds",
+          "'much/far' + comparative": "much busier, far more expensive, a lot slower, much cheaper, far better",
+          "'the more … the …' structure": "the busier … the less time, the more money … the happier, the older … the more",
+          "weak 'than'": "more expensive than the village, better than a stressful one",
+          "not as … as (less)": "not as peaceful, isn't as convenient, not as true as it sounds"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Function words weak, intensifiers and comparatives stressed, double comparative clear. Ready for week 10.",
+        "70_89": "Good; occasional stressed 'as/than'.",
+        "50_69": "Frame words too strong; comparisons buried. Repeat days 1-2.",
+        "below_50": "Redo days 1-5, whispering the 'as/than/the' and stressing the content words."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "In 'as … as' both 'as' are weak /əz/; the adjective between them carries the meaning and the stress.",
+      "'much/far/a lot' strengthen a comparative and take stress — never use 'very' with a comparative.",
+      "'the more … the better' needs BOTH 'the's and both comparatives; stress the comparative words.",
+      "'than' /ðən/ is different from 'then' /ðen/ and stays weak."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

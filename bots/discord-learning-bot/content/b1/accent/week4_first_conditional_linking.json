@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 4,
+  "focus": "Weak 'if' /ɪf/ and 'll /l/ · pausing at the comma between clauses · weak 'when/as soon as/unless' · intonation across two clauses · linking 'if I' → /ɪfaɪ/",
+  "focus_ar": "'if' و 'll الخفيفة، والوقف عند الفاصلة بين الجملتين، و 'when/as soon as/unless' الخفيفة، ونغمة الجملتين",
+  "arabic_challenge": "Conditionals have two clauses with a specific melody: the 'if' clause rises slightly and pauses, then the result clause falls. Arabic learners tend to stress 'if' and deliver both clauses flat, losing the conditional 'shape'.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["weak 'if' /ɪf/"],
+      "isolation": {
+        "instructions": "'If' is an unstressed function word: /ɪf/. 'If it rains' = /ɪf ɪt ˈreɪnz/. The stress goes on the content of the clause (rains), not on 'if'.",
+        "instructions_ar": "'if' كلمة وظيفية غير منبورة /ɪf/. النبر على محتوى الجملة (rains) مش على 'if'.",
+        "practice": ["ɪf-it-RAINS", "ɪf-you-COME", "weak if, strong verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ɪf it rains ✅", "IF it rains ❌"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["if /ɪf/", "of /əv/"], "meaning": ["إذا", "مِن"]},
+        {"pair": ["if you come ✅", "IF YOU come ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["if I have time", "if I HAVE time (emphasis)"], "meaning": ["عادي", "توكيد"]},
+        {"pair": ["even if ✅", "even IF ❌"], "meaning": ["حتى لو", "خطأ"]}
+      ],
+      "word_practice": ["if it rains", "if you come", "if I have time", "if we win", "if she calls", "if they agree", "if possible", "if necessary", "even if", "only if"],
+      "sentence_practice": [
+        "If it rains, we'll stay home.",
+        "If you come, I'll be happy.",
+        "If I have time, I'll help."
+      ],
+      "record_this": "If it rains tomorrow, we'll stay home. If you come to the party, I'll be really happy. And if I have time this weekend, I'll help you move.",
+      "self_check": "Say 'if it rains'. Does 'if' stay light, with the stress on 'rains'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["pausing at the comma between clauses"],
+      "isolation": {
+        "instructions": "When the 'if' clause comes first, pause slightly at the comma: 'If it rains, // we'll stay home'. The pause separates condition from result and makes the sentence clear.",
+        "instructions_ar": "لما جملة 'if' تيجي الأول، قف قليلًا عند الفاصلة: 'If it rains, // we'll stay home'.",
+        "practice": ["If it rains, // we'll STAY home", "If you're late, // we'll GO without you", "pause at the comma"]
+      },
+      "minimal_pairs": [
+        {"pair": ["If it rains, // we'll stay ✅", "ifitrainswe'llstay ❌"], "meaning": ["مع وقفة", "بلا وقفة"]},
+        {"pair": ["comma pause ✅", "no pause ❌"], "meaning": ["واضح", "غير واضح"]},
+        {"pair": ["If..., we'll... (comma)", "We'll... if... (no comma)"], "meaning": ["شرط أولًا", "نتيجة أولًا"]},
+        {"pair": ["two clauses ✅", "one run-on ❌"], "meaning": ["واضح", "ملتصق"]},
+        {"pair": ["rising then falling ✅", "flat ❌"], "meaning": ["طبيعي", "ممل"]}
+      ],
+      "word_practice": ["if it rains,", "if you come,", "if I win,", "if she agrees,", "if we leave now,", "if you need help,", "if it's cold,", "if they call,", "if possible,", "if you ask me,"],
+      "sentence_practice": [
+        "If it rains, we'll stay home.",
+        "If you need help, just call me.",
+        "If we leave now, we'll catch the train."
+      ],
+      "record_this": "If it rains, we'll stay home and watch a film. If you need any help, just call me. And if we leave now, we'll easily catch the early train.",
+      "self_check": "Do you pause slightly at the comma, so the two clauses are clearly separate?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["conditional intonation (rise then fall)"],
+      "isolation": {
+        "instructions": "The 'if' clause rises slightly at the comma (unfinished ↗), then the result clause falls to a finish (↘): 'If you study, ↗ you'll pass ↘'. This melody signals a conditional.",
+        "instructions_ar": "جملة 'if' ترتفع قليلًا عند الفاصلة ↗، وبعدين جملة النتيجة تهبط للنهاية ↘. اللحن ده بيدل على الشرط.",
+        "practice": ["If you study, ↗ you'll pass ↘", "If we hurry, ↗ we'll make it ↘", "rise, then fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["rise ↗ then fall ↘ ✅", "flat ↘↘ ❌"], "meaning": ["شرطي واضح", "ممل"]},
+        {"pair": ["If..., ↗ result ↘", "statement ↘ only"], "meaning": ["شرط", "خبر"]},
+        {"pair": ["unfinished rise ↗", "finished fall ↘"], "meaning": ["مش مكتمل", "مكتمل"]},
+        {"pair": ["If you ask ↗", "If you ask ↘ (abrupt)"], "meaning": ["طبيعي", "جاف"]},
+        {"pair": ["two-part melody ✅", "monotone ❌"], "meaning": ["حيّ", "ممل"]}
+      ],
+      "word_practice": ["if you study", "if we hurry", "if it works", "if you try", "if they help", "if I pass", "if she comes", "if you practise", "if we save", "if it's sunny"],
+      "sentence_practice": [
+        "If you study, you'll pass.",
+        "If we hurry, we'll make it.",
+        "If you practise, you'll improve."
+      ],
+      "record_this": "If you study hard, you'll pass the exam. If we hurry now, we'll make it on time. And if you practise every day, you'll definitely improve your English.",
+      "self_check": "Does your voice rise gently at the comma and then fall to finish the result?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["weak 'when / as soon as / unless'"],
+      "isolation": {
+        "instructions": "Future time clauses use present tense after weak connectors: 'when' /wən/, 'as soon as' /əz suːn əz/, 'unless' /ənˈles/. 'I'll call you when I arrive' — stress 'call' and 'arrive'.",
+        "instructions_ar": "جُمَل الزمن المستقبلية بتستخدم المضارع بعد روابط خفيفة: when، as soon as، unless. النبر على الفعلين.",
+        "practice": ["wən I arRIVE", "əz-soon-əz I GET there", "ənLESS you HURRY"]
+      },
+      "minimal_pairs": [
+        {"pair": ["when I arrive ✅", "when I will arrive ❌"], "meaning": ["مضارع", "خطأ"]},
+        {"pair": ["as soon as /əz/ ✅", "AS SOON AS ❌"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["unless you hurry ✅", "if you don't hurry ~"], "meaning": ["ما لم", "مرادف"]},
+        {"pair": ["when /wən/", "one /wʌn/"], "meaning": ["عندما", "واحد"]},
+        {"pair": ["I'll call when I arrive", "I'll call when I'll arrive ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["when I arrive", "when you're ready", "as soon as I can", "as soon as possible", "unless you hurry", "unless it rains", "when we get there", "as soon as they call", "unless you help", "when it's done"],
+      "sentence_practice": [
+        "I'll call you when I arrive.",
+        "I'll come as soon as I can.",
+        "Unless you hurry, you'll be late."
+      ],
+      "record_this": "I'll call you when I arrive at the airport. I'll come and help as soon as I can. And unless you hurry up now, you'll definitely be late for the meeting.",
+      "self_check": "Note: use the PRESENT after 'when/as soon as/unless', never 'will'. Did you?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["linking 'if I' → /ɪfaɪ/ and result 'll"],
+      "isolation": {
+        "instructions": "Vowel-to-vowel linking: 'if I' → /ɪfaɪ/, 'if it' → /ɪfɪt/. And the result clause contracts: 'I'll', 'we'll'. The whole conditional flows: 'ɪfaɪ have time, aɪl help'.",
+        "instructions_ar": "وصل حرف علة بحرف علة: 'if I' → /ɪfaɪ/. وجملة النتيجة تتقلّص: I'll. الشرط كله يسيل.",
+        "practice": ["ɪf-aɪ have time", "ɪf-ɪt works", "aɪl help, wiːl see"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ɪfaɪ ✅", "if. I. ❌"], "meaning": ["موصول", "مقطّع"]},
+        {"pair": ["if it /ɪfɪt/ ✅", "if IT ❌"], "meaning": ["موصول", "خطأ"]},
+        {"pair": ["I'll help ✅", "I will help (over-full)"], "meaning": ["طبيعي", "متكلّف"]},
+        {"pair": ["if I were ✅", "if I was (informal)"], "meaning": ["رسمي", "عامي"]},
+        {"pair": ["ɪfaɪ ask ✅", "if I ASK (emphasis)"], "meaning": ["عادي", "توكيد"]}
+      ],
+      "word_practice": ["if I have", "if I can", "if it works", "if it's ok", "if I were you", "if I ask", "if I go", "if it helps", "if I win", "if it rains"],
+      "sentence_practice": [
+        "If I have time, I'll call you.",
+        "If it works, we'll be happy.",
+        "If I were you, I'd wait."
+      ],
+      "record_this": "If I have time this evening, I'll call you. If it works the first time, we'll be really happy. And honestly, if I were you, I'd wait a little longer before deciding.",
+      "self_check": "Say 'if I have time'. Do 'if I' link smoothly into /ɪfaɪ/?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["ɪf it rains ✅", "IF it rains ❌"], ["If..., // we'll... (pause)", "run-on ❌"], ["when I arrive ✅", "when I will arrive ❌"],
+        ["ɪfaɪ ✅", "if. I. ❌"], ["rise ↗ fall ↘ ✅", "flat ❌"], ["as soon as /əz/", "AS SOON AS ❌"]
+      ],
+      "challenge_sentences": [
+        "If it rains, we'll stay home.",
+        "I'll call you as soon as I arrive.",
+        "Unless you hurry, you'll miss the bus.",
+        "If I have time, I'll help you when you're ready."
+      ],
+      "record_this": "If it rains tomorrow, we'll stay home. I'll call you as soon as I arrive at the hotel. Unless you hurry now, you'll miss the bus. And if I have time this weekend, I'll help you when you're ready.",
+      "self_check": "Three checks: weak 'if', a pause + rise-fall melody, and present tense after when/as soon as/unless."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself talking about real future possibilities. Then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تتكلم عن احتمالات مستقبلية واقعية، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "I have a big exam next week, so I've made a plan. If I study hard every day, I'll be ready in time. If I don't understand something, I'll ask my teacher. I'll start early each morning, and I won't check my phone unless I finish my goals. As soon as the exam is over, I'm going to relax. If I pass, my family will be very proud, and we'll celebrate together. If I don't pass, I won't give up — I'll simply try again. Either way, if I do my best, I'll be happy with myself. When the results come out, I'll call you immediately.",
+        "sounds_to_check": {
+          "weak 'if'": "if I study, if I don't understand, if I pass, if I do my best",
+          "comma pause + rise/fall": "If I study hard, ↗ I'll be ready ↘",
+          "'ll in the result": "I'll be ready, I'll ask, we'll celebrate, I'll try again, I'll call",
+          "when/as soon as/unless + present": "as soon as the exam is over, unless I finish, when the results come out",
+          "linking 'if I'": "if I study, if I pass, if I do my best"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Weak 'if', clear two-clause melody, present after time words. Ready for week 5.",
+        "70_89": "Good; occasionally flat across the clauses.",
+        "50_69": "'if' stressed or 'will' after 'when'. Repeat days 1-4.",
+        "below_50": "Redo days 1-5, exaggerating the rise-then-fall melody."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "A conditional has a MELODY: if-clause rises to the comma ↗, result-clause falls ↘.",
+      "'if' is weak and unstressed — the verbs carry the meaning and the stress.",
+      "After 'when / as soon as / unless' use the PRESENT tense, not 'will'.",
+      "Link 'if I' smoothly (/ɪfaɪ/) and contract the result ('I'll')."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}

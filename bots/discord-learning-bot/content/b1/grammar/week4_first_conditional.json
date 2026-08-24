@@ -1,0 +1,36 @@
+{
+  "id": "grammar_b1_w4",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 4,
+  "pattern_name": "First conditional + time clauses (real future)",
+  "pattern_name_ar": "الشرط الأول + جُمل الزمن (المستقبل الواقعي)",
+  "formula": "If / when / as soon as / until + present simple, ... will + verb",
+  "formula_visual": "[If it rains], [we'll stay home] // [I'll call you] [when I arrive]",
+  "when_to_use": "For real, likely future situations: the condition/time clause uses the PRESENT simple, and the result uses WILL. Same rule after time words: when, as soon as, before, after, until.",
+  "when_to_use_ar": "لمواقف مستقبلية واقعية محتملة: جملة الشرط/الزمن بالمضارع البسيط، والنتيجة بـ will. نفس القاعدة بعد كلمات الزمن: when, as soon as, until.",
+  "why_arabic_speakers_struggle": "Learners put 'will' in BOTH halves ('If it will rain, we will stay') because Arabic uses a future marker in the condition too. English keeps the if/when clause in the present simple.",
+  "examples": [
+    {"en": "If it rains, we'll stay at home.", "ar": "إذا أمطرت، سنبقى في البيت", "structure": "If + [present], [will]"},
+    {"en": "I'll call you when I arrive.", "ar": "سأتصل بك عندما أصل", "structure": "[will] + when + [present]"},
+    {"en": "As soon as she finishes, we'll leave.", "ar": "بمجرد أن تنتهي، سنغادر", "structure": "As soon as + [present], [will]"},
+    {"en": "We won't start until everyone is here.", "ar": "لن نبدأ حتى يصل الجميع", "structure": "[won't] + until + [present]"},
+    {"en": "If you study hard, you'll pass.", "ar": "إذا ذاكرت بجد، ستنجح", "structure": "If + [present], [will]"}
+  ],
+  "common_errors": [
+    {"wrong": "If it will rain, we will stay home.", "correct": "If it rains, we'll stay home.", "explanation": "The if-clause uses the present simple, not will."},
+    {"wrong": "I will call you when I will arrive.", "correct": "I'll call you when I arrive.", "explanation": "After 'when' for the future, use the present simple."},
+    {"wrong": "We will start until everyone comes.", "correct": "We won't start until everyone comes.", "explanation": "'until' needs the negative result here + present simple."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "If you ___ (heat) ice, it melts.", "answer": "heat"},
+    {"sentence": "I'll text you as soon as I ___ (get) home.", "answer": "get"},
+    {"sentence": "If it ___ (be) sunny tomorrow, we'll go to the beach.", "answer": "is"},
+    {"sentence": "She ___ (call) you when she arrives.", "answer": "will call / 'll call"},
+    {"sentence": "We won't leave until the rain ___ (stop).", "answer": "stops"}
+  ],
+  "quick_rule": "If/when + PRESENT simple, ... WILL + verb. Never 'will' in the if/when half.",
+  "quick_rule_ar": "If/when + مضارع بسيط، ... WILL + فعل. لا تضع 'will' في نصف الشرط.",
+  "mnemonic": "The 'if/when' half stays in the present; only the result gets 'will'.",
+  "connect_to_speaking": "In accent week 4 you practised weak 'if', 'll, and the comma pause. Say: 'If it rains, // we'll stay home' — weak 'if', clear pause at the comma, contracted 'we'll'."
+}

@@ -1,0 +1,180 @@
+{
+  "level": "B1",
+  "cefr": "B1",
+  "week": 13,
+  "focus": "'too' /tuː/ vs weak 'to' /tə/ · 'enough' /ɪˈnʌf/ stress + position · 'a bit / a little' weak rhythm · degree phrase linking · 'not enough' vs 'too much'",
+  "focus_ar": "الفرق بين 'too' القوية و 'to' الخفيفة، ونبر 'enough' وموضعها، وإيقاع 'a bit / a little'، وربط عبارات الدرجة",
+  "arabic_challenge": "'too' (=زيادة عن اللازم) sounds almost like weak 'to', but they mean different things and 'too' is stressed. 'enough' comes AFTER adjectives but BEFORE nouns, and its stress is on the second syllable. Arabic learners flatten 'a bit' and confuse 'too much' with 'very'.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'too' /tuː/ (strong, = excess)"],
+      "isolation": {
+        "instructions": "'too' means 'more than we want' and is STRESSED with a long /uː/: 'too HOT', 'too EXPENSIVE'. It is NOT the same as 'very'. Say the long vowel clearly.",
+        "instructions_ar": "'too' معناها 'أكثر من اللازم' ومنبورة بحرف /uː/ طويل: 'too HOT'. مش نفس 'very'.",
+        "practice": ["tuː HOT", "tuː exPENsive", "long /uː/, stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["too /tuː/", "to /tə/"], "meaning": ["زيادة (قوية)", "إلى (خفيفة)"]},
+        {"pair": ["too hot (excess)", "very hot (degree)"], "meaning": ["زيادة عن اللازم", "درجة عالية"]},
+        {"pair": ["too /tuː/", "two /tuː/"], "meaning": ["زيادة", "اثنان"]},
+        {"pair": ["it's too big ✅", "it's to big ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["too expensive", "expensive enough"], "meaning": ["غالٍ زيادة", "غالٍ بما يكفي"]}
+      ],
+      "word_practice": ["too hot", "too cold", "too big", "too small", "too expensive", "too late", "too early", "too difficult", "too tired", "too loud"],
+      "sentence_practice": [
+        "This coffee is too hot.",
+        "The bag is too heavy for me.",
+        "It's too late to call him now."
+      ],
+      "record_this": "This coffee is too hot to drink right now. The bag is too heavy for me to carry. It's too late to call him tonight, so I'll message him tomorrow.",
+      "self_check": "Say 'too hot'. Is 'too' stressed with a long /uː/, meaning 'more than you want'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'too ... to' — strong 'too', weak 'to' /tə/"],
+      "isolation": {
+        "instructions": "In 'too ADJ to VERB', the first word 'too' is strong /tuː/ and the second word 'to' is weak /tə/: 'too TIRED tə WALK'. Two spellings that sound different — feel the contrast.",
+        "instructions_ar": "في 'too ADJ to VERB': الأولى 'too' قوية /tuː/ والثانية 'to' خفيفة /tə/: 'too TIRED tə WALK'.",
+        "practice": ["too TIRED tə WALK", "too YOUNG tə DRIVE", "strong too, weak to"]
+      },
+      "minimal_pairs": [
+        {"pair": ["too /tuː/ ... to /tə/", "to /tə/ ... too /tuː/"], "meaning": ["زيادة ثم إلى", "إلى ثم زيادة"]},
+        {"pair": ["too tired to walk ✅", "to tired to walk ❌"], "meaning": ["صحيح", "خطأ إملائي"]},
+        {"pair": ["too young tə drive", "young enough tə drive"], "meaning": ["صغير زيادة", "كبير كفاية"]},
+        {"pair": ["too tə (❌ same sound)", "tuː ... tə (✅ different)"], "meaning": ["خطأ", "صحيح"]},
+        {"pair": ["too hot to hold", "hot enough to cook"], "meaning": ["حار زيادة", "حار كفاية"]}
+      ],
+      "word_practice": ["too tired to walk", "too young to drive", "too hot to hold", "too dark to see", "too far to walk", "too busy to talk", "too shy to speak", "too small to read", "too heavy to lift", "too fast to follow"],
+      "sentence_practice": [
+        "I'm too tired to walk home.",
+        "He's too young to drive a car.",
+        "It's too dark to see anything."
+      ],
+      "record_this": "I'm too tired to walk home, so I'll take a taxi. He's too young to drive a car legally. The room was too dark to see anything, so we turned on the lights.",
+      "self_check": "Say 'too tired to walk'. Is the first 'too' strong /tuː/ and the second 'to' weak /tə/?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'enough' /ɪˈnʌf/ stress + position"],
+      "isolation": {
+        "instructions": "'enough' is stressed on the SECOND syllable /ɪˈnʌf/ and ends in an /f/ sound. Position: it comes AFTER an adjective ('big ENOUGH') but BEFORE a noun ('enough TIME'). Say it clearly.",
+        "instructions_ar": "'enough' منبورة على المقطع الثاني /ɪˈnʌf/ وتنتهي بـ /f/. تأتي بعد الصفة ('big enough') وقبل الاسم ('enough time').",
+        "practice": ["ɪˈnʌf (second-syllable stress)", "big eNOUGH", "eNOUGH time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["big enough ✅ (adj + enough)", "enough big ❌"], "meaning": ["صحيح", "خطأ ترتيب"]},
+        {"pair": ["enough time ✅ (enough + noun)", "time enough ❌"], "meaning": ["صحيح", "خطأ ترتيب"]},
+        {"pair": ["eNOUGH /ɪˈnʌf/", "Enough ❌ (wrong stress)"], "meaning": ["نبر صحيح", "نبر خطأ"]},
+        {"pair": ["enough /ɪˈnʌf/", "enough /ɪˈnʌg/ ❌"], "meaning": ["ينتهي بـ /f/", "خطأ"]},
+        {"pair": ["not enough", "too much"], "meaning": ["ليس كافيًا", "كثير زيادة"]}
+      ],
+      "word_practice": ["big enough", "old enough", "good enough", "warm enough", "enough time", "enough money", "enough food", "enough space", "enough people", "not enough"],
+      "sentence_practice": [
+        "The room isn't big enough.",
+        "We don't have enough time.",
+        "Are you warm enough?"
+      ],
+      "record_this": "This room isn't big enough for the party. We don't have enough time to finish today. Are you warm enough, or shall I close the window? He's old enough to decide for himself.",
+      "self_check": "Say 'big enough' then 'enough time'. Is stress on the second syllable /ɪˈnʌf/, and is the position correct (after adjective, before noun)?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'a bit / a little' weak rhythm (softening)"],
+      "isolation": {
+        "instructions": "'a bit' and 'a little' soften an adjective and are said quickly as one light group: 'ə bit TIRED', 'ə little COLD'. The adjective is stressed; the softener is weak and fast.",
+        "instructions_ar": "'a bit' و 'a little' تخفّف الصفة وتُقال بسرعة كمجموعة خفيفة: 'ə bit TIRED'. الصفة منبورة والمخفّف خفيف.",
+        "practice": ["ə bit TIRED", "ə little COLD", "weak softener, strong adjective"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a bit tired (slightly)", "too tired (excess)"], "meaning": ["قليلاً", "زيادة"]},
+        {"pair": ["ə bit (weak)", "a BIT ❌ (over-stressed)"], "meaning": ["طبيعي", "مضغوط زيادة"]},
+        {"pair": ["a bit cold", "a little cold"], "meaning": ["نفس المعنى", "نفس المعنى"]},
+        {"pair": ["a bit of milk (noun)", "a bit tired (adj)"], "meaning": ["كمية قليلة", "قليلاً"]},
+        {"pair": ["a little water ✅", "a few water ❌"], "meaning": ["غير معدود", "خطأ"]}
+      ],
+      "word_practice": ["a bit tired", "a bit late", "a bit cold", "a bit expensive", "a little slow", "a little nervous", "a little hungry", "a bit of milk", "a little help", "a bit better"],
+      "sentence_practice": [
+        "I'm a bit tired today.",
+        "It's a little cold in here.",
+        "Can I have a bit of help?"
+      ],
+      "record_this": "I'm a bit tired today, but I'm fine. It's a little cold in here — could you close the door? The food was a bit expensive, but it was delicious. Can I have a little help with this?",
+      "self_check": "Say 'a bit tired'. Is 'a bit' light and fast, with the stress on the adjective?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["degree phrase linking (too/enough/a bit in flow)"],
+      "isolation": {
+        "instructions": "Put the pieces together in real speech: 'It's a bit too expensive', 'not warm enough', 'too far to walk'. Keep 'too' strong, 'enough' second-syllable stressed, and softeners weak — all linked smoothly.",
+        "instructions_ar": "اجمع القطع في كلام حقيقي: 'a bit too expensive'، 'not warm enough'. حافظ على 'too' قوية و'enough' منبورة وخفّف المخفّفات.",
+        "practice": ["ə bit tuː exPENsive", "not WARM eNOUGH", "tuː FAR tə walk"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a bit too expensive", "too expensive"], "meaning": ["غالٍ شوية زيادة", "غالٍ زيادة"]},
+        {"pair": ["not warm enough", "too cold"], "meaning": ["مش دافئ كفاية", "بارد زيادة"]},
+        {"pair": ["big enough ✅", "enough big ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["too much money (uncount)", "too many people (count)"], "meaning": ["غير معدود", "معدود"]},
+        {"pair": ["a little too much", "far too much"], "meaning": ["زيادة بسيطة", "زيادة كبيرة"]}
+      ],
+      "word_practice": ["a bit too expensive", "not warm enough", "too far to walk", "too much money", "too many people", "not enough time", "a little too fast", "just enough", "far too big", "quite enough"],
+      "sentence_practice": [
+        "It's a bit too expensive for me.",
+        "The soup isn't warm enough.",
+        "There were too many people there."
+      ],
+      "record_this": "This jacket is a bit too expensive for me right now. The soup isn't warm enough — could you heat it up? There were too many people at the station, and not enough time to catch the train.",
+      "self_check": "Say 'a bit too expensive'. Are 'too' strong, 'enough' second-syllable stressed, and the softeners weak, all linked smoothly?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 13 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["too /tuː/", "to /tə/"], ["too hot (excess)", "very hot (degree)"], ["big enough ✅", "enough big ❌"],
+        ["eNOUGH /ɪˈnʌf/", "Enough ❌"], ["a bit tired (slightly)", "too tired (excess)"], ["too much (uncount)", "too many (count)"]
+      ],
+      "challenge_sentences": [
+        "This coffee is too hot to drink.",
+        "The room isn't big enough for everyone.",
+        "I'm a bit tired, but I'm fine.",
+        "There were too many people and not enough chairs."
+      ],
+      "record_this": "This coffee is too hot to drink right now, so I'll wait. The room isn't big enough for everyone, so some people are standing. I'm a bit tired today, but honestly I'm fine. At the party there were too many people and not enough chairs.",
+      "self_check": "Three checks: strong 'too' /tuː/ vs weak 'to' /tə/, correct 'enough' stress and position, and light 'a bit / a little'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself describing a place or plan using degree words, then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك وانت تصف مكانًا أو خطة مستخدمًا كلمات الدرجة، وبعدين اسمع وراجع كل نقطة.",
+        "passage": "Let me tell you why we didn't enjoy that restaurant. First, it was a bit too far to walk, so we had to take a taxi. When we arrived, it was too crowded and there weren't enough tables, so we waited a long time. The food was good, but the portions weren't big enough, and the prices were far too high for what we got. My friend said the music was a little too loud to have a real conversation. Honestly, it was too expensive to go there again. Next time we'll choose somewhere close enough to walk, quiet enough to talk, and cheap enough for students like us.",
+        "sounds_to_check": {
+          "strong 'too' /tuː/": "too far, too crowded, too high, too loud, too expensive",
+          "weak 'to' /tə/ after too": "too far tə walk, too loud tə talk, too expensive tə go",
+          "'enough' stress + position": "enough tables, big enough, close enough, quiet enough, cheap enough",
+          "weak softeners": "a bit too far, a little too loud",
+          "count vs uncount": "not enough tables, prices too high"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear 'too' vs 'to', correct 'enough' stress/position, light softeners. Ready for week 14.",
+        "70_89": "Good; occasional flat 'a bit' or misplaced 'enough'.",
+        "50_69": "'too' and 'to' sound the same, or 'enough big'. Repeat days 1-3.",
+        "below_50": "Redo days 1-5, keeping 'too' strong and 'enough' after adjectives / before nouns."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'too' = more than you want (a problem); 'very' = just a high degree (not a problem). They are different.",
+      "'too' is strong /tuː/; the linking 'to' before a verb is weak /tə/ — same spelling family, different sound.",
+      "'enough' is stressed on the second syllable and goes AFTER adjectives but BEFORE nouns.",
+      "'a bit / a little' are soft and fast; the stress stays on the adjective they soften."
+    ],
+    "daily_time": "10-15 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1."
+  }
+}
