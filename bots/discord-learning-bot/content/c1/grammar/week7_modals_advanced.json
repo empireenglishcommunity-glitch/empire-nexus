@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w7",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 7,
+  "pattern_name": "Advanced modals and semi-modals",
+  "pattern_name_ar": "الأفعال الناقصة المتقدّمة وشبه الناقصة",
+  "formula": "needn't have + participle · ought (not) to (have) · be bound/likely/unlikely to · may well · might as well · would rather (+ past for others) · was/were to have + participle",
+  "formula_visual": "[You needn't have] [waited] · [It was bound] [to happen]",
+  "when_to_use": "To express fine degrees of necessity, probability, advice and preference. 'needn't have done' says something was done unnecessarily. 'ought to' gives advice slightly more formally than 'should'. 'be bound to' means near-certainty, 'be likely to' probability. 'may well' means quite possibly; 'might as well' means there is no better option. 'would rather' expresses preference.",
+  "when_to_use_ar": "للتعبير عن درجات دقيقة من الضرورة والاحتمال والنصح والتفضيل. 'needn't have' لما فُعل بلا داعٍ، و'ought to' نصح أرسم من 'should'، و'be bound to' شبه يقين، و'may well' احتمال قوي، و'might as well' لا خيار أفضل.",
+  "why_arabic_speakers_struggle": "Arabic expresses these shades with separate verbs and particles (كان يجب / من المرجّح / يُستحسن), each keeping full weight, so the compact English chunks feel interchangeable when they are not. The critical confusion is 'needn't have done' (it WAS done, unnecessarily) versus 'didn't need to do' (it was not done at all) — a genuine difference in fact, not just in style. Learners also confuse 'may well' with 'might as well', which mean quite different things.",
+  "examples": [
+    {"en": "You needn't have waited — I had already finished.", "ar": "ما كان عليك الانتظار — كنت قد أنهيت", "structure": "[needn't have + participle]"},
+    {"en": "You ought to have told me sooner.", "ar": "كان عليك أن تخبرني أبكر", "structure": "[ought to have + participle]"},
+    {"en": "Something like this was bound to happen.", "ar": "كان لا بد أن يحدث شيء كهذا", "structure": "[was bound to + base verb]"},
+    {"en": "He may well be right about the timing.", "ar": "من المحتمل جدًا أنه محق بشأن الوقت", "structure": "[may well + base verb]"},
+    {"en": "Since nobody came, we might as well start.", "ar": "بما أن أحدًا لم يأتِ، فلنبدأ إذًا", "structure": "[might as well + base verb]"}
+  ],
+  "common_errors": [
+    {"wrong": "You needn't have worry about it.", "correct": "You needn't have worried about it.", "explanation": "After 'needn't have' the verb takes its third form."},
+    {"wrong": "I didn't need to bother, but I did.", "correct": "I needn't have bothered.", "explanation": "'Didn't need to' means you did not do it. 'Needn't have' means you did it unnecessarily."},
+    {"wrong": "We may as well be right about this.", "correct": "We may well be right about this.", "explanation": "'May well' means quite possibly; 'might as well' means there is no better alternative."},
+    {"wrong": "I would rather to wait.", "correct": "I would rather wait.", "explanation": "'Would rather' is followed by the base verb with no 'to'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "You ___ (need not / wait) — I had already finished.", "answer": "needn't have waited"},
+    {"sentence": "You ___ (ought / tell) me about it much sooner.", "answer": "ought to have told"},
+    {"sentence": "It was ___ to happen sooner or later.", "answer": "bound"},
+    {"sentence": "He may ___ be right about the timing.", "answer": "well"},
+    {"sentence": "I would rather ___ (wait) for the final report.", "answer": "wait"}
+  ],
+  "quick_rule": "needn't have + third form (done unnecessarily). ought to + base. bound to = near-certain. may well = quite possibly. might as well = no better option.",
+  "quick_rule_ar": "needn't have + التصريف الثالث (فُعل بلا داعٍ). وought to + المصدر. وbound to شبه يقين. وmay well احتمال قوي. وmight as well لا خيار أفضل.",
+  "mnemonic": "needn't have = you did it, and you didn't have to.",
+  "connect_to_speaking": "In accent week 7 you drilled these as single chunks: /ˈniːdəntəv/ and /ˈɔːtə/. Pronounced word by word the nuance flattens, so the chunk and the meaning are learned together."
+}

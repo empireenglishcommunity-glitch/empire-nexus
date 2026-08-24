@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 6,
+  "focus": "Stress shift verb → noun ('inCREASE' vs 'INcrease') · '-tion' /ʃən/ with stress on the previous syllable · '-ment' /mənt/ · '-ity' stress shift · the dense rhythm of nominalised prose",
+  "focus_ar": "انتقال النبر من الفعل إلى الاسم ('inCREASE' مقابل 'INcrease')، و'-tion' /ʃən/ مع النبر على المقطع السابق، و'-ment' /mənt/، وانتقال النبر في '-ity'، وإيقاع النثر الاسمي المكثّف",
+  "arabic_challenge": "Nominalisation is the engine of academic English, and it moves stress. 'They INcreased prices' becomes 'the inCREASE in prices' — same letters, different beat. Get the beat wrong and an educated listener notices immediately, even though every sound is correct. Arabic derives nouns through internal patterns (مصادر) rather than by shifting stress, so learners have no instinct that the noun and verb of one English word can differ only in which syllable is strong. The endings compound the problem: '-tion' pulls stress onto the syllable directly before it, regardless of where the original verb was stressed.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["noun/verb stress shift: 'INcrease' vs 'inCREASE'"],
+      "isolation": {
+        "instructions": "A family of English words changes meaning by stress alone. Noun = stress on the FIRST syllable; verb = stress on the SECOND. 'An INcrease' (noun) but 'to inCREASE' (verb). Say each pair back to back until the difference feels physical.",
+        "instructions_ar": "مجموعة من الكلمات الإنجليزية تتغيّر وظيفتها بالنبر فقط: الاسم على المقطع الأول والفعل على الثاني. كرّر كل زوج حتى تحسّ الفرق.",
+        "practice": ["an INcrease · to inCREASE", "a DEcrease · to deCREASE", "noun first, verb second"]
+      },
+      "minimal_pairs": [
+        {"pair": ["an INcrease (noun)", "to inCREASE (verb)"], "meaning": ["زيادة", "يزيد"]},
+        {"pair": ["a DEcrease (noun)", "to deCREASE (verb)"], "meaning": ["انخفاض", "ينخفض"]},
+        {"pair": ["a RECord (noun)", "to reCORD (verb)"], "meaning": ["سجل", "يسجّل"]},
+        {"pair": ["a PROgress report", "to proGRESS"], "meaning": ["تقدّم (اسم)", "يتقدّم"]},
+        {"pair": ["a CONtract (noun)", "to conTRACT (verb)"], "meaning": ["عقد", "يتقلّص"]}
+      ],
+      "word_practice": ["an increase", "to increase", "a decrease", "to decrease", "a record", "to record", "a contract", "to contract", "an insult", "to insult"],
+      "sentence_practice": [
+        "The increase in prices surprised everyone.",
+        "They plan to increase prices next month.",
+        "We need a record of every decision."
+      ],
+      "record_this": "The sudden increase in prices surprised almost everyone in the industry. They now plan to increase prices again early next month. We need a clear record of every decision taken at that meeting.",
+      "self_check": "Say 'an INcrease' then 'to inCREASE'. Is the strong syllable genuinely different in each?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'-tion' /ʃən/ with stress on the syllable before it"],
+      "isolation": {
+        "instructions": "'-tion' is always the quiet ending /ʃən/, and it pulls the stress onto the syllable immediately before it: inforMAtion, impleMENtation, conSIDeration. Notice this can move the stress away from where it sat in the verb: to imPLEment becomes impleMENtation.",
+        "instructions_ar": "'-tion' نهاية هادئة دائمًا /ʃən/ وتجذب النبر إلى المقطع الذي يسبقها مباشرة، وقد ينتقل النبر عن موضعه في الفعل.",
+        "practice": ["inforMAtion", "impleMENtation", "conSIDeration", "stress lands just before -tion"]
+      },
+      "minimal_pairs": [
+        {"pair": ["inforMAtion", "INformation"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["to imPLEment", "impleMENtation"], "meaning": ["فعل", "اسم بنبر منتقل"]},
+        {"pair": ["-tion /ʃən/ (quiet)", "-tion /ʃɒn/ (heavy)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["conSIDeration", "CONsideration"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["to eDUcate", "eduCAtion"], "meaning": ["فعل", "اسم"]}
+      ],
+      "word_practice": ["information", "implementation", "consideration", "education", "application", "explanation", "organisation", "recommendation", "interpretation", "administration"],
+      "sentence_practice": [
+        "The implementation of the policy took two years.",
+        "We need more information before deciding.",
+        "Her recommendation changed the outcome."
+      ],
+      "record_this": "The implementation of the new policy took nearly two years from start to finish. We clearly need more information about the costs before deciding anything. Her recommendation to the committee changed the outcome completely.",
+      "self_check": "Say 'implementation'. Does the stress fall on MEN, the syllable right before -tion?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'-ment' /mənt/ — the light noun ending"],
+      "isolation": {
+        "instructions": "'-ment' is a light, quick /mənt/ that does NOT take stress and does not usually move it: to deVELop becomes deVELopment. Keep the ending small — if you stress it, the whole word sounds foreign.",
+        "instructions_ar": "'-ment' نهاية خفيفة سريعة /mənt/ لا تأخذ النبر ولا تنقله عادةً. أبقِ النهاية صغيرة.",
+        "practice": ["deVELopment", "manAGEment", "aSSESSment", "light /mənt/, no stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["deVELopment", "developMENT"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["-ment /mənt/ (light)", "-ment /ment/ (heavy)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["to develop", "development"], "meaning": ["فعل", "اسم"]},
+        {"pair": ["MANagement", "manageMENT"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["aSSESSment", "ASSessment"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["development", "management", "assessment", "improvement", "agreement", "requirement", "commitment", "environment", "achievement", "arrangement"],
+      "sentence_practice": [
+        "The development of the site was delayed.",
+        "Management refused the request.",
+        "Their commitment to the project was obvious."
+      ],
+      "record_this": "The development of the northern site was delayed by almost a year. Management refused the request without offering any real explanation. Their commitment to the project was obvious to everyone who worked with them.",
+      "self_check": "Say 'development'. Is '-ment' light and unstressed, with the beat on VEL?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'-ity' stress shift: 'ABle' → 'aBILity'"],
+      "isolation": {
+        "instructions": "'-ity' pulls the stress two syllables back from the end: ABle becomes aBILity, POSSible becomes possiBILity, ACtive becomes acTIVity. The ending itself is a fast /ɪti/. This shift is large, so it is worth drilling as pairs.",
+        "instructions_ar": "'-ity' تجذب النبر مقطعين للخلف من النهاية، والنهاية نفسها سريعة /ɪti/. الانتقال كبير فتدرّب عليه كأزواج.",
+        "practice": ["ABle · aBILity", "POSSible · possiBILity", "ACtive · acTIVity"]
+      },
+      "minimal_pairs": [
+        {"pair": ["ABle", "aBILity"], "meaning": ["صفة", "اسم بنبر منتقل"]},
+        {"pair": ["POSSible", "possiBILity"], "meaning": ["صفة", "اسم"]},
+        {"pair": ["ACtive", "acTIVity"], "meaning": ["صفة", "اسم"]},
+        {"pair": ["-ity /ɪti/ (fast)", "-ity /aɪti/ (wrong vowel)"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["reSPONSible", "responsiBILity"], "meaning": ["صفة", "اسم"]}
+      ],
+      "word_practice": ["ability", "possibility", "activity", "responsibility", "availability", "flexibility", "complexity", "reliability", "sustainability", "productivity"],
+      "sentence_practice": [
+        "Her ability to explain things clearly is rare.",
+        "There is a real possibility of delay.",
+        "Productivity rose sharply last year."
+      ],
+      "record_this": "Her ability to explain complicated things clearly is genuinely rare. There is now a real possibility of a delay to the whole schedule. Productivity across the department rose sharply during the last financial year.",
+      "self_check": "Say 'ABle' then 'aBILity'. Did the stress move clearly to BIL?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the dense rhythm of nominalised prose"],
+      "isolation": {
+        "instructions": "Nominalised sentences pack meaning into long noun phrases, so the beats sit further apart and each one carries more weight. Compare 'Prices rose, so people complained' (fast, four beats) with 'The rise in prices led to widespread complaints' (slower, heavier). Slow down and give each nominalisation room.",
+        "instructions_ar": "الجُمَل الاسمية تكثّف المعنى في عبارات طويلة، فتتباعد النبضات ويحمل كل منها ثقلًا أكبر. أبطئ وأعطِ كل اسم مساحته.",
+        "practice": ["Prices rose, so people complained", "The RISE in prices led to widespread comPLAINTS", "fewer beats, more weight"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The rise in prices led to complaints", "Prices rose, so people complained"], "meaning": ["أكاديمي", "محادثة"]},
+        {"pair": ["fewer, heavier beats", "many light beats"], "meaning": ["نثر اسمي", "نثر فعلي"]},
+        {"pair": ["upon completion of the work", "when the work is finished"], "meaning": ["رسمي جدًا", "عادي"]},
+        {"pair": ["the failure of the system", "the system failed"], "meaning": ["اسم", "فعل"]},
+        {"pair": ["a reduction in costs", "costs went down"], "meaning": ["رسمي", "محادثة"]}
+      ],
+      "word_practice": ["the rise in prices", "the failure of the system", "a reduction in costs", "upon completion", "the introduction of", "in response to", "as a consequence of", "the absence of evidence", "an improvement in quality", "the withdrawal of support"],
+      "sentence_practice": [
+        "The rise in prices led to widespread complaints.",
+        "The failure of the system caused serious delays.",
+        "A reduction in costs remains the priority."
+      ],
+      "record_this": "The sharp rise in prices led to widespread complaints from customers and suppliers alike. The failure of the booking system caused serious delays throughout the entire weekend. A significant reduction in operating costs remains the board's clear priority.",
+      "self_check": "Say the 'rise in prices' sentence slowly. Are the beats further apart and heavier than in casual speech?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["an INcrease (noun)", "to inCREASE (verb)"],
+        ["inforMAtion", "INformation"],
+        ["deVELopment", "developMENT"],
+        ["ABle", "aBILity"],
+        ["The rise in prices led to complaints", "Prices rose, so people complained"],
+        ["-tion /ʃən/ (quiet)", "-tion /ʃɒn/ (heavy)"]
+      ],
+      "challenge_sentences": [
+        "The increase in demand required a rapid response.",
+        "Implementation of the recommendation was postponed.",
+        "Her ability to manage the development impressed us.",
+        "A reduction in complexity improved reliability."
+      ],
+      "record_this": "The sudden increase in demand required an unusually rapid response from the whole team. Implementation of the committee's main recommendation was postponed until the spring. Her ability to manage the development single-handedly impressed everyone involved. A reduction in complexity noticeably improved the reliability of the system.",
+      "self_check": "Three checks: noun stress on the first syllable, stress just before '-tion', and light unstressed '-ment'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as an executive summary. Nominalised prose is dense, so slow down and let each noun phrase land — then listen back and check every stress pattern.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كملخّص تنفيذي. النثر الاسمي مكثّف، فأبطئ وأعطِ كل عبارة اسمية مساحتها، ثم اسمع وراجع.",
+        "passage": "This report examines the increase in demand recorded over the last three years and its implications for management. The introduction of the online system in the first year produced a marked improvement in efficiency, but the implementation was uneven across regions. Our assessment is that the absence of proper training explains most of the variation. The complexity of the new interface, combined with a reduction in support staff, reduced productivity in several offices. There is a clear possibility that further development will be required. Consideration should therefore be given to a revised training programme, and the availability of local support must be treated as a requirement rather than an improvement. Upon completion of that work, a full evaluation of the system's reliability is recommended. The commitment of senior management to this process will determine its success.",
+        "sounds_to_check": {
+          "noun/verb stress shift": "the INcrease in demand (noun, not verb), a marked IMprovement",
+          "'-tion' pulling stress forward": "the introDUCtion, the impleMENtation, considerAtion, evaluAtion",
+          "light '-ment' endings": "manAGEment, aSSESSment, deVELopment, reQUIREment, comMITment",
+          "'-ity' stress shift": "compLEXity, possiBILity, availaBILity, reliaBILity, producTIVity",
+          "dense nominalised rhythm": "the absence of proper training explains most of the variation · Upon completion of that work"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every stress pattern correct, dense phrases given room, sounds genuinely academic. Ready for week 7.",
+        "70_89": "Good; one or two '-tion' or '-ity' words take the stress in the wrong place.",
+        "50_69": "Stress transferred from the verb form, so nouns sound wrong. Repeat days 1-2 and day 4.",
+        "below_50": "Redo days 1-5. Drill the noun/verb pairs first — they are the foundation of everything else here."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Noun = stress on the first syllable, verb = stress on the second: 'an INcrease' but 'to inCREASE'.",
+      "'-tion' always pulls the stress onto the syllable immediately before it, even if the verb was stressed elsewhere.",
+      "'-ment' is light /mənt/ and never takes stress.",
+      "'-ity' moves the stress two syllables back from the end: ABle becomes aBILity.",
+      "Nominalisation makes prose formal but heavy. Use it in reports and essays, not in conversation, or you will sound stiff."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check every '-tion', '-ment' and '-ity' word individually."
+  }
+}

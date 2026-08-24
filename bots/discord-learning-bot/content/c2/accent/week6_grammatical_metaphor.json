@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 6,
+  "focus": "Turning whole clauses into noun phrases · one beat across a long abstract phrase · dense-clause pacing · agentless abstraction · reading and unpacking packed prose",
+  "focus_ar": "تحويل الجُمَل الكاملة إلى عبارات اسمية، ونبضة واحدة في العبارة المجرّدة الطويلة، وإيقاع الجُمَل المكثّفة، والتجريد بلا فاعل، وقراءة النثر المكثّف وتفكيكه",
+  "arabic_challenge": "Grammatical metaphor is nominalisation taken to its limit: an entire process becomes a thing, so 'the government decided to cut spending, and unemployment rose' becomes 'the government's decision to cut spending led to a rise in unemployment'. The prosodic consequence is severe — beats become widely spaced and each carries far more meaning, so the reader must slow down and give every abstract phrase room. Learners who read dense prose at conversational speed produce an unintelligible rush, and Arabic academic style, while formal, does not compress agency out of sentences to the same degree.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["clause becomes noun phrase: process into entity"],
+      "isolation": {
+        "instructions": "Convert a whole clause into a noun phrase and make it the subject. 'They decided to cut spending' becomes 'their decision to cut spending'. The nominalised phrase now behaves as one unit with a single beat on the head noun: their deCISION to cut spending.",
+        "instructions_ar": "حوّل جملة كاملة إلى عبارة اسمية واجعلها الفاعل. العبارة الاسمية تتصرّف كوحدة واحدة بنبضة واحدة على الاسم الرئيسي.",
+        "practice": ["their deCISION to cut spending", "the FAILure to consult anyone", "one unit, one beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["their decision to cut spending", "they decided to cut spending"], "meaning": ["اسمي", "فعلي"]},
+        {"pair": ["the failure to consult", "they failed to consult"], "meaning": ["اسمي", "فعلي"]},
+        {"pair": ["one beat on the head noun", "a beat on every word"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["a rise in unemployment", "unemployment rose"], "meaning": ["اسمي", "فعلي"]},
+        {"pair": ["the refusal of the board", "the board refused"], "meaning": ["اسمي", "فعلي"]}
+      ],
+      "word_practice": ["their decision to cut spending", "the failure to consult", "a rise in unemployment", "the refusal of the board", "the introduction of the levy", "the withdrawal of funding", "the collapse of negotiations", "the abandonment of the scheme", "the imposition of limits", "the reversal of policy"],
+      "sentence_practice": [
+        "Their decision to cut spending led to a rise in unemployment.",
+        "The failure to consult caused most of the resentment.",
+        "The withdrawal of funding ended the project."
+      ],
+      "record_this": "Their decision to cut spending sharply led directly to a measurable rise in unemployment. The failure to consult anyone locally caused most of the resentment that followed. The sudden withdrawal of funding effectively ended the project overnight.",
+      "self_check": "Say 'their decision to cut spending'. Is it one unit with a single beat on 'decision'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["one beat across a long abstract phrase"],
+      "isolation": {
+        "instructions": "Long abstract phrases still take only one nuclear beat. 'The systematic under-reporting of minor incidents' has a single peak, on REPORTING. Practise finding the head of each abstraction and putting the beat there, letting everything else run underneath it.",
+        "instructions_ar": "العبارات المجرّدة الطويلة تأخذ نبضة نووية واحدة فقط. تدرّب على تحديد رأس كل تجريد ووضع النبضة عليه وترك ما عداه يجري تحتها.",
+        "practice": ["the systematic under-rePORting of minor incidents", "find the head, one beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["one nuclear beat", "four or five beats"], "meaning": ["فكرة واحدة", "قائمة مفكّكة"]},
+        {"pair": ["under-reporting (head)", "SYSTEMATIC UNDER-REPORTING"], "meaning": ["صحيح", "متقطّع"]},
+        {"pair": ["long phrase, one idea", "long phrase, many ideas"], "meaning": ["طبيعي", "مشوّش"]},
+        {"pair": ["everything runs under the beat", "each word competes"], "meaning": ["أنيق", "ثقيل"]},
+        {"pair": ["the erosion of public confidence", "public confidence eroded"], "meaning": ["اسمي مكثّف", "فعلي"]}
+      ],
+      "word_practice": ["the systematic under-reporting of incidents", "the erosion of public confidence", "the gradual centralisation of authority", "the widespread misinterpretation of the data", "the progressive weakening of oversight", "the deliberate omission of context", "the apparent duplication of effort", "the cumulative effect of small delays", "the eventual normalisation of the practice", "the persistent under-funding of services"],
+      "sentence_practice": [
+        "The systematic under-reporting of minor incidents concealed the trend.",
+        "The erosion of public confidence proved hard to reverse.",
+        "The cumulative effect of small delays was substantial."
+      ],
+      "record_this": "The systematic under-reporting of minor incidents concealed the underlying trend for years. The erosion of public confidence in the institution proved extremely hard to reverse. The cumulative effect of many small delays turned out to be substantial.",
+      "self_check": "Say 'the systematic under-reporting of minor incidents'. Did you use exactly one beat?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["dense-clause pacing: slowing for information density"],
+      "isolation": {
+        "instructions": "The denser the prose, the slower the delivery must be. A sentence carrying four nominalisations needs perhaps twenty per cent more time than a conversational one, with clear boundaries between phrases. Speed is not fluency here; giving each abstraction room is.",
+        "instructions_ar": "كلما كثُف النثر وجب أن يبطؤ الأداء. الجملة التي تحمل أربع عبارات اسمية تحتاج وقتًا أطول وحدودًا واضحة بين العبارات. السرعة ليست طلاقة هنا.",
+        "practice": ["The centralisation of authority | and the erosion of oversight | produced predictable results", "slow down, mark boundaries"]
+      },
+      "minimal_pairs": [
+        {"pair": ["slower for dense prose", "conversational speed"], "meaning": ["مفهوم", "غير مفهوم"]},
+        {"pair": ["clear phrase boundaries", "continuous rush"], "meaning": ["واضح", "مبهم"]},
+        {"pair": ["room for each abstraction", "abstractions crowded"], "meaning": ["أنيق", "مزدحم"]},
+        {"pair": ["breathe between phrases", "breathe inside a phrase"], "meaning": ["طبيعي", "مفكّك"]},
+        {"pair": ["density needs time", "density needs speed"], "meaning": ["صحيح", "خطأ شائع"]}
+      ],
+      "word_practice": ["the centralisation of authority", "and the erosion of oversight", "produced predictable results", "the combination of factors", "in the absence of scrutiny", "with the passage of time", "given the scale of the change", "in light of these findings", "as a consequence of that decision", "on the basis of limited evidence"],
+      "sentence_practice": [
+        "The centralisation of authority and the erosion of oversight produced predictable results.",
+        "In the absence of scrutiny, the normalisation of the practice was inevitable.",
+        "Given the scale of the change, the level of resistance was modest."
+      ],
+      "record_this": "The centralisation of authority and the simultaneous erosion of oversight produced entirely predictable results. In the absence of any external scrutiny, the gradual normalisation of the practice was probably inevitable. Given the scale of the change involved, the level of resistance was actually rather modest.",
+      "self_check": "Read the centralisation sentence. Did you slow down and mark clear boundaries between phrases?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["agentless abstraction: removing the doer"],
+      "isolation": {
+        "instructions": "Grammatical metaphor lets you delete the agent entirely: 'mistakes were made' becomes 'the occurrence of errors'. This is powerful and ethically loaded, since responsibility disappears with the doer. Deliver it evenly and neutrally — the neutrality is precisely the effect being created.",
+        "instructions_ar": "المجاز النحوي يتيح حذف الفاعل تمامًا، فتختفي المسؤولية معه. أدِّه بتساوٍ وحياد، فالحياد نفسه هو الأثر المقصود.",
+        "practice": ["the occurrence of errors", "the misallocation of resources", "even, neutral, agentless"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the occurrence of errors", "we made mistakes"], "meaning": ["بلا فاعل", "مسؤولية واضحة"]},
+        {"pair": ["the misallocation of resources", "they misallocated resources"], "meaning": ["مجرّد", "محدّد"]},
+        {"pair": ["even neutral delivery", "emphatic delivery"], "meaning": ["يخفي المسؤولية", "يُبرزها"]},
+        {"pair": ["a breakdown in communication", "we did not tell them"], "meaning": ["مخفَّف", "صريح"]},
+        {"pair": ["the loss of records", "someone lost the records"], "meaning": ["بلا فاعل", "بفاعل"]}
+      ],
+      "word_practice": ["the occurrence of errors", "the misallocation of resources", "a breakdown in communication", "the loss of records", "a lapse in procedure", "the non-availability of staff", "an oversight in the process", "the deterioration of standards", "a discrepancy in the accounts", "the absence of documentation"],
+      "sentence_practice": [
+        "The occurrence of errors was noted but not investigated.",
+        "There was a breakdown in communication between departments.",
+        "The absence of documentation makes verification impossible."
+      ],
+      "record_this": "The occurrence of errors in the returns was noted at the time but never investigated. There was, by any reading, a serious breakdown in communication between the two departments. The complete absence of documentation now makes independent verification impossible.",
+      "self_check": "Say 'the occurrence of errors'. Is your delivery even and neutral, with no one blamed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["unpacking: reading packed prose and restating it plainly"],
+      "isolation": {
+        "instructions": "Mastery means moving in both directions. Read a packed sentence aloud, then immediately restate it as plain clauses: 'The failure to consult resulted in widespread resentment' becomes 'Nobody asked them, so they were angry'. The packed version is slow and abstract; the plain version is quick and concrete. Practise switching.",
+        "instructions_ar": "الإتقان يعني الحركة في الاتجاهين. اقرأ جملة مكثّفة ثم أعد صياغتها بجُمَل بسيطة. المكثّف بطيء مجرّد والبسيط سريع محسوس. تدرّب على التبديل.",
+        "practice": ["packed: The failure to consult resulted in resentment", "plain: Nobody asked them, so they were angry", "switch both ways"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The failure to consult resulted in resentment", "Nobody asked them, so they were angry"], "meaning": ["أكاديمي", "محسوس"]},
+        {"pair": ["packed: slow and abstract", "plain: quick and concrete"], "meaning": ["مكثّف", "بسيط"]},
+        {"pair": ["can switch both ways", "one register only"], "meaning": ["متمكّن", "محدود"]},
+        {"pair": ["the deterioration of standards", "things got worse"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["packed for a report", "plain for a conversation"], "meaning": ["مناسب", "مناسب"]}
+      ],
+      "word_practice": ["the failure to consult", "nobody asked them", "resulted in resentment", "so they were angry", "the deterioration of standards", "things got worse", "the cessation of funding", "the money stopped", "a reduction in capacity", "we could do less"],
+      "sentence_practice": [
+        "The failure to consult resulted in widespread resentment.",
+        "Nobody asked them, so they were angry.",
+        "The cessation of funding brought the work to a halt."
+      ],
+      "record_this": "The failure to consult local residents resulted in widespread and lasting resentment. Put plainly: nobody asked them, so they were angry, and they stayed angry. The cessation of funding in the third year brought the whole programme to a halt.",
+      "self_check": "Read the packed version, then the plain one. Is the packed version genuinely slower and more abstract?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 6 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["their decision to cut spending", "they decided to cut spending"],
+        ["under-reporting (head)", "SYSTEMATIC UNDER-REPORTING"],
+        ["slower for dense prose", "conversational speed"],
+        ["the occurrence of errors", "we made mistakes"],
+        ["The failure to consult resulted in resentment", "Nobody asked them, so they were angry"],
+        ["one nuclear beat", "four or five beats"]
+      ],
+      "challenge_sentences": [
+        "The refusal of the board led to the collapse of talks.",
+        "The gradual erosion of oversight went unnoticed.",
+        "There was a lapse in procedure that night.",
+        "Plainly: nobody checked, and it went wrong."
+      ],
+      "record_this": "The refusal of the board to reconsider led directly to the collapse of the talks. The gradual erosion of independent oversight went almost entirely unnoticed for years. There was, on any reading, a serious lapse in procedure that night. Put plainly: nobody checked anything, and the whole thing went wrong.",
+      "self_check": "Three checks: one beat per abstract phrase, slower pace for density, and the ability to restate it plainly."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as an academic abstract, then record the final plain restatement in a conversational voice. The contrast between the two is the point — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كملخّص أكاديمي، ثم سجّل إعادة الصياغة البسيطة في الآخر بصوت محادثة. التقابل بينهما هو المقصد، ثم اسمع وراجع.",
+        "passage": "This paper examines the progressive centralisation of decision-making within regional health administration and its consequences for local accountability. The withdrawal of budgetary discretion from district managers, combined with the introduction of standardised reporting, produced a measurable reduction in responsiveness. Our analysis attributes the deterioration of local outcomes primarily to the systematic under-reporting of minor incidents rather than to any decline in clinical standards. The absence of independent scrutiny during this period permitted the gradual normalisation of practices that would previously have prompted intervention. The eventual restoration of local discretion in the fourth year produced only partial recovery, suggesting that the erosion of institutional trust is not readily reversed by structural adjustment alone. Put plainly: they took the decisions away from the people doing the work, nobody was watching, small problems stopped being reported, and when they gave the power back it was already too late.",
+        "sounds_to_check": {
+          "one beat per abstract phrase": "the progressive centraliSAtion of decision-making, the systematic under-rePORTing of minor incidents, the erosion of institutional TRUST",
+          "clause-to-noun conversion": "The withdrawal of budgetary discretion…, The absence of independent scrutiny…, The eventual restoration of local discretion…",
+          "dense-clause pacing": "roughly a fifth slower than conversation, with a clear boundary between every abstract phrase",
+          "agentless abstraction, neutral delivery": "produced a measurable reduction in responsiveness, permitted the gradual normalisation of practices - note that nobody is named",
+          "the plain restatement, quicker and concrete": "Put plainly: they took the decisions away…, nobody was watching…, it was already too late"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "One beat per abstraction, genuinely slowed pacing, neutral agentless delivery, and a clearly quicker plain restatement. Full command of both registers. Ready for week 7.",
+        "70_89": "Good; occasionally an abstract phrase takes two beats or the pace stays conversational.",
+        "50_69": "Dense prose read at speed, so it becomes an unintelligible rush. Repeat days 2-3.",
+        "below_50": "Redo days 1-5. Start by slowing down and marking a boundary after every abstract phrase."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "However long an abstract phrase is, it takes ONE nuclear beat, on the head noun.",
+      "Dense prose needs MORE time, not less. Speed is not fluency here.",
+      "Never breathe inside an abstract phrase. Breathe at the boundaries between them.",
+      "Nominalisation deletes the agent, and with it the responsibility. Be aware of that when you choose it.",
+      "Mastery is bidirectional: you should be able to pack a plain sentence and unpack a dense one on demand."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 record both the packed abstract and the plain restatement and compare them."
+  }
+}

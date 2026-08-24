@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w11",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 11,
+  "pattern_name": "Connotation, nuance and evaluative language",
+  "pattern_name_ar": "الدلالة الإيحائية والفروق والتقييم اللغوي",
+  "formula": "Approving/critical pairs: frugal/stingy, thrifty/miserly, confident/arrogant, determined/stubborn, assertive/aggressive, curious/nosy, ambitious/ruthless, careful/fussy, slim/skinny, generous/extravagant",
+  "formula_visual": "[He is frugal] (approving) vs [He is stingy] (critical)",
+  "when_to_use": "Whenever you describe people or decisions. English rarely offers a neutral option: most descriptive words carry an evaluation, so choosing one commits you to a judgement whether you intend it or not. Selecting deliberately lets you praise, criticise or stay neutral with precision, which matters enormously in references, appraisals, reviews and diplomatic writing.",
+  "when_to_use_ar": "حيثما تصف أشخاصًا أو قرارات. الإنجليزية نادرًا ما تقدّم خيارًا محايدًا، فمعظم الكلمات الوصفية تحمل حكمًا، واختيار إحداها يُلزمك بذلك الحكم سواء قصدته أو لا.",
+  "why_arabic_speakers_struggle": "Bilingual dictionaries typically give one Arabic gloss for both members of an English pair, so 'frugal' and 'stingy' may appear as the same word, and learners select whichever they saw first. The result is unintended insult or unintended praise, which is far more damaging socially than a grammatical error because listeners attribute it to intention rather than to limited vocabulary.",
+  "examples": [
+    {"en": "He is frugal, which I respect.", "ar": "هو مقتصد، وهذا ما أحترمه", "structure": "[approving word] + positive comment"},
+    {"en": "He is stingy, which is quite different.", "ar": "هو بخيل، وهذا شيء مختلف تمامًا", "structure": "[critical word] + negative implication"},
+    {"en": "She is assertive rather than aggressive.", "ar": "هي حازمة لا عدوانية", "structure": "[approving] + rather than + [critical]"},
+    {"en": "He is stubborn rather than determined.", "ar": "هو عنيد لا مصمّم", "structure": "[critical] + rather than + [approving]"},
+    {"en": "They are ambitious, though never ruthless.", "ar": "هم طموحون، لكن ليسوا بلا رحمة", "structure": "[approving], though never + [critical]"}
+  ],
+  "common_errors": [
+    {"wrong": "She is very stubborn, which is why I recommend her.", "correct": "She is very determined, which is why I recommend her.", "explanation": "'Stubborn' is critical, so it contradicts a recommendation."},
+    {"wrong": "He is stingy with his own money, which is admirable.", "correct": "He is frugal with his own money, which is admirable.", "explanation": "'Stingy' cannot be paired with admiration; 'frugal' carries the approving sense."},
+    {"wrong": "Thank you for your nosy interest in my work.", "correct": "Thank you for your genuine interest in my work.", "explanation": "'Nosy' is an accusation of intrusiveness, not a compliment."},
+    {"wrong": "The team is aggressive in the best sense.", "correct": "The team is assertive. / The team is determined.", "explanation": "'Aggressive' carries a negative charge that resists rescue by qualification."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "She is ___ (frugal / stingy) with her own money, which I respect.", "answer": "frugal"},
+    {"sentence": "He is ___ (determined / stubborn), which is why the project finished.", "answer": "determined"},
+    {"sentence": "She is ___ (assertive / aggressive) rather than confrontational.", "answer": "assertive"},
+    {"sentence": "They are ambitious but never ___ (ruthless / determined).", "answer": "ruthless"},
+    {"sentence": "He is ___ (careful / fussy) about detail, which the work demands.", "answer": "careful"}
+  ],
+  "quick_rule": "Almost no descriptive word is neutral. Decide your judgement FIRST, then choose the word that carries it. Do not try to rescue a negative word with a positive qualifier.",
+  "quick_rule_ar": "لا تكاد توجد كلمة وصفية محايدة. حدّد حكمك أولًا ثم اختر الكلمة التي تحمله. ولا تحاول إنقاذ كلمة سالبة بمُلحق موجب.",
+  "mnemonic": "Same behaviour, opposite verdict.",
+  "connect_to_speaking": "In accent week 11 you drilled warm rising praise against cool level criticism, and how tone alone can load a neutral word. The word chooses the judgement; the tone confirms or contradicts it."
+}

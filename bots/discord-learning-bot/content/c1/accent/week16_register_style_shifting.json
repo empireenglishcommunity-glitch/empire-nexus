@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 16,
+  "focus": "Crisp formal enunciation (full forms, released consonants) · relaxed casual speech (contractions, elision) · the same message in two registers · presentational delivery · switching register mid-conversation",
+  "focus_ar": "الإخراج الرسمي الواضح (صيغ كاملة وحروف مُطلقة)، والكلام العادي المرتاح (اختصارات وحذف)، والرسالة نفسها بأسلوبين، والأداء التقديمي، وتغيير الأسلوب أثناء الحديث",
+  "arabic_challenge": "Register is not only vocabulary — it is carried by how much you compress. Formal English releases its consonants, keeps full forms and pauses at punctuation; casual English contracts, elides and runs words together. Many learners speak every register at the same speed and compression, so a presentation sounds chatty or a friendly chat sounds like a lecture, and the mismatch reads as social awkwardness rather than as a language error. Arabic also shifts between فصحى and عامية, which is a real advantage here: the instinct exists and simply needs mapping onto English prosody.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["crisp formal enunciation: full forms, released consonants"],
+      "isolation": {
+        "instructions": "Formal delivery keeps full forms ('we will', 'cannot', 'it is'), releases final consonants clearly, and pauses at every punctuation mark. Slow down about ten per cent and let each word finish before the next begins.",
+        "instructions_ar": "الأداء الرسمي يحافظ على الصيغ الكاملة ويُطلق الحروف الأخيرة بوضوح ويقف عند كل علامة ترقيم. أبطئ قليلًا ودع كل كلمة تكتمل.",
+        "practice": ["we will not proceed", "it is important to note", "full forms, clear endings"]
+      },
+      "minimal_pairs": [
+        {"pair": ["we will not", "we won't"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["cannot /ˈkænɒt/", "can't /kɑːnt/"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["it is important", "it's important"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["released final /t/", "swallowed final /t/"], "meaning": ["رسمي واضح", "عادي"]},
+        {"pair": ["pause at commas", "run straight through"], "meaning": ["رسمي", "غير رسمي"]}
+      ],
+      "word_practice": ["we will not", "cannot", "it is important", "do not hesitate", "I should like to", "we are unable to", "it would appear", "please note that", "in addition", "furthermore"],
+      "sentence_practice": [
+        "We will not be able to confirm before Friday.",
+        "It is important to note the limitations.",
+        "Please do not hesitate to contact me."
+      ],
+      "record_this": "We will not be in a position to confirm the arrangements before Friday afternoon. It is important to note the limitations of the method before drawing conclusions. Please do not hesitate to contact me should any further questions arise.",
+      "self_check": "Say 'We will not be able to confirm'. Are the full forms kept and the final consonants clearly released?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["relaxed casual speech: contractions and elision"],
+      "isolation": {
+        "instructions": "Casual English compresses hard: 'I don't know' becomes /aɪ dəˈnəʊ/, 'what do you' becomes /ˈwɒdʒə/, 'going to' becomes /ˈɡənə/. Speed up, contract everything, and let words melt into each other. This is not sloppy — it is the correct register for friends.",
+        "instructions_ar": "الإنجليزية العادية تُضغط بقوة، فتندمج الكلمات. هذا ليس إهمالًا بل هو الأسلوب الصحيح مع الأصدقاء.",
+        "practice": ["/aɪ dəˈnəʊ/", "/ˈwɒdʒə/ think?", "/ˈɡənə/ be fine", "let words melt"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/aɪ dəˈnəʊ/", "I do not know"], "meaning": ["عادي", "رسمي"]},
+        {"pair": ["/ˈwɒdʒə/ think?", "what do you think?"], "meaning": ["عادي سريع", "كامل"]},
+        {"pair": ["/ˈɡənə/", "going to"], "meaning": ["منطوق", "مكتوب"]},
+        {"pair": ["/lemiː/ see", "let me see"], "meaning": ["عادي", "كامل"]},
+        {"pair": ["/kaɪ/ get one?", "can I get one?"], "meaning": ["عادي جدًا", "كامل"]}
+      ],
+      "word_practice": ["I dunno", "whatcha think", "gonna be fine", "lemme see", "kinda works", "sorta finished", "gimme a minute", "d'you reckon", "innit warm", "cuppa tea"],
+      "sentence_practice": [
+        "I dunno, what do you think?",
+        "It's gonna be fine, honestly.",
+        "Lemme see if I can find it."
+      ],
+      "record_this": "I honestly dunno what to make of it, so what do you reckon we should do? It's gonna be absolutely fine once we get the first week out of the way. Lemme see if I can find that file somewhere on the shared drive.",
+      "self_check": "Say 'I dunno, what do you think?' quickly. Do the words melt together naturally?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["the same message in two registers"],
+      "isolation": {
+        "instructions": "Take one message and deliver it twice. Formal: 'I regret that we are unable to proceed at this time.' Casual: 'Sorry, we can't do it right now.' Notice that the speed, compression and pitch range all change, not just the words.",
+        "instructions_ar": "خذ رسالة واحدة وقدّمها مرّتين. لاحظ أن السرعة والضغط ومدى النبرة كلها تتغيّر، لا الكلمات فقط.",
+        "practice": ["formal: I regret that we are unable to proceed", "casual: sorry, we can't do it now", "everything changes, not just words"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I regret that we are unable to…", "Sorry, we can't…"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["I should be grateful if you would…", "Could you…?"], "meaning": ["رسمي جدًا", "عادي"]},
+        {"pair": ["slower + wider pitch (formal)", "faster + narrower (casual)"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["We shall review the matter", "We'll take a look"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["Thank you for your patience", "Thanks for waiting"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["I regret that", "sorry but", "I should be grateful if", "could you", "we shall review", "we'll take a look", "thank you for your patience", "thanks for waiting", "I am writing to inform you", "just letting you know"],
+      "sentence_practice": [
+        "I regret that we are unable to proceed at this time.",
+        "Sorry, we can't do it right now.",
+        "I should be grateful if you would confirm."
+      ],
+      "record_this": "I regret to inform you that we are unable to proceed with the order at this time. Sorry, we just can't do it right now, but ask me again in a fortnight. I should be grateful if you would confirm the arrangements in writing.",
+      "self_check": "Say the formal then the casual version. Did your speed and pitch range change, not only the vocabulary?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["presentational delivery: projecting to a room"],
+      "isolation": {
+        "instructions": "Presenting is a third register: slightly slower than conversation, wider pitch range, and deliberate pauses after key points to let them land. Signpost clearly — 'First, I'll outline the problem. | Then I'll turn to the data.' The pauses do the structuring.",
+        "instructions_ar": "التقديم أسلوب ثالث: أبطأ قليلًا من المحادثة، ومدى نبرة أوسع، ووقفات مقصودة بعد النقاط المهمة. الوقفات هي ما ينظّم الكلام.",
+        "practice": ["First, | I'll outline the problem. ↘", "Then | I'll turn to the data. ↘", "pauses do the structuring"]
+      },
+      "minimal_pairs": [
+        {"pair": ["First, | I'll outline… ↘", "First I'll outline…"], "meaning": ["تقديمي واضح", "محادثة"]},
+        {"pair": ["wide pitch range", "flat monotone"], "meaning": ["جاذب", "ممل"]},
+        {"pair": ["pause after key point", "no pause"], "meaning": ["يترسّخ", "يُفقد"]},
+        {"pair": ["The key point is this: | …", "The key point is…"], "meaning": ["تشويق", "عادي"]},
+        {"pair": ["Let me turn to… ↘", "So anyway…"], "meaning": ["تقديمي", "محادثة"]}
+      ],
+      "word_practice": ["first, I'll outline", "then I'll turn to", "let me turn to", "the key point is this", "to summarise", "in conclusion", "I'd like to highlight", "as you can see", "this brings me to", "finally"],
+      "sentence_practice": [
+        "First, I'll outline the problem. Then I'll turn to the data.",
+        "The key point is this: nothing was documented.",
+        "To summarise, we have three options."
+      ],
+      "record_this": "First, I'll outline the problem as we understood it in January. Then I'll turn to the data and what it actually shows. The key point is this: almost nothing was documented at the time. To summarise, we have three realistic options and very little time.",
+      "self_check": "Say the signposting sentences. Are your pauses deliberate, with a wider pitch range than in chat?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["switching register mid-conversation"],
+      "isolation": {
+        "instructions": "Real professional life demands switching mid-flow: a relaxed chat interrupted by a client call, then back again. Practise the pivot — compress for the colleague, then immediately de-compress and slow for the client, then relax again. The switch itself should be clean and instant.",
+        "instructions_ar": "الحياة المهنية تتطلّب التحوّل أثناء الحديث. تدرّب على الانتقال: اضغط مع الزميل ثم أبطئ ووضّح مع العميل ثم ارتَح مرّة أخرى.",
+        "practice": ["casual: yeah, it's fine → formal: Good afternoon, thank you for waiting", "clean instant pivot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Yeah, it's fine → Good afternoon", "same tone for both"], "meaning": ["تحوّل واعٍ", "بلا تمييز"]},
+        {"pair": ["instant clean switch", "gradual drift"], "meaning": ["محترف", "مرتبك"]},
+        {"pair": ["Hang on → One moment, please", "Hang on (to a client)"], "meaning": ["مناسب", "غير مناسب"]},
+        {"pair": ["Cheers → Thank you very much", "Cheers (in a report)"], "meaning": ["مناسب", "غير مناسب"]},
+        {"pair": ["No worries → Not at all", "No worries (formal)"], "meaning": ["مناسب", "غير مناسب"]}
+      ],
+      "word_practice": ["hang on", "one moment please", "cheers", "thank you very much", "no worries", "not at all", "yeah sure", "certainly", "no problem", "of course"],
+      "sentence_practice": [
+        "Hang on — Good afternoon, thank you for waiting.",
+        "Cheers. — Thank you very much indeed.",
+        "No worries at all. — Not at all, it's no trouble."
+      ],
+      "record_this": "Hang on a second, I'll just grab it. Good afternoon, thank you very much for waiting. Cheers for sorting that out so quickly, I really appreciate it. Not at all, it was genuinely no trouble whatsoever.",
+      "self_check": "Record the casual line and the formal line back to back. Is the switch instant and clean?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 16 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["we will not", "we won't"],
+        ["/aɪ dəˈnəʊ/", "I do not know"],
+        ["I regret that we are unable to…", "Sorry, we can't…"],
+        ["First, | I'll outline… ↘", "First I'll outline…"],
+        ["Hang on → One moment, please", "Hang on (to a client)"],
+        ["slower + wider pitch (formal)", "faster + narrower (casual)"]
+      ],
+      "challenge_sentences": [
+        "I regret that we cannot confirm this today.",
+        "Sorry, can't confirm it today — maybe Monday?",
+        "To summarise, the position is unchanged.",
+        "Yeah, basically nothing's changed."
+      ],
+      "record_this": "I regret that we are unable to confirm the arrangement today. Sorry, can't confirm it today, but maybe Monday if that helps at all? To summarise, the position remains essentially unchanged since our last meeting. Yeah, basically nothing's changed since we last spoke.",
+      "self_check": "Three checks: full forms and released consonants when formal, heavy compression when casual, and an instant clean switch between them."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record this passage performing every register shift it contains. The whole point is that your delivery changes with each one — then listen back and check.",
+        "instructions_ar": "سجّل هذا النص وأدِّ كل تحوّل في الأسلوب. المقصد أن يتغيّر أداؤك مع كل تحوّل، ثم اسمع وراجع.",
+        "passage": "Right, so between us, the first draft was a bit of a mess. I dunno what happened, honestly. Anyway, I've rewritten it. Here's the formal version I'm sending to the client: I am writing to confirm that the revised proposal is attached for your consideration. Should you require any clarification, please do not hesitate to contact me directly. And here's how I'd say the same thing to you: yeah, it's done, have a look and tell me if it's rubbish. For the presentation on Thursday I'll open like this. First, I'll outline what changed. | Then I'll explain why. | The key point is this: the client asked for simpler, not shorter. To summarise, we've cut the jargon and kept the detail. Then afterwards, obviously, I'll just say: cheers everyone, pub?",
+        "sounds_to_check": {
+          "casual compression": "so between us, I dunno what happened, tell me if it's rubbish, cheers everyone, pub?",
+          "formal full forms + released consonants": "I am writing to confirm…, Should you require any clarification, please do not hesitate",
+          "the same message in two registers": "the revised proposal is attached for your consideration -> yeah, it's done, have a look",
+          "presentational pauses and signposting": "First, | I'll outline what changed. | Then | I'll explain why. | The key point is this:",
+          "clean instant switches": "each pivot between casual, formal and presentational should be immediate, not gradual"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Three distinct registers, switches instant and clean, delivery changing with each. Genuinely versatile. Ready for week 17.",
+        "70_89": "Good; registers distinguishable but one switch drifts rather than snapping.",
+        "50_69": "Same speed and compression throughout, so register is carried by words alone. Repeat days 1-3.",
+        "below_50": "Redo days 1-5. Exaggerate the contrast between day 1 and day 2 until the difference is unmistakable."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "You already switch between فصحى and عامية. This is the same skill applied to English prosody, not a new one.",
+      "Formal English = full forms, released consonants, pauses at punctuation, slightly slower.",
+      "Casual English = contractions, elision, faster, words melting together. This is correct, not lazy.",
+      "Presenting is a third register: slower than chat with a wider pitch range and deliberate pauses.",
+      "The most common register error is not vocabulary but delivering everything at one speed and compression level."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that all three registers sound genuinely different."
+  }
+}

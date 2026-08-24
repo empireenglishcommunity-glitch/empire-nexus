@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 4,
+  "focus": "End-focus (new information last) · end-weight (heavy elements last) · fronting for theme and contrast · existential 'there' + inversion · tonic stress placement to steer meaning",
+  "focus_ar": "التركيز النهائي (الجديد في الآخر)، والثقل النهائي (العناصر الثقيلة في الآخر)، والتقديم للموضوع والمقابلة، و'there' الوجودية مع القلب، وموضع النبر النووي لتوجيه المعنى",
+  "arabic_challenge": "English organises every sentence around two principles: known information first, new information last (end-focus), and short elements before long ones (end-weight). The tonic stress then lands on that final new element. This is why 'To the committee I gave the report' and 'I gave the report to the committee' say different things. Learners who order clauses by translation rather than by information flow produce sentences that are grammatical but subtly misleading, because the stress lands on something the listener already knew. Arabic word order is flexible in different ways, so the specific English pairing of position with informational status must be learned consciously.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["end-focus: new information takes the final tonic stress"],
+      "isolation": {
+        "instructions": "Put what is NEW at the end, and let the tonic stress fall there naturally. 'I gave the report to the COMMITTEE' answers 'who did you give it to?'. 'I gave the committee the REPORT' answers 'what did you give them?'. Choose the order that puts your news last.",
+        "instructions_ar": "ضع الجديد في النهاية ودع النبر النووي يقع هناك طبيعيًا. اختر الترتيب الذي يجعل خبرك في الآخر.",
+        "practice": ["I gave the report to the COMMITTEE", "I gave the committee the REPORT", "news goes last"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I gave the report to the COMMITTEE", "I gave the committee the REPORT"], "meaning": ["الجديد: لمن", "الجديد: ماذا"]},
+        {"pair": ["new information last", "new information first"], "meaning": ["طبيعي", "مضلّل"]},
+        {"pair": ["She sent me a LETTER", "She sent the letter to ME"], "meaning": ["الجديد: الشيء", "الجديد: المستلم"]},
+        {"pair": ["tonic stress at the end", "tonic stress early"], "meaning": ["افتراضي", "تقابلي"]},
+        {"pair": ["known first, new last", "new first, known last"], "meaning": ["تدفّق سليم", "مرتبك"]}
+      ],
+      "word_practice": ["I gave the report to the committee", "she sent me a letter", "he handed the file to Layla", "we offered them a discount", "they showed us the plans", "I told the manager the truth", "she lent me her notes", "he read the letter to us", "we sent the client an apology", "they gave the prize to her"],
+      "sentence_practice": [
+        "I gave the report to the committee, not to the board.",
+        "She sent me a letter, which I still have.",
+        "We offered them a discount, and they accepted."
+      ],
+      "record_this": "I gave the report to the committee, not to the board, which is what caused the confusion. She sent me a long letter that same week, and I still have it somewhere. We offered them a modest discount in the end, and to my surprise they accepted immediately.",
+      "self_check": "Say both orders of the report sentence. Does the tonic stress land on genuinely new information each time?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["end-weight: long and heavy elements go last"],
+      "isolation": {
+        "instructions": "English puts short before long. 'She explained to us the reasons behind the delay' is better than 'She explained the reasons behind the delay to us', because the heavy phrase belongs at the end. Say both and notice how the second stumbles in the middle while the first flows to a clean landing.",
+        "instructions_ar": "الإنجليزية تضع القصير قبل الطويل. العبارة الثقيلة تنتمي للنهاية. قل الصيغتين ولاحظ كيف تتعثّر الثانية في الوسط.",
+        "practice": ["She explained to us | the reasons behind the delay", "short first, heavy last", "flows to a clean landing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["explained to us the reasons behind the delay", "explained the reasons behind the delay to us"], "meaning": ["ثقل نهائي سليم", "تعثّر في الوسط"]},
+        {"pair": ["short before long", "long before short"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["gave her the file I mentioned", "gave the file I mentioned to her"], "meaning": ["أخف", "أثقل"]},
+        {"pair": ["clean final landing", "stumble mid-sentence"], "meaning": ["أنيق", "مرتبك"]},
+        {"pair": ["heavy element last", "heavy element buried"], "meaning": ["واضح", "مبهم"]}
+      ],
+      "word_practice": ["explained to us the reasons", "gave her the file I mentioned", "sent them everything we had", "showed the board what we found", "offered him what remained", "told us exactly what happened", "handed over all the documents", "described to the panel the whole sequence", "read out the names of everyone involved", "presented to the committee a revised plan"],
+      "sentence_practice": [
+        "She explained to us the reasons behind the delay.",
+        "He handed over all the documents he had collected.",
+        "They presented to the committee a completely revised plan."
+      ],
+      "record_this": "She explained to us at some length the reasons behind the unexpected delay. He handed over all the documents he had painstakingly collected that year. They presented to the committee a completely revised plan, which nobody had expected.",
+      "self_check": "Say the 'explained' sentence both ways. Does putting the heavy phrase last give a cleaner landing?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["fronting for theme and contrast"],
+      "isolation": {
+        "instructions": "Front an element to make it the topic or to contrast it: 'The first draft I rewrote entirely; the second I left alone.' The fronted element takes a beat plus a small pause, then the clause continues normally. This is how English signals 'as for this one…' without saying it.",
+        "instructions_ar": "قدّم عنصرًا لتجعله الموضوع أو للمقابلة. العنصر المُقدَّم يأخذ نبضة ووقفة صغيرة ثم تكمل الجملة عاديًا. هكذا تقول الإنجليزية 'أما هذا…' دون أن تقولها.",
+        "practice": ["The FIRST draft | I rewrote entirely", "the SECOND | I left alone", "topic first, then comment"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The first draft I rewrote entirely", "I rewrote the first draft entirely"], "meaning": ["موضوع مُقدَّم", "عادي"]},
+        {"pair": ["fronted + small pause", "fronted with no pause"], "meaning": ["واضح", "مبهم"]},
+        {"pair": ["His name I remember; his face I don't", "I remember his name but not his face"], "meaning": ["تقابل حادّ", "عادي"]},
+        {"pair": ["As for the budget, …", "About the budget, …"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["contrast pairs balanced", "one side stressed only"], "meaning": ["متوازن", "غير متوازن"]}
+      ],
+      "word_practice": ["the first draft I rewrote", "the second I left alone", "his name I remember", "his face I don't", "as for the budget", "that much I accept", "the rest I question", "this I know", "the details we can settle later", "the principle I cannot accept"],
+      "sentence_practice": [
+        "The first draft I rewrote entirely; the second I left alone.",
+        "His name I remember; his face I don't.",
+        "The details we can settle later; the principle I cannot accept."
+      ],
+      "record_this": "The first draft I rewrote entirely over one weekend; the second I left almost alone. His name I remember perfectly well; his face, oddly enough, I don't. The details we can settle later without much difficulty; the principle I simply cannot accept.",
+      "self_check": "Say the draft sentence. Does each fronted element get a beat and a small pause, with the two halves balanced?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["existential 'there' + inversion"],
+      "isolation": {
+        "instructions": "'There' introduces something new into the discourse: 'There remains one difficulty.' 'There followed a long silence.' 'There' itself is completely unstressed /ðə/, the verb is light, and the new noun takes the tonic stress. It exists precisely to delay the news to the end.",
+        "instructions_ar": "'There' تُدخل شيئًا جديدًا في الخطاب. 'There' نفسها غير منبورة تمامًا والفعل خفيف والاسم الجديد يأخذ النبر النووي. وهي موجودة لتأخير الخبر إلى النهاية.",
+        "practice": ["/ðə/ remains one DIFFICULTY", "/ðə/ followed a long SILENCE", "'there' unstressed, noun peaks"]
+      },
+      "minimal_pairs": [
+        {"pair": ["There remains one difficulty", "One difficulty remains"], "meaning": ["إدخال جديد", "خبر عادي"]},
+        {"pair": ["there /ðə/ (unstressed)", "THERE (stressed = place)"], "meaning": ["وجودية", "مكان"]},
+        {"pair": ["There followed a long silence", "A long silence followed"], "meaning": ["أدبي", "عادي"]},
+        {"pair": ["There arose a question ✅", "There arose it ❌"], "meaning": ["اسم", "ضمير - خطأ"]},
+        {"pair": ["new noun takes the tonic", "verb takes the tonic"], "meaning": ["صحيح", "غير طبيعي"]}
+      ],
+      "word_practice": ["there remains one difficulty", "there followed a long silence", "there arose a question", "there exists no record", "there came a point", "there emerged a pattern", "there remains much to do", "there followed weeks of delay", "there appeared no alternative", "there lay the problem"],
+      "sentence_practice": [
+        "There remains one difficulty we have not addressed.",
+        "There followed a long and uncomfortable silence.",
+        "There exists no record of the original agreement."
+      ],
+      "record_this": "There remains one significant difficulty that we have not yet addressed at all. There followed a long and distinctly uncomfortable silence around the table. There exists no written record of the original agreement, which is itself revealing.",
+      "self_check": "Say 'There remains one difficulty'. Is 'there' completely unstressed, with the tonic on 'difficulty'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["moving the tonic stress to steer meaning"],
+      "isolation": {
+        "instructions": "At mastery level you can leave the words untouched and change the message by moving the tonic stress alone. 'I didn't tell HER' (I told someone else) versus 'I didn't TELL her' (I hinted) versus 'I DIDN'T tell her' (flat denial). Practise all three deliberately and hear each meaning appear.",
+        "instructions_ar": "في مستوى الإتقان يمكنك ترك الكلمات كما هي وتغيير الرسالة بنقل النبر النووي فقط. تدرّب على الثلاثة عن قصد واسمع ظهور كل معنى.",
+        "practice": ["I didn't tell HER", "I didn't TELL her", "I DIDN'T tell her", "same words, three messages"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I didn't tell HER", "I didn't TELL her"], "meaning": ["أخبرت غيرها", "لمّحت فقط"]},
+        {"pair": ["I DIDN'T tell her", "I didn't tell HER"], "meaning": ["نفي قاطع", "شخص آخر"]},
+        {"pair": ["We can't do it TODAY", "WE can't do it today"], "meaning": ["اليوم تحديدًا", "نحن تحديدًا"]},
+        {"pair": ["She SAID she'd come", "She said SHE'd come"], "meaning": ["قالت فقط", "هي وليس غيرها"]},
+        {"pair": ["deliberate tonic placement", "default tonic placement"], "meaning": ["متمكّن", "محايد"]}
+      ],
+      "word_practice": ["I didn't tell her", "we can't do it today", "she said she'd come", "he promised us that", "they agreed to it", "nobody asked me", "I never said that", "it isn't finished", "we already tried", "you knew about it"],
+      "sentence_practice": [
+        "I didn't tell her — I told her assistant.",
+        "We can't do it today, but tomorrow is fine.",
+        "She said she'd come; she didn't say when."
+      ],
+      "record_this": "I didn't tell her anything at all; I told her assistant, which is quite different. We can't do it today because of the audit, but tomorrow is perfectly fine. She said she would come; she didn't say when, and nobody thought to ask.",
+      "self_check": "Say 'I didn't tell her' three times, moving the tonic. Do all three versions mean genuinely different things?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I gave the report to the COMMITTEE", "I gave the committee the REPORT"],
+        ["explained to us the reasons behind the delay", "explained the reasons behind the delay to us"],
+        ["The first draft I rewrote entirely", "I rewrote the first draft entirely"],
+        ["there /ðə/ (unstressed)", "THERE (stressed = place)"],
+        ["I didn't tell HER", "I didn't TELL her"],
+        ["new information last", "new information first"]
+      ],
+      "challenge_sentences": [
+        "She explained to us the reasons for the change.",
+        "The first half I enjoyed; the second I did not.",
+        "There remains one question nobody has asked.",
+        "I didn't promise that — I said I would try."
+      ],
+      "record_this": "She explained to us in some detail the reasons behind the sudden change. The first half of the concert I genuinely enjoyed; the second I did not. There remains one obvious question that nobody in the room has asked. I didn't promise that at any point; I said only that I would try.",
+      "self_check": "Three checks: new information last, heavy elements last, and unstressed 'there' with the tonic on the new noun."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a considered explanation. Information packaging is invisible when done well, so listen for whether each sentence lands on genuinely new information — then check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كتفسير متأنٍّ. تعبئة المعلومة غير مرئية عند إتقانها، فاستمع هل تهبط كل جملة على معلومة جديدة فعلًا، ثم راجع.",
+        "passage": "Let me set out what happened, in order. There arose, early in the spring, a disagreement about the budget. I explained to the committee at some length the reasons for the revised figures. The figures themselves nobody disputed; the interpretation they questioned immediately. There followed several weeks of correspondence, most of it unhelpful. I sent the chair a summary; I sent the members the full appendix. That distinction mattered more than it should have. There remains, even now, some confusion about who approved what. As for the timing, I accept responsibility entirely. The delay I could have prevented; the disagreement I could not. There exists no version of these events in which everyone emerges satisfied. Only later did I understand that the argument was never really about money at all.",
+        "sounds_to_check": {
+          "end-focus, tonic on new information": "I sent the chair a SUMmary; I sent the members the full apPENdix",
+          "end-weight, heavy element last": "I explained to the committee at some length the reasons for the revised figures",
+          "fronting for theme and contrast": "The figures themselves nobody disputed; the interpretation they questioned · The delay I could have prevented; the disagreement I could not",
+          "unstressed existential 'there'": "There arose…, There followed…, There remains…, There exists no version…",
+          "deliberate tonic placement": "the argument was never really about MONey at all"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Information flows naturally, tonic lands on new material, heavy phrases last, contrasts balanced. Effortless clarity. Ready for week 5.",
+        "70_89": "Good; occasionally the tonic lands on known information or a heavy phrase sits mid-sentence.",
+        "50_69": "Order follows translation rather than information flow, so stress lands oddly. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Start with end-focus: decide what your news is, then put it last."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Two rules govern English word order: known before new (end-focus) and short before long (end-weight).",
+      "The tonic stress falls on the last new element. If it lands on something the listener already knew, your order is wrong.",
+      "Fronting makes something the topic, and needs a beat plus a small pause to work.",
+      "Existential 'there' is completely unstressed /ðə/. Stressed 'THERE' means a place instead.",
+      "Moving the tonic changes the message without changing a single word. This is one of the clearest markers of mastery."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every sentence lands on genuinely new information."
+  }
+}

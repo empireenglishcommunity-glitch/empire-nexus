@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w11",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 11,
+  "pattern_name": "Ellipsis and substitution",
+  "pattern_name_ar": "الحذف والاستبدال",
+  "formula": "So + auxiliary + subject (So do I) · Neither/Nor + auxiliary + subject · one/ones for nouns · do so / do the same for verb phrases · omission of repeated words (I'd like to, but I can't)",
+  "formula_visual": "[So] + [do] + [I] · I'd like to come, but I can't [come]",
+  "when_to_use": "To avoid repetition, which English strongly prefers. 'So do I' agrees positively; 'Neither do I' agrees negatively; 'one/ones' replaces a repeated noun; 'do so' replaces a whole verb phrase in formal contexts; and repeated words are simply deleted after an auxiliary ('I can't'). Using ellipsis well is one of the clearest markers of natural, fluent English.",
+  "when_to_use_ar": "لتجنّب التكرار الذي تكرهه الإنجليزية. 'So do I' للموافقة المثبتة، و'Neither do I' للمنفية، و'one/ones' لاستبدال الاسم، و'do so' لعبارة فعلية كاملة في السياق الرسمي.",
+  "why_arabic_speakers_struggle": "Arabic tolerates repetition comfortably and marks agreement with pronoun-plus-particle constructions (وأنا أيضًا), so there is no pressure to compress and no inversion involved. Learners therefore repeat the full verb, which sounds laboured, or they produce 'So I do' without inverting. The negative pattern causes a further error: because 'neither' already carries the negative, adding another one ('Neither I don't') reverses the meaning.",
+  "examples": [
+    {"en": "I love this city. — So do I.", "ar": "أحبّ هذه المدينة. — وأنا أيضًا", "structure": "[So] + [auxiliary] + [subject]"},
+    {"en": "I don't agree. — Neither do I.", "ar": "لا أوافق. — ولا أنا", "structure": "[Neither] + [auxiliary] + [subject]"},
+    {"en": "I'll take the cheaper ones, thanks.", "ar": "سآخذ الأرخص، شكرًا", "structure": "[determiner + adjective + ones]"},
+    {"en": "She was asked to explain and did so willingly.", "ar": "طُلب منها أن تشرح ففعلت ذلك برضا", "structure": "[did so] replacing a verb phrase"},
+    {"en": "I'd like to come, but I can't.", "ar": "أودّ أن آتي، لكن لا أستطيع", "structure": "auxiliary + [deleted verb phrase]"}
+  ],
+  "common_errors": [
+    {"wrong": "So I do.", "correct": "So do I.", "explanation": "After 'so' and 'neither' the auxiliary comes before the subject."},
+    {"wrong": "Neither I don't agree.", "correct": "Neither do I.", "explanation": "'Neither' already carries the negative, so a second one reverses the meaning."},
+    {"wrong": "I'll take the cheaper one's.", "correct": "I'll take the cheaper ones.", "explanation": "The plural of the substitute is 'ones' with no apostrophe."},
+    {"wrong": "She was asked to explain and did so it.", "correct": "She was asked to explain and did so.", "explanation": "'Do so' already replaces the whole verb phrase, so no object is added."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I agree completely. — So ___ I.", "answer": "do"},
+    {"sentence": "They haven't replied. — Nor ___ we.", "answer": "have"},
+    {"sentence": "I'll take the smaller ___, please.", "answer": "ones"},
+    {"sentence": "Anyone wishing to object may do ___ in writing.", "answer": "so"},
+    {"sentence": "I haven't finished, but he ___.", "answer": "has"}
+  ],
+  "quick_rule": "So/Neither + auxiliary + subject (invert!). One negative only. one/ones for nouns, do so for verb phrases.",
+  "quick_rule_ar": "So/Neither + المساعد + الفاعل (اقلب!). ونفي واحد فقط. وone/ones للأسماء، وdo so للعبارات الفعلية.",
+  "mnemonic": "Say it once, then let an auxiliary carry the rest.",
+  "connect_to_speaking": "In accent week 11 you drilled the strong substituting auxiliary: 'So DO I'. Because that one word replaces a whole clause, it must be stressed — said flatly it sounds oddly uncommitted."
+}

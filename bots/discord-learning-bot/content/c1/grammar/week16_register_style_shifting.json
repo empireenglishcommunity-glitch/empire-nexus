@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w16",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 16,
+  "pattern_name": "Register and style shifting",
+  "pattern_name_ar": "تغيير الأسلوب ومستوى الرسمية",
+  "formula": "Formal: full forms, nominalisation, passive, Latinate verbs (require, obtain, commence) · Neutral: standard clauses · Casual: contractions, phrasal verbs (need, get, start), ellipsis · Signposting for presentations",
+  "formula_visual": "[I regret that we are unable to proceed] vs [Sorry, we can't do it]",
+  "when_to_use": "To match how you speak or write to the situation. Formal register uses full forms, nominalisation, the passive and Latinate verbs; casual register uses contractions, phrasal verbs and ellipsis. Presenting is a third register with explicit signposting. At C1 the expectation is not that you know one style, but that you can move deliberately between them and stay consistent within each.",
+  "when_to_use_ar": "لمطابقة كلامك أو كتابتك مع الموقف. الرسمي يستخدم الصيغ الكاملة والاسمية والمجهول والأفعال اللاتينية، والعادي يستخدم الاختصارات وأفعال العبارة والحذف. والتقديم أسلوب ثالث بإشارات صريحة.",
+  "why_arabic_speakers_struggle": "Arabic speakers already switch between فصحى and عامية, so the underlying instinct is strong; the problem is that the English markers are different and often invisible in textbooks. Learners typically acquire one register (usually semi-formal textbook English) and use it everywhere, which reads as stiff with friends and oddly casual in formal writing. Mixing registers within a single paragraph is the most common visible error.",
+  "examples": [
+    {"en": "I regret that we are unable to proceed at this time.", "ar": "يؤسفني أننا غير قادرين على المتابعة حاليًا", "structure": "[formal: full forms + Latinate verb]"},
+    {"en": "Sorry, we can't do it right now.", "ar": "آسف، لا نستطيع فعلها الآن", "structure": "[casual: contraction + phrasal simplicity]"},
+    {"en": "Should you require clarification, please contact me.", "ar": "إن احتجت توضيحًا، تواصل معي", "structure": "[formal: inverted conditional + 'require']"},
+    {"en": "Just let me know if you need anything.", "ar": "أخبرني فقط إن احتجت شيئًا", "structure": "[casual: 'let me know' + 'need']"},
+    {"en": "First, I'll outline the problem; then I'll turn to the data.", "ar": "أولًا سأعرض المشكلة، ثم أنتقل إلى البيانات", "structure": "[presentational signposting]"}
+  ],
+  "common_errors": [
+    {"wrong": "I am writing to inform you that the thing went pear-shaped.", "correct": "I am writing to inform you that the project encountered significant difficulties.", "explanation": "A formal opening followed by a colloquial idiom mixes registers within one sentence."},
+    {"wrong": "Dear Sir, Gimme a call when you can.", "correct": "Dear Sir, I should be grateful if you would telephone me at your convenience.", "explanation": "A formal salutation requires formal phrasing throughout."},
+    {"wrong": "Hey Layla, please do not hesitate to contact the undersigned.", "correct": "Hey Layla, just give me a shout if you need anything.", "explanation": "A casual greeting followed by contractual language sounds unintentionally comic."},
+    {"wrong": "The data demonstrates that stuff got better.", "correct": "The data demonstrates a marked improvement.", "explanation": "'Stuff' and 'got' are casual and clash with the academic verb 'demonstrates'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Formal: I ___ (be) grateful if you would confirm.", "answer": "should be / would be"},
+    {"sentence": "Casual version of 'I require assistance': I need a ___.", "answer": "hand"},
+    {"sentence": "Formal: ___ you require clarification, please contact me.", "answer": "Should"},
+    {"sentence": "Presentation signpost: ___, I'll outline the problem.", "answer": "First"},
+    {"sentence": "Formal alternative to 'start': the project will ___ in March.", "answer": "commence"}
+  ],
+  "quick_rule": "Pick a register and stay inside it. Formal = full forms, nominalisation, Latinate verbs. Casual = contractions, phrasal verbs, ellipsis. Never mix within a sentence.",
+  "quick_rule_ar": "اختر أسلوبًا والتزم به. الرسمي: صيغ كاملة واسمية وأفعال لاتينية. والعادي: اختصارات وأفعال عبارة وحذف. ولا تخلط داخل الجملة.",
+  "mnemonic": "Consistency matters more than formality.",
+  "connect_to_speaking": "In accent week 16 you drilled crisp formal enunciation against heavily compressed casual speech. Register lives in how much you compress, not only in which words you choose."
+}

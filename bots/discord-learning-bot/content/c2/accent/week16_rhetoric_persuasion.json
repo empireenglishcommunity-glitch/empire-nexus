@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 16,
+  "focus": "Tricolon rhythm (three-part lists) · parallelism · antithesis · building stress across a climax · sustained rhetorical delivery",
+  "focus_ar": "إيقاع الثلاثية (القوائم الثلاثية)، والتوازي، والمقابلة، وبناء النبر نحو الذروة، والأداء البلاغي المطوّل",
+  "arabic_challenge": "Rhetoric is prosody organised into patterns. A tricolon works because three items are delivered with rising intensity and near-identical rhythm; parallelism works because repeated structures get repeated melody; antithesis works because two halves are balanced against each other with a pivot between them. Read any of these as ordinary prose and the pattern vanishes even though the words remain. Arabic rhetoric is deeply developed and shares many of these devices, so the structures are familiar; what must be learned is the specific English delivery, especially the third-item lift in a tricolon.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["tricolon: three items with a rising third"],
+      "isolation": {
+        "instructions": "Three items, roughly equal in length, delivered with increasing weight: 'It was slow, | it was expensive, | and it did not WORK.' The first two are level and matched; the third takes extra length and a firm fall. That third-item lift is what makes a list sound rhetorical rather than merely enumerated.",
+        "instructions_ar": "ثلاثة عناصر متقاربة الطول تُقال بثقل متزايد: الأوّلان مستويان متطابقان والثالث يأخذ طولًا أكبر وهبوطًا حازمًا. وارتفاع العنصر الثالث هو ما يجعل القائمة بلاغية.",
+        "practice": ["It was slow, | it was expensive, | and it did not WORK ↘", "two matched, third lifted"]
+      },
+      "minimal_pairs": [
+        {"pair": ["slow, expensive, and it did not WORK ↘", "slow, expensive and it didn't work (flat)"], "meaning": ["ثلاثية بلاغية", "قائمة عادية"]},
+        {"pair": ["third item lifted and longer", "all three equal"], "meaning": ["ذروة", "مسطّح"]},
+        {"pair": ["three items", "four items"], "meaning": ["إيقاع بلاغي", "قائمة"]},
+        {"pair": ["matched first two", "uneven first two"], "meaning": ["متوازن", "مفكّك"]},
+        {"pair": ["firm final fall ↘", "trailing off"], "meaning": ["حاسم", "ضعيف"]}
+      ],
+      "word_practice": ["it was slow", "it was expensive", "and it did not work", "clear, fair and final", "faster, cheaper and simpler", "we planned, we prepared, we failed", "not now, not next year, not ever", "less waste, less cost, less delay", "come, see, decide", "learn, practise, master"],
+      "sentence_practice": [
+        "It was slow, it was expensive, and it did not work.",
+        "The plan was clear, fair and final.",
+        "We planned, we prepared, and we failed anyway."
+      ],
+      "record_this": "It was slow, it was expensive, and in the end it simply did not work. The revised plan is clear, fair and final, and I will not be reopening it. We planned carefully, we prepared thoroughly, and we failed anyway.",
+      "self_check": "Say the slow-expensive-work tricolon. Is the third item longer and heavier, with a firm fall?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["parallelism: repeated structure, repeated melody"],
+      "isolation": {
+        "instructions": "Repeat the grammatical structure and repeat the melody with it: 'We asked for time. | We asked for detail. | We asked for honesty.' Each clause takes the same contour, which is what makes the repetition feel deliberate rather than clumsy. Keep the rhythm identical and let only the final clause fall.",
+        "instructions_ar": "كرّر البنية النحوية وكرّر اللحن معها. كل جملة تأخذ الكفاف نفسه، وهذا ما يجعل التكرار مقصودًا لا ركيكًا. أبقِ الإيقاع متطابقًا ولا تهبط إلا الجملة الأخيرة.",
+        "practice": ["We asked for TIME. | We asked for DEtail. | We asked for HONesty ↘", "same contour each time"]
+      },
+      "minimal_pairs": [
+        {"pair": ["identical contour repeated", "varied contour"], "meaning": ["توازٍ مقصود", "تكرار ركيك"]},
+        {"pair": ["We asked for time, detail, honesty", "We asked for time, and also detail, plus honesty"], "meaning": ["متوازٍ", "مفكّك"]},
+        {"pair": ["only the last clause falls", "every clause falls"], "meaning": ["مترابط", "متقطّع"]},
+        {"pair": ["same length clauses", "uneven clauses"], "meaning": ["إيقاعي", "غير إيقاعي"]},
+        {"pair": ["repetition as device", "repetition as accident"], "meaning": ["بلاغي", "ضعيف"]}
+      ],
+      "word_practice": ["we asked for time", "we asked for detail", "we asked for honesty", "no excuses, no delays, no exceptions", "they promised, they delayed, they denied", "for the staff, for the students, for the city", "by design, by neglect, by choice", "we listened, we learned, we changed", "not louder, not longer, not again", "first the plan, then the funding, then the work"],
+      "sentence_practice": [
+        "We asked for time. We asked for detail. We asked for honesty.",
+        "They promised, they delayed, and then they denied.",
+        "This is for the staff, for the students, and for the city."
+      ],
+      "record_this": "We asked for time. We asked for detail. We asked, above all, for honesty. They promised in January, they delayed through the spring, and by autumn they denied it entirely. This is for the staff, for the students, and for the city that funds them.",
+      "self_check": "Say the 'we asked' parallelism. Does each clause carry the same contour, with only the last falling?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["antithesis: two halves balanced across a pivot"],
+      "isolation": {
+        "instructions": "Antithesis sets two opposites against each other with a clear pivot in the middle: 'We were promised reform; | we received rearrangement.' Both halves take equal weight and near-identical length, and the pivot is a short pause. The balance is the argument.",
+        "instructions_ar": "المقابلة تضع نقيضين مقابل بعضهما مع محور واضح في الوسط. النصفان متساويان في الثقل والطول تقريبًا والمحور وقفة قصيرة. والتوازن هو الحجّة.",
+        "practice": ["We were promised reFORM; | we received rearrangeMENT.", "equal halves, pivot between"]
+      },
+      "minimal_pairs": [
+        {"pair": ["promised reform; received rearrangement", "they said reform but it wasn't"], "meaning": ["مقابلة", "شرح"]},
+        {"pair": ["equal weighted halves", "one half heavier"], "meaning": ["متوازن", "غير متوازن"]},
+        {"pair": ["short pivot pause", "no pause"], "meaning": ["واضح", "متداخل"]},
+        {"pair": ["not X but Y", "X and also Y"], "meaning": ["مقابلة", "إضافة"]},
+        {"pair": ["near-identical length", "very uneven"], "meaning": ["بلاغي", "عادي"]}
+      ],
+      "word_practice": ["promised reform, received rearrangement", "not a beginning but an end", "less talk, more action", "we spoke, they listened", "asked for bread, given stones", "not louder but clearer", "much said, little done", "many promises, few results", "easy to announce, hard to deliver", "quick to blame, slow to help"],
+      "sentence_practice": [
+        "We were promised reform; we received rearrangement.",
+        "This is not a beginning but an end.",
+        "Much was said that evening; little was done."
+      ],
+      "record_this": "We were promised genuine reform; what we received was rearrangement. This is not a beginning but an end, and we should be honest about that. Much was said at the meeting that evening; remarkably little was actually done.",
+      "self_check": "Say the reform-rearrangement antithesis. Are both halves equally weighted with a short pivot pause?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["building stress across a climax"],
+      "isolation": {
+        "instructions": "A climax escalates across several units, each slightly louder, higher and slower than the last: 'not this year, | not next year, | not EVER ↘↘.' Plan the escalation so you have somewhere left to go — starting too high leaves the climax nowhere to climb.",
+        "instructions_ar": "الذروة تتصاعد عبر عدّة وحدات، كل واحدة أعلى وأبطأ قليلًا من سابقتها. خطّط للتصاعد ليبقى لك مجال، فالبداية العالية تترك الذروة بلا مكان تصعد إليه.",
+        "practice": ["not this year, | not next year, | not EVer ↘↘", "start low, leave room to climb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["escalating: low → high", "starting at maximum"], "meaning": ["ذروة", "بلا مجال"]},
+        {"pair": ["each unit louder and slower", "all units the same"], "meaning": ["تصاعد", "مسطّح"]},
+        {"pair": ["not this year, not next, not ever ↘↘", "never"], "meaning": ["ذروة بلاغية", "مباشر"]},
+        {"pair": ["room left to climb", "peaked too early"], "meaning": ["مخطّط", "سيّئ التخطيط"]},
+        {"pair": ["final unit heaviest", "final unit weakest"], "meaning": ["مؤثّر", "فاشل"]}
+      ],
+      "word_practice": ["not this year", "not next year", "not ever", "first the delay", "then the excuse", "then the silence", "one warning", "two warnings", "no more warnings", "we asked", "we insisted", "we are now demanding"],
+      "sentence_practice": [
+        "Not this year, not next year, not ever.",
+        "First the delay, then the excuse, then the silence.",
+        "We asked, we insisted, and now we are demanding."
+      ],
+      "record_this": "Not this year, not next year, not ever, and I want that recorded. First came the delay, then came the excuse, and then came the silence. We asked politely, we insisted formally, and now we are simply demanding.",
+      "self_check": "Say the 'not ever' climax. Did each unit grow, with the final one heaviest?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["sustained rhetorical delivery combining all devices"],
+      "isolation": {
+        "instructions": "Combine tricolon, parallelism, antithesis and climax in one passage, and pace them: devices need plain sentences between them to breathe. Three rhetorical figures in a row exhaust a listener; one every few sentences persuades. Deliver plain stretches at normal pace so the figures stand out.",
+        "instructions_ar": "اجمع الثلاثية والتوازي والمقابلة والذروة في نص واحد ووزّعها: الأدوات تحتاج جُمَلًا بسيطة بينها لتتنفّس. ثلاث صور متتالية تُتعب المستمع، وواحدة كل عدّة جُمَل تُقنع.",
+        "practice": ["figure, plain, plain, figure", "plain stretches at normal pace", "let the figures stand out"]
+      },
+      "minimal_pairs": [
+        {"pair": ["one figure every few sentences", "figure after figure"], "meaning": ["مُقنع", "متعب"]},
+        {"pair": ["plain stretches at normal pace", "everything heightened"], "meaning": ["الصور تبرز", "تُفقد أثرها"]},
+        {"pair": ["devices paced", "devices crowded"], "meaning": ["مُحكَم", "مزدحم"]},
+        {"pair": ["rhetoric serving the argument", "rhetoric for its own sake"], "meaning": ["مقنع", "متكلَّف"]},
+        {"pair": ["breathing room between figures", "no breathing room"], "meaning": ["طبيعي", "لاهث"]}
+      ],
+      "word_practice": ["let me be plain", "the figures speak for themselves", "consider the sequence", "and so we arrive here", "which brings me to this", "the question is simple", "here is what we know", "the record shows", "nobody disputes that", "that leaves one question"],
+      "sentence_practice": [
+        "The figures speak for themselves. We asked, we insisted, we were ignored.",
+        "Nobody disputes the facts. We were promised reform; we received rearrangement.",
+        "The question is simple: not this year, not next, not ever?"
+      ],
+      "record_this": "The figures speak for themselves, and I will not labour them. We asked, we insisted, and we were ignored. Nobody disputes the basic facts of the sequence. We were promised reform; we received rearrangement. So the question is simple.",
+      "self_check": "Read your passage. Do the plain sentences sit at normal pace, letting the rhetorical figures stand out?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 16 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["slow, expensive, and it did not WORK ↘", "slow, expensive and it didn't work (flat)"],
+        ["identical contour repeated", "varied contour"],
+        ["promised reform; received rearrangement", "they said reform but it wasn't"],
+        ["escalating: low → high", "starting at maximum"],
+        ["one figure every few sentences", "figure after figure"],
+        ["third item lifted and longer", "all three equal"]
+      ],
+      "challenge_sentences": [
+        "It was late, it was costly, and it failed.",
+        "We warned them. We wrote to them. We waited.",
+        "Much promised; little delivered.",
+        "Not once, not twice, but three times."
+      ],
+      "record_this": "It was late, it was costly, and in the end it failed completely. We warned them in person. We wrote to them twice. We waited four months. Much was promised that year; remarkably little was delivered. Not once, not twice, but three separate times.",
+      "self_check": "Three checks: a lifted third item, identical parallel contours, and balanced antithesis halves."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a speech to a hall. Rhetoric is built for the voice, so perform it — then listen back and check every device.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كخطاب في قاعة. البلاغة مبنيّة للصوت فأدِّها، ثم اسمع وراجع كل أداة.",
+        "passage": "Three years ago we were told this project would be quick, cheap and simple. It has been slow, it has been expensive, and it has been anything but simple. We asked for a timetable. We asked for costs. We asked, more than once, for somebody to take responsibility. What we were promised was transparency; what we received was a press release. Let me be plain, because the record deserves plainness. Nobody in this room disputes the figures. The question is not whether mistakes were made, but whether anything has been learned. And so I say this: not this year, not next year, not ever again should a scheme of this size proceed without independent scrutiny. We can argue about the past. We cannot afford to repeat it. That is the whole of my case, and I commend it to you.",
+        "sounds_to_check": {
+          "tricolon with a lifted third item": "quick, cheap and SIMple  ·  slow, expensive, and anything but SIMple ↘",
+          "parallelism with identical contours": "We asked for a TIMEtable. | We asked for COSTS. | We asked for somebody to take responsiBILity.",
+          "antithesis balanced across a pivot": "What we were promised was TRANSparency; | what we received was a press RELEASE.  ·  We can argue about the past. | We cannot afford to repeat it.",
+          "climax with escalation": "not this year, | not next year, | not EVer again ↘↘ - each unit higher, slower, heavier",
+          "paced plain stretches": "Let me be plain… and Nobody in this room disputes the figures - delivered at normal pace so the figures stand out"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Tricolons lifted, parallels matched, antitheses balanced, climax escalating, devices well paced. Genuinely persuasive. Ready for week 17.",
+        "70_89": "Good; occasionally a third item stays level or a climax peaks too early.",
+        "50_69": "Devices read as ordinary prose, so the patterns disappear. Repeat days 1-2 and day 4.",
+        "below_50": "Redo days 1-5. Start with the tricolon and exaggerate the third-item lift."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Arabic rhetoric shares these devices, so the structures are familiar. What is new is the English delivery.",
+      "In a tricolon the THIRD item is longer and heavier. Three equal items sound like a list, not rhetoric.",
+      "Parallelism needs the same melody as well as the same structure, or the repetition sounds clumsy.",
+      "Antithesis depends on balance: two halves of similar length and equal weight, with a short pivot pause.",
+      "Pace your devices. One rhetorical figure every few sentences persuades; several in a row exhausts."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 mark each device in the text before recording, then check you delivered it."
+  }
+}

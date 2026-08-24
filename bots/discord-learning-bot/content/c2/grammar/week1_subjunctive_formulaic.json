@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w1",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 1,
+  "pattern_name": "The formal and formulaic subjunctive",
+  "pattern_name_ar": "صيغة الشرط الرسمية والمتجمّدة",
+  "formula": "verb of demand + that + BARE base verb (insist that he be) · were-subjunctive (if I were, as it were) · lest + bare verb · optative may (May it never happen) · frozen formulae (So be it, Be that as it may, Suffice it to say)",
+  "formula_visual": "[I insist] [that he] [be] [informed]",
+  "when_to_use": "For formal demands, recommendations, motions and declarations. After insist, demand, request, propose, recommend, require and their nouns, the following verb is a bare base form for every subject, with no -s and no auxiliary. Also used in fixed expressions and in wishes. This is the register of committees, contracts, legal drafting and ceremonial speech.",
+  "when_to_use_ar": "للطلبات والتوصيات والمقترحات والإعلانات الرسمية. بعد أفعال مثل insist وdemand وrequest وpropose يأتي الفعل مجرّدًا لكل الفاعلين بلا -s وبلا مساعد. ويُستخدم أيضًا في التعبيرات الثابتة والتمنّي.",
+  "why_arabic_speakers_struggle": "Arabic marks its subjunctive-like mood morphologically and consistently (المنصوب), so learners instinctively supply agreement that English deliberately removes, producing 'that he is informed' or 'that she attends'. A second issue is that British English often prefers 'should' ('that he should be informed'), which is also correct, so learners meet two competing patterns and conclude the bare form is an error. The frozen formulae add a third problem: they cannot be altered at all.",
+  "examples": [
+    {"en": "I insist that he be informed immediately.", "ar": "أُصرّ على أن يُبلَّغ فورًا", "structure": "[insist] + [that] + [bare base verb]"},
+    {"en": "The committee recommended that she attend in person.", "ar": "أوصت اللجنة بأن تحضر شخصيًا", "structure": "[recommend] + [that] + [bare base verb]"},
+    {"en": "We request that no exception be made.", "ar": "نطلب ألّا يُستثنى أحد", "structure": "[request] + [that] + [bare passive]"},
+    {"en": "If I were you, I would wait.", "ar": "لو كنت مكانك لانتظرت", "structure": "[were] + subject (all persons)"},
+    {"en": "Let me be clear, lest there be any doubt.", "ar": "دعني أوضّح، خشية أن يكون هناك شكّ", "structure": "[lest] + [bare base verb]"}
+  ],
+  "common_errors": [
+    {"wrong": "I insist that he is informed.", "correct": "I insist that he be informed.", "explanation": "After a verb of demand the following verb is a bare base form, with no agreement."},
+    {"wrong": "The committee recommended that she attends.", "correct": "The committee recommended that she attend.", "explanation": "No -s on a subjunctive verb, even in the third person singular."},
+    {"wrong": "If I was you, I would wait.", "correct": "If I were you, I would wait.", "explanation": "The were-subjunctive is used for every subject in hypothetical clauses."},
+    {"wrong": "Lest there is any doubt.", "correct": "Lest there be any doubt.", "explanation": "'Lest' is followed by a bare base form."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I insist that he ___ (be) informed immediately.", "answer": "be"},
+    {"sentence": "They recommended that she ___ (attend) in person.", "answer": "attend"},
+    {"sentence": "We request that no exception ___ (be) made.", "answer": "be"},
+    {"sentence": "If I ___ (be) in your position, I would wait.", "answer": "were"},
+    {"sentence": "Let me be clear, lest there ___ (be) any doubt.", "answer": "be"}
+  ],
+  "quick_rule": "After demand/recommend/request/insist + that, use the BARE base verb for every subject. 'Were' for all persons in hypotheticals. Never alter the frozen formulae.",
+  "quick_rule_ar": "بعد أفعال الطلب + that استخدم الفعل المجرّد لكل الفاعلين. و'Were' لكل الأشخاص في الافتراض. ولا تُغيّر التعبيرات المتجمّدة.",
+  "mnemonic": "Demand strips the verb bare.",
+  "connect_to_speaking": "In accent week 1 you drilled the bare verb with a deliberate beat and a measured ceremonial pace. Because the verb carries no tense marker, the steadiness of your delivery is what makes the form sound intentional rather than mistaken."
+}

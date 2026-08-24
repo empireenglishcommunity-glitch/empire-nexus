@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 17,
+  "focus": "'Admittedly … however' · 'It could be argued that … yet' · the pivot beat on 'nonetheless' · steelmanning before rebutting · sustained concede-and-counter control",
+  "focus_ar": "'Admittedly … however'، و'It could be argued that … yet'، ونبضة المحور على 'nonetheless'، وعرض أقوى صورة للخصم قبل الردّ، وضبط التنازل والردّ عبر نص مطوّل",
+  "arabic_challenge": "Sophisticated argument requires you to state the opposing case fairly and then defeat it, and English marks the turn prosodically: the concession is delivered generously but at pace, then the pivot word ('however', 'yet', 'nonetheless') takes a distinct beat and a pitch reset, and the rebuttal lands with weight. Learners who deliver the concession too slowly or too warmly appear to agree, and those who rush past the pivot leave the listener unsure which side they are on. The whole technique depends on making the turn unmistakable.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'Admittedly … however' — the basic concede-and-counter"],
+      "isolation": {
+        "instructions": "Concede genuinely, then turn: 'Admittedly the sample was small. | However, | the pattern is consistent.' The concession moves at a brisk, generous pace; 'however' takes its own beat with pauses either side; the rebuttal falls with weight. Never linger on the concession.",
+        "instructions_ar": "تنازل بصدق ثم انقلب: التنازل بإيقاع سريع كريم، و'however' تأخذ نبضة خاصة بوقفتين، والردّ يهبط بثقل. ولا تتوقّف عند التنازل.",
+        "practice": ["Admittedly the sample was small. | HowEVer, | the pattern is conSIStent ↘", "brisk concession, weighted rebuttal"]
+      },
+      "minimal_pairs": [
+        {"pair": ["brisk concession + weighted rebuttal", "slow concession + light rebuttal"], "meaning": ["ردّ قوي", "يبدو موافقًا"]},
+        {"pair": ["however with beat + pauses", "however rushed past"], "meaning": ["واضح", "مبهم"]},
+        {"pair": ["Admittedly, …", "Obviously, …"], "meaning": ["إقرار", "توكيد"]},
+        {"pair": ["concession then turn", "concession only"], "meaning": ["حجّة", "تسليم"]},
+        {"pair": ["rebuttal falls with weight ↘", "rebuttal trails off"], "meaning": ["حاسم", "ضعيف"]}
+      ],
+      "word_practice": ["admittedly", "however", "that said", "even so", "all the same", "be that as it may", "having said that", "nonetheless", "yet", "still"],
+      "sentence_practice": [
+        "Admittedly the sample was small. However, the pattern is consistent.",
+        "Admittedly we were late. Even so, the work was thorough.",
+        "Admittedly the cost rose. All the same, the outcome justified it."
+      ],
+      "record_this": "Admittedly the sample was small and drawn from one region. However, the pattern within it is remarkably consistent. Admittedly we delivered two weeks late. Even so, the work itself was unusually thorough.",
+      "self_check": "Say the sample sentence. Is the concession brisk, with 'however' taking its own beat before a weighted rebuttal?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'It could be argued that … yet' — voicing the other side"],
+      "isolation": {
+        "instructions": "Attribute the opposing view before answering it: 'It could be argued that the delay was unavoidable. | Yet | three earlier warnings suggest otherwise.' Deliver the attributed argument neutrally, as though reporting it fairly, then let 'yet' pivot sharply. Neutrality in the first half is what makes the rebuttal credible.",
+        "instructions_ar": "انسب الرأي المقابل قبل الردّ عليه. أدِّ الحجّة المنسوبة بحياد كأنك تنقلها بإنصاف ثم اجعل 'yet' تنقلب بحدّة. والحياد في النصف الأول هو ما يجعل الردّ ذا مصداقية.",
+        "practice": ["It could be argued that the delay was unavoidable. | YET | three warnings suggest otherwise ↘", "neutral attribution, sharp pivot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["neutral attribution then sharp yet", "dismissive attribution"], "meaning": ["مصداقية", "خصومة"]},
+        {"pair": ["It could be argued that…", "Some people foolishly think…"], "meaning": ["منصف", "متحيّز"]},
+        {"pair": ["yet (sharp pivot)", "yet (rushed)"], "meaning": ["واضح", "مفقود"]},
+        {"pair": ["One might object that…", "You might stupidly say…"], "meaning": ["منصف", "مهين"]},
+        {"pair": ["fair first half", "straw man first half"], "meaning": ["مقنع", "ضعيف"]}
+      ],
+      "word_practice": ["it could be argued that", "one might object that", "the counter-argument runs", "a reasonable person might say", "there is a case for", "the opposing view holds", "critics would point out", "it is sometimes suggested", "yet", "and yet"],
+      "sentence_practice": [
+        "It could be argued that the delay was unavoidable. Yet three warnings suggest otherwise.",
+        "One might object that the cost was justified. And yet nobody costed the alternative.",
+        "The counter-argument runs that consultation takes time. Yet ours took none at all."
+      ],
+      "record_this": "It could reasonably be argued that the delay was entirely unavoidable. Yet three earlier warnings suggest otherwise. One might object that the additional cost was justified by the outcome. And yet nobody at any point costed the alternative.",
+      "self_check": "Say the delay sentences. Is the attributed argument genuinely neutral, with 'yet' pivoting sharply?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["the pivot beat on 'nonetheless'"],
+      "isolation": {
+        "instructions": "'Nonetheless' is the heaviest pivot available, four syllables with the stress on the last: /ˌnʌnðəˈLES/. Give it a full beat, a pause on each side, and a clear pitch reset. It signals that everything conceded is now being set aside — so it must sound decisive, not apologetic.",
+        "instructions_ar": "'Nonetheless' أثقل محور متاح، أربعة مقاطع والنبر على الأخير. أعطها نبضة كاملة ووقفة على الجانبين وإعادة ضبط واضحة للنبرة. فهي تُعلن أن كل ما تنازلت عنه يُوضع جانبًا الآن.",
+        "practice": ["| /ˌnʌnðəˈLES/, | the conclusion stands ↘", "full beat, pauses, pitch reset"]
+      },
+      "minimal_pairs": [
+        {"pair": ["| nonetheLESS, | (full beat)", "nonetheless (rushed)"], "meaning": ["محور حاسم", "مفقود"]},
+        {"pair": ["nonetheLESS", "NONEtheless"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["decisive nonetheless", "apologetic nonetheless"], "meaning": ["حاسم", "متردّد"]},
+        {"pair": ["nonetheless (heavy)", "however (lighter)"], "meaning": ["أثقل محور", "محور عادي"]},
+        {"pair": ["pitch reset after the pivot", "no reset"], "meaning": ["واضح", "متداخل"]}
+      ],
+      "word_practice": ["nonetheless", "nevertheless", "even so", "for all that", "in spite of that", "that notwithstanding", "all the same", "be that as it may", "still and all", "regardless"],
+      "sentence_practice": [
+        "The objections are serious. Nonetheless, the conclusion stands.",
+        "I accept the difficulty. Nevertheless, the deadline holds.",
+        "The evidence is mixed. Even so, we must decide."
+      ],
+      "record_this": "The objections raised this morning are serious and I do not dismiss them. Nonetheless, the conclusion stands as recorded. I accept the genuine difficulty involved. Nevertheless, the deadline holds and will not move again.",
+      "self_check": "Say 'Nonetheless, the conclusion stands'. Does the pivot get a full beat with stress on the last syllable?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["steelmanning: strengthening the opposing case before defeating it"],
+      "isolation": {
+        "instructions": "The most persuasive move is to state the other side better than its own advocates: 'The strongest version of the objection is not that we were slow, but that we were slow for the wrong reason. | Even that, | however, | does not explain the March decision.' Deliver the steelman warmly and slowly — you are being generous — then turn.",
+        "instructions_ar": "أقوى حركة إقناعية أن تعرض الرأي المقابل أفضل من أصحابه. أدِّ ذلك بدفء وبطء — فأنت كريم — ثم انقلب.",
+        "practice": ["The strongest version of the objection is… (warm, slow) | Even that, | however, | does not explain… ↘"]
+      },
+      "minimal_pairs": [
+        {"pair": ["strongest version of the objection", "weakest version"], "meaning": ["إنصاف مقنع", "رجل من قش"]},
+        {"pair": ["warm slow steelman", "quick dismissive summary"], "meaning": ["كريم", "خصومة"]},
+        {"pair": ["Even that, however, …", "But anyway…"], "meaning": ["ردّ محترم", "تجاهل"]},
+        {"pair": ["I would put it more strongly than they do", "they have no case"], "meaning": ["واثق", "متعجرف"]},
+        {"pair": ["generosity then defeat", "dismissal then assertion"], "meaning": ["مقنع", "غير مقنع"]}
+      ],
+      "word_practice": ["the strongest version of that objection", "put at its highest", "the best case against me", "I would go further than they do", "even on the most generous reading", "taking their argument at its strongest", "granting all of that", "even that, however", "and yet even so", "which still leaves"],
+      "sentence_practice": [
+        "The strongest version of the objection is not that we were slow but that we were slow for the wrong reason.",
+        "Put at its highest, the case against me is serious. Even so, it does not explain March.",
+        "Taking their argument at its strongest, one question remains unanswered."
+      ],
+      "record_this": "The strongest version of the objection is not that we were slow, but that we were slow for the wrong reason. Put at its highest, the case against me is genuinely serious. Even so, it does not explain the decision taken in March.",
+      "self_check": "Say the steelman sentence. Is the opposing case delivered warmly and generously before the turn?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["sustained concede-and-counter across a whole argument"],
+      "isolation": {
+        "instructions": "Hold the pattern across several exchanges without becoming mechanical: vary the pivot word, vary the concession length, and occasionally concede without countering to show you are listening. A speaker who counters every single point sounds defensive rather than reasonable.",
+        "instructions_ar": "احفظ النمط عبر عدّة تبادلات دون أن تصبح آليًا: نوّع كلمة المحور وطول التنازل، وأحيانًا تنازل بلا ردّ لتُظهر أنك تسمع. فمن يردّ على كل نقطة يبدو مدافعًا لا معقولًا.",
+        "practice": ["vary the pivot word", "vary concession length", "sometimes concede without countering"]
+      },
+      "minimal_pairs": [
+        {"pair": ["varied pivots", "'however' every time"], "meaning": ["طبيعي", "آلي"]},
+        {"pair": ["sometimes concede without countering", "counter every point"], "meaning": ["معقول", "مدافع"]},
+        {"pair": ["varied concession length", "identical each time"], "meaning": ["حيوي", "ميكانيكي"]},
+        {"pair": ["listening then arguing", "arguing only"], "meaning": ["مقنع", "عدواني"]},
+        {"pair": ["That is a fair point. (full stop)", "That is fair, however…"], "meaning": ["يسمع فعلًا", "يردّ دائمًا"]}
+      ],
+      "word_practice": ["that is a fair point", "I accept that entirely", "you are right about that", "I have no answer to that", "on that we agree", "however", "yet", "nonetheless", "even so", "that said"],
+      "sentence_practice": [
+        "That is a fair point, and I accept it entirely.",
+        "You are right about the timing. On the process, however, I disagree.",
+        "I have no answer to that. Nonetheless, the wider question remains."
+      ],
+      "record_this": "That is a fair point, and I accept it entirely without qualification. You are right about the timing of the first letter. On the process itself, however, I disagree fundamentally. I have no good answer to that. Nonetheless, the wider question remains open.",
+      "self_check": "Read the exchange. Did you vary your pivots and concede at least once without countering?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 17 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["brisk concession + weighted rebuttal", "slow concession + light rebuttal"],
+        ["neutral attribution then sharp yet", "dismissive attribution"],
+        ["| nonetheLESS, | (full beat)", "nonetheless (rushed)"],
+        ["strongest version of the objection", "weakest version"],
+        ["varied pivots", "'however' every time"],
+        ["sometimes concede without countering", "counter every point"]
+      ],
+      "challenge_sentences": [
+        "Admittedly the data is thin. However, the direction is clear.",
+        "It could be argued that we acted late. Yet the record says otherwise.",
+        "The objections are real. Nonetheless, I stand by it.",
+        "That is a fair point, and I accept it."
+      ],
+      "record_this": "Admittedly the data is thin in the early years. However, the direction of travel is clear. It could be argued that we acted late. Yet the record itself says otherwise. The objections raised are real and serious. Nonetheless, I stand by the recommendation. That is a fair point, and I accept it.",
+      "self_check": "Three checks: brisk generous concessions, a full beat on each pivot, and weighted falling rebuttals."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a reasoned reply to critics. Every turn must be audible, and at least one concession must stand unanswered — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كردّ مُحكَم على النقّاد. كل انقلاب يجب أن يكون مسموعًا، وتنازل واحد على الأقل يبقى بلا ردّ، ثم اسمع وراجع.",
+        "passage": "Let me take the criticisms in turn, and take them seriously. Admittedly the consultation was short. However, it was longer than any previous consultation in this department, and nobody mentions that. It could be argued that we should have waited for the review. Yet the review itself recommended acting before its publication. The strongest version of the objection is not that we moved too fast, but that we moved fast without telling anyone, and on that point I have no adequate answer. It is a fair criticism and I accept it. On the question of cost, the numbers are disputed. Nonetheless, every independent estimate falls within our published range. Critics say the process was opaque. That is right, and we have changed it. But the substance of the decision, I would still defend, and I would defend it more strongly today than I did a year ago.",
+        "sounds_to_check": {
+          "'Admittedly … however' with a brisk concession": "Admittedly the consultation was short. | HowEVer, | it was longer than any previous consultation",
+          "neutral attribution then a sharp pivot": "It could be argued that we should have waited for the review. | YET | the review itself recommended acting",
+          "the heavy 'nonetheless' pivot": "the numbers are disputed. | nonetheLESS, | every independent estimate falls within our range",
+          "steelmanning, warm and generous": "The strongest version of the objection is not that we moved too fast, but that we moved fast without telling anyone",
+          "conceding WITHOUT countering": "on that point I have no adequate answer. It is a fair criticism and I accept it.  ·  That is right, and we have changed it. - no pivot follows either"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Concessions generous but brisk, pivots unmistakable, rebuttals weighted, and at least one concession left standing. Sounds genuinely reasonable. Ready for week 18.",
+        "70_89": "Good; occasionally a pivot is rushed or every concession gets countered.",
+        "50_69": "Concessions too slow so you appear to agree, or pivots inaudible. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5. Start by exaggerating the pivot beat until the turn is obvious."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Deliver the concession briskly and generously. Lingering on it makes you sound as though you agree.",
+      "The pivot word needs its own beat, pauses on both sides, and a pitch reset. That is what makes the turn audible.",
+      "State the opposing case at its STRONGEST. Defeating a weak version persuades nobody.",
+      "Concede at least once without countering. A speaker who answers every point sounds defensive rather than reasonable.",
+      "Vary your pivots. 'However' four times in a paragraph sounds mechanical."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that at least one concession was left standing."
+  }
+}

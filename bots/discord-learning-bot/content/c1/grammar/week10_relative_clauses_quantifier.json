@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w10",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 10,
+  "pattern_name": "Relative clauses with quantifiers and prepositions",
+  "pattern_name_ar": "جُمَل الوصل مع المُحدِّدات الكمّية وحروف الجر",
+  "formula": "quantifier + of which/whom: many of which, most of whom, none of which · the extent/degree to which · the manner/way in which · a point at which · preposition + which/whom (formal)",
+  "formula_visual": "[twenty proposals], [many of which] [were rejected]",
+  "when_to_use": "To add precise, formal detail without starting a new sentence. Use 'of which' for things and 'of whom' for people after a quantifier. Use 'the extent to which' to discuss degree rather than a simple yes or no. In formal registers the preposition moves in front of the relative pronoun: 'the manner in which it was handled'. These structures are standard in reports, academic writing and legal prose.",
+  "when_to_use_ar": "لإضافة تفصيل دقيق ورسمي دون بدء جملة جديدة. استخدم 'of which' للأشياء و'of whom' للأشخاص بعد مُحدِّد كمّي، و'the extent to which' لمناقشة الدرجة. وفي الأسلوب الرسمي يتقدّم حرف الجر على الضمير.",
+  "why_arabic_speakers_struggle": "Arabic uses one relative pronoun family (الذي / التي) that agrees with the noun, and there is no equivalent of the who/whom distinction or of moving a preposition to the front. Learners therefore write 'many of them' where a relative clause is needed, creating two sentences joined by a comma, or use 'who' after a preposition ('with who I worked'). Subject-verb agreement after 'of which' is a further trap, since the verb agrees with the quantifier.",
+  "examples": [
+    {"en": "We received twenty proposals, many of which were unrealistic.", "ar": "تلقّينا عشرين مقترحًا، كثير منها غير واقعي", "structure": "noun, [quantifier + of which] + verb"},
+    {"en": "We interviewed forty candidates, most of whom were graduates.", "ar": "قابلنا أربعين مرشّحًا، أكثرهم من حاملي الشهادات", "structure": "noun, [quantifier + of whom] + verb"},
+    {"en": "The extent to which this applies is unclear.", "ar": "مدى انطباق هذا غير واضح", "structure": "[The extent to which] + clause + verb"},
+    {"en": "The manner in which it was handled caused offence.", "ar": "الطريقة التي عُوملت بها سبّبت استياءً", "structure": "[noun + in which] + clause"},
+    {"en": "The colleagues with whom I worked were excellent.", "ar": "الزملاء الذين عملت معهم كانوا ممتازين", "structure": "[preposition + whom] + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "We received twenty proposals, many of them were unrealistic.", "correct": "We received twenty proposals, many of which were unrealistic.", "explanation": "'Them' cannot introduce a relative clause; 'of which' links it to the main sentence."},
+    {"wrong": "The colleagues with who I worked were excellent.", "correct": "The colleagues with whom I worked were excellent.", "explanation": "After a preposition the formal object pronoun 'whom' is required."},
+    {"wrong": "The extent which this applies is unclear.", "correct": "The extent to which this applies is unclear.", "explanation": "The fixed phrase needs 'to' before 'which'."},
+    {"wrong": "Six suppliers, most of which has now closed.", "correct": "Six suppliers, most of which have now closed.", "explanation": "The verb agrees with the quantifier, which is plural here."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "We had six suppliers, most of ___ have now closed.", "answer": "which"},
+    {"sentence": "The team, many of ___ were new, performed well.", "answer": "whom"},
+    {"sentence": "The extent ___ ___ this matters is debatable.", "answer": "to which"},
+    {"sentence": "The way ___ ___ she explained it was masterful.", "answer": "in which"},
+    {"sentence": "He made three claims, none of which he ___ (can) support.", "answer": "could"}
+  ],
+  "quick_rule": "of WHICH for things, of WHOM for people. Preposition goes before which/whom in formal English. The verb agrees with the quantifier.",
+  "quick_rule_ar": "of WHICH للأشياء وof WHOM للأشخاص. وحرف الجر يتقدّم على which/whom في الرسمي. والفعل يطابق المُحدِّد الكمّي.",
+  "mnemonic": "'Them' starts a new sentence; 'of which' keeps the same one.",
+  "connect_to_speaking": "In accent week 10 you drilled 'of which' and 'of whom' as quiet, linked and unstressed, with the quantifier taking the only beat. Over-pronouncing them makes the sentence stall in the middle."
+}

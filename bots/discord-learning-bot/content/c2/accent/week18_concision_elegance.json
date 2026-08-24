@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 18,
+  "focus": "Pruning padding · the short sentence for impact · varying sentence length for rhythm · crisp delivery of pruned prose · rhythm through deliberate variation",
+  "focus_ar": "تشذيب الحشو، والجملة القصيرة للأثر، وتنويع طول الجُمَل للإيقاع، والأداء الحادّ للنثر المُشذَّب، والإيقاع بالتنويع المقصود",
+  "arabic_challenge": "Concision is a prosodic skill as much as an editorial one. Once padding is removed, every remaining word carries weight, so the delivery must be crisper and the pauses more deliberate — pruned prose read at a padded pace sounds oddly empty. The second element is rhythm: English prose gains its music from VARIED sentence length, especially a short sentence dropped after several long ones. Arabic rhetorical prose often favours accumulation and balanced expansion, so the deliberate use of a very short sentence as a rhythmic weapon can feel abrupt rather than powerful until it is practised.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["pruning padding: cutting empty phrases"],
+      "isolation": {
+        "instructions": "Remove the padding and say the shorter version: 'at this point in time' becomes 'now'; 'due to the fact that' becomes 'because'; 'in the event that' becomes 'if'. Say both aloud. The pruned version needs a firmer, crisper delivery because there is nowhere to hide.",
+        "instructions_ar": "احذف الحشو وقل الصيغة الأقصر. قل الاثنين بصوت عالٍ. الصيغة المُشذَّبة تحتاج أداءً أحزم وأحدّ لأنه لا مكان للاختباء.",
+        "practice": ["at this point in time → NOW", "due to the fact that → beCAUSE", "crisper, nowhere to hide"]
+      },
+      "minimal_pairs": [
+        {"pair": ["now", "at this point in time"], "meaning": ["مُشذَّب", "محشو"]},
+        {"pair": ["because", "due to the fact that"], "meaning": ["مُشذَّب", "محشو"]},
+        {"pair": ["if", "in the event that"], "meaning": ["مُشذَّب", "محشو"]},
+        {"pair": ["crisp firm delivery", "loose padded delivery"], "meaning": ["مُشذَّب", "مترهّل"]},
+        {"pair": ["few words, each weighted", "many words, none weighted"], "meaning": ["قوي", "ضعيف"]}
+      ],
+      "word_practice": ["now", "because", "if", "although", "to", "about", "many", "help", "start", "end"],
+      "sentence_practice": [
+        "We must decide now.",
+        "The delay happened because nobody checked.",
+        "If it fails, we start again."
+      ],
+      "record_this": "We must decide now, not at the next meeting or the one after that. The delay happened because nobody checked the figures before publication. If this approach fails, we start again from the beginning.",
+      "self_check": "Say 'We must decide now'. Is the delivery crisp and firm, with each word carrying weight?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["the short sentence for impact"],
+      "isolation": {
+        "instructions": "A very short sentence after several long ones hits hard. 'We spent three years, two budgets and a great deal of goodwill on a system that was never going to work. | It failed.' Deliver the short sentence slowly, with a pause before it and a firm fall. Its power comes from contrast.",
+        "instructions_ar": "الجملة القصيرة جدًا بعد عدّة جُمَل طويلة تضرب بقوة. أدِّها ببطء مع وقفة قبلها وهبوط حازم. وقوّتها من التقابل.",
+        "practice": ["…a system that was never going to work. | It FAILED ↘.", "pause before, slow, firm fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["long, long, | It FAILED ↘", "long, long, and it failed"], "meaning": ["أثر قوي", "بلا أثر"]},
+        {"pair": ["pause before the short sentence", "no pause"], "meaning": ["مؤثّر", "مفقود"]},
+        {"pair": ["short sentence delivered slowly", "short sentence rushed"], "meaning": ["ثقيل", "خفيف"]},
+        {"pair": ["It failed.", "Unfortunately it did not succeed."], "meaning": ["حاسم", "مخفَّف"]},
+        {"pair": ["power from contrast", "no contrast available"], "meaning": ["فعّال", "غير فعّال"]}
+      ],
+      "word_practice": ["it failed", "we lost", "nobody came", "that was wrong", "it worked", "she refused", "they knew", "we stopped", "it ended", "enough"],
+      "sentence_practice": [
+        "We spent three years on a system that was never going to work. It failed.",
+        "There were meetings, memos, reviews and working groups. Nothing changed.",
+        "I asked twice, in writing, with a deadline. No reply."
+      ],
+      "record_this": "We spent three years, two budgets and a great deal of goodwill on a system that was never going to work. It failed. There were meetings, memos, reviews and three separate working groups. Nothing changed.",
+      "self_check": "Say the 'It failed' pair. Is there a pause before the short sentence, delivered slowly with a firm fall?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["varying sentence length for rhythm"],
+      "isolation": {
+        "instructions": "Alternate lengths deliberately: long, long, short. Or short, long, short. Uniform length flattens prose however good the words are. Practise a paragraph where you can hear the pattern of lengths as clearly as you hear the meaning.",
+        "instructions_ar": "نوّع الأطوال عن قصد: طويلة طويلة قصيرة، أو قصيرة طويلة قصيرة. الطول الموحّد يُسطّح النثر مهما كانت الكلمات جيدة.",
+        "practice": ["long, long, SHORT", "short, long, SHORT", "hear the pattern of lengths"]
+      },
+      "minimal_pairs": [
+        {"pair": ["long, long, short", "all medium length"], "meaning": ["إيقاعي", "مسطّح"]},
+        {"pair": ["varied lengths", "uniform lengths"], "meaning": ["موسيقي", "رتيب"]},
+        {"pair": ["pattern audible", "pattern absent"], "meaning": ["مُحكَم", "عادي"]},
+        {"pair": ["short sentence as punctuation", "short sentence at random"], "meaning": ["مقصود", "عشوائي"]},
+        {"pair": ["rhythm through variation", "rhythm through repetition"], "meaning": ["نثر", "شعر"]}
+      ],
+      "word_practice": ["and so", "but", "then", "yet", "still", "again", "meanwhile", "afterwards", "eventually", "finally"],
+      "sentence_practice": [
+        "The first review was thorough, well evidenced and largely ignored. The second was neither thorough nor evidenced. It was, however, adopted.",
+        "We tried. We tried again, more carefully, with better data and more time. It made no difference.",
+        "Nobody objected. Nobody, in the eighteen months between the first draft and the final decision, raised a single formal concern. That silence was the problem."
+      ],
+      "record_this": "The first review was thorough, well evidenced and largely ignored. The second was neither. It was, however, adopted. We tried once. We tried again, more carefully, with better data and considerably more time. It made no difference at all.",
+      "self_check": "Read the review paragraph. Can you hear the pattern of long and short as clearly as the meaning?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["crisp delivery of pruned prose"],
+      "isolation": {
+        "instructions": "Pruned prose demands crisper articulation: release final consonants fully, keep pauses deliberate, and avoid filling gaps with sound. Because there are fewer words, any mumbling costs proportionally more. Read slightly slower than you would padded prose, not faster.",
+        "instructions_ar": "النثر المُشذَّب يتطلّب نطقًا أحدّ: أطلق الحروف الأخيرة كاملة، واجعل الوقفات مقصودة، ولا تملأ الفراغات بأصوات. فقلّة الكلمات تجعل كل تمتمة أغلى.",
+        "practice": ["release final consonants", "deliberate pauses", "slightly slower, not faster"]
+      },
+      "minimal_pairs": [
+        {"pair": ["released final consonants", "swallowed endings"], "meaning": ["حادّ", "مترهّل"]},
+        {"pair": ["deliberate pauses", "gaps filled with sound"], "meaning": ["واثق", "متردّد"]},
+        {"pair": ["slightly slower", "faster because shorter"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["fewer words, more care", "fewer words, less care"], "meaning": ["مُحكَم", "ضعيف"]},
+        {"pair": ["silence between sentences", "sound between sentences"], "meaning": ["مضبوط", "مرتبك"]}
+      ],
+      "word_practice": ["decide", "act", "stop", "check", "confirm", "reject", "accept", "delay", "proceed", "conclude"],
+      "sentence_practice": [
+        "We checked. We confirmed. We proceeded.",
+        "The answer is no. The reason is cost.",
+        "Act now. Explain later."
+      ],
+      "record_this": "We checked the figures. We confirmed them independently. We proceeded. The answer is no, and the reason is cost. Act now and explain later, because the alternative is another year of this.",
+      "self_check": "Say 'We checked. We confirmed. We proceeded.' Are the final consonants fully released, with silent gaps between?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["elegance: rhythm serving meaning"],
+      "isolation": {
+        "instructions": "Elegance is when the rhythm matches the sense: long sentences for complexity, short ones for conclusions. 'We debated the wording for a fortnight, consulted three lawyers and redrafted it six times. Then we deleted the paragraph.' The length pattern tells the story before the words do.",
+        "instructions_ar": "الأناقة هي أن يوافق الإيقاع المعنى: الجُمَل الطويلة للتعقيد والقصيرة للخلاصات. ونمط الأطوال يحكي القصة قبل الكلمات.",
+        "practice": ["long complexity → short conclusion", "the length pattern tells the story", "rhythm matching sense"]
+      },
+      "minimal_pairs": [
+        {"pair": ["long for complexity, short for conclusion", "same length for both"], "meaning": ["أنيق", "مسطّح"]},
+        {"pair": ["rhythm matches sense", "rhythm fights sense"], "meaning": ["أنيق", "مرتبك"]},
+        {"pair": ["Then we deleted the paragraph.", "and subsequently the paragraph was removed"], "meaning": ["حاسم", "مترهّل"]},
+        {"pair": ["length pattern carries meaning", "length is accidental"], "meaning": ["مُحكَم", "عشوائي"]},
+        {"pair": ["conclusion short and final", "conclusion long and hedged"], "meaning": ["قوي", "ضعيف"]}
+      ],
+      "word_practice": ["then we deleted it", "so we stopped", "and that was that", "we began again", "it ended there", "nothing followed", "we moved on", "the file closed", "no more was said", "that was the end"],
+      "sentence_practice": [
+        "We debated the wording for a fortnight, consulted three lawyers and redrafted it six times. Then we deleted the paragraph.",
+        "After eleven months of negotiation, four site visits and a change of minister, the answer arrived. No.",
+        "We built the case carefully, with evidence, witnesses and precedent. Nobody read it."
+      ],
+      "record_this": "We debated the wording for a fortnight, consulted three separate lawyers and redrafted the clause six times. Then we deleted the paragraph. After eleven months of negotiation, four site visits and a change of minister, the answer finally arrived. No.",
+      "self_check": "Read the wording sentence. Does the long-then-short pattern make the conclusion land harder?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 18 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["now", "at this point in time"],
+        ["long, long, | It FAILED ↘", "long, long, and it failed"],
+        ["long, long, short", "all medium length"],
+        ["released final consonants", "swallowed endings"],
+        ["long for complexity, short for conclusion", "same length for both"],
+        ["slightly slower", "faster because shorter"]
+      ],
+      "challenge_sentences": [
+        "We must decide now.",
+        "We spent a year on it. It failed.",
+        "We checked. We confirmed. We proceeded.",
+        "After months of work, the answer came. No."
+      ],
+      "record_this": "We must decide now, not next quarter. We spent a full year on that system, with two budgets and endless goodwill. It failed. We checked the figures. We confirmed them. We proceeded. After eight months of careful work, the answer finally came. No.",
+      "self_check": "Three checks: padding removed, a pause before each short sentence, and final consonants fully released."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this aloud. It is deliberately pruned, so read slightly slower than feels natural and let the short sentences land — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا بصوت عالٍ. النص مُشذَّب عن قصد، فاقرأ أبطأ قليلًا من المعتاد ودع الجُمَل القصيرة تقع، ثم اسمع وراجع.",
+        "passage": "The programme ran for three years. It was well funded, carefully monitored and widely admired by everyone except the people it was meant to help. We measured attendance, satisfaction, completion and cost per head. We did not measure whether anything improved. That was the flaw. Reviewers noticed it in year one and mentioned it in an appendix. Nobody read the appendix. By the time the second evaluation appeared, with better data, clearer methods and an explicit warning on its first page, the funding was already committed for a further two years. So it continued. The final report ran to two hundred pages and recommended six changes. Five were adopted. The sixth, which was the only one that mattered, was described as being for future consideration. It is still being considered.",
+        "sounds_to_check": {
+          "pruned prose, no padding": "We did not measure whether anything improved.  ·  Nobody read the appendix.  ·  So it continued.",
+          "short sentences after long, with a pause and firm fall": "…except the people it was meant to help. | That was the FLAW ↘.  ·  …a further two years. | So it conTINued ↘.  ·  Five were adopted.",
+          "deliberate length variation": "long opening, then 'It is still being considered.' - the closing short sentence must land hardest",
+          "crisp released consonants": "measured attendance, satisfaction, completion and cost per head - every ending audible",
+          "rhythm matching sense": "the long sentence about the second evaluation enacts the delay it describes; the short ones deliver the verdicts"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Padding gone, short sentences landing with pause and weight, lengths clearly varied, consonants crisp. Genuinely elegant. Ready for week 19.",
+        "70_89": "Good; occasionally a short sentence is rushed or an ending swallowed.",
+        "50_69": "Read at padded pace, so pruned prose sounds empty. Repeat days 2 and 4.",
+        "below_50": "Redo days 1-5. Slow down and put a real pause before every short sentence."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Pruned prose needs a CRISPER and slightly SLOWER delivery, not a faster one. Fewer words means each carries more.",
+      "A short sentence after several long ones is a rhythmic weapon. Pause before it and let it fall firmly.",
+      "Uniform sentence length flattens prose however good the words are. Vary deliberately.",
+      "Release your final consonants. With fewer words, any mumbling costs proportionally more.",
+      "Let the rhythm match the sense: long for complexity, short for conclusions."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every short sentence had a pause before it."
+  }
+}

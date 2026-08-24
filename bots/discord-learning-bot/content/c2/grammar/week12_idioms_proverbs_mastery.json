@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w12",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 12,
+  "pattern_name": "Idioms, proverbs and fixed expressions at mastery",
+  "pattern_name_ar": "التعابير والأمثال والعبارات الثابتة في مستوى الإتقان",
+  "formula": "Fixed idioms (a storm in a teacup, the tip of the iceberg, a foregone conclusion) · Proverbs in balanced halves (least said soonest mended) · Deliberate variation (the straw that broke this particular camel's back) · Register-matched selection",
+  "formula_visual": "[a storm in a teacup] = one unit, one meaning, one register",
+  "when_to_use": "To sound genuinely idiomatic rather than merely accurate. Idioms are stored whole, so they must be retrieved whole. At mastery level you also vary them deliberately for wit or precision, and you match the register exactly: professional metaphor for formal contexts, colloquial idiom for relaxed ones. One well-chosen idiom is worth more than five that clash with the setting.",
+  "when_to_use_ar": "لتبدو اصطلاحيًا حقًّا لا صحيحًا فقط. التعابير تُحفظ كاملة فتُستدعى كاملة. وفي مستوى الإتقان تُحوّرها عن قصد للطرافة أو الدقّة وتُطابق الأسلوب بدقّة.",
+  "why_arabic_speakers_struggle": "Arabic is exceptionally rich in idiom, which creates a strong temptation to translate directly, and direct translation almost never works. The second problem is variation: fluent speakers bend idioms, but bending requires the base form to be completely automatic, so learners who have memorised without automatising produce alterations that read as errors instead of wit. Register mismatch is the third and most costly error in professional contexts.",
+  "examples": [
+    {"en": "Honestly, it was a storm in a teacup.", "ar": "بصراحة، كانت عاصفة في فنجان", "structure": "[fixed idiom as complement]"},
+    {"en": "That complaint is just the tip of the iceberg.", "ar": "تلك الشكوى مجرّد قمّة جبل الجليد", "structure": "[fixed idiom as complement]"},
+    {"en": "Least said, soonest mended.", "ar": "أقلّ الكلام أسرع في الإصلاح", "structure": "[balanced proverb, two halves]"},
+    {"en": "That was the straw that broke this particular camel's back.", "ar": "كان ذلك القشّة التي قصمت ظهر هذا البعير بالتحديد", "structure": "[deliberately varied idiom]"},
+    {"en": "Whether it was lawful is now a moot point.", "ar": "أما إن كان قانونيًا فتلك مسألة خلافية الآن", "structure": "[formal idiom in formal register]"}
+  ],
+  "common_errors": [
+    {"wrong": "It was a storm in a cup of tea.", "correct": "It was a storm in a teacup.", "explanation": "Fixed idioms cannot be paraphrased; the exact wording is the idiom."},
+    {"wrong": "The board report noted the project had gone pear-shaped.", "correct": "The board report noted the project had encountered significant difficulties.", "explanation": "A colloquial idiom in a formal report is a register error that costs credibility."},
+    {"wrong": "That was the last straw that broke the camel.", "correct": "That was the last straw. / the straw that broke the camel's back.", "explanation": "Two idioms have been merged; keep them separate or vary one deliberately and completely."},
+    {"wrong": "Least said, soonest repaired.", "correct": "Least said, soonest mended.", "explanation": "Proverbs are fixed; substituting a synonym destroys the proverb."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Honestly, the whole argument was a storm in a ___.", "answer": "teacup"},
+    {"sentence": "That complaint is just the ___ of the iceberg.", "answer": "tip"},
+    {"sentence": "Least said, soonest ___.", "answer": "mended"},
+    {"sentence": "Whether it was lawful is now a ___ point.", "answer": "moot"},
+    {"sentence": "The role turned out to be a poisoned ___.", "answer": "chalice"}
+  ],
+  "quick_rule": "Idioms are FIXED: exact wording, one unit. Vary only when the base form is automatic. Match the register - colloquial idiom in a formal report costs more than a plain phrase.",
+  "quick_rule_ar": "التعابير ثابتة: صياغة محدّدة ووحدة واحدة. وحوّرها فقط إذا كان الأصل تلقائيًا. وطابق الأسلوب.",
+  "mnemonic": "Never translate an idiom. Learn it whole or leave it alone.",
+  "connect_to_speaking": "In accent week 12 you drilled idioms as instant chunks with no hesitation before them, and proverbs with two matched peaks. A native listener hears the tiny pause that reveals an idiom being assembled rather than retrieved."
+}

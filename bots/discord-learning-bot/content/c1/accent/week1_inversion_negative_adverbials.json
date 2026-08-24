@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 1,
+  "focus": "Fronted-adverbial stress + pause · auxiliary prominence in inversion · 'Not only … but also' double peak · 'No sooner … than' /nəʊ ˈsuːnə ðən/ · the full inverted contour",
+  "focus_ar": "نبر الظرف المُقدَّم مع وقفة، وبروز الفعل المساعد في القلب، وقمّتا 'Not only … but also'، و'No sooner … than'، والتنغيم الكامل للجملة المقلوبة",
+  "arabic_challenge": "At C1 the difficulty is no longer individual sounds but PROSODY — where the weight of a sentence falls. Inversion exists purely for emphasis, so if you say 'Never have I seen this' with flat, even stress, the grammar is perfect but the rhetorical effect disappears and it sounds like a translation exercise. Arabic marks emphasis mainly with word order and particles rather than with pitch and stress, so learners often front the adverbial correctly and then fail to give it the accompanying stress peak and micro-pause that English listeners expect.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["fronted negative adverbial: stress peak + micro-pause"],
+      "isolation": {
+        "instructions": "When you front a negative adverbial, it becomes the launch pad of the sentence and takes its own stress peak, followed by a tiny pause: 'NEVER | have I seen…'. The pause is very short — think of a comma you feel but do not write. Without it, the emphasis is lost.",
+        "instructions_ar": "عند تقديم ظرف النفي، يأخذ قمّة نبر خاصة به ثم وقفة صغيرة جدًا: 'NEVER | have I seen…'. الوقفة قصيرة — كفاصلة تُحسّ ولا تُكتب.",
+        "practice": ["NEVER | have I seen…", "RARELY | do we find…", "peak, tiny pause, then flow"]
+      },
+      "minimal_pairs": [
+        {"pair": ["NEVER | have I seen it", "I have never seen it"], "meaning": ["مقلوب للتوكيد", "ترتيب عادي"]},
+        {"pair": ["NEVER (peak + pause)", "never (flat, unstressed)"], "meaning": ["أسلوب بلاغي", "بلا تأثير"]},
+        {"pair": ["SELDOM | do we agree", "we seldom agree"], "meaning": ["رسمي مؤكَّد", "محايد"]},
+        {"pair": ["LITTLE | did he know", "he knew little"], "meaning": ["تشويق أدبي", "خبر عادي"]},
+        {"pair": ["NOWHERE | will you find…", "you will find nowhere…"], "meaning": ["صحيح ومؤكَّد", "غير طبيعي"]}
+      ],
+      "word_practice": ["never", "rarely", "seldom", "little", "nowhere", "hardly", "scarcely", "barely", "at no time", "under no circumstances"],
+      "sentence_practice": [
+        "Never have I seen such a response.",
+        "Rarely do we encounter a case like this.",
+        "Little did she know what was coming."
+      ],
+      "record_this": "Never have I seen a response quite like this one. Rarely do we encounter a case that raises so many questions at once. Little did she know, at that point, how much the decision would change everything.",
+      "self_check": "Say 'Never have I seen it'. Did 'NEVER' get a clear stress peak followed by a very short pause?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["auxiliary prominence: 'Never HAVE I…'"],
+      "isolation": {
+        "instructions": "In inversion the auxiliary moves in front of the subject and becomes unusually prominent — much stronger than in normal word order. Compare the weak 'have' in 'I have seen it' /aɪv siːn ɪt/ with the strong 'HAVE' in 'Never HAVE I seen it'. The auxiliary is the hinge of the structure, so let it be heard.",
+        "instructions_ar": "في القلب يتقدّم الفعل المساعد ويصبح بارزًا أكثر من المعتاد. قارن 'have' الخفيفة في 'I have seen it' بـ 'HAVE' القوية في 'Never HAVE I seen it'.",
+        "practice": ["Never HAVE I seen it", "Rarely DOES he agree", "the auxiliary is the hinge"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Never HAVE I seen it", "I've /aɪv/ seen it"], "meaning": ["مساعد قوي", "مساعد مدمج"]},
+        {"pair": ["Rarely DOES he agree", "he rarely agrees"], "meaning": ["مساعد بارز", "لا مساعد"]},
+        {"pair": ["Never DID we imagine", "we never imagined"], "meaning": ["مقلوب", "عادي"]},
+        {"pair": ["Seldom IS it so simple", "it is seldom so simple"], "meaning": ["مؤكَّد", "محايد"]},
+        {"pair": ["Never have I SEEN it ✅", "Never have I saw it ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["never have I", "rarely does he", "seldom is it", "never did we", "little does she", "hardly had we", "nowhere can you", "never would I", "scarcely do they", "at no time was it"],
+      "sentence_practice": [
+        "Never have I been so certain.",
+        "Rarely does an opportunity like this appear.",
+        "Seldom is the answer this straightforward."
+      ],
+      "record_this": "Never have I been so certain about a decision in my entire career. Rarely does an opportunity of this scale appear without some hidden complication. Seldom is the answer as straightforward as it first seems.",
+      "self_check": "Say 'Rarely does he agree'. Is 'DOES' clearly audible and strong, not swallowed?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'Not only … but also': the double stress peak"],
+      "isolation": {
+        "instructions": "'Not only … but also' is a two-peak structure: one stress peak on the first idea, a second on the contrasting idea. 'Not only did he APOLOGISE, but he also OFFERED to pay.' Both peaks must be equally strong — if the second collapses, the balance of the sentence breaks.",
+        "instructions_ar": "'Not only … but also' بنية بقمّتين: قمّة على الفكرة الأولى وأخرى على الفكرة المقابلة. يجب أن تكون القمّتان متساويتين في القوة.",
+        "practice": ["Not only did he APOLOGISE…", "…but he also OFFERED to pay", "two equal peaks"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Not only DID he apologise ✅", "Not only he apologised ❌"], "meaning": ["قلب صحيح", "بدون قلب - خطأ"]},
+        {"pair": ["two equal peaks", "one peak then fade"], "meaning": ["متوازن", "غير متوازن"]},
+        {"pair": ["Not only … but also", "and also"], "meaning": ["بلاغي مؤكَّد", "ربط عادي"]},
+        {"pair": ["Not only IS it cheaper…", "It is not only cheaper…"], "meaning": ["مقلوب رسمي", "غير مقلوب"]},
+        {"pair": ["but he ALSO offered", "but also he offered ❌"], "meaning": ["ترتيب صحيح", "ترتيب خطأ"]}
+      ],
+      "word_practice": ["not only did he", "not only is it", "not only was she", "but he also", "but it also", "not only … but", "not merely", "but in addition", "not just", "but equally"],
+      "sentence_practice": [
+        "Not only did he apologise, but he also offered to pay.",
+        "Not only is it cheaper, but it also lasts longer.",
+        "Not only was she late, but she had forgotten the file."
+      ],
+      "record_this": "Not only did he apologise sincerely, but he also offered to pay for the damage himself. Not only is this version cheaper to run, but it also lasts considerably longer. Not only was she late for the meeting, but she had also forgotten the file entirely.",
+      "self_check": "Say the 'Not only … but also' sentence. Are BOTH peaks equally strong, and did you invert after 'Not only'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'No sooner … than' /nəʊ ˈsuːnə ðən/"],
+      "isolation": {
+        "instructions": "'No sooner' is one rhythmic chunk /nəʊ ˈsuːnə/ with the stress on SOO-. The following 'than' is weak /ðən/ — never 'when'. The whole frame is: /nəʊ ˈsuːnə/ HAD we arrived /ðən/ it started to rain.",
+        "instructions_ar": "'No sooner' كتلة إيقاعية واحدة /nəʊ ˈsuːnə/ والنبر على SOO-، و'than' خفيفة /ðən/ — وليست 'when'.",
+        "practice": ["/nəʊ ˈsuːnə/ HAD we arrived", "/ðən/ it started to rain", "SOO- stressed, than weak"]
+      },
+      "minimal_pairs": [
+        {"pair": ["No sooner … than ✅", "No sooner … when ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["/nəʊ ˈsuːnə/ (one chunk)", "no · sooner (two words)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["No sooner HAD we arrived", "No sooner we arrived ❌"], "meaning": ["قلب صحيح", "بدون قلب"]},
+        {"pair": ["than /ðən/ (weak)", "than /ðæn/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["Hardly HAD we sat down", "we had hardly sat down"], "meaning": ["مقلوب", "عادي"]}
+      ],
+      "word_practice": ["no sooner had we", "no sooner did he", "than it started", "hardly had we", "scarcely had they", "barely had I", "no sooner said", "than she left", "hardly had it begun", "scarcely had we spoken"],
+      "sentence_practice": [
+        "No sooner had we arrived than it started to rain.",
+        "Hardly had she sat down than the phone rang.",
+        "Scarcely had we begun when the power failed."
+      ],
+      "record_this": "No sooner had we arrived at the venue than it started to rain heavily. Hardly had she sat down at her desk than the phone began ringing again. Scarcely had we begun the presentation when the power failed completely.",
+      "self_check": "Say 'No sooner had we arrived than it rained'. Is 'no sooner' one chunk, and did you say 'than', not 'when'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the complete inverted contour: rise on the fronted part, fall on the resolution"],
+      "isolation": {
+        "instructions": "A full inverted sentence has a shape: the fronted adverbial and auxiliary carry the tension (slight rise or high level), and the final content resolves it with a clear fall. 'Under no circumstances ↗ | should this be repeated ↘.' Practise the arc, not just the words.",
+        "instructions_ar": "الجملة المقلوبة لها شكل تنغيمي: الجزء المُقدَّم يحمل التوتّر (صعود أو مستوى عالٍ) والنهاية تحلّه بهبوط واضح. تدرّب على القوس كله.",
+        "practice": ["Under no circumstances ↗ | should this be repeated ↘", "At no time ↗ | were we informed ↘", "tension, then resolution"]
+      },
+      "minimal_pairs": [
+        {"pair": ["tension ↗ then fall ↘", "flat throughout"], "meaning": ["بلاغي مؤثّر", "بلا تأثير"]},
+        {"pair": ["Under no circumstances ↘ should this…", "…should this be repeated? ↗"], "meaning": ["حكم قاطع", "سؤال"]},
+        {"pair": ["At no time WERE we informed", "we were not informed at any time"], "meaning": ["مؤكَّد رسمي", "محايد"]},
+        {"pair": ["In no way DOES this excuse it", "this does not excuse it"], "meaning": ["نفي قوي", "نفي عادي"]},
+        {"pair": ["Only then DID I understand ↘", "I only understood then"], "meaning": ["ذروة سردية", "خبر عادي"]}
+      ],
+      "word_practice": ["under no circumstances", "at no time", "in no way", "only then", "only after", "not for a moment", "on no account", "never before", "nor did we", "neither could they"],
+      "sentence_practice": [
+        "Under no circumstances should this be repeated.",
+        "At no time were we informed of the change.",
+        "Only then did I understand the real problem."
+      ],
+      "record_this": "Under no circumstances should this procedure be repeated without approval. At no time were we informed about the change in policy. Only then did I finally understand what the real problem had been all along.",
+      "self_check": "Say 'Under no circumstances should this be repeated'. Does your voice hold tension at the start and fall decisively at the end?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["NEVER | have I seen it", "I have never seen it"],
+        ["Never HAVE I seen it", "I've /aɪv/ seen it"],
+        ["Not only DID he apologise ✅", "Not only he apologised ❌"],
+        ["No sooner … than ✅", "No sooner … when ❌"],
+        ["tension ↗ then fall ↘", "flat throughout"],
+        ["Only then DID I understand", "I only understood then"]
+      ],
+      "challenge_sentences": [
+        "Never have I seen such a strong reaction.",
+        "Not only did he refuse, but he also complained.",
+        "No sooner had we sat down than the lights went out.",
+        "Under no circumstances should you sign that."
+      ],
+      "record_this": "Never have I seen such a strong reaction to a simple proposal. Not only did he refuse the offer, but he also complained about it publicly. No sooner had we sat down than the lights went out across the entire building. Under no circumstances should you sign that document today.",
+      "self_check": "Three checks: a stress peak plus micro-pause on the fronted adverbial, a strong audible auxiliary, and a decisive final fall."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this short address as though speaking to an audience. Inversion is a rhetorical device, so perform it — then listen back and check each prosodic feature.",
+        "instructions_ar": "سجّل نفسك تقدّم هذه الكلمة القصيرة كأنك تخاطب جمهورًا. القلب أداة بلاغية، فأدِّه ثم اسمع وراجع كل ملمح.",
+        "passage": "Never in the history of this organisation have we faced a year quite like the one now ending. Rarely does a single decision reshape an entire strategy, yet that is precisely what happened last spring. No sooner had we announced the new direction than the questions began, and little did we realise how many of them would prove justified. Not only did the team absorb an enormous amount of change, but they also delivered results that exceeded every forecast. Seldom have I been prouder. At no time were the risks hidden from anyone, and under no circumstances would we have proceeded without that honesty. Only then, when the final figures arrived, did the scale of the achievement become clear. Nowhere will you find a group more deserving of recognition, and nor should we forget those who supported us quietly throughout.",
+        "sounds_to_check": {
+          "fronted-adverbial peak + micro-pause": "Never in the history…, Rarely does…, Seldom have I…, Nowhere will you find…",
+          "auxiliary prominence": "have we faced, does a single decision, had we announced, did the team absorb, were the risks",
+          "'Not only … but also' double peak": "Not only did the team absorb…, but they also delivered…",
+          "'No sooner … than' chunk": "No sooner had we announced … than the questions began",
+          "tension-then-fall contour": "under no circumstances would we have proceeded ↘, Only then … did the scale become clear ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Clear stress peaks, strong auxiliaries, balanced double peaks and decisive falls. The rhetoric lands. Ready for week 2.",
+        "70_89": "Good control; the occasional fronted adverbial goes flat or a second peak weakens.",
+        "50_69": "Grammar correct but prosody flat, so the emphasis is lost. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Focus first on the peak plus micro-pause, then on making the auxiliary audible."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Inversion exists ONLY for emphasis. Correct word order with flat stress wastes the structure entirely — the prosody is the point.",
+      "The inverted auxiliary is strong, not weak: 'Never HAVE I seen it', never 'Never /əv/ I seen it'.",
+      "'No sooner … THAN', never 'no sooner … when'. This is the most common C1 slip in this set.",
+      "Keep the micro-pause after the fronted adverbial. It is what tells the listener that something emphatic is coming.",
+      "Use these sparingly in speech. One inversion in a paragraph is powerful; four in a row sounds theatrical."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1 and listen specifically for stress placement."
+  }
+}

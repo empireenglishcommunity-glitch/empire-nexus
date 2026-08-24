@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w12",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 12,
+  "pattern_name": "Emphasis and intensification",
+  "pattern_name_ar": "التوكيد والتكثيف",
+  "formula": "emphatic do/does/did + base verb · far too + adjective · nowhere near + adjective · by far the + superlative · all the more + adjective · utterly/absolutely/completely + extreme adjective",
+  "formula_visual": "[I] [do] [understand] · [by far] [the best] · [nowhere near] [ready]",
+  "when_to_use": "To insist, contradict or strengthen a claim. Emphatic 'do' adds insistence to a positive sentence, usually against an unspoken doubt ('I do understand'). 'far too' marks excess, 'nowhere near' marks a large shortfall, 'by far' strengthens a superlative, and 'all the more' means 'even more, because of that'. Use these to sound firm without sounding aggressive.",
+  "when_to_use_ar": "للإصرار أو النقض أو تقوية الادّعاء. 'do' التوكيدية تضيف إصرارًا لجملة مثبتة، و'far too' للإفراط، و'nowhere near' لنقص كبير، و'by far' لتقوية التفضيل، و'all the more' لمزيد بسبب ذلك.",
+  "why_arabic_speakers_struggle": "Arabic intensifies with adverbs and repetition (جدًا / إطلاقًا) and has no auxiliary whose only job is to carry emphasis, so emphatic 'do' has nothing to map onto. Learners omit it and lose the insistence, or include it without stressing it, which makes the sentence merely odd. The intensifiers add a collocation problem: 'utterly' and 'absolutely' pair only with extreme adjectives, so 'utterly good' is not English even though it is grammatical.",
+  "examples": [
+    {"en": "I do understand your concern.", "ar": "أنا أفهم قلقك فعلًا", "structure": "subject + [do] + base verb"},
+    {"en": "The original quote was far too expensive.", "ar": "كان العرض الأصلي مكلفًا جدًا", "structure": "[far too] + adjective"},
+    {"en": "We're nowhere near ready for the launch.", "ar": "لسنا مستعدّين إطلاقًا للإطلاق", "structure": "[nowhere near] + adjective"},
+    {"en": "It was by far the best presentation of the day.", "ar": "كان أفضل عرض في اليوم بفارق كبير", "structure": "[by far] + the + superlative"},
+    {"en": "Given her age, that is all the more impressive.", "ar": "بالنظر إلى عمرها، هذا أكثر إثارة للإعجاب", "structure": "[all the more] + adjective"}
+  ],
+  "common_errors": [
+    {"wrong": "I do understood your concern.", "correct": "I do understand your concern.", "explanation": "Emphatic 'do' carries the tense, so the main verb stays in its base form."},
+    {"wrong": "She does cares about the result.", "correct": "She does care about the result.", "explanation": "'Does' already marks the third person, so the verb takes no extra -s."},
+    {"wrong": "The plan is utterly good.", "correct": "The plan is absolutely excellent.", "explanation": "'Utterly' and 'absolutely' pair with extreme adjectives, not mild ones."},
+    {"wrong": "We are nowhere near of ready.", "correct": "We are nowhere near ready.", "explanation": "'Nowhere near' is followed directly by the adjective, with no preposition."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ appreciate the effort, but it's too slow.", "answer": "do"},
+    {"sentence": "She ___ care about the outcome, even if it doesn't show.", "answer": "does"},
+    {"sentence": "The response was nowhere ___ adequate.", "answer": "near"},
+    {"sentence": "This is ___ ___ the most likely explanation.", "answer": "by far"},
+    {"sentence": "That makes the result all the ___ frustrating.", "answer": "more"}
+  ],
+  "quick_rule": "Emphatic do/does/did + BASE verb, and stress it. far too = excess. nowhere near = big shortfall. utterly/absolutely only with extreme adjectives.",
+  "quick_rule_ar": "do/does/did التوكيدية + المصدر، وانبرها. وfar too للإفراط. وnowhere near لنقص كبير. وutterly/absolutely مع الصفات المتطرّفة فقط.",
+  "mnemonic": "'Do' adds no meaning — it exists purely to be stressed.",
+  "connect_to_speaking": "In accent week 12 you drilled emphatic 'do' as the loudest word in its clause and one heavy beat for corrections. Included but unstressed, emphatic 'do' has no purpose at all."
+}

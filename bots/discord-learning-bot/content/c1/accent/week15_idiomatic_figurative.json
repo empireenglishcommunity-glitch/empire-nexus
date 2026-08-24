@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 15,
+  "focus": "Idioms as single rhythmic chunks with one main beat · metaphor phrases · strong collocations · the fixed rhythm of proverbs · register-appropriate idiom choice",
+  "focus_ar": "التعابير الاصطلاحية ككتل إيقاعية واحدة بنبضة رئيسية، والعبارات المجازية، والمتلازمات القوية، وإيقاع الأمثال الثابت، واختيار التعبير المناسب للأسلوب",
+  "arabic_challenge": "An idiom is stored and delivered as ONE unit, not as a sequence of words. 'It's a blessing in disguise' has a single main beat and a fixed internal rhythm; break it into five separate words and a native listener hears the idiom being assembled rather than used. The bigger risk at C1 is not pronunciation but appropriacy: idioms carry strong register signals, and a colloquial one dropped into an academic argument damages credibility more than a plain phrase ever would. Arabic idioms are equally fixed but translate poorly word for word, so learners often produce literal calques that sound baffling.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["idiom as one chunk with a single main beat"],
+      "isolation": {
+        "instructions": "Take an idiom and find its ONE main beat: 'a blessing in disGUISE', 'the last STRAW', 'a grey Area'. Say the whole phrase at one speed with that single peak. If you can hear separate words, it is not yet a chunk.",
+        "instructions_ar": "خذ التعبير وابحث عن نبضته الرئيسية الواحدة، وقل العبارة كلها بسرعة واحدة مع تلك القمّة. إن سمعت كلمات منفصلة فهي لم تصبح كتلة بعد.",
+        "practice": ["a blessing in disGUISE", "the last STRAW", "a grey Area", "one speed, one peak"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a blessing in disGUISE (chunk)", "a · blessing · in · disguise"], "meaning": ["تعبير طبيعي", "كلمات مركّبة"]},
+        {"pair": ["the last STRAW", "the LAST straw"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["a grey area", "an unclear situation"], "meaning": ["تعبير", "وصف حرفي"]},
+        {"pair": ["idiom at one speed", "idiom with pauses"], "meaning": ["مستخدَم", "مُركَّب"]},
+        {"pair": ["back to square ONE", "BACK to square one"], "meaning": ["نبر صحيح", "نبر خاطئ"]}
+      ],
+      "word_practice": ["a blessing in disguise", "the last straw", "a grey area", "back to square one", "a steep learning curve", "the bigger picture", "a double-edged sword", "common ground", "a turning point", "food for thought"],
+      "sentence_practice": [
+        "Losing that contract was a blessing in disguise.",
+        "For me, that was the last straw.",
+        "The rules here are a bit of a grey area."
+      ],
+      "record_this": "Losing that particular contract turned out to be a blessing in disguise. For me personally, the third cancellation was the last straw. The rules around remote working here are still very much a grey area.",
+      "self_check": "Say 'a blessing in disguise'. Does it come out as one chunk with a single peak on 'guise'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["metaphor phrases in professional speech"],
+      "isolation": {
+        "instructions": "Professional English is full of light metaphor: 'move the goalposts', 'gain traction', 'a bottleneck'. These behave like idioms — one chunk, one beat — but sit comfortably in formal contexts, which makes them extremely useful at C1.",
+        "instructions_ar": "الإنجليزية المهنية مليئة بالمجاز الخفيف. هذه تتصرّف كالتعابير — كتلة واحدة ونبضة واحدة — لكنها تُلائم السياقات الرسمية.",
+        "practice": ["move the GOALposts", "gain TRACtion", "a BOTTLEneck", "metaphor that fits formal speech"]
+      },
+      "minimal_pairs": [
+        {"pair": ["move the goalposts", "change the requirements"], "meaning": ["مجاز مهني", "حرفي"]},
+        {"pair": ["gain traction", "become popular"], "meaning": ["مجاز", "حرفي"]},
+        {"pair": ["a BOTTLEneck", "a bottle NECK"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["in the pipeline", "being planned"], "meaning": ["مجاز", "حرفي"]},
+        {"pair": ["a roadmap", "a plan"], "meaning": ["مجاز شائع", "عادي"]}
+      ],
+      "word_practice": ["move the goalposts", "gain traction", "a bottleneck", "in the pipeline", "a roadmap", "raise the bar", "a knock-on effect", "cut corners", "on the back burner", "gain momentum"],
+      "sentence_practice": [
+        "They keep moving the goalposts on this project.",
+        "The idea is finally gaining traction.",
+        "Approval has become the real bottleneck."
+      ],
+      "record_this": "They keep moving the goalposts on this project, which makes planning almost impossible. The idea is finally gaining traction with the senior team after two years. Approval from the legal department has become the real bottleneck in the process.",
+      "self_check": "Say 'gaining traction'. Is it one chunk, with 'traction' carrying the beat?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["strong collocations: the partner is fixed"],
+      "isolation": {
+        "instructions": "Collocations are word partnerships English insists on: you DRAW a conclusion, RAISE a concern, MEET a deadline. The rhythm puts the beat on the noun, and choosing the wrong verb is the error to avoid — 'do a conclusion' is grammatical but not English.",
+        "instructions_ar": "المتلازمات شراكات لفظية تُصرّ عليها الإنجليزية، والنبضة على الاسم، والخطأ هو اختيار الفعل الخاطئ.",
+        "practice": ["draw a conCLUsion", "raise a conCERN", "meet a DEADline", "fixed partners"]
+      },
+      "minimal_pairs": [
+        {"pair": ["draw a conclusion ✅", "do a conclusion ❌"], "meaning": ["تلازم صحيح", "خطأ"]},
+        {"pair": ["raise a concern ✅", "say a concern ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["meet a deadline ✅", "catch a deadline ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["make a decision", "take a decision"], "meaning": ["أمريكي/عام", "بريطاني رسمي"]},
+        {"pair": ["pay attention ✅", "give attention (weaker)"], "meaning": ["الأشيع", "أقل شيوعًا"]}
+      ],
+      "word_practice": ["draw a conclusion", "raise a concern", "meet a deadline", "make a decision", "pay attention", "reach an agreement", "conduct research", "bear in mind", "take responsibility", "set a precedent"],
+      "sentence_practice": [
+        "It's too early to draw any firm conclusions.",
+        "She raised a concern about the methodology.",
+        "We reached an agreement within an hour."
+      ],
+      "record_this": "It is honestly far too early to draw any firm conclusions from this data. She raised a serious concern about the methodology during the review. We reached a workable agreement within about an hour, which surprised everyone.",
+      "self_check": "Say 'draw a conclusion'. Is the verb the correct partner, with the beat on 'conclusion'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["the fixed rhythm of proverbs and set expressions"],
+      "isolation": {
+        "instructions": "Proverbs have an almost musical, balanced rhythm, often two halves of equal weight: 'better SAFE than SORry', 'easier SAID than DONE'. Deliver the balance — the two peaks should mirror each other. They are usually said slightly slower than surrounding speech.",
+        "instructions_ar": "الأمثال لها إيقاع متوازن شبه موسيقي، غالبًا نصفان متساويان في الثقل، وتُقال أبطأ قليلًا من الكلام المحيط.",
+        "practice": ["better SAFE than SORry", "easier SAID than DONE", "two mirrored peaks"]
+      },
+      "minimal_pairs": [
+        {"pair": ["better SAFE than SORry", "better safe than sorry (flat)"], "meaning": ["مثل بإيقاعه", "بلا إيقاع"]},
+        {"pair": ["easier said than done", "it's difficult in practice"], "meaning": ["مثل", "حرفي"]},
+        {"pair": ["two balanced peaks", "one peak only"], "meaning": ["صحيح", "غير متوازن"]},
+        {"pair": ["slightly slower delivery", "same speed as speech"], "meaning": ["طبيعي للأمثال", "يُفقد الأثر"]},
+        {"pair": ["the exception that proves the rule", "an unusual case"], "meaning": ["تعبير ثابت", "حرفي"]}
+      ],
+      "word_practice": ["better safe than sorry", "easier said than done", "sooner rather than later", "give or take", "by and large", "all things considered", "at the end of the day", "more often than not", "for better or worse", "in the long run"],
+      "sentence_practice": [
+        "Let's check twice — better safe than sorry.",
+        "Reforming it is easier said than done.",
+        "All things considered, it went well."
+      ],
+      "record_this": "Let's check the figures twice before sending them, because better safe than sorry. Reforming the whole system is a great deal easier said than done. All things considered, the launch went remarkably well for a first attempt.",
+      "self_check": "Say 'better safe than sorry'. Are there two balanced peaks, delivered slightly slower?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["register-appropriate idiom choice"],
+      "isolation": {
+        "instructions": "The C1 skill is choosing an idiom that matches the room. 'It went pear-shaped' is fine with colleagues over coffee; in a board report you would say 'the project encountered significant difficulties'. Practise the same idea in both registers and notice how the delivery changes with it.",
+        "instructions_ar": "المهارة في C1 هي اختيار التعبير المناسب للمقام. تدرّب على الفكرة نفسها بأسلوبين ولاحظ كيف يتغيّر الأداء.",
+        "practice": ["casual: it went pear-shaped", "formal: it encountered difficulties", "same idea, different room"]
+      },
+      "minimal_pairs": [
+        {"pair": ["it went pear-shaped (casual)", "it encountered difficulties (formal)"], "meaning": ["ودّي", "رسمي"]},
+        {"pair": ["a ballpark figure", "an approximate estimate"], "meaning": ["غير رسمي", "رسمي"]},
+        {"pair": ["touch base", "make contact"], "meaning": ["مهني ودّي", "رسمي محايد"]},
+        {"pair": ["bite the bullet", "accept the necessary cost"], "meaning": ["تعبير", "حرفي رسمي"]},
+        {"pair": ["idiom in a board report ❌", "idiom over coffee ✅"], "meaning": ["غير مناسب", "مناسب"]}
+      ],
+      "word_practice": ["it went pear-shaped", "a ballpark figure", "touch base", "bite the bullet", "a long shot", "in the same boat", "call it a day", "off the top of my head", "a fine line", "run its course"],
+      "sentence_practice": [
+        "Between us, the whole thing went pear-shaped.",
+        "Can you give me a ballpark figure?",
+        "We'll have to bite the bullet and rebuild it."
+      ],
+      "record_this": "Between the two of us, the whole thing went completely pear-shaped in week three. Could you give me a ballpark figure before the meeting, even a rough one? I think we'll have to bite the bullet and rebuild the module from scratch.",
+      "self_check": "Say the casual and formal versions of one idea. Does your tone shift with the register, not just the words?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 15 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["a blessing in disGUISE (chunk)", "a · blessing · in · disguise"],
+        ["a BOTTLEneck", "a bottle NECK"],
+        ["draw a conclusion ✅", "do a conclusion ❌"],
+        ["better SAFE than SORry", "better safe than sorry (flat)"],
+        ["it went pear-shaped (casual)", "it encountered difficulties (formal)"],
+        ["the last STRAW", "the LAST straw"]
+      ],
+      "challenge_sentences": [
+        "In the long run it was a blessing in disguise.",
+        "Approval is the bottleneck; that's the bigger picture.",
+        "It's easier said than done, but let's bite the bullet.",
+        "We finally reached an agreement and found common ground."
+      ],
+      "record_this": "In the long run losing that client was genuinely a blessing in disguise. Approval is the real bottleneck here, and that's the bigger picture people keep missing. It's certainly easier said than done, but I think we should bite the bullet. We finally reached an agreement yesterday and found some real common ground.",
+      "self_check": "Three checks: each idiom as one chunk, correct collocation partners, and balanced peaks in proverbs."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself speaking this as a relaxed but professional debrief to a colleague. Idioms should sound used, not assembled — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تتكلم بهذا كمراجعة مهنية مرتاحة مع زميل. يجب أن تبدو التعابير مُستخدَمة لا مُركَّبة، ثم اسمع وراجع.",
+        "passage": "Honestly, when we lost the first bid I thought we were back to square one. Looking at it now, it was a blessing in disguise. The second brief was clearer, and the idea gained traction almost immediately. There was a steep learning curve, and the approval process was a real bottleneck, but we met every deadline. The client kept moving the goalposts on the design, which was the last straw for two of the team. All things considered, we handled it well. We had to bite the bullet on the budget, and rewriting the middle section was easier said than done. Some of the licensing is still a grey area, so we're checking twice: better safe than sorry. At the end of the day we found common ground, drew some useful conclusions, and I'd rather learn it this way than the hard way.",
+        "sounds_to_check": {
+          "idioms as single chunks": "back to square ONE, a blessing in disGUISE, a steep learning CURVE, the last STRAW, a grey Area",
+          "professional metaphors": "gained TRACtion, a real BOTTLEneck, moving the GOALposts, bite the BULLet",
+          "correct collocations": "we MET every deadline, DREW some useful conclusions, found common GROUND",
+          "balanced proverb rhythm": "easier SAID than DONE, better SAFE than SORry, All things conSIDered",
+          "register consistency": "relaxed professional throughout - no over-formal or over-slangy jumps"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Idioms delivered as fluent chunks, collocations correct, register consistent. Sounds like a confident professional. Ready for week 16.",
+        "70_89": "Good; one or two idioms assembled word by word, or a collocation slightly off.",
+        "50_69": "Idioms broken into separate words, so they sound translated. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Take five idioms and drill each as a single chunk until it is automatic."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "An idiom is ONE unit with ONE main beat. Word-by-word delivery is the clearest sign it is not yet owned.",
+      "Never translate an Arabic idiom literally — the English version is usually completely different.",
+      "Collocations are fixed: 'draw a conclusion', 'raise a concern', 'meet a deadline'. The verb is not interchangeable.",
+      "Proverbs need their balanced two-peak rhythm and a slightly slower delivery.",
+      "Appropriacy matters more than quantity. One well-chosen idiom beats five that clash with the register."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that no idiom breaks into separate words."
+  }
+}

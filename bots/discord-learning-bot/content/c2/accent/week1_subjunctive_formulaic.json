@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 1,
+  "focus": "Bare base-form verbs in the subjunctive (that he BE informed) · fixed formulae 'So be it' and 'Be that as it may' · the 'were' subjunctive · 'lest' and optative 'may' · measured ceremonial delivery",
+  "focus_ar": "الفعل المجرّد في صيغة الشرط (that he BE informed)، والصيغ الثابتة 'So be it' و'Be that as it may'، وصيغة 'were'، و'lest' و'may' التمنّيّة، والأداء الرسمي المتّزن",
+  "arabic_challenge": "The English subjunctive survives mainly in fixed, ceremonial expressions, and its prosody is unusual: because the verb is a bare base form with no tense marker, the sentence loses one of its normal rhythmic anchors and must be delivered slowly and evenly to sound authoritative rather than simply ungrammatical. 'I insist that he be informed' has no -s on 'be', and an English listener hears that absence. Arabic has a rich subjunctive-like system (المنصوب) that is fully marked morphologically, so learners instinctively add the missing agreement, which quietly destroys the form.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["bare base form after that: 'that he BE informed'"],
+      "isolation": {
+        "instructions": "After verbs of demand and recommendation (insist, demand, request, propose, recommend) the following verb is a BARE base form for every subject: 'that he be informed', 'that she attend', 'that it not proceed'. There is no -s and no 'should'. Give the bare verb a clear, deliberate beat so its plainness sounds intentional.",
+        "instructions_ar": "بعد أفعال الطلب والتوصية يأتي الفعل مجرّدًا لكل الفاعلين: 'that he be informed'. بلا -s وبلا 'should'. أعطِ الفعل المجرّد نبضة واضحة مقصودة.",
+        "practice": ["that he BE informed", "that she atTEND", "that it not proCEED"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I insist that he be informed", "I insist that he is informed"], "meaning": ["صيغة الطلب", "خبر عادي"]},
+        {"pair": ["that she attend ✅", "that she attends ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["that it not proceed ✅", "that it does not proceed"], "meaning": ["رسمي مجرّد", "أقل رسمية"]},
+        {"pair": ["I demand that he apologise", "I demand he should apologise"], "meaning": ["أمريكي/رسمي", "بريطاني عادي"]},
+        {"pair": ["deliberate beat on the bare verb", "rushed bare verb"], "meaning": ["مقصود", "يبدو خطأً"]}
+      ],
+      "word_practice": ["that he be informed", "that she attend", "that it not proceed", "that they be notified", "that he resign", "that she remain", "that the matter be reviewed", "that no exception be made", "that it be recorded", "that all parties be heard"],
+      "sentence_practice": [
+        "I insist that he be informed immediately.",
+        "The committee recommended that she attend in person.",
+        "We request that no exception be made."
+      ],
+      "record_this": "I must insist that he be informed of the decision immediately and in writing. The committee recommended that she attend the hearing in person rather than by video. We would request that no exception be made in this particular case.",
+      "self_check": "Say 'I insist that he be informed'. Did you keep 'be' bare, with no -s and no 'should'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["fixed formulae: 'So be it' · 'Be that as it may' · 'Suffice it to say'"],
+      "isolation": {
+        "instructions": "These frozen expressions are delivered as complete units with a falling, settled tone. 'So BE it ↘' concedes finality. 'Be that as it MAY ↘,' concedes a point before turning. 'Suffice it to SAY ↘,' signals deliberate brevity. Say each as one measured phrase, never word by word.",
+        "instructions_ar": "هذه تعبيرات متجمّدة تُقال كوحدات كاملة بنبرة هابطة مستقرّة. قل كل واحدة كعبارة واحدة متّزنة لا كلمة كلمة.",
+        "practice": ["So BE it ↘", "Be that as it MAY ↘,", "Suffice it to SAY ↘,"]
+      },
+      "minimal_pairs": [
+        {"pair": ["So be it ↘", "So be it? ↗"], "meaning": ["قبول نهائي", "استفهام"]},
+        {"pair": ["Be that as it may", "However"], "meaning": ["تنازل رسمي", "تقابل عادي"]},
+        {"pair": ["Suffice it to say", "In short"], "meaning": ["رسمي أدبي", "عادي"]},
+        {"pair": ["one measured unit", "word by word"], "meaning": ["متمكّن", "مُركَّب"]},
+        {"pair": ["Far be it from me to…", "I would not want to…"], "meaning": ["رسمي متحفّظ", "عادي"]}
+      ],
+      "word_practice": ["so be it", "be that as it may", "suffice it to say", "far be it from me", "come what may", "as it were", "be it ever so", "God forbid", "heaven forbid", "so help me"],
+      "sentence_practice": [
+        "If they refuse, then so be it.",
+        "Be that as it may, the deadline stands.",
+        "Suffice it to say, the meeting did not go well."
+      ],
+      "record_this": "If they refuse to reconsider the terms, then so be it. Be that as it may, the deadline still stands and cannot be moved again. Suffice it to say, the meeting did not go anything like as well as we had hoped.",
+      "self_check": "Say 'Be that as it may'. Is it one measured unit with a settled falling tone?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["the 'were' subjunctive: 'If I were' · 'as it were'"],
+      "isolation": {
+        "instructions": "'Were' is used for every subject in hypothetical clauses: 'if I were', 'if he were', 'were she to'. The parenthetical 'as it were' means 'so to speak' and is said quickly and lightly, tucked between commas. Keep 'were' clear but unstressed unless it is fronted.",
+        "instructions_ar": "'Were' تُستخدم لكل الفاعلين في الجُمَل الافتراضية. والعبارة المعترضة 'as it were' تعني 'إن صحّ التعبير' وتُقال بسرعة وخفّة بين فاصلتين.",
+        "practice": ["if I WERE you", "if he were HERE", "…, as it were, …"]
+      },
+      "minimal_pairs": [
+        {"pair": ["if I were you ✅", "if I was you ❌"], "meaning": ["صحيح رسمي", "غير رسمي"]},
+        {"pair": ["if he were here", "if he was here"], "meaning": ["افتراضي رسمي", "عادي منطوق"]},
+        {"pair": ["as it were (light, parenthetical)", "as it were (stressed)"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["as it were", "so to speak"], "meaning": ["أدبي", "عادي"]},
+        {"pair": ["if I were to suggest", "if I suggested"], "meaning": ["أرسم", "عادي"]}
+      ],
+      "word_practice": ["if I were you", "if he were here", "if it were possible", "were she to accept", "as it were", "if I were to guess", "if that were true", "were it otherwise", "if need be", "if truth be told"],
+      "sentence_practice": [
+        "If I were you, I would wait for the report.",
+        "He is, as it were, the unofficial chairman.",
+        "If it were possible, we would have done it."
+      ],
+      "record_this": "If I were in your position, I would wait quietly for the final report. He is, as it were, the unofficial chairman of the whole committee. If it were genuinely possible, we would have done it years ago.",
+      "self_check": "Say 'He is, as it were, the unofficial chairman'. Is the aside light and tucked between commas?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'lest' /lest/ · optative 'may' ('may it never happen')"],
+      "isolation": {
+        "instructions": "'lest' means 'in case' or 'for fear that' and takes a bare base form: 'lest we forget', 'lest it be thought'. Optative 'may' expresses a wish and inverts: 'May it never happen again.' Both are ceremonial and need a slow, weighted delivery with a clear final fall.",
+        "instructions_ar": "'lest' تعني 'خشية أن' ويتبعها فعل مجرّد. و'may' التمنّيّة تعبّر عن رغبة وتُقلب. وكلتاهما احتفالية وتحتاج أداءً بطيئًا موزونًا بهبوط نهائي واضح.",
+        "practice": ["lest we forGET ↘", "may it never HAPpen again ↘", "slow, weighted, final fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["lest we forget ✅", "lest we forgot ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["lest it be thought", "in case people think"], "meaning": ["أدبي", "عادي"]},
+        {"pair": ["May it never happen again ↘", "It may never happen again"], "meaning": ["تمنٍّ", "احتمال"]},
+        {"pair": ["Long may it continue ↘", "It may continue for a long time"], "meaning": ["تمنٍّ", "احتمال"]},
+        {"pair": ["ceremonial pacing", "conversational pacing"], "meaning": ["مناسب", "غير مناسب"]}
+      ],
+      "word_practice": ["lest we forget", "lest it be thought", "lest there be doubt", "lest anyone imagine", "may it never happen", "long may it continue", "may they rest in peace", "may I say", "come what may", "be it so"],
+      "sentence_practice": [
+        "Let me be clear, lest there be any doubt.",
+        "May it never happen again in our lifetime.",
+        "Long may that tradition continue."
+      ],
+      "record_this": "Let me be entirely clear, lest there be any doubt about my position. May it never happen again, certainly not in our lifetime. Long may that particular tradition continue in this community.",
+      "self_check": "Say 'lest there be any doubt'. Is the verb bare, with a slow ceremonial weight?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["measured ceremonial delivery of formal declarations"],
+      "isolation": {
+        "instructions": "Subjunctive language belongs to declarations, motions and formal statements, and it demands a slower, evener pace than ordinary speech. Reduce your speed by roughly a fifth, keep the pitch range narrow and controlled, and land each clause with a definite fall. Authority here comes from steadiness, not volume.",
+        "instructions_ar": "لغة الشرط تنتمي إلى الإعلانات والمقترحات والبيانات الرسمية، وتتطلّب إيقاعًا أبطأ وأكثر استواءً. أبطئ قليلًا واضبط مدى النبرة وأنهِ كل جملة بهبوط محدّد. السلطة هنا من الثبات لا من الصوت.",
+        "practice": ["It is moved | that the motion be adopted ↘", "narrow range, definite falls", "steadiness, not volume"]
+      },
+      "minimal_pairs": [
+        {"pair": ["measured ceremonial pace", "normal conversational pace"], "meaning": ["مهيب", "عادي"]},
+        {"pair": ["narrow controlled pitch", "wide animated pitch"], "meaning": ["رسمي", "حماسي"]},
+        {"pair": ["definite fall each clause", "trailing off"], "meaning": ["حاسم", "متردّد"]},
+        {"pair": ["It is moved that the motion be adopted", "Let's vote on it"], "meaning": ["رسمي إجرائي", "عادي"]},
+        {"pair": ["authority through steadiness", "authority through volume"], "meaning": ["فعّال", "غير فعّال"]}
+      ],
+      "word_practice": ["it is moved that", "it is hereby resolved", "be it noted that", "let the record show", "it is ordered that", "we hereby request", "it is proposed that", "let it be understood", "on the motion that", "it is agreed that"],
+      "sentence_practice": [
+        "It is moved that the motion be adopted without amendment.",
+        "Let the record show that the objection was noted.",
+        "It is hereby resolved that the committee be dissolved."
+      ],
+      "record_this": "It is moved that the motion be adopted without further amendment or delay. Let the record show that the objection was noted and formally set aside. It is hereby resolved that the standing committee be dissolved at the end of the term.",
+      "self_check": "Read the motion aloud. Is your pace measurably slower and your pitch range narrower than in conversation?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 1 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I insist that he be informed", "I insist that he is informed"],
+        ["So be it ↘", "So be it? ↗"],
+        ["if I were you ✅", "if I was you ❌"],
+        ["lest we forget ✅", "lest we forgot ❌"],
+        ["measured ceremonial pace", "normal conversational pace"],
+        ["that she attend ✅", "that she attends ❌"]
+      ],
+      "challenge_sentences": [
+        "I insist that the matter be reviewed properly.",
+        "Be that as it may, the decision stands.",
+        "If I were you, I would say nothing.",
+        "It is proposed that the rule be suspended."
+      ],
+      "record_this": "I must insist that the whole matter be reviewed properly and independently. Be that as it may, the decision stands and I will not revisit it. If I were in your position, I would say nothing at all for now. It is proposed that the rule be suspended for the remainder of the year.",
+      "self_check": "Three checks: bare base form with no -s, formulae as single measured units, and a slower ceremonial pace throughout."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a formal address to a committee. The subjunctive is ceremonial language, so the pace must be measured and the falls definite — then listen back and check every feature.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كخطاب رسمي أمام لجنة. لغة الشرط احتفالية، فليكن الإيقاع متّزنًا والهبوط محدّدًا، ثم اسمع وراجع.",
+        "passage": "I rise to propose that this motion be adopted, and I ask that my reasons be recorded in full. It is essential that every member be given the papers in advance, lest anyone imagine the decision was rushed. I would request that no exception be made for latecomers. Be that as it may, I recognise there is disagreement, and if I were in the minority I would accept it without complaint. Suffice it to say the last attempt failed for want of preparation. Far be it from me to reopen old arguments; I ask only that the record be corrected. Should the committee decide otherwise, then so be it. May this be the last time we debate a matter that ought to have been settled years ago. Long may this body continue to take such questions seriously.",
+        "sounds_to_check": {
+          "bare base form after that": "that this motion BE adopted, that my reasons BE recorded, that every member BE given, that no exception BE made, that the record BE corrected",
+          "fixed formulae as single units": "Be that as it MAY ↘, Suffice it to SAY ↘, Far be it from ME, so BE it ↘",
+          "'were' subjunctive": "if I were in the minority",
+          "'lest' + bare verb, optative 'may'": "lest anyone imagine…, MAY this be the last time…, LONG may this body continue",
+          "measured ceremonial delivery": "narrow pitch range, definite fall at the end of each clause, pace roughly a fifth slower than conversation"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Bare forms clean, formulae delivered as units, pace genuinely ceremonial. Sounds authoritative. Ready for week 2.",
+        "70_89": "Good; an occasional -s creeps onto a subjunctive verb, or a formula breaks into words.",
+        "50_69": "Subjunctive forms regularised to ordinary present tense, pace conversational. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start with the bare base form, which is the foundation of everything else here."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The subjunctive verb is BARE for every subject: 'that he be', 'that she attend'. Adding -s destroys the form.",
+      "British English often prefers 'that he should be informed'; both are correct, but the bare form is more formal and more concise.",
+      "The formulae ('So be it', 'Be that as it may', 'Suffice it to say') are frozen. Do not alter their wording.",
+      "'Were' is used for every subject in hypotheticals: 'if I were', 'if he were'.",
+      "This is ceremonial register. It suits motions, declarations and formal writing, and sounds absurd in casual conversation."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check every subjunctive verb individually for a stray -s."
+  }
+}

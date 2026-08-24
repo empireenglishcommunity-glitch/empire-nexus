@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w17",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 17,
+  "pattern_name": "Sophisticated counter-argument, concession and rebuttal",
+  "pattern_name_ar": "الحجّة المضادّة والتنازل والردّ المتطوّر",
+  "formula": "Admittedly … however · It could be argued that … yet · One might object that … nonetheless · Granted … even so · Steelman: The strongest version of the objection is not X but Y · Concede without countering",
+  "formula_visual": "[Admittedly the sample was small]. [However], [the pattern is consistent]",
+  "when_to_use": "In academic argument, professional disagreement, reviews and any context where you must persuade a sceptical reader. State the opposing case fairly, at its strongest, and then answer it. Concede at least one point without answering, which demonstrates that you are weighing evidence rather than defending a position.",
+  "when_to_use_ar": "في الحجّة الأكاديمية والخلاف المهني والمراجعات وكل سياق تحتاج فيه إقناع قارئ متشكّك. اعرض الرأي المقابل بإنصاف وفي أقوى صوره ثم أجب عنه، وتنازل عن نقطة واحدة على الأقل بلا ردّ.",
+  "why_arabic_speakers_struggle": "The structural elements are straightforward; the difficulty is strategic. Learners either omit the concession entirely, which reads as one-sided, or concede so extensively that the rebuttal seems to lose. A related error is treating 'however' as a conjunction and joining two clauses with a comma, producing a comma splice at exactly the point where the argument turns, which is where clarity matters most.",
+  "examples": [
+    {"en": "Admittedly the sample was small. However, the pattern is consistent.", "ar": "من المسلّم أن العيّنة صغيرة. لكن النمط متّسق", "structure": "[concession]. [pivot], [rebuttal]"},
+    {"en": "It could be argued that the delay was unavoidable. Yet three warnings suggest otherwise.", "ar": "قد يُقال إن التأخير كان حتميًا. لكن ثلاثة تحذيرات تشير لغير ذلك", "structure": "[attributed argument]. [pivot] [rebuttal]"},
+    {"en": "The objections are serious. Nonetheless, the conclusion stands.", "ar": "الاعتراضات جدّية. ومع ذلك تبقى الخلاصة", "structure": "[concession]. [heavy pivot], [rebuttal]"},
+    {"en": "The strongest version of the objection is not that we were slow, but that we were slow for the wrong reason.", "ar": "أقوى صورة للاعتراض ليست أننا كنّا بطيئين بل أننا كنّا بطيئين لسبب خاطئ", "structure": "[steelman: not X but Y]"},
+    {"en": "That is a fair point, and I accept it entirely.", "ar": "هذه نقطة عادلة وأقبلها تمامًا", "structure": "[concession with no rebuttal]"}
+  ],
+  "common_errors": [
+    {"wrong": "The sample was small, however the pattern is consistent.", "correct": "The sample was small; however, the pattern is consistent.", "explanation": "'However' is an adverb, not a conjunction, so it cannot join two clauses with only a comma."},
+    {"wrong": "Some people foolishly argue that the delay was unavoidable.", "correct": "It could be argued that the delay was unavoidable.", "explanation": "Attribute the opposing view neutrally; a dismissive framing undermines your own credibility."},
+    {"wrong": "Admittedly the sample was small, but however the pattern is consistent.", "correct": "Admittedly the sample was small. However, the pattern is consistent.", "explanation": "Use one pivot, not two; 'but however' is redundant."},
+    {"wrong": "Every objection I have answered in turn.", "correct": "Most objections I have answered; on one I have no adequate reply.", "explanation": "Answering every single point reads as defensiveness. Conceding one strengthens the rest."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Admittedly the sample was small. ___, the pattern is consistent.", "answer": "However"},
+    {"sentence": "It could be argued that the delay was unavoidable. ___ three warnings suggest otherwise.", "answer": "Yet"},
+    {"sentence": "The objections are serious. ___, the conclusion stands.", "answer": "Nonetheless / Nevertheless"},
+    {"sentence": "The ___ version of the objection is not that we were slow, but why.", "answer": "strongest"},
+    {"sentence": "That is a fair point, and I ___ it entirely.", "answer": "accept"}
+  ],
+  "quick_rule": "Concede briskly, pivot clearly, rebut with weight. State the objection at its STRONGEST. Concede at least one point without answering. 'However' needs a semicolon, not a comma.",
+  "quick_rule_ar": "تنازل بسرعة وانقلب بوضوح وردّ بثقل. واعرض الاعتراض في أقوى صوره. وتنازل عن نقطة بلا ردّ. و'however' تحتاج فاصلة منقوطة.",
+  "mnemonic": "Beat the best version, not the worst.",
+  "connect_to_speaking": "In accent week 17 you drilled brisk generous concessions, a full beat on each pivot, and weighted falling rebuttals. Lingering on a concession makes you sound as though you have conceded the argument."
+}

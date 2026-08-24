@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 13,
+  "focus": "Classical and literary allusion · pun timing and stress · sustained figurative extension · deliberate ambiguity · comic timing and the held pause",
+  "focus_ar": "التلميح الكلاسيكي والأدبي، وتوقيت النبر في التلاعب اللفظي، وامتداد المجاز المتّصل، والغموض المقصود، والتوقيت الكوميدي والوقفة المحفوظة",
+  "arabic_challenge": "Allusion and wordplay depend on TIMING more than on pronunciation. A pun works because the double meaning arrives a fraction of a second after the listener has committed to the first reading, and that fraction is created by a held pause. Deliver the same words without the pause and the joke simply vanishes; deliver the pause too long and it becomes laboured. Arabic has an extremely rich tradition of wordplay, so the instinct is strong, but the English rhythm of setup, micro-pause and landing is specific and must be practised as a physical skill.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["classical and literary allusion delivered lightly"],
+      "isolation": {
+        "instructions": "An allusion works only if you do not explain it. 'It was his Achilles' heel.' 'A Pyrrhic victory at best.' Deliver them at normal speed with one beat on the key word and no explanatory pause afterwards. Pausing to check whether the listener understood destroys the effect.",
+        "instructions_ar": "التلميح ينجح فقط إن لم تشرحه. قله بسرعة عادية بنبضة واحدة على الكلمة الأساسية وبلا وقفة تفسيرية بعده، فالوقوف للتحقّق من فهم المستمع يُفسد الأثر.",
+        "practice": ["his aCHILLes' heel", "a PYRRHic victory at best", "no explanatory pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["his Achilles' heel", "his one weakness"], "meaning": ["تلميح", "حرفي"]},
+        {"pair": ["a Pyrrhic victory", "a costly win"], "meaning": ["تلميح", "حرفي"]},
+        {"pair": ["no pause after the allusion", "pause to check understanding"], "meaning": ["واثق", "يُفسد الأثر"]},
+        {"pair": ["a Catch-22", "an impossible situation"], "meaning": ["تلميح أدبي", "حرفي"]},
+        {"pair": ["crossing the Rubicon", "passing the point of no return"], "meaning": ["تلميح", "حرفي"]}
+      ],
+      "word_practice": ["his Achilles' heel", "a Pyrrhic victory", "a Catch-22", "crossing the Rubicon", "opening Pandora's box", "a Trojan horse", "the elephant in the room", "a Faustian bargain", "the eleventh hour", "a Sisyphean task"],
+      "sentence_practice": [
+        "Impatience was always his Achilles' heel.",
+        "It was a Pyrrhic victory at best.",
+        "We had, in effect, crossed the Rubicon."
+      ],
+      "record_this": "Impatience was always his Achilles' heel, and everyone around him knew it. It was a Pyrrhic victory at best, and an expensive one at that. By signing that letter we had, in effect, already crossed the Rubicon.",
+      "self_check": "Say 'Impatience was his Achilles' heel'. Did you resist pausing afterwards to check it landed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["pun timing: setup, micro-pause, landing"],
+      "isolation": {
+        "instructions": "A pun needs three beats: the setup at normal pace, a micro-pause, then the double-meaning word with a slight lift. 'The meeting about the budget cuts was, appropriately enough, | cut SHORT.' The pause is what lets the listener notice the second meaning arriving.",
+        "instructions_ar": "التلاعب اللفظي يحتاج ثلاث نبضات: التمهيد بسرعة عادية، ثم وقفة صغيرة، ثم الكلمة ذات المعنى المزدوج بارتفاع طفيف. الوقفة هي ما تتيح للمستمع ملاحظة المعنى الثاني.",
+        "practice": ["…was, appropriately enough, | cut SHORT ↗", "setup, micro-pause, landing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["…, | cut SHORT ↗ (with pause)", "…cut short (no pause)"], "meaning": ["التلاعب يظهر", "يختفي"]},
+        {"pair": ["micro-pause", "long theatrical pause"], "meaning": ["أنيق", "متكلَّف"]},
+        {"pair": ["slight lift on the pun word", "flat pun word"], "meaning": ["يُلاحظ", "يُفقد"]},
+        {"pair": ["appropriately enough, |", "and then"], "meaning": ["يُنبّه للتلاعب", "محايد"]},
+        {"pair": ["deadpan pun", "signposted pun"], "meaning": ["أذكى", "أقل طرافة"]}
+      ],
+      "word_practice": ["appropriately enough", "as it were", "so to speak", "if you will pardon the phrase", "no pun intended", "and I use the word deliberately", "in every sense", "quite literally", "for want of a better word", "to put it mildly"],
+      "sentence_practice": [
+        "The meeting about budget cuts was, appropriately enough, cut short.",
+        "The bakery's accounts were, if you will pardon the phrase, half-baked.",
+        "The drainage report was, in every sense, a wash-out."
+      ],
+      "record_this": "The meeting about the budget cuts was, appropriately enough, cut short. The bakery's accounts were, if you will pardon the phrase, distinctly half-baked. The drainage report was, in every sense of the word, a complete wash-out.",
+      "self_check": "Say the budget-cuts sentence. Is there a micro-pause before 'cut short', with a slight lift on it?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["sustained figurative extension"],
+      "isolation": {
+        "instructions": "Extend one metaphor across several clauses instead of mixing several. 'We had the wind behind us in the spring, ran into heavy weather by June, and were bailing out by September.' Keep the pace even so the metaphor accumulates. Switching metaphors mid-sentence is the error to avoid.",
+        "instructions_ar": "امدد مجازًا واحدًا عبر عدّة جُمَل بدل خلط عدّة مجازات. أبقِ الإيقاع مستويًا ليتراكم المجاز، والخطأ هو تبديل المجاز في وسط الجملة.",
+        "practice": ["wind behind us → heavy weather → bailing out", "one metaphor, accumulating", "never mix mid-sentence"]
+      },
+      "minimal_pairs": [
+        {"pair": ["one metaphor extended", "three metaphors mixed"], "meaning": ["بليغ", "مشوّش"]},
+        {"pair": ["wind behind us, then heavy weather", "wind behind us, then an own goal"], "meaning": ["متّصل", "مختلط"]},
+        {"pair": ["even accumulating pace", "uneven pace"], "meaning": ["يتراكم", "يتفكّك"]},
+        {"pair": ["sustained image", "abandoned image"], "meaning": ["متمكّن", "ضعيف"]},
+        {"pair": ["metaphor closes the paragraph", "metaphor forgotten"], "meaning": ["مُحكَم", "مفكّك"]}
+      ],
+      "word_practice": ["the wind behind us", "ran into heavy weather", "bailing out by September", "back on an even keel", "a change of course", "in uncharted waters", "trimming the sails", "a following sea", "dead in the water", "safely into harbour"],
+      "sentence_practice": [
+        "We had the wind behind us in spring and ran into heavy weather by June.",
+        "By September we were bailing out; by December, back on an even keel.",
+        "The project is dead in the water until the funding returns."
+      ],
+      "record_this": "We had the wind behind us all through spring and ran into heavy weather by June. By September we were frankly bailing out, and by December we were back on an even keel. The second project is simply dead in the water until the funding returns.",
+      "self_check": "Read the sailing sentences. Did you sustain one metaphor without switching to a different image?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["deliberate ambiguity held open"],
+      "isolation": {
+        "instructions": "Sometimes you want both meanings alive at once. 'She was, let us say, economical with the detail.' Deliver it evenly and do not resolve it — no emphasis that points at one reading. The listener should feel the second meaning without being told it exists.",
+        "instructions_ar": "أحيانًا تريد المعنيين حيّين معًا. أدِّه بتساوٍ ولا تحلّه — بلا توكيد يشير إلى قراءة واحدة. وليحسّ المستمع المعنى الثاني بلا أن تُخبره.",
+        "practice": ["She was, let us say, | economical with the detail", "even, unresolved, both meanings alive"]
+      },
+      "minimal_pairs": [
+        {"pair": ["economical with the detail (ambiguous)", "she lied (explicit)"], "meaning": ["غامض مقصود", "صريح"]},
+        {"pair": ["even and unresolved", "emphasis on one reading"], "meaning": ["كلا المعنيين", "معنى واحد"]},
+        {"pair": ["let us say, |", "frankly,"], "meaning": ["يفتح الغموض", "يحسم"]},
+        {"pair": ["a somewhat flexible account", "a false account"], "meaning": ["مخفَّف غامض", "صريح"]},
+        {"pair": ["listener senses it", "listener is told"], "meaning": ["أنيق", "فجّ"]}
+      ],
+      "word_practice": ["economical with the detail", "a somewhat flexible account", "let us say", "shall we say", "not entirely candid", "creative with the figures", "selectively informed", "less than forthcoming", "somewhat optimistic", "generously described"],
+      "sentence_practice": [
+        "She was, let us say, economical with the detail.",
+        "The figures were, shall we say, optimistic.",
+        "He was less than forthcoming about the timing."
+      ],
+      "record_this": "She was, let us say, rather economical with the detail in her account. The projections were, shall we say, optimistic even by the standards of that department. He was noticeably less than forthcoming about the timing of the transfer.",
+      "self_check": "Say 'She was, let us say, economical with the detail'. Did you keep it even and leave both readings alive?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["comic timing and the held pause"],
+      "isolation": {
+        "instructions": "Comic effect in English comes from delay. Set up in a completely straight voice, hold the pause a beat longer than feels comfortable, then land the final phrase flat rather than emphatically. 'We had a detailed contingency plan. | It was on the laptop | that was stolen.' Flat delivery is funnier than emphasis.",
+        "instructions_ar": "الأثر الكوميدي في الإنجليزية يأتي من التأجيل. مهّد بصوت جادّ تمامًا، واحفظ الوقفة أطول قليلًا من المريح، ثم أنزل العبارة الأخيرة مسطّحة لا مؤكَّدة. فالأداء المسطّح أطرف من التوكيد.",
+        "practice": ["We had a detailed contingency plan. | It was on the laptop | that was stolen.", "straight setup, held pause, flat landing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["flat landing", "emphatic landing"], "meaning": ["أطرف", "أقل طرافة"]},
+        {"pair": ["held pause (a beat longer)", "no pause"], "meaning": ["يعمل", "يفشل"]},
+        {"pair": ["straight-faced setup", "smiling setup"], "meaning": ["أقوى", "يُفسد المفاجأة"]},
+        {"pair": ["pause a beat longer", "pause far too long"], "meaning": ["أنيق", "متكلَّف"]},
+        {"pair": ["understated punchline", "announced punchline"], "meaning": ["إنجليزي جدًا", "فجّ"]}
+      ],
+      "word_practice": ["we had a detailed plan", "it was on the laptop", "that was stolen", "everything was documented", "in the file we lost", "the review was thorough", "nobody read it", "we consulted widely", "with ourselves", "the system was foolproof"],
+      "sentence_practice": [
+        "We had a detailed contingency plan. It was on the laptop that was stolen.",
+        "Everything was documented, in the file we later lost.",
+        "We consulted widely — mostly with ourselves."
+      ],
+      "record_this": "We had a detailed contingency plan for exactly this situation. It was on the laptop that was stolen. Everything was properly documented, in the file we subsequently managed to lose. We consulted very widely at the time, mostly with ourselves.",
+      "self_check": "Say the laptop lines. Did you hold the pause a beat longer and land the final phrase flat?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 13 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["his Achilles' heel", "his one weakness"],
+        ["…, | cut SHORT ↗ (with pause)", "…cut short (no pause)"],
+        ["one metaphor extended", "three metaphors mixed"],
+        ["economical with the detail (ambiguous)", "she lied (explicit)"],
+        ["flat landing", "emphatic landing"],
+        ["no pause after the allusion", "pause to check understanding"]
+      ],
+      "challenge_sentences": [
+        "Impatience was his Achilles' heel.",
+        "The cuts meeting was, appropriately, cut short.",
+        "She was, let us say, economical with detail.",
+        "We had a plan. It was on the stolen laptop."
+      ],
+      "record_this": "Impatience was always his Achilles' heel, and it cost him the promotion. The meeting about the cuts was, appropriately enough, cut short. She was, let us say, rather economical with the detail that afternoon. We did have a plan for this. It was on the stolen laptop.",
+      "self_check": "Three checks: no explanatory pause after allusions, a micro-pause before each pun, and a flat comic landing."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a wry after-dinner account. Timing is everything here, so resist emphasis and trust the pauses — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كحكاية ساخرة بعد العشاء. التوقيت هو كل شيء، فقاوم التوكيد وثِق بالوقفات، ثم اسمع وراجع.",
+        "passage": "Our first attempt at digital transformation was, and I use the word carefully, ambitious. Impatience was the project's Achilles' heel from the start. We had the wind behind us in the spring, ran into heavy weather by June, and by September were bailing out with both hands. The steering group met monthly to discuss delays. Those meetings were, appropriately enough, always cut short. There was a full contingency plan. It was on the laptop that was stolen from the car park. The vendor described their platform as intuitive, which turned out to mean nobody could explain it. Our own report was, shall we say, economical about the timeline. We declared victory in November. It was a Pyrrhic one, and expensive, and we consulted widely before declaring it, mostly with ourselves. Still, we are back on an even keel now, which in this organisation counts as a triumph.",
+        "sounds_to_check": {
+          "allusion with no explanatory pause": "the project's aCHILLes' heel  ·  It was a PYRRHic one",
+          "pun timing: micro-pause then slight lift": "Those meetings were, appropriately enough, | always cut SHORT ↗  ·  and I use the word carefully, | amBItious",
+          "sustained figurative extension": "wind behind us in the spring, ran into heavy weather by June, bailing out with both hands, back on an even keel",
+          "deliberate ambiguity left unresolved": "shall we say, economical about the timeline  ·  described their platform as intuitive",
+          "comic timing, flat landing": "There was a full contingency plan. | It was on the laptop that was stolen.  ·  we consulted widely, | mostly with ourselves."
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Allusions unexplained, puns landing on a micro-pause, one sustained metaphor, comic lines delivered flat. Genuinely witty. Ready for week 14.",
+        "70_89": "Good; occasionally a pause is missed or a punchline is over-emphasised.",
+        "50_69": "Wordplay explained or emphasised, so the effect disappears. Repeat days 2 and 5.",
+        "below_50": "Redo days 1-5. Practise the held pause and the flat landing before anything else."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Never explain an allusion. If it lands, it lands; explaining it removes the pleasure of recognition.",
+      "A pun needs a micro-pause before the double-meaning word. Without the pause the second meaning is simply missed.",
+      "Extend ONE metaphor rather than mixing several. Mixed metaphors are the commonest failure here.",
+      "Deliberate ambiguity must be delivered evenly. Any emphasis resolves it and kills the effect.",
+      "English comic timing prefers a flat, understated landing. Emphasis makes a joke less funny, not more."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that each pun has an audible micro-pause before it."
+  }
+}

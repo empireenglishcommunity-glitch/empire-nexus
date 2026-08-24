@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w4",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 4,
+  "pattern_name": "Participle clauses (present, past and perfect)",
+  "pattern_name_ar": "الجُمَل المشتقّة (الحاضرة والماضية والتامّة)",
+  "formula": "-ing clause: Arriving early, she waited · Past participle: Seen from above, the city … · Perfect: Having finished, I left · Perfect passive: Having been told, she resigned · Negative: Not having received a reply, …",
+  "formula_visual": "[Having finished the report], [I went home]",
+  "when_to_use": "To compress two clauses into one and produce concise, formal prose. Use an -ing participle for an action by the same subject ('Arriving early, she waited'), a past participle for passive meaning ('Seen from above, …'), and 'Having + participle' for something completed first ('Having finished, I left'). Common in reports, essays and narrative writing; less frequent in casual speech.",
+  "when_to_use_ar": "لدمج جملتين في واحدة وإنتاج نثر موجز ورسمي. استخدم -ing لفعل الفاعل نفسه، والتصريف الثالث للمعنى المجهول، و'Having + التصريف' لما اكتمل أولًا. شائعة في التقارير والمقالات.",
+  "why_arabic_speakers_struggle": "Arabic normally links clauses with explicit connectors (وَ / فَ / بعد أن), so removing the connector and the subject at the same time feels like losing information. The most damaging error is the dangling participle: because the participle has no subject of its own, it must share the subject of the main clause. 'Having finished the report, the phone rang' unintentionally says the phone finished the report — a mistake that is easy to make and hard to hear.",
+  "examples": [
+    {"en": "Having finished the report, I went home.", "ar": "بعد أن أنهيت التقرير، عدت إلى البيت", "structure": "[Having + participle], [subject + verb]"},
+    {"en": "Arriving early, she waited in the lobby.", "ar": "بوصولها مبكرًا، انتظرت في البهو", "structure": "[-ing clause], [subject + verb]"},
+    {"en": "Seen from above, the whole city looks tiny.", "ar": "عند رؤيتها من الأعلى، تبدو المدينة صغيرة", "structure": "[Past participle clause], [subject + verb]"},
+    {"en": "Having been told the truth, she resigned.", "ar": "بعد أن أُخبرت بالحقيقة، استقالت", "structure": "[Having been + participle], [subject + verb]"},
+    {"en": "Not having received a reply, I called again.", "ar": "لعدم تلقّي ردّ، اتصلت مرّة أخرى", "structure": "[Not having + participle], [subject + verb]"}
+  ],
+  "common_errors": [
+    {"wrong": "Having finished the report, the phone rang.", "correct": "Having finished the report, I heard the phone ring.", "explanation": "The participle shares the main clause subject, so this version says the phone finished the report."},
+    {"wrong": "Having finish the report, I left.", "correct": "Having finished the report, I left.", "explanation": "'Having' is always followed by the third form of the verb."},
+    {"wrong": "Having not received a reply, I called.", "correct": "Not having received a reply, I called.", "explanation": "The negative goes before 'having', not after it."},
+    {"wrong": "Seeing from above, the city looks tiny.", "correct": "Seen from above, the city looks tiny.", "explanation": "The meaning is passive (the city is seen), so the past participle is required."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ (finish) the report, I went home early.", "answer": "Having finished"},
+    {"sentence": "___ (arrive) early, she waited in the lobby.", "answer": "Arriving"},
+    {"sentence": "___ (see) from above, the city looks tiny.", "answer": "Seen"},
+    {"sentence": "___ (not / receive) a reply, I called again.", "answer": "Not having received"},
+    {"sentence": "___ (be / tell) the truth, he said nothing.", "answer": "Having been told"}
+  ],
+  "quick_rule": "Same subject as the main clause. Having + third form for earlier actions. Negative before 'having'. Past participle for passive meaning.",
+  "quick_rule_ar": "الفاعل نفسه كالجملة الرئيسية. وHaving + التصريف الثالث لما سبق. والنفي قبل 'having'. والتصريف الثالث للمجهول.",
+  "mnemonic": "No subject of its own, so it borrows the main clause's subject.",
+  "connect_to_speaking": "In accent week 4 you drilled the boundary pause and a light /ˈhævɪŋ/. Without that short pause at the comma, a participle clause runs into the main clause and becomes genuinely hard to follow."
+}

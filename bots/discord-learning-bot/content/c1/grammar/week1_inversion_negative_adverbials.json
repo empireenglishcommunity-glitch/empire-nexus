@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w1",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 1,
+  "pattern_name": "Inversion after negative and limiting adverbials",
+  "pattern_name_ar": "القلب بعد ظروف النفي والتحديد",
+  "formula": "Negative/limiting adverbial + auxiliary + subject + verb · Never have I … · Rarely does he … · Not only did she … but she also … · No sooner had we … than …",
+  "formula_visual": "[Never] + [have] + [I] + [seen] + such a thing",
+  "when_to_use": "To add emphasis and formality by fronting a negative or limiting adverbial (never, rarely, seldom, little, hardly, scarcely, nowhere, at no time, under no circumstances, not only, no sooner). Once the adverbial moves to the front, the subject and auxiliary must swap places, exactly as in a question. Use it in writing, speeches and formal argument; one or two per paragraph is powerful, more sounds theatrical.",
+  "when_to_use_ar": "لإضافة توكيد ورسمية بتقديم ظرف نفي أو تحديد (never, rarely, seldom, little, hardly, no sooner). بعد تقديم الظرف يجب تبديل موضع الفاعل والفعل المساعد كما في السؤال. استخدمه في الكتابة والخطابة، وبقلّة.",
+  "why_arabic_speakers_struggle": "Arabic achieves emphasis mainly through word order and emphatic particles rather than through auxiliary movement, so the required swap feels arbitrary. Two errors dominate: keeping normal order after the fronted adverbial (Never I have seen), and adding a second negative because the adverbial already feels negative (Never have I not seen). Learners also forget that 'Not only' needs inversion in the first half but the ordinary order in the 'but also' half.",
+  "examples": [
+    {"en": "Never have I seen such a strong reaction.", "ar": "لم أرَ قطّ ردّ فعل بهذه القوة", "structure": "[Never] + [have] + [I] + participle"},
+    {"en": "Rarely does an opportunity like this appear.", "ar": "نادرًا ما تظهر فرصة كهذه", "structure": "[Rarely] + [does] + [subject] + base verb"},
+    {"en": "Not only did he refuse, but he also complained.", "ar": "لم يرفض فقط، بل اشتكى أيضًا", "structure": "[Not only] + [did] + [subject] + …, but … also …"},
+    {"en": "No sooner had we arrived than it started to rain.", "ar": "لم نكد نصل حتى بدأ المطر", "structure": "[No sooner] + [had] + [subject] + participle + than …"},
+    {"en": "Under no circumstances should this be repeated.", "ar": "لا يجوز تحت أي ظرف تكرار هذا", "structure": "[Under no circumstances] + [should] + [subject] + base verb"}
+  ],
+  "common_errors": [
+    {"wrong": "Never I have seen such a thing.", "correct": "Never have I seen such a thing.", "explanation": "After a fronted negative adverbial the auxiliary must come before the subject, just as in a question."},
+    {"wrong": "Never have I not seen it.", "correct": "Never have I seen it.", "explanation": "The fronted adverbial already carries the negative. A second negative reverses the meaning."},
+    {"wrong": "No sooner had we arrived when it rained.", "correct": "No sooner had we arrived than it rained.", "explanation": "'No sooner' pairs with 'than', not with 'when'."},
+    {"wrong": "Not only he refused, but also he complained.", "correct": "Not only did he refuse, but he also complained.", "explanation": "Invert after 'Not only'; in the second half keep normal order with 'also' after the subject."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Never ___ (I / see) such a clear example.", "answer": "have I seen"},
+    {"sentence": "Rarely ___ (he / agree) with the committee.", "answer": "does he agree"},
+    {"sentence": "No sooner had we sat down ___ the lights went out.", "answer": "than"},
+    {"sentence": "Not only ___ (she / arrive) late, but she had forgotten the file.", "answer": "did she arrive"},
+    {"sentence": "Under no circumstances ___ (you / sign) that document.", "answer": "should you sign"}
+  ],
+  "quick_rule": "Front the negative adverbial, then swap subject and auxiliary like a question. One negative only. 'No sooner … THAN'.",
+  "quick_rule_ar": "قدّم ظرف النفي ثم بدّل الفاعل والفعل المساعد كما في السؤال. نفي واحد فقط. و'No sooner … THAN'.",
+  "mnemonic": "Negative goes first, so the verb jumps the subject.",
+  "connect_to_speaking": "In accent week 1 you drilled the stress peak plus micro-pause on the fronted adverbial and the strong auxiliary. Say 'NEVER | have I seen it' with that peak, or the grammar is correct but the emphasis is wasted."
+}

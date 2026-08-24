@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w2",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 2,
+  "pattern_name": "Inversion in conditionals (Had I / Were I / Should you)",
+  "pattern_name_ar": "القلب في جُمَل الشرط (Had I / Were I / Should you)",
+  "formula": "Had + subject + participle, … · Were + subject + to + verb, … · Should + subject + verb, … · Had it not been for … · Were it not for …",
+  "formula_visual": "[Had] + [I] + [known], [I would have called]",
+  "when_to_use": "To express a condition formally without using 'if'. Remove 'if' and move the auxiliary in front of the subject: 'If I had known' becomes 'Had I known'. 'Had' replaces third-conditional if-clauses, 'Were' replaces second-conditional ones, and 'Should' expresses a polite possibility ('Should you need anything'). This is standard in professional writing, contracts, presentations and formal speech.",
+  "when_to_use_ar": "للتعبير عن الشرط بصيغة رسمية بدون 'if'. احذف 'if' وقدّم الفعل المساعد على الفاعل. 'Had' للشرط الثالث، و'Were' للثاني، و'Should' لاحتمال مؤدّب. تُستخدم في الكتابة المهنية والعقود والعروض.",
+  "why_arabic_speakers_struggle": "Arabic conditionals always keep an explicit particle (لو / إذا / إن), so removing the conditional word entirely feels as though the condition has disappeared. Learners therefore tend to keep 'if' alongside the inversion ('If had I known'), or they add a redundant 'have' ('Had I have known'). A third issue is that 'Were' is used for every subject, which conflicts with the was/were agreement learners drilled at lower levels.",
+  "examples": [
+    {"en": "Had I known, I would have acted differently.", "ar": "لو كنت أعرف، لكنت تصرّفت بشكل مختلف", "structure": "[Had] + [subject] + participle, [would have + participle]"},
+    {"en": "Were I to suggest a change, would you consider it?", "ar": "لو اقترحت تغييرًا، هل ستفكّر فيه؟", "structure": "[Were] + [subject] + [to + verb], …"},
+    {"en": "Should you need anything, please let me know.", "ar": "إن احتجت شيئًا، أخبرني", "structure": "[Should] + [subject] + base verb, …"},
+    {"en": "Had it not been for her help, we would have failed.", "ar": "لولا مساعدتها لكنّا فشلنا", "structure": "[Had it not been for] + noun, …"},
+    {"en": "Were it not for the delay, we would be finished.", "ar": "لولا التأخير لكنّا انتهينا", "structure": "[Were it not for] + noun, …"}
+  ],
+  "common_errors": [
+    {"wrong": "If had I known, I would have called.", "correct": "Had I known, I would have called.", "explanation": "Inversion replaces 'if'. Using both together is not possible."},
+    {"wrong": "Had I have known, I would have called.", "correct": "Had I known, I would have called.", "explanation": "'Had' is already the auxiliary. Adding a second 'have' is redundant."},
+    {"wrong": "Was I you, I would wait.", "correct": "Were I you, I would wait.", "explanation": "Inverted second conditionals always use 'Were', for every subject."},
+    {"wrong": "Should you will need anything, tell me.", "correct": "Should you need anything, tell me.", "explanation": "'Should' is followed by the base verb, never by 'will'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ I known about the risk, I would have withdrawn.", "answer": "Had"},
+    {"sentence": "___ it not been for your advice, I would have signed it.", "answer": "Had"},
+    {"sentence": "___ you need any help, please contact me directly.", "answer": "Should"},
+    {"sentence": "___ I in your position, I would wait for the report.", "answer": "Were"},
+    {"sentence": "___ the board to refuse, we would need a new plan.", "answer": "Were"}
+  ],
+  "quick_rule": "Drop 'if', move the auxiliary to the front. Had (past), Were (hypothetical), Should (possibility). No extra 'have'.",
+  "quick_rule_ar": "احذف 'if' وقدّم الفعل المساعد. Had للماضي، وWere للافتراض، وShould للاحتمال. بلا 'have' زائدة.",
+  "mnemonic": "No 'if' needed — the auxiliary moves up front and does the job.",
+  "connect_to_speaking": "In accent week 2 you drilled the strong fronted auxiliary. Because 'if' is gone, that auxiliary is the ONLY signal that this is a condition — say 'HAD I known' with real weight or the listener hears a statement."
+}

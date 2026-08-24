@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w5",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 5,
+  "pattern_name": "Cleft mastery across all types",
+  "pattern_name_ar": "إتقان الجُمَل المشقوقة بكل أنواعها",
+  "formula": "it-cleft: It + be + focus + that/who · wh-cleft: What + clause + be + focus · all-cleft: All + clause + be + focus · reversed wh-cleft: That/This + be + what + clause · there-cleft: There + be + noun + that + clause",
+  "formula_visual": "[It was the timing] [that caused it] · [What worries me] [is] [the silence]",
+  "when_to_use": "To choose precisely which element your listener treats as the point, and with what rhetorical effect. An it-cleft isolates one element against alternatives. A wh-cleft delays the point to build anticipation. An all-cleft limits and often mildly complains. A reversed wh-cleft points back at something just said. A there-cleft introduces a new item into the discussion.",
+  "when_to_use_ar": "لتختار بدقّة العنصر الذي يعتبره المستمع النقطة، وبأي أثر بلاغي. الجملة بـ it تعزل، وبـ wh تُشوّق، وبـ all تحدّد وتشكو بلطف، والمعكوسة تشير للخلف، وبـ there تُقدّم عنصرًا جديدًا.",
+  "why_arabic_speakers_struggle": "Arabic marks focus through word order and emphatic particles and has no direct equivalent of the 'it … that' frame, so learners either omit the linking word or stress a word instead of building the structure. The commonest grammatical error is a plural verb after a wh-cleft ('What I need are time'), because the following noun feels plural. The subtler C2 weakness is using it-clefts for everything, which is repetitive and loses the distinct effects of the other types.",
+  "examples": [
+    {"en": "It was the timing that caused the problem, not the plan.", "ar": "التوقيت هو ما سبّب المشكلة لا الخطة", "structure": "[It + be] + focus + [that] + clause"},
+    {"en": "What worries me is the silence that followed.", "ar": "ما يقلقني هو الصمت الذي تبع ذلك", "structure": "[What + clause] + [is] + focus"},
+    {"en": "All I asked for was a straight answer.", "ar": "كل ما طلبته جواب صريح", "structure": "[All + clause] + [was] + focus"},
+    {"en": "That is exactly what worries me.", "ar": "هذا بالضبط ما يقلقني", "structure": "[That + is] + [what + clause]"},
+    {"en": "There is one detail that still troubles me.", "ar": "هناك تفصيل واحد ما زال يقلقني", "structure": "[There + is] + noun + [that + clause]"}
+  ],
+  "common_errors": [
+    {"wrong": "What I need are more time.", "correct": "What I need is more time.", "explanation": "The verb agrees with 'what', which is singular, regardless of the following noun."},
+    {"wrong": "It was the timing caused the problem.", "correct": "It was the timing that caused the problem.", "explanation": "An it-cleft needs 'that' or 'who' to link the focus to the clause."},
+    {"wrong": "What worries me is that the silence.", "correct": "What worries me is the silence.", "explanation": "Do not add 'that' before a noun phrase; it belongs only before a clause."},
+    {"wrong": "All I asked for were a straight answer.", "correct": "All I asked for was a straight answer.", "explanation": "'All' in this pattern is singular, like 'what'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It was the timing ___ caused the problem.", "answer": "that"},
+    {"sentence": "What worries me ___ (be) the silence that followed.", "answer": "is"},
+    {"sentence": "___ I asked for was a straight answer.", "answer": "All"},
+    {"sentence": "___ is exactly what worries me about the plan.", "answer": "That"},
+    {"sentence": "___ is one detail that still troubles me.", "answer": "There"}
+  ],
+  "quick_rule": "it-cleft isolates, wh-cleft anticipates, all-cleft limits, reversed points back, there-cleft introduces. Verb after What/All is always SINGULAR.",
+  "quick_rule_ar": "it تعزل، وwh تُشوّق، وall تحدّد، والمعكوسة تشير للخلف، وthere تُقدّم. والفعل بعد What/All مفرد دائمًا.",
+  "mnemonic": "Five clefts, five different jobs. Pick the one your argument needs.",
+  "connect_to_speaking": "In accent week 5 you drilled one dominant beat per cleft and the small pause before a wh-cleft landing. The structure builds the spotlight; the single nuclear beat is what switches it on."
+}

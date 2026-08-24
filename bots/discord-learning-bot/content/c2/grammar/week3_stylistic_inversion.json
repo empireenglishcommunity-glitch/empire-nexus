@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w3",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 3,
+  "pattern_name": "Stylistic inversion and marked word order",
+  "pattern_name_ar": "القلب الأسلوبي وترتيب الكلمات المُعلَّم",
+  "formula": "So + adjective + be + subject + that … · Such + be + noun + that … · adverbial + full verb + subject (Down came the rain) · Not until … + auxiliary + subject · Only then/Nowhere/Never + auxiliary + subject",
+  "formula_visual": "[So great] [was] [the change] [that nobody recognised it]",
+  "when_to_use": "For dramatic emphasis in narrative and rhetoric. 'So + adjective' and 'Such + noun' front a quality or thing and then state its consequence with 'that'. Directional adverbs invert with the full verb for vivid narration. 'Not until' and 'Only then' delay the resolution for effect. These belong to literary writing, speeches and vivid storytelling, used sparingly.",
+  "when_to_use_ar": "للتوكيد الدرامي في السرد والبلاغة. 'So + صفة' و'Such + اسم' تقدّمان صفة أو شيئًا ثم تذكران نتيجته بـ 'that'. وظروف الاتجاه تُقلب مع الفعل التام للسرد الحيوي. تُستخدم بقلّة.",
+  "why_arabic_speakers_struggle": "Arabic marks emphasis through word order and particles without requiring auxiliary movement, so the specific English rules feel arbitrary and are applied inconsistently. Two errors dominate: forgetting to invert after the fronted element ('So great the change was'), and inverting with a pronoun in the adverbial pattern ('Off went they' instead of 'Off they went'). Learners also tend to overuse these forms once learned, which turns emphasis into melodrama.",
+  "examples": [
+    {"en": "So great was the change that nobody recognised the place.", "ar": "كان التغيير كبيرًا لدرجة أن أحدًا لم يعرف المكان", "structure": "[So + adjective] + [be] + subject + [that + result]"},
+    {"en": "Such was the response that we ran out of tickets.", "ar": "كان الإقبال كبيرًا حتى نفدت التذاكر", "structure": "[Such] + [be] + noun + [that + result]"},
+    {"en": "Down came the rain, and the match was abandoned.", "ar": "نزل المطر فأُلغيت المباراة", "structure": "[adverb] + [full verb] + [noun subject]"},
+    {"en": "Not until the following morning did we realise the mistake.", "ar": "لم ندرك الخطأ إلا في صباح اليوم التالي", "structure": "[Not until + time] + [auxiliary] + subject"},
+    {"en": "Only then did it become clear what had happened.", "ar": "وحينها فقط اتّضح ما حدث", "structure": "[Only then] + [auxiliary] + subject"}
+  ],
+  "common_errors": [
+    {"wrong": "So great the change was that nobody recognised it.", "correct": "So great was the change that nobody recognised it.", "explanation": "After the fronted 'so + adjective' the verb must precede the subject."},
+    {"wrong": "Such the response was that we ran out.", "correct": "Such was the response that we ran out.", "explanation": "'Such' also requires inversion of verb and subject."},
+    {"wrong": "Off went they, without a word.", "correct": "Off they went, without a word.", "explanation": "Adverbial inversion applies to noun subjects; pronouns keep normal order."},
+    {"wrong": "Not until the morning we realised the mistake.", "correct": "Not until the morning did we realise the mistake.", "explanation": "'Not until' requires an inverted auxiliary in the main clause."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "So great ___ the change that nobody recognised it.", "answer": "was"},
+    {"sentence": "Such ___ the response that we ran out of tickets.", "answer": "was"},
+    {"sentence": "Down ___ (come) the rain, and the match was abandoned.", "answer": "came"},
+    {"sentence": "Not until the morning ___ we realise the mistake.", "answer": "did"},
+    {"sentence": "Only then ___ it become clear what had happened.", "answer": "did"}
+  ],
+  "quick_rule": "Front the element, then invert. 'So' + adjective, 'Such' + noun, both with 'that'. Adverbial inversion for NOUNS only. 'Not until' and 'Only then' need an inverted auxiliary.",
+  "quick_rule_ar": "قدّم العنصر ثم اقلب. 'So' + صفة و'Such' + اسم مع 'that'. وقلب الظرف للأسماء فقط. و'Not until' و'Only then' تحتاجان مساعدًا مقلوبًا.",
+  "mnemonic": "Front it, then flip it.",
+  "connect_to_speaking": "In accent week 3 you drilled a raised, expanded pitch on the fronted element with the peak near the beginning. These structures exist only for drama, so correct syntax delivered flat wastes the entire device."
+}

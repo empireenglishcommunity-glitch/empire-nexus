@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 5,
+  "focus": "'It is believed that' /ɪtɪz bɪˈliːvd ðət/ · 'is said to' /ɪz sed tə/ · 'is thought to have' + participle · long passive chains · auxiliaries reduce, participle carries the content",
+  "focus_ar": "'It is believed that'، و'is said to' /ɪz sed tə/، و'is thought to have' + التصريف الثالث، وسلاسل المبني للمجهول الطويلة، وتخفيف المساعدات مع حمل التصريف للمضمون",
+  "arabic_challenge": "Impersonal passives stack grammar words before any content arrives: 'is thought to have been' is four words carrying almost no meaning. English solves this by reducing every one of them to a fast, quiet run and putting all the weight on the final participle. Learners who pronounce each auxiliary fully sound like they are reading a legal document aloud, word by word. Arabic expresses this reporting sense with active constructions (يُقال إنّ / يُعتقد أنّ) that do not require a chain of light auxiliaries, so the reduction has to be learned deliberately.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'It is believed that' /ɪtɪz bɪˈliːvd ðət/"],
+      "isolation": {
+        "instructions": "'It is believed that…' is the standard academic opener. 'It is' contracts and links to /ɪtɪz/, 'that' weakens to /ðət/, and the stress sits squarely on the reporting verb: /ɪtɪz/ bɪˈLIEVED /ðət/. The frame is light; the verb is the beat.",
+        "instructions_ar": "'It is believed that…' مفتاح أكاديمي معتاد. 'It is' تُدمج و'that' تُخفَّف، والنبر على فعل النقل.",
+        "practice": ["/ɪtɪz/ bɪˈLIEVED /ðət/…", "/ɪtɪz/ ˈWIDELY həld /ðət/…", "light frame, stressed verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It is beLIEVED that…", "People believe that…"], "meaning": ["رسمي غير شخصي", "عادي"]},
+        {"pair": ["/ɪtɪz/ (linked)", "it · is (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["that /ðət/ (weak)", "that /ðæt/ (strong)"], "meaning": ["أداة ربط", "إشارة"]},
+        {"pair": ["It is widely held that…", "Everyone says that…"], "meaning": ["أكاديمي", "محادثة"]},
+        {"pair": ["It is beLIEVED", "IT is believed"], "meaning": ["نبر صحيح", "نبر خاطئ"]}
+      ],
+      "word_practice": ["it is believed that", "it is thought that", "it is widely held that", "it is assumed that", "it is reported that", "it is claimed that", "it is understood that", "it is expected that", "it is generally agreed that", "it is often argued that"],
+      "sentence_practice": [
+        "It is believed that the practice began much earlier.",
+        "It is widely held that the policy failed.",
+        "It is generally agreed that reform is needed."
+      ],
+      "record_this": "It is believed that the practice began several centuries earlier than previously assumed. It is widely held among economists that the policy failed for structural reasons. It is generally agreed that some form of reform is now unavoidable.",
+      "self_check": "Say 'It is believed that…'. Is 'it is' linked and light, with the stress on 'believed'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'is said to' /ɪz sed tə/"],
+      "isolation": {
+        "instructions": "'He is said to be…' compresses to /ɪz sed tə/ — three quick, quiet syllables before the content. 'To' is weak /tə/, never /tuː/. Then the following word takes the stress: /ɪz sed tə/ BE the finest in Europe.",
+        "instructions_ar": "'He is said to be…' تُضغط إلى /ɪz sed tə/ — ثلاث مقاطع سريعة خفيفة قبل المضمون، و'to' خفيفة /tə/.",
+        "practice": ["/ɪz sed tə/ BE…", "/ɪz θɔːt tə/ BE…", "three quiet syllables, then the beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["is said to /ɪz sed tə/", "is said to /ɪz sed tuː/"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["He is said to be…", "People say he is…"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["is said to be ✅", "is said to being ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["is thought to be", "is said to be"], "meaning": ["يُعتقد", "يُقال"]},
+        {"pair": ["is known to be", "is believed to be"], "meaning": ["مؤكَّد", "مرجَّح"]}
+      ],
+      "word_practice": ["is said to be", "is thought to be", "is known to be", "is believed to be", "is reported to be", "is expected to be", "are said to have", "is considered to be", "is alleged to be", "is understood to be"],
+      "sentence_practice": [
+        "The building is said to be over four hundred years old.",
+        "She is thought to be the strongest candidate.",
+        "The results are known to be unreliable."
+      ],
+      "record_this": "The building is said to be well over four hundred years old, though nobody is certain. She is thought to be the strongest candidate by some distance. The early results are now known to be unreliable, which changes the whole picture.",
+      "self_check": "Say 'is said to be'. Are all three words quick and quiet, with a weak /tə/?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'is thought to have' + participle"],
+      "isolation": {
+        "instructions": "To report a past event impersonally, add 'have': 'He is thought to have left' = /ɪz θɔːt tə (h)əv/ LEFT. That whole run is one quick blur, and the participle at the end carries everything. The /h/ in 'have' usually disappears entirely.",
+        "instructions_ar": "للإخبار عن حدث ماضٍ بصيغة غير شخصية، أضف 'have': /ɪz θɔːt tə (h)əv/ LEFT. كل هذا الجزء سريع، والتصريف في النهاية يحمل المعنى.",
+        "practice": ["/ɪz θɔːt tə əv/ LEFT", "/ɪz bɪˈliːvd tə əv/ DIED", "one quick blur, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["is thought to have left", "is thought to leave"], "meaning": ["ماضٍ", "حاضر/مستقبل"]},
+        {"pair": ["to have /tə əv/ (blurred)", "to have /tuː hæv/ (full)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["is thought to have left ✅", "is thought to have leave ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["is said to have been", "is said to be"], "meaning": ["كان في الماضي", "هو الآن"]},
+        {"pair": ["are believed to have escaped", "believed they escaped"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["is thought to have left", "is said to have been", "is believed to have died", "are reported to have escaped", "is known to have worked", "is alleged to have taken", "is understood to have resigned", "is thought to have originated", "is said to have written", "are believed to have survived"],
+      "sentence_practice": [
+        "He is thought to have left the country in 1938.",
+        "The manuscript is said to have been written much later.",
+        "Several passengers are believed to have survived."
+      ],
+      "record_this": "He is thought to have left the country quietly sometime in nineteen thirty-eight. The manuscript is said to have been written considerably later than its title page suggests. Several passengers are believed to have survived the initial impact.",
+      "self_check": "Say 'is thought to have left'. Is 'to have' a quick blur /tə əv/, with 'left' stressed?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["long passive chains: 'has been being' territory"],
+      "isolation": {
+        "instructions": "Formal writing produces long chains: 'is being considered', 'has been reported', 'will have been completed'. Every auxiliary in the chain is light and fast; only the final participle is stressed. Practise the chain as a single rhythmic run-up: /hæz bɪn/ rɪˈPORTED.",
+        "instructions_ar": "الكتابة الرسمية تُنتج سلاسل طويلة. كل مساعد في السلسلة خفيف وسريع، والتصريف الأخير فقط منبور.",
+        "practice": ["/ɪz ˈbiːɪŋ/ kənˈSIDERED", "/hæz bɪn/ rɪˈPORTED", "/wɪl əv bɪn/ kəmˈPLETED"]
+      },
+      "minimal_pairs": [
+        {"pair": ["is being conSIDERED", "IS BEING considered"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["has been reported", "was reported"], "meaning": ["حتى الآن", "في وقت محدّد"]},
+        {"pair": ["will have been completed", "will be completed"], "meaning": ["قبل وقت مستقبلي", "في وقت مستقبلي"]},
+        {"pair": ["/hæz bɪn/ (light chain)", "HAS BEEN (heavy)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["is being built", "is built"], "meaning": ["جارٍ الآن", "حقيقة عامة"]}
+      ],
+      "word_practice": ["is being considered", "has been reported", "had been arranged", "will have been completed", "is being investigated", "has been approved", "was being discussed", "have been informed", "will be reviewed", "had been expected"],
+      "sentence_practice": [
+        "The proposal is being considered at the highest level.",
+        "No decision has been reported so far.",
+        "The work will have been completed by then."
+      ],
+      "record_this": "The proposal is currently being considered at the highest level of the organisation. No formal decision has been reported to us so far, which is itself revealing. By the end of next quarter the work will have been completed and independently reviewed.",
+      "self_check": "Say 'has been reported'. Are 'has' and 'been' both light, with only 'reported' stressed?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["stress distribution: content words survive, grammar words vanish"],
+      "isolation": {
+        "instructions": "This is the underlying principle of the whole week. In 'It is thought to have been caused by human error', only THOUGHT, CAUSED, HUMAN and ERROR carry real beats. Everything else compresses into the gaps. Practise tapping only the content words.",
+        "instructions_ar": "هذا هو المبدأ الأساسي للأسبوع. الكلمات ذات المضمون فقط تحمل النبضات، وما عداها يُضغط في الفراغات. تدرّب على النقر على كلمات المضمون فقط.",
+        "practice": ["it is THOUGHT to have been CAUSED by HUMAN ERROR", "tap only the content words", "grammar words fill the gaps"]
+      },
+      "minimal_pairs": [
+        {"pair": ["4 beats (content only)", "10 beats (every word)"], "meaning": ["طبيعي", "متقطّع كالقراءة"]},
+        {"pair": ["it is THOUGHT to have been CAUSED", "IT IS THOUGHT TO HAVE BEEN CAUSED"], "meaning": ["إيقاع طبيعي", "كلمة كلمة"]},
+        {"pair": ["compressed grammar words", "fully pronounced grammar words"], "meaning": ["متحدّث متقدّم", "قراءة قانونية"]},
+        {"pair": ["by HUMAN ERROR", "BY human error"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["It has been SUGGESTED", "It HAS BEEN suggested"], "meaning": ["طبيعي", "مبالغ"]}
+      ],
+      "word_practice": ["it is thought to have been caused", "it has been suggested that", "it was later found to be", "it is now known to have been", "it may have been affected", "it should have been reported", "it must have been overlooked", "it could have been prevented", "it appears to have been ignored", "it is said to have been lost"],
+      "sentence_practice": [
+        "It is thought to have been caused by human error.",
+        "It has been suggested that the data was incomplete.",
+        "It could easily have been prevented."
+      ],
+      "record_this": "The failure is thought to have been caused by simple human error rather than any design fault. It has been suggested, quite reasonably, that the original data set was incomplete. Looking at it now, the whole situation could easily have been prevented.",
+      "self_check": "Say the 'human error' sentence. Did you tap only four or five strong beats, letting the rest compress?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["It is beLIEVED that…", "IT is believed that…"],
+        ["is said to /ɪz sed tə/", "is said to /ɪz sed tuː/"],
+        ["is thought to have left", "is thought to leave"],
+        ["/hæz bɪn/ (light chain)", "HAS BEEN (heavy)"],
+        ["4 beats (content only)", "10 beats (every word)"],
+        ["is said to be ✅", "is said to being ❌"]
+      ],
+      "challenge_sentences": [
+        "It is believed that the report was never sent.",
+        "She is said to have refused the offer twice.",
+        "The matter is being investigated internally.",
+        "It could have been avoided entirely."
+      ],
+      "record_this": "It is believed that the report was never actually sent to the committee. She is said to have refused the offer twice before finally accepting. The matter is currently being investigated internally by an independent team. Looking back, the entire situation could have been avoided.",
+      "self_check": "Three checks: linked light frame, weak /tə/ in 'to', and stress only on the final participle."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a broadcast news summary. Impersonal passives are the language of reporting, so aim for a steady professional pace — then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كموجز أخبار. المبني للمجهول غير الشخصي لغة التقارير، فاستهدف إيقاعًا مهنيًا ثابتًا، ثم اسمع وراجع.",
+        "passage": "The fire at the warehouse is thought to have started shortly after midnight. It is believed that an electrical fault was responsible, although the investigation is still being carried out. No injuries have been reported, and all staff are understood to have left the building several hours earlier. The site is said to have been inspected only last month, and it is now widely assumed that the report from that inspection will be examined closely. Local residents are reported to have heard two loud noises before the alarm sounded. It has been suggested that the sprinkler system may not have been functioning correctly. A full statement is expected to be released tomorrow, by which time the cause will have been established with more confidence. It could, of course, have been considerably worse.",
+        "sounds_to_check": {
+          "'It is believed that' frame": "It is beLIEVED that an electrical fault…, it is now widely asSUMED that…",
+          "'is said/thought to' /ɪz sed tə/": "is thought to have started, is said to have been inspected, are understood to have left",
+          "'to have' + participle blur": "to have STARTED, to have LEFT, to have HEARD, may not have been FUNCTIONING",
+          "long passive chains": "is being carried out, have been reported, will have been established, is expected to be released",
+          "content-word beats only": "It could, of course, have been considerably WORSE"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Auxiliary chains reduced and fast, participles clearly stressed, steady professional pace. Sounds like a broadcaster. Ready for week 6.",
+        "70_89": "Good; occasionally an auxiliary gets too much weight or /tuː/ replaces /tə/.",
+        "50_69": "Every word pronounced fully, so it sounds read rather than spoken. Repeat days 2-3 and day 5.",
+        "below_50": "Redo days 1-5. Start with day 5: tap only the content words and let the grammar words disappear."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The rule for the whole week: auxiliaries compress, the final participle carries the stress.",
+      "'to' in 'is said to be' is always weak /tə/. A strong /tuː/ instantly sounds like reading aloud.",
+      "'to have' becomes /tə əv/ — the /h/ normally disappears completely in connected speech.",
+      "Use the third form after 'have': 'is thought to have left', never 'to have leave'.",
+      "These constructions let you report without naming a source, which is why they dominate academic and news writing. Match that neutral, even tone."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 count your strong beats — there should be far fewer than the number of words."
+  }
+}

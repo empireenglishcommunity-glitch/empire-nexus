@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 18,
+  "focus": "Chunking long turns into thought groups · the rhetorical pause · smooth self-correction and paraphrase · holding the floor naturally · full C1 prosody review",
+  "focus_ar": "تقسيم الأدوار الطويلة إلى وحدات فكرية، والوقفة البلاغية، والتصحيح الذاتي وإعادة الصياغة بسلاسة، والحفاظ على الدور في الحديث، ومراجعة شاملة لتنغيم C1",
+  "arabic_challenge": "This final week shifts from sentences to whole turns. At C1 you must sustain several minutes of coherent speech, and the difficulty is no longer any individual sound but MANAGEMENT: grouping words into thought units, breathing at boundaries, pausing deliberately for effect, repairing a sentence without collapsing, and holding your turn while you think. Learners who have mastered every feature of weeks 1-17 can still sound laboured across a long turn because they breathe at random points and treat every hesitation as a failure. This week consolidates everything into sustained, confident delivery.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["chunking long turns into thought groups"],
+      "isolation": {
+        "instructions": "Long speech is delivered in thought groups of roughly five to nine words, each with one main beat, separated by tiny boundaries. Mark your groups before you speak: 'When we started the project | back in February | nobody expected | quite so many complications.' Breathe only at boundaries.",
+        "instructions_ar": "الكلام الطويل يُقدَّم في وحدات فكرية من خمس إلى تسع كلمات، لكل منها نبضة رئيسية، تفصلها حدود صغيرة. تنفّس عند الحدود فقط.",
+        "practice": ["When we started the project | back in February | nobody expected | quite so many complications", "5-9 words, one beat each"]
+      },
+      "minimal_pairs": [
+        {"pair": ["grouped in thought units", "one continuous stream"], "meaning": ["مفهوم", "متعب للمستمع"]},
+        {"pair": ["breathe at boundaries", "breathe mid-phrase"], "meaning": ["طبيعي", "مفكّك"]},
+        {"pair": ["one beat per group", "many beats per group"], "meaning": ["واضح", "مشوّش"]},
+        {"pair": ["5-9 word groups", "20-word groups"], "meaning": ["مريح", "لاهث"]},
+        {"pair": ["planned grouping", "random grouping"], "meaning": ["واثق", "مرتبك"]}
+      ],
+      "word_practice": ["when we started the project", "back in February", "nobody expected", "quite so many complications", "as far as I can tell", "at that particular point", "for a number of reasons", "which is why I think", "in the first instance", "to put it simply"],
+      "sentence_practice": [
+        "When we started the project, nobody expected so many complications.",
+        "As far as I can tell, the figures haven't changed.",
+        "For a number of reasons, we decided to wait."
+      ],
+      "record_this": "When we first started this project back in February, nobody expected quite so many complications. As far as I can tell from the latest figures, very little has actually changed. For a number of practical reasons, we eventually decided to wait until the spring.",
+      "self_check": "Say the February sentence. Did you group it into units of five to nine words and breathe only at the boundaries?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["the rhetorical pause"],
+      "isolation": {
+        "instructions": "A deliberate silence before or after a key point makes it land. 'The real problem | was never the budget.' Pausing before the important word creates anticipation; pausing after it gives the listener time to absorb. Silence is a tool, not a gap to be filled.",
+        "instructions_ar": "الصمت المقصود قبل النقطة المهمة أو بعدها يجعلها تترسّخ. الوقفة قبل الكلمة المهمة تخلق توقّعًا وبعدها تمنح المستمع وقتًا للاستيعاب.",
+        "practice": ["The real problem | was never the budget", "It was the timing. | (pause) | Nothing else.", "silence is a tool"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The real problem | was never the budget", "The real problem was never the budget"], "meaning": ["مؤثّر", "عادي"]},
+        {"pair": ["pause before the key word", "no pause"], "meaning": ["توقّع", "مسطّح"]},
+        {"pair": ["pause after the key point", "rush onward"], "meaning": ["يترسّخ", "يُفقد"]},
+        {"pair": ["deliberate silence", "filled hesitation"], "meaning": ["واثق", "متردّد"]},
+        {"pair": ["one strong pause", "constant pausing"], "meaning": ["مؤثّر", "متقطّع"]}
+      ],
+      "word_practice": ["the real problem", "was never the budget", "it was the timing", "nothing else", "and that", "is the point", "think about that", "for a moment", "one question remains", "why now"],
+      "sentence_practice": [
+        "The real problem was never the budget.",
+        "It was the timing. Nothing else.",
+        "And that, I think, is the point."
+      ],
+      "record_this": "The real problem, I have come to believe, was never actually the budget. It was the timing, and nothing else. And that, I think, is the point everyone keeps missing in these discussions.",
+      "self_check": "Say 'The real problem was never the budget' with a pause before 'never'. Does it land harder?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["smooth self-correction and paraphrase"],
+      "isolation": {
+        "instructions": "Advanced speakers repair mid-sentence without breaking stride: 'The report was finished in May — or rather, submitted in May.' Use a small pause, a repair phrase ('or rather', 'I mean', 'what I should say is'), then continue at the same pace. No apology, no restart.",
+        "instructions_ar": "المتحدّث المتقدّم يصحّح في وسط الجملة دون توقّف: وقفة صغيرة ثم عبارة تصحيح ثم المتابعة بالسرعة نفسها، بلا اعتذار ولا إعادة من البداية.",
+        "practice": ["finished in May — or rather, submitted in May", "I mean, more precisely…", "repair and continue, don't restart"]
+      },
+      "minimal_pairs": [
+        {"pair": ["— or rather, submitted in May", "sorry, sorry, let me start again"], "meaning": ["تصحيح سلس", "ارتباك"]},
+        {"pair": ["I mean, more precisely…", "no no no"], "meaning": ["مهني", "مرتبك"]},
+        {"pair": ["same pace after repair", "slowing down apologetically"], "meaning": ["واثق", "متردّد"]},
+        {"pair": ["what I should say is…", "how do you say…"], "meaning": ["إعادة صياغة", "طلب مساعدة"]},
+        {"pair": ["or rather", "or better"], "meaning": ["الأشيع", "أقل شيوعًا"]}
+      ],
+      "word_practice": ["or rather", "I mean", "what I should say is", "more precisely", "to put it another way", "let me rephrase that", "that is to say", "or perhaps I should say", "in other words", "strictly speaking"],
+      "sentence_practice": [
+        "The report was finished in May — or rather, submitted in May.",
+        "It's cheaper. I mean, more cost-effective overall.",
+        "To put it another way, we ran out of time."
+      ],
+      "record_this": "The report was finished in May, or rather, it was submitted in May and finished rather later. It's cheaper, or I mean, more cost-effective overall once you include maintenance. To put it another way, we simply ran out of time before the deadline.",
+      "self_check": "Say the May sentence with the repair. Did you keep the same pace, without apologising or restarting?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["holding the floor while you think"],
+      "isolation": {
+        "instructions": "You need natural ways to keep your turn while forming a thought: 'That's a good question — let me think about that for a second.' Deliver these at normal pace with a level tone. Silence with a falling tone hands your turn away; a level tone keeps it.",
+        "instructions_ar": "تحتاج طرقًا طبيعية للحفاظ على دورك أثناء تكوين الفكرة. قلها بسرعة عادية ونبرة مستوية؛ فالنبرة الهابطة تسلّم الدور.",
+        "practice": ["That's a good question — | let me think about that", "It depends, really, | on what you mean by…", "level tone keeps your turn"]
+      },
+      "minimal_pairs": [
+        {"pair": ["level tone (keeps turn)", "falling tone (gives turn away)"], "meaning": ["يحتفظ بالدور", "يسلّم الدور"]},
+        {"pair": ["That's a good question…", "silence"], "meaning": ["يحتفظ بالدور", "يُقطع"]},
+        {"pair": ["It depends on what you mean", "erm… erm… erm…"], "meaning": ["مهني", "متردّد"]},
+        {"pair": ["one filler phrase", "repeated fillers"], "meaning": ["طبيعي", "مزعج"]},
+        {"pair": ["Let me put it this way…", "I don't know"], "meaning": ["يشتري وقتًا", "ينهي الدور"]}
+      ],
+      "word_practice": ["that's a good question", "let me think about that", "it depends really", "on what you mean by", "let me put it this way", "the short answer is", "I suppose the honest answer", "there are two ways", "of looking at that", "if I can come back to that"],
+      "sentence_practice": [
+        "That's a good question — let me think about that.",
+        "It depends, really, on what you mean by success.",
+        "The short answer is yes, but with conditions."
+      ],
+      "record_this": "That's a genuinely good question, so let me think about it for a moment. It depends, really, on what exactly you mean by success in this context. The short answer is yes, but with two fairly important conditions attached.",
+      "self_check": "Say 'That's a good question — let me think about that' with a level tone. Does it feel like you still hold the floor?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["full C1 prosody review across all features"],
+      "isolation": {
+        "instructions": "Combine the whole level in one delivery: inversion stress (w1-2), nuclear focus (w3), boundary pauses (w4), reduced auxiliaries (w5), nominalised stress (w6), modal chunks (w7), hedging fall-rise (w8), bracketed connectors (w9), quiet relatives (w10), strong substitute auxiliaries (w11), emphatic 'do' (w12), reduced 'going to' (w13), condition contours (w14), idiom chunks (w15), register control (w16) and single-beat noun phrases (w17).",
+        "instructions_ar": "اجمع المستوى كله في أداء واحد: نبر القلب، والتركيز النووي، ووقفات الحدود، وتخفيف المساعدات، والنبر الاسمي، وكتل الأفعال الناقصة، ونغمة التحفّظ، وأدوات الربط، والوصل الهادئ، والمساعدات البديلة، و'do' التوكيدية، والشرط، والتعابير، والأسلوب، والعبارات الاسمية.",
+        "practice": ["Never have I seen…", "What matters is…", "It is thought to have…", "I DO accept…", "all seventeen features, one delivery"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Never HAVE I seen it", "I have never seen it"], "meaning": ["مقلوب مؤكَّد", "عادي"]},
+        {"pair": ["What matters is the RESULT", "The result matters"], "meaning": ["مشقوق", "عادي"]},
+        {"pair": ["is thought to have LEFT", "IS THOUGHT TO HAVE LEFT"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["I DO accept that", "I accept that"], "meaning": ["إصرار", "عادي"]},
+        {"pair": ["to some extent ↘↗", "to some extent ↘"], "meaning": ["متحفّظ", "حاسم"]}
+      ],
+      "word_practice": ["never have I", "what matters is", "having considered", "is thought to have", "the implementation of", "ought to have", "it would seem", "however", "many of which", "so do I"],
+      "sentence_practice": [
+        "Never have I seen a clearer example.",
+        "What matters is not the cost but the timing.",
+        "It is thought to have been an oversight."
+      ],
+      "record_this": "Never have I seen a clearer example of what happens when nobody checks. What matters here is not the cost but the timing, and that was always obvious. It is now thought to have been a simple oversight rather than anything deliberate.",
+      "self_check": "Say all three sentences. Can you hear inversion stress, nuclear focus and reduced auxiliaries working together?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 18 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["grouped in thought units", "one continuous stream"],
+        ["The real problem | was never the budget", "The real problem was never the budget"],
+        ["— or rather, submitted in May", "sorry, sorry, let me start again"],
+        ["level tone (keeps turn)", "falling tone (gives turn away)"],
+        ["Never HAVE I seen it", "I have never seen it"],
+        ["breathe at boundaries", "breathe mid-phrase"]
+      ],
+      "challenge_sentences": [
+        "When we began, | nobody expected | quite so much resistance.",
+        "The issue was never the money. | It was trust.",
+        "We finished in June — or rather, we stopped in June.",
+        "That's a fair question; let me answer it properly."
+      ],
+      "record_this": "When we first began this work, nobody expected quite so much internal resistance. The issue was never really the money. It was trust, and it still is. We finished in June, or rather, we stopped working on it in June. That's a perfectly fair question, so let me try to answer it properly.",
+      "self_check": "Three checks: thought groups with breaths only at boundaries, one deliberate rhetorical pause, and a repair that keeps its pace."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is the C1 capstone. Record yourself delivering this as a five-minute conference talk, performing every prosodic feature of the level. Then listen back critically and compare it with your very first recording from week 1 day 1.",
+        "instructions_ar": "هذا تتويج مستوى C1. سجّل نفسك تقدّم هذا كمحاضرة مؤتمر وأدِّ كل ملامح التنغيم في المستوى، ثم اسمع بنقد وقارن بتسجيلك الأول في الأسبوع الأول.",
+        "passage": "Rarely does a project teach you as much as this one did. When we began, | back in early February, | nobody expected quite so many complications. It is widely believed that delays are caused by poor planning. In our case, arguably, the opposite was true: the plan was detailed, and that was the problem. Having spent three weeks refining it, we had no flexibility left. What we needed was not a better plan but a shorter one. The implementation of the original schedule required approval from four committees, most of which met only monthly. Had we understood that at the outset, we would have designed the whole thing differently. I do accept that some of this was foreseeable. Nevertheless, | the central lesson | is not about planning at all. It is about trust. Provided a team trusts one another, a rough plan will survive contact with reality. Without that, no amount of detail will save you. The real problem, | in other words, | was never the schedule. It was that we did not know each other well enough to disagree productively. That, | I think, | is worth more than any timeline.",
+        "sounds_to_check": {
+          "inversion + nuclear focus (w1-3)": "RARELY does a project teach you…, Had we understood that…, What we needed was not a better PLAN but a shorter ONE",
+          "boundary pauses + participles (w1, w4)": "When we began, | back in early February, | nobody expected… · Having spent three weeks refining it,",
+          "reduced auxiliaries + nominalisation (w5-6)": "It is widely believed that…, The implementation of the original schedule required…",
+          "hedging + connectors + relatives (w8-10)": "arguably ↘↗, Nevertheless, | the central lesson |, four committees, most of which met only monthly",
+          "emphatic 'do' + conditions + rhetorical pause (w12, w14, w18)": "I DO accept that…, Provided a team trusts one another…, The real problem, | in other words, | was never the schedule"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Sustained, confident delivery with every C1 feature present and controlled. Thought groups clean, pauses purposeful, register consistent. C1 prosody achieved — ready for C2.",
+        "70_89": "Strong; the level is clearly audible but one or two features slip across a long turn. Revisit those specific weeks.",
+        "50_69": "Individual features work in isolation but break down over sustained speech. Repeat days 1-2 and review the weakest three weeks.",
+        "below_50": "Redo days 1-5, then revisit weeks 1, 5 and 12 before reattempting this capstone."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Group your speech into thought units of five to nine words and breathe ONLY at the boundaries.",
+      "A deliberate pause is a tool of emphasis, not a mistake. Silence before a key word makes it land.",
+      "Repair smoothly with 'or rather' or 'I mean' and keep your pace. Never apologise or restart.",
+      "Keep a LEVEL tone while thinking to hold your turn. A falling tone invites someone else to speak.",
+      "Compare this final recording with week 1 day 1. The distance you have travelled is the real result of the level."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 record the full capstone and compare it directly with your first C1 recording."
+  }
+}

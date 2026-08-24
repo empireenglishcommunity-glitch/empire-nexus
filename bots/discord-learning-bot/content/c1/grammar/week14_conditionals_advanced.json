@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w14",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 14,
+  "pattern_name": "Advanced conditionals (provided, as long as, supposing, inverted)",
+  "pattern_name_ar": "الشرط المتقدّم (provided، as long as، supposing، والمقلوب)",
+  "formula": "provided/providing (that) + clause · as long as / so long as + clause · unless + positive clause · supposing (that) + clause · on condition that + clause · inverted: Had/Were/Should + subject",
+  "formula_visual": "[Provided the funding arrives], [we can start in March]",
+  "when_to_use": "To express conditions with more precision than plain 'if'. 'provided that' and 'as long as' state a requirement, 'unless' means 'if not', 'supposing' opens a hypothesis, and 'on condition that' marks a binding, often contractual requirement. There is a clear register ladder: 'as long as' in speech, 'provided that' in formal writing, 'on condition that' in agreements.",
+  "when_to_use_ar": "للتعبير عن الشروط بدقّة أكبر من 'if' المجرّدة. 'provided that' و'as long as' تفيدان شرطًا، و'unless' تعني 'إن لم'، و'supposing' تفتح افتراضًا، و'on condition that' شرط مُلزم. وهناك سلّم رسمية واضح.",
+  "why_arabic_speakers_struggle": "The Arabic 'إلا إذا' contains an explicit negative, which invites the classic double-negative error after 'unless' ('unless it doesn't rain'), reversing the meaning. Learners also carry over a habit from other languages of using a future form in the condition clause ('provided we will agree'), where English requires the present. Finally, the register differences are invisible without instruction, so contractual phrasing appears in casual conversation.",
+  "examples": [
+    {"en": "Provided the funding arrives, we can start in March.", "ar": "بشرط وصول التمويل، يمكننا البدء في مارس", "structure": "[Provided + present clause], [result]"},
+    {"en": "You can borrow it as long as you're careful.", "ar": "يمكنك استعارته ما دمت حذرًا", "structure": "[result] + [as long as + present clause]"},
+    {"en": "We'll meet outside unless it rains.", "ar": "سنتقابل في الخارج إلا إذا أمطرت", "structure": "[result] + [unless + positive clause]"},
+    {"en": "Supposing they refuse, what do we do then?", "ar": "لو افترضنا أنهم رفضوا، فماذا نفعل؟", "structure": "[Supposing + clause], + question"},
+    {"en": "He agreed on condition that his name stayed private.", "ar": "وافق بشرط أن يبقى اسمه سرًّا", "structure": "[on condition that + clause]"}
+  ],
+  "common_errors": [
+    {"wrong": "We'll meet outside unless it doesn't rain.", "correct": "We'll meet outside unless it rains.", "explanation": "'Unless' already means 'if not', so a second negative reverses the meaning."},
+    {"wrong": "Provided we will agree, we can start.", "correct": "Provided we agree, we can start.", "explanation": "Condition clauses take the present tense, not 'will'."},
+    {"wrong": "As long as of the paperwork is clean, we proceed.", "correct": "As long as the paperwork is clean, we proceed.", "explanation": "'As long as' is followed directly by a clause with no preposition."},
+    {"wrong": "On condition that he will apologise, I'll continue.", "correct": "On condition that he apologises, I'll continue.", "explanation": "Like other conditional connectors, this takes the present tense."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ the board approves it, we can begin recruitment.", "answer": "Provided / Providing"},
+    {"sentence": "You can stay as ___ as you like.", "answer": "long"},
+    {"sentence": "___ something changes, that remains the plan.", "answer": "Unless"},
+    {"sentence": "He agreed on ___ that his name stayed private.", "answer": "condition"},
+    {"sentence": "Provided nothing ___ (change), we'll finish on time.", "answer": "changes"}
+  ],
+  "quick_rule": "Condition clauses use the PRESENT, never 'will'. 'unless' takes a positive verb. Register: as long as (spoken) - provided that (formal) - on condition that (contractual).",
+  "quick_rule_ar": "جُمَل الشرط بالمضارع لا 'will'. و'unless' يتبعها فعل مثبت. والرسمية: as long as منطوق - provided that رسمي - on condition that تعاقدي.",
+  "mnemonic": "'Unless' already carries the 'not'.",
+  "connect_to_speaking": "In accent week 14 you drilled each connector as a single chunk with the condition suspended before the result falls. That contour is what tells a listener where the condition ends and the consequence begins."
+}

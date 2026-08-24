@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 12,
+  "focus": "Emphatic auxiliary 'do' ('I DO understand') · 'far too' and 'nowhere near' · 'by far' and 'all the more' · 'utterly/absolutely' collocations · contrastive stress for correction",
+  "focus_ar": "الفعل المساعد التوكيدي 'do' ('I DO understand')، و'far too' و'nowhere near'، و'by far' و'all the more'، ومتلازمات 'utterly/absolutely'، والنبر التقابلي للتصحيح",
+  "arabic_challenge": "English can insert a purely emphatic 'do' into a positive sentence — 'I DO understand' — where the auxiliary adds no grammatical information at all and exists only to carry stress. Learners either omit it (losing the insistence) or include it without stressing it, which makes the sentence sound merely odd. The intensifiers have a second trap: they collocate strictly. 'Utterly' pairs with negative extremes ('utterly ridiculous'), never with mild adjectives, and 'nowhere near' takes a strong beat on NEAR. Arabic intensifies with adverbs and repetition (جدًا / إطلاقًا) that do not require a carrier auxiliary, so emphatic 'do' has no direct equivalent to lean on.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["emphatic auxiliary 'do': 'I DO understand'"],
+      "isolation": {
+        "instructions": "Insert 'do/does/did' into a positive sentence purely to insist, and stress it hard: 'I DO understand.' It usually answers an unspoken doubt. Without the stress the sentence has no purpose, so make the auxiliary the loudest word in the clause.",
+        "instructions_ar": "أدخل 'do/does/did' في جملة مثبتة للتوكيد فقط وانبرها بقوة: 'I DO understand'. وهي تجيب عن شكّ غير معلن.",
+        "practice": ["I DO understand", "She DOES care", "We DID try", "the auxiliary is the loudest word"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I DO understand", "I understand"], "meaning": ["إصرار", "خبر عادي"]},
+        {"pair": ["She DOES care", "She cares"], "meaning": ["توكيد ضد الشك", "عادي"]},
+        {"pair": ["We DID try", "We tried"], "meaning": ["دفاع مؤكَّد", "عادي"]},
+        {"pair": ["I DO understand ✅", "I do UNDERSTAND"], "meaning": ["نبر توكيدي صحيح", "نبر خاطئ"]},
+        {"pair": ["Do come in ↘ (warm)", "Come in"], "meaning": ["دعوة ودّية", "أمر"]}
+      ],
+      "word_practice": ["I do understand", "she does care", "we did try", "he does know", "they did warn us", "I do apologise", "it does matter", "do come in", "do sit down", "I did tell you"],
+      "sentence_practice": [
+        "I do understand your concern, honestly.",
+        "She does care, even if it doesn't show.",
+        "We did try to warn them."
+      ],
+      "record_this": "I do understand your concern about the timing, and I'm not dismissing it. She does care about the outcome, even if it doesn't always show. We did try to warn them well in advance, but nobody was listening.",
+      "self_check": "Say 'I DO understand'. Is 'do' the loudest word, sounding genuinely insistent?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'far too' /fɑː tuː/ · 'nowhere near' /ˈnəʊweə nɪə/"],
+      "isolation": {
+        "instructions": "'far too' intensifies an excess: 'far too EXPENSIVE'. Both words are fairly strong, then the adjective peaks. 'nowhere near' means 'not remotely', with the main beat on NEAR: 'nowhere NEAR ready'. Both are chunks — do not break them up.",
+        "instructions_ar": "'far too' تكثّف الإفراط وكلتاهما قويّتان ثم تعلو الصفة، و'nowhere near' تعني 'ليس قريبًا إطلاقًا' والنبضة على NEAR.",
+        "practice": ["far too exPENSIVE", "nowhere NEAR ready", "chunks, not separate words"]
+      },
+      "minimal_pairs": [
+        {"pair": ["far too expensive", "too expensive"], "meaning": ["مبالغ جدًا", "مبالغ"]},
+        {"pair": ["nowhere near ready", "not quite ready"], "meaning": ["بعيد جدًا", "قريب"]},
+        {"pair": ["nowhere NEAR", "NOWHERE near"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["far too many", "far too much"], "meaning": ["معدود", "غير معدود"]},
+        {"pair": ["nowhere near enough", "not enough"], "meaning": ["ناقص بشدّة", "ناقص"]}
+      ],
+      "word_practice": ["far too expensive", "far too many", "far too much", "far too late", "nowhere near ready", "nowhere near enough", "nowhere near as good", "far too complicated", "nowhere near finished", "far too optimistic"],
+      "sentence_practice": [
+        "The original quote was far too expensive.",
+        "We're nowhere near ready for the launch.",
+        "There were far too many people involved."
+      ],
+      "record_this": "The original quote was far too expensive for a project of this size. We are nowhere near ready for a launch at the end of the month. There were far too many people involved in what should have been a simple decision.",
+      "self_check": "Say 'nowhere near ready'. Is the main beat on NEAR, with the phrase said as one chunk?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'by far' /baɪ fɑː/ · 'all the more' /ɔːl ðə mɔː/"],
+      "isolation": {
+        "instructions": "'by far' strengthens a superlative: 'by far the BEST'. 'all the more' means 'even more, because of that': 'all the more IMPRESSIVE'. In both, the chunk is quick and the following adjective carries the peak.",
+        "instructions_ar": "'by far' تقوّي صفة التفضيل، و'all the more' تعني 'أكثر بسبب ذلك'. في كلتيهما الكتلة سريعة والصفة التالية تحمل القمّة.",
+        "practice": ["by far the BEST", "all the more imPRESSIVE", "quick chunk, adjective peaks"]
+      },
+      "minimal_pairs": [
+        {"pair": ["by far the best", "the best"], "meaning": ["بفارق كبير", "الأفضل"]},
+        {"pair": ["all the more impressive", "more impressive"], "meaning": ["أكثر بسبب ذلك", "أكثر"]},
+        {"pair": ["by far ✅", "by the far ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["all the more so", "even more so"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["by far the worst", "by far the best"], "meaning": ["الأسوأ بفارق", "الأفضل بفارق"]}
+      ],
+      "word_practice": ["by far the best", "by far the worst", "by far the largest", "all the more impressive", "all the more important", "all the more so", "by far the cheapest", "all the more surprising", "by far the most likely", "all the more reason"],
+      "sentence_practice": [
+        "It was by far the best presentation of the day.",
+        "Given her age, that's all the more impressive.",
+        "That's all the more reason to check again."
+      ],
+      "record_this": "It was by far the best presentation of the entire day, and everyone said so. Given how little time she had, that result is all the more impressive. If the deadline really is fixed, that's all the more reason to check everything again.",
+      "self_check": "Say 'by far the best'. Is the chunk quick, with the peak on 'best'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'utterly' and 'absolutely' + extreme adjectives"],
+      "isolation": {
+        "instructions": "These intensifiers only pair with extreme adjectives. 'utterly ridiculous', 'absolutely exhausted' — not 'utterly good'. Both words are said quickly with the peak on the adjective: /ˈʌtəli/ riDICulous. Choosing the wrong partner is the commonest error, not the pronunciation.",
+        "instructions_ar": "هذه المكثّفات تتلازم مع الصفات المتطرّفة فقط، وتُقال بسرعة مع القمّة على الصفة. الخطأ الأشيع هو اختيار الصفة لا اللفظ.",
+        "practice": ["/ˈʌtəli/ riDICulous", "/ˈæbsəluːtli/ igˈZAUSTed", "extreme partners only"]
+      },
+      "minimal_pairs": [
+        {"pair": ["utterly ridiculous ✅", "utterly good ❌"], "meaning": ["تلازم صحيح", "تلازم خاطئ"]},
+        {"pair": ["absolutely exhausted ✅", "very exhausted ❌"], "meaning": ["صحيح", "غير طبيعي"]},
+        {"pair": ["utterly /ˈʌtəli/", "UTTERLY (over-stressed)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["absolutely certain", "fairly certain"], "meaning": ["يقين تام", "يقين جزئي"]},
+        {"pair": ["completely different", "very different"], "meaning": ["مختلف تمامًا", "مختلف كثيرًا"]}
+      ],
+      "word_practice": ["utterly ridiculous", "utterly exhausted", "absolutely certain", "absolutely essential", "completely different", "entirely unnecessary", "totally unacceptable", "perfectly clear", "highly unlikely", "deeply concerned"],
+      "sentence_practice": [
+        "The suggestion was utterly ridiculous.",
+        "I'm absolutely certain about the date.",
+        "That approach is completely different."
+      ],
+      "record_this": "The suggestion was utterly ridiculous, and I said so at the time. I am absolutely certain about the date, because I wrote it down twice. That approach is completely different from anything we have tried before.",
+      "self_check": "Say 'utterly ridiculous'. Is 'utterly' quick, with the peak on the adjective — and is the adjective extreme?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["contrastive stress for correction"],
+      "isolation": {
+        "instructions": "To correct someone, put a heavy beat on the corrected word and leave everything else level: 'I said THURSDAY, not Tuesday.' The contrast is carried entirely by that one beat. Often the corrected word is also slightly lengthened.",
+        "instructions_ar": "لتصحيح شخص، ضع نبضة ثقيلة على الكلمة المصحّحة واترك ما عداها مستويًا. التقابل كله محمول على تلك النبضة.",
+        "practice": ["I said THURSday, not Tuesday", "It's HER report, not mine", "one heavy beat carries the contrast"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I said THURSDAY, not Tuesday", "I said Thursday not Tuesday (flat)"], "meaning": ["تصحيح واضح", "مبهم"]},
+        {"pair": ["It's HER report", "It's her REPORT"], "meaning": ["ملكها لا ملكي", "تقرير لا شيء آخر"]},
+        {"pair": ["I asked for TWO", "I ASKED for two"], "meaning": ["العدد", "الطلب نفسه"]},
+        {"pair": ["not BEFORE, after", "not before AFTER"], "meaning": ["تصحيح صحيح", "مشوّش"]},
+        {"pair": ["lengthened corrected word", "same length"], "meaning": ["تصحيح طبيعي", "أقل وضوحًا"]}
+      ],
+      "word_practice": ["I said Thursday", "not Tuesday", "it's her report", "I asked for two", "not before, after", "I meant the second one", "not less, more", "she called, not wrote", "it's cheaper, not better", "I said maybe"],
+      "sentence_practice": [
+        "I said Thursday, not Tuesday.",
+        "It's her report, not mine.",
+        "I asked for two, not twelve."
+      ],
+      "record_this": "I said Thursday, not Tuesday, which is why nobody was there to meet you. It's her report, not mine, so any questions should really go to her. I asked for two copies, not twelve, and now the whole office has them.",
+      "self_check": "Say 'I said THURSDAY, not Tuesday'. Is there one heavy beat on the corrected word, with the rest level?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 12 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["I DO understand", "I understand"],
+        ["nowhere NEAR", "NOWHERE near"],
+        ["by far the best", "the best"],
+        ["utterly ridiculous ✅", "utterly good ❌"],
+        ["I said THURSDAY, not Tuesday", "I said Thursday not Tuesday (flat)"],
+        ["all the more impressive", "more impressive"]
+      ],
+      "challenge_sentences": [
+        "I do appreciate the effort, but it's far too slow.",
+        "This is by far the most likely explanation.",
+        "That's utterly unacceptable, frankly.",
+        "I said reduce it, not remove it."
+      ],
+      "record_this": "I do appreciate the effort involved, but the process is far too slow at present. This is by far the most likely explanation for the discrepancy we found. That response is utterly unacceptable, frankly, and I intend to say so. I said reduce it, not remove it, which is a very different instruction.",
+      "self_check": "Three checks: emphatic 'do' as the loudest word, intensifier chunks with the peak on the adjective, and one heavy beat for each correction."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a firm but professional response in a disagreement. Emphasis is the whole point, so commit to each beat — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كردّ حاسم لكن مهني في خلاف. التوكيد هو المقصد، فالتزم بكل نبضة، ثم اسمع وراجع.",
+        "passage": "Let me be clear, because I think my position has been misrepresented. I do accept that the first version was too slow. What I don't accept is the claim that we ignored the warnings. We did raise the issue, twice, in writing. The response we received was nowhere near adequate, and the delay that followed was far too long to be explained by workload alone. That makes the eventual result all the more frustrating, because it was by far the simplest problem on the list. I said the process needed simplifying, not scrapping. Those are completely different recommendations. To describe our team as uncooperative is utterly unfair, and I do think an apology would be appropriate. I am absolutely willing to move on. I am nowhere near willing to accept a version of events that isn't true.",
+        "sounds_to_check": {
+          "emphatic 'do' as loudest word": "I DO accept that…, We DID raise the issue, I DO think an apology…",
+          "'far too' and 'nowhere near'": "nowhere near adequate, far too long, nowhere near willing",
+          "'by far' and 'all the more'": "all the more frustrating, by far the simplest problem",
+          "extreme-adjective collocations": "completely different, utterly unfair, absolutely willing",
+          "contrastive correction beats": "needed SIMPLIFYING, not scrapping · a version of events that ISN'T true"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Emphatic 'do' unmistakable, intensifiers correctly collocated, corrections carried by a single clear beat. Firm and professional. Ready for week 13.",
+        "70_89": "Good; occasionally the emphatic 'do' is under-stressed or an intensifier is mismatched.",
+        "50_69": "Emphasis flat, so the response sounds passive rather than firm. Repeat days 1 and 5.",
+        "below_50": "Redo days 1-5. Start with emphatic 'do' — exaggerate it until it feels natural."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Emphatic 'do' exists only to carry stress. Include it AND stress it, or leave it out.",
+      "'nowhere near' takes the main beat on NEAR and means 'not remotely', which is far stronger than 'not quite'.",
+      "'utterly' and 'absolutely' pair only with extreme adjectives. 'Utterly good' is not English.",
+      "For corrections, one heavy beat on the corrected word does all the work. Do not stress the whole clause.",
+      "Use emphasis sparingly. Constant intensification stops being emphatic and starts sounding aggressive."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every emphatic 'do' is genuinely the loudest word in its clause."
+  }
+}

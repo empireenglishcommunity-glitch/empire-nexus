@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w6",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 6,
+  "pattern_name": "Grammatical metaphor and extreme nominalisation",
+  "pattern_name_ar": "المجاز النحوي والتحويل الاسمي المكثّف",
+  "formula": "clause → noun phrase (they decided → their decision) · process → entity (prices rose → the rise in prices) · agentless abstraction (we made mistakes → the occurrence of errors) · stacked abstraction (the systematic under-reporting of minor incidents)",
+  "formula_visual": "[Their decision to cut spending] [led to] [a rise in unemployment]",
+  "when_to_use": "To compress whole events into noun phrases so they can function as subjects and objects, which is the defining move of academic and official prose. It allows you to package a process ('the government decided to cut spending') and then say something about it. It also removes the agent, which makes writing impersonal and, sometimes, evasive.",
+  "when_to_use_ar": "لضغط أحداث كاملة في عبارات اسمية تعمل كفواعل ومفاعيل، وهي الحركة المميّزة للنثر الأكاديمي والرسمي. وتتيح تغليف عملية ثم القول عنها شيئًا، كما تحذف الفاعل فتجعل الكتابة غير شخصية وربما متهرّبة.",
+  "why_arabic_speakers_struggle": "Arabic forms nouns from roots through internal patterns (مصادر), so the process feels regular, whereas English uses an unpredictable set of endings (-tion, -ment, -ance, -al, -ure) and sometimes no change at all. Learners therefore choose the wrong ending or use the bare verb as a noun ('the develop of the site'). The prepositions are a second trap, since each nominalisation selects its own ('a rise IN prices', 'the failure OF the system', 'an increase IN demand').",
+  "examples": [
+    {"en": "Their decision to cut spending led to a rise in unemployment.", "ar": "أدّى قرارهم بخفض الإنفاق إلى ارتفاع البطالة", "structure": "[nominalised clause] + verb + [nominalised result]"},
+    {"en": "The failure to consult caused most of the resentment.", "ar": "تسبّب عدم التشاور في معظم الاستياء", "structure": "[The + noun + to + verb] + verb"},
+    {"en": "The systematic under-reporting of minor incidents concealed the trend.", "ar": "أخفى النقص المنهجي في الإبلاغ عن الحوادث الصغيرة الاتجاه العام", "structure": "[stacked abstraction] + verb"},
+    {"en": "The absence of documentation makes verification impossible.", "ar": "غياب الوثائق يجعل التحقّق مستحيلًا", "structure": "[The absence of + noun] + verb"},
+    {"en": "There was a breakdown in communication between departments.", "ar": "كان هناك انقطاع في التواصل بين الأقسام", "structure": "[agentless abstraction]"}
+  ],
+  "common_errors": [
+    {"wrong": "The develop of the site was delayed.", "correct": "The development of the site was delayed.", "explanation": "The noun requires its own ending; the bare verb cannot serve as a noun here."},
+    {"wrong": "A rise of prices caused complaints.", "correct": "A rise in prices caused complaints.", "explanation": "'Rise' selects 'in' when describing levels or amounts."},
+    {"wrong": "The fail of the system caused delays.", "correct": "The failure of the system caused delays.", "explanation": "Use the correct nominal form 'failure'."},
+    {"wrong": "The absence of documentation make verification impossible.", "correct": "The absence of documentation makes verification impossible.", "explanation": "The head noun 'absence' is singular, so the verb is singular."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Their ___ (decide) to cut spending caused a rise in unemployment.", "answer": "decision"},
+    {"sentence": "The ___ (fail) of the system caused serious delays.", "answer": "failure"},
+    {"sentence": "There was a sharp rise ___ prices last winter.", "answer": "in"},
+    {"sentence": "The ___ (absent) of documentation makes verification impossible.", "answer": "absence"},
+    {"sentence": "The ___ (introduce) of the levy was widely opposed.", "answer": "introduction"}
+  ],
+  "quick_rule": "Turn the process into a noun and make it the subject. Watch the ending and the preposition (rise IN, failure OF). The verb agrees with the HEAD noun.",
+  "quick_rule_ar": "حوّل العملية إلى اسم واجعله الفاعل. وانتبه للنهاية وحرف الجر (rise IN، failure OF). والفعل يطابق الاسم الرئيسي.",
+  "mnemonic": "Package the event, then say what it did.",
+  "connect_to_speaking": "In accent week 6 you drilled one nuclear beat per abstract phrase and a slower pace for dense prose. Nominalised writing needs more time, not less, because each phrase carries a whole clause inside it."
+}

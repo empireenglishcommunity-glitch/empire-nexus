@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 3,
+  "focus": "Nuclear stress on the clefted element · 'It was X that…' · 'What I need is…' · 'All/The thing/The reason…' · fronting intonation · contrastive stress that changes meaning",
+  "focus_ar": "النبر النووي على العنصر المشقوق، و'It was X that…'، و'What I need is…'، و'All/The thing/The reason…'، وتنغيم التقديم، والنبر التقابلي الذي يغيّر المعنى",
+  "arabic_challenge": "Cleft sentences exist to move one element into the spotlight, and English marks that spotlight with NUCLEAR STRESS — the single strongest beat in the sentence. If you build the cleft structure correctly but distribute stress evenly, you have done the grammatical work and thrown away the communicative payoff. Arabic achieves this focus mainly through word order and particles, so learners rarely feel that one word must dominate all the others acoustically. The hardest step is trusting that everything after the nucleus should drop away.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'It was X that…' — nuclear stress on X"],
+      "isolation": {
+        "instructions": "In 'It was SARAH that called', the whole point is SARAH. Give it the strongest beat in the sentence, then let 'that called' fall away almost to a murmur. The clefted element dominates; everything after it is background.",
+        "instructions_ar": "في 'It was SARAH that called' المقصود هو SARAH. أعطها أقوى نبضة في الجملة ثم اجعل 'that called' تخفت تمامًا.",
+        "practice": ["It was SARAH that called", "It was the PRICE that worried me", "nucleus dominates, tail falls away"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It was SARAH that called", "It was Sarah that CALLED"], "meaning": ["سارة هي الفاعل", "الاتصال هو الجديد"]},
+        {"pair": ["It was the PRICE that worried me", "The price worried me"], "meaning": ["تركيز على السعر", "خبر عادي"]},
+        {"pair": ["It was YESTERDAY that we met", "We met yesterday"], "meaning": ["تحديد الزمن", "عادي"]},
+        {"pair": ["nucleus + faded tail", "even stress throughout"], "meaning": ["تركيز واضح", "بلا تركيز"]},
+        {"pair": ["It was HE who decided", "He decided"], "meaning": ["رسمي مؤكَّد", "عادي"]}
+      ],
+      "word_practice": ["it was Sarah that", "it was the price that", "it was yesterday that", "it is this that", "it was you who", "it was then that", "it is here that", "it was the delay that", "it was her tone that", "it is precisely this that"],
+      "sentence_practice": [
+        "It was the price that worried me, not the design.",
+        "It was Sarah who first raised the issue.",
+        "It was then that everything finally made sense."
+      ],
+      "record_this": "It was the price that worried me most, not the design itself. It was Sarah who first raised the issue, long before anyone else noticed. It was then, somewhere around the middle of the second week, that everything finally made sense.",
+      "self_check": "Say 'It was the PRICE that worried me'. Is 'price' clearly the strongest beat, with the rest fading?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'What I need is…' — stress on the complement after 'is'"],
+      "isolation": {
+        "instructions": "'What I need is TIME' builds suspense: the opening is level and fairly quick, then everything lands on the word after 'is'. Hold a very small pause before it: 'What I need is | TIME.' That pause makes the listener lean in.",
+        "instructions_ar": "'What I need is TIME' تبني تشويقًا: البداية مستوية وسريعة نسبيًا ثم يقع كل الثقل على الكلمة بعد 'is'، مع وقفة صغيرة قبلها.",
+        "practice": ["What I need is | TIME", "What surprised me was | the SILENCE", "level opening, then landing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["What I need is TIME", "I need time"], "meaning": ["مشقوق مؤكَّد", "عادي"]},
+        {"pair": ["What I need is | TIME", "What I need is time (flat)"], "meaning": ["تشويق", "بلا تأثير"]},
+        {"pair": ["What surprised me was the SILENCE", "The silence surprised me"], "meaning": ["تركيز", "عادي"]},
+        {"pair": ["What he wants is RESPECT", "He wants respect"], "meaning": ["مؤكَّد", "محايد"]},
+        {"pair": ["What matters is the RESULT", "The result matters"], "meaning": ["مشقوق", "عادي"]}
+      ],
+      "word_practice": ["what I need is", "what surprised me was", "what he wants is", "what matters is", "what worries me is", "what we lack is", "what she meant was", "what happened was", "what counts is", "what struck me was"],
+      "sentence_practice": [
+        "What I need is more time, not more advice.",
+        "What surprised me was the complete silence.",
+        "What worries me is how quickly it changed."
+      ],
+      "record_this": "What I really need is more time, not more advice from people outside the team. What surprised me most was the complete silence that followed the announcement. What worries me now is how quickly the whole situation changed direction.",
+      "self_check": "Say 'What I need is TIME'. Is there a small pause before 'time', and does 'time' carry the nucleus?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'All … is' / 'The thing is' / 'The reason … is' openers"],
+      "isolation": {
+        "instructions": "These openers set up a frame and then deliver the punchline. 'All I want is a straight ANSWER.' 'The reason I called was the DEADLINE.' Keep the frame light and quick, then place the nucleus on the delivered idea.",
+        "instructions_ar": "هذه المفاتيح تُنشئ إطارًا ثم تُسلّم الخلاصة. اجعل الإطار خفيفًا وسريعًا ثم ضع النبر النووي على الفكرة المُسلَّمة.",
+        "practice": ["All I want is a straight ANSWER", "The reason I called was the DEADLINE", "light frame, heavy delivery"]
+      },
+      "minimal_pairs": [
+        {"pair": ["All I want is an ANSWER", "I just want an answer"], "meaning": ["مشقوق مؤكَّد", "عادي"]},
+        {"pair": ["The thing is, | we're late", "We're late"], "meaning": ["تمهيد", "خبر مباشر"]},
+        {"pair": ["The reason was the DEADLINE", "It was because of the deadline"], "meaning": ["مشقوق", "عادي"]},
+        {"pair": ["light frame + heavy nucleus", "even stress"], "meaning": ["طبيعي", "مسطّح"]},
+        {"pair": ["All that remains is to SIGN", "We only need to sign"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["all I want is", "all that remains is", "the thing is", "the reason is", "the reason I called was", "the problem is", "the point is", "the question is", "all we need is", "the difficulty is"],
+      "sentence_practice": [
+        "All I want is a straight answer.",
+        "The reason I called was the deadline.",
+        "The thing is, nobody told the client."
+      ],
+      "record_this": "All I want at this stage is a straight answer about the timeline. The reason I called yesterday was the deadline, which nobody seemed to have noticed. The thing is, nobody actually told the client about any of these changes.",
+      "self_check": "Say 'All I want is a straight ANSWER'. Is the opening frame light, with the nucleus on 'answer'?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["fronting objects and complements for emphasis"],
+      "isolation": {
+        "instructions": "Fronting moves a normally-later element to the front, where it takes a stress peak and a small pause: 'That much | I can accept.' 'Strange though it seems, | he was right.' The fronted piece is emphatic, so it needs both the peak and the pause to work.",
+        "instructions_ar": "التقديم ينقل عنصرًا متأخّرًا إلى البداية فيأخذ قمّة نبر ووقفة صغيرة: 'That much | I can accept.' العنصر المُقدَّم مؤكَّد فيحتاج القمّة والوقفة.",
+        "practice": ["THAT much | I can accept", "STRANGE though it seems | he was right", "peak plus pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["That much I can accept", "I can accept that much"], "meaning": ["مُقدَّم مؤكَّد", "عادي"]},
+        {"pair": ["Strange though it seems…", "Although it seems strange…"], "meaning": ["أدبي مؤكَّد", "عادي"]},
+        {"pair": ["THAT much | (peak + pause)", "that much (flat)"], "meaning": ["مؤكَّد", "بلا تأثير"]},
+        {"pair": ["His name I remember", "I remember his name"], "meaning": ["تقابل مؤكَّد", "عادي"]},
+        {"pair": ["Much as I admire him…", "Although I admire him…"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["that much", "his name", "strange though it seems", "much as I admire", "hard though it was", "such was the response", "so great was the demand", "this I know", "that I cannot accept", "little of it remains"],
+      "sentence_practice": [
+        "That much I can accept, but no more.",
+        "Strange though it seems, he was completely right.",
+        "Much as I admire her work, I disagree here."
+      ],
+      "record_this": "That much I can accept, but no more than that without further discussion. Strange though it seems now, he turned out to be completely right about the timing. Much as I admire her earlier work, I have to disagree with her conclusion here.",
+      "self_check": "Say 'That much I can accept'. Does 'that much' get a peak and a short pause before the rest?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["contrastive nuclear stress: same words, different meaning"],
+      "isolation": {
+        "instructions": "At C1 you can change a sentence's meaning without changing a single word — only the nucleus moves. 'I didn't say SHE took it' (someone else did) versus 'I didn't SAY she took it' (I implied it). Practise moving the beat deliberately and hearing the meaning shift.",
+        "instructions_ar": "في C1 يمكنك تغيير المعنى دون تغيير أي كلمة — فقط بنقل النبر النووي. تدرّب على نقل النبضة عن قصد واسمع تغيّر المعنى.",
+        "practice": ["I didn't say SHE took it", "I didn't SAY she took it", "move the beat, move the meaning"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I didn't say SHE took it", "I didn't SAY she took it"], "meaning": ["شخص آخر أخذه", "لم أقلها صراحة"]},
+        {"pair": ["I never said THAT", "I NEVER said that"], "meaning": ["ليس هذا ما قلته", "نفي قاطع"]},
+        {"pair": ["We need it TODAY", "WE need it today"], "meaning": ["الزمن مهم", "نحن تحديدًا"]},
+        {"pair": ["She SAID she would come", "She said SHE would come"], "meaning": ["قالت فقط", "هي وليس غيرها"]},
+        {"pair": ["It's not THAT expensive", "It's NOT that expensive"], "meaning": ["ليس بهذه الدرجة", "نفي واضح"]}
+      ],
+      "word_practice": ["I didn't say that", "I never said that", "we need it today", "she said she would", "it's not that expensive", "that's not what I meant", "I asked for one", "he promised us", "they agreed to it", "nobody told me"],
+      "sentence_practice": [
+        "I didn't say she took it.",
+        "That is not what I meant at all.",
+        "We need it today, not next week."
+      ],
+      "record_this": "I didn't say she took it, and I would appreciate it if nobody repeated that. That is honestly not what I meant at all when I raised the question. We need the final version today, not next week, or the whole schedule slips.",
+      "self_check": "Say 'I didn't say she took it' twice, moving the nucleus. Do the two versions clearly mean different things?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["It was SARAH that called", "It was Sarah that CALLED"],
+        ["What I need is | TIME", "What I need is time (flat)"],
+        ["All I want is an ANSWER", "I just want an answer"],
+        ["That much I can accept", "I can accept that much"],
+        ["I didn't say SHE took it", "I didn't SAY she took it"],
+        ["nucleus + faded tail", "even stress throughout"]
+      ],
+      "challenge_sentences": [
+        "It was the timing that caused the problem.",
+        "What I need is a clear decision.",
+        "That much I understand, but the rest is unclear.",
+        "I didn't say it was impossible."
+      ],
+      "record_this": "It was the timing that caused the whole problem, not the plan itself. What I need from this meeting is a clear decision, one way or the other. That much I understand perfectly, but the rest of the proposal is still unclear to me. I didn't say it was impossible, only that it would be considerably harder than expected.",
+      "self_check": "Three checks: one dominant nucleus per sentence, a faded tail after it, and a deliberate peak plus pause on anything fronted."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this explanation as though correcting a misunderstanding in a meeting. Cleft and fronting are focus tools, so let each nucleus land clearly — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا التوضيح كأنك تصحّح فهمًا خاطئًا في اجتماع. اجعل كل نبر نووي يقع بوضوح ثم اسمع وراجع.",
+        "passage": "Let me clarify, because I think something has been misunderstood. It was never the budget that concerned me; it was the timeline. What I actually said was that the plan needed two more weeks, not that it needed rewriting. All I asked for was a realistic schedule. The reason I raised it in the first place was that three separate teams depend on this delivery date. That much, I hope, is uncontroversial. Strange though it may sound, delaying by a fortnight now would save a month later. What worries me is not the work itself but the sequence. It is precisely this point that keeps getting lost. I didn't say the team was unprepared; I said the schedule was unrealistic. Those are very different claims. What I would like from today is a decision we can all plan around.",
+        "sounds_to_check": {
+          "nuclear stress on the clefted element": "It was never the BUDGET…, it was the TIMELINE, It is precisely this POINT",
+          "'What … is/was' landing": "What I actually SAID was…, What WORRIES me is…, What I would LIKE from today is…",
+          "'All … was' / 'The reason … was'": "All I asked for was a realistic SCHEDULE, The reason I raised it was…",
+          "fronting with peak + pause": "That much, | I hope, is uncontroversial · Strange though it may sound, |",
+          "contrastive stress": "I didn't SAY the team was unprepared; I said the SCHEDULE was unrealistic"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "One clear nucleus per sentence, tails properly faded, fronting marked with peak and pause. The clarification genuinely persuades. Ready for week 4.",
+        "70_89": "Good; occasionally two competing nuclei, or a tail that stays too loud.",
+        "50_69": "Structures correct but stress spread evenly, so the focus is lost. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start by exaggerating one nucleus per sentence and letting everything after it fade."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "A cleft has exactly ONE nucleus. Two strong beats cancel each other out and the focus disappears.",
+      "Let the tail fade. After 'It was the PRICE that worried me', the words 'that worried me' should be noticeably quieter.",
+      "The small pause before the landing word ('What I need is | TIME') is doing real work — do not skip it.",
+      "Fronted elements need both a stress peak and a micro-pause, or they simply sound like odd word order.",
+      "Moving the nucleus changes meaning. Practise this deliberately: it is one of the clearest markers of an advanced speaker."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that each sentence has exactly one dominant beat."
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 8,
+  "focus": "'As noted above' and 'as I have argued' · parenthetical asides in a lower pitch band · 'It is worth noting that' · 'To return to my earlier point' · nested asides without losing the thread",
+  "focus_ar": "'As noted above' و'as I have argued'، والعبارات المعترضة في نطاق نبرة أخفض، و'It is worth noting that'، و'To return to my earlier point'، والاعتراضات المتداخلة دون فقدان الخيط",
+  "arabic_challenge": "Meta-discourse is language about your own argument, and English marks it prosodically by dropping it into a LOWER pitch band, like a stage aside. 'The figures, as I noted earlier, are provisional.' If the aside is delivered at the same pitch as the main clause, the listener cannot tell commentary from content and the sentence becomes twice as hard to follow. Arabic manages this with explicit connectors rather than with a pitch shift, so learners tend to deliver everything in one register and then compensate by pausing heavily, which fragments the sentence instead.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'as noted above' · 'as I have argued' — signposting your own text"],
+      "isolation": {
+        "instructions": "These phrases refer to your own argument. Deliver them quickly and in a slightly lower pitch than the surrounding clause: 'As noted above, the figures are provisional.' They are scaffolding, not content, so they must not compete with the main claim.",
+        "instructions_ar": "هذه العبارات تشير إلى حجّتك أنت. قلها بسرعة وبنبرة أخفض قليلًا من الجملة المحيطة، فهي سقالة لا مضمون ولا يجوز أن تزاحم الادّعاء الرئيسي.",
+        "practice": ["(lower) As noted above, | (normal) the figures are proVISional", "(lower) as I have argued, |", "scaffolding, not content"]
+      },
+      "minimal_pairs": [
+        {"pair": ["(lower pitch) As noted above,", "(same pitch) As noted above,"], "meaning": ["سقالة", "يزاحم المضمون"]},
+        {"pair": ["As noted above", "As you know"], "meaning": ["إشارة للنص", "إشارة للمستمع"]},
+        {"pair": ["as I have argued", "as I said"], "meaning": ["رسمي أكاديمي", "عادي"]},
+        {"pair": ["quick and light", "slow and weighted"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["as discussed earlier", "as mentioned before"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["as noted above", "as I have argued", "as discussed earlier", "as we have seen", "as outlined previously", "as indicated in section two", "as suggested already", "as will become clear", "as I shall show", "as the data demonstrates"],
+      "sentence_practice": [
+        "As noted above, the figures remain provisional.",
+        "As I have argued, the method itself is the problem.",
+        "As we have seen, the pattern is consistent."
+      ],
+      "record_this": "As noted above, the figures for the third quarter remain entirely provisional. As I have argued throughout this paper, the method itself is the real problem. As we have already seen, the pattern is remarkably consistent across regions.",
+      "self_check": "Say 'As noted above, the figures are provisional'. Is the signpost lower and quicker than the main clause?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["mid-sentence parenthetical asides"],
+      "isolation": {
+        "instructions": "An aside inserted mid-sentence needs a pause on each side and a distinctly lower pitch: 'The figures, | as I noted earlier, | are provisional.' Think of it as stepping down into a side comment and then stepping back up to resume the main line.",
+        "instructions_ar": "العبارة المعترضة في وسط الجملة تحتاج وقفة على الجانبين ونبرة أخفض بوضوح. تصوّرها نزولًا إلى تعليق جانبي ثم صعودًا لاستئناف الخط الرئيسي.",
+        "practice": ["The figures, | (lower) as I noted earlier, | (normal) are provisional", "step down, step back up"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The figures, | as I noted, | are provisional", "The figures as I noted are provisional"], "meaning": ["واضح", "متداخل"]},
+        {"pair": ["lower pitch aside", "same pitch aside"], "meaning": ["تعليق", "مضمون"]},
+        {"pair": ["step down then back up", "flat throughout"], "meaning": ["طبيعي", "مبهم"]},
+        {"pair": ["pauses on both sides", "pause on one side only"], "meaning": ["متوازن", "مرتبك"]},
+        {"pair": ["short aside", "long rambling aside"], "meaning": ["أنيق", "يُفقد الخيط"]}
+      ],
+      "word_practice": ["as I noted earlier", "as it happens", "to be fair", "in my view", "so far as I can tell", "if I may say so", "and this is the key point", "as one might expect", "rightly or wrongly", "for what it is worth"],
+      "sentence_practice": [
+        "The figures, as I noted earlier, are provisional.",
+        "The decision, rightly or wrongly, was taken in March.",
+        "The method, to be fair, was never designed for this."
+      ],
+      "record_this": "The figures, as I noted earlier in the report, are still entirely provisional. The decision, rightly or wrongly, was taken in March without consultation. The method, to be fair to its authors, was never designed for a case like this.",
+      "self_check": "Say the figures sentence. Does the aside sit in a clearly lower pitch, bracketed by pauses?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'It is worth noting that' — raising importance"],
+      "isolation": {
+        "instructions": "'It is worth noting that…' tells the listener to pay extra attention. Unlike a low aside, this frame stays at normal pitch and is followed by a small pause, then the important content lands with weight. It is a spotlight, not a footnote.",
+        "instructions_ar": "'It is worth noting that…' تُخبر المستمع أن يزيد انتباهه. بخلاف الاعتراض المنخفض، هذا الإطار يبقى بنبرة عادية ثم وقفة صغيرة ثم يقع المضمون المهم بثقل. إنه تسليط ضوء لا حاشية.",
+        "practice": ["It is worth noting that | NOBODY was consulted ↘", "spotlight, not footnote"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It is worth noting that…", "as I noted earlier"], "meaning": ["تسليط ضوء", "حاشية"]},
+        {"pair": ["normal pitch + pause + weight", "lower pitch aside"], "meaning": ["مهم", "ثانوي"]},
+        {"pair": ["It should be emphasised that", "It might be added that"], "meaning": ["توكيد قوي", "إضافة خفيفة"]},
+        {"pair": ["I would draw attention to", "incidentally"], "meaning": ["مهم", "عارض"]},
+        {"pair": ["the important content lands", "the frame competes"], "meaning": ["فعّال", "غير فعّال"]}
+      ],
+      "word_practice": ["it is worth noting that", "it should be emphasised that", "I would draw attention to", "it is significant that", "what matters here is", "the crucial point is", "it bears repeating that", "note in particular", "let me stress that", "importantly"],
+      "sentence_practice": [
+        "It is worth noting that nobody was consulted.",
+        "It should be emphasised that the sample was small.",
+        "I would draw attention to one omission."
+      ],
+      "record_this": "It is worth noting that nobody outside the committee was consulted at any stage. It should be emphasised that the sample was small and drawn from one region. I would draw attention to one significant omission in the appendix.",
+      "self_check": "Say 'It is worth noting that nobody was consulted'. Is there a pause before the content, which then lands with weight?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'To return to my earlier point' — recovering the thread"],
+      "isolation": {
+        "instructions": "After a digression you must visibly return. 'To return to my earlier point…' or 'But to come back to the timetable…' is delivered at normal pitch with a slight upward reset, signalling that the main line is resuming. This is how a speaker keeps a long argument navigable.",
+        "instructions_ar": "بعد الاستطراد يجب أن تعود بوضوح. تُقال هذه العبارات بنبرة عادية مع إعادة ضبط صاعدة قليلًا، إشارةً إلى أن الخط الرئيسي يُستأنف.",
+        "practice": ["To return to my earlier POINT, ↗ |", "But to come back to the TIMEtable, ↗ |", "the main line resumes"]
+      },
+      "minimal_pairs": [
+        {"pair": ["To return to my earlier point,", "Anyway,"], "meaning": ["رسمي منظّم", "عادي"]},
+        {"pair": ["upward reset ↗ (resuming)", "downward (ending)"], "meaning": ["استئناف", "ختام"]},
+        {"pair": ["But to come back to…", "As I was saying…"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["visible return", "no return"], "meaning": ["مُتابَع", "مفقود"]},
+        {"pair": ["I digress; to resume,", "sorry, where was I?"], "meaning": ["متمكّن", "مرتبك"]}
+      ],
+      "word_practice": ["to return to my earlier point", "but to come back to", "as I was saying", "to resume", "I digress", "returning to the main question", "leaving that aside", "setting that to one side", "back to the timetable", "to pick up the thread"],
+      "sentence_practice": [
+        "To return to my earlier point, the timetable is the real issue.",
+        "But to come back to the budget, one figure is missing.",
+        "Setting that to one side, the principle still stands."
+      ],
+      "record_this": "To return to my earlier point, the timetable rather than the budget is the real issue. But to come back to the costings, one significant figure is still missing. Setting that objection to one side, the underlying principle still stands.",
+      "self_check": "Say 'To return to my earlier point'. Is there a slight upward reset signalling resumption?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["nested asides without losing the thread"],
+      "isolation": {
+        "instructions": "Mastery is surviving an aside inside an aside. 'The report, which, as I said, was never published, is now the only record.' You must step down twice and climb back twice, and the main clause must still complete cleanly. Keep each nested layer short and return promptly.",
+        "instructions_ar": "الإتقان هو النجاة من اعتراض داخل اعتراض. عليك النزول مرّتين والصعود مرّتين، ويجب أن تكتمل الجملة الرئيسية بنظافة. أبقِ كل طبقة قصيرة وعُد بسرعة.",
+        "practice": ["The report, | which, | as I said, | was never published, | is now the only record", "down twice, up twice, complete cleanly"]
+      },
+      "minimal_pairs": [
+        {"pair": ["nested aside, main clause completes", "nested aside, thread lost"], "meaning": ["متمكّن", "مفقود"]},
+        {"pair": ["two pitch levels down", "one flat level"], "meaning": ["واضح", "مبهم"]},
+        {"pair": ["short nested layers", "long nested layers"], "meaning": ["مُتابَع", "مربك"]},
+        {"pair": ["prompt return", "delayed return"], "meaning": ["نظيف", "مفكّك"]},
+        {"pair": ["main clause finished", "main clause abandoned"], "meaning": ["صحيح", "خطأ شائع"]}
+      ],
+      "word_practice": ["the report, which, as I said", "was never published", "is now the only record", "the file, which nobody kept", "the decision, taken, as it happens", "in March", "the witness, whose name, for obvious reasons", "was withheld", "the clause, which, incidentally", "nobody had read"],
+      "sentence_practice": [
+        "The report, which, as I said, was never published, is now the only record.",
+        "The decision, taken, as it happens, in March, was never minuted.",
+        "The clause, which, incidentally, nobody had read, proved decisive."
+      ],
+      "record_this": "The report, which, as I said earlier, was never actually published, is now the only surviving record. The decision, taken, as it happens, in March of that year, was never properly minuted. The clause, which, incidentally, nobody had read closely, proved absolutely decisive.",
+      "self_check": "Say the report sentence. Did you step down twice, climb back twice, and still finish the main clause cleanly?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 8 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["(lower pitch) As noted above,", "(same pitch) As noted above,"],
+        ["The figures, | as I noted, | are provisional", "The figures as I noted are provisional"],
+        ["It is worth noting that…", "as I noted earlier"],
+        ["upward reset ↗ (resuming)", "downward (ending)"],
+        ["nested aside, main clause completes", "nested aside, thread lost"],
+        ["short aside", "long rambling aside"]
+      ],
+      "challenge_sentences": [
+        "As I have argued, the process was flawed.",
+        "The result, to be fair, was never in doubt.",
+        "It is worth noting that no minutes exist.",
+        "To return to my point, the timing was wrong."
+      ],
+      "record_this": "As I have argued from the beginning, the process itself was fundamentally flawed. The result, to be fair to everyone involved, was never seriously in doubt. It is worth noting that no minutes of that meeting appear to exist. To return to my earlier point, the timing was wrong from the very start.",
+      "self_check": "Three checks: signposts and asides in a lower pitch, spotlight frames at normal pitch, and an upward reset when resuming."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a conference paper. Meta-discourse must sit below the argument in pitch — then listen back and check that commentary and content are clearly distinguishable.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كورقة مؤتمر. لغة ما وراء الخطاب يجب أن تكون أخفض من الحجّة نبرةً، ثم اسمع وتحقّق أن التعليق والمضمون متمايزان.",
+        "passage": "As I indicated at the outset, this paper makes a narrow claim. The evidence, as we have seen, supports only the weaker version of the hypothesis. It is worth noting that the original study, which, as I said earlier, was never replicated, remains the most cited in the field. That fact, in my view, tells us more about citation practice than about the finding itself. To return to the data: the effect appears in three of the five cohorts. I would draw attention to the fourth, where, for reasons nobody has explained, the measurement protocol changed midway. Leaving that anomaly aside, the pattern is consistent. As will become clear in the final section, my argument does not require the effect to be large. It requires only that it be real. That distinction, which is easily lost, is the whole point of the paper.",
+        "sounds_to_check": {
+          "signposts in a lower pitch band": "As I indicated at the outset,  ·  as we have seen  ·  As will become clear in the final section",
+          "mid-sentence asides, bracketed and lower": "The evidence, | as we have seen, | supports…  ·  That fact, | in my view, | tells us…",
+          "spotlight frames at normal pitch with weight": "It is worth noting that…  ·  I would draw attention to the fourth",
+          "returning with an upward reset": "To return to the data: ↗  ·  Leaving that anomaly aside, ↗",
+          "nested asides that still complete": "the original study, | which, | as I said earlier, | was never replicated, | remains the most cited  ·  the fourth, | where, | for reasons nobody has explained, | the protocol changed"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Commentary clearly below content in pitch, nested asides survive, resumptions marked. Dense argument stays navigable. Ready for week 9.",
+        "70_89": "Good; occasionally an aside sits at main-clause pitch, or a nested layer runs long.",
+        "50_69": "Everything delivered in one register, so commentary and content blur. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Exaggerate the pitch drop on every aside until the two layers are unmistakable."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Meta-discourse belongs in a LOWER pitch band than the argument. That drop is what separates commentary from content.",
+      "Asides need pauses on BOTH sides. A pause on only one side sounds like a false start.",
+      "'It is worth noting that' is a spotlight, not a footnote: keep it at normal pitch and let the content land with weight.",
+      "After a digression, return audibly with a slight upward reset, or the listener will not know the main line has resumed.",
+      "Keep nested asides short and always finish the main clause. Abandoning it is the commonest failure here."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that a listener could tell commentary from content by pitch alone."
+  }
+}

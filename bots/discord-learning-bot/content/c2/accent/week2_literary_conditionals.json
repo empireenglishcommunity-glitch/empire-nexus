@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 2,
+  "focus": "'Were it not for' with weak /ɪt/ · 'Had it not been for' compression · 'Should it transpire that' · 'But for' + noun · the rhythm of the literary period",
+  "focus_ar": "'Were it not for' مع /ɪt/ الخفيفة، وضغط 'Had it not been for'، و'Should it transpire that'، و'But for' + اسم، وإيقاع الفترة الأدبية",
+  "arabic_challenge": "These are the most compressed conditional frames in English, and the pronoun 'it' inside them is almost inaudible: 'Were it not for' runs as /wɜː ɪt nɒt fə/ with 'it' reduced to a flicker. Because the frame carries no content, giving 'it' full value makes the opening sound laboured and draws attention to exactly the wrong word. There is a structural trap too: these frames are fixed, so learners who try to vary them (adding 'if', changing 'it' to a noun) produce something that reads as an error rather than as elegance.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'Were it not for' /wɜː ɪt nɒt fə/"],
+      "isolation": {
+        "instructions": "'Were it not for X, …' means 'if X did not exist'. The frame compresses hard: WERE takes the stress, 'it' shrinks almost to nothing, 'not' keeps a light beat, and 'for' weakens to /fə/. Then the noun that follows carries real weight.",
+        "instructions_ar": "'Were it not for X' تعني 'لو لم يكن X موجودًا'. الإطار يُضغط بقوة: WERE منبورة و'it' تكاد تختفي و'for' تُخفَّف، والاسم بعدها يحمل الثقل.",
+        "practice": ["/wɜː ɪt nɒt fə/ her SUPPORT", "/wɜː ɪt nɒt fə/ the DELAY", "WERE strong, 'it' a flicker"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Were it not for her support", "If it were not for her support"], "meaning": ["أدبي مضغوط", "كامل"]},
+        {"pair": ["'it' reduced to a flicker", "'it' fully pronounced"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["Were it not for ✅", "Was it not for ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["for /fə/ (weak)", "for /fɔː/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["Were it not for the rain, …", "If not for the rain, …"], "meaning": ["أدبي", "عادي"]}
+      ],
+      "word_practice": ["were it not for", "were it not for her", "were it not for the delay", "were it not so", "were it otherwise", "were this not the case", "were there no alternative", "were it possible", "were it up to me", "were it not for luck"],
+      "sentence_practice": [
+        "Were it not for her support, we would have failed.",
+        "Were it not for the weather, we would have finished.",
+        "Were it otherwise, I would say so plainly."
+      ],
+      "record_this": "Were it not for her steady support that first winter, we would certainly have failed. Were it not for the weather closing in, we would have finished the survey in a fortnight. Were it otherwise, believe me, I would say so plainly.",
+      "self_check": "Say 'Were it not for her support'. Is 'it' almost inaudible, with WERE carrying the stress?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'Had it not been for' /hædɪt nɒt bɪn fə/"],
+      "isolation": {
+        "instructions": "The past version stacks even more grammar words: HAD takes the stress, 'it' links straight into it as /hædɪt/, 'not' keeps a beat, and 'been for' reduces to /bɪn fə/. Five words, two beats. Learn the whole thing as one rhythmic gesture.",
+        "instructions_ar": "الصيغة الماضية تجمع كلمات نحوية أكثر: HAD منبورة و'it' تُربط بها، و'been for' تُخفَّف. خمس كلمات ونبضتان. تعلّمها كحركة إيقاعية واحدة.",
+        "practice": ["/hædɪt nɒt bɪn fə/ that MISTAKE", "five words, two beats", "one rhythmic gesture"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Had it not been for (past)", "Were it not for (present/general)"], "meaning": ["ماضٍ", "حاضر عام"]},
+        {"pair": ["/hædɪt/ (linked)", "had · it (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["been /bɪn/ (weak)", "been /biːn/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["two beats total", "five separate beats"], "meaning": ["أدبي", "قراءة كلمة كلمة"]},
+        {"pair": ["Had it not been for ✅", "Had not it been for ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["had it not been for", "had it not been for that", "had it not been for luck", "had it not been so late", "had there not been", "had it not happened", "had that not occurred", "had it not been necessary", "had we not intervened", "had it not been obvious"],
+      "sentence_practice": [
+        "Had it not been for one mistake, nobody would have noticed.",
+        "Had it not been for luck, the plan would have failed.",
+        "Had there not been a witness, the case would have collapsed."
+      ],
+      "record_this": "Had it not been for one small mistake in the appendix, nobody would ever have noticed. Had it not been for a good deal of luck, the whole plan would have failed publicly. Had there not been an independent witness, the case would simply have collapsed.",
+      "self_check": "Say 'Had it not been for luck'. Is it one gesture with only two real beats?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'Should it transpire that' — the formal contingent"],
+      "isolation": {
+        "instructions": "'Should it transpire/emerge/prove that …' is the most formal way of saying 'if it turns out that'. SHOULD takes the stress, 'it' is light, and the Latinate verb carries the second beat: /ʃʊd ɪt trænˈSPIRE ðət/. It belongs to legal and official registers.",
+        "instructions_ar": "'Should it transpire that' هي أرسم صيغة لـ 'إن تبيّن أن'. SHOULD منبورة و'it' خفيفة والفعل اللاتيني يحمل النبضة الثانية. تنتمي للسياق القانوني والرسمي.",
+        "practice": ["/ʃʊd ɪt trænˈSPIRE ðət/", "/ʃʊd ɪt PROVE ðət/", "formal contingent"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Should it transpire that…", "If it turns out that…"], "meaning": ["رسمي قانوني", "عادي"]},
+        {"pair": ["should it prove necessary", "if it's necessary"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["Should it transpire ✅", "Should it transpires ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["transpire /trænˈspaɪə/", "transpire /ˈtrænspaɪə/"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["should any doubt arise", "if anyone doubts it"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["should it transpire that", "should it prove necessary", "should it emerge that", "should any doubt arise", "should the need arise", "should it become apparent", "should circumstances change", "should it be found", "should there be cause", "should it so happen"],
+      "sentence_practice": [
+        "Should it transpire that the figures were altered, we will act.",
+        "Should it prove necessary, we can extend the deadline.",
+        "Should any doubt arise, the matter returns to committee."
+      ],
+      "record_this": "Should it transpire that the figures were altered deliberately, we will act at once. Should it prove necessary, we can extend the deadline by a further two weeks. Should any doubt arise about the process, the matter returns automatically to committee.",
+      "self_check": "Say 'Should it transpire that'. Is SHOULD stressed, 'it' light, and the stress on SPIRE?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'But for' + noun — the compressed literary conditional"],
+      "isolation": {
+        "instructions": "'But for X, …' is the shortest conditional in English: two words replacing a whole clause. 'But for her help, we would have failed.' BUT takes a firm beat, 'for' weakens to /fə/, and the noun peaks. Its brevity is the effect, so do not pad it.",
+        "instructions_ar": "'But for X' أقصر شرط في الإنجليزية: كلمتان تحلّان محل جملة كاملة. BUT تأخذ نبضة حازمة و'for' تُخفَّف والاسم يعلو. والإيجاز هو الأثر المقصود.",
+        "practice": ["BUT /fə/ her HELP", "BUT /fə/ the RAIN", "two words, whole clause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["But for her help, …", "If it had not been for her help, …"], "meaning": ["موجز أدبي", "كامل"]},
+        {"pair": ["but for (conditional)", "but (contrast)"], "meaning": ["لولا", "لكن"]},
+        {"pair": ["But for the rain ✅", "But for it rained ❌"], "meaning": ["اسم", "جملة - خطأ"]},
+        {"pair": ["for /fə/ (weak)", "for /fɔː/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["brevity as effect", "padded out"], "meaning": ["أنيق", "ثقيل"]}
+      ],
+      "word_practice": ["but for her help", "but for the rain", "but for that mistake", "but for one detail", "but for luck", "but for your patience", "but for the delay", "but for a single vote", "but for the timing", "but for his intervention"],
+      "sentence_practice": [
+        "But for her help, we would have failed completely.",
+        "But for one detail, the plan was flawless.",
+        "But for a single vote, the motion would have passed."
+      ],
+      "record_this": "But for her help at the critical moment, we would have failed completely. But for one small detail in the costings, the plan was very nearly flawless. But for a single vote, the motion would have passed that afternoon.",
+      "self_check": "Say 'But for her help'. Is BUT firm, 'for' weak, and the noun peaking?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the literary period: suspension across a long sentence"],
+      "isolation": {
+        "instructions": "A literary period holds several clauses in suspension before resolving. 'Had it not been for the storm, | which delayed the fleet by three days, | the outcome might have been different.' Keep every clause before the resolution slightly raised and unresolved, then let the final clause fall decisively. The listener must feel you have not finished until you have.",
+        "instructions_ar": "الفترة الأدبية تُبقي عدّة جُمَل معلّقة قبل الحلّ. أبقِ كل جملة قبل الحلّ مرفوعة قليلًا وغير محلولة، ثم اجعل الجملة الأخيرة تهبط بحسم.",
+        "practice": ["Had it not been for the storm, ↗ | which delayed the fleet, ↗ | the outcome might have differed ↘", "suspend, suspend, resolve"]
+      },
+      "minimal_pairs": [
+        {"pair": ["suspend, suspend, resolve", "three separate falls"], "meaning": ["فترة أدبية", "ثلاث جُمَل مفكّكة"]},
+        {"pair": ["raised unresolved clauses", "each clause falling"], "meaning": ["مترابط", "متقطّع"]},
+        {"pair": ["decisive final fall ↘", "trailing off"], "meaning": ["حاسم", "متردّد"]},
+        {"pair": ["one long period", "several short sentences"], "meaning": ["أدبي", "صحفي"]},
+        {"pair": ["listener waits for the end", "listener thinks you finished"], "meaning": ["ناجح", "فاشل"]}
+      ],
+      "word_practice": ["had it not been for", "which delayed everything", "the outcome might have differed", "were it not for", "as things stood", "in the circumstances", "by any reckoning", "on balance", "in the event", "as it turned out"],
+      "sentence_practice": [
+        "Had it not been for the storm, which delayed the fleet, the outcome might have differed.",
+        "Were it not for her insistence, which nobody welcomed at the time, the flaw would have gone unnoticed.",
+        "But for one witness, whose name was never published, the case would have collapsed."
+      ],
+      "record_this": "Had it not been for the storm, which delayed the fleet by three full days, the outcome of the campaign might have been entirely different. Were it not for her insistence, which nobody welcomed at the time, the flaw would have gone unnoticed for years. But for one witness, whose name was never published, the case would certainly have collapsed.",
+      "self_check": "Read the storm sentence. Do the middle clauses stay suspended, with only the final clause falling?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["'it' reduced to a flicker", "'it' fully pronounced"],
+        ["Had it not been for (past)", "Were it not for (present/general)"],
+        ["Should it transpire that…", "If it turns out that…"],
+        ["But for her help, …", "If it had not been for her help, …"],
+        ["suspend, suspend, resolve", "three separate falls"],
+        ["Were it not for ✅", "Was it not for ❌"]
+      ],
+      "challenge_sentences": [
+        "Were it not for the delay, we would be finished.",
+        "Had it not been for that error, nobody would have known.",
+        "Should it prove necessary, we will reconvene.",
+        "But for luck, the whole thing would have collapsed."
+      ],
+      "record_this": "Were it not for the delay at customs, we would be completely finished by now. Had it not been for that one error in the appendix, nobody would ever have known. Should it prove necessary, we will reconvene the panel before the end of the month. But for a good deal of luck, the whole thing would have collapsed in the first week.",
+      "self_check": "Three checks: 'it' almost inaudible in the frames, only two real beats per frame, and suspension held until the final fall."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a reflective literary passage. These conditionals are elegant precisely because they are compressed — then listen back and check every frame.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كنص أدبي تأمّلي. هذه الشروط أنيقة لأنها مضغوطة، ثم اسمع وراجع كل إطار.",
+        "passage": "Looking back, the whole enterprise turned on a handful of accidents. Were it not for a mistranslated telegram, the delegation would never have travelled at all. Had it not been for the storm that followed, which delayed the fleet by three days and exhausted its supplies, the negotiations might have opened on quite different terms. But for one junior clerk, whose name appears nowhere in the official record, the error would have gone undetected. Should it ever transpire that the correspondence survives, historians will find the sequence almost comic. Were the archive open, we might know more. As things stand, we can only guess. Had the weather held, had the telegram been read correctly, had anyone thought to check, the century might have taken a different shape. But for chance, as so often, nothing would have happened at all.",
+        "sounds_to_check": {
+          "'Were it not for' with flickered 'it'": "Were it not for a mistranslated telegram, Were the archive open",
+          "'Had it not been for' as one gesture": "Had it not been for the storm that followed…",
+          "formal contingent 'Should it transpire'": "Should it ever transpire that the correspondence survives",
+          "'But for' + noun, compressed": "But for one junior clerk…, But for chance, as so often,",
+          "literary period held in suspension": "Had the weather held, ↗ | had the telegram been read correctly, ↗ | had anyone thought to check, ↗ | the century might have taken a different shape ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Frames compressed with inaudible 'it', suspension held across long periods, decisive final falls. Genuinely literary. Ready for week 3.",
+        "70_89": "Good; occasionally 'it' takes too much value or a middle clause falls early.",
+        "50_69": "Frames pronounced word by word, so the elegance is lost. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start by making 'it' almost disappear inside each frame."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The 'it' inside these frames is nearly inaudible. Giving it full value stresses the emptiest word in the sentence.",
+      "'Were it not for' is present or general; 'Had it not been for' is past. Match the frame to the time.",
+      "These frames are fixed. Do not insert 'if' or replace 'it' with a noun.",
+      "'But for' takes a NOUN, never a clause: 'But for the rain', not 'But for it rained'.",
+      "In a long literary period, only the final clause falls. Everything before it stays suspended."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 count your beats inside each frame — there should be only two."
+  }
+}

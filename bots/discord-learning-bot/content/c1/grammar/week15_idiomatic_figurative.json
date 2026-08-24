@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w15",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 15,
+  "pattern_name": "Idiomatic and figurative language with deep collocation",
+  "pattern_name_ar": "اللغة الاصطلاحية والمجازية والمتلازمات العميقة",
+  "formula": "fixed idioms (a blessing in disguise, the last straw) · professional metaphor (gain traction, a bottleneck, move the goalposts) · strong collocations (draw a conclusion, raise a concern, meet a deadline) · proverbs (easier said than done)",
+  "formula_visual": "[draw] + [a conclusion] · [meet] + [a deadline] · [raise] + [a concern]",
+  "when_to_use": "To sound natural rather than merely correct. Idioms and collocations are stored as whole units, so the skill is choosing the right partner word and the right register. Professional metaphors ('gain traction', 'a bottleneck') work in formal contexts; colloquial idioms ('it went pear-shaped') belong in relaxed conversation. Using one well-chosen idiom beats scattering several that clash with the setting.",
+  "when_to_use_ar": "لتبدو طبيعيًا لا صحيحًا فقط. التعابير والمتلازمات تُحفظ كوحدات كاملة، والمهارة في اختيار الكلمة المرافقة والأسلوب المناسب. تعبير واحد مناسب أفضل من عدّة تعابير تتنافر مع المقام.",
+  "why_arabic_speakers_struggle": "Idioms almost never translate word for word, so a literal rendering of a vivid Arabic expression produces something baffling in English, and the reverse is equally true. Collocations are the subtler problem: they are arbitrary and must be memorised as pairs. 'Do a conclusion' and 'say a concern' are perfectly logical and completely wrong, and because they are grammatical, learners are rarely corrected and the habit hardens.",
+  "examples": [
+    {"en": "Losing that contract was a blessing in disguise.", "ar": "خسارة ذلك العقد كانت نعمة في ثوب نقمة", "structure": "[fixed idiom as complement]"},
+    {"en": "The idea is finally gaining traction.", "ar": "بدأت الفكرة تكتسب زخمًا أخيرًا", "structure": "[verb + metaphorical object]"},
+    {"en": "It's too early to draw any firm conclusions.", "ar": "من المبكر استخلاص أي نتائج حاسمة", "structure": "[draw] + [conclusions] collocation"},
+    {"en": "She raised a serious concern about the method.", "ar": "أثارت قلقًا جديًا بشأن المنهج", "structure": "[raise] + [a concern] collocation"},
+    {"en": "Reforming it is easier said than done.", "ar": "إصلاحه أسهل قولًا من فعلًا", "structure": "[balanced proverb]"}
+  ],
+  "common_errors": [
+    {"wrong": "It's too early to do a conclusion.", "correct": "It's too early to draw a conclusion.", "explanation": "The fixed partner for 'conclusion' is 'draw', not 'do'."},
+    {"wrong": "She said a concern about the method.", "correct": "She raised a concern about the method.", "explanation": "Concerns are raised; the verb is not interchangeable."},
+    {"wrong": "We need to catch the deadline.", "correct": "We need to meet the deadline.", "explanation": "Deadlines are met, not caught."},
+    {"wrong": "The board report noted the project went pear-shaped.", "correct": "The board report noted the project encountered significant difficulties.", "explanation": "A colloquial idiom in a formal report clashes with the register and damages credibility."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It's too early to ___ any firm conclusions.", "answer": "draw"},
+    {"sentence": "She ___ a serious concern about the methodology.", "answer": "raised"},
+    {"sentence": "We managed to ___ every deadline that month.", "answer": "meet"},
+    {"sentence": "Approval has become the real ___ in the process.", "answer": "bottleneck"},
+    {"sentence": "Reforming the system is easier ___ than done.", "answer": "said"}
+  ],
+  "quick_rule": "Learn idioms and collocations as whole units, never word by word. Match the idiom to the register: professional metaphor for formal, colloquial idiom for casual.",
+  "quick_rule_ar": "تعلّم التعابير والمتلازمات كوحدات كاملة لا كلمة كلمة. وطابق التعبير مع الأسلوب: المجاز المهني للرسمي والتعبير العامي للودّي.",
+  "mnemonic": "One unit, one meaning, one register.",
+  "connect_to_speaking": "In accent week 15 you drilled each idiom as a single chunk with one main beat. Delivered word by word, an idiom sounds assembled rather than owned, which undoes the natural effect you were aiming for."
+}
