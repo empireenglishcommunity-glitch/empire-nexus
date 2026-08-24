@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 14,
+  "focus": "'provided that' /prəˈvaɪdɪd ðət/ · 'as long as' /əz lɒŋ əz/ · 'unless' and 'supposing' · 'on condition that' · inverted conditionals at speed",
+  "focus_ar": "'provided that'، و'as long as'، و'unless' و'supposing'، و'on condition that'، والشرط المقلوب بسرعة الكلام",
+  "arabic_challenge": "These conditional connectors are multi-word chunks that must run as single units while the CONDITION itself stays prosodically suspended — waiting for its result. 'Provided that the funding arrives ↗ | we can start in March ↘.' Learners commonly stress every word of the connector, which makes the clause boundary vanish and leaves the listener unsure where the condition ends. There is also a meaning trap: 'unless' already contains the negative, so adding another one reverses the sense entirely, and Arabic 'إلا إذا' invites exactly that double negative.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'provided that' /prəˈvaɪdɪd ðət/"],
+      "isolation": {
+        "instructions": "'provided (that)' means 'only if this condition holds'. It runs as one chunk with the beat on VAID, and 'that' weakens to /ðət/ or disappears. Then the condition follows, suspended, before the result resolves.",
+        "instructions_ar": "'provided (that)' تعني 'بشرط أن'. تُقال ككتلة واحدة والنبضة على VAID، و'that' تُخفَّف أو تُحذف.",
+        "practice": ["/prəˈVAIDɪd ðət/ the funding arrives ↗", "/prəˈVAIDɪd/ we agree ↗", "one chunk, then suspension"]
+      },
+      "minimal_pairs": [
+        {"pair": ["provided that", "if"], "meaning": ["بشرط صريح", "شرط عادي"]},
+        {"pair": ["/prəˈvaɪdɪd ðət/ (chunk)", "pro-vi-ded that (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["provided that ↗ | result ↘", "provided that ↘ result ↘"], "meaning": ["مترابط", "مسطّح"]},
+        {"pair": ["provided", "providing"], "meaning": ["كلتاهما صحيحة", "أقل رسمية قليلًا"]},
+        {"pair": ["provided that we agree ✅", "provided that we will agree ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["provided that", "providing that", "provided the funding arrives", "provided nothing changes", "provided we agree", "provided it's approved", "provided you tell me", "provided there's time", "provided they accept", "provided all goes well"],
+      "sentence_practice": [
+        "Provided the funding arrives, we can start in March.",
+        "You may use the data, provided you cite the source.",
+        "Provided nothing changes, we'll finish on time."
+      ],
+      "record_this": "Provided the funding arrives before the end of the quarter, we can start in March. You may certainly use the data, provided you cite the original source properly. Provided nothing else changes between now and then, we will finish comfortably on time.",
+      "self_check": "Say 'Provided the funding arrives, we can start'. Is the connector one chunk, with the condition suspended?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'as long as' /əz lɒŋ əz/ · 'so long as'"],
+      "isolation": {
+        "instructions": "'as long as' compresses to /əz LONG əz/ with a single beat on LONG — the two 'as' words are almost inaudible. It is the everyday equivalent of 'provided that', common in speech.",
+        "instructions_ar": "'as long as' تُضغط إلى /əz LONG əz/ بنبضة واحدة على LONG، و'as' تكاد لا تُسمع. وهي المكافئ اليومي لـ 'provided that'.",
+        "practice": ["/əz LONG əz/ you're careful", "/səʊ LONG əz/ it works", "one beat on LONG"]
+      },
+      "minimal_pairs": [
+        {"pair": ["as long as (condition)", "as long as (duration)"], "meaning": ["بشرط أن", "طوال مدة"]},
+        {"pair": ["/əz LONG əz/ (compressed)", "as · long · as"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["as long as", "provided that"], "meaning": ["عادي", "رسمي"]},
+        {"pair": ["so long as", "as long as"], "meaning": ["مترادفتان", "الأشيع"]},
+        {"pair": ["as long as you tell me ✅", "as long as you will tell me ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["as long as", "so long as", "as long as you're careful", "as long as it works", "as long as nobody minds", "as long as we're clear", "as long as there's time", "as long as they agree", "as long as it lasts", "as long as necessary"],
+      "sentence_practice": [
+        "You can borrow it as long as you're careful.",
+        "As long as nobody objects, we'll proceed.",
+        "It's fine as long as we're clear about the cost."
+      ],
+      "record_this": "You can certainly borrow the equipment as long as you're careful with it. As long as nobody objects in the next few days, we will simply proceed. The arrangement is fine as long as we are completely clear about the cost.",
+      "self_check": "Say 'as long as you're careful'. Is there one beat on LONG, with both 'as' words tiny?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'unless' /ənˈles/ · 'supposing' /səˈpəʊzɪŋ/"],
+      "isolation": {
+        "instructions": "'unless' means 'if not' — the negative is already inside it, so the verb after it stays positive: 'unless it rains', never 'unless it doesn't rain'. Beat on LESS. 'Supposing' opens a hypothesis, often as a question: 'Supposing they refuse?'",
+        "instructions_ar": "'unless' تعني 'إن لم' والنفي داخلها، فالفعل بعدها مثبت. والنبضة على LESS. و'Supposing' تفتح افتراضًا وغالبًا كسؤال.",
+        "practice": ["/ənˈLESS/ it rains", "/səˈPOSing/ they refuse ↗", "the negative is inside 'unless'"]
+      },
+      "minimal_pairs": [
+        {"pair": ["unless it rains ✅", "unless it doesn't rain ❌"], "meaning": ["صحيح", "نفي مزدوج"]},
+        {"pair": ["unless", "if not"], "meaning": ["مختصر", "مطوّل"]},
+        {"pair": ["unLESS", "UNless"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["Supposing they refuse? ↗", "Supposing they refuse. ↘"], "meaning": ["سؤال افتراضي", "خبر"]},
+        {"pair": ["supposing", "what if"], "meaning": ["رسمي قليلًا", "عادي"]}
+      ],
+      "word_practice": ["unless it rains", "unless something changes", "unless you object", "unless told otherwise", "unless absolutely necessary", "supposing they refuse", "supposing it fails", "supposing we're wrong", "unless I hear otherwise", "supposing nobody comes"],
+      "sentence_practice": [
+        "We'll meet outside unless it rains.",
+        "Unless I hear otherwise, I'll assume it's approved.",
+        "Supposing they refuse — what then?"
+      ],
+      "record_this": "We will meet outside by the north gate unless it happens to rain. Unless I hear otherwise from you before Friday, I'll assume it has been approved. Supposing they refuse the whole proposal outright, what exactly do we do then?",
+      "self_check": "Say 'unless it rains'. Is the verb positive, with the beat on LESS?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'on condition that' /ɒn kənˈdɪʃən ðət/"],
+      "isolation": {
+        "instructions": "'on condition that' is the most formal option, used for agreements and legal contexts. Five syllables running to a beat on DISH: /ɒn kənˈDISHən ðət/. It signals a genuine, binding requirement, not a casual preference.",
+        "instructions_ar": "'on condition that' هي الأكثر رسمية وتُستخدم في الاتفاقات والسياقات القانونية، والنبضة على DISH، وتعني شرطًا مُلزمًا حقيقيًا.",
+        "practice": ["/ɒn kənˈDISHən ðət/", "released on condition that…", "formal and binding"]
+      },
+      "minimal_pairs": [
+        {"pair": ["on condition that", "as long as"], "meaning": ["رسمي مُلزم", "عادي"]},
+        {"pair": ["/kənˈdɪʃən/", "/ˈkɒndɪʃən/"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["on condition that ✅", "on the condition ✅"], "meaning": ["كلتاهما صحيحة", "بديل صحيح"]},
+        {"pair": ["only on condition that", "on condition that"], "meaning": ["توكيد أقوى", "عادي"]},
+        {"pair": ["on condition that he apologises", "if he apologises"], "meaning": ["مُلزم", "شرط عادي"]}
+      ],
+      "word_practice": ["on condition that", "on the condition that", "only on condition that", "subject to", "in the event that", "on the understanding that", "provided always that", "conditional upon", "on condition that he apologises", "on the strict condition that"],
+      "sentence_practice": [
+        "The funds were released on condition that receipts were provided.",
+        "He agreed on condition that his name stayed private.",
+        "We'll continue on the understanding that this is final."
+      ],
+      "record_this": "The funds were released on condition that full receipts were provided within a month. He agreed to take part on condition that his name stayed completely private. We will continue on the understanding that this really is the final version.",
+      "self_check": "Say 'on condition that'. Is the stress on DISH, with the phrase flowing as one formal unit?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["inverted conditionals at conversational speed"],
+      "isolation": {
+        "instructions": "Bring back week 2's inversion, now at natural speed and mixed with the other connectors: 'HAD they known, they'd have acted.' 'SHOULD anything change, call me.' The auxiliary stays strong even when the whole sentence moves quickly.",
+        "instructions_ar": "أعِد قلب الشرط من الأسبوع الثاني لكن بسرعة طبيعية ومختلطًا بأدوات أخرى. يبقى الفعل المساعد قويًا حتى مع سرعة الجملة.",
+        "practice": ["HAD they known ↗ | they'd have acted ↘", "SHOULD anything change ↗ | call me ↘", "fast but still strong"]
+      },
+      "minimal_pairs": [
+        {"pair": ["HAD they known…", "If they had known…"], "meaning": ["رسمي مقلوب", "عادي"]},
+        {"pair": ["SHOULD anything change…", "If anything changes…"], "meaning": ["رسمي مؤدّب", "عادي"]},
+        {"pair": ["strong auxiliary at speed", "mumbled auxiliary at speed"], "meaning": ["مفهوم", "مبهم"]},
+        {"pair": ["Were it not for…", "If it weren't for…"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["Had they known ✅", "Had they have known ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["had they known", "should anything change", "were it not for", "had we been told", "should you need me", "were they to refuse", "had it not been for", "should that happen", "had she asked", "were we to agree"],
+      "sentence_practice": [
+        "Had they known, they would have acted sooner.",
+        "Should anything change, call me straight away.",
+        "Were it not for the delay, we'd be finished."
+      ],
+      "record_this": "Had they known about the risk earlier, they would certainly have acted sooner. Should anything at all change over the weekend, call me straight away. Were it not for that one delay in February, we would be completely finished by now.",
+      "self_check": "Say 'Had they known, they'd have acted sooner' at normal speed. Is 'HAD' still clearly strong?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 14 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/prəˈvaɪdɪd ðət/ (chunk)", "pro-vi-ded that (separated)"],
+        ["/əz LONG əz/ (compressed)", "as · long · as"],
+        ["unless it rains ✅", "unless it doesn't rain ❌"],
+        ["on condition that", "as long as"],
+        ["HAD they known…", "If they had known…"],
+        ["provided that ↗ | result ↘", "provided that ↘ result ↘"]
+      ],
+      "challenge_sentences": [
+        "Provided we get approval, we'll start on Monday.",
+        "You can stay as long as you like.",
+        "Unless something changes, that's the plan.",
+        "Should you need anything, just ask."
+      ],
+      "record_this": "Provided we get final approval this week, we will start on Monday morning. You are very welcome to stay as long as you like, honestly. Unless something significant changes in the meantime, that remains the plan. Should you need anything at all while I'm away, just ask Layla.",
+      "self_check": "Three checks: connectors as single chunks, no double negative after 'unless', and the condition suspended before the result falls."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a careful negotiation summary. Conditions must be unambiguous, so mark every clause boundary clearly — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كملخّص تفاوض دقيق. الشروط يجب أن تكون واضحة، فحدّد كل حدّ بوضوح، ثم اسمع وراجع.",
+        "passage": "Here is where we stand. Provided the board approves the revised budget next week, we can begin recruitment immediately. The partner is willing to contribute, but only on condition that their name appears on all published material. As long as that is acceptable to us, I see no real obstacle. Unless someone raises a serious objection in the next few days, I intend to confirm. Supposing they withdraw at the last moment, we would need a contingency, and had we not discussed that possibility in March, we would have nothing prepared. Should the timeline slip beyond June, the whole calculation changes. Were it not for the goodwill built up over three years, I doubt this would be possible at all. So: provided nothing unexpected happens, and as long as the paperwork is clean, we proceed.",
+        "sounds_to_check": {
+          "'provided that' as one chunk": "Provided the board approves…, provided nothing unexpected happens",
+          "'as long as' compressed /əz LONG əz/": "As long as that is acceptable…, as long as the paperwork is clean",
+          "'unless' with a positive verb": "Unless someone raises a serious objection",
+          "formal 'on condition that'": "only on condition that their name appears on all published material",
+          "inverted conditionals still strong": "HAD we not discussed that possibility…, SHOULD the timeline slip…, WERE it not for the goodwill"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Connectors chunked, conditions clearly suspended, inverted auxiliaries strong. Every condition unambiguous. Ready for week 15.",
+        "70_89": "Good; occasionally a connector separates or a condition boundary is rushed.",
+        "50_69": "Connectors stressed word by word, so boundaries blur. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Start by drilling each connector as a single chunk."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'unless' already means 'if not'. Never add another negative — 'unless it rains', not 'unless it doesn't rain'.",
+      "Each connector is one rhythmic chunk with a single beat: /prəˈVAIDɪd/, /əz LONG əz/, /ɒn kənˈDISHən/.",
+      "Keep the condition suspended (level or slightly rising) and let the result fall. That contour is what separates the two halves.",
+      "Register ladder: 'as long as' (everyday) → 'provided that' (formal) → 'on condition that' (contractual).",
+      "Conditions take present tense, not 'will': 'provided we agree', never 'provided we will agree'."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every condition boundary is clearly audible."
+  }
+}

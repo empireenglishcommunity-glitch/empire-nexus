@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 10,
+  "focus": "'many of which' /ˈmeni əv wɪtʃ/ · 'most of whom' /məʊst əv uːm/ · 'the extent to which' · prepositional relatives 'the manner in which' · the parenthetical dip of non-defining clauses",
+  "focus_ar": "'many of which'، و'most of whom'، و'the extent to which'، وجُمَل الوصل بحرف جر 'the manner in which'، والهبوط الاعتراضي في الوصل غير المحدِّد",
+  "arabic_challenge": "These relative structures are dense with grammar words that must almost disappear: in 'many of which were damaged', the words 'of which' carry no stress at all and link into one smooth run /əv wɪtʃ/. Pronounce them fully and the sentence stalls in the middle. There is a second challenge: non-defining clauses are parenthetical, so they sit in a lower pitch band, like an aside. Arabic relative clauses are introduced by a single agreeing pronoun (الذي / التي) with no comma-bracketing convention, so the pitch drop for extra information is unfamiliar and often omitted, which makes essential and non-essential information sound identical.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'many of which' /ˈmeni əv wɪtʃ/"],
+      "isolation": {
+        "instructions": "The quantifier takes the stress and 'of which' vanishes into a quick link: /ˈMEni əv wɪtʃ/. Practise the whole phrase as one unit, with only the first word audible as a beat: 'twenty proposals, MANY of which were rejected'.",
+        "instructions_ar": "المُحدِّد الكمّي يأخذ النبر و'of which' تختفي في رابط سريع. تدرّب على العبارة كوحدة واحدة بنبضة واحدة على الكلمة الأولى.",
+        "practice": ["/ˈMEni əv wɪtʃ/", "/ˈSEvrəl əv wɪtʃ/", "quantifier is the only beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["many of which", "many of them"], "meaning": ["وصل داخل الجملة", "جملة جديدة"]},
+        {"pair": ["/əv wɪtʃ/ (linked, quiet)", "of · which (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["some of which", "all of which"], "meaning": ["بعضها", "كلها"]},
+        {"pair": ["many of which were ✅", "many of which was ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["none of which", "not of which ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["many of which", "some of which", "all of which", "none of which", "several of which", "most of which", "both of which", "half of which", "neither of which", "few of which"],
+      "sentence_practice": [
+        "We received twenty proposals, many of which were unrealistic.",
+        "He made three claims, none of which he could support.",
+        "There were two options, both of which had risks."
+      ],
+      "record_this": "We received nearly twenty proposals, many of which were completely unrealistic. He made three separate claims, none of which he could actually support with evidence. There were only two options available, both of which carried significant risks.",
+      "self_check": "Say 'many of which were rejected'. Is 'of which' quiet and linked, with the beat on 'many'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'most of whom' /məʊst əv uːm/"],
+      "isolation": {
+        "instructions": "Use 'whom' for people. The /h/ normally disappears in connected speech, so 'of whom' becomes /əv uːm/ — a smooth vowel link. Again the quantifier carries the only beat: 'forty staff, MOST of whom were new'.",
+        "instructions_ar": "استخدم 'whom' للأشخاص، والـ /h/ تختفي عادةً في الكلام المتّصل فتصبح /əv uːm/. والمُحدِّد الكمّي يحمل النبضة الوحيدة.",
+        "practice": ["/MOST əv uːm/", "/ˈMEni əv uːm/", "the /h/ disappears"]
+      },
+      "minimal_pairs": [
+        {"pair": ["most of whom (people)", "most of which (things)"], "meaning": ["أشخاص", "أشياء"]},
+        {"pair": ["/əv uːm/ (h dropped)", "of /huːm/ (h pronounced)"], "meaning": ["طبيعي", "بطيء رسمي"]},
+        {"pair": ["most of whom were ✅", "most of who were ❌"], "meaning": ["صحيح رسمي", "غير رسمي"]},
+        {"pair": ["some of whom", "one of whom"], "meaning": ["بعضهم", "واحد منهم"]},
+        {"pair": ["all of whom", "all of them"], "meaning": ["وصل", "جملة جديدة"]}
+      ],
+      "word_practice": ["most of whom", "many of whom", "some of whom", "one of whom", "all of whom", "none of whom", "several of whom", "both of whom", "few of whom", "neither of whom"],
+      "sentence_practice": [
+        "We interviewed forty candidates, most of whom were new graduates.",
+        "Two colleagues, both of whom I trust, disagreed.",
+        "She has three assistants, one of whom is bilingual."
+      ],
+      "record_this": "We interviewed nearly forty candidates, most of whom were recent graduates. Two colleagues, both of whom I trust completely, disagreed with the decision. She has three assistants, one of whom is fluent in four languages.",
+      "self_check": "Say 'most of whom were new'. Did the /h/ disappear, giving a smooth /əv uːm/?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'the extent to which' /ði ɪkˈstent tə wɪtʃ/"],
+      "isolation": {
+        "instructions": "This academic phrase has one clear beat on STENT; everything after it links quietly: /ði ɪkˈSTENT tə wɪtʃ/. The two /t/ sounds in 'extent to' merge. It is the standard way to discuss degree rather than yes-or-no.",
+        "instructions_ar": "هذه العبارة الأكاديمية لها نبضة واضحة على STENT وما بعدها يُربط بهدوء، وتندمج الـ /t/ في 'extent to'.",
+        "practice": ["/ði ɪkˈSTENT tə wɪtʃ/", "/ðə dɪˈGREE tə wɪtʃ/", "one beat, then quiet linking"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the extent to which", "how much"], "meaning": ["أكاديمي", "عادي"]},
+        {"pair": ["/ɪkˈstent tə/ (merged /t/)", "extent · to (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["the extent to which", "the extent which ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["the degree to which", "the extent to which"], "meaning": ["الدرجة", "المدى"]},
+        {"pair": ["the way in which", "the extent to which"], "meaning": ["الطريقة", "المدى"]}
+      ],
+      "word_practice": ["the extent to which", "the degree to which", "the way in which", "the speed at which", "the point at which", "the manner in which", "the rate at which", "the ease with which", "the frequency with which", "the reason for which"],
+      "sentence_practice": [
+        "The extent to which this applies is unclear.",
+        "The speed at which it spread surprised everyone.",
+        "The ease with which she solved it was remarkable."
+      ],
+      "record_this": "The extent to which this conclusion applies elsewhere remains genuinely unclear. The speed at which the problem spread surprised absolutely everyone involved. The ease with which she solved the whole thing was frankly remarkable.",
+      "self_check": "Say 'the extent to which'. Is there one beat on STENT, with everything after it linking quietly?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["prepositional relatives: 'a point at which' · 'the manner in which'"],
+      "isolation": {
+        "instructions": "In formal English the preposition moves in front of the relative pronoun: 'the manner in which it was handled' rather than 'the manner it was handled in'. The preposition and pronoun link tightly and quietly: /ɪn wɪtʃ/, /æt wɪtʃ/, /wɪð wɪtʃ/.",
+        "instructions_ar": "في الإنجليزية الرسمية يتقدّم حرف الجر على ضمير الوصل، ويُربط الحرف بالضمير بهدوء وإحكام.",
+        "practice": ["the manner /ɪn wɪtʃ/ it was handled", "a point /æt wɪtʃ/ we agreed", "preposition first, quiet link"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the manner in which it was handled", "the manner it was handled in"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["/ɪn wɪtʃ/ (linked, quiet)", "in · which (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["the reason for which", "the reason why"], "meaning": ["رسمي جدًا", "عادي"]},
+        {"pair": ["with whom I worked", "who I worked with"], "meaning": ["رسمي", "محادثة"]},
+        {"pair": ["at which point", "at which time"], "meaning": ["عند تلك النقطة", "في ذلك الوقت"]}
+      ],
+      "word_practice": ["in which", "at which", "with which", "for which", "to which", "the manner in which", "a point at which", "the tool with which", "the purpose for which", "the standard to which"],
+      "sentence_practice": [
+        "The manner in which it was handled caused offence.",
+        "There came a point at which nobody could agree.",
+        "The colleagues with whom I worked were excellent."
+      ],
+      "record_this": "The manner in which the complaint was handled caused genuine offence. There came a point at which nobody in the room could agree on anything. The colleagues with whom I worked most closely were absolutely excellent.",
+      "self_check": "Say 'the manner in which it was handled'. Do 'in which' link tightly and quietly together?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the parenthetical dip of non-defining clauses"],
+      "isolation": {
+        "instructions": "A non-defining clause is extra information, so English drops it into a lower pitch band, like an aside, with a pause on each side: 'My brother, | who lives in Cairo, | is a doctor.' A defining clause has no commas and no dip: 'The man who called was polite.' The pitch tells the listener which one you mean.",
+        "instructions_ar": "الوصل غير المحدِّد معلومة إضافية، فتُقال بنبرة أخفض كالاعتراض مع وقفة على الجانبين، بينما المحدِّد بلا فواصل ولا هبوط.",
+        "practice": ["My brother, | who lives in Cairo, | is a doctor", "The man who called was polite", "dip for extra, flat for essential"]
+      },
+      "minimal_pairs": [
+        {"pair": ["My brother, who lives in Cairo, …", "The man who called was polite"], "meaning": ["معلومة إضافية", "معلومة محدِّدة"]},
+        {"pair": ["lower pitch aside", "same pitch throughout"], "meaning": ["غير محدِّد", "محدِّد"]},
+        {"pair": ["The students, who passed, celebrated", "The students who passed celebrated"], "meaning": ["كلهم نجحوا", "الذين نجحوا فقط"]},
+        {"pair": ["…, which surprised me, …", "…which surprised me"], "meaning": ["اعتراض", "متّصل"]},
+        {"pair": ["comma + dip ✅", "comma with no dip"], "meaning": ["واضح", "مبهم"]}
+      ],
+      "word_practice": ["my brother, who", "the report, which", "the students, who", "her proposal, which", "the manager, whose", "the city, where", "that year, when", "the file, which", "our client, who", "the results, which"],
+      "sentence_practice": [
+        "My brother, who lives in Cairo, is a doctor.",
+        "The report, which nobody read, was excellent.",
+        "The students who passed celebrated together."
+      ],
+      "record_this": "My brother, who lives in Cairo these days, is a doctor at the university hospital. The report, which almost nobody actually read, was genuinely excellent. The students who passed the exam celebrated together in the courtyard afterwards.",
+      "self_check": "Say the 'my brother' sentence. Does the middle clause sit in a lower pitch, bracketed by pauses?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 10 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/əv wɪtʃ/ (linked, quiet)", "of · which (separated)"],
+        ["most of whom (people)", "most of which (things)"],
+        ["the extent to which", "the extent which ❌"],
+        ["the manner in which it was handled", "the manner it was handled in"],
+        ["My brother, who lives in Cairo, …", "The man who called was polite"],
+        ["lower pitch aside", "same pitch throughout"]
+      ],
+      "challenge_sentences": [
+        "We had six suppliers, most of which have now closed.",
+        "The team, many of whom were new, performed well.",
+        "The extent to which this matters is debatable.",
+        "The way in which she explained it was masterful."
+      ],
+      "record_this": "We had six regular suppliers, most of which have now closed or merged. The team, many of whom were completely new that year, performed remarkably well. The extent to which any of this actually matters is still debatable. The way in which she explained the whole problem was frankly masterful.",
+      "self_check": "Three checks: quiet linked 'of which', 'whom' for people, and a lower pitch band for non-defining clauses."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a formal report summary. These structures are dense, so keep the grammar words quiet and let the content words carry the rhythm — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كملخّص تقرير رسمي. هذه التراكيب مكثّفة، فاجعل الكلمات النحوية هادئة ودع كلمات المضمون تحمل الإيقاع، ثم اسمع وراجع.",
+        "passage": "The programme involved eleven partner organisations, most of which were small charities, and around four hundred participants, many of whom had never used the service before. The manner in which the funding was distributed proved controversial. There came a point at which three partners, two of whom had joined only that spring, threatened to withdraw. The extent to which this affected delivery is hard to measure. Our coordinator, who had managed similar programmes elsewhere, argued that the structure itself was the problem. The final report, which runs to two hundred pages, identifies six recommendations, none of which has yet been implemented. The speed at which the situation deteriorated surprised the trustees, several of whom had raised concerns much earlier. The lesson, insofar as there is one, concerns the ease with which good intentions become unmanageable.",
+        "sounds_to_check": {
+          "'of which' quiet and linked": "most of which were small charities, none of which has yet been implemented",
+          "'of whom' with dropped /h/": "many of whom had never used…, two of whom had joined…, several of whom had raised concerns",
+          "'the extent/speed/ease … to/at/with which'": "The extent to which this affected delivery, The speed at which the situation deteriorated, the ease with which good intentions become unmanageable",
+          "prepositional relatives": "The manner in which the funding was distributed, a point at which three partners…",
+          "non-defining parenthetical dip": "Our coordinator, | who had managed similar programmes elsewhere, | argued… · The final report, | which runs to two hundred pages, |"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Grammar words quiet, quantifiers stressed, non-defining clauses clearly dipped. Dense prose still easy to follow. Ready for week 11.",
+        "70_89": "Good; occasionally 'of which' is over-pronounced or a parenthetical dip is missed.",
+        "50_69": "Every word given equal weight, so the sentences stall mid-flow. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start by making 'of which' and 'of whom' almost inaudible."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'of which' and 'of whom' carry no stress at all. The quantifier before them takes the only beat.",
+      "The /h/ in 'whom' normally disappears after 'of': /əv uːm/.",
+      "Use 'whom' for people and 'which' for things — mixing them is immediately noticeable in formal registers.",
+      "Non-defining clauses need a lower pitch and pauses on both sides. Without the dip, essential and extra information sound identical.",
+      "Formal English puts the preposition first: 'the manner in which', not 'the manner which … in'."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every 'of which/of whom' is quiet and linked."
+  }
+}

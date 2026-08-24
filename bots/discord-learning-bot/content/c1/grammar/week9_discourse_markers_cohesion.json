@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w9",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 9,
+  "pattern_name": "Advanced discourse markers and cohesion",
+  "pattern_name_ar": "أدوات الربط المتقدّمة والتماسك",
+  "formula": "however, nevertheless, nonetheless (contrast) · hence, thus, thereby (result) · conversely (opposite) · notwithstanding (despite) · in that, insofar as (respect/extent) · moreover, furthermore (addition)",
+  "formula_visual": "[The results], [however], [were disappointing]",
+  "when_to_use": "To signal precise logical relationships in formal writing and argument. 'however/nevertheless' mark contrast, 'hence/thus/thereby' mark result, 'conversely' introduces the mirror case, 'notwithstanding' concedes, and 'in that/insofar as' specify a respect or extent. These connectors are the skeleton of an academic paragraph, letting a reader follow an argument without rereading.",
+  "when_to_use_ar": "للإشارة إلى علاقات منطقية دقيقة في الكتابة الرسمية. هذه الأدوات هي هيكل الفقرة الأكاديمية، وتتيح للقارئ متابعة الحجّة دون إعادة القراءة.",
+  "why_arabic_speakers_struggle": "Arabic connectors usually attach directly to the clause (لكنّ / ومع ذلك / لذلك) and are not bracketed by commas, so learners either omit English punctuation or, more often, treat 'however' as a coordinating conjunction and join two independent clauses with only a comma. That produces a comma splice, which in formal writing is a visible error. Learners also mix up 'thereby' (followed by an -ing form) with 'therefore' (followed by a clause).",
+  "examples": [
+    {"en": "The results, however, were disappointing.", "ar": "لكن النتائج كانت مخيّبة", "structure": "subject, [however], + verb"},
+    {"en": "The evidence is thin; nevertheless, it is suggestive.", "ar": "الدليل ضعيف؛ ومع ذلك فهو مُلفت", "structure": "clause; [nevertheless], + clause"},
+    {"en": "Demand fell sharply; hence the price cut.", "ar": "انخفض الطلب بحدّة؛ ومن هنا خفض السعر", "structure": "clause; [hence] + noun phrase"},
+    {"en": "We automated the process, thereby reducing errors.", "ar": "قمنا بأتمتة العملية، وبذلك قلّلنا الأخطاء", "structure": "clause, [thereby] + -ing"},
+    {"en": "The case is unusual in that no warning was given.", "ar": "الحالة غير معتادة من حيث أنه لم يُعطَ أي تحذير", "structure": "clause + [in that] + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "The plan was good, however it failed.", "correct": "The plan was good; however, it failed.", "explanation": "'However' is not a conjunction, so it cannot join two clauses with only a comma. Use a semicolon or full stop."},
+    {"wrong": "We automated it, thereby we reduced errors.", "correct": "We automated it, thereby reducing errors.", "explanation": "'Thereby' is followed by an -ing form, not by a new clause."},
+    {"wrong": "Nevertheless of the delays, we finished.", "correct": "Notwithstanding the delays, we finished.", "explanation": "'Nevertheless' cannot take an object; 'notwithstanding' means 'despite' and can."},
+    {"wrong": "It is unusual, in that, no warning was given.", "correct": "It is unusual in that no warning was given.", "explanation": "'In that' joins clauses directly and takes no commas around it."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The second quarter, ___, was markedly weaker.", "answer": "however"},
+    {"sentence": "The sample is small; ___, the trend seems consistent.", "answer": "nevertheless / nonetheless"},
+    {"sentence": "Costs had risen; ___ the tighter margins.", "answer": "hence"},
+    {"sentence": "We simplified the form, thereby ___ (reduce) errors.", "answer": "reducing"},
+    {"sentence": "The report is unusual ___ ___ it separates the two effects.", "answer": "in that"}
+  ],
+  "quick_rule": "however/nevertheless need a semicolon or full stop, plus commas. thereby + -ing. notwithstanding + noun. in that/insofar as join clauses with no commas.",
+  "quick_rule_ar": "however/nevertheless تحتاج فاصلة منقوطة أو نقطة مع فواصل. وthereby + -ing. وnotwithstanding + اسم. وin that/insofar as تربط الجُمَل بلا فواصل.",
+  "mnemonic": "'However' is an adverb, not a joiner — it needs stronger punctuation.",
+  "connect_to_speaking": "In accent week 9 you drilled the pause-dip-pause bracketing of 'however' and the final stress on 'nevertheless'. Those written commas are audible boundaries, and skipping them makes formal speech hard to follow."
+}

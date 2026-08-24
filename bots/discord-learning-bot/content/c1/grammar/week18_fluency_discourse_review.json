@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w18",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 18,
+  "pattern_name": "Fluency, coherence and discourse strategies (C1 review)",
+  "pattern_name_ar": "الطلاقة والتماسك واستراتيجيات الخطاب (مراجعة C1)",
+  "formula": "Repair: or rather, I mean, what I should say is, to put it another way · Floor-holding: that's a good question, it depends on what you mean by · Structuring: first, then, the key point is this, to summarise · plus all C1 structures from weeks 1-17",
+  "formula_visual": "[The report was finished in May] — [or rather], [submitted in May]",
+  "when_to_use": "To sustain long, coherent turns and manage them like an advanced speaker. Repair phrases let you correct yourself mid-sentence without collapsing; floor-holding phrases keep your turn while you form a thought; structuring phrases tell the listener where you are. This week also consolidates every C1 structure from weeks 1 to 17 into extended, connected discourse.",
+  "when_to_use_ar": "للحفاظ على أدوار كلام طويلة ومتماسكة وإدارتها كمتحدّث متقدّم. عبارات التصحيح تتيح تصحيح نفسك دون انهيار، وعبارات الحفاظ على الدور تمنحك وقتًا للتفكير، وعبارات التنظيم تُخبر المستمع بموقعك. ومراجعة لكل تراكيب C1.",
+  "why_arabic_speakers_struggle": "Learners at this level usually control the individual structures but treat every hesitation as a failure, so they restart sentences, apologise, or fall silent — and silence with a falling tone hands the turn to someone else. Arabic conversation has its own repair and floor-holding formulas, but they do not transfer, so learners are left with 'erm' repeated, which sounds far less competent than their actual English.",
+  "examples": [
+    {"en": "The report was finished in May — or rather, submitted in May.", "ar": "انتهى التقرير في مايو، أو بالأحرى قُدّم في مايو", "structure": "clause + [or rather] + correction"},
+    {"en": "It's cheaper. I mean, more cost-effective overall.", "ar": "إنه أرخص. أعني أكثر جدوى اقتصاديًا بشكل عام", "structure": "clause + [I mean] + rephrasing"},
+    {"en": "That's a good question — let me think about that.", "ar": "سؤال جيد — دعني أفكّر فيه", "structure": "[floor-holding phrase]"},
+    {"en": "It depends, really, on what you mean by success.", "ar": "الأمر يعتمد فعلًا على ما تعنيه بالنجاح", "structure": "[it depends on] + [what you mean by]"},
+    {"en": "To summarise, we have three realistic options.", "ar": "خلاصة القول، لدينا ثلاثة خيارات واقعية", "structure": "[structuring phrase], + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "Sorry, sorry, let me start again from the beginning.", "correct": "The report was finished in May — or rather, submitted in May.", "explanation": "Advanced speakers repair inside the sentence and keep going rather than restarting."},
+    {"wrong": "Erm... erm... erm...", "correct": "That's a good question — let me think about that for a moment.", "explanation": "A full phrase holds your turn and sounds competent; repeated fillers do not."},
+    {"wrong": "I don't know. (falling tone, then silence)", "correct": "It depends, really, on what you mean by that.", "explanation": "A falling tone plus silence hands your turn away; a level tone keeps it."},
+    {"wrong": "To summarise, and also I want to add another new point.", "correct": "To summarise, we have three options.", "explanation": "A summary signpost must actually summarise; adding new material confuses the structure."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It was finished in May — ___ rather, submitted in May.", "answer": "or"},
+    {"sentence": "It's cheaper. I ___, more cost-effective overall.", "answer": "mean"},
+    {"sentence": "That's a good question — let me ___ about that.", "answer": "think"},
+    {"sentence": "It depends on what you ___ by success.", "answer": "mean"},
+    {"sentence": "To ___, we have three realistic options.", "answer": "summarise"}
+  ],
+  "quick_rule": "Repair inside the sentence with 'or rather' and keep your pace. Hold the floor with a full phrase and a LEVEL tone. Signpost so the listener always knows where you are.",
+  "quick_rule_ar": "صحّح داخل الجملة بـ 'or rather' وحافظ على سرعتك. واحفظ دورك بعبارة كاملة ونبرة مستوية. وأشِر لموقعك دائمًا.",
+  "mnemonic": "Repair, don't restart. Hold, don't fill.",
+  "connect_to_speaking": "In accent week 18 you drilled thought groups, the rhetorical pause and level-tone floor-holding. This is the C1 capstone: every structure from weeks 1 to 17 delivered across a sustained turn rather than one sentence at a time."
+}

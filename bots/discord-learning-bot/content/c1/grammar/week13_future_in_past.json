@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w13",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 13,
+  "pattern_name": "Future in the past and complex time reference",
+  "pattern_name_ar": "المستقبل في الماضي والإشارة الزمنية المركّبة",
+  "formula": "was/were going to + verb · would later/eventually + verb · was/were to + verb (destiny or arrangement) · was/were to have + participle (unfulfilled) · was about to + verb · on the point of + -ing · by which time",
+  "formula_visual": "[I was going to call], [but it got late]",
+  "when_to_use": "To describe a future seen from a point already in the past — essential for storytelling, biography and explanation. 'was going to' marks an intention that usually did not happen. 'would later' narrates what followed. 'was to' expresses destiny or a formal arrangement, and 'was to have' marks a plan that failed. 'was about to' means something was seconds away.",
+  "when_to_use_ar": "لوصف مستقبل من منظور نقطة ماضية — أساسي للحكاية والسيرة والتفسير. 'was going to' نيّة لم تتحقّق غالبًا، و'would later' تسرد ما تلا، و'was to' قدر أو ترتيب، و'was to have' خطة فشلت.",
+  "why_arabic_speakers_struggle": "Arabic narrative marks sequence through context and particles rather than through a dedicated future-in-the-past form, so learners default to a simple past and lose the crucial implication that the intention was never fulfilled. Saying 'I called you but it was late' instead of 'I was going to call you but it got late' changes the facts entirely. A second problem is using 'will' inside a past narrative, where 'would' is required.",
+  "examples": [
+    {"en": "I was going to call you, but it got late.", "ar": "كنت سأتصل بك، لكن الوقت تأخّر", "structure": "[was going to + base verb], but …"},
+    {"en": "He would later become the company's first director.", "ar": "كان سيصبح لاحقًا أول مدير للشركة", "structure": "[would + later + base verb]"},
+    {"en": "The meeting was to begin at nine sharp.", "ar": "كان من المقرّر أن يبدأ الاجتماع في التاسعة", "structure": "[was to + base verb]"},
+    {"en": "The report was to have been finished by Friday.", "ar": "كان من المفترض أن ينتهي التقرير بحلول الجمعة", "structure": "[was to have been + participle]"},
+    {"en": "I was about to leave when the phone rang.", "ar": "كنت على وشك المغادرة عندما رنّ الهاتف", "structure": "[was about to + base verb] + when …"}
+  ],
+  "common_errors": [
+    {"wrong": "I was going to called you.", "correct": "I was going to call you.", "explanation": "'Going to' is always followed by the base form of the verb."},
+    {"wrong": "He will later become the director.", "correct": "He would later become the director.", "explanation": "Inside a past narrative the future is expressed with 'would', not 'will'."},
+    {"wrong": "She was on the point of resign.", "correct": "She was on the point of resigning.", "explanation": "'On the point of' is followed by an -ing form."},
+    {"wrong": "The delivery was to arrive on Monday, but it didn't.", "correct": "The delivery was to have arrived on Monday.", "explanation": "For a plan that clearly failed, 'was to have + participle' states it directly."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "I ___ (go) to explain, but nobody asked me.", "answer": "was going"},
+    {"sentence": "That decision ___ later prove decisive.", "answer": "would"},
+    {"sentence": "The shipment was to ___ arrived on Monday.", "answer": "have"},
+    {"sentence": "We were ___ to start when the power failed.", "answer": "about"},
+    {"sentence": "She was on the point of ___ (resign) when they called.", "answer": "resigning"}
+  ],
+  "quick_rule": "was going to + base (usually didn't happen). would (not will) inside past narrative. was to have + third form = failed plan. on the point of + -ing.",
+  "quick_rule_ar": "was going to + المصدر (لم يحدث عادةً). وwould لا will داخل السرد الماضي. وwas to have + التصريف الثالث لخطة فشلت. وon the point of + -ing.",
+  "mnemonic": "'Was going to' almost always ends in 'but'.",
+  "connect_to_speaking": "In accent week 13 you drilled /wəz ˈɡənə/ reduced to a quick blur with the main verb stressed. Fully pronounced, the frame swallows the sentence and the actual verb disappears."
+}

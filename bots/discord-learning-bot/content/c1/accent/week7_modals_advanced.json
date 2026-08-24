@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 7,
+  "focus": "'needn't have' /ˈniːdəntəv/ · 'ought to' /ˈɔːtə/ · 'be bound/likely to' · 'may well' and 'might as well' · 'would rather' /ˈwʊdrɑːðə/",
+  "focus_ar": "'needn't have' /ˈniːdəntəv/، و'ought to' /ˈɔːtə/، و'be bound/likely to'، و'may well' و'might as well'، و'would rather'",
+  "arabic_challenge": "C1 modality is about fine shades of meaning, and those shades are carried by short, heavily reduced chunks. 'needn't have bothered' and 'ought to have known' each compress four or five words into a single rhythmic unit; pronounce them word by word and the nuance turns into a stiff recitation. Arabic expresses these degrees with separate particles and verbs (كان يجب / من المرجّح / يُستحسن), so each element keeps its full weight. The habit of giving every word equal value is exactly what has to be unlearned here.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'needn't have' /ˈniːdəntəv/"],
+      "isolation": {
+        "instructions": "'needn't have' means 'you did it, but it wasn't necessary'. It compresses to /ˈniːdəntəv/ — one unit, /nt/ light, gliding into /əv/, then the participle takes the stress: /ˈniːdəntəv/ BOTHERED.",
+        "instructions_ar": "'needn't have' تعني 'فعلتَه لكنه لم يكن ضروريًا'. تُضغط إلى /ˈniːdəntəv/ وحدة واحدة، والتصريف يأخذ النبر.",
+        "practice": ["/ˈniːdəntəv/ BOTHERED", "/ˈniːdəntəv/ WORRIED", "one unit, strong participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["needn't have bothered (did it)", "didn't need to bother (didn't do it)"], "meaning": ["فعله بلا داعٍ", "لم يفعله"]},
+        {"pair": ["/ˈniːdəntəv/ (one unit)", "need · not · have (three words)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["needn't have worried ✅", "needn't have worry ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["needn't have paid", "mustn't have paid"], "meaning": ["لم يكن ضروريًا", "استنتاج غير صحيح"]},
+        {"pair": ["You needn't have come", "You didn't have to come"], "meaning": ["جئتَ بلا داعٍ", "لم يكن إلزاميًا"]}
+      ],
+      "word_practice": ["needn't have bothered", "needn't have worried", "needn't have paid", "needn't have come", "needn't have said", "needn't have waited", "needn't have brought it", "needn't have asked", "needn't have rushed", "needn't have explained"],
+      "sentence_practice": [
+        "You needn't have bothered — I'd already finished.",
+        "She needn't have worried about the results.",
+        "We needn't have rushed after all."
+      ],
+      "record_this": "You needn't have bothered coming in early, because I had already finished everything. She needn't have worried so much about the results, which turned out fine. As it happened, we needn't have rushed at all that morning.",
+      "self_check": "Say 'You needn't have bothered'. Is 'needn't have' one compressed unit with 'bothered' stressed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'ought to' /ˈɔːtə/"],
+      "isolation": {
+        "instructions": "'ought to' is a single chunk /ˈɔːtə/ — the /t/ of 'ought' and the 'to' merge completely. Add 'have' and it becomes /ˈɔːtəv/: 'You ought to have known' = /ˈɔːtəv/ NOWN. Never separate the words.",
+        "instructions_ar": "'ought to' كتلة واحدة /ˈɔːtə/ حيث تندمج /t/ مع 'to'، ومع 'have' تصبح /ˈɔːtəv/. لا تفصل الكلمات.",
+        "practice": ["/ˈɔːtə/ KNOW better", "/ˈɔːtəv/ NOWN better", "one chunk, never separated"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/ˈɔːtə/ (merged)", "ought · to (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["ought to know", "ought to have known"], "meaning": ["الآن", "في الماضي"]},
+        {"pair": ["ought to /ˈɔːtə/", "aught to ❌"], "meaning": ["صحيح", "خطأ إملائي"]},
+        {"pair": ["You ought to apologise", "You should apologise"], "meaning": ["أقوى قليلًا وأرسم", "عادي"]},
+        {"pair": ["ought not to /ˈɔːtnətə/", "ought to not ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["ought to know", "ought to have known", "ought to apologise", "ought to be", "ought to have told me", "ought not to", "ought to have asked", "ought to check", "ought to have realised", "ought to consider"],
+      "sentence_practice": [
+        "You ought to have told me sooner.",
+        "We ought to check the figures again.",
+        "He ought to know better by now."
+      ],
+      "record_this": "You really ought to have told me about this a great deal sooner. We ought to check those figures again before the meeting tomorrow. Honestly, he ought to know better by now, given his experience.",
+      "self_check": "Say 'ought to have known'. Is it /ˈɔːtəv/ as one smooth chunk?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'be bound to' /bi baʊnd tə/ · 'be likely to'"],
+      "isolation": {
+        "instructions": "'bound to' expresses near-certainty; 'likely to' expresses probability. Both reduce the 'to' to /tə/ and keep the adjective as the beat: is BOUND /tə/ happen, is LIKELY /tə/ rise. Notice 'bound' has a full /aʊ/ diphthong.",
+        "instructions_ar": "'bound to' تعبّر عن شبه يقين و'likely to' عن احتمال. كلتاهما تُخفّف 'to' إلى /tə/ والصفة تحمل النبضة.",
+        "practice": ["is BOUND /tə/ happen", "is LIKELY /tə/ rise", "adjective is the beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["is bound to happen", "is likely to happen"], "meaning": ["شبه مؤكَّد", "محتمل"]},
+        {"pair": ["bound /baʊnd/", "bond /bɒnd/"], "meaning": ["ملزم/مؤكَّد", "رابطة"]},
+        {"pair": ["to /tə/ (weak)", "to /tuː/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["is unlikely to", "is likely to"], "meaning": ["غير محتمل", "محتمل"]},
+        {"pair": ["was bound to fail", "was likely to fail"], "meaning": ["كان محتومًا", "كان مرجَّحًا"]}
+      ],
+      "word_practice": ["is bound to happen", "is likely to rise", "is unlikely to change", "was bound to fail", "is bound to notice", "is likely to object", "are likely to agree", "is bound to come out", "is likely to be delayed", "was bound to happen eventually"],
+      "sentence_practice": [
+        "Something like this was bound to happen eventually.",
+        "Prices are likely to rise again this year.",
+        "She is unlikely to change her mind now."
+      ],
+      "record_this": "Something like this was bound to happen eventually, given how the system was designed. Prices are likely to rise again before the end of this year. She is unlikely to change her mind now that the decision has been announced.",
+      "self_check": "Say 'is bound to happen'. Is 'bound' the strong beat with a weak /tə/ after it?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'may well' · 'might as well' /maɪt əz wel/"],
+      "isolation": {
+        "instructions": "'may well' means 'quite possibly' and both words are strong: may WELL be true. 'might as well' means 'there is no better option' and compresses in the middle: /maɪt əz wel/, with the beat on WELL. The two are easy to confuse, so drill them together.",
+        "instructions_ar": "'may well' تعني 'من المحتمل جدًا' وكلتا الكلمتين قويّتان، و'might as well' تعني 'لا يوجد خيار أفضل' وتُضغط في الوسط.",
+        "practice": ["may WELL be true", "/maɪt əz wel/ START now", "different meanings, drill together"]
+      },
+      "minimal_pairs": [
+        {"pair": ["may well be true", "might as well start"], "meaning": ["محتمل جدًا", "لا خيار أفضل"]},
+        {"pair": ["/maɪt əz wel/ (compressed)", "might · as · well"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["may well happen", "may happen"], "meaning": ["احتمال أقوى", "احتمال عادي"]},
+        {"pair": ["might as well ✅", "might well as ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["may well have been", "might as well have been"], "meaning": ["ربما كان فعلًا", "لا فرق يُذكر"]}
+      ],
+      "word_practice": ["may well be", "may well happen", "may well have been", "might as well start", "might as well ask", "might as well wait", "may well be right", "might as well go", "may well object", "might as well try"],
+      "sentence_practice": [
+        "He may well be right about the timing.",
+        "We might as well start without them.",
+        "That may well have been the real reason."
+      ],
+      "record_this": "He may well be right about the timing, even if his reasoning is questionable. Since nobody else has arrived, we might as well start without them. Looking back, that may well have been the real reason for the delay.",
+      "self_check": "Say both 'may well be right' and 'might as well try'. Do they sound clearly different?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["'would rather' /ˈwʊdrɑːðə/ · 'was to have'"],
+      "isolation": {
+        "instructions": "'would rather' compresses to /ˈwʊdrɑːðə/, often further to /ˈdrɑːðə/ after a pronoun: 'I'd rather wait' /aɪd ˈrɑːðə weɪt/. 'was to have' describes an arrangement that failed: 'She was to have arrived yesterday' = /wəz tə əv/.",
+        "instructions_ar": "'would rather' تُضغط إلى /ˈwʊdrɑːðə/ وأكثر بعد الضمير، و'was to have' تصف ترتيبًا لم يتحقّق.",
+        "practice": ["/aɪd ˈrɑːðə/ WAIT", "/wəz tə əv/ aRRIVED", "compress the frame, stress the verb"]
+      },
+      "minimal_pairs": [
+        {"pair": ["I'd rather wait", "I would rather wait"], "meaning": ["طبيعي", "بطيء رسمي"]},
+        {"pair": ["I'd rather you didn't", "I'd rather not"], "meaning": ["أفضّل ألا تفعل", "أفضّل ألا أفعل"]},
+        {"pair": ["was to have arrived (didn't)", "arrived"], "meaning": ["كان مقرّرًا ولم يحدث", "حدث"]},
+        {"pair": ["/wəz tə əv/ (blurred)", "was · to · have"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["would rather ✅", "would rather to ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["I'd rather wait", "I'd rather not", "I'd rather you didn't", "would rather stay", "would rather have gone", "was to have arrived", "was to have been finished", "were to have met", "was to have started", "would rather discuss it"],
+      "sentence_practice": [
+        "I'd rather wait until the report is final.",
+        "I'd rather you didn't mention it yet.",
+        "The shipment was to have arrived yesterday."
+      ],
+      "record_this": "I would rather wait until the report is completely final before commenting. I'd rather you didn't mention any of this to the client just yet. The shipment was to have arrived yesterday morning, but nobody can tell us where it is.",
+      "self_check": "Say 'I'd rather wait'. Is 'would rather' compressed, with 'wait' carrying the beat?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 7 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["needn't have bothered (did it)", "didn't need to bother (didn't do it)"],
+        ["/ˈɔːtə/ (merged)", "ought · to (separated)"],
+        ["is bound to happen", "is likely to happen"],
+        ["may well be true", "might as well start"],
+        ["I'd rather wait", "I would rather wait"],
+        ["needn't have worried ✅", "needn't have worry ❌"]
+      ],
+      "challenge_sentences": [
+        "You needn't have waited — I ought to have called.",
+        "It was bound to come out sooner or later.",
+        "We might as well ask, since he may well agree.",
+        "I'd rather you told me directly."
+      ],
+      "record_this": "You needn't have waited outside for so long, and honestly I ought to have called you. It was bound to come out sooner or later, whatever we did. We might as well ask him, since he may well agree to the whole thing. In future I'd rather you told me directly instead of going through the office.",
+      "self_check": "Three checks: 'needn't have' as one unit, 'ought to' merged into /ˈɔːtə/, and a clear difference between 'may well' and 'might as well'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself speaking this reflection aloud, as if thinking through a difficult week with a colleague. These modals carry nuance, so keep them light and quick — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تتكلم بهذا التأمّل بصوت عالٍ كأنك تراجع أسبوعًا صعبًا مع زميل. هذه الأفعال تحمل دلالات دقيقة، فاجعلها خفيفة وسريعة، ثم اسمع وراجع.",
+        "passage": "Looking back on the week, I ought to have seen it coming. The delay was bound to happen once two teams were sharing the same deadline, and I needn't have pretended otherwise. My manager may well have noticed before I did, though she said nothing at the time. I'd rather have been told directly, but I understand why she waited. The report was to have been finished on Thursday; in the end it was closer to Monday. We might as well admit that the original estimate was optimistic. Costs are likely to rise slightly as a result, and someone is bound to ask why. I ought not to have promised a date before checking with the supplier, and I needn't have committed to a figure at all. Next time I'd rather give a range than a number I cannot defend.",
+        "sounds_to_check": {
+          "'needn't have' /ˈniːdəntəv/": "I needn't have pretended otherwise, I needn't have committed to a figure",
+          "'ought to' merged /ˈɔːtə(v)/": "I ought to have seen it coming, I ought not to have promised a date",
+          "'bound/likely to' with weak /tə/": "was bound to happen, are likely to rise, is bound to ask",
+          "'may well' vs 'might as well'": "may well have noticed · We might as well admit",
+          "'would rather' + 'was to have'": "I'd rather have been told, I'd rather give a range · was to have been finished"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "All chunks compressed and natural, nuances clearly distinguished. Sounds like a fluent professional thinking aloud. Ready for week 8.",
+        "70_89": "Good; occasionally a chunk separates into individual words.",
+        "50_69": "Modals pronounced word by word, so nuance flattens. Repeat days 1-2 and day 4.",
+        "below_50": "Redo days 1-5. Start with 'needn't have' and 'ought to' as single units."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'needn't have done' means you DID it unnecessarily. 'Didn't need to do' means you did not do it at all — a genuine difference in meaning.",
+      "'ought to' is one chunk /ˈɔːtə/. Separating the words is the clearest sign of a non-native rhythm here.",
+      "'may well' = quite possibly (both words strong). 'might as well' = no better option (compressed middle).",
+      "Always use the third form after 'have': 'ought to have known', never 'ought to have know'.",
+      "'was to have + participle' signals a plan that did not happen — very useful and often missed by learners."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that each modal chunk is one unit, not several words."
+  }
+}

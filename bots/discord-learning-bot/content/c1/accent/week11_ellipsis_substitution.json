@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 11,
+  "focus": "Stress on the surviving auxiliary: 'So DO I' · 'Neither HAVE they' · 'one/ones' substitution · 'do so' and 'do the same' · what stress remains after ellipsis",
+  "focus_ar": "النبر على الفعل المساعد الباقي: 'So DO I'، و'Neither HAVE they'، والاستبدال بـ 'one/ones'، و'do so' و'do the same'، والنبر الباقي بعد الحذف",
+  "arabic_challenge": "Ellipsis removes words, and the ones that survive absorb all the stress. In 'So do I', 'do' replaces an entire verb phrase, so it must be strong — 'So DO I'. Learners often say it flatly, which sounds oddly uncommitted, or they avoid ellipsis altogether and repeat the full verb, which sounds laboured. Arabic agreement patterns allow repetition without awkwardness (وأنا أيضًا أحبّ ذلك), so there is no pressure to compress. The skill here is trusting that a single strong auxiliary can carry a whole clause.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'So DO I' — stress on the substituting auxiliary"],
+      "isolation": {
+        "instructions": "'So do I' means 'I do too'. Because 'do' stands in for the whole verb phrase, it takes the stress: 'So DO I'. Note the inversion — auxiliary before subject. Match the auxiliary to the original verb: 'I can' gives 'So CAN I'.",
+        "instructions_ar": "'So do I' تعني 'وأنا أيضًا'. لأن 'do' تنوب عن العبارة الفعلية كلها فهي تأخذ النبر، مع قلب المساعد قبل الفاعل.",
+        "practice": ["So DO I", "So CAN I", "So HAVE we", "auxiliary carries everything"]
+      },
+      "minimal_pairs": [
+        {"pair": ["So DO I", "so do I (flat)"], "meaning": ["موافقة واضحة", "غير مقنع"]},
+        {"pair": ["So do I", "So am I"], "meaning": ["مع فعل عادي", "مع am/is/are"]},
+        {"pair": ["So do I ✅", "So I do ❌"], "meaning": ["قلب صحيح", "ترتيب خطأ"]},
+        {"pair": ["So can I", "So could I"], "meaning": ["أستطيع أيضًا", "كنت أستطيع أيضًا"]},
+        {"pair": ["So HAVE we", "So DID we"], "meaning": ["حتى الآن", "في الماضي"]}
+      ],
+      "word_practice": ["so do I", "so am I", "so can I", "so have we", "so did we", "so does she", "so will they", "so would I", "so is it", "so was he"],
+      "sentence_practice": [
+        "I love this city. — So do I.",
+        "She's exhausted. — So am I.",
+        "We've already finished. — So have we."
+      ],
+      "record_this": "I genuinely love this city, and apparently so does everyone who visits it. She was completely exhausted by the end of the week, and so was I. We have already finished our section, and so have the other two teams.",
+      "self_check": "Say 'So do I'. Is 'do' clearly the strongest word, with the auxiliary before the subject?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'Neither HAVE they' · 'Nor DO I' — negative agreement"],
+      "isolation": {
+        "instructions": "For negative agreement use 'neither' or 'nor', and again the auxiliary is strong: 'Neither HAVE they', 'Nor DO I'. The verb after it stays positive — the negativity lives in 'neither/nor'. 'Neither' is /ˈnaɪðə/ or /ˈniːðə/; both are correct.",
+        "instructions_ar": "للموافقة في النفي استخدم 'neither' أو 'nor'، والمساعد يبقى قويًا، والفعل بعده مثبت لأن النفي في 'neither/nor'.",
+        "practice": ["Neither HAVE they", "Nor DO I", "Neither DID she", "negativity is in neither/nor"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Neither have they ✅", "Neither haven't they ❌"], "meaning": ["صحيح", "نفي مزدوج"]},
+        {"pair": ["Neither do I", "Me neither"], "meaning": ["رسمي", "محادثة"]},
+        {"pair": ["Nor DO I", "nor do I (flat)"], "meaning": ["واضح", "باهت"]},
+        {"pair": ["/ˈnaɪðə/", "/ˈniːðə/"], "meaning": ["لفظ بريطاني/أمريكي", "لفظ بريطاني"]},
+        {"pair": ["Neither did we ✅", "Neither we did ❌"], "meaning": ["قلب صحيح", "ترتيب خطأ"]}
+      ],
+      "word_practice": ["neither do I", "neither have they", "neither did we", "nor do I", "nor did she", "nor can we", "neither am I", "neither would he", "nor was it", "neither has anyone"],
+      "sentence_practice": [
+        "I don't agree. — Neither do I.",
+        "They haven't replied. — Nor have we.",
+        "She didn't understand, and nor did I."
+      ],
+      "record_this": "I don't agree with the conclusion at all, and neither does my colleague. They still haven't replied to the original message, and nor have we. She clearly didn't understand the question, and nor did I, if I'm honest.",
+      "self_check": "Say 'Neither do I'. Is the auxiliary strong, and did you avoid a double negative?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'one' and 'ones' substitution"],
+      "isolation": {
+        "instructions": "'one/ones' replaces a repeated noun. The substitute itself is usually weak; the describing word takes the stress: 'the RED one', 'the CHEAPER ones'. Saying 'the red ONE' shifts the emphasis oddly onto the substitute, which sounds unnatural.",
+        "instructions_ar": "'one/ones' تنوب عن الاسم المتكرّر، والبديل نفسه خفيف عادةً والصفة تأخذ النبر. نبر البديل يبدو غير طبيعي.",
+        "practice": ["the RED one", "the CHEAPER ones", "the one on the LEFT", "describer is stressed"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the RED one", "the red ONE"], "meaning": ["طبيعي", "نبر غريب"]},
+        {"pair": ["this one", "these ones"], "meaning": ["مفرد", "جمع"]},
+        {"pair": ["the cheaper ones ✅", "the cheaper one's ❌"], "meaning": ["جمع", "ملكية"]},
+        {"pair": ["which one?", "which ones?"], "meaning": ["مفرد", "جمع"]},
+        {"pair": ["a big one", "the big one"], "meaning": ["غير محدّد", "محدّد"]}
+      ],
+      "word_practice": ["the red one", "the cheaper ones", "this one", "that one", "which ones", "the big one", "a better one", "the ones we ordered", "the one on the left", "the earlier ones"],
+      "sentence_practice": [
+        "I'll take the cheaper ones, thanks.",
+        "Which one did you prefer?",
+        "The ones we ordered never arrived."
+      ],
+      "record_this": "I think I'll take the cheaper ones, if that's genuinely all right with you. Which one of the two proposals did you actually prefer in the end? The ones we ordered back in March never arrived at all.",
+      "self_check": "Say 'the cheaper ones'. Is 'cheaper' stressed and 'ones' light?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'do so' · 'do the same' — formal verb substitution"],
+      "isolation": {
+        "instructions": "'do so' replaces a whole verb phrase in formal English: 'She was asked to explain, and she did so willingly.' 'Do' is light here and 'so' takes a small beat. 'Do the same' is the everyday equivalent, with the beat on SAME.",
+        "instructions_ar": "'do so' تنوب عن عبارة فعلية كاملة في الإنجليزية الرسمية، و'do' خفيفة و'so' تأخذ نبضة صغيرة، و'do the same' هي المكافئ اليومي.",
+        "practice": ["and she did SO willingly", "and we did the SAME", "formal vs everyday"]
+      },
+      "minimal_pairs": [
+        {"pair": ["did so", "did the same"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["did so willingly", "did it willingly"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["do so ✅", "do so it ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["failed to do so", "didn't do it"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["and so did we", "and we did so"], "meaning": ["ونحن أيضًا", "وقمنا بذلك"]}
+      ],
+      "word_practice": ["did so", "do so", "failed to do so", "chose to do so", "did the same", "do likewise", "declined to do so", "was asked to do so", "did so immediately", "may do so"],
+      "sentence_practice": [
+        "She was asked to explain and did so willingly.",
+        "Anyone wishing to object may do so in writing.",
+        "He apologised, and I did the same."
+      ],
+      "record_this": "She was asked to explain her reasoning and did so willingly and in detail. Anyone wishing to object to the proposal may do so in writing before Friday. He apologised properly at the end, and I did the same.",
+      "self_check": "Say 'and did so willingly'. Is 'do' light, with a small beat on 'so'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["ellipsis proper: what survives takes the weight"],
+      "isolation": {
+        "instructions": "English routinely deletes repeated material: 'I'd like to come but I can't [come].' Whatever survives at the end of the clause takes a strong, final beat, often with a small fall: 'but I CAN'T ↘'. The deleted words leave their stress behind on the remaining auxiliary.",
+        "instructions_ar": "الإنجليزية تحذف المُعاد كثيرًا، وما يبقى في نهاية الجملة يأخذ نبضة قوية نهائية مع هبوط صغير.",
+        "practice": ["I'd like to but I CAN'T ↘", "She said she would, and she DID ↘", "the survivor takes the weight"]
+      },
+      "minimal_pairs": [
+        {"pair": ["but I CAN'T ↘", "but I can't come"], "meaning": ["محذوف طبيعي", "كامل"]},
+        {"pair": ["she said she would, and she DID", "she said she would come, and she came"], "meaning": ["موجز", "مكرّر"]},
+        {"pair": ["I haven't, but he HAS", "I haven't finished, but he has finished"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["if you want to ↘", "if you want to do it"], "meaning": ["محذوف", "كامل"]},
+        {"pair": ["I'd love to ↘", "I'd love to ↗"], "meaning": ["قبول", "غير مكتمل"]}
+      ],
+      "word_practice": ["but I can't", "and she did", "but he has", "if you want to", "I'd love to", "I never have", "she might", "we should have", "they didn't", "I hope so"],
+      "sentence_practice": [
+        "I'd like to come, but I can't.",
+        "She said she would help, and she did.",
+        "I haven't finished, but he has."
+      ],
+      "record_this": "I would genuinely like to come along tomorrow, but unfortunately I can't. She said she would help us with the final section, and she absolutely did. I haven't finished my part of the report yet, but he has.",
+      "self_check": "Say 'I'd like to come, but I can't'. Does 'can't' take a strong final beat with a small fall?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 11 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["So DO I", "so do I (flat)"],
+        ["Neither have they ✅", "Neither haven't they ❌"],
+        ["the RED one", "the red ONE"],
+        ["did so", "did the same"],
+        ["but I CAN'T ↘", "but I can't come"],
+        ["So do I ✅", "So I do ❌"]
+      ],
+      "challenge_sentences": [
+        "I agree completely. — So do I.",
+        "They never replied, and nor did we.",
+        "I'll take the smaller ones, please.",
+        "She promised to call, and she did."
+      ],
+      "record_this": "I agree completely with what you said, and so does almost everyone here. They never replied to our letter, and nor did we chase it up properly. I think I'll take the smaller ones instead, if that's possible. She promised to call before the weekend, and she did.",
+      "self_check": "Three checks: strong substituting auxiliary, no double negative after 'neither', and a strong final beat on whatever survives ellipsis."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a natural conversation with yourself as both speakers. Ellipsis is the rhythm of real dialogue, so keep it quick — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كمحادثة طبيعية بدورين. الحذف هو إيقاع الحوار الحقيقي، فاجعله سريعًا، ثم اسمع وراجع.",
+        "passage": "I thought the meeting went reasonably well, and apparently so did everyone else. Rashid wasn't convinced, though, and neither was Layla. They had both read the earlier draft; I hadn't, which probably explains why I was less critical. When the chair asked for written objections, two people said they would submit them, and one actually did so. The others didn't. I'd have preferred a clearer decision, but we didn't get one. Someone suggested reordering the agenda, and I wish we had. The longer items should have come first; the shorter ones could easily have waited. If anyone wants to raise it again next week, they can, and I suspect somebody will. I'd support them if they did. So would Rashid, I think, though he hasn't said so directly.",
+        "sounds_to_check": {
+          "strong substituting auxiliary": "apparently so DID everyone else · neither WAS Layla · So WOULD Rashid",
+          "negative agreement without double negatives": "and neither was Layla · The others didn't",
+          "'one/ones' with the describer stressed": "we didn't get ONE · the LONGER items · the SHORTER ones",
+          "'do so' formal substitution": "one actually did so · he hasn't said so directly",
+          "ellipsis with a strong final beat": "I HADN'T ↘ · but we DIDN'T ↘ · they CAN ↘ · I suspect somebody WILL ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Substituting auxiliaries strong, no double negatives, ellipsis landing on a clear final beat. Sounds genuinely conversational. Ready for week 12.",
+        "70_89": "Good; occasionally an auxiliary goes flat or a full verb is repeated unnecessarily.",
+        "50_69": "Ellipsis avoided or delivered flatly, so speech sounds laboured. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start with 'So DO I' until the strong auxiliary feels automatic."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The auxiliary that replaces a verb phrase is ALWAYS stressed: 'So DO I', not 'so do I'.",
+      "Invert after 'so' and 'neither': 'So do I', never 'So I do'.",
+      "Never add a second negative: 'Neither do I', not 'Neither don't I'.",
+      "With 'one/ones' the describing word takes the stress: 'the CHEAPER ones'.",
+      "'do so' is formal; 'do it' or 'do the same' is everyday. Choose to match the register you are in."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every surviving auxiliary is genuinely strong."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w3",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 3,
+  "pattern_name": "Advanced cleft sentences and fronting",
+  "pattern_name_ar": "الجُمَل المشقوقة المتقدّمة والتقديم",
+  "formula": "It + be + focus + that/who … · What + clause + be + focus · All (that) + clause + be + focus · The reason/thing/problem + be + focus · Fronted object/complement + subject + verb",
+  "formula_visual": "[It was] [the price] [that worried me] · [What I need] [is] [time]",
+  "when_to_use": "To control which part of your sentence the listener treats as most important. An 'it' cleft spotlights one element ('It was the price that worried me'). A 'what' cleft builds suspense before the key idea ('What I need is time'). Fronting moves an object or complement to the front for contrast ('That much I can accept'). These are the main tools for managing emphasis and information flow in argument and clarification.",
+  "when_to_use_ar": "للتحكّم في الجزء الذي يعتبره المستمع الأهم. الجملة المشقوقة بـ 'it' تُسلّط الضوء على عنصر واحد، وبـ 'what' تبني تشويقًا، والتقديم ينقل المفعول للمقابلة. أدوات أساسية لإدارة التوكيد وتدفّق المعلومة.",
+  "why_arabic_speakers_struggle": "Arabic marks focus mainly by moving words and by adding emphatic particles, and it has no direct equivalent of the English 'it … that' frame, so learners often skip the frame and simply stress a word instead. The commonest structural errors are omitting 'that' or 'who' in an it-cleft, and using a plural verb after a 'what' cleft ('What I need are time'), since 'what' feels plural when the following noun is plural.",
+  "examples": [
+    {"en": "It was the price that worried me, not the design.", "ar": "السعر هو ما أقلقني، لا التصميم", "structure": "[It was] + focus + [that] + clause"},
+    {"en": "It was Sarah who first raised the issue.", "ar": "سارة هي أول من أثار المسألة", "structure": "[It was] + person + [who] + clause"},
+    {"en": "What I need is more time, not more advice.", "ar": "ما أحتاجه هو وقت أكثر، لا نصائح أكثر", "structure": "[What + clause] + [is] + focus"},
+    {"en": "All I want is a straight answer.", "ar": "كل ما أريده جواب صريح", "structure": "[All + clause] + [is] + focus"},
+    {"en": "That much I can accept, but no more.", "ar": "هذا القدر أقبله، لا أكثر", "structure": "[Fronted object] + subject + verb"}
+  ],
+  "common_errors": [
+    {"wrong": "It was the price worried me.", "correct": "It was the price that worried me.", "explanation": "An it-cleft needs 'that' or 'who' to link the focus to the rest of the clause."},
+    {"wrong": "What I need are more time.", "correct": "What I need is more time.", "explanation": "The verb after a 'what' cleft agrees with 'what', which is singular."},
+    {"wrong": "What I need it is time.", "correct": "What I need is time.", "explanation": "Do not add a second subject pronoun; the 'what' clause is already the subject."},
+    {"wrong": "It was because of the price that I worried about it.", "correct": "It was the price that worried me.", "explanation": "Keep the cleft tight. Repeating the idea with 'because of' and 'about it' undoes the focusing effect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It was the timing ___ caused the problem.", "answer": "that"},
+    {"sentence": "It was Layla ___ first noticed the error.", "answer": "who"},
+    {"sentence": "What I need ___ (be) a clear decision.", "answer": "is"},
+    {"sentence": "___ I want is a straight answer.", "answer": "All"},
+    {"sentence": "The reason I called ___ (be) the deadline.", "answer": "was"}
+  ],
+  "quick_rule": "It + be + focus + THAT/WHO. What/All + clause + IS (singular). Fronted element first, then normal order.",
+  "quick_rule_ar": "It + be + العنصر + THAT/WHO. وWhat/All + جملة + IS بالمفرد. والعنصر المُقدَّم أولًا ثم الترتيب العادي.",
+  "mnemonic": "Spotlight one thing; everything else steps back.",
+  "connect_to_speaking": "In accent week 3 you drilled nuclear stress on the clefted element with a faded tail. The structure builds the spotlight, but the single strong beat is what actually turns it on."
+}

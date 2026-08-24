@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 17,
+  "focus": "Compound-modifier stress shift ('a well-known WRITER' vs 'he is well KNOWN') · stacked pre-modification · post-modified phrases · one nuclear beat per long noun phrase · dense report prose",
+  "focus_ar": "انتقال النبر في الصفات المركّبة ('a well-known WRITER' مقابل 'he is well KNOWN')، وتراكم التعديل القبلي، والتعديل البعدي، ونبضة نووية واحدة لكل عبارة اسمية طويلة، ونثر التقارير المكثّف",
+  "arabic_challenge": "Complex noun phrases are how English compresses a whole clause into a single subject: 'the government-funded three-year training programme' replaces an entire sentence. Two prosodic problems follow. First, compound modifiers move their stress depending on position: 'a well-known writer' (stress reduced) but 'he is well KNOWN' (stress on the second part). Second, a long noun phrase takes only ONE nuclear beat, usually on the head noun — stress every element and the phrase stops sounding like a single idea. Arabic builds these relationships with إضافة chains and adjectives that agree and follow, so the English habit of stacking modifiers before the noun is structurally unfamiliar.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["compound-modifier stress shift: attributive vs predicative"],
+      "isolation": {
+        "instructions": "A compound like 'well-known' changes stress with position. Before a noun it flattens and the noun peaks: 'a well-known WRITER'. After the verb it takes the stress on the second element: 'he is well KNOWN'. Drill the pairs back to back.",
+        "instructions_ar": "الصفة المركّبة مثل 'well-known' يتغيّر نبرها بحسب موضعها: قبل الاسم تنخفض ويعلو الاسم، وبعد الفعل يقع النبر على جزئها الثاني.",
+        "practice": ["a well-known WRITER", "he is well KNOWN", "position changes the stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a well-known WRITER", "he is well KNOWN"], "meaning": ["قبل الاسم", "بعد الفعل"]},
+        {"pair": ["a long-term PLAN", "it is long TERM"], "meaning": ["قبل الاسم", "بعد الفعل"]},
+        {"pair": ["a well-known writer ✅", "a well known writer (no hyphen)"], "meaning": ["صفة مركّبة", "غير دقيق"]},
+        {"pair": ["a five-year CONTRACT", "a five-years contract ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["an export-driven ECONomy", "the economy is export DRIVEN"], "meaning": ["قبل الاسم", "بعد الفعل"]}
+      ],
+      "word_practice": ["a well-known writer", "he is well known", "a long-term plan", "it is long term", "a five-year contract", "an export-driven economy", "a high-risk strategy", "a well-documented case", "a two-hour meeting", "a state-funded scheme"],
+      "sentence_practice": [
+        "She's a well-known writer in the region.",
+        "Her work is well known outside academia.",
+        "They signed a five-year contract."
+      ],
+      "record_this": "She is a well-known writer throughout the region and beyond. Her earlier work is well known even outside academic circles. They eventually signed a five-year contract with an option to extend.",
+      "self_check": "Say 'a well-known WRITER' then 'he is well KNOWN'. Did the stress genuinely move?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["stacked pre-modification: many modifiers, one peak"],
+      "isolation": {
+        "instructions": "English can stack several modifiers before a noun: 'a three-year government-funded training programme'. Say the modifiers at an even, brisk rhythm and put the single nuclear peak on the head noun: PROGRAMME. Do not give each modifier its own peak.",
+        "instructions_ar": "يمكن للإنجليزية تراكم عدّة معدّلات قبل الاسم. قل المعدّلات بإيقاع سريع متساوٍ وضع القمّة الواحدة على الاسم الرئيسي.",
+        "practice": ["a three-year government-funded training PROGRAMME", "an unexpected last-minute policy CHANGE", "one peak on the head noun"]
+      },
+      "minimal_pairs": [
+        {"pair": ["…training PROGRAMME (one peak)", "THREE-YEAR GOVERNMENT-FUNDED TRAINING PROGRAMME"], "meaning": ["فكرة واحدة", "متقطّع"]},
+        {"pair": ["a last-minute policy CHANGE", "a change of policy at the last minute"], "meaning": ["مكثّف", "مفصول"]},
+        {"pair": ["brisk even modifiers", "each modifier stressed"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["a two-hour MEETING", "a two-hours meeting ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["head noun peaks", "first modifier peaks"], "meaning": ["صحيح", "غير طبيعي"]}
+      ],
+      "word_practice": ["a three-year training programme", "a government-funded scheme", "a last-minute policy change", "a full-time research post", "a low-cost housing project", "an entry-level support role", "a short-term cash-flow problem", "a high-profile legal case", "a well-established local charity", "a large-scale data collection exercise"],
+      "sentence_practice": [
+        "It's a three-year government-funded training programme.",
+        "We faced a short-term cash-flow problem.",
+        "She took a full-time research post in Cairo."
+      ],
+      "record_this": "It is a three-year government-funded training programme aimed at recent graduates. We faced a short-term cash-flow problem that looked much worse than it was. She took a full-time research post in Cairo at the end of that year.",
+      "self_check": "Say 'a three-year government-funded training programme'. Is there exactly one peak, on 'programme'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["post-modification: information after the noun"],
+      "isolation": {
+        "instructions": "English also adds information after the head noun: 'the decision taken by the committee last year'. The head noun keeps the main beat and everything after it steps down in prominence, flowing without a pause: DEciSION taken by the committee last year.",
+        "instructions_ar": "تضيف الإنجليزية معلومات بعد الاسم الرئيسي أيضًا. يحتفظ الاسم بالنبضة الرئيسية وما بعده ينخفض تدريجيًا بلا وقفة.",
+        "practice": ["the deCISION taken by the committee", "the FIGures published last week", "head noun peaks, tail steps down"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the decision taken by the committee", "the committee's decision"], "meaning": ["تعديل بعدي", "إضافة"]},
+        {"pair": ["head noun peaks, tail lower", "tail as loud as head"], "meaning": ["طبيعي", "مسطّح"]},
+        {"pair": ["the figures published last week", "last week's published figures"], "meaning": ["بعدي", "قبلي"]},
+        {"pair": ["the man responsible for the delay", "the responsible man"], "meaning": ["المسؤول عن التأخير", "الرجل المسؤول عمومًا"]},
+        {"pair": ["no pause after head noun", "pause after head noun"], "meaning": ["صحيح", "متقطّع"]}
+      ],
+      "word_practice": ["the decision taken by the committee", "the figures published last week", "the man responsible for the delay", "the report submitted in March", "the changes agreed at the meeting", "the staff affected by the closure", "the questions raised yesterday", "the version sent to the client", "the funding available this year", "the issues identified in the audit"],
+      "sentence_practice": [
+        "The decision taken by the committee was final.",
+        "The figures published last week tell a different story.",
+        "The staff affected by the closure were offered transfers."
+      ],
+      "record_this": "The decision taken by the committee in March turned out to be final after all. The figures published last week tell a rather different story from the summary. The staff affected by the closure were all offered transfers elsewhere.",
+      "self_check": "Say 'the decision taken by the committee'. Does the head noun peak, with the tail stepping down smoothly?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["one nuclear beat per long noun phrase"],
+      "isolation": {
+        "instructions": "This is the underlying rule of the week. However long the phrase, it is ONE idea and gets ONE nuclear beat. 'The recently published government review of primary education funding' has a single peak — on FUNDING. Practise finding the head noun and putting the beat there.",
+        "instructions_ar": "هذه قاعدة الأسبوع الأساسية: أيًّا كان طول العبارة فهي فكرة واحدة ولها نبضة نووية واحدة. تدرّب على تحديد الاسم الرئيسي ووضع النبضة عليه.",
+        "practice": ["the recently published government review of primary education FUNDing", "find the head, place the beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["one nuclear beat", "four or five beats"], "meaning": ["فكرة واحدة", "قائمة مفكّكة"]},
+        {"pair": ["…education FUNDing", "…EDUCATION FUNDING"], "meaning": ["صحيح", "متقطّع"]},
+        {"pair": ["long phrase, one idea", "long phrase, many ideas"], "meaning": ["طبيعي", "مشوّش"]},
+        {"pair": ["beat on the head noun", "beat on a modifier"], "meaning": ["صحيح", "مضلّل"]},
+        {"pair": ["smooth run to the peak", "stop-start delivery"], "meaning": ["طبيعي", "متقطّع"]}
+      ],
+      "word_practice": ["the government review of education funding", "a comprehensive assessment of current practice", "the long-awaited report on regional inequality", "an independent evaluation of the pilot scheme", "the widely criticised decision to postpone", "a detailed breakdown of operating costs", "the newly appointed head of department", "a significant reduction in processing times", "the previously unpublished internal audit", "an unusually high level of staff turnover"],
+      "sentence_practice": [
+        "The government review of education funding was published today.",
+        "An independent evaluation of the pilot scheme is under way.",
+        "A detailed breakdown of operating costs is attached."
+      ],
+      "record_this": "The long-awaited government review of primary education funding was published this morning. An independent evaluation of the pilot scheme is currently under way in three regions. A detailed breakdown of our operating costs for the year is attached to this email.",
+      "self_check": "Say the 'education funding' phrase. Did you use exactly one nuclear beat, on the head noun?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["reading dense report prose aloud"],
+      "isolation": {
+        "instructions": "Reports chain several complex noun phrases together, so you must group them into thought units and breathe between them, not inside them. Mark each phrase boundary with a small pause: 'The independent review | of regional funding arrangements | was published in March.'",
+        "instructions_ar": "التقارير تربط عدّة عبارات اسمية معقّدة، فيجب تجميعها في وحدات فكرية والتنفّس بينها لا داخلها.",
+        "practice": ["The independent review | of regional funding arrangements | was published in March", "breathe between phrases, never inside"]
+      },
+      "minimal_pairs": [
+        {"pair": ["breathe between phrases", "breathe inside a phrase"], "meaning": ["واضح", "مفكّك"]},
+        {"pair": ["grouped thought units", "word-by-word reading"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["small boundary pause", "no boundary at all"], "meaning": ["مفهوم", "مبهم"]},
+        {"pair": ["one peak per group", "peaks everywhere"], "meaning": ["صحيح", "مشوّش"]},
+        {"pair": ["steady report pace", "rushed report pace"], "meaning": ["مهني", "متعب للمستمع"]}
+      ],
+      "word_practice": ["the independent review", "of regional funding arrangements", "was published in March", "a full assessment", "of the current procedures", "is now available", "the revised guidance", "issued last month", "applies to all departments", "with immediate effect"],
+      "sentence_practice": [
+        "The independent review of regional funding arrangements was published in March.",
+        "A full assessment of current procedures is now available.",
+        "The revised guidance issued last month applies to all departments."
+      ],
+      "record_this": "The independent review of regional funding arrangements was finally published in March. A full assessment of our current procedures is now available on the internal site. The revised guidance issued last month applies to all departments with immediate effect.",
+      "self_check": "Read the 'independent review' sentence. Did you pause between phrases and never inside one?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 17 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["a well-known WRITER", "he is well KNOWN"],
+        ["…training PROGRAMME (one peak)", "THREE-YEAR GOVERNMENT-FUNDED TRAINING PROGRAMME"],
+        ["the decision taken by the committee", "the committee's decision"],
+        ["one nuclear beat", "four or five beats"],
+        ["breathe between phrases", "breathe inside a phrase"],
+        ["a five-year CONTRACT", "a five-years contract ❌"]
+      ],
+      "challenge_sentences": [
+        "It's a well-documented case with long-term implications.",
+        "The report submitted in March identified six risks.",
+        "A large-scale data collection exercise is planned.",
+        "The newly appointed head of department starts Monday."
+      ],
+      "record_this": "It is a well-documented case with significant long-term implications for the sector. The report submitted in March identified six separate risks, none of them new. A large-scale data collection exercise is planned for the autumn term. The newly appointed head of department starts on Monday morning.",
+      "self_check": "Three checks: compound stress correct for its position, one nuclear beat per phrase, and pauses only at phrase boundaries."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a formal briefing. Dense noun phrases must sound like single ideas, so group and breathe carefully — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كإحاطة رسمية. العبارات الاسمية المكثّفة يجب أن تبدو أفكارًا واحدة، فجمّع وتنفّس بعناية، ثم اسمع وراجع.",
+        "passage": "This briefing summarises the independent review of regional funding arrangements published earlier this month. The review, a well-documented piece of work commissioned in response to long-standing concerns, examines a three-year government-funded programme covering forty-one local authorities. The central finding is a significant and previously unreported variation in processing times between regions. The decision taken by the steering group in March to standardise reporting has had only limited effect. Staff affected by the changes describe an unusually high administrative burden. The newly appointed director of operations, who is well known in the sector, has proposed a low-cost pilot in two areas. A detailed breakdown of the additional costs involved is attached. The recommendations, most of which require no new funding, should be considered at the next meeting.",
+        "sounds_to_check": {
+          "compound stress by position": "a well-documented PIECE of work (before noun) · who is well KNOWN in the sector (after verb)",
+          "stacked pre-modification, one peak": "a three-year government-funded PROGRAMME · an unusually high administrative BURden · a low-cost PIlot",
+          "post-modification stepping down": "The decision taken by the steering group in March · Staff affected by the changes · A detailed breakdown of the additional costs involved",
+          "one nuclear beat per long phrase": "the independent review of regional funding arRANGEments · a significant and previously unreported variation in processing TIMES",
+          "grouping and breathing": "The review, | a well-documented piece of work commissioned in response to long-standing concerns, | examines…"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "One beat per phrase, compound stress correct, breathing only at boundaries. Dense prose sounds effortless. Ready for week 18.",
+        "70_89": "Good; occasionally a modifier takes its own peak or a breath lands mid-phrase.",
+        "50_69": "Every element stressed, so phrases fragment into lists. Repeat days 2 and 4.",
+        "below_50": "Redo days 1-5. Practise finding the head noun of each phrase and putting the single beat there."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "However long a noun phrase is, it is ONE idea with ONE nuclear beat, normally on the head noun.",
+      "Compound modifiers flatten before a noun ('a well-known WRITER') and take stress after the verb ('he is well KNOWN').",
+      "Number-plus-noun modifiers stay singular: 'a five-year contract', never 'a five-years contract'.",
+      "Never breathe inside a noun phrase. Breathe at the boundaries between phrases.",
+      "These structures make writing economical but speech dense. In conversation, break them into shorter clauses."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 count your beats — each long phrase should have only one."
+  }
+}

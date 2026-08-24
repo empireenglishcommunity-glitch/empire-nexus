@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 2,
+  "focus": "Auxiliary-first stress: 'HAD I known' · 'WERE I to' /wɜːr aɪ tə/ · 'SHOULD you need' /ʃʊd juː/ · 'Had it not been for' compression · the two-part conditional rhythm",
+  "focus_ar": "نبر الفعل المساعد في البداية: 'HAD I known'، و'WERE I to'، و'SHOULD you need'، وضغط 'Had it not been for'، وإيقاع الشرط ذي الجزأين",
+  "arabic_challenge": "Inverted conditionals drop 'if' entirely, so the auxiliary alone must signal 'this is a condition'. That places the whole communicative burden on prosody: 'HAD I known' must open with a strong, clearly articulated auxiliary, or the listener hears a statement about the past instead of a condition. Arabic conditionals always keep an explicit particle (لو / إذا / إن), so learners are not used to a grammatical signal that must be carried by stress. The result is either a mumbled auxiliary that confuses the listener, or an over-corrected shout that sounds unnatural.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'HAD I known' — auxiliary-first stress"],
+      "isolation": {
+        "instructions": "Drop 'if' and move 'had' to the front, where it takes real stress: 'HAD I known…'. This is the formal equivalent of 'If I had known…'. The auxiliary is fully pronounced /hæd/ — not the weak /həd/ you would use mid-sentence.",
+        "instructions_ar": "احذف 'if' وقدّم 'had' لتأخذ نبرًا حقيقيًا: 'HAD I known…'. الفعل المساعد يُلفظ كاملًا /hæd/ لا /həd/ الخفيفة.",
+        "practice": ["HAD I known…", "HAD we realised…", "strong /hæd/, not /həd/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["HAD I known…", "If I had known…"], "meaning": ["رسمي مقلوب", "عادي"]},
+        {"pair": ["HAD /hæd/ (strong, fronted)", "had /həd/ (weak, mid-sentence)"], "meaning": ["مُقدَّم منبور", "خفيف"]},
+        {"pair": ["Had I known ✅", "Had I have known ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["Had she asked…", "She had asked…"], "meaning": ["شرط", "خبر ماضٍ"]},
+        {"pair": ["Had we realised, we'd have…", "We had realised…"], "meaning": ["شرط غير واقعي", "حقيقة"]}
+      ],
+      "word_practice": ["had I known", "had we realised", "had she asked", "had they told me", "had it happened", "had I been", "had you mentioned", "had he arrived", "had we booked", "had I understood"],
+      "sentence_practice": [
+        "Had I known, I would have acted differently.",
+        "Had we realised the risk, we'd have withdrawn.",
+        "Had she asked earlier, the answer might have been yes."
+      ],
+      "record_this": "Had I known the full situation, I would have acted very differently from the start. Had we realised the scale of the risk, we would have withdrawn the proposal immediately. Had she asked me even a week earlier, the answer might well have been yes.",
+      "self_check": "Say 'Had I known'. Is 'HAD' strong and clearly the first thing the listener hears?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'WERE I to' /wɜːr aɪ tə/"],
+      "isolation": {
+        "instructions": "'Were I to…' replaces 'If I were to…' and links smoothly: /wɜːr aɪ tə/. Note the linking /r/ joining 'were' to 'I', and the weak 'to' /tə/. The stress sits on WERE, then the sentence flows without a break.",
+        "instructions_ar": "'Were I to…' تحل مكان 'If I were to…' وتُربط بسلاسة: /wɜːr aɪ tə/، مع /r/ رابطة و'to' خفيفة /tə/، والنبر على WERE.",
+        "practice": ["/wɜːr aɪ tə/ suggest…", "/wɜː ɪt nɒt fə/…", "linking /r/, weak /tə/"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Were I to suggest…", "If I were to suggest…"], "meaning": ["رسمي مقلوب", "عادي"]},
+        {"pair": ["/wɜːr aɪ/ (linked)", "were · I (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["Were it not for…", "If it were not for…"], "meaning": ["مقلوب", "عادي"]},
+        {"pair": ["Were I you ✅", "Was I you ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["to /tə/ (weak)", "to /tuː/ (strong)"], "meaning": ["طبيعي", "مبالغ"]}
+      ],
+      "word_practice": ["were I to", "were we to", "were it not for", "were I you", "were they to refuse", "were he to resign", "were she to accept", "were this to fail", "were that the case", "were I in charge"],
+      "sentence_practice": [
+        "Were I to suggest a change, would you consider it?",
+        "Were it not for her support, we'd have failed.",
+        "Were the board to refuse, we would need a new plan."
+      ],
+      "record_this": "Were I to suggest a fundamental change of direction, would you seriously consider it? Were it not for her steady support last year, we would almost certainly have failed. Were the board to refuse the request outright, we would need an entirely new plan.",
+      "self_check": "Say 'Were I to suggest'. Does the /r/ link 'were' to 'I', with a weak /tə/?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'SHOULD you need' /ʃʊd juː/ — the polite formal opener"],
+      "isolation": {
+        "instructions": "'Should you need…' means 'if you happen to need…' and is the standard polite formula in professional writing and speech. 'Should' is stressed and fully pronounced /ʃʊd/, then it links straight into 'you' /ʃʊd juː/. The tone stays warm and level, never abrupt.",
+        "instructions_ar": "'Should you need…' تعني 'إن احتجت' وهي الصيغة المهنية المؤدّبة. 'Should' منبورة وكاملة /ʃʊd/ وتُربط بـ 'you'، والنبرة تبقى دافئة ومستوية.",
+        "practice": ["/ʃʊd juː/ need anything…", "/ʃʊd ðeə/ be a problem…", "warm and level, not abrupt"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Should you need…", "If you need…"], "meaning": ["مؤدّب رسمي", "عادي"]},
+        {"pair": ["/ʃʊd juː/ (linked)", "should · you (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["Should there be…", "If there is…"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["Should you require ↘ (warm)", "Should you require! (abrupt)"], "meaning": ["مؤدّب", "حاد"]},
+        {"pair": ["Should anything change…", "Should anything changes ❌"], "meaning": ["صحيح", "خطأ"]}
+      ],
+      "word_practice": ["should you need", "should you require", "should there be", "should anything change", "should it prove", "should you wish", "should we fail", "should the need arise", "should you have", "should any issue"],
+      "sentence_practice": [
+        "Should you need anything, please let me know.",
+        "Should there be a delay, we will inform you.",
+        "Should it prove difficult, we can revisit the plan."
+      ],
+      "record_this": "Should you need anything further before the meeting, please do let me know directly. Should there be any delay with the shipment, we will inform you the same day. Should it prove more difficult than expected, we can always revisit the plan together.",
+      "self_check": "Say 'Should you need anything'. Is 'should' strong and linked to 'you', with a warm falling tone?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'Had it not been for' — the compressed formal chunk"],
+      "isolation": {
+        "instructions": "'Had it not been for…' is a fixed formal chunk that compresses heavily in speech: /hædɪt nɒt bɪn fə/. Stress lands on HAD and NOT; everything between is light and quick. Learn it as one unit rather than five separate words.",
+        "instructions_ar": "'Had it not been for…' كتلة رسمية ثابتة تُضغط في الكلام: /hædɪt nɒt bɪn fə/. النبر على HAD وNOT وما بينهما خفيف وسريع.",
+        "practice": ["/hædɪt nɒt bɪn fə/ her help", "/wɜːr ɪt nɒt fə/ the delay", "HAD and NOT stressed, rest light"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Had it not been for…", "If it had not been for…"], "meaning": ["مقلوب مضغوط", "كامل"]},
+        {"pair": ["/hædɪt/ (linked)", "had · it (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["Had it not been for her help", "Were it not for her help"], "meaning": ["ماضٍ", "حاضر عام"]},
+        {"pair": ["been /bɪn/ (weak)", "been /biːn/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["for /fə/ (weak)", "for /fɔː/ (strong)"], "meaning": ["طبيعي", "مبالغ"]}
+      ],
+      "word_practice": ["had it not been for", "were it not for", "had it not been for her", "but for her help", "if not for that", "had that not happened", "were that not true", "had we not acted", "were it not so", "had there not been"],
+      "sentence_practice": [
+        "Had it not been for her help, we would have failed.",
+        "Were it not for the delay, we'd be finished by now.",
+        "Had it not been for that mistake, nobody would have noticed."
+      ],
+      "record_this": "Had it not been for her help during those first difficult weeks, we would certainly have failed. Were it not for the delay at customs, we would be completely finished by now. Had it not been for one small mistake, nobody would ever have noticed the difference.",
+      "self_check": "Say 'Had it not been for her help'. Is it one compressed chunk with HAD and NOT carrying the stress?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the two-part conditional rhythm: condition holds, result falls"],
+      "isolation": {
+        "instructions": "An inverted conditional has two halves with different jobs. The condition half stays suspended — level or slightly rising, ending with a small pause. The result half resolves with a clear fall: 'Had I known ↗ | I would have called ↘.' Keeping the first half suspended is what makes the listener wait for the result.",
+        "instructions_ar": "الشرط المقلوب نصفان بوظيفتين: نصف الشرط يبقى معلّقًا (مستوى أو صاعد قليلًا) ثم وقفة صغيرة، ونصف النتيجة يهبط بوضوح.",
+        "practice": ["Had I known ↗ | I would have called ↘", "Were it not for you ↗ | we'd be lost ↘", "suspend, pause, resolve"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Had I known ↗ | … ↘", "Had I known ↘ | … ↘"], "meaning": ["معلّق ثم حلّ", "مسطّح"]},
+        {"pair": ["suspended condition", "flat condition"], "meaning": ["طبيعي", "غير مترابط"]},
+        {"pair": ["Had I known, I WOULD have called", "Had I known, I would have CALLED"], "meaning": ["توكيد الرغبة", "توكيد الفعل"]},
+        {"pair": ["Should you need it ↗ | just ask ↘", "Should you need it ↘ just ask ↘"], "meaning": ["مؤدّب مترابط", "متقطّع"]},
+        {"pair": ["Were I you ↗ | I'd wait ↘", "I'd wait if I were you"], "meaning": ["مقلوب رسمي", "عادي"]}
+      ],
+      "word_practice": ["had I known, I would have", "were I you, I would", "should you need it, just ask", "had we acted, we could have", "were it possible, we would", "had they agreed, we'd have", "should it fail, we will", "had she stayed, things would", "were this true, it would", "had it worked, we might have"],
+      "sentence_practice": [
+        "Had I known, I would have called you immediately.",
+        "Were I you, I would wait for the final report.",
+        "Should you need it, just ask and I'll send it over."
+      ],
+      "record_this": "Had I known about the change in schedule, I would have called you immediately. Were I in your position, I would wait quietly for the final report before deciding. Should you need it before then, just ask and I will send the file straight over.",
+      "self_check": "Say 'Had I known, I would have called'. Does the first half stay suspended and the second half fall clearly?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 2 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["HAD /hæd/ (fronted, strong)", "had /həd/ (weak, mid-sentence)"],
+        ["Were I to suggest…", "If I were to suggest…"],
+        ["/ʃʊd juː/ (linked)", "should · you (separated)"],
+        ["Had it not been for…", "If it had not been for…"],
+        ["Had I known ↗ | … ↘", "Had I known ↘ | … ↘"],
+        ["Had I known ✅", "Had I have known ❌"]
+      ],
+      "challenge_sentences": [
+        "Had I known, I would have said something.",
+        "Were it not for your advice, I'd have signed it.",
+        "Should you need help, please contact me directly.",
+        "Had it not been for the weather, we would have finished."
+      ],
+      "record_this": "Had I known about the situation earlier, I would certainly have said something at the time. Were it not for your careful advice, I would have signed that contract without reading it. Should you need any help with the revisions, please contact me directly. Had it not been for the weather, we would have finished the whole project last week.",
+      "self_check": "Three checks: a strong fronted auxiliary, smooth linking into the subject, and a suspended condition resolving in a clear fall."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this reflective account. Inverted conditionals are formal, so keep the delivery measured and controlled — then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا النص التأمّلي. الشرط المقلوب رسمي، فاجعل الأداء متّزنًا ومضبوطًا، ثم اسمع وراجع.",
+        "passage": "Looking back, the outcome depended on a handful of small moments. Had we submitted the application a single day later, it would not have been considered at all. Were it not for a colleague who noticed the deadline buried in an attachment, the whole opportunity would have passed us by unnoticed. Had I been asked at the time, I would have said our chances were slim. Should anyone ask me now what made the difference, I would point to that one email. Were I to start the process again, I would build in far more time for review, and had we done so originally, the final week would have been considerably calmer. Should you ever find yourself in a similar position, my advice is simple: assume nothing. Had it not been for luck as much as preparation, this story would have a very different ending.",
+        "sounds_to_check": {
+          "strong fronted auxiliary": "Had we submitted…, Had I been asked…, Had we done so…, Had it not been for…",
+          "'Were I to' linking /wɜːr aɪ tə/": "Were it not for a colleague…, Were I to start the process again",
+          "'Should you' /ʃʊd juː/": "Should anyone ask me now…, Should you ever find yourself…",
+          "compressed formal chunk": "Had it not been for luck as much as preparation",
+          "suspend-then-resolve contour": "Had we submitted … ↗ | it would not have been considered ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Auxiliaries strong and clear, smooth linking, condition suspended and result resolved. Genuinely formal delivery. Ready for week 3.",
+        "70_89": "Good; the occasional auxiliary weakens or a condition half goes flat.",
+        "50_69": "Auxiliaries mumbled, so conditions sound like statements. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Start with making the fronted auxiliary unmistakably strong."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "With 'if' removed, the auxiliary is the ONLY signal that this is a condition. Mumble it and the listener hears a statement.",
+      "The fronted auxiliary is fully pronounced: 'HAD /hæd/ I known', not the weak /həd/ you would use mid-sentence.",
+      "Never add an extra 'have': 'Had I known', never 'Had I have known'.",
+      "'Were I you' keeps 'were' for every subject — never 'was I you'.",
+      "These forms are markedly formal. They suit writing, presentations and professional speech, but sound stiff in casual chat."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; compare day 7 with day 1 and check the strength of every fronted auxiliary."
+  }
+}

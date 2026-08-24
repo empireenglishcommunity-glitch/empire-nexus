@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w17",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 17,
+  "pattern_name": "Complex noun phrases and precision",
+  "pattern_name_ar": "العبارات الاسمية المركّبة والدقّة",
+  "formula": "Pre-modification: determiner + adjectives + compound modifiers + head noun · Post-modification: head noun + participle/prepositional/relative phrase · hyphenated compounds: a three-year contract, an export-driven economy",
+  "formula_visual": "[a three-year government-funded] [training programme] [aimed at graduates]",
+  "when_to_use": "To pack precise information into a single phrase so it can function as one subject or object. Modifiers before the noun are compact ('a low-cost housing project'); information after the noun carries longer detail ('the decision taken by the committee in March'). This is the dominant style of reports, headlines and academic prose, where economy and precision matter more than simplicity.",
+  "when_to_use_ar": "لتكثيف معلومة دقيقة في عبارة واحدة تعمل كفاعل أو مفعول. المعدّلات قبل الاسم مختصرة، والمعلومات بعده تحمل تفصيلًا أطول. الأسلوب السائد في التقارير والعناوين والنثر الأكاديمي.",
+  "why_arabic_speakers_struggle": "Arabic builds these relationships with إضافة chains and with adjectives that follow the noun and agree with it, so stacking several modifiers BEFORE the head noun is structurally unfamiliar and the order feels arbitrary. Two errors are very common: pluralising a number-plus-noun modifier ('a five-years contract'), since the noun is plural in meaning, and omitting the hyphen that signals the words are working as a single modifier.",
+  "examples": [
+    {"en": "It is a three-year government-funded training programme.", "ar": "هو برنامج تدريبي حكومي التمويل لمدة ثلاث سنوات", "structure": "[determiner + compound modifiers + head noun]"},
+    {"en": "We faced a short-term cash-flow problem.", "ar": "واجهنا مشكلة سيولة قصيرة الأجل", "structure": "[hyphenated compounds + head noun]"},
+    {"en": "The decision taken by the committee was final.", "ar": "كان القرار الذي اتخذته اللجنة نهائيًا", "structure": "[head noun + participle phrase]"},
+    {"en": "She is a well-known writer in the region.", "ar": "هي كاتبة معروفة في المنطقة", "structure": "[compound modifier before noun]"},
+    {"en": "Her earlier work is well known outside academia.", "ar": "عملها السابق معروف جيدًا خارج الأوساط الأكاديمية", "structure": "[compound after verb, no hyphen]"}
+  ],
+  "common_errors": [
+    {"wrong": "They signed a five-years contract.", "correct": "They signed a five-year contract.", "explanation": "A number-plus-noun modifier stays singular before the head noun."},
+    {"wrong": "It was a two-hours meeting.", "correct": "It was a two-hour meeting.", "explanation": "Same rule: the modifier is singular even though the meaning is plural."},
+    {"wrong": "She is a well known writer.", "correct": "She is a well-known writer.", "explanation": "Before a noun the compound takes a hyphen; after the verb it does not."},
+    {"wrong": "Her work is well-known outside academia.", "correct": "Her work is well known outside academia.", "explanation": "After the verb the hyphen is dropped, since the words are no longer modifying a following noun."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "They signed a five-___ contract last spring.", "answer": "year"},
+    {"sentence": "It was an unusually productive two-___ meeting.", "answer": "hour"},
+    {"sentence": "She is a well-___ writer throughout the region.", "answer": "known"},
+    {"sentence": "The report ___ (submit) in March identified six risks.", "answer": "submitted"},
+    {"sentence": "We faced a short-___ cash-flow problem.", "answer": "term"}
+  ],
+  "quick_rule": "Number-plus-noun modifiers stay SINGULAR (a five-year contract). Hyphenate compounds before a noun, not after a verb. Post-modify for longer detail.",
+  "quick_rule_ar": "معدّلات العدد + الاسم تبقى مفردة (a five-year contract). واستخدم الشرطة قبل الاسم لا بعد الفعل. والتعديل البعدي للتفصيل الأطول.",
+  "mnemonic": "Before the noun: hyphen and singular. After the verb: neither.",
+  "connect_to_speaking": "In accent week 17 you drilled one nuclear beat per noun phrase and the compound stress shift. However long the phrase, it is one idea and takes one beat, normally on the head noun."
+}

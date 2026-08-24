@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 4,
+  "focus": "'Having' /ˈhævɪŋ/ + participle rhythm · past participle openers 'Seen from above' · perfect passive 'Having been told' · the boundary pause · negative 'Not having'",
+  "focus_ar": "إيقاع 'Having' + التصريف الثالث، ومفاتيح التصريف الماضي 'Seen from above'، والمبني للمجهول التام 'Having been told'، ووقفة الحدّ، والمنفي 'Not having'",
+  "arabic_challenge": "A participle clause has no subject and no tense marker of its own, so the listener depends entirely on a small pause to know where the clause ends and the main clause begins. Say 'Having finished the report I went home' with no boundary and it becomes an unparsable run of words. Arabic tends to join clauses with explicit connectors (وَ / فَ / بعد أن), so learners are not accustomed to a boundary carried by silence rather than by a word. The second difficulty is rhythmic: 'having' is a light, quick /ˈhævɪŋ/, not a heavy stressed verb.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'Having' /ˈhævɪŋ/ + participle"],
+      "isolation": {
+        "instructions": "'Having finished…' opens a clause that means 'after I finished'. Say 'having' lightly and quickly /ˈhævɪŋ/ — the stress belongs to the following participle: /ˈhævɪŋ/ FINISHED. Do not give 'having' the weight of a main verb.",
+        "instructions_ar": "'Having finished…' تعني 'بعد أن أنهيت'. الفظ 'having' خفيفة وسريعة /ˈhævɪŋ/ والنبر على التصريف الذي يليها.",
+        "practice": ["/ˈhævɪŋ/ FINISHED the report", "/ˈhævɪŋ/ CHECKED the figures", "light having, stressed participle"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Having FINISHED the report…", "After I finished the report…"], "meaning": ["مشتق رسمي", "عادي"]},
+        {"pair": ["/ˈhævɪŋ/ (light, quick)", "HAVING (heavy)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["Having finished ✅", "Having finish ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["Having checked the figures…", "I checked the figures and…"], "meaning": ["موجز رسمي", "عادي"]},
+        {"pair": ["Having said that, …", "But …"], "meaning": ["ربط رسمي", "بسيط"]}
+      ],
+      "word_practice": ["having finished", "having checked", "having read", "having heard", "having decided", "having said that", "having considered", "having spoken to her", "having reviewed it", "having arrived early"],
+      "sentence_practice": [
+        "Having finished the report, I went home.",
+        "Having checked the figures, she approved the budget.",
+        "Having said that, I still have one concern."
+      ],
+      "record_this": "Having finished the report late that evening, I went straight home without checking my email. Having checked the figures twice herself, she finally approved the budget. Having said that, I still have one significant concern about the timing.",
+      "self_check": "Say 'Having finished the report'. Is 'having' light and quick, with the stress on 'finished'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["past-participle openers: 'Seen from above…'"],
+      "isolation": {
+        "instructions": "A clause can open with a bare past participle carrying passive meaning: 'Seen from above, the city looks tiny' = 'When it is seen from above…'. The participle takes the stress immediately, so the sentence begins with weight: SEEN from above.",
+        "instructions_ar": "يمكن أن تبدأ الجملة بتصريف ماضٍ بمعنى المبني للمجهول: 'Seen from above…' أي 'عندما يُرى من الأعلى'. التصريف يأخذ النبر فورًا.",
+        "practice": ["SEEN from above…", "WRITTEN in haste…", "the participle opens with weight"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Seen from above, the city…", "When it is seen from above…"], "meaning": ["موجز", "كامل"]},
+        {"pair": ["Written in haste, the letter…", "The letter was written in haste"], "meaning": ["مشتق مُقدَّم", "عادي"]},
+        {"pair": ["Given the delay, …", "Because of the delay, …"], "meaning": ["رسمي موجز", "عادي"]},
+        {"pair": ["Seen /siːn/", "Seeing /ˈsiːɪŋ/"], "meaning": ["مبني للمجهول", "مبني للمعلوم"]},
+        {"pair": ["Faced with the choice…", "When we faced the choice…"], "meaning": ["موجز", "كامل"]}
+      ],
+      "word_practice": ["seen from above", "written in haste", "given the delay", "faced with the choice", "based on the data", "compared with last year", "taken together", "left unchecked", "asked to explain", "surrounded by noise"],
+      "sentence_practice": [
+        "Seen from above, the whole city looks tiny.",
+        "Given the delay, we should reschedule.",
+        "Left unchecked, the problem will spread."
+      ],
+      "record_this": "Seen from above, the whole city looks surprisingly small and orderly. Given the delay at the supplier's end, we should probably reschedule the launch. Left unchecked for another month, this problem will spread to the other departments.",
+      "self_check": "Say 'Seen from above, the city looks tiny'. Does the participle open the sentence with clear weight?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["perfect passive: 'Having been told…' /ˈhævɪŋ bɪn təʊld/"],
+      "isolation": {
+        "instructions": "'Having been told…' stacks three grammar words before the content: /ˈhævɪŋ bɪn/ TOLD. Keep 'having' and 'been' both light and quick, then stress the final participle. The whole opener should feel like one smooth run-up to one strong beat.",
+        "instructions_ar": "'Having been told…' تجمع ثلاث كلمات نحوية قبل المضمون: /ˈhævɪŋ bɪn/ TOLD. اجعل 'having' و'been' خفيفتين ثم انبر التصريف الأخير.",
+        "practice": ["/ˈhævɪŋ bɪn/ TOLD", "/ˈhævɪŋ bɪn/ WARNED", "smooth run-up, one strong beat"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Having been told…", "After I had been told…"], "meaning": ["موجز رسمي", "كامل"]},
+        {"pair": ["/ˈhævɪŋ bɪn/ (both light)", "having BEEN (been stressed)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["Having been warned ✅", "Having been warn ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["Having told her…", "Having been told…"], "meaning": ["أنا أخبرتها", "أُخبرتُ أنا"]},
+        {"pair": ["been /bɪn/ (weak)", "been /biːn/ (strong)"], "meaning": ["طبيعي", "مبالغ"]}
+      ],
+      "word_practice": ["having been told", "having been warned", "having been asked", "having been delayed", "having been approved", "having been informed", "having been rejected", "having been given", "having been advised", "having been selected"],
+      "sentence_practice": [
+        "Having been told the truth, she resigned.",
+        "Having been warned twice, he said nothing.",
+        "Having been delayed again, the flight was cancelled."
+      ],
+      "record_this": "Having been told the whole truth at last, she resigned the following morning. Having been warned about the deadline twice already, he said nothing at all in the meeting. Having been delayed for a third time that evening, the flight was eventually cancelled.",
+      "self_check": "Say 'Having been told the truth'. Are 'having' and 'been' both light, with 'told' stressed?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["the boundary pause between participle clause and main clause"],
+      "isolation": {
+        "instructions": "This is the feature that makes participle clauses intelligible. Close the participle clause with a small pause, then begin the main clause: 'Having finished the report | I went home.' Without that boundary the listener cannot tell where one idea ends and the next begins.",
+        "instructions_ar": "هذه هي السمة التي تجعل الجملة المشتقة مفهومة. أغلق الجملة المشتقة بوقفة صغيرة ثم ابدأ الجملة الرئيسية.",
+        "practice": ["Having finished the report | I went home", "Seen from above | the city looks tiny", "close, pause, then continue"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Having finished | I went home", "Having finished I went home"], "meaning": ["واضح", "غير مفهوم"]},
+        {"pair": ["boundary pause present", "no boundary"], "meaning": ["مفهوم", "مبهم"]},
+        {"pair": ["Arriving early | she waited", "Arriving early she waited"], "meaning": ["واضح", "متداخل"]},
+        {"pair": ["Given the delay | we rescheduled", "Given the delay we rescheduled"], "meaning": ["واضح", "مضغوط"]},
+        {"pair": ["short pause ✅", "long dramatic pause ❌"], "meaning": ["طبيعي", "مبالغ"]}
+      ],
+      "word_practice": ["having finished, I", "arriving early, she", "given the delay, we", "having read it, he", "seen from here, it", "not knowing, they", "having checked, we", "faced with that, I", "having spoken, she", "left alone, it"],
+      "sentence_practice": [
+        "Having finished the report, I went home early.",
+        "Arriving early, she waited in the lobby.",
+        "Having read the contract, he refused to sign."
+      ],
+      "record_this": "Having finished the report well ahead of schedule, I went home early for once. Arriving nearly an hour early, she waited quietly in the lobby with her notes. Having read the contract properly, he refused to sign anything until the terms were changed.",
+      "self_check": "Say 'Having finished the report, I went home'. Is there a clear but short pause at the comma?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["negative and 'being' openers: 'Not having…' / 'Being aware…'"],
+      "isolation": {
+        "instructions": "The negative goes first: 'NOT having received a reply…'. 'Not' takes the stress, then 'having' stays light. 'Being aware of the risk…' works the same way, with 'being' light and the following word stressed: /ˈbiːɪŋ/ aWARE.",
+        "instructions_ar": "النفي يتقدّم: 'NOT having received a reply…'. 'Not' تأخذ النبر و'having' تبقى خفيفة، وكذلك 'Being aware…'.",
+        "practice": ["NOT having received a reply…", "/ˈbiːɪŋ/ aWARE of the risk…", "not is stressed, having stays light"]
+      },
+      "minimal_pairs": [
+        {"pair": ["NOT having received…", "Having not received… ❌"], "meaning": ["ترتيب صحيح", "غير طبيعي"]},
+        {"pair": ["Being aware of the risk…", "Because I was aware…"], "meaning": ["موجز رسمي", "عادي"]},
+        {"pair": ["/ˈbiːɪŋ/ (light)", "BEING (heavy)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["Not knowing what to say…", "I did not know what to say, so…"], "meaning": ["موجز", "كامل"]},
+        {"pair": ["Not having eaten…", "Not eating… "], "meaning": ["قبل ذلك", "عادة عامة"]}
+      ],
+      "word_practice": ["not having received", "not having heard", "not knowing", "not wanting to", "being aware", "being new here", "being unable to", "not having been told", "not having finished", "being short of time"],
+      "sentence_practice": [
+        "Not having received a reply, I called again.",
+        "Being aware of the risk, we proceeded carefully.",
+        "Not knowing what to say, he simply nodded."
+      ],
+      "record_this": "Not having received a reply after four full days, I called the office again. Being fully aware of the risk involved, we proceeded very carefully with the trial. Not knowing quite what to say in the moment, he simply nodded and looked away.",
+      "self_check": "Say 'Not having received a reply'. Is 'not' first and stressed, with 'having' staying light?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 4 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/ˈhævɪŋ/ (light, quick)", "HAVING (heavy)"],
+        ["Seen from above…", "When it is seen from above…"],
+        ["/ˈhævɪŋ bɪn/ (both light)", "having BEEN (been stressed)"],
+        ["Having finished | I went home", "Having finished I went home"],
+        ["NOT having received…", "Having not received… ❌"],
+        ["Having finished ✅", "Having finish ❌"]
+      ],
+      "challenge_sentences": [
+        "Having reviewed the file, I have some questions.",
+        "Given the circumstances, we acted correctly.",
+        "Having been informed late, they could do nothing.",
+        "Not knowing the answer, she asked for time."
+      ],
+      "record_this": "Having reviewed the entire file this morning, I have a few questions for the team. Given the circumstances at the time, I still believe we acted correctly. Having been informed far too late, they could realistically do nothing about it. Not knowing the answer immediately, she sensibly asked for more time.",
+      "self_check": "Three checks: light 'having', stress on the participle, and a clear short pause at the clause boundary."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this account. Participle clauses make writing concise, so keep a steady pace and mark every boundary — then listen back and check each feature.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا النص. الجُمَل المشتقة تجعل الكتابة موجزة، فحافظ على إيقاع ثابت وحدّد كل وقفة، ثم اسمع وراجع.",
+        "passage": "Having worked in this field for almost fifteen years, I have learnt to be cautious about early results. Seen from the outside, a promising first month can look like proof of everything. Given how much money often depends on that impression, the temptation to announce success early is enormous. Not having understood this myself at the start, I made exactly that mistake once, and having announced a result publicly, I then spent six months quietly correcting it. Being aware of the risk now, I hold announcements back until the data has settled. Faced with pressure from above, I explain the reasoning rather than simply refusing. Having been burned once, I would rather be slow than wrong. Written down like this, it sounds obvious. Learned the hard way, it took years.",
+        "sounds_to_check": {
+          "light 'having' + stressed participle": "Having WORKED…, having anNOUNCED…, Having BEEN burned",
+          "past-participle openers": "SEEN from the outside, GIVEN how much money, FACED with pressure, WRITTEN down like this, LEARNED the hard way",
+          "perfect passive /ˈhævɪŋ bɪn/": "Having been burned once",
+          "boundary pause": "Having worked in this field for almost fifteen years | I have learnt…",
+          "negative and 'being' openers": "NOT having understood this myself…, /ˈbiːɪŋ/ aWARE of the risk now"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Light auxiliaries, stressed participles, every boundary clearly marked. Concise and highly readable. Ready for week 5.",
+        "70_89": "Good; occasionally 'having' takes too much weight or a boundary is rushed.",
+        "50_69": "Boundaries missing, so clauses run together and meaning blurs. Repeat day 4, then days 1-3.",
+        "below_50": "Redo days 1-5. Start with the boundary pause — it matters more than anything else here."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The boundary pause is not decoration. Without it, 'Having finished the report I went home' is genuinely hard to parse.",
+      "'Having' is light and quick /ˈhævɪŋ/. The stress belongs to the participle that follows it.",
+      "Always use the third form: 'having finished', never 'having finish'.",
+      "The negative comes first: 'Not having received…', not 'Having not received…'.",
+      "The subject of the participle clause must match the main clause. 'Having finished the report, the phone rang' wrongly says the phone finished the report."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 listen specifically for the pause at each clause boundary."
+  }
+}

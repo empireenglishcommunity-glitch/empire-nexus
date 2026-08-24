@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 9,
+  "focus": "Comma intonation around connectors · 'however' with pauses both sides · 'nevertheless' /ˌnevəðəˈles/ · 'hence' and 'thereby' · 'conversely' and 'notwithstanding' · mid-sentence 'in that' and 'insofar as'",
+  "focus_ar": "تنغيم الفواصل حول أدوات الربط، و'however' مع وقفتين، و'nevertheless'، و'hence' و'thereby'، و'conversely' و'notwithstanding'، و'in that' و'insofar as' في وسط الجملة",
+  "arabic_challenge": "Formal connectors are set off by commas in writing, and in speech those commas are real: they become short pauses with a small pitch dip. 'The results, however, were disappointing' has two audible boundaries around 'however'. Learners who read straight through produce a sentence that is grammatically fine but hard to follow, because the listener loses the signal that a contrast is coming. Arabic connectors are usually attached directly to the clause (لكنّ / ومع ذلك) without this parenthetical bracketing, so the pause-dip-pause pattern has to be learned as a physical habit.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'however' bracketed by pauses"],
+      "isolation": {
+        "instructions": "Mid-sentence 'however' is bracketed: pause, slight pitch dip on the word, pause again. 'The results, | however, | were disappointing.' The two boundaries are what tell the listener a contrast is arriving. At the start of a sentence it takes one pause after it.",
+        "instructions_ar": "'however' في وسط الجملة تُحاط بوقفتين مع هبوط بسيط في النبرة. الحدّان هما ما ينبّه المستمع إلى تقابل قادم.",
+        "practice": ["The results, | however, | were poor", "However, | the results were poor", "pause, dip, pause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The results, however, were poor", "The results however were poor"], "meaning": ["واضح", "متداخل"]},
+        {"pair": ["however (bracketed dip)", "however (flat, no pause)"], "meaning": ["إشارة تقابل", "مبهم"]},
+        {"pair": ["However, we agreed.", "But we agreed."], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["however = but", "however = in whatever way"], "meaning": ["مع ذلك", "بأي طريقة"]},
+        {"pair": ["…, however. ↘", "…, however ↗"], "meaning": ["ختام", "غير مكتمل"]}
+      ],
+      "word_practice": ["however", "the results, however", "however, the plan", "it was, however, clear", "however difficult", "however, in practice", "however, we agreed", "however, this differs", "however small", "however, that changed"],
+      "sentence_practice": [
+        "The results, however, were disappointing.",
+        "However, nobody raised the issue at the time.",
+        "It was, however, entirely predictable."
+      ],
+      "record_this": "The results, however, were considerably more disappointing than the summary suggested. However, nobody raised the issue at the time, which still puzzles me. It was, however, entirely predictable given the conditions.",
+      "self_check": "Say 'The results, however, were disappointing'. Can you hear two clear boundaries around 'however'?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'nevertheless' /ˌnevəðəˈles/ · 'nonetheless'"],
+      "isolation": {
+        "instructions": "Both words are four syllables with the main stress on the LAST: /ˌnevəðəˈLES/, /ˌnʌnðəˈLES/. The middle syllables are quick and light. They are stronger than 'however' — they concede a point and then push back.",
+        "instructions_ar": "كلتاهما من أربعة مقاطع والنبر الرئيسي على الأخير، والمقاطع الوسطى سريعة وخفيفة. وهما أقوى من 'however'.",
+        "practice": ["/ˌnevəðəˈLES/", "/ˌnʌnðəˈLES/", "stress the final syllable"]
+      },
+      "minimal_pairs": [
+        {"pair": ["neverthe-LESS", "NEVER-theless"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["nevertheless", "however"], "meaning": ["تنازل ثم رد", "تقابل عادي"]},
+        {"pair": ["nonetheless", "none the less"], "meaning": ["كلمة واحدة", "ثلاث كلمات"]},
+        {"pair": ["Nevertheless, | we proceeded", "Nevertheless we proceeded"], "meaning": ["واضح", "متداخل"]},
+        {"pair": ["nevertheless ↘", "nevertheless ↗"], "meaning": ["حاسم", "غير مكتمل"]}
+      ],
+      "word_practice": ["nevertheless", "nonetheless", "nevertheless, we agreed", "nonetheless, it worked", "nevertheless, the risk", "nonetheless valuable", "nevertheless, I accept", "nonetheless, we continued", "nevertheless significant", "nonetheless surprising"],
+      "sentence_practice": [
+        "Nevertheless, we decided to proceed.",
+        "The evidence is thin; nonetheless, it is suggestive.",
+        "It was expensive but nonetheless worthwhile."
+      ],
+      "record_this": "Nevertheless, we decided to proceed with the original plan as agreed. The evidence is admittedly thin; nonetheless, it is genuinely suggestive. The whole exercise was expensive but nonetheless entirely worthwhile.",
+      "self_check": "Say 'nevertheless'. Is the stress clearly on the final syllable, not the first?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'hence' · 'thus' · 'thereby' — result connectors"],
+      "isolation": {
+        "instructions": "These are compact, formal result markers. 'hence' /hens/ and 'thus' /ðʌs/ are single strong syllables followed by a short pause. 'thereby' /ˌðeəˈbaɪ/ takes the stress on BY and usually introduces an -ing clause: 'thereby reducing costs'.",
+        "instructions_ar": "هذه أدوات نتيجة رسمية ومختصرة. 'hence' و'thus' مقطع قوي واحد مع وقفة قصيرة، و'thereby' نبرها على BY وتُتبع بـ -ing.",
+        "practice": ["hence | the delay", "thus | the change", "thereby reDUCing costs"]
+      },
+      "minimal_pairs": [
+        {"pair": ["hence the delay", "so the delay happened"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["thus /ðʌs/", "this /ðɪs/"], "meaning": ["لذلك", "هذا"]},
+        {"pair": ["thereBY", "THEREby"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["thereby reducing costs", "and this reduced costs"], "meaning": ["رسمي موجز", "عادي"]},
+        {"pair": ["hence ↘ | ", "hence ↗"], "meaning": ["نتيجة حاسمة", "غير مكتمل"]}
+      ],
+      "word_practice": ["hence", "thus", "thereby", "hence the delay", "thus avoiding", "thereby reducing", "hence our concern", "thus far", "thereby allowing", "hence the decision"],
+      "sentence_practice": [
+        "Demand fell sharply; hence the price cut.",
+        "The route was closed, thus forcing a detour.",
+        "We automated the process, thereby reducing errors."
+      ],
+      "record_this": "Demand fell sharply in the second quarter; hence the sudden price cut. The main route was closed that morning, thus forcing a lengthy detour. We automated most of the process, thereby reducing errors by almost half.",
+      "self_check": "Say 'thereby reducing errors'. Is the stress on BY, with the -ing clause following smoothly?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'conversely' · 'notwithstanding'"],
+      "isolation": {
+        "instructions": "'Conversely' /ˈkɒnvɜːsli/ introduces the mirror image of what you just said, and takes a clear pause after it. 'Notwithstanding' /ˌnɒtwɪθˈstændɪŋ/ means 'despite' — five syllables with the stress on STAN. It can follow its noun: 'the delays notwithstanding'.",
+        "instructions_ar": "'Conversely' تُقدّم الصورة المقابلة وتُتبع بوقفة واضحة. و'Notwithstanding' تعني 'بالرغم من' والنبر على STAN، وقد تأتي بعد الاسم.",
+        "practice": ["Conversely, | prices fell", "/ˌnɒtwɪθˈSTANdɪŋ/ the delays", "the delays notwithSTANDing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Conversely, prices fell", "However, prices fell"], "meaning": ["الصورة المعاكسة", "تقابل عادي"]},
+        {"pair": ["notwithSTANDing", "NOTwithstanding"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["notwithstanding the delays", "despite the delays"], "meaning": ["رسمي جدًا", "عادي"]},
+        {"pair": ["the delays notwithstanding", "notwithstanding the delays"], "meaning": ["بعد الاسم", "قبل الاسم"]},
+        {"pair": ["Conversely, | …", "Conversely …"], "meaning": ["واضح", "متداخل"]}
+      ],
+      "word_practice": ["conversely", "notwithstanding", "conversely, demand rose", "notwithstanding the cost", "the delays notwithstanding", "conversely, in the south", "notwithstanding these concerns", "conversely, smaller firms", "notwithstanding the evidence", "conversely, the older group"],
+      "sentence_practice": [
+        "Conversely, demand rose in the smaller markets.",
+        "Notwithstanding the delays, the project succeeded.",
+        "The cost notwithstanding, it was the right choice."
+      ],
+      "record_this": "Conversely, demand rose quite sharply in several of the smaller markets. Notwithstanding the delays and the extra cost, the project ultimately succeeded. The expense notwithstanding, it was clearly the right choice at the time.",
+      "self_check": "Say 'notwithstanding the delays'. Is the stress on STAN, with the word said smoothly as five syllables?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["mid-sentence subordinators: 'in that' · 'insofar as'"],
+      "isolation": {
+        "instructions": "These join clauses inside a sentence with no pause before them, unlike the bracketed connectors. 'It is unusual in that it requires no training.' 'Insofar as' /ˌɪnsəʊˈfɑːr əz/ links with the /r/ and means 'to the extent that'. Keep them flowing — they are joints, not brackets.",
+        "instructions_ar": "هذه تربط الجُمَل داخل الجملة بلا وقفة قبلها، بخلاف أدوات الربط المُحاطة بفواصل. اجعلها متّصلة — فهي مفاصل لا أقواس.",
+        "practice": ["unusual in that it requires…", "/ˌɪnsəʊˈfɑːr əz/ we can tell", "joints, not brackets"]
+      },
+      "minimal_pairs": [
+        {"pair": ["unusual in that it…", "unusual, however, it…"], "meaning": ["مفصل متّصل", "قوس معترض"]},
+        {"pair": ["insofar as we can tell", "as far as we know"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["/ˌɪnsəʊˈfɑːr əz/ (linked /r/)", "in so far as (separated)"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["in that (reason)", "in which (place/thing)"], "meaning": ["من حيث أنّ", "الذي فيه"]},
+        {"pair": ["no pause before 'in that'", "pause before 'in that'"], "meaning": ["صحيح", "غير طبيعي"]}
+      ],
+      "word_practice": ["in that", "insofar as", "unusual in that", "insofar as we can tell", "in that respect", "insofar as it applies", "differ in that", "insofar as possible", "significant in that", "insofar as the data allows"],
+      "sentence_practice": [
+        "The case is unusual in that no warning was given.",
+        "Insofar as we can tell, the data is reliable.",
+        "They differ in that one is voluntary."
+      ],
+      "record_this": "The case is unusual in that absolutely no warning was given beforehand. Insofar as we can tell from the records, the data appears entirely reliable. The two schemes differ in that one is voluntary and the other is not.",
+      "self_check": "Say 'unusual in that no warning was given'. Did you flow through 'in that' without pausing before it?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["The results, however, were poor", "The results however were poor"],
+        ["neverthe-LESS", "NEVER-theless"],
+        ["thereBY", "THEREby"],
+        ["notwithSTANDing", "NOTwithstanding"],
+        ["unusual in that it…", "unusual, however, it…"],
+        ["however (bracketed dip)", "however (flat, no pause)"]
+      ],
+      "challenge_sentences": [
+        "The figures, however, tell a different story.",
+        "Nevertheless, the conclusion stands.",
+        "Costs rose; hence the review.",
+        "It is notable in that nobody objected."
+      ],
+      "record_this": "The figures, however, tell a rather different story from the one we were given. Nevertheless, the central conclusion of the report still stands. Costs rose steadily throughout the year; hence the review that followed. The decision is notable in that absolutely nobody objected to it at the time.",
+      "self_check": "Three checks: pauses bracketing 'however', final stress on 'nevertheless', and no pause before 'in that'."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a formal analysis. Connectors are signposts, so make each boundary audible — then listen back and check every feature.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كتحليل رسمي. أدوات الربط علامات إرشادية، فاجعل كل حدّ مسموعًا، ثم اسمع وراجع.",
+        "passage": "The first quarter exceeded every forecast. The second, however, was markedly weaker, and the reasons are not entirely clear. Costs had risen in the previous year; hence the tighter margins we now see. Demand in the northern region held up well. Conversely, the southern markets contracted by almost a tenth. Notwithstanding those losses, the annual figure remains positive. The report is unusual in that it separates regional effects from seasonal ones, thereby allowing a much cleaner comparison. Insofar as we can judge from a single year, the trend is stable. Nevertheless, I would caution against reading too much into it. The sample is small and the method new. Nonetheless, the direction of travel seems consistent, and the board will, however cautiously, need to plan on that basis.",
+        "sounds_to_check": {
+          "'however' bracketed by pauses": "The second, | however, | was markedly weaker · the board will, | however cautiously, | need to plan",
+          "final stress on 'nevertheless/nonetheless'": "Neverthe-LESS, I would caution · Nonethe-LESS, the direction of travel",
+          "'hence' and 'thereby'": "hence | the tighter margins · thereBY allowing a cleaner comparison",
+          "'conversely' and 'notwithstanding'": "Conversely, | the southern markets contracted · NotwithSTANDing those losses",
+          "flowing mid-sentence joints": "unusual in that it separates… · Insofar as we can judge…"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every connector correctly bracketed or flowed, stress patterns accurate. The argument is easy to follow. Ready for week 10.",
+        "70_89": "Good; occasionally a comma boundary is skipped or 'nevertheless' takes initial stress.",
+        "50_69": "Connectors read straight through, so the signposting is lost. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Start with 'however' and exaggerate the two pauses until they feel automatic."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Written commas around 'however' are real pauses in speech. Skipping them makes formal sentences hard to follow.",
+      "'nevertheless' and 'nonetheless' are stressed on the LAST syllable. Initial stress is a very common error.",
+      "'thereby' is normally followed by an -ing clause: 'thereby reducing costs'.",
+      "'in that' and 'insofar as' are joints inside the sentence — do NOT pause before them.",
+      "These connectors belong to formal registers. In casual speech, 'but', 'so' and 'though' do the same work more naturally."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that each bracketed connector has an audible pause on both sides."
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "level": "C1",
+  "cefr": "C1",
+  "week": 13,
+  "focus": "'was going to' /wəz ˈɡənə/ · 'would later' · 'was to become' · 'by which time' · 'was about to' and 'on the point of'",
+  "focus_ar": "'was going to' /wəz ˈɡənə/، و'would later'، و'was to become'، و'by which time'، و'was about to' و'on the point of'",
+  "arabic_challenge": "Future in the past describes a future seen from a point already in the past — 'I was going to call, but…'. English compresses these frames heavily ('was going to' becomes /wəz ˈɡənə/) and relies on them constantly in storytelling. Two difficulties follow. First, the reduction: pronounced fully, the frame swallows the sentence and the actual verb loses prominence. Second, the time logic: Arabic narrative marks sequence with particles and context rather than with a dedicated future-in-the-past form, so learners often default to a plain past and lose the sense of an intention that was never fulfilled.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'was going to' /wəz ˈɡənə/"],
+      "isolation": {
+        "instructions": "In speech 'was going to' collapses to /wəz ˈɡənə/, and the following verb takes the stress: /wəz ˈɡənə/ CALL. It nearly always implies the plan did not happen, so it is usually followed by 'but…'.",
+        "instructions_ar": "في الكلام تُختصر 'was going to' إلى /wəz ˈɡənə/ والفعل التالي يأخذ النبر، وهي تعني غالبًا أن الخطة لم تتحقّق.",
+        "practice": ["/wəz ˈɡənə/ CALL", "/wɜː ˈɡənə/ LEAVE", "the verb takes the stress"]
+      },
+      "minimal_pairs": [
+        {"pair": ["/wəz ˈɡənə/ (reduced)", "was going to (full)"], "meaning": ["كلام طبيعي", "بطيء رسمي"]},
+        {"pair": ["I was going to call (didn't)", "I called"], "meaning": ["نيّة لم تتحقّق", "حدث"]},
+        {"pair": ["was going to", "went to"], "meaning": ["كان سينوي", "ذهب"]},
+        {"pair": ["were going to leave", "was going to leave"], "meaning": ["جمع", "مفرد"]},
+        {"pair": ["I was gonna ✅ (spoken)", "I was gonna ❌ (written)"], "meaning": ["منطوق", "لا يُكتب"]}
+      ],
+      "word_practice": ["was going to call", "was going to ask", "were going to leave", "was going to say", "was going to book", "were going to meet", "was going to explain", "was going to resign", "were going to complain", "was going to mention it"],
+      "sentence_practice": [
+        "I was going to call you, but it got late.",
+        "We were going to leave early, then the traffic started.",
+        "She was going to ask, but changed her mind."
+      ],
+      "record_this": "I was going to call you last night, but by the time I finished it was far too late. We were going to leave early that morning, and then the traffic started building up. She was going to ask him directly, but at the last moment she changed her mind.",
+      "self_check": "Say 'I was going to call you'. Is the frame reduced to /wəz ˈɡənə/, with 'call' stressed?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'would later' — narrative future in the past"],
+      "isolation": {
+        "instructions": "'would' plus a time adverb narrates what happened afterwards, from the earlier point of view: 'He would later become the director.' 'would' is weak /wəd/ and 'later' carries a beat, then the main verb peaks. This is the voice of biography and history writing.",
+        "instructions_ar": "'would' مع ظرف زمن تسرد ما حدث لاحقًا من منظور أسبق. 'would' خفيفة /wəd/ و'later' تحمل نبضة ثم يعلو الفعل الرئيسي.",
+        "practice": ["/wəd/ LATER beCOME", "/wəd/ eventually reSIGN", "the voice of biography"]
+      },
+      "minimal_pairs": [
+        {"pair": ["would later become", "became"], "meaning": ["سرد استباقي", "خبر عادي"]},
+        {"pair": ["/wəd/ (weak)", "would /wʊd/ (strong)"], "meaning": ["طبيعي", "مبالغ"]},
+        {"pair": ["would later", "will later"], "meaning": ["من منظور ماضٍ", "من منظور حاضر"]},
+        {"pair": ["would eventually", "would immediately"], "meaning": ["في النهاية", "فورًا"]},
+        {"pair": ["would go on to", "would later"], "meaning": ["ثم مضى إلى", "لاحقًا"]}
+      ],
+      "word_practice": ["would later become", "would eventually resign", "would go on to found", "would soon discover", "would never return", "would later admit", "would prove decisive", "would in time replace", "would ultimately fail", "would shortly afterwards leave"],
+      "sentence_practice": [
+        "He would later become the company's first director.",
+        "She would go on to found three more schools.",
+        "That decision would prove decisive."
+      ],
+      "record_this": "He would later become the company's first director, though nobody expected it then. She would go on to found three more schools across the region. That single decision, taken quickly and quietly, would prove decisive.",
+      "self_check": "Say 'He would later become the director'. Is 'would' weak, with beats on 'later' and 'become'?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'was to become' — destiny and arrangement"],
+      "isolation": {
+        "instructions": "'was to + verb' has two uses: destiny ('She was to become famous') and a formal arrangement ('The meeting was to begin at nine'). Add 'have' for a plan that failed: 'was to have arrived'. The frame reduces to /wəz tə/ and the verb peaks.",
+        "instructions_ar": "'was to + فعل' لها استخدامان: القدر والترتيب الرسمي، ومع 'have' تعني خطة لم تتحقّق. الإطار يُختصر إلى /wəz tə/ والفعل يعلو.",
+        "practice": ["/wəz tə/ beCOME famous", "/wəz tə əv/ aRRIVED", "destiny or arrangement"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was to become (destiny)", "was to have become (didn't)"], "meaning": ["تحقّق", "لم يتحقّق"]},
+        {"pair": ["was to begin at nine", "began at nine"], "meaning": ["كان مقرّرًا", "بدأ فعلًا"]},
+        {"pair": ["/wəz tə/ (reduced)", "was to (full)"], "meaning": ["طبيعي", "بطيء"]},
+        {"pair": ["was to become", "was going to become"], "meaning": ["قدر/ترتيب", "نيّة"]},
+        {"pair": ["were to meet", "was to meet"], "meaning": ["جمع", "مفرد"]}
+      ],
+      "word_practice": ["was to become", "was to begin", "were to meet", "was to have arrived", "was to prove", "were to be informed", "was to have been finished", "was to follow", "were to receive", "was to change everything"],
+      "sentence_practice": [
+        "She was to become one of the country's finest writers.",
+        "The meeting was to begin at nine sharp.",
+        "The report was to have been finished by Friday."
+      ],
+      "record_this": "She was to become one of the country's finest writers within a decade. The meeting was to begin at nine sharp, and almost nobody arrived on time. The report was to have been finished by Friday, but here we are on Tuesday.",
+      "self_check": "Say 'was to become' then 'was to have become'. Is the difference between fulfilled and unfulfilled clear?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'by which time' — layered time reference"],
+      "isolation": {
+        "instructions": "'by which time' links a second time point to the first: 'The train left at six, by which time we were still queuing.' It is one quick chunk /baɪ wɪtʃ taɪm/ with a light beat on TIME, and it needs a small pause before it.",
+        "instructions_ar": "'by which time' تربط نقطة زمنية ثانية بالأولى، وهي كتلة سريعة بنبضة خفيفة على TIME وتحتاج وقفة صغيرة قبلها.",
+        "practice": ["…, | /baɪ wɪtʃ taɪm/ we were still queuing", "…, | by then it was too late", "small pause, quick chunk"]
+      },
+      "minimal_pairs": [
+        {"pair": ["by which time", "by that time"], "meaning": ["وصل داخل الجملة", "جملة جديدة"]},
+        {"pair": ["/baɪ wɪtʃ taɪm/ (chunk)", "by · which · time"], "meaning": ["طبيعي", "متقطّع"]},
+        {"pair": ["by which point", "by which time"], "meaning": ["نقطة في التسلسل", "لحظة زمنية"]},
+        {"pair": ["…, by which time…", "…by which time…"], "meaning": ["مع وقفة", "بلا وقفة"]},
+        {"pair": ["until which time", "by which time"], "meaning": ["حتى ذلك الوقت", "بحلول ذلك الوقت"]}
+      ],
+      "word_practice": ["by which time", "by which point", "by then", "at which point", "after which", "before which", "since which time", "during which", "by the time we arrived", "by which stage"],
+      "sentence_practice": [
+        "The train left at six, by which time we were still queuing.",
+        "He resigned in March, by which point the damage was done.",
+        "We finally got approval, after which everything moved quickly."
+      ],
+      "record_this": "The train left at six exactly, by which time we were still queuing for tickets. He resigned in March, by which point most of the damage had already been done. We finally received approval in the spring, after which everything moved surprisingly quickly.",
+      "self_check": "Say 'by which time we were still queuing'. Is there a small pause before the chunk, said quickly?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["'was about to' · 'on the point of'"],
+      "isolation": {
+        "instructions": "'was about to' means something was seconds away: /wəz əˈbaʊt tə/ LEAVE. 'on the point of' is more formal and takes an -ing form: 'on the point of resigning'. Both usually get interrupted, so they often end with a rising tension before 'when…'.",
+        "instructions_ar": "'was about to' تعني أن الشيء كان على وشك الحدوث، و'on the point of' أكثر رسمية وتُتبع بـ -ing. وكلتاهما تُقطع عادةً بـ 'when…'.",
+        "practice": ["/wəz əˈbaʊt tə/ LEAVE ↗ when…", "on the point of reSIGNing ↗ when…", "tension, then interruption"]
+      },
+      "minimal_pairs": [
+        {"pair": ["was about to leave", "was leaving"], "meaning": ["على وشك", "كان يغادر"]},
+        {"pair": ["on the point of resigning", "about to resign"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["on the point of resigning ✅", "on the point of resign ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["was about to ↗ when…", "was about to ↘"], "meaning": ["توتّر قبل مقاطعة", "مكتمل"]},
+        {"pair": ["was on the verge of", "was on the point of"], "meaning": ["على حافة", "على وشك"]}
+      ],
+      "word_practice": ["was about to leave", "was about to speak", "were about to start", "on the point of resigning", "on the verge of collapse", "was just about to call", "were about to give up", "on the point of leaving", "was about to explain", "on the verge of tears"],
+      "sentence_practice": [
+        "I was about to leave when the phone rang.",
+        "She was on the point of resigning.",
+        "We were about to give up when it finally worked."
+      ],
+      "record_this": "I was just about to leave the office when the phone rang for the third time. She was genuinely on the point of resigning before that conversation changed her mind. We were about to give up on the whole approach when it finally worked.",
+      "self_check": "Say 'I was about to leave when the phone rang'. Does the first half hold tension before 'when'?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 13 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["/wəz ˈɡənə/ (reduced)", "was going to (full)"],
+        ["would later become", "became"],
+        ["was to become (destiny)", "was to have become (didn't)"],
+        ["/baɪ wɪtʃ taɪm/ (chunk)", "by · which · time"],
+        ["was about to leave", "was leaving"],
+        ["on the point of resigning ✅", "on the point of resign ❌"]
+      ],
+      "challenge_sentences": [
+        "I was going to explain, but nobody asked.",
+        "He would later regret that decision.",
+        "The delivery was to have arrived on Monday.",
+        "We were about to start when the power failed."
+      ],
+      "record_this": "I was going to explain the whole situation, but strangely nobody actually asked. He would later come to regret that decision more than any other. The delivery was to have arrived on Monday morning at the latest. We were about to start the presentation when the power failed completely.",
+      "self_check": "Three checks: /wəz ˈɡənə/ reduced, weak 'would' in narration, and 'was to have' clearly marking an unfulfilled plan."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling this story naturally, as if to a friend. Future in the past is the grammar of storytelling, so keep the frames light and quick — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تحكي هذه القصة بطبيعية كأنك تحكيها لصديق. هذه القواعد هي قواعد الحكاية، فاجعل الأطر خفيفة وسريعة، ثم اسمع وراجع.",
+        "passage": "That summer was supposed to be straightforward. I was going to finish my thesis by August, and then I was going to take a month off. Neither happened. My supervisor was to have returned from leave in June, by which time I expected to have a full draft ready. She didn't come back until late July. I was about to give up on the deadline entirely when a colleague suggested restructuring the middle chapters. That conversation would later turn out to be the most useful of the whole year. I was going to argue with her, I remember, but something stopped me. By the time I submitted, in October, the thesis was almost unrecognisable, and it was to become the basis of everything I have written since. I was on the point of abandoning the topic. Looking back, I was going to be wrong either way, but at least I was wrong quickly.",
+        "sounds_to_check": {
+          "'was going to' reduced to /wəz ˈɡənə/": "I was going to finish…, I was going to take…, I was going to argue…, I was going to be wrong",
+          "narrative 'would later'": "That conversation would later turn out to be…",
+          "'was to have' unfulfilled plan": "My supervisor was to have returned from leave in June",
+          "'by which time' chunk": "by which time I expected to have a full draft ready",
+          "'was about to' / 'on the point of'": "I was about to give up…, I was on the point of abandoning the topic"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Frames reduced and light, verbs prominent, unfulfilled plans clearly marked. Sounds like natural storytelling. Ready for week 14.",
+        "70_89": "Good; occasionally 'was going to' is fully pronounced or 'would' is over-stressed.",
+        "50_69": "Frames heavy, so the actual verbs get lost. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Start with /wəz ˈɡənə/ until the reduction is automatic."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'was going to' almost always means the plan did NOT happen — it is usually followed by 'but'.",
+      "In speech the frame reduces to /wəz ˈɡənə/. Write 'was going to'; say /ˈɡənə/.",
+      "'would later' is the voice of biography and history. 'would' stays weak; the time word and verb carry the beats.",
+      "'was to have + participle' marks an arrangement that failed, which plain past tense cannot express.",
+      "'on the point of' takes -ing: 'on the point of resigning', never 'on the point of resign'."
+    ],
+    "daily_time": "15-20 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every 'was going to' is reduced."
+  }
+}

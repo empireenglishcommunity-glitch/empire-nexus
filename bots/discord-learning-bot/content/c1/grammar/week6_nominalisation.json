@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w6",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 6,
+  "pattern_name": "Nominalisation for formal register",
+  "pattern_name_ar": "التحويل إلى الاسمية للأسلوب الرسمي",
+  "formula": "verb → noun: rise/increase, fail → failure, implement → implementation, develop → development, able → ability · the + noun + of/in + noun · upon completion of …",
+  "formula_visual": "[Prices rose] → [the rise in prices] → [The rise in prices caused complaints]",
+  "when_to_use": "To make writing formal, compact and impersonal by turning actions and qualities into noun phrases. 'Prices rose sharply, so people complained' becomes 'The sharp rise in prices led to complaints'. This is the dominant style of academic writing, reports and official documents, because it lets you package a whole event as the subject of a new sentence.",
+  "when_to_use_ar": "لجعل الكتابة رسمية ومكثّفة وغير شخصية بتحويل الأفعال والصفات إلى عبارات اسمية. الأسلوب السائد في الكتابة الأكاديمية والتقارير والوثائق الرسمية.",
+  "why_arabic_speakers_struggle": "Arabic derives nouns through internal root patterns (مصادر), so learners expect a predictable transformation and are surprised by the number of English endings (-tion, -ment, -ity, -al, -ance) and by the fact that some nouns are identical to the verb but differ in stress ('an INcrease' versus 'to inCREASE'). The typical result is either the wrong ending or a heavily nominalised sentence in conversation, where it sounds unnaturally stiff.",
+  "examples": [
+    {"en": "The sharp rise in prices led to widespread complaints.", "ar": "أدّى الارتفاع الحاد في الأسعار إلى شكاوى واسعة", "structure": "[the + noun + in + noun] + verb + object"},
+    {"en": "The failure of the system caused serious delays.", "ar": "تسبّب فشل النظام في تأخيرات خطيرة", "structure": "[the + noun + of + noun] + verb"},
+    {"en": "Implementation of the recommendation was postponed.", "ar": "تم تأجيل تنفيذ التوصية", "structure": "[Nominalised subject] + passive verb"},
+    {"en": "Her ability to explain complex ideas is rare.", "ar": "قدرتها على شرح الأفكار المعقّدة نادرة", "structure": "[noun + to + verb] + be + complement"},
+    {"en": "Upon completion of the work, a full review is recommended.", "ar": "عند إنجاز العمل، يُنصح بمراجعة كاملة", "structure": "[Upon + noun + of + noun], + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "The implement of the policy took two years.", "correct": "The implementation of the policy took two years.", "explanation": "The noun requires its own ending; 'implement' is the verb."},
+    {"wrong": "The develop of the site was delayed.", "correct": "The development of the site was delayed.", "explanation": "Use the noun form 'development', not the bare verb."},
+    {"wrong": "The rise of prices caused complaints.", "correct": "The rise in prices caused complaints.", "explanation": "'Rise' takes 'in' when describing amounts or levels."},
+    {"wrong": "Her able to explain things is rare.", "correct": "Her ability to explain things is rare.", "explanation": "A possessive needs a noun, so the adjective must become 'ability'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The ___ (implement) of the new policy took two years.", "answer": "implementation"},
+    {"sentence": "The ___ (fail) of the system caused long delays.", "answer": "failure"},
+    {"sentence": "Her ___ (able) to stay calm impressed everyone.", "answer": "ability"},
+    {"sentence": "There was a sharp rise ___ prices last winter.", "answer": "in"},
+    {"sentence": "The ___ (develop) of the northern site was postponed.", "answer": "development"}
+  ],
+  "quick_rule": "Turn the action into a noun and make it the subject. Watch the ending (-tion, -ment, -ity) and the preposition (rise IN, failure OF).",
+  "quick_rule_ar": "حوّل الفعل إلى اسم واجعله الفاعل. وانتبه للنهاية (-tion, -ment, -ity) وحرف الجر (rise IN، failure OF).",
+  "mnemonic": "Package the event as a noun, then say what it did.",
+  "connect_to_speaking": "In accent week 6 you drilled the stress shift into noun forms and the pull of '-tion'. Saying 'INcrease' as a noun and 'impleMENtation' with the beat before '-tion' is what makes nominalised prose sound genuinely educated."
+}

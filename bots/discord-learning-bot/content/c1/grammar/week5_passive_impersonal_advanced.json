@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w5",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 5,
+  "pattern_name": "Advanced and impersonal passive (it is thought that …)",
+  "pattern_name_ar": "المبني للمجهول المتقدّم وغير الشخصي (it is thought that …)",
+  "formula": "It + is/was + reporting verb + that + clause · Subject + is said/thought/known + to + verb · Subject + is thought + to have + participle · Long chains: is being + participle, has been + participle, will have been + participle",
+  "formula_visual": "[It is believed] [that the practice began earlier] · [He is thought] [to have left]",
+  "when_to_use": "To report information without naming its source, which is the default voice of academic writing, news and formal reports. 'It is believed that …' introduces a whole clause. 'He is said to be …' moves the subject to the front. Add 'have' for a past event: 'He is thought to have left.' Use it when the source is unknown, unimportant, or deliberately unstated.",
+  "when_to_use_ar": "لنقل معلومة دون تسمية مصدرها، وهو الأسلوب الافتراضي للكتابة الأكاديمية والأخبار والتقارير الرسمية. و'have' تُضاف لحدث ماضٍ. يُستخدم عندما يكون المصدر مجهولًا أو غير مهم.",
+  "why_arabic_speakers_struggle": "Arabic reports impersonally with active forms (يُقال إنّ / يُعتقد أنّ) that need no chain of auxiliaries, so English chains such as 'is thought to have been' feel top-heavy and are often shortened incorrectly. Two errors recur: omitting 'to' in the personal pattern ('He is said be rich'), and using a base verb instead of a participle after 'have' ('is thought to have leave'). Learners also mix the two frames into 'It is thought him to have left'.",
+  "examples": [
+    {"en": "It is believed that the practice began much earlier.", "ar": "يُعتقد أن هذه الممارسة بدأت في وقت أبكر", "structure": "[It is + reporting verb] + [that + clause]"},
+    {"en": "The building is said to be four hundred years old.", "ar": "يُقال إن المبنى عمره أربعمئة سنة", "structure": "[Subject] + [is said] + [to be] + complement"},
+    {"en": "He is thought to have left the country in 1938.", "ar": "يُعتقد أنه غادر البلاد عام ١٩٣٨", "structure": "[Subject] + [is thought] + [to have + participle]"},
+    {"en": "The proposal is being considered at the highest level.", "ar": "يُدرَس المقترح على أعلى مستوى", "structure": "[is being + participle]"},
+    {"en": "The work will have been completed by then.", "ar": "سيكون العمل قد أُنجز بحلول ذلك الوقت", "structure": "[will have been + participle]"}
+  ],
+  "common_errors": [
+    {"wrong": "He is said be very wealthy.", "correct": "He is said to be very wealthy.", "explanation": "The personal reporting passive always keeps 'to' before the verb."},
+    {"wrong": "He is thought to have leave early.", "correct": "He is thought to have left early.", "explanation": "After 'to have' the verb takes its third form."},
+    {"wrong": "It is thought him to have left.", "correct": "It is thought that he left. / He is thought to have left.", "explanation": "Choose one frame: 'It is thought that + clause' or 'Subject + is thought to + verb'."},
+    {"wrong": "It is believed the practice began earlier.", "correct": "It is believed that the practice began earlier.", "explanation": "In formal writing keep 'that' after the reporting verb for clarity."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "It ___ (believe) that the report was never sent.", "answer": "is believed"},
+    {"sentence": "She is said ___ refused the offer twice.", "answer": "to have"},
+    {"sentence": "The matter is ___ (investigate) internally at the moment.", "answer": "being investigated"},
+    {"sentence": "He is thought to have ___ (leave) before midnight.", "answer": "left"},
+    {"sentence": "By June the work will ___ (complete).", "answer": "have been completed"}
+  ],
+  "quick_rule": "It is + reporting verb + THAT + clause. Or Subject + is said/thought + TO + verb. Add TO HAVE + third form for the past.",
+  "quick_rule_ar": "It is + فعل النقل + THAT + جملة. أو الفاعل + is said/thought + TO + فعل. وأضف TO HAVE + التصريف الثالث للماضي.",
+  "mnemonic": "No source needed — the reporting verb carries the claim.",
+  "connect_to_speaking": "In accent week 5 you drilled reduced auxiliary chains with the stress on the final participle. Say 'is thought to have LEFT' with /tə əv/ blurred, or the sentence sounds like a legal document read word by word."
+}

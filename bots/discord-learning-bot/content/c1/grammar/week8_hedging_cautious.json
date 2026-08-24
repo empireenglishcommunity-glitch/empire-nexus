@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c1_w8",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 8,
+  "pattern_name": "Hedging and cautious language",
+  "pattern_name_ar": "التخفيف واللغة المتحفّظة",
+  "formula": "tend to + verb · appear/seem to + verb · it would seem/appear that · arguably, presumably, admittedly · to some extent, by and large, on the whole, up to a point · may/might + verb",
+  "formula_visual": "[Prices] [tend to] [rise] · [It would seem] [that nobody checked]",
+  "when_to_use": "To state a view while leaving room for disagreement — the default register of academic argument, professional disagreement and diplomatic writing. 'tend to' turns a claim into a tendency; 'appear/seem to' distances you slightly; 'arguably' concedes the point is debatable; 'to some extent' limits the scope. Hedging signals intellectual care, and its absence can read as arrogance.",
+  "when_to_use_ar": "لإبداء رأي مع إتاحة مجال للاختلاف — الأسلوب الافتراضي للنقاش الأكاديمي والخلاف المهني والكتابة الدبلوماسية. التخفيف يدل على دقّة فكرية، وغيابه قد يبدو تعجرفًا.",
+  "why_arabic_speakers_struggle": "Arabic hedges lexically (يبدو أنّ / إلى حدٍّ ما) but does not require the same density of qualification, so direct translation of an Arabic argument into English can sound unusually assertive to an academic reader. Structurally, learners omit 'to' after 'tend' and 'seem', and often stack hedges incorrectly. The deeper issue is calibration: knowing how much hedging a context expects is itself part of the C1 skill.",
+  "examples": [
+    {"en": "Prices tend to rise during the winter months.", "ar": "تميل الأسعار إلى الارتفاع في أشهر الشتاء", "structure": "[tend to + base verb]"},
+    {"en": "The data appears to suggest a different pattern.", "ar": "تبدو البيانات مشيرة إلى نمط مختلف", "structure": "[appears to + base verb]"},
+    {"en": "It would seem that nobody checked the figures.", "ar": "يبدو أن أحدًا لم يراجع الأرقام", "structure": "[It would seem] + [that + clause]"},
+    {"en": "Arguably, it was the right decision at the time.", "ar": "يمكن القول إنه كان القرار الصحيح حينها", "structure": "[Arguably], + clause"},
+    {"en": "To some extent, that is a fair criticism.", "ar": "إلى حدٍّ ما، هذا نقد عادل", "structure": "[To some extent], + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "Prices tend rise in winter.", "correct": "Prices tend to rise in winter.", "explanation": "'Tend' always takes 'to' before the verb."},
+    {"wrong": "The data seems suggesting a pattern.", "correct": "The data seems to suggest a pattern.", "explanation": "'Seem' is followed by 'to' plus the base verb, not by an -ing form."},
+    {"wrong": "It would seem nobody checked.", "correct": "It would seem that nobody checked.", "explanation": "In formal writing keep 'that' after 'it would seem'."},
+    {"wrong": "In some extent, that is fair.", "correct": "To some extent, that is fair.", "explanation": "The fixed phrase uses 'to', not 'in'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Studies of this kind tend ___ overstate short-term effects.", "answer": "to"},
+    {"sentence": "The results appear ___ (support) the original hypothesis.", "answer": "to support"},
+    {"sentence": "It would ___ that the effect is weaker than reported.", "answer": "seem"},
+    {"sentence": "___ some extent, the criticism is justified.", "answer": "To"},
+    {"sentence": "___, the more interesting question is why it varies.", "answer": "Arguably"}
+  ],
+  "quick_rule": "tend TO / appear TO / seem TO + base verb. Keep 'that' after 'it would seem'. Stacking two hedges is normal in academic English.",
+  "quick_rule_ar": "tend TO / appear TO / seem TO + المصدر. وأبقِ 'that' بعد 'it would seem'. وتجميع أداتي تخفيف أمر معتاد أكاديميًا.",
+  "mnemonic": "Say it, but leave the door open.",
+  "connect_to_speaking": "In accent week 8 you drilled the fall-rise ↘↗. Hedging words delivered with a flat fall still sound blunt, so the melody and the vocabulary have to travel together."
+}
