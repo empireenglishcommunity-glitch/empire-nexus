@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w19",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 19,
+  "pattern_name": "Spontaneous fluency, paraphrase and seamless repair",
+  "pattern_name_ar": "الطلاقة العفوية وإعادة الصياغة والتصحيح السلس",
+  "formula": "Real fillers: well, I mean, the thing is, let me put it this way · Reformulation: or rather, to put it more precisely, what I should say is · Inline repair: — Wednesday, sorry — · Time-buying: let me separate two things, before I answer that",
+  "formula_visual": "[It was unsuccessful] — [or rather], [it was never properly tried]",
+  "when_to_use": "In any unscripted speech: interviews, meetings, seminars, negotiations. Fluent speakers hesitate constantly, but they hesitate with language rather than with 'erm'. They also refine formulations mid-sentence and repair genuine slips without stopping. These devices are what make unprepared speech sound composed.",
+  "when_to_use_ar": "في أي كلام غير مُعدّ: المقابلات والاجتماعات والحلقات والمفاوضات. المتحدّث الطليق يتردّد كثيرًا لكنه يتردّد بلغة لا بـ 'erm'. ويصقل الصياغة أثناء الجملة ويصحّح الزلّات دون توقّف.",
+  "why_arabic_speakers_struggle": "Learners are often taught that hesitation is a defect to be eliminated, so when it inevitably occurs they treat it as failure: they stop, apologise, or restart the sentence, all of which cost far more credibility than the original hesitation would have. Arabic has its own repair and floor-holding formulae, but they do not transfer, leaving a gap that gets filled with 'erm' and with silence that invites interruption.",
+  "examples": [
+    {"en": "Well, the thing is, nobody actually asked.", "ar": "في الحقيقة، لم يسأل أحد فعلًا", "structure": "[real filler] + clause"},
+    {"en": "It was unsuccessful — or rather, it was never properly tried.", "ar": "لم ينجح، أو بالأحرى لم يُجرَّب فعلًا", "structure": "clause + [reformulation]"},
+    {"en": "We met on Tuesday — Wednesday, sorry — and agreed the terms.", "ar": "اجتمعنا الثلاثاء — الأربعاء، عفوًا — واتّفقنا على الشروط", "structure": "[inline repair] within the flow"},
+    {"en": "That is a good question, and I want to answer it properly.", "ar": "سؤال جيد، وأريد أن أجيب عنه كما ينبغي", "structure": "[time-buying move]"},
+    {"en": "Let me separate two things, because they are being confused.", "ar": "دعني أفصل بين أمرين لأنهما يُخلطان", "structure": "[structuring / time-buying]"}
+  ],
+  "common_errors": [
+    {"wrong": "Sorry, sorry, let me start that sentence again from the beginning.", "correct": "It was unsuccessful — or rather, it was never properly tried.", "explanation": "Repair inside the sentence and continue; restarting costs more than the slip."},
+    {"wrong": "Erm... erm... how do you say... erm...", "correct": "Let me put it this way. / The thing is, …", "explanation": "A real phrase occupies the same time but signals control rather than difficulty."},
+    {"wrong": "I don't know. (falling tone, then silence)", "correct": "It depends, really, on what you mean by that.", "explanation": "A falling tone plus silence hands your turn to someone else before you have finished."},
+    {"wrong": "It was unsuccessful. Sorry, that's wrong. It was never tried.", "correct": "It was unsuccessful — or rather, it was never properly tried.", "explanation": "Reformulate in the same breath; announcing the correction breaks the flow unnecessarily."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Well, the ___ is, nobody actually asked.", "answer": "thing"},
+    {"sentence": "It was unsuccessful — or ___, it was never properly tried.", "answer": "rather"},
+    {"sentence": "We met on Tuesday — Wednesday, ___ — and agreed the terms.", "answer": "sorry"},
+    {"sentence": "That is a good question, and I want to answer it ___.", "answer": "properly"},
+    {"sentence": "Let me ___ two things, because they are being confused.", "answer": "separate"}
+  ],
+  "quick_rule": "Hesitate in ENGLISH, not with 'erm'. Reformulate with 'or rather' at the same pace. Repair inline and continue. Never apologise or restart.",
+  "quick_rule_ar": "تردّد بالإنجليزية لا بـ 'erm'. وأعد الصياغة بـ 'or rather' بالسرعة نفسها. وصحّح داخل الجريان وتابع. ولا تعتذر ولا تُعِد من البداية.",
+  "mnemonic": "Repair, don't restart. Hold, don't fill.",
+  "connect_to_speaking": "In accent week 19 you drilled level-tone pauses that hold your turn and reformulations delivered at unchanged pace. A falling pause invites interruption, so the tone of your hesitation matters as much as its content."
+}

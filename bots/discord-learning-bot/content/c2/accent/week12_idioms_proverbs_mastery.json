@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 12,
+  "focus": "Idiom as a single chunk at speed · balanced proverb rhythm · deliberately varied idioms · register-matched idiom choice · idiom woven into extended discourse",
+  "focus_ar": "التعبير ككتلة واحدة بسرعة الكلام، وإيقاع الأمثال المتوازن، والتعابير المُحوَّرة عن قصد، واختيار التعبير المطابق للأسلوب، ونسج التعبير في خطاب مطوّل",
+  "arabic_challenge": "At C2 the test is no longer knowing idioms but deploying them at full conversational speed without the rhythm faltering. A native listener can tell instantly whether an idiom is retrieved as a whole unit or assembled word by word, because assembly leaves a tiny hesitation before the phrase. The harder skill is deliberate variation: fluent speakers bend idioms for effect ('the straw that broke this particular camel's back'), and that only works if the base form is completely automatic. Learners who have memorised idioms but not automatised them cannot vary them safely.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["idiom as one chunk at full speed"],
+      "isolation": {
+        "instructions": "Say each idiom at your normal talking speed with one main beat and no hesitation before it. 'It's a storm in a TEAcup.' If you feel a tiny pause as you begin the phrase, it is not yet automatic — repeat it until the whole unit arrives at once.",
+        "instructions_ar": "قل كل تعبير بسرعتك الطبيعية بنبضة واحدة وبلا تردّد قبله. إن أحسست بوقفة صغيرة عند البداية فهو لم يصبح تلقائيًا بعد، فأعده حتى تأتي الوحدة كاملة دفعة واحدة.",
+        "practice": ["a storm in a TEAcup", "the tip of the ICEberg", "a foregone conCLUsion", "no hesitation before the phrase"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a storm in a TEAcup (one chunk)", "a · storm · in · a · teacup"], "meaning": ["تلقائي", "مُركَّب"]},
+        {"pair": ["no hesitation before the idiom", "tiny pause before it"], "meaning": ["متمكّن", "متعلّم"]},
+        {"pair": ["the tip of the ICEberg", "the TIP of the iceberg"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["a foregone conclusion", "an obvious result"], "meaning": ["تعبير", "حرفي"]},
+        {"pair": ["full conversational speed", "slowed for the idiom"], "meaning": ["طبيعي", "مُصطنع"]}
+      ],
+      "word_practice": ["a storm in a teacup", "the tip of the iceberg", "a foregone conclusion", "a double-edged sword", "a vicious circle", "a moot point", "par for the course", "a sea change", "the elephant in the room", "a poisoned chalice"],
+      "sentence_practice": [
+        "Honestly, it was a storm in a teacup.",
+        "That complaint is just the tip of the iceberg.",
+        "The outcome was a foregone conclusion."
+      ],
+      "record_this": "Honestly, the whole argument turned out to be a storm in a teacup. That single complaint is really just the tip of the iceberg, I'm afraid. The outcome of the vote was a foregone conclusion weeks before it happened.",
+      "self_check": "Say 'a storm in a teacup' at full speed. Was there any hesitation before the phrase began?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["balanced proverb rhythm with mirrored halves"],
+      "isolation": {
+        "instructions": "Proverbs are built on balance, usually two halves of equal weight with mirrored beats: 'Least SAID, soonest MENDed.' 'More HASTE, less SPEED.' Deliver them slightly slower than the surrounding speech and make the two peaks match. That symmetry is what makes them sound proverbial rather than invented.",
+        "instructions_ar": "الأمثال مبنية على التوازن، غالبًا نصفان متساويان بنبضات متقابلة. قلها أبطأ قليلًا من الكلام المحيط واجعل القمّتين متطابقتين، فالتناظر هو ما يجعلها تبدو مأثورة.",
+        "practice": ["Least SAID, soonest MENDed", "More HASTE, less SPEED", "two matched peaks, slightly slower"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Least SAID, soonest MENDed", "least said soonest mended (flat)"], "meaning": ["مثل بإيقاعه", "بلا إيقاع"]},
+        {"pair": ["two matched peaks", "one peak only"], "meaning": ["متوازن", "غير متوازن"]},
+        {"pair": ["slightly slower than speech", "same speed"], "meaning": ["مأثور", "عابر"]},
+        {"pair": ["More haste, less speed", "Hurrying makes you slower"], "meaning": ["مثل", "شرح"]},
+        {"pair": ["Nothing ventured, nothing gained", "You have to take risks"], "meaning": ["مثل", "حرفي"]}
+      ],
+      "word_practice": ["least said, soonest mended", "more haste, less speed", "nothing ventured, nothing gained", "easy come, easy go", "out of sight, out of mind", "no pain, no gain", "waste not, want not", "first come, first served", "live and let live", "better late than never"],
+      "sentence_practice": [
+        "Least said, soonest mended, in my experience.",
+        "More haste, less speed — we've seen that before.",
+        "Nothing ventured, nothing gained, after all."
+      ],
+      "record_this": "Least said, soonest mended, in my experience of these disagreements. More haste, less speed, and we have certainly seen that happen here before. Nothing ventured, nothing gained, after all, so I think we should try.",
+      "self_check": "Say 'Least said, soonest mended'. Are the two peaks matched and slightly slower than your normal pace?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["deliberately varied idioms"],
+      "isolation": {
+        "instructions": "Fluent speakers bend idioms for precision or wit: 'the straw that broke this particular camel's back', 'we were not so much rocking the boat as capsizing it'. The base rhythm must survive the variation, so the listener still hears the original underneath. This only works if the base form is fully automatic.",
+        "instructions_ar": "المتحدّث المتمكّن يُحوّر التعابير للدقّة أو الطرافة. يجب أن يبقى الإيقاع الأصلي محفوظًا ليسمع المستمع الأصل تحته. وهذا لا ينجح إلا إذا كان الأصل تلقائيًا تمامًا.",
+        "practice": ["the straw that broke this particular camel's back", "not so much rocking the boat as capsizing it", "base rhythm survives"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the straw that broke this particular camel's back", "the last straw"], "meaning": ["مُحوَّر", "أصلي"]},
+        {"pair": ["base rhythm audible underneath", "rhythm destroyed"], "meaning": ["ناجح", "مشوّش"]},
+        {"pair": ["not rocking the boat but capsizing it", "making things worse"], "meaning": ["تحوير بليغ", "حرفي"]},
+        {"pair": ["deliberate variation", "accidental error"], "meaning": ["متمكّن", "خطأ"]},
+        {"pair": ["a blessing in rather heavy disguise", "a blessing in disguise"], "meaning": ["مُحوَّر", "أصلي"]}
+      ],
+      "word_practice": ["the straw that broke this particular camel's back", "not rocking the boat but capsizing it", "a blessing in rather heavy disguise", "the elephant in this particular room", "barking up entirely the wrong tree", "a storm in a very small teacup", "the thin end of a very thick wedge", "swings and rather fewer roundabouts", "the tip of a considerable iceberg", "preaching to a very small choir"],
+      "sentence_practice": [
+        "That was the straw that broke this particular camel's back.",
+        "We were not so much rocking the boat as capsizing it.",
+        "It was a blessing in rather heavy disguise."
+      ],
+      "record_this": "That memo was the straw that broke this particular camel's back, I'm afraid. We were not so much rocking the boat by then as actively capsizing it. Looking back, it was a blessing in rather heavy disguise.",
+      "self_check": "Say the varied camel's-back idiom. Can you still hear the original rhythm underneath the variation?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["register-matched idiom choice"],
+      "isolation": {
+        "instructions": "At C2 the choice must fit the room precisely. 'A moot point' and 'a sea change' are fine in a formal report; 'a storm in a teacup' suits conversation; 'gone pear-shaped' belongs with friends. Deliver each in the tone of its register, and notice how the delivery changes with the choice.",
+        "instructions_ar": "في C2 يجب أن يلائم الاختيار المقام بدقّة. بعض التعابير للتقرير الرسمي وبعضها للمحادثة وبعضها للأصدقاء. أدِّ كل واحد بنبرة أسلوبه ولاحظ تغيّر الأداء.",
+        "practice": ["formal: a moot point / a sea change", "neutral: a storm in a teacup", "casual: gone pear-shaped"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a moot point (formal)", "gone pear-shaped (casual)"], "meaning": ["رسمي", "ودّي"]},
+        {"pair": ["a sea change (formal)", "a total turnaround (neutral)"], "meaning": ["رسمي", "محايد"]},
+        {"pair": ["idiom fits the room", "idiom clashes with the room"], "meaning": ["مصداقية", "خسارة مصداقية"]},
+        {"pair": ["at the eleventh hour (formal)", "at the last minute (neutral)"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["delivery matches register", "one delivery for all"], "meaning": ["متمكّن", "مسطّح"]}
+      ],
+      "word_practice": ["a moot point", "a sea change", "at the eleventh hour", "a poisoned chalice", "a storm in a teacup", "the elephant in the room", "gone pear-shaped", "a ballpark figure", "touch base", "call it a day"],
+      "sentence_practice": [
+        "Whether it was lawful is now a moot point.",
+        "There has been a sea change in public attitudes.",
+        "Between us, the whole thing went pear-shaped."
+      ],
+      "record_this": "Whether the original decision was lawful is now largely a moot point. There has been a genuine sea change in public attitudes over the last decade. Between the two of us, the whole thing went completely pear-shaped in March.",
+      "self_check": "Say the formal and casual examples. Does your delivery shift with the register, not just the words?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["idiom woven into extended discourse"],
+      "isolation": {
+        "instructions": "The final skill is density control: one idiom per few sentences, integrated so smoothly that it does not announce itself. Too many and you sound like a phrasebook. Practise a paragraph where two idioms appear naturally and the rest is plain — the idioms should feel inevitable rather than decorative.",
+        "instructions_ar": "المهارة الأخيرة هي ضبط الكثافة: تعبير واحد كل عدّة جُمَل، مندمج بسلاسة لا يُعلن عن نفسه. والإكثار يجعلك تبدو كدفتر عبارات.",
+        "practice": ["two idioms in a paragraph, rest plain", "integrated, not announced", "inevitable, not decorative"]
+      },
+      "minimal_pairs": [
+        {"pair": ["one idiom per few sentences", "an idiom in every sentence"], "meaning": ["طبيعي", "دفتر عبارات"]},
+        {"pair": ["integrated smoothly", "announced with a pause"], "meaning": ["متمكّن", "مُصطنع"]},
+        {"pair": ["idiom feels inevitable", "idiom feels decorative"], "meaning": ["مقنع", "مُتكلَّف"]},
+        {"pair": ["plain sentences between idioms", "idiom after idiom"], "meaning": ["متوازن", "مزدحم"]},
+        {"pair": ["density controlled", "density unmanaged"], "meaning": ["أنيق", "متعب"]}
+      ],
+      "word_practice": ["as things stood", "in the event", "by that stage", "to be fair", "on reflection", "as it happened", "in practice", "for the most part", "at that point", "in the end"],
+      "sentence_practice": [
+        "By that stage it was a foregone conclusion.",
+        "We pressed on, though it was a poisoned chalice.",
+        "On reflection, the complaint was a storm in a teacup."
+      ],
+      "record_this": "By that stage the result was a foregone conclusion, whatever anyone said publicly. We pressed on regardless, though the role turned out to be something of a poisoned chalice. On reflection, the original complaint really was a storm in a teacup.",
+      "self_check": "Read your paragraph aloud. Do the idioms feel inevitable and integrated, or decorative and announced?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 12 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["a storm in a TEAcup (one chunk)", "a · storm · in · a · teacup"],
+        ["Least SAID, soonest MENDed", "least said soonest mended (flat)"],
+        ["the straw that broke this particular camel's back", "the last straw"],
+        ["a moot point (formal)", "gone pear-shaped (casual)"],
+        ["one idiom per few sentences", "an idiom in every sentence"],
+        ["no hesitation before the idiom", "tiny pause before it"]
+      ],
+      "challenge_sentences": [
+        "That was only the tip of the iceberg.",
+        "More haste, less speed, as always.",
+        "It became a poisoned chalice fairly quickly.",
+        "Whether it helped is now a moot point."
+      ],
+      "record_this": "That first complaint was only the tip of the iceberg, as we later discovered. More haste, less speed, as always, and we paid for it in the final week. The role became something of a poisoned chalice fairly quickly. Whether any of it actually helped is now a moot point.",
+      "self_check": "Three checks: no hesitation before any idiom, matched proverb peaks, and idiom choice fitting the register."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself telling this as a relaxed professional post-mortem. Idioms must arrive automatically and sparingly — then listen back and check for hesitations before each one.",
+        "instructions_ar": "سجّل نفسك تحكي هذا كمراجعة مهنية مرتاحة. يجب أن تأتي التعابير تلقائيًا وبقلّة، ثم اسمع وتحقّق من عدم وجود تردّد قبل كل واحد.",
+        "passage": "With hindsight, the warning signs were all there. The first complaint looked like a storm in a teacup, and we treated it as one. It was, of course, only the tip of a fairly substantial iceberg. By March the second contract had become a poisoned chalice, and taking it on was the straw that broke this particular camel's back for two of the team. Least said, soonest mended, I thought at the time, which was probably a mistake. More haste, less speed: we tried to fix three things at once and fixed none of them properly. Whether the reorganisation helped is now a moot point. What I would say is that there has been a real sea change in how we handle complaints, and that at least is worth something. Nothing ventured, nothing gained, I suppose. Between us, though, it went thoroughly pear-shaped before it got better.",
+        "sounds_to_check": {
+          "idioms as instant chunks, no hesitation": "a storm in a TEAcup, the tip of a fairly substantial ICEberg, a poisoned CHALice, a moot POINT, a real sea CHANGE",
+          "balanced proverb rhythm, matched peaks": "Least SAID, soonest MENDed  ·  More HASTE, less SPEED  ·  Nothing VENtured, nothing GAINED",
+          "deliberate variation with base rhythm intact": "the straw that broke this particular camel's back  ·  the tip of a fairly substantial iceberg",
+          "register-matched choices": "formal 'a moot point' and 'a sea change' sit beside casual 'went thoroughly pear-shaped' - each needs its own delivery",
+          "controlled density": "plain sentences between idioms; nothing should sound like a phrasebook"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Idioms instant and automatic, proverbs balanced, variations intelligible, register matched, density controlled. Genuinely idiomatic. Ready for week 13.",
+        "70_89": "Good; a slight hesitation before one or two idioms, or density a little high.",
+        "50_69": "Idioms assembled word by word, so they announce themselves. Repeat days 1-2.",
+        "below_50": "Redo days 1-5. Drill five idioms until each arrives as a single unit with no hesitation."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "A native listener hears the tiny hesitation before an idiom that is being assembled rather than retrieved. Automaticity is the goal.",
+      "Proverbs need two matched peaks and a slightly slower delivery. Symmetry is what makes them sound proverbial.",
+      "You can only vary an idiom safely once the base form is automatic, and the original rhythm must remain audible underneath.",
+      "Match the idiom to the room. A colloquial idiom in a formal report costs more credibility than a plain phrase ever would.",
+      "Control density. One idiom every few sentences sounds fluent; one in every sentence sounds like a phrasebook."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 listen specifically for hesitation immediately before each idiom."
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 5,
+  "focus": "it-cleft · wh-cleft ('What matters is…') · all-cleft ('All I ask is…') · reversed wh-cleft ('That is what worries me') · there-cleft · contrastive stress across all cleft types",
+  "focus_ar": "الجملة المشقوقة بـ it، وبـ wh ('What matters is…')، وبـ all ('All I ask is…')، والمعكوسة ('That is what worries me')، وبـ there، والنبر التقابلي في كل الأنواع",
+  "arabic_challenge": "By C2 the issue is no longer building a cleft but choosing among four or five types, each with a different rhetorical effect and a different stress profile. An it-cleft isolates one element against alternatives; a wh-cleft builds anticipation; a reversed wh-cleft points back at something just said; an all-cleft implies 'nothing more than this'. Learners who know only the it-cleft use it everywhere and sound repetitive, while the specific contrastive stress each type requires goes unmarked, so the rhetorical difference disappears even when the syntax is correct.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["it-cleft: isolating one element against alternatives"],
+      "isolation": {
+        "instructions": "An it-cleft says 'this one, not the others'. 'It was the TIMING that caused the problem' implies alternatives were possible. Give the isolated element the strongest beat in the sentence and let the rest fall away almost to a murmur — the contrast with the unstated alternatives is the whole point.",
+        "instructions_ar": "الجملة المشقوقة بـ it تقول 'هذا لا غيره'. أعطِ العنصر المعزول أقوى نبضة ودع ما بعده يخفت، فالمقابلة مع البدائل غير المذكورة هي المقصد.",
+        "practice": ["It was the TIMing that caused it", "It was HER who objected", "this one, not the others"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It was the TIMING that caused it", "The timing caused it"], "meaning": ["عزل مقابل بدائل", "خبر عادي"]},
+        {"pair": ["It was HER who objected", "It was her who OBJECTED"], "meaning": ["هي لا غيرها", "اعتراض لا شيء آخر"]},
+        {"pair": ["strongest beat + faded tail", "even stress"], "meaning": ["تركيز حادّ", "بلا تركيز"]},
+        {"pair": ["It was in MARCH that we agreed", "We agreed in March"], "meaning": ["تحديد الزمن", "عادي"]},
+        {"pair": ["It is precisely THIS that concerns me", "This concerns me"], "meaning": ["توكيد قوي", "عادي"]}
+      ],
+      "word_practice": ["it was the timing that", "it was her who", "it was in March that", "it is precisely this that", "it was not the cost that", "it was you who", "it is the principle that", "it was then that", "it is here that", "it was the tone that"],
+      "sentence_practice": [
+        "It was the timing that caused the problem, not the plan.",
+        "It was her who first raised the objection.",
+        "It is precisely this point that concerns me."
+      ],
+      "record_this": "It was the timing that caused the whole problem, not the plan itself. It was her who first raised the objection, long before anyone else spoke. It is precisely this point that concerns me most about the entire proposal.",
+      "self_check": "Say 'It was the TIMING that caused it'. Is the isolated element clearly the strongest beat, with a faded tail?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["wh-cleft: building anticipation before the landing"],
+      "isolation": {
+        "instructions": "A wh-cleft delays the point to create anticipation: 'What worries me is the SILENCE.' Keep the opening level and moderately quick, hold a small pause after 'is', then land the tonic on the final element. The pause is the mechanism — remove it and the anticipation collapses.",
+        "instructions_ar": "الجملة المشقوقة بـ wh تؤخّر النقطة لخلق تشويق. أبقِ البداية مستوية وسريعة نسبيًا ثم وقفة صغيرة بعد 'is' ثم اجعل النبر يقع على العنصر الأخير.",
+        "practice": ["What worries me is | the SILENCE", "What we need is | more TIME", "the pause is the mechanism"]
+      },
+      "minimal_pairs": [
+        {"pair": ["What worries me is | the SILENCE", "What worries me is the silence (no pause)"], "meaning": ["تشويق", "مسطّح"]},
+        {"pair": ["What worries me is…", "The silence worries me"], "meaning": ["مشقوق", "عادي"]},
+        {"pair": ["What I need is time ✅", "What I need are time ❌"], "meaning": ["مفرد صحيح", "خطأ"]},
+        {"pair": ["What happened was that…", "It happened that…"], "meaning": ["سردي", "عادي"]},
+        {"pair": ["level opening, then landing", "even throughout"], "meaning": ["مؤثّر", "بلا أثر"]}
+      ],
+      "word_practice": ["what worries me is", "what we need is", "what happened was", "what surprised me was", "what matters is", "what he wants is", "what struck me was", "what remains is", "what she meant was", "what counts is"],
+      "sentence_practice": [
+        "What worries me is the silence that followed.",
+        "What we need is more time, not more advice.",
+        "What happened was that nobody checked the figures."
+      ],
+      "record_this": "What worries me most is the complete silence that followed the announcement. What we genuinely need is more time, not more advice from outside. What actually happened was that nobody thought to check the figures at all.",
+      "self_check": "Say 'What worries me is the SILENCE'. Is there a small pause before the landing word?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["all-cleft: 'nothing more than this'"],
+      "isolation": {
+        "instructions": "An all-cleft limits and often mildly complains: 'All I asked for was a straight ANSWER' implies the request was modest and unmet. Keep 'all I asked for was' light and quick, then place the tonic firmly on the final element with a slight fall of exasperation.",
+        "instructions_ar": "الجملة المشقوقة بـ all تحدّد وتشكو بلطف: 'All I asked for was…' تعني أن الطلب كان بسيطًا ولم يُلبَّ. اجعل البداية خفيفة سريعة ثم النبر على العنصر الأخير بهبوط طفيف.",
+        "practice": ["All I asked for was | a straight ANSWER ↘", "All that remains is | to SIGN ↘", "modest request, unmet"]
+      },
+      "minimal_pairs": [
+        {"pair": ["All I asked for was an ANSWER", "I asked for an answer"], "meaning": ["طلب بسيط لم يُلبَّ", "خبر عادي"]},
+        {"pair": ["All I want is peace ✅", "All I want are peace ❌"], "meaning": ["مفرد صحيح", "خطأ"]},
+        {"pair": ["All that remains is to sign", "We only need to sign"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["slight fall of exasperation ↘", "neutral fall"], "meaning": ["شكوى لطيفة", "محايد"]},
+        {"pair": ["All I did was ask", "I only asked"], "meaning": ["دفاع", "خبر"]}
+      ],
+      "word_practice": ["all I asked for was", "all I want is", "all that remains is", "all we need is", "all I did was ask", "all she said was", "all it takes is", "all that matters is", "all I know is", "all he wanted was"],
+      "sentence_practice": [
+        "All I asked for was a straight answer.",
+        "All that remains is to sign the agreement.",
+        "All I did was ask a simple question."
+      ],
+      "record_this": "All I asked for at that stage was a straight answer about the timeline. All that remains now is to sign the agreement and file the paperwork. All I did was ask one simple question, and the room went completely quiet.",
+      "self_check": "Say 'All I asked for was a straight ANSWER'. Is the opening light, with a slightly exasperated fall at the end?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["reversed wh-cleft: 'That is what worries me'"],
+      "isolation": {
+        "instructions": "A reversed wh-cleft points BACK at something already said: 'That is what worries me.' 'This is what I meant.' 'That' or 'this' takes a firm demonstrative beat, 'is' is light, and the wh-clause follows level. It is the natural way to respond to what someone has just told you.",
+        "instructions_ar": "الجملة المشقوقة المعكوسة تشير إلى ما سبق قوله. 'That' أو 'this' تأخذ نبضة إشارية حازمة و'is' خفيفة والجملة بعدها مستوية. وهي الطريقة الطبيعية للردّ على ما قيل.",
+        "practice": ["THAT is what worries me", "THIS is what I meant", "points back at what was said"]
+      },
+      "minimal_pairs": [
+        {"pair": ["That is what worries me", "What worries me is that"], "meaning": ["يشير للخلف", "يقدّم جديدًا"]},
+        {"pair": ["THAT is what I meant", "that is what I MEANT"], "meaning": ["إشارة حازمة", "توكيد المعنى"]},
+        {"pair": ["This is what happened", "What happened was this"], "meaning": ["ردّ", "تقديم"]},
+        {"pair": ["That's exactly what I said ✅", "That's exactly what I say ❌"], "meaning": ["ماضٍ صحيح", "زمن خاطئ"]},
+        {"pair": ["reversed (responding)", "standard (introducing)"], "meaning": ["ردّ", "افتتاح"]}
+      ],
+      "word_practice": ["that is what worries me", "this is what I meant", "that's exactly what I said", "this is what happened", "that is what matters", "that's what I don't understand", "this is what concerns us", "that is precisely what I feared", "this is what they proposed", "that is what changed"],
+      "sentence_practice": [
+        "That is exactly what worries me about the plan.",
+        "This is what I meant when I raised it.",
+        "That is precisely what I feared would happen."
+      ],
+      "record_this": "That is exactly what worries me most about the plan as it currently stands. This is what I meant when I raised the point at the last meeting. That is precisely what I feared would happen if nobody intervened early.",
+      "self_check": "Say 'THAT is what worries me'. Does 'that' take a firm demonstrative beat, pointing back?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["choosing the cleft: matching type to rhetorical purpose"],
+      "isolation": {
+        "instructions": "Take one idea and deliver it four ways, hearing the different effect: it-cleft isolates ('It was the delay that ruined it'), wh-cleft anticipates ('What ruined it was the delay'), all-cleft limits ('All that ruined it was one delay'), reversed points back ('That is what ruined it'). Mastery is choosing the one your argument needs.",
+        "instructions_ar": "خذ فكرة واحدة وقدّمها بأربع طرق واسمع الفرق: it تعزل، وwh تُشوّق، وall تحدّد، والمعكوسة تشير للخلف. الإتقان هو اختيار ما تحتاجه حجّتك.",
+        "practice": ["It was the DELAY that ruined it", "What ruined it was the DELAY", "That is what RUINED it", "same idea, four effects"]
+      },
+      "minimal_pairs": [
+        {"pair": ["It was the delay that ruined it", "What ruined it was the delay"], "meaning": ["عزل", "تشويق"]},
+        {"pair": ["All that ruined it was one delay", "That is what ruined it"], "meaning": ["تحديد", "إشارة للخلف"]},
+        {"pair": ["varied cleft types", "it-cleft everywhere"], "meaning": ["متمكّن", "مكرّر"]},
+        {"pair": ["cleft matched to purpose", "cleft chosen at random"], "meaning": ["مقنع", "مشوّش"]},
+        {"pair": ["There is one thing that troubles me", "One thing troubles me"], "meaning": ["مشقوق بـ there", "عادي"]}
+      ],
+      "word_practice": ["it was the delay that", "what ruined it was", "all that ruined it was", "that is what ruined it", "there is one thing that", "it is not that I disagree", "what I object to is", "all I question is", "this is where we differ", "that is where it went wrong"],
+      "sentence_practice": [
+        "It was the delay that ruined the whole thing.",
+        "What ruined it was one avoidable delay.",
+        "That is what ruined it, in the end."
+      ],
+      "record_this": "It was the delay that ruined the whole thing, not any failure of planning. What ruined it, ultimately, was one entirely avoidable delay in February. That is what ruined it in the end, though nobody wanted to say so aloud.",
+      "self_check": "Deliver the same idea as an it-cleft, a wh-cleft and a reversed cleft. Do the three feel rhetorically different?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 5 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["It was the TIMING that caused it", "The timing caused it"],
+        ["What worries me is | the SILENCE", "What worries me is the silence (no pause)"],
+        ["All I asked for was an ANSWER", "I asked for an answer"],
+        ["That is what worries me", "What worries me is that"],
+        ["varied cleft types", "it-cleft everywhere"],
+        ["What I need is time ✅", "What I need are time ❌"]
+      ],
+      "challenge_sentences": [
+        "It was the tone that offended people, not the content.",
+        "What surprised me was how quickly it spread.",
+        "All I wanted was a clear decision.",
+        "That is exactly what I warned about."
+      ],
+      "record_this": "It was the tone of the message that offended people, not the content itself. What surprised me most was how quickly the story spread across the sector. All I wanted from that meeting was a clear decision, one way or the other. That is exactly what I warned about in my note last month.",
+      "self_check": "Three checks: one dominant beat per cleft, a small pause before the wh-cleft landing, and a firm demonstrative beat in the reversed form."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a measured rebuttal in a meeting. Cleft types must vary with purpose — then listen back and check each one.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كردّ متّزن في اجتماع. أنواع الجملة المشقوقة يجب أن تتنوّع بحسب الغرض، ثم اسمع وراجع.",
+        "passage": "I want to correct an impression. It was never the budget that I objected to; it was the process. What concerned me from the beginning was that three teams were committed before anyone was consulted. All I asked for at that stage was a single meeting. That is what I was refused. There is one detail that still troubles me: the minutes record a decision that was never actually taken. It is precisely that discrepancy which needs explaining. What I am not saying is that anyone acted dishonestly. What I am saying is that the record is wrong. All that remains is for someone to correct it. This is where we differ, and I suspect we will continue to. It was not the outcome that mattered to me. It was whether we could trust our own paperwork.",
+        "sounds_to_check": {
+          "it-cleft isolating against alternatives": "It was never the BUDget that I objected to; it was the PROcess · It is precisely that discrepancy which…",
+          "wh-cleft with the anticipatory pause": "What concerned me from the beginning was | that three teams were committed · What I am NOT saying is | … What I AM saying is |",
+          "all-cleft limiting": "All I asked for at that stage was a single MEEting · All that remains is for someone to corRECT it",
+          "reversed wh-cleft pointing back": "THAT is what I was refused · THIS is where we differ",
+          "there-cleft introducing": "There is one detail that still troubles me"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Cleft types varied and matched to purpose, one dominant beat each, anticipatory pauses in place. Genuinely persuasive. Ready for week 6.",
+        "70_89": "Good; occasionally two cleft types blur or a landing pause is skipped.",
+        "50_69": "Only it-clefts used, or stress spread evenly, so the focus is lost. Repeat days 2-4.",
+        "below_50": "Redo days 1-5. Practise delivering one idea in all four cleft types until the effects feel distinct."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Each cleft has a different job: it-cleft isolates, wh-cleft anticipates, all-cleft limits, reversed points back.",
+      "Every cleft has exactly ONE dominant beat. Two competing beats cancel the focus.",
+      "The small pause before a wh-cleft landing is the mechanism of anticipation. Do not skip it.",
+      "The verb agrees with 'what', which is singular: 'What I need is time', never 'are time'.",
+      "Using only it-clefts is the commonest C2 weakness here. Vary the type to match your rhetorical purpose."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 name the cleft type you used in each sentence and say why."
+  }
+}

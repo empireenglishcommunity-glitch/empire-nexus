@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 11,
+  "focus": "Positive/negative near-pairs (frugal vs stingy) · confident vs arrogant · tone signalling approval · tone signalling disapproval · neutral vs loaded delivery of the same word",
+  "focus_ar": "الأزواج القريبة الموجبة والسالبة (frugal مقابل stingy)، وconfident مقابل arrogant، ونبرة الاستحسان، ونبرة الاستنكار، والأداء المحايد مقابل المحمّل للكلمة نفسها",
+  "arabic_challenge": "Many English word pairs describe the SAME behaviour and differ only in judgement: frugal or stingy, confident or arrogant, determined or stubborn. Choosing one commits you to an evaluation. Beyond that, intonation can load an apparently neutral word — 'interesting' said with a flat fall means bored dismissal, while the same word with a genuine rise means engaged. Learners often select the right dictionary meaning and the wrong evaluation, or deliver praise in a tone that reads as sarcasm, which is far more damaging socially than a grammatical slip.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["positive/negative pairs: 'frugal' vs 'stingy'"],
+      "isolation": {
+        "instructions": "These describe identical behaviour with opposite judgements. 'Frugal' approves; 'stingy' condemns. Say them in the same sentence frame and notice that your tone naturally shifts to match the word: 'He is FRUgal' sounds respectful, 'He is STINgy' sounds critical. Let the tone follow the choice.",
+        "instructions_ar": "هذه تصف السلوك نفسه بحكمين متعاكسين: 'Frugal' تستحسن و'stingy' تستنكر. ضعهما في الإطار نفسه ولاحظ أن نبرتك تتغيّر تلقائيًا لتوافق الكلمة.",
+        "practice": ["He is FRUgal (approving)", "He is STINgy (critical)", "tone follows the choice"]
+      },
+      "minimal_pairs": [
+        {"pair": ["frugal (approving)", "stingy (critical)"], "meaning": ["مقتصد", "بخيل"]},
+        {"pair": ["thrifty", "miserly"], "meaning": ["مدبّر", "شديد البخل"]},
+        {"pair": ["slim", "skinny"], "meaning": ["نحيف (إيجابي)", "هزيل (سلبي)"]},
+        {"pair": ["assertive", "aggressive"], "meaning": ["حازم", "عدواني"]},
+        {"pair": ["curious", "nosy"], "meaning": ["فضولي (إيجابي)", "متدخّل"]}
+      ],
+      "word_practice": ["frugal", "stingy", "thrifty", "miserly", "slim", "skinny", "assertive", "aggressive", "curious", "nosy"],
+      "sentence_practice": [
+        "He is frugal, which I respect.",
+        "He is stingy, which is quite different.",
+        "She is assertive rather than aggressive."
+      ],
+      "record_this": "He is frugal in a way I genuinely respect, especially given his circumstances. He is stingy, which is quite a different thing and much less attractive. She is assertive rather than aggressive, and the distinction matters here.",
+      "self_check": "Say 'He is frugal' then 'He is stingy'. Does your tone shift to match each judgement?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'confident' vs 'arrogant' · 'determined' vs 'stubborn'"],
+      "isolation": {
+        "instructions": "These pairs judge character. Praise words carry a warm, slightly rising delivery; criticism carries a cooler, flatter fall. 'She is CONfident ↗' feels admiring; 'She is ARrogant ↘' feels dismissive. Practise both in the same frame until the tonal difference is automatic.",
+        "instructions_ar": "هذه الأزواج تحكم على الشخصية. كلمات المدح بنبرة دافئة صاعدة قليلًا، والنقد بنبرة أبرد وهبوط أكثر استواءً. تدرّب على الاثنين في الإطار نفسه.",
+        "practice": ["She is CONfident ↗ (warm)", "She is ARrogant ↘ (cool)", "warm rise vs cool fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["confident ↗ (admiring)", "arrogant ↘ (dismissive)"], "meaning": ["واثق", "متعجرف"]},
+        {"pair": ["determined", "stubborn"], "meaning": ["مصمّم", "عنيد"]},
+        {"pair": ["ambitious", "ruthless"], "meaning": ["طموح", "بلا رحمة"]},
+        {"pair": ["careful", "fussy"], "meaning": ["دقيق", "متزمّت"]},
+        {"pair": ["warm rise", "cool flat fall"], "meaning": ["مدح", "نقد"]}
+      ],
+      "word_practice": ["confident", "arrogant", "determined", "stubborn", "ambitious", "ruthless", "careful", "fussy", "generous", "extravagant"],
+      "sentence_practice": [
+        "She is confident, and it serves her well.",
+        "He is stubborn rather than determined.",
+        "They are ambitious, though never ruthless."
+      ],
+      "record_this": "She is genuinely confident, and it has served her extremely well in that role. He is stubborn rather than determined, which is not at all the same quality. They are ambitious, certainly, though I have never once found them ruthless.",
+      "self_check": "Say 'She is confident' then 'He is arrogant'. Is the first warm and rising, the second cooler and falling?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["tone signalling genuine approval"],
+      "isolation": {
+        "instructions": "Genuine praise in English needs warmth: a slightly wider pitch range, a real rise on the key word, and an unhurried pace. 'That was REALLY well done ↗' with a narrow flat delivery sounds perfunctory or even sarcastic. The warmth is not optional; it is the message.",
+        "instructions_ar": "المدح الصادق في الإنجليزية يحتاج دفئًا: مدى نبرة أوسع قليلًا وصعودًا حقيقيًا على الكلمة الأساسية وإيقاعًا غير متعجّل. والدفء ليس اختياريًا بل هو الرسالة.",
+        "practice": ["That was REALLY well done ↗ (warm, unhurried)", "flat version sounds sarcastic", "warmth is the message"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Really well done ↗ (warm)", "Really well done ↘ (flat)"], "meaning": ["مدح صادق", "شكلي أو ساخر"]},
+        {"pair": ["wider range + unhurried", "narrow range + quick"], "meaning": ["دافئ", "بارد"]},
+        {"pair": ["I was genuinely impressed ↗", "I was impressed ↘"], "meaning": ["حماسي", "فاتر"]},
+        {"pair": ["This is excellent work ↗", "This is fine ↘"], "meaning": ["مدح", "قبول بالكاد"]},
+        {"pair": ["praise with warmth", "praise without warmth"], "meaning": ["مقبول", "يُقرأ سخرية"]}
+      ],
+      "word_practice": ["really well done", "genuinely impressed", "excellent work", "exactly right", "couldn't be better", "a real achievement", "very impressive indeed", "I'm delighted", "outstanding", "precisely what was needed"],
+      "sentence_practice": [
+        "That was really well done, and I mean that.",
+        "I was genuinely impressed by the whole thing.",
+        "This is exactly what was needed."
+      ],
+      "record_this": "That was really well done, and I mean that quite sincerely. I was genuinely impressed by the whole approach, particularly the final section. This is exactly what was needed, and it arrived at exactly the right moment.",
+      "self_check": "Say 'That was really well done'. Does it sound genuinely warm rather than perfunctory?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["tone signalling measured disapproval"],
+      "isolation": {
+        "instructions": "Professional criticism in English is usually understated, and the tone carries the weight. 'That is not quite what I had in mind ↘' delivered cool, level and slow is stronger than anything shouted. Keep the pitch narrow and the pace deliberate; restraint signals seriousness.",
+        "instructions_ar": "النقد المهني في الإنجليزية مُخفَّف عادةً والنبرة تحمل الثقل. العبارة الباردة المستوية البطيئة أقوى من أي صراخ. أبقِ النبرة ضيّقة والإيقاع متأنّيًا؛ فالتحفّظ يدل على الجدّية.",
+        "practice": ["That is not quite what I had in mind ↘ (cool, level, slow)", "restraint signals seriousness"]
+      },
+      "minimal_pairs": [
+        {"pair": ["not quite what I had in mind ↘ (cool)", "THIS IS WRONG (loud)"], "meaning": ["نقد مهني قوي", "انفعال أضعف أثرًا"]},
+        {"pair": ["narrow pitch + slow pace", "wide pitch + fast pace"], "meaning": ["جدّي", "منفعل"]},
+        {"pair": ["I have some concerns ↘", "I'm worried"], "meaning": ["رسمي جدّي", "عادي"]},
+        {"pair": ["I'm not persuaded ↘", "I disagree"], "meaning": ["مُخفَّف قوي", "مباشر"]},
+        {"pair": ["restraint = seriousness", "volume = weakness"], "meaning": ["مؤثّر", "أقل تأثيرًا"]}
+      ],
+      "word_practice": ["not quite what I had in mind", "I have some concerns", "I'm not persuaded", "that is disappointing", "I had expected more", "this needs rethinking", "I question the basis", "less convincing than hoped", "somewhat inadequate", "not the standard we expect"],
+      "sentence_practice": [
+        "That is not quite what I had in mind.",
+        "I have some concerns about the approach.",
+        "I have to say I am not persuaded."
+      ],
+      "record_this": "That is not quite what I had in mind when we discussed it last week. I have some concerns about the approach, which I would like to set out properly. I have to say, on reflection, that I am simply not persuaded.",
+      "self_check": "Say 'That is not quite what I had in mind'. Is it cool, level and slow rather than loud?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["loading a neutral word by delivery alone"],
+      "isolation": {
+        "instructions": "The same word can be sincere or cutting depending on tone. 'Interesting ↗' means engaged; 'Interesting ↘' means dismissive. 'Fine ↗' accepts; 'Fine ↘' resents. This is one of the sharpest tools at C2 and one of the easiest to fire accidentally, so practise both deliberately and know which you are producing.",
+        "instructions_ar": "الكلمة نفسها قد تكون صادقة أو جارحة بحسب النبرة. هذه من أحدّ أدوات C2 وأسهلها إطلاقًا بالخطأ، فتدرّب على الاثنين عن قصد واعرف أيّهما تُنتج.",
+        "practice": ["Interesting ↗ (engaged)", "Interesting ↘ (dismissive)", "know which you are producing"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Interesting ↗ (engaged)", "Interesting ↘ (dismissive)"], "meaning": ["مهتم", "رافض"]},
+        {"pair": ["Fine ↗ (accepting)", "Fine ↘ (resentful)"], "meaning": ["موافق", "متضايق"]},
+        {"pair": ["Right ↗ (following you)", "Right ↘ (unconvinced)"], "meaning": ["متابع", "غير مقتنع"]},
+        {"pair": ["If you say so ↗", "If you say so ↘"], "meaning": ["قبول", "شكّ"]},
+        {"pair": ["Brave choice ↗ (praise)", "Brave choice ↘ (criticism)"], "meaning": ["مدح", "نقد مُبطَّن"]}
+      ],
+      "word_practice": ["interesting", "fine", "right", "if you say so", "brave choice", "how nice", "I see", "of course", "naturally", "wonderful"],
+      "sentence_practice": [
+        "Interesting. Tell me more about that.",
+        "Fine. We'll do it your way then.",
+        "If you say so, though I'd check again."
+      ],
+      "record_this": "Interesting — genuinely, tell me more about how you arrived at that. Fine. We will do it your way then, and we will see what happens. If you say so, though personally I would want to check the figures again.",
+      "self_check": "Say 'Interesting' twice, once engaged and once dismissive. Are the two unmistakably different?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 11 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["frugal (approving)", "stingy (critical)"],
+        ["confident ↗ (admiring)", "arrogant ↘ (dismissive)"],
+        ["Really well done ↗ (warm)", "Really well done ↘ (flat)"],
+        ["not quite what I had in mind ↘ (cool)", "THIS IS WRONG (loud)"],
+        ["Interesting ↗ (engaged)", "Interesting ↘ (dismissive)"],
+        ["determined", "stubborn"]
+      ],
+      "challenge_sentences": [
+        "She is thrifty, not miserly.",
+        "That was genuinely excellent work.",
+        "I have one or two concerns.",
+        "Interesting. I hadn't considered that."
+      ],
+      "record_this": "She is thrifty rather than miserly, and the difference is worth stating clearly. That was genuinely excellent work, and I want you to know I noticed. I have one or two concerns that I would rather raise now than later. Interesting. I honestly hadn't considered that possibility at all.",
+      "self_check": "Three checks: judgement words matched by tone, praise delivered warmly, and criticism delivered cool and level."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself giving this as spoken feedback to a colleague. Every evaluation must be audible in the tone, not just the word — then listen back and check whether a stranger could hear your judgements.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كتقييم شفهي لزميل. كل حكم يجب أن يكون مسموعًا في النبرة لا في الكلمة فقط، ثم اسمع وتحقّق أن غريبًا يمكنه سماع أحكامك.",
+        "passage": "Let me be honest with you, because I think you would prefer that. The work is careful, and I mean careful in the good sense, not fussy. You are thorough where it matters. That was genuinely well done, particularly the section on costs. Now, the presentation. It is confident, which is a strength, but in two places it reads as arrogant, and I do not think you intend that. Your persistence I would call determined; someone less sympathetic might call it stubborn. On the budget, you have been frugal rather than stingy, and the committee will notice the difference. My one real concern is the timeline. It is not quite what I had in mind, and I am not yet persuaded it is achievable. Interesting choice to compress the final phase. Brave, even. I would rather you reconsidered it than defended it.",
+        "sounds_to_check": {
+          "positive/negative pair choices": "careful in the good sense, not fussy  ·  frugal rather than stingy  ·  determined / stubborn",
+          "warm genuine praise": "That was GENuinely well done ↗  ·  You are thorough where it matters ↗ - wider range, unhurried",
+          "cool measured disapproval": "It is not quite what I had in mind ↘  ·  I am not yet persuaded ↘ - narrow pitch, deliberate pace",
+          "the confident/arrogant contrast": "It is CONfident ↗, which is a strength, but in two places it reads as ARrogant ↘",
+          "deliberately loaded neutral words": "INteresting choice to compress the final phase ↘  ·  BRAVE, even ↘ - both should be audibly critical, not sincere"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every evaluation audible in the tone, praise warm, criticism cool and restrained, loaded words clearly loaded. Socially skilful. Ready for week 12.",
+        "70_89": "Good; praise occasionally sounds perfunctory or a loaded word lands as sincere.",
+        "50_69": "Words correct but delivered in one flat tone, so the judgements disappear. Repeat days 3-5.",
+        "below_50": "Redo days 1-5. Practise the same sentence as praise and as criticism until the tonal difference is unmistakable."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Many English pairs describe the same behaviour and differ only in judgement. Choosing one commits you to an evaluation.",
+      "Genuine praise needs audible warmth: a wider range, a real rise, an unhurried pace. Flat praise reads as sarcasm.",
+      "Professional criticism is understated. Cool, level and slow is far stronger than loud.",
+      "Tone alone can load a neutral word. 'Interesting ↘' is dismissive; 'Interesting ↗' is engaged.",
+      "This is the register where tonal mistakes do the most social damage, because listeners hear intention rather than error."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 ask whether a listener could identify your judgements from tone alone."
+  }
+}

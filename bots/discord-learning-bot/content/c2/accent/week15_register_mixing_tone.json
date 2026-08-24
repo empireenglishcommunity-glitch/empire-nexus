@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 15,
+  "focus": "Deliberate register clash for effect · signalling the shift by delivery alone · formal-to-casual pivot · casual-to-formal pivot · sustaining tone control across a long passage",
+  "focus_ar": "التصادم الأسلوبي المقصود للأثر، والإشارة إلى التحوّل بالأداء وحده، والانتقال من الرسمي إلى العادي، ومن العادي إلى الرسمي، وضبط النبرة عبر نص طويل",
+  "arabic_challenge": "At C1 the goal was consistency within a register. At C2 the goal is the opposite: breaking register DELIBERATELY for rhetorical effect, which only works if the break is audibly intentional. 'The committee resolved, after eighteen months of deliberation, to do absolutely nothing' lands because the plain final phrase collides with the formal opening. If the shift is not marked by delivery, listeners hear a lapse in control rather than a device. Arabic speakers who already move between فصحى and عامية have the instinct; what must be learned is signalling intent through pace and pitch rather than through vocabulary alone.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["deliberate register clash for effect"],
+      "isolation": {
+        "instructions": "Set up formally, then drop suddenly into plain speech: 'The committee resolved, after eighteen months of deliberation, | to do absolutely nothing.' Keep the opening measured and formal, pause, then deliver the plain phrase quickly and flatly. The collision is the point.",
+        "instructions_ar": "مهّد رسميًا ثم انزل مباغتًا إلى كلام بسيط. أبقِ البداية متّزنة رسمية ثم وقفة ثم أنزل العبارة البسيطة بسرعة وتسطّح. والتصادم هو المقصد.",
+        "practice": ["The committee resolved, after eighteen months of deliberation, | to do absolutely NOTHing", "formal setup, plain collision"]
+      },
+      "minimal_pairs": [
+        {"pair": ["formal setup + plain landing", "formal throughout"], "meaning": ["أثر بلاغي", "محايد"]},
+        {"pair": ["audible pause before the drop", "no pause"], "meaning": ["مقصود", "يبدو خطأً"]},
+        {"pair": ["quick flat plain phrase", "slow weighted plain phrase"], "meaning": ["ساخر", "ثقيل"]},
+        {"pair": ["deliberate clash", "accidental lapse"], "meaning": ["أداة", "خطأ"]},
+        {"pair": ["…to do absolutely nothing", "…to take no further action"], "meaning": ["تصادم", "رسمي متّسق"]}
+      ],
+      "word_practice": ["the committee resolved", "after lengthy deliberation", "to do absolutely nothing", "having considered the evidence", "we gave up", "the strategic review concluded", "that nobody knew", "following extensive consultation", "we guessed", "the findings indicate"],
+      "sentence_practice": [
+        "The committee resolved, after eighteen months, to do absolutely nothing.",
+        "Having considered the evidence at length, we gave up.",
+        "The strategic review concluded that nobody knew."
+      ],
+      "record_this": "The committee resolved, after eighteen months of careful deliberation, to do absolutely nothing. Having considered the available evidence at considerable length, we gave up. The strategic review concluded, at a cost of forty thousand pounds, that nobody knew.",
+      "self_check": "Say the committee sentence. Is the formal opening measured and the plain landing quick and flat?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["signalling the shift by delivery alone"],
+      "isolation": {
+        "instructions": "The same words can read as a lapse or as a device depending on delivery. Mark an intentional shift with a small pause and a clear change of pace: slow and formal, then quick and plain. That marking tells the listener you meant it. Without it, you simply sound inconsistent.",
+        "instructions_ar": "الكلمات نفسها قد تُقرأ كزلّة أو كأداة بحسب الأداء. حدّد التحوّل المقصود بوقفة صغيرة وتغيير واضح في الإيقاع، فهذا يُخبر المستمع أنك قصدته.",
+        "practice": ["slow formal | (pause) | quick plain", "marking = intent", "without it = inconsistency"]
+      },
+      "minimal_pairs": [
+        {"pair": ["marked shift (intentional)", "unmarked shift (lapse)"], "meaning": ["أداة", "زلّة"]},
+        {"pair": ["pause + pace change", "no marking"], "meaning": ["مقصود", "مرتبك"]},
+        {"pair": ["slow formal then quick plain", "same pace throughout"], "meaning": ["واضح", "مبهم"]},
+        {"pair": ["listener hears a device", "listener hears an error"], "meaning": ["ناجح", "فاشل"]},
+        {"pair": ["control demonstrated", "control lost"], "meaning": ["متمكّن", "ضعيف"]}
+      ],
+      "word_practice": ["to put it bluntly", "in plain terms", "or, more simply", "which is to say", "not to put too fine a point on it", "frankly", "in other words", "bluntly put", "to be blunt", "plainly"],
+      "sentence_practice": [
+        "The projections were optimistic, or, to put it bluntly, wrong.",
+        "There were procedural irregularities. In plain terms, someone lied.",
+        "The outcome was suboptimal. We lost."
+      ],
+      "record_this": "The projections were optimistic, or, to put it rather bluntly, simply wrong. There were procedural irregularities throughout. In plain terms, someone lied. The outcome was, in the language of the report, suboptimal. We lost.",
+      "self_check": "Say 'The projections were optimistic, or, to put it bluntly, wrong'. Is the shift clearly marked as intentional?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["formal-to-casual pivot mid-passage"],
+      "isolation": {
+        "instructions": "Move from a formal frame into a casual one to create intimacy or candour: 'I am obliged to record my formal objection. Between ourselves, it will change nothing.' The first sentence is measured with full forms; the second speeds up and contracts. The pivot signals that you are now speaking as yourself.",
+        "instructions_ar": "انتقل من إطار رسمي إلى عادي لخلق حميمية أو صراحة. الجملة الأولى متّزنة بصيغ كاملة والثانية أسرع ومختصرة. والانتقال يُشير إلى أنك تتكلّم الآن بصفتك أنت.",
+        "practice": ["I am obliged to record my formal objection. | Between ourselves, it'll change nothing.", "measured, then candid"]
+      },
+      "minimal_pairs": [
+        {"pair": ["formal → casual (candour)", "formal throughout (distance)"], "meaning": ["صراحة", "مسافة"]},
+        {"pair": ["Between ourselves, …", "It should be noted that …"], "meaning": ["ودّي", "رسمي"]},
+        {"pair": ["speeds up and contracts", "same pace, full forms"], "meaning": ["حميمي", "بعيد"]},
+        {"pair": ["speaking as yourself", "speaking in role"], "meaning": ["شخصي", "مؤسّسي"]},
+        {"pair": ["pivot marked", "pivot unmarked"], "meaning": ["مقصود", "مرتبك"]}
+      ],
+      "word_practice": ["between ourselves", "off the record", "just between us", "speaking personally", "if I'm honest", "candidly", "my own view is", "look", "to be straight with you", "here's the thing"],
+      "sentence_practice": [
+        "I am obliged to record my objection. Between ourselves, it will change nothing.",
+        "The official position is unchanged. Off the record, everyone disagrees.",
+        "I shall submit the report as required. Honestly, nobody will read it."
+      ],
+      "record_this": "I am obliged to record my formal objection to the proposal. Between ourselves, it will change absolutely nothing. The official position remains unchanged. Off the record, almost everyone I have spoken to disagrees with it.",
+      "self_check": "Say the objection lines. Does the second sentence speed up and contract, sounding candid?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["casual-to-formal pivot: raising the stakes"],
+      "isolation": {
+        "instructions": "The reverse move raises the stakes: 'Look, I get it, everyone's busy. | Nevertheless, I must ask that the deadline be respected.' Start quick and contracted, then slow down and shift to full forms. The formality arriving suddenly signals that the friendly part is over.",
+        "instructions_ar": "الحركة المعاكسة ترفع المستوى: ابدأ سريعًا مختصرًا ثم أبطئ وانتقل إلى الصيغ الكاملة. والرسمية المباغتة تُشير إلى أن الجزء الودّي انتهى.",
+        "practice": ["Look, I get it, everyone's busy. | Nevertheless, I must ask that the deadline BE respected.", "friendly part is over"]
+      },
+      "minimal_pairs": [
+        {"pair": ["casual → formal (stakes raised)", "casual throughout (no pressure)"], "meaning": ["تحذير", "ودّي"]},
+        {"pair": ["Nevertheless, I must ask that…", "But please try to…"], "meaning": ["رسمي جادّ", "طلب ودّي"]},
+        {"pair": ["slows down + full forms", "stays quick + contracted"], "meaning": ["جادّ", "غير جادّ"]},
+        {"pair": ["friendly part is over", "still friendly"], "meaning": ["إشارة واضحة", "مبهم"]},
+        {"pair": ["subjunctive on arrival", "casual verb"], "meaning": ["رسمي حادّ", "عادي"]}
+      ],
+      "word_practice": ["look, I get it", "nevertheless", "I must ask that", "be respected", "that said", "however", "I would ask you to note", "it is nonetheless the case", "I am afraid I must insist", "with respect"],
+      "sentence_practice": [
+        "Look, I get it, everyone's busy. Nevertheless, I must ask that the deadline be respected.",
+        "Fine, we all make mistakes. That said, I am afraid I must insist on a written explanation.",
+        "Sure, it's awkward. With respect, however, the rule is clear."
+      ],
+      "record_this": "Look, I get it, everyone is busy at this time of year. Nevertheless, I must ask that the deadline be respected from now on. Fine, we all make mistakes occasionally. That said, I am afraid I must insist on a written explanation.",
+      "self_check": "Say the deadline lines. Does the second half slow down and shift to full forms, raising the stakes?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["sustaining tone control across a long passage"],
+      "isolation": {
+        "instructions": "The final skill is holding a chosen tone for a whole passage and breaking it only where you intend. Decide the base register, sustain it, and place one or two deliberate breaks. Uncontrolled drift is the failure mode: register wandering because attention lapsed rather than because you chose it.",
+        "instructions_ar": "المهارة الأخيرة هي الحفاظ على نبرة مختارة عبر نص كامل وكسرها فقط حيث تقصد. حدّد الأسلوب الأساس واحفظه وضع كسرة أو اثنتين مقصودتين. والانحراف غير المضبوط هو الفشل.",
+        "practice": ["choose a base register, sustain it, break it twice on purpose", "drift = failure"]
+      },
+      "minimal_pairs": [
+        {"pair": ["sustained base + chosen breaks", "uncontrolled drift"], "meaning": ["متمكّن", "ضعيف"]},
+        {"pair": ["two deliberate breaks", "constant switching"], "meaning": ["مؤثّر", "مربك"]},
+        {"pair": ["register chosen", "register wandering"], "meaning": ["مضبوط", "غير مضبوط"]},
+        {"pair": ["break for effect", "break by accident"], "meaning": ["أداة", "زلّة"]},
+        {"pair": ["listener trusts the speaker", "listener senses loss of control"], "meaning": ["مصداقية", "خسارة"]}
+      ],
+      "word_practice": ["let me be clear", "in conclusion", "the position is this", "I want to be candid", "returning to the formal point", "which brings me back", "to summarise", "and finally", "put simply", "in short"],
+      "sentence_practice": [
+        "Let me be clear about the formal position, and then I will be candid.",
+        "The position is this: the process was followed. Whether it should have been is another matter.",
+        "In short, we complied. Whether we were right to is a different question."
+      ],
+      "record_this": "Let me be entirely clear about the formal position first, and then I will be candid. The position is this: the process was followed correctly at every stage. Whether it should have been followed at all is quite another matter. In short, we complied.",
+      "self_check": "Read the passage. Did you sustain one base register and break it only where you intended?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 15 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["formal setup + plain landing", "formal throughout"],
+        ["marked shift (intentional)", "unmarked shift (lapse)"],
+        ["formal → casual (candour)", "formal throughout (distance)"],
+        ["casual → formal (stakes raised)", "casual throughout (no pressure)"],
+        ["sustained base + chosen breaks", "uncontrolled drift"],
+        ["listener hears a device", "listener hears an error"]
+      ],
+      "challenge_sentences": [
+        "The review concluded, after a year, that nobody knew.",
+        "The projections were optimistic, or bluntly, wrong.",
+        "I'll record my objection. Between us, it changes nothing.",
+        "Look, I understand. Nevertheless, I must insist."
+      ],
+      "record_this": "The review concluded, after a full year of work, that nobody knew. The projections were optimistic, or, to put it bluntly, they were wrong. I will record my formal objection. Between us, it changes nothing at all. Look, I understand the pressure you are under. Nevertheless, I must insist.",
+      "self_check": "Three checks: a marked pause at every register shift, a clear pace change across it, and no unintended drift."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a real speech to a room you know. It moves deliberately between three registers, so every shift must be audibly chosen — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كخطاب حقيقي أمام قاعة تعرفها. ينتقل بين ثلاثة أساليب عن قصد، فليكن كل تحوّل مسموعًا ومقصودًا، ثم اسمع وراجع.",
+        "passage": "I have been asked to summarise the findings of the review, and I shall do so as briefly as the material permits. The panel examined eleven complaints over fourteen months and concluded, after considerable deliberation, that the process was followed. Now, between ourselves, that sentence took four drafts, and I am not sure any of us believe it. Look, the process was followed. It was also, in my personal view, the wrong process, and following it carefully did not make it right. That said, I am obliged to report what the panel found rather than what I think. Nevertheless, I would ask that the recommendations be read in full, particularly the fourth. In plain terms: fix the process. Honestly, if we meet again next year to discuss the same eleven complaints, I shall have very little left to say. I commend the report to the committee.",
+        "sounds_to_check": {
+          "formal base register sustained": "I have been asked to summarise…, The panel examined eleven complaints…, I commend the report to the committee - measured, full forms",
+          "deliberate clash: formal setup, plain landing": "concluded, after considerable deliberation, | that the process was followed  ·  In plain terms: | fix the process",
+          "formal-to-casual pivot for candour": "Now, between ourselves, | that sentence took four drafts  ·  Look, | the process was followed.  ·  Honestly, |",
+          "casual-to-formal pivot raising stakes": "That said, I am obliged to report…  ·  Nevertheless, I would ask that the recommendations BE read in full",
+          "controlled shifts, no drift": "each pivot needs a pause plus a pace change; the closing line must return to the formal base"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Three registers clearly distinct, every shift marked and intentional, base register recovered at the close. Full tonal command. Ready for week 16.",
+        "70_89": "Good; one shift is under-marked or the base register is not fully recovered.",
+        "50_69": "Registers blur or drift without intent, so shifts read as lapses. Repeat days 2-4.",
+        "below_50": "Redo days 1-5. Exaggerate the pause and pace change at each pivot until intent is unmistakable."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "At C2 you break register on PURPOSE. The break only works if it is audibly intentional.",
+      "Mark every shift with a short pause and a clear change of pace. Unmarked shifts read as loss of control.",
+      "Formal to casual creates candour and intimacy; casual to formal raises the stakes and signals seriousness.",
+      "Your instinct from moving between فصحى and عامية is an advantage here. What is new is signalling intent through pace and pitch.",
+      "Return to your base register at the end. A passage that drifts and never returns sounds unplanned."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 mark every intended shift in the text before recording, then check you hit each one."
+  }
+}

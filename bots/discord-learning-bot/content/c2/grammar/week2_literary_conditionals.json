@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w2",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 2,
+  "pattern_name": "Literary conditionals with inversion",
+  "pattern_name_ar": "الشروط الأدبية بالقلب",
+  "formula": "Were it not for + noun, … · Had it not been for + noun, … · Should it transpire/prove/emerge that + clause, … · But for + noun, … · Were + subject + to + verb",
+  "formula_visual": "[Were it not for] [her support], [we would have failed]",
+  "when_to_use": "For elegant, formal conditionals that name a decisive factor. 'Were it not for X' covers present or general time; 'Had it not been for X' covers the past; 'But for X' is the most compressed of all. 'Should it transpire that' expresses a formal contingency. These belong to literary prose, formal reports, legal drafting and considered speech.",
+  "when_to_use_ar": "لشروط أنيقة رسمية تُسمّي عاملًا حاسمًا. 'Were it not for' للحاضر أو العموم، و'Had it not been for' للماضي، و'But for' أكثرها إيجازًا، و'Should it transpire that' لاحتمال رسمي.",
+  "why_arabic_speakers_struggle": "Arabic conditionals always carry an explicit particle (لو / لولا / إذا), and لولا in particular maps neatly onto 'were it not for', which helps. The difficulty is that the English frames are FIXED: 'it' cannot be replaced by a noun, 'if' cannot be added, and 'but for' takes a noun phrase rather than a clause. Learners who treat them as flexible produce 'But for it rained' or 'If were it not for', which read as errors rather than elegance.",
+  "examples": [
+    {"en": "Were it not for her support, we would have failed.", "ar": "لولا دعمها لكنّا فشلنا", "structure": "[Were it not for] + noun, + result"},
+    {"en": "Had it not been for one mistake, nobody would have noticed.", "ar": "لولا خطأ واحد لما لاحظ أحد", "structure": "[Had it not been for] + noun, + result"},
+    {"en": "But for a single vote, the motion would have passed.", "ar": "لولا صوت واحد لأُقرّ الاقتراح", "structure": "[But for] + noun, + result"},
+    {"en": "Should it transpire that the figures were altered, we will act.", "ar": "إن تبيّن أن الأرقام غُيّرت فسنتحرّك", "structure": "[Should it transpire that] + clause"},
+    {"en": "Were I to suggest a change, would you consider it?", "ar": "لو اقترحت تغييرًا، هل ستفكّر فيه؟", "structure": "[Were] + subject + [to + verb]"}
+  ],
+  "common_errors": [
+    {"wrong": "If were it not for her support, we would have failed.", "correct": "Were it not for her support, we would have failed.", "explanation": "Inversion replaces 'if'; the two cannot be combined."},
+    {"wrong": "But for it rained, we would have finished.", "correct": "But for the rain, we would have finished.", "explanation": "'But for' takes a noun phrase, never a clause."},
+    {"wrong": "Was it not for her support, we would have failed.", "correct": "Were it not for her support, we would have failed.", "explanation": "This frame always uses 'were', regardless of the following noun."},
+    {"wrong": "Should it transpires that the figures were altered.", "correct": "Should it transpire that the figures were altered.", "explanation": "'Should' is followed by a bare base form."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ it not for her support, we would have failed.", "answer": "Were"},
+    {"sentence": "___ it not been for one mistake, nobody would have noticed.", "answer": "Had"},
+    {"sentence": "___ for a single vote, the motion would have passed.", "answer": "But"},
+    {"sentence": "___ it prove necessary, we can extend the deadline.", "answer": "Should"},
+    {"sentence": "___ I to suggest a change, would you consider it?", "answer": "Were"}
+  ],
+  "quick_rule": "Were it not for (present/general) · Had it not been for (past) · But for + NOUN · Should it + bare verb. The frames are fixed: no 'if', no substitutions.",
+  "quick_rule_ar": "Were it not for للحاضر، وHad it not been for للماضي، وBut for + اسم، وShould it + فعل مجرّد. والأطر ثابتة: بلا 'if' وبلا استبدال.",
+  "mnemonic": "لولا becomes 'were it not for' - one factor decides everything.",
+  "connect_to_speaking": "In accent week 2 you drilled these frames with 'it' reduced almost to nothing and only two real beats per frame. The elegance comes from the compression, so pronouncing every word fully undoes the effect the structure is chosen for."
+}

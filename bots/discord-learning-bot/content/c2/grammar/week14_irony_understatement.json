@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w14",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 14,
+  "pattern_name": "Irony, understatement and litotes",
+  "pattern_name_ar": "السخرية والتهوين والتقليل بالنفي",
+  "formula": "Litotes: not + negative adjective (not bad, not unlike, not exactly cheap, no small achievement) · Understatement: diminishing phrase for a large event (a bit of a setback) · Ironic praise (a brave choice, an interesting approach) · Deadpan: flat comment on extreme content",
+  "formula_visual": "[not bad at all] = genuinely good · [a bit of a setback] = a serious problem",
+  "when_to_use": "To convey strong meaning while appearing to say little, which is a defining feature of educated British English in particular. Litotes praises or criticises through negation. Understatement lets the listener supply the real scale. Ironic praise criticises without an explicit attack. All three soften the surface while sharpening the content.",
+  "when_to_use_ar": "لإيصال معنى قوي مع إظهار قلّة الكلام، وهي سمة مميّزة للإنجليزية البريطانية المثقّفة. التقليل بالنفي يمدح أو ينقد بالنفي، والتهوين يترك للمستمع تقدير الحجم، والمدح الساخر ينقد بلا هجوم صريح.",
+  "why_arabic_speakers_struggle": "Arabic rhetorical tradition often intensifies for emphasis, whereas English irony DIMINISHES for emphasis, so the strategy is inverted and can feel like weakness rather than force. Litotes causes a literal-reading problem too: 'not bad' is understood as mild criticism rather than genuine praise. The greatest risk is that irony delivered with emphasis becomes sarcasm, which is socially hostile rather than wry.",
+  "examples": [
+    {"en": "That was not bad at all, actually.", "ar": "لم يكن سيّئًا إطلاقًا، بل جيد فعلًا", "structure": "[litotes] = genuine praise"},
+    {"en": "Finishing on time was no small achievement.", "ar": "الانتهاء في الوقت لم يكن إنجازًا صغيرًا", "structure": "[litotes] = considerable praise"},
+    {"en": "Losing the contract was a bit of a setback.", "ar": "خسارة العقد كانت انتكاسة بسيطة", "structure": "[understatement] = a serious problem"},
+    {"en": "That was certainly a brave choice.", "ar": "كان ذلك خيارًا جسورًا بالتأكيد", "structure": "[ironic praise] = criticism"},
+    {"en": "The server has been down since Tuesday, which is unhelpful.", "ar": "الخادم متوقّف من الثلاثاء، وهذا غير مفيد", "structure": "[deadpan] on serious content"}
+  ],
+  "common_errors": [
+    {"wrong": "That was not bad, but I did not really like it.", "correct": "That was not bad at all. / That was disappointing.", "explanation": "'Not bad' is praise, so following it with dislike contradicts the phrase."},
+    {"wrong": "It was a bit of a setback, in fact a total catastrophe.", "correct": "It was a bit of a setback.", "explanation": "Understatement works by leaving the true scale unsaid; explaining it removes the effect."},
+    {"wrong": "That was a brave choice and I mean that as a compliment.", "correct": "That was a genuinely bold decision, and I admire it.", "explanation": "'A brave choice' is conventionally ironic, so a sincere compliment needs different wording."},
+    {"wrong": "Not unsimilar to last year.", "correct": "Not unlike last year.", "explanation": "Litotes uses established negative forms; invented ones sound wrong."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "That was not ___ at all, actually — better than expected.", "answer": "bad"},
+    {"sentence": "Finishing on time was ___ small achievement.", "answer": "no"},
+    {"sentence": "Losing the contract was a bit of a ___.", "answer": "setback"},
+    {"sentence": "That was certainly a ___ choice, and I await the results.", "answer": "brave"},
+    {"sentence": "The result is not ___ last year's.", "answer": "unlike"}
+  ],
+  "quick_rule": "English intensifies by DIMINISHING. 'Not bad' means good. Understatement leaves the scale unsaid. Ironic praise criticises. Never explain any of them.",
+  "quick_rule_ar": "الإنجليزية تُكثّف بالتهوين. و'Not bad' تعني جيدًا. والتهوين يترك الحجم غير مذكور. والمدح الساخر ينقد. ولا تشرح أيًّا منها.",
+  "mnemonic": "Say less, mean more.",
+  "connect_to_speaking": "In accent week 14 you drilled the counter-intuitive rule that extreme content takes flatter delivery, and the ↗↘ contour that withdraws apparent enthusiasm. Emphasis turns irony into sarcasm, which reads as hostility."
+}

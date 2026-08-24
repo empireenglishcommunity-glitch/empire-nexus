@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 3,
+  "focus": "'So great was the change that …' · 'Such was the response that …' · adverbial inversion ('Down came the rain') · 'Not until … did' · dramatic pitch on the fronted element",
+  "focus_ar": "'So great was the change that …'، و'Such was the response that …'، وقلب الظرف ('Down came the rain')، و'Not until … did'، والنبرة الدرامية على العنصر المُقدَّم",
+  "arabic_challenge": "Stylistic inversion exists purely for dramatic effect, which means it lives or dies on pitch. 'So great was the change that nobody recognised the place' needs a genuinely raised, expanded pitch on 'so great' — the kind of range most speakers reserve for strong emotion. Delivered in a normal register the structure sounds merely odd rather than powerful, and the effort of building it is wasted. Arabic achieves comparable emphasis through word order, emphatic particles and repetition rather than through a wide pitch excursion, so learners tend to build the syntax correctly and then under-perform it.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'So + adjective + was/were + subject + that …'"],
+      "isolation": {
+        "instructions": "Front 'so + adjective', invert, then complete with 'that'. 'So great was the change that nobody recognised the place.' Give 'so GREAT' a raised, expanded pitch — noticeably higher than your normal range — then descend steadily through the rest.",
+        "instructions_ar": "قدّم 'so + صفة' ثم اقلب ثم أكمل بـ 'that'. أعطِ 'so GREAT' نبرة مرتفعة موسّعة أعلى من مدى صوتك المعتاد، ثم انزل تدريجيًا.",
+        "practice": ["So GREAT ↗ was the change | that nobody recognised it ↘", "So SUDDEN ↗ was the shift…", "raise, then descend"]
+      },
+      "minimal_pairs": [
+        {"pair": ["So great was the change that…", "The change was so great that…"], "meaning": ["أدبي درامي", "عادي"]},
+        {"pair": ["so GREAT ↗ (raised pitch)", "so great (normal pitch)"], "meaning": ["مؤثّر", "غريب فقط"]},
+        {"pair": ["So great was the change ✅", "So great the change was ❌"], "meaning": ["قلب صحيح", "خطأ"]},
+        {"pair": ["So sudden was the shift", "The shift was very sudden"], "meaning": ["بلاغي", "خبر"]},
+        {"pair": ["expanded range", "narrow range"], "meaning": ["درامي", "مسطّح"]}
+      ],
+      "word_practice": ["so great was the change", "so sudden was the shift", "so complete was the silence", "so fierce was the storm", "so rapid was the decline", "so strong was the feeling", "so total was the failure", "so clear was the message", "so deep was the divide", "so obvious was the answer"],
+      "sentence_practice": [
+        "So great was the change that nobody recognised the place.",
+        "So complete was the silence that we could hear the clock.",
+        "So rapid was the decline that no one had time to react."
+      ],
+      "record_this": "So great was the change that nobody who had known the place recognised it. So complete was the silence in that room that we could hear the clock ticking. So rapid was the decline that nobody in the company had time to react at all.",
+      "self_check": "Say 'So GREAT was the change'. Is your pitch on 'great' noticeably above your normal speaking range?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'Such + was + noun + that …'"],
+      "isolation": {
+        "instructions": "'Such was the response that we ran out of tickets.' 'Such' carries the raised pitch and the noun follows on a high level before the descent. This variant emphasises a whole thing rather than a quality, and it is a shade more formal than the 'so + adjective' pattern.",
+        "instructions_ar": "'Such was the response that …' — 'such' تحمل النبرة المرتفعة والاسم يتبع على مستوى عالٍ قبل النزول. هذه الصيغة تُبرز شيئًا كاملًا لا صفة، وهي أرسم قليلًا.",
+        "practice": ["SUCH ↗ was the response | that we ran out ↘", "SUCH ↗ was the demand…", "high level, then descend"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Such was the response that…", "The response was such that…"], "meaning": ["مقلوب درامي", "عادي"]},
+        {"pair": ["Such was the demand (noun)", "So great was the demand (adjective)"], "meaning": ["شيء كامل", "صفة"]},
+        {"pair": ["Such was the response ✅", "Such the response was ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["SUCH ↗ (raised)", "such (flat)"], "meaning": ["درامي", "مسطّح"]},
+        {"pair": ["Such is the nature of…", "That is how … works"], "meaning": ["أدبي", "عادي"]}
+      ],
+      "word_practice": ["such was the response", "such was the demand", "such was the confusion", "such was his influence", "such was the scale", "such is the nature of", "such was the urgency", "such was her reputation", "such was the outcry", "such was the cost"],
+      "sentence_practice": [
+        "Such was the response that we ran out of tickets in an hour.",
+        "Such was his influence that nobody dared object.",
+        "Such is the nature of the work that mistakes are inevitable."
+      ],
+      "record_this": "Such was the response to the announcement that we ran out of tickets within the hour. Such was his influence over the committee that nobody dared object openly. Such is the nature of this work that occasional mistakes are simply inevitable.",
+      "self_check": "Say 'Such was the response'. Does 'such' carry a raised pitch with the noun held high?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["adverbial inversion: 'Down came the rain' · 'In came the manager'"],
+      "isolation": {
+        "instructions": "Front a directional adverb and invert the full verb with no auxiliary: 'Down came the rain.' 'Off went the lights.' The adverb takes a sharp, high beat and the verb follows immediately. This is narrative and vivid — the effect is sudden movement, so the delivery must be quick and clean.",
+        "instructions_ar": "قدّم ظرف اتجاه واقلب الفعل التام بلا مساعد: 'Down came the rain'. الظرف يأخذ نبضة حادّة عالية والفعل يتبع فورًا. الأثر حركة مباغتة فليكن الأداء سريعًا نظيفًا.",
+        "practice": ["DOWN came the rain", "OFF went the lights", "IN came the manager", "sharp, quick, clean"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Down came the rain", "The rain came down"], "meaning": ["سردي حيوي", "خبر عادي"]},
+        {"pair": ["DOWN (sharp high beat)", "down (flat)"], "meaning": ["مباغت", "عادي"]},
+        {"pair": ["Off went the lights ✅", "Off went they ❌"], "meaning": ["اسم يُقلب", "ضمير لا يُقلب"]},
+        {"pair": ["Here comes the bus", "Here it comes"], "meaning": ["اسم بعد الفعل", "ضمير قبل الفعل"]},
+        {"pair": ["quick clean delivery", "slow heavy delivery"], "meaning": ["حيوي", "ثقيل"]}
+      ],
+      "word_practice": ["down came the rain", "off went the lights", "in came the manager", "up went the prices", "away flew the birds", "here comes the bus", "there goes our chance", "out came the truth", "back came the reply", "round came the season"],
+      "sentence_practice": [
+        "Down came the rain, and the match was abandoned.",
+        "Off went the lights, and the hall fell silent.",
+        "Out came the truth, eventually."
+      ],
+      "record_this": "Down came the rain in sheets, and within minutes the match was abandoned. Off went the lights without any warning, and the whole hall fell silent at once. Out came the truth eventually, as it usually does in these situations.",
+      "self_check": "Say 'Down came the rain'. Is 'down' a sharp high beat with the verb following immediately?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'Not until … did …' — delayed resolution"],
+      "isolation": {
+        "instructions": "'Not until the following morning did we realise the mistake.' The whole first half is held in suspension, the auxiliary 'did' arrives with weight, and the resolution follows. The structure creates delay deliberately, so resist the urge to hurry to the end.",
+        "instructions_ar": "'Not until … did …' — النصف الأول كله معلّق، ثم يأتي المساعد 'did' بثقل، ثم الحلّ. البنية تخلق تأخيرًا مقصودًا فلا تتعجّل النهاية.",
+        "practice": ["Not until the following morning ↗ | DID we realise ↘", "Only later ↗ | DID it become clear ↘", "delay deliberately"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Not until later did we realise", "We did not realise until later"], "meaning": ["أدبي مؤجّل", "عادي"]},
+        {"pair": ["Not until … DID we", "Not until … we did ❌"], "meaning": ["قلب صحيح", "خطأ"]},
+        {"pair": ["Only then did it become clear", "It only became clear then"], "meaning": ["ذروة", "خبر"]},
+        {"pair": ["suspension held", "rushed to the end"], "meaning": ["مؤثّر", "يُفقد الأثر"]},
+        {"pair": ["Not only … but also", "Not until … did"], "meaning": ["إضافة", "تأخير"]}
+      ],
+      "word_practice": ["not until later did we", "not until the morning did", "only then did it", "only after did we", "not until now have I", "never before had we", "only once did she", "not until then did they", "only rarely does it", "not till afterwards did"],
+      "sentence_practice": [
+        "Not until the following morning did we realise the mistake.",
+        "Only then did it become clear what had happened.",
+        "Not until much later did anyone question the figures."
+      ],
+      "record_this": "Not until the following morning did we realise quite how serious the mistake had been. Only then did it become entirely clear what had actually happened that night. Not until much later did anyone think to question the figures at all.",
+      "self_check": "Say 'Not until the morning did we realise'. Is the first half suspended, with weight on 'did'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["dramatic pitch across the whole inverted period"],
+      "isolation": {
+        "instructions": "Combine everything into a single dramatic arc: raise sharply on the fronted element, hold a high level through the inverted verb, then descend steadily to a firm final fall. Think of it as one gesture with a peak near the beginning rather than at the end — the opposite of an ordinary sentence.",
+        "instructions_ar": "اجمع كل شيء في قوس درامي واحد: ارفع بحدّة على العنصر المُقدَّم، واحفظ مستوى عاليًا عبر الفعل المقلوب، ثم انزل بثبات إلى هبوط نهائي حازم. القمّة قرب البداية لا النهاية.",
+        "practice": ["SO COMPLETE ↗↗ was the collapse | that nothing remained ↘↘", "peak early, descend to a firm fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["peak early, descend", "peak at the end"], "meaning": ["مقلوب درامي", "جملة عادية"]},
+        {"pair": ["wide expanded range", "normal narrow range"], "meaning": ["بلاغي", "محادثة"]},
+        {"pair": ["firm final fall ↘↘", "trailing off"], "meaning": ["حاسم", "ضعيف"]},
+        {"pair": ["one continuous gesture", "several separate beats"], "meaning": ["أدبي", "متقطّع"]},
+        {"pair": ["performed", "merely read"], "meaning": ["مؤثّر", "مسطّح"]}
+      ],
+      "word_practice": ["so complete was the collapse", "such was the devastation", "nowhere was this clearer", "rarely has a decision", "never in living memory", "little did anyone suspect", "so total was the change", "such is the paradox", "only once in a generation", "not since then has it"],
+      "sentence_practice": [
+        "So complete was the collapse that nothing at all remained.",
+        "Nowhere was this clearer than in the northern districts.",
+        "Never in living memory had the river risen so high."
+      ],
+      "record_this": "So complete was the collapse of the old system that almost nothing at all remained. Nowhere was this pattern clearer than in the northern districts that winter. Never in living memory had the river risen quite so high or so quickly.",
+      "self_check": "Say the collapse sentence. Does your pitch peak near the beginning and descend to a firm final fall?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 3 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["So great was the change that…", "The change was so great that…"],
+        ["Such was the demand (noun)", "So great was the demand (adjective)"],
+        ["Down came the rain", "The rain came down"],
+        ["Not until later did we realise", "We did not realise until later"],
+        ["peak early, descend", "peak at the end"],
+        ["Off went the lights ✅", "Off went they ❌"]
+      ],
+      "challenge_sentences": [
+        "So fierce was the storm that the ferries stopped.",
+        "Such was the outcry that the policy was withdrawn.",
+        "Up went the prices, and down went demand.",
+        "Not until the audit did anyone notice."
+      ],
+      "record_this": "So fierce was the storm that night that every ferry service simply stopped. Such was the public outcry that the policy was quietly withdrawn within a fortnight. Up went the prices in the spring, and down went demand almost immediately. Not until the annual audit did anyone notice what had been happening.",
+      "self_check": "Three checks: raised expanded pitch on the fronted element, correct inversion, and a peak near the beginning rather than the end."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a dramatic narrative to an audience. Stylistic inversion is performance, so commit to the pitch — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كسرد درامي لجمهور. القلب الأسلوبي أداء، فالتزم بالنبرة، ثم اسمع وراجع.",
+        "passage": "So quiet was the town that morning that the first arrivals thought it abandoned. Such was the scale of what had happened overnight that nobody quite knew where to begin. Down came the rain again at noon, and off went what remained of the power. Not until the second day did any official message arrive, and only then did the size of the task become clear. So complete was the failure of communication that neighbouring districts, barely twenty miles away, knew nothing at all. Rarely has a single night changed a place so utterly. Nowhere was this more visible than along the old harbour road, where little remained but the foundations. Never, in the memory of anyone still living, had the sea come so far inland. Such is the way of these things: no sooner had the water gone down than the arguments began.",
+        "sounds_to_check": {
+          "'So + adjective + was' with raised pitch": "So QUIET ↗ was the town…, So COMPLETE ↗ was the failure…",
+          "'Such + was + noun'": "SUCH ↗ was the scale of what had happened…, Such is the way of these things",
+          "adverbial inversion, sharp and quick": "DOWN came the rain again, OFF went what remained of the power",
+          "'Not until … did' delayed resolution": "Not until the second day DID any official message arrive, and only then DID the size become clear",
+          "peak-early dramatic arc": "RARELY has a single night changed a place so utterly ↘ · NEVER, in the memory of anyone still living, had the sea come so far inland ↘"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Wide expanded pitch on fronted elements, correct inversion throughout, peak-early arcs. Genuinely dramatic. Ready for week 4.",
+        "70_89": "Good; the pitch occasionally stays in the normal range, weakening the effect.",
+        "50_69": "Structures correct but delivered flat, so they sound odd rather than powerful. Repeat days 1-2 and day 5.",
+        "below_50": "Redo days 1-5. Exaggerate the pitch on the fronted element until it feels theatrical, then pull back slightly."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Stylistic inversion is performance. Without a raised, expanded pitch on the fronted element it sounds odd rather than powerful.",
+      "'So' takes an adjective ('So great was the change'); 'Such' takes a noun ('Such was the response').",
+      "Adverbial inversion works with nouns, not pronouns: 'Off went the lights', but 'Off they went'.",
+      "In these structures the pitch peaks near the BEGINNING and descends — the opposite of an ordinary sentence.",
+      "Use sparingly. One or two per passage is striking; a paragraph of them becomes exhausting."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that your pitch genuinely rises above your normal range on each fronted element."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w13",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 13,
+  "pattern_name": "Allusion, wordplay and figurative extension",
+  "pattern_name_ar": "التلميح والتلاعب اللفظي وامتداد المجاز",
+  "formula": "Classical/literary allusion (an Achilles' heel, a Pyrrhic victory, a Catch-22, crossing the Rubicon) · Puns flagged lightly (appropriately enough, if you will pardon the phrase) · Sustained metaphor across clauses · Deliberate ambiguity (economical with the detail)",
+  "formula_visual": "[Impatience] [was his Achilles' heel]",
+  "when_to_use": "To compress a large idea into a short phrase and to signal shared cultural ground. An allusion says in three words what would otherwise take a sentence. Wordplay adds wit where a plain statement would be blunt. Sustained metaphor gives a paragraph coherence. Deliberate ambiguity lets you convey criticism without stating it, which is invaluable in diplomatic and professional writing.",
+  "when_to_use_ar": "لضغط فكرة كبيرة في عبارة قصيرة والإشارة إلى أرضية ثقافية مشتركة. والتلميح يقول بثلاث كلمات ما يحتاج جملة. والغموض المقصود يتيح إيصال النقد دون ذكره.",
+  "why_arabic_speakers_struggle": "Allusion depends on shared reference, and the English canon of stock allusions is largely classical, biblical and Shakespearean, so the individual references must simply be learned. More importantly, learners tend to explain the allusion immediately afterwards, which removes the reader's pleasure of recognition and signals uncertainty. Mixed metaphor is the other frequent failure: two images in one sentence cancel each other out.",
+  "examples": [
+    {"en": "Impatience was always his Achilles' heel.", "ar": "كان نفاد الصبر نقطة ضعفه دائمًا", "structure": "[allusion as complement]"},
+    {"en": "It was a Pyrrhic victory at best.", "ar": "كان نصرًا باهظ الثمن في أفضل الأحوال", "structure": "[allusion as complement]"},
+    {"en": "The meeting about budget cuts was, appropriately enough, cut short.", "ar": "الاجتماع عن خفض الميزانية اختُصر، وهو أمر مناسب", "structure": "clause + [light flag] + [pun]"},
+    {"en": "We had the wind behind us in spring and ran into heavy weather by June.", "ar": "كانت الريح في ظهرنا في الربيع ثم واجهنا عاصفة في يونيو", "structure": "[sustained metaphor across clauses]"},
+    {"en": "She was, let us say, economical with the detail.", "ar": "كانت، إن صحّ التعبير، مقتصدة في التفصيل", "structure": "[deliberate ambiguity]"}
+  ],
+  "common_errors": [
+    {"wrong": "It was his Achilles' heel, which means his weak point, as in the Greek myth.", "correct": "It was his Achilles' heel.", "explanation": "Explaining an allusion removes its effect and signals that you doubt it will land."},
+    {"wrong": "We had the wind behind us, then scored an own goal, then the ship sank.", "correct": "We had the wind behind us, ran into heavy weather, and were bailing out by September.", "explanation": "Mixed metaphors cancel each other; sustain one image instead."},
+    {"wrong": "It was a Pyrrhic victory, which we were very happy about.", "correct": "It was a Pyrrhic victory, and it cost us more than it gained.", "explanation": "A Pyrrhic victory is one whose cost outweighs the gain, so celebration contradicts it."},
+    {"wrong": "She was economical with the detail, meaning she lied.", "correct": "She was, let us say, economical with the detail.", "explanation": "Deliberate ambiguity must be left open; resolving it destroys the effect."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Impatience was always his ___ heel.", "answer": "Achilles'"},
+    {"sentence": "It was a ___ victory at best, and an expensive one.", "answer": "Pyrrhic"},
+    {"sentence": "The meeting about cuts was, appropriately enough, cut ___.", "answer": "short"},
+    {"sentence": "She was, let us ___, economical with the detail.", "answer": "say"},
+    {"sentence": "By signing, we had in effect crossed the ___.", "answer": "Rubicon"}
+  ],
+  "quick_rule": "Never explain an allusion. Sustain ONE metaphor, never mix two. Leave deliberate ambiguity unresolved. Flag a pun lightly or not at all.",
+  "quick_rule_ar": "لا تشرح التلميح أبدًا. وامدد مجازًا واحدًا ولا تخلط اثنين. واترك الغموض المقصود بلا حلّ. وأشِر للتلاعب بخفّة أو لا تُشِر.",
+  "mnemonic": "If you have to explain it, do not use it.",
+  "connect_to_speaking": "In accent week 13 you drilled the micro-pause that lets a pun land and the flat comic delivery that makes it funnier. Timing carries wordplay far more than vocabulary does."
+}

@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 7,
+  "focus": "'however + adjective' fronted · 'whatever/whoever/whichever' universals · 'Much as I…' · 'Be that as it may' and 'Granted that' · the concessive-to-main pivot",
+  "focus_ar": "'however + صفة' مُقدَّمة، والعموميات 'whatever/whoever/whichever'، و'Much as I…'، و'Be that as it may' و'Granted that'، والانتقال من التنازل إلى الأصل",
+  "arabic_challenge": "Concessive clauses require a two-part contour: the concession is held up, unresolved, and then the main clause resolves it with a decisive fall. 'However difficult it may be, ↗ | we must proceed ↘.' If both halves fall, the listener hears two statements instead of a concession and a conclusion, and the argumentative force disappears. The universal forms add a structural trap: 'however' here means 'no matter how' and takes an adjective directly, so learners who read it as the contrast connector produce 'However it is difficult', which is a different and incorrect structure.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'however + adjective': 'However difficult it may be'"],
+      "isolation": {
+        "instructions": "Here 'however' means 'no matter how' and is followed IMMEDIATELY by an adjective or adverb: 'However difficult it may be'. The adjective takes the beat, the clause stays raised and unresolved, then the main clause falls. Do not insert 'it is' after 'however'.",
+        "instructions_ar": "هنا 'however' تعني 'مهما' ويتبعها صفة أو حال مباشرة. الصفة تأخذ النبضة والجملة تبقى مرفوعة غير محلولة ثم تهبط الجملة الرئيسية. ولا تُدخل 'it is' بعد 'however'.",
+        "practice": ["However DIFFicult it may be ↗ | we must proceed ↘", "However SMALL the risk ↗ | it matters ↘"]
+      },
+      "minimal_pairs": [
+        {"pair": ["However difficult it may be ✅", "However it is difficult ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["However difficult (no matter how)", "However, it is difficult (contrast)"], "meaning": ["مهما", "لكن"]},
+        {"pair": ["raised ↗ then fall ↘", "both halves falling"], "meaning": ["تنازل ثم حكم", "خبران منفصلان"]},
+        {"pair": ["However hard we try", "No matter how hard we try"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["However much it costs", "However many there are"], "meaning": ["غير معدود", "معدود"]}
+      ],
+      "word_practice": ["however difficult it may be", "however small the risk", "however hard we try", "however much it costs", "however many there are", "however unlikely it seems", "however long it takes", "however carefully we plan", "however tempting it is", "however painful the truth"],
+      "sentence_practice": [
+        "However difficult it may be, we must proceed.",
+        "However small the risk, it still matters.",
+        "However long it takes, the work must be done properly."
+      ],
+      "record_this": "However difficult it may be to explain, we must proceed with the original plan. However small the remaining risk, it still matters to the people affected. However long it takes us, the work must be done properly the first time.",
+      "self_check": "Say 'However difficult it may be, we must proceed'. Does the first half stay raised, with the second falling?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["universals: 'whatever' · 'whoever' · 'whichever'"],
+      "isolation": {
+        "instructions": "'Whatever you decide, I will support you.' These forms mean 'it does not matter which', and they open a clause held in suspension. The universal word takes a beat, the clause runs level, and only the main clause falls. Note there is no comma inside the universal clause itself.",
+        "instructions_ar": "هذه الصيغ تعني 'لا يهمّ أيّها' وتفتح جملة معلّقة. الكلمة العمومية تأخذ نبضة والجملة تجري مستوية ولا تهبط إلا الجملة الرئيسية.",
+        "practice": ["whatEVer you decide ↗ | I will support you ↘", "whoEVer asks ↗ | say nothing ↘"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Whatever you decide, I'll support you", "What you decide, I'll support"], "meaning": ["عمومي", "محدّد"]},
+        {"pair": ["whoever asks", "whomever you ask"], "meaning": ["فاعل", "مفعول"]},
+        {"pair": ["whichever you prefer", "whatever you prefer"], "meaning": ["من مجموعة محدّدة", "غير محدّد"]},
+        {"pair": ["Whatever happens ✅", "Whatever will happen ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["clause suspended ↗", "clause falling ↘"], "meaning": ["مترابط", "منفصل"]}
+      ],
+      "word_practice": ["whatever you decide", "whatever happens", "whoever asks", "whichever you prefer", "wherever it leads", "whenever you're ready", "however you look at it", "whatever the cost", "whoever is responsible", "whichever route we take"],
+      "sentence_practice": [
+        "Whatever you decide, I will support you.",
+        "Whoever asks, say nothing for now.",
+        "Whichever route we take, it will take three hours."
+      ],
+      "record_this": "Whatever you decide in the end, I will support you completely and publicly. Whoever asks about it before Friday, say nothing at all for now. Whichever route we eventually take, the journey will still take about three hours.",
+      "self_check": "Say 'Whatever you decide, I will support you'. Is the universal clause suspended before the fall?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'Much as I…' — reluctant concession"],
+      "isolation": {
+        "instructions": "'Much as I admire her work, I disagree here.' This is a reluctant concession: you grant something genuinely before objecting. 'MUCH as' takes the opening beat, the concession stays warm and raised, then the objection falls firmly. The warmth in the first half is what makes the objection acceptable.",
+        "instructions_ar": "'Much as I…' تنازل متردّد: تمنح شيئًا بصدق قبل الاعتراض. 'MUCH as' تأخذ النبضة الافتتاحية والتنازل يبقى دافئًا مرفوعًا ثم يهبط الاعتراض بحزم.",
+        "practice": ["MUCH as I admire her work ↗ | I disagree ↘", "MUCH as I'd like to ↗ | I can't ↘", "warm concession, firm objection"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Much as I admire her, I disagree", "Although I admire her, I disagree"], "meaning": ["تنازل دافئ", "تنازل محايد"]},
+        {"pair": ["Much as I'd like to ↗ | I can't ↘", "I'd like to but I can't"], "meaning": ["مؤدّب رسمي", "عادي"]},
+        {"pair": ["warm first half", "cold first half"], "meaning": ["الاعتراض مقبول", "الاعتراض جافّ"]},
+        {"pair": ["Much as ✅ + clause", "Much as ❌ + noun"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["Try as I might, …", "However hard I try, …"], "meaning": ["أدبي", "عادي"]}
+      ],
+      "word_practice": ["much as I admire her work", "much as I'd like to", "much as I sympathise", "much as it pains me", "much as I respect the view", "try as I might", "hard as it is", "willing though I am", "grateful as I am", "tempting as it sounds"],
+      "sentence_practice": [
+        "Much as I admire her work, I disagree here.",
+        "Much as I'd like to help, I simply can't.",
+        "Try as I might, I could not follow the argument."
+      ],
+      "record_this": "Much as I admire her earlier work, I have to disagree with her conclusion here. Much as I would genuinely like to help you with this, I simply can't. Try as I might that evening, I could not follow the argument at all.",
+      "self_check": "Say 'Much as I admire her work, I disagree'. Is the concession warm and the objection firm?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'Be that as it may' · 'Granted that' · 'Admittedly'"],
+      "isolation": {
+        "instructions": "These concede a point and then set it aside. 'Granted that the evidence is thin, the conclusion still holds.' The concession is delivered quickly and lightly — you are not dwelling on it — and the main clause carries the weight. Lingering on the concession undermines your own argument.",
+        "instructions_ar": "هذه تمنح نقطة ثم تضعها جانبًا. يُقال التنازل بسرعة وخفّة — فأنت لا تتوقّف عنده — والجملة الرئيسية تحمل الثقل. والتطويل في التنازل يُضعف حجّتك.",
+        "practice": ["Granted that the evidence is thin, | the conclusion STILL holds ↘", "quick concession, weighty main clause"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Granted that the evidence is thin, the conclusion holds", "The evidence is thin. The conclusion holds."], "meaning": ["تنازل مُدار", "خبران"]},
+        {"pair": ["quick light concession", "lingering concession"], "meaning": ["حجّة قوية", "حجّة ضعيفة"]},
+        {"pair": ["Be that as it may", "Granted that"], "meaning": ["يضع جانبًا", "يمنح صراحة"]},
+        {"pair": ["Admittedly, …", "Obviously, …"], "meaning": ["إقرار", "توكيد"]},
+        {"pair": ["main clause weighted", "concession weighted"], "meaning": ["مقنع", "يهدم نفسه"]}
+      ],
+      "word_practice": ["granted that", "be that as it may", "admittedly", "true enough", "I concede that", "it may well be that", "there is something in that", "I take the point", "fair enough, but", "no doubt, yet"],
+      "sentence_practice": [
+        "Granted that the evidence is thin, the conclusion still holds.",
+        "Be that as it may, the deadline has not moved.",
+        "Admittedly the sample was small, but the pattern is clear."
+      ],
+      "record_this": "Granted that the evidence is undeniably thin, the central conclusion still holds. Be that as it may, the deadline has not moved and will not be moved. Admittedly the sample was rather small, but the pattern in it is remarkably clear.",
+      "self_check": "Say 'Granted that the evidence is thin, the conclusion still holds'. Is the concession quick and the main clause weighted?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the concessive-to-main pivot"],
+      "isolation": {
+        "instructions": "The pivot is the exact moment the sentence turns. Mark it with a short pause and a small pitch reset: 'However strong the objections, | the decision stands.' That reset tells the listener the concession is finished and the conclusion is arriving. Without it, the two halves blur into one flat statement.",
+        "instructions_ar": "الانتقال هو اللحظة التي تنقلب فيها الجملة. حدّدها بوقفة قصيرة وإعادة ضبط بسيطة للنبرة، فهذا يُخبر المستمع أن التنازل انتهى والخلاصة قادمة.",
+        "practice": ["However strong the objections, | the decision STANDS ↘", "pause + pitch reset at the pivot"]
+      },
+      "minimal_pairs": [
+        {"pair": ["objections, | the decision stands", "objections the decision stands"], "meaning": ["انتقال واضح", "مبهم"]},
+        {"pair": ["pause + pitch reset", "no reset"], "meaning": ["مقنع", "مسطّح"]},
+        {"pair": ["concession ↗ | conclusion ↘", "both ↘"], "meaning": ["حجّة", "خبران"]},
+        {"pair": ["the turn is audible", "the turn is invisible"], "meaning": ["مؤثّر", "مفقود"]},
+        {"pair": ["Whatever the cost, | we proceed", "Whatever the cost we proceed"], "meaning": ["واضح", "متداخل"]}
+      ],
+      "word_practice": ["however strong the objections", "the decision stands", "whatever the cost", "we proceed regardless", "much as I regret it", "the answer is no", "granted the difficulty", "it must be done", "be that as it may", "nothing changes"],
+      "sentence_practice": [
+        "However strong the objections, the decision stands.",
+        "Whatever the cost, we proceed as planned.",
+        "Much as I regret it, the answer is no."
+      ],
+      "record_this": "However strong the objections raised this morning, the decision stands as recorded. Whatever the eventual cost turns out to be, we proceed exactly as planned. Much as I genuinely regret having to say it, the answer is no.",
+      "self_check": "Say 'However strong the objections, the decision stands'. Is the pivot marked by a pause and a pitch reset?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 7 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["However difficult it may be ✅", "However it is difficult ❌"],
+        ["Whatever you decide, I'll support you", "What you decide, I'll support"],
+        ["Much as I admire her, I disagree", "Although I admire her, I disagree"],
+        ["quick light concession", "lingering concession"],
+        ["concession ↗ | conclusion ↘", "both ↘"],
+        ["Whatever happens ✅", "Whatever will happen ❌"]
+      ],
+      "challenge_sentences": [
+        "However unlikely it seems, it happened.",
+        "Whatever they say, the facts are unchanged.",
+        "Much as I sympathise, I cannot agree.",
+        "Granted the difficulty, it must still be done."
+      ],
+      "record_this": "However unlikely the whole sequence seems now, it genuinely happened that way. Whatever they say in public, the underlying facts remain entirely unchanged. Much as I sympathise with their position, I cannot agree to the proposal. Granted the real difficulty involved, it must still be done before spring.",
+      "self_check": "Three checks: 'however' straight into the adjective, concession suspended, and an audible pivot before the falling conclusion."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a firm but courteous refusal. Every sentence concedes before it resolves, so the pivots must be audible — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كرفض حاسم لكن مؤدّب. كل جملة تتنازل قبل أن تحكم، فليكن الانتقال مسموعًا، ثم اسمع وراجع.",
+        "passage": "Let me respond as directly as I can. Much as I appreciate the work that has gone into this proposal, I cannot support it in its present form. However carefully the costings have been prepared, they rest on an assumption nobody has tested. Granted that the timetable is tight, that is not in itself a reason to shorten the consultation. Whatever the commercial pressures, and I accept they are real, the process must be seen to be fair. Be that as it may, I recognise that mine is a minority view. However the vote goes, I will accept the outcome and say so publicly. Whoever takes this forward will have my cooperation. Try as I might, though, I cannot pretend to be persuaded. However much I would like to end on agreement, honesty seems more useful.",
+        "sounds_to_check": {
+          "'however + adjective' straight through": "However CAREfully the costings have been prepared…, However MUCH I would like to end on agreement",
+          "universals held in suspension": "Whatever the commercial pressures ↗ |…, However the vote goes ↗ |…, Whoever takes this forward ↗ |",
+          "'Much as' with a warm concession": "MUCH as I appreciate the work ↗ | I cannot support it ↘ · Try as I might, though, |",
+          "quick light concession then weight": "Granted that the timetable is tight, | that is not in itself a reason… · Be that as it may, |",
+          "audible pivot: pause plus pitch reset": "every comma between concession and conclusion should carry a short pause and a small reset"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Concessions suspended, pivots clearly audible, conclusions falling decisively. Firm yet courteous. Ready for week 8.",
+        "70_89": "Good; occasionally a concession falls early or a pivot goes unmarked.",
+        "50_69": "Both halves delivered flat, so concessions read as plain statements. Repeat days 1 and 5.",
+        "below_50": "Redo days 1-5. Exaggerate the pause and pitch reset at each pivot until it feels automatic."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'However + adjective' means 'no matter how' and takes the adjective directly: 'However difficult it may be', never 'However it is difficult'.",
+      "The concessive half stays RAISED and unresolved; only the main clause falls. Two falls turn an argument into two statements.",
+      "Deliver concessions quickly and lightly. Lingering on what you are conceding weakens your own case.",
+      "The pivot needs a short pause and a small pitch reset — that is what makes the turn audible.",
+      "Universals take the present tense: 'Whatever happens', never 'Whatever will happen'."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that every pivot has an audible pause and reset."
+  }
+}

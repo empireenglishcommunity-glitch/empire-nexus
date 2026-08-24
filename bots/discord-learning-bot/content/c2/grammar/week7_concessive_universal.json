@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w7",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 7,
+  "pattern_name": "Advanced concessive and universal-conditional structures",
+  "pattern_name_ar": "تراكيب التنازل والشرط العمومي المتقدّمة",
+  "formula": "However/Howsoever + adjective/adverb + subject + verb · Whatever/Whoever/Whichever/Wherever + clause · Much as / Try as + subject + might · Be that as it may · Granted that + clause · adjective + though/as + subject + be",
+  "formula_visual": "[However difficult it may be], [we must proceed]",
+  "when_to_use": "To grant a point fully and still reach your own conclusion, which is the backbone of mature argument. 'However + adjective' means 'no matter how'. The universals ('whatever', 'whoever') mean 'it does not matter which'. 'Much as I…' concedes something you genuinely believe before objecting. 'Granted that' and 'Be that as it may' concede and then set aside.",
+  "when_to_use_ar": "لمنح نقطة كاملة والوصول إلى خلاصتك، وهو عصب الحجّة الناضجة. 'However + صفة' تعني 'مهما'، والعموميات تعني 'لا يهمّ أيّها'، و'Much as I…' تمنح شيئًا تعتقده فعلًا قبل الاعتراض.",
+  "why_arabic_speakers_struggle": "The word 'however' does two entirely different jobs in English: as a contrast connector ('The results, however, were poor') and as a universal concessive ('However difficult it may be'). Learners who know only the first produce 'However it is difficult', inserting a verb that the concessive pattern does not allow. The universals cause a second error, since they take the present tense for future reference: 'Whatever happens', never 'Whatever will happen'.",
+  "examples": [
+    {"en": "However difficult it may be, we must proceed.", "ar": "مهما كان الأمر صعبًا، علينا أن نمضي", "structure": "[However + adjective] + clause, + main clause"},
+    {"en": "Whatever you decide, I will support you.", "ar": "أيّما قرّرت، سأدعمك", "structure": "[Whatever + clause], + main clause"},
+    {"en": "Much as I admire her work, I disagree here.", "ar": "مع كل إعجابي بعملها، أختلف معها هنا", "structure": "[Much as + subject + verb], + main clause"},
+    {"en": "Granted that the evidence is thin, the conclusion still holds.", "ar": "بالتسليم بأن الدليل ضعيف، تبقى الخلاصة صحيحة", "structure": "[Granted that + clause], + main clause"},
+    {"en": "Strange though it seems, he was right.", "ar": "مع أنه يبدو غريبًا، كان محقًّا", "structure": "[adjective + though] + subject + be"}
+  ],
+  "common_errors": [
+    {"wrong": "However it is difficult, we must proceed.", "correct": "However difficult it may be, we must proceed.", "explanation": "In this pattern 'however' is followed immediately by the adjective, not by a verb."},
+    {"wrong": "Whatever will happen, I will support you.", "correct": "Whatever happens, I will support you.", "explanation": "Universals take the present tense for future reference."},
+    {"wrong": "Much as I admire her work, but I disagree.", "correct": "Much as I admire her work, I disagree.", "explanation": "The concessive clause already carries the contrast, so 'but' is redundant."},
+    {"wrong": "Although difficult it may be, we must proceed.", "correct": "Difficult though it may be, we must proceed.", "explanation": "The inverted concessive uses 'though' or 'as' after the adjective, not 'although'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ difficult it may be, we must proceed.", "answer": "However"},
+    {"sentence": "___ you decide, I will support you completely.", "answer": "Whatever"},
+    {"sentence": "___ as I admire her work, I disagree here.", "answer": "Much"},
+    {"sentence": "___ that the evidence is thin, the conclusion holds.", "answer": "Granted"},
+    {"sentence": "Strange ___ it seems, he was entirely right.", "answer": "though"}
+  ],
+  "quick_rule": "However + ADJECTIVE (no verb between). Universals take the PRESENT tense. No 'but' after a concessive clause. Inverted concessive uses though/as.",
+  "quick_rule_ar": "However + صفة بلا فعل بينهما. والعموميات بالمضارع. ولا 'but' بعد جملة التنازل. والتنازل المقلوب بـ though/as.",
+  "mnemonic": "Grant it fully, then turn.",
+  "connect_to_speaking": "In accent week 7 you drilled the concession held raised and unresolved with an audible pivot before the falling conclusion. If both halves fall, the listener hears two statements rather than an argument."
+}

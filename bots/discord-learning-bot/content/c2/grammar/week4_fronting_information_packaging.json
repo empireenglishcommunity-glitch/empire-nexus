@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w4",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 4,
+  "pattern_name": "Advanced fronting and information packaging",
+  "pattern_name_ar": "التقديم المتقدّم وتعبئة المعلومة",
+  "formula": "End-focus: known information first, new last · End-weight: short before long · Fronting for theme/contrast (The first draft I rewrote) · Existential there + verb + new noun (There remains one difficulty)",
+  "formula_visual": "[I explained to the committee] [the reasons for the revised figures]",
+  "when_to_use": "To control what a reader or listener treats as the point of a sentence. Put known information first and the news last, so the natural sentence stress lands on it. Put short elements before long ones, so heavy phrases end the sentence. Front an element to make it the topic or to contrast it. Use existential 'there' to introduce something new. These principles govern all careful English prose.",
+  "when_to_use_ar": "للتحكّم في ما يعتبره القارئ نقطة الجملة. ضع المعلوم أولًا والجديد آخرًا ليقع النبر الطبيعي عليه، وضع القصير قبل الطويل، وقدّم عنصرًا لتجعله الموضوع، واستخدم 'there' الوجودية لتقديم الجديد.",
+  "why_arabic_speakers_struggle": "Arabic word order is flexible but pairs position with informational status differently, so a sentence translated clause by clause often ends on information the listener already had, which makes the stress land oddly and the emphasis feel wrong. Learners also produce 'I explained the reasons for the revised figures to us' style orders that bury the heavy phrase mid-sentence, and they frequently stress existential 'there', which turns it into a word about place.",
+  "examples": [
+    {"en": "I gave the report to the committee, not to the board.", "ar": "أعطيت التقرير للجنة لا للمجلس", "structure": "known first, [new information last]"},
+    {"en": "She explained to us the reasons behind the delay.", "ar": "شرحت لنا أسباب التأخير", "structure": "short element before [heavy phrase]"},
+    {"en": "The first draft I rewrote entirely; the second I left alone.", "ar": "المسوّدة الأولى أعدت كتابتها كاملة، والثانية تركتها", "structure": "[fronted object] + subject + verb"},
+    {"en": "There remains one difficulty we have not addressed.", "ar": "تبقى صعوبة واحدة لم نعالجها", "structure": "[There] + verb + [new noun]"},
+    {"en": "There followed a long and uncomfortable silence.", "ar": "تبع ذلك صمت طويل غير مريح", "structure": "[There] + verb + [new noun]"}
+  ],
+  "common_errors": [
+    {"wrong": "She explained the reasons behind the delay to us.", "correct": "She explained to us the reasons behind the delay.", "explanation": "End-weight puts the heavy phrase last; burying it mid-sentence makes the clause stumble."},
+    {"wrong": "There arose it during the meeting.", "correct": "There arose a difficulty during the meeting.", "explanation": "Existential 'there' introduces a new noun, not a pronoun referring to something known."},
+    {"wrong": "One difficulty there remains.", "correct": "There remains one difficulty.", "explanation": "The existential pattern places 'there' first, then the verb, then the new noun."},
+    {"wrong": "I rewrote entirely the first draft.", "correct": "I rewrote the first draft entirely. / The first draft I rewrote entirely.", "explanation": "Either keep normal order or front the object deliberately; do not split the verb from its object."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "She explained ___ us the reasons behind the delay.", "answer": "to"},
+    {"sentence": "___ remains one difficulty we have not addressed.", "answer": "There"},
+    {"sentence": "___ followed a long and uncomfortable silence.", "answer": "There"},
+    {"sentence": "The first draft I rewrote entirely; the second I ___ alone.", "answer": "left"},
+    {"sentence": "___ exists no record of the original agreement.", "answer": "There"}
+  ],
+  "quick_rule": "Known first, NEW last. Short before long. Front an element to make it the topic. Existential 'there' is unstressed and introduces new nouns only.",
+  "quick_rule_ar": "المعلوم أولًا والجديد آخرًا. والقصير قبل الطويل. وقدّم عنصرًا لتجعله الموضوع. و'there' الوجودية غير منبورة وتُقدّم أسماء جديدة فقط.",
+  "mnemonic": "Save your news for the end of the sentence.",
+  "connect_to_speaking": "In accent week 4 you drilled end-focus and deliberate tonic placement. If the tonic lands on information the listener already had, the word order is wrong, so the prosody is a direct test of your packaging."
+}

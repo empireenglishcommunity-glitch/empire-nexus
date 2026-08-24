@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 9,
+  "focus": "'By all accounts' and 'reportedly' · 'To the best of my knowledge' · 'ostensibly', 'allegedly', 'purportedly' · 'insofar as the evidence permits' · measured evidential delivery",
+  "focus_ar": "'By all accounts' و'reportedly'، و'To the best of my knowledge'، و'ostensibly' و'allegedly' و'purportedly'، و'insofar as the evidence permits'، والأداء الاستدلالي المتّزن",
+  "arabic_challenge": "Evidentiality is the marking of HOW you know something, and English carries much of it prosodically. 'Allegedly' delivered flatly is neutral reporting; the same word with a slight lift and a following micro-pause signals scepticism. That means a speaker can imply doubt without ever stating it, which is legally and professionally important. Arabic marks source with explicit constructions (يُقال / بحسب / وفقًا لـ) rather than by intonational shading, so learners either sound unintentionally sceptical or fail to convey the caution their words are supposed to carry.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'by all accounts' · 'reportedly' — second-hand evidence"],
+      "isolation": {
+        "instructions": "These signal that you did not witness the thing yourself. 'By all accounts' is a fixed chunk with the beat on aCCOUNTS. 'Reportedly' sits mid-sentence, quickly and lightly: 'He reportedly refused.' Keep them neutral and even — you are attributing, not doubting.",
+        "instructions_ar": "هذه تُشير إلى أنك لم تشهد الأمر بنفسك. 'By all accounts' كتلة ثابتة والنبضة على aCCOUNTS، و'reportedly' تأتي في الوسط بسرعة وخفّة. أبقهما محايدتين، فأنت تنسب لا تشكّك.",
+        "practice": ["by all acCOUNTS", "he REportedly refused", "attributing, not doubting"]
+      },
+      "minimal_pairs": [
+        {"pair": ["By all accounts, it went well", "It went well"], "meaning": ["مصدر غير مباشر", "شهادة مباشرة"]},
+        {"pair": ["reportedly (neutral, light)", "reportedly (lifted, sceptical)"], "meaning": ["نسب محايد", "تشكيك"]},
+        {"pair": ["by all accounts", "in my experience"], "meaning": ["من الآخرين", "من نفسي"]},
+        {"pair": ["He reportedly refused", "He refused"], "meaning": ["بحسب التقارير", "مؤكَّد"]},
+        {"pair": ["apparently", "evidently"], "meaning": ["يبدو (سماعًا)", "يبدو (بالدليل)"]}
+      ],
+      "word_practice": ["by all accounts", "reportedly", "apparently", "evidently", "according to the report", "as I understand it", "from what I hear", "so I am told", "by some accounts", "on the available evidence"],
+      "sentence_practice": [
+        "By all accounts, the meeting went reasonably well.",
+        "He reportedly refused to sign the document.",
+        "According to the report, no warning was given."
+      ],
+      "record_this": "By all accounts, the meeting went reasonably well despite the difficult agenda. He reportedly refused to sign the document without seeing the annexes. According to the report itself, no formal warning was given at any point.",
+      "self_check": "Say 'He reportedly refused'. Is 'reportedly' light and neutral, attributing rather than doubting?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'to the best of my knowledge' — bounded certainty"],
+      "isolation": {
+        "instructions": "This frame states the limit of what you can vouch for. It runs as one quick chunk with the beat on KNOWledge, followed by a small pause: 'To the best of my knowledge, | no decision has been taken.' The chunk is a hedge, so it stays quick; the content that follows carries the weight.",
+        "instructions_ar": "هذا الإطار يحدّد نطاق ما تستطيع تأكيده. يُقال ككتلة سريعة والنبضة على KNOWledge ثم وقفة صغيرة، والمضمون بعده يحمل الثقل.",
+        "practice": ["To the best of my KNOWledge, | no decision has been taken", "quick chunk, weighty content"]
+      },
+      "minimal_pairs": [
+        {"pair": ["To the best of my knowledge, no decision…", "No decision has been taken"], "meaning": ["يقين محدود", "يقين مطلق"]},
+        {"pair": ["quick chunk + pause", "slow laboured chunk"], "meaning": ["طبيعي", "ثقيل"]},
+        {"pair": ["to the best of my knowledge", "as far as I know"], "meaning": ["رسمي", "عادي"]},
+        {"pair": ["I am not aware of any", "There are none"], "meaning": ["محدود", "قاطع"]},
+        {"pair": ["so far as I can establish", "definitely"], "meaning": ["مقيّد", "قاطع"]}
+      ],
+      "word_practice": ["to the best of my knowledge", "as far as I know", "so far as I can establish", "I am not aware of any", "I have no record of", "unless I am mistaken", "if memory serves", "subject to correction", "on my understanding", "so far as the file shows"],
+      "sentence_practice": [
+        "To the best of my knowledge, no decision has been taken.",
+        "So far as I can establish, the file was never opened.",
+        "I am not aware of any objection having been raised."
+      ],
+      "record_this": "To the best of my knowledge, no formal decision has been taken on this matter. So far as I can establish from the records, the file was never actually opened. I am not aware of any objection having been raised at the time.",
+      "self_check": "Say 'To the best of my knowledge, no decision has been taken'. Is the frame quick, with the content weighted?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'ostensibly' · 'allegedly' · 'purportedly' — the sceptical lift"],
+      "isolation": {
+        "instructions": "These three imply a gap between claim and reality, and the lift does the work. Said flatly, 'allegedly' is neutral legal caution. Said with a small rise and a micro-pause after it, it becomes clearly sceptical: 'He was allegedly ↗ | unaware.' Learn to control which one you produce.",
+        "instructions_ar": "هذه الثلاث تُلمّح إلى فجوة بين الادّعاء والواقع، والارتفاع هو ما يفعل ذلك. مسطّحة تكون حيادًا قانونيًا، ومع ارتفاع صغير ووقفة تصبح تشكيكية. تحكّم في أيّهما تُنتج.",
+        "practice": ["allegedly (flat) = neutral", "allegedly ↗ | (lift + pause) = sceptical", "control which you produce"]
+      },
+      "minimal_pairs": [
+        {"pair": ["allegedly (flat, neutral)", "allegedly ↗ | (sceptical)"], "meaning": ["حياد قانوني", "تشكيك"]},
+        {"pair": ["ostensibly", "apparently"], "meaning": ["ظاهريًا (مع شك)", "يبدو"]},
+        {"pair": ["purportedly", "reportedly"], "meaning": ["يُزعم", "بحسب التقارير"]},
+        {"pair": ["He was ostensibly unaware", "He did not know"], "meaning": ["ظاهريًا فقط", "حقيقة"]},
+        {"pair": ["the so-called agreement", "the agreement"], "meaning": ["تشكيك واضح", "محايد"]}
+      ],
+      "word_practice": ["allegedly", "ostensibly", "purportedly", "supposedly", "the so-called agreement", "on the face of it", "at least officially", "or so we were told", "in theory at least", "if the account is accurate"],
+      "sentence_practice": [
+        "He was ostensibly unaware of the arrangement.",
+        "The funds were allegedly transferred in March.",
+        "The document purportedly bears her signature."
+      ],
+      "record_this": "He was ostensibly unaware of the whole arrangement, though the emails suggest otherwise. The funds were allegedly transferred in March, according to the bank's own records. The document purportedly bears her signature, but no one has verified it independently.",
+      "self_check": "Say 'allegedly' twice, once flat and once with a lift. Do the two clearly differ in implied doubt?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'insofar as the evidence permits' — explicit limits"],
+      "isolation": {
+        "instructions": "This frame states exactly how far a claim can be pushed. It links smoothly with no internal pause: /ˌɪnsəʊˈfɑːr əz ði ˈevɪdəns pəˈmɪts/, with beats on FAR and MITS. It is scrupulous rather than evasive, and the even delivery is what makes it sound rigorous.",
+        "instructions_ar": "هذا الإطار يُبيّن إلى أي حدّ يمكن دفع الادّعاء. يُربط بسلاسة بلا وقفة داخلية، والنبضات على FAR وMITS. وهو دقيق لا متهرّب، والأداء المستوي هو ما يجعله صارمًا.",
+        "practice": ["/ˌɪnsəʊˈFAR əz ði ˈevɪdəns pəˈMITS/", "scrupulous, not evasive", "even and rigorous"]
+      },
+      "minimal_pairs": [
+        {"pair": ["insofar as the evidence permits", "as far as we know"], "meaning": ["رسمي دقيق", "عادي"]},
+        {"pair": ["smooth, no internal pause", "broken into words"], "meaning": ["صارم", "متعثّر"]},
+        {"pair": ["scrupulous", "evasive"], "meaning": ["دقيق", "متهرّب"]},
+        {"pair": ["on the balance of probabilities", "probably"], "meaning": ["قانوني", "عادي"]},
+        {"pair": ["the evidence permits no firmer view", "we cannot be sure"], "meaning": ["رسمي", "عادي"]}
+      ],
+      "word_practice": ["insofar as the evidence permits", "on the balance of probabilities", "the evidence permits no firmer view", "beyond reasonable doubt", "on the material available", "subject to further inquiry", "pending confirmation", "provisionally at least", "on present information", "to a reasonable degree of confidence"],
+      "sentence_practice": [
+        "Insofar as the evidence permits, the account appears accurate.",
+        "On the balance of probabilities, the delay was accidental.",
+        "On present information, no further action is justified."
+      ],
+      "record_this": "Insofar as the evidence permits any conclusion, the account appears broadly accurate. On the balance of probabilities, the delay was accidental rather than deliberate. On present information, no further action against the department is justified.",
+      "self_check": "Say 'insofar as the evidence permits'. Is it smooth with no internal pause, sounding rigorous?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["measured evidential delivery across a whole account"],
+      "isolation": {
+        "instructions": "Sustained evidential speech is deliberately even: a narrow pitch range, a steady pace, and no emphatic peaks. The neutrality is the message — it signals that you are reporting rather than advocating. Any sudden emphasis reads as taking sides, which is exactly what this register avoids.",
+        "instructions_ar": "الكلام الاستدلالي المطوّل متساوٍ عن قصد: مدى نبرة ضيّق وإيقاع ثابت ولا قمم توكيدية. الحياد هو الرسالة، فأي توكيد مباغت يُقرأ كاتّخاذ موقف.",
+        "practice": ["narrow range, steady pace, no peaks", "neutrality is the message", "reporting, not advocating"]
+      },
+      "minimal_pairs": [
+        {"pair": ["narrow even range", "wide emphatic range"], "meaning": ["تقرير", "مناصرة"]},
+        {"pair": ["steady pace", "variable dramatic pace"], "meaning": ["محايد", "متحيّز"]},
+        {"pair": ["no emphatic peaks", "peaks on key words"], "meaning": ["استدلالي", "إقناعي"]},
+        {"pair": ["reporting", "advocating"], "meaning": ["محايد", "منحاز"]},
+        {"pair": ["sudden emphasis = taking sides", "even delivery = neutral"], "meaning": ["يُفسد الحياد", "يحفظه"]}
+      ],
+      "word_practice": ["the evidence indicates", "the records show", "witnesses state", "the account suggests", "no documentation exists", "the timeline is consistent with", "this cannot be verified", "two accounts conflict", "the file is incomplete", "the position remains unclear"],
+      "sentence_practice": [
+        "The records show one transfer; the witness recalls two.",
+        "This element of the account cannot be verified.",
+        "The position remains unclear on the available material."
+      ],
+      "record_this": "The records show only one transfer that month, whereas the witness recalls two. This particular element of the account cannot be independently verified at present. The position therefore remains unclear on the material currently available.",
+      "self_check": "Read the records sentence. Is your range narrow and your pace steady, with no emphatic peaks?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 9 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["By all accounts, it went well", "It went well"],
+        ["To the best of my knowledge, no decision…", "No decision has been taken"],
+        ["allegedly (flat, neutral)", "allegedly ↗ | (sceptical)"],
+        ["insofar as the evidence permits", "as far as we know"],
+        ["narrow even range", "wide emphatic range"],
+        ["ostensibly", "apparently"]
+      ],
+      "challenge_sentences": [
+        "By all accounts, the process was followed.",
+        "To the best of my knowledge, nothing was recorded.",
+        "The transfer was allegedly authorised in writing.",
+        "On present information, the matter is closed."
+      ],
+      "record_this": "By all accounts, the correct process was followed at every stage that week. To the best of my knowledge, nothing at all was recorded in the minutes. The transfer was allegedly authorised in writing, though the letter has not surfaced. On present information, the matter is closed and will not be reopened.",
+      "self_check": "Three checks: neutral attribution, quick hedging frames, and an even narrow range throughout."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as formal evidence to an inquiry. Evidentiality demands neutrality, so resist every temptation to emphasise — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كشهادة رسمية أمام لجنة تحقيق. الاستدلال يتطلّب الحياد، فقاوم كل ميل للتوكيد، ثم اسمع وراجع.",
+        "passage": "I will set out what I know and how I know it. To the best of my knowledge, the instruction was issued on the eleventh. I did not see it myself; I am told it was circulated by email. By all accounts it reached the three senior managers, though only two have confirmed receipt. The third was ostensibly on leave that week. The funds were allegedly transferred the following morning, and the bank record is consistent with that, insofar as the evidence permits any conclusion. I have no record of any objection being raised. Reportedly there was a conversation in the corridor; I cannot verify it and would not wish to rely on it. On the balance of probabilities, the omission was administrative rather than deliberate. That, I should stress, is an inference and not a finding. On present information I can take the matter no further.",
+        "sounds_to_check": {
+          "neutral second-hand attribution": "I am told it was circulated…, By all accounts it reached…, Reportedly there was a conversation",
+          "bounded certainty frames, quick": "To the best of my KNOWledge, |  ·  I have no record of any objection",
+          "'ostensibly' and 'allegedly' kept FLAT and neutral": "The third was ostensibly on leave  ·  The funds were allegedly transferred - no sceptical lift here, this is evidence",
+          "explicit evidential limits": "insofar as the evidence permits any conclusion  ·  On the balance of probabilities  ·  On present information",
+          "sustained even delivery": "narrow pitch range, steady pace, no emphatic peaks anywhere - including on 'inference and not a finding'"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Sources clearly attributed, hedges quick, delivery genuinely neutral with no emphatic peaks. Sounds like credible testimony. Ready for week 10.",
+        "70_89": "Good; an occasional emphatic peak slips in, or 'allegedly' acquires an unintended lift.",
+        "50_69": "Delivery too animated, so the account sounds like advocacy. Repeat days 3 and 5.",
+        "below_50": "Redo days 1-5. Focus on keeping the pitch range narrow across the whole passage."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Evidentiality marks HOW you know. English carries much of it in delivery, not only in words.",
+      "'Allegedly' said flat is neutral legal caution; the same word with a lift and a micro-pause becomes openly sceptical. Choose deliberately.",
+      "Hedging frames stay quick and light; the content after them carries the weight.",
+      "In testimony and reporting, keep the pitch range narrow. Sudden emphasis reads as taking sides.",
+      "Distinguish what you saw, what you were told, and what you infer. English has separate frames for each, and mixing them damages credibility."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that no word received emphatic stress."
+  }
+}

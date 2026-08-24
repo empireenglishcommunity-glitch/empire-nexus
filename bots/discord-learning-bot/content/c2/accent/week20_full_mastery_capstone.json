@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 20,
+  "focus": "Full expressive pitch range · deliberate pace control · strategic silence · sustaining an extended discourse · the complete C2 review and final capstone",
+  "focus_ar": "المدى التعبيري الكامل للنبرة، وضبط الإيقاع المتعمّد، والصمت الاستراتيجي، والحفاظ على خطاب مطوّل، والمراجعة الشاملة لـ C2 والتتويج النهائي",
+  "arabic_challenge": "This is the final week of the entire programme, and the challenge is integration rather than any new feature. Mastery means having the full expressive range available and choosing from it consciously: the narrow neutral band for evidence, the wide dramatic band for rhetoric, the low band for asides, deadpan flatness for irony. Most advanced speakers can produce each of these in isolation but default to one comfortable register under pressure. The capstone tests whether you can move deliberately between all of them across a sustained piece of speech.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["full expressive pitch range on demand"],
+      "isolation": {
+        "instructions": "Say the same sentence four ways: neutral narrow (evidence), wide and raised (rhetoric), low and quick (aside), completely flat (irony). 'That was the turning point.' Your range should be audibly different in each. If all four sound similar, the range is not yet under conscious control.",
+        "instructions_ar": "قل الجملة نفسها بأربع طرق: محايدة ضيّقة للدليل، وواسعة مرتفعة للبلاغة، ومنخفضة سريعة للاعتراض، ومسطّحة تمامًا للسخرية. وإن تشابهت الأربع فالمدى ليس تحت السيطرة الواعية.",
+        "practice": ["neutral narrow (evidence)", "wide raised (rhetoric)", "low quick (aside)", "completely flat (irony)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["narrow neutral (evidence)", "wide raised (rhetoric)"], "meaning": ["تقرير", "خطابة"]},
+        {"pair": ["low quick (aside)", "flat (irony)"], "meaning": ["تعليق", "سخرية"]},
+        {"pair": ["four audibly different bands", "one comfortable band"], "meaning": ["إتقان", "محدود"]},
+        {"pair": ["range chosen consciously", "range by default"], "meaning": ["متمكّن", "تلقائي"]},
+        {"pair": ["That was the turning point (4 ways)", "one delivery only"], "meaning": ["مرن", "جامد"]}
+      ],
+      "word_practice": ["that was the turning point", "the evidence is clear", "as it happens", "how very helpful", "we must decide", "nobody objected", "it worked", "that is the question", "consider the sequence", "so be it"],
+      "sentence_practice": [
+        "That was the turning point.",
+        "The evidence, as it happens, is clear.",
+        "How very helpful that was."
+      ],
+      "record_this": "That was the turning point, and the records confirm it beyond any doubt. The evidence, as it happens, is perfectly clear on this narrow question. How very helpful that intervention turned out to be for everyone concerned.",
+      "self_check": "Say 'That was the turning point' four ways. Are all four audibly different in range?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["deliberate pace control"],
+      "isolation": {
+        "instructions": "Change speed on purpose to signal function: slow for weight and conclusions, quick for background and asides, moderate for the main line. Read one paragraph three times at three speeds and notice how the meaning of the emphasis shifts even though the words do not.",
+        "instructions_ar": "غيّر السرعة عن قصد للإشارة إلى الوظيفة: بطيء للثقل والخلاصات، وسريع للخلفية والاعتراضات، ومتوسط للخط الرئيسي. اقرأ فقرة بثلاث سرعات ولاحظ تغيّر موضع الأهمية.",
+        "practice": ["slow = weight and conclusion", "quick = background and aside", "moderate = main line"]
+      },
+      "minimal_pairs": [
+        {"pair": ["slow for conclusions", "quick for conclusions"], "meaning": ["ثقيل", "يُفقد الثقل"]},
+        {"pair": ["quick for background", "slow for background"], "meaning": ["مناسب", "ممل"]},
+        {"pair": ["pace signals function", "one pace throughout"], "meaning": ["واضح", "مسطّح"]},
+        {"pair": ["deliberate speed change", "accidental drift"], "meaning": ["مضبوط", "مرتبك"]},
+        {"pair": ["three speeds available", "one speed available"], "meaning": ["مرن", "محدود"]}
+      ],
+      "word_practice": ["let me be clear", "by way of background", "the conclusion is this", "briefly", "in short", "more slowly now", "to summarise", "the essential point", "and finally", "that is all"],
+      "sentence_practice": [
+        "By way of background, the scheme began in 2019 and ran for three years.",
+        "The conclusion is this. It should never have been approved.",
+        "Briefly: three reviews, two warnings, no action."
+      ],
+      "record_this": "By way of background, the scheme began in twenty nineteen and ran for three years. The conclusion is this. It should never have been approved in the first place. Briefly: three reviews, two formal warnings, and no action whatsoever.",
+      "self_check": "Read the three sentences. Is the background quick, the conclusion slow, and the difference obvious?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["strategic silence"],
+      "isolation": {
+        "instructions": "A silence of two full seconds before a key sentence is one of the strongest tools available, and one of the hardest to hold. Count it internally: 'The report was never sent. | | | Nobody has explained why.' Resist filling the gap. The discomfort you feel is the effect working.",
+        "instructions_ar": "الصمت لثانيتين كاملتين قبل جملة مفتاحية من أقوى الأدوات وأصعبها حفظًا. عُدّ داخليًا وقاوم ملء الفراغ. والحرج الذي تحسّه هو الأثر يعمل.",
+        "practice": ["The report was never sent. | | | Nobody has explained why.", "two full seconds", "resist filling the gap"]
+      },
+      "minimal_pairs": [
+        {"pair": ["two-second silence", "no pause"], "meaning": ["مؤثّر جدًا", "عادي"]},
+        {"pair": ["silence held", "silence filled with sound"], "meaning": ["واثق", "مرتبك"]},
+        {"pair": ["discomfort = effect working", "comfort = effect lost"], "meaning": ["ناجح", "فاشل"]},
+        {"pair": ["silence before the key line", "silence at random"], "meaning": ["مقصود", "عشوائي"]},
+        {"pair": ["one strategic silence", "constant long pauses"], "meaning": ["مؤثّر", "متعب"]}
+      ],
+      "word_practice": ["the report was never sent", "nobody has explained why", "and that is the point", "think about that", "for a moment", "consider what that means", "let that sit", "I will say it again", "nobody", "not once"],
+      "sentence_practice": [
+        "The report was never sent. Nobody has explained why.",
+        "Not once in three years did anyone ask. Think about that.",
+        "We had the evidence in March. We acted in November."
+      ],
+      "record_this": "The report was never sent to the committee. Nobody, in the two years since, has explained why. Not once in three full years did anyone ask the obvious question. We had the evidence in March. We acted in November.",
+      "self_check": "Say the report lines with a two-second silence. Did you hold it without filling the gap?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["sustaining an extended discourse"],
+      "isolation": {
+        "instructions": "Speak for three minutes without losing shape: signpost at the start, hold thought groups of five to nine words, breathe only at boundaries, vary your pace, and return to your base register at the end. Stamina here is prosodic, not physical — control usually fails before the voice does.",
+        "instructions_ar": "تكلّم ثلاث دقائق دون فقدان الشكل: أشِر في البداية، واحفظ وحدات فكرية من خمس إلى تسع كلمات، وتنفّس عند الحدود فقط، ونوّع الإيقاع، وعُد لأسلوبك الأساس في النهاية.",
+        "practice": ["signpost, thought groups, boundary breaths, varied pace, return to base", "control fails before the voice does"]
+      },
+      "minimal_pairs": [
+        {"pair": ["shape held for three minutes", "shape lost after one"], "meaning": ["إتقان", "محدود"]},
+        {"pair": ["breathe at boundaries", "breathe anywhere"], "meaning": ["مضبوط", "مفكّك"]},
+        {"pair": ["returns to base register", "drifts and never returns"], "meaning": ["مخطّط", "غير مخطّط"]},
+        {"pair": ["varied pace sustained", "pace flattens over time"], "meaning": ["حيوي", "متعب"]},
+        {"pair": ["signposted throughout", "no signposts"], "meaning": ["مُتابَع", "مفقود"]}
+      ],
+      "word_practice": ["I want to make three points", "first", "second", "which brings me to my third", "to summarise", "let me return to where I began", "and finally", "in closing", "that is my case", "thank you"],
+      "sentence_practice": [
+        "I want to make three points, and I will keep each of them short.",
+        "Which brings me to my third and most important point.",
+        "Let me return to where I began, and then I will stop."
+      ],
+      "record_this": "I want to make three points this evening, and I will keep each of them short. Which brings me to my third and, I think, most important point. Let me return to where I began, and then I will stop talking.",
+      "self_check": "Speak for three minutes on any topic. Did you keep the shape and return to your base register?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["complete C2 review: all twenty weeks integrated"],
+      "isolation": {
+        "instructions": "Integrate the level: subjunctive formulae (w1), literary conditionals (w2), stylistic inversion (w3), end-focus (w4), cleft types (w5), grammatical metaphor (w6), concessives (w7), meta-discourse (w8), evidentiality (w9), precise near-synonyms (w10), evaluative tone (w11), idiom chunks (w12), allusion timing (w13), irony (w14), register shifts (w15), rhetoric (w16), rebuttal pivots (w17), concision (w18) and repair (w19).",
+        "instructions_ar": "دمج المستوى: صيغ الشرط، والشروط الأدبية، والقلب الأسلوبي، والتركيز النهائي، وأنواع الجملة المشقوقة، والمجاز النحوي، والتنازل، وما وراء الخطاب، والاستدلال، والمترادفات الدقيقة، والنبرة التقييمية، والتعابير، والتلميح، والسخرية، وتحوّل الأسلوب، والبلاغة، ومحاور الردّ، والإيجاز، والتصحيح.",
+        "practice": ["So be it (w1)", "Were it not for (w2)", "So great was (w3)", "What matters is (w5)", "Nonetheless (w17)", "all twenty weeks, one delivery"]
+      },
+      "minimal_pairs": [
+        {"pair": ["So great was the change ↗ (w3)", "The change was great"], "meaning": ["بلاغي", "عادي"]},
+        {"pair": ["What matters is | the RESULT (w5)", "The result matters"], "meaning": ["مشقوق", "عادي"]},
+        {"pair": ["not bad at all ↘ (w14)", "good"], "meaning": ["تهوين", "مباشر"]},
+        {"pair": ["| nonetheLESS, | (w17)", "but"], "meaning": ["محور ثقيل", "ربط خفيف"]},
+        {"pair": ["It failed. (w18)", "It was unsuccessful."], "meaning": ["حاسم", "مخفَّف"]}
+      ],
+      "word_practice": ["so be it", "were it not for", "so great was", "what matters is", "the erosion of", "however difficult", "as I noted", "by all accounts", "nonetheless", "it failed"],
+      "sentence_practice": [
+        "Were it not for one warning, nobody would have known.",
+        "So great was the failure that the department was reorganised.",
+        "What matters now is not blame but process."
+      ],
+      "record_this": "Were it not for one early warning, nobody would ever have known. So great was the failure that the entire department was eventually reorganised. What matters now is not blame but process, and I would ask the committee to focus there.",
+      "self_check": "Say all three. Can you hear inversion, cleft focus and literary conditional all working together?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 20 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["narrow neutral (evidence)", "wide raised (rhetoric)"],
+        ["slow for conclusions", "quick for conclusions"],
+        ["two-second silence", "no pause"],
+        ["shape held for three minutes", "shape lost after one"],
+        ["four audibly different bands", "one comfortable band"],
+        ["returns to base register", "drifts and never returns"]
+      ],
+      "challenge_sentences": [
+        "The evidence is clear. The conclusion is not.",
+        "So be it. We will proceed regardless.",
+        "The report was never sent. Nobody has explained why.",
+        "Not bad at all, given everything."
+      ],
+      "record_this": "The evidence is perfectly clear. The conclusion drawn from it is not. So be it. We will proceed regardless, and I will take responsibility. The report was never sent to anyone. Nobody has explained why. Not bad at all, given everything that went wrong.",
+      "self_check": "Three checks: four distinct pitch bands available, pace signalling function, and one strategic silence genuinely held."
+    },
+    {
+      "day": 7,
+      "target_sounds": "FINAL CAPSTONE: the whole programme, A1 to C2",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "This is the final assessment of the entire programme. Record yourself delivering this speech in full, using every register the text demands. Then listen back beside your very first A1 recording — week 1, day 1 — and hear the distance travelled.",
+        "instructions_ar": "هذا التقييم الأخير للبرنامج كله. سجّل نفسك تقدّم هذه الكلمة كاملة بكل الأساليب التي يطلبها النص، ثم اسمعها بجوار تسجيلك الأول في A1 — الأسبوع الأول اليوم الأول — واسمع المسافة التي قطعتها.",
+        "passage": "I have been asked to say something about what we have learned, and I shall try to be brief. Rarely does an organisation get a second chance at the same mistake. We got three. It is worth noting that every warning we eventually acted on had been given, in writing, at least a year earlier. Admittedly the reports were long. However, the length of a warning is not an excuse for ignoring it. Were it not for two junior colleagues who kept asking the same question, we would still be where we started. The strongest version of the objection to what I am about to propose is not that it costs too much, but that it asks people to admit error in public, and I have no comfortable answer to that. It is a fair point. Nonetheless, I would put it to you that the alternative is worse. What we need is not another review. We have had four. What we need is the willingness to act on the one we already have. So: three commitments. We will publish the findings in full, we will name the decisions rather than the departments, and we will report back in six months whether or not there is progress to report. Much as I would like to end on something more uplifting, I think honesty is more useful. It has not been our finest year. It could, however, be the one we learn from. So be it.",
+        "sounds_to_check": {
+          "stylistic inversion + rhetoric (w3, w16)": "RARELY does an organisation get a second chance ↗ | We got THREE ↘  ·  the tricolon of three commitments with a lifted third item",
+          "meta-discourse, evidentiality, cleft (w8, w9, w5)": "It is worth noting that…  ·  had been given, in writing, at least a year earlier  ·  What we NEED is not another review",
+          "concession, steelman and heavy pivot (w7, w17)": "Admittedly the reports were long. | HowEVer, |…  ·  The strongest version of the objection is not that it costs too much, but…  ·  It is a fair point. | nonetheLESS, |",
+          "literary conditional and subjunctive (w1, w2)": "Were it not for two junior colleagues…  ·  whether or not there is progress to report  ·  So be it ↘",
+          "concision, understatement and range control (w18, w14, w20)": "We got three.  ·  We have had four.  ·  It has not been our finest year (flat, understated) - and the pace must slow for the final three sentences"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Full command: range chosen consciously, pace signalling function, silences held, every C2 device present and controlled across a sustained speech. The programme is complete. Compare this with your first A1 recording.",
+        "70_89": "Strong C2. The level is clearly audible; one or two devices slip under the demands of a long passage. Revisit those specific weeks.",
+        "50_69": "Devices work in isolation but flatten across sustained speech. Repeat days 1-4, then review weeks 3, 16 and 17.",
+        "below_50": "Redo days 1-5, then revisit weeks 1, 5, 14 and 17 before reattempting this capstone."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Mastery is not a new technique. It is having every band of your range available and choosing consciously between them.",
+      "Pace signals function: slow for conclusions, quick for background, moderate for the main line.",
+      "A two-second silence before a key sentence is among the strongest tools you have. The discomfort of holding it is the effect working.",
+      "Across a long turn, control fails before the voice does. Signpost, group, breathe at boundaries, and return to your base register.",
+      "Listen to this final recording beside your first A1 one. That comparison, more than any score, is the real result of the programme."
+    ],
+    "daily_time": "25-30 minutes",
+    "recording_requirement": "Record the 'record_this' line daily. On day 7 record the full capstone speech and listen to it immediately after your A1 week 1 day 1 recording."
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 14,
+  "focus": "Litotes ('not bad at all', 'not unlike') · deadpan delivery · ironic praise · classic British understatement · the rising-falling ironic tone",
+  "focus_ar": "التقليل بالنفي ('not bad at all'، 'not unlike')، والأداء الجادّ الخالي من الانفعال، والمدح الساخر، والتهوين البريطاني الكلاسيكي، ونغمة السخرية الصاعدة الهابطة",
+  "arabic_challenge": "Irony in English is carried almost entirely by tone, and the tone is counter-intuitive: the more extreme the actual situation, the flatter the delivery. 'That went well' after a disaster works only if said with complete evenness; add emphasis and it becomes sarcasm, which is cruder and reads as hostile rather than wry. Litotes compounds the difficulty by stating the positive through a negative ('not bad' meaning good), which is grammatically simple but requires the listener to invert the meaning — and that inversion is signalled by intonation alone.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["litotes: 'not bad at all' · 'not unlike'"],
+      "isolation": {
+        "instructions": "Litotes affirms by negating the opposite. 'Not bad at all' means genuinely good; 'not unlike' means quite similar. The delivery is understated with a gentle fall on the negated word: 'not BAD at all ↘'. Overdo the emphasis and it flips into criticism.",
+        "instructions_ar": "التقليل بالنفي يُثبت بنفي النقيض: 'not bad at all' تعني جيدًا فعلًا. الأداء مُخفَّف بهبوط لطيف على الكلمة المنفية، والمبالغة تقلبه إلى نقد.",
+        "practice": ["not BAD at all ↘ (= good)", "not UNlike ↘ (= similar)", "understated, gentle fall"]
+      },
+      "minimal_pairs": [
+        {"pair": ["not bad at all (= good)", "bad"], "meaning": ["جيد فعلًا", "سيّئ"]},
+        {"pair": ["not unlike (= similar)", "unlike"], "meaning": ["مشابه", "مختلف"]},
+        {"pair": ["not exactly cheap (= expensive)", "cheap"], "meaning": ["غالٍ", "رخيص"]},
+        {"pair": ["gentle fall ↘", "heavy emphasis"], "meaning": ["مدح مُخفَّف", "نقد"]},
+        {"pair": ["no small achievement", "a big achievement"], "meaning": ["مُخفَّف بليغ", "مباشر"]}
+      ],
+      "word_practice": ["not bad at all", "not unlike", "not exactly cheap", "no small achievement", "not without merit", "not entirely wrong", "hardly surprising", "not unreasonable", "no mean feat", "not the worst idea"],
+      "sentence_practice": [
+        "That was not bad at all, actually.",
+        "The result is not unlike last year's.",
+        "Finishing on time was no small achievement."
+      ],
+      "record_this": "That was not bad at all, actually, and I say that as someone who expected worse. The result this quarter is not unlike last year's, which is itself interesting. Finishing the whole thing on time was no small achievement.",
+      "self_check": "Say 'not bad at all'. Does it clearly mean good, with a gentle fall rather than heavy emphasis?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["deadpan delivery: flat tone on extreme content"],
+      "isolation": {
+        "instructions": "Deadpan means the tone contradicts the content by staying completely level. 'The building is on fire, which is unhelpful.' No rise, no emphasis, no smile in the voice. The gap between the situation and the delivery is where the effect lives.",
+        "instructions_ar": "الأداء الجادّ يعني أن النبرة تخالف المضمون ببقائها مستوية تمامًا. بلا صعود ولا توكيد ولا ابتسامة في الصوت. والفجوة بين الموقف والأداء هي موضع الأثر.",
+        "practice": ["The building is on fire, which is unhelpful. (completely level)", "no rise, no smile in the voice"]
+      },
+      "minimal_pairs": [
+        {"pair": ["…which is unhelpful (flat)", "…which is a DISASTER (emphatic)"], "meaning": ["سخرية جافّة", "انفعال"]},
+        {"pair": ["completely level tone", "any emphasis at all"], "meaning": ["ناجح", "يُفسد الأثر"]},
+        {"pair": ["no smile in the voice", "audible smile"], "meaning": ["جادّ ساخر", "يكشف النكتة"]},
+        {"pair": ["mildly inconvenient (of a crisis)", "catastrophic"], "meaning": ["تهوين ساخر", "وصف صادق"]},
+        {"pair": ["gap between content and tone", "tone matches content"], "meaning": ["سخرية", "وصف"]}
+      ],
+      "word_practice": ["which is unhelpful", "mildly inconvenient", "somewhat awkward", "less than ideal", "a minor complication", "not our finest hour", "slightly problematic", "a small setback", "faintly irritating", "not ideal timing"],
+      "sentence_practice": [
+        "The server is down, which is unhelpful.",
+        "We lost the only copy. Mildly inconvenient.",
+        "The client arrived a day early. Less than ideal."
+      ],
+      "record_this": "The server has been down since Tuesday, which is unhelpful. We appear to have lost the only remaining copy of the contract. Mildly inconvenient. The client arrived a full day early, unannounced, which was less than ideal.",
+      "self_check": "Say 'The server is down, which is unhelpful'. Is your tone completely level, with no smile audible?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["ironic praise: apparent compliment, real criticism"],
+      "isolation": {
+        "instructions": "'That was certainly a brave choice.' 'Brave' here means unwise, and the signal is a slight lengthening plus a level-then-falling tone: 'certainly a BRAAVE choice ↘'. Sincere praise rises and warms; ironic praise stays cool and stretches the key word slightly.",
+        "instructions_ar": "'That was certainly a brave choice' — 'brave' هنا تعني غير حكيم، والإشارة إطالة طفيفة ونبرة مستوية ثم هابطة. فالمدح الصادق يصعد ويدفأ، والمدح الساخر يبقى باردًا ويُمدّ الكلمة قليلًا.",
+        "practice": ["certainly a BRAAVE choice ↘ (cool, stretched)", "sincere: a brave CHOICE ↗ (warm)"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a BRAAVE choice ↘ (ironic)", "a brave CHOICE ↗ (sincere)"], "meaning": ["نقد مُبطَّن", "مدح صادق"]},
+        {"pair": ["cool + stretched key word", "warm + rising"], "meaning": ["ساخر", "صادق"]},
+        {"pair": ["an interesting approach ↘", "an interesting approach ↗"], "meaning": ["نقد", "اهتمام"]},
+        {"pair": ["how very original ↘", "how original ↗"], "meaning": ["سخرية", "إعجاب"]},
+        {"pair": ["that is one way of doing it ↘", "that works ↗"], "meaning": ["نقد مُبطَّن", "قبول"]}
+      ],
+      "word_practice": ["a brave choice", "an interesting approach", "how very original", "that is one way of doing it", "bold, certainly", "a courageous decision", "well, that is different", "you have been busy", "quite a claim", "ambitious, I'll give you that"],
+      "sentence_practice": [
+        "That was certainly a brave choice.",
+        "An interesting approach to the problem.",
+        "Well, that is one way of doing it."
+      ],
+      "record_this": "That was certainly a brave choice, and I look forward to seeing how it works out. An interesting approach to the problem, if not the one I would have taken. Well, that is one way of doing it, I suppose.",
+      "self_check": "Say 'a brave choice' twice, once ironic and once sincere. Are the two unmistakably different?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["classic understatement: scaling extreme events down"],
+      "isolation": {
+        "instructions": "English shrinks big events with small words: a catastrophe becomes 'a bit of a setback', a triumph becomes 'quite pleasing'. Deliver the diminishing phrase flatly and slightly quickly, as though it barely merits comment. The listener supplies the true scale.",
+        "instructions_ar": "الإنجليزية تصغّر الأحداث الكبيرة بكلمات صغيرة. أدِّ عبارة التصغير بتسطّح وسرعة طفيفة كأنها لا تستحق التعليق، وليقدّر المستمع الحجم الحقيقي.",
+        "practice": ["a bit of a setback (of a catastrophe)", "quite pleasing (of a triumph)", "barely merits comment"]
+      },
+      "minimal_pairs": [
+        {"pair": ["a bit of a setback (catastrophe)", "a catastrophe"], "meaning": ["تهوين", "وصف صادق"]},
+        {"pair": ["quite pleasing (triumph)", "a triumph"], "meaning": ["تهوين", "صريح"]},
+        {"pair": ["flat and slightly quick", "slow and weighted"], "meaning": ["تهوين ناجح", "يكشف الحجم"]},
+        {"pair": ["I've had better weeks", "it was a terrible week"], "meaning": ["تهوين", "صريح"]},
+        {"pair": ["not our finest hour", "a humiliating failure"], "meaning": ["تهوين", "صريح"]}
+      ],
+      "word_practice": ["a bit of a setback", "quite pleasing", "I've had better weeks", "not our finest hour", "a slight miscalculation", "somewhat over budget", "a touch optimistic", "not entirely smooth", "a modest success", "could have gone better"],
+      "sentence_practice": [
+        "Losing the contract was a bit of a setback.",
+        "Winning the award was quite pleasing.",
+        "I have had better weeks, frankly."
+      ],
+      "record_this": "Losing the main contract three weeks before Christmas was a bit of a setback. Winning the national award was quite pleasing, all things considered. I have had better weeks, frankly, though I would rather not go into detail.",
+      "self_check": "Say 'Losing the contract was a bit of a setback'. Is the diminishing phrase flat and quick, as if barely worth mentioning?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["the rising-falling ironic tone"],
+      "isolation": {
+        "instructions": "The signature ironic contour rises then falls on the same word: 'Oh, WOnderful ↗↘.' The rise creates apparent enthusiasm and the immediate fall withdraws it, which is exactly the double message irony needs. Practise the contour on a single word before using it in sentences.",
+        "instructions_ar": "الكفاف الساخر المميّز يصعد ثم يهبط على الكلمة نفسها: 'Oh, WOnderful ↗↘'. الصعود يخلق حماسًا ظاهريًا والهبوط الفوري يسحبه، وهذه هي الرسالة المزدوجة التي تحتاجها السخرية.",
+        "practice": ["Oh, WOnderful ↗↘", "MARvellous ↗↘", "rise then withdraw"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Oh, wonderful ↗↘ (ironic)", "Oh, wonderful ↗ (sincere)"], "meaning": ["ساخر", "صادق"]},
+        {"pair": ["rise then fall on one word", "rise only"], "meaning": ["سخرية", "حماس"]},
+        {"pair": ["Marvellous ↗↘", "Marvellous ↗"], "meaning": ["ساخر", "صادق"]},
+        {"pair": ["Perfect ↗↘", "Perfect ↗"], "meaning": ["ساخر", "موافقة"]},
+        {"pair": ["double message", "single message"], "meaning": ["ساخر", "مباشر"]}
+      ],
+      "word_practice": ["oh, wonderful", "marvellous", "perfect", "brilliant", "charming", "how lovely", "just what we needed", "excellent timing", "of course you did", "naturally"],
+      "sentence_practice": [
+        "Oh, wonderful. The printer is broken again.",
+        "Marvellous. Another meeting about meetings.",
+        "Perfect timing, as always."
+      ],
+      "record_this": "Oh, wonderful. The printer is broken again, on the morning of the deadline. Marvellous. Another meeting about meetings, which is exactly what this week needed. Perfect timing, as always, from the department that never answers email.",
+      "self_check": "Say 'Oh, wonderful' with a rise then fall. Does it clearly convey the opposite of enthusiasm?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 14 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["not bad at all (= good)", "bad"],
+        ["…which is unhelpful (flat)", "…which is a DISASTER (emphatic)"],
+        ["a BRAAVE choice ↘ (ironic)", "a brave CHOICE ↗ (sincere)"],
+        ["a bit of a setback (catastrophe)", "a catastrophe"],
+        ["Oh, wonderful ↗↘ (ironic)", "Oh, wonderful ↗ (sincere)"],
+        ["gentle fall ↘", "heavy emphasis"]
+      ],
+      "challenge_sentences": [
+        "That was not bad at all.",
+        "The roof collapsed, which is unhelpful.",
+        "An interesting choice of words.",
+        "Oh, wonderful. Another delay."
+      ],
+      "record_this": "That was not bad at all, considering how little time you had. The roof of the storeroom collapsed on Sunday night, which is unhelpful. An interesting choice of words in the press release, if I may say so. Oh, wonderful. Another delay, and nobody has told the client.",
+      "self_check": "Three checks: litotes with a gentle fall, deadpan completely level, and the ironic rise-then-fall clearly conveying the opposite."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself delivering this as a dry, understated account to a colleague you know well. Irony lives in flatness, so resist every urge to emphasise — then listen back and check.",
+        "instructions_ar": "سجّل نفسك تقدّم هذا كحكاية جافّة مُهوّنة لزميل تعرفه جيدًا. السخرية تعيش في التسطّح، فقاوم كل ميل للتوكيد، ثم اسمع وراجع.",
+        "passage": "It has been an interesting quarter. We lost two of our three largest clients, which is unhelpful. The replacement system went live on schedule, and then went offline for nine days, so not our finest hour. Marketing described this as a transitional phase. An interesting choice of words. Our new procurement process is not without merit, though it is also not exactly quick. I asked for an update in March and received one in July, which I thought was quite prompt in the circumstances. The audit was a bit of a setback. Oh, and the building flooded. Twice. Still, revenue is not bad at all given everything, and the team has performed no small feat in holding it together. All in all, I have had better years, but I have also had worse, and I would rather not say which this resembles more closely.",
+        "sounds_to_check": {
+          "litotes with a gentle fall": "not without MErit ↘  ·  not exactly QUICK ↘  ·  not BAD at all ↘  ·  no small FEAT ↘",
+          "deadpan on extreme content, completely level": "which is unhelpful  ·  and then went offline for nine days  ·  Oh, and the building flooded. Twice.",
+          "ironic praise, cool and stretched": "It has been an INteresting quarter ↘  ·  An INteresting choice of words ↘  ·  which I thought was quite PROMPT ↘",
+          "understatement scaling events down": "so not our finest hour  ·  The audit was a bit of a setback  ·  I have had better years",
+          "the rising-falling ironic contour": "MARvellous-type words: 'a transitional phase' and 'quite prompt' should both carry the ↗↘ withdrawal"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Litotes clear, deadpan genuinely flat, ironic praise cool, understatement dry. Wry rather than bitter. Ready for week 15.",
+        "70_89": "Good; occasionally emphasis creeps in and irony tips into sarcasm.",
+        "50_69": "Delivery too animated, so irony reads as complaint. Repeat days 2 and 5.",
+        "below_50": "Redo days 1-5. Practise keeping the tone completely level on extreme content."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "The rule is counter-intuitive: the more extreme the situation, the FLATTER the delivery.",
+      "Litotes affirms by negating the opposite. 'Not bad' means good, and the gentle fall signals the inversion.",
+      "Irony delivered with emphasis becomes sarcasm, which reads as hostile rather than wry.",
+      "The ↗↘ contour on one word is the signature ironic move: apparent enthusiasm immediately withdrawn.",
+      "Understatement invites the listener to supply the real scale. Say less and mean more."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check that no line received emphatic stress."
+  }
+}

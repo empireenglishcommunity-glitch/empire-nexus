@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 19,
+  "focus": "Natural fillers instead of 'erm' · reformulation on the move · seamless self-repair · buying time elegantly · thinking on your feet under pressure",
+  "focus_ar": "الفواصل الطبيعية بدل 'erm'، وإعادة الصياغة أثناء الكلام، والتصحيح الذاتي السلس، وكسب الوقت بأناقة، والتفكير السريع تحت الضغط",
+  "arabic_challenge": "By C2 the words are available; the challenge is retrieving them in real time without the machinery showing. Fluent speakers do hesitate — constantly — but they hesitate in ENGLISH: with phrases, discourse markers and controlled pauses rather than with 'erm'. They also repair without apology, sliding from one formulation into a better one at the same pace. Learners with excellent English often sound less competent than they are simply because their hesitations are unmanaged, and a silence with a falling tone hands the turn away before they have finished thinking.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["natural fillers instead of 'erm'"],
+      "isolation": {
+        "instructions": "Replace 'erm' with real language: 'well', 'I mean', 'the thing is', 'let me put it this way', 'how shall I say'. These occupy the same time but sound deliberate. Deliver them at normal pace with a level tone so the turn stays yours.",
+        "instructions_ar": "استبدل 'erm' بلغة حقيقية: 'well'، 'I mean'، 'the thing is'، 'let me put it this way'. تشغل الوقت نفسه لكنها تبدو مقصودة. قلها بسرعة عادية ونبرة مستوية ليبقى الدور لك.",
+        "practice": ["well, |", "I mean, |", "the thing is, |", "level tone keeps the turn"]
+      },
+      "minimal_pairs": [
+        {"pair": ["the thing is, |", "erm..."], "meaning": ["مقصود", "متردّد"]},
+        {"pair": ["level tone (turn kept)", "falling tone (turn lost)"], "meaning": ["يحتفظ", "يسلّم"]},
+        {"pair": ["one filler phrase", "repeated erm"], "meaning": ["طبيعي", "مزعج"]},
+        {"pair": ["let me put it this way", "how do you say"], "meaning": ["واثق", "يطلب مساعدة"]},
+        {"pair": ["filler at normal pace", "filler stretched out"], "meaning": ["طبيعي", "متكلَّف"]}
+      ],
+      "word_practice": ["well", "I mean", "the thing is", "let me put it this way", "how shall I say", "look", "you see", "the point is", "actually", "in a sense"],
+      "sentence_practice": [
+        "Well, the thing is, nobody actually asked.",
+        "I mean, it depends what you count as success.",
+        "Let me put it this way: it was not our best decision."
+      ],
+      "record_this": "Well, the thing is, nobody actually asked the question at the time. I mean, it rather depends what you count as success in this context. Let me put it this way: it was not the best decision we made that year.",
+      "self_check": "Say 'Well, the thing is, nobody asked'. Is the filler at normal pace with a level tone?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["reformulation on the move"],
+      "isolation": {
+        "instructions": "Improve a formulation mid-sentence without stopping: 'It was unsuccessful — or rather, it was never properly tried.' The reformulation runs at the same pace with a tiny pause before it. No apology, no restart; you are refining, not correcting an error.",
+        "instructions_ar": "حسّن الصياغة في وسط الجملة دون توقّف. إعادة الصياغة بالسرعة نفسها مع وقفة صغيرة قبلها. بلا اعتذار ولا إعادة، فأنت تُصقل لا تصحّح خطأً.",
+        "practice": ["It was unsuccessful — | or rather, | it was never properly tried", "refining, not correcting"]
+      },
+      "minimal_pairs": [
+        {"pair": ["— or rather, | (same pace)", "sorry, let me rephrase"], "meaning": ["صقل", "اعتذار"]},
+        {"pair": ["to put it more precisely", "no, that's wrong"], "meaning": ["مهني", "مرتبك"]},
+        {"pair": ["refining", "correcting an error"], "meaning": ["واثق", "متردّد"]},
+        {"pair": ["tiny pause before", "long pause before"], "meaning": ["سلس", "متعثّر"]},
+        {"pair": ["what I should say is", "I don't know how to say it"], "meaning": ["متمكّن", "عاجز"]}
+      ],
+      "word_practice": ["or rather", "to put it more precisely", "what I should say is", "more accurately", "or perhaps better", "to be exact", "that is to say", "in other words", "let me refine that", "closer to the truth"],
+      "sentence_practice": [
+        "It was unsuccessful — or rather, it was never properly tried.",
+        "They refused. Or more accurately, they never replied.",
+        "It was expensive; to be exact, it was three times the estimate."
+      ],
+      "record_this": "The pilot was unsuccessful — or rather, it was never properly tried at all. They refused the request. Or more accurately, they simply never replied to it. It was expensive; to be exact, it came to three times the original estimate.",
+      "self_check": "Say the 'unsuccessful' line. Did the reformulation keep the same pace, with no apology?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["seamless self-repair of a real slip"],
+      "isolation": {
+        "instructions": "When you make an actual error, repair it inside the flow: 'We met on Tuesday — Wednesday, sorry — and agreed the terms.' Keep the correction quick, put the right word in immediately, and continue at pace. Do not stop, do not restart the sentence, and do not dwell on it.",
+        "instructions_ar": "عند وقوع خطأ حقيقي، صحّحه داخل الجريان: 'We met on Tuesday — Wednesday, sorry — and agreed'. أبقِ التصحيح سريعًا وأدخل الكلمة الصحيحة فورًا وتابع بالسرعة نفسها.",
+        "practice": ["We met on Tuesday — Wednesday, sorry — and agreed the terms", "quick, inline, continue at pace"]
+      },
+      "minimal_pairs": [
+        {"pair": ["— Wednesday, sorry — and continued", "stopping and starting again"], "meaning": ["سلس", "متعثّر"]},
+        {"pair": ["repair inside the flow", "repair by restarting"], "meaning": ["متمكّن", "مرتبك"]},
+        {"pair": ["quick correction", "lingering correction"], "meaning": ["طبيعي", "محرج"]},
+        {"pair": ["one brief sorry", "repeated apologies"], "meaning": ["مهني", "متردّد"]},
+        {"pair": ["continue at pace", "slow down apologetically"], "meaning": ["واثق", "ضعيف"]}
+      ],
+      "word_practice": ["sorry, Wednesday", "I mean March", "the second one, rather", "not him, her", "forty, not fourteen", "the third clause", "sorry, the fourth", "in June, I should say", "or was it May", "let me correct that"],
+      "sentence_practice": [
+        "We met on Tuesday — Wednesday, sorry — and agreed the terms.",
+        "The figure was fourteen thousand — forty, rather — in the first year.",
+        "She raised it in March. April, I should say."
+      ],
+      "record_this": "We met on Tuesday — Wednesday, sorry — and agreed the main terms that afternoon. The figure was fourteen thousand — forty thousand, rather — in the very first year. She raised the objection in March. April, I should say, just before the vote.",
+      "self_check": "Say the Tuesday line. Did you repair inline and continue at pace, without restarting?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["buying time elegantly under questioning"],
+      "isolation": {
+        "instructions": "When you need a moment, take it visibly and calmly: 'That is a good question, and I want to answer it properly.' 'Let me separate two things.' 'Before I answer that, can I check what you mean by…'. Each buys real thinking time while sounding like control rather than evasion.",
+        "instructions_ar": "عندما تحتاج لحظة، خذها بوضوح وهدوء. كل عبارة تكسب وقت تفكير حقيقيًا وتبدو تحكّمًا لا تهرّبًا.",
+        "practice": ["That is a good question, and I want to answer it properly.", "Let me separate two things.", "control, not evasion"]
+      },
+      "minimal_pairs": [
+        {"pair": ["Let me separate two things.", "erm, well, I suppose"], "meaning": ["تحكّم", "تردّد"]},
+        {"pair": ["visible calm pause", "panicked filling"], "meaning": ["واثق", "مرتبك"]},
+        {"pair": ["Before I answer, can I check…", "I don't understand"], "meaning": ["يكسب وقتًا", "يعترف بالعجز"]},
+        {"pair": ["sounds like control", "sounds like evasion"], "meaning": ["مقنع", "مريب"]},
+        {"pair": ["one time-buying move", "several in a row"], "meaning": ["طبيعي", "واضح التهرّب"]}
+      ],
+      "word_practice": ["that is a good question", "let me separate two things", "before I answer that", "can I check what you mean", "there are two parts to that", "let me take the second first", "I want to be accurate here", "the short answer is", "the longer answer is", "may I come back to that"],
+      "sentence_practice": [
+        "That is a good question, and I want to answer it properly.",
+        "Let me separate two things, because they are being confused.",
+        "There are two parts to that. Let me take the second first."
+      ],
+      "record_this": "That is a good question, and I want to answer it properly rather than quickly. Let me separate two things, because I think they are being confused. There are two parts to that question, and I will take the second one first.",
+      "self_check": "Say 'Let me separate two things'. Does it sound like calm control rather than evasion?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["thinking on your feet under real pressure"],
+      "isolation": {
+        "instructions": "Combine everything: hold the floor with a level tone, use a real filler, reformulate as you go, and repair inline without apology. The target is speech that sounds composed while you are genuinely still deciding what to say. Practise answering a hard question aloud with no preparation.",
+        "instructions_ar": "اجمع كل شيء: احفظ الدور بنبرة مستوية، واستخدم فاصلة حقيقية، وأعد الصياغة أثناء الكلام، وصحّح داخل الجريان بلا اعتذار. الهدف كلام يبدو متماسكًا وأنت لا تزال تقرّر ما تقول.",
+        "practice": ["level tone + real filler + reformulation + inline repair", "composed while still deciding"]
+      },
+      "minimal_pairs": [
+        {"pair": ["composed while deciding", "visibly struggling"], "meaning": ["متمكّن", "مرتبك"]},
+        {"pair": ["all four tools together", "one tool repeated"], "meaning": ["طبيعي", "ميكانيكي"]},
+        {"pair": ["thinking time taken calmly", "thinking time filled with erm"], "meaning": ["واثق", "ضعيف"]},
+        {"pair": ["turn held throughout", "turn lost mid-thought"], "meaning": ["مضبوط", "مقطوع"]},
+        {"pair": ["sounds prepared", "sounds improvised"], "meaning": ["مقنع", "مهزوز"]}
+      ],
+      "word_practice": ["well, the honest answer is", "I would put it like this", "there are two ways of looking at it", "let me be careful here", "I want to distinguish", "or rather", "sorry, the other way round", "which brings me to", "so, in short", "that is where I would leave it"],
+      "sentence_practice": [
+        "Well, the honest answer is that I don't yet know — or rather, I know what I suspect but not what I can prove.",
+        "There are two ways of looking at it. Let me be careful here, because the distinction matters.",
+        "So, in short: yes in principle, no in practice. That is where I would leave it."
+      ],
+      "record_this": "Well, the honest answer is that I don't yet know, or rather, I know what I suspect but not what I can prove. There are two ways of looking at it, and let me be careful here, because the distinction genuinely matters. So, in short: yes in principle, no in practice.",
+      "self_check": "Answer a hard question aloud without preparation. Did you sound composed while still deciding?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 19 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["the thing is, |", "erm..."],
+        ["— or rather, | (same pace)", "sorry, let me rephrase"],
+        ["— Wednesday, sorry — and continued", "stopping and starting again"],
+        ["Let me separate two things.", "erm, well, I suppose"],
+        ["composed while deciding", "visibly struggling"],
+        ["level tone (turn kept)", "falling tone (turn lost)"]
+      ],
+      "challenge_sentences": [
+        "Well, the thing is, nobody checked.",
+        "It failed — or rather, it was never tried.",
+        "We met Tuesday — Wednesday, sorry.",
+        "That is a good question. Let me separate two things."
+      ],
+      "record_this": "Well, the thing is, nobody actually checked the figures before publication. It failed — or rather, it was never genuinely tried in the first place. We met on Tuesday. Wednesday, sorry. That is a good question, so let me separate two things before I answer.",
+      "self_check": "Three checks: no 'erm', reformulations at the same pace, and a level tone holding your turn."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself answering this as though live in a hostile interview, ideally without reading it word for word. The point is that hesitation should sound like control — then listen back and count your 'erm's.",
+        "instructions_ar": "سجّل نفسك تجيب بهذا كأنك في مقابلة صعبة مباشرة، وبلا قراءة حرفية إن أمكن. المقصد أن يبدو التردّد تحكّمًا، ثم اسمع وعُدّ 'erm'.",
+        "passage": "Well, the thing is, that question contains two separate claims, and I want to answer both properly. Let me take the second one first. Yes, the report was late. It was late because the data arrived in March — February, sorry, but we did not receive the corrected version until March. That matters. On your first point, I would say the process was inadequate, or rather, it was adequate for a smaller decision and quite wrong for this one. That is a distinction I would want to hold onto. Now, you asked whether anyone was warned. The honest answer is that I do not know what was said in that meeting, and I would rather say so than guess. What I can tell you is what the minutes record. Before I go on, can I check whether you mean the March meeting or the April one? Because my answer changes.",
+        "sounds_to_check": {
+          "real fillers, zero 'erm'": "Well, the thing is,  ·  Now,  ·  The honest answer is  ·  all at normal pace with a level tone",
+          "reformulation at the same pace": "it was inadequate, | or rather, | it was adequate for a smaller decision  ·  no apology, no restart",
+          "inline repair of a genuine slip": "the data arrived in March — February, sorry, but we did not receive the corrected version until March",
+          "elegant time-buying": "I want to answer both properly  ·  Let me take the second one first  ·  Before I go on, can I check whether…",
+          "turn held with a level tone": "every pause should sit level, never falling - a falling pause invites interruption"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "No 'erm', fillers deliberate, reformulations and repairs seamless, turn held throughout. Sounds composed under pressure. Ready for week 20.",
+        "70_89": "Good; an occasional 'erm' or an apology after a repair.",
+        "50_69": "Hesitations unmanaged, so competence is understated. Repeat days 1 and 3.",
+        "below_50": "Redo days 1-5. Ban 'erm' entirely and substitute a real phrase every time."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "Fluent speakers hesitate constantly, but they hesitate in English: with phrases, not with 'erm'.",
+      "Keep a LEVEL tone while thinking. A falling pause hands your turn to someone else.",
+      "Reformulate at the same pace and never apologise. You are refining, not confessing an error.",
+      "Repair inline and keep going. Restarting the sentence costs more credibility than the original slip.",
+      "Buying time visibly and calmly reads as control. Filling silence with sound reads as panic."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 count your 'erm's - the target is zero."
+  }
+}

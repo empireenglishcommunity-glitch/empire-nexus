@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w18",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 18,
+  "pattern_name": "Concision, elegance and editing for style",
+  "pattern_name_ar": "الإيجاز والأناقة والتحرير الأسلوبي",
+  "formula": "Cut padding (at this point in time → now; due to the fact that → because; in the event that → if) · Prefer the verb to the nominalisation where clarity demands · Vary sentence length · Short sentence for impact · Cut intensifiers that add nothing",
+  "formula_visual": "[at this point in time] → [now]",
+  "when_to_use": "In every final draft. Concision is not brevity for its own sake but the removal of words that do no work, so that the remaining words carry weight. Vary sentence length for rhythm, and place a very short sentence after long ones when you want a conclusion to land. This is the discipline that separates competent writing from good writing.",
+  "when_to_use_ar": "في كل مسوّدة نهائية. الإيجاز ليس القِصَر لذاته بل حذف الكلمات التي لا تعمل ليحمل الباقي ثقلًا. ونوّع طول الجُمَل للإيقاع، وضع جملة قصيرة جدًا بعد الطويلة عندما تريد أن تقع الخلاصة.",
+  "why_arabic_speakers_struggle": "Arabic rhetorical prose values amplification, balanced doubling and elaboration, and these are genuine virtues in Arabic. Transferred to English they read as padding, because English formal prose prizes compression. Learners also inherit a belief from examination writing that longer sentences signal higher proficiency, when in fact controlled variation, including deliberately short sentences, is the stronger signal.",
+  "examples": [
+    {"en": "We must decide now.", "ar": "علينا أن نقرّر الآن", "structure": "[pruned: 'at this point in time' removed]"},
+    {"en": "The delay happened because nobody checked.", "ar": "حدث التأخير لأن أحدًا لم يراجع", "structure": "[because, not 'due to the fact that']"},
+    {"en": "We spent three years on a system that was never going to work. It failed.", "ar": "أنفقنا ثلاث سنوات على نظام لم يكن سينجح. فشل", "structure": "[long] + [very short for impact]"},
+    {"en": "We checked. We confirmed. We proceeded.", "ar": "راجعنا. أكّدنا. مضينا", "structure": "[three short sentences for pace]"},
+    {"en": "After eleven months of negotiation, four site visits and a change of minister, the answer arrived. No.", "ar": "بعد أحد عشر شهرًا من التفاوض وأربع زيارات وتغيير وزير، وصل الجواب. لا", "structure": "[very long] + [one word]"}
+  ],
+  "common_errors": [
+    {"wrong": "At this point in time we must make a decision.", "correct": "We must decide now.", "explanation": "'At this point in time' is padding for 'now', and 'make a decision' is weaker than 'decide'."},
+    {"wrong": "Due to the fact that nobody checked, the delay occurred.", "correct": "The delay happened because nobody checked.", "explanation": "'Due to the fact that' is five words doing the work of 'because'."},
+    {"wrong": "It was very extremely important and absolutely essential.", "correct": "It was essential.", "explanation": "Stacked intensifiers weaken rather than strengthen; one precise word is stronger."},
+    {"wrong": "In the event that it should transpire that the system fails, we will act.", "correct": "If the system fails, we will act.", "explanation": "Two formal frames have been stacked where one simple conditional suffices."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Cut the padding: 'at this point in time' becomes ___.", "answer": "now"},
+    {"sentence": "Cut the padding: 'due to the fact that' becomes ___.", "answer": "because"},
+    {"sentence": "Cut the padding: 'in the event that' becomes ___.", "answer": "if"},
+    {"sentence": "We spent three years on it. It ___.", "answer": "failed"},
+    {"sentence": "Prefer the verb: 'make a decision' becomes ___.", "answer": "decide"}
+  ],
+  "quick_rule": "Delete any word that does no work. Prefer one precise word to three vague ones. Vary sentence length, and use a very short sentence to land a conclusion.",
+  "quick_rule_ar": "احذف كل كلمة لا تعمل. وفضّل كلمة دقيقة على ثلاث مبهمة. ونوّع طول الجُمَل، واستخدم جملة قصيرة جدًا لإنزال الخلاصة.",
+  "mnemonic": "If deleting it changes nothing, delete it.",
+  "connect_to_speaking": "In accent week 18 you drilled crisper articulation and a slightly slower pace for pruned prose, with a real pause before every short sentence. Fewer words means each one carries more, so delivery must tighten rather than speed up."
+}

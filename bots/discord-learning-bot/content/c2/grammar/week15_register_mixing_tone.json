@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w15",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 15,
+  "pattern_name": "Register mixing and tone control for effect",
+  "pattern_name_ar": "خلط الأساليب وضبط النبرة للأثر",
+  "formula": "Formal frame + plain landing (resolved, after lengthy deliberation, to do nothing) · Marked shift (or, to put it bluntly / in plain terms) · Formal to casual (Between ourselves, …) · Casual to formal (Nevertheless, I must ask that …)",
+  "formula_visual": "[The committee resolved, after eighteen months,] [to do absolutely nothing]",
+  "when_to_use": "To create effect by breaking register on purpose. A formal opening followed by a plain landing produces irony or emphasis. Moving from formal to casual creates candour and intimacy. Moving from casual to formal raises the stakes and signals seriousness. At C2 the expectation is not consistency but deliberate, controlled inconsistency.",
+  "when_to_use_ar": "لخلق أثر بكسر الأسلوب عن قصد. الافتتاح الرسمي مع نهاية بسيطة يُنتج سخرية أو توكيدًا، والانتقال من الرسمي إلى العادي يخلق صراحة، ومن العادي إلى الرسمي يرفع المستوى.",
+  "why_arabic_speakers_struggle": "Arabic speakers already switch between فصحى and عامية, so the instinct is present and strong. The difficulty is that English register is carried by features that textbooks rarely teach: contraction, Latinate versus Germanic vocabulary, phrasal versus single-word verbs, and sentence length. Learners therefore mix registers accidentally, and because the break is unmarked it reads as loss of control rather than as a device.",
+  "examples": [
+    {"en": "The committee resolved, after eighteen months of deliberation, to do absolutely nothing.", "ar": "قرّرت اللجنة بعد ثمانية عشر شهرًا من التداول ألّا تفعل شيئًا إطلاقًا", "structure": "[formal frame] + [plain landing]"},
+    {"en": "The projections were optimistic, or, to put it bluntly, wrong.", "ar": "كانت التوقّعات متفائلة، أو بصراحة، خاطئة", "structure": "clause + [marked shift] + plain word"},
+    {"en": "I am obliged to record my objection. Between ourselves, it will change nothing.", "ar": "أنا مُلزم بتسجيل اعتراضي. بيننا، لن يغيّر شيئًا", "structure": "[formal] then [casual candour]"},
+    {"en": "Look, I get it, everyone is busy. Nevertheless, I must ask that the deadline be respected.", "ar": "أفهم أن الجميع مشغول. ومع ذلك، أطلب احترام الموعد", "structure": "[casual] then [formal escalation]"},
+    {"en": "There were procedural irregularities. In plain terms, someone lied.", "ar": "كانت هناك مخالفات إجرائية. بعبارة صريحة، أحدهم كذب", "structure": "[formal] + [plain restatement]"}
+  ],
+  "common_errors": [
+    {"wrong": "I am writing to inform you that the whole thing went pear-shaped.", "correct": "I am writing to inform you that the project encountered significant difficulties.", "explanation": "An unmarked colloquialism inside a formal sentence reads as a lapse, not a device."},
+    {"wrong": "Dear Sir, Gimme a call when you can.", "correct": "Dear Sir, I should be grateful if you would telephone me at your convenience.", "explanation": "A formal salutation commits you to formal phrasing throughout."},
+    {"wrong": "The data demonstrates that stuff got better.", "correct": "The data demonstrates a marked improvement.", "explanation": "'Stuff' and 'got' clash with the academic verb 'demonstrates'."},
+    {"wrong": "The outcome was suboptimal, we lost.", "correct": "The outcome was, in the language of the report, suboptimal. We lost.", "explanation": "The shift needs marking with punctuation or a phrase, or it looks accidental."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The projections were optimistic, or, to put it ___, wrong.", "answer": "bluntly"},
+    {"sentence": "There were irregularities. In ___ terms, someone lied.", "answer": "plain"},
+    {"sentence": "I must record my objection. ___ ourselves, it changes nothing.", "answer": "Between"},
+    {"sentence": "Look, I understand. ___, I must ask that the rule be followed.", "answer": "Nevertheless"},
+    {"sentence": "The committee resolved, after a year, ___ do absolutely nothing.", "answer": "to"}
+  ],
+  "quick_rule": "Break register on PURPOSE and MARK the break. Formal to casual = candour. Casual to formal = seriousness. An unmarked break reads as a mistake.",
+  "quick_rule_ar": "اكسر الأسلوب عن قصد وحدّد الكسرة. من الرسمي إلى العادي صراحة، ومن العادي إلى الرسمي جدّية. والكسرة غير المحدّدة تُقرأ خطأً.",
+  "mnemonic": "Deliberate clash is a device; accidental clash is an error.",
+  "connect_to_speaking": "In accent week 15 you drilled marking every shift with a pause and a change of pace. The same words read as a lapse or as a device depending entirely on whether the delivery shows intent."
+}

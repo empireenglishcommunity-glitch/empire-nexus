@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w8",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 8,
+  "pattern_name": "Meta-discourse and sophisticated cohesion",
+  "pattern_name_ar": "ما وراء الخطاب والتماسك المتطوّر",
+  "formula": "Retrospective: as noted above, as I have argued, as we have seen · Prospective: as will become clear, I shall show · Emphasis: it is worth noting that, I would draw attention to · Return: to return to my earlier point, leaving that aside · Parenthetical asides between commas",
+  "formula_visual": "[The figures], [as I noted earlier], [are provisional]",
+  "when_to_use": "To talk about your own argument so a reader or listener can navigate it. Retrospective signposts point back, prospective ones point forward, emphasis markers raise importance, and return phrases recover the thread after a digression. This is what makes a long paper or speech followable, and its absence is the commonest reason complex writing feels impenetrable.",
+  "when_to_use_ar": "للحديث عن حجّتك نفسها ليتمكّن القارئ أو المستمع من التنقّل فيها. إشارات للخلف وأخرى للأمام وعلامات توكيد وعبارات عودة بعد الاستطراد. وهذا ما يجعل الورقة أو الخطاب الطويل قابلًا للمتابعة.",
+  "why_arabic_speakers_struggle": "Arabic academic prose signals structure with explicit connectors attached to clauses rather than with bracketed parenthetical commentary, so learners often omit the commas around an aside or write it as a separate sentence, which breaks the flow. The more damaging habit is omitting meta-discourse entirely: the argument may be excellent, but with no signposts the reader cannot tell which claim is central and which is background.",
+  "examples": [
+    {"en": "As noted above, the figures remain provisional.", "ar": "كما ذُكر أعلاه، تبقى الأرقام مؤقّتة", "structure": "[retrospective signpost], + clause"},
+    {"en": "The figures, as I noted earlier, are provisional.", "ar": "الأرقام، كما ذكرت سابقًا، مؤقّتة", "structure": "subject, [aside], + verb"},
+    {"en": "It is worth noting that nobody was consulted.", "ar": "من الجدير بالذكر أن أحدًا لم يُستشَر", "structure": "[emphasis marker] + [that + clause]"},
+    {"en": "To return to my earlier point, the timetable is the real issue.", "ar": "بالعودة إلى نقطتي السابقة، الجدول الزمني هو المسألة الحقيقية", "structure": "[return phrase], + clause"},
+    {"en": "As will become clear, my argument does not require a large effect.", "ar": "كما سيتّضح، لا تتطلّب حجّتي أثرًا كبيرًا", "structure": "[prospective signpost], + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "The figures as I noted earlier are provisional.", "correct": "The figures, as I noted earlier, are provisional.", "explanation": "A parenthetical aside needs commas on both sides, or the sentence becomes hard to parse."},
+    {"wrong": "As noted above the figures remain provisional.", "correct": "As noted above, the figures remain provisional.", "explanation": "An initial signpost is followed by a comma."},
+    {"wrong": "It is worth noting nobody was consulted.", "correct": "It is worth noting that nobody was consulted.", "explanation": "In formal writing keep 'that' after the emphasis marker."},
+    {"wrong": "As I have argued before in the previous section above earlier.", "correct": "As I have argued, …", "explanation": "One signpost is enough; stacking them is redundant and clumsy."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "___ noted above, the figures remain provisional.", "answer": "As"},
+    {"sentence": "The figures, ___ I noted earlier, are provisional.", "answer": "as"},
+    {"sentence": "It is worth noting ___ nobody was consulted.", "answer": "that"},
+    {"sentence": "To ___ to my earlier point, the timetable is the issue.", "answer": "return"},
+    {"sentence": "As will become ___, the effect need not be large.", "answer": "clear"}
+  ],
+  "quick_rule": "Signpost backwards, forwards, and when you return. Asides take commas on BOTH sides. Keep 'that' after emphasis markers. One signpost at a time.",
+  "quick_rule_ar": "أشِر للخلف وللأمام وعند العودة. والاعتراضات بفواصل على الجانبين. وأبقِ 'that' بعد علامات التوكيد. وإشارة واحدة في المرّة.",
+  "mnemonic": "Tell the reader where they are.",
+  "connect_to_speaking": "In accent week 8 you drilled asides in a lower pitch band with pauses on both sides. Those written commas are audible boundaries, and without the pitch drop commentary and content become indistinguishable."
+}

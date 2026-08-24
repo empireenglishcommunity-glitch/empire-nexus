@@ -1,0 +1,185 @@
+{
+  "level": "C2",
+  "cefr": "C2",
+  "week": 10,
+  "focus": "continual vs continuous · imply vs infer · affect vs effect (and the noun/verb stress shift) · comprise/compose/constitute · precise articulation of near-identical pairs",
+  "focus_ar": "continual مقابل continuous، وimply مقابل infer، وaffect مقابل effect وانتقال النبر، وcomprise/compose/constitute، والنطق الدقيق للأزواج شديدة التشابه",
+  "arabic_challenge": "At C2 the risk is no longer being misunderstood but being slightly wrong in a way that educated listeners notice. Many of these pairs differ by one or two phonemes ('affect' /əˈfekt/ versus 'effect' /ɪˈfekt/) and by meaning, so a small articulatory slip produces a real semantic error. Arabic vowel inventory does not distinguish the unstressed /ə/ and /ɪ/ that separate this pair, so the two words can collapse into one sound. The remedy is deliberate articulation of the first vowel plus certainty about which word you actually want.",
+  "daily_drills": [
+    {
+      "day": 1,
+      "target_sounds": ["'continual' vs 'continuous'"],
+      "isolation": {
+        "instructions": "'Continual' means repeated with breaks; 'continuous' means unbroken. Both stress the second syllable: conTINual, conTINuous. The difference is the ending — /juəl/ against /juəs/. Say them back to back and keep the final consonant crisp, because that is the only audible clue.",
+        "instructions_ar": "'Continual' تعني متكرّرًا بفواصل، و'continuous' تعني متّصلًا بلا انقطاع. النبر في كلتيهما على المقطع الثاني، والفرق في النهاية فقط.",
+        "practice": ["conTINual /juəl/ = repeated", "conTINuous /juəs/ = unbroken", "keep the final consonant crisp"]
+      },
+      "minimal_pairs": [
+        {"pair": ["continual interruptions (repeated)", "continuous noise (unbroken)"], "meaning": ["متكرّر", "متّصل"]},
+        {"pair": ["/juəl/", "/juəs/"], "meaning": ["نهاية L", "نهاية S"]},
+        {"pair": ["continual rain (on and off)", "continuous rain (all day)"], "meaning": ["متقطّع", "مستمر"]},
+        {"pair": ["conTINual ✅", "CONtinual ❌"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["continuous assessment", "continual assessment"], "meaning": ["تقييم مستمر", "تقييم متكرّر"]}
+      ],
+      "word_practice": ["continual interruptions", "continuous noise", "continual rain", "continuous supply", "continual complaints", "continuous improvement", "continual delays", "continuous monitoring", "continual reminders", "continuous service"],
+      "sentence_practice": [
+        "The continual interruptions made the meeting impossible.",
+        "A continuous supply of power is essential.",
+        "There were continual delays throughout the week."
+      ],
+      "record_this": "The continual interruptions that morning made the meeting virtually impossible. A continuous supply of power is absolutely essential for the equipment. There were continual delays throughout the week, each one small in itself.",
+      "self_check": "Say 'continual' then 'continuous'. Is the final consonant clearly different in each?"
+    },
+    {
+      "day": 2,
+      "target_sounds": ["'imply' vs 'infer'"],
+      "isolation": {
+        "instructions": "The speaker IMPLIES; the listener INFERS. They move in opposite directions, so confusing them reverses the sentence. 'imPLY' has the beat on PLY; 'inFER' has it on FER. Both are short and easy to say — the difficulty is purely conceptual, so drill the direction as you drill the sound.",
+        "instructions_ar": "المتحدّث يُلمّح (implies) والمستمع يستنتج (infers). الاتجاهان متعاكسان، فالخلط يعكس الجملة. تدرّب على الاتجاه مع الصوت.",
+        "practice": ["the speaker imPLIES", "the listener inFERS", "opposite directions"]
+      },
+      "minimal_pairs": [
+        {"pair": ["She implied that he knew", "I inferred that he knew"], "meaning": ["هي ألمحت", "أنا استنتجت"]},
+        {"pair": ["imPLY (speaker)", "inFER (listener)"], "meaning": ["يُلمّح", "يستنتج"]},
+        {"pair": ["Are you implying I lied?", "Are you inferring I lied? ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["the report implies", "the reader infers"], "meaning": ["النص يُلمّح", "القارئ يستنتج"]},
+        {"pair": ["implication", "inference"], "meaning": ["ما أُلمِح", "ما استُنتِج"]}
+      ],
+      "word_practice": ["she implied that", "I inferred that", "are you implying", "we can infer", "the report implies", "the reader infers", "an implication", "an inference", "implicitly stated", "reasonably inferred"],
+      "sentence_practice": [
+        "She implied that he already knew.",
+        "From her tone I inferred that he already knew.",
+        "Are you implying that I was careless?"
+      ],
+      "record_this": "She implied fairly clearly that he already knew about the decision. From her tone that afternoon I inferred that he already knew. Are you implying that I was careless with the original figures?",
+      "self_check": "Say both sentences. Is the speaker doing the implying and the listener the inferring?"
+    },
+    {
+      "day": 3,
+      "target_sounds": ["'affect' vs 'effect' — /əˈfekt/ vs /ɪˈfekt/ and the noun stress"],
+      "isolation": {
+        "instructions": "'Affect' is usually the verb /əˈfekt/; 'effect' is usually the noun /ɪˈfekt/. The first vowel is the only clue, so articulate it deliberately. Note also the rarer verb 'to effect change' (to bring it about) and the noun 'affect' (emotional state), stressed AFfect.",
+        "instructions_ar": "'Affect' فعل عادةً و'effect' اسم عادةً، والحرف الأول هو الدليل الوحيد فانطقه بعناية. ولاحظ الفعل الأقل شيوعًا 'to effect change' والاسم 'affect'.",
+        "practice": ["it will afFECT /ə/ the outcome", "the efFECT /ɪ/ was small", "the first vowel is the only clue"]
+      },
+      "minimal_pairs": [
+        {"pair": ["affect /əˈfekt/ (verb)", "effect /ɪˈfekt/ (noun)"], "meaning": ["يؤثّر", "التأثير"]},
+        {"pair": ["It will affect the outcome", "The effect on the outcome"], "meaning": ["فعل", "اسم"]},
+        {"pair": ["to effect change (bring about)", "to affect change ❌"], "meaning": ["يُحدث", "خطأ"]},
+        {"pair": ["side effects ✅", "side affects ❌"], "meaning": ["صحيح", "خطأ"]},
+        {"pair": ["AFfect (noun: mood)", "afFECT (verb)"], "meaning": ["حالة نفسية", "يؤثّر"]}
+      ],
+      "word_practice": ["it will affect the outcome", "the effect was small", "side effects", "to effect change", "adversely affected", "with immediate effect", "no discernible effect", "deeply affected by it", "in effect", "cause and effect"],
+      "sentence_practice": [
+        "The delay will affect the outcome significantly.",
+        "The effect on morale was immediate.",
+        "The new rule comes into effect in April."
+      ],
+      "record_this": "The delay will certainly affect the outcome of the whole negotiation. The effect on morale across the department was immediate and obvious. The new rule comes into effect in April, with no transitional period.",
+      "self_check": "Say 'affect' then 'effect'. Is the first vowel deliberately different in each?"
+    },
+    {
+      "day": 4,
+      "target_sounds": ["'comprise' / 'compose' / 'constitute'"],
+      "isolation": {
+        "instructions": "The whole COMPRISES the parts; the parts COMPOSE or CONSTITUTE the whole. 'The committee comprises nine members.' 'Nine members constitute the committee.' All three take second-syllable stress. The classic error is 'is comprised of', which reverses the logic.",
+        "instructions_ar": "الكلّ يشمل (comprises) الأجزاء، والأجزاء تُشكّل (compose/constitute) الكلّ. النبر في الثلاثة على المقطع الثاني. والخطأ الشائع 'is comprised of' يعكس المنطق.",
+        "practice": ["the committee comPRISES nine members", "nine members CONstitute the committee", "whole comprises, parts constitute"]
+      },
+      "minimal_pairs": [
+        {"pair": ["The committee comprises nine members ✅", "The committee is comprised of nine ❌"], "meaning": ["صحيح", "خطأ شائع"]},
+        {"pair": ["comprises (whole to parts)", "constitute (parts to whole)"], "meaning": ["الكلّ يشمل", "الأجزاء تُشكّل"]},
+        {"pair": ["is composed of ✅", "comprises ✅"], "meaning": ["كلتاهما صحيحة", "بديل صحيح"]},
+        {"pair": ["comPRISE", "COMprise ❌"], "meaning": ["نبر صحيح", "نبر خاطئ"]},
+        {"pair": ["constitute a majority", "comprise a majority"], "meaning": ["يُشكّلون", "يشمل"]}
+      ],
+      "word_practice": ["the committee comprises", "is composed of", "constitute a majority", "comprises three sections", "composed of volunteers", "constitutes a breach", "comprising four members", "which constitute the whole", "is made up of", "amounts to"],
+      "sentence_practice": [
+        "The committee comprises nine members.",
+        "Nine members constitute a quorum.",
+        "The report is composed of four sections."
+      ],
+      "record_this": "The standing committee comprises nine members drawn from three departments. Nine members constitute a quorum, which we have rarely managed to achieve. The final report is composed of four sections and two lengthy appendices.",
+      "self_check": "Say 'The committee comprises nine members'. Did you avoid 'is comprised of'?"
+    },
+    {
+      "day": 5,
+      "target_sounds": ["precise articulation across a mixed set"],
+      "isolation": {
+        "instructions": "Now mix the pairs and keep every distinction audible at speed: principle and principal, complement and compliment, discreet and discrete, elicit and illicit, precede and proceed. Each pair differs by one or two phonemes, so slow down just enough to articulate the difference and then return to normal pace.",
+        "instructions_ar": "الآن اخلط الأزواج وأبقِ كل تمييز مسموعًا بسرعة الكلام. كل زوج يختلف بحرف أو حرفين، فأبطئ قليلًا لتُخرج الفرق ثم عُد للإيقاع العادي.",
+        "practice": ["principle / principal", "discreet / discrete", "precede / proceed", "one or two phonemes apart"]
+      },
+      "minimal_pairs": [
+        {"pair": ["principle (rule)", "principal (main / head)"], "meaning": ["مبدأ", "رئيسي/مدير"]},
+        {"pair": ["complement (completes)", "compliment (praise)"], "meaning": ["يُكمّل", "مجاملة"]},
+        {"pair": ["discreet (tactful)", "discrete (separate)"], "meaning": ["كتوم", "منفصل"]},
+        {"pair": ["elicit (draw out)", "illicit (illegal)"], "meaning": ["يستخرج", "غير مشروع"]},
+        {"pair": ["precede (come before)", "proceed (continue)"], "meaning": ["يسبق", "يمضي"]}
+      ],
+      "word_practice": ["a matter of principle", "the principal reason", "complement the team", "pay a compliment", "be discreet about it", "three discrete stages", "elicit a response", "illicit payments", "precede the meeting", "proceed with caution"],
+      "sentence_practice": [
+        "It is a matter of principle, not the principal issue.",
+        "Please be discreet; these are discrete problems.",
+        "The briefing will precede the vote, then we proceed."
+      ],
+      "record_this": "It is a matter of principle for me, though not the principal issue at stake. Please be discreet about this, because these are two entirely discrete problems. The briefing will precede the vote, and only then do we proceed to discussion.",
+      "self_check": "Say each pair in the sentences. Is every distinction audible without slowing to a crawl?"
+    },
+    {
+      "day": 6,
+      "target_sounds": "Review all week 10 features",
+      "type": "review",
+      "mixed_pairs": [
+        ["continual interruptions (repeated)", "continuous noise (unbroken)"],
+        ["She implied that he knew", "I inferred that he knew"],
+        ["affect /əˈfekt/ (verb)", "effect /ɪˈfekt/ (noun)"],
+        ["The committee comprises nine ✅", "The committee is comprised of nine ❌"],
+        ["discreet (tactful)", "discrete (separate)"],
+        ["principle (rule)", "principal (main / head)"]
+      ],
+      "challenge_sentences": [
+        "The continual delays will affect the outcome.",
+        "She implied it; I merely inferred it.",
+        "The board comprises five discrete committees.",
+        "It is a principle, not the principal objection."
+      ],
+      "record_this": "The continual delays this quarter will certainly affect the final outcome. She implied it fairly openly, and I merely inferred what she left unsaid. The board comprises five discrete committees, each with its own remit. It is a principle for me, not the principal objection I would raise.",
+      "self_check": "Three checks: continual against continuous, the direction of imply against infer, and the first vowel of affect against effect."
+    },
+    {
+      "day": 7,
+      "target_sounds": "Self-assessment + extended practice",
+      "type": "assessment",
+      "test_yourself": {
+        "instructions": "Record yourself reading this as a careful written review read aloud. Every near-synonym here is deliberate, so precision matters more than pace — then listen back and check each pair.",
+        "instructions_ar": "سجّل نفسك تقرأ هذا كمراجعة مكتوبة بعناية. كل مترادف قريب هنا مقصود، فالدقّة أهم من السرعة، ثم اسمع وراجع كل زوج.",
+        "passage": "The principal difficulty with this study is not its conclusion but its method. The authors imply throughout that the intervention caused the improvement, yet the reader is left to infer the mechanism, which is never stated. The programme comprises three discrete stages, and continual changes to the second of these make comparison difficult. A continuous record was kept only in the final year. The effect reported is modest, and it is not clear whether the revisions affected it materially. I would compliment the authors on their transparency about missing data, which complements an otherwise cautious tone. Two points precede any firmer judgement: we must know what elicited the changes mid-study, and whether the omissions were discreet editorial choices or something else. On the principle that a method should be reproducible, I cannot yet proceed to endorse the finding.",
+        "sounds_to_check": {
+          "continual vs continuous": "continual changes to the second of these  ·  A continuous record was kept only in the final year",
+          "imply vs infer, correct direction": "The authors imply throughout…  ·  the reader is left to infer the mechanism",
+          "affect vs effect, first vowel": "The effect reported is modest  ·  whether the revisions affected it materially",
+          "comprise and the discrete pair": "The programme comprises three discrete stages - not 'is comprised of'",
+          "the remaining pairs": "principal difficulty / On the principle that  ·  compliment the authors / complements a cautious tone  ·  what elicited the changes  ·  discreet editorial choices  ·  Two points precede / cannot yet proceed"
+        }
+      },
+      "scoring_guide": {
+        "90_100": "Every pair distinct and correctly chosen, articulation precise at normal pace. Genuinely exact. Ready for week 11.",
+        "70_89": "Good; one or two pairs blur, most often affect against effect.",
+        "50_69": "Several pairs collapse into one sound or the wrong word is chosen. Repeat days 3 and 5.",
+        "below_50": "Redo days 1-5. Drill affect against effect first, since the unstressed vowel is the hardest distinction here."
+      }
+    }
+  ],
+  "supplementary_notes": {
+    "for_arabic_speakers": [
+      "'affect' is normally the verb, 'effect' the noun. The only audible clue is the unstressed first vowel, so articulate it deliberately.",
+      "The speaker implies; the listener infers. Confusing them reverses the sentence.",
+      "'continual' means repeated with gaps; 'continuous' means unbroken.",
+      "The whole comprises its parts. 'Is comprised of' is widely considered an error, so prefer 'comprises' or 'is composed of'.",
+      "At C2 these slips do not prevent understanding, but educated listeners notice them, which is precisely why they matter."
+    ],
+    "daily_time": "20-25 minutes",
+    "recording_requirement": "Record the 'record_this' line daily; on day 7 check each near-synonym pair individually."
+  }
+}

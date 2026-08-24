@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w9",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 9,
+  "pattern_name": "Epistemic stance and evidentiality",
+  "pattern_name_ar": "الموقف المعرفي والاستدلال",
+  "formula": "Second-hand: by all accounts, reportedly, according to · Bounded: to the best of my knowledge, so far as I can establish · Distanced: ostensibly, allegedly, purportedly · Limited: insofar as the evidence permits, on the balance of probabilities",
+  "formula_visual": "[To the best of my knowledge], [no decision has been taken]",
+  "when_to_use": "To mark HOW you know what you claim, which is essential in testimony, reporting, academic writing and any professional context where credibility depends on precision. Distinguish what you witnessed, what you were told, what is claimed by others, and what you infer. Overstating your source is a serious professional error, not a stylistic one.",
+  "when_to_use_ar": "لبيان كيف تعرف ما تدّعيه، وهو أساسي في الشهادة والتقارير والكتابة الأكاديمية وكل سياق مهني تعتمد فيه المصداقية على الدقّة. ميّز بين ما شهدته وما أُخبرت به وما يزعمه غيرك وما تستنتجه.",
+  "why_arabic_speakers_struggle": "Arabic marks source with clear constructions (يُقال / بحسب / وفقًا لـ), so the vocabulary transfers reasonably well. The difficulty is calibration and consistency: learners mix an assertive frame with a hedged one in the same sentence, or use 'allegedly' where 'reportedly' is meant, since 'allegedly' carries an implication of possible wrongdoing that 'reportedly' does not. Mixing the two frames ('It is thought him to have left') is a further structural error.",
+  "examples": [
+    {"en": "To the best of my knowledge, no decision has been taken.", "ar": "بحسب علمي، لم يُتّخذ أي قرار", "structure": "[bounded frame], + clause"},
+    {"en": "By all accounts, the meeting went reasonably well.", "ar": "بحسب كل الروايات، سار الاجتماع جيدًا", "structure": "[second-hand frame], + clause"},
+    {"en": "The funds were allegedly transferred in March.", "ar": "يُزعم أن الأموال حُوّلت في مارس", "structure": "[distanced adverb] + passive"},
+    {"en": "Insofar as the evidence permits, the account appears accurate.", "ar": "بقدر ما يسمح الدليل، يبدو السرد دقيقًا", "structure": "[limiting frame], + clause"},
+    {"en": "On the balance of probabilities, the delay was accidental.", "ar": "على الأرجح، كان التأخير عارضًا", "structure": "[probability frame], + clause"}
+  ],
+  "common_errors": [
+    {"wrong": "To the best of my knowledge, I am certain no decision was taken.", "correct": "To the best of my knowledge, no decision was taken.", "explanation": "A bounded frame and an assertion of certainty contradict each other."},
+    {"wrong": "He allegedly won the award.", "correct": "He reportedly won the award.", "explanation": "'Allegedly' implies a claim of wrongdoing; use 'reportedly' for neutral second-hand information."},
+    {"wrong": "It is thought him to have left the country.", "correct": "It is thought that he left the country. / He is thought to have left the country.", "explanation": "Choose one frame; the two cannot be combined."},
+    {"wrong": "According by the report, no warning was given.", "correct": "According to the report, no warning was given.", "explanation": "The fixed phrase is 'according to'."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "To the best of my ___, no decision has been taken.", "answer": "knowledge"},
+    {"sentence": "___ all accounts, the meeting went reasonably well.", "answer": "By"},
+    {"sentence": "The funds were ___ transferred in March, according to the bank.", "answer": "allegedly / reportedly"},
+    {"sentence": "___ as the evidence permits, the account appears accurate.", "answer": "Insofar"},
+    {"sentence": "On the ___ of probabilities, the delay was accidental.", "answer": "balance"}
+  ],
+  "quick_rule": "Mark your source precisely. 'Reportedly' is neutral; 'allegedly' implies wrongdoing. Never combine a hedge with a claim of certainty. Do not mix the two reporting frames.",
+  "quick_rule_ar": "حدّد مصدرك بدقّة. 'Reportedly' محايدة و'allegedly' تُلمّح لمخالفة. ولا تجمع تخفيفًا مع تأكيد يقين. ولا تخلط إطاري النقل.",
+  "mnemonic": "Say how you know, not just what you know.",
+  "connect_to_speaking": "In accent week 9 you drilled a narrow, even pitch range with no emphatic peaks, and the crucial difference between a flat 'allegedly' and one delivered with a sceptical lift. In testimony, emphasis reads as taking sides."
+}

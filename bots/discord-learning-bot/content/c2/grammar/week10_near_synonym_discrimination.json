@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w10",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 10,
+  "pattern_name": "Near-synonym discrimination and precise lexical choice",
+  "pattern_name_ar": "التمييز بين المترادفات القريبة والاختيار المعجمي الدقيق",
+  "formula": "continual (repeated) vs continuous (unbroken) · imply (speaker) vs infer (listener) · affect (verb) vs effect (noun) · comprise (whole) vs constitute (parts) · principle/principal · discreet/discrete · elicit/illicit · precede/proceed · complement/compliment",
+  "formula_visual": "[The whole] [comprises] [the parts] · [The parts] [constitute] [the whole]",
+  "when_to_use": "Whenever precision matters, which at C2 is always. These pairs are not stylistic alternatives; each member means something different, and choosing the wrong one changes your claim. In professional and academic writing these distinctions are treated as markers of competence, and errors in them are noticed even by readers who cannot explain the rule.",
+  "when_to_use_ar": "حيثما كانت الدقّة مهمّة، وهي في C2 دائمًا. هذه الأزواج ليست بدائل أسلوبية، فكل عضو يعني شيئًا مختلفًا واختيار الخطأ يغيّر ادّعاءك. وفي الكتابة المهنية تُعدّ هذه الفروق علامات كفاءة.",
+  "why_arabic_speakers_struggle": "Several of these pairs differ by a single unstressed vowel that Arabic does not distinguish, so 'affect' and 'effect' can collapse into one sound and then into one word. Others differ conceptually in a direction Arabic handles with one verb, notably imply and infer, where Arabic often uses a single verb for both the speaker's hinting and the listener's deducing. Because both members are real English words, spellcheckers and listeners rarely correct the error, so it hardens.",
+  "examples": [
+    {"en": "The continual interruptions made the meeting impossible.", "ar": "الانقطاعات المتكرّرة جعلت الاجتماع مستحيلًا", "structure": "continual = repeated with gaps"},
+    {"en": "A continuous supply of power is essential.", "ar": "الإمداد المتواصل بالطاقة ضروري", "structure": "continuous = unbroken"},
+    {"en": "She implied that he knew; I inferred it from her tone.", "ar": "لمّحت إلى أنه يعرف، واستنتجت ذلك من نبرتها", "structure": "speaker implies / listener infers"},
+    {"en": "The delay will affect the outcome, but the effect is small.", "ar": "سيؤثّر التأخير في النتيجة، لكن التأثير صغير", "structure": "affect = verb / effect = noun"},
+    {"en": "The committee comprises nine members.", "ar": "تتألّف اللجنة من تسعة أعضاء", "structure": "whole [comprises] parts"}
+  ],
+  "common_errors": [
+    {"wrong": "Are you inferring that I was careless?", "correct": "Are you implying that I was careless?", "explanation": "The speaker implies; the listener infers. Here the other person is doing the hinting."},
+    {"wrong": "The new rule will effect the timetable.", "correct": "The new rule will affect the timetable.", "explanation": "'Affect' is the verb; 'effect' as a verb means to bring something about."},
+    {"wrong": "The committee is comprised of nine members.", "correct": "The committee comprises nine members. / is composed of nine members.", "explanation": "The whole comprises its parts; 'is comprised of' reverses the logic."},
+    {"wrong": "Please be discrete about this matter.", "correct": "Please be discreet about this matter.", "explanation": "'Discreet' means tactful; 'discrete' means separate."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "The ___ (continual / continuous) interruptions made work impossible.", "answer": "continual"},
+    {"sentence": "She ___ (implied / inferred) that he already knew.", "answer": "implied"},
+    {"sentence": "The delay will ___ (affect / effect) the outcome.", "answer": "affect"},
+    {"sentence": "The board ___ (comprises / is comprised of) five committees.", "answer": "comprises"},
+    {"sentence": "Please be ___ (discreet / discrete) about this.", "answer": "discreet"}
+  ],
+  "quick_rule": "continual = repeated, continuous = unbroken. Speaker implies, listener infers. affect = verb, effect = noun. Whole comprises parts. discreet = tactful, discrete = separate.",
+  "quick_rule_ar": "continual متكرّر وcontinuous متّصل. والمتحدّث يُلمّح والمستمع يستنتج. وaffect فعل وeffect اسم. والكلّ يشمل الأجزاء. وdiscreet كتوم وdiscrete منفصل.",
+  "mnemonic": "Both words are real, so nobody will correct you. Learn the difference yourself.",
+  "connect_to_speaking": "In accent week 10 you drilled deliberate articulation of the unstressed first vowel that separates 'affect' from 'effect'. Because the two collapse easily in Arabic, precision in the vowel is precision in the meaning."
+}

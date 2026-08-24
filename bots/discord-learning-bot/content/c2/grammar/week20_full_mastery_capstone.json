@@ -1,0 +1,37 @@
+{
+  "id": "grammar_c2_w20",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 20,
+  "pattern_name": "Full mastery: flexible, effortless and precise use",
+  "pattern_name_ar": "الإتقان الكامل: استخدام مرن ومتقن ودقيق",
+  "formula": "All C2 structures integrated: subjunctive (w1) · literary conditionals (w2) · stylistic inversion (w3) · information packaging (w4) · cleft mastery (w5) · grammatical metaphor (w6) · concessives (w7) · meta-discourse (w8) · evidentiality (w9) · lexical precision (w10) · evaluative choice (w11) · idiom (w12) · allusion (w13) · irony (w14) · register control (w15) · rhetoric (w16) · rebuttal (w17) · concision (w18) · repair (w19)",
+  "formula_visual": "[Rarely does] [what we need is] [nonetheless] [so be it] - all available, chosen consciously",
+  "when_to_use": "Everywhere, and selectively. Mastery is not using every structure but having all of them available and choosing the one the moment requires. The CEFR describes C2 as flexible, effortless and precise use, and each word matters: flexible means you can switch, effortless means retrieval is automatic, precise means you choose the exact form your meaning needs rather than the nearest one you can produce.",
+  "when_to_use_ar": "في كل مكان وبانتقاء. الإتقان ليس استخدام كل التراكيب بل توفّرها كلها واختيار ما تطلبه اللحظة. ويصف الإطار المرجعي C2 بأنه استخدام مرن ومتقن ودقيق، وكل كلمة مهمّة.",
+  "why_arabic_speakers_struggle": "At this level the obstacle is no longer knowledge but retrieval under pressure. Most advanced learners can produce every C2 structure when asked, yet default to a narrow comfortable subset in real time, which is why their writing outperforms their speech. The remedy is deliberate rehearsal of the less comfortable forms until they arrive unprompted, and honest self-assessment about which structures you avoid.",
+  "examples": [
+    {"en": "Rarely does an organisation get a second chance at the same mistake.", "ar": "نادرًا ما تحصل مؤسسة على فرصة ثانية للخطأ نفسه", "structure": "[stylistic inversion, w3]"},
+    {"en": "What we need is not another review but the willingness to act.", "ar": "ما نحتاجه ليس مراجعة أخرى بل الإرادة للتحرّك", "structure": "[wh-cleft + antithesis, w5 + w16]"},
+    {"en": "Admittedly the reports were long. However, length is not an excuse for ignoring them.", "ar": "من المسلّم أن التقارير طويلة. لكن الطول ليس عذرًا لتجاهلها", "structure": "[concession + pivot + rebuttal, w17]"},
+    {"en": "Were it not for two junior colleagues, we would still be where we started.", "ar": "لولا زميلان مبتدئان لكنّا حيث بدأنا", "structure": "[literary conditional, w2]"},
+    {"en": "It has not been our finest year. It could, however, be the one we learn from.", "ar": "لم يكن عامنا الأفضل. لكنه قد يكون العام الذي نتعلّم منه", "structure": "[litotes + pivot, w14 + w17]"}
+  ],
+  "common_errors": [
+    {"wrong": "Using every C2 structure in a single paragraph to demonstrate range.", "correct": "Choosing the one structure the moment requires.", "explanation": "Density is not mastery. Precision is choosing the right form, not displaying all of them."},
+    {"wrong": "Avoiding inversion, cleft and subjunctive in speech because they feel risky.", "correct": "Rehearsing the uncomfortable forms until they arrive unprompted.", "explanation": "Structures you avoid in real time are not yet mastered, however well you can write them."},
+    {"wrong": "It has not been our finest year, which is to say it was catastrophic.", "correct": "It has not been our finest year.", "explanation": "Explaining understatement removes the effect; C2 trusts the listener."},
+    {"wrong": "Rarely does an organisation gets a second chance.", "correct": "Rarely does an organisation get a second chance.", "explanation": "After an inverted auxiliary the main verb is a bare base form."}
+  ],
+  "practice_fill_blank": [
+    {"sentence": "Rarely ___ an organisation get a second chance at the same mistake.", "answer": "does"},
+    {"sentence": "What we need ___ (be) not another review but the will to act.", "answer": "is"},
+    {"sentence": "Admittedly the reports were long. ___, that is no excuse.", "answer": "However"},
+    {"sentence": "___ it not for two colleagues, we would still be where we started.", "answer": "Were"},
+    {"sentence": "It has ___ been our finest year, but we may learn from it.", "answer": "not"}
+  ],
+  "quick_rule": "Flexible: you can switch structure and register at will. Effortless: retrieval is automatic. Precise: you choose the exact form, not the nearest one. Density is not mastery.",
+  "quick_rule_ar": "مرن: تُبدّل التركيب والأسلوب كما تريد. ومتقن: الاستدعاء تلقائي. ودقيق: تختار الصيغة المضبوطة لا الأقرب. والكثافة ليست إتقانًا.",
+  "mnemonic": "Have everything available. Use only what the moment needs.",
+  "connect_to_speaking": "In accent week 20 you drilled the full expressive range, deliberate pace control and strategic silence, then recorded the final capstone. Compare it with your very first A1 recording: that comparison, more than any score, is the real measure of the programme."
+}
