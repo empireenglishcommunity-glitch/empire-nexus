@@ -3547,20 +3547,31 @@ async def cmd_organize_server(ctx, confirm: str = None):
 
     await ctx.send("🗂️ Organizing… (repositioning categories + channels, ~a minute)")
     moved_cat = moved_ch = 0
+    errors = []
     for pos, cat in enumerate(ordered_cats):
         try:
             await cat.edit(position=pos)
             moved_cat += 1
-        except Exception:
-            pass
-        for cpos, ch in enumerate(sorted(cat.channels, key=_chan_key)):
-            try:
-                await ch.edit(position=cpos)
-                moved_ch += 1
-            except Exception:
-                pass
-    await ctx.send(f"🗂️ **Organized** — repositioned **{moved_cat}** categories + "
-                   f"**{moved_ch}** channels into the professional layout. ✅")
+        except Exception as e:
+            errors.append(f"category {cat.name}: {e}")
+    # Text and voice channels keep SEPARATE position sequences within a
+    # category — reorder each type independently or Discord ignores the move.
+    for cat in ordered_cats:
+        texts = [c for c in cat.channels if not isinstance(c, discord.VoiceChannel)]
+        voices = [c for c in cat.channels if isinstance(c, discord.VoiceChannel)]
+        for group in (texts, voices):
+            for cpos, ch in enumerate(sorted(group, key=_chan_key)):
+                try:
+                    await ch.edit(position=cpos)
+                    moved_ch += 1
+                except Exception as e:
+                    errors.append(f"#{ch.name}: {e}")
+    out = (f"🗂️ **Organized** — repositioned **{moved_cat}** categories + "
+           f"**{moved_ch}** channels into the professional layout. ✅")
+    if errors:
+        out += (f"\n⚠️ {len(errors)} item(s) couldn't move — first: `{errors[0][:150]}`"
+                f"\n(Discord may need a moment / permission check — re-run if needed.)")
+    await ctx.send(out[:1950])
     try:
         await ops_hub.send_ops_alert(
             "Server reorganized",
