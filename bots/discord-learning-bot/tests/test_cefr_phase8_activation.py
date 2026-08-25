@@ -96,3 +96,17 @@ async def test_exit_finish_already_passed_is_guarded(stub_part_b):
     stub_part_b(90, 0.9)
     out = await assessment.finish_advancement_exit("edone", 5004, "word " * 20)
     assert out == {"ok": False, "error": "already_passed"}
+
+
+
+def test_certificate_data_includes_can_do_checklist():
+    """Phase 8: the certificate endpoint carries the level's CEFR can-do
+    descriptors + the aligned-not-certified marker for the honest footer."""
+    database.register_member("certu", "Cert User")
+    database.set_level("certu", "A1")
+    data = database.itqan_certificate_data("certu", "A1")
+    assert data["cefr_aligned"] is True
+    assert isinstance(data["can_do"], list) and data["can_do"]
+    first = data["can_do"][0]
+    assert {"code", "en", "mode"}.issubset(first.keys())
+    assert first["code"].startswith("A1.")
