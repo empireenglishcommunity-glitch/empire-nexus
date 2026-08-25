@@ -79,7 +79,7 @@ def mint_session(discord_id: str, level: str, device_id: str,
     now = int(time.time())
     payload = {
         "did": discord_id,
-        "lvl": level,
+        "lvl": config.cefr_key(level),  # never mint a legacy lvl into a token
         "sid": device_id,
         "iat": now,
         "exp": now + ttl_days * 86400,

@@ -213,13 +213,13 @@ async def test_check_english_only_allows_pure_english_in_enforced_channel():
 
 @pytest.mark.asyncio
 async def test_check_english_only_gentle_for_l0_early_weeks():
-    database.register_member("u1", "Alice", level="L0")
+    database.register_member("u1", "Alice", level="A1")
     joined = datetime.datetime.now().isoformat()  # week 1
     database.update_member("u1", joined_at=joined)
     message = MagicMock()
     message.author.bot = False
     message.author.id = "u1"
-    message.channel.name = "l0-text-practice"
+    message.channel.name = "a1-text-practice"
     message.content = "ممكن حد يساعدني؟"
     message.reply = AsyncMock()
     await features.check_english_only(message)
