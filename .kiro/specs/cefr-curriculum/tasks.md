@@ -109,16 +109,16 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
       New exam surfaces correctly stay behind the OFF flag (zero student-facing
       change until enabled) — which is exactly why 8b is `[~]` above.
 
-## Phase 9 — Guides + transparency · [dojo] + [nexus] + [chronicle] — ❌ NOT DONE
-- [ ] Student `/guide` + owner `/ops-guide`: NOT updated for CEFR structure,
-      can-do checklists, level exams, certificates (commands exist but pre-date
-      this and were not revised).
-- [ ] `!progress` does NOT show CEFR level + can-do progress (no can-do surface
-      in the command).
-- [ ] Per-level can-do checklist on the practice site — NOT built (only the
-      certificate page shows can-do).
-- [x] `STATUS.md` updated (chronicle) to reflect the go-live.
-- [ ] `SYSTEM-MAP.md` not yet updated for Phase 8.
+## Phase 9 — Guides + transparency · [dojo] + [nexus] + [chronicle] — ✅ LIVE
+- [x] Student `/guide`: new CEFR section (placement, exit exam + boundary review,
+      can-do checklist, certificate) + TOC entry + page links (dojo #105).
+- [x] Owner `/ops-guide`: new section (`!exam-review`/`-pass`/`-fail`, `!placement`,
+      kill switch, pages) + TOC entry (dojo #105).
+- [x] `!progress` shows CEFR level (already) + can-do progress bar + checklist
+      link; `assessment.can_do_progress` + `GET /api/cefr/progress` (nexus #378).
+- [x] Per-level can-do checklist on the site: `/can-do/` with the student's real
+      reached/not-yet progress (dojo #105).
+- [x] `STATUS.md` + `SYSTEM-MAP.md` updated (chronicle).
 
 ## Phase 10 — Final verification + full enable · [nexus] — 🟡 MOSTLY DONE
 - [x] End-to-end ghost journey A1→A2 via the exit exam — automated integration
@@ -129,21 +129,22 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
       through production code paths — not a manual click-through on the live
       server (no sandbox access to prod Discord/site).
 - [x] Placement live (8c ✅) + exam-based certificate live (8d ✅).
-- [ ] Guides live (blocked on Phase 9).
+- [x] Guides live (Phase 9 ✅).
 - [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
 - [ ] Legacy L0–L3 retirement — OWNER DECISION pending (currently kept, map retained).
 
 ---
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
-   per-level site can-do checklist, `SYSTEM-MAP.md` update.
-2. **Owner decision:** whether to retire legacy L0–L3 (map is retained either way).
-3. **Placement enhancement (later):** add listening + speaking skills (audio path).
+1. **Owner decision:** whether to retire legacy L0–L3 (map is retained either way).
+2. **Placement enhancement (later):** add listening + speaking skills (audio path).
 
-**Now LIVE + verified end-to-end:** exit exams (8b), placement (8c: vocab/grammar
-+ writing), exam-based certificate (8d). Phase 10 e2e chain proven by automated
-integration tests (3 ghost journeys).
+Everything else in Mi'yar (Phases 0–10) is built, live, and verified. The two
+items above are a decision + an optional enhancement — not blocking work.
+
+**LIVE + verified end-to-end:** curriculum A1–C2, phonology/audio, migration,
+exit exams (8b), placement (8c: vocab/grammar + writing), exam-based certificate
+(8d), can-do transparency (Phase 9), e2e verification (Phase 10, 3 ghost journeys).
 
 ## Cross-cutting (every phase)
 - Full nexus test suite green; bump `BOT_VERSION` on each bot deploy.
