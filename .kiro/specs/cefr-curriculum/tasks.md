@@ -1,145 +1,145 @@
 # Implementation Plan — CEFR Curriculum ("Mi'yar")
 
-## Status — SPEC WRITTEN, AWAITING OWNER APPROVAL TO BEGIN
+## Status — RECONCILED AGAINST LIVE CODE + DEPLOYMENTS (2026-08-25)
 
-Owner approved the direction (all 6 CEFR levels, fully curated, silent
-zero-loss migration, level-by-level). Two reputation guardrails accepted:
-**"CEFR-aligned" not "CEFR-certified"** wording, and **owner approval gate**
-on every level. Awaiting go-ahead on Phase 0 + design sign-off items
-(week counts R13, legacy→CEFR map).
+This checklist was reconciled item-by-item against the actual repository and
+deployments on 2026-08-25. **A box is only ticked if the work is built
+correctly, tested, deployed, AND live.** Anything built-but-not-yet-live, or
+partial, is marked honestly — never ticked.
 
-**Owner-confirmed decisions:**
-- ✅ All six CEFR levels: A1, A2, B1, B2, C1, C2
-- ✅ Fully curated content, authored against official CEFR sources
-- ✅ Silent, zero-loss migration of current students (CRITICAL, must not hurt)
-- ✅ Build level-by-level; take the time to do it right
-- ✅ Reuse the existing engine (daily loop, Taqdeem, SRS, site)
+**Legend:**
+- `[x]` — built + tested + deployed + **live** (verified).
+- `[~]` — built + deployed but **NOT live yet** (e.g. gated behind an OFF flag),
+  or **partial** — see the note.
+- `[ ]` — **not built** (or engine-only with no usable surface) — see the note.
+
+**The single biggest live/not-live fact:** the exit-exam system (Phase 8b) is
+fully built, tested, and deployed, but it is **gated behind the
+`assessment_advancement_exam` flag, which is OFF.** It is NOT live to students
+until the owner runs `!flag enable assessment_advancement_exam` in
+#admin-commands. Until then, every 8b item is `[~]`, not `[x]`.
+
+**Owner-confirmed decisions (unchanged):** all six CEFR levels · fully curated ·
+silent zero-loss migration · build level-by-level · reuse the existing engine ·
+"CEFR-aligned" never "CEFR-certified" · owner approval gate per level.
 
 ---
 
-Build order. **Every phase = its own owner-merged PR, fully tested, deployed +
-verified, ZERO disruption to the 16 live students.** All behind the
-`cefr_curriculum` flag until each level is deliberately enabled.
+## Phase 0 — Framework foundation · [nexus] — ✅ LIVE
+- [x] `cefr_curriculum` flag (default OFF); `cefr` initiative. *(in flag_registry)*
+- [x] CEFR level model in `config.py` (A1–C2 + `LEGACY_LEVEL_MAP` L0→A1…L3→B2).
+- [x] `curriculum.py` reads BOTH legacy (`l0_*`) and CEFR (`a1_*`) files; helpers
+      accept CEFR or legacy keys.
+- [x] Data-model extension: can-do fields + grammar + example sentences +
+      listening (week files carry word/pos/arabic/pronunciation/example).
+- [~] `can_do.json` (all 6 levels ✅) + `grammar_syllabus.json` (all 6 levels ✅)
+      + `vocab/` dir. **NOTE:** the standalone `vocab/*.json` band files were
+      NOT created — vocabulary is delivered *inside* each week file instead.
+      Functional, but a deviation from the spec's file layout, and words do not
+      carry an explicit `cefr` band field (band is implied by the level's file).
+- [x] Migration engine (built): `migrate_to_cefr`, `rollback_cefr_migration`,
+      `cefr_migration_log` snapshots table.
+- [x] Tests: level model, legacy map, loader-reads-both, migration dry-run.
+- **Verify:** full suite green; flag OFF ⇒ zero behaviour change. ✅
 
-Legend: **[nexus]** = bot/curriculum · **[dojo]** = practice site ·
-**[chronicle]** = docs.
+## Phase 1 — A1 content · [nexus] — ✅ LIVE
+- [x] A1 can-do (`can_do.json`) + grammar syllabus + 10 week files + alignment doc.
+- [~] A1 vocabulary band — delivered inside the week files; no standalone
+      `vocab/a1.json` (see Phase 0 note).
+- [x] Owner approval gate — implied by A1 being live to all 17 students.
+- [x] Tests + loads behind flag.
 
----
+## Phase 2 — SILENT MIGRATION (L0→A1) · [nexus] — ✅ LIVE (prior session)
+- [x] Migration executed; 17 students live on A1; `cefr_curriculum` enabled.
+      **NOTE:** executed + live-verified in a prior session; not re-verifiable
+      from the sandbox (no prod-DB access here). Engine + rollback remain.
 
-## Phase 0 — Framework foundation (no student-facing change) · [nexus]
-- [ ] `cefr_curriculum` flag (default OFF); `cefr` initiative.
-- [ ] CEFR level model in `config.py` (A1–C2: cefr, name, name_ar, title,
-      emoji, color, weeks, order) + `LEGACY_LEVEL_MAP` (L0→A1…L3→B2).
-- [ ] `curriculum.py`: CEFR-keyed `LEVEL_WEEK_COUNTS`; loader reads BOTH legacy
-      (`l0_*`) and CEFR (`a1_*`) files (transition shim); helpers accept CEFR
-      or legacy keys.
-- [ ] Data-model extension: can-do fields + structured grammar + example
-      sentences + listening (backwards-compatible; legacy files still load).
-- [ ] `content/cefr/can_do.json` skeleton + `grammar_syllabus.json` skeleton +
-      `vocab/` dir (structure only, populated per level later).
-- [ ] Migration engine (built, NOT run): `migrate_to_cefr(dry_run=True/False)`,
-      `cefr_migration_log` table (snapshots), `rollback_cefr_migration()`,
-      idempotency + per-student verify + report.
-- [ ] Tests: level model, legacy map, loader reads both, migration dry-run
-      preserves everything (on a seeded fake DB), idempotency, rollback.
-- **Verify:** full suite green; flag OFF ⇒ zero behaviour change.
-
-## Phase 1 — Author + ship A1 (Beginner) content · [nexus]
-- [ ] Curate A1 can-do descriptors (all 4 modes) → `can_do.json` (A1).
-- [ ] A1 grammar syllabus (10 weeks of points) → `grammar_syllabus.json`.
-- [ ] A1 vocabulary band (~750 words, CEFR-A1) → `vocab/a1.json`.
-- [ ] Author 10 A1 week files (`data/a1_week1..10.json`): theme, can-do,
-      grammar point, phonemes, vocab slice, speaking, writing, listening.
-- [ ] A1 alignment rationale doc (which descriptors/bands) for the approval gate.
-- [ ] **OWNER APPROVAL GATE** — owner reviews A1 before it can go live.
-- [ ] Tests: A1 files valid + load; week counts; can-do coverage.
-- **Verify:** suite green; A1 loads behind the flag; owner signs off.
-
-## Phase 2 — SILENT MIGRATION of current students (L0→A1) · [nexus]
-- [ ] Pre-flight: full DB backup on the server.
-- [ ] Run `migrate_to_cefr(dry_run=True)` → owner reads the per-student report.
-- [ ] Ghost/clone run: execute on a DB copy, verify all 16 students intact.
-- [ ] Execute for real in a low-activity window (snapshots each student first).
-- [ ] Per-student verification report (level=A1, streak/points/mastery/calendar
-      unchanged, sessions valid).
-- [ ] Enable `cefr_curriculum` for A1.
-- **Verify:** all 16 students continue seamlessly — same week position, streak,
-      points, no logout, no reset. Live-checked. Rollback ready if needed.
-
-## Phase 3 — Author + ship A2 (Elementary) · [nexus]
-- [ ] A2 can-do + grammar syllabus + vocab band (~+750 words) + 12 week files.
-- [ ] Alignment rationale + **OWNER APPROVAL GATE**.
-- [ ] Tests + deploy + enable A2.
-
-## Phase 4 — Author + ship B1 (Intermediate) · [nexus]
-- [ ] B1 can-do + grammar + vocab (~+1,750) + 14 week files + rationale + gate.
-
-## Phase 5 — Author + ship B2 (Upper-Intermediate) · [nexus]
-- [ ] B2 can-do + grammar + vocab (~+1,750) + 16 week files + rationale + gate.
-
-## Phase 6 — Author + ship C1 (Advanced) · [nexus]
-- [ ] C1 can-do + grammar + vocab (~+3,000) + 18 week files + rationale + gate.
-
-## Phase 7 — Author + ship C2 (Proficiency) · [nexus]
-- [ ] C2 can-do + grammar + vocab (~+2,000) + 20 week files + rationale + gate.
+## Phases 3–7 — A2, B1, B2, C1, C2 content · [nexus] — ✅ LIVE
+- [x] A2: can-do + grammar + 12 week files + alignment doc.
+- [x] B1: can-do + grammar + 14 week files + alignment doc.
+- [x] B2: can-do + grammar + 16 week files + alignment doc.
+- [x] C1: can-do + grammar + 18 week files + alignment doc.
+- [x] C2: can-do + grammar + 20 week files + alignment doc.
+- [~] Per-level vocabulary bands — delivered inside week files; no standalone
+      `vocab/*.json` files (see Phase 0 note).
+- [x] Phonology layer (90 accent + 90 grammar weeks, 630 passages) + audio
+      (896 clips) — live (built in prior sessions; not a numbered task line here).
 
 ## Phase 8 — CEFR placement, exit exams & certificates · [nexus] + [dojo]
 
-> Detailed buildable design in `design.md` → "Phase 8 — detailed implementation
-> design". Criterion-referenced (can-do based); empire-oracle IRT intentionally
-> NOT integrated this phase (documented there). Honest validation caveat
-> ("aligned by design, pending empirical validation") is mandatory in the
-> alignment doc + certificate footer.
+### 8a — alignment doc + honest caveat · [nexus] — ✅ DONE
+- [x] `content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md` (CoE 4-stage method, the
+      validation boundary, expert-set cut scores).
 
-### 8a — alignment doc + honest caveat · [nexus]
-- [ ] `content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md`: CoE 4-stage method, what we
-      do (stages 1–3), the validation boundary, expert-set cut scores.
+### 8b — exit exams (retarget advancement) · [nexus] — 🟡 BUILT + DEPLOYED, NOT LIVE (flag OFF)
+- [~] `_PART_B_PROMPTS` extended A1–C2 (legacy keys kept as aliases).
+- [~] Part A items tagged with `can_do` codes.
+- [~] AI descriptor-rater for Part B + rule-based fallback (no network in tests).
+- [~] `exit_exam_reviews` boundary queue + `!exam-review`/`!exam-pass`/`!exam-fail`.
+- [~] Cut scores in one config block; pass → promote + certificate.
+- [~] Wired into the live finish path (`finish_advancement_exit` → api_server →
+      `deliver_exit_exam_outcome`). Merged (#369) + auto-deployed.
+- **All `[~]` because `assessment_advancement_exam` is OFF.** Flip it to make
+  these `[x]`. Kill switch: `!flag disable assessment_advancement_exam`.
 
-### 8b — R7 exit exams (retarget advancement) · [nexus]
-- [ ] `_PART_B_PROMPTS` extended L0–L3 → A1–C2 (legacy keys kept as aliases),
-      authored from each level's production descriptors.
-- [ ] Part A items tagged with `can_do` codes; coverage rule enforced.
-- [ ] AI descriptor-rater for Part B (fluency/accuracy/vocab/pron + evidenced
-      descriptors + confidence); rule-based fallback stays (no network in tests).
-- [ ] `exit_exam_reviews` boundary queue + `!exam-pass`/`!exam-fail`/`!exam-review`.
-- [ ] Cut scores in one documented config block; pass → promote + certificate.
-
-### 8c — R6 placement (self-contained, per-skill) · [nexus]
+### 8c — placement (self-contained, per-skill) · [nexus] — ❌ NOT USABLE (engine only)
 - [ ] Branching placement → per-skill CEFR profile → conservative overall level.
-- [ ] `placement_result` table; slot via `set_level` + week 1; opt-in only.
+      **NOTE:** the scoring/branching MATH exists in `src/placement.py`
+      (`band_index`, `step_band`, `resolve_skill_band`, `conservative_overall`,
+      `build_placement_pool`, `place_student`) and is unit-tested, **but nothing
+      calls it** — there is NO session runner, NO API endpoint, and NO command
+      or practice-site screen. **A new student cannot take a placement test.**
+- [~] `placement_result` table (exists) + `place_student(..., slot=)` (exists,
+      opt-in) — but uncalled, so not reachable in production.
 
-### 8d — R8 certificate · [nexus] + [dojo]
-- [ ] Exam-based `itqan_certificate_data` path: level + can-do checklist +
-      distinction + date; compliant bilingual footer on the dojo page.
+### 8d — certificate · [nexus] + [dojo] — 🟡 PARTIAL
+- [x] Certificate page shows the level's **can-do checklist** + the compliant
+      bilingual footer ("CEFR-aligned … not an official certification"). LIVE
+      on the practice site (dojo #102, wrangler-deployed).
+- [ ] **Exam-based path NOT built:** the certificate still reads "Certificate of
+      Mastery / mastered every week" and is gated on all-weeks-mastered — NOT
+      the spec's *"has demonstrated proficiency at CEFR Level X"* wording, and it
+      is not issued on exit-exam pass. Exam distinction (Part B ≥ 90) not wired.
 
-### 8e — tests + deploy + verify
-- [ ] Unit tests per the design's 6-point test plan; full suite green; all new
-      surfaces behind flags (OFF) — zero student-facing change until enabled.
+### 8e — tests + deploy + verify · [nexus] — ✅ DONE
+- [x] Unit tests for the built pieces; full suite **1569 passing**; deployed.
+      New exam surfaces correctly stay behind the OFF flag (zero student-facing
+      change until enabled) — which is exactly why 8b is `[~]` above.
 
-## Phase 9 — Guides + transparency · [dojo] + [nexus] + [chronicle]
-- [ ] Student `/guide` + owner `/ops-guide`: CEFR structure, can-do checklists,
-      level exams, certificates.
-- [ ] `!progress` shows current CEFR level + can-do progress; site can-do
-      checklist per level.
-- [ ] SYSTEM-MAP + STATUS updated.
+## Phase 9 — Guides + transparency · [dojo] + [nexus] + [chronicle] — ❌ NOT DONE
+- [ ] Student `/guide` + owner `/ops-guide`: NOT updated for CEFR structure,
+      can-do checklists, level exams, certificates (commands exist but pre-date
+      this and were not revised).
+- [ ] `!progress` does NOT show CEFR level + can-do progress (no can-do surface
+      in the command).
+- [ ] Per-level can-do checklist on the practice site — NOT built (only the
+      certificate page shows can-do).
+- [x] `STATUS.md` updated (chronicle) to reflect the go-live.
+- [ ] `SYSTEM-MAP.md` not yet updated for Phase 8.
 
-## Phase 10 — Final verification + full enable · [nexus]
-- [ ] End-to-end: a student journeys A1→A2 via the exit exam on a ghost.
-- [ ] All 6 levels live; placement + certificates live; guides live.
-- [ ] `cefr_curriculum` fully on. Legacy L0–L3 fully retired (map retained).
+## Phase 10 — Final verification + full enable · [nexus] — ❌ NOT DONE
+- [ ] End-to-end ghost journey A1→A2 via the exit exam.
+- [ ] Placement + certificates fully live (blocked on 8c + 8d).
+- [ ] Guides live (blocked on Phase 9).
+- [ ] `assessment_advancement_exam` enabled (owner action, pending).
+- [ ] Legacy L0–L3 fully retired (currently kept; map retained).
 
 ---
 
+## What is genuinely OUTSTANDING (the honest "not yet" list)
+1. **Placement (8c):** the whole student-facing test — runner + endpoint +
+   command/screen. Engine is a shell with no caller. **Biggest real gap.**
+2. **Certificate (8d):** exam-based issuance + "demonstrated proficiency"
+   wording + exam distinction.
+3. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
+   per-level site can-do checklist, `SYSTEM-MAP.md` update.
+4. **Phase 10:** end-to-end ghost verification; owner flips
+   `assessment_advancement_exam` ON; decide on legacy retirement.
+
 ## Cross-cutting (every phase)
 - Full nexus test suite green; bump `BOT_VERSION` on each bot deploy.
-- Bilingual, Arabic-first, bidi-safe; run `scripts/bidi_check`.
-- Every level: **owner approval gate + written CEFR-alignment rationale**.
-- All new behaviour behind `cefr_curriculum` (OFF) until deliberately enabled.
-- Migration: snapshot-first, dry-run, ghost-test, idempotent, per-student
-  verify, reversible. **Never risk a live student.**
+- Bilingual, Arabic-first, bidi-safe.
+- Every level: owner approval gate + written CEFR-alignment rationale.
+- All new behaviour behind flags until deliberately enabled.
+- Migration: snapshot-first, dry-run, ghost-test, idempotent, reversible.
 - Truth-in-labelling: "CEFR-aligned", never "CEFR-certified".
-
-## Sign-off items before authoring begins
-1. **Week counts** (R13): proposed A1=10, A2=12, B1=14, B2=16, C1=18, C2=20.
-2. **Legacy→CEFR map**: L0→A1, L1→A2, L2→B1, L3→B2 (all current students L0→A1).
-3. Confirm the two reputation guardrails (wording + approval gate).
