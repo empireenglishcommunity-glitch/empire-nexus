@@ -679,6 +679,16 @@ CREATE TABLE IF NOT EXISTS placement_result (
     taken_at       TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Phase 8 (Mi'yar CEFR): in-progress placement runner state (one per student).
+-- Transient working state for the adaptive session; cleared when placement
+-- finishes or is slotted. Deliberately NO FK — a placement can be taken before
+-- a full member row exists, and the row is throwaway.
+CREATE TABLE IF NOT EXISTS placement_session (
+    discord_id  TEXT PRIMARY KEY,
+    state       TEXT NOT NULL DEFAULT '{}',  -- JSON: runner state (see placement_runner)
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 
@@ -4356,6 +4366,41 @@ def save_placement_result(discord_id: str, overall_level: str, skill_bands: dict
     pid = cur.lastrowid
     conn.close()
     return pid
+
+
+def placement_session_save(discord_id: str, state: dict) -> None:
+    """Upsert the in-progress placement runner state for a student."""
+    conn = _connect()
+    conn.execute(
+        "INSERT INTO placement_session (discord_id, state, updated_at) "
+        "VALUES (?,?,datetime('now')) "
+        "ON CONFLICT(discord_id) DO UPDATE SET state=excluded.state, "
+        "updated_at=datetime('now')",
+        (discord_id, json.dumps(state, ensure_ascii=False)))
+    conn.commit()
+    conn.close()
+
+
+def placement_session_get(discord_id: str) -> dict | None:
+    """The in-progress placement state, or None if there is no active session."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT state FROM placement_session WHERE discord_id=?", (discord_id,)).fetchone()
+    conn.close()
+    if not row:
+        return None
+    try:
+        return json.loads(row["state"] or "{}")
+    except Exception:
+        return None
+
+
+def placement_session_clear(discord_id: str) -> None:
+    """Drop a student's placement session (on finish / slot / restart)."""
+    conn = _connect()
+    conn.execute("DELETE FROM placement_session WHERE discord_id=?", (discord_id,))
+    conn.commit()
+    conn.close()
 
 
 def latest_placement_result(discord_id: str) -> dict | None:
