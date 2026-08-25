@@ -1192,6 +1192,52 @@ def finish_monthly_attempt(discord_id: str, attempt_id: int,
 # weak areas. 20 minutes. The first half of the level-up gate.
 
 
+# ── Mi'yar Phase 8: tag each Part A item with the CEFR can-do descriptor it
+#    evidences, so an exit-exam pass can print a descriptor-referenced checklist
+#    on the certificate. Each objective skill maps to a CEFR "mode". This is an
+#    approximation — one short objective item is narrower than a full
+#    communicative descriptor — and is documented as aligned-not-validated in
+#    content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md. Interaction/mediation are not
+#    covered by Part A objective items (they need the Part B integrated task). ──
+_CAN_DO_SKILL_MODE = {
+    "vocab": "reception",
+    "listening": "reception",
+    "pronunciation": "production",
+    "speaking": "production",
+    "writing": "production",
+}
+
+
+def can_do_descriptors(level: str) -> dict:
+    """Load {mode: [{code, en, ar}, ...]} for a level from can_do.json. Accepts
+    CEFR or legacy keys; returns {} on any failure (never raises)."""
+    try:
+        data = json.load(open(config.BASE_DIR / "content" / "cefr" / "can_do.json",
+                              encoding="utf-8"))
+        return data.get(config.cefr_key(level), {}) or {}
+    except Exception:
+        return {}
+
+
+def tag_part_a_can_do(items: list[dict], level: str) -> list[dict]:
+    """Attach a `can_do` = {code, en, mode} to each Part A item by its skill→mode
+    map, cycling through the level's descriptors for that mode so items spread
+    across codes (deterministic). Items whose mode has no descriptors are left
+    untagged. Mutates and returns `items`."""
+    cando = can_do_descriptors(level)
+    counters: dict[str, int] = {}
+    for it in items:
+        mode = _CAN_DO_SKILL_MODE.get(it.get("skill"))
+        pool = cando.get(mode or "", [])
+        if not pool:
+            continue
+        i = counters.get(mode, 0)
+        d = pool[i % len(pool)]
+        counters[mode] = i + 1
+        it["can_do"] = {"code": d.get("code"), "en": d.get("en"), "mode": mode}
+    return items
+
+
 def generate_advancement_blueprint_a(discord_id: str, level: str,
                                      seed: str | None = None,
                                      total_items: int = 18) -> dict:
@@ -1271,6 +1317,7 @@ def generate_advancement_blueprint_a(discord_id: str, level: str,
     rng.shuffle(items)
     for idx, it in enumerate(items, start=1):
         it["item_no"] = idx
+    tag_part_a_can_do(items, level)  # Phase 8: descriptor-reference each item
 
     return {
         "level": level, "type": "advancement_a", "seed": seed,
@@ -1885,6 +1932,36 @@ def exit_exam_decision(level: str, part_a_pct: float, part_b: dict) -> dict:
         "confidence": round(conf, 2),
         "cut": cut,
     }
+
+
+async def exit_exam_finalize(discord_id: str, level: str, part_a_pct: float,
+                             part_b_transcript: str, *,
+                             attempt_num: int | None = None,
+                             part_b_prompt: dict | None = None) -> dict:
+    """Score + decide a CEFR exit exam end-to-end (Phase 8).
+
+    Flag-gated (`assessment_advancement_exam`, fails closed). Rates Part B with
+    the AI descriptor-rater (rule-based fallback so an LLM outage never blocks a
+    student), applies `exit_exam_decision`, and on a `review` verdict enqueues a
+    human-review row. Returns the decision dict augmented with the full Part B
+    score (`part_b`) and any `review_id`. Never raises.
+
+    The caller passes the returned decision to
+    advancement_outcomes.deliver_exit_exam_outcome to fire the consequence."""
+    if not database.is_feature_enabled("assessment_advancement_exam", discord_id):
+        return {"decision": "disabled"}
+    part_b = await rate_part_b(part_b_transcript, level, part_b_prompt)
+    decision = exit_exam_decision(level, part_a_pct, part_b)
+    decision["part_b"] = part_b
+    decision["review_id"] = None
+    if decision["decision"] == "review":
+        decision["review_id"] = database.exit_exam_enqueue_review(
+            discord_id, level, attempt_num,
+            decision["part_a_pct"], decision["part_b_total"],
+            decision["confidence"], part_b.get("rater", "?"),
+            decision["reasons"], part_b.get("evidenced_descriptors", []),
+        )
+    return decision
 
 
 def compute_advancement_final(part_a_score: float, part_b_score: float,

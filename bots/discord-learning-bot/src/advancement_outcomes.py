@@ -257,3 +257,161 @@ async def _notify_owner(discord_id: str, level: str, result: dict) -> None:
         logger.info(f"advancement: owner notified for {discord_id} ({verdict})")
     except Exception as e:
         logger.warning(f"advancement: owner notification failed: {e}")
+
+
+
+# ============================================================
+#  Mi'yar Phase 8 — CEFR EXIT-EXAM outcome delivery
+#  Reuses the promotion mechanics above; adds honest boundary-review handling.
+# ============================================================
+
+async def _resolve_user(discord_id: str):
+    from . import bot as bot_mod
+    b = getattr(bot_mod, "bot", None)
+    if not b:
+        return None
+    try:
+        user = b.get_user(int(discord_id))
+        if user is None:
+            user = await b.fetch_user(int(discord_id))
+        return user
+    except Exception:
+        return None
+
+
+def _exit_result(decision: dict, *, passed: bool) -> dict:
+    """Adapt an exit-exam decision into the `result` dict the promotion path
+    (`_promote_and_celebrate`) expects. Overall is shown as the mean of Part A%
+    and Part B/100 — a display figure only; the pass/fail was already decided by
+    the criterion cuts in exit_exam_decision, not by this average."""
+    a = decision.get("part_a_pct", 0)
+    b = decision.get("part_b_total", 0)
+    return {
+        "passed": passed,
+        "overall_pct": round((a + b) / 2, 1),
+        "distinction": decision.get("distinction", False),
+        "part_a_score": a,
+        "part_b_score": b,
+    }
+
+
+async def deliver_exit_exam_outcome(discord_id: str, level: str, decision: dict) -> None:
+    """Route a finished CEFR exit exam to its consequence.
+      pass   → promote + certificate (same path as advancement) + owner notify
+      fail   → private retake DM + owner notify
+      review → 'under review' DM + owner alert to run !exam-review
+    ('disabled' — flag off — does nothing.) Best-effort; never raises."""
+    try:
+        verdict = decision.get("decision")
+        if verdict == "pass":
+            await _promote_and_celebrate(discord_id, level, _exit_result(decision, passed=True))
+        elif verdict == "fail":
+            await _send_exit_fail_dm(discord_id, level, decision)
+        elif verdict == "review":
+            await _send_exit_review_dm(discord_id, level)
+        else:
+            return  # disabled / unknown — no side effects
+        await _notify_owner_exit(discord_id, level, decision)
+    except Exception as e:
+        logger.warning(f"exit-exam: outcome delivery error for {discord_id}: {e}")
+
+
+async def promote_from_review(review_row: dict) -> None:
+    """Promote a student whose boundary exit exam the owner resolved as PASS
+    (via !exam-pass). Same promotion + certificate + Champions path as an
+    auto-pass. Best-effort; never raises."""
+    discord_id = str(review_row.get("discord_id"))
+    level = review_row.get("level")
+    decision = {
+        "decision": "pass",
+        "part_a_pct": review_row.get("part_a_pct", 0),
+        "part_b_total": review_row.get("part_b_total", 0),
+        "distinction": False,
+    }
+    try:
+        await _promote_and_celebrate(discord_id, level, _exit_result(decision, passed=True))
+        await _notify_owner_exit(discord_id, level, {**decision, "via_review": True})
+    except Exception as e:
+        logger.warning(f"exit-exam: promote-from-review error for {discord_id}: {e}")
+
+
+async def fail_from_review(review_row: dict) -> None:
+    """Send the retake DM for a boundary exit exam the owner resolved as FAIL
+    (via !exam-fail). Best-effort; never raises."""
+    discord_id = str(review_row.get("discord_id"))
+    level = review_row.get("level")
+    decision = {
+        "decision": "fail",
+        "part_a_pct": review_row.get("part_a_pct", 0),
+        "part_b_total": review_row.get("part_b_total", 0),
+    }
+    try:
+        await _send_exit_fail_dm(discord_id, level, decision)
+        await _notify_owner_exit(discord_id, level, {**decision, "via_review": True})
+    except Exception as e:
+        logger.warning(f"exit-exam: fail-from-review error for {discord_id}: {e}")
+
+
+async def _send_exit_review_dm(discord_id: str, level: str) -> None:
+    user = await _resolve_user(discord_id)
+    if not user:
+        return
+    msg = (
+        f"📋 **اختبار {level} — تحت المراجعة**\n"
+        f"نتيجتك قريبة من الحد الفاصل، فمُدرّس بشري هيراجع أداءك قبل القرار النهائي. "
+        f"هنبلّغك قريب — وتقدّمك اليومي في أمان.\n"
+        f"━━━━━━━━━━\n"
+        f"📋 **{level} exit exam — under review**\n"
+        f"Your result was close to the boundary, so a human teacher will review it "
+        f"before the final decision. We'll let you know soon — your daily progress is safe."
+    )
+    try:
+        await user.send(msg)
+        logger.info(f"exit-exam: review DM sent to {discord_id}")
+    except Exception as e:
+        logger.warning(f"exit-exam: review DM failed: {e}")
+
+
+async def _send_exit_fail_dm(discord_id: str, level: str, decision: dict) -> None:
+    user = await _resolve_user(discord_id)
+    if not user:
+        return
+    a = decision.get("part_a_pct", 0)
+    b = decision.get("part_b_total", 0)
+    msg = (
+        f"📊 **اختبار الخروج — {level}**\n"
+        f"Part A: {a}% · Part B: {b}/100\n"
+        f"لسه محتاج/ة شوية شغل قبل ما تعدّي للمستوى الجاي. تقدر تعيد قريب — كمّل تمرين! 🌱\n"
+        f"━━━━━━━━━━\n"
+        f"📊 **{level} exit exam** — Part A {a}%, Part B {b}/100.\n"
+        f"Not quite yet — keep practising and you can retake soon. Your progress is safe."
+    )
+    try:
+        await user.send(msg)
+        logger.info(f"exit-exam: fail DM sent to {discord_id}")
+    except Exception as e:
+        logger.warning(f"exit-exam: fail DM failed: {e}")
+
+
+async def _notify_owner_exit(discord_id: str, level: str, decision: dict) -> None:
+    from . import ops_hub
+    name = (database.get_member(discord_id) or {}).get("discord_name", str(discord_id))
+    verdict = decision.get("decision", "?")
+    a = decision.get("part_a_pct", 0)
+    b = decision.get("part_b_total", 0)
+    dist = " ✨distinction" if decision.get("distinction") else ""
+    via = " (via review)" if decision.get("via_review") else ""
+    icons = {"pass": "🎓", "fail": "📊", "review": "📋"}
+    body = (
+        f"{icons.get(verdict, '•')} **{name}** — {level} exit exam: **{verdict.upper()}**{dist}{via}\n"
+        f"Part A {a}% · Part B {b}/100 · confidence {decision.get('confidence', '—')}"
+    )
+    if verdict == "review":
+        reasons = "; ".join(decision.get("reasons", [])) or "—"
+        body += f"\nReasons: {reasons}\nRun `!exam-review` to resolve."
+    try:
+        sev = {"pass": "info", "fail": "warning", "review": "warning"}.get(verdict, "info")
+        await ops_hub.send_ops_alert("CEFR exit exam", body, severity=sev)
+        logger.info(f"exit-exam: owner notified for {discord_id} ({verdict})")
+    except Exception as e:
+        logger.warning(f"exit-exam: owner notify failed: {e}")
