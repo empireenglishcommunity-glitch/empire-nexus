@@ -157,6 +157,57 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
                     )
 
 
+def test_every_authored_listening_item_is_reachable():
+    """All 450 authored listening items must be reachable through the public
+    accessor, for every week of every level.
+
+    Regression guard: the week files' `listening` array had no accessor and
+    no consumer at all -- the practice site built dictation from
+    `vocabulary` instead -- so the curated dictation set and all 450 Arabic
+    hints reached nobody.
+    """
+    total = 0
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            items = curriculum.get_listening_for_week(week, level)
+            assert items, f"{level} week {week} has no authored listening items"
+            for item in items:
+                assert item.get("say_en"), f"{level} w{week}: item missing say_en"
+                assert item.get("expected"), f"{level} w{week}: item missing expected"
+                assert item.get("hint_ar"), f"{level} w{week}: item missing hint_ar"
+            total += len(items)
+    assert total == 450, f"expected 450 authored listening items, found {total}"
+
+
+def test_get_listening_for_day_delivers_the_full_week_set_on_every_day():
+    """Only 5 items are authored per week against 7 days, so every day must
+    surface the complete set (rotated for variety) -- otherwise coverage
+    would depend on which days a student happens to practise, and 2 days a
+    week would have no authored listening at all."""
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            expected = {i["expected"] for i in curriculum.get_listening_for_week(week, level)}
+            for day_index in range(7):
+                day_items = curriculum.get_listening_for_day(week, day_index, level)
+                assert {i["expected"] for i in day_items} == expected, (
+                    f"{level} week {week} day {day_index} does not surface the "
+                    f"full authored listening set"
+                )
+
+
+def test_get_listening_for_day_rotates_order_by_day():
+    """Rotation gives day-to-day variety without dropping any item."""
+    day0 = curriculum.get_listening_for_day(1, 0, "A1")
+    day1 = curriculum.get_listening_for_day(1, 1, "A1")
+    assert [i["expected"] for i in day0] != [i["expected"] for i in day1]
+    assert sorted(i["expected"] for i in day0) == sorted(i["expected"] for i in day1)
+
+
+def test_get_listening_for_unknown_week_returns_empty():
+    assert curriculum.get_listening_for_week(999, "A1") == []
+    assert curriculum.get_listening_for_day(999, 0, "ZZ") == []
+
+
 def test_get_vocabulary_for_day_loses_zero_words_across_every_authored_week():
     """ZERO-LOSS INVARIANT: the 7 day slices must reconstruct the week's
     vocabulary list EXACTLY -- same words, same order, same count.
