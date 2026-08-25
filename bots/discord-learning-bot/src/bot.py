@@ -3473,6 +3473,103 @@ async def cmd_purge_legacy_zones(ctx, confirm: str = None):
         pass
 
 
+@bot.command(name="organize-server")
+@commands.has_permissions(manage_guild=True)
+async def cmd_organize_server(ctx, confirm: str = None):
+    """(Admin) Reorder every category + channel into a clean, professional
+    layout (Welcome → System → your Level zones → Community → Accountability →
+    Resources → Feedback → Admin → Ghost → Archive; voice channels last in each
+    category; level zones get daily-tasks → text-practice → questions → showcase).
+    Preview: `!organize-server`  ·  Apply: `!organize-server confirm`"""
+    guild = ctx.guild
+    if not guild:
+        await ctx.send("Run this in the server.")
+        return
+
+    def _cat_rank(cat):
+        raw = cat.name
+        n = raw.upper()
+        if raw.startswith("📦") or "ARCHIVE" in n:
+            return 90                                  # archived → very bottom
+        if "GHOST" in n:
+            return 80
+        if "ADMIN" in n or "الإدارة" in raw:
+            return 70
+        if "FEEDBACK" in n or "التقييم" in raw:
+            return 62
+        if "RESOURCES" in n or "المصادر" in raw:
+            return 60
+        if "ACCOUNTABILITY" in n or "المتابعة" in raw:
+            return 58
+        if "COMMUNITY" in n or "المجتمع" in raw:
+            return 56
+        for i, lvl in enumerate(config.CEFR_ORDER):     # A1..C2 zones grouped
+            if f"{lvl} ZONE" in n:
+                return 30 + i
+        if "SYSTEM" in n or "الأوامر" in raw:
+            return 20
+        if "WELCOME" in n or "أهل" in raw:
+            return 10
+        return 57                                      # unknown shared → near community
+
+    _ZONE_ORDER = ("daily-tasks", "text-practice", "questions", "showcase")
+
+    def _chan_key(ch):
+        name = ch.name.lower()
+        is_voice = isinstance(ch, discord.VoiceChannel)
+        for i, suf in enumerate(_ZONE_ORDER):
+            if name.endswith(suf):
+                return (0, i, ch.position)             # canonical zone order first
+        if is_voice:
+            return (2, 0, ch.position)                 # voice channels last
+        return (1, ch.position, 0)                     # other text: keep current order
+
+    ordered_cats = sorted(guild.categories, key=lambda c: (_cat_rank(c), c.name))
+
+    if confirm != "confirm":
+        lines = ["🗂️ **Proposed professional layout** (preview — nothing moved yet):", ""]
+        for i, cat in enumerate(ordered_cats, 1):
+            lines.append(f"**{i}. {cat.name}**")
+            for ch in sorted(cat.channels, key=_chan_key):
+                icon = "🔊 " if isinstance(ch, discord.VoiceChannel) else "#"
+                lines.append(f"    {icon}{ch.name}")
+        lines.append("\n✅ Run `!organize-server confirm` to apply (may take ~a minute).")
+        buf = ""
+        for ln in lines:
+            if len(buf) + len(ln) + 1 > 1900:
+                await ctx.send(buf)
+                buf = ln
+            else:
+                buf += ("\n" + ln) if buf else ln
+        if buf:
+            await ctx.send(buf)
+        return
+
+    await ctx.send("🗂️ Organizing… (repositioning categories + channels, ~a minute)")
+    moved_cat = moved_ch = 0
+    for pos, cat in enumerate(ordered_cats):
+        try:
+            await cat.edit(position=pos)
+            moved_cat += 1
+        except Exception:
+            pass
+        for cpos, ch in enumerate(sorted(cat.channels, key=_chan_key)):
+            try:
+                await ch.edit(position=cpos)
+                moved_ch += 1
+            except Exception:
+                pass
+    await ctx.send(f"🗂️ **Organized** — repositioned **{moved_cat}** categories + "
+                   f"**{moved_ch}** channels into the professional layout. ✅")
+    try:
+        await ops_hub.send_ops_alert(
+            "Server reorganized",
+            f"{ctx.author} ran !organize-server ({moved_cat} categories, {moved_ch} channels).",
+            severity="info")
+    except Exception:
+        pass
+
+
 @bot.command(name="itqan-reset")
 @commands.has_permissions(manage_guild=True)
 async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
