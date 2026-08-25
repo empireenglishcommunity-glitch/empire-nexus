@@ -3405,6 +3405,62 @@ async def cmd_exam_fail(ctx, review_id: int = None):
                    f"marked not-pass. Retake DM sent.")
 
 
+@bot.command(name="purge-legacy-zones")
+@commands.has_permissions(manage_guild=True)
+async def cmd_purge_legacy_zones(ctx, confirm: str = None):
+    """(Admin) Permanently DELETE the archived legacy L0–L3 zones + any leftover
+    l0–l3 channels, so the server is CEFR-only (no old/archive).
+    Preview: `!purge-legacy-zones`  ·  Delete: `!purge-legacy-zones confirm`"""
+    import re as _re
+    guild = ctx.guild
+    if not guild:
+        await ctx.send("Run this in the server.")
+        return
+    legacy_re = _re.compile(r"^l[0-3](-|$)", _re.I)
+    archive_cats = [c for c in guild.categories if c.name.startswith("📦 Archive")]
+    archived_children = [ch for c in archive_cats for ch in c.channels]
+    legacy_named = [ch for ch in guild.channels
+                    if getattr(ch, "name", "") and legacy_re.match(ch.name)]
+    to_delete = list({ch.id: ch for ch in (archived_children + legacy_named)}.values())
+
+    if not archive_cats and not to_delete:
+        await ctx.send("✅ No legacy/archived zones found — the server is already CEFR-only.")
+        return
+
+    if confirm != "confirm":
+        lines = [f"   • #{getattr(ch, 'name', '?')}" for ch in to_delete[:25]]
+        more = f"\n   … +{len(to_delete) - 25} more" if len(to_delete) > 25 else ""
+        await ctx.send(
+            (f"🧹 **Legacy purge — PREVIEW** (nothing deleted yet)\n"
+             f"Archived categories: **{len(archive_cats)}** · channels: **{len(to_delete)}**\n"
+             + "\n".join(lines) + more +
+             f"\n\n⚠️ Run `!purge-legacy-zones confirm` to DELETE these permanently.")[:1900])
+        return
+
+    deleted_ch = deleted_cat = 0
+    for ch in to_delete:
+        try:
+            await ch.delete(reason="Legacy L0–L3 retirement — purge")
+            deleted_ch += 1
+        except Exception:
+            pass
+    for cat in archive_cats:
+        try:
+            await cat.delete(reason="Legacy L0–L3 retirement — purge")
+            deleted_cat += 1
+        except Exception:
+            pass
+    await ctx.send(f"🧹 Purged: deleted **{deleted_ch}** channel(s) + **{deleted_cat}** "
+                   f"archived categor(y/ies). The server is CEFR-only now. ✅")
+    try:
+        await ops_hub.send_ops_alert(
+            "Legacy zones purged",
+            f"{ctx.author} deleted {deleted_ch} legacy channels + {deleted_cat} archived "
+            f"categories. Server is CEFR-only.", severity="info")
+    except Exception:
+        pass
+
+
 @bot.command(name="itqan-reset")
 @commands.has_permissions(manage_guild=True)
 async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):

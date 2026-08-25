@@ -35,9 +35,28 @@ def test_level_slug_maps_cefr_levels_to_their_own_slug():
     assert config.level_slug("C2") == "c2"
 
 
-def test_level_slug_still_supports_legacy_keys():
-    for legacy in ("L0", "L1", "L2", "L3"):
-        assert config.level_slug(legacy) == legacy.lower()
+def test_level_slug_normalises_legacy_to_cefr():
+    """THE recording-bug fix: a legacy key must resolve to its CEFR slug, NEVER
+    to the archived l0–l3 channel. (Was: L1 -> 'l1' = archived #l1-showcase.)"""
+    assert config.level_slug("L0") == "a1"
+    assert config.level_slug("L1") == "a2"
+    assert config.level_slug("L2") == "b1"
+    assert config.level_slug("L3") == "b2"
+    # so no slug can ever start with 'l' (the legacy prefix)
+    for lvl in ("A1", "C2", "L0", "L3", "weird"):
+        assert not config.level_slug(lvl).startswith("l")
+
+
+def test_no_legacy_lN_channel_fstrings_in_source():
+    """Guard: no module builds an l0–l3 channel name via an f-string like
+    f"l{i}-showcase" (the explicit legacy fallbacks we removed)."""
+    bad = re.compile(r'f"l\{')
+    offenders = []
+    for path in SRC.glob("*.py"):
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if bad.search(line):
+                offenders.append(f"{path.name}:{i}")
+    assert not offenders, f"legacy l{{i}}- channel f-strings found: {offenders}"
 
 
 @pytest.mark.parametrize("level", config.CEFR_ORDER)

@@ -43,7 +43,7 @@ def test_level_info_unknown_falls_back_to_a1():
 def test_level_slug():
     assert config.level_slug("A1") == "a1"
     assert config.level_slug("C2") == "c2"
-    assert config.level_slug("L0") == "l0"  # legacy still lowercases
+    assert config.level_slug("L0") == "a1"  # legacy normalises to CEFR (not archived l0)
     assert config.level_slug("") == "a1"    # safe default
 
 

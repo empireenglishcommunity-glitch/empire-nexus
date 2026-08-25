@@ -110,7 +110,7 @@ def test_session_mint_verify_roundtrip(monkeypatch):
     payload = darb.verify_session(tok)
     assert payload is not None
     assert payload["did"] == "u1"
-    assert payload["lvl"] == "L0"
+    assert payload["lvl"] == "A1"   # legacy input normalised — never mint a legacy lvl
     assert payload["sid"] == "dev1"
 
 

@@ -572,7 +572,7 @@ async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
 _ARABIC_PATTERN = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]{3,}')
 
 # Channels where Arabic is allowed
-ARABIC_ALLOWED_CHANNELS = {"l0-questions", "support", "دليل-القنوات"}
+ARABIC_ALLOWED_CHANNELS = {"a1-questions", "support", "دليل-القنوات"}
 
 
 async def check_english_only(message: discord.Message) -> bool:
@@ -600,15 +600,12 @@ async def check_english_only(message: discord.Message) -> bool:
     if channel_name in ARABIC_ALLOWED_CHANNELS:
         return False
 
-    # Only enforce in text practice and community channels
-    # Mi'yar: enforce in the six CEFR text-practice channels (a1…c2) as well
-    # as the legacy l0–l3 ones (archived, but harmless to keep listed).
+    # Only enforce in text practice and community channels — the six CEFR
+    # text-practice channels (a1…c2). (Legacy l0–l3 channels are retired.)
     enforce_channels = {
         "general-chat", "introductions", "daily-word", "events",
     } | {
         f"{config.level_slug(lvl)}-text-practice" for lvl in config.CEFR_ORDER
-    } | {
-        f"l{i}-text-practice" for i in range(4)
     }
     if channel_name not in enforce_channels:
         return False
@@ -620,23 +617,23 @@ async def check_english_only(message: discord.Message) -> bool:
         level = member.get("level", "A1") if member else "A1"
         week = database.member_week_number(str(message.author.id)) if member else 1
 
-        # L0 weeks 1-4: gentle reminder only
-        if level == "L0" and week <= 4:
+        # A1 weeks 1-4: gentle reminder only
+        if config.cefr_key(level) == "A1" and week <= 4:
             try:
                 await message.reply(
                     "💡 English only in this channel! Try in English:\n"
-                    "*You can ask Arabic questions in `#l0-questions`*",
+                    "*You can ask Arabic questions in `#a1-questions`*",
                     delete_after=30,
                 )
             except Exception:
                 pass
             return True
         else:
-            # Stronger enforcement for L0 week 5+ and higher levels
+            # Stronger enforcement for A1 week 5+ and higher levels
             try:
                 await message.reply(
                     "⚠️ **English only!** This channel is English-only.\n"
-                    "*Arabic questions → `#l0-questions` or `#support`*",
+                    "*Arabic questions → `#a1-questions` or `#support`*",
                     delete_after=30,
                 )
             except Exception:
@@ -1263,15 +1260,10 @@ async def _post_to_showcase(guild: discord.Guild, member_name: str, days: int, b
         return
 
     # Try to find the member's level to post to the right channel
-    # (We only have member_name here, so try all showcase channels)
-    # Mi'yar: the six CEFR showcase channels (a1-showcase … c2-showcase),
-    # falling back to the legacy l0–l3 ones for any pre-migration server.
+    # (We only have member_name here, so try all six CEFR showcase channels.)
     showcase_channels = [
         discord.utils.get(guild.text_channels, name=f"{config.level_slug(lvl)}-showcase")
         for lvl in config.CEFR_ORDER
-    ] + [
-        discord.utils.get(guild.text_channels, name=f"l{i}-showcase")
-        for i in range(4)
     ]
 
     messages = {

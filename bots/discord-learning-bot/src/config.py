@@ -396,10 +396,11 @@ CEFR_XP_THRESHOLDS = {"A1": 0, "A2": 2000, "B1": 5000, "B2": 10000, "C1": 18000,
 
 
 def level_slug(level: str) -> str:
-    """Lowercase channel/URL slug for a level: 'A1' -> 'a1' (and legacy
-    'L0' -> 'l0'). Used for Discord channel names (a1-daily-tasks) and
-    practice-site paths (/a1/week1/day1/)."""
-    return (level or "A1").lower()
+    """CEFR channel/URL slug for a level: 'A1' -> 'a1'. Legacy keys are
+    normalised to their CEFR level FIRST ('L1' -> 'a2'), so a slug can NEVER
+    point at an archived legacy l0–l3 channel or path. Used for Discord channel
+    names (a1-daily-tasks) and practice-site paths (/a1/week1/day1/)."""
+    return cefr_key(level).lower()
 
 
 def cefr_key(level: str) -> str:
