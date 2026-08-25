@@ -2292,7 +2292,7 @@ def backfill_srs_recent_vocab(discord_id: str, lookback_days: int = 7) -> int:
     member = get_member(discord_id)
     if not member:
         return 0
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
     cutoff = (_today_local() - datetime.timedelta(days=lookback_days)).isoformat()
     conn = _connect()
     try:
@@ -2455,7 +2455,7 @@ def get_progress_for_discord_id(discord_id: str) -> dict | None:
     return {
         "discord_id": discord_id,
         "discord_name": member.get("discord_name", ""),
-        "level": member.get("level", "L0"),
+        "level": member.get("level", "A1"),
         # Hisn D029: the practice platform's homepage (level/week/day
         # picker) had ZERO awareness of a connected student's real
         # progress -- it always defaulted to Level 0/Week 1 regardless
@@ -3365,7 +3365,7 @@ def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:
     member = get_member(discord_id)
     if not member:
         return {"days_marked": 0, "exercises_marked": 0}
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
     try:
         anchor = datetime.datetime.fromisoformat(level_anchor_iso(member)).date()
     except (ValueError, TypeError):
@@ -3755,7 +3755,7 @@ def migrate_member_to_cefr(discord_id: str, dry_run: bool = True) -> dict:
     if not member:
         return {"discord_id": discord_id, "status": "not_found"}
 
-    cur_level = member.get("level", "L0")
+    cur_level = member.get("level", "A1")
 
     # Idempotent: already a CEFR level → nothing to do.
     if cur_level in _cfg.CEFR_LEVELS:

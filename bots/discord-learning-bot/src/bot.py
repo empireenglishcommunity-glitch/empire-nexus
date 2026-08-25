@@ -801,7 +801,7 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
                     wk_day = darb_mod.today_week_day(str(payload.user_id))
                     if wk_day:
                         member_data = database.get_member(str(payload.user_id))
-                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        level = (member_data.get("level", "A1") if member_data else "A1")
                         database.record_practice_mastery(
                             str(payload.user_id), level, wk_day[0], wk_day[1], task_id
                         )
@@ -1404,12 +1404,11 @@ async def daily_word_delivery():
         logger.warning("daily_word_delivery: #daily-word channel not found")
         return
 
-    # Use L0 members' week (the largest cohort, and L0's vocabulary is
-    # the most useful for a mixed-level "word of the day" since higher-
-    # level students already know L0 words and can still engage, while
-    # L0 students are actively learning them). Fall back to week 1 if
-    # no L0 members exist yet.
-    members = database.members_at_level("L0")
+    # Use A1 members' week (the entry level + largest cohort; A1 vocab is the
+    # most useful for a mixed-level "word of the day" — higher levels already
+    # know it and can still engage, A1 students are learning it). Fall back to
+    # week 1 if no A1 members exist yet.
+    members = database.members_at_level("A1")
     if members:
         week = database.member_week_number(members[0]["discord_id"])
     else:
@@ -1419,10 +1418,10 @@ async def daily_word_delivery():
     today = _now()
     day_index = (today.weekday() + 2) % 7  # Python: Mon=0; curriculum: Sat=0
 
-    words = curriculum.get_vocabulary_for_day(week, day_index, "L0")
+    words = curriculum.get_vocabulary_for_day(week, day_index, "A1")
     if not words:
         # Fallback: try the full week's vocab and pick randomly
-        words = curriculum.get_vocabulary_for_week(week, "L0")
+        words = curriculum.get_vocabulary_for_week(week, "A1")
     if not words:
         logger.info("daily_word_delivery: no vocabulary available, skipping")
         return
@@ -1443,7 +1442,7 @@ async def daily_word_delivery():
 
     try:
         await channel.send(msg)
-        logger.info(f"Daily word posted: {word['word']} (L0 week {week})")
+        logger.info(f"Daily word posted: {word['word']} (A1 week {week})")
     except discord.HTTPException as e:
         logger.error(f"Failed to post daily word: {e}")
 
@@ -2068,7 +2067,7 @@ async def _score_pronunciation(ctx, task_id: str):
         audio_url, filename = audio_info
 
         # Get the expected text for this task
-        level = member_data.get("level", "L0")
+        level = member_data.get("level", "A1")
         week = database.member_week_number(discord_id)
         day_name = task_engine.current_day_name()
         day_index = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].index(day_name) \
@@ -2310,7 +2309,7 @@ async def cmd_done(ctx, task: str = None):
             wk_day = darb_mod.today_week_day(str(ctx.author.id))
             if wk_day:
                 member_data = database.get_member(str(ctx.author.id))
-                level = (member_data.get("level", "L0") if member_data else "L0")
+                level = (member_data.get("level", "A1") if member_data else "A1")
                 database.record_practice_mastery(
                     str(ctx.author.id), level, wk_day[0], wk_day[1], task
                 )
@@ -2340,7 +2339,7 @@ async def cmd_done(ctx, task: str = None):
         msg = features.done_response_for_member(str(ctx.author.id), task, result)
     else:
         member_data = database.get_member(str(ctx.author.id))
-        level = member_data.get("level", "L0") if member_data else "L0"
+        level = member_data.get("level", "A1") if member_data else "A1"
         if config.cefr_key(level) == "A1":
             msg = features.get_done_response_ar(task, result)
         else:
@@ -2974,7 +2973,7 @@ async def on_message(message: discord.Message):
                     wk_day = darb_mod.today_week_day(str(message.author.id))
                     if wk_day:
                         member_data = database.get_member(str(message.author.id))
-                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        level = (member_data.get("level", "A1") if member_data else "A1")
                         database.record_practice_mastery(
                             str(message.author.id), level, wk_day[0], wk_day[1], "vocab"
                         )
@@ -3006,7 +3005,7 @@ async def on_message(message: discord.Message):
                     wk_day = darb_mod.today_week_day(str(message.author.id))
                     if wk_day:
                         member_data = database.get_member(str(message.author.id))
-                        level = (member_data.get("level", "L0") if member_data else "L0")
+                        level = (member_data.get("level", "A1") if member_data else "A1")
                         database.record_practice_mastery(
                             str(message.author.id), level, wk_day[0], wk_day[1], "listening"
                         )
@@ -3292,7 +3291,7 @@ async def cmd_itqan_pass(ctx, member: discord.Member = None, week: int = None):
     if not data:
         await ctx.send("That user isn't a registered student.")
         return
-    level = data.get("level", "L0")
+    level = data.get("level", "A1")
     database.itqan_admin_pass(str(member.id), level, week)
     await ctx.send(f"✅ Marked **{member.display_name}** as mastered for **{level} Week {week}** "
                    f"— notifying + celebrating them now.")
@@ -3418,7 +3417,7 @@ async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
     if not data:
         await ctx.send("That user isn't a registered student.")
         return
-    level = data.get("level", "L0")
+    level = data.get("level", "A1")
     r = database.itqan_reset(str(member.id), level, week)
     await ctx.send(
         f"♻️ Reset **{member.display_name}**'s {level} Week {week} assessment — "
@@ -3848,7 +3847,7 @@ async def slash_itqan_review(interaction: discord.Interaction, student: str, wee
             "Couldn't identify that student. Start typing the name and **pick from the list**.",
             ephemeral=True)
         return
-    level = data.get("level", "L0")
+    level = data.get("level", "A1")
     aid = database.itqan_latest_attempt_id(did, level, week)
     if not aid:
         await interaction.followup.send(
@@ -3884,7 +3883,7 @@ async def slash_itqan_pass(interaction: discord.Interaction, student: str, week:
         await interaction.followup.send(
             "Couldn't identify that student. Pick from the list.", ephemeral=True)
         return
-    level = data.get("level", "L0")
+    level = data.get("level", "A1")
     database.itqan_admin_pass(did, level, week)
     name = member.display_name if member else data.get("discord_name", did)
     try:
@@ -3918,7 +3917,7 @@ async def slash_itqan_reset(interaction: discord.Interaction, student: str, week
         await interaction.followup.send(
             "Couldn't identify that student. Pick from the list.", ephemeral=True)
         return
-    level = data.get("level", "L0")
+    level = data.get("level", "A1")
     r = database.itqan_reset(did, level, week)
     name = member.display_name if member else data.get("discord_name", did)
     await interaction.followup.send(
@@ -4373,7 +4372,7 @@ async def cmd_status(ctx):
     member_count = database.member_count()
     today_subs = database.total_submissions_today()
     active_levels = {}
-    for lvl in ["L0", "L1", "L2", "L3"]:
+    for lvl in ["A1", "A2", "B1", "B2", "C1", "C2"]:
         active_levels[lvl] = len(database.members_at_level(lvl))
 
     msg = (
@@ -4382,8 +4381,9 @@ async def cmd_status(ctx):
         f"Version: **{config.BOT_VERSION}**\n"
         f"Guilds: {len(bot.guilds)}\n"
         f"Members (registered): **{member_count}**\n"
-        f"  🌱 L0: {active_levels['L0']} | 💪 L1: {active_levels['L1']} | "
-        f"🚀 L2: {active_levels['L2']} | 👑 L3: {active_levels['L3']}\n"
+        f"  🌱 A1: {active_levels['A1']} | 🌿 A2: {active_levels['A2']} | "
+        f"🚀 B1: {active_levels['B1']} | 💪 B2: {active_levels['B2']} | "
+        f"🏆 C1: {active_levels['C1']} | 👑 C2: {active_levels['C2']}\n"
         f"Submissions today: **{today_subs}**\n"
         f"Daily tasks: {'🟢 Running' if daily_task_post.is_running() else '🔴 Stopped'}\n"
         f"Weekly recap: {'🟢 Running' if weekly_recap.is_running() else '🔴 Stopped'}\n"
@@ -4776,11 +4776,11 @@ async def cmd_recruit(ctx, lang: str = "ar"):
 
 @bot.command(name="resources")
 @commands.has_permissions(manage_guild=True)
-async def cmd_resources(ctx, level: str = "L0"):
-    """Post shadowing resources for a level. Usage: !resources L0"""
-    level = level.upper()
-    if level not in ["L0", "L1", "L2", "L3"]:
-        await ctx.send("Usage: `!resources L0/L1/L2/L3`")
+async def cmd_resources(ctx, level: str = "A1"):
+    """Post shadowing resources for a level. Usage: !resources A1"""
+    level = config.cefr_key(level.upper())
+    if level not in config.CEFR_ORDER:
+        await ctx.send("Usage: `!resources A1/A2/B1/B2/C1/C2`")
         return
     msg = features.format_shadowing_resources(level)
     channel = discord.utils.get(ctx.guild.text_channels, name="cheat-sheets")

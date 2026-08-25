@@ -198,7 +198,7 @@ def today_week_day(discord_id: str) -> tuple[int, int] | None:
     member = database.get_member(discord_id)
     if not member:
         return None
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
 
     # Darb Phase 6: anchor to the current level's start (falls back to
     # joined_at for un-promoted students), so a promoted student's day
@@ -236,7 +236,7 @@ def build_calendar(discord_id: str) -> dict | None:
     member = database.get_member(discord_id)
     if not member:
         return None
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
 
     # Darb Phase 6: anchor to the current level's start (falls back to
     # joined_at for un-promoted students).

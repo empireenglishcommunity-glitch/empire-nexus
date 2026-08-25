@@ -221,7 +221,7 @@ def format_monthly_report(level: str = None) -> str:
     lines = ["📊 Monthly Review Status", "━" * 30, ""]
 
     for m in members:
-        lvl = m.get("level", "L0")
+        lvl = m.get("level", "A1")
         if level and lvl.upper() != level.upper():
             continue
         did = m["discord_id"]

@@ -665,7 +665,7 @@ async def get_progress_v2(request: web.Request) -> web.Response:
 
     # Basic progress (same as legacy)
     streak = member.get("current_streak", 0)
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
     tasks_today = len(database.tasks_completed_today(discord_id))
 
     # Adaptive fields
@@ -812,7 +812,7 @@ async def get_nour_tips(request: web.Request) -> web.Response:
         return web.json_response({"error": "invalid token"}, status=404)
 
     _touch_token(token)
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
 
     # Generic level-appropriate tips (the personalized cache was removed).
     generic_tips = _generic_tips_for_level(level)
@@ -826,28 +826,38 @@ async def get_nour_tips(request: web.Request) -> web.Response:
 def _generic_tips_for_level(level: str) -> list[str]:
     """Static fallback tips when AI-generated ones aren't available."""
     tips = {
-        "L0": [
+        "A1": [
             "Focus on daily accent drills — 5 minutes of practice builds muscle memory",
             "Use the SRS flashcards before bed — sleep consolidates vocabulary",
             "Record yourself and compare with the model — you'll hear the difference",
         ],
-        "L1": [
+        "A2": [
             "Shadow full sentences now, not just words — build natural rhythm",
             "Try the dictation exercises — writing what you hear strengthens listening",
             "Review your pronunciation scores — focus on any phoneme below 70%",
         ],
-        "L2": [
+        "B1": [
             "Practice speaking in complete paragraphs — fluency over perfection",
             "Challenge yourself with the writing exercises — express original thoughts",
             "Listen to the model audio at full speed — train your ear for natural pace",
         ],
-        "L3": [
+        "B2": [
             "Focus on nuance — intonation, emphasis, and emotional expression",
             "Try explaining complex ideas in English without translating from Arabic",
             "Record a 2-minute monologue weekly — track your confidence growth",
         ],
+        "C1": [
+            "Refine register — switch between formal and casual English deliberately",
+            "Argue both sides of a topic aloud — build spontaneous, nuanced fluency",
+            "Read authentic long-form English daily and summarise it in your own words",
+        ],
+        "C2": [
+            "Polish idiom and collocation — aim for natural, native-like phrasing",
+            "Present a complex idea for 5 minutes with no notes — master coherence",
+            "Critique a nuanced text in English — precision of expression is the goal",
+        ],
     }
-    return tips.get(level, tips["L0"])
+    return tips.get(config.cefr_key(level), tips["A1"])
 
 
 # ============================================================
@@ -955,7 +965,7 @@ async def get_validate_token(request: web.Request) -> web.Response:
     return web.json_response({
         "valid": True,
         "name": (member.get("discord_name") or "Student").split("#")[0],
-        "level": member.get("level", "L0"),
+        "level": member.get("level", "A1"),
     }, headers=_cors_headers(request))
 
 
@@ -1068,7 +1078,7 @@ async def post_practice_complete(request: web.Request) -> web.Response:
     except Exception:
         body = {}
     discord_id = payload["did"]
-    level = payload.get("lvl", "L0")
+    level = payload.get("lvl", "A1")
     exercise = (body.get("exercise") or "").strip()
     try:
         week = int(body.get("week"))
@@ -1175,7 +1185,7 @@ async def post_submit_recording(request: web.Request) -> web.Response:
                                  status=401, headers=_cors_headers(request))
 
     discord_id = payload["did"]
-    level = payload.get("lvl", "L0")
+    level = payload.get("lvl", "A1")
 
     # Parse multipart
     try:
@@ -1329,7 +1339,7 @@ async def post_pronunciation_check(request: web.Request) -> web.Response:
         return web.json_response({"ok": False, "error": "unauthorized"},
                                  status=401, headers=_cors_headers(request))
     discord_id = payload["did"]
-    level = payload.get("lvl", "L0")
+    level = payload.get("lvl", "A1")
 
     if not database.is_feature_enabled("tatawwur_pronunciation", discord_id):
         # Feature off → nothing to check (client shows nothing).
@@ -1449,7 +1459,7 @@ async def post_grade_best_read(request: web.Request) -> web.Response:
         return web.json_response({"ok": False, "error": "unauthorized"},
                                  status=401, headers=_cors_headers(request))
     discord_id = payload["did"]
-    level = payload.get("lvl", "L0")
+    level = payload.get("lvl", "A1")
 
     if not database.is_feature_enabled("tatawwur_pronunciation", discord_id):
         return web.json_response({"ok": True, "pronunciation": {"scored": False}},
@@ -1727,7 +1737,7 @@ async def get_assessment_status(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     cfg = database.get_itqan_config()
     thresholds = {
@@ -1759,7 +1769,7 @@ async def get_assessment_certificate(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     data = database.itqan_certificate_data(discord_id, level)
     return web.json_response({"ok": True, **data}, headers=_cors_headers(request))
@@ -1864,7 +1874,7 @@ async def post_assessment_start(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     try:
         body = await request.json()
     except Exception:
@@ -2005,7 +2015,7 @@ async def get_monthly_status(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     state = assessment.get_monthly_state(discord_id, level)
     return web.json_response({"ok": True, **state}, headers=_cors_headers(request))
@@ -2018,7 +2028,7 @@ async def post_monthly_start(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     result = assessment.start_monthly_attempt(discord_id, level)
     status = 200 if result.get("ok") else 409
@@ -2080,7 +2090,7 @@ async def post_monthly_finish(request: web.Request) -> web.Response:
             from . import monthly_outcomes
             att = database.itqan_get_attempt(int(attempt_id))
             review_number = att["week"] if att else 1
-            level = payload.get("lvl", "L0")
+            level = payload.get("lvl", "A1")
             await monthly_outcomes.deliver_monthly_outcome(
                 discord_id, level, review_number, result)
         except Exception as e:
@@ -2101,7 +2111,7 @@ async def get_advancement_status(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     state = assessment.get_advancement_state(discord_id, level)
     return web.json_response({"ok": True, **state}, headers=_cors_headers(request))
@@ -2114,7 +2124,7 @@ async def post_advancement_start(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    discord_id, level = payload["did"], payload.get("lvl", "L0")
+    discord_id, level = payload["did"], payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     result = assessment.start_advancement_attempt(discord_id, level)
     status = 200 if result.get("ok") else 409
@@ -2178,7 +2188,7 @@ async def get_advancement_part_b(request: web.Request) -> web.Response:
     payload, err = _itqan_gate(request)
     if err:
         return err
-    level = payload.get("lvl", "L0")
+    level = payload.get("lvl", "A1")
     database.touch_device_session(payload["sid"])
     prompt = assessment.get_part_b_prompt(level)
     return web.json_response({"ok": True, **prompt}, headers=_cors_headers(request))
@@ -2217,7 +2227,7 @@ async def post_advancement_finish_b(request: web.Request) -> web.Response:
     if result.get("ok"):
         try:
             from . import advancement_outcomes
-            level = result.get("level") or payload.get("lvl", "L0")
+            level = result.get("level") or payload.get("lvl", "A1")
             await advancement_outcomes.deliver_exit_exam_outcome(
                 discord_id, level, {
                     "decision": result["decision"],

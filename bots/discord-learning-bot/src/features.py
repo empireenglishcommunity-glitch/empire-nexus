@@ -305,7 +305,7 @@ async def send_weekly_progress_report(guild: discord.Guild):
 #  6. GRAMMAR PATTERN CARD (Day 4 of each week)
 # ============================================================
 
-def format_grammar_card(week: int, level: str = "L0") -> str:
+def format_grammar_card(week: int, level: str = "A1") -> str:
     """Format the grammar pattern card for posting in #cheat-sheets.
     Returns "" if this level has no grammar content authored yet — the
     caller (bot.py's grammar_card_delivery task) is expected to skip
@@ -395,7 +395,7 @@ def format_grammar_card(week: int, level: str = "L0") -> str:
     return "\n".join(lines)
 
 
-def format_vocab_cheat_sheet(week: int, level: str = "L0") -> str:
+def format_vocab_cheat_sheet(week: int, level: str = "A1") -> str:
     """Format the weekly vocabulary cheat sheet for posting in #cheat-sheets.
 
     Sahin Phase 4: this prompt existed in content/prompts/cheat_sheets.json
@@ -617,7 +617,7 @@ async def check_english_only(message: discord.Message) -> bool:
     if _ARABIC_PATTERN.search(message.content):
         # Check member's level for enforcement level
         member = database.get_member(str(message.author.id))
-        level = member.get("level", "L0") if member else "L0"
+        level = member.get("level", "A1") if member else "A1"
         week = database.member_week_number(str(message.author.id)) if member else 1
 
         # L0 weeks 1-4: gentle reminder only

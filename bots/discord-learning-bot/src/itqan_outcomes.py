@@ -437,7 +437,7 @@ async def nudge_almost_done_students() -> int:
     n = 0
     for m in database.all_active_members():
         did = m["discord_id"]
-        level = m.get("level", "L0")
+        level = m.get("level", "A1")
         if not database.is_feature_enabled("itqan_weekly_assessment", did):
             continue
         target = _almost_done_week(did, level)
