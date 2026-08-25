@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w6",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 6,
+  "title": "Hana Likes Food",
+  "title_ar": "هنا بتحب الأكل",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 62,
+  "gist_ar": "هنا بتحكي عن أكلها وشربها المفضل.",
+  "text": "Hana likes food from her country. In the morning she drinks tea with sugar. She eats bread and cheese and one egg. She does not drink coffee. For lunch she eats rice with chicken and vegetables. She likes fish too. Her favourite fruit is the orange. Hana is thirsty now. There is some juice in the kitchen, but there isn't any milk.",
+  "glossary": [
+    {
+      "word": "favourite",
+      "ar": "المفضل"
+    },
+    {
+      "word": "thirsty",
+      "ar": "عطشان"
+    },
+    {
+      "word": "vegetables",
+      "ar": "خضار"
+    },
+    {
+      "word": "some",
+      "ar": "بعض / شوية"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does Hana drink in the morning?",
+      "q_ar": "هنا بتشرب إيه الصبح؟",
+      "options": [
+        "Juice",
+        "Coffee",
+        "Tea"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is her favourite fruit?",
+      "q_ar": "فاكهتها المفضلة إيه؟",
+      "options": [
+        "The orange",
+        "The apple",
+        "The banana"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she eat for lunch?",
+      "q_ar": "بتاكل إيه في الغدا؟",
+      "options": [
+        "Only fish",
+        "Bread and cheese",
+        "Rice with chicken"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Is there any milk in the kitchen?",
+      "q_ar": "في لبن في المطبخ؟",
+      "options": [
+        "No, there isn't",
+        "Yes, there is",
+        "There is a lot"
+      ],
+      "answer": 0
+    }
+  ]
+}

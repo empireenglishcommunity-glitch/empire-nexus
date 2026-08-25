@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w8",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 8,
+  "title": "My Friend Nadia",
+  "title_ar": "صاحبتي ناديا",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 65,
+  "gist_ar": "وصف ناديا وأخوها وعجلتها الجديدة.",
+  "text": "My friend Nadia is tall. She has got long black hair and green eyes. She is beautiful and very kind. She is never sad. Her brother is short. He has got brown eyes. He is fast; he runs every day. Nadia has got a new bike. It is red. It is not slow, it is fast. English is not difficult for Nadia. It is easy.",
+  "glossary": [
+    {
+      "word": "tall",
+      "ar": "طويل"
+    },
+    {
+      "word": "short",
+      "ar": "قصير"
+    },
+    {
+      "word": "difficult",
+      "ar": "صعب"
+    },
+    {
+      "word": "easy",
+      "ar": "سهل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What colour is Nadia's hair?",
+      "q_ar": "شعر ناديا لونه إيه؟",
+      "options": [
+        "Black",
+        "Red",
+        "Brown"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who is short?",
+      "q_ar": "مين القصير؟",
+      "options": [
+        "The teacher",
+        "Her brother",
+        "Nadia"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What colour is the new bike?",
+      "q_ar": "العجلة الجديدة لونها إيه؟",
+      "options": [
+        "Red",
+        "Blue",
+        "Green"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Is English difficult for Nadia?",
+      "q_ar": "الإنجليزي صعب على ناديا؟",
+      "options": [
+        "Yes, very difficult",
+        "No, it is easy",
+        "Yes, a little"
+      ],
+      "answer": 1
+    }
+  ]
+}

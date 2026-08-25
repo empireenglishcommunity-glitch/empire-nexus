@@ -157,6 +157,109 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
                     )
 
 
+# ============================================================
+#  READING (Phase 11B — the CEFR mode that had no task at all)
+# ============================================================
+
+def test_reading_is_authored_for_a1_and_absent_levels_return_none():
+    """Reading rolls out level by level behind the owner approval gate, so an
+    unauthored level must return None -- never another level's passage."""
+    assert "A1" in curriculum.reading_levels()
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        assert curriculum.get_reading_for_week(week, "A1"), f"A1 w{week} missing"
+    for level in curriculum.reading_levels():
+        assert level in ("A1", "A2", "B1", "B2", "C1", "C2")
+    unauthored = [l for l in ("A2", "B1", "B2", "C1", "C2")
+                  if l not in curriculum.reading_levels()]
+    for level in unauthored:
+        assert curriculum.get_reading_for_week(1, level) is None, (
+            f"{level} has no authored reading but returned a passage — it must "
+            f"not borrow another level's text"
+        )
+
+
+def test_a1_reading_passages_are_wellformed_and_answerable():
+    """Every authored passage must be usable as an exercise: real text, a
+    bilingual title, glossary entries, and comprehension questions whose
+    answer index actually points at an option."""
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        r = curriculum.get_reading_for_week(week, "A1")
+        assert r["text"].strip(), f"w{week}: empty passage"
+        assert r["title"] and r["title_ar"], f"w{week}: title not bilingual"
+        assert r["gist_ar"], f"w{week}: no Arabic gist"
+        assert r["can_do"], f"w{week}: passage targets no descriptor"
+        assert r["glossary"], f"w{week}: no glossary"
+        for g in r["glossary"]:
+            assert g.get("word") and g.get("ar"), f"w{week}: glossary not bilingual"
+        assert len(r["questions"]) >= 3, f"w{week}: too few questions"
+        for q in r["questions"]:
+            assert q.get("q") and q.get("q_ar"), f"w{week}: question not bilingual"
+            assert len(q["options"]) >= 3, f"w{week}: too few options"
+            assert isinstance(q["answer"], int)
+            assert 0 <= q["answer"] < len(q["options"]), (
+                f"w{week}: answer index {q['answer']} out of range"
+            )
+            assert len(set(q["options"])) == len(q["options"]), (
+                f"w{week}: duplicate options would make two answers correct"
+            )
+
+
+def test_a1_reading_answers_are_not_all_in_the_same_position():
+    """Anti-gaming: if the correct option were always first, a student could
+    score full marks without reading. (The first draft of this content had
+    every answer at index 0 — caught and shuffled deterministically.)"""
+    positions = [q["answer"]
+                 for week in range(1, curriculum.max_week_for_level("A1") + 1)
+                 for q in curriculum.get_reading_for_week(week, "A1")["questions"]]
+    assert len(set(positions)) >= 3, f"answers cluster in positions {set(positions)}"
+    most_common = max(positions.count(p) for p in set(positions))
+    assert most_common < len(positions) * 0.6, (
+        "over 60% of answers share one position — guessable without reading"
+    )
+
+
+def test_a1_reading_passages_are_level_appropriate_length():
+    """A1 reading descriptors are about VERY short texts; a 300-word wall
+    would not be A1 no matter how simple the words."""
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        r = curriculum.get_reading_for_week(week, "A1")
+        words = len(r["text"].split())
+        assert 30 <= words <= 120, f"A1 w{week} passage is {words} words"
+        assert r["word_count"] > 0
+
+
+def test_a1_reading_is_grounded_in_the_week_it_belongs_to():
+    """A passage must recycle the week's OWN authored vocabulary, otherwise it
+    is generic filler bolted onto the curriculum rather than part of it."""
+    import re
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        r = curriculum.get_reading_for_week(week, "A1")
+        text = r["text"].lower()
+        vocab = [w["word"].lower() for w in
+                 curriculum.get_vocabulary_for_week(week, "A1")]
+        used = [v for v in vocab if re.search(r"\b" + re.escape(v) + r"\b", text)]
+        assert len(used) >= 8, (
+            f"A1 w{week} passage only reuses {len(used)} of the week's "
+            f"{len(vocab)} authored words — not grounded in the week"
+        )
+        assert r["week"] == week and r["cefr"] == "A1"
+
+
+def test_reading_passages_only_claim_descriptors_of_their_own_level():
+    """A passage must not claim to teach another level's descriptor."""
+    for level in curriculum.reading_levels():
+        library = curriculum.can_do_descriptor_map(level)
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            r = curriculum.get_reading_for_week(week, level)
+            if not r:
+                continue
+            for code in r.get("can_do") or []:
+                assert code.startswith(f"{level}."), (
+                    f"{level} w{week} claims {code}"
+                )
+                assert code in library, f"{level} w{week} claims unknown {code}"
+
+
 def test_every_week_resolves_its_can_do_goals_bilingually():
     """Every one of the 90 weeks must resolve at least one CEFR can-do goal to
     a real bilingual "I can ..." descriptor.

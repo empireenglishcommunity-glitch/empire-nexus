@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w9",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 9,
+  "title": "What Ahmed Can Do",
+  "title_ar": "أحمد بيقدر يعمل إيه",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 62,
+  "gist_ar": "أحمد بيحكي عن قدراته وهواياته ووقت فراغه.",
+  "text": "Ahmed can swim very well. He goes to the sea every weekend. He can't drive a car, because he is young. He loves playing football with his friends. In his free time he likes reading and drawing. He can sing a little, but he can't dance. His sister can ride a bike. She enjoys music. Together they play games. It is fun.",
+  "glossary": [
+    {
+      "word": "can",
+      "ar": "يقدر"
+    },
+    {
+      "word": "free time",
+      "ar": "وقت الفراغ"
+    },
+    {
+      "word": "enjoy",
+      "ar": "يستمتع"
+    },
+    {
+      "word": "together",
+      "ar": "مع بعض"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What can Ahmed do very well?",
+      "q_ar": "أحمد بيقدر يعمل إيه كويس جدًا؟",
+      "options": [
+        "Swim",
+        "Drive",
+        "Dance"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why can't Ahmed drive?",
+      "q_ar": "ليه أحمد مش بيقدر يسوق؟",
+      "options": [
+        "Because he is young",
+        "Because he is tired",
+        "Because he can't run"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he like doing in his free time?",
+      "q_ar": "بيحب يعمل إيه في وقت فراغه؟",
+      "options": [
+        "Cooking",
+        "Reading and drawing",
+        "Driving"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What can his sister do?",
+      "q_ar": "أخته بتقدر تعمل إيه؟",
+      "options": [
+        "Ride a bike",
+        "Dance",
+        "Drive a car"
+      ],
+      "answer": 0
+    }
+  ]
+}

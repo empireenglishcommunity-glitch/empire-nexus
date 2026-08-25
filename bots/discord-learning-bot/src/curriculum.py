@@ -87,11 +87,12 @@ def _parse_week_number(filename: str) -> Optional[int]:
 _weekly_data: dict = {}   # {"L0_1": {...}, "L1_3": {...}, ...}
 _accent_data: dict = {}   # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 _grammar_data: dict = {}  # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
+_reading_data: dict = {}  # {"A1": {1: {...}, ...}, ...} — Phase 11B, per level
 
 
 def load_all():
     """Load all curriculum data from JSON files. Call once at bot startup."""
-    global _weekly_data, _accent_data, _grammar_data
+    global _weekly_data, _accent_data, _grammar_data, _reading_data
 
     # Load weekly data (vocab/speaking/writing) for ALL levels — legacy
     # (L0–L3) AND CEFR (A1–C2). CEFR files (data/a1_weekN.json …) are added
@@ -149,6 +150,25 @@ def load_all():
                 try:
                     with open(path, encoding="utf-8") as f:
                         _grammar_data[level][week_num] = json.load(f)
+                except Exception as e:
+                    logger.error(f"Failed to load {path}: {e}")
+
+        # Reading passages (Phase 11B — CEFR reception). Authored level by
+        # level behind the owner approval gate, so a level with no
+        # content/{level}/reading/ folder is NOT an error: it stays empty and
+        # get_reading_for_week() reports "not authored yet" rather than
+        # borrowing another level's text.
+        _reading_data[level] = {}
+        reading_dir = CONTENT_DIR / level_lower / "reading"
+        if reading_dir.exists():
+            for path in reading_dir.glob("week*.json"):
+                week_num = _parse_week_number(path.name)
+                if week_num is None:
+                    logger.warning(f"Skipping {path}: filename doesn't start with 'weekN'")
+                    continue
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        _reading_data[level][week_num] = json.load(f)
                 except Exception as e:
                     logger.error(f"Failed to load {path}: {e}")
 
@@ -219,6 +239,36 @@ def get_vocabulary_for_day(week: int, day_index: int, level: str = "A1") -> list
     start = day_index * base + min(day_index, remainder)
     size = base + (1 if day_index < remainder else 0)
     return all_words[start:start + size]
+
+
+def get_reading_for_week(week: int, level: str = "A1") -> Optional[dict]:
+    """The week's authored reading passage, or None if not authored yet.
+
+    Phase 11B (CEFR reception). Reading was the CEFR mode with NO task at all:
+    the 7 daily tasks covered listening, speaking, writing, interaction and the
+    enabling skills, but nothing asked a student to read. That is why A1-B2
+    each had reading descriptors (`.R.`) that no week taught, and why those
+    levels could not honestly claim full CEFR coverage.
+
+    Authored level by level behind the owner approval gate (the convention set
+    by content/cefr/*-ALIGNMENT.md), so `None` is a legitimate answer for a
+    level whose passages are not written yet. Callers MUST render an honest
+    "not available yet" rather than substituting another level's text.
+
+    Shape: {id, level, cefr, week, title(_ar), can_do, word_count, gist_ar,
+    text, glossary[{word, ar}], questions[{q, q_ar, options, answer}]}.
+    """
+    level_data = _reading_data.get(level)
+    if not level_data:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    return level_data.get(week)
+
+
+def reading_levels() -> list[str]:
+    """Levels that actually have authored reading passages (for the ledger and
+    for honest 'is this level complete yet' reporting)."""
+    return sorted(lvl for lvl, weeks in _reading_data.items() if weeks)
 
 
 def get_listening_for_week(week: int, level: str = "A1") -> list[dict]:
