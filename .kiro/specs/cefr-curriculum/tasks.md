@@ -120,24 +120,30 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 - [x] `STATUS.md` updated (chronicle) to reflect the go-live.
 - [ ] `SYSTEM-MAP.md` not yet updated for Phase 8.
 
-## Phase 10 — Final verification + full enable · [nexus] — ❌ NOT DONE
-- [ ] End-to-end ghost journey A1→A2 via the exit exam.
+## Phase 10 — Final verification + full enable · [nexus] — 🟡 MOSTLY DONE
+- [x] End-to-end ghost journey A1→A2 via the exit exam — automated integration
+      tests drive the real chain (start_advancement_attempt → finish_advancement_exit
+      → deliver_exit_exam_outcome → promotion → exam certificate), plus the
+      boundary→review→owner-pass path and the clear-fail path.
+      `tests/test_cefr_phase8_e2e_journey.py` (3 journeys). NOTE: automated e2e
+      through production code paths — not a manual click-through on the live
+      server (no sandbox access to prod Discord/site).
 - [x] Placement live (8c ✅) + exam-based certificate live (8d ✅).
 - [ ] Guides live (blocked on Phase 9).
 - [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
-- [ ] Legacy L0–L3 fully retired (currently kept; map retained).
+- [ ] Legacy L0–L3 retirement — OWNER DECISION pending (currently kept, map retained).
 
 ---
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
 1. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
    per-level site can-do checklist, `SYSTEM-MAP.md` update.
-2. **Phase 10:** end-to-end ghost verification (A1→A2 via the exit exam);
-   decide on legacy L0–L3 retirement.
+2. **Owner decision:** whether to retire legacy L0–L3 (map is retained either way).
 3. **Placement enhancement (later):** add listening + speaking skills (audio path).
 
-**Now LIVE:** exit exams (8b), placement (8c: vocab/grammar + writing),
-exam-based certificate (8d).
+**Now LIVE + verified end-to-end:** exit exams (8b), placement (8c: vocab/grammar
++ writing), exam-based certificate (8d). Phase 10 e2e chain proven by automated
+integration tests (3 ghost journeys).
 
 ## Cross-cutting (every phase)
 - Full nexus test suite green; bump `BOT_VERSION` on each bot deploy.
