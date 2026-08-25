@@ -3091,6 +3091,21 @@ SPEAKING_EXERCISE = "speaking"
 # The FULL practice-page set once Speaking is required (E1). Days practised
 # on/after config.SPEAKING_LAUNCH_DATE need all 5 of these to turn green.
 CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
+
+# WEEKLY exercises — tracked and rewarded, but deliberately NOT part of
+# PRACTICE_EXERCISES/CALENDAR_EXERCISES, so they can never un-green a day.
+#
+# `grammar` is the curriculum's weekly pattern: exactly ONE pattern is
+# authored per week (content/{level}/grammar/weekN.json), so requiring it
+# *daily* would be wrong by design and would retroactively break every
+# existing green day and streak. It is additive in exactly the way
+# SPEAKING was additive before its launch date: the API accepts it,
+# `record_practice_mastery` tiers it, points are awarded — but
+# `get_calendar_mastery` only ever reads `required_exercises_for_date()`,
+# so grammar rows are ignored by the calendar's "done" calculation.
+WEEKLY_EXERCISES = ("grammar",)
+# Everything the practice site may legitimately report a completion for.
+TRACKED_EXERCISES = CALENDAR_EXERCISES + WEEKLY_EXERCISES
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond
 
 
