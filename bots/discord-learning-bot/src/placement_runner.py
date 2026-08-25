@@ -70,6 +70,43 @@ def _client_block(block: list[dict]) -> list[dict]:
              "options": it["options"]} for it in block]
 
 
+LISTEN_BLOCK = 5  # dictation items in the listening probe
+
+
+def _listening_block(band: str, pool: dict, rng: random.Random,
+                     n: int = LISTEN_BLOCK) -> list[dict]:
+    """Build a dictation block for a band: the browser speaks `say_en` (via TTS)
+    and the student types the word. Auto-scored against `answer`."""
+    items = list(pool.get(band, []))
+    rng.shuffle(items)
+    block = []
+    for i in range(n):
+        if not items:
+            break
+        v = items[i % len(items)]
+        word = v.get("word", "")
+        if not word:
+            continue
+        block.append({"q_id": f"L{band}:{i}", "say_en": word,
+                      "hint_ar": v.get("arabic", ""), "answer": word})
+    return block
+
+
+def _client_listen_block(block: list[dict]) -> list[dict]:
+    """Listening block for the browser (keeps say_en for TTS; hides nothing more
+    than the vocab block does — placement is opt-in self-assessment)."""
+    return [{"q_id": it["q_id"], "say_en": it["say_en"], "hint_ar": it["hint_ar"]}
+            for it in block]
+
+
+def _band_from_rate(band: str, rate: float) -> str:
+    """A single probe block at `band` resolves to that band if passed, else one
+    band lower (conservative)."""
+    idx = placement.band_index(band)
+    return placement.index_to_band(idx if rate >= placement.PLACEMENT_PASS_RATE
+                                   else max(0, idx - 1))
+
+
 # ── session lifecycle ──
 
 def start_session(discord_id: str, seed: str | None = None) -> dict:
@@ -93,16 +130,22 @@ def start_session(discord_id: str, seed: str | None = None) -> dict:
 
 
 async def submit_answers(discord_id: str, answers: dict) -> dict:
-    """Score the current objective block, branch, and return the next block, the
-    writing prompt, or (if writing already done) the final profile."""
+    """Score the current objective block. Handles both the adaptive VOCAB phase
+    and the LISTENING (dictation) phase; advances the session accordingly."""
     state = database.placement_session_get(discord_id)
     if not state:
         return {"ok": False, "error": "no_session"}
-    if state.get("phase") != "vocab":
-        return {"ok": False, "error": "not_in_vocab_phase"}
-
-    block = state.get("current_block") or []
+    phase = state.get("phase")
     answers = answers or {}
+    if phase == "vocab":
+        return _advance_vocab(discord_id, state, answers)
+    if phase == "listening":
+        return _advance_listening(discord_id, state, answers)
+    return {"ok": False, "error": f"not_answerable_phase:{phase}"}
+
+
+def _advance_vocab(discord_id: str, state: dict, answers: dict) -> dict:
+    block = state.get("current_block") or []
     correct = sum(1 for it in block if answers.get(it["q_id"]) == it["answer"])
     rate = (correct / len(block)) if block else 0.0
     cur_idx = state["vocab_band_idx"]
@@ -125,15 +168,33 @@ async def submit_answers(discord_id: str, answers: dict) -> dict:
                 "block_no": state["blocks_done"] + 1,
                 "block": _client_block(state["current_block"])}
 
-    # Vocab settled → resolve its band and move to the writing task.
+    # Vocab settled → resolve its band, then probe LISTENING at that band.
     vocab_band = placement.resolve_skill_band(state["vocab_blocks"])
     state["skill_bands"]["vocab_grammar"] = vocab_band
-    prompt = assessment.get_part_b_prompt(vocab_band)
+    rng = random.Random()
+    pool = placement.build_placement_pool()
+    state["phase"] = "listening"
+    state["listen_band"] = vocab_band
+    state["current_block"] = _listening_block(vocab_band, pool, rng)
+    database.placement_session_save(discord_id, state)
+    return {"ok": True, "phase": "listening", "band": vocab_band,
+            "block": _client_listen_block(state["current_block"])}
+
+
+def _advance_listening(discord_id: str, state: dict, answers: dict) -> dict:
+    block = state.get("current_block") or []
+    correct = sum(1 for it in block
+                  if assessment._forgiving_equal(answers.get(it["q_id"], ""), it["answer"]))
+    rate = (correct / len(block)) if block else 0.0
+    band = state.get("listen_band", placement.index_to_band(state["vocab_band_idx"]))
+    state["skill_bands"]["listening"] = _band_from_rate(band, rate)
+    # → writing task at the vocab band
+    prompt = assessment.get_part_b_prompt(band)
     state["phase"] = "writing"
     state["current_block"] = None
-    state["writing"] = {"band": vocab_band, "prompt": prompt}
+    state["writing"] = {"band": band, "prompt": prompt}
     database.placement_session_save(discord_id, state)
-    return {"ok": True, "phase": "writing", "band": vocab_band, "prompt": prompt}
+    return {"ok": True, "phase": "writing", "band": band, "prompt": prompt}
 
 
 async def submit_writing(discord_id: str, text: str) -> dict:
@@ -148,12 +209,37 @@ async def submit_writing(discord_id: str, text: str) -> dict:
     idx = placement.band_index(band)
     writing_idx = idx if total >= WRITING_PASS else max(0, idx - 1)
     state["skill_bands"]["writing"] = placement.index_to_band(writing_idx)
+    # → speaking task (final skill) at the same band
+    state["phase"] = "speaking"
+    state["speaking"] = {"band": band, "prompt": assessment.get_part_b_prompt(band)}
+    database.placement_session_save(discord_id, state)
+    return {"ok": True, "phase": "speaking", "band": band,
+            "prompt": state["speaking"]["prompt"], "writing_score": total}
+
+
+async def submit_speaking(discord_id: str, transcript: str) -> dict:
+    """Rate the spoken response (already transcribed) against the band's
+    descriptors and FINALISE the placement — the 4th and last skill. Stores the
+    result; does NOT slot (separate opt-in). If the transcript is empty (STT
+    failed / no audio), speaking is skipped and the profile finalises on the
+    other three skills."""
+    state = database.placement_session_get(discord_id)
+    if not state or state.get("phase") != "speaking":
+        return {"ok": False, "error": "no_speaking_phase"}
+    band = state["speaking"]["band"]
+    total = 0
+    if transcript and len(transcript.split()) >= 3:
+        score = await assessment.rate_part_b(transcript, band, state["speaking"].get("prompt"))
+        total = score.get("total", 0)
+        idx = placement.band_index(band)
+        sp_idx = idx if total >= WRITING_PASS else max(0, idx - 1)
+        state["skill_bands"]["speaking"] = placement.index_to_band(sp_idx)
     state["phase"] = "done"
     database.placement_session_save(discord_id, state)
 
     result = placement.place_student(discord_id, state["skill_bands"],
                                      slot=False, source="self")
-    return {"ok": True, "phase": "done", "writing_score": total,
+    return {"ok": True, "phase": "done", "speaking_score": total,
             "measured_skills": list(state["skill_bands"].keys()), **result}
 
 

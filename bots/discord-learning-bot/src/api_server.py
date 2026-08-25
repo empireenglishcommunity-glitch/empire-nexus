@@ -1853,6 +1853,50 @@ async def post_placement_writing(request: web.Request) -> web.Response:
                              headers=_cors_headers(request))
 
 
+@routes.post("/api/placement/speaking")
+async def post_placement_speaking(request: web.Request) -> web.Response:
+    """Submit the spoken response (multipart `audio`, transcribed via Whisper;
+    or JSON {transcript} fallback). Finalises the placement profile."""
+    from . import placement_runner, pronunciation_scorer
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    database.touch_device_session(payload["sid"])
+    transcript = ""
+    ctype = request.headers.get("Content-Type", "")
+    if ctype.startswith("multipart/"):
+        try:
+            reader = await request.multipart()
+            while True:
+                part = await reader.next()
+                if part is None:
+                    break
+                if part.name == "audio":
+                    audio_bytes = await part.read()
+                    ct = part.headers.get("Content-Type", "audio/webm")
+                    fn = ("recording.m4a" if ("mp4" in ct or "m4a" in ct)
+                          else "recording.ogg" if "ogg" in ct else "recording.webm")
+                    try:
+                        transcript = await pronunciation_scorer.transcribe_audio(
+                            audio_bytes, fn) or ""
+                    except Exception:
+                        transcript = ""
+                elif part.name == "transcript":
+                    transcript = (await part.text()).strip()
+        except Exception:
+            return web.json_response({"ok": False, "error": "multipart required"},
+                                     status=400, headers=_cors_headers(request))
+    else:
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        transcript = (body.get("transcript") or "").strip()
+    out = await placement_runner.submit_speaking(payload["did"], transcript)
+    return web.json_response(out, status=200 if out.get("ok") else 400,
+                             headers=_cors_headers(request))
+
+
 @routes.post("/api/placement/slot")
 async def post_placement_slot(request: web.Request) -> web.Response:
     """Opt-in: place the student at their result level (week 1)."""
