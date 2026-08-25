@@ -157,6 +157,45 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
                     )
 
 
+def test_every_week_resolves_its_can_do_goals_bilingually():
+    """Every one of the 90 weeks must resolve at least one CEFR can-do goal to
+    a real bilingual "I can ..." descriptor.
+
+    Phase 11A-4 regression guard: weeks carry bare codes ("A1.P.1") which mean
+    nothing to a student, and the goals were invisible during study -- shown
+    only on the Phase-9 progress screen and the certificate, i.e. after the
+    fact. `get_can_do_for_week` returns codes; this resolves them.
+    """
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            goals = curriculum.get_can_do_details_for_week(week, level)
+            assert goals, f"{level} week {week} resolves no can-do goals"
+            for g in goals:
+                assert g.get("code"), f"{level} w{week}: goal without code"
+                assert g.get("en"), f"{level} w{week}: {g.get('code')} has no English"
+                assert g.get("ar"), f"{level} w{week}: {g.get('code')} has no Arabic"
+                assert g.get("mode") in (
+                    "reception", "production", "interaction", "mediation"
+                ), f"{level} w{week}: {g.get('code')} has odd mode {g.get('mode')}"
+
+
+def test_can_do_descriptor_map_skips_the_overview_string_keys():
+    """can_do.json mixes list-valued modes with plain string keys
+    (overview_en/overview_ar). Those must never be treated as descriptors."""
+    m = curriculum.can_do_descriptor_map("A1")
+    assert m, "A1 descriptor library is empty"
+    assert "overview_en" not in m and "overview_ar" not in m
+    assert all(code.startswith("A1.") for code in m), sorted(m)[:5]
+
+
+def test_get_can_do_details_skips_unknown_codes(monkeypatch):
+    """An unrecognised code is dropped, not rendered raw to the student."""
+    monkeypatch.setattr(curriculum, "get_can_do_for_week",
+                        lambda w, l="A1": ["A1.P.1", "A1.NOPE.9"])
+    goals = curriculum.get_can_do_details_for_week(1, "A1")
+    assert [g["code"] for g in goals] == ["A1.P.1"]
+
+
 def test_every_authored_grammar_pattern_is_reachable_and_practisable():
     """All 90 authored grammar patterns must be reachable, and each must
     carry the fields the practice page turns into a real exercise.

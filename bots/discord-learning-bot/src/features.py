@@ -1128,6 +1128,26 @@ async def show_today(ctx):
 
     lines = [f"📅 **مهامك النهاردة — Week {week}**", "━━━━━━━━━━━━━━━━━━━━━━━━", ""]
 
+    # Phase 11A-4: show WHY today's tasks exist. These CEFR can-do goals are
+    # the point of a CEFR-aligned course, but they used to be invisible while
+    # studying — surfaced only on the Phase-9 progress screen and the
+    # certificate, i.e. after the fact. Best-effort: a missing/corrupt
+    # descriptor library must never break the daily flow.
+    try:
+        goals = curriculum.get_can_do_details_for_week(
+            week, config.cefr_key(member.get("level", "A1")))
+    except Exception:
+        goals = []
+    if goals:
+        lines.append("🎯 **هدف الأسبوع — بعد الأسبوع ده تقدر:**")
+        for g in goals:
+            ar = g.get("ar") or ""
+            en = g.get("en") or ""
+            lines.append(f"  • {ar}" if ar else f"  • {en}")
+            if ar and en:
+                lines.append(f"    _{en}_")
+        lines.append("")
+
     total_min = 0
 
     _num_hint = {"writing": "!6", "community": "!7"}
