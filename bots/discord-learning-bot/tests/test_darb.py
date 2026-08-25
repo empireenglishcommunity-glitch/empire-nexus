@@ -218,6 +218,54 @@ def test_done_requires_speaking_on_or_after_launch(monkeypatch):
     assert cal[(1, 1)]["day_tier"] == 1
 
 
+def test_grammar_is_weekly_and_never_gates_a_day(monkeypatch):
+    """Phase 11A-3 SAFETY: grammar is a WEEKLY exercise, so it must be
+    tracked and rewarded but must NEVER become a requirement for a day to be
+    green -- otherwise every existing green day and streak would break the
+    moment grammar shipped.
+
+    Exactly one grammar pattern is authored per week, so requiring it daily
+    would also be wrong by design.
+    """
+    # It must be tracked (the API may accept it) ...
+    assert "grammar" in database.WEEKLY_EXERCISES
+    assert "grammar" in database.TRACKED_EXERCISES
+    # ... but NEVER part of the sets that decide "is this day done".
+    assert "grammar" not in database.PRACTICE_EXERCISES
+    assert "grammar" not in database.CALENDAR_EXERCISES
+    for d in ("2026-07-01", "2026-08-01", "2099-01-01"):
+        assert "grammar" not in database.required_exercises_for_date(
+            datetime.date.fromisoformat(d)
+        )
+
+    _member(joined_at="2026-08-01")
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2026-08-01")
+    # A day completed to its real requirement is green...
+    for ex in ("accent", "vocab", "shadow", "listening", "speaking"):
+        database.record_practice_mastery("u1", "L0", 1, 1, ex, today="2026-08-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal[(1, 1)]["done"] is True
+    day_tier_before = cal[(1, 1)]["day_tier"]
+    exercises_before = set(cal[(1, 1)]["exercises"])
+
+    # ...and recording grammar changes NOTHING about that day's state.
+    database.record_practice_mastery("u1", "L0", 1, 1, "grammar", today="2026-08-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal[(1, 1)]["done"] is True
+    assert cal[(1, 1)]["day_tier"] == day_tier_before
+    assert set(cal[(1, 1)]["exercises"]) == exercises_before
+    assert "grammar" not in cal[(1, 1)]["exercises"]
+
+
+def test_grammar_alone_does_not_green_a_day(monkeypatch):
+    """The inverse guard: doing only grammar must not make a day count."""
+    _member(joined_at="2026-08-01")
+    monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2026-08-01")
+    database.record_practice_mastery("u1", "L0", 1, 1, "grammar", today="2026-08-01")
+    cal = database.get_calendar_mastery("u1", "L0")
+    assert cal.get((1, 1), {}).get("done") is not True
+
+
 def test_pre_launch_day_grandfathered_at_four(monkeypatch):
     """A day BEFORE the launch stays green at 4/4 even after speaking exists —
     historic streak days are never un-greened."""

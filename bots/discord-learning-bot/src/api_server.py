@@ -1086,7 +1086,7 @@ async def post_practice_complete(request: web.Request) -> web.Response:
     except (TypeError, ValueError):
         return web.json_response({"ok": False, "error": "bad week/day"},
                                  status=400, headers=_cors_headers(request))
-    if exercise not in database.PRACTICE_EXERCISES:
+    if exercise not in database.TRACKED_EXERCISES:
         return web.json_response({"ok": False, "error": "bad exercise"},
                                  status=400, headers=_cors_headers(request))
     if not (1 <= week <= curriculum.max_week_for_level(level)) or not (1 <= day <= 7):
@@ -1100,14 +1100,33 @@ async def post_practice_complete(request: web.Request) -> web.Response:
     # completion over a feedback/streak hiccup.
     member = database.get_member(discord_id)
     name = member.get("discord_name", "Student") if member else "Student"
-    try:
-        from . import tasks
-        await tasks.process_submission(discord_id, name, exercise)
-    except Exception as e:
-        logger.warning(f"practice-complete: process_submission failed: {e}")
+    is_weekly = exercise in database.WEEKLY_EXERCISES
+    if not is_weekly:
+        try:
+            from . import tasks
+            await tasks.process_submission(discord_id, name, exercise)
+        except Exception as e:
+            logger.warning(f"practice-complete: process_submission failed: {e}")
 
     # Content-day mastery/tier truth (the calendar's source of truth).
     m = database.record_practice_mastery(discord_id, level, week, day, exercise)
+
+    if is_weekly:
+        # Weekly exercises deliberately bypass tasks.process_submission:
+        # that function logs a DAILY submission and awards POINTS_ALL_TASKS
+        # when count_submissions_for_date() hits exactly 7. Logging grammar
+        # there would let a student reach "7 submissions today" WITHOUT
+        # doing all 7 daily tasks (grammar + 6 tasks), handing out the
+        # all-tasks bonus unearned, and would also pollute streak counting.
+        # So we award the flat per-task points directly and leave the daily
+        # streak/bonus machinery completely untouched. Only on a genuine
+        # tier increment, so re-opening the page cannot farm points.
+        if m.get("incremented"):
+            try:
+                database.add_points(discord_id, config.POINTS_PER_TASK,
+                                    f"weekly:{exercise}")
+            except Exception as e:
+                logger.warning(f"practice-complete: weekly points failed: {e}")
     day_state = database.get_calendar_mastery(discord_id, level).get((week, day), {})
     return web.json_response({
         "ok": True,

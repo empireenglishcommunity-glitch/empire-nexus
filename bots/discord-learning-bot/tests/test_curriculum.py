@@ -157,6 +157,36 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
                     )
 
 
+def test_every_authored_grammar_pattern_is_reachable_and_practisable():
+    """All 90 authored grammar patterns must be reachable, and each must
+    carry the fields the practice page turns into a real exercise.
+
+    Phase 11A-3 regression guard: grammar used to reach students ONLY as a
+    passive Wednesday #cheat-sheets post -- no page, no exercise, no
+    completion -- so a student could finish a level having never practised a
+    single grammar point.
+    """
+    weeks = 0
+    practice_items = 0
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            g = curriculum.get_grammar_pattern(week, level)
+            assert g, f"{level} week {week} has no grammar pattern"
+            assert g.get("pattern_name"), f"{level} w{week}: no pattern_name"
+            assert g.get("formula"), f"{level} w{week}: no formula"
+            # What makes it an EXERCISE rather than a cheat sheet:
+            practice = g.get("practice_fill_blank") or []
+            assert practice, f"{level} w{week}: no practice_fill_blank"
+            for p in practice:
+                assert p.get("sentence") and p.get("answer"), (
+                    f"{level} w{week}: practice item missing sentence/answer"
+                )
+            practice_items += len(practice)
+            weeks += 1
+    assert weeks == 90, f"expected 90 authored grammar weeks, found {weeks}"
+    assert practice_items >= 90, "every week must have practisable items"
+
+
 def test_every_authored_listening_item_is_reachable():
     """All 450 authored listening items must be reachable through the public
     accessor, for every week of every level.
