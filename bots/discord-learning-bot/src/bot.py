@@ -3526,6 +3526,20 @@ async def cmd_organize_server(ctx, confirm: str = None):
 
     ordered_cats = sorted(guild.categories, key=lambda c: (_cat_rank(c), c.name))
 
+    # Floating (uncategorized) channels: owner/system ones (teacher-feed, logs,
+    # dev, mod, admin, nutq) get tucked into the Admin category (owner-only, and
+    # synced perms make them owner-only too — important for the private
+    # nutq-teacher-feed). Any other orphan is reported but left where it is.
+    import re as _re
+    admin_cat = next((c for c in ordered_cats
+                      if "ADMIN" in c.name.upper() or "الإدارة" in c.name), None)
+    _admin_orphan_re = _re.compile(r"teacher-feed|nutq|-log$|^dev-|^bot-log|^mod-|admin|ops",
+                                   _re.I)
+    orphans = [ch for ch in guild.channels
+               if not isinstance(ch, discord.CategoryChannel) and ch.category is None]
+    orphans_to_admin = [ch for ch in orphans if admin_cat and _admin_orphan_re.search(ch.name or "")]
+    orphans_other = [ch for ch in orphans if ch not in orphans_to_admin]
+
     if confirm != "confirm":
         lines = ["🗂️ **Proposed professional layout** (preview — nothing moved yet):", ""]
         for i, cat in enumerate(ordered_cats, 1):
@@ -3533,6 +3547,12 @@ async def cmd_organize_server(ctx, confirm: str = None):
             for ch in sorted(cat.channels, key=_chan_key):
                 icon = "🔊 " if isinstance(ch, discord.VoiceChannel) else "#"
                 lines.append(f"    {icon}{ch.name}")
+        if orphans_to_admin:
+            lines.append(f"\n🧩 **Floating → moved into {admin_cat.name}** (owner-only):")
+            lines += [f"    #{ch.name}" for ch in orphans_to_admin]
+        if orphans_other:
+            lines.append("\n🧩 **Floating (left as-is — tell me where they belong):**")
+            lines += [f"    #{ch.name}" for ch in orphans_other]
         lines.append("\n✅ Run `!organize-server confirm` to apply (may take ~a minute).")
         buf = ""
         for ln in lines:
@@ -3546,8 +3566,17 @@ async def cmd_organize_server(ctx, confirm: str = None):
         return
 
     await ctx.send("🗂️ Organizing… (repositioning categories + channels, ~a minute)")
-    moved_cat = moved_ch = 0
+    moved_cat = moved_ch = adopted = 0
     errors = []
+    # 1. Tuck floating owner/system channels into Admin (sync its owner-only perms).
+    for ch in orphans_to_admin:
+        try:
+            await ch.edit(category=admin_cat, sync_permissions=True,
+                          reason="organize-server: file uncategorized owner channel under Admin")
+            adopted += 1
+        except Exception as e:
+            errors.append(f"#{ch.name}→Admin: {e}")
+    # 2. Category order.
     for pos, cat in enumerate(ordered_cats):
         try:
             await cat.edit(position=pos)
@@ -3567,7 +3596,12 @@ async def cmd_organize_server(ctx, confirm: str = None):
                 except Exception as e:
                     errors.append(f"#{ch.name}: {e}")
     out = (f"🗂️ **Organized** — repositioned **{moved_cat}** categories + "
-           f"**{moved_ch}** channels into the professional layout. ✅")
+           f"**{moved_ch}** channels"
+           + (f", filed **{adopted}** floating channel(s) under Admin" if adopted else "")
+           + " into the professional layout. ✅")
+    if orphans_other:
+        out += f"\n🧩 Still uncategorized (tell me where to put them): " + \
+               ", ".join(f"#{ch.name}" for ch in orphans_other[:8])
     if errors:
         out += (f"\n⚠️ {len(errors)} item(s) couldn't move — first: `{errors[0][:150]}`"
                 f"\n(Discord may need a moment / permission check — re-run if needed.)")
