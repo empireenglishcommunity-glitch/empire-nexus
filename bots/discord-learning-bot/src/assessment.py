@@ -1219,6 +1219,35 @@ def can_do_descriptors(level: str) -> dict:
         return {}
 
 
+def can_do_progress(discord_id: str, level: str) -> dict:
+    """Mi'yar Phase 9 — the student's CEFR can-do progress at `level`: how many
+    of the level's TAUGHT descriptors (those its weeks target) are evidenced by
+    weeks the student has mastered. Returns {level, reached, total, pct,
+    evidenced, taught, mastered_weeks, total_weeks}."""
+    ck = config.cefr_key(level)
+    max_wk = curriculum.max_week_for_level(ck) or 0
+    mastered = database.itqan_mastered_weeks(discord_id, ck) or \
+        database.itqan_mastered_weeks(discord_id, level)
+    taught, evidenced = set(), set()
+    for wk in range(1, max_wk + 1):
+        codes = curriculum.get_can_do_for_week(wk, ck)
+        taught.update(codes)
+        if wk in mastered:
+            evidenced.update(codes)
+    reached = len(evidenced & taught)
+    total = len(taught)
+    return {
+        "level": ck,
+        "reached": reached,
+        "total": total,
+        "pct": round(100 * reached / total) if total else 0,
+        "evidenced": sorted(evidenced & taught),
+        "taught": sorted(taught),
+        "mastered_weeks": len(mastered),
+        "total_weeks": max_wk,
+    }
+
+
 def tag_part_a_can_do(items: list[dict], level: str) -> list[dict]:
     """Attach a `can_do` = {code, en, mode} to each Part A item by its skill→mode
     map, cycling through the level's descriptors for that mode so items spread

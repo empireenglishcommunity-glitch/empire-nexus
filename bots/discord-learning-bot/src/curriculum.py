@@ -435,6 +435,17 @@ def get_theme(week: int, level: str = "L0") -> str:
     return data.get("theme", config.VOCAB_THEMES.get(week, "General"))
 
 
+def get_can_do_for_week(week: int, level: str = "L0") -> list:
+    """CEFR can-do descriptor codes a week targets (e.g. ['A1.P.1', 'A1.I.2']).
+    Empty list if the week has none. Accepts CEFR or legacy keys."""
+    from . import config
+    for key in (f"{level}_{week}", f"{config.cefr_key(level)}_{week}"):
+        data = _weekly_data.get(key)
+        if data:
+            return list(data.get("can_do", []) or [])
+    return []
+
+
 def is_loaded() -> bool:
     """Check if curriculum data has been loaded."""
     return len(_weekly_data) > 0
