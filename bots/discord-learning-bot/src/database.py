@@ -4244,9 +4244,39 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
         statement_ar = (f"تشهد Empire English أن {name} أتمّ/ت المستوى {cert_level} "
                         f"على الإطار الأوروبي المرجعي (CEFR) — بإتقان كل الأسابيع.")
 
+    # Phase 11C — the LEVEL COMPLETION CONTRACT.
+    #
+    # It gates the strongest CLAIM, never access: `eligible` above is
+    # untouched, so no student who can see their certificate today loses it.
+    # Retroactively revoking an earned certificate would be indefensible, and
+    # this codebase already set the grandfathering precedent when speaking
+    # became a required exercise.
+    #
+    # When all three criteria hold, the certificate additionally asserts
+    # fully-evidenced completion. Short of that it reads exactly as before, and
+    # the contract states plainly which criterion is outstanding.
+    contract = None
+    full_completion = False
+    try:
+        from . import assessment as _assessment
+        contract = _assessment.level_completion_contract(discord_id, cert_level)
+        full_completion = bool(contract["met"])
+    except Exception:
+        contract = None
+
+    if full_completion:
+        statement_en += (" Every CEFR can-do statement for this level is backed "
+                         "by the student's own recorded work.")
+        statement_ar += (" وكل أهداف الـ CEFR لهذا المستوى مدعومة بعمل الطالب "
+                         "المسجَّل فعليًا.")
+
     return {
         "eligible": eligible,
         "basis": basis,                     # 'exam' (stronger) | 'mastery'
+        # Phase 11C: provable completion. `eligible` = may they hold a
+        # certificate; `full_completion` = is every claim on it proven.
+        "contract": contract,
+        "full_completion": full_completion,
         "name": name,
         "level": cert_level,
         "level_name": level_name,
