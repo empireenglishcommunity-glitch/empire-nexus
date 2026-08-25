@@ -3291,6 +3291,68 @@ async def cmd_advance(ctx, member: discord.Member = None):
         pass
 
 
+@bot.command(name="exam-review")
+@commands.has_permissions(manage_guild=True)
+async def cmd_exam_review(ctx, level: str = None):
+    """(Admin) List CEFR exit exams awaiting human review — those that landed
+    near a cut or where the AI rater was unsure. Usage: !exam-review [level]"""
+    rows = database.exit_exam_pending_reviews(level)
+    if not rows:
+        await ctx.send("✅ No exit exams awaiting review.")
+        return
+    lines = ["📋 **Exit exams awaiting review:**"]
+    for r in rows:
+        name = (database.get_member(str(r["discord_id"])) or {}).get(
+            "discord_name", r["discord_id"])
+        lines.append(
+            f"`#{r['id']}` **{name}** — {r['level']} · A {r['part_a_pct']}% · "
+            f"B {r['part_b_total']}/100 · conf {r['ai_confidence']} ({r['rater']})\n"
+            f"     {'; '.join(r.get('reasons', [])) or '—'}"
+        )
+    lines.append("\nResolve with `!exam-pass <id>` or `!exam-fail <id>`.")
+    await ctx.send("\n".join(lines)[:1900])
+
+
+@bot.command(name="exam-pass")
+@commands.has_permissions(manage_guild=True)
+async def cmd_exam_pass(ctx, review_id: int = None):
+    """(Admin) Resolve a reviewed exit exam as PASS → promote + certificate.
+    Usage: !exam-pass <review_id> (see !exam-review)"""
+    if review_id is None:
+        await ctx.send("Usage: `!exam-pass <review_id>` — see `!exam-review`")
+        return
+    row = database.exit_exam_resolve_review(review_id, "passed", str(ctx.author))
+    if not row:
+        await ctx.send(f"No pending review `#{review_id}`.")
+        return
+    from . import advancement_outcomes
+    await advancement_outcomes.promote_from_review(row)
+    name = (database.get_member(str(row["discord_id"])) or {}).get(
+        "discord_name", row["discord_id"])
+    await ctx.send(f"🎓 Review `#{review_id}` — **{name}** passed **{row['level']}**. "
+                   f"Promoting + issuing certificate now.")
+
+
+@bot.command(name="exam-fail")
+@commands.has_permissions(manage_guild=True)
+async def cmd_exam_fail(ctx, review_id: int = None):
+    """(Admin) Resolve a reviewed exit exam as NOT-PASS → retake DM.
+    Usage: !exam-fail <review_id> (see !exam-review)"""
+    if review_id is None:
+        await ctx.send("Usage: `!exam-fail <review_id>` — see `!exam-review`")
+        return
+    row = database.exit_exam_resolve_review(review_id, "failed", str(ctx.author))
+    if not row:
+        await ctx.send(f"No pending review `#{review_id}`.")
+        return
+    from . import advancement_outcomes
+    await advancement_outcomes.fail_from_review(row)
+    name = (database.get_member(str(row["discord_id"])) or {}).get(
+        "discord_name", row["discord_id"])
+    await ctx.send(f"📊 Review `#{review_id}` — **{name}** ({row['level']}) "
+                   f"marked not-pass. Retake DM sent.")
+
+
 @bot.command(name="itqan-reset")
 @commands.has_permissions(manage_guild=True)
 async def cmd_itqan_reset(ctx, member: discord.Member = None, week: int = None):
