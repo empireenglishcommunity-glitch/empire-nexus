@@ -1769,6 +1769,34 @@ async def get_assessment_certificate(request: web.Request) -> web.Response:
 #  Mi'yar Phase 8 — CEFR placement (adaptive, per-skill profile)
 # ============================================================
 
+@routes.get("/api/cefr/progress")
+async def get_cefr_progress(request: web.Request) -> web.Response:
+    """Phase 9: the student's per-level CEFR can-do checklist + progress.
+    Each descriptor the level teaches, marked reached (a mastered week evidences
+    it) or not — powers the /can-do/ page."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    did, level = payload["did"], payload.get("lvl", "A1")
+    database.touch_device_session(payload["sid"])
+    cdp = assessment.can_do_progress(did, level)
+    descs = assessment.can_do_descriptors(cdp["level"])
+    evidenced, taught = set(cdp["evidenced"]), set(cdp["taught"])
+    out = []
+    for mode in ("reception", "production", "interaction", "mediation"):
+        for d in descs.get(mode, []):
+            if d.get("code") in taught:
+                out.append({"code": d["code"], "en": d.get("en"), "ar": d.get("ar"),
+                            "mode": mode, "reached": d["code"] in evidenced})
+    return web.json_response({
+        "ok": True, "level": cdp["level"],
+        "level_name": config.level_info(cdp["level"]).get("name", cdp["level"]),
+        "reached": cdp["reached"], "total": cdp["total"], "pct": cdp["pct"],
+        "descriptors": out,
+    }, headers=_cors_headers(request))
+
+
 @routes.post("/api/placement/start")
 async def post_placement_start(request: web.Request) -> web.Response:
     """Begin a placement session; returns the first objective block."""

@@ -2421,6 +2421,22 @@ async def cmd_progress(ctx):
         f"Track: {member['track']}"
     )
 
+    # Phase 9 (transparency): CEFR can-do progress — how many of this level's
+    # can-do goals the student has evidenced by the weeks they've mastered.
+    try:
+        from . import assessment
+        cdp = assessment.can_do_progress(str(ctx.author.id), member["level"])
+        if cdp["total"]:
+            filled = round(cdp["pct"] / 10)
+            cbar = "█" * filled + "░" * (10 - filled)
+            msg += (
+                f"\n🎓 CEFR can-do ({cdp['level']}): **{cdp['reached']}/{cdp['total']}** "
+                f"[{cbar}] {cdp['pct']}%\n"
+                f"   Your checklist: {config.PRACTICE_PLATFORM_URL}/can-do/"
+            )
+    except Exception:
+        pass
+
     # Dhaka' A1.3: Show difficulty + pronunciation average
     from . import adaptive_engine
     difficulty = member.get("difficulty_level", 2)
