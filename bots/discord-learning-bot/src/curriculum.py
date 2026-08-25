@@ -674,6 +674,115 @@ def get_can_do_details_for_week(week: int, level: str = "A1") -> list[dict]:
     return [library[c] for c in codes if c in library]
 
 
+# Which CEFR mode(s) an exercise can produce evidence for.
+#
+# Deliberately conservative. accent, shadowing, vocabulary, grammar and the
+# review quiz are ENABLING skills: they build the machinery a descriptor needs,
+# but no CEFR descriptor says "can do a pronunciation drill". Claiming they
+# evidence a descriptor would be exactly the kind of over-claiming this whole
+# effort exists to remove, so they map to nothing.
+EVIDENCE_MODES_BY_EXERCISE = {
+    "listening": ("reception",),
+    "reading": ("reception",),
+    "speaking": ("production", "interaction"),
+    "writing": ("production",),
+    "mediation": ("mediation",),
+    "accent": (), "shadow": (), "vocab": (), "grammar": (), "review": (),
+    # `community` is real interaction, but it is unstructured free chat that is
+    # not tied to any specific descriptor ("can ask and answer questions about
+    # personal details" is proven by the speaking mission, not by having
+    # posted). Deliberately empty rather than absent, so this is a recorded
+    # decision and not an oversight.
+    "community": (),
+}
+
+
+def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
+    """Narrow mode-matched exercises to the channel the descriptor names.
+
+    CEFR's `mode` is coarser than the descriptor text. "reception" covers both
+    listening and reading, and "production" covers both speaking and writing,
+    so matching on mode alone over-claims in both directions:
+
+      * A1.P.5 "Can WRITE short, simple notes and messages" would otherwise be
+        evidenced by a speaking task.
+      * A1.R.3 "...numbers, prices, dates and times when SPOKEN slowly" would
+        otherwise be evidenced by a reading task.
+
+    The descriptor text says which channel it means, so use it. Only narrows —
+    never widens — and leaves the set untouched when the wording is neutral.
+    """
+    text = (descriptor_en or "").lower()
+    written = any(k in text for k in ("write", "written", "letter", "note"))
+    spoken_recept = any(k in text for k in (
+        "spoken", "speech", "listen", "hear", "radio", "tv ", "announcement",
+        "lecture", "conversation"))
+    read_recept = any(k in text for k in (
+        "text", "read", "article", "report", "news item", "written"))
+
+    narrowed = exercises
+    if "writing" in exercises and "speaking" in exercises and written:
+        narrowed = tuple(e for e in narrowed if e != "speaking")
+    if "listening" in exercises and "reading" in exercises:
+        if spoken_recept and not read_recept:
+            narrowed = tuple(e for e in narrowed if e != "reading")
+        elif read_recept and not spoken_recept:
+            narrowed = tuple(e for e in narrowed if e != "listening")
+    return narrowed or exercises
+
+
+def descriptor_evidence_map(week: int, level: str = "A1") -> dict:
+    """{descriptor_code: (exercises that can evidence it)} for one week.
+
+    Phase 11C. Answers "which task proves this can-do statement?" so the
+    certificate can show EVIDENCE per descriptor instead of an unbacked
+    checklist.
+
+    Three sources, each with its own precision:
+
+      * the week file's `can_do` — evidenced by any exercise whose CEFR mode
+        matches the descriptor's mode (see EVIDENCE_MODES_BY_EXERCISE);
+      * the reading passage's `can_do` — evidenced ONLY by the reading
+        exercise. Reading and listening are both "reception", so mode
+        matching alone would let a dictation claim a reading descriptor;
+      * the mediation task's `can_do` — evidenced ONLY by the mediation
+        exercise, for the same reason.
+
+    A code with no possible exercise is omitted rather than listed as
+    unprovable — the coverage ledger is where "taught but unevidenceable"
+    belongs, not a student's certificate.
+    """
+    week = min(max_week_for_level(level), max(1, week))
+    library = can_do_descriptor_map(level)
+    out: dict = {}
+
+    for code in get_can_do_for_week(week, level):
+        d = library.get(code)
+        if not d:
+            continue
+        mode = d.get("mode")
+        exercises = tuple(
+            ex for ex, modes in EVIDENCE_MODES_BY_EXERCISE.items() if mode in modes
+        )
+        exercises = _narrow_by_channel(exercises, d.get("en", ""))
+        if exercises:
+            out[code] = exercises
+
+    passage = get_reading_for_week(week, level)
+    if passage and passage.get("text"):
+        for code in passage.get("can_do") or []:
+            if code in library:
+                out[code] = ("reading",)
+
+    med = get_mediation_for_week(week, level)
+    if med and med.get("source") and (med.get("key_points") or []):
+        for code in med.get("can_do") or []:
+            if code in library:
+                out[code] = ("mediation",)
+
+    return out
+
+
 def is_loaded() -> bool:
     """Check if curriculum data has been loaded."""
     return len(_weekly_data) > 0

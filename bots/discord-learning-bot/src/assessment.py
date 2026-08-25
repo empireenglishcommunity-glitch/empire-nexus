@@ -1248,6 +1248,81 @@ def can_do_progress(discord_id: str, level: str) -> dict:
     }
 
 
+def descriptor_portfolio(discord_id: str, level: str) -> dict:
+    """Phase 11C — EVIDENCE per CEFR descriptor, not just a checklist.
+
+    `can_do_progress` answers "how many descriptors has this student reached?"
+    at week granularity: master the week, get credit for all of its codes. That
+    is fine for a progress bar but it cannot answer the question that actually
+    matters on a certificate — *what did the student DO that proves this?*
+
+    This derives that proof from `practice_mastery`, which already records every
+    completion as (level, week, day, exercise) with dates. Two consequences
+    worth stating:
+
+      * no new table and no change to the completion hot path, so nothing about
+        recording a completion can break;
+      * it works RETROACTIVELY — every student's existing history produces a
+        portfolio immediately, with no backfill job.
+
+    Evidence is attributed strictly: `curriculum.descriptor_evidence_map`
+    decides which exercises may prove which descriptor, so a dictation cannot
+    claim a reading descriptor and a speaking task cannot claim "can write".
+    Enabling-skill exercises (accent, shadowing, vocabulary, grammar, review)
+    prove no descriptor at all by design.
+
+    Returns {level, descriptors: [{code, en, ar, mode, evidenced, evidence:
+    [{exercise, week, day, at}], possible_exercises}], evidenced, total, pct}.
+    """
+    ck = config.cefr_key(level)
+    max_wk = curriculum.max_week_for_level(ck) or 0
+    library = curriculum.can_do_descriptor_map(ck)
+
+    # code -> {week: allowed exercises}
+    wanted: dict[str, dict] = {}
+    for wk in range(1, max_wk + 1):
+        for code, exercises in curriculum.descriptor_evidence_map(wk, ck).items():
+            wanted.setdefault(code, {})[wk] = set(exercises)
+
+    completions = database.practice_completions(discord_id, ck)
+
+    portfolio = []
+    for code in sorted(wanted):
+        d = library.get(code) or {}
+        ev = []
+        for row in completions:
+            allowed = wanted[code].get(row["week"])
+            if allowed and row["exercise"] in allowed:
+                ev.append({
+                    "exercise": row["exercise"],
+                    "week": row["week"],
+                    "day": row["day"],
+                    "at": row.get("last_completed_date"),
+                })
+        ev.sort(key=lambda e: (e["week"], e["day"]))
+        possible = sorted({x for exs in wanted[code].values() for x in exs})
+        portfolio.append({
+            "code": code,
+            "en": d.get("en", ""),
+            "ar": d.get("ar", ""),
+            "mode": d.get("mode", ""),
+            "evidenced": bool(ev),
+            "evidence": ev,
+            "evidence_count": len(ev),
+            "possible_exercises": possible,
+        })
+
+    evidenced = sum(1 for p in portfolio if p["evidenced"])
+    total = len(portfolio)
+    return {
+        "level": ck,
+        "descriptors": portfolio,
+        "evidenced": evidenced,
+        "total": total,
+        "pct": round(100 * evidenced / total) if total else 0,
+    }
+
+
 def tag_part_a_can_do(items: list[dict], level: str) -> list[dict]:
     """Attach a `can_do` = {code, en, mode} to each Part A item by its skill→mode
     map, cycling through the level's descriptors for that mode so items spread
