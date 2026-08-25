@@ -1323,6 +1323,104 @@ def descriptor_portfolio(discord_id: str, level: str) -> dict:
     }
 
 
+def level_completion_contract(discord_id: str, level: str) -> dict:
+    """Phase 11C — the LEVEL COMPLETION CONTRACT.
+
+    "Finished A1" used to mean "clicked through the days". This states, and
+    checks, what it should mean:
+
+      1. WORK      — every content day of the level completed to its required
+                     exercise set, and every week's weekly exercises done.
+      2. EVIDENCE  — every CEFR descriptor the level teaches is backed by real
+                     recorded student work (see descriptor_portfolio).
+      3. RETENTION — the level's exit exam is passed.
+
+    Deliberately NOT an access gate. `itqan_certificate_data["eligible"]` is
+    untouched, so no student who can see their certificate today loses it —
+    retroactively revoking earned certificates would be indefensible, and this
+    codebase already set that precedent by grandfathering pre-launch green days
+    when speaking became a required exercise.
+
+    What the contract gates is the STRONGEST CLAIM: only when all three
+    criteria hold does the certificate assert fully-evidenced completion. Short
+    of that, the certificate stands as before and the contract says plainly
+    which criterion is outstanding. A claim that cannot be checked is exactly
+    what this whole effort set out to remove.
+
+    Returns {level, met, criteria: [{id, label_en, label_ar, met, detail}]}.
+    """
+    ck = config.cefr_key(level)
+    max_wk = curriculum.max_week_for_level(ck) or 0
+
+    # ── 1. WORK: every content day green, plus each week's weekly exercises.
+    cal = database.get_calendar_mastery(discord_id, ck) or {}
+    days_total = max_wk * 7
+    days_done = sum(1 for wk in range(1, max_wk + 1) for d in range(1, 8)
+                    if cal.get((wk, d), {}).get("done"))
+
+    completions = database.practice_completions(discord_id, ck)
+    done_weekly = {(r["week"], r["exercise"]) for r in completions}
+    weekly_required, weekly_done = 0, 0
+    for wk in range(1, max_wk + 1):
+        for ex in database.WEEKLY_EXERCISES:
+            # Only require a weekly exercise where its content actually exists;
+            # reading/mediation roll out level by level, so demanding them on an
+            # unauthored level would make the contract unsatisfiable.
+            if ex == "reading" and not curriculum.get_reading_for_week(wk, ck):
+                continue
+            if ex == "mediation" and not curriculum.get_mediation_for_week(wk, ck):
+                continue
+            if ex == "grammar" and not curriculum.get_grammar_pattern(wk, ck):
+                continue
+            weekly_required += 1
+            if (wk, ex) in done_weekly:
+                weekly_done += 1
+
+    work_met = (days_total > 0 and days_done >= days_total
+                and weekly_done >= weekly_required)
+
+    # ── 2. EVIDENCE
+    try:
+        pf = descriptor_portfolio(discord_id, ck)
+    except Exception:
+        pf = {"evidenced": 0, "total": 0}
+    evidence_met = bool(pf["total"]) and pf["evidenced"] >= pf["total"]
+
+    # ── 3. RETENTION
+    exam = database.highest_passed_exit_exam(discord_id)
+    exam_met = bool(exam and config.cefr_key(exam.get("level", "")) == ck)
+
+    criteria = [
+        {
+            "id": "work",
+            "label_en": "Completed every day and every weekly exercise",
+            "label_ar": "أتمّ كل يوم وكل تمرين أسبوعي",
+            "met": work_met,
+            "detail": (f"{days_done}/{days_total} days · "
+                       f"{weekly_done}/{weekly_required} weekly exercises"),
+        },
+        {
+            "id": "evidence",
+            "label_en": "Every CEFR can-do statement backed by real work",
+            "label_ar": "كل هدف CEFR مدعوم بعمل حقيقي",
+            "met": evidence_met,
+            "detail": f"{pf['evidenced']}/{pf['total']} descriptors evidenced",
+        },
+        {
+            "id": "retention",
+            "label_en": "Passed the level exit exam",
+            "label_ar": "نجح في امتحان نهاية المستوى",
+            "met": exam_met,
+            "detail": ("passed" if exam_met else "not passed yet"),
+        },
+    ]
+    return {
+        "level": ck,
+        "met": all(c["met"] for c in criteria),
+        "criteria": criteria,
+    }
+
+
 def tag_part_a_can_do(items: list[dict], level: str) -> list[dict]:
     """Attach a `can_do` = {code, en, mode} to each Part A item by its skill→mode
     map, cycling through the level's descriptors for that mode so items spread

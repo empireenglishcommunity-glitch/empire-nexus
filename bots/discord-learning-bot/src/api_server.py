@@ -1843,6 +1843,23 @@ async def get_cefr_progress(request: web.Request) -> web.Response:
     }, headers=_cors_headers(request))
 
 
+@routes.get("/api/cefr/contract")
+async def get_cefr_contract(request: web.Request) -> web.Response:
+    """Phase 11C: the student's LEVEL COMPLETION CONTRACT — the three criteria
+    that make "finished this level" a provable statement (all work done, every
+    can-do statement evidenced, exit exam passed), each with its own progress
+    detail. Reporting only: it never controls access to a certificate."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    did, level = payload["did"], payload.get("lvl", "A1")
+    database.touch_device_session(payload["sid"])
+    contract = assessment.level_completion_contract(did, level)
+    return web.json_response({"ok": True, **contract},
+                             headers=_cors_headers(request))
+
+
 @routes.post("/api/placement/start")
 async def post_placement_start(request: web.Request) -> web.Response:
     """Begin a placement session; returns the first objective block."""
