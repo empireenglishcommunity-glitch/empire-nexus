@@ -3408,23 +3408,34 @@ async def cmd_exam_fail(ctx, review_id: int = None):
 @bot.command(name="purge-legacy-zones")
 @commands.has_permissions(manage_guild=True)
 async def cmd_purge_legacy_zones(ctx, confirm: str = None):
-    """(Admin) Permanently DELETE the archived legacy L0–L3 zones + any leftover
-    l0–l3 channels, so the server is CEFR-only (no old/archive).
+    """(Admin) Permanently DELETE the archived legacy **Level 1/2/3** zones +
+    their l1–l3 channels. **Level 0 is KEPT (archived)** as a fallback.
     Preview: `!purge-legacy-zones`  ·  Delete: `!purge-legacy-zones confirm`"""
     import re as _re
     guild = ctx.guild
     if not guild:
         await ctx.send("Run this in the server.")
         return
-    legacy_re = _re.compile(r"^l[0-3](-|$)", _re.I)
-    archive_cats = [c for c in guild.categories if c.name.startswith("📦 Archive")]
+    # Target Levels 1–3 only. Level 0 (l0-* channels + its archived category) is
+    # deliberately preserved per owner decision (keep as a just-in-case archive).
+    legacy_re = _re.compile(r"^l[1-3](-|$)", _re.I)
+
+    def _is_target_category(name: str) -> bool:
+        if not name.startswith("📦 Archive"):
+            return False  # only archived categories
+        keep = ("LEVEL 0" in name.upper()) or ("المستوى 0" in name)  # keep L0
+        hits_123 = any(k in name.upper() for k in ("LEVEL 1", "LEVEL 2", "LEVEL 3")) \
+            or any(k in name for k in ("المستوى 1", "المستوى 2", "المستوى 3"))
+        return hits_123 and not keep
+
+    archive_cats = [c for c in guild.categories if _is_target_category(c.name)]
     archived_children = [ch for c in archive_cats for ch in c.channels]
     legacy_named = [ch for ch in guild.channels
                     if getattr(ch, "name", "") and legacy_re.match(ch.name)]
     to_delete = list({ch.id: ch for ch in (archived_children + legacy_named)}.values())
 
     if not archive_cats and not to_delete:
-        await ctx.send("✅ No legacy/archived zones found — the server is already CEFR-only.")
+        await ctx.send("✅ No Level 1/2/3 legacy zones found. (Level 0 archive, if any, is kept.)")
         return
 
     if confirm != "confirm":
@@ -3432,6 +3443,7 @@ async def cmd_purge_legacy_zones(ctx, confirm: str = None):
         more = f"\n   … +{len(to_delete) - 25} more" if len(to_delete) > 25 else ""
         await ctx.send(
             (f"🧹 **Legacy purge — PREVIEW** (nothing deleted yet)\n"
+             f"Deleting **Level 1/2/3** — Level 0 archive is KEPT.\n"
              f"Archived categories: **{len(archive_cats)}** · channels: **{len(to_delete)}**\n"
              + "\n".join(lines) + more +
              f"\n\n⚠️ Run `!purge-legacy-zones confirm` to DELETE these permanently.")[:1900])
@@ -3440,23 +3452,23 @@ async def cmd_purge_legacy_zones(ctx, confirm: str = None):
     deleted_ch = deleted_cat = 0
     for ch in to_delete:
         try:
-            await ch.delete(reason="Legacy L0–L3 retirement — purge")
+            await ch.delete(reason="Legacy L1–L3 retirement — purge (L0 kept)")
             deleted_ch += 1
         except Exception:
             pass
     for cat in archive_cats:
         try:
-            await cat.delete(reason="Legacy L0–L3 retirement — purge")
+            await cat.delete(reason="Legacy L1–L3 retirement — purge (L0 kept)")
             deleted_cat += 1
         except Exception:
             pass
-    await ctx.send(f"🧹 Purged: deleted **{deleted_ch}** channel(s) + **{deleted_cat}** "
-                   f"archived categor(y/ies). The server is CEFR-only now. ✅")
+    await ctx.send(f"🧹 Purged **Level 1/2/3**: deleted **{deleted_ch}** channel(s) + "
+                   f"**{deleted_cat}** archived categor(y/ies). Level 0 archive kept. ✅")
     try:
         await ops_hub.send_ops_alert(
-            "Legacy zones purged",
-            f"{ctx.author} deleted {deleted_ch} legacy channels + {deleted_cat} archived "
-            f"categories. Server is CEFR-only.", severity="info")
+            "Legacy zones purged (L1–L3)",
+            f"{ctx.author} deleted {deleted_ch} L1–L3 channels + {deleted_cat} archived "
+            f"categories. Level 0 archive preserved.", severity="info")
     except Exception:
         pass
 
