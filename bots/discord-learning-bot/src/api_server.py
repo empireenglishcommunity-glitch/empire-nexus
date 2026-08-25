@@ -1765,6 +1765,69 @@ async def get_assessment_certificate(request: web.Request) -> web.Response:
     return web.json_response({"ok": True, **data}, headers=_cors_headers(request))
 
 
+# ============================================================
+#  Mi'yar Phase 8 — CEFR placement (adaptive, per-skill profile)
+# ============================================================
+
+@routes.post("/api/placement/start")
+async def post_placement_start(request: web.Request) -> web.Response:
+    """Begin a placement session; returns the first objective block."""
+    from . import placement_runner
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    database.touch_device_session(payload["sid"])
+    out = placement_runner.start_session(payload["did"])
+    return web.json_response(out, headers=_cors_headers(request))
+
+
+@routes.post("/api/placement/answer")
+async def post_placement_answer(request: web.Request) -> web.Response:
+    """Submit the current block's answers; returns the next block or the writing task."""
+    from . import placement_runner
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    out = await placement_runner.submit_answers(payload["did"], body.get("answers") or {})
+    return web.json_response(out, status=200 if out.get("ok") else 400,
+                             headers=_cors_headers(request))
+
+
+@routes.post("/api/placement/writing")
+async def post_placement_writing(request: web.Request) -> web.Response:
+    """Submit the typed writing sample; finalises + returns the per-skill profile."""
+    from . import placement_runner
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    database.touch_device_session(payload["sid"])
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    out = await placement_runner.submit_writing(payload["did"], body.get("text", ""))
+    return web.json_response(out, status=200 if out.get("ok") else 400,
+                             headers=_cors_headers(request))
+
+
+@routes.post("/api/placement/slot")
+async def post_placement_slot(request: web.Request) -> web.Response:
+    """Opt-in: place the student at their result level (week 1)."""
+    from . import placement_runner
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    database.touch_device_session(payload["sid"])
+    out = placement_runner.slot_student(payload["did"])
+    return web.json_response(out, status=200 if out.get("ok") else 400,
+                             headers=_cors_headers(request))
+
+
 @routes.post("/api/assessment/start")
 async def post_assessment_start(request: web.Request) -> web.Response:
     """Begin a new attempt for a week (if unlocked, no active attempt, and

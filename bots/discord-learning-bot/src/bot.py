@@ -2767,6 +2767,39 @@ async def cmd_help(ctx, *, topic: str = ""):
     await ctx.send(msg)
 
 
+@bot.command(name="placement")
+async def cmd_placement(ctx, member: discord.Member = None):
+    """Get your CEFR placement link (find your level). Admins may send it to
+    someone else: `!placement @user`."""
+    if member is not None and not ctx.author.guild_permissions.manage_guild:
+        await ctx.send("Only admins can send a placement link to another member.")
+        return
+    target = member or ctx.author
+    discord_id = str(target.id)
+    if not database.get_member(discord_id):
+        await ctx.send(("That user isn't a registered student yet." if member
+                        else "You need to register first — type `!join`."))
+        return
+    code = database.create_claim_code(discord_id)
+    if not code:
+        await ctx.send("⏳ Too many link requests in the last hour — please wait a bit.")
+        return
+    base = config.PRACTICE_PLATFORM_URL
+    try:
+        await target.send(
+            f"🧭 **اختبار تحديد المستوى (CEFR)**\n\n"
+            f"الكود بتاعك (صالح ١٥ دقيقة، مرة واحدة بس):\n```\n{code}\n```\n"
+            f"اضغط الرابط ده وابدأ على طول:\n{base}/placement/?code={code}\n\n"
+            f"━━━━━━━━━━\n"
+            f"🧭 **CEFR placement test** — a short adaptive check to find your level.\n"
+            f"One-click start: {base}/placement/?code={code}\n"
+            f"(Already logged in on this device? Just open {base}/placement/)"
+        )
+        await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
+    except Exception:
+        await ctx.send("I couldn't DM you — please enable DMs from server members and retry.")
+
+
 @bot.command(name="guide")
 async def cmd_guide(ctx, *, topic: str = ""):
     """Open the student guide, optionally jumping to a section: `!guide [topic]`."""
