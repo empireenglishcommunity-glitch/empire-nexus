@@ -84,12 +84,37 @@ Legend: **[nexus]** = bot/curriculum · **[dojo]** = practice site ·
 - [ ] C2 can-do + grammar + vocab (~+2,000) + 20 week files + rationale + gate.
 
 ## Phase 8 — CEFR placement, exit exams & certificates · [nexus] + [dojo]
-- [ ] Upgrade placement test → outputs a CEFR level (A1–C2) → slots student.
-- [ ] Level exit exam per level (extend Taqdeem `_PART_B_PROMPTS` + blueprints
-      to A1–C2, test each level's can-do descriptors).
-- [ ] Certificate page: CEFR level + can-do checklist + compliant wording
-      ("Empire English certifies … at CEFR Level X"). [dojo]
-- [ ] Tests + deploy + verify.
+
+> Detailed buildable design in `design.md` → "Phase 8 — detailed implementation
+> design". Criterion-referenced (can-do based); empire-oracle IRT intentionally
+> NOT integrated this phase (documented there). Honest validation caveat
+> ("aligned by design, pending empirical validation") is mandatory in the
+> alignment doc + certificate footer.
+
+### 8a — alignment doc + honest caveat · [nexus]
+- [ ] `content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md`: CoE 4-stage method, what we
+      do (stages 1–3), the validation boundary, expert-set cut scores.
+
+### 8b — R7 exit exams (retarget advancement) · [nexus]
+- [ ] `_PART_B_PROMPTS` extended L0–L3 → A1–C2 (legacy keys kept as aliases),
+      authored from each level's production descriptors.
+- [ ] Part A items tagged with `can_do` codes; coverage rule enforced.
+- [ ] AI descriptor-rater for Part B (fluency/accuracy/vocab/pron + evidenced
+      descriptors + confidence); rule-based fallback stays (no network in tests).
+- [ ] `exit_exam_reviews` boundary queue + `!exam-pass`/`!exam-fail`/`!exam-review`.
+- [ ] Cut scores in one documented config block; pass → promote + certificate.
+
+### 8c — R6 placement (self-contained, per-skill) · [nexus]
+- [ ] Branching placement → per-skill CEFR profile → conservative overall level.
+- [ ] `placement_result` table; slot via `set_level` + week 1; opt-in only.
+
+### 8d — R8 certificate · [nexus] + [dojo]
+- [ ] Exam-based `itqan_certificate_data` path: level + can-do checklist +
+      distinction + date; compliant bilingual footer on the dojo page.
+
+### 8e — tests + deploy + verify
+- [ ] Unit tests per the design's 6-point test plan; full suite green; all new
+      surfaces behind flags (OFF) — zero student-facing change until enabled.
 
 ## Phase 9 — Guides + transparency · [dojo] + [nexus] + [chronicle]
 - [ ] Student `/guide` + owner `/ops-guide`: CEFR structure, can-do checklists,

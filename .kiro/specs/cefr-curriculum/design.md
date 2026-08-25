@@ -208,3 +208,149 @@ Each content phase = author → owner approval gate → deploy → verify.
 - Reading as a separate timed skill beyond current listening/vocab (can be a
   later enhancement; CEFR reception is covered via listening + vocab + can-dos).
 - Live human oral examining (the AI-scored Part B stands; owner can spot-review).
+
+
+
+---
+
+# Phase 8 — detailed implementation design (added 2026-08-25)
+
+> Written after direct investigation of the live code. This section is the
+> buildable spec for R6 (placement), R7 (exit exams) and R8 (certificates).
+> It supersedes the two-line sketch above where they differ.
+
+## Guiding principle: criterion-referenced, not norm-referenced
+
+CEFR is a **can-do** framework. The defensible way to "align" to it with a tiny
+cohort is to assess against the level's **can-do descriptors** (criterion-
+referenced), NOT to norm-rank students against each other. Every exit-exam item
+and every placement task therefore traces to a `can_do.json` descriptor code
+(e.g. `B1.P.3`), and passing means "demonstrated these descriptors."
+
+## The honest validation boundary (must appear in the alignment doc + certs)
+
+The Council of Europe's *Manual for Relating Examinations to the CEFR* has four
+stages: **familiarisation → specification → standardisation → empirical
+validation.** With 17 students we can do the first three rigorously and document
+them; we **cannot** do the fourth — there is no sample to statistically
+calibrate item difficulty or validate cut scores. Therefore:
+
+- Item difficulty / cut scores are **expert-assigned, not empirically
+  calibrated.**
+- The defensible public claim is **"built to CEFR methodology, aligned by
+  design, pending empirical validation"** — never "internationally certified."
+- This sentence is written into `content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md`
+  and the certificate footer, so no future session or marketing overstates it.
+
+## Scope decision (explicit, so it is not read as an omission)
+
+Phase 8 ships in **bot (empire-nexus) + practice site (empire-dojo)** — where
+the students actually are (Discord + Darb). The separate **empire-oracle**
+TOEFL/IRT product is **intentionally not integrated** this phase, because:
+1. it is a standalone deployed app with its own Prisma DB and **no bridge** to
+   the bot (building that integration is its own project);
+2. its CEFR mapping is 4 coarse ambiguous bands (`A2-B1`, `C1-C2`) that cannot
+   emit a single level;
+3. a "real IRT" score implies a rigor the 17-student data cannot support, which
+   would work against the truth-in-labelling rule.
+The oracle IRT engine remains the future "full adaptive placement" option; a
+revisit trigger is: a calibrated item bank + enough attempts to estimate
+parameters.
+
+---
+
+## R6 — CEFR placement (self-contained, in the bot)
+
+A short **adaptive-by-branching** placement that outputs a **per-skill CEFR
+profile**, not one number — because CEFR is skill-differentiated and collapsing
+it to a single score is a known misuse.
+
+- **Skills probed:** Vocabulary/Grammar (objective, auto-scored), Listening
+  (objective), Writing (AI-rated vs descriptors), Speaking (AI-rated vs
+  descriptors). Reading folded into vocab/grammar for now (noted as a later
+  enhancement).
+- **Branching:** start at B1-level items; a running correct-rate steps the next
+  block up/down one CEFR band (mirrors the IRT idea of routing to the ability
+  region, without over-claiming calibration). Objective blocks of ~5 items per
+  band; stop when two consecutive blocks agree on a band or bands exhausted.
+- **Per-skill result:** each skill resolves to a CEFR band from its own items.
+- **Overall placement level:** the **lower of** (rounded mean of skill bands)
+  and (min skill band + 1) — CEFR practice places conservatively so a student
+  is never dropped somewhere they cannot cope; start them where they can
+  succeed, they advance fast if under-placed.
+- **Slotting:** placement → `set_level(discord_id, level)` + start at **week 1**
+  of that level (R6.2). Current students are never force-retested (R6.3);
+  placement is opt-in via a command / the practice site.
+- **Output artifact:** a stored `placement_result` row + a profile shown to the
+  student and owner (per-skill bands + recommended level + the can-do overview
+  for that level).
+
+## R7 — CEFR level exit exam (retarget the advancement exam)
+
+Reuse the existing two-part advancement machinery; retarget and descriptor-link
+it. **No engine rewrite** — content + keys + an AI rater.
+
+- **Keys A1–C2.** Extend `_PART_B_PROMPTS` from `L0–L3` to `A1–C2` (authored
+  from each level's **production** descriptors). Keep legacy keys as aliases so
+  nothing breaks.
+- **Part A (structured, objective + short production):** `generate_advancement_
+  blueprint_a` already spreads items across 5 skills; add a `can_do` code tag to
+  each item so the exam demonstrably samples that level's descriptors across
+  reception/production/interaction. Coverage rule: every skill family present;
+  ≥1 item per production descriptor group.
+- **Part B (integrated production task):** the per-level speaking/writing prompt,
+  authored to the level's top production descriptors (A1 self-intro … C2 argue
+  a nuanced position, concede then rebut).
+- **AI rating (option c):** replace/augment the rule-based `score_part_b` with an
+  **AI rater that scores against the level's descriptors** on the existing
+  fluency/accuracy/vocab-range/pronunciation axes (0–100), returning a per-axis
+  score + which descriptors were evidenced + a confidence. Reuse
+  `ai_engine._call_llm`. Deterministic rule-based path stays as the fallback if
+  the LLM is unavailable (never block a student on an API outage).
+- **Boundary human-review queue:** if the total lands within a **±review-band**
+  of the pass cut (default ±7, reuse the Itqan near-miss idea) OR the AI rater
+  flags low confidence, the attempt is **not auto-decided** — it goes to an
+  owner review queue (`exit_exam_reviews`) with paste-ready
+  `!exam-pass`/`!exam-fail` commands, exactly like the Itqan flagged-review flow.
+  Clear passes/fails auto-resolve.
+- **Pass → certify + promote:** on pass, `deliver_advancement_outcome` promotes
+  (already CEFR-aware via `next_cefr_level`) and issues the certificate (R8).
+- **Cut scores (expert-assigned):** Part A ≥ 65% AND Part B ≥ 60/100 for A1–A2;
+  the Part B weight and threshold rise with level (B1–B2 65, C1–C2 70) per R7.2.
+  All thresholds live in one config block, documented as expert-set.
+- **Flag:** stays behind `assessment_advancement_exam` (OFF) until owner enables.
+
+## R8 — CEFR certificate (extend, don't replace)
+
+- `itqan_certificate_data` gains an **exam-based** path: when a level exit exam
+  is passed, the certificate reflects *"demonstrated proficiency at CEFR Level
+  X"* + the **can-do checklist** the exam evidenced (from the tagged items) +
+  date + distinction if Part B ≥ 90.
+- Keep the existing completion-based certificate too; the exam-based one is the
+  stronger credential. Both use `config.level_info` (already CEFR-safe).
+- **dojo page:** add the can-do checklist block + the compliant footer
+  (*"CEFR-aligned; not an accredited CEFR examination."*), bilingual.
+- Wording obeys R0 everywhere: **"CEFR-aligned," never "CEFR certified."**
+
+## Data model (new, all behind the existing flags)
+
+- `placement_result(discord_id, taken_at, overall_level, skill_bands_json,
+  recommended_week, source)` — one row per placement.
+- `exit_exam_reviews(id, discord_id, level, attempt_ref, part_a, part_b,
+  ai_confidence, status[pending|passed|failed], created_at, resolved_at,
+  resolved_by)` — the boundary queue.
+- Reuse existing `advancement_exams` for the attempt/outcome record.
+
+## Test plan (what Task 6 must prove)
+
+1. Placement emits a **per-skill profile** and a single conservative level;
+   boundary maths (lower-of rule) unit-tested.
+2. Exit-exam blueprint for every level A1–C2 tags items to real `can_do` codes;
+   `_PART_B_PROMPTS` has A1–C2 keys; legacy keys still resolve.
+3. AI rater returns the schema; rule-based fallback triggers when the LLM path
+   is stubbed (no network dependence in tests).
+4. Boundary queue: a near-cut result goes to `exit_exam_reviews` (pending), a
+   clear pass auto-promotes, a clear fail does not.
+5. Certificate: exam-based path shows the can-do checklist + compliant footer;
+   `config.level_info` drives the label.
+6. Full suite green; no student-facing behaviour changes while flags are OFF.
