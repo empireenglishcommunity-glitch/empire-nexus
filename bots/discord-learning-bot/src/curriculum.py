@@ -221,6 +221,47 @@ def get_vocabulary_for_day(week: int, day_index: int, level: str = "A1") -> list
     return all_words[start:start + size]
 
 
+def get_listening_for_week(week: int, level: str = "A1") -> list[dict]:
+    """Get the week's authored listening/dictation targets.
+
+    Each item: {say_en, expected, hint_ar} — `say_en` is spoken aloud (TTS),
+    `expected` is what the student must type, `hint_ar` is the Arabic hint.
+    All 90 authored weeks carry exactly 5 items (450 total).
+
+    ORPHANED-CONTENT FIX: this array existed in every week file since the
+    curriculum was authored but had NO accessor and NO consumer anywhere in
+    the codebase — the practice site's listening page built its dictation
+    from `vocabulary` instead, so the curated set (and all 450 `hint_ar`
+    Arabic hints) never reached a single student. 98% of the items' words do
+    also appear in that week's `vocabulary`, so students were not missing
+    those *words* wholesale; what they were missing is the authored
+    dictation selection and its Arabic hints (plus 10 items whose word is
+    not in the week's vocab at all).
+    """
+    key = f"{level}_{week}"
+    data = _weekly_data.get(key, {})
+    items = data.get("listening", [])
+    return items if isinstance(items, list) else []
+
+
+def get_listening_for_day(week: int, day_index: int, level: str = "A1") -> list[dict]:
+    """Get the day's listening/dictation targets (0=Saturday, 6=Friday).
+
+    Only 5 items are authored per week against 7 days, so slicing them per
+    day would leave 2 days empty and make coverage depend on WHICH days a
+    student happens to do. Instead every day gets the full set, rotated by
+    day so the order varies (start at `day_index % 5`). That guarantees all
+    5 authored items reach the student on any day they practise, while the
+    day-specific content on the page (the comprehension quiz, built from
+    that day's vocabulary) still changes daily.
+    """
+    items = get_listening_for_week(min(max_week_for_level(level), max(1, week)), level)
+    if not items:
+        return []
+    offset = (day_index % 7) % len(items)
+    return items[offset:] + items[:offset]
+
+
 def get_quiz_words(week: int, count: int = 10, level: str = "A1") -> list[dict]:
     """Get random words from this week + previous weeks for quiz verification."""
     import random
