@@ -90,9 +90,9 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 - [x] API `/api/placement/{start,answer,writing,slot}`; slotting is opt-in only.
 - [x] `!placement` (self) / `!placement @user` (admin) claim-code login link.
 - [x] Practice-site page `/placement/` (dojo #103, wrangler-deployed).
-- [~] **NOTE:** measures vocab/grammar + writing this version; **listening &
-      speaking deferred** (need the audio/Whisper path) — disclosed to the
-      student, exactly as reading was folded in. Honest, not hidden.
+- [x] All FOUR skills measured (nexus #385, dojo #107): vocab/grammar → listening
+      (dictation via browser TTS, auto-scored) → writing (AI) → speaking (record →
+      Whisper → AI rater). Empty speaking transcript finalises on the other three.
 
 ### 8d — certificate · [nexus] + [dojo] — ✅ LIVE
 - [x] Can-do checklist + compliant bilingual footer ("CEFR-aligned … not an
@@ -156,13 +156,13 @@ so everything could be retired now, safely:
   `rollback_cefr_migration` (the migration undo button).
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Placement enhancement (later, optional):** add listening + speaking skills
-   (needs the audio/Whisper path). Not blocking.
 
-Everything else in Mi'yar (Phases 0–10) is built, live, and verified.
+**Nothing.** Mi'yar (Phases 0–10) is fully built, live, verified, and legacy is
+retired. Placement now measures all four CEFR skills (listening + speaking added,
+nexus #385 / dojo #107). Any future work is net-new product, not spec debt.
 
 **LIVE + verified end-to-end:** curriculum A1–C2, phonology/audio, migration,
-exit exams (8b), placement (8c: vocab/grammar + writing), exam-based certificate
+exit exams (8b), placement (8c: all 4 skills), exam-based certificate
 (8d), can-do transparency (Phase 9), e2e verification (Phase 10, 3 ghost journeys).
 
 ## Cross-cutting (every phase)
