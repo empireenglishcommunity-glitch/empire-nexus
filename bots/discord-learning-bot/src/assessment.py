@@ -2071,3 +2071,80 @@ def finish_advancement_final(discord_id: str, attempt_id: int,
         "failed_skills": final["failed_skills"],
         "reason_if_failed": final["reason_if_failed"],
     }
+
+
+async def finish_advancement_exit(discord_id: str, attempt_id: int,
+                                  part_b_transcript: str) -> dict:
+    """Mi'yar Phase 8 — finalize the advancement exam as a CEFR *exit exam*.
+
+    Same attempt bookkeeping as finish_advancement_final, but the verdict comes
+    from criterion cut scores + the AI descriptor-rater (rule-based fallback) +
+    boundary human review — not the legacy weighted 75% rule. The verdict is one
+    of pass / fail / review; a `review` verdict enqueues a human-review row and
+    leaves the student un-promoted until the owner resolves it (!exam-pass/-fail).
+
+    Does NOT re-check the feature flag: an exam already in progress always
+    finishes (the flag gates *starting*, upstream in start_advancement_attempt).
+    Async — calls the AI rater; never surfaces an LLM outage to the student
+    (rate_part_b always yields a score via its rule-based fallback)."""
+    conn = database._connect()
+    adv = conn.execute(
+        "SELECT * FROM advancement_exams WHERE attempt_id=?", (attempt_id,)).fetchone()
+    conn.close()
+    if not adv:
+        return {"ok": False, "error": "not_found"}
+    if adv["passed"]:
+        return {"ok": False, "error": "already_passed"}
+
+    level = adv["level"]
+    part_a_pct = adv["part_a_score"] or 0.0
+    try:
+        per_skill = _json.loads(adv["skill_mins"] or "{}")
+    except Exception:
+        per_skill = {}
+
+    part_b = await rate_part_b(part_b_transcript, level)
+    decision = exit_exam_decision(level, part_a_pct, part_b)
+    verdict = decision["decision"]
+    passed = verdict == "pass"
+    part_b_total = decision["part_b_total"]
+    overall = round((part_a_pct + part_b_total) / 2, 1)
+
+    conn = database._connect()
+    try:
+        conn.execute(
+            "UPDATE advancement_exams SET part_b_score=?, overall_score=?, "
+            "passed=?, promoted=0 WHERE attempt_id=?",
+            (part_b_total, overall, 1 if passed else 0, attempt_id))
+        conn.commit()
+    finally:
+        conn.close()
+
+    review_id = None
+    if verdict == "review":
+        review_id = database.exit_exam_enqueue_review(
+            discord_id, level, attempt_id, decision["part_a_pct"], part_b_total,
+            decision["confidence"], part_b.get("rater", "?"),
+            decision["reasons"], part_b.get("evidenced_descriptors", []))
+
+    _alog.info(f"exit-exam: {discord_id} {level} FINAL -> {verdict} "
+               f"(A={part_a_pct}%, B={part_b_total}/100, conf={decision['confidence']})")
+
+    return {
+        "ok": True,
+        "decision": verdict,
+        "passed": passed,
+        "distinction": decision["distinction"],
+        "level": level,
+        "overall_pct": overall,
+        "part_a_score": part_a_pct,
+        "part_a_pct": decision["part_a_pct"],
+        "part_b_score": part_b_total,
+        "part_b_total": part_b_total,
+        "part_b_detail": part_b,
+        "per_skill": per_skill,
+        "confidence": decision["confidence"],
+        "reasons": decision["reasons"],
+        "cut": decision["cut"],
+        "review_id": review_id,
+    }
