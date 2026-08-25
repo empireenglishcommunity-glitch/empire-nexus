@@ -36,3 +36,11 @@ jobs:
 
       - name: Syntax check (all .py files compile)
         run: python -m py_compile run.py && python -c "import src"
+
+      # Content coverage ledger. The hard gate already runs inside the test
+      # suite (tests/test_coverage_ledger.py); this step prints the table so
+      # the delivery numbers are visible in the build log without digging
+      # through test output, and exits non-zero if any authored atom has no
+      # route to a student.
+      - name: Content coverage ledger (fails on any orphaned atom)
+        run: python -m src.coverage_ledger
