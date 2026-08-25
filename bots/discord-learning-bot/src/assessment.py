@@ -8,10 +8,11 @@ This module is PURE structure — it does not score anything and is not wired to
 any user surface yet (later phases). Everything stays inert until the
 `itqan_weekly_assessment` flag is turned on.
 """
+import json
 import random
 from typing import Optional
 
-from . import curriculum, database
+from . import config, curriculum, database
 
 # Objective (auto-gradeable) skills we cycle through for the non-production
 # portion of the test. Speaking + writing (production) are added separately.
@@ -1522,9 +1523,14 @@ def finish_advancement_part_a(discord_id: str, attempt_id: int,
 #   fluency, accuracy, vocabulary range, pronunciation clarity.
 # Combined with Part A for the final pass/fail determination.
 
-# Per-level integrated task prompts (owner-configurable in future)
+# Per-level integrated production task prompts (Phase 8: CEFR exit exam).
+# Keyed by CEFR level A1-C2; each task is authored from that level's PRODUCTION
+# can-do descriptors so passing Part B demonstrably evidences the level. Legacy
+# L0-L3 callers are normalised to CEFR keys by get_part_b_prompt(), so nothing
+# that still passes an L-key breaks. Every prompt carries the descriptor codes
+# it targets, which the certificate's can-do checklist reads back.
 _PART_B_PROMPTS = {
-    "L0": {
+    "A1": {  # A1.P: personal details, immediate needs, very simple connected phrases
         "prompt_en": (
             "Record yourself for 60 seconds. Introduce yourself in English: "
             "your name, where you're from, what you do, and why you're learning English."
@@ -1533,50 +1539,87 @@ _PART_B_PROMPTS = {
             "سجّل نفسك ٦٠ ثانية. عرّف نفسك بالإنجليزي: "
             "اسمك، من فين، شغلك إيه، وليه بتتعلم إنجليزي."
         ),
-        "duration_sec": 60,
-        "prep_time_sec": 60,
+        "duration_sec": 60, "prep_time_sec": 60,
+        "descriptors": ["A1.P.1", "A1.P.2"],
     },
-    "L1": {
+    "A2": {  # A2.P: describe routines, past activities, plans in simple connected text
         "prompt_en": (
-            "Record yourself for 60 seconds. Describe your typical day "
-            "from morning to night in English."
+            "Record yourself for 60 seconds. Describe your typical day from morning "
+            "to night, then say one thing you did last weekend and one thing you plan "
+            "to do next week."
         ),
         "prompt_ar": (
-            "سجّل نفسك ٦٠ ثانية. وصّف يومك العادي من الصبح للّيل بالإنجليزي."
+            "سجّل نفسك ٦٠ ثانية. وصّف يومك العادي من الصبح للّيل، وبعدين قول حاجة "
+            "عملتها الويكند اللي فات وحاجة ناوي تعملها الأسبوع الجاي."
         ),
-        "duration_sec": 60,
-        "prep_time_sec": 60,
+        "duration_sec": 60, "prep_time_sec": 60,
+        "descriptors": ["A2.P.1", "A2.P.2"],
     },
-    "L2": {
+    "B1": {  # B1.P: connected narrative + opinion with reasons on a familiar topic
         "prompt_en": (
-            "Record yourself for 60 seconds. You're at a café — order a drink, "
-            "ask about the Wi-Fi, and make small talk with the barista."
+            "Record yourself for 90 seconds. Tell the story of a time you learned "
+            "something the hard way — what happened, how you felt, and what you would "
+            "do differently. Give reasons for your view."
         ),
         "prompt_ar": (
-            "سجّل نفسك ٦٠ ثانية. إنت في كافيه — اطلب مشروب، اسأل عن الواي فاي، "
-            "واعمل محادثة خفيفة مع الباريستا."
+            "سجّل نفسك ٩٠ ثانية. احكِ عن مرة اتعلمت فيها حاجة بصعوبة — إيه اللي حصل، "
+            "وحسّيت بإيه، وإيه اللي كنت هتعمله بشكل مختلف. واذكر أسباب رأيك."
         ),
-        "duration_sec": 60,
-        "prep_time_sec": 60,
+        "duration_sec": 90, "prep_time_sec": 90,
+        "descriptors": ["B1.P.1", "B1.P.3", "B1.I.1"],
     },
-    "L3": {
+    "B2": {  # B2.P: argue a position on a topical issue, weigh advantages/disadvantages
         "prompt_en": (
-            "Record yourself for 90 seconds. Give a short presentation: "
-            "explain something you're passionate about and why others should care."
+            "Record yourself for 2 minutes. Argue for or against this statement: "
+            "'Remote work is better than working in an office.' Give a clear position, "
+            "at least two supporting reasons, and acknowledge one point on the other side."
         ),
         "prompt_ar": (
-            "سجّل نفسك ٩٠ ثانية. قدّم عرض قصير: "
-            "اشرح حاجة بتحبها وليه الناس لازم تهتم بيها."
+            "سجّل نفسك دقيقتين. جادل مع أو ضد العبارة دي: «العمل عن بُعد أفضل من العمل "
+            "في المكتب». حدّد موقفك بوضوح، اذكر سببين على الأقل، واعترف بنقطة واحدة للطرف الآخر."
         ),
-        "duration_sec": 90,
-        "prep_time_sec": 60,
+        "duration_sec": 120, "prep_time_sec": 120,
+        "descriptors": ["B2.P.2", "B2.P.3", "B2.I.2"],
+    },
+    "C1": {  # C1.P: structured extended presentation on a complex topic, nuanced view
+        "prompt_en": (
+            "Record yourself for 2-3 minutes. Give a structured mini-presentation on a "
+            "complex issue you know well: outline the problem, present two perspectives, "
+            "and end with your own reasoned conclusion. Use clear signposting."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك من دقيقتين لتلاتة. قدّم عرضًا منظّمًا عن قضية معقّدة تعرفها كويس: "
+            "اعرض المشكلة، قدّم وجهتَي نظر، واختم باستنتاجك المدعّم. استخدم روابط واضحة."
+        ),
+        "duration_sec": 180, "prep_time_sec": 180,
+        "descriptors": ["C1.P.2", "C1.P.4", "C1.I.2"],
+    },
+    "C2": {  # C2.P: argue a nuanced position, concede then rebut, precise and idiomatic
+        "prompt_en": (
+            "Record yourself for 3 minutes. Take a nuanced position on a debatable "
+            "claim of your choice. State the strongest version of the opposing view, "
+            "concede what is fair, then rebut it — precisely, coherently, and in your "
+            "own natural register."
+        ),
+        "prompt_ar": (
+            "سجّل نفسك تلات دقايق. اتبنَّ موقفًا دقيقًا من ادعاء قابل للجدل من اختيارك. "
+            "اعرض أقوى صورة لوجهة النظر المقابلة، وسلّم بما هو منصف، ثم فنّدها — بدقّة "
+            "وتماسك وبأسلوبك الطبيعي."
+        ),
+        "duration_sec": 180, "prep_time_sec": 180,
+        "descriptors": ["C2.P.2", "C2.P.5", "C2.I.3"],
     },
 }
 
 
 def get_part_b_prompt(level: str) -> dict:
-    """Get the Part B integrated task prompt for a level."""
-    return _PART_B_PROMPTS.get(level, _PART_B_PROMPTS["L0"])
+    """Part B integrated task prompt for a level.
+
+    Accepts a CEFR key (A1-C2) or a legacy key (L0-L3); legacy is normalised via
+    config.cefr_key so old callers keep working. Falls back to A1 for anything
+    unrecognised (never raises)."""
+    key = config.cefr_key(level)
+    return _PART_B_PROMPTS.get(key) or _PART_B_PROMPTS.get(level) or _PART_B_PROMPTS["A1"]
 
 
 def score_part_b(transcript: str, level: str, cfg: dict | None = None) -> dict:
@@ -1685,6 +1728,162 @@ def score_part_b(transcript: str, level: str, cfg: dict | None = None) -> dict:
         "pronunciation": pronunciation,
         "feedback": feedback,
         "feedback_ar": feedback_ar,
+    }
+
+
+# ============================================================
+#  PHASE 8 — CEFR exit exam: AI descriptor-rater + cut scores
+# ============================================================
+#
+# Cut scores are EXPERT-ASSIGNED, not empirically calibrated (17 students is
+# far too few — see content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md §3/§5). They are
+# defined in ONE place here so they are never silently changed elsewhere.
+# Production weight/threshold rise with level (requirement R7.2).
+EXIT_EXAM_CUT_SCORES = {
+    "A1": {"part_a_pct": 65, "part_b_min": 60},
+    "A2": {"part_a_pct": 65, "part_b_min": 60},
+    "B1": {"part_a_pct": 65, "part_b_min": 65},
+    "B2": {"part_a_pct": 65, "part_b_min": 65},
+    "C1": {"part_a_pct": 65, "part_b_min": 70},
+    "C2": {"part_a_pct": 65, "part_b_min": 70},
+}
+EXIT_EXAM_DISTINCTION_PART_B = 90   # Part B >= 90 -> "with distinction"
+EXIT_EXAM_REVIEW_BAND = 7           # within +/-7 of a cut -> human review
+EXIT_EXAM_MIN_AI_CONFIDENCE = 0.55  # below this -> human review
+
+
+def exit_exam_cut(level: str) -> dict:
+    """Expert-assigned pass thresholds for a level (CEFR or legacy key)."""
+    return EXIT_EXAM_CUT_SCORES.get(config.cefr_key(level), EXIT_EXAM_CUT_SCORES["A1"])
+
+
+def _part_b_rater_prompt(transcript: str, level: str, prompt: dict) -> str:
+    """Build the descriptor-anchored rubric prompt for the AI rater."""
+    ck = config.cefr_key(level)
+    descriptors = prompt.get("descriptors", [])
+    desc_lines = []
+    try:
+        cando = json.load(open(config.BASE_DIR / "content" / "cefr" / "can_do.json",
+                                encoding="utf-8")).get(ck, {})
+        by_code = {}
+        for mode in ("reception", "production", "interaction", "mediation"):
+            for d in cando.get(mode, []):
+                by_code[d.get("code")] = d.get("en", "")
+        for code in descriptors:
+            if code in by_code:
+                desc_lines.append(f"  - {code}: {by_code[code]}")
+    except Exception:
+        pass
+    desc_block = "\n".join(desc_lines) or "  (level production descriptors)"
+    return (
+        f"You are a CEFR examiner rating a spoken response at level {ck}.\n"
+        f"The task targeted these can-do descriptors:\n{desc_block}\n\n"
+        f"Candidate transcript (from speech-to-text, may contain minor ASR errors):\n"
+        f'"""{transcript.strip()[:2000]}"""\n\n'
+        f"Rate the response on four axes, each 0-25 (total 0-100), judged against "
+        f"what a solid {ck} performance looks like — criterion-referenced, not "
+        f"compared to other students:\n"
+        f"  fluency, accuracy, vocab_range, pronunciation.\n"
+        f"Also decide which of the listed descriptor codes were actually EVIDENCED, "
+        f"and give your confidence 0.0-1.0 that your rating is reliable (lower it if "
+        f"the transcript is too short, garbled, or off-task).\n"
+        f"Respond with STRICT JSON only, no prose:\n"
+        f'{{"fluency":int,"accuracy":int,"vocab_range":int,"pronunciation":int,'
+        f'"evidenced_descriptors":["code",...],"confidence":float,'
+        f'"feedback":"one short sentence","feedback_ar":"جملة قصيرة"}}'
+    )
+
+
+async def score_part_b_ai(transcript: str, level: str, prompt: dict | None = None):
+    """AI descriptor-rater for Part B. Returns a score dict with rater='ai' and a
+    confidence, or None on any failure (caller falls back to the rule-based
+    scorer). Never raises."""
+    if not transcript or len(transcript.split()) < 5:
+        return None
+    prompt = prompt or get_part_b_prompt(level)
+    try:
+        from . import ai_engine
+        raw = await ai_engine._call_llm(_part_b_rater_prompt(transcript, level, prompt),
+                                        temperature=0.2)
+        if not raw:
+            return None
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        data = json.loads(m.group(0) if m else raw)
+        axes = {k: max(0, min(25, int(round(float(data.get(k, 0))))))
+                for k in ("fluency", "accuracy", "vocab_range", "pronunciation")}
+        total = sum(axes.values())
+        conf = max(0.0, min(1.0, float(data.get("confidence", 0.0))))
+        return {
+            "total": total, **axes,
+            "evidenced_descriptors": [c for c in data.get("evidenced_descriptors", [])
+                                      if isinstance(c, str)],
+            "confidence": round(conf, 2),
+            "rater": "ai",
+            "feedback": str(data.get("feedback", ""))[:300],
+            "feedback_ar": str(data.get("feedback_ar", ""))[:300],
+        }
+    except Exception:
+        return None
+
+
+async def rate_part_b(transcript: str, level: str, prompt: dict | None = None) -> dict:
+    """Orchestrator: AI descriptor-rater first, rule-based scorer as the fallback
+    so an LLM/network outage never blocks a student. Always returns a score dict
+    tagged with the rater used and a confidence."""
+    ai = await score_part_b_ai(transcript, level, prompt)
+    if ai is not None:
+        return ai
+    fallback = score_part_b(transcript, level)
+    fallback.setdefault("evidenced_descriptors", [])
+    fallback["rater"] = "rule"
+    fallback["confidence"] = 0.5  # neutral -> boundary logic will tend to review
+    return fallback
+
+
+def exit_exam_decision(level: str, part_a_pct: float, part_b: dict) -> dict:
+    """Decide pass / fail / review for a CEFR exit exam.
+
+    A clear pass or fail auto-resolves; anything within EXIT_EXAM_REVIEW_BAND of
+    a cut, or rated with low AI confidence, routes to human review so automated
+    judgement is never final on the least-reliable cases. Returns
+    {decision: 'pass'|'fail'|'review', distinction: bool, reasons: [...],
+     part_a_pct, part_b_total, confidence}."""
+    cut = exit_exam_cut(level)
+    b_total = int(part_b.get("total", 0))
+    conf = float(part_b.get("confidence", 0.5))
+    a_cut, b_cut = cut["part_a_pct"], cut["part_b_min"]
+
+    a_margin = part_a_pct - a_cut
+    b_margin = b_total - b_cut
+    reasons = []
+
+    near_boundary = abs(a_margin) <= EXIT_EXAM_REVIEW_BAND or abs(b_margin) <= EXIT_EXAM_REVIEW_BAND
+    low_confidence = conf < EXIT_EXAM_MIN_AI_CONFIDENCE
+
+    if low_confidence:
+        reasons.append(f"AI rater confidence {conf:.2f} < {EXIT_EXAM_MIN_AI_CONFIDENCE}")
+    if near_boundary:
+        reasons.append(f"within ±{EXIT_EXAM_REVIEW_BAND} of a cut "
+                       f"(A {part_a_pct:.0f} vs {a_cut}, B {b_total} vs {b_cut})")
+
+    clear_pass = a_margin > EXIT_EXAM_REVIEW_BAND and b_margin > EXIT_EXAM_REVIEW_BAND
+    clear_fail = a_margin < -EXIT_EXAM_REVIEW_BAND or b_margin < -EXIT_EXAM_REVIEW_BAND
+
+    if low_confidence or near_boundary or not (clear_pass or clear_fail):
+        decision = "review"
+    elif clear_pass:
+        decision = "pass"
+    else:
+        decision = "fail"
+
+    return {
+        "decision": decision,
+        "distinction": decision == "pass" and b_total >= EXIT_EXAM_DISTINCTION_PART_B,
+        "reasons": reasons,
+        "part_a_pct": round(part_a_pct, 1),
+        "part_b_total": b_total,
+        "confidence": round(conf, 2),
+        "cut": cut,
     }
 
 

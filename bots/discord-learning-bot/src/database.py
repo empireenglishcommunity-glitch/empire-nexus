@@ -644,6 +644,41 @@ CREATE TABLE IF NOT EXISTS advancement_exams (
     PRIMARY KEY (discord_id, level, attempt_num),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Phase 8 (Mi'yar CEFR): exit-exam boundary review queue. A result within the
+-- review band of a cut, or rated with low AI confidence, is NOT auto-decided —
+-- it lands here for the owner to pass/fail. Clear passes/fails never enqueue.
+CREATE TABLE IF NOT EXISTS exit_exam_reviews (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id    TEXT NOT NULL,
+    level         TEXT NOT NULL,        -- CEFR level being tested (A1-C2)
+    attempt_num   INTEGER DEFAULT NULL, -- FK-ish to advancement_exams.attempt_num
+    part_a_pct    REAL DEFAULT NULL,
+    part_b_total  INTEGER DEFAULT NULL,
+    ai_confidence REAL DEFAULT NULL,
+    rater         TEXT DEFAULT '',      -- 'ai' | 'rule'
+    reasons       TEXT DEFAULT '',      -- JSON list of why it needs review
+    evidenced     TEXT DEFAULT '',      -- JSON list of can-do codes evidenced
+    status        TEXT NOT NULL DEFAULT 'pending',  -- pending | passed | failed
+    created_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    resolved_at   TEXT DEFAULT NULL,
+    resolved_by   TEXT DEFAULT NULL,
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
+-- Phase 8 (Mi'yar CEFR): placement results. One row per placement attempt; the
+-- per-skill CEFR profile is stored as JSON so the profile can be shown to the
+-- student and owner without recomputing.
+CREATE TABLE IF NOT EXISTS placement_result (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id     TEXT NOT NULL,
+    overall_level  TEXT NOT NULL,       -- CEFR level the student is slotted into
+    skill_bands    TEXT DEFAULT '',     -- JSON: {vocab_grammar, listening, writing, speaking}
+    recommended_week INTEGER NOT NULL DEFAULT 1,
+    source         TEXT DEFAULT 'self', -- 'self' | 'owner' | 'import'
+    taken_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 
@@ -4187,3 +4222,120 @@ def itqan_allowed_week(discord_id: str, level: str, current_week: int) -> int:
     while allowed in mastered:
         allowed += 1
     return allowed
+
+
+
+# ============================================================
+#  PHASE 8 (Mi'yar CEFR) — exit-exam review queue + placement
+# ============================================================
+
+def exit_exam_enqueue_review(discord_id: str, level: str, attempt_num: int | None,
+                             part_a_pct: float, part_b_total: int,
+                             ai_confidence: float, rater: str,
+                             reasons: list, evidenced: list) -> int:
+    """Add a boundary/low-confidence exit-exam attempt to the owner review queue.
+    Returns the new review id. Clear passes/fails should NOT call this."""
+    conn = _connect()
+    cur = conn.execute(
+        "INSERT INTO exit_exam_reviews "
+        "(discord_id, level, attempt_num, part_a_pct, part_b_total, ai_confidence, "
+        " rater, reasons, evidenced, status) "
+        "VALUES (?,?,?,?,?,?,?,?,?, 'pending')",
+        (discord_id, level, attempt_num, part_a_pct, part_b_total, ai_confidence,
+         rater, json.dumps(reasons, ensure_ascii=False),
+         json.dumps(evidenced, ensure_ascii=False)),
+    )
+    conn.commit()
+    rid = cur.lastrowid
+    conn.close()
+    return rid
+
+
+def exit_exam_pending_reviews(level: str | None = None) -> list[dict]:
+    """All pending exit-exam reviews (optionally filtered to one level), oldest
+    first — the owner's work queue."""
+    conn = _connect()
+    if level:
+        rows = conn.execute(
+            "SELECT * FROM exit_exam_reviews WHERE status='pending' AND level=? "
+            "ORDER BY created_at ASC", (level,)).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT * FROM exit_exam_reviews WHERE status='pending' "
+            "ORDER BY created_at ASC").fetchall()
+    conn.close()
+    out = []
+    for r in rows:
+        d = dict(r)
+        for k in ("reasons", "evidenced"):
+            try:
+                d[k] = json.loads(d.get(k) or "[]")
+            except Exception:
+                d[k] = []
+        out.append(d)
+    return out
+
+
+def exit_exam_resolve_review(review_id: int, status: str, resolved_by: str) -> dict | None:
+    """Owner resolves a queued review to 'passed' or 'failed'. Returns the
+    updated row (so the caller can trigger promotion + certificate on a pass),
+    or None if the id was not a pending review."""
+    if status not in ("passed", "failed"):
+        raise ValueError("status must be 'passed' or 'failed'")
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM exit_exam_reviews WHERE id=? AND status='pending'",
+        (review_id,)).fetchone()
+    if not row:
+        conn.close()
+        return None
+    conn.execute(
+        "UPDATE exit_exam_reviews SET status=?, resolved_at=datetime('now'), "
+        "resolved_by=? WHERE id=?", (status, resolved_by, review_id))
+    conn.commit()
+    updated = conn.execute("SELECT * FROM exit_exam_reviews WHERE id=?",
+                           (review_id,)).fetchone()
+    conn.close()
+    d = dict(updated)
+    for k in ("reasons", "evidenced"):
+        try:
+            d[k] = json.loads(d.get(k) or "[]")
+        except Exception:
+            d[k] = []
+    return d
+
+
+def save_placement_result(discord_id: str, overall_level: str, skill_bands: dict,
+                          recommended_week: int = 1, source: str = "self") -> int:
+    """Persist a placement result (per-skill CEFR profile + slotted level).
+    Returns the new row id. Does NOT itself change the member's level — the
+    caller decides whether to slot (opt-in, never forced)."""
+    conn = _connect()
+    cur = conn.execute(
+        "INSERT INTO placement_result "
+        "(discord_id, overall_level, skill_bands, recommended_week, source) "
+        "VALUES (?,?,?,?,?)",
+        (discord_id, overall_level, json.dumps(skill_bands, ensure_ascii=False),
+         int(recommended_week), source),
+    )
+    conn.commit()
+    pid = cur.lastrowid
+    conn.close()
+    return pid
+
+
+def latest_placement_result(discord_id: str) -> dict | None:
+    """Most recent placement result for a student, or None."""
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM placement_result WHERE discord_id=? "
+        "ORDER BY taken_at DESC, id DESC LIMIT 1", (discord_id,)).fetchone()
+    conn.close()
+    if not row:
+        return None
+    d = dict(row)
+    try:
+        d["skill_bands"] = json.loads(d.get("skill_bands") or "{}")
+    except Exception:
+        d["skill_bands"] = {}
+    return d
