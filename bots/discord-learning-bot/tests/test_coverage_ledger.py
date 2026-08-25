@@ -265,6 +265,27 @@ def test_every_remaining_gap_has_a_named_plan():
         assert len(need) > 25, f"{code}: plan too vague to act on"
 
 
+def test_review_quiz_is_tracked_but_never_gates_a_day():
+    """Phase 11C retrieval quiz: tracked and rewarded, but a student must not
+    lose a green day because they have not yet sat the week's review."""
+    assert "review" in database.WEEKLY_EXERCISES
+    assert "review" in database.TRACKED_EXERCISES
+    assert "review" not in database.PRACTICE_EXERCISES
+    assert "review" not in database.CALENDAR_EXERCISES
+
+
+def test_all_weekly_exercises_are_tracked_and_none_gate_a_day():
+    """One assertion covering the whole family, so a future weekly exercise
+    cannot be added to the day-green requirement by accident."""
+    for weekly in database.WEEKLY_EXERCISES:
+        assert weekly in database.TRACKED_EXERCISES, f"{weekly} untracked"
+        assert weekly not in database.PRACTICE_EXERCISES, f"{weekly} gates a day"
+        assert weekly not in database.CALENDAR_EXERCISES, f"{weekly} gates a day"
+    assert set(database.WEEKLY_EXERCISES) == {
+        "grammar", "reading", "mediation", "review"
+    }, f"unexpected weekly set: {database.WEEKLY_EXERCISES}"
+
+
 def test_reading_is_tracked_but_never_gates_a_day():
     """Same safety property as grammar: one passage is authored per week and
     the rollout is level-by-level, so requiring reading for a day to be green

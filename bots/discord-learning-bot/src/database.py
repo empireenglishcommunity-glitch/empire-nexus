@@ -3110,7 +3110,11 @@ CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
 #
 # `mediation` (Phase 11B) — the fourth CEFR mode, also one authored task per
 # week and also rolled out level by level, so weekly and never a day gate.
-WEEKLY_EXERCISES = ("grammar", "reading", "mediation")
+#
+# `review` (Phase 11C) is the weekly retrieval-practice quiz. Weekly for the
+# same reason and, like the others, never a day gate -- a student must not lose
+# a green day because they have not yet sat the week's review.
+WEEKLY_EXERCISES = ("grammar", "reading", "mediation", "review")
 # Everything the practice site may legitimately report a completion for.
 TRACKED_EXERCISES = CALENDAR_EXERCISES + WEEKLY_EXERCISES
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond
