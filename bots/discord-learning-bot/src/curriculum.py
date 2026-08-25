@@ -517,6 +517,64 @@ def get_can_do_for_week(week: int, level: str = "A1") -> list:
     return []
 
 
+_can_do_library: dict = {}   # {"A1": {code: {code, en, ar, mode}}, ...}
+
+
+def can_do_descriptor_map(level: str = "A1") -> dict:
+    """{code: {code, en, ar, mode}} for a level, from content/cefr/can_do.json.
+
+    Cached after first read. Returns {} on any failure (never raises) so a
+    missing/corrupt library degrades to "no goals shown", never a crash in
+    the daily flow.
+
+    NOTE the file's per-level dict mixes list-valued modes (reception,
+    production, interaction, mediation) with plain string keys
+    (overview_en/overview_ar), so mode values MUST be isinstance-checked.
+    """
+    ck = config.cefr_key(level)
+    if ck in _can_do_library:
+        return _can_do_library[ck]
+    out: dict = {}
+    try:
+        path = config.BASE_DIR / "content" / "cefr" / "can_do.json"
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        for mode, items in (data.get(ck) or {}).items():
+            if not isinstance(items, list):
+                continue  # overview_en / overview_ar are strings
+            for item in items:
+                if isinstance(item, dict) and item.get("code"):
+                    out[item["code"]] = {
+                        "code": item["code"],
+                        "en": item.get("en", ""),
+                        "ar": item.get("ar", ""),
+                        "mode": mode,
+                    }
+    except Exception as e:
+        logger.warning(f"can_do_descriptor_map({level}) failed: {e}")
+        out = {}
+    _can_do_library[ck] = out
+    return out
+
+
+def get_can_do_details_for_week(week: int, level: str = "A1") -> list[dict]:
+    """The week's CEFR can-do goals RESOLVED to {code, en, ar, mode}.
+
+    `get_can_do_for_week` only returns bare codes like "A1.P.1", which are
+    meaningless to a student. This resolves them against the descriptor
+    library so the daily flow can show the actual "I can ..." sentence in
+    English and Arabic.
+
+    Phase 11A-4: these goals are the whole point of a CEFR-aligned course,
+    but they were invisible during study -- surfaced only on the Phase-9
+    progress screen and the certificate, i.e. after the fact. Unknown codes
+    are skipped rather than rendered as a raw code.
+    """
+    codes = get_can_do_for_week(min(max_week_for_level(level), max(1, week)), level)
+    library = can_do_descriptor_map(level)
+    return [library[c] for c in codes if c in library]
+
+
 def is_loaded() -> bool:
     """Check if curriculum data has been loaded."""
     return len(_weekly_data) > 0

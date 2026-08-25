@@ -11,7 +11,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from src import config, database, features
+from src import config, curriculum, database, features
 
 
 # ============================================================
@@ -577,6 +577,38 @@ async def test_show_today_shows_two_labelled_sections():
     sent = ctx.send.call_args[0][0]
     assert "على منصة التمرين" in sent  # calendar section label
     assert "هنا في Discord" in sent  # Discord-only section label
+
+
+@pytest.mark.asyncio
+async def test_show_today_shows_this_weeks_can_do_goals():
+    """Phase 11A-4: the daily message must state WHY today's tasks exist --
+    the week's CEFR can-do goals, in Arabic with the English descriptor.
+    They used to appear only on the Phase-9 progress screen and the
+    certificate, i.e. after the level was already finished."""
+    database.register_member("1", "Alice")
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "هدف الأسبوع" in sent
+    goals = curriculum.get_can_do_details_for_week(
+        database.member_week_number("1"), "A1")
+    assert goals, "no A1 goals resolved -- test would be vacuous"
+    assert goals[0]["ar"] in sent
+    assert goals[0]["en"] in sent
+
+
+@pytest.mark.asyncio
+async def test_show_today_survives_a_broken_can_do_library(monkeypatch):
+    """A missing/corrupt descriptor library must never break the daily flow --
+    the tasks still render, just without the goals header."""
+    database.register_member("1", "Alice")
+    monkeypatch.setattr(curriculum, "get_can_do_details_for_week",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("boom")))
+    ctx = _mock_ctx("1")
+    await features.show_today(ctx)
+    sent = ctx.send.call_args[0][0]
+    assert "هدف الأسبوع" not in sent
+    assert "على منصة التمرين" in sent  # tasks still there
 
 
 @pytest.mark.asyncio
