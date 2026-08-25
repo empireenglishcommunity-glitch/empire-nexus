@@ -34,7 +34,7 @@ def setup_function():
 def test_monthly_blueprint_item_count():
     """Generates the expected number of items."""
     database.register_member("mb1", "Alice")
-    bp = assessment.generate_monthly_blueprint("mb1", "L0", [1, 2, 3, 4], total_items=16)
+    bp = assessment.generate_monthly_blueprint("mb1", "A1", [1, 2, 3, 4], total_items=16)
     # May be less if vocab pool is thin, but should be close to 16
     assert len(bp["items"]) >= 10
     assert len(bp["items"]) <= 16
@@ -43,7 +43,7 @@ def test_monthly_blueprint_item_count():
 def test_monthly_blueprint_production_heavy():
     """Production items (speaking + writing) are >= 50%."""
     database.register_member("mb2", "Alice")
-    bp = assessment.generate_monthly_blueprint("mb2", "L0", [1, 2, 3, 4], total_items=16)
+    bp = assessment.generate_monthly_blueprint("mb2", "A1", [1, 2, 3, 4], total_items=16)
     production = [it for it in bp["items"] if it["skill"] in ("speaking", "writing")]
     assert len(production) >= len(bp["items"]) / 2
 
@@ -51,7 +51,7 @@ def test_monthly_blueprint_production_heavy():
 def test_monthly_blueprint_covers_multiple_weeks():
     """Items come from different weeks (not just one)."""
     database.register_member("mb3", "Alice")
-    bp = assessment.generate_monthly_blueprint("mb3", "L0", [1, 2, 3, 4], total_items=16)
+    bp = assessment.generate_monthly_blueprint("mb3", "A1", [1, 2, 3, 4], total_items=16)
     weeks_seen = {it["source_week"] for it in bp["items"]}
     # Should cover at least 2 different weeks (ideally all 4, but depends on pool)
     assert len(weeks_seen) >= 2
@@ -60,16 +60,16 @@ def test_monthly_blueprint_covers_multiple_weeks():
 def test_monthly_blueprint_deterministic_with_seed():
     """Same seed produces same blueprint."""
     database.register_member("mb4", "Alice")
-    bp1 = assessment.generate_monthly_blueprint("mb4", "L0", [1, 2], seed="test-seed-1")
-    bp2 = assessment.generate_monthly_blueprint("mb4", "L0", [1, 2], seed="test-seed-1")
+    bp1 = assessment.generate_monthly_blueprint("mb4", "A1", [1, 2], seed="test-seed-1")
+    bp2 = assessment.generate_monthly_blueprint("mb4", "A1", [1, 2], seed="test-seed-1")
     assert bp1["items"] == bp2["items"]
 
 
 def test_monthly_blueprint_different_seed_different_items():
     """Different seeds produce different item orders."""
     database.register_member("mb5", "Alice")
-    bp1 = assessment.generate_monthly_blueprint("mb5", "L0", [1, 2, 3, 4], seed="seed-a")
-    bp2 = assessment.generate_monthly_blueprint("mb5", "L0", [1, 2, 3, 4], seed="seed-b")
+    bp1 = assessment.generate_monthly_blueprint("mb5", "A1", [1, 2, 3, 4], seed="seed-a")
+    bp2 = assessment.generate_monthly_blueprint("mb5", "A1", [1, 2, 3, 4], seed="seed-b")
     # Items should differ (at least in order)
     items1 = [(it["skill"], it.get("source_week")) for it in bp1["items"]]
     items2 = [(it["skill"], it.get("source_week")) for it in bp2["items"]]
@@ -79,14 +79,14 @@ def test_monthly_blueprint_different_seed_different_items():
 def test_monthly_blueprint_type_field():
     """Blueprint has type='monthly'."""
     database.register_member("mb6", "Alice")
-    bp = assessment.generate_monthly_blueprint("mb6", "L0", [1, 2])
+    bp = assessment.generate_monthly_blueprint("mb6", "A1", [1, 2])
     assert bp["type"] == "monthly"
 
 
 def test_monthly_blueprint_time_limit():
     """Monthly review has 20 min time limit."""
     database.register_member("mb7", "Alice")
-    bp = assessment.generate_monthly_blueprint("mb7", "L0", [1, 2])
+    bp = assessment.generate_monthly_blueprint("mb7", "A1", [1, 2])
     assert bp["time_limit_min"] == 20
 
 

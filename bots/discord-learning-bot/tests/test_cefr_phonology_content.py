@@ -246,11 +246,12 @@ def test_daily_content_bundle_has_accent_and_grammar(level):
     assert bundle.get("grammar_pattern"), f"{level} daily bundle has no grammar_pattern"
 
 
-def test_legacy_levels_still_load():
-    """Authoring CEFR content must not disturb the legacy L0-L3 content."""
+def test_legacy_levels_no_longer_load():
+    """Legacy L0–L3 content is RETIRED (2026-08-25) — no accent data under any
+    legacy key."""
     curriculum.load_all()
-    for legacy, weeks in (("L0", 8), ("L1", 10), ("L2", 12), ("L3", 8)):
-        assert len(curriculum._accent_data.get(legacy, {})) == weeks
+    for legacy in ("L0", "L1", "L2", "L3"):
+        assert curriculum._accent_data.get(legacy, {}) == {}
 
 
 

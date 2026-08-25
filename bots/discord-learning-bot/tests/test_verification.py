@@ -140,12 +140,12 @@ def test_generate_vocab_quiz_uses_members_real_level_curriculum():
     """Regression guard: this previously always quizzed against L0 data
     regardless of the member's real level."""
     from src import database
-    database.register_member("u1", "Alice", level="L2")
+    database.register_member("u1", "Alice", level="B1")
     _, _, word = verification.generate_vocab_quiz("u1")
     # The word must come from real L2 curriculum vocabulary, not the
     # small hardcoded L0-only VOCAB_QUIZ_BANK fallback.
     from src import curriculum
-    l2_week1_words = {w["word"] for w in curriculum.get_vocabulary_for_week(1, "L2")}
+    l2_week1_words = {w["word"] for w in curriculum.get_vocabulary_for_week(1, "B1")}
     # word may come from week 1-3 (spaced repetition window); just confirm
     # it's a real L2 curriculum word, not an L0 hardcoded-bank word.
     l0_bank_words = {w for words in verification.VOCAB_QUIZ_BANK.values() for w, _ in words}

@@ -105,8 +105,8 @@ def test_spaced_repetition_respects_count_limit():
 #  6. GRAMMAR PATTERN CARD FORMATTING
 # ============================================================
 
-def test_format_grammar_card_l0_week1_produces_nonempty_card():
-    card = features.format_grammar_card(1, "L0")
+def test_format_grammar_card_a1_week1_produces_nonempty_card():
+    card = features.format_grammar_card(1, "A1")
     assert card
     assert "Grammar Pattern" in card
 
@@ -120,15 +120,15 @@ def test_format_grammar_card_unknown_level_returns_empty_string():
 
 
 def test_format_grammar_card_includes_arabic_translation():
-    card = features.format_grammar_card(1, "L0")
+    card = features.format_grammar_card(1, "A1")
     assert "بالعربي" in card
 
 
 def test_format_grammar_card_every_level_and_week_produces_output():
     """Every real week/level combination with authored grammar content
-    must format without raising, for all 38 weeks."""
+    must format without raising, for all 90 CEFR weeks."""
     from src import curriculum
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             card = features.format_grammar_card(week, level)
             assert card, f"{level} week {week} produced an empty grammar card"
