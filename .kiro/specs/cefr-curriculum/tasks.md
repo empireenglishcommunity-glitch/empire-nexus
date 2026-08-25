@@ -120,7 +120,7 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
       reached/not-yet progress (dojo #105).
 - [x] `STATUS.md` + `SYSTEM-MAP.md` updated (chronicle).
 
-## Phase 10 — Final verification + full enable · [nexus] — 🟡 MOSTLY DONE
+## Phase 10 — Final verification + full enable · [nexus] — ✅ DONE
 - [x] End-to-end ghost journey A1→A2 via the exit exam — automated integration
       tests drive the real chain (start_advancement_attempt → finish_advancement_exit
       → deliver_exit_exam_outcome → promotion → exam certificate), plus the
@@ -131,32 +131,35 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 - [x] Placement live (8c ✅) + exam-based certificate live (8d ✅).
 - [x] Guides live (Phase 9 ✅).
 - [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
-- [~] Legacy L0–L3 retirement — STAGED: Stage A done (onboarding + schema);
-      Stage B (shims + content + site folders) gated to ~2026-10-23 (60-day
-      session-token window after the 2026-08-23 migration) + dry-run check.
+- [x] Legacy L0–L3 retirement — DONE (all stages, 2026-08-25). Token cutover
+      let us finish now instead of waiting out the 60-day window (see below).
 
 ---
 
-## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Legacy L0–L3 retirement — STAGED (owner approved 2026-08-25):**
-   - **Stage A — DONE:** new-member onboarding now assigns the A1 role + says
-     "A1" (was misleadingly "Level 0"); `members.level` schema default L0→A1.
-     Verified full suite green. No student impact (DB already CEFR, new members
-     were already written as A1).
-   - **Stage B — GATED, do NOT do before ~2026-10-23:** removing the dojo
-     `LEGACY_TO_CEFR` middleware shim + `cefr_key`/`LEGACY_LEVEL_MAP` +
-     `/l0../l3/` site folders + legacy content files. **Blocked because:** (a)
-     the DB migration ran **2026-08-23**, and pre-migration session tokens carry
-     `lvl:"L0"` for a **60-day** TTL — removing the shim earlier 403s those
-     students off their own content; (b) the legacy content files are entangled
-     with 36 test files (`generate_blueprint("L0")` etc.) + health-check counts,
-     so deletion needs a careful test migration. Gate to open Stage B: run
-     `migrate_to_cefr(dry_run=True)` → all members `already_cefr`, AND ≥60 days
-     since 2026-08-23. Keep `rollback_cefr_migration` regardless.
-2. **Placement enhancement (later):** add listening + speaking skills (audio path).
+## Legacy L0–L3 retirement — COMPLETE (2026-08-25)
 
-Everything else in Mi'yar (Phases 0–10) is built, live, and verified. The two
-items above are a decision + an optional enhancement — not blocking work.
+Rather than wait out the 60-day session-token window, we did a **token cutover**
+so everything could be retired now, safely:
+- **W2 (#381):** `claim()` mints **CEFR-only** tokens; promotion DMs a one-click
+  re-link so a promoted student's session picks up the new level.
+- **W3 (dojo #106):** the edge gate now **requires a CEFR level** — a pre-migration
+  `lvl:"L0"` token is treated like an expired session (friendly re-link, never a
+  403), which let us delete the `LEGACY_TO_CEFR` map. Deleted the `/l0..l3/` site
+  trees (1596 files) + 266 legacy audio clips (manifest 896→630). Old tokens are
+  invalidated by design; re-entry is the **same `!link`** flow.
+- **W1 (#382, #383):** deleted `data/l0..l3` + `content/l0..l3`; migrated the test
+  suite to CEFR (verified CEFR content passes every quality bar first, so coverage
+  is preserved); purged runtime legacy literals (incl. a real fix: the Word-of-the-
+  Day post was hardcoded to deleted L0 content).
+- **Kept deliberately** (defensive input-hardening, not lesson content):
+  `config.LEVELS`, `cefr_key`/`LEGACY_LEVEL_MAP`, `LEGACY_ROLE_NAMES`, and
+  `rollback_cefr_migration` (the migration undo button).
+
+## What is genuinely OUTSTANDING (the honest "not yet" list)
+1. **Placement enhancement (later, optional):** add listening + speaking skills
+   (needs the audio/Whisper path). Not blocking.
+
+Everything else in Mi'yar (Phases 0–10) is built, live, and verified.
 
 **LIVE + verified end-to-end:** curriculum A1–C2, phonology/audio, migration,
 exit exams (8b), placement (8c: vocab/grammar + writing), exam-based certificate
