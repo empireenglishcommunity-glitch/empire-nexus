@@ -229,15 +229,40 @@ def test_mediation_is_tracked_but_never_gates_a_day():
     assert "mediation" not in database.CALENDAR_EXERCISES
 
 
-def test_a1_now_covers_all_four_cefr_modes(rep):
-    """The headline claim of Phase 11B: A1 exercises reception (listening AND
-    reading), production, interaction AND mediation. Only A1.P.5 remains, and
-    it is a production gap, not a missing MODE."""
+def test_a1_teaches_every_descriptor_it_publishes(rep):
+    """The headline claim of Phase 11B for A1: a student who finishes A1 has
+    been taught ALL 15 descriptors A1 publishes, across all four CEFR modes.
+
+    This is the strongest form of the owner's original question ("if a student
+    finishes A1, did they get all of A1?") and it is now provably yes for the
+    descriptor set, not just for content delivery.
+    """
     leftover = rep["levels"]["A1"]["untaught_descriptors"]
-    modes_missing = {c.split(".")[1] for c in leftover}
-    assert "R" not in modes_missing, f"A1 still missing reading: {leftover}"
-    assert "M" not in modes_missing, f"A1 still missing mediation: {leftover}"
-    assert "I" not in modes_missing, f"A1 still missing interaction: {leftover}"
+    assert leftover == [], f"A1 no longer complete: {leftover}"
+    assert rep["levels"]["A1"]["descriptors_in_library"] == 15
+
+
+def test_levels_with_full_descriptor_coverage_do_not_regress(rep):
+    """A1, C1 and C2 teach everything they publish. Losing that must fail."""
+    for level in ("A1", "C1", "C2"):
+        assert rep["levels"][level]["untaught_descriptors"] == [], (
+            f"{level} lost full descriptor coverage: "
+            f"{rep['levels'][level]['untaught_descriptors']}"
+        )
+
+
+def test_every_remaining_gap_has_a_named_plan():
+    """No gap may sit in the baseline as a vague todo: each one must state what
+    concretely closes it, so "we are incomplete" always comes with "and here is
+    exactly what incomplete means"."""
+    missing = sorted(set(coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS)
+                     - set(coverage_ledger.DESCRIPTOR_GAP_PLAN))
+    assert not missing, f"no recorded plan for: {missing}"
+    stale = sorted(set(coverage_ledger.DESCRIPTOR_GAP_PLAN)
+                   - set(coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS))
+    assert not stale, f"plan entries for already-closed descriptors: {stale}"
+    for code, need in coverage_ledger.DESCRIPTOR_GAP_PLAN.items():
+        assert len(need) > 25, f"{code}: plan too vague to act on"
 
 
 def test_reading_is_tracked_but_never_gates_a_day():

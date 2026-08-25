@@ -159,10 +159,33 @@ this: every key point must be **anchored in the source** the student was given
 (so the task never asks them to invent information), and the model answer must
 **cover every key point** (so it never teaches under-reporting).
 
-**A1 status after this.** A1 now exercises **all four CEFR modes**. The only
-remaining A1 descriptor gap is `A1.P.5` (write short notes and messages) — a
-production gap, not a missing mode — and it stays pinned in the coverage
-ledger's baseline until closed.
+**A1 status after this.** A1 now exercises **all four CEFR modes**.
+
+### 4d. A1.P.5 closed — A1 is now 100% descriptor-complete (2026-08-24)
+
+The last A1 gap was `A1.P.5` — *"Can write short, simple notes and messages
+relating to matters in areas of immediate need."*
+
+This was a **real content gap, not a labelling gap**: across all 10 A1 weeks and
+70 writing prompts, **not one asked the student to write a note or a message.**
+
+**What changed (one prompt).** Week 3's day-6 prompt was a weak gap-fill:
+
+> before: `Write: 'My birthday is in ___' and 'I study on ___.'`
+> after: `Write a short note to a friend (2-3 lines): say what day and what time your English class is, and ask them to come.`
+
+Week 3 is *Numbers, Time & Days*, so the note keeps **exactly the same language
+target** (times + days) while upgrading a fill-in-the-blank into real
+production — and it closes `A1.P.5`. `A1.P.5` was then added to week 3's
+`can_do`.
+
+⚠️ **This is the one place where previously-approved A1 content was edited**, so
+it is called out here explicitly for your review rather than buried in a diff.
+It is a single prompt and trivially reversible.
+
+**Result:** all **15** A1 descriptors are now taught by a week, across
+reception (listening + reading), production, interaction and mediation. A test
+(`test_a1_teaches_every_descriptor_it_publishes`) fails if that ever regresses.
 
 ### 5. Progression logic
 The 10 weeks build a coherent A1 arc: identity → relationships → quantities/time

@@ -3,59 +3,316 @@
   "cefr": "B1",
   "week": 1,
   "theme": "Recent Experiences & News (Present Perfect vs Past Simple)",
-  "can_do": ["B1.P.1", "B1.R.3"],
+  "can_do": [
+    "B1.P.1",
+    "B1.R.3",
+    "B1.P.5"
+  ],
   "phoneme_focus": "Contractions in connected speech: 've /v/, 's /z/; weak 'for' /fə/ and 'since' /sɪns/",
   "grammar_pattern": "Present perfect vs past simple + for/since, already/yet/just",
-  "grammar_point": {"cefr": "B1", "title": "Present perfect vs past simple (for/since, already/yet/just)",
+  "grammar_point": {
+    "cefr": "B1",
+    "title": "Present perfect vs past simple (for/since, already/yet/just)",
     "en": "Contrast finished past (past simple) with experience/unfinished time (present perfect); for/since, already/yet/just.",
-    "ar": "الفرق بين الماضي المنتهي والخبرة/الزمن غير المنتهي؛ for/since وalready/yet/just."},
+    "ar": "الفرق بين الماضي المنتهي والخبرة/الزمن غير المنتهي؛ for/since وalready/yet/just."
+  },
   "vocabulary": [
-    {"word": "recently", "pronunciation": "REE-sunt-lee", "arabic": "مؤخرًا", "pos": "adverb", "example": "Have you read any good books recently?"},
-    {"word": "lately", "pronunciation": "LAYT-lee", "arabic": "في الآونة الأخيرة", "pos": "adverb", "example": "I haven't seen her lately."},
-    {"word": "already", "pronunciation": "awl-RED-ee", "arabic": "بالفعل", "pos": "adverb", "example": "I've already eaten."},
-    {"word": "yet", "pronunciation": "YET", "arabic": "بعد", "pos": "adverb", "example": "She hasn't called yet."},
-    {"word": "just", "pronunciation": "JUST", "arabic": "للتو", "pos": "adverb", "example": "We've just arrived."},
-    {"word": "since", "pronunciation": "SINS", "arabic": "منذ", "pos": "preposition", "example": "I've worked here since 2021."},
-    {"word": "for", "pronunciation": "FOR", "arabic": "لمدة", "pos": "preposition", "example": "I've known him for ten years."},
-    {"word": "ever", "pronunciation": "EV-er", "arabic": "من قبل (في السؤال)", "pos": "adverb", "example": "Have you ever tried skiing?"},
-    {"word": "news", "pronunciation": "NYOOZ", "arabic": "أخبار", "pos": "noun", "example": "Have you heard the news?"},
-    {"word": "so far", "pronunciation": "soh FAR", "arabic": "حتى الآن", "pos": "phrase", "example": "So far, so good."},
-    {"word": "happen", "pronunciation": "HAP-un", "arabic": "يحدث", "pos": "verb", "example": "What has happened?"},
-    {"word": "change", "pronunciation": "CHAYNJ", "arabic": "يتغيّر", "pos": "verb", "example": "A lot has changed."},
-    {"word": "achieve", "pronunciation": "uh-CHEEV", "arabic": "يحقّق", "pos": "verb", "example": "I've achieved my goal."},
-    {"word": "improve", "pronunciation": "im-PROOV", "arabic": "يتحسّن", "pos": "verb", "example": "My English has improved a lot."},
-    {"word": "move", "pronunciation": "MOOV", "arabic": "ينتقل", "pos": "verb", "example": "We've moved to a new flat."},
-    {"word": "start", "pronunciation": "START", "arabic": "يبدأ", "pos": "verb", "example": "I've started a new job."},
-    {"word": "finish", "pronunciation": "FIN-ish", "arabic": "ينهي", "pos": "verb", "example": "Have you finished the report?"},
-    {"word": "meet", "pronunciation": "MEET", "arabic": "يقابل", "pos": "verb", "example": "I've met a lot of new people."},
-    {"word": "lose", "pronunciation": "LOOZ", "arabic": "يفقد", "pos": "verb", "example": "I've lost my keys."},
-    {"word": "win", "pronunciation": "WIN", "arabic": "يفوز", "pos": "verb", "example": "Our team has won three games."},
-    {"word": "become", "pronunciation": "bi-KUM", "arabic": "يصبح", "pos": "verb", "example": "She has become a teacher."},
-    {"word": "grow", "pronunciation": "GROH", "arabic": "ينمو", "pos": "verb", "example": "The city has grown quickly."},
-    {"word": "experience", "pronunciation": "ek-SPEER-ee-uns", "arabic": "خبرة", "pos": "noun", "example": "It was a great experience."},
-    {"word": "opportunity", "pronunciation": "op-er-TYOO-ni-tee", "arabic": "فرصة", "pos": "noun", "example": "I've had a good opportunity."},
-    {"word": "progress", "pronunciation": "PROH-gres", "arabic": "تقدّم", "pos": "noun", "example": "I've made real progress."},
-    {"word": "goal", "pronunciation": "GOHL", "arabic": "هدف", "pos": "noun", "example": "I've reached my main goal."},
-    {"word": "challenge", "pronunciation": "CHAL-inj", "arabic": "تحدٍّ", "pos": "noun", "example": "It has been a big challenge."},
-    {"word": "decision", "pronunciation": "di-SIZH-un", "arabic": "قرار", "pos": "noun", "example": "I've made a decision."},
-    {"word": "recently changed", "pronunciation": "REE-sunt-lee chaynjd", "arabic": "تغيّر مؤخرًا", "pos": "phrase", "example": "My routine has recently changed."},
-    {"word": "abroad", "pronunciation": "uh-BRAWD", "arabic": "الخارج", "pos": "adverb", "example": "I've never lived abroad."},
-    {"word": "so much", "pronunciation": "soh MUTCH", "arabic": "كثيرًا جدًا", "pos": "phrase", "example": "I've learned so much this year."},
-    {"word": "twice", "pronunciation": "TWYS", "arabic": "مرتين", "pos": "adverb", "example": "I've been there twice."},
-    {"word": "gone", "pronunciation": "GON", "arabic": "ذهب (تصريف ثالث)", "pos": "verb", "example": "He has gone to the bank."},
-    {"word": "been", "pronunciation": "BEEN", "arabic": "كان/زار", "pos": "verb", "example": "I've been to Italy."},
-    {"word": "known", "pronunciation": "NOHN", "arabic": "عرف (تصريف ثالث)", "pos": "verb", "example": "I've known her since school."},
-    {"word": "kept", "pronunciation": "KEPT", "arabic": "احتفظ", "pos": "verb", "example": "I've kept a diary for years."},
-    {"word": "spent", "pronunciation": "SPENT", "arabic": "أنفق/قضى", "pos": "verb", "example": "I've spent a lot of time on this."}
+    {
+      "word": "recently",
+      "pronunciation": "REE-sunt-lee",
+      "arabic": "مؤخرًا",
+      "pos": "adverb",
+      "example": "Have you read any good books recently?"
+    },
+    {
+      "word": "lately",
+      "pronunciation": "LAYT-lee",
+      "arabic": "في الآونة الأخيرة",
+      "pos": "adverb",
+      "example": "I haven't seen her lately."
+    },
+    {
+      "word": "already",
+      "pronunciation": "awl-RED-ee",
+      "arabic": "بالفعل",
+      "pos": "adverb",
+      "example": "I've already eaten."
+    },
+    {
+      "word": "yet",
+      "pronunciation": "YET",
+      "arabic": "بعد",
+      "pos": "adverb",
+      "example": "She hasn't called yet."
+    },
+    {
+      "word": "just",
+      "pronunciation": "JUST",
+      "arabic": "للتو",
+      "pos": "adverb",
+      "example": "We've just arrived."
+    },
+    {
+      "word": "since",
+      "pronunciation": "SINS",
+      "arabic": "منذ",
+      "pos": "preposition",
+      "example": "I've worked here since 2021."
+    },
+    {
+      "word": "for",
+      "pronunciation": "FOR",
+      "arabic": "لمدة",
+      "pos": "preposition",
+      "example": "I've known him for ten years."
+    },
+    {
+      "word": "ever",
+      "pronunciation": "EV-er",
+      "arabic": "من قبل (في السؤال)",
+      "pos": "adverb",
+      "example": "Have you ever tried skiing?"
+    },
+    {
+      "word": "news",
+      "pronunciation": "NYOOZ",
+      "arabic": "أخبار",
+      "pos": "noun",
+      "example": "Have you heard the news?"
+    },
+    {
+      "word": "so far",
+      "pronunciation": "soh FAR",
+      "arabic": "حتى الآن",
+      "pos": "phrase",
+      "example": "So far, so good."
+    },
+    {
+      "word": "happen",
+      "pronunciation": "HAP-un",
+      "arabic": "يحدث",
+      "pos": "verb",
+      "example": "What has happened?"
+    },
+    {
+      "word": "change",
+      "pronunciation": "CHAYNJ",
+      "arabic": "يتغيّر",
+      "pos": "verb",
+      "example": "A lot has changed."
+    },
+    {
+      "word": "achieve",
+      "pronunciation": "uh-CHEEV",
+      "arabic": "يحقّق",
+      "pos": "verb",
+      "example": "I've achieved my goal."
+    },
+    {
+      "word": "improve",
+      "pronunciation": "im-PROOV",
+      "arabic": "يتحسّن",
+      "pos": "verb",
+      "example": "My English has improved a lot."
+    },
+    {
+      "word": "move",
+      "pronunciation": "MOOV",
+      "arabic": "ينتقل",
+      "pos": "verb",
+      "example": "We've moved to a new flat."
+    },
+    {
+      "word": "start",
+      "pronunciation": "START",
+      "arabic": "يبدأ",
+      "pos": "verb",
+      "example": "I've started a new job."
+    },
+    {
+      "word": "finish",
+      "pronunciation": "FIN-ish",
+      "arabic": "ينهي",
+      "pos": "verb",
+      "example": "Have you finished the report?"
+    },
+    {
+      "word": "meet",
+      "pronunciation": "MEET",
+      "arabic": "يقابل",
+      "pos": "verb",
+      "example": "I've met a lot of new people."
+    },
+    {
+      "word": "lose",
+      "pronunciation": "LOOZ",
+      "arabic": "يفقد",
+      "pos": "verb",
+      "example": "I've lost my keys."
+    },
+    {
+      "word": "win",
+      "pronunciation": "WIN",
+      "arabic": "يفوز",
+      "pos": "verb",
+      "example": "Our team has won three games."
+    },
+    {
+      "word": "become",
+      "pronunciation": "bi-KUM",
+      "arabic": "يصبح",
+      "pos": "verb",
+      "example": "She has become a teacher."
+    },
+    {
+      "word": "grow",
+      "pronunciation": "GROH",
+      "arabic": "ينمو",
+      "pos": "verb",
+      "example": "The city has grown quickly."
+    },
+    {
+      "word": "experience",
+      "pronunciation": "ek-SPEER-ee-uns",
+      "arabic": "خبرة",
+      "pos": "noun",
+      "example": "It was a great experience."
+    },
+    {
+      "word": "opportunity",
+      "pronunciation": "op-er-TYOO-ni-tee",
+      "arabic": "فرصة",
+      "pos": "noun",
+      "example": "I've had a good opportunity."
+    },
+    {
+      "word": "progress",
+      "pronunciation": "PROH-gres",
+      "arabic": "تقدّم",
+      "pos": "noun",
+      "example": "I've made real progress."
+    },
+    {
+      "word": "goal",
+      "pronunciation": "GOHL",
+      "arabic": "هدف",
+      "pos": "noun",
+      "example": "I've reached my main goal."
+    },
+    {
+      "word": "challenge",
+      "pronunciation": "CHAL-inj",
+      "arabic": "تحدٍّ",
+      "pos": "noun",
+      "example": "It has been a big challenge."
+    },
+    {
+      "word": "decision",
+      "pronunciation": "di-SIZH-un",
+      "arabic": "قرار",
+      "pos": "noun",
+      "example": "I've made a decision."
+    },
+    {
+      "word": "recently changed",
+      "pronunciation": "REE-sunt-lee chaynjd",
+      "arabic": "تغيّر مؤخرًا",
+      "pos": "phrase",
+      "example": "My routine has recently changed."
+    },
+    {
+      "word": "abroad",
+      "pronunciation": "uh-BRAWD",
+      "arabic": "الخارج",
+      "pos": "adverb",
+      "example": "I've never lived abroad."
+    },
+    {
+      "word": "so much",
+      "pronunciation": "soh MUTCH",
+      "arabic": "كثيرًا جدًا",
+      "pos": "phrase",
+      "example": "I've learned so much this year."
+    },
+    {
+      "word": "twice",
+      "pronunciation": "TWYS",
+      "arabic": "مرتين",
+      "pos": "adverb",
+      "example": "I've been there twice."
+    },
+    {
+      "word": "gone",
+      "pronunciation": "GON",
+      "arabic": "ذهب (تصريف ثالث)",
+      "pos": "verb",
+      "example": "He has gone to the bank."
+    },
+    {
+      "word": "been",
+      "pronunciation": "BEEN",
+      "arabic": "كان/زار",
+      "pos": "verb",
+      "example": "I've been to Italy."
+    },
+    {
+      "word": "known",
+      "pronunciation": "NOHN",
+      "arabic": "عرف (تصريف ثالث)",
+      "pos": "verb",
+      "example": "I've known her since school."
+    },
+    {
+      "word": "kept",
+      "pronunciation": "KEPT",
+      "arabic": "احتفظ",
+      "pos": "verb",
+      "example": "I've kept a diary for years."
+    },
+    {
+      "word": "spent",
+      "pronunciation": "SPENT",
+      "arabic": "أنفق/قضى",
+      "pos": "verb",
+      "example": "I've spent a lot of time on this."
+    }
   ],
   "speaking_missions": {
-    "Saturday": {"type": "present_perfect", "prompt": "Say three recent changes in your life: 'I have started/moved/learned...'", "target_seconds": 40},
-    "Sunday": {"type": "contrast", "prompt": "Contrast: 'I have lived here for... I moved here in...' (present perfect vs past simple).", "target_seconds": 45},
-    "Monday": {"type": "news", "prompt": "Share your recent news using just/already/yet in five sentences.", "target_seconds": 45},
-    "Tuesday": {"type": "for_since", "prompt": "Talk about how long: 'I have ... for ...' and 'I have ... since ...'", "target_seconds": 40},
-    "Wednesday": {"type": "experiences", "prompt": "Answer: 'What have you achieved this year?' Give reasons.", "target_seconds": 45},
-    "Thursday": {"type": "conversation", "prompt": "Ask and answer: 'Have you ever...?' + 'When did you...?' with a partner.", "target_seconds": 45},
-    "Friday": {"type": "review", "prompt": "Summarise your year so far (7 sentences): what has changed and when.", "target_seconds": 60}
+    "Saturday": {
+      "type": "present_perfect",
+      "prompt": "Say three recent changes in your life: 'I have started/moved/learned...'",
+      "target_seconds": 40
+    },
+    "Sunday": {
+      "type": "contrast",
+      "prompt": "Contrast: 'I have lived here for... I moved here in...' (present perfect vs past simple).",
+      "target_seconds": 45
+    },
+    "Monday": {
+      "type": "news",
+      "prompt": "Share your recent news using just/already/yet in five sentences.",
+      "target_seconds": 45
+    },
+    "Tuesday": {
+      "type": "for_since",
+      "prompt": "Talk about how long: 'I have ... for ...' and 'I have ... since ...'",
+      "target_seconds": 40
+    },
+    "Wednesday": {
+      "type": "experiences",
+      "prompt": "Answer: 'What have you achieved this year?' Give reasons.",
+      "target_seconds": 45
+    },
+    "Thursday": {
+      "type": "conversation",
+      "prompt": "Ask and answer: 'Have you ever...?' + 'When did you...?' with a partner.",
+      "target_seconds": 45
+    },
+    "Friday": {
+      "type": "review",
+      "prompt": "Summarise your year so far (7 sentences): what has changed and when.",
+      "target_seconds": 60
+    }
   },
   "writing_prompts": [
     "Write four sentences about recent changes (present perfect).",
@@ -67,10 +324,30 @@
     "Write a paragraph (6-7 sentences): how your life has changed this year."
   ],
   "listening": [
-    {"say_en": "recently", "expected": "recently", "hint_ar": "مؤخرًا"},
-    {"say_en": "already", "expected": "already", "hint_ar": "بالفعل"},
-    {"say_en": "experience", "expected": "experience", "hint_ar": "خبرة"},
-    {"say_en": "achieve", "expected": "achieve", "hint_ar": "يحقّق"},
-    {"say_en": "opportunity", "expected": "opportunity", "hint_ar": "فرصة"}
+    {
+      "say_en": "recently",
+      "expected": "recently",
+      "hint_ar": "مؤخرًا"
+    },
+    {
+      "say_en": "already",
+      "expected": "already",
+      "hint_ar": "بالفعل"
+    },
+    {
+      "say_en": "experience",
+      "expected": "experience",
+      "hint_ar": "خبرة"
+    },
+    {
+      "say_en": "achieve",
+      "expected": "achieve",
+      "hint_ar": "يحقّق"
+    },
+    {
+      "say_en": "opportunity",
+      "expected": "opportunity",
+      "hint_ar": "فرصة"
+    }
   ]
 }
