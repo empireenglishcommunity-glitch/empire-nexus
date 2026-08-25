@@ -1,0 +1,57 @@
+{
+  "id": "mediation_a1_w7",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 7,
+  "title": "Tell your mother the prices",
+  "title_ar": "قول لأمك الأسعار",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "You are in the market. Your mother is at home. She asks you on the phone: how much is it?",
+    "ar": "انت في السوق وأمك في البيت. سألتك في التليفون: بكام؟"
+  },
+  "source": "\"The shirt is one hundred pounds. The shoes are fifty pounds. Today the bag is free.\"",
+  "task": {
+    "en": "Tell your mother the three prices.",
+    "ar": "قول لأمك التلات أسعار."
+  },
+  "key_points": [
+    {
+      "en": "The shirt is one hundred pounds.",
+      "ar": "القميص بمية جنيه."
+    },
+    {
+      "en": "The shoes are fifty pounds.",
+      "ar": "الجزمة بخمسين جنيه."
+    },
+    {
+      "en": "The bag is free today.",
+      "ar": "الشنطة ببلاش النهارده."
+    }
+  ],
+  "model_answer": {
+    "en": "The shirt is one hundred pounds, the shoes are fifty pounds, and the bag is free today.",
+    "ar": "القميص بمية جنيه، الجزمة بخمسين، والشنطة ببلاش النهارده."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}

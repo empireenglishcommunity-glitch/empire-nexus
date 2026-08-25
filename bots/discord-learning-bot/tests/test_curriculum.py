@@ -260,6 +260,93 @@ def test_reading_passages_only_claim_descriptors_of_their_own_level():
                 assert code in library, f"{level} w{week} claims unknown {code}"
 
 
+def test_mediation_is_authored_for_a1_and_absent_levels_return_none():
+    assert "A1" in curriculum.mediation_levels()
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        assert curriculum.get_mediation_for_week(week, "A1"), f"A1 w{week} missing"
+    for level in ("A2", "B1", "B2", "C1", "C2"):
+        if level not in curriculum.mediation_levels():
+            assert curriculum.get_mediation_for_week(1, level) is None
+
+
+def test_a1_mediation_tasks_are_wellformed_and_assessable():
+    """A mediation task is only usable if it has a source to relay, a person
+    who needs it, and CHECKABLE key points — the key points are the assessment
+    criteria (did the essential information get across?), so a task without
+    them would be unmarkable."""
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        m = curriculum.get_mediation_for_week(week, "A1")
+        assert m["title"] and m["title_ar"], f"w{week}: title not bilingual"
+        assert m["source"].strip(), f"w{week}: nothing to relay"
+        assert m["scenario"]["en"] and m["scenario"]["ar"], f"w{week}: scenario"
+        assert m["task"]["en"] and m["task"]["ar"], f"w{week}: task"
+        assert m["model_answer"]["en"] and m["model_answer"]["ar"], f"w{week}: model"
+        assert len(m["key_points"]) >= 3, f"w{week}: too few key points"
+        for kp in m["key_points"]:
+            assert kp.get("en") and kp.get("ar"), f"w{week}: key point not bilingual"
+        # A1.M.2 is specifically about signalling with a short phrase.
+        assert len(m["signal_phrases"]) >= 3, f"w{week}: no signal phrases"
+        for sp in m["signal_phrases"]:
+            assert sp.get("en") and sp.get("ar")
+            assert len(sp["en"].split()) <= 6, (
+                f"w{week}: signal phrase '{sp['en']}' is not a SHORT phrase"
+            )
+
+
+def test_a1_mediation_key_points_are_grounded_in_the_source():
+    """Every fact the student must relay has to be findable in the source they
+    were given. Otherwise the task asks them to invent information, which is
+    not mediation."""
+    import re
+    stop = {"a", "an", "the", "is", "are", "was", "were", "he", "she", "it",
+            "his", "her", "they", "them", "at", "in", "on", "of", "and", "to",
+            "with", "no", "not", "please", "my", "one", "can", "has", "have",
+            "got", "there", "years", "old", "very", "well", "but", "does",
+            "would", "like", "want", "wants", "today", "from", "you", "i"}
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        m = curriculum.get_mediation_for_week(week, "A1")
+        source = m["source"].lower()
+        for kp in m["key_points"]:
+            toks = [t for t in re.findall(r"[a-z']+", kp["en"].lower())
+                    if t not in stop]
+            assert any(t in source for t in toks), (
+                f"A1 w{week}: key point '{kp['en']}' has no anchor in the "
+                f"source the student was given"
+            )
+
+
+def test_a1_mediation_model_answer_covers_every_key_point():
+    """The model answer must demonstrate a SUCCESSFUL relay — if it omits a
+    required fact, it teaches students to under-report."""
+    import re
+    stop = {"a", "an", "the", "is", "are", "was", "were", "he", "she", "it",
+            "his", "her", "they", "them", "at", "in", "on", "of", "and", "to",
+            "with", "no", "not", "please", "my", "one", "can", "has", "have",
+            "got", "there", "years", "old", "very", "well", "but", "does",
+            "would", "like", "want", "wants", "today", "from", "you", "i"}
+    for week in range(1, curriculum.max_week_for_level("A1") + 1):
+        m = curriculum.get_mediation_for_week(week, "A1")
+        model = m["model_answer"]["en"].lower()
+        for kp in m["key_points"]:
+            toks = [t for t in re.findall(r"[a-z']+", kp["en"].lower())
+                    if t not in stop]
+            assert any(t in model for t in toks), (
+                f"A1 w{week}: model answer omits key point '{kp['en']}'"
+            )
+
+
+def test_mediation_tasks_only_claim_descriptors_of_their_own_level():
+    for level in curriculum.mediation_levels():
+        library = curriculum.can_do_descriptor_map(level)
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            m = curriculum.get_mediation_for_week(week, level)
+            if not m:
+                continue
+            for code in m.get("can_do") or []:
+                assert code.startswith(f"{level}."), f"{level} w{week} claims {code}"
+                assert code in library, f"{level} w{week} claims unknown {code}"
+
+
 def test_every_week_resolves_its_can_do_goals_bilingually():
     """Every one of the 90 weeks must resolve at least one CEFR can-do goal to
     a real bilingual "I can ..." descriptor.

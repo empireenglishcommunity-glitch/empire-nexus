@@ -1,0 +1,61 @@
+{
+  "id": "mediation_a1_w3",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 3,
+  "title": "Pass on the lesson time",
+  "title_ar": "انقل معاد الدرس",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "The teacher tells you about tomorrow's lesson. Your friend was not there. He needs the time and the room.",
+    "ar": "المدرّس قالك على درس بكرة. صاحبك مكانش موجود، ومحتاج المعاد ورقم الأوضة."
+  },
+  "source": "\"The English lesson is at ten o'clock on Sunday. It is in room number twelve. It is one hour.\"",
+  "task": {
+    "en": "Tell your friend the time, the day, and the room number.",
+    "ar": "قول لصاحبك المعاد واليوم ورقم الأوضة."
+  },
+  "key_points": [
+    {
+      "en": "The lesson is at ten o'clock.",
+      "ar": "الدرس الساعة عشرة."
+    },
+    {
+      "en": "It is on Sunday.",
+      "ar": "يوم الأحد."
+    },
+    {
+      "en": "It is in room number twelve.",
+      "ar": "في أوضة رقم اتناشر."
+    },
+    {
+      "en": "It is one hour.",
+      "ar": "مدته ساعة."
+    }
+  ],
+  "model_answer": {
+    "en": "The English lesson is at ten o'clock on Sunday, in room twelve. It is one hour.",
+    "ar": "درس الإنجليزي الساعة عشرة يوم الأحد، في أوضة اتناشر، ومدته ساعة."
+  },
+  "signal_phrases": [
+    {
+      "en": "How do you say ...?",
+      "ar": "إزاي تقول ...؟"
+    },
+    {
+      "en": "What does ... mean?",
+      "ar": "معنى ... إيه؟"
+    },
+    {
+      "en": "Can you help me?",
+      "ar": "تقدر تساعدني؟"
+    },
+    {
+      "en": "Slowly, please.",
+      "ar": "بالراحة، لو سمحت."
+    }
+  ]
+}

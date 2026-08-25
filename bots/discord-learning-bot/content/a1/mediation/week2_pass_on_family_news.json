@@ -1,0 +1,61 @@
+{
+  "id": "mediation_a1_w2",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 2,
+  "title": "Tell your sister about your friend's family",
+  "title_ar": "قول لأختك عن عيلة صاحبك",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "Your friend Sara tells you about her family. Your sister wants to know how many people are in it.",
+    "ar": "صاحبتك سارة حكتلك عن عيلتها. أختك عايزة تعرف هم كام واحد."
+  },
+  "source": "\"I have got two brothers and one sister. My father is a teacher. My grandmother lives with us.\"",
+  "task": {
+    "en": "Tell your sister the important information about Sara's family.",
+    "ar": "قول لأختك المعلومات المهمة عن عيلة سارة."
+  },
+  "key_points": [
+    {
+      "en": "She has got two brothers.",
+      "ar": "عندها أخين."
+    },
+    {
+      "en": "She has got one sister.",
+      "ar": "عندها أخت واحدة."
+    },
+    {
+      "en": "Her father is a teacher.",
+      "ar": "أبوها مدرّس."
+    },
+    {
+      "en": "Her grandmother lives with them.",
+      "ar": "جدتها ساكنة معاهم."
+    }
+  ],
+  "model_answer": {
+    "en": "Sara has got two brothers and one sister. Her father is a teacher, and her grandmother lives with them.",
+    "ar": "سارة عندها أخين وأخت واحدة. أبوها مدرّس، وجدتها ساكنة معاهم."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}

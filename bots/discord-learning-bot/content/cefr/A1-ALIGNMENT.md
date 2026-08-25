@@ -120,6 +120,50 @@ retroactively broken every existing streak.
 and `A1.P.5` (short notes and messages). These are tracked in the coverage
 ledger's pinned baseline, so they cannot be quietly forgotten.
 
+### 4c. Mediation (added 2026-08-24 — Phase 11B)
+
+**The gap this closes.** The CEFR Companion Volume (2020) defines **four** modes:
+reception, production, interaction and **mediation**. Empire English exercised
+three. Mediation — relaying, explaining and summarising *for someone else* — had
+no task anywhere, so these two A1 descriptors were taught by no week:
+
+- `A1.M.1` — *Can convey simple, predictable information of immediate relevance
+  (a name, a number, a price, a time) to another person.*
+- `A1.M.2` — *Can use a single word or a short phrase, with gesture, to signal
+  understanding or ask for help.*
+
+**Why this is the right mode for these students.** Our learners are Arabic
+speakers who already mediate English in real life — reading a message for a
+parent, telling a shopkeeper what a friend wants, passing on a lesson time. The
+tasks use exactly those situations, so the practice is authentic rather than
+academic. Most competing courses skip mediation entirely.
+
+**Shape of each task** (`content/a1/mediation/weekN_*.json`):
+
+1. **The situation** — who needs help, and why (bilingual).
+2. **What you heard/read** — a short English source containing the concrete
+   facts. Playable, because at A1 the source is often spoken.
+3. **Your job** — relay it. A free-text box; Arabic *or* simple English is
+   explicitly allowed, because mediation is measured by whether the information
+   arrives, not by grammatical polish.
+4. **A good answer** — revealed on request, never before the attempt.
+5. **Did you pass on everything?** — the checklist of required facts.
+6. **If you do not understand** — the `A1.M.2` signal phrases, each playable,
+   with gesture explicitly permitted.
+
+**How it is assessed, and why that is honest.** Mediation is scored by a
+**key-points checklist**, not by machine-marking free text. That is genuinely
+how CEFR mediation is judged — *did the essential information get across?* — and
+it avoids pretending to auto-grade open writing. Tests enforce the integrity of
+this: every key point must be **anchored in the source** the student was given
+(so the task never asks them to invent information), and the model answer must
+**cover every key point** (so it never teaches under-reporting).
+
+**A1 status after this.** A1 now exercises **all four CEFR modes**. The only
+remaining A1 descriptor gap is `A1.P.5` (write short notes and messages) — a
+production gap, not a missing mode — and it stays pinned in the coverage
+ledger's baseline until closed.
+
 ### 5. Progression logic
 The 10 weeks build a coherent A1 arc: identity → relationships → quantities/time
 → environment → habits → consumption → transactions → description → ability →
@@ -142,6 +186,10 @@ capstone speaking task that previews the A1 exit exam.
 - [ ] **Reading passages (§4b) read well and feel right for your beginners** —
       10 passages, 50–67 words each, one per week. This is new content, so it is
       the part most worth your eyes before A2–C2 are authored to the same shape.
+- [ ] **Mediation situations (§4c) feel true to your students' real life** —
+      10 tasks (tell your mother the prices, pass on the lesson time, order for
+      a friend, describe a lost child…). Same reason: check the shape here
+      before A2–C2 are authored to match.
 
 Once you approve, we run the **Phase 2 silent migration** (L0 → A1, zero loss)
 and enable A1 for students.

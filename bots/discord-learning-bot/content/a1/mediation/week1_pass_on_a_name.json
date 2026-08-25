@@ -1,0 +1,57 @@
+{
+  "id": "mediation_a1_w1",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 1,
+  "title": "Tell your mother who your new friend is",
+  "title_ar": "قول لأمك مين صاحبك الجديد",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "A new student says hello to you at school. Your mother does not speak English. She asks you: who is he?",
+    "ar": "طالب جديد سلّم عليك في المدرسة. أمك مش بتتكلم إنجليزي، وسألتك: هو مين؟"
+  },
+  "source": "\"Hello! My name is Karim Hassan. I am a student. I am from Egypt. Nice to meet you.\"",
+  "task": {
+    "en": "Tell your mother the important information about Karim. You can say it in Arabic or in simple English.",
+    "ar": "قول لأمك المعلومات المهمة عن كريم. تقدر تقولها بالعربي أو بإنجليزي بسيط."
+  },
+  "key_points": [
+    {
+      "en": "His name is Karim Hassan.",
+      "ar": "اسمه كريم حسن."
+    },
+    {
+      "en": "He is a student.",
+      "ar": "هو طالب."
+    },
+    {
+      "en": "He is from Egypt.",
+      "ar": "هو من مصر."
+    }
+  ],
+  "model_answer": {
+    "en": "His name is Karim Hassan. He is a student, and he is from Egypt.",
+    "ar": "اسمه كريم حسن. هو طالب، وهو من مصر."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}

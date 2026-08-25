@@ -63,6 +63,7 @@ def test_ledger_covers_every_authored_content_kind(rep):
         "writing_prompts", "grammar_pattern", "grammar_sub_items",
         "phoneme_focus", "grammar_point", "can_do_goals",
         "reading_passage", "reading_questions", "reading_glossary",
+        "mediation_task", "mediation_key_points", "mediation_signal_phrases",
     }
     assert expected_kinds <= set(rep["totals"]), (
         f"ledger stopped tracking: {expected_kinds - set(rep['totals'])}"
@@ -180,21 +181,25 @@ def test_c1_and_c2_teach_every_descriptor_they_publish(rep):
         )
 
 
-def test_remaining_gap_is_mediation_plus_unauthored_reading_levels(rep):
-    """Documents WHY the baseline is non-empty. Mediation (.M.) has no task at
-    all yet. Reading (.R.) now has one, but only for the levels whose passages
-    are authored — so .R. gaps must remain ONLY for unauthored levels."""
+def test_remaining_descriptor_gaps_are_only_unauthored_levels(rep):
+    """Documents WHY the baseline is non-empty, and keeps it honest: a `.R.` or
+    `.M.` gap is only acceptable for a level whose reading/mediation content is
+    NOT authored yet. Once a level's content ships, its gaps must be gone."""
     untaught = rep["untaught_descriptors"]
     assert untaught, "baseline unexpectedly empty — update this test if Phase 11B is done"
-    modes = {code.split(".")[1] for code in untaught}
-    assert "M" in modes, f"expected mediation gaps, saw modes {modes}"
     authored_reading = set(curriculum.reading_levels())
+    authored_mediation = set(curriculum.mediation_levels())
     for code in untaught:
         level, mode, _ = code.split(".")
         if mode == "R":
             assert level not in authored_reading, (
                 f"{code} is still untaught even though {level} reading is "
                 f"authored — the passage should target it"
+            )
+        if mode == "M":
+            assert level not in authored_mediation, (
+                f"{code} is still untaught even though {level} mediation is "
+                f"authored — the task should target it"
             )
 
 
@@ -206,6 +211,33 @@ def test_authored_reading_closes_its_levels_reading_descriptors(rep):
         leftover = [c for c in rep["levels"][level]["untaught_descriptors"]
                     if c.split(".")[1] == "R"]
         assert not leftover, f"{level} reading authored but {leftover} untaught"
+
+
+def test_authored_mediation_closes_its_levels_mediation_descriptors(rep):
+    """For every level whose mediation IS authored, no `.M.` descriptor may
+    remain untaught."""
+    for level in curriculum.mediation_levels():
+        leftover = [c for c in rep["levels"][level]["untaught_descriptors"]
+                    if c.split(".")[1] == "M"]
+        assert not leftover, f"{level} mediation authored but {leftover} untaught"
+
+
+def test_mediation_is_tracked_but_never_gates_a_day():
+    assert "mediation" in database.WEEKLY_EXERCISES
+    assert "mediation" in database.TRACKED_EXERCISES
+    assert "mediation" not in database.PRACTICE_EXERCISES
+    assert "mediation" not in database.CALENDAR_EXERCISES
+
+
+def test_a1_now_covers_all_four_cefr_modes(rep):
+    """The headline claim of Phase 11B: A1 exercises reception (listening AND
+    reading), production, interaction AND mediation. Only A1.P.5 remains, and
+    it is a production gap, not a missing MODE."""
+    leftover = rep["levels"]["A1"]["untaught_descriptors"]
+    modes_missing = {c.split(".")[1] for c in leftover}
+    assert "R" not in modes_missing, f"A1 still missing reading: {leftover}"
+    assert "M" not in modes_missing, f"A1 still missing mediation: {leftover}"
+    assert "I" not in modes_missing, f"A1 still missing interaction: {leftover}"
 
 
 def test_reading_is_tracked_but_never_gates_a_day():
@@ -226,6 +258,13 @@ def test_unauthored_reading_levels_contribute_no_orphans(rep):
         if level in curriculum.reading_levels():
             continue
         for kind in ("reading_passage", "reading_questions", "reading_glossary"):
+            assert data["by_kind"][kind]["authored"] == 0
+            assert data["by_kind"][kind]["delivered"] == 0
+    for level, data in rep["levels"].items():
+        if level in curriculum.mediation_levels():
+            continue
+        for kind in ("mediation_task", "mediation_key_points",
+                     "mediation_signal_phrases"):
             assert data["by_kind"][kind]["authored"] == 0
             assert data["by_kind"][kind]["delivered"] == 0
 
