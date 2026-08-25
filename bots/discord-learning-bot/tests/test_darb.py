@@ -275,7 +275,9 @@ async def test_claim_flow_mints_valid_session(monkeypatch):
     code = database.create_claim_code("u1")
     result = await darb.claim(code, ip="9.9.9.9", user_agent="ua")
     assert result is not None
-    assert result["level"] == "L1"
+    # Claim now mints CEFR-only tokens: a legacy stored level normalises (L1→A2)
+    # so no new session ever carries a legacy lvl.
+    assert result["level"] == "A2"
     # The minted token verifies and its device session is active.
     payload = darb.verify_session(result["token"])
     assert payload["did"] == "u1"

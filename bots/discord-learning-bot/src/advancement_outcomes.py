@@ -118,17 +118,44 @@ async def _send_promotion_dm(discord_id: str, from_level: str, to_level: str,
         return
 
     overall = result.get("overall_pct", 0)
+
+    # A promotion changes the student's level, but their practice-site session
+    # token still names the OLD level — so their new level's pages would be
+    # gated until they refresh. Issue a fresh one-click login link so the next
+    # session carries the new level. Best-effort (rate-limited); falls back to
+    # a plain !link instruction.
+    from . import config
+    base = config.PRACTICE_PLATFORM_URL
+    code = None
+    try:
+        code = database.create_claim_code(discord_id)
+    except Exception:
+        code = None
+    refresh_link = (f"{base}/?code={code}" if code else base)
+    refresh_line_ar = (
+        f"🔄 لتحديث دخولك للمستوى الجديد، افتح الرابط ده: {refresh_link}\n"
+        if code else
+        f"🔄 لتحديث دخولك للمستوى الجديد اكتب `!link` في ديسكورد.\n"
+    )
+    refresh_line_en = (
+        f"🔄 Refresh your access to the new level: {refresh_link}"
+        if code else
+        f"🔄 Type `!link` in Discord to refresh your access to the new level."
+    )
+
     msg = (
         f"🎓 **مبروك! اتقبلت في {to_level}!**\n\n"
         f"نتيجتك النهائية: **{overall}%** ✅\n"
         f"أنت أثبتّ إنك جاهز/ة للمستوى التالي. فخورين بيك!\n\n"
         f"📜 شهادتك متاحة على صفحة التمرين: "
-        f"https://practice.empireenglish.online/assessment/certificate/\n\n"
+        f"https://practice.empireenglish.online/assessment/certificate/\n"
+        f"{refresh_line_ar}\n"
         f"تقويمك اتجدّد — ابدأ {to_level} من الأسبوع الأول! 🚀\n"
         f"━━━━━━━━━━\n"
         f"🎓 **Congratulations! You've been promoted to {to_level}!**\n"
         f"Final score: {overall}%. You proved you're ready. We're proud of you!\n"
-        f"Your calendar has been reset — start {to_level} from Week 1! 🚀"
+        f"Your calendar has been reset — start {to_level} from Week 1! 🚀\n"
+        f"{refresh_line_en}"
     )
     try:
         await user.send(msg)
