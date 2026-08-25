@@ -13,11 +13,11 @@ partial, is marked honestly — never ticked.
   or **partial** — see the note.
 - `[ ]` — **not built** (or engine-only with no usable surface) — see the note.
 
-**The single biggest live/not-live fact:** the exit-exam system (Phase 8b) is
-fully built, tested, and deployed, but it is **gated behind the
-`assessment_advancement_exam` flag, which is OFF.** It is NOT live to students
-until the owner runs `!flag enable assessment_advancement_exam` in
-#admin-commands. Until then, every 8b item is `[~]`, not `[x]`.
+**Update 2026-08-25 (later):** per owner decision to "make everything live," the
+exit exam (8b) is now **ON** — `assessment_advancement_exam` is auto-enabled on
+deploy (`database.enable_exit_exam_once`, one-time/idempotent), and placement
+(8c) shipped its runner + practice-site page + `!placement` command. Both are
+now `[x]` LIVE. Kill switch still available: `!flag disable assessment_advancement_exam`.
 
 **Owner-confirmed decisions (unchanged):** all six CEFR levels · fully curated ·
 silent zero-loss migration · build level-by-level · reuse the existing engine ·
@@ -71,26 +71,28 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 - [x] `content/cefr/PHASE8-ASSESSMENT-ALIGNMENT.md` (CoE 4-stage method, the
       validation boundary, expert-set cut scores).
 
-### 8b — exit exams (retarget advancement) · [nexus] — 🟡 BUILT + DEPLOYED, NOT LIVE (flag OFF)
-- [~] `_PART_B_PROMPTS` extended A1–C2 (legacy keys kept as aliases).
-- [~] Part A items tagged with `can_do` codes.
-- [~] AI descriptor-rater for Part B + rule-based fallback (no network in tests).
-- [~] `exit_exam_reviews` boundary queue + `!exam-review`/`!exam-pass`/`!exam-fail`.
-- [~] Cut scores in one config block; pass → promote + certificate.
-- [~] Wired into the live finish path (`finish_advancement_exit` → api_server →
-      `deliver_exit_exam_outcome`). Merged (#369) + auto-deployed.
-- **All `[~]` because `assessment_advancement_exam` is OFF.** Flip it to make
-  these `[x]`. Kill switch: `!flag disable assessment_advancement_exam`.
+### 8b — exit exams (retarget advancement) · [nexus] — ✅ LIVE (flag auto-enabled)
+- [x] `_PART_B_PROMPTS` extended A1–C2 (legacy keys kept as aliases).
+- [x] Part A items tagged with `can_do` codes.
+- [x] AI descriptor-rater for Part B + rule-based fallback (no network in tests).
+- [x] `exit_exam_reviews` boundary queue + `!exam-review`/`!exam-pass`/`!exam-fail`.
+- [x] Cut scores in one config block; pass → promote + certificate.
+- [x] Wired into the live finish path (`finish_advancement_exit` → api_server →
+      `deliver_exit_exam_outcome`). Merged (#369).
+- [x] `assessment_advancement_exam` **ON** — auto-enabled on deploy
+      (`enable_exit_exam_once`, #371). Kill switch: `!flag disable assessment_advancement_exam`.
 
-### 8c — placement (self-contained, per-skill) · [nexus] — ❌ NOT USABLE (engine only)
-- [ ] Branching placement → per-skill CEFR profile → conservative overall level.
-      **NOTE:** the scoring/branching MATH exists in `src/placement.py`
-      (`band_index`, `step_band`, `resolve_skill_band`, `conservative_overall`,
-      `build_placement_pool`, `place_student`) and is unit-tested, **but nothing
-      calls it** — there is NO session runner, NO API endpoint, and NO command
-      or practice-site screen. **A new student cannot take a placement test.**
-- [~] `placement_result` table (exists) + `place_student(..., slot=)` (exists,
-      opt-in) — but uncalled, so not reachable in production.
+### 8c — placement (self-contained, per-skill) · [nexus] + [dojo] — ✅ LIVE
+- [x] Branching placement → per-skill CEFR profile → conservative overall level.
+      `src/placement_runner.py` drives adaptive vocab/grammar MC blocks (branch
+      by band) + a writing task (AI descriptor-rater, rule fallback). Merged #372.
+- [x] `placement_result` + `placement_session` tables; `place_student(slot=)`.
+- [x] API `/api/placement/{start,answer,writing,slot}`; slotting is opt-in only.
+- [x] `!placement` (self) / `!placement @user` (admin) claim-code login link.
+- [x] Practice-site page `/placement/` (dojo #103, wrangler-deployed).
+- [~] **NOTE:** measures vocab/grammar + writing this version; **listening &
+      speaking deferred** (need the audio/Whisper path) — disclosed to the
+      student, exactly as reading was folded in. Honest, not hidden.
 
 ### 8d — certificate · [nexus] + [dojo] — 🟡 PARTIAL
 - [x] Certificate page shows the level's **can-do checklist** + the compliant
@@ -119,22 +121,23 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 
 ## Phase 10 — Final verification + full enable · [nexus] — ❌ NOT DONE
 - [ ] End-to-end ghost journey A1→A2 via the exit exam.
-- [ ] Placement + certificates fully live (blocked on 8c + 8d).
+- [~] Placement live (8c ✅); certificate only partial (8d exam-based path pending).
 - [ ] Guides live (blocked on Phase 9).
-- [ ] `assessment_advancement_exam` enabled (owner action, pending).
+- [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
 - [ ] Legacy L0–L3 fully retired (currently kept; map retained).
 
 ---
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Placement (8c):** the whole student-facing test — runner + endpoint +
-   command/screen. Engine is a shell with no caller. **Biggest real gap.**
-2. **Certificate (8d):** exam-based issuance + "demonstrated proficiency"
-   wording + exam distinction.
-3. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
+1. **Certificate (8d):** exam-based issuance + "demonstrated proficiency"
+   wording + exam distinction. (Can-do checklist + honest footer already live.)
+2. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
    per-level site can-do checklist, `SYSTEM-MAP.md` update.
-4. **Phase 10:** end-to-end ghost verification; owner flips
-   `assessment_advancement_exam` ON; decide on legacy retirement.
+3. **Phase 10:** end-to-end ghost verification (A1→A2 via the exit exam);
+   decide on legacy L0–L3 retirement.
+4. **Placement enhancement (later):** add listening + speaking skills (audio path).
+
+**Now LIVE:** exit exams (8b), placement (8c, vocab/grammar + writing).
 
 ## Cross-cutting (every phase)
 - Full nexus test suite green; bump `BOT_VERSION` on each bot deploy.
