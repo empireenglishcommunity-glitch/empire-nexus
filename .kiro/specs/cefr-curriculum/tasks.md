@@ -155,11 +155,73 @@ so everything could be retired now, safely:
   `config.LEVELS`, `cefr_key`/`LEGACY_LEVEL_MAP`, `LEGACY_ROLE_NAMES`, and
   `rollback_cefr_migration` (the migration undo button).
 
+## Phase 11 — CONTENT COVERAGE ("100% of the level, provably") — 🔴 NOT BUILT
+
+**Opened 2026-08-24** after a measured audit answered the owner's question *"does
+finishing A1 via the 7 daily tasks mean the student took all A1 content?"* with
+**no**. Full evidence + reproduction commands:
+[`empire-chronicle/docs/CONTENT-COVERAGE-AUDIT-2026-08-24.md`](https://github.com/empireenglishcommunity-glitch/empire-chronicle/blob/main/docs/CONTENT-COVERAGE-AUDIT-2026-08-24.md).
+
+**Measured:** 90 weeks hold **5,339 content atoms**; **~894 (16.7%)** never properly
+reach a student. Accent (630), speaking (630) and writing (630) are clean — the
+losses are concentrated in vocab, listening, and grammar.
+
+### 11A — stop the bleeding (no new authoring, additive only, zero student risk)
+- [ ] **A1 · 354 lost vocabulary words.** `curriculum.get_vocabulary_for_day`
+      (`curriculum.py:186`) uses `len(all_words) // 7` and never assigns the
+      remainder, so the last 2–6 words of **every** week are unreachable
+      (A1 11.7% → A2 14.9% lost). Fix: round-robin remainder + a test asserting
+      the union of all 7 days == the full week list, for all 90 weeks.
+- [ ] **A2 · 450 orphaned listening items.** Week files carry a `listening` array
+      (`say_en`/`expected`/`hint_ar`) that **no code reads**; dojo `gen_listening`
+      builds dictation from vocabulary instead. Fix: add
+      `curriculum.get_listening_for_day()` and feed the practice page from it.
+- [ ] **A3 · grammar is authored, not delivered.** 90 rich bilingual patterns
+      (**1,208 sub-items**: formula/visual, `why_arabic_speakers_struggle`,
+      examples, common_errors, practice_fill_blank, quick_rule, mnemonic) reach
+      students only as a passive Wednesday `#cheat-sheets` post (`bot.py:1338`) —
+      no task, no page, no completion, no mastery. Fix: real weekly practice page
+      + tracked task.
+- [ ] **A4 · can-do invisible + empty pattern card.** Week `can_do` codes never
+      appear in the daily flow (only Phase-9 progress + certificate).
+      `content/patterns/` has only `l0..l3`, so the a1–c2 "Today's Pattern" card
+      renders **nothing** (verified in generated `a1/week1/day1/index.html`).
+- [ ] **A5 · Coverage Ledger + CI gate.** Enumerate all 5,339 atoms; assert each
+      has a delivery route **and** a tracked completion; **fail the build on any
+      orphan.** This is the permanent guarantee — it would fail on 894 atoms today.
+
+### 11B — complete the CEFR claim (needs authoring)
+The 7 tasks cover only ~2.5 of CEFR's four modes. **Reading has no task at all and
+mediation is entirely absent** — proven by descriptors that *no week teaches*:
+A1=5, A2=7, B1=6, B2=7 (C1/C2 = 0 ✅). At A1 the untaught set is exactly
+`A1.R.1`,`A1.R.4` (reading), `A1.M.1`,`A1.M.2` (mediation), `A1.P.5` (notes).
+**A1–B2 cannot honestly claim full CEFR coverage until this is closed.**
+- [ ] **B1 · Reading task** (reception) + authored texts → closes `R.*`.
+- [ ] **B2 · Mediation task** + authored tasks → closes `M.*`. The differentiator:
+      relay/explain/summarise, natural for Arabic-speaking learners.
+- [ ] **B3 · Assign the 25 orphaned A1–B2 descriptors** to specific weeks.
+- [ ] Delivery shape: **Daily Core (5)** = accent, vocab, listening, shadowing,
+      speaking · **Weekly Ring (1/day, rotating)** = grammar, reading, mediation,
+      writing, community. Daily load stays ~6; weekly coverage becomes complete.
+
+### 11C — depth & proof (exposure → retention)
+- [ ] **C1 · Weekly consolidation quiz** — retrieval practice over that week's real
+      atoms + spaced items from prior weeks ("done" is currently just a click).
+- [ ] **C2 · Descriptor evidence portfolio** — every completed task emits evidence
+      tagged to a can-do code; certificate shows proof per descriptor.
+- [ ] **C3 · Level Completion Contract** — certify only when coverage == 100% AND
+      every descriptor has evidence AND the exit exam is passed.
+
+---
+
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
 
-**Nothing.** Mi'yar (Phases 0–10) is fully built, live, verified, and legacy is
-retired. Placement now measures all four CEFR skills (listening + speaking added,
-nexus #385 / dojo #107). Any future work is net-new product, not spec debt.
+**Phase 11 (content coverage) — see above.** Mi'yar Phases 0–10 are fully built,
+live, verified, and legacy is retired; placement measures all four CEFR skills
+(nexus #385 / dojo #107). But Phase 10 verified that *the machinery works*, not
+that *all authored content is delivered* — and the 2026-08-24 audit proved it is
+not (894 atoms orphaned; reading + mediation missing). That is real spec debt, not
+net-new product, because the content already exists and was already paid for.
 
 **LIVE + verified end-to-end:** curriculum A1–C2, phonology/audio, migration,
 exit exams (8b), placement (8c: all 4 skills), exam-based certificate
