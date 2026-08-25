@@ -95,7 +95,7 @@ REGISTRY = [
 
     # ── TAQDEEM (assessment progression) ──
     ("assessment_monthly_review", "Taqdeem: Monthly Progress Review — retention-focused assessment after every 4 weekly passes (diagnostic + prerequisite for advancement)", "taqdeem", False),
-    ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", False),
+    ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
     # ── MI'YAR (CEFR curriculum) ──
     ("cefr_curriculum", "Mi'yar: CEFR-aligned curriculum — six levels (A1–C2), CEFR can-do objectives + grammar + vocabulary bands, CEFR placement + level exit exams + certificates (built level-by-level behind this flag)", "miyar", False),

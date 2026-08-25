@@ -31,11 +31,14 @@ def test_taqdeem_flags_registered():
         assert flag in names, f"Flag '{flag}' not in REGISTRY"
 
 
-def test_taqdeem_flags_default_off():
-    """Both Taqdeem flags default to OFF."""
-    for name, _desc, _init, default in flag_registry.REGISTRY:
-        if name in TAQDEEM_FLAGS:
-            assert default is False, f"Flag '{name}' should default OFF"
+def test_taqdeem_flag_defaults():
+    """Taqdeem flag defaults. `assessment_advancement_exam` is now the LIVE CEFR
+    exit exam and defaults ON (owner decision 2026-08-25 — Phase 8 go-live;
+    also auto-enabled once on deploy via database.enable_exit_exam_once).
+    `assessment_monthly_review` remains OFF (not yet released)."""
+    defaults = {name: default for name, _d, _i, default in flag_registry.REGISTRY}
+    assert defaults["assessment_advancement_exam"] is True
+    assert defaults["assessment_monthly_review"] is False
 
 
 def test_taqdeem_initiative_registered():
