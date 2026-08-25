@@ -716,7 +716,7 @@ async def handle_check(args: str, bot) -> str:
         return f"❌ Student '{ops_hub.escape_markdown(args.strip())}' not found\\."
 
     discord_id = member["discord_id"]
-    level = member.get("level", "L0")
+    level = member.get("level", "A1")
     streak, longest = database.get_streak(discord_id)
     points = member.get("total_points", 0)
     week = database.member_week_number(discord_id)

@@ -296,7 +296,7 @@ def reset_daily_voice():
 
 async def verify_writing(member: discord.Member, guild: discord.Guild) -> tuple[bool, str]:
     """Check if member posted 20+ chars in #<level>-text-practice (or their level) in last 2 hours."""
-    level = (database.get_member(str(member.id)) or {}).get("level", "L0")
+    level = (database.get_member(str(member.id)) or {}).get("level", "A1")
     channel_name = f"{config.level_slug(level)}-text-practice"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 
@@ -337,7 +337,7 @@ async def verify_audio(member: discord.Member, guild: discord.Guild,
     so the same message can never satisfy a second !done call, for
     this task or a different one.
     """
-    level = (database.get_member(str(member.id)) or {}).get("level", "L0")
+    level = (database.get_member(str(member.id)) or {}).get("level", "A1")
     channel_name = f"{config.level_slug(level)}-showcase"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 
@@ -496,7 +496,7 @@ def generate_vocab_quiz(discord_id: str) -> tuple[str, str, str]:
     from . import curriculum
 
     member = database.get_member(discord_id)
-    level = member["level"] if member else "L0"
+    level = member["level"] if member else "A1"
     week = database.member_week_number(discord_id) if member else 1
     week = min(curriculum.max_week_for_level(level), max(1, week))
 
@@ -630,7 +630,7 @@ def generate_listening_quiz(discord_id: str) -> tuple[str, str]:
     from . import curriculum, tasks as task_engine
 
     member = database.get_member(discord_id)
-    level = member["level"] if member else "L0"
+    level = member["level"] if member else "A1"
     week = database.member_week_number(discord_id) if member else 1
     week = min(curriculum.max_week_for_level(level), max(1, week))
 
@@ -759,7 +759,7 @@ async def get_recent_audio_url(member: discord.Member, guild: discord.Guild,
     Returns (url, filename) or None if not found. Used by the pronunciation
     scorer to download the audio for transcription.
     """
-    level = (database.get_member(str(member.id)) or {}).get("level", "L0")
+    level = (database.get_member(str(member.id)) or {}).get("level", "A1")
     channel_name = f"{config.level_slug(level)}-showcase"
     channel = discord.utils.get(guild.text_channels, name=channel_name)
 

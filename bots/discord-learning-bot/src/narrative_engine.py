@@ -102,7 +102,7 @@ def gather_signals(discord_id: str) -> dict:
     return {
         "discord_id": discord_id,
         "discord_name": member.get("discord_name", "").split("#")[0],
-        "level": member.get("level", "L0"),
+        "level": member.get("level", "A1"),
         "week": database.member_week_number(discord_id),
         "total_points": member.get("total_points", 0),
         "streak": member.get("current_streak", 0),
@@ -487,7 +487,7 @@ def _build_growth_letter_prompt(signals: dict) -> str:
     text without anyone noticing).
     """
     name = signals.get("discord_name", "the student")
-    level = signals.get("level", "L0")
+    level = signals.get("level", "A1")
     week = signals.get("week", 1)
     streak = signals.get("streak", 0)
     completion = signals.get("completion_rate_7d", 0)
@@ -585,7 +585,7 @@ async def build_milestone_moment(discord_id: str, milestone_id: str,
     whatever real context `signals` has (streak, related memory) for
     extra personalization when available.
     """
-    milestone_info = _get_milestone_info(milestone_id, signals.get("level", "L0"))
+    milestone_info = _get_milestone_info(milestone_id, signals.get("level", "A1"))
     milestone_name = milestone_info.get("name", milestone_id) if milestone_info else milestone_id
     milestone_desc = milestone_info.get("description", "") if milestone_info else ""
 

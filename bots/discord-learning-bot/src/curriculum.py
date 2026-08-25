@@ -167,7 +167,7 @@ def load_all():
 #  VOCABULARY ACCESS
 # ============================================================
 
-def get_vocabulary_for_week(week: int, level: str = "L0") -> list[dict]:
+def get_vocabulary_for_week(week: int, level: str = "A1") -> list[dict]:
     """Get the vocabulary words for a given week and level.
     Each word: {word, pronunciation, arabic, pos}
     """
@@ -176,7 +176,7 @@ def get_vocabulary_for_week(week: int, level: str = "L0") -> list[dict]:
     return data.get("vocabulary", [])
 
 
-def get_vocabulary_for_day(week: int, day_index: int, level: str = "L0") -> list[dict]:
+def get_vocabulary_for_day(week: int, day_index: int, level: str = "A1") -> list[dict]:
     """Get the 8 vocabulary words for a specific day (0=Saturday, 6=Friday).
     Splits the weekly words into 7 days of 8 words each.
     """
@@ -190,7 +190,7 @@ def get_vocabulary_for_day(week: int, day_index: int, level: str = "L0") -> list
     return all_words[start:end]
 
 
-def get_quiz_words(week: int, count: int = 10, level: str = "L0") -> list[dict]:
+def get_quiz_words(week: int, count: int = 10, level: str = "A1") -> list[dict]:
     """Get random words from this week + previous weeks for quiz verification."""
     import random
     all_words = []
@@ -206,7 +206,7 @@ def get_quiz_words(week: int, count: int = 10, level: str = "L0") -> list[dict]:
 #  SPEAKING MISSIONS
 # ============================================================
 
-def get_speaking_mission(week: int, day_name: str, level: str = "L0") -> Optional[dict]:
+def get_speaking_mission(week: int, day_name: str, level: str = "A1") -> Optional[dict]:
     """Get the speaking mission for a specific week, day, and level.
     Returns: {type, prompt, target_seconds} or None.
     """
@@ -222,7 +222,7 @@ def get_speaking_mission(week: int, day_name: str, level: str = "L0") -> Optiona
 #  WRITING PROMPTS
 # ============================================================
 
-def get_writing_prompt(week: int, day_index: int, level: str = "L0") -> Optional[str]:
+def get_writing_prompt(week: int, day_index: int, level: str = "A1") -> Optional[str]:
     """Get the writing prompt for a specific week, day (0-indexed), and level."""
     key = f"{level}_{week}"
     data = _weekly_data.get(key, {})
@@ -241,7 +241,7 @@ def has_accent_content(level: str) -> bool:
     return bool(_accent_data.get(level))
 
 
-def get_accent_drill(week: int, day_index: int, level: str = "L0") -> Optional[dict]:
+def get_accent_drill(week: int, day_index: int, level: str = "A1") -> Optional[dict]:
     """Get the accent drill for a specific level, week, and day (0-indexed).
 
     Returns the daily drill dict from content/{level}/accent/weekX.json,
@@ -260,7 +260,7 @@ def get_accent_drill(week: int, day_index: int, level: str = "L0") -> Optional[d
     return None
 
 
-def get_accent_focus(week: int, level: str = "L0") -> Optional[str]:
+def get_accent_focus(week: int, level: str = "A1") -> Optional[str]:
     """Get this week's accent focus description for a level.
     Returns None if this level has no accent content authored yet.
     """
@@ -278,7 +278,7 @@ def get_accent_focus(week: int, level: str = "L0") -> Optional[str]:
     return None
 
 
-def get_accent_focus_ar(week: int, level: str = "L0") -> str:
+def get_accent_focus_ar(week: int, level: str = "A1") -> str:
     """Get this week's accent focus in Arabic for a level (empty string if none)."""
     level_data = _accent_data.get(level)
     if not level_data:
@@ -297,7 +297,7 @@ def has_grammar_content(level: str) -> bool:
     return bool(_grammar_data.get(level))
 
 
-def get_grammar_pattern(week: int, level: str = "L0") -> Optional[dict]:
+def get_grammar_pattern(week: int, level: str = "A1") -> Optional[dict]:
     """Get the grammar pattern card for a specific level and week.
 
     Returns full grammar pattern dict with formula, examples, practice, etc.,
@@ -314,7 +314,7 @@ def get_grammar_pattern(week: int, level: str = "L0") -> Optional[dict]:
 #  DAILY TASK CONTENT (complete daily bundle)
 # ============================================================
 
-def get_daily_content(week: int, day_name: str, day_index: int, level: str = "L0") -> dict:
+def get_daily_content(week: int, day_name: str, day_index: int, level: str = "A1") -> dict:
     """Get all curriculum content for a specific day.
     Returns a dict with all 7 tasks pre-populated from curated data.
 
@@ -401,14 +401,14 @@ _PRACTICE_PAGE_BY_TASK = {
 }
 
 
-def practice_platform_day_url(week: int, day_index: int, level: str = "L0") -> str:
+def practice_platform_day_url(week: int, day_index: int, level: str = "A1") -> str:
     """URL for the day's full exercise menu on the practice platform."""
     week = min(max_week_for_level(level), max(1, week))
     day = (day_index % 7) + 1
     return f"{config.PRACTICE_PLATFORM_URL}/{level.lower()}/week{week}/day{day}/"
 
 
-def practice_platform_task_url(task_id: str, week: int, day_index: int, level: str = "L0") -> Optional[str]:
+def practice_platform_task_url(task_id: str, week: int, day_index: int, level: str = "A1") -> Optional[str]:
     """URL for a specific task's page on the practice platform.
 
     Returns None if this task has no corresponding practice-platform page
@@ -427,14 +427,14 @@ def practice_platform_task_url(task_id: str, week: int, day_index: int, level: s
 #  UTILITY
 # ============================================================
 
-def get_theme(week: int, level: str = "L0") -> str:
+def get_theme(week: int, level: str = "A1") -> str:
     """Get the vocabulary theme for a week and level."""
     key = f"{level}_{week}"
     data = _weekly_data.get(key, {})
     return data.get("theme", config.VOCAB_THEMES.get(week, "General"))
 
 
-def get_can_do_for_week(week: int, level: str = "L0") -> list:
+def get_can_do_for_week(week: int, level: str = "A1") -> list:
     """CEFR can-do descriptor codes a week targets (e.g. ['A1.P.1', 'A1.I.2']).
     Empty list if the week has none. Accepts CEFR or legacy keys."""
     from . import config
