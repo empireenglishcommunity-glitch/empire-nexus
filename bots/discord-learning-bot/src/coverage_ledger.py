@@ -57,7 +57,9 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # and messages). Update this set ONLY when a week genuinely starts teaching
 # the descriptor -- never to make a failing test pass.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    "A1.M.1", "A1.M.2", "A1.P.5", "A1.R.1", "A1.R.4",
+    # A1.R.1 + A1.R.4 were CLOSED by the A1 reading passages (Phase 11B).
+    # A2-C2 reading is not authored yet, so their `.R.` gaps remain.
+    "A1.M.1", "A1.M.2", "A1.P.5",
     "A2.M.1", "A2.M.2", "A2.M.3", "A2.P.6", "A2.R.1", "A2.R.2", "A2.R.5",
     "B1.I.1", "B1.M.2", "B1.M.3", "B1.P.5", "B1.R.1", "B1.R.2",
     "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
@@ -166,6 +168,45 @@ def _atom_rows(level: str) -> list[dict]:
             "tracked_as": "grammar",
         })
 
+        # --- reading (Phase 11B, weekly, rolled out level by level) ---
+        # A level with no authored passages contributes authored=0, so the
+        # gate stays honestly green while the rollout is in progress: nothing
+        # is authored, therefore nothing is orphaned. The moment a passage IS
+        # authored, it must be reachable.
+        passage = curriculum.get_reading_for_week(week, level)
+        has_passage = bool(passage and passage.get("text"))
+        authored_reading = 1 if (level in curriculum.reading_levels()
+                                 and week in (curriculum._reading_data.get(level) or {})) else 0
+        rows.append({
+            "kind": "reading_passage", "week": week,
+            "authored": authored_reading,
+            "delivered": 1 if (authored_reading and has_passage) else 0,
+            "route": "practice site reading page (curriculum.get_reading_for_week)",
+            "tracked_as": "reading",
+        })
+        q_authored = len((passage or {}).get("questions") or [])
+        rows.append({
+            "kind": "reading_questions", "week": week,
+            "authored": q_authored,
+            "delivered": sum(
+                1 for q in ((passage or {}).get("questions") or [])
+                if q.get("q") and q.get("options")
+                and isinstance(q.get("answer"), int)
+                and 0 <= q["answer"] < len(q["options"])
+            ),
+            "route": "practice site reading page comprehension quiz",
+            "tracked_as": "reading",
+        })
+        g_authored = len((passage or {}).get("glossary") or [])
+        rows.append({
+            "kind": "reading_glossary", "week": week,
+            "authored": g_authored,
+            "delivered": sum(1 for g in ((passage or {}).get("glossary") or [])
+                             if g.get("word")),
+            "route": "practice site reading page — words to help you",
+            "tracked_as": "reading",
+        })
+
         # --- week-level fields that used to have no surface at all ---
         week_data = curriculum._weekly_data.get(f"{level}_{week}", {}) or {}
         for field, route in (
@@ -208,6 +249,15 @@ def untaught_descriptors(level: str) -> set:
     taught = set()
     for week in range(1, curriculum.max_week_for_level(level) + 1):
         taught.update(curriculum.get_can_do_for_week(week, level))
+        # Task content can also target descriptors the week file does not
+        # list. Reading passages carry their own `can_do` (that is the whole
+        # point of adding the mode: to close the `.R.` descriptors), and a
+        # descriptor is only counted as taught if the passage is actually
+        # authored AND reachable -- claiming it from an empty file would make
+        # this report lie.
+        passage = curriculum.get_reading_for_week(week, level)
+        if passage and passage.get("text"):
+            taught.update(passage.get("can_do") or [])
     return library - taught
 
 
@@ -292,7 +342,9 @@ def format_report(rep: dict = None) -> str:
     if rep["untaught_descriptors"]:
         out.append("")
         out.append("  Untaught: " + ", ".join(rep["untaught_descriptors"]))
-        out.append("  (reading + mediation have no task yet — spec Phase 11B)")
+        out.append("  (mediation has no task yet; reading is authored for "
+                   + ", ".join(curriculum.reading_levels() or ["no levels"])
+                   + " and pending for the rest — spec Phase 11B)")
     return "\n".join(out)
 
 

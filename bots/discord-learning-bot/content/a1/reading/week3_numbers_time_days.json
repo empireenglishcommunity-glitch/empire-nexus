@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w3",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 3,
+  "title": "Layla's Week",
+  "title_ar": "أسبوع ليلى",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 55,
+  "gist_ar": "ليلى بتحكي عن مواعيد مدرستها وأيام دراستها.",
+  "text": "My name is Layla. I am a student. My school starts at eight o'clock in the morning. There are twenty students in my class. There is one teacher. On Saturday I study English. On Sunday I study maths. My English lesson is at ten o'clock. It is one hour. Today is Monday. Tomorrow is Tuesday.",
+  "glossary": [
+    {
+      "word": "o'clock",
+      "ar": "الساعة (تمام)"
+    },
+    {
+      "word": "hour",
+      "ar": "ساعة"
+    },
+    {
+      "word": "class",
+      "ar": "فصل"
+    },
+    {
+      "word": "tomorrow",
+      "ar": "بكرة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What time does school start?",
+      "q_ar": "المدرسة بتبدأ الساعة كام؟",
+      "options": [
+        "At ten o'clock",
+        "At nine o'clock",
+        "At eight o'clock"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How many students are in the class?",
+      "q_ar": "كام طالب في الفصل؟",
+      "options": [
+        "Thirty",
+        "Twelve",
+        "Twenty"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "When does Layla study English?",
+      "q_ar": "ليلى بتدرس إنجليزي إمتى؟",
+      "options": [
+        "On Sunday",
+        "On Saturday",
+        "On Monday"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How long is the English lesson?",
+      "q_ar": "درس الإنجليزي مدته قد إيه؟",
+      "options": [
+        "Two hours",
+        "One hour",
+        "One minute"
+      ],
+      "answer": 1
+    }
+  ]
+}

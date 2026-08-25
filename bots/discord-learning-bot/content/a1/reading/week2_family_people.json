@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w2",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 2,
+  "title": "My Family",
+  "title_ar": "عيلتي",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 67,
+  "gist_ar": "الكاتب بيوصف أبوه وأمه وأخوه وأخواته وجدته.",
+  "text": "This is my family. My father is Ali. He is fifty years old. My mother is Mona. She is a kind woman. I have got one brother and two sisters. My brother's name is Youssef. He is a baby. He is very young. My sisters are Nour and Hana. We have got a big family. My grandmother lives with us. She is old, and we love her.",
+  "glossary": [
+    {
+      "word": "family",
+      "ar": "عيلة"
+    },
+    {
+      "word": "brother",
+      "ar": "أخ"
+    },
+    {
+      "word": "sister",
+      "ar": "أخت"
+    },
+    {
+      "word": "grandmother",
+      "ar": "جدّة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How many sisters has the writer got?",
+      "q_ar": "الكاتب عنده كام أخت؟",
+      "options": [
+        "Two",
+        "Three",
+        "One"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who is a baby?",
+      "q_ar": "مين البيبي؟",
+      "options": [
+        "Youssef",
+        "Ali",
+        "Nour"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the mother's name?",
+      "q_ar": "اسم الأم إيه؟",
+      "options": [
+        "Nour",
+        "Mona",
+        "Hana"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Who lives with the family?",
+      "q_ar": "مين ساكن مع العيلة؟",
+      "options": [
+        "The cousin",
+        "The uncle",
+        "The grandmother"
+      ],
+      "answer": 2
+    }
+  ]
+}

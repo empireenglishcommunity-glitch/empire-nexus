@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w1",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 1,
+  "title": "Meet Omar",
+  "title_ar": "اتعرف على عمر",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 50,
+  "gist_ar": "عمر بيعرّف نفسه وصاحبته سارة ومدرسهم.",
+  "text": "Hello! My name is Omar. I am a student. I am from Egypt. This is my friend Sara. She is a student too. We are happy. Mr Adel is our teacher. He is very kind. \"Good morning, Mr Adel!\" \"Good morning, Omar. How are you?\" \"I am fine, thank you.\"",
+  "glossary": [
+    {
+      "word": "student",
+      "ar": "طالب"
+    },
+    {
+      "word": "teacher",
+      "ar": "مدرّس"
+    },
+    {
+      "word": "friend",
+      "ar": "صاحب / صديق"
+    },
+    {
+      "word": "fine",
+      "ar": "بخير"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is Omar?",
+      "q_ar": "عمر إيه؟",
+      "options": [
+        "A father",
+        "A teacher",
+        "A student"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Where is Omar from?",
+      "q_ar": "عمر منين؟",
+      "options": [
+        "Turkey",
+        "Sudan",
+        "Egypt"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Who is the teacher?",
+      "q_ar": "مين المدرّس؟",
+      "options": [
+        "Mr Adel",
+        "Sara",
+        "Omar"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How is Omar?",
+      "q_ar": "عمر عامل إيه؟",
+      "options": [
+        "He is sad",
+        "He is tired",
+        "He is fine"
+      ],
+      "answer": 2
+    }
+  ]
+}

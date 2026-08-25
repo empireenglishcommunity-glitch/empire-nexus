@@ -62,6 +62,7 @@ def test_ledger_covers_every_authored_content_kind(rep):
         "vocabulary", "accent_drills", "listening", "speaking_missions",
         "writing_prompts", "grammar_pattern", "grammar_sub_items",
         "phoneme_focus", "grammar_point", "can_do_goals",
+        "reading_passage", "reading_questions", "reading_glossary",
     }
     assert expected_kinds <= set(rep["totals"]), (
         f"ledger stopped tracking: {expected_kinds - set(rep['totals'])}"
@@ -179,13 +180,54 @@ def test_c1_and_c2_teach_every_descriptor_they_publish(rep):
         )
 
 
-def test_reading_and_mediation_are_the_known_structural_gap(rep):
-    """Documents WHY the baseline is non-empty: the untaught set is dominated
-    by reading (.R.) and mediation (.M.) because neither has a task yet."""
+def test_remaining_gap_is_mediation_plus_unauthored_reading_levels(rep):
+    """Documents WHY the baseline is non-empty. Mediation (.M.) has no task at
+    all yet. Reading (.R.) now has one, but only for the levels whose passages
+    are authored — so .R. gaps must remain ONLY for unauthored levels."""
     untaught = rep["untaught_descriptors"]
     assert untaught, "baseline unexpectedly empty — update this test if Phase 11B is done"
     modes = {code.split(".")[1] for code in untaught}
-    assert {"R", "M"} <= modes, f"expected reading+mediation gaps, saw modes {modes}"
+    assert "M" in modes, f"expected mediation gaps, saw modes {modes}"
+    authored_reading = set(curriculum.reading_levels())
+    for code in untaught:
+        level, mode, _ = code.split(".")
+        if mode == "R":
+            assert level not in authored_reading, (
+                f"{code} is still untaught even though {level} reading is "
+                f"authored — the passage should target it"
+            )
+
+
+def test_authored_reading_closes_its_levels_reading_descriptors(rep):
+    """For every level whose reading IS authored, no reading descriptor may
+    remain untaught. This is what makes 'reading is done for this level' a
+    checkable claim rather than a promise."""
+    for level in curriculum.reading_levels():
+        leftover = [c for c in rep["levels"][level]["untaught_descriptors"]
+                    if c.split(".")[1] == "R"]
+        assert not leftover, f"{level} reading authored but {leftover} untaught"
+
+
+def test_reading_is_tracked_but_never_gates_a_day():
+    """Same safety property as grammar: one passage is authored per week and
+    the rollout is level-by-level, so requiring reading for a day to be green
+    would break existing streaks and punish students on unauthored levels."""
+    assert "reading" in database.WEEKLY_EXERCISES
+    assert "reading" in database.TRACKED_EXERCISES
+    assert "reading" not in database.PRACTICE_EXERCISES
+    assert "reading" not in database.CALENDAR_EXERCISES
+
+
+def test_unauthored_reading_levels_contribute_no_orphans(rep):
+    """A level with no authored passages must show authored == delivered == 0,
+    so an in-progress rollout can never make the gate lie in either
+    direction (no false orphan, no phantom delivery)."""
+    for level, data in rep["levels"].items():
+        if level in curriculum.reading_levels():
+            continue
+        for kind in ("reading_passage", "reading_questions", "reading_glossary"):
+            assert data["by_kind"][kind]["authored"] == 0
+            assert data["by_kind"][kind]["delivered"] == 0
 
 
 # ============================================================

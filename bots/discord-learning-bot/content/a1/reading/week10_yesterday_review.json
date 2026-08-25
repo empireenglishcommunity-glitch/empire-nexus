@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w10",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 10,
+  "title": "My Birthday Yesterday",
+  "title_ar": "عيد ميلادي إمبارح",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 63,
+  "gist_ar": "حكاية عن عيد ميلاد إمبارح بصيغة was/were.",
+  "text": "Yesterday was Friday. It was my birthday. I was very happy. My family were with me at home. There was a party. My friends were there too. The food was delicious. My mother was in the kitchen all day. Last week I was sick, but yesterday I was fine. It was a wonderful day. Why was it wonderful? Because my family were together.",
+  "glossary": [
+    {
+      "word": "yesterday",
+      "ar": "إمبارح"
+    },
+    {
+      "word": "party",
+      "ar": "حفلة"
+    },
+    {
+      "word": "delicious",
+      "ar": "لذيذ"
+    },
+    {
+      "word": "wonderful",
+      "ar": "رائع"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What day was yesterday?",
+      "q_ar": "إمبارح كان يوم إيه؟",
+      "options": [
+        "Monday",
+        "Saturday",
+        "Friday"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why was the writer happy?",
+      "q_ar": "الكاتب كان مبسوط ليه؟",
+      "options": [
+        "It was his birthday",
+        "It was a holiday",
+        "He was sick"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Where was his mother all day?",
+      "q_ar": "أمه كانت فين طول اليوم؟",
+      "options": [
+        "At the beach",
+        "At work",
+        "In the kitchen"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How was the writer last week?",
+      "q_ar": "الكاتب كان عامل إيه الأسبوع اللي فات؟",
+      "options": [
+        "Sick",
+        "Busy",
+        "Fine"
+      ],
+      "answer": 0
+    }
+  ]
+}

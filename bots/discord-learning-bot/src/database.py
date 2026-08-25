@@ -3103,7 +3103,11 @@ CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
 # `record_practice_mastery` tiers it, points are awarded — but
 # `get_calendar_mastery` only ever reads `required_exercises_for_date()`,
 # so grammar rows are ignored by the calendar's "done" calculation.
-WEEKLY_EXERCISES = ("grammar",)
+#
+# `reading` (Phase 11B) is weekly for the same reason: one passage is authored
+# per week, and it is being rolled out level by level behind the owner approval
+# gate, so it must never be a precondition for a day being green either.
+WEEKLY_EXERCISES = ("grammar", "reading")
 # Everything the practice site may legitimately report a completion for.
 TRACKED_EXERCISES = CALENDAR_EXERCISES + WEEKLY_EXERCISES
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond

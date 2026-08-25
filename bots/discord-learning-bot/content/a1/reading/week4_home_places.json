@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w4",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 4,
+  "title": "My Small Flat",
+  "title_ar": "شقتي الصغيرة",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 60,
+  "gist_ar": "وصف شقة صغيرة وأماكن الحاجات فيها.",
+  "text": "I live in a small flat in the city. There are three rooms. This is my bedroom. My bed is next to the window. There is a table under the window. My books are on the table. That is the kitchen. It is clean. Our flat is near a park. There is a shop between the park and my school.",
+  "glossary": [
+    {
+      "word": "flat",
+      "ar": "شقة"
+    },
+    {
+      "word": "next to",
+      "ar": "جانب"
+    },
+    {
+      "word": "under",
+      "ar": "تحت"
+    },
+    {
+      "word": "between",
+      "ar": "بين"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Where is the bed?",
+      "q_ar": "السرير فين؟",
+      "options": [
+        "Behind the door",
+        "Under the table",
+        "Next to the window"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Where are the books?",
+      "q_ar": "الكتب فين؟",
+      "options": [
+        "On the table",
+        "In the kitchen",
+        "Under the bed"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How many rooms are in the flat?",
+      "q_ar": "الشقة فيها كام غرفة؟",
+      "options": [
+        "Two",
+        "Four",
+        "Three"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is between the park and the school?",
+      "q_ar": "إيه اللي بين الحديقة والمدرسة؟",
+      "options": [
+        "A hospital",
+        "A shop",
+        "A house"
+      ],
+      "answer": 1
+    }
+  ]
+}

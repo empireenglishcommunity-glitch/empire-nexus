@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w7",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 7,
+  "title": "At the Market",
+  "title_ar": "في السوق",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 61,
+  "gist_ar": "كريم بيسأل عن الأسعار في السوق ويشتري.",
+  "text": "Karim needs a new shirt. He goes to the market. The shop is open. \"Good morning. I'd like this blue shirt, please. How much is it?\" \"It is one hundred pounds.\" \"That is expensive! And how much are these shoes?\" \"The shoes are cheap. They are fifty pounds.\" Karim buys the shoes. He pays with cash. \"Here you are.\" \"Thank you.\"",
+  "glossary": [
+    {
+      "word": "expensive",
+      "ar": "غالي"
+    },
+    {
+      "word": "cheap",
+      "ar": "رخيص"
+    },
+    {
+      "word": "pay",
+      "ar": "يدفع"
+    },
+    {
+      "word": "cash",
+      "ar": "كاش / فلوس"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does Karim need?",
+      "q_ar": "كريم محتاج إيه؟",
+      "options": [
+        "A bag",
+        "Shoes",
+        "A shirt"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How much is the shirt?",
+      "q_ar": "القميص بكام؟",
+      "options": [
+        "One hundred pounds",
+        "It is free",
+        "Fifty pounds"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Karim buy?",
+      "q_ar": "كريم اشترى إيه؟",
+      "options": [
+        "The shirt",
+        "The shoes",
+        "A phone"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does he pay?",
+      "q_ar": "بيدفع إزاي؟",
+      "options": [
+        "With his phone",
+        "With cash",
+        "With a card"
+      ],
+      "answer": 1
+    }
+  ]
+}

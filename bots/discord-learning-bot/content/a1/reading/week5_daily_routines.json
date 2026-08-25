@@ -1,0 +1,75 @@
+{
+  "id": "reading_a1_w5",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 5,
+  "title": "Every Day",
+  "title_ar": "كل يوم",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.4"
+  ],
+  "word_count": 67,
+  "gist_ar": "روتين يوم كامل من الصباح لبالليل.",
+  "text": "I get up early every day. I wake up at six o'clock. I eat breakfast with my family. Then I go to school. I study English and maths. I come home at three o'clock. After lunch I read a book. In the evening we watch TV together. I sometimes play football with my friends. I never sleep late. I go to bed at ten o'clock at night.",
+  "glossary": [
+    {
+      "word": "get up",
+      "ar": "يصحى / يقوم"
+    },
+    {
+      "word": "breakfast",
+      "ar": "فطار"
+    },
+    {
+      "word": "sometimes",
+      "ar": "ساعات"
+    },
+    {
+      "word": "never",
+      "ar": "أبدًا"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What time does the writer wake up?",
+      "q_ar": "الكاتب بيصحى الساعة كام؟",
+      "options": [
+        "At ten o'clock",
+        "At three o'clock",
+        "At six o'clock"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer do after lunch?",
+      "q_ar": "بيعمل إيه بعد الغدا؟",
+      "options": [
+        "Cooks dinner",
+        "Reads a book",
+        "Plays football"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When does the family watch TV?",
+      "q_ar": "العيلة بتتفرج على التلفزيون إمتى؟",
+      "options": [
+        "In the evening",
+        "In the morning",
+        "At school"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Does the writer sleep late?",
+      "q_ar": "الكاتب بينام متأخر؟",
+      "options": [
+        "No, never",
+        "Yes, usually",
+        "Yes, always"
+      ],
+      "answer": 0
+    }
+  ]
+}
