@@ -3370,6 +3370,75 @@ def record_practice_mastery(discord_id: str, level: str, week: int, day: int,
     return result
 
 
+def practice_completions(discord_id: str, level: str) -> list[dict]:
+    """Every recorded practice completion for a member at a level.
+
+    Phase 11C: the raw material for the descriptor evidence portfolio. This is
+    a plain read of `practice_mastery` — the table already holds exactly what
+    evidence needs (which exercise, which content day, when) — so the portfolio
+    needs no new table, no new write path, and works retroactively over a
+    student's whole history.
+    """
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT week, day, exercise, completion_count, "
+            "       first_completed_date, last_completed_date "
+            "FROM practice_mastery WHERE discord_id=? AND level=? "
+            "ORDER BY week, day, exercise",
+            (discord_id, level),
+        ).fetchall()
+        out = [dict(r) for r in rows]
+
+        # Writing and community are DISCORD-ONLY tasks (!6 / !7): they are
+        # logged in daily_submissions and never reach practice_mastery. Without
+        # them here, every "can write ..." descriptor would be permanently
+        # unevidenceable and the portfolio would understate real work — so map
+        # those submissions onto their content day too.
+        #
+        # daily_submissions is keyed by calendar DATE, so we invert the SAME
+        # anchor arithmetic the personal calendar uses (anchor + (week-1)*7 +
+        # (day-1)) to recover (week, day). If the anchor or a date is
+        # unreadable we skip that row rather than guess a week.
+        member = get_member(discord_id)
+        if member:
+            try:
+                anchor = datetime.datetime.fromisoformat(
+                    level_anchor_iso(member)).date()
+            except (ValueError, TypeError):
+                anchor = None
+            if anchor is not None:
+                from . import curriculum
+                max_week = curriculum.max_week_for_level(level)
+                sub_rows = conn.execute(
+                    "SELECT date, task_id FROM daily_submissions "
+                    "WHERE discord_id=? AND task_id IN ('writing','community') "
+                    "ORDER BY date",
+                    (discord_id,),
+                ).fetchall()
+                for r in sub_rows:
+                    try:
+                        d = datetime.date.fromisoformat(str(r["date"])[:10])
+                    except (ValueError, TypeError):
+                        continue
+                    offset = (d - anchor).days
+                    if offset < 0:
+                        continue  # before this level started
+                    week, day = offset // 7 + 1, offset % 7 + 1
+                    if not (1 <= week <= max_week):
+                        continue
+                    out.append({
+                        "week": week, "day": day, "exercise": r["task_id"],
+                        "completion_count": 1,
+                        "first_completed_date": str(r["date"])[:10],
+                        "last_completed_date": str(r["date"])[:10],
+                    })
+    finally:
+        conn.close()
+    out.sort(key=lambda r: (r["week"], r["day"], r["exercise"]))
+    return out
+
+
 def backfill_practice_mastery_from_submissions(discord_id: str) -> dict:
     """Darb Phase 6: reconstruct calendar mastery for a student from their
     real `daily_submissions` history, so days they were actually active
@@ -4130,6 +4199,38 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
     except Exception:
         can_do = []
 
+    # Phase 11C — attach EVIDENCE to each can-do statement, so the checklist
+    # stops being an unbacked claim. Each descriptor gains what the student
+    # actually did to prove it (which exercise, which content day), derived
+    # from their real completion history.
+    #
+    # Best-effort: a certificate must still render if the portfolio cannot be
+    # computed. In that case descriptors simply carry no evidence rather than
+    # the page failing.
+    evidence_summary = {"evidenced": 0, "total": len(can_do), "pct": 0}
+    try:
+        from . import assessment
+        portfolio = assessment.descriptor_portfolio(discord_id, cert_level)
+        by_code = {p["code"]: p for p in portfolio["descriptors"]}
+        for item in can_do:
+            p = by_code.get(item["code"])
+            item["evidenced"] = bool(p and p["evidenced"])
+            item["evidence"] = (p or {}).get("evidence", [])
+            item["evidence_count"] = (p or {}).get("evidence_count", 0)
+        evidence_summary = {
+            "evidenced": sum(1 for i in can_do if i.get("evidenced")),
+            "total": len(can_do),
+            "pct": round(100 * sum(1 for i in can_do if i.get("evidenced")) / len(can_do))
+            if can_do else 0,
+        }
+    except Exception:
+        # This module deliberately has no logger; swallowing here is the point
+        # -- a certificate must render even if evidence cannot be computed.
+        for item in can_do:
+            item.setdefault("evidenced", False)
+            item.setdefault("evidence", [])
+            item.setdefault("evidence_count", 0)
+
     # Truth-in-labelling (R0/R8): "certifies … has demonstrated proficiency at
     # CEFR Level X" — never "CEFR-certified".
     if basis == "exam":
@@ -4159,6 +4260,9 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
         "distinction_count": distinction_count,
         "completed_at": completed_at,
         "can_do": can_do,
+        # Phase 11C: how much of the checklist is actually backed by the
+        # student's own recorded work.
+        "evidence": evidence_summary,
         "cefr_aligned": True,
     }
 

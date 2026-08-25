@@ -1812,16 +1812,33 @@ async def get_cefr_progress(request: web.Request) -> web.Response:
     cdp = assessment.can_do_progress(did, level)
     descs = assessment.can_do_descriptors(cdp["level"])
     evidenced, taught = set(cdp["evidenced"]), set(cdp["taught"])
+    # Phase 11C: attach the EVIDENCE behind each descriptor — which exercise on
+    # which content day proves it — so the checklist shows work, not just a
+    # tick. Best-effort: the checklist must still render without it.
+    portfolio = {}
+    try:
+        pf = assessment.descriptor_portfolio(did, cdp["level"])
+        portfolio = {p["code"]: p for p in pf["descriptors"]}
+    except Exception as e:
+        logger.warning(f"cefr/progress: portfolio unavailable: {e}")
+
     out = []
     for mode in ("reception", "production", "interaction", "mediation"):
         for d in descs.get(mode, []):
             if d.get("code") in taught:
+                p = portfolio.get(d["code"]) or {}
                 out.append({"code": d["code"], "en": d.get("en"), "ar": d.get("ar"),
-                            "mode": mode, "reached": d["code"] in evidenced})
+                            "mode": mode, "reached": d["code"] in evidenced,
+                            "evidence": p.get("evidence", []),
+                            "evidence_count": p.get("evidence_count", 0),
+                            "proves_with": p.get("possible_exercises", [])})
+    evidenced_count = sum(1 for d in out if d["evidence_count"])
     return web.json_response({
         "ok": True, "level": cdp["level"],
         "level_name": config.level_info(cdp["level"]).get("name", cdp["level"]),
         "reached": cdp["reached"], "total": cdp["total"], "pct": cdp["pct"],
+        "evidenced": evidenced_count,
+        "evidence_pct": round(100 * evidenced_count / len(out)) if out else 0,
         "descriptors": out,
     }, headers=_cors_headers(request))
 
