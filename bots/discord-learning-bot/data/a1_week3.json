@@ -3,59 +3,317 @@
   "cefr": "A1",
   "week": 3,
   "theme": "Numbers, Time & Days",
-  "can_do": ["A1.R.3", "A1.I.3", "A1.P.3"],
+  "can_do": [
+    "A1.R.3",
+    "A1.I.3",
+    "A1.P.3",
+    "A1.P.5"
+  ],
   "phoneme_focus": "/θ/ (three, thirteen, thirty); final consonants in six, seven; -teen vs -ty stress",
   "grammar_pattern": "Numbers, 'there is/are' + time prepositions (at/in/on)",
-  "grammar_point": {"cefr": "A1", "title": "Numbers, 'there is/are' + time prepositions",
+  "grammar_point": {
+    "cefr": "A1",
+    "title": "Numbers, 'there is/are' + time prepositions",
     "en": "Cardinal numbers; there is/are for existence; at (times), in (months), on (days).",
-    "ar": "الأرقام، there is/are للوجود، وحروف الوقت at/in/on."},
+    "ar": "الأرقام، there is/are للوجود، وحروف الوقت at/in/on."
+  },
   "vocabulary": [
-    {"word": "one", "pronunciation": "WUN", "arabic": "واحد", "pos": "number", "example": "I have one brother."},
-    {"word": "two", "pronunciation": "TOO", "arabic": "اثنان", "pos": "number", "example": "Two coffees, please."},
-    {"word": "three", "pronunciation": "THREE", "arabic": "ثلاثة", "pos": "number", "example": "There are three books."},
-    {"word": "four", "pronunciation": "FOR", "arabic": "أربعة", "pos": "number", "example": "It is four o'clock."},
-    {"word": "five", "pronunciation": "FYV", "arabic": "خمسة", "pos": "number", "example": "She is five years old."},
-    {"word": "six", "pronunciation": "SIKS", "arabic": "ستة", "pos": "number", "example": "I get up at six."},
-    {"word": "seven", "pronunciation": "SEV-un", "arabic": "سبعة", "pos": "number", "example": "There are seven days."},
-    {"word": "eight", "pronunciation": "AYT", "arabic": "ثمانية", "pos": "number", "example": "The shop opens at eight."},
-    {"word": "nine", "pronunciation": "NYN", "arabic": "تسعة", "pos": "number", "example": "He is nine years old."},
-    {"word": "ten", "pronunciation": "TEN", "arabic": "عشرة", "pos": "number", "example": "There are ten students."},
-    {"word": "eleven", "pronunciation": "ee-LEV-un", "arabic": "أحد عشر", "pos": "number", "example": "It is eleven o'clock."},
-    {"word": "twelve", "pronunciation": "TWELV", "arabic": "اثنا عشر", "pos": "number", "example": "There are twelve months."},
-    {"word": "twenty", "pronunciation": "TWEN-tee", "arabic": "عشرون", "pos": "number", "example": "I am twenty years old."},
-    {"word": "thirty", "pronunciation": "THIR-tee", "arabic": "ثلاثون", "pos": "number", "example": "There are thirty days in June."},
-    {"word": "hundred", "pronunciation": "HUN-dred", "arabic": "مئة", "pos": "number", "example": "One hundred people are here."},
-    {"word": "number", "pronunciation": "NUM-ber", "arabic": "رقم", "pos": "noun", "example": "What is your phone number?"},
-    {"word": "time", "pronunciation": "TYM", "arabic": "وقت", "pos": "noun", "example": "What time is it?"},
-    {"word": "hour", "pronunciation": "OWR", "arabic": "ساعة", "pos": "noun", "example": "The class is one hour."},
-    {"word": "minute", "pronunciation": "MIN-it", "arabic": "دقيقة", "pos": "noun", "example": "Wait one minute, please."},
-    {"word": "day", "pronunciation": "DAY", "arabic": "يوم", "pos": "noun", "example": "There are seven days in a week."},
-    {"word": "week", "pronunciation": "WEEK", "arabic": "أسبوع", "pos": "noun", "example": "I study every week."},
-    {"word": "month", "pronunciation": "MUNTH", "arabic": "شهر", "pos": "noun", "example": "There are twelve months in a year."},
-    {"word": "year", "pronunciation": "YEER", "arabic": "سنة", "pos": "noun", "example": "There are twelve months in one year."},
-    {"word": "today", "pronunciation": "tuh-DAY", "arabic": "اليوم", "pos": "adverb", "example": "Today is Sunday."},
-    {"word": "tomorrow", "pronunciation": "tuh-MOR-oh", "arabic": "غدًا", "pos": "adverb", "example": "See you tomorrow."},
-    {"word": "Saturday", "pronunciation": "SAT-ur-day", "arabic": "السبت", "pos": "noun", "example": "The class is on Saturday."},
-    {"word": "Sunday", "pronunciation": "SUN-day", "arabic": "الأحد", "pos": "noun", "example": "I rest on Sunday."},
-    {"word": "Monday", "pronunciation": "MUN-day", "arabic": "الإثنين", "pos": "noun", "example": "I work on Monday."},
-    {"word": "Friday", "pronunciation": "FRY-day", "arabic": "الجمعة", "pos": "noun", "example": "We meet on Friday."},
-    {"word": "o'clock", "pronunciation": "uh-KLOK", "arabic": "الساعة (تمامًا)", "pos": "adverb", "example": "It is three o'clock."},
-    {"word": "morning", "pronunciation": "MOR-ning", "arabic": "الصباح", "pos": "noun", "example": "I study in the morning."},
-    {"word": "evening", "pronunciation": "EEV-ning", "arabic": "المساء", "pos": "noun", "example": "The class is in the evening."},
-    {"word": "there is", "pronunciation": "thair IZ", "arabic": "يوجد (مفرد)", "pos": "phrase", "example": "There is one book on the table."},
-    {"word": "there are", "pronunciation": "thair AR", "arabic": "يوجد (جمع)", "pos": "phrase", "example": "There are five students."},
-    {"word": "at", "pronunciation": "AT", "arabic": "في (وقت)", "pos": "preposition", "example": "The class is at four."},
-    {"word": "on", "pronunciation": "ON", "arabic": "في (يوم)", "pos": "preposition", "example": "I work on Monday."},
-    {"word": "in", "pronunciation": "IN", "arabic": "في (شهر)", "pos": "preposition", "example": "My birthday is in June."}
+    {
+      "word": "one",
+      "pronunciation": "WUN",
+      "arabic": "واحد",
+      "pos": "number",
+      "example": "I have one brother."
+    },
+    {
+      "word": "two",
+      "pronunciation": "TOO",
+      "arabic": "اثنان",
+      "pos": "number",
+      "example": "Two coffees, please."
+    },
+    {
+      "word": "three",
+      "pronunciation": "THREE",
+      "arabic": "ثلاثة",
+      "pos": "number",
+      "example": "There are three books."
+    },
+    {
+      "word": "four",
+      "pronunciation": "FOR",
+      "arabic": "أربعة",
+      "pos": "number",
+      "example": "It is four o'clock."
+    },
+    {
+      "word": "five",
+      "pronunciation": "FYV",
+      "arabic": "خمسة",
+      "pos": "number",
+      "example": "She is five years old."
+    },
+    {
+      "word": "six",
+      "pronunciation": "SIKS",
+      "arabic": "ستة",
+      "pos": "number",
+      "example": "I get up at six."
+    },
+    {
+      "word": "seven",
+      "pronunciation": "SEV-un",
+      "arabic": "سبعة",
+      "pos": "number",
+      "example": "There are seven days."
+    },
+    {
+      "word": "eight",
+      "pronunciation": "AYT",
+      "arabic": "ثمانية",
+      "pos": "number",
+      "example": "The shop opens at eight."
+    },
+    {
+      "word": "nine",
+      "pronunciation": "NYN",
+      "arabic": "تسعة",
+      "pos": "number",
+      "example": "He is nine years old."
+    },
+    {
+      "word": "ten",
+      "pronunciation": "TEN",
+      "arabic": "عشرة",
+      "pos": "number",
+      "example": "There are ten students."
+    },
+    {
+      "word": "eleven",
+      "pronunciation": "ee-LEV-un",
+      "arabic": "أحد عشر",
+      "pos": "number",
+      "example": "It is eleven o'clock."
+    },
+    {
+      "word": "twelve",
+      "pronunciation": "TWELV",
+      "arabic": "اثنا عشر",
+      "pos": "number",
+      "example": "There are twelve months."
+    },
+    {
+      "word": "twenty",
+      "pronunciation": "TWEN-tee",
+      "arabic": "عشرون",
+      "pos": "number",
+      "example": "I am twenty years old."
+    },
+    {
+      "word": "thirty",
+      "pronunciation": "THIR-tee",
+      "arabic": "ثلاثون",
+      "pos": "number",
+      "example": "There are thirty days in June."
+    },
+    {
+      "word": "hundred",
+      "pronunciation": "HUN-dred",
+      "arabic": "مئة",
+      "pos": "number",
+      "example": "One hundred people are here."
+    },
+    {
+      "word": "number",
+      "pronunciation": "NUM-ber",
+      "arabic": "رقم",
+      "pos": "noun",
+      "example": "What is your phone number?"
+    },
+    {
+      "word": "time",
+      "pronunciation": "TYM",
+      "arabic": "وقت",
+      "pos": "noun",
+      "example": "What time is it?"
+    },
+    {
+      "word": "hour",
+      "pronunciation": "OWR",
+      "arabic": "ساعة",
+      "pos": "noun",
+      "example": "The class is one hour."
+    },
+    {
+      "word": "minute",
+      "pronunciation": "MIN-it",
+      "arabic": "دقيقة",
+      "pos": "noun",
+      "example": "Wait one minute, please."
+    },
+    {
+      "word": "day",
+      "pronunciation": "DAY",
+      "arabic": "يوم",
+      "pos": "noun",
+      "example": "There are seven days in a week."
+    },
+    {
+      "word": "week",
+      "pronunciation": "WEEK",
+      "arabic": "أسبوع",
+      "pos": "noun",
+      "example": "I study every week."
+    },
+    {
+      "word": "month",
+      "pronunciation": "MUNTH",
+      "arabic": "شهر",
+      "pos": "noun",
+      "example": "There are twelve months in a year."
+    },
+    {
+      "word": "year",
+      "pronunciation": "YEER",
+      "arabic": "سنة",
+      "pos": "noun",
+      "example": "There are twelve months in one year."
+    },
+    {
+      "word": "today",
+      "pronunciation": "tuh-DAY",
+      "arabic": "اليوم",
+      "pos": "adverb",
+      "example": "Today is Sunday."
+    },
+    {
+      "word": "tomorrow",
+      "pronunciation": "tuh-MOR-oh",
+      "arabic": "غدًا",
+      "pos": "adverb",
+      "example": "See you tomorrow."
+    },
+    {
+      "word": "Saturday",
+      "pronunciation": "SAT-ur-day",
+      "arabic": "السبت",
+      "pos": "noun",
+      "example": "The class is on Saturday."
+    },
+    {
+      "word": "Sunday",
+      "pronunciation": "SUN-day",
+      "arabic": "الأحد",
+      "pos": "noun",
+      "example": "I rest on Sunday."
+    },
+    {
+      "word": "Monday",
+      "pronunciation": "MUN-day",
+      "arabic": "الإثنين",
+      "pos": "noun",
+      "example": "I work on Monday."
+    },
+    {
+      "word": "Friday",
+      "pronunciation": "FRY-day",
+      "arabic": "الجمعة",
+      "pos": "noun",
+      "example": "We meet on Friday."
+    },
+    {
+      "word": "o'clock",
+      "pronunciation": "uh-KLOK",
+      "arabic": "الساعة (تمامًا)",
+      "pos": "adverb",
+      "example": "It is three o'clock."
+    },
+    {
+      "word": "morning",
+      "pronunciation": "MOR-ning",
+      "arabic": "الصباح",
+      "pos": "noun",
+      "example": "I study in the morning."
+    },
+    {
+      "word": "evening",
+      "pronunciation": "EEV-ning",
+      "arabic": "المساء",
+      "pos": "noun",
+      "example": "The class is in the evening."
+    },
+    {
+      "word": "there is",
+      "pronunciation": "thair IZ",
+      "arabic": "يوجد (مفرد)",
+      "pos": "phrase",
+      "example": "There is one book on the table."
+    },
+    {
+      "word": "there are",
+      "pronunciation": "thair AR",
+      "arabic": "يوجد (جمع)",
+      "pos": "phrase",
+      "example": "There are five students."
+    },
+    {
+      "word": "at",
+      "pronunciation": "AT",
+      "arabic": "في (وقت)",
+      "pos": "preposition",
+      "example": "The class is at four."
+    },
+    {
+      "word": "on",
+      "pronunciation": "ON",
+      "arabic": "في (يوم)",
+      "pos": "preposition",
+      "example": "I work on Monday."
+    },
+    {
+      "word": "in",
+      "pronunciation": "IN",
+      "arabic": "في (شهر)",
+      "pos": "preposition",
+      "example": "My birthday is in June."
+    }
   ],
   "speaking_missions": {
-    "Saturday": {"type": "numbers", "prompt": "Count from one to twelve out loud, clearly.", "target_seconds": 20},
-    "Sunday": {"type": "time", "prompt": "Say three times: 'It is ___ o'clock.' (three different times)", "target_seconds": 20},
-    "Monday": {"type": "there_is_are", "prompt": "Describe your room: 'There is a ___', 'There are ___ ___.'", "target_seconds": 25},
-    "Tuesday": {"type": "days", "prompt": "Say what you do on three days: 'On Saturday I…', 'On Monday I…'.", "target_seconds": 25},
-    "Wednesday": {"type": "time_prepositions", "prompt": "Say when: 'My class is at ___', 'My birthday is in ___', 'I rest on ___.'", "target_seconds": 30},
-    "Thursday": {"type": "conversation", "prompt": "Ask and answer: 'What time is it?' and 'What day is it today?'", "target_seconds": 30},
-    "Friday": {"type": "review", "prompt": "Talk about your week: which days you study, and at what time.", "target_seconds": 35}
+    "Saturday": {
+      "type": "numbers",
+      "prompt": "Count from one to twelve out loud, clearly.",
+      "target_seconds": 20
+    },
+    "Sunday": {
+      "type": "time",
+      "prompt": "Say three times: 'It is ___ o'clock.' (three different times)",
+      "target_seconds": 20
+    },
+    "Monday": {
+      "type": "there_is_are",
+      "prompt": "Describe your room: 'There is a ___', 'There are ___ ___.'",
+      "target_seconds": 25
+    },
+    "Tuesday": {
+      "type": "days",
+      "prompt": "Say what you do on three days: 'On Saturday I…', 'On Monday I…'.",
+      "target_seconds": 25
+    },
+    "Wednesday": {
+      "type": "time_prepositions",
+      "prompt": "Say when: 'My class is at ___', 'My birthday is in ___', 'I rest on ___.'",
+      "target_seconds": 30
+    },
+    "Thursday": {
+      "type": "conversation",
+      "prompt": "Ask and answer: 'What time is it?' and 'What day is it today?'",
+      "target_seconds": 30
+    },
+    "Friday": {
+      "type": "review",
+      "prompt": "Talk about your week: which days you study, and at what time.",
+      "target_seconds": 35
+    }
   },
   "writing_prompts": [
     "Write the numbers one to ten in words.",
@@ -63,14 +321,34 @@
     "Write what time your English class is.",
     "Write three days of the week and what you do on them.",
     "Answer: How many days are there in a week? How many months in a year?",
-    "Write: 'My birthday is in ___' and 'I study on ___.'",
+    "Write a short note to a friend (2-3 lines): say what day and what time your English class is, and ask them to come.",
     "Write about your daily times (get up, study, sleep) in 3 sentences."
   ],
   "listening": [
-    {"say_en": "three", "expected": "three", "hint_ar": "ثلاثة"},
-    {"say_en": "twelve", "expected": "twelve", "hint_ar": "اثنا عشر"},
-    {"say_en": "time", "expected": "time", "hint_ar": "وقت"},
-    {"say_en": "Monday", "expected": "Monday", "hint_ar": "الإثنين"},
-    {"say_en": "month", "expected": "month", "hint_ar": "شهر"}
+    {
+      "say_en": "three",
+      "expected": "three",
+      "hint_ar": "ثلاثة"
+    },
+    {
+      "say_en": "twelve",
+      "expected": "twelve",
+      "hint_ar": "اثنا عشر"
+    },
+    {
+      "say_en": "time",
+      "expected": "time",
+      "hint_ar": "وقت"
+    },
+    {
+      "say_en": "Monday",
+      "expected": "Monday",
+      "hint_ar": "الإثنين"
+    },
+    {
+      "say_en": "month",
+      "expected": "month",
+      "hint_ar": "شهر"
+    }
   ]
 }

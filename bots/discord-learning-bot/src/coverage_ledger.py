@@ -56,16 +56,49 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # two CEFR modes have no task yet (spec Phase 11B), plus A1.P.5 (short notes
 # and messages). Update this set ONLY when a week genuinely starts teaching
 # the descriptor -- never to make a failing test pass.
+# A1 IS NOW COMPLETE: all 15 A1 descriptors are taught. A1.R.1/A1.R.4 closed by
+# the A1 reading passages, A1.M.1/A1.M.2 by the A1 mediation tasks, and A1.P.5
+# by turning week 3's weak gap-fill prompt into a real short-note task.
+#
+# Every remaining gap has a NAMED, specific requirement below — no gap is
+# allowed to sit here as a vague "todo". `DESCRIPTOR_GAP_PLAN` must cover every
+# entry in this set (enforced by a test), so the honest answer to "what is left
+# and what does it need?" is always in the code.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    # A1 is DOWN TO ONE: A1.R.1 + A1.R.4 closed by the A1 reading passages and
-    # A1.M.1 + A1.M.2 closed by the A1 mediation tasks (Phase 11B). A1.P.5
-    # (write short notes and messages) is the last A1 gap. A2-C2 reading and
-    # mediation are not authored yet, so their `.R.`/`.M.` gaps remain.
-    "A1.P.5",
-    "A2.M.1", "A2.M.2", "A2.M.3", "A2.P.6", "A2.R.1", "A2.R.2", "A2.R.5",
-    "B1.I.1", "B1.M.2", "B1.M.3", "B1.P.5", "B1.R.1", "B1.R.2",
+    "A2.M.1", "A2.M.2", "A2.M.3", "A2.R.1", "A2.R.2", "A2.R.5",
+    "B1.I.1", "B1.M.2", "B1.M.3", "B1.R.1", "B1.R.2",
     "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
 })
+
+# What each remaining gap actually NEEDS in order to close honestly. This is
+# the difference between "we know we are incomplete" and "we know exactly what
+# incomplete means and what closes it".
+DESCRIPTOR_GAP_PLAN = {
+    # --- needs authored MEDIATION tasks for that level (same schema as A1) ---
+    "A2.M.1": "A2 mediation tasks — convey the main points of a short everyday text/message",
+    "A2.M.2": "A2 mediation tasks — clarify with simple examples + comprehension-check questions",
+    "A2.M.3": "A2 mediation tasks — collaborate on a shared task, invite contributions",
+    "B1.M.2": "B1 mediation tasks — summarise + give an opinion on a story/article/talk",
+    "B1.M.3": "B1 mediation tasks — keep a discussion going, restate and summarise",
+    "B2.M.1": "B2 mediation tasks — summarise varied texts, contrast differing viewpoints",
+    "B2.M.4": "B2 mediation tasks — bridge a disagreement, restate positions, propose a way forward",
+    # --- needs authored READING passages for that level ---
+    "A2.R.1": "A2 reading passages — high-frequency vocabulary on immediately relevant topics",
+    "A2.R.5": "A2 reading passages — follow simple directions and short instruction sets",
+    "B2.R.4": "B2 reading passages — skim news/articles to judge relevance quickly",
+    # --- needs EXTENDED LISTENING content (longer audio than the current
+    #     single-word dictation items can ever satisfy) ---
+    "A2.R.2": "extended listening — catch the main point of short clear messages/announcements",
+    "B1.R.1": "extended listening — main points of clear standard speech on familiar matters",
+    "B1.R.2": "extended listening — main points of radio/TV on current affairs",
+    "B2.R.1": "extended listening — extended speech/lectures, complex lines of argument",
+    "B2.R.2": "extended listening — TV news/current affairs and films in standard dialect",
+    # --- needs new INTERACTION content (the current missions are largely solo
+    #     monologue or scripted, so claiming these today would be a stretch) ---
+    "B1.I.1": "B1 travel/transactional interaction — no B1 week has a travel theme yet",
+    "B2.I.1": "B2 spontaneous interaction — current B2 fluency tasks are solo monologue",
+    "B2.I.5": "B2 collaborative interaction — invite others in, negotiate a compromise",
+}
 
 
 def _atom_rows(level: str) -> list[dict]:
@@ -377,7 +410,10 @@ def format_report(rep: dict = None) -> str:
         out.append(f"  {level}: {data['descriptors_in_library']:>2} descriptors — {mark}")
     if rep["untaught_descriptors"]:
         out.append("")
-        out.append("  Untaught: " + ", ".join(rep["untaught_descriptors"]))
+        out.append("  Still untaught, and what each one needs:")
+        for code in rep["untaught_descriptors"]:
+            need = DESCRIPTOR_GAP_PLAN.get(code, "NO PLAN RECORDED — fix this")
+            out.append(f"    {code:<8} {need}")
         out.append("  (reading authored for: "
                    + ", ".join(curriculum.reading_levels() or ["none"])
                    + " · mediation authored for: "
