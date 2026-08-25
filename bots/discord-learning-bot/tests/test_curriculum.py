@@ -19,25 +19,27 @@ def test_all_four_levels_loaded():
     # stays correct as CEFR levels ship while still catching a file that
     # failed to parse (loaded < expected).
     assert stats["weeks_loaded"] == curriculum.expected_week_count()
-    assert stats["weeks_loaded"] >= 38  # legacy floor must always be present
+    assert stats["weeks_loaded"] >= 90  # CEFR A1–C2 floor (90 weeks)
 
 
 def test_level_week_counts_matches_loaded_weeks():
-    for level, expected_weeks in curriculum.LEVEL_WEEK_COUNTS.items():
+    for level, expected_weeks in curriculum.CEFR_WEEK_COUNTS.items():
         for week in range(1, expected_weeks + 1):
             vocab = curriculum.get_vocabulary_for_week(week, level)
             assert vocab, f"{level} week {week} has no vocabulary loaded"
 
 
 def test_max_week_for_level():
-    assert curriculum.max_week_for_level("L0") == 8
-    assert curriculum.max_week_for_level("L1") == 10
-    assert curriculum.max_week_for_level("L2") == 12
-    assert curriculum.max_week_for_level("L3") == 8
+    assert curriculum.max_week_for_level("A1") == 10
+    assert curriculum.max_week_for_level("A2") == 12
+    assert curriculum.max_week_for_level("B1") == 14
+    assert curriculum.max_week_for_level("B2") == 16
+    assert curriculum.max_week_for_level("C1") == 18
+    assert curriculum.max_week_for_level("C2") == 20
 
 
-def test_max_week_for_level_unknown_defaults_to_l0():
-    assert curriculum.max_week_for_level("L99") == curriculum.LEVEL_WEEK_COUNTS["L0"]
+def test_max_week_for_level_unknown_defaults_to_a1():
+    assert curriculum.max_week_for_level("L99") == curriculum.CEFR_WEEK_COUNTS["A1"]
 
 
 def test_accent_and_grammar_content_covers_all_levels():
@@ -53,7 +55,7 @@ def test_accent_and_grammar_content_covers_all_levels():
     failing loudly if any covered level disappears.
     """
     stats = curriculum.stats()
-    required = {"L0", "L1", "L2", "L3", "A1", "A2", "B1", "B2"}
+    required = {"A1", "A2", "B1", "B2", "C1", "C2"}
     assert required <= set(stats["accent_levels_covered"]), (
         f"missing accent content for: {required - set(stats['accent_levels_covered'])}"
     )
@@ -63,7 +65,7 @@ def test_accent_and_grammar_content_covers_all_levels():
 
 
 def test_has_accent_content_and_has_grammar_content():
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         assert curriculum.has_accent_content(level)
         assert curriculum.has_grammar_content(level)
 
@@ -81,11 +83,11 @@ def test_get_vocabulary_for_week_unknown_level_returns_empty():
 
 
 def test_get_vocabulary_for_week_unknown_week_returns_empty():
-    assert curriculum.get_vocabulary_for_week(999, "L0") == []
+    assert curriculum.get_vocabulary_for_week(999, "A1") == []
 
 
 def test_vocabulary_entries_have_required_fields():
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             for entry in curriculum.get_vocabulary_for_week(week, level):
                 assert entry.get("word"), f"{level} week {week} has a vocab entry with no word"
@@ -100,7 +102,7 @@ def test_no_cross_week_exact_vocabulary_duplication():
     having its own correct, distinct theme. Guards against this (or any
     similar copy-paste) recurring in any level, at the exact boundary
     where the bot's own curriculum.py loader would serve it to students."""
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         seen = {}
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             words = tuple(w["word"] for w in curriculum.get_vocabulary_for_week(week, level))
@@ -115,7 +117,7 @@ def test_no_cross_week_exact_vocabulary_duplication():
 def test_vocabulary_word_count_reasonable_per_level():
     """Sanity floor — a week with e.g. 0-5 words would indicate a loading
     failure or an empty/corrupted file, not real curriculum content."""
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             count = len(curriculum.get_vocabulary_for_week(week, level))
             assert count >= 30, f"{level} week {week} has suspiciously few words ({count})"
@@ -140,7 +142,7 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
     two different days without it being the regression this guards
     against (site falling back to day 1's exact word list on later days).
     """
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             day_lists = []
             for day_index in range(7):
@@ -157,13 +159,13 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
 
 def test_get_vocabulary_for_day_wraps_day_index():
     """day_index % 7 means day 7 (index 7) must equal day 0 (index 0)."""
-    words_day0 = curriculum.get_vocabulary_for_day(1, 0, "L0")
-    words_day7 = curriculum.get_vocabulary_for_day(1, 7, "L0")
+    words_day0 = curriculum.get_vocabulary_for_day(1, 0, "A1")
+    words_day7 = curriculum.get_vocabulary_for_day(1, 7, "A1")
     assert words_day0 == words_day7
 
 
 def test_get_vocabulary_for_day_empty_week_returns_empty():
-    assert curriculum.get_vocabulary_for_day(999, 0, "L0") == []
+    assert curriculum.get_vocabulary_for_day(999, 0, "A1") == []
 
 
 # ============================================================
@@ -171,14 +173,14 @@ def test_get_vocabulary_for_day_empty_week_returns_empty():
 # ============================================================
 
 def test_get_quiz_words_respects_count():
-    words = curriculum.get_quiz_words(5, count=10, level="L0")
+    words = curriculum.get_quiz_words(5, count=10, level="A1")
     assert len(words) <= 10
 
 
 def test_get_quiz_words_pulls_from_current_and_previous_two_weeks():
     """Week 1 should only draw from week 1 (no earlier weeks exist)."""
-    week1_only = set(w["word"] for w in curriculum.get_vocabulary_for_week(1, "L0"))
-    quiz_words = curriculum.get_quiz_words(1, count=100, level="L0")
+    week1_only = set(w["word"] for w in curriculum.get_vocabulary_for_week(1, "A1"))
+    quiz_words = curriculum.get_quiz_words(1, count=100, level="A1")
     for w in quiz_words:
         assert w["word"] in week1_only
 
@@ -193,7 +195,7 @@ def test_get_quiz_words_empty_for_unknown_level():
 
 def test_every_week_has_all_seven_speaking_missions():
     day_names = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             for day in day_names:
                 mission = curriculum.get_speaking_mission(week, day, level)
@@ -202,11 +204,11 @@ def test_every_week_has_all_seven_speaking_missions():
 
 
 def test_get_speaking_mission_unknown_day_returns_none():
-    assert curriculum.get_speaking_mission(1, "Blursday", "L0") is None
+    assert curriculum.get_speaking_mission(1, "Blursday", "A1") is None
 
 
 def test_every_week_has_seven_writing_prompts():
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             for day_index in range(7):
                 prompt = curriculum.get_writing_prompt(week, day_index, level)
@@ -214,7 +216,7 @@ def test_every_week_has_seven_writing_prompts():
 
 
 def test_get_writing_prompt_out_of_range_returns_none():
-    assert curriculum.get_writing_prompt(1, 999, "L0") is None
+    assert curriculum.get_writing_prompt(1, 999, "A1") is None
 
 
 # ============================================================
@@ -229,17 +231,17 @@ def test_get_accent_drill_clamps_week_to_valid_range():
     """Week 999 on L0 (8 weeks) should clamp to week 8, not silently
     return None or raise — callers rely on always getting *some* content
     for a level that has content authored, even for an out-of-range week."""
-    clamped = curriculum.get_accent_drill(999, 0, "L0")
-    week8 = curriculum.get_accent_drill(8, 0, "L0")
-    assert clamped == week8
+    clamped = curriculum.get_accent_drill(999, 0, "A1")
+    week10 = curriculum.get_accent_drill(10, 0, "A1")
+    assert clamped == week10
 
 
 def test_get_accent_focus_l0_falls_back_to_phoneme_weeks_if_missing():
     """L0 has a legacy hardcoded fallback (config.PHONEME_WEEKS) — verify
     the real JSON content takes priority, and that the function never
     returns None for L0 (content exists for all 8 weeks)."""
-    for week in range(1, 9):
-        assert curriculum.get_accent_focus(week, "L0") is not None
+    for week in range(1, 11):
+        assert curriculum.get_accent_focus(week, "A1") is not None
 
 
 def test_get_accent_focus_unknown_level_returns_none_not_fabricated():
@@ -257,7 +259,7 @@ def test_get_grammar_pattern_returns_none_for_unknown_level():
 
 
 def test_every_week_has_a_grammar_pattern():
-    for level in ("L0", "L1", "L2", "L3"):
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             pattern = curriculum.get_grammar_pattern(week, level)
             assert pattern, f"{level} week {week} missing grammar pattern"
@@ -268,7 +270,7 @@ def test_every_week_has_a_grammar_pattern():
 # ============================================================
 
 def test_get_daily_content_returns_all_task_keys():
-    daily = curriculum.get_daily_content(1, "Saturday", 0, "L0")
+    daily = curriculum.get_daily_content(1, "Saturday", 0, "A1")
     expected_keys = {
         "week", "day_name", "day_index", "level", "vocabulary",
         "speaking_mission", "writing_prompt", "accent_drill",
@@ -281,10 +283,10 @@ def test_get_daily_content_threads_level_through_correctly():
     """Regression guard: get_daily_content() previously silently defaulted
     every level to L0 content internally. Confirm L1's daily content is
     genuinely different from L0's, not a hidden L0 fallback."""
-    l0_daily = curriculum.get_daily_content(1, "Saturday", 0, "L0")
-    l1_daily = curriculum.get_daily_content(1, "Saturday", 0, "L1")
-    assert l0_daily["theme"] != l1_daily["theme"]
-    assert l0_daily["vocabulary"] != l1_daily["vocabulary"]
+    a1_daily = curriculum.get_daily_content(1, "Saturday", 0, "A1")
+    a2_daily = curriculum.get_daily_content(1, "Saturday", 0, "A2")
+    assert a1_daily["theme"] != a2_daily["theme"]
+    assert a1_daily["vocabulary"] != a2_daily["vocabulary"]
 
 
 def test_get_daily_content_clamps_vocab_speaking_writing_past_max_week():
@@ -298,20 +300,20 @@ def test_get_daily_content_clamps_vocab_speaking_writing_past_max_week():
     vocab/speaking/writing instead of week 8 repeating like everything
     else. Confirm week 15 for L0 (max week 8) now returns identical
     task content to week 8 itself, for every task type."""
-    week_8 = curriculum.get_daily_content(8, "Saturday", 0, "L0")
-    week_15 = curriculum.get_daily_content(15, "Saturday", 0, "L0")
-    assert week_15["vocabulary"] == week_8["vocabulary"]
+    week_10 = curriculum.get_daily_content(10, "Saturday", 0, "A1")
+    week_15 = curriculum.get_daily_content(15, "Saturday", 0, "A1")
+    assert week_15["vocabulary"] == week_10["vocabulary"]
     assert week_15["vocabulary"] != []
-    assert week_15["speaking_mission"] == week_8["speaking_mission"]
+    assert week_15["speaking_mission"] == week_10["speaking_mission"]
     assert week_15["speaking_mission"] is not None
-    assert week_15["writing_prompt"] == week_8["writing_prompt"]
+    assert week_15["writing_prompt"] == week_10["writing_prompt"]
     assert week_15["writing_prompt"] is not None
     # The returned "week" key itself is clamped too (it's what theme/
     # grammar-name lookups key off of internally) -- callers that want to
     # display the member's REAL week number (e.g. bot.py's daily task
     # post header) already use their own separate, unclamped
     # member_week_number() value for that, not this dict's "week" key.
-    assert week_15["week"] == 8
+    assert week_15["week"] == 10
 
 
 # ============================================================
@@ -319,21 +321,21 @@ def test_get_daily_content_clamps_vocab_speaking_writing_past_max_week():
 # ============================================================
 
 def test_practice_platform_day_url_shape():
-    url = curriculum.practice_platform_day_url(3, 0, "L1")
-    assert url == f"{config.PRACTICE_PLATFORM_URL}/l1/week3/day1/"
+    url = curriculum.practice_platform_day_url(3, 0, "A2")
+    assert url == f"{config.PRACTICE_PLATFORM_URL}/a2/week3/day1/"
 
 
 def test_practice_platform_day_url_day_index_to_day_number():
     """day_index is 0=Saturday..6=Friday; the URL uses day1=Saturday..day7=Friday."""
-    url_day0 = curriculum.practice_platform_day_url(1, 0, "L0")
-    url_day6 = curriculum.practice_platform_day_url(1, 6, "L0")
+    url_day0 = curriculum.practice_platform_day_url(1, 0, "A1")
+    url_day6 = curriculum.practice_platform_day_url(1, 6, "A1")
     assert "/day1/" in url_day0
     assert "/day7/" in url_day6
 
 
 def test_practice_platform_day_url_clamps_week():
-    url = curriculum.practice_platform_day_url(999, 0, "L0")
-    assert "/week8/" in url  # L0 max week is 8
+    url = curriculum.practice_platform_day_url(999, 0, "A1")
+    assert "/week10/" in url  # A1 max week is 10
 
 
 def test_practice_platform_task_url_known_tasks():
@@ -341,7 +343,7 @@ def test_practice_platform_task_url_known_tasks():
         ("accent", "accent"), ("vocab", "vocab"),
         ("shadow", "shadowing"), ("listening", "listening"),
     ):
-        url = curriculum.practice_platform_task_url(task_id, 1, 0, "L0")
+        url = curriculum.practice_platform_task_url(task_id, 1, 0, "A1")
         assert url is not None
         assert url.endswith(f"/{expected_slug}")
 
@@ -350,14 +352,14 @@ def test_practice_platform_task_url_unmapped_tasks_return_none():
     """speaking/writing/community have no matching practice-site page —
     must return None, never a fabricated/guessed link."""
     for task_id in ("speaking", "writing", "community"):
-        assert curriculum.practice_platform_task_url(task_id, 1, 0, "L0") is None
+        assert curriculum.practice_platform_task_url(task_id, 1, 0, "A1") is None
 
 
 def test_practice_platform_task_url_is_extensionless():
     """Verified live: the .html-suffixed path 404s on the custom domain;
     the extensionless form works everywhere. Must never regress to
     appending .html."""
-    url = curriculum.practice_platform_task_url("vocab", 1, 0, "L0")
+    url = curriculum.practice_platform_task_url("vocab", 1, 0, "A1")
     assert not url.endswith(".html")
 
 
@@ -370,7 +372,7 @@ def test_get_theme_falls_back_to_vocab_themes_for_missing_week():
     key isn't in _weekly_data at all (e.g. week 999); every real week
     should return its own JSON-sourced theme, not the L0-only fallback
     table, for L1/L2/L3 as well as L0."""
-    for level in ("L1", "L2", "L3"):
+    for level in ("A2", "B1", "C1"):
         theme = curriculum.get_theme(1, level)
         assert theme and theme != "General"
 

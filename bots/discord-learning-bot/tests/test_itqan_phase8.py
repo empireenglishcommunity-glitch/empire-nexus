@@ -18,13 +18,13 @@ def _master(did, level, week, distinction=False):
 
 def test_progress_counts_and_streak(student):
     for w in (1, 2, 3):
-        _master(student, "L0", w)
-    p = database.itqan_progress(student, "L0")
+        _master(student, "A1", w)
+    p = database.itqan_progress(student, "A1")
     assert p["mastered_count"] == 3
-    assert p["total_weeks"] == curriculum.max_week_for_level("L0")  # 8
+    assert p["total_weeks"] == curriculum.max_week_for_level("A1")  # 10
     assert p["streak"] == 3                       # contiguous from week 1
     assert p["level_complete"] is False
-    assert p["pct"] == round(100 * 3 / 8, 1)
+    assert p["pct"] == round(100 * 3 / 10, 1)
 
 
 def test_progress_streak_breaks_on_gap(student):

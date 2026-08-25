@@ -26,20 +26,21 @@ CONTENT_DIR = config.BASE_DIR / "content"
 # Any module that needs "how many weeks does this level have" must import
 # this constant / call max_week_for_level() rather than hardcoding it,
 # so L0/L1/L2/L3 never silently drift out of sync again.
-LEVEL_WEEK_COUNTS = {"L0": 8, "L1": 10, "L2": 12, "L3": 8}
+# Legacy L0–L3 week counts — RETIRED (content deleted 2026-08-25). Empty so any
+# lingering reference resolves harmlessly; CEFR is the only curriculum now.
+LEVEL_WEEK_COUNTS: dict = {}
 
-# Mi'yar (CEFR) week counts — the six CEFR levels. Used once CEFR content
-# exists + the cefr_curriculum flag is on. Legacy counts above remain the
-# source of truth for L0–L3 until each level is migrated.
+# Mi'yar (CEFR) week counts — the six CEFR levels, the single source of truth.
 CEFR_WEEK_COUNTS = {"A1": 10, "A2": 12, "B1": 14, "B2": 16, "C1": 18, "C2": 20}
 
 
 def max_week_for_level(level: str) -> int:
-    """Number of curriculum weeks defined for a level. Accepts BOTH CEFR
-    (A1–C2) and legacy (L0–L3) keys (defaults to L0's 8)."""
+    """Number of curriculum weeks for a level. CEFR-only; any input normalises
+    to a CEFR level (unknown → A1)."""
     if level in CEFR_WEEK_COUNTS:
         return CEFR_WEEK_COUNTS[level]
-    return LEVEL_WEEK_COUNTS.get(level, LEVEL_WEEK_COUNTS["L0"])
+    from . import config
+    return CEFR_WEEK_COUNTS.get(config.cefr_key(level), CEFR_WEEK_COUNTS["A1"])
 
 
 def expected_week_count() -> int:
@@ -110,12 +111,10 @@ def load_all():
                 except Exception as e:
                     logger.error(f"Failed to load {path}: {e}")
 
-    # Count loaded
-    l0_count = sum(1 for k in _weekly_data if k.startswith("L0_"))
-    l1_count = sum(1 for k in _weekly_data if k.startswith("L1_"))
-    l2_count = sum(1 for k in _weekly_data if k.startswith("L2_"))
-    l3_count = sum(1 for k in _weekly_data if k.startswith("L3_"))
-    logger.info(f"Weekly data: L0={l0_count}, L1={l1_count}, L2={l2_count}, L3={l3_count}")
+    # Count loaded (CEFR only — legacy L0–L3 retired)
+    counts = {lvl: sum(1 for k in _weekly_data if k.startswith(f"{lvl}_"))
+              for lvl in CEFR_WEEK_COUNTS}
+    logger.info("Weekly data: " + ", ".join(f"{k}={v}" for k, v in counts.items()))
 
     # Load accent drills and grammar patterns PER LEVEL.
     # Only content/l0/{accent,grammar}/ exist today — L1-L3 folders are

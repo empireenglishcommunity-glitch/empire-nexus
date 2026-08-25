@@ -238,18 +238,18 @@ def test_pre_launch_day_grandfathered_at_four(monkeypatch):
 def test_calendar_states(monkeypatch):
     # Pin before launch so this test is purely about day STATES (4-core rule).
     monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2099-01-01")
-    _member(level="L0", joined_at="2026-07-10")
+    _member(level="A1", joined_at="2026-07-10")
     # Fix "today" to 3 days after join → today_index == 3.
     monkeypatch.setattr(darb, "_today_local", lambda: datetime.date(2026, 7, 12))
     # Complete all 4 of week1/day1 → that day should be green (done).
     for ex in database.PRACTICE_EXERCISES:
-        database.record_practice_mastery("u1", "L0", 1, 1, ex, today="2026-07-10")
+        database.record_practice_mastery("u1", "A1", 1, 1, ex, today="2026-07-10")
 
     cal = darb.build_calendar("u1")
-    assert cal["level"] == "L0"
+    assert cal["level"] == "A1"
     assert cal["join_date"] == "2026-07-10"
     assert cal["today_index"] == 3
-    assert cal["level_total_days"] == 56  # L0 = 8 weeks
+    assert cal["level_total_days"] == 70  # A1 = 10 weeks
 
     by_index = {d["index"]: d for d in cal["days"]}
     assert by_index[1]["state"] == "done"      # completed

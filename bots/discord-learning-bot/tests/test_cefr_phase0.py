@@ -78,19 +78,22 @@ def test_cefr_week_counts():
 def test_max_week_accepts_both_keys():
     assert curriculum.max_week_for_level("A1") == 10
     assert curriculum.max_week_for_level("C2") == 20
-    assert curriculum.max_week_for_level("L0") == 8   # legacy unchanged
-    assert curriculum.max_week_for_level("L1") == 10
+    # Legacy keys are retired but still normalise to their CEFR equivalent.
+    assert curriculum.max_week_for_level("L0") == 10  # → A1
+    assert curriculum.max_week_for_level("L1") == 12  # → A2
 
 
 # ============================================================
 #  LOADER — no regression + tolerates missing CEFR files
 # ============================================================
 
-def test_loader_still_loads_legacy():
+def test_loader_no_longer_loads_legacy():
     curriculum.load_all()
-    # L0 legacy content still loads (8 weeks defined)
-    l0 = [k for k in curriculum._weekly_data if k.startswith("L0_")]
-    assert len(l0) >= 1
+    # Legacy L0–L3 content is RETIRED (2026-08-25) — nothing loads under a
+    # legacy key anymore; the loader is CEFR-only.
+    legacy = [k for k in curriculum._weekly_data
+              if k.startswith(("L0_", "L1_", "L2_", "L3_"))]
+    assert legacy == []
 
 
 def test_loader_tolerates_unauthored_cefr_levels():
