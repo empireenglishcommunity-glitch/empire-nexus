@@ -131,7 +131,9 @@ async def claim(code: str, ip: str = "", user_agent: str = "") -> dict | None:
     member = database.get_member(discord_id)
     if not member:
         return None
-    level = member.get("level", "L0")
+    # Mint CEFR-only tokens: normalise the stored level (defaulting to A1) so a
+    # new session never carries a legacy L0–L3 `lvl`. All students are CEFR now.
+    level = config.cefr_key(member.get("level", "A1"))
 
     device_id = secrets.token_urlsafe(12)
     database.create_device_session(discord_id, device_id, ip=ip, user_agent=user_agent)
