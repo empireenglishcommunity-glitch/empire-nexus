@@ -4043,6 +4043,22 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
     dates = [r["mastered_at"] for r in rows if r["mastered_at"]]
     completed_at = max(dates) if dates else None
     level_name = config.level_info(level).get("name", level)
+
+    # Mi'yar Phase 8: the CEFR "can-do" statements this level attests to — a
+    # descriptor-referenced checklist for the certificate. Aligned to the CEFR
+    # Companion Volume (2020); an internal, CEFR-aligned-by-design certificate of
+    # level completion, NOT an official / empirically-validated certification.
+    can_do = []
+    try:
+        cd = json.load(open(config.BASE_DIR / "content" / "cefr" / "can_do.json",
+                            encoding="utf-8")).get(config.cefr_key(level), {})
+        for mode in ("reception", "production", "interaction", "mediation"):
+            for d in cd.get(mode, []):
+                can_do.append({"code": d.get("code"), "en": d.get("en"),
+                               "ar": d.get("ar"), "mode": mode})
+    except Exception:
+        can_do = []
+
     return {
         "eligible": prog["level_complete"],
         "name": name,
@@ -4052,6 +4068,8 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
         "total_weeks": prog["total_weeks"],
         "distinction_count": distinction_count,
         "completed_at": completed_at,
+        "can_do": can_do,
+        "cefr_aligned": True,
     }
 
 

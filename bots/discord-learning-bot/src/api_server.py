@@ -2117,18 +2117,27 @@ async def post_advancement_finish_b(request: web.Request) -> web.Response:
     if not transcript.strip():
         return web.json_response({"ok": False, "error": "empty transcript"},
                                  status=400, headers=_cors_headers(request))
-    result = assessment.finish_advancement_final(discord_id, int(attempt_id), transcript)
+    # Mi'yar Phase 8: the advancement exam IS the CEFR exit exam. Verdict comes
+    # from criterion cut scores + AI descriptor-rater + boundary human review.
+    result = await assessment.finish_advancement_exit(discord_id, int(attempt_id), transcript)
 
-    # Fire outcome delivery: auto-promote on pass, private feedback on not-pass,
-    # owner notified on every attempt. Best-effort.
+    # Fire outcome delivery: pass -> promote + certificate, fail -> retake DM,
+    # review -> "under review" DM + owner alert (!exam-review). Best-effort.
     if result.get("ok"):
         try:
             from . import advancement_outcomes
-            level = payload.get("lvl", "L0")
-            await advancement_outcomes.deliver_advancement_outcome(
-                discord_id, level, int(attempt_id), result)
+            level = result.get("level") or payload.get("lvl", "L0")
+            await advancement_outcomes.deliver_exit_exam_outcome(
+                discord_id, level, {
+                    "decision": result["decision"],
+                    "distinction": result.get("distinction", False),
+                    "part_a_pct": result["part_a_pct"],
+                    "part_b_total": result["part_b_total"],
+                    "confidence": result["confidence"],
+                    "reasons": result.get("reasons", []),
+                })
         except Exception as e:
-            logger.warning(f"advancement: outcome delivery error: {e}")
+            logger.warning(f"exit-exam: outcome delivery error: {e}")
 
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
