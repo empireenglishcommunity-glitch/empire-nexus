@@ -716,8 +716,8 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
             return  # already registered, no-op
         # Register them
         database.register_member(str(payload.user_id), member.display_name)
-        # Assign Level 0 role
-        await _assign_level_role(member, "L0")
+        # Assign the starting CEFR role (A1) — students start on A1, not legacy L0.
+        await _assign_level_role(member, "A1")
         # Assign buddy
         await features.assign_buddy(member, guild)
         # Send Arabic confirmation DM
@@ -1994,10 +1994,10 @@ async def cmd_join(ctx, *, goal: str = ""):
     goal = goal[:200]
     is_new = database.register_member(str(ctx.author.id), ctx.author.display_name, goal=goal)
     if is_new:
-        # Assign Level 0 role
+        # Assign the starting CEFR role (A1) — students start on A1, not legacy L0.
         if isinstance(ctx.author, discord.Member):
-            await _assign_level_role(ctx.author, "L0")
-        msg = f"🌱 Welcome {ctx.author.mention}! You're registered at **Level 0**."
+            await _assign_level_role(ctx.author, "A1")
+        msg = f"🌱 Welcome {ctx.author.mention}! You're registered at **A1** (Breakthrough)."
         if goal:
             msg += f"\n🎯 Goal: **{goal}**"
         msg += "\n\nYour daily tasks will appear in #a1-daily-tasks every morning."

@@ -131,12 +131,28 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 - [x] Placement live (8c ✅) + exam-based certificate live (8d ✅).
 - [x] Guides live (Phase 9 ✅).
 - [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
-- [ ] Legacy L0–L3 retirement — OWNER DECISION pending (currently kept, map retained).
+- [~] Legacy L0–L3 retirement — STAGED: Stage A done (onboarding + schema);
+      Stage B (shims + content + site folders) gated to ~2026-10-23 (60-day
+      session-token window after the 2026-08-23 migration) + dry-run check.
 
 ---
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Owner decision:** whether to retire legacy L0–L3 (map is retained either way).
+1. **Legacy L0–L3 retirement — STAGED (owner approved 2026-08-25):**
+   - **Stage A — DONE:** new-member onboarding now assigns the A1 role + says
+     "A1" (was misleadingly "Level 0"); `members.level` schema default L0→A1.
+     Verified full suite green. No student impact (DB already CEFR, new members
+     were already written as A1).
+   - **Stage B — GATED, do NOT do before ~2026-10-23:** removing the dojo
+     `LEGACY_TO_CEFR` middleware shim + `cefr_key`/`LEGACY_LEVEL_MAP` +
+     `/l0../l3/` site folders + legacy content files. **Blocked because:** (a)
+     the DB migration ran **2026-08-23**, and pre-migration session tokens carry
+     `lvl:"L0"` for a **60-day** TTL — removing the shim earlier 403s those
+     students off their own content; (b) the legacy content files are entangled
+     with 36 test files (`generate_blueprint("L0")` etc.) + health-check counts,
+     so deletion needs a careful test migration. Gate to open Stage B: run
+     `migrate_to_cefr(dry_run=True)` → all members `already_cefr`, AND ≥60 days
+     since 2026-08-23. Keep `rollback_cefr_migration` regardless.
 2. **Placement enhancement (later):** add listening + speaking skills (audio path).
 
 Everything else in Mi'yar (Phases 0–10) is built, live, and verified. The two

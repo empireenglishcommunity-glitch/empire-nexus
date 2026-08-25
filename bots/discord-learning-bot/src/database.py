@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS members (
     discord_id      TEXT PRIMARY KEY,
     discord_name    TEXT NOT NULL DEFAULT '',
     telegram_id     TEXT DEFAULT '',
-    level           TEXT NOT NULL DEFAULT 'L0',
+    level           TEXT NOT NULL DEFAULT 'A1',
     track           TEXT NOT NULL DEFAULT 'Core',
     goal            TEXT DEFAULT '',
     joined_at       TEXT NOT NULL DEFAULT (datetime('now')),
