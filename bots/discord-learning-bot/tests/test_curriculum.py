@@ -157,6 +157,74 @@ def test_get_vocabulary_for_day_covers_whole_week_without_overlap():
                     )
 
 
+def test_get_vocabulary_for_day_loses_zero_words_across_every_authored_week():
+    """ZERO-LOSS INVARIANT: the 7 day slices must reconstruct the week's
+    vocabulary list EXACTLY -- same words, same order, same count.
+
+    Regression guard for a real, measured content-loss bug: the old split
+    used `max(1, len(words) // 7)` and never assigned the integer-division
+    remainder to any day, so the last `len % 7` words of EVERY week were
+    unreachable for every student, forever. Across the 90 authored weeks
+    that silently discarded 354 of 2,909 words (12.2%); A2 lost 14.9% and
+    one week lost 6 words.
+
+    Asserting exact reconstruction (not just "no word is missing") also
+    pins down non-overlap and authored order in one check, and correctly
+    tolerates weeks that intentionally teach the same word twice as two
+    senses (e.g. "impact" as noun and verb) because it compares lists.
+    """
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            week_words = curriculum.get_vocabulary_for_week(week, level)
+            assert week_words, f"{level} week {week} has no authored vocabulary"
+            rebuilt = []
+            for day_index in range(7):
+                rebuilt.extend(curriculum.get_vocabulary_for_day(week, day_index, level))
+            assert rebuilt == week_words, (
+                f"{level} week {week}: the 7 daily slices do not reconstruct the "
+                f"week's vocabulary. Authored {len(week_words)} words, students "
+                f"see {len(rebuilt)} -- "
+                f"{len(week_words) - len(rebuilt)} word(s) are unreachable."
+            )
+
+
+def test_get_vocabulary_for_day_balances_days_within_one_word():
+    """No day may carry 2+ more words than another: the remainder is spread
+    one-per-day, never dumped onto a single day (which would make one day
+    brutal and is not how the authored content is paced)."""
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            sizes = [
+                len(curriculum.get_vocabulary_for_day(week, d, level))
+                for d in range(7)
+            ]
+            assert max(sizes) - min(sizes) <= 1, (
+                f"{level} week {week}: unbalanced day sizes {sizes}"
+            )
+
+
+def test_get_vocabulary_for_day_handles_short_weeks_without_empty_days():
+    """A week with fewer than 7 words must still give every day something
+    AND still surface every authored word (union == full list)."""
+    key = "A1_1"
+    original = curriculum._weekly_data.get(key)
+    try:
+        curriculum._weekly_data[key] = {
+            "vocabulary": [{"word": "one"}, {"word": "two"}, {"word": "three"}]
+        }
+        seen = set()
+        for day_index in range(7):
+            day_words = curriculum.get_vocabulary_for_day(1, day_index, "A1")
+            assert day_words, f"day {day_index} is empty on a 3-word week"
+            seen.update(w["word"] for w in day_words)
+        assert seen == {"one", "two", "three"}
+    finally:
+        if original is None:
+            curriculum._weekly_data.pop(key, None)
+        else:
+            curriculum._weekly_data[key] = original
+
+
 def test_get_vocabulary_for_day_wraps_day_index():
     """day_index % 7 means day 7 (index 7) must equal day 0 (index 0)."""
     words_day0 = curriculum.get_vocabulary_for_day(1, 0, "A1")

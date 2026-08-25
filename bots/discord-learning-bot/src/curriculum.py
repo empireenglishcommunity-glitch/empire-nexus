@@ -177,17 +177,48 @@ def get_vocabulary_for_week(week: int, level: str = "A1") -> list[dict]:
 
 
 def get_vocabulary_for_day(week: int, day_index: int, level: str = "A1") -> list[dict]:
-    """Get the 8 vocabulary words for a specific day (0=Saturday, 6=Friday).
-    Splits the weekly words into 7 days of 8 words each.
+    """Get the vocabulary words for a specific day (0=Saturday, 6=Friday).
+
+    Splits the week's words into 7 contiguous, non-overlapping day slices
+    that together cover EVERY word exactly once.
+
+    ZERO-LOSS INVARIANT (regression guard — this used to silently drop
+    content): the previous implementation did
+
+        words_per_day = max(1, len(all_words) // 7)
+        return all_words[day_index * words_per_day:][:words_per_day]
+
+    which truncates on integer division and never assigns the remainder to
+    any day, so the last `len(all_words) % 7` words of EVERY week were
+    unreachable for every student, forever. Measured cost across the 90
+    authored weeks: 354 of 2,909 words (12.2%) — A2 lost 14.9%, and the
+    worst single week (34 words -> 4/day -> 28 shown) lost 6 words.
+
+    The fix distributes the remainder instead of discarding it: the first
+    `len % 7` days get one extra word (`base + 1`), the rest get `base`.
+    Slices stay contiguous and in authored order, so spaced-repetition and
+    "day N teaches these words" semantics are unchanged — days simply get
+    1 word longer where the remainder lands.
+
+    empire-dojo's `scripts/generate.py` MUST mirror this split exactly
+    (`database.record_vocab_quiz` and `verification.py` both assume the
+    bot and the practice site agree word-for-word on what a given day
+    teaches), so any change here must ship with the matching dojo change.
     """
     all_words = get_vocabulary_for_week(week, level)
     if not all_words:
         return []
     day_index = day_index % 7
-    words_per_day = max(1, len(all_words) // 7)
-    start = day_index * words_per_day
-    end = start + words_per_day
-    return all_words[start:end]
+    base, remainder = divmod(len(all_words), 7)
+    if base == 0:
+        # Fewer than 7 words authored: cycle so no day is empty. Every word
+        # still appears (union over the 7 days == the full week list).
+        return [all_words[day_index % len(all_words)]]
+    # Days before `remainder` carry one extra word; offset accounts for the
+    # extra words already handed out by earlier days.
+    start = day_index * base + min(day_index, remainder)
+    size = base + (1 if day_index < remainder else 0)
+    return all_words[start:start + size]
 
 
 def get_quiz_words(week: int, count: int = 10, level: str = "A1") -> list[dict]:
