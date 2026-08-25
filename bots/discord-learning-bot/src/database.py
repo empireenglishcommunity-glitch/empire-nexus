@@ -1697,6 +1697,22 @@ def sync_flag_registry():
     return added
 
 
+def enable_exit_exam_once() -> bool:
+    """One-time, idempotent activation of the CEFR exit exam
+    (`assessment_advancement_exam`) on deploy — per the owner's 2026-08-25
+    decision to "turn on and make everything live."
+
+    Runs exactly once, guarded by a settings marker, so that a later deliberate
+    `!flag disable assessment_advancement_exam` is NOT silently undone on the
+    next restart. Returns True only on the run that actually flips it on."""
+    if get_setting("exit_exam_autoenabled_v1", "") == "1":
+        return False
+    set_feature_flag("assessment_advancement_exam", enabled=True,
+                     updated_by="phase8_autoenable")
+    set_setting("exit_exam_autoenabled_v1", "1")
+    return True
+
+
 def set_feature_flag(name: str, enabled: bool, allowed_ids: str = "", updated_by: str = ""):
     """Enable/disable a feature flag, optionally restricted to an
     allowlist of comma-separated discord_ids. Upserts so the same

@@ -378,6 +378,10 @@ async def on_ready():
     added = database.sync_flag_registry()
     if added:
         logger.info(f"Flag registry sync: {added} new flag(s) added to database")
+    # Phase 8: activate the CEFR exit exam once, automatically, on deploy
+    # (owner decision — make it live). Idempotent; won't undo a later manual off.
+    if database.enable_exit_exam_once():
+        logger.info("CEFR exit exam auto-enabled (assessment_advancement_exam = ON)")
     # Load curriculum data from JSON files
     from . import curriculum
     curriculum.load_all()
