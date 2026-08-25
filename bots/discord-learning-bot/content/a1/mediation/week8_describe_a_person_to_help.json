@@ -1,0 +1,61 @@
+{
+  "id": "mediation_a1_w8",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 8,
+  "title": "Help your teacher find a student",
+  "title_ar": "ساعد مدرّسك يلاقي طالب",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "A small boy is lost. His mother describes him to you in Arabic. Now tell the teacher in English.",
+    "ar": "ولد صغير تاه. أمه وصفته لك بالعربي. قول للمدرّس بالإنجليزي."
+  },
+  "source": "His mother says: he is short, he has got black hair and brown eyes, and he is seven years old.",
+  "task": {
+    "en": "Describe the boy to the teacher in English.",
+    "ar": "اوصف الولد للمدرّس بالإنجليزي."
+  },
+  "key_points": [
+    {
+      "en": "He is short.",
+      "ar": "هو قصير."
+    },
+    {
+      "en": "He has got black hair.",
+      "ar": "شعره أسود."
+    },
+    {
+      "en": "He has got brown eyes.",
+      "ar": "عيونه بني."
+    },
+    {
+      "en": "He is seven years old.",
+      "ar": "عنده سبع سنين."
+    }
+  ],
+  "model_answer": {
+    "en": "He is short. He has got black hair and brown eyes. He is seven years old.",
+    "ar": "هو قصير، شعره أسود وعيونه بني، وعنده سبع سنين."
+  },
+  "signal_phrases": [
+    {
+      "en": "How do you say ...?",
+      "ar": "إزاي تقول ...؟"
+    },
+    {
+      "en": "What does ... mean?",
+      "ar": "معنى ... إيه؟"
+    },
+    {
+      "en": "Can you help me?",
+      "ar": "تقدر تساعدني؟"
+    },
+    {
+      "en": "Slowly, please.",
+      "ar": "بالراحة، لو سمحت."
+    }
+  ]
+}

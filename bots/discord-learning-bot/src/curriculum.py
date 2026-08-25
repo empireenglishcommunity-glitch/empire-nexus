@@ -88,11 +88,13 @@ _weekly_data: dict = {}   # {"L0_1": {...}, "L1_3": {...}, ...}
 _accent_data: dict = {}   # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 _grammar_data: dict = {}  # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 _reading_data: dict = {}  # {"A1": {1: {...}, ...}, ...} — Phase 11B, per level
+_mediation_data: dict = {}  # {"A1": {1: {...}, ...}, ...} — Phase 11B, per level
 
 
 def load_all():
     """Load all curriculum data from JSON files. Call once at bot startup."""
     global _weekly_data, _accent_data, _grammar_data, _reading_data
+    global _mediation_data
 
     # Load weekly data (vocab/speaking/writing) for ALL levels — legacy
     # (L0–L3) AND CEFR (A1–C2). CEFR files (data/a1_weekN.json …) are added
@@ -169,6 +171,23 @@ def load_all():
                 try:
                     with open(path, encoding="utf-8") as f:
                         _reading_data[level][week_num] = json.load(f)
+                except Exception as e:
+                    logger.error(f"Failed to load {path}: {e}")
+
+        # Mediation (Phase 11B — the fourth CEFR mode). Same per-level rollout
+        # rule as reading: a level with no content/{level}/mediation/ folder is
+        # simply not authored yet, never a fallback to another level.
+        _mediation_data[level] = {}
+        mediation_dir = CONTENT_DIR / level_lower / "mediation"
+        if mediation_dir.exists():
+            for path in mediation_dir.glob("week*.json"):
+                week_num = _parse_week_number(path.name)
+                if week_num is None:
+                    logger.warning(f"Skipping {path}: filename doesn't start with 'weekN'")
+                    continue
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        _mediation_data[level][week_num] = json.load(f)
                 except Exception as e:
                     logger.error(f"Failed to load {path}: {e}")
 
@@ -269,6 +288,36 @@ def reading_levels() -> list[str]:
     """Levels that actually have authored reading passages (for the ledger and
     for honest 'is this level complete yet' reporting)."""
     return sorted(lvl for lvl, weeks in _reading_data.items() if weeks)
+
+
+def get_mediation_for_week(week: int, level: str = "A1") -> Optional[dict]:
+    """The week's authored MEDIATION task, or None if not authored yet.
+
+    Phase 11B. Mediation is the fourth CEFR mode (Companion Volume 2020) and
+    the one that was completely absent: relaying, explaining and summarising
+    for someone else. Nothing in the 7 daily tasks asked a student to do it, so
+    every level's `.M.` descriptors were taught by no week at all.
+
+    It is also the mode that fits these students best: they are Arabic
+    speakers who genuinely have to relay English to family, friends and
+    shopkeepers. Each task gives an English source containing concrete facts,
+    a person who needs those facts, a checklist of what must get across, a
+    model relay, and the A1 "signal" phrases for asking for help.
+
+    Shape: {id, level, cefr, week, title(_ar), can_do, scenario{en,ar},
+    source, task{en,ar}, key_points[{en,ar}], model_answer{en,ar},
+    signal_phrases[{en,ar}]}.
+    """
+    level_data = _mediation_data.get(level)
+    if not level_data:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    return level_data.get(week)
+
+
+def mediation_levels() -> list[str]:
+    """Levels that actually have authored mediation tasks."""
+    return sorted(lvl for lvl, weeks in _mediation_data.items() if weeks)
 
 
 def get_listening_for_week(week: int, level: str = "A1") -> list[dict]:

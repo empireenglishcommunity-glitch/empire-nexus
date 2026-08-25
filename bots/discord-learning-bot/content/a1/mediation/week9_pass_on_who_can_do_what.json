@@ -1,0 +1,61 @@
+{
+  "id": "mediation_a1_w9",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 9,
+  "title": "Build the team",
+  "title_ar": "كوّن الفريق",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "Your class needs a small team. Three students tell you what they can do. Tell the teacher.",
+    "ar": "فصلك محتاج فريق صغير. تلات طلبة قالولك يقدروا يعملوا إيه. قول للمدرّس."
+  },
+  "source": "\"Nour can swim very well. Ali can cook. Hana can sing, but she can't dance.\"",
+  "task": {
+    "en": "Tell the teacher what each student can do.",
+    "ar": "قول للمدرّس كل طالب يقدر يعمل إيه."
+  },
+  "key_points": [
+    {
+      "en": "Nour can swim very well.",
+      "ar": "نور تقدر تعوم كويس جدًا."
+    },
+    {
+      "en": "Ali can cook.",
+      "ar": "علي يقدر يطبخ."
+    },
+    {
+      "en": "Hana can sing.",
+      "ar": "هنا تقدر تغني."
+    },
+    {
+      "en": "Hana can't dance.",
+      "ar": "هنا مش بتقدر ترقص."
+    }
+  ],
+  "model_answer": {
+    "en": "Nour can swim very well. Ali can cook. Hana can sing, but she can't dance.",
+    "ar": "نور تقدر تعوم كويس جدًا. علي يقدر يطبخ. هنا تقدر تغني، بس مش بتقدر ترقص."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}

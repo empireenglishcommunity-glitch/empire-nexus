@@ -3107,7 +3107,10 @@ CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
 # `reading` (Phase 11B) is weekly for the same reason: one passage is authored
 # per week, and it is being rolled out level by level behind the owner approval
 # gate, so it must never be a precondition for a day being green either.
-WEEKLY_EXERCISES = ("grammar", "reading")
+#
+# `mediation` (Phase 11B) — the fourth CEFR mode, also one authored task per
+# week and also rolled out level by level, so weekly and never a day gate.
+WEEKLY_EXERCISES = ("grammar", "reading", "mediation")
 # Everything the practice site may legitimately report a completion for.
 TRACKED_EXERCISES = CALENDAR_EXERCISES + WEEKLY_EXERCISES
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond

@@ -57,9 +57,11 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # and messages). Update this set ONLY when a week genuinely starts teaching
 # the descriptor -- never to make a failing test pass.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    # A1.R.1 + A1.R.4 were CLOSED by the A1 reading passages (Phase 11B).
-    # A2-C2 reading is not authored yet, so their `.R.` gaps remain.
-    "A1.M.1", "A1.M.2", "A1.P.5",
+    # A1 is DOWN TO ONE: A1.R.1 + A1.R.4 closed by the A1 reading passages and
+    # A1.M.1 + A1.M.2 closed by the A1 mediation tasks (Phase 11B). A1.P.5
+    # (write short notes and messages) is the last A1 gap. A2-C2 reading and
+    # mediation are not authored yet, so their `.R.`/`.M.` gaps remain.
+    "A1.P.5",
     "A2.M.1", "A2.M.2", "A2.M.3", "A2.P.6", "A2.R.1", "A2.R.2", "A2.R.5",
     "B1.I.1", "B1.M.2", "B1.M.3", "B1.P.5", "B1.R.1", "B1.R.2",
     "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
@@ -207,6 +209,37 @@ def _atom_rows(level: str) -> list[dict]:
             "tracked_as": "reading",
         })
 
+        # --- mediation (Phase 11B, weekly, rolled out level by level) ---
+        med = curriculum.get_mediation_for_week(week, level)
+        has_med = bool(med and med.get("source") and (med.get("key_points") or []))
+        authored_med = 1 if (level in curriculum.mediation_levels()
+                             and week in (curriculum._mediation_data.get(level) or {})) else 0
+        rows.append({
+            "kind": "mediation_task", "week": week,
+            "authored": authored_med,
+            "delivered": 1 if (authored_med and has_med) else 0,
+            "route": "practice site mediation page (curriculum.get_mediation_for_week)",
+            "tracked_as": "mediation",
+        })
+        # The key points ARE the assessment criteria — a task with a source but
+        # no checkable points would be unmarkable, so they are ledgered.
+        kp = (med or {}).get("key_points") or []
+        rows.append({
+            "kind": "mediation_key_points", "week": week,
+            "authored": len(kp),
+            "delivered": sum(1 for p in kp if p.get("en")),
+            "route": "practice site mediation page — did you pass on everything?",
+            "tracked_as": "mediation",
+        })
+        sig = (med or {}).get("signal_phrases") or []
+        rows.append({
+            "kind": "mediation_signal_phrases", "week": week,
+            "authored": len(sig),
+            "delivered": sum(1 for s in sig if s.get("en")),
+            "route": "practice site mediation page — if you do not understand",
+            "tracked_as": "mediation",
+        })
+
         # --- week-level fields that used to have no surface at all ---
         week_data = curriculum._weekly_data.get(f"{level}_{week}", {}) or {}
         for field, route in (
@@ -258,6 +291,9 @@ def untaught_descriptors(level: str) -> set:
         passage = curriculum.get_reading_for_week(week, level)
         if passage and passage.get("text"):
             taught.update(passage.get("can_do") or [])
+        med = curriculum.get_mediation_for_week(week, level)
+        if med and med.get("source") and (med.get("key_points") or []):
+            taught.update(med.get("can_do") or [])
     return library - taught
 
 
@@ -342,9 +378,11 @@ def format_report(rep: dict = None) -> str:
     if rep["untaught_descriptors"]:
         out.append("")
         out.append("  Untaught: " + ", ".join(rep["untaught_descriptors"]))
-        out.append("  (mediation has no task yet; reading is authored for "
-                   + ", ".join(curriculum.reading_levels() or ["no levels"])
-                   + " and pending for the rest — spec Phase 11B)")
+        out.append("  (reading authored for: "
+                   + ", ".join(curriculum.reading_levels() or ["none"])
+                   + " · mediation authored for: "
+                   + ", ".join(curriculum.mediation_levels() or ["none"])
+                   + " — remaining levels pending, spec Phase 11B)")
     return "\n".join(out)
 
 

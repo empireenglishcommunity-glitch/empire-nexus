@@ -1,0 +1,61 @@
+{
+  "id": "mediation_a1_w10",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 10,
+  "title": "Tell your cousin about the party",
+  "title_ar": "احكي لابن عمك عن الحفلة",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "Your cousin was not at the party yesterday. He asks you: how was it?",
+    "ar": "ابن عمك مكانش في الحفلة إمبارح. سألك: كانت عاملة إيه؟"
+  },
+  "source": "\"The party was at my house on Friday. There were twenty people. The food was delicious. My uncle was very funny.\"",
+  "task": {
+    "en": "Tell your cousin about the party. Use was and were.",
+    "ar": "احكي لابن عمك عن الحفلة. استخدم was و were."
+  },
+  "key_points": [
+    {
+      "en": "The party was on Friday.",
+      "ar": "الحفلة كانت يوم الجمعة."
+    },
+    {
+      "en": "It was at my house.",
+      "ar": "كانت في بيتي."
+    },
+    {
+      "en": "There were twenty people.",
+      "ar": "كانوا عشرين واحد."
+    },
+    {
+      "en": "The food was delicious.",
+      "ar": "الأكل كان لذيذ."
+    }
+  ],
+  "model_answer": {
+    "en": "The party was at my house on Friday. There were twenty people, and the food was delicious.",
+    "ar": "الحفلة كانت في بيتي يوم الجمعة. كانوا عشرين واحد، والأكل كان لذيذ."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}

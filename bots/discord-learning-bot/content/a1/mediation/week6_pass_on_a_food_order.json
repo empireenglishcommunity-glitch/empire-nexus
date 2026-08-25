@@ -1,0 +1,57 @@
+{
+  "id": "mediation_a1_w6",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 6,
+  "title": "Order for your friend",
+  "title_ar": "اطلب لصاحبك",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "Your friend cannot speak English. He tells you what he wants. You speak to the waiter.",
+    "ar": "صاحبك مش بيتكلم إنجليزي. قالك عايز إيه، وانت اللي هتتكلم مع الويتر."
+  },
+  "source": "Your friend wants: chicken with rice, no salt, and one cup of tea with sugar.",
+  "task": {
+    "en": "Tell the waiter what your friend wants, in English.",
+    "ar": "قول للويتر صاحبك عايز إيه، بالإنجليزي."
+  },
+  "key_points": [
+    {
+      "en": "He wants chicken with rice.",
+      "ar": "عايز فراخ مع رز."
+    },
+    {
+      "en": "No salt, please.",
+      "ar": "بدون ملح، لو سمحت."
+    },
+    {
+      "en": "One tea with sugar.",
+      "ar": "شاي واحد بسكر."
+    }
+  ],
+  "model_answer": {
+    "en": "He would like chicken with rice, no salt, please. And one tea with sugar.",
+    "ar": "هو عايز فراخ مع رز، بدون ملح لو سمحت. وشاي واحد بسكر."
+  },
+  "signal_phrases": [
+    {
+      "en": "How do you say ...?",
+      "ar": "إزاي تقول ...؟"
+    },
+    {
+      "en": "What does ... mean?",
+      "ar": "معنى ... إيه؟"
+    },
+    {
+      "en": "Can you help me?",
+      "ar": "تقدر تساعدني؟"
+    },
+    {
+      "en": "Slowly, please.",
+      "ar": "بالراحة، لو سمحت."
+    }
+  ]
+}

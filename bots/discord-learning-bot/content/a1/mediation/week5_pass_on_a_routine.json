@@ -1,0 +1,57 @@
+{
+  "id": "mediation_a1_w5",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 5,
+  "title": "Tell your father the school times",
+  "title_ar": "قول لأبوك مواعيد المدرسة",
+  "can_do": [
+    "A1.M.1",
+    "A1.M.2"
+  ],
+  "scenario": {
+    "en": "Your school sends a message about the new times. Your father asks you what it says.",
+    "ar": "المدرسة بعتت رسالة بالمواعيد الجديدة. أبوك سألك بتقول إيه."
+  },
+  "source": "\"School starts at eight o'clock every day. Lunch is at twelve. Students finish at three o'clock.\"",
+  "task": {
+    "en": "Tell your father the three times from the message.",
+    "ar": "قول لأبوك التلات مواعيد اللي في الرسالة."
+  },
+  "key_points": [
+    {
+      "en": "School starts at eight o'clock.",
+      "ar": "المدرسة تبدأ الساعة تمانية."
+    },
+    {
+      "en": "Lunch is at twelve.",
+      "ar": "الغدا الساعة اتناشر."
+    },
+    {
+      "en": "Students finish at three o'clock.",
+      "ar": "الطلبة يخلصوا الساعة تلاتة."
+    }
+  ],
+  "model_answer": {
+    "en": "School starts at eight, lunch is at twelve, and we finish at three o'clock.",
+    "ar": "المدرسة تبدأ تمانية، الغدا اتناشر، وبنخلص تلاتة."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry?",
+      "ar": "عفوًا؟ (مش فاهم)"
+    },
+    {
+      "en": "Again, please.",
+      "ar": "تاني، لو سمحت."
+    },
+    {
+      "en": "I understand.",
+      "ar": "فهمت."
+    },
+    {
+      "en": "One moment, please.",
+      "ar": "لحظة، لو سمحت."
+    }
+  ]
+}
