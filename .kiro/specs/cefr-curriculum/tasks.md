@@ -94,14 +94,15 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
       speaking deferred** (need the audio/Whisper path) — disclosed to the
       student, exactly as reading was folded in. Honest, not hidden.
 
-### 8d — certificate · [nexus] + [dojo] — 🟡 PARTIAL
-- [x] Certificate page shows the level's **can-do checklist** + the compliant
-      bilingual footer ("CEFR-aligned … not an official certification"). LIVE
-      on the practice site (dojo #102, wrangler-deployed).
-- [ ] **Exam-based path NOT built:** the certificate still reads "Certificate of
-      Mastery / mastered every week" and is gated on all-weeks-mastered — NOT
-      the spec's *"has demonstrated proficiency at CEFR Level X"* wording, and it
-      is not issued on exit-exam pass. Exam distinction (Part B ≥ 90) not wired.
+### 8d — certificate · [nexus] + [dojo] — ✅ LIVE
+- [x] Can-do checklist + compliant bilingual footer ("CEFR-aligned … not an
+      official certification") on the certificate page (dojo #102).
+- [x] Exam-based path: a passed exit exam issues *"Empire English certifies that
+      <name> has demonstrated proficiency at CEFR Level X"* (EN+AR), distinction
+      when Part B ≥ 90, certified at the level passed; completion/mastery is the
+      fallback. `highest_passed_exit_exam` + `itqan_certificate_data` basis
+      (nexus #374); page renders it (dojo #104, wrangler-deployed). Level is
+      CEFR-normalized (L0→A1). Never "CEFR-certified".
 
 ### 8e — tests + deploy + verify · [nexus] — ✅ DONE
 - [x] Unit tests for the built pieces; full suite **1569 passing**; deployed.
@@ -121,7 +122,7 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 
 ## Phase 10 — Final verification + full enable · [nexus] — ❌ NOT DONE
 - [ ] End-to-end ghost journey A1→A2 via the exit exam.
-- [~] Placement live (8c ✅); certificate only partial (8d exam-based path pending).
+- [x] Placement live (8c ✅) + exam-based certificate live (8d ✅).
 - [ ] Guides live (blocked on Phase 9).
 - [x] `assessment_advancement_exam` enabled — auto-enabled on deploy (#371).
 - [ ] Legacy L0–L3 fully retired (currently kept; map retained).
@@ -129,15 +130,14 @@ silent zero-loss migration · build level-by-level · reuse the existing engine 
 ---
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
-1. **Certificate (8d):** exam-based issuance + "demonstrated proficiency"
-   wording + exam distinction. (Can-do checklist + honest footer already live.)
-2. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
+1. **Phase 9:** `/guide` + `/ops-guide` CEFR update, `!progress` can-do view,
    per-level site can-do checklist, `SYSTEM-MAP.md` update.
-3. **Phase 10:** end-to-end ghost verification (A1→A2 via the exit exam);
+2. **Phase 10:** end-to-end ghost verification (A1→A2 via the exit exam);
    decide on legacy L0–L3 retirement.
-4. **Placement enhancement (later):** add listening + speaking skills (audio path).
+3. **Placement enhancement (later):** add listening + speaking skills (audio path).
 
-**Now LIVE:** exit exams (8b), placement (8c, vocab/grammar + writing).
+**Now LIVE:** exit exams (8b), placement (8c: vocab/grammar + writing),
+exam-based certificate (8d).
 
 ## Cross-cutting (every phase)
 - Full nexus test suite green; bump `BOT_VERSION` on each bot deploy.
