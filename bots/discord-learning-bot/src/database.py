@@ -4052,8 +4052,12 @@ def itqan_progress(discord_id: str, level: str) -> dict:
 
 
 def itqan_certificate_data(discord_id: str, level: str) -> dict:
-    """Data for the level-completion certificate page. `eligible` is True only
-    when every week of the level has been mastered."""
+    """Certificate data for the dojo certificate page.
+
+    Mi'yar Phase 8: prefers an EXAM-BASED certificate — if the student has passed
+    a level exit exam, the certificate certifies "demonstrated proficiency at
+    CEFR Level X" (the stronger credential). Otherwise it falls back to the
+    completion certificate (`eligible` only when every week is mastered)."""
     from . import curriculum, config
     prog = itqan_progress(discord_id, level)
     member = get_member(discord_id) or {}
@@ -4068,16 +4072,31 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
     distinction_count = sum(1 for r in rows if r["distinction"])
     dates = [r["mastered_at"] for r in rows if r["mastered_at"]]
     completed_at = max(dates) if dates else None
-    level_name = config.level_info(level).get("name", level)
+    # ── Choose the basis: a passed exit exam (stronger) else all-weeks-mastered.
+    exam = highest_passed_exit_exam(discord_id)
+    if exam:
+        basis = "exam"
+        cert_level = exam["level"]
+        eligible = True
+        distinction = (exam.get("part_b_score") or 0) >= 90  # EXIT_EXAM_DISTINCTION_PART_B
+        cert_date = exam.get("attempted_at")
+    else:
+        basis = "mastery"
+        cert_level = config.cefr_key(level)
+        eligible = prog["level_complete"]
+        distinction = distinction_count > 0
+        cert_date = completed_at
 
-    # Mi'yar Phase 8: the CEFR "can-do" statements this level attests to — a
-    # descriptor-referenced checklist for the certificate. Aligned to the CEFR
-    # Companion Volume (2020); an internal, CEFR-aligned-by-design certificate of
-    # level completion, NOT an official / empirically-validated certification.
+    level_name = config.level_info(cert_level).get("name", cert_level)
+
+    # The CEFR "can-do" statements the certified level attests to — a
+    # descriptor-referenced checklist. Aligned to the CEFR Companion Volume
+    # (2020); an internal, CEFR-aligned-by-design certificate, NOT an official /
+    # empirically-validated certification.
     can_do = []
     try:
         cd = json.load(open(config.BASE_DIR / "content" / "cefr" / "can_do.json",
-                            encoding="utf-8")).get(config.cefr_key(level), {})
+                            encoding="utf-8")).get(config.cefr_key(cert_level), {})
         for mode in ("reception", "production", "interaction", "mediation"):
             for d in cd.get(mode, []):
                 can_do.append({"code": d.get("code"), "en": d.get("en"),
@@ -4085,11 +4104,30 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
     except Exception:
         can_do = []
 
+    # Truth-in-labelling (R0/R8): "certifies … has demonstrated proficiency at
+    # CEFR Level X" — never "CEFR-certified".
+    if basis == "exam":
+        statement_en = (f"Empire English certifies that {name} has demonstrated "
+                        f"proficiency at CEFR Level {cert_level}.")
+        statement_ar = (f"تشهد Empire English أن {name} أظهر/ت إتقانًا للمستوى "
+                        f"{cert_level} على الإطار الأوروبي المرجعي المشترك (CEFR).")
+    else:
+        statement_en = (f"Empire English certifies that {name} has completed "
+                        f"CEFR Level {cert_level} — all weeks mastered.")
+        statement_ar = (f"تشهد Empire English أن {name} أتمّ/ت المستوى {cert_level} "
+                        f"على الإطار الأوروبي المرجعي (CEFR) — بإتقان كل الأسابيع.")
+
     return {
-        "eligible": prog["level_complete"],
+        "eligible": eligible,
+        "basis": basis,                     # 'exam' (stronger) | 'mastery'
         "name": name,
-        "level": level,
+        "level": cert_level,
         "level_name": level_name,
+        "statement_en": statement_en,
+        "statement_ar": statement_ar,
+        "distinction": distinction,
+        "date": cert_date,
+        # mastery-view detail (kept for backward compatibility)
         "weeks_mastered": prog["mastered_count"],
         "total_weeks": prog["total_weeks"],
         "distinction_count": distinction_count,
@@ -4097,6 +4135,27 @@ def itqan_certificate_data(discord_id: str, level: str) -> dict:
         "can_do": can_do,
         "cefr_aligned": True,
     }
+
+
+def highest_passed_exit_exam(discord_id: str) -> dict | None:
+    """The highest CEFR level for which the student has PASSED the exit exam
+    (from `advancement_exams`), with its Part B score + date — the basis for an
+    exam-based certificate. None if they have not passed any."""
+    from . import config
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT level, part_b_score, overall_score, attempted_at "
+        "FROM advancement_exams WHERE discord_id=? AND passed=1", (discord_id,)).fetchall()
+    conn.close()
+    best, best_idx = None, -1
+    for r in rows:
+        ck = config.cefr_key(r["level"])
+        idx = config.CEFR_ORDER.index(ck) if ck in config.CEFR_ORDER else -1
+        if idx > best_idx:
+            best_idx = idx
+            best = dict(r)
+            best["level"] = ck
+    return best
 
 
 
