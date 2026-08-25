@@ -64,7 +64,10 @@ def test_certificate_eligible_on_full_mastery(student):
     assert c["eligible"] is True
     assert c["weeks_mastered"] == total
     assert c["distinction_count"] == 2
-    assert c["level"] == "L0"
+    # Phase 8: the certificate now reports the CEFR level (legacy L0 → A1),
+    # and this mastery cert carries the completion statement.
+    assert c["level"] == "A1"
+    assert c["basis"] == "mastery"
 
 
 # ---- level-complete detector (outcomes) -----------------------------------
