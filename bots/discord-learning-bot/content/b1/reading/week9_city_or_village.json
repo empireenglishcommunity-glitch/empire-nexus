@@ -1,0 +1,75 @@
+{
+  "id": "reading_b1_w9",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 9,
+  "title": "City or Village: Which Life Is Better?",
+  "title_ar": "مدينة ولا قرية: أنهي حياة أحسن؟",
+  "can_do": [
+    "B1.R.5",
+    "B1.R.4"
+  ],
+  "word_count": 187,
+  "gist_ar": "مقال بيقارن المدينة والقرية وبيوصل لخلاصة.",
+  "text": "Every year thousands of young people move from villages to cities. Are they right?\n\nOn one hand, the city offers far more opportunities. Salaries are usually higher, and public transport is much more convenient. A young engineer in a city has slightly better chances than an equally talented one in a village.\n\nOn the other hand, the advantages are not as large as they seem. City rent is not nearly as affordable as village rent, so a bigger salary does not always mean more money at the end of the month. The city is also far more crowded and a bit less healthy, and it is certainly not as peaceful.\n\nSome people argue that the two ways of life are becoming similar to each other, because the internet has brought city work to the village. That is true for a few jobs, but not for most.\n\nSo what is the conclusion? Neither place is better in general. The city is better for starting a career; the village is better for raising a family. The right question is not 'which is better?' but 'better for what?'",
+  "glossary": [
+    {
+      "word": "advantage",
+      "ar": "ميزة"
+    },
+    {
+      "word": "convenient",
+      "ar": "مريح/عملي"
+    },
+    {
+      "word": "affordable",
+      "ar": "في المتناول"
+    },
+    {
+      "word": "peaceful",
+      "ar": "هادي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the city offer, according to the writer?",
+      "q_ar": "الكاتب بيقول المدينة بتقدّم إيه؟",
+      "options": [
+        "A more peaceful life",
+        "Cheaper rent",
+        "Higher salaries and convenient transport"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why doesn't a bigger salary always mean more money?",
+      "q_ar": "ليه الراتب الأكبر مش دايمًا معناه فلوس أكتر؟",
+      "options": [
+        "Salaries are paid late",
+        "City rent is not as affordable",
+        "Transport is expensive"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the writer's conclusion?",
+      "q_ar": "خلاصة الكاتب إيه؟",
+      "options": [
+        "Neither is better in general — it depends what for",
+        "The city is always better",
+        "The village is always better"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer say about the internet argument?",
+      "q_ar": "بيقول إيه عن حجة الإنترنت؟",
+      "options": [
+        "It is completely true",
+        "It is true for a few jobs, not most",
+        "It is completely false"
+      ],
+      "answer": 1
+    }
+  ]
+}

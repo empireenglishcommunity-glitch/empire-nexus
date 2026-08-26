@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w13",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 13,
+  "title": "Run the budget discussion",
+  "title_ar": "ادِر نقاش الميزانية",
+  "can_do": [
+    "B1.M.3"
+  ],
+  "scenario": {
+    "en": "Your group has a small budget for a class event and cannot agree.",
+    "ar": "مجموعتك عندها ميزانية صغيرة لحفلة الفصل ومش قادرين يتفقوا."
+  },
+  "source": "Rania says: 'We can't afford both food and decorations.' Samir keeps saying the cheapest option is always best. Hoda has not spoken. Tarek suggests borrowing money from another class, which nobody has answered. The teacher says the group must agree on a budget today.",
+  "task": {
+    "en": "Run it: invite Hoda to join, restate Samir's point, respond to Tarek's suggestion, and summarise where the group has got to.",
+    "ar": "ادِر النقاش: خلّي هدى تشارك، أعِد صياغة نقطة سمير، رد على اقتراح طارق، ولخّص وصلوا لفين."
+  },
+  "key_points": [
+    {
+      "en": "Invite Hoda to join the discussion.",
+      "ar": "خلّي هدى تشارك في النقاش."
+    },
+    {
+      "en": "Restate Samir's point that the cheapest option is best.",
+      "ar": "أعِد صياغة نقطة سمير إن الأرخص أحسن."
+    },
+    {
+      "en": "Respond to Tarek's suggestion about borrowing money.",
+      "ar": "رد على اقتراح طارق بخصوص الاستلاف."
+    },
+    {
+      "en": "Summarise where the group has got to.",
+      "ar": "لخّص المجموعة وصلت لفين."
+    }
+  ],
+  "model_answer": {
+    "en": "Hoda, what do you think? Samir, so you're saying the cheapest option is always best — but cheap things sometimes cost more later. Tarek, I don't think borrowing money is wise. Where have we got to? We agree we can't afford both, so shall we choose food and make the decorations ourselves?",
+    "ar": "هدى، إيه رأيك؟ سمير، يعني انت بتقول إن الأرخص دايمًا أحسن — بس الرخيص ساعات يكلّف أكتر بعدين. طارق، أنا مش شايف إن الاستلاف حكيم. وصلنا لفين؟ متفقين إننا مش قادرين على الاتنين، فنختار الأكل ونعمل الزينة بنفسنا؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think, Samir?",
+      "ar": "إيه رأيك يا سمير؟"
+    },
+    {
+      "en": "So you're saying...",
+      "ar": "يعني انت بتقول..."
+    },
+    {
+      "en": "Let's come back to that.",
+      "ar": "نرجع للنقطة دي."
+    },
+    {
+      "en": "Where have we got to?",
+      "ar": "وصلنا لفين؟"
+    }
+  ]
+}

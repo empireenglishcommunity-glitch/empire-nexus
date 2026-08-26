@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w6",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 6,
+  "title": "Lead the group to a conclusion",
+  "title_ar": "ادِر المجموعة لاستنتاج",
+  "can_do": [
+    "B1.M.3"
+  ],
+  "scenario": {
+    "en": "Your group is trying to work out where the office keys went. People are talking over each other.",
+    "ar": "مجموعتك بتحاول تعرف المفاتيح راحت فين. الكلام مختلط."
+  },
+  "source": "Nadia says: 'They can't be in the store room, because the door was locked from the outside.' Samir suggests that the cleaner took them. Hoda has an idea but keeps stopping. The camera shows nobody entered the corridor after six on Sunday.",
+  "task": {
+    "en": "Help the discussion along: invite Hoda to finish her idea, restate Nadia's point, and summarise what the group can be sure about.",
+    "ar": "ساعد النقاش: خلّي هدى تكمّل فكرتها، أعِد صياغة نقطة نادية، ولخّص المجموعة متأكدة من إيه."
+  },
+  "key_points": [
+    {
+      "en": "Invite Hoda to finish her idea.",
+      "ar": "خلّي هدى تكمّل فكرتها."
+    },
+    {
+      "en": "Restate Nadia's point about the locked door.",
+      "ar": "أعِد صياغة نقطة نادية عن الباب المقفول."
+    },
+    {
+      "en": "Summarise what the group can be sure about.",
+      "ar": "لخّص إيه اللي المجموعة متأكدة منه."
+    },
+    {
+      "en": "Question the suggestion about the cleaner fairly.",
+      "ar": "ناقش اقتراح سمير عن عاملة النظافة بإنصاف."
+    }
+  ],
+  "model_answer": {
+    "en": "Hoda, what do you think — you started an idea? Nadia, so you're saying the keys can't be inside because the door was locked from the outside. Where have we got to? We can be sure the keys left before six on Sunday. Samir, the cleaner doesn't have permission, so that seems unlikely.",
+    "ar": "هدى، إيه رأيك — كنتي بدأتي فكرة؟ نادية، يعني انتي بتقولي إن المفاتيح مش ممكن تكون جوه لأن الباب كان مقفول من بره. وصلنا لفين؟ متأكدين إن المفاتيح خرجت قبل ستة الأحد. سمير، عاملة النظافة مالهاش تصريح، فده مستبعد."
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think, Samir?",
+      "ar": "إيه رأيك يا سمير؟"
+    },
+    {
+      "en": "So you're saying...",
+      "ar": "يعني انت بتقول..."
+    },
+    {
+      "en": "Let's come back to that.",
+      "ar": "نرجع للنقطة دي."
+    },
+    {
+      "en": "Where have we got to?",
+      "ar": "وصلنا لفين؟"
+    }
+  ]
+}

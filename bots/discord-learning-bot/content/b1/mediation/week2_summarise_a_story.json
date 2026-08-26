@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w2",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 2,
+  "title": "Summarise the story and say what you think",
+  "title_ar": "لخّص الحكاية وقول رأيك",
+  "can_do": [
+    "B1.M.2"
+  ],
+  "scenario": {
+    "en": "Your book club read a short story. One member missed the meeting and asks you about it.",
+    "ar": "نادي القراءة قرأ قصة قصيرة. عضو غاب عن اللقاء وبيسألك عنها."
+  },
+  "source": "The story: while a family was sitting at home one evening, the lights suddenly went out. The father started telling stories about his childhood, and the mother remembered arriving in the city. When the electricity came back at midnight, everybody went to their rooms. The narrator says they had not talked like that for months.",
+  "task": {
+    "en": "Summarise the story in three or four sentences, then give your opinion about it.",
+    "ar": "لخّص الحكاية في تلات أو أربع جمل، وبعدين قول رأيك فيها."
+  },
+  "key_points": [
+    {
+      "en": "Summarise what happened: the lights went out one evening.",
+      "ar": "لخّص اللي حصل: النور قطع في ليلة."
+    },
+    {
+      "en": "The family told stories and remembered the past.",
+      "ar": "العيلة حكت قصص وافتكرت الماضي."
+    },
+    {
+      "en": "When the electricity came back, everybody went to their rooms.",
+      "ar": "لما النور رجع كل واحد رجع لأوضته."
+    },
+    {
+      "en": "Give your opinion about the story.",
+      "ar": "قول رأيك في الحكاية."
+    }
+  ],
+  "model_answer": {
+    "en": "In short: one evening the lights went out, and while the family was sitting in the dark they told stories and remembered the past. When the electricity came back, everybody went to their rooms again. In my opinion the point is that we need quiet before we really talk to each other.",
+    "ar": "باختصار: النور قطع في ليلة، وقعدوا في الضلمة يحكوا قصص ويفتكروا الماضي. ولما النور رجع كل واحد رجع لأوضته. في رأيي إن الفكرة إننا محتاجين هدوء عشان نتكلم بجد."
+  },
+  "signal_phrases": [
+    {
+      "en": "In short...",
+      "ar": "باختصار..."
+    },
+    {
+      "en": "The main point is...",
+      "ar": "النقطة الأساسية هي..."
+    },
+    {
+      "en": "Personally, I think...",
+      "ar": "شخصيًا، أنا شايف..."
+    },
+    {
+      "en": "On the other hand...",
+      "ar": "من ناحية تانية..."
+    }
+  ]
+}

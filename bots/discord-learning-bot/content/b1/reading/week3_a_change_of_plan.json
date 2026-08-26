@@ -1,0 +1,75 @@
+{
+  "id": "reading_b1_w3",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 3,
+  "title": "A Change of Plan",
+  "title_ar": "تغيير في الخطة",
+  "can_do": [
+    "B1.R.3",
+    "B1.R.4"
+  ],
+  "word_count": 147,
+  "gist_ar": "إيميل بيغيّر معاد اجتماع ويوضّح الجدول الجديد.",
+  "text": "Dear team,\n\nI am writing to change the arrangements for next week. We were going to hold the meeting on Tuesday, but two colleagues are travelling that day, so I have decided to postpone it.\n\nThe new schedule is: the meeting is taking place on Thursday at ten o'clock in Room 4. It will last ninety minutes. I am going to send the documents on Wednesday morning, so please read them before you arrive.\n\nIf you cannot come on Thursday, tell me before Monday and I will arrange a short call instead. I expect that we will finish the main decisions in one meeting, but if we need more time, we will organise a second meeting in two weeks.\n\nPlease note the deadline for the report has not changed: it is still the end of the month. I promise I will not cancel anything again!\n\nBest wishes,\nHanan",
+  "glossary": [
+    {
+      "word": "arrangement",
+      "ar": "ترتيب"
+    },
+    {
+      "word": "postpone",
+      "ar": "يأجّل"
+    },
+    {
+      "word": "schedule",
+      "ar": "جدول"
+    },
+    {
+      "word": "deadline",
+      "ar": "الموعد النهائي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why was the meeting postponed?",
+      "q_ar": "الاجتماع اتأجل ليه؟",
+      "options": [
+        "The report was late",
+        "Two colleagues are travelling",
+        "Room 4 was not free"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When is the meeting taking place now?",
+      "q_ar": "الاجتماع بقى إمتى؟",
+      "options": [
+        "Tuesday at ten o'clock",
+        "Thursday at ten o'clock",
+        "Wednesday morning"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What should you do if you cannot come?",
+      "q_ar": "لو مش هتقدر تيجي تعمل إيه؟",
+      "options": [
+        "Arrange a second meeting",
+        "Send the documents",
+        "Tell Hanan before Monday"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What has NOT changed?",
+      "q_ar": "إيه اللي ماتغيّرش؟",
+      "options": [
+        "The deadline for the report",
+        "The day of the meeting",
+        "The room number"
+      ],
+      "answer": 0
+    }
+  ]
+}

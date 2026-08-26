@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w11",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 11,
+  "title": "Summarise the report and give your view",
+  "title_ar": "لخّص التقرير وقول رأيك",
+  "can_do": [
+    "B1.M.2"
+  ],
+  "scenario": {
+    "en": "Your family asks you what the news report about the new bus line said.",
+    "ar": "عيلتك بتسألك التقرير عن خط الأتوبيس الجديد قال إيه."
+  },
+  "source": "The report said the company announced the line would open in June. The director admitted that costs had risen by twenty per cent, but promised no ticket price would change this year. Shop owners complained that the building work had reduced their sales. Two bridges still need testing.",
+  "task": {
+    "en": "Summarise the report, then give your opinion about it.",
+    "ar": "لخّص التقرير، وبعدين قول رأيك فيه."
+  },
+  "key_points": [
+    {
+      "en": "The company announced the line would open in June.",
+      "ar": "الشركة أعلنت إن الخط يفتح في يونيو."
+    },
+    {
+      "en": "The director admitted costs had risen by twenty per cent.",
+      "ar": "المدير اعترف إن التكاليف زادت ٢٠٪."
+    },
+    {
+      "en": "Shop owners complained that their sales had fallen.",
+      "ar": "أصحاب الدكاكين اشتكوا إن بيعهم قل."
+    },
+    {
+      "en": "Give your opinion about the report.",
+      "ar": "قول رأيك في التقرير."
+    }
+  ],
+  "model_answer": {
+    "en": "In short, the company announced the line would open in June, and the director admitted costs had risen by twenty per cent, although he promised ticket prices would not change. Shop owners complained that their sales had fallen. My opinion about the report is that June is optimistic, because two bridges still need testing.",
+    "ar": "باختصار، الشركة أعلنت إن الخط يفتح في يونيو، والمدير اعترف إن التكاليف زادت ٢٠٪، وإن كان وعد إن الأسعار ماتزيدش. وأصحاب الدكاكين اشتكوا إن بيعهم قل. رأيي في التقرير إن يونيو متفائل، لأن فيه كوبريين لسه محتاجين اختبار."
+  },
+  "signal_phrases": [
+    {
+      "en": "In short...",
+      "ar": "باختصار..."
+    },
+    {
+      "en": "The main point is...",
+      "ar": "النقطة الأساسية هي..."
+    },
+    {
+      "en": "Personally, I think...",
+      "ar": "شخصيًا، أنا شايف..."
+    },
+    {
+      "en": "On the other hand...",
+      "ar": "من ناحية تانية..."
+    }
+  ]
+}

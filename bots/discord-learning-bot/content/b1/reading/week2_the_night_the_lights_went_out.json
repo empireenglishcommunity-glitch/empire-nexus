@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w2",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 2,
+  "title": "The Night the Lights Went Out",
+  "title_ar": "الليلة اللي النور فيها قطع",
+  "can_do": [
+    "B1.R.3"
+  ],
+  "word_count": 147,
+  "gist_ar": "حكاية عن ليلة قطع فيها النور والعيلة اتجمعت.",
+  "text": "It was a normal Thursday evening. My mother was cooking, my father was reading the newspaper, and I was waiting for a message from my friend. Suddenly, at nine o'clock, all the lights went out.\n\nAt that moment nobody moved. Then my father laughed and said, 'Well, we still have candles.' While my mother was looking for them, I noticed something strange: the whole street was dark, not only our building.\n\nWe sat together in the kitchen with two candles. My father started telling stories about his childhood, and my mother remembered the day she arrived in this city. I realised that we had not talked like that for months.\n\nThe lights came back at midnight. Everybody stood up and went to their rooms, and the evening ended. But I still think about that night — the night we lost the electricity and found each other again.",
+  "glossary": [
+    {
+      "word": "suddenly",
+      "ar": "فجأة"
+    },
+    {
+      "word": "notice",
+      "ar": "يلاحظ"
+    },
+    {
+      "word": "realise",
+      "ar": "يدرك"
+    },
+    {
+      "word": "at that moment",
+      "ar": "في اللحظة دي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What was the writer doing when the lights went out?",
+      "q_ar": "الكاتب كان بيعمل إيه لما النور قطع؟",
+      "options": [
+        "Cooking dinner",
+        "Waiting for a message",
+        "Reading the newspaper"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What strange thing did the writer notice?",
+      "q_ar": "لاحظ إيه الغريب؟",
+      "options": [
+        "The door was open",
+        "The whole street was dark",
+        "The candles were missing"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did the family do during the power cut?",
+      "q_ar": "العيلة عملت إيه وقت انقطاع النور؟",
+      "options": [
+        "They went outside",
+        "They sat together and told stories",
+        "They went to their rooms"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the writer still think about that night?",
+      "q_ar": "ليه لسه بيفكر في الليلة دي؟",
+      "options": [
+        "The lights never came back",
+        "The family talked together again",
+        "He lost his phone"
+      ],
+      "answer": 1
+    }
+  ]
+}

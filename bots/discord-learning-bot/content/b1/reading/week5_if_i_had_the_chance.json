@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w5",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 5,
+  "title": "If I Had the Chance",
+  "title_ar": "لو كانت عندي الفرصة",
+  "can_do": [
+    "B1.R.3"
+  ],
+  "word_count": 161,
+  "gist_ar": "رسالة عن أحلام وأمنيات لو الظروف اتغيرت.",
+  "text": "Dear Mona,\n\nYou asked me a difficult question: what would I do if I had the chance to change my life? I have been thinking about it all week.\n\nIf I were a millionaire, I don't think I would stop working. I would probably invest some of the money in a small school, because I would like to give other people the opportunity that I did not have. I would donate a part of it too, but I wouldn't tell anybody.\n\nIf I could travel anywhere tomorrow, I would choose Japan. I wish I spoke Japanese! I imagine walking in a quiet street there in spring.\n\nThe honest answer, though, is that I would change very little. If I quit my job and spent every day travelling, I think I would miss my students. Sometimes we dream about a different life, and then we discover that we would choose the same one again.\n\nWhat about you? What would you do?\n\nLayla",
+  "glossary": [
+    {
+      "word": "imagine",
+      "ar": "يتخيّل"
+    },
+    {
+      "word": "opportunity",
+      "ar": "فرصة"
+    },
+    {
+      "word": "donate",
+      "ar": "يتبرّع"
+    },
+    {
+      "word": "wish",
+      "ar": "يتمنّى"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What would Layla do if she were a millionaire?",
+      "q_ar": "لو كانت مليونيرة كانت عملت إيه؟",
+      "options": [
+        "Travel every day",
+        "Stop working immediately",
+        "Invest in a small school"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why would she invest in a school?",
+      "q_ar": "ليه تستثمر في مدرسة؟",
+      "options": [
+        "To give others an opportunity she did not have",
+        "To become more famous",
+        "To earn more money"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she wish?",
+      "q_ar": "بتتمنى إيه؟",
+      "options": [
+        "That she had more money",
+        "That she spoke Japanese",
+        "That she could stop working"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is her honest answer?",
+      "q_ar": "إيه إجابتها الصادقة؟",
+      "options": [
+        "She would change very little",
+        "She would change everything",
+        "She would quit her job"
+      ],
+      "answer": 0
+    }
+  ]
+}

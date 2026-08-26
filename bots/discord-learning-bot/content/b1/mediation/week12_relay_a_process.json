@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w12",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 12,
+  "title": "Explain how the shirt was made",
+  "title_ar": "اشرح القميص اتعمل إزاي",
+  "can_do": [
+    "B1.M.1"
+  ],
+  "scenario": {
+    "en": "A younger student asks you to explain the article about how a shirt is made.",
+    "ar": "طالب أصغر منك طلب تشرحله المقال عن إزاي القميص بيتعمل."
+  },
+  "source": "The article said: cotton is grown in a warm country and cleaned in a factory, then it is turned into thread. The thread is dyed before it is woven. The cloth is exported to a second factory, where it is cut and sewn. The buttons are added by hand, and each shirt is checked before it is packed.",
+  "task": {
+    "en": "Relay the main stages of the process in order.",
+    "ar": "انقل مراحل العملية بالترتيب."
+  },
+  "key_points": [
+    {
+      "en": "Cotton is grown and cleaned, then turned into thread.",
+      "ar": "القطن بيُزرع ويتنضف وبعدين يبقى خيط."
+    },
+    {
+      "en": "The thread is dyed before it is woven.",
+      "ar": "الخيط بيتصبغ قبل ما يُنسج."
+    },
+    {
+      "en": "The cloth is exported, cut and sewn in a second factory.",
+      "ar": "القماش بيتصدّر ويتقص ويتخيّط في مصنع تاني."
+    },
+    {
+      "en": "The buttons are added by hand and each shirt is checked.",
+      "ar": "الزراير بتتحط باليد وكل قميص بيتفحص."
+    }
+  ],
+  "model_answer": {
+    "en": "First the cotton is grown and cleaned, then it is turned into thread. The thread is dyed before it is woven. The cloth is exported to a second factory, where it is cut and sewn. Finally the buttons are added by hand, and each shirt is checked before it is packed.",
+    "ar": "الأول القطن بيُزرع ويتنضف، وبعدين يبقى خيط. والخيط بيتصبغ قبل ما يُنسج. والقماش بيتصدّر لمصنع تاني، وهناك يتقص ويتخيّط. وفي الآخر الزراير بتتحط باليد وكل قميص بيتفحص."
+  },
+  "signal_phrases": [
+    {
+      "en": "Just to be clear...",
+      "ar": "بس للتوضيح..."
+    },
+    {
+      "en": "So basically...",
+      "ar": "يعني بالأساس..."
+    },
+    {
+      "en": "Did I get that right?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Let me summarise.",
+      "ar": "خليني ألخّص."
+    }
+  ]
+}

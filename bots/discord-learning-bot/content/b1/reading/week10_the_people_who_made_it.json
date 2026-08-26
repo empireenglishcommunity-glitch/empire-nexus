@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w10",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 10,
+  "title": "The People Who Made My Street",
+  "title_ar": "الناس اللي عملوا شارعي",
+  "can_do": [
+    "B1.R.4"
+  ],
+  "word_count": 165,
+  "gist_ar": "وصف لناس وأماكن في الشارع باستخدام العبارات الوصلية.",
+  "text": "I want to describe the street where I grew up, and the people who made it what it is.\n\nThere is a baker whose shop opens at four in the morning. He is the person who taught me that work can be quiet and proud. Next to him there is a small workshop where an old man repairs anything that has a motor. The tool which he uses most is a screwdriver that belonged to his father.\n\nOpposite them lives a woman who came here as a stranger twenty years ago and who now knows every family. She is the neighbour that everybody calls when there is a problem.\n\nAt the end of the street there is a wall where the children write their names. The reason I love that wall is simple: it is the only place in the city which records that we were here.\n\nA street is not the buildings. It is the people whose habits you can hear through the window.",
+  "glossary": [
+    {
+      "word": "whose",
+      "ar": "اللي بتاعه"
+    },
+    {
+      "word": "workshop",
+      "ar": "ورشة"
+    },
+    {
+      "word": "stranger",
+      "ar": "غريب"
+    },
+    {
+      "word": "belongings",
+      "ar": "ممتلكات"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What time does the baker's shop open?",
+      "q_ar": "الفرن يفتح الساعة كام؟",
+      "options": [
+        "At midday",
+        "Six in the morning",
+        "Four in the morning"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Whose screwdriver does the old man use?",
+      "q_ar": "المفك بتاع مين؟",
+      "options": [
+        "The children's",
+        "The baker's",
+        "His father's"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the woman opposite known for?",
+      "q_ar": "الست اللي قصادهم معروفة بإيه؟",
+      "options": [
+        "Everybody calls her when there is a problem",
+        "She opens the earliest shop",
+        "She repairs motors"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the writer love the wall?",
+      "q_ar": "ليه الكاتب بيحب الحيطة؟",
+      "options": [
+        "It is the newest thing",
+        "It records that they were here",
+        "The children painted it"
+      ],
+      "answer": 1
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w13",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 13,
+  "title": "Is It Worth the Money?",
+  "title_ar": "هل يستاهل الفلوس؟",
+  "can_do": [
+    "B1.R.5"
+  ],
+  "word_count": 169,
+  "gist_ar": "مقال عن إزاي تحكم إن حاجة تستاهل تمنها.",
+  "text": "Most of us do not waste money on big things. We waste it on small things we do not notice.\n\nThink about a cheap phone charger. It costs too little to worry about, so we buy it, and it breaks in a month. Then we buy another one. After a year we have spent plenty of money and we still do not have a charger that works. A better one would have been expensive enough to make us think — and cheap enough in the end.\n\nOf course, the opposite mistake exists too. Some people believe that a high price always means good value, so they spend far too much and call it an investment. Neither habit is wise.\n\nSo how do we decide? Ask two questions. Will I still use this in a year? And can I afford it without borrowing? If the answer to both is yes, the price is probably fair.\n\nThe conclusion is not 'buy cheap' or 'buy expensive'. It is: buy rarely, and buy once.",
+  "glossary": [
+    {
+      "word": "afford",
+      "ar": "يقدر يتحمّل التكلفة"
+    },
+    {
+      "word": "value",
+      "ar": "قيمة"
+    },
+    {
+      "word": "borrow",
+      "ar": "يستلف"
+    },
+    {
+      "word": "plenty of",
+      "ar": "كتير"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the problem with a cheap charger?",
+      "q_ar": "مشكلة الشاحن الرخيص إيه؟",
+      "options": [
+        "You keep buying replacements",
+        "It is too expensive at first",
+        "It is hard to find"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the opposite mistake?",
+      "q_ar": "الغلطة العكسية إيه؟",
+      "options": [
+        "Never buying anything",
+        "Borrowing money to save",
+        "Believing a high price always means good value"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which two questions does the writer suggest?",
+      "q_ar": "الكاتب بيقترح أنهي سؤالين؟",
+      "options": [
+        "Is it cheap, and is it popular?",
+        "Who made it, and where?",
+        "Will I use it in a year, and can I afford it without borrowing?"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the writer's conclusion?",
+      "q_ar": "خلاصة الكاتب إيه؟",
+      "options": [
+        "Always buy the cheapest",
+        "Always buy the most expensive",
+        "Buy rarely, and buy once"
+      ],
+      "answer": 2
+    }
+  ]
+}

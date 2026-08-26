@@ -71,7 +71,11 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
     # ANNOUNCEMENTS" needs extended listening, which no reading passage can
     # honestly satisfy.
     "A2.R.2",
-    "B1.I.1", "B1.M.2", "B1.M.3", "B1.R.1", "B1.R.2",
+    # B1 is down to its two LISTENING-side descriptors: its mediation tasks
+    # closed B1.M.2 + B1.M.3, and B1.I.1 closed when week 3's Thursday mission
+    # became a travel roleplay (interaction cannot be proven by reading or
+    # mediation, so it needed a speaking task).
+    "B1.R.1", "B1.R.2",
     "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
 })
 
@@ -93,8 +97,6 @@ GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
 # incomplete means and what closes it".
 DESCRIPTOR_GAP_PLAN = {
     # --- needs authored MEDIATION tasks for that level (same schema as A1) ---
-    "B1.M.2": "B1 mediation tasks — summarise + give an opinion on a story/article/talk",
-    "B1.M.3": "B1 mediation tasks — keep a discussion going, restate and summarise",
     "B2.M.1": "B2 mediation tasks — summarise varied texts, contrast differing viewpoints",
     "B2.M.4": "B2 mediation tasks — bridge a disagreement, restate positions, propose a way forward",
     # --- needs authored READING passages for that level ---
@@ -108,7 +110,6 @@ DESCRIPTOR_GAP_PLAN = {
     "B2.R.2": "extended listening — TV news/current affairs and films in standard dialect",
     # --- needs new INTERACTION content (the current missions are largely solo
     #     monologue or scripted, so claiming these today would be a stretch) ---
-    "B1.I.1": "B1 travel/transactional interaction — no B1 week has a travel theme yet",
     "B2.I.1": "B2 spontaneous interaction — current B2 fluency tasks are solo monologue",
     "B2.I.5": "B2 collaborative interaction — invite others in, negotiate a compromise",
 }
