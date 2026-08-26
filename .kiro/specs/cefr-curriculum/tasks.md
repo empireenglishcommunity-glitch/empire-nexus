@@ -195,7 +195,7 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       NEW authored field cannot go undelivered. Closed the last two orphans
       (`phoneme_focus`, `grammar_point`). *nexus #398, dojo #112*
 
-### 11B — complete the CEFR claim · ✅ A1 LIVE, A2–B2 authoring pending
+### 11B — complete the CEFR claim · ✅ A1 + A2 LIVE, B1–B2 authoring pending
 - [x] **Reading added** — CEFR reception had **no task at all**. A1 authored: 10
       passages, 50–67 words, each reusing 12–21 of its own week's vocabulary and
       only that week's grammar. Two self-caught quality bugs: every answer was in
@@ -210,12 +210,26 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       gap** — 0 of A1's 70 writing prompts asked for a note/message — closed by
       upgrading one week-3 prompt (documented in `A1-ALIGNMENT.md` §4d for owner
       review). `A2.P.6`/`B1.P.5` were labelling gaps. *nexus #401, dojo #115*
-- [ ] **18 descriptors still untaught** (A2 6, B1 5, B2 7). Each has a **named
-      plan** in `DESCRIPTOR_GAP_PLAN`, enforced by a test so none can sit as a
-      vague todo. They split into three different needs: authored **reading** for
-      A2/B2, authored **mediation** for A2/B1/B2, and **extended listening**
-      (which single-word dictation can never satisfy) for A2.R.2/B1.R.1/B1.R.2/
-      B2.R.1/B2.R.2 — plus new interaction content for B1.I.1/B2.I.1/B2.I.5.
+- [x] **A2 authored (2026-08-24) — A2 is 17/18.** 12 reading passages (89–105
+      words; four deliberately instruction-shaped so `A2.R.5` is genuinely
+      taught, not claimed) + 12 mediation tasks split by act (relay ×5, clarify
+      ×3, collaborate ×4, each claiming only the descriptors it performs).
+      Closes `A2.R.1`, `A2.R.5`, `A2.M.1`, `A2.M.2`, `A2.M.3`. The A1-only
+      content tests were **generalised over every authored level**, which
+      immediately caught a real weakness in the new A2 content (the `A2.M.2`
+      model answers asked a checking question without naming the move) — fixed
+      in the content, not by weakening the test. *nexus #406, dojo #117*
+- [ ] **13 descriptors still untaught** (A2 **1**, B1 5, B2 7). Each has a
+      **named plan** in `DESCRIPTOR_GAP_PLAN`, enforced by a test so none can sit
+      as a vague todo. Four different needs: authored **reading** for B2,
+      authored **mediation** for B1/B2, **extended listening** for
+      `A2.R.2`/`B1.R.1`/`B1.R.2`/`B2.R.1`/`B2.R.2`, and new **interaction**
+      content for `B1.I.1`/`B2.I.1`/`B2.I.5`.
+      **Authoring reading for a level does NOT close all its `.R.` gaps** — CEFR
+      files listening and reading both under "reception", so `A2.R.2`
+      ("announcements") stays open even though A2 reading shipped. Two ledger
+      tests were asserting that false equivalence and were corrected; the
+      distinction is now explicit as `GAPS_NEEDING_EXTENDED_LISTENING`.
       Deliberately NOT labelled as taught: claiming them would be over-claiming.
 
 ### 11C — depth & proof · ✅ LIVE
@@ -241,10 +255,11 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
 
-**One thing: authoring reading + mediation for A2–B2** (and extended-listening
-content), which is what the **18 remaining descriptors** need. Every one has a
+**One thing: authoring reading + mediation for B1–B2** (and extended-listening
+content), which is what the **13 remaining descriptors** need. Every one has a
 named plan in `coverage_ledger.DESCRIPTOR_GAP_PLAN`, enforced by a test, so the
-list cannot drift or be quietly forgotten. A2 6 · B1 5 · B2 7 · **A1/C1/C2 = 0**.
+list cannot drift or be quietly forgotten. A2 **1** · B1 5 · B2 7 ·
+**A1/C1/C2 = 0**. A1 and A2 both now exercise all four CEFR modes.
 
 Everything else is delivered: Phase 11 closed all ~894 orphaned atoms (coverage
 ledger reads **7,095 / 7,095 / 0**, gated in CI), added the two missing CEFR
