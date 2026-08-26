@@ -1,0 +1,104 @@
+{
+  "id": "broadcast_b1_w11",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 11,
+  "title": "What They Actually Said",
+  "title_ar": "هما قالوا إيه بالظبط",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "news review",
+  "word_count": 154,
+  "gist_ar": "مراجعة أسبوعية: الوزير قال حاجة أضيق من اللي الناس فهمتها، ومحدش سأل السؤال الواضح.",
+  "before_listening": {
+    "en": "A weekly news review about what a minister said. Listen for the analyst's EXPLANATION of how the confusion happened.",
+    "ar": "مراجعة أخبار أسبوعية عن كلام وزير. ركّز على تفسير المحللة للّبس اللي حصل."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "Welcome to the week in review. On Sunday the transport minister said that fuel prices would not rise before the summer. On Monday his office told a newspaper that he had been talking about diesel only. By Wednesday, petrol was up nine per cent. Layla, what happened?"
+    },
+    {
+      "speaker": "Analyst",
+      "speaker_ar": "المحللة",
+      "voice": "af_sarah",
+      "text": "Two things happened. First, he said something narrower than people heard. He told the conference that there were no plans for an increase, and 'no plans' is not a promise. Second, nobody asked him the obvious follow-up question. If a journalist had asked him whether he meant petrol as well, we would have known on Sunday. Instead, three papers reported that he had promised prices would stay the same, and one reported that he had refused to comment, which was not true either. He did comment. He was simply careful."
+    },
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "So who was wrong?"
+    },
+    {
+      "speaker": "Analyst",
+      "speaker_ar": "المحللة",
+      "voice": "af_sarah",
+      "text": "Everybody was a little wrong, which is the most uncomfortable answer there is."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the analyst's main explanation?",
+    "q_ar": "إيه تفسير المحللة الأساسي؟",
+    "options": [
+      "The minister lied deliberately about fuel prices",
+      "He spoke narrowly and nobody asked the obvious follow-up",
+      "The newspapers invented the whole story"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What exactly did the minister tell the conference?",
+      "q_ar": "الوزير قال إيه بالظبط في المؤتمر؟",
+      "options": [
+        "That prices would never rise again",
+        "That there were no plans for an increase",
+        "That petrol would rise in the summer"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "According to the analyst, what does 'no plans' mean?",
+      "q_ar": "حسب المحللة، 'مفيش خطط' معناها إيه؟",
+      "options": [
+        "A firm promise",
+        "A refusal to comment",
+        "Something less than a promise"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did one newspaper report that was untrue?",
+      "q_ar": "إيه اللي جورنال واحد نشره وكان غلط؟",
+      "options": [
+        "That he had refused to comment",
+        "That diesel prices would fall",
+        "That the minister had resigned"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "fuel",
+      "ar": "وقود / بنزين وسولار"
+    },
+    {
+      "word": "an increase",
+      "ar": "زيادة"
+    },
+    {
+      "word": "a follow-up question",
+      "ar": "سؤال متابعة"
+    },
+    {
+      "word": "refused to comment",
+      "ar": "رفض التعليق"
+    }
+  ]
+}

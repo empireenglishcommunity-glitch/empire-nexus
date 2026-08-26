@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_b1_w13",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 13,
+  "title": "Never Enough Left at the End",
+  "title_ar": "مفيش حاجة فاضلة في الآخر",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "advice show",
+  "word_count": 193,
+  "gist_ar": "برنامج نصايح مالية: المشكلة مش في الحاجات الكبيرة، المشكلة في الصغيرة اللي محدش بيحسبها.",
+  "before_listening": {
+    "en": "A radio money-advice programme with a caller. Listen for the host's MAIN advice, not the three steps.",
+    "ar": "برنامج نصايح مالية مع متصل. ركّز على النصيحة الأساسية، مش الخطوات التلاتة."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_bella",
+      "text": "Our next caller has a problem that a lot of you wrote to us about. Go ahead, Kamal."
+    },
+    {
+      "speaker": "Kamal",
+      "speaker_ar": "كمال",
+      "voice": "bm_lewis",
+      "text": "I earn enough, I think, but there is never enough left at the end of the month. Both my sisters say I spend too much on small things, and neither of them is wrong. But I cannot see where it goes."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_bella",
+      "text": "That is the most common problem we get, and it is almost never the big things. Try this for one month. Write down every amount under fifty pounds, and only those. Most people track the rent and forget the rest, and the rest is usually too big to ignore. Second: you said you earn enough. Enough for what? If you have no number, any amount feels too little. Pick one goal, one figure and one date. Third, and this is the hard one: neither saving nor earning more will help if you do not know the shape of the month. Some weeks are far more expensive than others. Find the expensive week, and move something out of it."
+    },
+    {
+      "speaker": "Kamal",
+      "speaker_ar": "كمال",
+      "voice": "bm_lewis",
+      "text": "The expensive week is always the first one."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_bella",
+      "text": "Then you have just done the hardest part."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the host's main advice?",
+    "q_ar": "إيه نصيحة المذيعة الأساسية؟",
+    "options": [
+      "Find a second job and earn more",
+      "Track the small spending and learn the shape of the month",
+      "Let his sisters manage his money for him"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Which amounts does she tell him to write down?",
+      "q_ar": "قالت له يكتب أنهي مبالغ؟",
+      "options": [
+        "Only the rent and the bills",
+        "Every amount under fifty pounds",
+        "Every amount over fifty pounds"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does she ask 'enough for what?'",
+      "q_ar": "ليه سألته 'كفاية لإيه؟'",
+      "options": [
+        "Because without a number, any amount feels too little",
+        "Because she thinks he does not earn enough",
+        "Because his sisters disagree with him"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Kamal realise at the end?",
+      "q_ar": "كمال اكتشف إيه في الآخر؟",
+      "options": [
+        "He spends too much on his sisters",
+        "The first week of the month is always the expensive one",
+        "He needs to move to a cheaper flat"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "there is never enough left",
+      "ar": "مفيش حاجة فاضلة أبدًا"
+    },
+    {
+      "word": "to track",
+      "ar": "يتابع / يسجّل"
+    },
+    {
+      "word": "a figure",
+      "ar": "رقم محدد"
+    },
+    {
+      "word": "the shape of the month",
+      "ar": "شكل الشهر / توزيع المصاريف فيه"
+    }
+  ]
+}

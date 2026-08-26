@@ -1,0 +1,104 @@
+{
+  "id": "broadcast_b1_w5",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 5,
+  "title": "What Would You Do? — A Radio Phone-In",
+  "title_ar": "إنت كنت هتعمل إيه؟ — برنامج مداخلات",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "phone-in",
+  "word_count": 181,
+  "gist_ar": "برنامج مداخلات: لو لقيت شنطة فيها فلوس كتير، هتعمل إيه؟ اتنين ردّوا بطريقتين مختلفتين.",
+  "before_listening": {
+    "en": "A radio phone-in with two callers. They reach the same decision for very different reasons. Listen for what they AGREE on.",
+    "ar": "برنامج مداخلات في الراديو مع متصلين. الاتنين وصلوا لنفس القرار بأسباب مختلفة. ركّز على إيه اللي متفقين عليه."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "Good afternoon. Today's question is simple. If you found a bag with a lot of money in it, what would you do? The lines are open. First caller, you are on."
+    },
+    {
+      "speaker": "Hisham",
+      "speaker_ar": "هشام",
+      "voice": "am_michael",
+      "text": "Hello. I would take it straight to the police. I know some people would keep it, but I would not sleep. If it were my bag, I would want somebody to do the same for me. My father lost his wallet in a taxi twenty years ago, and a stranger returned it with everything inside. If that had not happened, I think I would be a different person today."
+    },
+    {
+      "speaker": "Dina",
+      "speaker_ar": "دينا",
+      "voice": "af_sky",
+      "text": "I would take it to the police too, but I want to be honest: I would think about it first. If I had no money for the rent that month, it would be much harder. I do not think people who keep it are all bad. I think they are frightened. If we talked about money more openly, fewer people would be in that situation."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "Two answers, and neither of them is as simple as it sounds. More after the news."
+    }
+  ],
+  "gist_question": {
+    "q": "What do the two callers agree about?",
+    "q_ar": "إيه اللي المتصلين الاتنين متفقين عليه؟",
+    "options": [
+      "That they would take the bag to the police",
+      "That everyone who keeps the money is a bad person",
+      "That they would keep the money if the rent was due"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Why does Hisham say he would return it?",
+      "q_ar": "ليه هشام قال إنه هيرجّعها؟",
+      "options": [
+        "Because a stranger once returned his father's wallet",
+        "Because he is afraid of the police",
+        "Because he has never needed money"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Dina admit?",
+      "q_ar": "دينا اعترفت بإيه؟",
+      "options": [
+        "That she would keep the money",
+        "That she would think about it first",
+        "That she has kept money before"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Dina say would help?",
+      "q_ar": "دينا قالت إيه اللي هيساعد؟",
+      "options": [
+        "Stronger punishments",
+        "Talking about money more openly",
+        "More police on the streets"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "the lines are open",
+      "ar": "الخطوط مفتوحة للمداخلات"
+    },
+    {
+      "word": "a stranger",
+      "ar": "شخص غريب"
+    },
+    {
+      "word": "the rent",
+      "ar": "الإيجار"
+    },
+    {
+      "word": "frightened",
+      "ar": "خايفين"
+    }
+  ]
+}

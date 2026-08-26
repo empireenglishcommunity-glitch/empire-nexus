@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w10",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 10,
+  "title": "The Walking Tour — Stop Three",
+  "title_ar": "الجولة المشي — المحطة التالتة",
+  "can_do": [
+    "B1.R.1"
+  ],
+  "format": "audio guide",
+  "word_count": 176,
+  "gist_ar": "دليل صوتي في جولة مشي، وبيفرّق بين اللي مؤكد واللي مش مؤكد.",
+  "before_listening": {
+    "en": "An audio guide on a walking tour. The guide believes some things and doubts others. Listen for what he DOUBTS.",
+    "ar": "دليل صوتي في جولة مشي. بيصدّق حاجات وبيشكّ في حاجات. ركّز على الحاجة اللي بيشكّ فيها."
+  },
+  "segments": [
+    {
+      "speaker": "Guide",
+      "speaker_ar": "المرشد",
+      "voice": "bf_emma",
+      "text": "Stop here for a moment, in front of the blue door. This is the house where the poet lived for six years, and the room whose window you can see on the first floor is the one in which he wrote most of his early work. The man who owns the house today is a dentist, and he is used to visitors standing in the street and pointing. Now look to your left. The narrow lane that runs beside the house is older than the house itself. It is the only lane in this quarter which has never been widened, which is why it still floods every winter. At the end of it there is a café whose owner claims that his grandfather served coffee to the poet every morning. That may well be true. What is certainly true is that the chairs, which look old enough, were bought in two thousand and four. Walk to the end of the lane and wait there. The next stop is the school that gave this street its name."
+    }
+  ],
+  "gist_question": {
+    "q": "What kind of recording is this?",
+    "q_ar": "التسجيل ده نوعه إيه؟",
+    "options": [
+      "A university lecture about a poet",
+      "A guided walking tour of a street",
+      "A radio interview with a dentist"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Who owns the poet's house today?",
+      "q_ar": "مين بيملك بيت الشاعر دلوقتي؟",
+      "options": [
+        "A dentist",
+        "The café owner",
+        "The poet's grandson"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the lane still flood every winter?",
+      "q_ar": "ليه الحارة لسه بتغرق كل شتا؟",
+      "options": [
+        "It has never been widened",
+        "The café blocks the water",
+        "It is newer than the house"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the guide clearly doubt?",
+      "q_ar": "إيه اللي المرشد بيشكّ فيه بوضوح؟",
+      "options": [
+        "That the poet ever lived in the house",
+        "That the café's chairs are as old as they look",
+        "That the lane is older than the house"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "lane",
+      "ar": "حارة ضيقة"
+    },
+    {
+      "word": "widened",
+      "ar": "اتوسّعت"
+    },
+    {
+      "word": "it floods",
+      "ar": "بتغرق بالمية"
+    },
+    {
+      "word": "claims",
+      "ar": "بيدّعي / بيقول"
+    }
+  ]
+}

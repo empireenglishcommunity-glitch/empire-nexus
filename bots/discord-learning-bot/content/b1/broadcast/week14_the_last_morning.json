@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w14",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 14,
+  "title": "The Last Morning",
+  "title_ar": "آخر يوم",
+  "can_do": [
+    "B1.R.1"
+  ],
+  "format": "talk",
+  "word_count": 181,
+  "gist_ar": "كلمة آخر يوم في الكورس: الممارسة هتتوقف لوحدها، فلازم تقرّر دلوقتي إيه اللي هيفكّرك.",
+  "before_listening": {
+    "en": "A teacher's talk on the last day of a course. Listen for her WARNING about what will happen in three weeks.",
+    "ar": "كلمة مدرّسة في آخر يوم من الكورس. ركّز على تحذيرها عن اللي هيحصل بعد تلات أسابيع."
+  },
+  "segments": [
+    {
+      "speaker": "Teacher",
+      "speaker_ar": "المدرّسة",
+      "voice": "af_sky",
+      "text": "This is the last morning, so I want to say one thing and then let you go. When you started, most of you wanted to learn English in order to get a better job. That is a good reason, and although it worked for some of you, it is not the reason you kept going. You kept going because you started enjoying being understood. That is a different thing, and it is much harder to lose. A warning, however. In three weeks you will stop practising. Not because you decide to, but because nothing will remind you. So decide now what will remind you. Some of you have agreed to meet on Fridays, and I would recommend keeping that, even when only two people come. Others plan to read for ten minutes a night, which sounds too small to matter and is in fact the only size that survives. Finally, avoid waiting to feel ready before you speak. Nobody feels ready. You did not feel ready in week one either, and yet here you are, understanding every word I am saying."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the teacher's main message?",
+    "q_ar": "إيه رسالة المدرّسة الأساسية؟",
+    "options": [
+      "English is mainly useful for getting a better job",
+      "Students should have studied harder during the course",
+      "Practice will stop unless they decide now what will remind them"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why does she say the students really kept going?",
+      "q_ar": "ليه قالت إن الطلبة كمّلوا فعلًا؟",
+      "options": [
+        "They started enjoying being understood",
+        "They wanted a better job",
+        "Their teacher pushed them"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she recommend about the Friday meetings?",
+      "q_ar": "نصحت بإيه بخصوص لقاءات الجمعة؟",
+      "options": [
+        "Stop them once attendance falls",
+        "Keep them even when only two people come",
+        "Replace them with daily meetings"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she say about waiting to feel ready?",
+      "q_ar": "قالت إيه عن الانتظار لحد ما تحس إنك جاهز؟",
+      "options": [
+        "Nobody feels ready, so do not wait for it",
+        "Wait until you are genuinely confident",
+        "You should have felt ready by week one"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "in order to",
+      "ar": "علشان / بهدف"
+    },
+    {
+      "word": "although",
+      "ar": "على الرغم من إن"
+    },
+    {
+      "word": "I would recommend",
+      "ar": "أنا أنصح بـ"
+    },
+    {
+      "word": "avoid waiting",
+      "ar": "متستناش"
+    }
+  ]
+}

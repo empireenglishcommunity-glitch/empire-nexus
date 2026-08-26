@@ -1,0 +1,105 @@
+{
+  "id": "broadcast_b1_w7",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 7,
+  "title": "I've Been Doing This for Nine Years",
+  "title_ar": "بقالي تسع سنين بعمل كده",
+  "can_do": [
+    "B1.R.1",
+    "B1.R.2"
+  ],
+  "format": "interview",
+  "word_count": 165,
+  "gist_ar": "مقابلة في بودكاست مع راجل بيصلّح عجل: بدأ بالغلط وبقى بيحب التعليم أكتر من التصليح.",
+  "before_listening": {
+    "en": "A podcast interview about somebody's work and hobby. Listen for HOW the business started.",
+    "ar": "مقابلة بودكاست عن شغل وهواية واحد. ركّز على الشغل ده بدأ إزاي."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_bella",
+      "text": "You have been repairing bicycles in the same shop for nine years. How did it start?"
+    },
+    {
+      "speaker": "Guest",
+      "speaker_ar": "الضيف",
+      "voice": "bm_lewis",
+      "text": "By accident. I had been working in an office for six years, and I hated it. I had been fixing my own bike since I was a boy, and one evening a neighbour asked me to look at hers. Then her brother came. Then his friends. I have been doing it ever since. For the first two years I was still in the office, so I was repairing bikes until midnight and going to work tired. I have been teaching a class on Saturdays for about eighteen months now, and that is the part I enjoy most. People arrive thinking a bicycle is complicated. It is not. It has been more or less the same machine for a hundred years, and it wants to be understood, not respected."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيعة",
+      "voice": "af_bella",
+      "text": "And the office? Do you ever miss it?"
+    },
+    {
+      "speaker": "Guest",
+      "speaker_ar": "الضيف",
+      "voice": "bm_lewis",
+      "text": "I have not thought about the office for years. That is the answer."
+    }
+  ],
+  "gist_question": {
+    "q": "How did the guest's business begin?",
+    "q_ar": "شغل الضيف بدأ إزاي؟",
+    "options": [
+      "He trained as a bicycle mechanic at college",
+      "He planned it carefully while working in the office",
+      "A neighbour asked him to fix her bicycle"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "How long had he worked in an office?",
+      "q_ar": "قعد قد إيه بيشتغل في مكتب؟",
+      "options": [
+        "Six years",
+        "Nine years",
+        "Eighteen months"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which part of the work does he enjoy most now?",
+      "q_ar": "أنهي جزء من الشغل بيستمتع بيه أكتر دلوقتي؟",
+      "options": [
+        "Working late until midnight",
+        "Teaching the Saturday class",
+        "Repairing his own bicycle"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he say about bicycles?",
+      "q_ar": "قال إيه عن العجل؟",
+      "options": [
+        "They are complicated machines",
+        "They have barely changed and want to be understood",
+        "They should be treated with respect"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "by accident",
+      "ar": "بالغلط / من غير تخطيط"
+    },
+    {
+      "word": "ever since",
+      "ar": "من يومها"
+    },
+    {
+      "word": "complicated",
+      "ar": "معقّد"
+    },
+    {
+      "word": "more or less",
+      "ar": "تقريبًا"
+    }
+  ]
+}

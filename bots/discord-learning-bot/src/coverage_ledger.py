@@ -81,8 +81,9 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
     # Phase 11D closes them one level at a time with the `broadcast` (extended
     # listening) exercise: about a minute of connected speech per week, with the
     # gist question asked BEFORE the transcript unlocks, so the answer comes
-    # from the ear. A2.R.2 closed when A2's twelve scripts landed.
-    "B1.R.1", "B1.R.2",
+    # from the ear. A2.R.2 closed when A2's twelve scripts landed; B1.R.1 and
+    # B1.R.2 closed with B1's fourteen (seven on work/school/leisure speech,
+    # nine on radio/TV current affairs).
     "B2.R.1", "B2.R.2",
 })
 
@@ -97,7 +98,7 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
 # effort exists to remove. Kept as an explicit set rather than inferred from
 # prose, and a test pins it against DESCRIPTOR_GAP_PLAN so the two cannot drift.
 GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
-    "B1.R.1", "B1.R.2", "B2.R.1", "B2.R.2",
+    "B2.R.1", "B2.R.2",
 })
 
 # What each remaining gap actually NEEDS in order to close honestly. This is
@@ -106,8 +107,6 @@ GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
 DESCRIPTOR_GAP_PLAN = {
     # --- needs EXTENDED LISTENING content (longer audio than the current
     #     single-word dictation items can ever satisfy) ---
-    "B1.R.1": "extended listening — main points of clear standard speech on familiar matters",
-    "B1.R.2": "extended listening — main points of radio/TV on current affairs",
     "B2.R.1": "extended listening — extended speech/lectures, complex lines of argument",
     "B2.R.2": "extended listening — TV news/current affairs and films in standard dialect",
 }

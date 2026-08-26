@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w4",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 4,
+  "title": "Exam Day: The Rules",
+  "title_ar": "يوم الامتحان: القواعد",
+  "can_do": [
+    "B1.R.1"
+  ],
+  "format": "instructions",
+  "word_count": 170,
+  "gist_ar": "تعليمات قبل الامتحان: إيه اللي هيحصل لو كسرت أي قاعدة.",
+  "before_listening": {
+    "en": "Rules read out before an exam. Listen for the rule that has NO warning and no second chance.",
+    "ar": "قواعد بتتقال قبل الامتحان. ركّز على القاعدة اللي مفيهاش تحذير ولا فرصة تانية."
+  },
+  "segments": [
+    {
+      "speaker": "Examiner",
+      "speaker_ar": "المراقب",
+      "voice": "am_adam",
+      "text": "Right, listen carefully, because these rules decide whether you sit the exam or not. If you arrive more than thirty minutes late, you will not be allowed into the hall. If you arrive before that, you can come in, but you will not get extra time. As soon as you sit down, put your identity card on the desk, face up. If an invigilator cannot see your card, they will stop and ask you, and that wastes your time, not theirs. Phones: if your phone makes any sound, even inside your bag, the exam is over for you. There is no warning and there is no second chance. When you finish, stay in your seat until an invigilator collects your paper. If you stand up and walk to the front, your paper may be counted as incomplete. Finally, if you feel unwell during the exam, raise your hand and wait. Do not leave the hall on your own, because once you go through that door you cannot come back in."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker's main purpose?",
+    "q_ar": "إيه هدف المتكلم الأساسي؟",
+    "options": [
+      "To explain what will happen if students break the rules",
+      "To describe how the exam will be marked",
+      "To tell students what to revise tonight"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "What happens if a student arrives forty minutes late?",
+      "q_ar": "إيه اللي يحصل لو الطالب جه متأخر أربعين دقيقة؟",
+      "options": [
+        "They get extra time at the end",
+        "They will not be allowed into the hall",
+        "They must sit at the front"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the rule about phones?",
+      "q_ar": "إيه القاعدة بخصوص الموبايل؟",
+      "options": [
+        "Any sound ends the exam, with no warning",
+        "One warning is given first",
+        "Phones must be switched off but may stay in bags"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What should a student do if they feel unwell?",
+      "q_ar": "الطالب يعمل إيه لو حس إنه تعبان؟",
+      "options": [
+        "Leave the hall quietly",
+        "Raise their hand and wait",
+        "Take the paper to the front"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "invigilator",
+      "ar": "المراقب في الامتحان"
+    },
+    {
+      "word": "identity card",
+      "ar": "كارت الهوية"
+    },
+    {
+      "word": "face up",
+      "ar": "الوش لفوق"
+    },
+    {
+      "word": "incomplete",
+      "ar": "غير مكتمل"
+    }
+  ]
+}

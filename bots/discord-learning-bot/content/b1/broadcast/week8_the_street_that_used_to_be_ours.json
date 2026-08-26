@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w8",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 8,
+  "title": "The Street That Used To Be Ours",
+  "title_ar": "الشارع اللي كان بتاعنا",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "documentary",
+  "word_count": 175,
+  "gist_ar": "برنامج عن شارع اتغيّر: الحياة بقت أسهل، بس حاجة محدش خطّط يخسرها ضاعت.",
+  "before_listening": {
+    "en": "A radio documentary about how a street has changed. The speaker is careful NOT to say the past was simply better. Listen for what she says was lost.",
+    "ar": "برنامج إذاعي عن شارع اتغيّر. المذيعة مش بتقول إن الماضي كان أحسن وخلاص. ركّز على إيه اللي ضاع."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "In nineteen eighty-five, this street had four bakeries. Today it has one, and it opens at six because the man who runs it still cannot sleep past five. People here will tell you that things used to be better, and then, if you sit with them long enough, they will tell you something more honest. Mrs Aziza used to sell vegetables from a table outside her door. She would start at four in the morning, and in winter her hands would crack. She does not miss that. What she misses is the noise: the children who used to play in the road because there were almost no cars, and the neighbours who would sit outside until midnight in summer because nobody had air conditioning. Her grandson has a good job and a flat with cold air and a lock on the door, and she is proud of him. But he does not know the names of the people upstairs. She used to know everybody in three streets. That is the thing nobody planned to lose."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the main point of this programme?",
+    "q_ar": "إيه الفكرة الأساسية في البرنامج؟",
+    "options": [
+      "The street was better in every way in the past",
+      "Life is easier now, but something nobody planned for was lost",
+      "The last bakery in the street will soon close"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What does Mrs Aziza say she does NOT miss?",
+      "q_ar": "مدام عزيزة قالت إنها مش وحشاها إيه؟",
+      "options": [
+        "The noise of the street",
+        "Selling vegetables in the cold",
+        "Sitting outside with the neighbours"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did children use to play in the road?",
+      "q_ar": "ليه الأطفال كانوا بيلعبوا في الشارع؟",
+      "options": [
+        "There were almost no cars",
+        "There was no school",
+        "The bakeries were closed"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she say about her grandson?",
+      "q_ar": "قالت إيه عن حفيدها؟",
+      "options": [
+        "He cannot find a good job",
+        "She is proud of him, but he does not know his neighbours",
+        "He wants to move back into the street"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "bakeries",
+      "ar": "مخابز"
+    },
+    {
+      "word": "her hands would crack",
+      "ar": "إيديها كانت تتشقّق"
+    },
+    {
+      "word": "air conditioning",
+      "ar": "تكييف"
+    },
+    {
+      "word": "she is proud of him",
+      "ar": "هي فخورة بيه"
+    }
+  ]
+}

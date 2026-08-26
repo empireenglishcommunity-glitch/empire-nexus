@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_b1_w12",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 12,
+  "title": "How It Is Made — The Glass Factory",
+  "title_ar": "إزاي بتتعمل — مصنع الإزاز",
+  "can_do": [
+    "B1.R.1",
+    "B1.R.2"
+  ],
+  "format": "factory tour",
+  "word_count": 172,
+  "gist_ar": "جولة في مصنع إزاز: كل حاجة بتحصل في مبنى واحد ومفيش حاجة بتتخلص منها.",
+  "before_listening": {
+    "en": "A tour of a glass factory. Listen for the point the guide keeps returning to about waste.",
+    "ar": "جولة في مصنع إزاز. ركّز على النقطة اللي المرشد بيرجع لها عن الهدر."
+  },
+  "segments": [
+    {
+      "speaker": "Guide",
+      "speaker_ar": "المرشد",
+      "voice": "am_michael",
+      "text": "Everything you are about to see is done in this one building. The glass arrives as sand, which surprises most visitors, and it is delivered by truck twice a week. The sand is mixed with two other materials, and then it is heated to about one thousand five hundred degrees. At that temperature it is not solid and it is not liquid; it is somewhere in between, and that is when it is shaped. The bottles you can see on the left were made about four minutes ago. They are still too hot to touch, so they are cooled slowly, over ninety minutes, in that long tunnel. If they were cooled quickly, they would crack. Every bottle is then checked by a camera that takes sixteen photographs of it. About one in forty is rejected, and the rejected ones are crushed and used again the same day. Nothing is thrown away. The factory was built in nineteen ninety-one, and it has been running seven days a week since two thousand and two."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the guide most want visitors to understand?",
+    "q_ar": "إيه اللي المرشد عايز الزوار يفهموه أكتر حاجة؟",
+    "options": [
+      "That the work is done entirely by hand",
+      "That it all happens in one building and nothing is wasted",
+      "That the factory is too old to work properly"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What form does the glass arrive in?",
+      "q_ar": "الإزاز بيوصل في أي شكل؟",
+      "options": [
+        "Finished bottles",
+        "Sand",
+        "Hot liquid glass"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why are the bottles cooled slowly?",
+      "q_ar": "ليه الإزايز بتبرد بالراحة؟",
+      "options": [
+        "They would crack if they were cooled quickly",
+        "The camera needs the extra time",
+        "To use less electricity"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What happens to the rejected bottles?",
+      "q_ar": "إيه اللي يحصل للإزايز المرفوضة؟",
+      "options": [
+        "They are thrown away",
+        "They are sold at a lower price",
+        "They are crushed and used again the same day"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "it is delivered",
+      "ar": "بيتم توصيله"
+    },
+    {
+      "word": "it is heated",
+      "ar": "بيتم تسخينه"
+    },
+    {
+      "word": "rejected",
+      "ar": "مرفوض"
+    },
+    {
+      "word": "crushed",
+      "ar": "بيتم طحنه"
+    }
+  ]
+}
