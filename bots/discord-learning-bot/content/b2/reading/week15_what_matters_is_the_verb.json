@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w15",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 15,
+  "title": "What Matters Is the Emphasis",
+  "title_ar": "اللي يهم هو التوكيد",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 188,
+  "gist_ar": "مقال عن إن ترتيب الجملة بيحدّد اللي القارئ يفتكره.",
+  "text": "It is not the facts that persuade people; it is the order they arrive in. What most writers underestimate is how much emphasis decides.\n\nConsider a sentence carrying three pieces of information: the delay, the cause and the remedy. Put the remedy last and the reader remembers a problem. Put it first and they remember a plan. The facts are identical; what changes is which one the sentence points at. That is precisely why 'the reason we cancelled was the weather' lands so differently from 'the weather cancelled it'.\n\nWhat matters particularly is the end of a sentence. English gives its final position enormous weight, so a crucial detail buried in the middle is, in fact, hidden. Writers who are so worried about being unclear that they explain everything twice often bury the essential point in the second explanation.\n\nThe thing is, emphasis cannot be added afterwards with bold type. It is built by structure. If you want a reader to leave with one idea, the honest test is simple: read the last six words of each paragraph and ask whether they are the six you would choose.",
+  "glossary": [
+    {
+      "word": "emphasise",
+      "ar": "يؤكّد"
+    },
+    {
+      "word": "highlight",
+      "ar": "يبرز"
+    },
+    {
+      "word": "crucial",
+      "ar": "حاسم"
+    },
+    {
+      "word": "in fact",
+      "ar": "في الحقيقة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say persuades people?",
+      "q_ar": "الكاتب بيقول إيه اللي يقنع الناس؟",
+      "options": [
+        "The number of facts",
+        "The order the facts arrive in",
+        "The use of bold type"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What happens if the remedy comes last?",
+      "q_ar": "لو الحل جه في الآخر يحصل إيه؟",
+      "options": [
+        "The reader remembers a problem",
+        "The facts change",
+        "The reader remembers a plan"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is a detail in the middle of a sentence hidden?",
+      "q_ar": "ليه التفصيلة في وسط الجملة مخفية؟",
+      "options": [
+        "Readers skip the middle",
+        "Middles are usually longer",
+        "English gives the final position most weight"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What test does the writer suggest?",
+      "q_ar": "بيقترح أنهي اختبار؟",
+      "options": [
+        "Count the facts in each sentence",
+        "Add bold type and reread",
+        "Read the last six words of each paragraph"
+      ],
+      "answer": 2
+    }
+  ]
+}

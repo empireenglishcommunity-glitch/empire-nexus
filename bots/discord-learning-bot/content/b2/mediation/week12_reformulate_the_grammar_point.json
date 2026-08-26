@@ -1,0 +1,56 @@
+{
+  "id": "mediation_b2_w12",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 12,
+  "title": "Reformulate the rule so it is usable",
+  "title_ar": "أعِد صياغة القاعدة عشان تبقى قابلة للاستخدام",
+  "can_do": [
+    "B2.M.3"
+  ],
+  "scenario": {
+    "en": "A study group is trying to memorise verb pairs and getting nowhere.",
+    "ar": "مجموعة دراسة بتحاول تحفظ أزواج الأفعال وواقفة."
+  },
+  "source": "The group has a list: stop doing / stop to do, regret telling / regret to tell, mean doing / mean to do. They have been repeating the list for twenty minutes. The article they read said the infinitive looks forward to a purpose and the gerund looks back at an action.",
+  "task": {
+    "en": "Reformulate the rule in your own words so the group can use it, and move them on.",
+    "ar": "أعِد صياغة القاعدة بكلامك عشان المجموعة تستخدمها، وحرّكهم للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Reformulate the rule: infinitive looks forward to a purpose.",
+      "ar": "أعِد الصياغة: المصدر بينظر لغرض قدام."
+    },
+    {
+      "en": "Reformulate: the gerund looks back at an action.",
+      "ar": "أعِد الصياغة: الـ gerund بينظر لفعل ورا."
+    },
+    {
+      "en": "Move the group from memorising the list to using the pattern.",
+      "ar": "حرّكهم من الحفظ لاستخدام النمط."
+    }
+  ],
+  "model_answer": {
+    "en": "To put it another way: don't memorise the list. The infinitive looks forward to a purpose — I stopped to smoke means that was my reason. The gerund looks back at an action — I stopped smoking means I ended it. Shall we test each pair by asking which direction the sentence faces, instead of learning it?",
+    "ar": "بصيغة تانية: مانحفظش القائمة. المصدر بينظر لغرض جاي — I stopped to smoke يعني ده كان سببي. والـ gerund بينظر لفعل فات — I stopped smoking يعني بطّلت. نجرّب كل زوج بسؤال: الجملة بتبص في أنهي اتجاه؟ بدل الحفظ؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me be precise.",
+      "ar": "خليني أكون دقيق."
+    },
+    {
+      "en": "The significance is...",
+      "ar": "الأهمية إن..."
+    },
+    {
+      "en": "To put it another way...",
+      "ar": "بصيغة تانية..."
+    },
+    {
+      "en": "Have I missed anything?",
+      "ar": "فوّتت حاجة؟"
+    }
+  ]
+}

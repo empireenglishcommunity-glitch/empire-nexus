@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w11",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 11,
+  "title": "The Founder Nobody Names",
+  "title_ar": "المؤسِّسة اللي محدش بيسمّيها",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 188,
+  "gist_ar": "مقال عن ناس مؤسّسين بيتنسوا من التاريخ الرسمي.",
+  "text": "The library in our district, which was built in 1931, carries the name of a governor who never entered it. The woman who founded it, having sold her own house to pay for the land, is recorded nowhere on the building.\n\nThis is not unusual. Landmarks tend to be named after the official who approved them rather than the resident who wanted them. The monument in the square, surrounded now by parked cars, commemorates a battle; the school behind it, which has taught four generations of the same families, commemorates nobody.\n\nHeritage bodies, whose job is partly to decide what is worth keeping, are aware of the problem. A colleague of mine, a historian working in the region, has spent years collecting the names of founders known only from receipts and letters. Her archive, containing over three hundred names, is not yet published.\n\nWhat is at stake is not fairness to the dead. It is the belief, held quietly by residents in every district, that places are made by people like them. A city that names only its governors teaches its children that nothing they build will be remembered.",
+  "glossary": [
+    {
+      "word": "landmark",
+      "ar": "معلم بارز"
+    },
+    {
+      "word": "founder",
+      "ar": "مؤسِّس"
+    },
+    {
+      "word": "heritage",
+      "ar": "تراث"
+    },
+    {
+      "word": "resident",
+      "ar": "مقيم/ساكن"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How did the founder pay for the land?",
+      "q_ar": "المؤسِّسة دفعت تمن الأرض إزاي؟",
+      "options": [
+        "She sold her own house",
+        "The governor funded it",
+        "A heritage body paid"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer say landmarks tend to be named after?",
+      "q_ar": "المعالم بتتسمى على مين عادةً؟",
+      "options": [
+        "The resident who wanted them",
+        "The architect who designed them",
+        "The official who approved them"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is unusual about the historian's archive?",
+      "q_ar": "إيه الغريب في أرشيف المؤرخة؟",
+      "options": [
+        "It has not been published yet",
+        "It covers only one district",
+        "It contains only receipts"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer say is really at stake?",
+      "q_ar": "إيه اللي على المحك فعلًا؟",
+      "options": [
+        "The condition of the monument",
+        "Residents' belief that people like them make places",
+        "Fairness to people who have died"
+      ],
+      "answer": 1
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w9",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 9,
+  "title": "Summarise the sources and say which to trust",
+  "title_ar": "لخّص المصادر وقول نثق في مين",
+  "can_do": [
+    "B2.M.1"
+  ],
+  "scenario": {
+    "en": "Your neighbourhood group has four documents about the district and no time to read them all.",
+    "ar": "مجموعة الحي عندها أربع مستندات ومافيش وقت لقراية كلها."
+  },
+  "source": "A council statement announces repairs but gives no cost, contractor or timetable. An inspection report lists seventeen sites investigated, four approved, with dates. A local article quotes three residents about cancelled deliveries. A contractor newsletter, published by the company awarded the contract, calls the new system transformational.",
+  "task": {
+    "en": "Summarise what each source offers, contrast their reliability, then say which you would trust.",
+    "ar": "لخّص كل مصدر بيقدّم إيه، قارن مصداقيتهم، وقول انت تثق في مين."
+  },
+  "key_points": [
+    {
+      "en": "Summarise what the inspection report offers.",
+      "ar": "لخّص تقرير الفحص بيقدّم إيه."
+    },
+    {
+      "en": "Summarise what the local article offers.",
+      "ar": "لخّص المقال المحلي بيقدّم إيه."
+    },
+    {
+      "en": "Contrast reliability: the newsletter has an interest.",
+      "ar": "قارن المصداقية: النشرة عندها مصلحة."
+    },
+    {
+      "en": "Say which source you would trust and why.",
+      "ar": "قول تثق في أنهي مصدر وليه."
+    }
+  ],
+  "model_answer": {
+    "en": "To summarise both views: the inspection report gives seventeen sites investigated with dates, whereas the local article gives residents' experience of cancelled deliveries. The key difference is interest — the contractor newsletter was published by the company awarded the contract, so it cannot be treated as evidence. My own view is that I would trust the inspection report for facts and the article for effects.",
+    "ar": "تلخيصًا للرأيين: تقرير الفحص بيقدّم ١٧ موقع اتفحصوا بتواريخ، في حين إن المقال المحلي بيقدّم تجربة السكان مع إلغاء التوصيل. والفرق الجوهري هو المصلحة — نشرة المقاول نشرتها الشركة اللي خدت العقد، فمايصحّش نعتبرها دليل. ورأيي إني أثق في تقرير الفحص للحقائق وفي المقال للآثار."
+  },
+  "signal_phrases": [
+    {
+      "en": "To summarise both views...",
+      "ar": "تلخيصًا للرأيين..."
+    },
+    {
+      "en": "Whereas the first argues...",
+      "ar": "في حين إن الأول بيقول..."
+    },
+    {
+      "en": "The key difference is...",
+      "ar": "الفرق الجوهري هو..."
+    },
+    {
+      "en": "My own view is...",
+      "ar": "رأيي الشخصي إن..."
+    }
+  ]
+}

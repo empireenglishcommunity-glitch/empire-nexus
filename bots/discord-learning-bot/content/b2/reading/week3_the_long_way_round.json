@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w3",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 3,
+  "title": "The Long Way Round",
+  "title_ar": "الطريق الطويل",
+  "can_do": [
+    "B2.R.5"
+  ],
+  "word_count": 209,
+  "gist_ar": "حكاية حياة عن الفشل اللي طلع بداية.",
+  "text": "Nadia had been studying engineering for three years when she realised, quite suddenly, that she did not want it. She had grown up in a family with a background in medicine, which valued certainty, and at first she said nothing.\n\nMeanwhile her results were getting worse. She had never struggled at anything before, and the experience frightened her more than the subject did. Eventually, in the middle of an examination she had not prepared for, she put down her pen and left. That was the first stage of something she could not yet describe.\n\nHer father did not speak to her for a period of a month. Gradually, though, another event changed things: she began teaching mathematics to children in the neighbourhood, at first for nothing, then for a small fee. She had been doing it for a year before she understood that she had overcome the thing she had been afraid of.\n\nWhen she finally graduated — from a different course, four years later than planned — she gave a short speech. She said she had spent a long time believing she had wasted three years. She had not wasted them. She had simply been taking the long way round, which, she added, is still a way to achieve something.",
+  "glossary": [
+    {
+      "word": "eventually",
+      "ar": "في النهاية"
+    },
+    {
+      "word": "gradually",
+      "ar": "تدريجيًا"
+    },
+    {
+      "word": "struggle",
+      "ar": "يكافح"
+    },
+    {
+      "word": "overcome",
+      "ar": "يتغلّب على"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What frightened Nadia most?",
+      "q_ar": "إيه اللي خوّف نادية أكتر؟",
+      "options": [
+        "Teaching children",
+        "The engineering subject itself",
+        "The experience of failing"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did she do during the examination?",
+      "q_ar": "عملت إيه في الامتحان؟",
+      "options": [
+        "She put down her pen and left",
+        "She finished it badly",
+        "She asked for more time"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How did the teaching begin?",
+      "q_ar": "التدريس بدأ إزاي؟",
+      "options": [
+        "For nothing, then for a small fee",
+        "As part of her course",
+        "As a paid job at a school"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does 'the long way round is still a way' imply?",
+      "q_ar": "إيه المعنى الضمني للجملة دي؟",
+      "options": [
+        "Planning is unnecessary",
+        "She regretted her choice",
+        "A slower route is still a valid route"
+      ],
+      "answer": 2
+    }
+  ]
+}

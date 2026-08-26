@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w3",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 3,
+  "title": "Summarise the story and contrast two readings of it",
+  "title_ar": "لخّص الحكاية وقارن بين قراءتين لها",
+  "can_do": [
+    "B2.M.1"
+  ],
+  "scenario": {
+    "en": "Your reading group disagreed about a story. Someone who missed it asks what happened and what people thought.",
+    "ar": "مجموعة القراءة اختلفت على حكاية. حد غاب بيسأل حصل إيه والناس قالت إيه."
+  },
+  "source": "The story: Nadia left an engineering examination she had not prepared for, and her father did not speak to her for a month. She began teaching mathematics for nothing, and eventually graduated from a different course four years late. One reader called it a story about wasted time; another called it a story about finding work that suits you.",
+  "task": {
+    "en": "Summarise the story, contrast the two readings, then comment with your own.",
+    "ar": "لخّص الحكاية، قارن بين القراءتين، وبعدين قول رأيك."
+  },
+  "key_points": [
+    {
+      "en": "Summarise: she left the examination and changed course.",
+      "ar": "لخّص: سابت الامتحان وغيّرت مسارها."
+    },
+    {
+      "en": "Reading one: it is about wasted time.",
+      "ar": "القراءة الأولى: عن وقت اتضيّع."
+    },
+    {
+      "en": "Reading two: it is about finding suitable work.",
+      "ar": "القراءة التانية: عن إيجاد شغل مناسب."
+    },
+    {
+      "en": "Comment with your own view.",
+      "ar": "قول رأيك انت."
+    }
+  ],
+  "model_answer": {
+    "en": "To summarise both views: the story is that Nadia left an examination, taught mathematics for nothing, and graduated four years late from a different course. Whereas the first reader argues it is about wasted time, the second argues it is about finding suitable work. The key difference is whether they count the three years as a loss. My own view is that the ending settles it.",
+    "ar": "تلخيصًا للرأيين: الحكاية إن نادية سابت امتحان، ودرّست رياضة ببلاش، وتخرجت بعد ٤ سنين من مسار تاني. في حين إن الأول بيقول إنها عن وقت اتضيّع، التاني بيقول إنها عن إيجاد شغل مناسب. والفرق الجوهري هو هل التلات سنين خسارة. ورأيي إن النهاية بتحسم الموضوع."
+  },
+  "signal_phrases": [
+    {
+      "en": "To summarise both views...",
+      "ar": "تلخيصًا للرأيين..."
+    },
+    {
+      "en": "Whereas the first argues...",
+      "ar": "في حين إن الأول بيقول..."
+    },
+    {
+      "en": "The key difference is...",
+      "ar": "الفرق الجوهري هو..."
+    },
+    {
+      "en": "My own view is...",
+      "ar": "رأيي الشخصي إن..."
+    }
+  ]
+}

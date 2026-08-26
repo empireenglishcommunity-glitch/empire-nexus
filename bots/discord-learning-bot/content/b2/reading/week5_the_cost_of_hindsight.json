@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w5",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 5,
+  "title": "The Cost of Hindsight",
+  "title_ar": "تكلفة إدراك الأمور متأخّر",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 188,
+  "gist_ar": "مقال عن إن الحكم على قرارات الماضي بمعلومات النهارده مضلّل.",
+  "text": "If you had known then what you know now, you would have decided differently. That sentence is true of almost every decision, which is exactly why it explains almost nothing.\n\nHindsight creates a consequence we rarely notice: it makes past decisions look obvious. Had the outcome been different, we would have called the same choice reckless. A manager who invested in a project that failed is blamed for not having foreseen it; if it had succeeded, nobody would have asked what she had risked.\n\nThis matters because organisations use the past to train the future. If we only examine decisions whose outcomes were bad, we learn to avoid the wrong things. We conclude that the mistake was the investment, when in fact the mistake may have been the absence of a plan for failure.\n\nA better question than 'what should they have done?' is 'what could they have known?' Had the warning signs been available and ignored, that is a real error. If they were not available, no amount of regret would have prevented the outcome — and treating it as a lesson teaches a false one.",
+  "glossary": [
+    {
+      "word": "hindsight",
+      "ar": "إدراك متأخّر"
+    },
+    {
+      "word": "consequence",
+      "ar": "نتيجة"
+    },
+    {
+      "word": "outcome",
+      "ar": "محصّلة"
+    },
+    {
+      "word": "prevent",
+      "ar": "يمنع"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why does the writer say hindsight explains almost nothing?",
+      "q_ar": "ليه الكاتب بيقول إن الإدراك المتأخر مابيفسّرش حاجة؟",
+      "options": [
+        "It ignores the outcome",
+        "It is true of nearly every decision",
+        "It is usually inaccurate"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What happens to the manager whose project failed?",
+      "q_ar": "المديرة اللي مشروعها فشل بيحصل لها إيه؟",
+      "options": [
+        "She is asked what she risked",
+        "She is praised for the attempt",
+        "She is blamed for not having foreseen it"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What false lesson do organisations learn?",
+      "q_ar": "المؤسسات بتتعلم درس خاطئ إيه؟",
+      "options": [
+        "That plans for failure are useless",
+        "That the investment itself was the mistake",
+        "That outcomes cannot be judged"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What question does the writer prefer?",
+      "q_ar": "الكاتب بيفضّل أنهي سؤال؟",
+      "options": [
+        "What could they have known?",
+        "Who was responsible?",
+        "What should they have done?"
+      ],
+      "answer": 0
+    }
+  ]
+}

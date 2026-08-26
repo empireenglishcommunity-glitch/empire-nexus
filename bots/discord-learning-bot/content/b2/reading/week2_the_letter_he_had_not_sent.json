@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w2",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 2,
+  "title": "The Letter He Had Not Sent",
+  "title_ar": "الجواب اللي مابعتوش",
+  "can_do": [
+    "B2.R.5"
+  ],
+  "word_count": 223,
+  "gist_ar": "مقطع أدبي فيه معنى ضمني عن أب وابنه.",
+  "text": "By the time Adel arrived, the house had already been emptied. Somebody had swept the floor earlier and stacked the chairs, and the room smelled of a cleaning product his mother would never have bought.\n\nHe had expected to feel something dramatic. Instead he noticed small things: a nail where a photograph had previously hung, a curtain that had faded on one side only. He had prepared a speech on the plane and now he could not remember why. He had planned this visit for years and had decided, before he left, exactly what he would say.\n\nIn the drawer he found an envelope with his own name on it. His father had written the address twice, as though he had been unsure of it, and had never posted it. Adel put it in his pocket. He had promised himself he would read it just as soon as he arrived, and he did not.\n\nOnly afterwards, at the airport, did he realise what he had been avoiding. The driver had asked whether he had come for a holiday. 'Something like that,' Adel said, and looked out at a city that had changed less than he had.\n\nThe envelope stayed in his jacket for eleven months. He told people he had forgotten where he put it, which was, in a way, the truth.",
+  "glossary": [
+    {
+      "word": "previously",
+      "ar": "سابقًا"
+    },
+    {
+      "word": "realise",
+      "ar": "يدرك"
+    },
+    {
+      "word": "prepare",
+      "ar": "يحضّر"
+    },
+    {
+      "word": "by the time",
+      "ar": "لما / بحلول وقت"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What had happened to the house before Adel arrived?",
+      "q_ar": "البيت حصل له إيه قبل ما عادل يوصل؟",
+      "options": [
+        "It had already been emptied",
+        "It had been repainted",
+        "It had been sold"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the detail of the faded curtain suggest?",
+      "q_ar": "تفصيلة الستارة الباهتة بتوحي بإيه؟",
+      "options": [
+        "Somebody had cleaned carelessly",
+        "Time had passed unnoticed in that room",
+        "The house was badly built"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why had his father written the address twice?",
+      "q_ar": "ليه أبوه كتب العنوان مرتين؟",
+      "options": [
+        "He had bad handwriting",
+        "He seemed unsure of it",
+        "He wanted two copies"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is implied when Adel says he had lost the letter?",
+      "q_ar": "إيه المعنى الضمني لما قال إنه ضيّع الجواب؟",
+      "options": [
+        "He was avoiding reading it",
+        "He genuinely could not find it",
+        "Somebody else had taken it"
+      ],
+      "answer": 0
+    }
+  ]
+}

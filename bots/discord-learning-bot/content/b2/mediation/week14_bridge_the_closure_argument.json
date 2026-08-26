@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w14",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 14,
+  "title": "Bridge the argument about the closure",
+  "title_ar": "اقرّب الخلاف حول غلق المصنع",
+  "can_do": [
+    "B2.M.4"
+  ],
+  "scenario": {
+    "en": "Two colleagues disagree sharply about why the factory closed and what to write.",
+    "ar": "زميلين مختلفين بشدة عن سبب غلق المصنع وإيه اللي نكتبه."
+  },
+  "source": "Sami insists the closure happened because nobody cared, and cites the comment piece. Rana insists the analysis showed falling orders since 2022 and a rent increase, and that the follow-up report showed 180 of 300 workers found new work. Both want the article to be fair.",
+  "task": {
+    "en": "Bridge it: ask which source each is using, restate both positions, and suggest a way forward.",
+    "ar": "قرّب الخلاف: اسأل كل واحد بيستخدم أنهي مصدر، أعِد صياغة الموقفين، واقترح طريق للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Ask which source each of them is relying on.",
+      "ar": "اسأل كل واحد بيعتمد على أنهي مصدر."
+    },
+    {
+      "en": "Restate Sami's position about nobody caring.",
+      "ar": "أعِد صياغة موقف سامي إن محدش اهتم."
+    },
+    {
+      "en": "Restate Rana's position about orders and rent.",
+      "ar": "أعِد صياغة موقف رنا عن الطلبات والإيجار."
+    },
+    {
+      "en": "Suggest a way forward for the article.",
+      "ar": "اقترح طريق للأمام للمقال."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I check something? Which source is each of you using? Sami, your position is that nobody cared, from the comment piece. Rana, so your position is that falling orders since 2022 and a rent increase caused it, from the analysis. Where do you actually agree? You both want the article to be fair. Could we try this instead: report the causes from the analysis and the outcome from the follow-up?",
+    "ar": "أقدر أتأكد من حاجة؟ كل واحد فيكم بيستخدم أنهي مصدر؟ سامي، موقفك إن محدش اهتم، من مقال الرأي. رنا، يعني موقفك إن السبب انخفاض الطلبات من ٢٠٢٢ وزيادة الإيجار، من التحليل. بتتفقوا فين؟ الاتنين عايزين المقال يكون منصف. نجرّب كده: ننقل الأسباب من التحليل والنتيجة من تقرير المتابعة؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check something?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "So your position is...",
+      "ar": "يعني موقفك إن..."
+    },
+    {
+      "en": "Where do you actually agree?",
+      "ar": "بتتفقوا فين بالظبط؟"
+    },
+    {
+      "en": "Could we try this instead?",
+      "ar": "نجرّب كده بدلًا؟"
+    }
+  ]
+}

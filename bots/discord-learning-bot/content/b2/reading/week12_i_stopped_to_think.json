@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w12",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 12,
+  "title": "I Stopped to Think",
+  "title_ar": "وقفت أفكّر",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 176,
+  "gist_ar": "مقال عن إن تغيير كلمة صغيرة بيغيّر المعنى.",
+  "text": "I remember reading that small grammatical choices change meaning more than large vocabulary ones. I did not believe it until I began teaching and had to explain why 'I stopped smoking' and 'I stopped to smoke' describe opposite lives.\n\nEnglish allows a verb to mean two things depending on what follows it. If you regret to tell somebody something, you are about to deliver bad news; if you regret telling them, you have already done it and wish you had not. A manager who means to reduce costs intends it; a decision that means reducing costs has that consequence. Learners who avoid noticing this can manage for years and then be misunderstood at an important moment.\n\nWhat interests me is that nobody considers these pairs difficult once they stop trying to memorise them. The pattern is meaningful, not arbitrary: the infinitive looks forward to a purpose, and the gerund looks back at an action. Try remembering that instead. I would suggest not learning a list — I would suggest listening for the direction the sentence is facing.",
+  "glossary": [
+    {
+      "word": "consider",
+      "ar": "يعتبر"
+    },
+    {
+      "word": "avoid",
+      "ar": "يتجنّب"
+    },
+    {
+      "word": "manage",
+      "ar": "يقدر/يتصرّف"
+    },
+    {
+      "word": "suggest",
+      "ar": "يقترح"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What did the writer not believe at first?",
+      "q_ar": "الكاتب مكانش مقتنع بإيه في الأول؟",
+      "options": [
+        "That vocabulary matters more",
+        "That teaching is difficult",
+        "That small grammatical choices change meaning most"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does 'I regret telling them' mean?",
+      "q_ar": "معنى 'I regret telling them' إيه؟",
+      "options": [
+        "Bad news is about to be delivered",
+        "It has already happened and is regretted",
+        "The speaker intends to tell them"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What danger does the writer mention for learners?",
+      "q_ar": "إيه الخطر اللي بيذكره للمتعلّمين؟",
+      "options": [
+        "Speaking too slowly",
+        "Forgetting vocabulary lists",
+        "Being misunderstood at an important moment"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer suggest instead of a list?",
+      "q_ar": "بيقترح إيه بدل القوائم؟",
+      "options": [
+        "Avoiding gerunds entirely",
+        "Listening for the direction the sentence faces",
+        "Memorising verb pairs"
+      ],
+      "answer": 1
+    }
+  ]
+}

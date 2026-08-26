@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w4",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 4,
+  "title": "Bridge the disagreement about automation",
+  "title_ar": "اقرّب الخلاف حول الأتمتة",
+  "can_do": [
+    "B2.M.4"
+  ],
+  "scenario": {
+    "en": "Two colleagues have stopped listening to each other in a planning meeting.",
+    "ar": "زميلين وقفوا يسمعوا لبعض في اجتماع تخطيط."
+  },
+  "source": "Rami insists that by 2030 automation will have replaced most administrative work, so training is a waste. Dalia insists that the same study showed workers moved into roles requiring more judgement, so training matters more than ever. Each says the other has not read the report.",
+  "task": {
+    "en": "Bridge it: ask a question to check each position, restate both fairly, and suggest a way forward.",
+    "ar": "قرّب الخلاف: اسأل للتأكد من كل موقف، أعِد صياغة الموقفين بإنصاف، واقترح طريق للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Ask a question to check what each actually claims.",
+      "ar": "اسأل سؤال تتأكد كل واحد بيقول إيه بالظبط."
+    },
+    {
+      "en": "Restate Rami's position fairly.",
+      "ar": "أعِد صياغة موقف رامي بإنصاف."
+    },
+    {
+      "en": "Restate Dalia's position fairly.",
+      "ar": "أعِد صياغة موقف داليا بإنصاف."
+    },
+    {
+      "en": "Suggest a way forward they could both accept.",
+      "ar": "اقترح طريق للأمام يقبله الاتنين."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I check something? Rami, your position is that routine administrative tasks will mostly go. Dalia, so your position is that the remaining work needs more judgement. Where do you actually agree? You both accept the report. Could we try this instead: train for judgement, not for the routine tasks?",
+    "ar": "أقدر أتأكد من حاجة؟ رامي، موقفك إن المهام الإدارية الروتينية هتختفي أغلبها. داليا، يعني موقفك إن الشغل الباقي محتاج حكم وتقدير أكتر. بتتفقوا فين بالظبط؟ الاتنين قابلين التقرير. نجرّب كده بدلًا: ندرّب على التقدير مش على المهام الروتينية؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check something?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "So your position is...",
+      "ar": "يعني موقفك إن..."
+    },
+    {
+      "en": "Where do you actually agree?",
+      "ar": "بتتفقوا فين بالظبط؟"
+    },
+    {
+      "en": "Could we try this instead?",
+      "ar": "نجرّب كده بدلًا؟"
+    }
+  ]
+}

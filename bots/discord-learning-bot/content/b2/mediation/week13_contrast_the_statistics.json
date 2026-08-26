@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w13",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 13,
+  "title": "Summarise the claims and contrast the evidence",
+  "title_ar": "لخّص الادعاءات وقارن الأدلة",
+  "can_do": [
+    "B2.M.1"
+  ],
+  "scenario": {
+    "en": "Your class must report on four claims about the same region.",
+    "ar": "فصلك لازم يعرض أربع ادعاءات عن نفس المنطقة."
+  },
+  "source": "A headline claims most young people have left the region, based on a survey of forty people outside one station. A national statistics release counted every household and reports that the majority of movement was within the region. A campaign leaflet gives no percentage at all. An academic paper compared districts over ten years and states which findings are uncertain.",
+  "task": {
+    "en": "Summarise the claims, contrast the strength of the evidence, then comment with your own view.",
+    "ar": "لخّص الادعاءات، قارن قوة الأدلة، وبعدين قول رأيك."
+  },
+  "key_points": [
+    {
+      "en": "Summarise the headline's claim and its sample of forty.",
+      "ar": "لخّص ادعاء العنوان وعيّنة الأربعين."
+    },
+    {
+      "en": "Summarise the national release: movement was within the region.",
+      "ar": "لخّص البيان القومي: الانتقال كان داخل المنطقة."
+    },
+    {
+      "en": "Contrast the strength of the evidence.",
+      "ar": "قارن قوة الأدلة."
+    },
+    {
+      "en": "Comment with your own view.",
+      "ar": "قول رأيك انت."
+    }
+  ],
+  "model_answer": {
+    "en": "To summarise both views: the headline claims most young people have left, based on forty people outside one station, whereas the national release counted every household and found the majority of movement was within the region. The key difference is the strength of the evidence — forty people at one station against a full count. My own view is that the academic paper deserves most trust, because it states which of its findings are uncertain.",
+    "ar": "تلخيصًا للرأيين: العنوان بيقول إن أغلب الشباب سافروا، مبني على ٤٠ شخص بره محطة واحدة، في حين إن البيان القومي عدّ كل البيوت ولقى إن أغلب الانتقال كان جوه المنطقة. والفرق الجوهري هو قوة الدليل — ٤٠ شخص في محطة مقابل حصر كامل. ورأيي إن الورقة الأكاديمية تستاهل أكبر ثقة، لأنها بتقول إيه اللي مش متأكدة منه."
+  },
+  "signal_phrases": [
+    {
+      "en": "To summarise both views...",
+      "ar": "تلخيصًا للرأيين..."
+    },
+    {
+      "en": "Whereas the first argues...",
+      "ar": "في حين إن الأول بيقول..."
+    },
+    {
+      "en": "The key difference is...",
+      "ar": "الفرق الجوهري هو..."
+    },
+    {
+      "en": "My own view is...",
+      "ar": "رأيي الشخصي إن..."
+    }
+  ]
+}

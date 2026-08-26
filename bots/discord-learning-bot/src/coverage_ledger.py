@@ -65,24 +65,28 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # entry in this set (enforced by a test), so the honest answer to "what is left
 # and what does it need?" is always in the code.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    # A2 is down to ONE: its reading passages closed A2.R.1 + A2.R.5 and its
-    # mediation tasks closed A2.M.1 + A2.M.2 + A2.M.3. A2.R.2 survives on
-    # purpose — "catch the main point in short, clear messages and
-    # ANNOUNCEMENTS" needs extended listening, which no reading passage can
-    # honestly satisfy.
+    # THE REMAINING SET IS NOW EXACTLY GAPS_NEEDING_EXTENDED_LISTENING.
+    #
+    # Every descriptor that authored TEXT could close is closed: reading and
+    # mediation now exist for A1-B2, and the interaction gaps (B1.I.1, B2.I.1,
+    # B2.I.5) closed via speaking missions, because interaction cannot be proven
+    # by a passage or a relay task.
+    #
+    # What is left cannot be closed by writing more content of any kind. These
+    # five are about understanding SPOKEN input at length -- announcements,
+    # clear standard speech, radio/TV, lectures, films. They need recorded audio
+    # (or TTS long-form) plus comprehension items built on it. A test asserts
+    # this equality, so if someone adds a non-listening gap here it fails loudly.
     "A2.R.2",
-    # B1 is down to its two LISTENING-side descriptors: its mediation tasks
-    # closed B1.M.2 + B1.M.3, and B1.I.1 closed when week 3's Thursday mission
-    # became a travel roleplay (interaction cannot be proven by reading or
-    # mediation, so it needed a speaking task).
     "B1.R.1", "B1.R.2",
-    "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
+    "B2.R.1", "B2.R.2",
 })
 
-# CEFR files "reception" as one mode, but it contains two different channels,
-# and this set is the difference that matters: these descriptors are about
-# understanding SPOKEN input (announcements, radio/TV, lectures). Authoring a
-# reading passage can never close them, however good the passage is.
+# CEFR files "reception" as one mode, but it contains two different channels, and
+# this set is the difference that matters: these descriptors are about
+# understanding SPOKEN input (announcements, clear standard speech, radio/TV,
+# lectures, films). Authoring a reading passage can never close them, however
+# good the passage is.
 #
 # Without this, "we authored reading for the level, so its .R. gaps are closed"
 # looks true and is false — exactly the kind of quiet over-claim this whole
@@ -96,11 +100,6 @@ GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
 # the difference between "we know we are incomplete" and "we know exactly what
 # incomplete means and what closes it".
 DESCRIPTOR_GAP_PLAN = {
-    # --- needs authored MEDIATION tasks for that level (same schema as A1) ---
-    "B2.M.1": "B2 mediation tasks — summarise varied texts, contrast differing viewpoints",
-    "B2.M.4": "B2 mediation tasks — bridge a disagreement, restate positions, propose a way forward",
-    # --- needs authored READING passages for that level ---
-    "B2.R.4": "B2 reading passages — skim news/articles to judge relevance quickly",
     # --- needs EXTENDED LISTENING content (longer audio than the current
     #     single-word dictation items can ever satisfy) ---
     "A2.R.2": "extended listening — catch the main point of short clear messages/announcements",
@@ -108,10 +107,6 @@ DESCRIPTOR_GAP_PLAN = {
     "B1.R.2": "extended listening — main points of radio/TV on current affairs",
     "B2.R.1": "extended listening — extended speech/lectures, complex lines of argument",
     "B2.R.2": "extended listening — TV news/current affairs and films in standard dialect",
-    # --- needs new INTERACTION content (the current missions are largely solo
-    #     monologue or scripted, so claiming these today would be a stretch) ---
-    "B2.I.1": "B2 spontaneous interaction — current B2 fluency tasks are solo monologue",
-    "B2.I.5": "B2 collaborative interaction — invite others in, negotiate a compromise",
 }
 
 

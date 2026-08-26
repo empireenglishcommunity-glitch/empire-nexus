@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w1",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 1,
+  "title": "Summarise both views on measuring progress",
+  "title_ar": "لخّص الرأيين عن قياس التقدّم",
+  "can_do": [
+    "B2.M.1"
+  ],
+  "scenario": {
+    "en": "Your department read two short pieces that disagree. Your manager asks you to report both fairly.",
+    "ar": "قسمك قرأ مقالين مختلفين. مديرك طلب تقرير منصف للرأيين."
+  },
+  "source": "Piece A argues that only completed targets should be rewarded, because ongoing effort cannot be measured reliably. Piece B argues that this culture punishes maintenance and documentation, and that progress can be described even when it cannot be photographed. Both accept that the current system rewards endings.",
+  "task": {
+    "en": "Summarise both views, contrast them, and then comment with your own view.",
+    "ar": "لخّص الرأيين، قارن بينهم، وبعدين قول رأيك."
+  },
+  "key_points": [
+    {
+      "en": "Summarise view A: reward only completed targets.",
+      "ar": "لخّص رأي A: كافئ الأهداف المكتملة بس."
+    },
+    {
+      "en": "Summarise view B: that culture punishes maintenance.",
+      "ar": "لخّص رأي B: الثقافة دي تعاقب الصيانة."
+    },
+    {
+      "en": "Contrast them: they disagree about what can be measured.",
+      "ar": "قارن: الخلاف على إيه اللي يمكن قياسه."
+    },
+    {
+      "en": "Comment with your own view.",
+      "ar": "قول رأيك انت."
+    }
+  ],
+  "model_answer": {
+    "en": "To summarise both views: A argues only completed targets should be rewarded, because ongoing effort cannot be measured reliably. Whereas the first argues that, B argues that this culture punishes maintenance and documentation. The key difference is what each believes can be measured. My own view is that B is right that progress can still be described.",
+    "ar": "تلخيصًا للرأيين: A بيقول نكافئ الأهداف المكتملة بس، لأن الجهد المستمر صعب قياسه. في حين إن الأول بيقول كده، B بيقول إن الثقافة دي تعاقب الصيانة والتوثيق. الفرق الجوهري هو إيه اللي كل واحد شايف إنه يمكن قياسه. ورأيي الشخصي إن B معاه حق إن التقدّم يمكن وصفه."
+  },
+  "signal_phrases": [
+    {
+      "en": "To summarise both views...",
+      "ar": "تلخيصًا للرأيين..."
+    },
+    {
+      "en": "Whereas the first argues...",
+      "ar": "في حين إن الأول بيقول..."
+    },
+    {
+      "en": "The key difference is...",
+      "ar": "الفرق الجوهري هو..."
+    },
+    {
+      "en": "My own view is...",
+      "ar": "رأيي الشخصي إن..."
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "reading_b2_w9",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 9,
+  "title": "News Digest: City Services",
+  "title_ar": "موجز أخبار: خدمات المدينة",
+  "can_do": [
+    "B2.R.4",
+    "B2.R.3"
+  ],
+  "word_count": 159,
+  "gist_ar": "أربع أخبار عن خدمات المدينة — أنهي واحدة تستاهل قراية متعمّقة.",
+  "text": "Four reports were published this week about the same district. Skim them, then decide which is worth studying closely.\n\n1. COUNCIL STATEMENT — It was announced that the water pipes will be repaired next month. No cost, contractor or timetable is given. One paragraph long.\n\n2. INSPECTION REPORT — An inspection was carried out in March. The findings are set out in full: seventeen sites were investigated, four were approved, and the maintenance history of each is listed with dates.\n\n3. LOCAL NEWS ARTICLE — Residents say deliveries have been cancelled repeatedly. Three residents are quoted. The service company was contacted but had not replied when the article was published.\n\n4. CONTRACTOR NEWSLETTER — A new system is being installed, described as 'transformational'. The newsletter is published by the company that was awarded the contract.\n\nIf you need to know what has actually been checked, only one of these will repay a careful reading. If you need to know how residents are affected, a different one will.",
+  "glossary": [
+    {
+      "word": "carry out",
+      "ar": "ينفّذ"
+    },
+    {
+      "word": "investigate",
+      "ar": "يحقّق/يفحص"
+    },
+    {
+      "word": "approve",
+      "ar": "يعتمد"
+    },
+    {
+      "word": "authorities",
+      "ar": "الجهات المسؤولة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Which item should you read closely to learn what was actually checked?",
+      "q_ar": "أنهي خبر تقراه بعناية لمعرفة اللي اتفحص فعلًا؟",
+      "options": [
+        "Item 1, the council statement",
+        "Item 4, the contractor newsletter",
+        "Item 2, the inspection report"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which item is most useful for residents' experience?",
+      "q_ar": "أنهي خبر أنفع لتجربة السكان؟",
+      "options": [
+        "Item 3, the local news article",
+        "Item 1, the council statement",
+        "Item 2, the inspection report"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why should item 4 be treated with caution?",
+      "q_ar": "ليه ناخد بالنا من الخبر ٤؟",
+      "options": [
+        "It is published by the company awarded the contract",
+        "It quotes only residents",
+        "It was written in March"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is missing from item 1?",
+      "q_ar": "إيه الناقص في الخبر ١؟",
+      "options": [
+        "The date of the repair",
+        "The name of the district",
+        "Cost, contractor and timetable"
+      ],
+      "answer": 2
+    }
+  ]
+}

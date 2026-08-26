@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w16",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 16,
+  "title": "Summarise both views on 'just be natural'",
+  "title_ar": "لخّص الرأيين عن 'اتكلم بطبيعية'",
+  "can_do": [
+    "B2.M.1"
+  ],
+  "scenario": {
+    "en": "Two teachers gave your study group opposite advice and the group is confused.",
+    "ar": "مدرّسين اداكم نصيحتين متعاكستين والمجموعة مش فاهمة."
+  },
+  "source": "One teacher advises learners to just be natural, arguing that fluency comes from imitation and that worrying about register slows people down. The other argues that natural is meaningless without a relationship, and that a learner who picked up phrasal verbs from films may come up with something fluent but far too informal for an email. Both agree that range matters eventually.",
+  "task": {
+    "en": "Summarise both views, contrast them, then comment with your own view.",
+    "ar": "لخّص الرأيين، قارن بينهم، وبعدين قول رأيك."
+  },
+  "key_points": [
+    {
+      "en": "Summarise view one: just be natural, fluency comes from imitation.",
+      "ar": "لخّص الرأي الأول: اتكلم بطبيعية، الطلاقة بالتقليد."
+    },
+    {
+      "en": "Summarise view two: natural is meaningless without a relationship.",
+      "ar": "لخّص الرأي التاني: الطبيعية بلا معنى بدون علاقة."
+    },
+    {
+      "en": "Contrast them: they disagree about when register matters.",
+      "ar": "الخلاف على إمتى النبرة تهم."
+    },
+    {
+      "en": "Comment with your own view.",
+      "ar": "قول رأيك انت."
+    }
+  ],
+  "model_answer": {
+    "en": "To summarise both views: the first advises learners to just be natural, because fluency comes from imitation, whereas the second argues that natural is meaningless without knowing the relationship, since something fluent can be far too informal for an email. The key difference is when register starts to matter. My own view is that both are right if you deal with fluency first and range soon after.",
+    "ar": "تلخيصًا للرأيين: الأول بينصح إنك تتكلم بطبيعية، لأن الطلاقة بتيجي بالتقليد، في حين إن التاني بيقول إن الطبيعية بلا معنى من غير ما تعرف العلاقة، لأن كلام طليق ممكن يكون غير رسمي بشكل مبالغ لإيميل. والفرق الجوهري هو إمتى النبرة تبدأ تهم. ورأيي إن الاتنين صح لو اهتمّيت بالطلاقة الأول والمدى بعدها بشويّة."
+  },
+  "signal_phrases": [
+    {
+      "en": "To summarise both views...",
+      "ar": "تلخيصًا للرأيين..."
+    },
+    {
+      "en": "Whereas the first argues...",
+      "ar": "في حين إن الأول بيقول..."
+    },
+    {
+      "en": "The key difference is...",
+      "ar": "الفرق الجوهري هو..."
+    },
+    {
+      "en": "My own view is...",
+      "ar": "رأيي الشخصي إن..."
+    }
+  ]
+}

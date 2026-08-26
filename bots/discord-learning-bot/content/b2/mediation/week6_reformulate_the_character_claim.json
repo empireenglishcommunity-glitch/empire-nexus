@@ -1,0 +1,56 @@
+{
+  "id": "mediation_b2_w6",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 6,
+  "title": "Reformulate the claim so the group can use it",
+  "title_ar": "أعِد صياغة الفكرة عشان المجموعة تستخدمها",
+  "can_do": [
+    "B2.M.3"
+  ],
+  "scenario": {
+    "en": "A discussion is stuck because a claim is too vague to act on.",
+    "ar": "النقاش واقف لأن الفكرة مبهمة ومش قابلة للتنفيذ."
+  },
+  "source": "A colleague says: 'He is just disorganised, that's his character.' The group has been repeating this for ten minutes. The article they read suggested a test: ask what would have to change for the behaviour to become unnecessary.",
+  "task": {
+    "en": "Reformulate the claim using the article's test, and move the discussion forward.",
+    "ar": "أعِد صياغة الفكرة باستخدام اختبار المقال، وحرّك النقاش للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Reformulate the claim in terms of circumstances, not character.",
+      "ar": "أعِد الصياغة بلغة الظروف مش الشخصية."
+    },
+    {
+      "en": "Apply the article's test: what would have to change?",
+      "ar": "طبّق اختبار المقال: إيه اللازم يتغيّر؟"
+    },
+    {
+      "en": "Move the discussion towards something actionable.",
+      "ar": "حرّك النقاش لحاجة قابلة للتنفيذ."
+    }
+  ],
+  "model_answer": {
+    "en": "To put it another way: instead of asking whether he is disorganised, let's apply the test from the article — what would have to change for this behaviour to become unnecessary? If the answer names a deadline or a workload, then we were never describing his character, and that is something we can actually act on.",
+    "ar": "بصيغة تانية: بدل ما نسأل هو غير منظّم ولا لأ، نطبّق اختبار المقال — إيه اللي لازم يتغيّر عشان السلوك ده مايبقى ضروري؟ لو الإجابة فيها موعد نهائي أو حجم شغل، فإحنا مكنّاش بنوصف شخصيته، وده حاجة نقدر نتصرف فيها."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me be precise.",
+      "ar": "خليني أكون دقيق."
+    },
+    {
+      "en": "The significance is...",
+      "ar": "الأهمية إن..."
+    },
+    {
+      "en": "To put it another way...",
+      "ar": "بصيغة تانية..."
+    },
+    {
+      "en": "Have I missed anything?",
+      "ar": "فوّتت حاجة؟"
+    }
+  ]
+}

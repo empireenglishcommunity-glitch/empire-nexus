@@ -1,0 +1,75 @@
+{
+  "id": "reading_b2_w13",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 13,
+  "title": "News Digest: Reading the Numbers",
+  "title_ar": "موجز أخبار: إزاي تقرا الأرقام",
+  "can_do": [
+    "B2.R.4",
+    "B2.R.3"
+  ],
+  "word_count": 165,
+  "gist_ar": "أربع تقارير بأرقام — أنهي واحد تستاهل الثقة.",
+  "text": "Four claims about the same society were published this month. Skim them, then decide which repays close reading.\n\n1. 'MOST YOUNG PEOPLE HAVE LEFT THE REGION' — A headline based on a survey of forty people outside one railway station. The proportion is given; the sample is not discussed.\n\n2. NATIONAL STATISTICS RELEASE — Every household in the region was counted. The majority of movement, it reports, was within the region rather than out of it. Definitions, margins of error and the whole questionnaire are included.\n\n3. CAMPAIGN LEAFLET — 'A generation is disappearing.' No percentage of any kind appears, although several photographs do.\n\n4. ACADEMIC PAPER — Researchers compared various districts over ten years. They found that in general the minority who left were older than assumed, and they state clearly which of their findings are uncertain.\n\nTwo of these tell you what a small number of people said in one place. Two tell you what happened across a whole population — and one of those admits what it does not know.",
+  "glossary": [
+    {
+      "word": "proportion",
+      "ar": "نسبة"
+    },
+    {
+      "word": "majority",
+      "ar": "الأغلبية"
+    },
+    {
+      "word": "minority",
+      "ar": "الأقلية"
+    },
+    {
+      "word": "in general",
+      "ar": "بشكل عام"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why is item 1 weak?",
+      "q_ar": "ليه الخبر ١ ضعيف؟",
+      "options": [
+        "It surveyed forty people in one place",
+        "It gives no proportion",
+        "It is too long to skim"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which item counted every household?",
+      "q_ar": "أنهي خبر عدّ كل البيوت؟",
+      "options": [
+        "Item 1, the survey headline",
+        "Item 2, the national statistics release",
+        "Item 4, the academic paper"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What makes item 4 trustworthy despite its limits?",
+      "q_ar": "إيه اللي يخلّي الخبر ٤ موثوق رغم حدوده؟",
+      "options": [
+        "It avoids comparing districts",
+        "It states which findings are uncertain",
+        "It uses photographs"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does item 2 report about movement?",
+      "q_ar": "الخبر ٢ بيقول إيه عن الانتقال؟",
+      "options": [
+        "Most movement was within the region",
+        "A generation is disappearing",
+        "Most young people left the region"
+      ],
+      "answer": 0
+    }
+  ]
+}

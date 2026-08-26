@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w5",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 5,
+  "title": "Bridge the disagreement about who was at fault",
+  "title_ar": "اقرّب الخلاف حول المسؤولية",
+  "can_do": [
+    "B2.M.4"
+  ],
+  "scenario": {
+    "en": "A project failed and two team leads blame each other in the review meeting.",
+    "ar": "مشروع فشل واتنين مسؤولين بيلوموا بعض في اجتماع المراجعة."
+  },
+  "source": "Hala insists the investment should never have been approved, because the warning signs were obvious. Tarek insists the signs were not available at the time, and that hindsight is being used unfairly. Both agree there was no plan for failure.",
+  "task": {
+    "en": "Bridge it: ask what each could have known, restate both positions, and suggest a way forward.",
+    "ar": "قرّب الخلاف: اسأل كل واحد كان يقدر يعرف إيه، أعِد صياغة الموقفين، واقترح طريق للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Ask what information was actually available at the time.",
+      "ar": "اسأل إيه المعلومات اللي كانت متاحة وقتها."
+    },
+    {
+      "en": "Restate Hala's position that the signs were obvious.",
+      "ar": "أعِد صياغة موقف هالة إن العلامات كانت واضحة."
+    },
+    {
+      "en": "Restate Tarek's position about hindsight.",
+      "ar": "أعِد صياغة موقف طارق عن الإدراك المتأخر."
+    },
+    {
+      "en": "Suggest a way forward: agree on a plan for failure.",
+      "ar": "اقترح طريق للأمام: خطة للفشل."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I check something? What information was actually available in March? Hala, your position is that the warning signs were obvious. Tarek, so your position is that hindsight is being used unfairly. Where do you actually agree? Neither of you had a plan for failure. Could we try this instead: agree that every approval needs one?",
+    "ar": "أقدر أتأكد من حاجة؟ إيه المعلومات اللي كانت متاحة في مارس؟ هالة، موقفك إن العلامات كانت واضحة. طارق، يعني موقفك إن الإدراك المتأخر بيُستخدم بشكل غير منصف. بتتفقوا فين؟ محدش فيكم كان عنده خطة للفشل. نجرّب كده: كل موافقة لازم يكون معاها خطة؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check something?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "So your position is...",
+      "ar": "يعني موقفك إن..."
+    },
+    {
+      "en": "Where do you actually agree?",
+      "ar": "بتتفقوا فين بالظبط؟"
+    },
+    {
+      "en": "Could we try this instead?",
+      "ar": "نجرّب كده بدلًا؟"
+    }
+  ]
+}

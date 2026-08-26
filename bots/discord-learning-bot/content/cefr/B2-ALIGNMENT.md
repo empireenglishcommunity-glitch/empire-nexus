@@ -111,7 +111,74 @@ register** (phrasal verbs/collocations). Week 16 is an explicit review + a
   weighing options with reasons) tests the B2 can-do set as a whole; passing
   certifies the student at **CEFR B2** and promotes them to C1.
 
+### 4b. Reading, Mediation + two interaction missions (added 2026-08-24 — Phase 11B)
+
+**What was missing.** B2 had **no reading task and no mediation task**, and five
+descriptors were taught by *no week*: `B2.R.4`, `B2.M.1`, `B2.M.4`, `B2.I.1`,
+`B2.I.5`. **All five now close. B2 is 18/20.**
+
+**Reading — 16 passages** (157–223 words), covering the three text types B2's
+descriptors actually distinguish:
+
+| Descriptor | Text type | Weeks |
+|---|---|---|
+| `B2.R.3` | articles/reports on contemporary problems, writer's viewpoint | 13 weeks |
+| `B2.R.5` | literary prose, literal vs **implied** meaning | 2, 3, 10 |
+| `B2.R.4` | **quickly judging relevance** of news items and reports | 4, 9, 13, 14 |
+
+**`B2.R.4` needed a different shape.** It is *"can quickly identify the content
+and relevance of news items, articles and reports, **deciding whether closer
+study is worthwhile**"* — that is **skimming to choose**, and a single continuous
+passage cannot teach it. Those four weeks use a **news-digest format**: four
+short items (a government report, an opinion column with no sources, a company
+press release, an independent study) and questions that ask *which item is worth
+studying closely for a stated purpose*. That also teaches source quality, which
+is the real-world form of the skill.
+
+**Mediation — 16 tasks**, split by act:
+
+- **`B2.M.1` summarise + contrast viewpoints (6):** each source contains **two
+  opposed views**, because the descriptor requires *contrasting* them, not just
+  summarising one.
+- **`B2.M.4` bridge a disagreement (5):** ask a question to check each position,
+  **restate both fairly**, then suggest a way forward — the three moves named.
+- `B2.M.2` convey detailed information + significance (3) and `B2.M.3`
+  reformulate/paraphrase to move a discussion on (2), both already taught.
+
+**Two interaction missions — the content edits, flagged for review.** `B2.I.1`
+and `B2.I.5` are **interaction**, so no passage or mediation task can prove them.
+Both weeks' replaced mission was the more duplicative of an adjacent pair:
+
+| | Before | After |
+|---|---|---|
+| **w14 Thu** (`B2.I.5`) | "Debate a topic with a partner…" — the week already had four *argue-a-point* tasks | **Group negotiation:** invite the quietest member **by name**, restate the position you disagree with, reach a compromise. *"Do not simply win the argument — reach an agreement."* |
+| **w16 Thu** (`B2.I.1`) | "Reflect on your B2 journey…" — a monologue that overlapped Friday's capstone talk | **Unprepared conversation:** a partner picks a topic you have not seen; keep it going 90s, ask a follow-up, disagree once, change subject naturally. *"Hesitate if you need to; the aim is spontaneity."* |
+
+`B2.I.1` is specifically about **fluency and spontaneity**, and every previous B2
+fluency task was a **prepared monologue** — which is why the Friday capstone was
+left untouched and Thursday became the unprepared one.
+
+**Still open for B2:** `B2.R.1` (extended speech and **lectures**) and `B2.R.2`
+(**TV news** and films). Both are spoken reception. No passage can close them, so
+they remain in `coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING`.
+
+**Quality gate note.** The shared automated bar caught seven real problems in
+this B2 content before it shipped: **five passages were genuinely thin on their
+own week's lexis** (weeks 2, 3, 4, 10, 14 — week 10 used only 3 of 33 words;
+rewritten so the week's language does the work), one mediation key point had **no
+anchor in the source** the student is given, and one model answer **did not
+demonstrate** the contrast it demanded. All fixed in the content.
+
 ## What to review / sign off
+
+- [ ] **Reading passages (§4b)** — 16 passages, 157–223 words. Especially the
+      four **news-digest** weeks (4, 9, 13, 14): they look unusual on purpose,
+      because `B2.R.4` is about *choosing what to read*, not reading one text.
+- [ ] **Mediation tasks (§4b)** — especially the six "summarise **and contrast**
+      two opposed views" tasks, which are the most demanding thing B2 asks.
+- [ ] ⚠️ **The two replaced speaking missions (§4b)** — w14 Thursday (group
+      negotiation) and w16 Thursday (unprepared conversation). These are the only
+      places approved B2 content changed. The Friday capstone talk is untouched.
 - [ ] Themes + week order feel right for your upper-intermediate students.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and B2-appropriate (builds on B1, stops below C1).
