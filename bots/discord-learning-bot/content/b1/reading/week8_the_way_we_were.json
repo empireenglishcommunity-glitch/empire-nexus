@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w8",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 8,
+  "title": "Letters From My Grandmother's Village",
+  "title_ar": "رسائل من قرية جدتي",
+  "can_do": [
+    "B1.R.3"
+  ],
+  "word_count": 158,
+  "gist_ar": "ذكريات جدتي عن الماضي ومقارنتها بالحاضر.",
+  "text": "Dear Amina,\n\nYou asked me what life used to be like in the village when I was young. Back then, everything was slower and, in some ways, simpler.\n\nWe used to wake up before the sun. My mother would bake bread every morning, and the smell would fill the whole house. We didn't use to have a fridge, so we bought food on the same day we ate it. In the evening the neighbours would sit outside together, and the children would play in the street until somebody called us in.\n\nI won't pretend it was all beautiful. We used to walk four kilometres to school, and in winter that walk was hard. There was no hospital nearby.\n\nNowadays my grandchildren have everything I dreamed of, and I am glad. But I do miss one thing: back then we knew every family in the street. These days people live closer together and know each other less.\n\nYour grandmother",
+  "glossary": [
+    {
+      "word": "used to",
+      "ar": "كان بيعمل زمان"
+    },
+    {
+      "word": "back then",
+      "ar": "في الوقت ده"
+    },
+    {
+      "word": "nowadays",
+      "ar": "الأيام دي"
+    },
+    {
+      "word": "miss",
+      "ar": "يفتقد"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why did they buy food on the same day?",
+      "q_ar": "ليه كانوا يشتروا الأكل في نفس اليوم؟",
+      "options": [
+        "The shop opened once a day",
+        "They didn't use to have a fridge",
+        "Food was cheaper then"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did the neighbours use to do in the evening?",
+      "q_ar": "الجيران كانوا يعملوا إيه بالليل؟",
+      "options": [
+        "Bake bread",
+        "Walk to school",
+        "Sit outside together"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the grandmother admit was hard?",
+      "q_ar": "الجدة بتعترف إن إيه كان صعب؟",
+      "options": [
+        "Baking bread every morning",
+        "Playing in the street",
+        "Walking four kilometres to school"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does she miss most?",
+      "q_ar": "بتفتقد إيه أكتر حاجة؟",
+      "options": [
+        "The slow mornings",
+        "The bread from the village",
+        "Knowing every family in the street"
+      ],
+      "answer": 2
+    }
+  ]
+}

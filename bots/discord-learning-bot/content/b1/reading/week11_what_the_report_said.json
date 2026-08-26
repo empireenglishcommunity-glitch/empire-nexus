@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w11",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 11,
+  "title": "What the Report Said",
+  "title_ar": "التقرير قال إيه",
+  "can_do": [
+    "B1.R.4"
+  ],
+  "word_count": 157,
+  "gist_ar": "خبر بينقل تصريحات ناس مختلفة عن مشروع.",
+  "text": "A report about the new bus line was published yesterday, and it has already caused an argument.\n\nThe transport company announced that the line would open in June. Its director explained that the work had taken longer than expected, and admitted that costs had risen by twenty per cent. He promised that no ticket price would change this year.\n\nLocal shop owners complained that the building work had reduced their sales. One owner said that she had lost half of her customers since January. She added that nobody from the company had spoken to her.\n\nA journalist asked whether the June date was realistic. The director replied that it was, but he mentioned that two bridges still needed testing.\n\nThe city council suggested that a meeting should be held next month. It told residents that their questions would be answered there. Several rumours about a second delay have appeared online, but so far nobody has confirmed them.",
+  "glossary": [
+    {
+      "word": "announce",
+      "ar": "يعلن"
+    },
+    {
+      "word": "admit",
+      "ar": "يعترف"
+    },
+    {
+      "word": "complain",
+      "ar": "يشتكي"
+    },
+    {
+      "word": "rumour",
+      "ar": "شائعة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What did the director admit?",
+      "q_ar": "المدير اعترف بإيه؟",
+      "options": [
+        "The line would not open",
+        "Ticket prices would change",
+        "Costs had risen by twenty per cent"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did the shop owner say?",
+      "q_ar": "صاحبة الدكان قالت إيه؟",
+      "options": [
+        "She had lost half of her customers since January",
+        "The company had helped her",
+        "Her sales had improved"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What still needs testing?",
+      "q_ar": "إيه اللي لسه محتاج اختبار؟",
+      "options": [
+        "Two buses",
+        "The ticket machines",
+        "Two bridges"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did the city council suggest?",
+      "q_ar": "المجلس اقترح إيه؟",
+      "options": [
+        "That the line should be cancelled",
+        "That a meeting should be held next month",
+        "That prices should rise"
+      ],
+      "answer": 1
+    }
+  ]
+}

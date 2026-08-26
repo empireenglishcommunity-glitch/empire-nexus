@@ -1,0 +1,75 @@
+{
+  "id": "reading_b1_w14",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 14,
+  "title": "What I Learned From Failing",
+  "title_ar": "اللي اتعلمته من الفشل",
+  "can_do": [
+    "B1.R.3",
+    "B1.R.4"
+  ],
+  "word_count": 159,
+  "gist_ar": "تأمّل شخصي عن التقدم والفشل في تعلّم الإنجليزي.",
+  "text": "When I decided to learn English properly, I expected to enjoy it. In fact, I spent the first six months avoiding it.\n\nI kept making the same mistake: I wanted to speak perfectly, so I said nothing. Although I understood the grammar, I avoided every conversation. However, saying nothing is not safe — it is just slow.\n\nThe change came because of a small decision. I managed to agree with a colleague that we would speak English for ten minutes every morning, despite how bad it felt. In order to keep going, we made one rule: mistakes were allowed, silence was not.\n\nAfter three months I noticed that I had stopped translating in my head. My confidence grew, although my grammar was still far from perfect.\n\nMy advice is simple. Don't hope to be ready; practise so that you become ready. The goal is not to avoid mistakes. The goal is to make them early, in front of someone kind.",
+  "glossary": [
+    {
+      "word": "avoid",
+      "ar": "يتجنّب"
+    },
+    {
+      "word": "although",
+      "ar": "على الرغم من"
+    },
+    {
+      "word": "confidence",
+      "ar": "ثقة"
+    },
+    {
+      "word": "achievement",
+      "ar": "إنجاز"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What did the writer do for the first six months?",
+      "q_ar": "الكاتب عمل إيه في أول ست شهور؟",
+      "options": [
+        "Avoided English",
+        "Practised every morning",
+        "Spoke perfectly"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What rule did they make?",
+      "q_ar": "إيه القاعدة اللي عملوها؟",
+      "options": [
+        "Mistakes were allowed, silence was not",
+        "They spoke for one hour a day",
+        "Only perfect sentences were allowed"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What did the writer notice after three months?",
+      "q_ar": "لاحظ إيه بعد تلات شهور؟",
+      "options": [
+        "He had stopped translating in his head",
+        "His grammar was perfect",
+        "He no longer needed to practise"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the writer's advice?",
+      "q_ar": "نصيحة الكاتب إيه؟",
+      "options": [
+        "Avoid speaking until your grammar is perfect",
+        "Wait until you are ready to speak",
+        "Practise so that you become ready, don't wait to be ready"
+      ],
+      "answer": 2
+    }
+  ]
+}

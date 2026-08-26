@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w14",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 14,
+  "title": "Summarise the talk on progress",
+  "title_ar": "لخّص المحاضرة عن التقدّم",
+  "can_do": [
+    "B1.M.2"
+  ],
+  "scenario": {
+    "en": "You heard a short talk about learning from failure. A classmate asks what it was about.",
+    "ar": "سمعت محاضرة قصيرة عن التعلّم من الفشل. زميلك بيسألك كانت عن إيه."
+  },
+  "source": "The speaker said: 'I spent six months avoiding English, because I wanted to speak perfectly, so I said nothing. Then a colleague and I agreed to speak for ten minutes every morning, with one rule: mistakes were allowed, silence was not. After three months I had stopped translating in my head.'",
+  "task": {
+    "en": "Summarise the talk, then give your opinion about the speaker's rule.",
+    "ar": "لخّص المحاضرة، وبعدين قول رأيك في قاعدة المتحدث."
+  },
+  "key_points": [
+    {
+      "en": "He avoided English for six months because he wanted to be perfect.",
+      "ar": "اتجنّب الإنجليزي ٦ شهور لأنه عايز يكون مثالي."
+    },
+    {
+      "en": "He agreed to speak ten minutes every morning with a colleague.",
+      "ar": "اتفق يتكلم ١٠ دقايق كل صباح مع زميل."
+    },
+    {
+      "en": "Their rule was that mistakes were allowed but silence was not.",
+      "ar": "قاعدتهم: الغلط مسموح والسكوت لأ."
+    },
+    {
+      "en": "Give your opinion about the rule.",
+      "ar": "قول رأيك في القاعدة."
+    }
+  ],
+  "model_answer": {
+    "en": "In short, he avoided English for six months because he wanted to speak perfectly. Then he agreed with a colleague to speak ten minutes every morning, and their rule was that mistakes were allowed but silence was not. After three months he had stopped translating in his head. Personally, I think that rule is the useful part.",
+    "ar": "باختصار، اتجنّب الإنجليزي ٦ شهور لأنه كان عايز يتكلم مثالي. وبعدين اتفق مع زميل يتكلموا ١٠ دقايق كل صباح، وقاعدتهم إن الغلط مسموح والسكوت لأ. وبعد ٣ شهور بقى مش بيترجم في دماغه. شخصيًا أنا شايف إن القاعدة دي هي الجزء المفيد."
+  },
+  "signal_phrases": [
+    {
+      "en": "In short...",
+      "ar": "باختصار..."
+    },
+    {
+      "en": "The main point is...",
+      "ar": "النقطة الأساسية هي..."
+    },
+    {
+      "en": "Personally, I think...",
+      "ar": "شخصيًا، أنا شايف..."
+    },
+    {
+      "en": "On the other hand...",
+      "ar": "من ناحية تانية..."
+    }
+  ]
+}

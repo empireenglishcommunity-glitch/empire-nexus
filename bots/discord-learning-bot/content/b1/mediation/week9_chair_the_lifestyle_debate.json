@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w9",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 9,
+  "title": "Chair the city-or-village debate",
+  "title_ar": "ادِر مناقشة المدينة والقرية",
+  "can_do": [
+    "B1.M.3"
+  ],
+  "scenario": {
+    "en": "Your class is debating whether city life is better than village life. It is going in circles.",
+    "ar": "فصلك بيناقش المدينة أحسن ولا القرية. النقاش بيلف في دايرة."
+  },
+  "source": "Rania argues that salaries are higher and transport is more convenient in the city. Samir replies that city rent is not nearly as affordable. Hoda has not spoken. Tarek keeps repeating that the village is more peaceful. The teacher asks the group to reach a conclusion.",
+  "task": {
+    "en": "Chair it: invite Hoda to join, restate Samir's point about rent, summarise where the group has got to, and move them to a conclusion.",
+    "ar": "ادِر النقاش: خلّي هدى تشارك، أعِد صياغة نقطة سمير عن الإيجار، لخّص وصلوا لفين، ووجّههم لخلاصة."
+  },
+  "key_points": [
+    {
+      "en": "Invite Hoda to join the discussion.",
+      "ar": "خلّي هدى تشارك في النقاش."
+    },
+    {
+      "en": "Restate Samir's point that city rent is not affordable.",
+      "ar": "أعِد صياغة نقطة سمير إن إيجار المدينة غالي."
+    },
+    {
+      "en": "Summarise where the group has got to.",
+      "ar": "لخّص المجموعة وصلت لفين."
+    },
+    {
+      "en": "Move the group towards a conclusion.",
+      "ar": "وجّه المجموعة لخلاصة."
+    }
+  ],
+  "model_answer": {
+    "en": "Hoda, what do you think? Samir, so you're saying a higher salary doesn't help if the rent is not affordable. Where have we got to? We agree the city is better for starting a career and the village is more peaceful for a family. Can we move to that conclusion: the answer depends on what you need?",
+    "ar": "هدى، إيه رأيك؟ سمير، يعني انت بتقول إن الراتب الأعلى مايفيدش لو الإيجار غالي. وصلنا لفين؟ متفقين إن المدينة أحسن لبداية المهنة والقرية أهدى للعيلة. نروح للخلاصة دي: الإجابة بتعتمد على احتياجك؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think, Samir?",
+      "ar": "إيه رأيك يا سمير؟"
+    },
+    {
+      "en": "So you're saying...",
+      "ar": "يعني انت بتقول..."
+    },
+    {
+      "en": "Let's come back to that.",
+      "ar": "نرجع للنقطة دي."
+    },
+    {
+      "en": "Where have we got to?",
+      "ar": "وصلنا لفين؟"
+    }
+  ]
+}

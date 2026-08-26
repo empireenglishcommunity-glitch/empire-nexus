@@ -1,0 +1,75 @@
+{
+  "id": "reading_b1_w4",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 4,
+  "title": "What Happens If We Waste Water?",
+  "title_ar": "إيه اللي يحصل لو ضيّعنا الميّة؟",
+  "can_do": [
+    "B1.R.4",
+    "B1.R.5"
+  ],
+  "word_count": 165,
+  "gist_ar": "مقال بيشرح نتايج تضييع الميّة وبيوصل لخلاصة.",
+  "text": "Water looks free, but it is not. If a city wastes water today, it will pay for it tomorrow.\n\nConsider one simple example. If a tap leaks one drop every second, it will waste about thirty litres in a day. That is one family. Now imagine a thousand families in the same area. Unless somebody repairs those taps, the result is a serious loss of clean water.\n\nThere is a second consequence. As soon as clean water becomes rare, its price rises, and poorer families are affected first. In case you think this is a distant problem, remember that several large cities have already reduced supply for a few hours a day.\n\nThe good news is that small actions help. If we repair leaks, reuse water for plants, and recycle where possible, we reduce waste immediately.\n\nThe main conclusion is clear: we will not solve this problem by waiting for governments. It will be solved when ordinary families decide to protect what they already have.",
+  "glossary": [
+    {
+      "word": "waste",
+      "ar": "يضيّع"
+    },
+    {
+      "word": "consequence",
+      "ar": "نتيجة"
+    },
+    {
+      "word": "reduce",
+      "ar": "يقلّل"
+    },
+    {
+      "word": "unless",
+      "ar": "إلا لو"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How much water can one leaking tap waste in a day?",
+      "q_ar": "حنفية بتنقّط تضيّع كام في اليوم؟",
+      "options": [
+        "About three hundred litres",
+        "About thirty litres",
+        "About one litre"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Who is affected first when clean water becomes rare?",
+      "q_ar": "مين اللي يتأثر الأول لما الميّة تقل؟",
+      "options": [
+        "Governments",
+        "Poorer families",
+        "Large companies"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer say is the main conclusion?",
+      "q_ar": "الكاتب بيقول الخلاصة إيه؟",
+      "options": [
+        "The problem only affects distant cities",
+        "Governments will solve the problem alone",
+        "Ordinary families must act, not wait for governments"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which action does the writer suggest?",
+      "q_ar": "الكاتب بيقترح إيه؟",
+      "options": [
+        "Use taps less at night",
+        "Reuse water for plants",
+        "Buy bottled water"
+      ],
+      "answer": 1
+    }
+  ]
+}

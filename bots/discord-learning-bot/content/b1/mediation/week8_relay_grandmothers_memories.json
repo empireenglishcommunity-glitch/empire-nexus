@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w8",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 8,
+  "title": "Pass on your grandmother's letter",
+  "title_ar": "انقل رسالة جدتك",
+  "can_do": [
+    "B1.M.1"
+  ],
+  "scenario": {
+    "en": "Your grandmother wrote in English about the past. Your younger brother wants to know what she said.",
+    "ar": "جدتك كتبت بالإنجليزي عن الماضي. أخوك الصغير عايز يعرف قالت إيه."
+  },
+  "source": "\"We used to wake up before the sun, and my mother would bake bread every morning. We didn't use to have a fridge, so we bought food on the same day. The neighbours would sit outside together. We used to walk four kilometres to school, and in winter that walk was hard.\"",
+  "task": {
+    "en": "Relay the main points of the letter to your brother.",
+    "ar": "انقل النقط الأساسية في الرسالة لأخوك."
+  },
+  "key_points": [
+    {
+      "en": "They used to wake up before the sun.",
+      "ar": "كانوا يصحوا قبل الشمس."
+    },
+    {
+      "en": "They didn't have a fridge, so they bought food daily.",
+      "ar": "مكانش عندهم تلاجة، فكانوا يشتروا الأكل كل يوم."
+    },
+    {
+      "en": "The neighbours would sit outside together.",
+      "ar": "الجيران كانوا يقعدوا برة مع بعض."
+    },
+    {
+      "en": "They walked four kilometres to school, which was hard in winter.",
+      "ar": "كانوا يمشوا ٤ كيلو للمدرسة، وكان صعب في الشتا."
+    }
+  ],
+  "model_answer": {
+    "en": "She says they used to wake up before the sun, and they didn't have a fridge, so they bought food on the same day. The neighbours would sit outside together, and they walked four kilometres to school, which was hard in winter.",
+    "ar": "بتقول إنهم كانوا يصحوا قبل الشمس، ومكانش عندهم تلاجة فكانوا يشتروا الأكل كل يوم. والجيران كانوا يقعدوا برة مع بعض، وكانوا يمشوا ٤ كيلو للمدرسة، وده كان صعب في الشتا."
+  },
+  "signal_phrases": [
+    {
+      "en": "Just to be clear...",
+      "ar": "بس للتوضيح..."
+    },
+    {
+      "en": "So basically...",
+      "ar": "يعني بالأساس..."
+    },
+    {
+      "en": "Did I get that right?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Let me summarise.",
+      "ar": "خليني ألخّص."
+    }
+  ]
+}

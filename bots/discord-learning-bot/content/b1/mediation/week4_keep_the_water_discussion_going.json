@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w4",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 4,
+  "title": "Keep the discussion going",
+  "title_ar": "خلّي النقاش ماشي",
+  "can_do": [
+    "B1.M.3"
+  ],
+  "scenario": {
+    "en": "Your group is discussing how to reduce water waste at school. Two people are silent and two are repeating themselves.",
+    "ar": "مجموعتك بتناقش إزاي تقلّلوا تضييع الميّة في المدرسة. اتنين ساكتين واتنين بيعيدوا كلامهم."
+  },
+  "source": "Rania says: 'If we repair the leaking taps, we will save a lot of water.' Samir has said twice that posters do not work. Two students, Hoda and Tarek, have not spoken at all. The teacher says the group must reach one plan before the end of the lesson.",
+  "task": {
+    "en": "Help the discussion along: invite Hoda and Tarek to join, restate Samir's point fairly, and summarise where the group has got to.",
+    "ar": "ساعد النقاش يكمل: خلّي هدى وطارق يشاركوا، أعِد صياغة نقطة سمير بإنصاف، ولخّص المجموعة وصلت لفين."
+  },
+  "key_points": [
+    {
+      "en": "Invite Hoda and Tarek to join the discussion.",
+      "ar": "خلّي هدى وطارق يشاركوا في النقاش."
+    },
+    {
+      "en": "Restate Samir's point that posters do not work.",
+      "ar": "أعِد صياغة نقطة سمير إن البوسترات مش مفيدة."
+    },
+    {
+      "en": "Summarise where the group has got to.",
+      "ar": "لخّص المجموعة وصلت لفين."
+    },
+    {
+      "en": "Move the group towards one plan.",
+      "ar": "وجّه المجموعة لخطة واحدة."
+    }
+  ],
+  "model_answer": {
+    "en": "Hoda, Tarek, what do you think? Samir, so you're saying posters do not change behaviour — that's fair. Where have we got to? We agree that repairing the leaking taps comes first, and we are not sure about posters. Shall we make that our one plan?",
+    "ar": "هدى، طارق، إيه رأيكم؟ سمير، يعني انت بتقول إن البوسترات مش بتغيّر السلوك — وده كلام منطقي. وصلنا لفين؟ متفقين إن تصليح الحنفيات أول حاجة، ومش متأكدين من البوسترات. نخلّيها دي خطتنا؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think, Samir?",
+      "ar": "إيه رأيك يا سمير؟"
+    },
+    {
+      "en": "So you're saying...",
+      "ar": "يعني انت بتقول..."
+    },
+    {
+      "en": "Let's come back to that.",
+      "ar": "نرجع للنقطة دي."
+    },
+    {
+      "en": "Where have we got to?",
+      "ar": "وصلنا لفين؟"
+    }
+  ]
+}

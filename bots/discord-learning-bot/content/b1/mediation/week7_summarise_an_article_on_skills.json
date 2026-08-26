@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w7",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 7,
+  "title": "Summarise the article and give your opinion",
+  "title_ar": "لخّص المقال وقول رأيك",
+  "can_do": [
+    "B1.M.2"
+  ],
+  "scenario": {
+    "en": "Your teacher asks you to report on an article you read about learning skills.",
+    "ar": "مدرّسك طلب منك تتكلم عن مقال قريته عن تعلّم المهارات."
+  },
+  "source": "The article said: 'Progress depends less on talent than on time. Short, regular practice beats long, rare practice — twenty minutes a day is more useful than three hours on Friday. One learner who practises only when she feels like it is still a beginner after two years.'",
+  "task": {
+    "en": "Summarise the article, then give your opinion about it.",
+    "ar": "لخّص المقال، وبعدين قول رأيك فيه."
+  },
+  "key_points": [
+    {
+      "en": "Progress depends less on talent than on time.",
+      "ar": "التقدّم بيعتمد على الوقت أكتر من الموهبة."
+    },
+    {
+      "en": "Short, regular practice beats long, rare practice.",
+      "ar": "تمرين قصير منتظم أحسن من طويل ومتقطّع."
+    },
+    {
+      "en": "Twenty minutes a day is more useful than three hours on Friday.",
+      "ar": "٢٠ دقيقة يوميًا أنفع من ٣ ساعات الجمعة."
+    },
+    {
+      "en": "Give your opinion about the article.",
+      "ar": "قول رأيك في المقال."
+    }
+  ],
+  "model_answer": {
+    "en": "The main point is that progress depends less on talent than on time. Short, regular practice beats long, rare practice: twenty minutes a day is more useful than three hours on Friday. My opinion about the article is that it is right, because a habit survives a busy week and a long session does not.",
+    "ar": "النقطة الأساسية إن التقدّم بيعتمد على الوقت أكتر من الموهبة. تمرين قصير منتظم أحسن من طويل متقطّع: ٢٠ دقيقة يوميًا أنفع من ٣ ساعات الجمعة. رأيي في المقال إنه صح، لأن العادة تستحمل أسبوع مزحوم والجلسة الطويلة لأ."
+  },
+  "signal_phrases": [
+    {
+      "en": "In short...",
+      "ar": "باختصار..."
+    },
+    {
+      "en": "The main point is...",
+      "ar": "النقطة الأساسية هي..."
+    },
+    {
+      "en": "Personally, I think...",
+      "ar": "شخصيًا، أنا شايف..."
+    },
+    {
+      "en": "On the other hand...",
+      "ar": "من ناحية تانية..."
+    }
+  ]
+}

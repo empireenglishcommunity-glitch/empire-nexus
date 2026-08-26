@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w3",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 3,
+  "title": "Pass on the change of plan",
+  "title_ar": "انقل تغيير الخطة",
+  "can_do": [
+    "B1.M.1"
+  ],
+  "scenario": {
+    "en": "A colleague who does not read English well asks you what the team email said.",
+    "ar": "زميل مش بيقرا إنجليزي كويس بيسألك الإيميل قال إيه."
+  },
+  "source": "\"We were going to hold the meeting on Tuesday, but I have decided to postpone it. The meeting is taking place on Thursday at ten o'clock in Room 4. I am going to send the documents on Wednesday morning. The deadline for the report has not changed.\"",
+  "task": {
+    "en": "Relay the main points to your colleague.",
+    "ar": "انقل النقط الأساسية لزميلك."
+  },
+  "key_points": [
+    {
+      "en": "The Tuesday meeting has been postponed.",
+      "ar": "اجتماع الثلاثاء اتأجل."
+    },
+    {
+      "en": "It is taking place on Thursday at ten in Room 4.",
+      "ar": "بقى الخميس عشرة في أوضة ٤."
+    },
+    {
+      "en": "The documents are coming on Wednesday morning.",
+      "ar": "المستندات هتوصل صباح الأربع."
+    },
+    {
+      "en": "The report deadline has not changed.",
+      "ar": "الموعد النهائي للتقرير ماتغيّرش."
+    }
+  ],
+  "model_answer": {
+    "en": "The Tuesday meeting has been postponed. It is taking place on Thursday at ten o'clock in Room 4, and the documents are coming on Wednesday morning. The deadline for the report has not changed.",
+    "ar": "اجتماع الثلاثاء اتأجل. بقى الخميس الساعة عشرة في أوضة ٤، والمستندات هتوصل صباح الأربع. والموعد النهائي للتقرير ماتغيّرش."
+  },
+  "signal_phrases": [
+    {
+      "en": "Just to be clear...",
+      "ar": "بس للتوضيح..."
+    },
+    {
+      "en": "So basically...",
+      "ar": "يعني بالأساس..."
+    },
+    {
+      "en": "Did I get that right?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Let me summarise.",
+      "ar": "خليني ألخّص."
+    }
+  ]
+}

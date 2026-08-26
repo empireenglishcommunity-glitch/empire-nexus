@@ -108,8 +108,77 @@ exit exam.
   giving experiences + reasons + opinions) tests the B1 can-do set as a whole;
   passing certifies the student at **CEFR B1** and promotes them to B2.
 
+### 4b. Reading, Mediation + one travel roleplay (added 2026-08-24 — Phase 11B)
+
+**What was missing.** B1 had **no reading task and no mediation task**, and three
+descriptors were taught by *no week*: `B1.M.2`, `B1.M.3` and `B1.I.1`. **B1 is now
+17/19.**
+
+**Reading — 14 passages** (`content/b1/reading/`), 147–187 words. B1's
+reading-side descriptors were *already* claimed by the week files, so these
+passages close **no new descriptor** — they exist for two better reasons: B1
+students had **no reading task at all**, and `B1.R.3` / `B1.R.4` / `B1.R.5` name
+three genuinely *different text types* that should be practised as such:
+
+| Descriptor | Text type | Weeks |
+|---|---|---|
+| `B1.R.3` | personal letters/emails: events, feelings, wishes | 1, 2, 3, 5, 8, 14 |
+| `B1.R.4` | straightforward factual texts on topics of interest | 3, 4, 6, 7, 9, 10, 11, 12, 14 |
+| `B1.R.5` | the main **conclusion** in a clearly signalled argument | 4, 9, 13 |
+
+The three `B1.R.5` passages end with an explicit signalled conclusion ("The main
+conclusion is clear…", "So what is the conclusion?"), because that descriptor is
+specifically about *identifying* it — a passage without one couldn't teach it.
+
+**Mediation — 14 tasks** (`content/b1/mediation/`), split by act so each task
+claims only what it performs:
+
+- **`B1.M.1` relay (5):** a friend's news, a change of plan, a grandmother's
+  letter, a visitor's description, a manufacturing process.
+- **`B1.M.2` summarise + opinion (5):** a short story, a talk, an article, a news
+  report, a talk on progress. Each requires a summary **and** an explicit opinion.
+- **`B1.M.3` keep a discussion going (4):** water waste, a deduction puzzle, the
+  city-or-village debate, a budget meeting. Each requires **inviting a named
+  silent classmate**, **restating** someone's point fairly, and **summarising
+  where the group has got to** — the three moves the descriptor actually names.
+
+**`B1.I.1` — the one content edit, called out for your review.** *"Can deal with
+most situations likely to arise while travelling (transport, accommodation,
+dealing with authorities)"* is **interaction**, so neither a passage nor a
+mediation task can prove it — it needed a speaking mission, and **no B1 week had
+a travel theme.**
+
+Week 3 is *Plans & Arrangements (Future Forms)* — exactly the language a travel
+transaction needs — and its Wednesday and Thursday missions **overlapped**:
+
+> Wed: "Arrange to meet a friend: suggest, confirm, and react to a change."
+> Thu (before): "Ask a partner about weekend plans and respond with offers."
+> Thu (after): "Roleplay a travel problem: you have missed your train and your hotel booking starts tonight. Speak to the ticket office, then to the hotel, using future forms…"
+
+So one mission changed: it closes `B1.I.1`, keeps the week's grammar target, and
+removes the duplication. `B1.I.1` was then added to week 3's `can_do`.
+
+**Still open for B1:** `B1.R.1` (main points of clear standard **speech**) and
+`B1.R.2` (**radio/TV** programmes). Both are spoken reception — no reading
+passage can close them — so they stay recorded in
+`coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING` until real extended-listening
+content exists.
+
+**Quality gate note.** The automated bar (shared by every authored level) caught
+two real problems in this B1 content before it shipped: one passage was genuinely
+thin on its own week's vocabulary (6 of 33 — rewritten, now 18), and five model
+answers *performed* the required move without ever **naming** it ("Personally, I
+think…" instead of "In my opinion…"), so a student copying the model wouldn't see
+that giving an opinion is a required step. Both fixed in the content.
+
 ## What to review / sign off
 - [ ] Themes + week order feel right for your intermediate students.
+- [ ] **Reading passages (§4b) feel right for B1** — 14 passages, 147–187 words,
+      three text types.
+- [ ] **Mediation tasks (§4b)** — especially the four "keep the discussion going"
+      tasks, which are the newest kind of thing we ask a student to do.
+- [ ] ⚠️ **The week-3 Thursday travel roleplay (§4b)** — this replaced an existing
+      mission, so it is the one place approved B1 content changed.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and B1-appropriate (builds on A2, stops below B2).
 - [ ] Speaking/writing tasks match your students' ability (reasons, opinions, narration).

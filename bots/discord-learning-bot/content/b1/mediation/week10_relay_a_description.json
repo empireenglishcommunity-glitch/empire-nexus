@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w10",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 10,
+  "title": "Describe the person who was asking",
+  "title_ar": "اوصف الشخص اللي كان بيسأل",
+  "can_do": [
+    "B1.M.1"
+  ],
+  "scenario": {
+    "en": "Somebody came looking for your neighbour while she was out. You have to describe him to her.",
+    "ar": "حد جه يسأل على جارتك وهي مش موجودة. لازم توصفه لها."
+  },
+  "source": "The visitor said: 'I am the colleague who works with her at the hospital. My name is Fouad. I am the man whose car is parked near the bakery. Please tell her the meeting which was on Thursday has moved to Saturday.'",
+  "task": {
+    "en": "Relay who he was and what he said to your neighbour.",
+    "ar": "انقل لجارتك مين كان وقال إيه."
+  },
+  "key_points": [
+    {
+      "en": "He is the colleague who works with her at the hospital.",
+      "ar": "هو الزميل اللي بيشتغل معاها في المستشفى."
+    },
+    {
+      "en": "His name is Fouad.",
+      "ar": "اسمه فؤاد."
+    },
+    {
+      "en": "His car is parked near the bakery.",
+      "ar": "عربيته واقفة جمب الفرن."
+    },
+    {
+      "en": "The Thursday meeting has moved to Saturday.",
+      "ar": "اجتماع الخميس اتحوّل للسبت."
+    }
+  ],
+  "model_answer": {
+    "en": "A colleague who works with you at the hospital came. His name is Fouad, and his car was parked near the bakery. He said the meeting which was on Thursday has moved to Saturday.",
+    "ar": "جه زميل بيشتغل معاكي في المستشفى. اسمه فؤاد، وعربيته كانت واقفة جمب الفرن. وقال إن اجتماع الخميس اتحوّل للسبت."
+  },
+  "signal_phrases": [
+    {
+      "en": "Just to be clear...",
+      "ar": "بس للتوضيح..."
+    },
+    {
+      "en": "So basically...",
+      "ar": "يعني بالأساس..."
+    },
+    {
+      "en": "Did I get that right?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Let me summarise.",
+      "ar": "خليني ألخّص."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w5",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 5,
+  "title": "Summarise the talk and give your view",
+  "title_ar": "لخّص المحاضرة وقول رأيك",
+  "can_do": [
+    "B1.M.2"
+  ],
+  "scenario": {
+    "en": "You attended a short talk. A friend who could not come asks you about it.",
+    "ar": "حضرت محاضرة قصيرة. صاحبك اللي مقدرش يحضر بيسألك عنها."
+  },
+  "source": "The speaker said: 'If people won a large amount of money, most of them would not change their work. In our survey, seven out of ten said they would invest part of it and keep their job. Only two said they would stop working completely. The speaker concluded that people want more choice, not less work.'",
+  "task": {
+    "en": "Summarise the talk in a few sentences, then give your opinion about the conclusion.",
+    "ar": "لخّص المحاضرة في كلمتين، وبعدين قول رأيك في الخلاصة."
+  },
+  "key_points": [
+    {
+      "en": "Most people would not change their work if they won money.",
+      "ar": "أغلب الناس مش هتغيّر شغلها لو كسبت فلوس."
+    },
+    {
+      "en": "Seven out of ten would invest part and keep their job.",
+      "ar": "٧ من ١٠ هيستثمروا جزء ويكملوا شغلهم."
+    },
+    {
+      "en": "The speaker concluded people want more choice, not less work.",
+      "ar": "الخلاصة إن الناس عايزة اختيار أكتر، مش شغل أقل."
+    },
+    {
+      "en": "Give your opinion about that conclusion.",
+      "ar": "قول رأيك في الخلاصة دي."
+    }
+  ],
+  "model_answer": {
+    "en": "In short, the speaker said most people would not change their work if they won money: seven out of ten would invest part of it and keep their job. He concluded that people want more choice, not less work. My opinion is that this conclusion is true for people who already like their job.",
+    "ar": "باختصار، المتحدث قال إن أغلب الناس مش هتغيّر شغلها لو كسبت فلوس: ٧ من ١٠ هيستثمروا جزء ويكملوا شغلهم. وخلاصته إن الناس عايزة اختيار أكتر مش شغل أقل. رأيي إن الخلاصة دي صح للناس اللي بتحب شغلها بالفعل."
+  },
+  "signal_phrases": [
+    {
+      "en": "In short...",
+      "ar": "باختصار..."
+    },
+    {
+      "en": "The main point is...",
+      "ar": "النقطة الأساسية هي..."
+    },
+    {
+      "en": "Personally, I think...",
+      "ar": "شخصيًا، أنا شايف..."
+    },
+    {
+      "en": "On the other hand...",
+      "ar": "من ناحية تانية..."
+    }
+  ]
+}

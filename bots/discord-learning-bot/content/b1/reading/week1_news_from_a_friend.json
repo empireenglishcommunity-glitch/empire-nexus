@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w1",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 1,
+  "title": "News From Yasmin",
+  "title_ar": "أخبار من ياسمين",
+  "can_do": [
+    "B1.R.3"
+  ],
+  "word_count": 151,
+  "gist_ar": "إيميل من ياسمين بتحكي فيه اللي حصل معاها مؤخرًا.",
+  "text": "Hi Karim,\n\nI haven't written for a long time, so here is my news. A lot has happened lately. I have just finished my first year at university, and I have already started a part-time job in a bookshop. I have been there since March.\n\nThe biggest change is that we moved to a new flat in February. I lost my old room, which I loved, but the new area is much quieter. So far I have met three of the neighbours and they seem kind.\n\nI have improved my English a lot this year, because I decided to read one article every morning. I didn't enjoy it at the beginning, but recently it has become a habit. Last week I even won a small prize in a writing competition at the university!\n\nWhat about you? Has anything changed since we last met? Write soon and tell me everything.\n\nYasmin",
+  "glossary": [
+    {
+      "word": "recently",
+      "ar": "مؤخرًا"
+    },
+    {
+      "word": "so far",
+      "ar": "لحد دلوقتي"
+    },
+    {
+      "word": "improve",
+      "ar": "يتحسّن"
+    },
+    {
+      "word": "achieve",
+      "ar": "يحقّق"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What has Yasmin just finished?",
+      "q_ar": "ياسمين خلصت إيه للتو؟",
+      "options": [
+        "A writing competition",
+        "Her first year at university",
+        "Her job in the bookshop"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How long has she worked in the bookshop?",
+      "q_ar": "بقالها قد إيه في المكتبة؟",
+      "options": [
+        "Since February",
+        "For one year",
+        "Since March"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does she say about the new area?",
+      "q_ar": "بتقول إيه عن المنطقة الجديدة؟",
+      "options": [
+        "It is more crowded",
+        "She lost her room there",
+        "It is much quieter"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How did she improve her English?",
+      "q_ar": "حسّنت إنجليزيها إزاي؟",
+      "options": [
+        "She won a prize",
+        "She moved to a new flat",
+        "She read one article every morning"
+      ],
+      "answer": 2
+    }
+  ]
+}

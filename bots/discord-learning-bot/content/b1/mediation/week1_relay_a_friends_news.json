@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b1_w1",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 1,
+  "title": "Pass on Yasmin's news",
+  "title_ar": "انقل أخبار ياسمين",
+  "can_do": [
+    "B1.M.1"
+  ],
+  "scenario": {
+    "en": "Yasmin sent a long email in English. Your aunt asks you what has happened to her recently.",
+    "ar": "ياسمين بعتت إيميل طويل بالإنجليزي. خالتك بتسألك حصل إيه معاها مؤخرًا."
+  },
+  "source": "\"I have just finished my first year at university, and I have already started a part-time job in a bookshop. We moved to a new flat in February. I have improved my English a lot, because I read one article every morning.\"",
+  "task": {
+    "en": "Relay the main points of the email to your aunt.",
+    "ar": "انقل النقط الأساسية في الإيميل لخالتك."
+  },
+  "key_points": [
+    {
+      "en": "She has finished her first year at university.",
+      "ar": "خلصت أول سنة في الجامعة."
+    },
+    {
+      "en": "She has started a part-time job in a bookshop.",
+      "ar": "بدأت شغل بارت تايم في مكتبة."
+    },
+    {
+      "en": "They moved to a new flat in February.",
+      "ar": "نقلوا لشقة جديدة في فبراير."
+    },
+    {
+      "en": "She has improved her English by reading every morning.",
+      "ar": "حسّنت إنجليزيها بالقراية كل صباح."
+    }
+  ],
+  "model_answer": {
+    "en": "She has just finished her first year at university and started a part-time job in a bookshop. They moved to a new flat in February, and she has improved her English by reading one article every morning.",
+    "ar": "خلصت أول سنة جامعة وبدأت شغل بارت تايم في مكتبة. نقلوا لشقة جديدة في فبراير، وحسّنت إنجليزيها لأنها بتقرا مقال كل صباح."
+  },
+  "signal_phrases": [
+    {
+      "en": "Just to be clear...",
+      "ar": "بس للتوضيح..."
+    },
+    {
+      "en": "So basically...",
+      "ar": "يعني بالأساس..."
+    },
+    {
+      "en": "Did I get that right?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Let me summarise.",
+      "ar": "خليني ألخّص."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w6",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 6,
+  "title": "The Case of the Missing Keys",
+  "title_ar": "قضية المفاتيح المفقودة",
+  "can_do": [
+    "B1.R.4"
+  ],
+  "word_count": 182,
+  "gist_ar": "مقال قصير بيستخدم الأدلة للوصول لاستنتاج.",
+  "text": "Every office has its own small mystery. In ours, the store-room keys went missing on Monday morning.\n\nWe had three pieces of evidence. First, the keys can't be inside the store room, because the door was locked from the outside — that is impossible. Second, only four people have permission to take them, so it is certain that one of us moved them. Third, the camera shows that nobody entered the corridor after six on Sunday.\n\nSo we had to guess. I suppose the keys must have left the building on Sunday evening. They might belong to the drawer downstairs, or they could probably be in somebody's coat. It seems obvious now, but for two days everybody suspected the cleaner, which was neither fair nor logical: she doesn't have permission to touch them, so she is not a possible suspect.\n\nOn Wednesday a colleague called and explained everything: the keys were in his jacket. He had put them there and forgotten. No detective was needed. The reason was ordinary, and that is usually the right conclusion — the simplest explanation solves most mysteries.",
+  "glossary": [
+    {
+      "word": "clue",
+      "ar": "دليل"
+    },
+    {
+      "word": "suspect",
+      "ar": "يشتبه"
+    },
+    {
+      "word": "obvious",
+      "ar": "واضح"
+    },
+    {
+      "word": "conclusion",
+      "ar": "استنتاج"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why can't the keys be inside the store room?",
+      "q_ar": "ليه المفاتيح مش ممكن تكون جوه المخزن؟",
+      "options": [
+        "The camera was broken",
+        "Nobody has permission",
+        "The door was locked from the outside"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the camera show?",
+      "q_ar": "الكاميرا بتوضّح إيه؟",
+      "options": [
+        "A colleague came back on Monday",
+        "The cleaner took the keys",
+        "Nobody entered the corridor after six on Sunday"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why was suspecting the cleaner not logical?",
+      "q_ar": "ليه الشك في عاملة النظافة مش منطقي؟",
+      "options": [
+        "She doesn't have permission to touch the keys",
+        "She was not in the building",
+        "She found the keys first"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Where were the keys?",
+      "q_ar": "المفاتيح كانت فين؟",
+      "options": [
+        "In the lost property box",
+        "In a colleague's jacket",
+        "In the store room"
+      ],
+      "answer": 1
+    }
+  ]
+}

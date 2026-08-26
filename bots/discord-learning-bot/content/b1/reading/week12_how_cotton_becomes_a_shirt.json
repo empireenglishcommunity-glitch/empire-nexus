@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w12",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 12,
+  "title": "How Cotton Becomes a Shirt",
+  "title_ar": "إزاي القطن يبقى قميص",
+  "can_do": [
+    "B1.R.4"
+  ],
+  "word_count": 158,
+  "gist_ar": "شرح مراحل تحويل القطن لقميص.",
+  "text": "The shirt you are wearing was probably made in four countries. Here is how it happens.\n\nFirst, cotton is grown in a warm country and picked, usually by machine. Then it is cleaned in a factory and turned into thread. The thread is dyed before it is woven, because colour is added more easily at that stage.\n\nNext, the cloth is exported to a second factory, where it is cut by a machine that follows a design. The pieces are sewn together by workers, and the buttons are added by hand. Each shirt is checked before it is packed.\n\nFinally, the shirts are sold to shops in many countries. A label is printed with the name of the last country, so people often think the whole product was produced there.\n\nThe process is fast, but it is not simple. When something is made this cheaply, we should ask which stage was made cheap, and who paid for it.",
+  "glossary": [
+    {
+      "word": "grown",
+      "ar": "بيُزرع"
+    },
+    {
+      "word": "exported",
+      "ar": "بيُصدَّر"
+    },
+    {
+      "word": "process",
+      "ar": "عملية"
+    },
+    {
+      "word": "material",
+      "ar": "مادة خام"
+    }
+  ],
+  "questions": [
+    {
+      "q": "When is the thread dyed?",
+      "q_ar": "الخيط بيتصبغ إمتى؟",
+      "options": [
+        "After it is packed",
+        "Before it is woven",
+        "After the shirt is sewn"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is added by hand?",
+      "q_ar": "إيه اللي بيتحط باليد؟",
+      "options": [
+        "The buttons",
+        "The thread",
+        "The label"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why do people think the shirt was made in one country?",
+      "q_ar": "ليه الناس تفتكر القميص اتعمل في بلد واحدة؟",
+      "options": [
+        "The label shows only the last country",
+        "The shirt is cheap",
+        "The cotton is grown everywhere"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What question does the writer say we should ask?",
+      "q_ar": "الكاتب بيقول لازم نسأل إيه؟",
+      "options": [
+        "Which stage was made cheap, and who paid for it",
+        "Which country grows the best cotton",
+        "How fast the process is"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_b1_w7",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 7,
+  "title": "How Long Does It Take to Learn a Skill?",
+  "title_ar": "بتاخد قد إيه تتعلّم مهارة؟",
+  "can_do": [
+    "B1.R.4"
+  ],
+  "word_count": 159,
+  "gist_ar": "مقال عن إن التقدّم بيجي من الاستمرار مش الموهبة.",
+  "text": "People often ask how long it takes to learn a new skill. The honest answer is that it depends less on talent than on time.\n\nTake three examples. Sara has been playing the guitar for two years, but she only practises when she feels like it. Omar has been learning photography for eight months, and he takes ten pictures every day. Nadia has been training at the gym since January, three times a week, without stopping. Omar and Nadia are making clear progress; Sara is still a beginner.\n\nResearchers who study skills say the same thing: short, regular practice beats long, rare practice. Twenty minutes a day is more useful than three hours on Friday.\n\nThis is good news for busy people. You do not need a special talent, and you do not need a whole afternoon. You need a small habit that you can repeat when you are tired, when you are busy, and when nobody is watching.",
+  "glossary": [
+    {
+      "word": "practise",
+      "ar": "يتمرّن"
+    },
+    {
+      "word": "progress",
+      "ar": "تقدّم"
+    },
+    {
+      "word": "beginner",
+      "ar": "مبتدئ"
+    },
+    {
+      "word": "challenging",
+      "ar": "صعب/محفّز"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why is Sara still a beginner?",
+      "q_ar": "ليه سارة لسه مبتدئة؟",
+      "options": [
+        "She started only eight months ago",
+        "She only practises when she feels like it",
+        "She has no guitar"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How often does Nadia train?",
+      "q_ar": "نادية بتتمرّن كل قد إيه؟",
+      "options": [
+        "Once a month",
+        "Every day",
+        "Three times a week"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What do researchers say is better?",
+      "q_ar": "الباحثين بيقولوا إيه الأحسن؟",
+      "options": [
+        "Long, rare practice",
+        "Short, regular practice",
+        "Practising only at the gym"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the writer's main point?",
+      "q_ar": "النقطة الأساسية للكاتب؟",
+      "options": [
+        "Talent decides everything",
+        "A small repeated habit matters more than talent",
+        "You need a whole afternoon"
+      ],
+      "answer": 1
+    }
+  ]
+}
