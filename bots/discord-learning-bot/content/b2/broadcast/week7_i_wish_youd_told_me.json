@@ -1,0 +1,152 @@
+{
+  "id": "broadcast_b2_w7",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 7,
+  "title": "I Wish You'd Told Me",
+  "title_ar": "نفسي كنت قلت لي",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 221,
+  "gist_ar": "مشهد بين بنت وأبوها: هو بيعترف إنه خد منها حقها إنها تقرّر.",
+  "before_listening": {
+    "en": "A daughter and her father. He gives several reasons, but admits only one mistake. Listen for WHICH one he admits.",
+    "ar": "بنت وأبوها. هو بيدي أسباب كتير، بس بيعترف بغلطة واحدة. ركّز على أنهي غلطة اعترف بيها."
+  },
+  "segments": [
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "How long?"
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "Since March."
+    },
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "March. Since March, and you told Amir."
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "I wish you wouldn't look at me like that. I didn't tell Amir. Amir works at the hospital. Amir found out, which is not the same thing."
+    },
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "If only you'd said something. One sentence. Hana, I've had some tests."
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "And then what? You'd have come back from Dubai, you'd have lost the contract, and you'd have sat in this flat for six months watching me have tests. I wish I could tell you I'd have handled it better than you would have. I wouldn't."
+    },
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "That was my decision to make."
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "Yes. It was. That's the part I got wrong. I keep wishing I'd been the sort of father you could have told bad news to. Then maybe I'd have been the sort you could hear it from."
+    },
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "Baba—"
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "Don't. Not yet. Ask me the medical question. You've been holding it since you walked in."
+    },
+    {
+      "speaker": "Hana",
+      "speaker_ar": "هنا",
+      "voice": "af_sky",
+      "text": "What did they say on Thursday?"
+    },
+    {
+      "speaker": "Father",
+      "speaker_ar": "الأب",
+      "voice": "am_adam",
+      "text": "They said it's operable. They said Tuesday. I wish it were sooner. And before you say it: yes, I have already told your mother, and no, I did not tell her first. She asked me the same question you did, in the same voice, standing in the same place. You are more like her than either of you would like."
+    }
+  ],
+  "gist_question": {
+    "q": "Which mistake does the father actually admit to?",
+    "q_ar": "الأب اعترف بأنهي غلطة فعلًا؟",
+    "options": [
+      "Letting Amir find out before Hana",
+      "Taking away Hana's right to decide for herself",
+      "Waiting until Tuesday for the operation"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "How did Amir find out?",
+      "q_ar": "أمير عرف إزاي؟",
+      "options": [
+        "The father told him directly",
+        "He works at the hospital and found out",
+        "Hana told him from Dubai"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What reason does the father give for not telling her?",
+      "q_ar": "إيه السبب اللي الأب قاله لعدم إخبارها؟",
+      "options": [
+        "She would have lost the contract and sat watching him have tests",
+        "He simply forgot to mention it",
+        "The doctors advised him not to"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he ask Hana to do?",
+      "q_ar": "طلب من هنا تعمل إيه؟",
+      "options": [
+        "Leave and come back on Tuesday",
+        "Ask him the medical question she has been holding",
+        "Telephone her mother immediately"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "I wish you wouldn't",
+      "ar": "نفسي مكنتش / متعملش كده"
+    },
+    {
+      "word": "if only you'd said",
+      "ar": "يا ريت كنت قلت"
+    },
+    {
+      "word": "operable",
+      "ar": "قابل للجراحة"
+    },
+    {
+      "word": "you've been holding it",
+      "ar": "إنتي حابسة السؤال جواكي"
+    }
+  ]
+}

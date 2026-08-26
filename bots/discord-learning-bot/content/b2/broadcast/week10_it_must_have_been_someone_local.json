@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_b2_w10",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 10,
+  "title": "It Must Have Been Someone Local",
+  "title_ar": "لازم يكون حد من المنطقة",
+  "can_do": [
+    "B2.R.1",
+    "B2.R.2"
+  ],
+  "format": "current affairs",
+  "word_count": 240,
+  "gist_ar": "برنامج تحقيقي: القضية اتحسمت بناءً على أنهي افتراض بدا طبيعي للضابط، مش بناءً على دليل.",
+  "before_listening": {
+    "en": "An investigation that lays out two lines of reasoning. Listen for what the narrator says ACTUALLY decided the case.",
+    "ar": "تحقيق بيعرض خطين من الاستنتاج. ركّز على إيه اللي المذيعة قالت إنه حسم القضية فعلًا."
+  },
+  "segments": [
+    {
+      "speaker": "Narrator",
+      "speaker_ar": "المذيعة",
+      "voice": "bf_isabella",
+      "text": "For eleven years the case was closed. It was reopened in twenty-nineteen, not because new evidence appeared, but because someone re-read the old evidence and noticed what it could not mean. Here is the reasoning, and I want you to follow it rather than accept it. The gate was locked from the inside. So whoever left must have had a key, or must have climbed the eastern wall. The wall was wet that night and unmarked in the morning, so they cannot have climbed it. Therefore they must have had a key. Eleven people had keys. But the original investigation had reached a different conclusion. It decided the gate might have been locked afterwards, by a caretaker who could simply have forgotten doing it. That is not impossible. Caretakers do forget. And once you allow that, the key stops mattering and the eleven names dissolve. This is the part that should trouble you. Both lines of reasoning are valid. One assumes the physical evidence is reliable and human memory is not; the other assumes the opposite. Neither can be tested now. What decided the case in nineteen ninety-eight was not evidence. It was which of those two assumptions the investigating officer found more natural, and he had been a caretaker himself, twenty years earlier, in a building with a gate he had sometimes forgotten to lock. He may never have noticed that about his own reasoning. Most of us don't."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the programme's main point?",
+    "q_ar": "إيه الفكرة الأساسية في البرنامج؟",
+    "options": [
+      "The caretaker was certainly the guilty person",
+      "The case was decided by which assumption the officer found natural, not by evidence",
+      "New evidence has finally solved the case"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why does the narrator say they cannot have climbed the wall?",
+      "q_ar": "ليه المذيعة قالت إنه مستحيل يكون طلع الحيطة؟",
+      "options": [
+        "The wall was too high to climb",
+        "It was wet that night and unmarked in the morning",
+        "The gate was locked from the inside"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did the original investigation assume instead?",
+      "q_ar": "التحقيق الأصلي افترض إيه بدل كده؟",
+      "options": [
+        "That a caretaker might have locked the gate later and forgotten",
+        "That all eleven key-holders were involved",
+        "That the wall had been climbed after all"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What was true of the investigating officer?",
+      "q_ar": "إيه اللي كان صحيح عن ضابط التحقيق؟",
+      "options": [
+        "He was one of the eleven key-holders",
+        "He had been a caretaker himself twenty years earlier",
+        "He personally reopened the case in 2019"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "reopened",
+      "ar": "اتفتحت تاني"
+    },
+    {
+      "word": "unmarked",
+      "ar": "من غير أي علامات"
+    },
+    {
+      "word": "the names dissolve",
+      "ar": "الأسامي بتفقد معناها"
+    },
+    {
+      "word": "an assumption",
+      "ar": "افتراض"
+    }
+  ]
+}

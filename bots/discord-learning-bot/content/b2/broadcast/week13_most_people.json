@@ -1,0 +1,122 @@
+{
+  "id": "broadcast_b2_w13",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 13,
+  "title": "Most People",
+  "title_ar": "معظم الناس",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "panel discussion",
+  "word_count": 235,
+  "gist_ar": "نقاش: 'معظم الناس' جملة ممكن تكون صح ومفيدة بصفر، لأنها بتخبّي إن الدعم هشّ.",
+  "before_listening": {
+    "en": "A panel discussion about one phrase. Listen for the pollster's MAIN criticism of it.",
+    "ar": "نقاش عن جملة واحدة. ركّز على النقد الأساسي من خبيرة قياس الرأي."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيع",
+      "voice": "am_adam",
+      "text": "Every guest on this programme this month has told me what most people want. Dalia, you actually measure it."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "And that is why I almost never use the phrase. 'Most people' is doing something dishonest in nearly every sentence it appears in. Take last week's figure: sixty-one per cent support the scheme. That is most people, in a sense. But of those sixty-one, fewer than half could describe what the scheme does, and a third said they would oppose it if it raised their own costs, which it will. So 'most people support it' is both true and useless."
+    },
+    {
+      "speaker": "Minister",
+      "speaker_ar": "الوزير",
+      "voice": "bm_george",
+      "text": "With respect, all of politics works like that. Neither of us has a better instrument. Every mandate in every parliament rests on a number that thin."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "I agree, and that is not a defence. It is the problem. The honest sentence is longer: a majority express support, few understand the detail, and support falls sharply when costs are mentioned. Nobody puts that on a poster."
+    },
+    {
+      "speaker": "Minister",
+      "speaker_ar": "الوزير",
+      "voice": "bm_george",
+      "text": "Because a poster with that on it loses."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيع",
+      "voice": "am_adam",
+      "text": "So is there any question where the answer is stable?"
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Yes. Almost all of them, if you ask twice, six months apart, and count only the people who say the same thing both times. That group is usually about a quarter. Every serious campaign is fought over the other three quarters, and each of them will tell you that they are most people."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the pollster's main criticism of the phrase?",
+    "q_ar": "إيه نقدها الأساسي للجملة؟",
+    "options": [
+      "The underlying polling data is simply inaccurate",
+      "It can be technically true while hiding that few understand and support is fragile",
+      "Politicians should stop commissioning polls altogether"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What is true of the sixty-one per cent who support the scheme?",
+      "q_ar": "إيه الصحيح عن الـ 61% اللي مؤيدين المشروع؟",
+      "options": [
+        "Fewer than half could describe what it does",
+        "All of them understand what it will cost",
+        "They would all still support it if their costs rose"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How does the minister respond to the criticism?",
+      "q_ar": "الوزير ردّ على النقد إزاي؟",
+      "options": [
+        "He disputes the figures themselves",
+        "He says all politics rests on numbers that thin",
+        "He agrees the scheme should be abandoned"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which group does she say gives the same answer twice?",
+      "q_ar": "أنهي مجموعة قالت إنها بتدّي نفس الإجابة مرتين؟",
+      "options": [
+        "About a quarter of those asked",
+        "About three quarters of those asked",
+        "The full sixty-one per cent"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a mandate",
+      "ar": "تفويض انتخابي"
+    },
+    {
+      "word": "a number that thin",
+      "ar": "رقم هشّ زي كده"
+    },
+    {
+      "word": "sharply",
+      "ar": "بشكل حاد"
+    },
+    {
+      "word": "a poster",
+      "ar": "لافتة دعائية"
+    }
+  ]
+}

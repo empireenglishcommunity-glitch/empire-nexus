@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w6",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 6,
+  "title": "The Historian's Temptation",
+  "title_ar": "إغراء المؤرّخ",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 256,
+  "gist_ar": "محاضرة بتدافع عن جمل 'لو مكانش حصل كذا': استخدمها، وقول بصوت عالي إنك بتستخدمها.",
+  "before_listening": {
+    "en": "A lecture defending a kind of sentence that historians officially distrust. Listen for the CONDITION she attaches to her defence.",
+    "ar": "محاضرة بتدافع عن نوع من الجمل المؤرّخين بيتشككوا فيه رسميًا. ركّز على الشرط اللي حطّته على دفاعها."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِرة",
+      "voice": "af_bella",
+      "text": "Historians are trained to distrust a certain kind of sentence, and I want to defend it anyway. The sentence is: if that had not happened, we would not be here. Notice the shape of it. The condition is in the past; the consequence is in the present. If the treaty had been signed in eighteen seventy, this region would be a single country today. If she had not missed that train, you would not exist. These are mixed conditionals, and they are the natural grammar of historical explanation, which is why historians use them constantly while officially disapproving of them. The objection is reasonable. We cannot test them. If the treaty had been signed, a thousand other things would also have changed, and we cannot hold those still while we vary the one we are interested in. So the sentence looks like an argument and behaves like a story. But consider the alternative. If we refuse all counterfactuals, we lose the ability to say that anything mattered. To say that a decision was important is to say that the present would be different without it. There is no other content to the word 'important'. A history with no counterfactuals is not a more rigorous history; it is a chronicle, a list of things that happened in order, and it cannot distinguish the treaty from the weather that afternoon. So: use them, and say out loud that you are using them. The danger is not the sentence. The danger is the sentence pretending to be a fact."
+    }
+  ],
+  "gist_question": {
+    "q": "What exactly is the lecturer defending?",
+    "q_ar": "المحاضِرة بتدافع عن إيه بالظبط؟",
+    "options": [
+      "Banning counterfactual sentences from history writing",
+      "Using counterfactuals, provided the historian admits to using them",
+      "The claim that counterfactuals can now be tested"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What is the grammatical shape of the sentence she describes?",
+      "q_ar": "إيه شكل الجملة اللي بتوصفها من ناحية القواعد؟",
+      "options": [
+        "A past condition with a present consequence",
+        "A present condition with a past consequence",
+        "Both the condition and the consequence in the past"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the reasonable objection she accepts?",
+      "q_ar": "إيه الاعتراض المنطقي اللي هي قبلته؟",
+      "options": [
+        "They cannot be tested, because everything else would change too",
+        "They are grammatically incorrect",
+        "Historians never actually use them"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she say history without counterfactuals becomes?",
+      "q_ar": "قالت إن التاريخ من غير الجمل دي بيبقى إيه؟",
+      "options": [
+        "More rigorous and more scientific",
+        "A chronicle that cannot say what mattered",
+        "Impossible to write at all"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to distrust",
+      "ar": "يتشكك في"
+    },
+    {
+      "word": "a counterfactual",
+      "ar": "افتراض مخالف للواقع"
+    },
+    {
+      "word": "to hold something still",
+      "ar": "يثبّت حاجة"
+    },
+    {
+      "word": "a chronicle",
+      "ar": "سِجل أحداث بالترتيب"
+    }
+  ]
+}

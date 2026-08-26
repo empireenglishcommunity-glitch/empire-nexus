@@ -65,50 +65,91 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # entry in this set (enforced by a test), so the honest answer to "what is left
 # and what does it need?" is always in the code.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    # THE REMAINING SET IS NOW EXACTLY GAPS_NEEDING_EXTENDED_LISTENING.
+    # EMPTY. Every descriptor every level publishes is now targeted by at least
+    # one week of that level, with content that actually exists and is reachable.
     #
-    # Every descriptor that authored TEXT could close is closed: reading and
-    # mediation now exist for A1-B2, and the interaction gaps (B1.I.1, B2.I.1,
-    # B2.I.5) closed via speaking missions, because interaction cannot be proven
-    # by a passage or a relay task.
+    # How it got here:
+    #   * reading and mediation authored for A1-B2 (Phase 11B), closing every
+    #     `.R.` gap a passage could close and every `.M.` gap;
+    #   * the interaction gaps (B1.I.1, B2.I.1, B2.I.5) closed via speaking
+    #     missions, because interaction cannot be proven by a passage or a
+    #     relay task;
+    #   * A1.P.5 closed by turning week 3's weak gap-fill into a real
+    #     short-note task;
+    #   * the five extended-listening descriptors (A2.R.2, B1.R.1, B1.R.2,
+    #     B2.R.1, B2.R.2) closed by the `broadcast` exercise in Phase 11D --
+    #     about a minute of connected speech a week, with the gist question
+    #     asked BEFORE the transcript unlocks so the answer comes from the ear.
     #
-    # What is left cannot be closed by writing more content of any kind. These
-    # are about understanding SPOKEN input at length -- clear standard speech,
-    # radio/TV, lectures, films -- so they need audio plus comprehension items
-    # built on it. A test asserts this equality, so if someone adds a
-    # non-listening gap here it fails loudly.
-    #
-    # Phase 11D closes them one level at a time with the `broadcast` (extended
-    # listening) exercise: about a minute of connected speech per week, with the
-    # gist question asked BEFORE the transcript unlocks, so the answer comes
-    # from the ear. A2.R.2 closed when A2's twelve scripts landed; B1.R.1 and
-    # B1.R.2 closed with B1's fourteen (seven on work/school/leisure speech,
-    # nine on radio/TV current affairs).
-    "B2.R.1", "B2.R.2",
+    # Keep it empty. If a descriptor becomes untaught again, a test fails and
+    # names it. Add to this set ONLY when a descriptor genuinely has no week
+    # teaching it -- never to make a failing test pass, and never as a place to
+    # park something that is partly taught: that is what
+    # TAUGHT_WITH_RESERVATION below is for.
 })
 
-# CEFR files "reception" as one mode, but it contains two different channels, and
-# this set is the difference that matters: these descriptors are about
-# understanding SPOKEN input (announcements, clear standard speech, radio/TV,
-# lectures, films). Authoring a reading passage can never close them, however
-# good the passage is.
+# Descriptors that needed SPOKEN input at length rather than a reading passage.
+# All now closed by the broadcast exercise; kept as a named (now empty) set
+# because a test pins it against KNOWN_UNTAUGHT_DESCRIPTORS, so if one of them
+# ever regresses it must be re-listed here and explained rather than quietly
+# reappearing as a generic gap.
+GAPS_NEEDING_EXTENDED_LISTENING = frozenset()
+
+# What each remaining gap NEEDS in order to close honestly. Empty because there
+# are no untaught descriptors left; a test pins its keys to
+# KNOWN_UNTAUGHT_DESCRIPTORS so the two cannot drift apart.
+DESCRIPTOR_GAP_PLAN = {}
+
+# ---------------------------------------------------------------------------
+#  TAUGHT, BUT NOT AS WELL AS THE WORDS OF THE DESCRIPTOR IMPLY
+# ---------------------------------------------------------------------------
+# A descriptor being "taught" is binary in `untaught_descriptors`: some week
+# targets it with real content, or no week does. That is the right test for
+# coverage and the wrong test for honesty, because it cannot express "we teach
+# this, and here is the specific respect in which our version falls short of
+# what the descriptor literally says".
 #
-# Without this, "we authored reading for the level, so its .R. gaps are closed"
-# looks true and is false — exactly the kind of quiet over-claim this whole
-# effort exists to remove. Kept as an explicit set rather than inferred from
-# prose, and a test pins it against DESCRIPTOR_GAP_PLAN so the two cannot drift.
-GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
-    "B2.R.1", "B2.R.2",
-})
-
-# What each remaining gap actually NEEDS in order to close honestly. This is
-# the difference between "we know we are incomplete" and "we know exactly what
-# incomplete means and what closes it".
-DESCRIPTOR_GAP_PLAN = {
-    # --- needs EXTENDED LISTENING content (longer audio than the current
-    #     single-word dictation items can ever satisfy) ---
-    "B2.R.1": "extended listening — extended speech/lectures, complex lines of argument",
-    "B2.R.2": "extended listening — TV news/current affairs and films in standard dialect",
+# Without somewhere to record that, there are only two options for a descriptor
+# like B2.R.2, and both of them are lies:
+#
+#   * tick it, and claim students have practised understanding FILMS when what
+#     they have practised is synthesized voices reading film dialogue;
+#   * leave it in KNOWN_UNTAUGHT_DESCRIPTORS, and print "not taught by any
+#     week" about sixteen authored weeks of news bulletins and drama scenes.
+#
+# So: this is the third state. Every entry must name what IS taught, what the
+# reservation is, and precisely what would remove it. `format_report` prints
+# this block directly under the coverage summary, so anybody reading the ledger
+# sees the reservation in the same breath as the claim, and a test asserts each
+# entry is genuinely taught and genuinely documented.
+#
+# This is deliberately hard to add to. A reservation is a debt, not an excuse:
+# if something can be fixed by authoring more content, author it instead.
+TAUGHT_WITH_RESERVATION = {
+    "B2.R.2": {
+        "descriptor": "Can understand most TV news and current-affairs "
+                      "programmes and the majority of films in standard dialect.",
+        "taught_by": "10 B2 weeks of extended listening: news bulletins, a "
+                     "studio discussion, a panel and an investigation "
+                     "(multi-voice, broadcast register), plus 5 drama scenes "
+                     "written the way film dialogue behaves -- contractions, "
+                     "ellipsis, interruption, unfinished sentences and meaning "
+                     "that is implied rather than stated.",
+        "reservation": "The news and current-affairs half is delivered in full. "
+                       "The FILM half is not, and cannot be by synthesis: our "
+                       "audio is Kokoro TTS, one clean voice per speaker turn "
+                       "with no overlapping speech, no background noise, no "
+                       "regional accents and no emotional prosody. In real "
+                       "films, sarcasm, tension and irony are carried by HOW a "
+                       "line is delivered, and a student who understands every "
+                       "one of our scenes has still never had to read tone off "
+                       "a real actor's voice.",
+        "removed_by": "Authentic recorded audio for the drama scenes -- human "
+                      "actors, or licensed clips -- with the existing "
+                      "comprehension items re-pointed at tone and implication. "
+                      "The scripts and the page need no changes; only the audio "
+                      "source does.",
+    },
 }
 
 
@@ -446,6 +487,8 @@ def report() -> dict:
         "orphaned_atoms": authored - delivered,
         "shortfalls": all_shortfalls,
         "untaught_descriptors": sorted(all_untaught),
+        "taught_with_reservation": {k: dict(v) for k, v
+                                    in TAUGHT_WITH_RESERVATION.items()},
         "tracked_exercises": list(database.TRACKED_EXERCISES),
         "weekly_exercises": list(database.WEEKLY_EXERCISES),
     }
@@ -495,7 +538,44 @@ def format_report(rep: dict = None) -> str:
                    + " · mediation authored for: "
                    + ", ".join(curriculum.mediation_levels() or ["none"])
                    + " — remaining levels pending, spec Phase 11B)")
+    else:
+        out.append("")
+        out.append("  Every descriptor every level publishes is taught by at "
+                   "least one week of that level.")
+
+    # Printed HERE, immediately under the coverage summary, and never in a
+    # separate report: a reservation that a reader has to go looking for is not
+    # a disclosure. "OK" above and this block belong on the same screen.
+    if rep.get("taught_with_reservation"):
+        out.append("")
+        out.append("TAUGHT, WITH A STATED RESERVATION")
+        out.append("  These are counted as taught above. Each one is genuinely "
+                   "taught, and each falls")
+        out.append("  short of what the descriptor literally says in a specific, "
+                   "recorded way.")
+        for code, r in sorted(rep["taught_with_reservation"].items()):
+            out.append("")
+            out.append(f"  {code} — {_wrap(r.get('descriptor', ''), 6)}")
+            out.append(f"      taught by:  {_wrap(r.get('taught_by', ''), 18)}")
+            out.append(f"      shortfall:  {_wrap(r.get('reservation', ''), 18)}")
+            out.append(f"      closed by:  {_wrap(r.get('removed_by', ''), 18)}")
     return "\n".join(out)
+
+
+def _wrap(text: str, indent: int, width: int = 88) -> str:
+    """Soft-wrap a long reservation string for terminal reading."""
+    words = (text or "").split()
+    lines, current = [], ""
+    for w in words:
+        if current and len(current) + 1 + len(w) > width - indent:
+            lines.append(current)
+            current = w
+        else:
+            current = f"{current} {w}".strip()
+    if current:
+        lines.append(current)
+    pad = " " * indent
+    return f"\n{pad}".join(lines)
 
 
 def main():  # pragma: no cover - CLI convenience

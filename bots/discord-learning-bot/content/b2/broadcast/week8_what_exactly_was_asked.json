@@ -1,0 +1,144 @@
+{
+  "id": "broadcast_b2_w8",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 8,
+  "title": "What Exactly Was Asked",
+  "title_ar": "السؤال كان إيه بالظبط",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "studio discussion",
+  "word_count": 298,
+  "gist_ar": "نقاش في الاستوديو: السؤال التالت — اللي فيه التزام بالاستقالة — اختفى من التغطية.",
+  "before_listening": {
+    "en": "A studio discussion about an interview. Three questions were asked. Listen for which one the coverage has FORGOTTEN, and why.",
+    "ar": "نقاش في استوديو عن مقابلة. اتسألت تلات أسئلة. ركّز على أنهي سؤال التغطية نسيته، وليه."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "Last night's interview has been described as a collapse, a trap and, by one newspaper this morning, as the most honest four minutes in a decade. Rania, you were in the room. What was she actually asked?"
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_sarah",
+      "text": "She was asked three things, and the order matters. She was first asked whether the department had approved the payments. She said it had not. She was then asked whether she personally had seen the file. She said she couldn't recall. And she was finally asked, and this is the question everyone has forgotten, whether she would resign if it turned out that she had. She said she would."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "Karim, why has that third question disappeared from the coverage?"
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "Because it doesn't fit either story. Those who want her gone are reporting that she denied everything, which she didn't; she made a commitment. Those defending her are reporting that she was ambushed, which she wasn't; she was asked a hypothetical and she chose to answer it. She could have said 'I won't deal in hypotheticals'. Ministers say that eleven times a day. She didn't."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_sarah",
+      "text": "I would add one thing. The word 'approved' was doing a lot of work in that first answer. She was asked whether the department had approved the payments, and she said it had not. Nobody asked her whether the payments had been made. Those are different questions, and she answered the one she was given, precisely and, as far as I can tell, truthfully."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "Which is what makes the interview interesting rather than damaging. She was not caught out. She was unusually careful, and then, in the last thirty seconds, she was not."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_sarah",
+      "text": "She also asked the interviewer a question, which nobody has reported. She asked him whether he had the file."
+    },
+    {
+      "speaker": "Host",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "And?"
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_sarah",
+      "text": "He said he did."
+    }
+  ],
+  "gist_question": {
+    "q": "What do both guests agree the coverage has got wrong?",
+    "q_ar": "إيه اللي الضيفين متفقين إن التغطية غلطت فيه؟",
+    "options": [
+      "That she denied everything",
+      "That the third question, in which she made a commitment, has been ignored",
+      "That the interviewer treated her unfairly"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What did she say when asked whether she had seen the file?",
+      "q_ar": "قالت إيه لما اتسألت لو كانت شافت الملف؟",
+      "options": [
+        "That she had not seen it",
+        "That she could not recall",
+        "That she would resign"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Karim say she could have done but did not?",
+      "q_ar": "كريم قال إنها كان ممكن تعمل إيه وملمتش؟",
+      "options": [
+        "Refused to deal in hypotheticals",
+        "Denied that the payments existed",
+        "Walked out of the studio"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What did she ask the interviewer?",
+      "q_ar": "هي سألت المحاور إيه؟",
+      "options": [
+        "Whether he had the file",
+        "Whether he would resign",
+        "Who had approved the payments"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What question does Rania point out nobody asked?",
+      "q_ar": "رانيا نبّهت إن محدش سأل أنهي سؤال؟",
+      "options": [
+        "Whether the department had approved the payments",
+        "Whether the payments had actually been made",
+        "Whether she had seen the file"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a collapse",
+      "ar": "انهيار"
+    },
+    {
+      "word": "she couldn't recall",
+      "ar": "مش فاكرة"
+    },
+    {
+      "word": "ambushed",
+      "ar": "اتنصب لها كمين"
+    },
+    {
+      "word": "a hypothetical",
+      "ar": "سؤال افتراضي"
+    }
+  ]
+}

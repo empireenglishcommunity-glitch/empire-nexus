@@ -181,31 +181,87 @@ def test_c1_and_c2_teach_every_descriptor_they_publish(rep):
         )
 
 
-def test_remaining_descriptor_gaps_are_only_unauthored_levels(rep):
-    """Documents WHY the baseline is non-empty, and keeps it honest: a `.R.` or
-    `.M.` gap is only acceptable for a level whose reading/mediation content is
-    NOT authored yet. Once a level's content ships, its gaps must be gone."""
-    untaught = rep["untaught_descriptors"]
-    assert untaught, "baseline unexpectedly empty — update this test if Phase 11B is done"
-    authored_reading = set(curriculum.reading_levels())
-    authored_mediation = set(curriculum.mediation_levels())
-    for code in untaught:
-        level, mode, _ = code.split(".")
-        if mode == "R":
-            # A listening-side reception descriptor is legitimately still open
-            # on a level whose READING is authored — see
-            # GAPS_NEEDING_EXTENDED_LISTENING.
-            if code in coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING:
-                continue
-            assert level not in authored_reading, (
-                f"{code} is still untaught even though {level} reading is "
-                f"authored — the passage should target it"
-            )
-        if mode == "M":
-            assert level not in authored_mediation, (
-                f"{code} is still untaught even though {level} mediation is "
-                f"authored — the task should target it"
-            )
+def test_every_published_descriptor_is_taught_by_some_week(rep):
+    """The baseline is now EMPTY, and this is the assertion that keeps it there.
+
+    Previously this test documented why the baseline was non-empty: a `.R.` or
+    `.M.` gap was acceptable only on a level whose reading/mediation was not
+    authored yet. All of that content now exists, and Phase 11D closed the five
+    extended-listening descriptors, so the honest form of the test is the
+    stronger one -- no descriptor any level publishes may be untaught by every
+    week of that level.
+
+    If this fails, the failure message names the descriptor and its level, and
+    the fix is to author content that targets it, NOT to re-populate
+    KNOWN_UNTAUGHT_DESCRIPTORS.
+    """
+    assert rep["untaught_descriptors"] == [], (
+        "descriptors published but taught by no week: "
+        f"{rep['untaught_descriptors']}"
+    )
+    for level, data in rep["levels"].items():
+        assert data["untaught_descriptors"] == [], (
+            f"{level} publishes {data['untaught_descriptors']} but teaches "
+            f"them in no week"
+        )
+
+
+# ============================================================
+#  TAUGHT, WITH A STATED RESERVATION (the third state)
+# ============================================================
+
+def test_every_reservation_is_about_a_genuinely_taught_descriptor(rep):
+    """A reservation records "we teach this, and here is how our version falls
+    short of the words of the descriptor". It is NOT a place to park a
+    descriptor nothing teaches -- that belongs in KNOWN_UNTAUGHT_DESCRIPTORS,
+    where it is reported as a gap."""
+    for code in coverage_ledger.TAUGHT_WITH_RESERVATION:
+        assert code not in rep["untaught_descriptors"], (
+            f"{code} has a reservation but is not taught at all — it belongs in "
+            f"KNOWN_UNTAUGHT_DESCRIPTORS, not here"
+        )
+        level = code.split(".")[0]
+        assert code in curriculum.can_do_descriptor_map(level), (
+            f"{code} is not a real descriptor in {level}'s library")
+
+
+def test_every_reservation_states_the_shortfall_and_how_to_remove_it():
+    """A vague reservation is worse than none: it looks like disclosure and
+    tells nobody what to do. Each one must say what IS taught, what is missing,
+    and what specifically would close it."""
+    for code, r in coverage_ledger.TAUGHT_WITH_RESERVATION.items():
+        for field in ("descriptor", "taught_by", "reservation", "removed_by"):
+            assert r.get(field), f"{code} reservation is missing '{field}'"
+            assert len(r[field]) > 40, (
+                f"{code}.{field} is too vague to act on: {r[field]!r}")
+        # The reservation must not simply restate the descriptor.
+        assert r["reservation"] != r["descriptor"], code
+
+
+def test_reservations_are_printed_next_to_the_coverage_claim():
+    """A disclosure a reader has to go looking for is not a disclosure. The
+    reservation must appear in the SAME report that says the level is OK."""
+    if not coverage_ledger.TAUGHT_WITH_RESERVATION:
+        pytest.skip("no reservations recorded")
+    text = coverage_ledger.format_report()
+    assert "TAUGHT, WITH A STATED RESERVATION" in text
+    for code in coverage_ledger.TAUGHT_WITH_RESERVATION:
+        assert code in text, f"{code}'s reservation is not printed in the ledger"
+    assert "shortfall:" in text
+    assert "closed by:" in text
+    # and it must be reported through report() too, for any UI that consumes it
+    assert set(coverage_ledger.report()["taught_with_reservation"]) == \
+        set(coverage_ledger.TAUGHT_WITH_RESERVATION)
+
+
+def test_reservations_do_not_fail_the_delivery_gate():
+    """A reservation is about descriptor QUALITY, not about content going
+    undelivered. It must not turn the CI gate red -- otherwise the only way to
+    keep CI green would be to stop recording reservations, which is exactly
+    backwards."""
+    rep = coverage_ledger.report()
+    assert rep["orphaned_atoms"] == 0
+    assert coverage_ledger.main() == 0
 
 
 def test_authored_reading_closes_every_reading_descriptor_it_can(rep):

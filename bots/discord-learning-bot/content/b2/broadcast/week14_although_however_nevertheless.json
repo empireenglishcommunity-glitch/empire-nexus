@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w14",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 14,
+  "title": "Although, However, Nevertheless",
+  "title_ar": "لكن، ومع ذلك، وبالرغم من كده",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 239,
+  "gist_ar": "محاضرة في أربع خطوات: من غير روابط الخطاب، السامع مش هيقدر يعيد بناء شكل الحجة.",
+  "before_listening": {
+    "en": "A lecture made in four announced moves, one of which is a concession. Listen for the CONCLUSION and how he signals it.",
+    "ar": "محاضرة في أربع خطوات معلنة، واحدة منها تنازل. ركّز على الخلاصة وإزاي أشار لها."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِر",
+      "voice": "bm_lewis",
+      "text": "I want to make an argument in four moves, and I want to signal each move as I make it, because the signalling is the lesson. First, the claim. Discourse markers are not decoration. 'However' is not a more formal 'but'. It performs a different act: it tells the listener that what follows will not merely differ from what preceded, but will outweigh it. Second, the evidence. When we removed the markers from recorded lectures and played them to students, comprehension of the individual sentences was unaffected. Recall of the argument's direction fell by roughly forty per cent. The students could tell you what had been said. They could not tell you which side the speaker was on. Third, and this is the concession, which I am flagging deliberately, the effect is smaller in writing. Readers can go back. Listeners cannot. So it is possible to write reasonably well while using markers carelessly, which is why many fluent writers are poor lecturers. Nevertheless, and here is the fourth move, the conclusion is stronger than the concession. If your listener cannot reconstruct the shape of your argument, you have not made an argument; you have produced a sequence of true sentences. And notice what I did just then. I said 'nevertheless', and you knew, before you heard any of the content, that the concession was about to be overruled. That is the whole mechanism, and it cost me one word."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the lecturer's conclusion?",
+    "q_ar": "إيه خلاصة المحاضِر؟",
+    "options": [
+      "Discourse markers matter more in writing than in speech",
+      "Without markers a listener cannot reconstruct the argument's shape, so no argument has been made",
+      "Removing markers actually improves comprehension"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What happened when the markers were removed from recorded lectures?",
+      "q_ar": "إيه اللي حصل لما شالوا الروابط من المحاضرات المسجّلة؟",
+      "options": [
+        "Sentence comprehension held up, but recall of the argument's direction fell",
+        "Both sentence comprehension and recall fell equally",
+        "Comprehension improved in both respects"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the concession he flags?",
+      "q_ar": "إيه التنازل اللي أشار له؟",
+      "options": [
+        "That markers are only decoration after all",
+        "That the effect is smaller in writing, because readers can go back",
+        "That lecturers are usually poor writers"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he say 'however' does that 'but' does not?",
+      "q_ar": "قال إن 'however' بتعمل إيه و'but' مبتعملهوش؟",
+      "options": [
+        "It signals that what follows will outweigh what preceded",
+        "It is simply the more formal of the two",
+        "It marks the end of the argument"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a discourse marker",
+      "ar": "رابط خطابي"
+    },
+    {
+      "word": "to outweigh",
+      "ar": "يرجّح / يتغلّب على"
+    },
+    {
+      "word": "a concession",
+      "ar": "تنازل في الحجة"
+    },
+    {
+      "word": "to overrule",
+      "ar": "يلغي / يتغلّب على"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "broadcast_b2_w9",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 9,
+  "title": "Water",
+  "title_ar": "المياه",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "news",
+  "word_count": 240,
+  "gist_ar": "نشرة أخبار: اللي غضّب الناس مش الحادثة، لكن إنهم محدش بلّغهم.",
+  "before_listening": {
+    "en": "A news bulletin and a live report. Listen for what has angered residents MOST — it is not the accident.",
+    "ar": "نشرة أخبار وتقرير مباشر. ركّز على إيه اللي غضّب السكان أكتر حاجة — ومش الحادثة."
+  },
+  "segments": [
+    {
+      "speaker": "Anchor",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "Good evening. Water pressure has been restored to most of the eastern districts tonight, twelve hours after a main was ruptured during construction work. Around forty thousand homes were affected. The company says the pipe had been marked on the plans, and that the contractor has been suspended while the incident is investigated. Our correspondent is in Zeitoun."
+    },
+    {
+      "speaker": "Correspondent",
+      "speaker_ar": "المراسل",
+      "voice": "bm_lewis",
+      "text": "The pipe was cut at about six this morning. Within an hour the street had been closed, and by nine the water had been shut off across four districts. What has angered people here is not the accident, because accidents happen. It is that they were not told. The company's message was sent to registered mobile numbers only, and in this district most accounts were opened before that system existed. So thousands of people had their supply cut with no warning at all. Several residents told me they had their tanks filled by neighbours who happened to have heard."
+    },
+    {
+      "speaker": "Anchor",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "And the repair itself?"
+    },
+    {
+      "speaker": "Correspondent",
+      "speaker_ar": "المراسل",
+      "voice": "bm_lewis",
+      "text": "The section is being replaced tonight rather than patched, which is why it has taken longer. It should be finished by morning. Schools in the four districts have been told to open as normal, and the two hospitals were never affected; they have their own tanks. The wider question, how many other pipes are marked on plans that contractors are not required to check, has not been answered, and it was not asked at this afternoon's press conference either."
+    }
+  ],
+  "gist_question": {
+    "q": "What has angered residents most, according to the report?",
+    "q_ar": "حسب التقرير، إيه اللي غضّب السكان أكتر؟",
+    "options": [
+      "The accident itself",
+      "That they were not warned, because the alert system missed older accounts",
+      "That the pipe is being replaced instead of patched"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why did many residents never receive the message?",
+      "q_ar": "ليه كتير من السكان موصلتهمش الرسالة؟",
+      "options": [
+        "Their accounts were opened before the mobile alert system existed",
+        "They ignored the message",
+        "It was sent to the wrong district"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is the repair taking longer than expected?",
+      "q_ar": "ليه التصليح واخد وقت أطول؟",
+      "options": [
+        "The section is being replaced rather than patched",
+        "The contractor was suspended",
+        "The street had to be closed first"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which question was not asked at the press conference?",
+      "q_ar": "أنهي سؤال محدش سألهوش في المؤتمر الصحفي؟",
+      "options": [
+        "When the water would come back",
+        "How many other pipes contractors are not required to check",
+        "Who suspended the contractor"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a main was ruptured",
+      "ar": "ماسورة رئيسية انفجرت"
+    },
+    {
+      "word": "suspended",
+      "ar": "موقوف عن العمل"
+    },
+    {
+      "word": "patched",
+      "ar": "اترقّع مؤقتًا"
+    },
+    {
+      "word": "registered",
+      "ar": "مسجّل"
+    }
+  ]
+}
