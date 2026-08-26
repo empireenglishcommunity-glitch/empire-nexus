@@ -1372,6 +1372,9 @@ def level_completion_contract(discord_id: str, level: str) -> dict:
                 continue
             if ex == "grammar" and not curriculum.get_grammar_pattern(wk, ck):
                 continue
+            if ex == "broadcast" and not curriculum.broadcast_is_deliverable(
+                    curriculum.get_broadcast_for_week(wk, ck)):
+                continue
             weekly_required += 1
             if (wk, ex) in done_weekly:
                 weekly_done += 1

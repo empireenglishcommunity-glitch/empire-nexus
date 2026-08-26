@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a2_w3",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 3,
+  "title": "Which Area? — A Radio Segment",
+  "title_ar": "أنهي منطقة؟ — فقرة في الراديو",
+  "can_do": [
+    "A2.R.2"
+  ],
+  "format": "radio",
+  "word_count": 112,
+  "gist_ar": "فقرة راديو بتقارن بين منطقتين للسكن، وكل واحدة أحسن لنوع مختلف من الناس.",
+  "before_listening": {
+    "en": "A radio programme compares two areas of the city. Listen for the presenter's CONCLUSION, not the details.",
+    "ar": "فقرة راديو بتقارن بين منطقتين. ركّز على الخلاصة اللي المذيعة وصلت لها، مش التفاصيل."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "You're listening to Cairo Today. This week's question: where should you rent your first flat? We compared two areas. Maadi is quieter than Nasr City, and the streets are greener, but it is also more expensive, about two thousand pounds more every month. Nasr City is busier and noisier, but the buses are faster and the shops are cheaper. If you work in the centre, Nasr City is closer. If you have small children, Maadi is safer in the evening. So the answer is not simple. Maadi is more comfortable, Nasr City is more practical. Choose the area that is better for your life, not the one that looks better in photos."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the presenter conclude?",
+    "q_ar": "المذيعة وصلت لإيه في الآخر؟",
+    "options": [
+      "Maadi is better than Nasr City for everybody",
+      "Neither area is good for a first flat",
+      "Each area is better for a different kind of person"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Which area is more expensive?",
+      "q_ar": "أنهي منطقة أغلى؟",
+      "options": [
+        "Maadi",
+        "Nasr City",
+        "They cost the same"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which area has faster buses?",
+      "q_ar": "أنهي منطقة أتوبيساتها أسرع؟",
+      "options": [
+        "Maadi",
+        "Nasr City",
+        "Neither"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which area does she call safer in the evening?",
+      "q_ar": "أنهي منطقة قالت إنها أأمن بالليل؟",
+      "options": [
+        "Nasr City",
+        "Maadi",
+        "Both are the same"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "rent",
+      "ar": "يستأجر"
+    },
+    {
+      "word": "quieter",
+      "ar": "أهدى"
+    },
+    {
+      "word": "practical",
+      "ar": "عملي / مناسب للاستخدام"
+    },
+    {
+      "word": "greener",
+      "ar": "أكتر خُضرة"
+    }
+  ]
+}

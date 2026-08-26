@@ -74,9 +74,21 @@ def test_written_descriptors_are_not_provable_by_speaking(load_curriculum):
 
 
 def test_spoken_reception_descriptors_are_not_provable_by_reading(load_curriculum):
-    """A1.R.3 is "...numbers, prices, dates and times when SPOKEN slowly"."""
+    """A1.R.3 is "...numbers, prices, dates and times when SPOKEN slowly".
+
+    Every exercise allowed to evidence it must be a SPOKEN-reception one. The
+    point of the assertion is the exclusion of `reading`, so it is written as a
+    subset check against curriculum.SPOKEN_RECEPTION rather than as an exact
+    tuple: Phase 11D added `broadcast` as a second ear-channel exercise, and an
+    exact-match assertion would have failed for a correct change while still
+    not saying what it actually cared about.
+    """
     emap = curriculum.descriptor_evidence_map(3, "A1")
-    assert emap.get("A1.R.3") == ("listening",), emap.get("A1.R.3")
+    allowed = emap.get("A1.R.3")
+    assert allowed, "A1.R.3 has no evidencing exercise at all"
+    assert "reading" not in allowed, allowed
+    assert set(allowed) <= set(curriculum.SPOKEN_RECEPTION), allowed
+    assert "listening" in allowed, allowed
 
 
 def test_no_descriptor_is_listed_as_unprovable(load_curriculum):

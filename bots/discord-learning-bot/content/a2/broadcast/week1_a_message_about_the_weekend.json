@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w1",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 1,
+  "title": "A Message About the Weekend",
+  "title_ar": "رسالة صوتية عن الويكند",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.4"
+  ],
+  "format": "voicemail",
+  "word_count": 104,
+  "gist_ar": "رسالة صوتية من صاحبتك بتحكي فيها إيه اللي عملته في الويكند وطالبة إنك تكلمها.",
+  "before_listening": {
+    "en": "You will hear a voice message from a friend. Listen ONCE and decide why she called. Do not open the transcript yet.",
+    "ar": "هتسمع رسالة صوتية من صاحبتك. اسمع مرة واحدة وحدّد هي بتكلمك ليه. متفتحش النص لسه."
+  },
+  "segments": [
+    {
+      "speaker": "Salma",
+      "speaker_ar": "سلمى",
+      "voice": "af_bella",
+      "text": "Hi Mona, it's Salma. Sorry I missed your call yesterday. I wanted to tell you about my weekend, because it was really busy. On Saturday morning I cleaned the whole flat. Then my cousin arrived from Alexandria, so we cooked lunch together and we talked for hours. On Sunday we walked to the old market and I bought a small lamp for my room. It only cost eighty pounds. In the evening I watched a film with my sister, but I was so tired that I closed my eyes after twenty minutes. Anyway, please call me back tonight. I finish work at six. Bye!"
+    }
+  ],
+  "gist_question": {
+    "q": "Why did Salma leave this message?",
+    "q_ar": "سلمى سابت الرسالة دي ليه؟",
+    "options": [
+      "To ask Mona to help her clean the flat",
+      "To tell Mona about her busy weekend and ask her to call back",
+      "To invite Mona to travel to Alexandria"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Who arrived from Alexandria?",
+      "q_ar": "مين اللي جه من إسكندرية؟",
+      "options": [
+        "Her sister",
+        "Her cousin",
+        "Her friend Mona"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did Salma buy at the market?",
+      "q_ar": "سلمى اشترت إيه من السوق؟",
+      "options": [
+        "A small lamp",
+        "A film",
+        "A table"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What time does Salma finish work?",
+      "q_ar": "سلمى بتخلص شغل الساعة كام؟",
+      "options": [
+        "At five",
+        "At six",
+        "At eight"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "I missed your call",
+      "ar": "فاتني اتصالك"
+    },
+    {
+      "word": "cousin",
+      "ar": "ابن/بنت العم أو الخال"
+    },
+    {
+      "word": "market",
+      "ar": "سوق"
+    },
+    {
+      "word": "it cost",
+      "ar": "كان سعره"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w8",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 8,
+  "title": "The Lentil Soup — Recorded Instructions",
+  "title_ar": "شوربة العدس — تعليمات مسجّلة",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.5"
+  ],
+  "format": "instructions",
+  "word_count": 130,
+  "gist_ar": "تعليمات مسجّلة خطوة بخطوة لعمل شوربة عدس لأربع أشخاص.",
+  "before_listening": {
+    "en": "A cooking programme gives instructions. Listen for the mistake the cook tells you NOT to make.",
+    "ar": "برنامج طبخ بيدي تعليمات. ركّز على الغلطة اللي بيقولك متعملهاش."
+  },
+  "segments": [
+    {
+      "speaker": "Cook",
+      "speaker_ar": "الشيف",
+      "voice": "af_heart",
+      "text": "Welcome to Kitchen Minute. Today: lentil soup for four people. You need two cups of red lentils, one large onion, two carrots, a little salt, and plenty of water, about six cups. You don't need much oil; one spoon is enough. First, wash the lentils twice. Then cut the onion and the carrots into small pieces. Put a little oil in the pot and cook the onion for two minutes, until it is soft. Add the lentils, the carrots and all the water. Cook everything for twenty-five minutes. Now listen carefully: don't add too much salt at the beginning. Add it at the end and taste it. If the soup is too thick, add some hot water, never cold water. Serve it with bread and a few slices of lemon."
+    }
+  ],
+  "gist_question": {
+    "q": "What mistake does the cook tell you not to make?",
+    "q_ar": "إيه الغلطة اللي الشيف بيقولك متعملهاش؟",
+    "options": [
+      "Adding too much salt at the beginning",
+      "Washing the lentils twice",
+      "Cooking the soup for twenty-five minutes"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "How much water do you need?",
+      "q_ar": "محتاج قد إيه مية؟",
+      "options": [
+        "Two cups",
+        "About six cups",
+        "One spoon"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When should you add the salt?",
+      "q_ar": "تحطّ الملح إمتى؟",
+      "options": [
+        "At the beginning",
+        "At the end, then taste it",
+        "After twenty-five minutes of salting"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "If the soup is too thick, what do you add?",
+      "q_ar": "لو الشوربة تقيلة، تضيف إيه؟",
+      "options": [
+        "Cold water",
+        "More lentils",
+        "Hot water"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "lentils",
+      "ar": "عدس"
+    },
+    {
+      "word": "plenty of",
+      "ar": "كتير من"
+    },
+    {
+      "word": "too thick",
+      "ar": "تقيلة أوي"
+    },
+    {
+      "word": "slices",
+      "ar": "شرايح"
+    }
+  ]
+}

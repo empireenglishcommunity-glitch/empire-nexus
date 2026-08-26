@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a2_w6",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 6,
+  "title": "The Weather This Week",
+  "title_ar": "الجو الأسبوع ده",
+  "can_do": [
+    "A2.R.2"
+  ],
+  "format": "forecast",
+  "word_count": 119,
+  "gist_ar": "نشرة جو بتقول إن الأسبوع هيبقى حر، وأسخن يوم هو الخميس، والويكند ألطف.",
+  "before_listening": {
+    "en": "A radio weather forecast. Listen for the ONE day the presenter warns you about.",
+    "ar": "نشرة جو في الراديو. ركّز على اليوم الواحد اللي المذيعة بتحذّر منه."
+  },
+  "segments": [
+    {
+      "speaker": "Weather presenter",
+      "speaker_ar": "مذيعة الجو",
+      "voice": "bf_emma",
+      "text": "And now the weather. Tomorrow will be warm and dry in Cairo, with a high of thirty-one degrees. There will be some wind in the afternoon, but it will not be strong. On Wednesday the sky will be cloudy in the morning, and it will probably clear by midday. Thursday will be the hottest day of the week, thirty-six degrees, so please drink plenty of water and stay inside between twelve and three. In Alexandria it will be cooler, about twenty-six, and there will be a chance of light rain on Thursday evening. The weekend will be pleasant everywhere. Temperatures will fall to twenty-eight, and it will feel much more comfortable. That's all from me. Have a good week."
+    }
+  ],
+  "gist_question": {
+    "q": "Which day does the presenter warn you about, and why?",
+    "q_ar": "المذيعة بتحذّر من أنهي يوم، وليه؟",
+    "options": [
+      "Wednesday, because it will be cloudy all day",
+      "Thursday, because it will be the hottest day",
+      "The weekend, because it will rain everywhere"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What is her advice for the hottest day?",
+      "q_ar": "إيه نصيحتها في أسخن يوم؟",
+      "options": [
+        "Drink plenty of water and stay inside from twelve to three",
+        "Travel to Alexandria",
+        "Do not go out after midday"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What will happen in Alexandria on Thursday evening?",
+      "q_ar": "إيه اللي هيحصل في إسكندرية مسا الخميس؟",
+      "options": [
+        "It will be thirty-six degrees",
+        "There may be light rain",
+        "There will be strong wind"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How will the weekend feel?",
+      "q_ar": "الويكند هيبقى عامل إزاي؟",
+      "options": [
+        "Hotter than Thursday",
+        "Cloudy and wet",
+        "Cooler and more comfortable"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a high of",
+      "ar": "أقصى درجة حرارة"
+    },
+    {
+      "word": "cloudy",
+      "ar": "مغيّم"
+    },
+    {
+      "word": "a chance of rain",
+      "ar": "احتمال مطر"
+    },
+    {
+      "word": "pleasant",
+      "ar": "لطيف"
+    }
+  ]
+}

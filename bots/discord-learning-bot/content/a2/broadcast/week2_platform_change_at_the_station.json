@@ -1,0 +1,93 @@
+{
+  "id": "broadcast_a2_w2",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 2,
+  "title": "Platform Change at the Station",
+  "title_ar": "تغيير الرصيف في المحطة",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.5"
+  ],
+  "format": "announcement",
+  "word_count": 104,
+  "gist_ar": "إعلان في محطة القطر إن قطر الأقصر غيّر الرصيف وهيتأخر شوية، وتعليمات للناس.",
+  "before_listening": {
+    "en": "You are in a train station. Two announcements will play. Listen for the ONE thing every passenger must do.",
+    "ar": "إنت في محطة قطر. هتسمع إعلانين. ركّز على الحاجة الوحيدة اللي كل مسافر لازم يعملها."
+  },
+  "segments": [
+    {
+      "speaker": "Announcer",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "Good afternoon, ladies and gentlemen. This is an announcement for passengers travelling to Luxor. The two o'clock train has changed platform. It will now leave from platform five, not platform two. The train left the depot late this morning, so it will depart about fifteen minutes behind time. We are sorry for the delay."
+    },
+    {
+      "speaker": "Station staff",
+      "speaker_ar": "موظفة المحطة",
+      "voice": "af_sarah",
+      "text": "If you already went to platform two, please come back to the main hall and take the stairs on your left. Passengers with heavy bags can use the lift next to the ticket office. Please keep your ticket in your hand, because staff will check tickets at the gate today."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the main message of these announcements?",
+    "q_ar": "إيه الفكرة الأساسية في الإعلانين؟",
+    "options": [
+      "The train to Luxor is cancelled today",
+      "The Luxor train now leaves from a different platform, a little late",
+      "Passengers to Luxor must buy a new ticket"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Which platform does the Luxor train leave from now?",
+      "q_ar": "قطر الأقصر هيقوم من رصيف نمرة كام دلوقتي؟",
+      "options": [
+        "Platform two",
+        "Platform five",
+        "Platform fifteen"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How late will the train be?",
+      "q_ar": "القطر هيتأخر قد إيه؟",
+      "options": [
+        "About fifteen minutes",
+        "About two hours",
+        "It will not be late"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What should passengers with heavy bags do?",
+      "q_ar": "اللي معاهم شنط تقيلة يعملوا إيه؟",
+      "options": [
+        "Take the stairs on the left",
+        "Use the lift near the ticket office",
+        "Wait on platform two"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "platform",
+      "ar": "رصيف القطر"
+    },
+    {
+      "word": "depart",
+      "ar": "يقوم / يسافر"
+    },
+    {
+      "word": "behind time",
+      "ar": "متأخر عن الموعد"
+    },
+    {
+      "word": "lift",
+      "ar": "أسانسير"
+    }
+  ]
+}

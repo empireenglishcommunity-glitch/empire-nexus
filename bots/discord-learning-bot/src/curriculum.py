@@ -89,12 +89,13 @@ _accent_data: dict = {}   # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 _grammar_data: dict = {}  # {"L0": {1: {...}, 2: {...}}, "L1": {...}, ...}
 _reading_data: dict = {}  # {"A1": {1: {...}, ...}, ...} — Phase 11B, per level
 _mediation_data: dict = {}  # {"A1": {1: {...}, ...}, ...} — Phase 11B, per level
+_broadcast_data: dict = {}  # {"A2": {1: {...}, ...}, ...} — Phase 11D, per level
 
 
 def load_all():
     """Load all curriculum data from JSON files. Call once at bot startup."""
     global _weekly_data, _accent_data, _grammar_data, _reading_data
-    global _mediation_data
+    global _mediation_data, _broadcast_data
 
     # Load weekly data (vocab/speaking/writing) for ALL levels — legacy
     # (L0–L3) AND CEFR (A1–C2). CEFR files (data/a1_weekN.json …) are added
@@ -188,6 +189,26 @@ def load_all():
                 try:
                     with open(path, encoding="utf-8") as f:
                         _mediation_data[level][week_num] = json.load(f)
+                except Exception as e:
+                    logger.error(f"Failed to load {path}: {e}")
+
+        # Extended listening (Phase 11D). The five descriptors that no amount
+        # of authored TEXT could ever close are all about understanding
+        # EXTENDED SPOKEN input — announcements, clear standard speech,
+        # radio/TV, lectures, films. Same per-level rollout rule as reading and
+        # mediation: no content/{level}/broadcast/ folder means "not authored
+        # yet", never a fallback to another level.
+        _broadcast_data[level] = {}
+        broadcast_dir = CONTENT_DIR / level_lower / "broadcast"
+        if broadcast_dir.exists():
+            for path in broadcast_dir.glob("week*.json"):
+                week_num = _parse_week_number(path.name)
+                if week_num is None:
+                    logger.warning(f"Skipping {path}: filename doesn't start with 'weekN'")
+                    continue
+                try:
+                    with open(path, encoding="utf-8") as f:
+                        _broadcast_data[level][week_num] = json.load(f)
                 except Exception as e:
                     logger.error(f"Failed to load {path}: {e}")
 
@@ -318,6 +339,118 @@ def get_mediation_for_week(week: int, level: str = "A1") -> Optional[dict]:
 def mediation_levels() -> list[str]:
     """Levels that actually have authored mediation tasks."""
     return sorted(lvl for lvl, weeks in _mediation_data.items() if weeks)
+
+
+def get_broadcast_for_week(week: int, level: str = "A1") -> Optional[dict]:
+    """The week's authored EXTENDED LISTENING script, or None if not authored.
+
+    Phase 11D. After reading and mediation landed, five descriptors were still
+    taught by no week, and they were the only ones that authored text could
+    never reach:
+
+        A2.R.2  main point of short, clear messages and ANNOUNCEMENTS
+        B1.R.1  main points of clear standard SPEECH on familiar matters
+        B1.R.2  main points of many RADIO or TV programmes on current affairs
+        B2.R.1  extended SPEECH and LECTURES, complex lines of argument
+        B2.R.2  most TV NEWS and current-affairs programmes, and FILMS
+
+    The existing listening exercise is single-word dictation: five words a
+    week, typed back. That builds decoding, which is a real skill, but no
+    amount of it can evidence "can catch the main point of an announcement" —
+    the unit of a word is smaller than the unit the descriptor is about. These
+    five need a MINUTE of connected speech and questions about its gist.
+
+    So this is a different exercise, not a bigger dictation:
+
+      * `segments` is a list of speaker turns, each with its own Kokoro voice,
+        which is what makes a news bulletin or a film scene possible at all —
+        one voice cannot be a two-person scene;
+      * `gist_question` is asked BEFORE the transcript can be revealed, so the
+        student answers from listening. If the transcript were on screen from
+        the start the exercise would be reading, and it could not honestly
+        evidence a listening descriptor;
+      * `questions` are detail questions, asked after the gist.
+
+    Rolled out level by level behind the owner approval gate, so `None` is a
+    legitimate answer. Callers MUST render an honest "not published yet".
+
+    Shape: {id, level, cefr, week, title(_ar), can_do, format, word_count,
+    gist_ar, before_listening{en,ar}, segments[{speaker, speaker_ar, voice,
+    text}], gist_question{q,q_ar,options,answer}, questions[...],
+    glossary[{word, ar}]}.
+    """
+    level_data = _broadcast_data.get(level)
+    if not level_data:
+        return None
+    week = min(max_week_for_level(level), max(1, week))
+    return level_data.get(week)
+
+
+def broadcast_levels() -> list[str]:
+    """Levels that actually have authored extended-listening scripts."""
+    return sorted(lvl for lvl, weeks in _broadcast_data.items() if weeks)
+
+
+# The minimum spoken length, in words, before a script may be called EXTENDED
+# listening for a given level. At a clear ~150 wpm delivery these are roughly
+# 25s (A1), 36s (A2), 60s (B1), 88s (B2), 112s (C1), 128s (C2).
+#
+# This exists because the descriptors are explicitly about LENGTH. B2.R.1 is
+# "can understand EXTENDED speech and lectures and follow COMPLEX LINES OF
+# ARGUMENT" -- a 30-word clip cannot contain a line of argument to follow, so
+# authoring one and ticking B2.R.1 would be precisely the over-claiming this
+# whole effort exists to remove. The bar is enforced in code (see
+# broadcast_meets_descriptor_bar) rather than left to the author's judgement.
+MIN_BROADCAST_WORDS_BY_LEVEL = {
+    "A1": 60, "A2": 90, "B1": 150, "B2": 220, "C1": 280, "C2": 320,
+}
+
+
+def broadcast_word_count(bc: Optional[dict]) -> int:
+    """Words actually spoken across all segments of a script."""
+    if not bc:
+        return 0
+    return sum(len((s.get("text") or "").split())
+               for s in (bc.get("segments") or []))
+
+
+def broadcast_meets_descriptor_bar(bc: Optional[dict], level: str) -> bool:
+    """May this script be counted as TEACHING the descriptors it names?
+
+    Stricter than `broadcast_is_deliverable`, which only asks "can this be
+    rendered". Three things must hold, and each maps to a specific way the
+    claim could otherwise be false:
+
+      * deliverable — it has audio and it asks for the main point;
+      * long enough for the level (MIN_BROADCAST_WORDS_BY_LEVEL) — otherwise
+        "extended" is not true of it;
+      * at least two detail questions on top of the gist question — one
+        lucky guess on a 3-option gist question is a 33% coin flip, which is
+        not evidence that anything was understood.
+    """
+    if not broadcast_is_deliverable(bc):
+        return False
+    minimum = MIN_BROADCAST_WORDS_BY_LEVEL.get(level, 90)
+    if broadcast_word_count(bc) < minimum:
+        return False
+    usable = [q for q in (bc.get("questions") or [])
+              if q.get("q") and q.get("options")]
+    return len(usable) >= 2
+
+
+def broadcast_is_deliverable(bc: Optional[dict]) -> bool:
+    """Is this extended-listening script complete enough to teach from?
+
+    A script with no spoken segments plays silence, and a script with no gist
+    question cannot ask the one thing the descriptors are actually about, so
+    neither may count as taught. Used by the ledger and the descriptor
+    attribution so a half-authored file can never close a descriptor.
+    """
+    if not bc:
+        return False
+    segments = [s for s in (bc.get("segments") or []) if (s.get("text") or "").strip()]
+    gist = bc.get("gist_question") or {}
+    return bool(segments and gist.get("q") and gist.get("options"))
 
 
 def get_listening_for_week(week: int, level: str = "A1") -> list[dict]:
@@ -684,6 +817,10 @@ def get_can_do_details_for_week(week: int, level: str = "A1") -> list[dict]:
 EVIDENCE_MODES_BY_EXERCISE = {
     "listening": ("reception",),
     "reading": ("reception",),
+    # Phase 11D. `broadcast` (extended listening) is reception like the other
+    # two, and SPOKEN reception like `listening` -- see SPOKEN_RECEPTION below,
+    # which is what keeps it from claiming a reading descriptor.
+    "broadcast": ("reception",),
     "speaking": ("production", "interaction"),
     "writing": ("production",),
     "mediation": ("mediation",),
@@ -695,6 +832,11 @@ EVIDENCE_MODES_BY_EXERCISE = {
     # decision and not an oversight.
     "community": (),
 }
+
+# The reception exercises whose channel is the EAR. CEFR files reception as one
+# mode, but a reading passage and a dictation are not interchangeable evidence,
+# and this is the set that makes the difference expressible.
+SPOKEN_RECEPTION = ("listening", "broadcast")
 
 
 def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
@@ -716,18 +858,21 @@ def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
     written = any(k in text for k in ("write", "written", "letter", "note"))
     spoken_recept = any(k in text for k in (
         "spoken", "speech", "listen", "hear", "radio", "tv ", "announcement",
-        "lecture", "conversation"))
+        "lecture", "conversation", "film"))
     read_recept = any(k in text for k in (
         "text", "read", "article", "report", "news item", "written"))
 
     narrowed = exercises
     if "writing" in exercises and "speaking" in exercises and written:
         narrowed = tuple(e for e in narrowed if e != "speaking")
-    if "listening" in exercises and "reading" in exercises:
+    # Both spoken-reception exercises are dropped/kept together: `broadcast`
+    # arriving must not create a hole through which a listening exercise
+    # claims a reading descriptor.
+    if any(e in exercises for e in SPOKEN_RECEPTION) and "reading" in exercises:
         if spoken_recept and not read_recept:
             narrowed = tuple(e for e in narrowed if e != "reading")
         elif read_recept and not spoken_recept:
-            narrowed = tuple(e for e in narrowed if e != "listening")
+            narrowed = tuple(e for e in narrowed if e not in SPOKEN_RECEPTION)
     return narrowed or exercises
 
 
@@ -779,6 +924,16 @@ def descriptor_evidence_map(week: int, level: str = "A1") -> dict:
         for code in med.get("can_do") or []:
             if code in library:
                 out[code] = ("mediation",)
+
+    # Phase 11D. The extended-listening script's `can_do` is evidenced ONLY by
+    # the broadcast exercise. Not by `listening`: the dictation is five typed
+    # words, and the whole reason this exercise exists is that word-level
+    # decoding cannot prove "can follow a complex line of argument".
+    bc = get_broadcast_for_week(week, level)
+    if broadcast_meets_descriptor_bar(bc, level):
+        for code in bc.get("can_do") or []:
+            if code in library:
+                out[code] = ("broadcast",)
 
     return out
 
