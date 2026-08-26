@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w2",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 2,
+  "title": "Our Trip to Alexandria",
+  "title_ar": "رحلتنا لإسكندرية",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 96,
+  "gist_ar": "حكاية رحلة العيلة لإسكندرية بالقطر.",
+  "text": "Last month my family went to Alexandria by train. We left home very early and arrived at nine o'clock. We took a taxi to the hotel. The hotel was small but clean. In the morning we saw the sea and swam for an hour. My father bought fish for lunch and my mother made a salad. We ate on the beach. In the afternoon I met a boy from Cairo and we played football together. I didn't want to go home! We came back on Sunday night, and I wrote about the trip in my notebook.",
+  "glossary": [
+    {
+      "word": "left",
+      "ar": "غادر / مشي"
+    },
+    {
+      "word": "arrived",
+      "ar": "وصل"
+    },
+    {
+      "word": "bought",
+      "ar": "اشترى"
+    },
+    {
+      "word": "met",
+      "ar": "قابل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How did the family travel to Alexandria?",
+      "q_ar": "العيلة سافرت إسكندرية إزاي؟",
+      "options": [
+        "By car",
+        "By train",
+        "By plane"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What time did they arrive?",
+      "q_ar": "وصلوا الساعة كام؟",
+      "options": [
+        "At nine o'clock",
+        "At six o'clock",
+        "At night"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who bought the fish?",
+      "q_ar": "مين اللي اشترى السمك؟",
+      "options": [
+        "The boy from Cairo",
+        "The mother",
+        "The father"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did the writer do in the morning?",
+      "q_ar": "الكاتب عمل إيه الصبح؟",
+      "options": [
+        "He played football",
+        "He swam in the sea",
+        "He wrote in his notebook"
+      ],
+      "answer": 1
+    }
+  ]
+}

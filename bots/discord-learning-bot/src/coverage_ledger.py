@@ -65,9 +65,27 @@ CEFR_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 # entry in this set (enforced by a test), so the honest answer to "what is left
 # and what does it need?" is always in the code.
 KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
-    "A2.M.1", "A2.M.2", "A2.M.3", "A2.R.1", "A2.R.2", "A2.R.5",
+    # A2 is down to ONE: its reading passages closed A2.R.1 + A2.R.5 and its
+    # mediation tasks closed A2.M.1 + A2.M.2 + A2.M.3. A2.R.2 survives on
+    # purpose — "catch the main point in short, clear messages and
+    # ANNOUNCEMENTS" needs extended listening, which no reading passage can
+    # honestly satisfy.
+    "A2.R.2",
     "B1.I.1", "B1.M.2", "B1.M.3", "B1.R.1", "B1.R.2",
     "B2.I.1", "B2.I.5", "B2.M.1", "B2.M.4", "B2.R.1", "B2.R.2", "B2.R.4",
+})
+
+# CEFR files "reception" as one mode, but it contains two different channels,
+# and this set is the difference that matters: these descriptors are about
+# understanding SPOKEN input (announcements, radio/TV, lectures). Authoring a
+# reading passage can never close them, however good the passage is.
+#
+# Without this, "we authored reading for the level, so its .R. gaps are closed"
+# looks true and is false — exactly the kind of quiet over-claim this whole
+# effort exists to remove. Kept as an explicit set rather than inferred from
+# prose, and a test pins it against DESCRIPTOR_GAP_PLAN so the two cannot drift.
+GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
+    "A2.R.2", "B1.R.1", "B1.R.2", "B2.R.1", "B2.R.2",
 })
 
 # What each remaining gap actually NEEDS in order to close honestly. This is
@@ -75,16 +93,11 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
 # incomplete means and what closes it".
 DESCRIPTOR_GAP_PLAN = {
     # --- needs authored MEDIATION tasks for that level (same schema as A1) ---
-    "A2.M.1": "A2 mediation tasks — convey the main points of a short everyday text/message",
-    "A2.M.2": "A2 mediation tasks — clarify with simple examples + comprehension-check questions",
-    "A2.M.3": "A2 mediation tasks — collaborate on a shared task, invite contributions",
     "B1.M.2": "B1 mediation tasks — summarise + give an opinion on a story/article/talk",
     "B1.M.3": "B1 mediation tasks — keep a discussion going, restate and summarise",
     "B2.M.1": "B2 mediation tasks — summarise varied texts, contrast differing viewpoints",
     "B2.M.4": "B2 mediation tasks — bridge a disagreement, restate positions, propose a way forward",
     # --- needs authored READING passages for that level ---
-    "A2.R.1": "A2 reading passages — high-frequency vocabulary on immediately relevant topics",
-    "A2.R.5": "A2 reading passages — follow simple directions and short instruction sets",
     "B2.R.4": "B2 reading passages — skim news/articles to judge relevance quickly",
     # --- needs EXTENDED LISTENING content (longer audio than the current
     #     single-word dictation items can ever satisfy) ---

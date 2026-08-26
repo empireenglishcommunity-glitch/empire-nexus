@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w12",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 12,
+  "title": "Agree on the class story",
+  "title_ar": "اتفقوا على حكاية الفصل",
+  "can_do": [
+    "A2.M.3"
+  ],
+  "scenario": {
+    "en": "Your class must write one story together, and finish today.",
+    "ar": "فصلك لازم يكتب حكاية واحدة مع بعض، ويخلّص النهارده."
+  },
+  "source": "Layla says: 'Let's write about a dream, because it is interesting.' Omar says: 'A memory is better, so we can explain real life.' The teacher says: 'Everyone must give one example, and you have to finish today.'",
+  "task": {
+    "en": "Lead the group: invite Layla for an example, react to Omar, say which you prefer and why, and agree to finish today.",
+    "ar": "ادِر المجموعة: خلّي ليلى تعطي مثال، رد على عمر، قول انت مفضّل إيه وليه، واتفقوا تخلّصوا النهارده."
+  },
+  "key_points": [
+    {
+      "en": "Invite Layla to give one example of a dream.",
+      "ar": "خلّي ليلى تعطي مثال لحلم."
+    },
+    {
+      "en": "React to Omar's idea about a memory.",
+      "ar": "رد على فكرة عمر بخصوص الذكرى."
+    },
+    {
+      "en": "Say which you think is better and why.",
+      "ar": "قول إيه الأحسن من رأيك وليه."
+    },
+    {
+      "en": "Agree to finish today.",
+      "ar": "اتفقوا تخلّصوا النهارده."
+    }
+  ],
+  "model_answer": {
+    "en": "Layla, can you give one example of a dream? Omar, a memory is a good idea, because we can explain real life. I think the memory is better, because it is easier. Shall we agree to finish today?",
+    "ar": "ليلى، تعطينا مثال لحلم؟ عمر، الذكرى فكرة حلوة، لأننا نقدر نشرح حياة حقيقية. أنا شايف الذكرى أحسن لأنها أسهل. نتفق نخلّص النهارده؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think?",
+      "ar": "إيه رأيك؟"
+    },
+    {
+      "en": "Good idea, but...",
+      "ar": "فكرة حلوة، بس..."
+    },
+    {
+      "en": "Shall we agree on this?",
+      "ar": "نتفق على ده؟"
+    },
+    {
+      "en": "Can you add something?",
+      "ar": "تقدر تضيف حاجة؟"
+    }
+  ]
+}

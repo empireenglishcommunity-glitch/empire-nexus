@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w3",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 3,
+  "title": "Explain the word 'crowded'",
+  "title_ar": "اشرح كلمة crowded",
+  "can_do": [
+    "A2.M.2"
+  ],
+  "scenario": {
+    "en": "Your classmate does not understand the word 'crowded'. You have to make the idea clearer for him.",
+    "ar": "زميلك مش فاهم كلمة crowded. لازم توضّح له الفكرة."
+  },
+  "source": "The teacher said: 'Cairo is more crowded than a village. Crowded means there are many people in a small place — for example, a bus at eight o'clock, or the market on Friday. Give two examples, then ask a question to check he understands.'",
+  "task": {
+    "en": "Explain 'crowded' in your own words, give two examples, then ask a question to check he understands.",
+    "ar": "اشرح crowded بكلامك، اعطي مثالين، وبعدين اسأله سؤال تتأكد إنه فهم."
+  },
+  "key_points": [
+    {
+      "en": "Crowded means many people in a small place.",
+      "ar": "crowded معناها ناس كتير في مكان صغير."
+    },
+    {
+      "en": "Give an example: a bus at eight o'clock.",
+      "ar": "مثال: أتوبيس الساعة تمانية."
+    },
+    {
+      "en": "Give an example: the market on Friday.",
+      "ar": "مثال: السوق يوم الجمعة."
+    },
+    {
+      "en": "Ask a question to check he understands.",
+      "ar": "اسأله سؤال تتأكد إنه فهم."
+    }
+  ],
+  "model_answer": {
+    "en": "Crowded means there are many people in a small place. For example, a bus at eight o'clock, or the market on Friday. Now one question to check you understand: is your street crowded?",
+    "ar": "crowded معناها ناس كتير في مكان صغير. مثلًا الأتوبيس الساعة تمانية، أو السوق يوم الجمعة. وسؤال كده أتأكد إنك فهمت: شارعكم مزدحم؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "For example?",
+      "ar": "مثلًا؟"
+    },
+    {
+      "en": "Do you understand?",
+      "ar": "فاهم؟"
+    },
+    {
+      "en": "Shall I explain again?",
+      "ar": "أشرح تاني؟"
+    },
+    {
+      "en": "Is that clear?",
+      "ar": "واضح؟"
+    }
+  ]
+}

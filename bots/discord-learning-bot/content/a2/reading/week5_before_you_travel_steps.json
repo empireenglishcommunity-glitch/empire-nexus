@@ -1,0 +1,75 @@
+{
+  "id": "reading_a2_w5",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 5,
+  "title": "Before You Travel: Five Steps",
+  "title_ar": "قبل ما تسافر: خمس خطوات",
+  "can_do": [
+    "A2.R.5",
+    "A2.R.1"
+  ],
+  "word_count": 90,
+  "gist_ar": "خمس خطوات لازم تعملها قبل السفر.",
+  "text": "Are you going to travel next month? Follow these five steps. First, save money every week. Second, book your flight early, because tickets are cheaper. Third, choose a hotel near the city centre. Fourth, make a list of the clothes you are going to need. Finally, check your passport two weeks before you travel. Do not wait until the last day! If you are going to stay abroad for a long time, learn ten words in the local language. Write your plan on paper and put it on your wall.",
+  "glossary": [
+    {
+      "word": "save",
+      "ar": "يوفّر"
+    },
+    {
+      "word": "book",
+      "ar": "يحجز"
+    },
+    {
+      "word": "abroad",
+      "ar": "في الخارج"
+    },
+    {
+      "word": "passport",
+      "ar": "جواز السفر"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the first step?",
+      "q_ar": "أول خطوة إيه؟",
+      "options": [
+        "Save money every week",
+        "Book your flight",
+        "Check your passport"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why should you book the flight early?",
+      "q_ar": "تحجز الطيران بدري ليه؟",
+      "options": [
+        "Because it is faster",
+        "Because tickets are cheaper",
+        "Because hotels are full"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When should you check your passport?",
+      "q_ar": "تتأكد من الجواز إمتى؟",
+      "options": [
+        "On the last day",
+        "After you arrive",
+        "Two weeks before you travel"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What should you do if you stay abroad a long time?",
+      "q_ar": "لو هتقعد بره كتير تعمل إيه؟",
+      "options": [
+        "Learn ten words in the local language",
+        "Book two hotels",
+        "Save more money"
+      ],
+      "answer": 0
+    }
+  ]
+}

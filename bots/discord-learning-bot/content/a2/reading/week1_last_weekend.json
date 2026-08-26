@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w1",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 1,
+  "title": "Nadia's Busy Weekend",
+  "title_ar": "عطلة نادية المزحومة",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 93,
+  "gist_ar": "نادية بتحكي كل اللي عملته السبت والأحد.",
+  "text": "Last weekend was very busy for Nadia. On Saturday morning she cleaned her room and helped her mother in the kitchen. They cooked rice and chicken together. In the afternoon she visited her grandmother. They talked for two hours and listened to old music. Nadia walked home at six o'clock. On Sunday she studied English for three hours, because she wanted a good mark. Then she called her friend Mona. They watched a film and enjoyed it a lot. Nadia finished her homework late at night. She was tired, but she was happy.",
+  "glossary": [
+    {
+      "word": "helped",
+      "ar": "ساعد"
+    },
+    {
+      "word": "visited",
+      "ar": "زار"
+    },
+    {
+      "word": "enjoyed",
+      "ar": "استمتع"
+    },
+    {
+      "word": "finished",
+      "ar": "خلّص"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What did Nadia do on Saturday morning?",
+      "q_ar": "نادية عملت إيه الصبح يوم السبت؟",
+      "options": [
+        "She studied English",
+        "She cleaned her room and helped her mother",
+        "She visited her grandmother"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How long did she talk with her grandmother?",
+      "q_ar": "قعدت تتكلم مع جدتها قد إيه؟",
+      "options": [
+        "Six hours",
+        "Two hours",
+        "Three hours"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did she study English on Sunday?",
+      "q_ar": "درست إنجليزي الأحد ليه؟",
+      "options": [
+        "Because she was tired",
+        "Because her friend called her",
+        "Because she wanted a good mark"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How did Nadia feel at the end?",
+      "q_ar": "كانت حاسة بإيه في الآخر؟",
+      "options": [
+        "Sad and angry",
+        "Sick",
+        "Tired but happy"
+      ],
+      "answer": 2
+    }
+  ]
+}

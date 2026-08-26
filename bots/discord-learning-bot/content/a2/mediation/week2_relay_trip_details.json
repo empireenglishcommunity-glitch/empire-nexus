@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w2",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 2,
+  "title": "Pass on the trip details",
+  "title_ar": "انقل تفاصيل الرحلة",
+  "can_do": [
+    "A2.M.1"
+  ],
+  "scenario": {
+    "en": "Your friend went to Alexandria and told you about it. Another friend wants to know the details.",
+    "ar": "صاحبك رجع من إسكندرية وحكالك. صاحب تاني عايز يعرف التفاصيل."
+  },
+  "source": "\"We went to Alexandria by train. We left at six and arrived at nine. The hotel was cheap. We ate fish on the beach, and we came back on Sunday.\"",
+  "task": {
+    "en": "Tell your other friend the main points.",
+    "ar": "قول لصاحبك التاني النقط المهمة."
+  },
+  "key_points": [
+    {
+      "en": "They went to Alexandria by train.",
+      "ar": "سافروا إسكندرية بالقطر."
+    },
+    {
+      "en": "They left at six and arrived at nine.",
+      "ar": "مشيوا ستة ووصلوا تسعة."
+    },
+    {
+      "en": "The hotel was cheap.",
+      "ar": "الفندق كان رخيص."
+    },
+    {
+      "en": "They came back on Sunday.",
+      "ar": "رجعوا يوم الأحد."
+    }
+  ],
+  "model_answer": {
+    "en": "They went to Alexandria by train. They left at six and arrived at nine. The hotel was cheap, they ate fish on the beach, and they came back on Sunday.",
+    "ar": "سافروا إسكندرية بالقطر، مشيوا ستة ووصلوا تسعة. الفندق كان رخيص، وأكلوا سمك على البحر، ورجعوا الأحد."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry, can you repeat that?",
+      "ar": "آسف، تقدر تكرر؟"
+    },
+    {
+      "en": "What do you mean?",
+      "ar": "تقصد إيه؟"
+    },
+    {
+      "en": "I understand now.",
+      "ar": "فهمت دلوقتي."
+    },
+    {
+      "en": "Let me check.",
+      "ar": "خليني أتأكد."
+    }
+  ]
+}

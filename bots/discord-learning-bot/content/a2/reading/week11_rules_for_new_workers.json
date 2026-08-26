@@ -1,0 +1,75 @@
+{
+  "id": "reading_a2_w11",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 11,
+  "title": "Rules for New Workers",
+  "title_ar": "قواعد للموظفين الجدد",
+  "can_do": [
+    "A2.R.5",
+    "A2.R.1"
+  ],
+  "word_count": 96,
+  "gist_ar": "قواعد الشغل للموظف الجديد.",
+  "text": "Welcome to your new job. Please read these rules. You have to arrive on time; the office opens at eight o'clock. You mustn't be late for a meeting with a customer. You have to wear the uniform, but you don't have to wear it on Friday. You should ask your boss if you have a problem. You mustn't use your phone during a meeting. You have to finish your work before the deadline. You should take a break for thirty minutes at one o'clock. If you are sick, you must call the office early. Good luck!",
+  "glossary": [
+    {
+      "word": "rule",
+      "ar": "قاعدة"
+    },
+    {
+      "word": "uniform",
+      "ar": "زي العمل"
+    },
+    {
+      "word": "deadline",
+      "ar": "الموعد النهائي"
+    },
+    {
+      "word": "break",
+      "ar": "راحة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What time does the office open?",
+      "q_ar": "المكتب يفتح الساعة كام؟",
+      "options": [
+        "At one o'clock",
+        "At eight o'clock",
+        "At nine o'clock"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When don't you have to wear the uniform?",
+      "q_ar": "إمتى مش لازم تلبس الزي؟",
+      "options": [
+        "On Monday",
+        "On Friday",
+        "In a meeting"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What mustn't you do during a meeting?",
+      "q_ar": "ممنوع تعمل إيه في الاجتماع؟",
+      "options": [
+        "Take a break",
+        "Use your phone",
+        "Ask your boss"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What must you do if you are sick?",
+      "q_ar": "لو عيّان لازم تعمل إيه؟",
+      "options": [
+        "Come to work late",
+        "Call the office early",
+        "Wear the uniform"
+      ],
+      "answer": 1
+    }
+  ]
+}

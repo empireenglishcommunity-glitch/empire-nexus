@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w5",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 5,
+  "title": "Plan the holiday together",
+  "title_ar": "خططوا للرحلة مع بعض",
+  "can_do": [
+    "A2.M.3"
+  ],
+  "scenario": {
+    "en": "You and two friends are going to travel in July. The group needs a clear plan.",
+    "ar": "انت وصاحبينك هتسافروا في يوليو. المجموعة محتاجة خطة واضحة."
+  },
+  "source": "Mona says: 'We are going to travel in July.' Youssef says: 'I am going to save money, but I can't book the hotel.' The group needs a plan: who is going to book the flight, who is going to choose the hotel, and how much everyone is going to save.",
+  "task": {
+    "en": "Organise the plan: ask who will do each job, react to Youssef, and agree how much to save.",
+    "ar": "نظّم الخطة: اسأل مين هيعمل إيه، رد على يوسف، واتفقوا على مبلغ التوفير."
+  },
+  "key_points": [
+    {
+      "en": "Ask who is going to book the flight.",
+      "ar": "اسأل مين هيحجز الطيران."
+    },
+    {
+      "en": "Ask who is going to choose the hotel.",
+      "ar": "اسأل مين هيختار الفندق."
+    },
+    {
+      "en": "React to Youssef: he can save but can't book.",
+      "ar": "رد على يوسف: يقدر يوفّر بس مش هيحجز."
+    },
+    {
+      "en": "Agree how much everyone is going to save.",
+      "ar": "اتفقوا كل واحد يوفّر كام."
+    }
+  ],
+  "model_answer": {
+    "en": "Mona, are you going to book the flight? Youssef, you can save money, so I am going to choose the hotel. How much is everyone going to save each week?",
+    "ar": "منى، انتي هتحجزي الطيران؟ يوسف، انت هتوفّر فلوس، فأنا هختار الفندق. كل واحد هيوفّر كام في الأسبوع؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think?",
+      "ar": "إيه رأيك؟"
+    },
+    {
+      "en": "Good idea, but...",
+      "ar": "فكرة حلوة، بس..."
+    },
+    {
+      "en": "Shall we agree on this?",
+      "ar": "نتفق على ده؟"
+    },
+    {
+      "en": "Can you add something?",
+      "ar": "تقدر تضيف حاجة؟"
+    }
+  ]
+}

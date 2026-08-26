@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w7",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 7,
+  "title": "In the Café Right Now",
+  "title_ar": "في الكافيه دلوقتي",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 90,
+  "gist_ar": "وصف اللي بيحصل في الكافيه في اللحظة دي.",
+  "text": "I am sitting in a café near my house. I usually come here on Fridays. Right now I am drinking tea and writing in my notebook. Outside it is raining, so the street is quiet. A man is standing near the door. He is wearing a black jacket and he is talking on the phone. Two students are sitting near the window. They are reading and they are waiting for their teacher. These days the café is busier than before, because the coffee is cheap and the internet is fast.",
+  "glossary": [
+    {
+      "word": "at the moment",
+      "ar": "في اللحظة دي"
+    },
+    {
+      "word": "wearing",
+      "ar": "لابس"
+    },
+    {
+      "word": "waiting",
+      "ar": "مستنّي"
+    },
+    {
+      "word": "these days",
+      "ar": "الأيام دي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer doing right now?",
+      "q_ar": "الكاتب بيعمل إيه دلوقتي؟",
+      "options": [
+        "Waiting for a teacher",
+        "Standing near the door",
+        "Drinking tea and writing"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the man near the door wearing?",
+      "q_ar": "الراجل اللي جمب الباب لابس إيه؟",
+      "options": [
+        "A black jacket",
+        "A white shirt",
+        "New shoes"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What are the two students waiting for?",
+      "q_ar": "الطالبين مستنيين إيه؟",
+      "options": [
+        "Their teacher",
+        "Their food",
+        "The rain to stop"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is the café busier these days?",
+      "q_ar": "الكافيه أزحم الأيام دي ليه؟",
+      "options": [
+        "The coffee is cheap and the internet is fast",
+        "It is bigger now",
+        "It is always raining"
+      ],
+      "answer": 0
+    }
+  ]
+}

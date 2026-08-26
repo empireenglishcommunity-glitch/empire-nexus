@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w4",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 4,
+  "title": "Agree on one place for the class trip",
+  "title_ar": "اتفقوا على مكان واحد لرحلة الفصل",
+  "can_do": [
+    "A2.M.3"
+  ],
+  "scenario": {
+    "en": "Your class must choose one place for a trip. You are leading the discussion.",
+    "ar": "فصلك لازم يختار مكان واحد للرحلة. وانت اللي بتدير النقاش."
+  },
+  "source": "Sara says: 'The museum is the most interesting place.' Ali says: 'The beach is the best, because it is the cheapest.' The teacher says: 'You have to agree on one place today, and everyone must speak.'",
+  "task": {
+    "en": "Lead the group: invite Sara to explain, react to Ali's idea, say what you think, and agree on one place.",
+    "ar": "ادِر المجموعة: خلّي سارة تشرح، رد على فكرة علي، قول رأيك، واتفقوا على مكان واحد."
+  },
+  "key_points": [
+    {
+      "en": "Invite Sara to explain why the museum is interesting.",
+      "ar": "خلّي سارة تشرح ليه المتحف ممتع."
+    },
+    {
+      "en": "React to Ali's idea that the beach is the cheapest.",
+      "ar": "رد على فكرة علي إن البحر أرخص."
+    },
+    {
+      "en": "Say what you think.",
+      "ar": "قول رأيك انت."
+    },
+    {
+      "en": "Agree on one place today.",
+      "ar": "اتفقوا على مكان واحد النهارده."
+    }
+  ],
+  "model_answer": {
+    "en": "Sara, can you explain why the museum is the most interesting? Ali, you are right that the beach is the cheapest, but the museum is nearer. I think the museum is better. Shall we agree on one place today?",
+    "ar": "سارة، تشرحي ليه المتحف أمتع؟ علي، معاك حق إن البحر أرخص، بس المتحف أقرب. أنا شايف المتحف أحسن. نتفق على مكان واحد النهارده؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "What do you think?",
+      "ar": "إيه رأيك؟"
+    },
+    {
+      "en": "Good idea, but...",
+      "ar": "فكرة حلوة، بس..."
+    },
+    {
+      "en": "Shall we agree on this?",
+      "ar": "نتفق على ده؟"
+    },
+    {
+      "en": "Can you add something?",
+      "ar": "تقدر تضيف حاجة؟"
+    }
+  ]
+}

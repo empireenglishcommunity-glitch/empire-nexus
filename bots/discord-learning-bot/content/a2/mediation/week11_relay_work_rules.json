@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w11",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 11,
+  "title": "Pass on the work rules",
+  "title_ar": "انقل قواعد الشغل",
+  "can_do": [
+    "A2.M.1"
+  ],
+  "scenario": {
+    "en": "A new worker does not read English. The boss explained the rules to you.",
+    "ar": "موظف جديد مش بيقرا إنجليزي. المدير شرحلك القواعد."
+  },
+  "source": "The boss said: 'You have to arrive at eight o'clock. You mustn't use your phone in a meeting. You don't have to wear the uniform on Friday. If you are sick, you must call the office early.'",
+  "task": {
+    "en": "Tell the new worker the four rules.",
+    "ar": "قول للموظف الجديد القواعد الأربعة."
+  },
+  "key_points": [
+    {
+      "en": "You have to arrive at eight o'clock.",
+      "ar": "لازم توصل الساعة تمانية."
+    },
+    {
+      "en": "You mustn't use your phone in a meeting.",
+      "ar": "ممنوع تستخدم التليفون في الاجتماع."
+    },
+    {
+      "en": "You don't have to wear the uniform on Friday.",
+      "ar": "مش لازم تلبس الزي يوم الجمعة."
+    },
+    {
+      "en": "If you are sick, you must call the office early.",
+      "ar": "لو عيّان لازم تكلّم المكتب بدري."
+    }
+  ],
+  "model_answer": {
+    "en": "You have to arrive at eight o'clock, and you mustn't use your phone in a meeting. You don't have to wear the uniform on Friday. If you are sick, you must call the office early.",
+    "ar": "لازم توصل الساعة تمانية، وممنوع تستخدم التليفون في الاجتماع. ومش لازم تلبس الزي يوم الجمعة. ولو عيّان لازم تكلّم المكتب بدري."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry, can you repeat that?",
+      "ar": "آسف، تقدر تكرر؟"
+    },
+    {
+      "en": "What do you mean?",
+      "ar": "تقصد إيه؟"
+    },
+    {
+      "en": "I understand now.",
+      "ar": "فهمت دلوقتي."
+    },
+    {
+      "en": "Let me check.",
+      "ar": "خليني أتأكد."
+    }
+  ]
+}

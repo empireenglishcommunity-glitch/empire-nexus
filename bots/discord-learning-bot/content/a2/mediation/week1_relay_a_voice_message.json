@@ -1,0 +1,56 @@
+{
+  "id": "mediation_a2_w1",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 1,
+  "title": "Tell your mother what your cousin said",
+  "title_ar": "قول لأمك ابن عمك قال إيه",
+  "can_do": [
+    "A2.M.1"
+  ],
+  "scenario": {
+    "en": "Your cousin sends you a voice message in English. Your mother does not speak English and asks you what he said.",
+    "ar": "ابن عمك بعتلك رسالة صوتية بالإنجليزي. أمك مش بتتكلم إنجليزي وسألتك قال إيه."
+  },
+  "source": "\"Hi! Last weekend I worked on Saturday and I studied on Sunday. I visited your grandmother and she cooked fish for me. I called you twice, but your phone was closed.\"",
+  "task": {
+    "en": "Tell your mother the main points of the message.",
+    "ar": "قول لأمك النقط المهمة في الرسالة."
+  },
+  "key_points": [
+    {
+      "en": "He worked on Saturday and studied on Sunday.",
+      "ar": "اشتغل السبت ودرس الأحد."
+    },
+    {
+      "en": "He visited your grandmother and she cooked fish.",
+      "ar": "زار جدتك وهي طبخت له سمك."
+    },
+    {
+      "en": "He called you twice but your phone was closed.",
+      "ar": "كلّمك مرتين بس تليفونك كان مقفول."
+    }
+  ],
+  "model_answer": {
+    "en": "He worked on Saturday and studied on Sunday. He visited grandmother and she cooked fish for him. He called you twice, but your phone was closed.",
+    "ar": "اشتغل السبت ودرس الأحد. زار جدتك وطبخت له سمك. وكلّمك مرتين بس تليفونك كان مقفول."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry, can you repeat that?",
+      "ar": "آسف، تقدر تكرر؟"
+    },
+    {
+      "en": "What do you mean?",
+      "ar": "تقصد إيه؟"
+    },
+    {
+      "en": "I understand now.",
+      "ar": "فهمت دلوقتي."
+    },
+    {
+      "en": "Let me check.",
+      "ar": "خليني أتأكد."
+    }
+  ]
+}
