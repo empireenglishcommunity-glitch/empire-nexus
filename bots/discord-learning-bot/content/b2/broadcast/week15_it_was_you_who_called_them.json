@@ -1,0 +1,210 @@
+{
+  "id": "broadcast_b2_w15",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 15,
+  "title": "It Was You Who Called Them",
+  "title_ar": "إنت اللي كلّمتهم",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 267,
+  "gist_ar": "مشهد: بيتكشف إن كريم هو اللي بلّغ، ومقالش لسميرة.",
+  "before_listening": {
+    "en": "A three-person scene. One thing is revealed and one thing is deliberately not. Listen for what is REVEALED.",
+    "ar": "مشهد بين تلات أشخاص. حاجة بتتكشف وحاجة بتتحجب بإصرار. ركّز على اللي اتكشف."
+  },
+  "segments": [
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "It wasn't the audit that worried me. It was how calm you were about the audit."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "I'm calm about a lot of things."
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "Not about this. What you do when something's wrong is you tidy. You alphabetise. For three weeks you didn't tidy anything."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_sky",
+      "text": "Can I just—"
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "No. Karim. It was you who called them."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "It was me who called them."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_sky",
+      "text": "Wait, you—"
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "What I couldn't do was watch it happen twice. That's all it was. It wasn't loyalty to the company and it certainly wasn't courage. I did it in a car park at eleven at night and I was sick afterwards."
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "Why didn't you tell me?"
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "Because what you'd have done is come with me. And then it would have been the two of us in that car park, and one of us needed to still be here in six months."
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "That wasn't yours to decide."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "No. It's the second time this year someone has told me that."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_sky",
+      "text": "It was Hana, wasn't it. The first time."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "It was Hana."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_sky",
+      "text": "Does she know you did it?"
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "What Hana knows is that somebody did it, and that whoever it was waited eight months longer than she did. She hasn't asked me. I think that's deliberate."
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "It was her they moved to the Alexandria office, wasn't it."
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "It was. And what I keep coming back to is that nobody moved me anywhere. Which tells you something about how much they think I matter, and it isn't flattering."
+    },
+    {
+      "speaker": "Samira",
+      "speaker_ar": "سميرة",
+      "voice": "af_nicole",
+      "text": "Right. So what happens on Monday?"
+    },
+    {
+      "speaker": "Karim",
+      "speaker_ar": "كريم",
+      "voice": "am_michael",
+      "text": "On Monday, nothing happens. It's what happens in March that I can't tell you about."
+    }
+  ],
+  "gist_question": {
+    "q": "What is revealed in this scene?",
+    "q_ar": "إيه اللي اتكشف في المشهد؟",
+    "options": [
+      "That the audit found nothing wrong",
+      "That Karim reported the company himself, and did not tell Samira",
+      "That Nour was the one who contacted the auditors"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What made Samira suspicious?",
+      "q_ar": "إيه اللي خلّى سميرة تشكّ؟",
+      "options": [
+        "He was unusually calm and stopped tidying for three weeks",
+        "He alphabetised everything in the office",
+        "He was absent for three weeks"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does Karim say he did not tell Samira?",
+      "q_ar": "ليه كريم قال إنه مقالش لسميرة؟",
+      "options": [
+        "She would have come with him, and one of them needed to still be there",
+        "He did not trust her to keep it quiet",
+        "She was away at the time"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Karim say about Monday?",
+      "q_ar": "كريم قال إيه عن يوم الاتنين؟",
+      "options": [
+        "He will resign on Monday",
+        "Nothing happens on Monday; it is March he cannot discuss",
+        "The audit result is published on Monday"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Karim conclude from the fact that nobody moved him?",
+      "q_ar": "كريم استنتج إيه من إن محدش نقله من مكانه؟",
+      "options": [
+        "That the company does not consider him important",
+        "That the company has not yet noticed anything",
+        "That Hana protected him"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "an audit",
+      "ar": "مراجعة مالية"
+    },
+    {
+      "word": "to alphabetise",
+      "ar": "يرتّب أبجديًا"
+    },
+    {
+      "word": "it was you who",
+      "ar": "إنت اللي"
+    },
+    {
+      "word": "that wasn't yours to decide",
+      "ar": "ده مكانش قرارك"
+    }
+  ]
+}

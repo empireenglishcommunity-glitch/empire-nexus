@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w11",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 11,
+  "title": "The Building That Was Never Finished",
+  "title_ar": "المبنى اللي عمره ما اكتمل",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 221,
+  "gist_ar": "محاضرة: الفشل مكانش في الموهبة، كان في وسيلة العرض — واللجنة حكمت على اللي اتعرض لها بس.",
+  "before_listening": {
+    "en": "A lecture about a failed building that is not really about architecture. Listen for the BROADER point in the last part.",
+    "ar": "محاضرة عن مبنى فشل، بس مش عن العمارة فعلًا. ركّز على الفكرة الأوسع في الجزء الأخير."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِر",
+      "voice": "am_michael",
+      "text": "The building we are looking at, begun in nineteen thirty-two and never completed, is the most instructive failure in the city. Its architect, who had never built anything above three storeys, won the competition with a drawing rather than a plan, a distinction which the committee, most of whom were merchants, did not recognise as important. The design, admired even now for its staircase, contains a mistake visible only in section. The light wells, intended to serve the inner rooms, narrow as they descend. Anyone standing on the ground floor, looking up, sees a bright rectangle of sky. Anyone in the rooms beside them sees almost nothing. The architect, drawing in elevation, never drew the section that would have shown him this. Two things follow, neither of them about architecture. First, the failure was not one of talent; the staircase is genuinely beautiful. It was a failure of representation. He was working in a medium which could not display the error he was making. Second, the committee's mistake was the more serious one, and it is the one we repeat. They judged the thing they were shown, rather than asking what they were not being shown. Every profession has a section drawing it does not habitually make. Finding yours, which is difficult and unrewarding, is most of what expertise consists of."
+    }
+  ],
+  "gist_question": {
+    "q": "What broader point does the lecturer draw from the building?",
+    "q_ar": "إيه الفكرة الأوسع اللي استخرجها من المبنى؟",
+    "options": [
+      "Architects should be trained more carefully in staircases",
+      "The real failures were a medium that could not show the error, and a committee that never asked what it was not shown",
+      "Committees should not include merchants"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What is wrong with the light wells?",
+      "q_ar": "إيه المشكلة في مناور الإضاءة؟",
+      "options": [
+        "They narrow as they descend, so the inner rooms get almost no light",
+        "They were never actually built",
+        "They are much too wide for the building"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why did the architect never see the mistake?",
+      "q_ar": "ليه المهندس عمره ما شاف الغلطة؟",
+      "options": [
+        "He was drawing in elevation and never drew the section",
+        "He never visited the site",
+        "The committee concealed it from him"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the lecturer say expertise mostly consists of?",
+      "q_ar": "قال إن الخبرة معظمها إيه؟",
+      "options": [
+        "Winning competitions against better-known rivals",
+        "Finding the drawing your own profession does not habitually make",
+        "Judging accurately what you are shown"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "in section",
+      "ar": "في المقطع الرأسي"
+    },
+    {
+      "word": "a light well",
+      "ar": "منور إضاءة"
+    },
+    {
+      "word": "in elevation",
+      "ar": "في الواجهة"
+    },
+    {
+      "word": "representation",
+      "ar": "التمثيل / طريقة العرض"
+    }
+  ]
+}

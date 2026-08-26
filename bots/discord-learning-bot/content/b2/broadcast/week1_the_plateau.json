@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w1",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 1,
+  "title": "The Plateau",
+  "title_ar": "الهضبة — لما التقدّم يتوقف",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 231,
+  "gist_ar": "محاضرة: الوقت اللي قضيته مش نفس التقدّم اللي حققته، والناس بتخلط بين الاتنين.",
+  "before_listening": {
+    "en": "A lecture built on one distinction. Listen for the CENTRAL ARGUMENT, not the grammar example she uses to open it.",
+    "ar": "محاضرة مبنية على فرق واحد. ركّز على الحجة الأساسية، مش مثال القواعد اللي بدأت بيه."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِرة",
+      "voice": "bf_isabella",
+      "text": "Good morning. Today I want to talk about why progress stops, and I want to be careful about a distinction that most people collapse. Consider two students. The first has studied English for six years. The second has been studying English for six years. In everyday speech we treat those as the same sentence. They are not. The first tells you about a completed quantity: six years exist, they are in the past, and something resulted. The second tells you about an unfinished activity, and it carries an implication the first does not, which is that the effort is still going on, and possibly going on longer than expected. Now, here is why this matters beyond grammar. We have known since the nineteen sixties that skill acquisition is not linear. What we have been discovering more recently is less comfortable: the plateau is not a failure of effort. Learners on a plateau have usually been working harder than they were at the start. They have been repeating what they already do well, because repeating what you do well feels like progress and feels safe. So the question to ask is not 'how long have you been studying?' It is 'what have you actually completed?' The first question measures your patience. The second measures your progress. Most of us have been answering the first one for years, and calling it the second."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the lecturer's central argument?",
+    "q_ar": "إيه الحجة الأساسية عند المحاضِرة؟",
+    "options": [
+      "Studying for a longer time reliably produces better results",
+      "A plateau happens because learners stop working hard",
+      "Time spent is not the same as progress achieved, and learners confuse the two"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What implication does 'have been studying' carry that 'have studied' does not?",
+      "q_ar": "إيه المعنى الضمني في 'have been studying' اللي مش موجود في 'have studied'؟",
+      "options": [
+        "That the activity is unfinished, and possibly longer than expected",
+        "That the studying was successful",
+        "That the studying finished a long time ago"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she say about learners on a plateau?",
+      "q_ar": "قالت إيه عن الدارسين اللي واقفين على الهضبة؟",
+      "options": [
+        "They have usually reduced their effort",
+        "They are usually working harder than at the start",
+        "They have stopped studying altogether"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which question does she say measures progress?",
+      "q_ar": "أنهي سؤال قالت إنه بيقيس التقدّم؟",
+      "options": [
+        "How long have you been studying?",
+        "What have you actually completed?",
+        "How hard have you been working?"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a distinction",
+      "ar": "فرق / تمييز"
+    },
+    {
+      "word": "to collapse two things",
+      "ar": "يخلط بين حاجتين"
+    },
+    {
+      "word": "a plateau",
+      "ar": "مرحلة توقّف التقدّم"
+    },
+    {
+      "word": "skill acquisition",
+      "ar": "اكتساب المهارة"
+    }
+  ]
+}

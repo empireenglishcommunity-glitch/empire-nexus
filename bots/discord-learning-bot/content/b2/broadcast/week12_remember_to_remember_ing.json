@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w12",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 12,
+  "title": "Remember To, Remember -ing",
+  "title_ar": "Remember to وRemember -ing",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 239,
+  "gist_ar": "محاضرة: الفرق النحوي بين النية والذكرى بيعبّر عن فرق حقيقي في مدى موثوقية الإجابة.",
+  "before_listening": {
+    "en": "A lecture that uses a grammar contrast to make a point about memory. Listen for WHY she says the contrast has survived in the language.",
+    "ar": "محاضرة بتستخدم فرق نحوي عشان توصل فكرة عن الذاكرة. ركّز على ليه قالت إن الفرق ده عاش في اللغة."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِرة",
+      "voice": "bf_emma",
+      "text": "There is a small group of English verbs which change meaning depending on what follows them, and I want to use them to make a point about memory rather than about grammar. Compare: I remembered to lock the door, and I remembered locking the door. The first is about an intention that was carried out. The second is about a past event being recalled. Native speakers use them correctly without being able to explain the difference, which is normal, and learners often produce the second when they mean the first, which is not a small error. It is the difference between a plan and a memory. Now the interesting part. Psychologists studying false memory have found that the second construction is unusually dangerous. When people are asked do you remember locking the door, they reconstruct the event, and reconstruction feels identical to recall. When they are asked did you intend to lock the door, they do not reconstruct anything; they consult a plan, and plans are easier to check. So the grammatical distinction that learners find fiddly turns out to mark a real difference in how reliable the answer is. I am not going to tell you that this makes the grammar easier. It does not. But it explains why the distinction survived. Languages tend to keep the contrasts that do work, and the contrast between having intended something and having witnessed it does a great deal of work."
+    }
+  ],
+  "gist_question": {
+    "q": "Why does the lecturer say this contrast has survived in the language?",
+    "q_ar": "ليه قالت إن الفرق ده عاش في اللغة؟",
+    "options": [
+      "Because it is easy for learners to master",
+      "Because it marks a real difference between an intention and a witnessed event",
+      "Because native speakers are able to explain it clearly"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What does 'I remembered locking the door' mean?",
+      "q_ar": "'I remembered locking the door' معناها إيه؟",
+      "options": [
+        "An intention that was carried out",
+        "A past event being recalled",
+        "A plan for later today"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What have psychologists found about the '-ing' question?",
+      "q_ar": "علماء النفس لاقوا إيه عن سؤال الـ '-ing'؟",
+      "options": [
+        "People reconstruct the event, and reconstruction feels like recall",
+        "People usually refuse to answer it",
+        "It produces more reliable answers than the alternative"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the lecturer explicitly refuse to claim?",
+      "q_ar": "إيه اللي رفضت تقوله بشكل صريح؟",
+      "options": [
+        "That the distinction is real",
+        "That knowing this makes the grammar easier",
+        "That learners make this mistake"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "an intention",
+      "ar": "نية"
+    },
+    {
+      "word": "to recall",
+      "ar": "يتذكّر"
+    },
+    {
+      "word": "to reconstruct",
+      "ar": "يعيد بناء الحدث في ذهنه"
+    },
+    {
+      "word": "fiddly",
+      "ar": "دقيق ومربك"
+    }
+  ]
+}

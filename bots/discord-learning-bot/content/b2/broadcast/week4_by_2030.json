@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b2_w4",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 4,
+  "title": "By 2030",
+  "title_ar": "بحلول 2030",
+  "can_do": [
+    "B2.R.1"
+  ],
+  "format": "lecture",
+  "word_count": 232,
+  "gist_ar": "محاضرة: التوقّع هيطلع غلط، ومع ذلك هو أفضل رقم عندنا.",
+  "before_listening": {
+    "en": "A lecture that begins by saying its own headline number is wrong. Listen for WHY he says it is still worth publishing.",
+    "ar": "محاضرة بتبدأ بإن الرقم الرئيسي فيها غلط. ركّز على ليه قال إنه لسه يستحق النشر."
+  },
+  "segments": [
+    {
+      "speaker": "Lecturer",
+      "speaker_ar": "المحاضِر",
+      "voice": "am_adam",
+      "text": "Let me start with a number that will be wrong. By twenty-thirty, according to the projection on the screen, this city will have added two million people. I want to spend the next few minutes explaining why that figure will be wrong, and why it is still the most useful figure we have. First, what the projection actually says. It does not say two million people will arrive. It says that if the trends of the last twelve years continue, the city will have absorbed roughly that number by the end of the decade. By twenty-thirty we will have been building at the current rate for eighteen years. The projection is a sentence about our own behaviour, not about the future. Second, why it will be wrong. Every projection of this kind has been wrong, in both directions, and for the same reason: people respond to the projection. If the number frightens the planners, they will be building differently within three years, and the number will fall. If it reassures them, they will be doing nothing, and it will rise. A forecast that changes behaviour cannot describe the world it predicts. So why publish it? Because the alternative is not a better number. The alternative is planning with no number at all, which in practice means planning for the city that already exists. And by twenty-thirty, that city will have stopped existing."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the lecturer's main argument about the projection?",
+    "q_ar": "إيه حجة المحاضِر الأساسية عن التوقّع؟",
+    "options": [
+      "It is accurate and should guide every planning decision",
+      "It will be wrong, but it is still better than having no number",
+      "It was irresponsible to publish it"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What does the projection actually claim?",
+      "q_ar": "التوقّع بيقول إيه بالظبط؟",
+      "options": [
+        "Two million people will definitely arrive",
+        "If current trends continue, the city will have absorbed roughly that number",
+        "The city will stop growing before 2030"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does he say such projections are always wrong?",
+      "q_ar": "ليه قال إن التوقّعات دي دايمًا بتطلع غلط؟",
+      "options": [
+        "The underlying data is poor",
+        "People respond to the projection and change their behaviour",
+        "Nobody ever reads them"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he say the alternative would be in practice?",
+      "q_ar": "قال إن البديل عمليًا هيكون إيه؟",
+      "options": [
+        "A more accurate number",
+        "Planning for the city that already exists",
+        "Waiting until 2030 to decide"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a projection",
+      "ar": "توقّع رقمي"
+    },
+    {
+      "word": "to absorb",
+      "ar": "يستوعب"
+    },
+    {
+      "word": "trends",
+      "ar": "اتجاهات"
+    },
+    {
+      "word": "a forecast",
+      "ar": "تنبؤ"
+    }
+  ]
+}

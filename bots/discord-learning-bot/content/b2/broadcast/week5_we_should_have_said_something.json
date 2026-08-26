@@ -1,0 +1,180 @@
+{
+  "id": "broadcast_b2_w5",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 5,
+  "title": "We Should Have Said Something",
+  "title_ar": "كان لازم نتكلم",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 262,
+  "gist_ar": "مشهد: هي عايزة تسمع 'إحنا مجرّبناش'، مش 'مكانش هينفع'.",
+  "before_listening": {
+    "en": "Two colleagues after something has gone wrong. Listen for what she finally gets him to ACCEPT.",
+    "ar": "زميلين بعد ما حصلت مشكلة. ركّز على إيه اللي هي خلّته يعترف بيه في الآخر."
+  },
+  "segments": [
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "If we'd said something in April, none of this would have happened."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "That's not true, and you know it isn't. Because if we'd said something in April, they would have moved us both off the project and given it to Hana, and Hana would have signed exactly the same thing. It wouldn't have changed the outcome. It would have changed who was standing here."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "So your position is that it wouldn't have mattered."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "My position is that it wouldn't have worked. Those aren't the same thing."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "Go on, then."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "Look. If I'd known in April what I know now, I'd have gone to the board directly. I would have. But in April all I had was a feeling that the numbers were too clean."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "You told me they were too clean. In the car park. You said nobody's costs come in that tidy."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "I did say that."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "And I said we should check. And you said, let's see what the second quarter looks like."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "Which was a reasonable thing to say in April."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "It was a reasonable thing to say if you wanted to not know for another three months. That's what it was for. If either of us had genuinely thought the numbers were fine, we wouldn't have needed to wait for the second quarter to find out."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "That's a hard way to put it."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "It's the accurate way to put it. So don't tell me it wouldn't have worked. Tell me we didn't try."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "All right. We didn't try. That doesn't make it better."
+    },
+    {
+      "speaker": "Layla",
+      "speaker_ar": "ليلى",
+      "voice": "bf_emma",
+      "text": "No. But it makes it ours."
+    }
+  ],
+  "gist_question": {
+    "q": "What does Layla finally get Sami to accept?",
+    "q_ar": "ليلى خلّت سامي يعترف بإيه في الآخر؟",
+    "options": [
+      "That speaking up in April would certainly have worked",
+      "That they did not try, rather than that trying would have failed",
+      "That Hana was the one responsible"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What does Sami say would have happened if they had spoken up in April?",
+      "q_ar": "سامي قال إيه اللي كان هيحصل لو اتكلموا في أبريل؟",
+      "options": [
+        "The project would have been cancelled",
+        "They would have been replaced, and Hana would have signed the same thing",
+        "The board would have opened an investigation"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What had Sami said in the car park?",
+      "q_ar": "سامي قال إيه في الجراج؟",
+      "options": [
+        "That the numbers were too clean",
+        "That they should go to the board",
+        "That Layla should check the file"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which distinction does Sami insist on?",
+      "q_ar": "سامي متمسّك بأنهي فرق؟",
+      "options": [
+        "Between April and now",
+        "Between 'wouldn't have mattered' and 'wouldn't have worked'",
+        "Between the board and Hana"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Layla say 'let's see what the second quarter looks like' was really for?",
+      "q_ar": "ليلى قالت إن جملة 'نشوف الربع التاني' كانت لإيه فعلًا؟",
+      "options": [
+        "Gathering the evidence they needed",
+        "Avoiding knowing for another three months",
+        "Giving Hana time to review the file"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "your position is",
+      "ar": "موقفك إن"
+    },
+    {
+      "word": "too clean",
+      "ar": "نضيفة أوي / مثالية بشكل مريب"
+    },
+    {
+      "word": "tidy",
+      "ar": "مرتّبة"
+    },
+    {
+      "word": "that doesn't make it better",
+      "ar": "ده مش بيخلّيها أحسن"
+    }
+  ]
+}

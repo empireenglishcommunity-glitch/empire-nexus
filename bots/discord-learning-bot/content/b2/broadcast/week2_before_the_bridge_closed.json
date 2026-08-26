@@ -1,0 +1,108 @@
+{
+  "id": "broadcast_b2_w2",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 2,
+  "title": "Before the Bridge Closed",
+  "title_ar": "قبل ما الكوبري يتقفل",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "current affairs",
+  "word_count": 249,
+  "gist_ar": "تحقيق تلفزيوني: الكوبري اتقفل بعد سنة ونص من التحذيرات، والسؤال ليه النظام محرّكش.",
+  "before_listening": {
+    "en": "A television investigation. Everything happened BEFORE the closure. Listen for what the report says the real failure was.",
+    "ar": "تحقيق تلفزيوني. كل الأحداث حصلت قبل القفل. ركّز على إيه اللي التقرير قال إنه الفشل الحقيقي."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "Tonight: the bridge that closed with four hours' notice, and the eighteen months of warnings that came before it. Our reporter has seen documents that nobody was supposed to see."
+    },
+    {
+      "speaker": "Reporter",
+      "speaker_ar": "المراسلة",
+      "voice": "af_sarah",
+      "text": "By the time the bridge was closed on the fourth of March, engineers had been raising concerns for a year and a half. The first report, in September the year before, had described the western supports as 'deteriorating but stable'. That phrase matters, because it had allowed the authority to postpone a decision without technically ignoring the warning. A second inspection, in January, had removed the word 'stable'. Nobody, it seems, noticed that it had gone. What we have established is this. The engineers had not been silent. They had written, they had escalated, and by February two of them had asked to be removed from the project. The authority says it received no formal recommendation to close the bridge, and strictly speaking that is true. What it had received was three documents, each one more worried than the last, none of which used the word 'close'. One of them, dated the eleventh of February, ends with a sentence the authority has not explained to us. It reads: we consider our obligation discharged. Engineers do not write that about a bridge they believe is safe. The question, then, is not who failed to speak. It is why a system that had been told three times still needed a fourth."
+    },
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيع",
+      "voice": "bm_george",
+      "text": "The authority declined to be interviewed. We will keep asking."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the report conclude the real failure was?",
+    "q_ar": "التقرير وصل لإيه بخصوص الفشل الحقيقي؟",
+    "options": [
+      "The engineers stayed silent about the danger",
+      "The system did not act, although it had been warned repeatedly",
+      "The bridge was closed with no warning to anyone"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What changed between the September and January inspections?",
+      "q_ar": "إيه اللي اتغيّر بين تقرير سبتمبر وتقرير يناير؟",
+      "options": [
+        "The word 'stable' was removed",
+        "The word 'deteriorating' was added",
+        "The supports had been repaired"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What had two of the engineers done by February?",
+      "q_ar": "اتنين من المهندسين عملوا إيه قبل فبراير؟",
+      "options": [
+        "Resigned from the authority",
+        "Asked to be removed from the project",
+        "Formally recommended closing the bridge"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why is the authority's statement technically true?",
+      "q_ar": "ليه بيان الجهة صحيح من الناحية الشكلية؟",
+      "options": [
+        "None of the documents used the word 'close'",
+        "It never received any documents at all",
+        "The engineers wrote to the wrong department"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the reporter imply about the sentence 'we consider our obligation discharged'?",
+      "q_ar": "المراسلة بتلمّح لإيه بخصوص جملة 'نعتبر واجبنا قد انتهى'؟",
+      "options": [
+        "The engineers were satisfied the bridge was safe",
+        "The engineers were signalling they no longer accepted responsibility",
+        "The authority itself wrote that sentence"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "with four hours' notice",
+      "ar": "بإشعار قبلها بأربع ساعات"
+    },
+    {
+      "word": "deteriorating",
+      "ar": "بتتدهور"
+    },
+    {
+      "word": "to postpone",
+      "ar": "يأجّل"
+    },
+    {
+      "word": "they had escalated",
+      "ar": "رفّعوا الموضوع لمستوى أعلى"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "id": "broadcast_b2_w3",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 3,
+  "title": "The Photograph",
+  "title_ar": "الصورة",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 273,
+  "gist_ar": "مشهد دراما: الخلاف مش على الصورة، الخلاف على إنه قال إنه حرقها، وإنها هي اللي فتّشت.",
+  "before_listening": {
+    "en": "A scene between two people. Almost nothing important is said directly. Listen for what they are REALLY arguing about.",
+    "ar": "مشهد بين شخصين. مفيش حاجة مهمة بتتقال بشكل مباشر. ركّز على هما بيتخانقوا على إيه فعلًا."
+  },
+  "segments": [
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "You kept it."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "Of course I kept it. Why would I throw it away?"
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Because you'd told me you had. That's why. In the car, on the way back from the hospital. You said you'd burnt everything."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I said I'd burnt the letters."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Oh. The letters."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "They were different. You know they were different. I'd been carrying those letters around for two years, and every time I read them I was worse afterwards. The photograph is just, it's the four of us on a beach. Nobody is angry in it."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "That's exactly what's wrong with it. Sorry. That came out—"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "No. Go on."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "It's just that when I look at it, I don't see the four of us on a beach. I see the morning after. I see you standing in the kitchen not telling me. And I'd been asking you for a week. So when you keep it, and you put it in a drawer where I'd obviously find it—"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I didn't put it anywhere. It's been in that drawer since we moved. Mona. It's been in that drawer since we moved."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Do you remember what you actually said to me in that car?"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I remember what I meant."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "That's not the same thing, and you know it isn't."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "No. It isn't. What I meant was, I'm not going to be the person who keeps a shrine. What I said was, I've burnt everything. Because the second one was shorter, and you were crying, and I wanted the conversation to be over."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "It was over. For eight months it was completely over."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I know."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Fine. Then I'm the one who went looking."
+    }
+  ],
+  "gist_question": {
+    "q": "What are they really arguing about?",
+    "q_ar": "هما بيتخانقوا على إيه فعلًا؟",
+    "options": [
+      "Whether the photograph should be thrown away",
+      "Whether he misled her, and whether she went looking for it",
+      "Which drawer the photograph belongs in"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What had Tarek actually said he had burnt?",
+      "q_ar": "طارق قال إنه حرق إيه بالظبط؟",
+      "options": [
+        "Everything",
+        "The letters",
+        "The photograph"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the photograph upset Mona?",
+      "q_ar": "ليه الصورة بتضايق منى؟",
+      "options": [
+        "It reminds her of the morning after, not of the beach",
+        "It is torn and damaged",
+        "She does not appear in it"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Mona concede at the end?",
+      "q_ar": "منى اعترفت بإيه في الآخر؟",
+      "options": [
+        "That she burnt the letters herself",
+        "That she was the one who went looking for it",
+        "That she never asked him anything"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does Tarek explain the difference between what he meant and what he said?",
+      "q_ar": "طارق فسّر الفرق بين اللي قصده واللي قاله إزاي؟",
+      "options": [
+        "He meant he would not keep a shrine, but said he had burnt everything because it was shorter",
+        "He meant that he had already burnt the photograph too",
+        "He says now that he meant nothing in particular"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "you'd told me",
+      "ar": "إنت كنت قلت لي"
+    },
+    {
+      "word": "that came out wrong",
+      "ar": "الكلام طلع غلط"
+    },
+    {
+      "word": "go on",
+      "ar": "كمّل"
+    },
+    {
+      "word": "I'm the one who",
+      "ar": "أنا اللي"
+    }
+  ]
+}

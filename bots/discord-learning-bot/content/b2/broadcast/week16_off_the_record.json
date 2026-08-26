@@ -1,0 +1,174 @@
+{
+  "id": "broadcast_b2_w16",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 16,
+  "title": "Off the Record",
+  "title_ar": "بعيد عن التسجيل",
+  "can_do": [
+    "B2.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 271,
+  "gist_ar": "مشهد: نفس الحكاية بتتحكي مرتين — مرة بلغة رسمية ومرة بصراحة، والصادقة هي غير الرسمية.",
+  "before_listening": {
+    "en": "One event, described twice. Listen for the difference between what is said ON the record and OFF it.",
+    "ar": "حدث واحد بيتوصف مرتين. ركّز على الفرق بين الكلام المسجّل والكلام بعد ما التسجيل يقف."
+  },
+  "segments": [
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "Ms Farid, thank you for making time. Could you outline for us the rationale behind the decision to withdraw the product?"
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "Certainly. Following a routine review, we concluded that the product no longer aligned with our long-term strategic priorities, and we took the decision to discontinue it in an orderly manner."
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "And the reports of a safety concern?"
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "I'm not in a position to comment on speculation."
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "Thank you. Right, that's us. We're done. Ahmed, you can put that down."
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "Is that thing off?"
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "It's off."
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "Right, look. Between us, it fell apart. Not the product, the whole thing. We'd been putting off the review for a year and a half because nobody wanted to be the one who brought it up, and then someone finally did, and it turned out we'd all been quietly assuming somebody else had checked. Nobody had."
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "That's a much better answer."
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "It's a much worse answer, which is exactly why you got the other one. I'm not going to be the person who says 'nobody had checked' on camera."
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "You realise the strategic-priorities line is what everyone will run."
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "Of course they'll run it. It's clean, it's short, and it doesn't require anybody to ring me back. And in eighteen months, when somebody digs it up and puts it next to whatever comes out of the review, I'll be the one explaining why I said it. I know exactly what I've just bought and what it cost."
+    },
+    {
+      "speaker": "Interviewer",
+      "speaker_ar": "المحاور",
+      "voice": "bm_george",
+      "text": "Off the record, then. Will you pull the next one earlier?"
+    },
+    {
+      "speaker": "Ms Farid",
+      "speaker_ar": "السيدة فريد",
+      "voice": "bf_emma",
+      "text": "We'll see. Ask me again in a year and I'll give you a sentence you can use."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the point of this scene?",
+    "q_ar": "إيه الفكرة من المشهد ده؟",
+    "options": [
+      "The product was withdrawn for genuine strategic reasons",
+      "The same event is told in two registers, and only the informal one is honest",
+      "The interviewer forgot to ask about safety"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What reason does Ms Farid give on the record?",
+      "q_ar": "السيدة فريد قالت إيه في الكلام المسجّل؟",
+      "options": [
+        "That the product no longer aligned with strategic priorities",
+        "That nobody had checked the product",
+        "That there was a genuine safety concern"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she say actually happened, off the record?",
+      "q_ar": "قالت إن اللي حصل فعلًا إيه، بعيد عن التسجيل؟",
+      "options": [
+        "Everyone assumed somebody else had checked, and nobody had",
+        "The product was known to be unsafe from the start",
+        "A competitor copied the design"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why will she not give the honest answer on camera?",
+      "q_ar": "ليه مش هتقول الإجابة الصادقة على الكاميرا؟",
+      "options": [
+        "Because it is not actually true",
+        "Because she will not be the person who says 'nobody had checked' publicly",
+        "Because her assistant advised her against it"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she say about the formal line she gave?",
+      "q_ar": "قالت إيه عن الجملة الرسمية اللي قالتها؟",
+      "options": [
+        "She expects it to be forgotten within a week",
+        "She knows it may be used against her later and has accepted that cost",
+        "She believes it is the more accurate of the two answers"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "outline the rationale",
+      "ar": "توضّح المنطق ورا القرار"
+    },
+    {
+      "word": "I'm not in a position to comment",
+      "ar": "مش في موقف يسمح لي أعلّق"
+    },
+    {
+      "word": "putting off",
+      "ar": "بنأجّل"
+    },
+    {
+      "word": "off the record",
+      "ar": "كلام غير مخصص للنشر"
+    }
+  ]
+}
