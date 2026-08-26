@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w2",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 2,
+  "title": "Something Went Wrong on Tuesday",
+  "title_ar": "حصل حاجة غلط يوم التلات",
+  "can_do": [
+    "B1.R.1"
+  ],
+  "format": "anecdote",
+  "word_count": 153,
+  "gist_ar": "زميل بيحكي قصة إنذار الحريق، والدرس اللي خرج بيه في الآخر.",
+  "before_listening": {
+    "en": "A colleague tells you what happened at work on Tuesday. Listen for the LESSON he learned, not just the events.",
+    "ar": "زميل بيحكي لك إيه اللي حصل في الشغل يوم التلات. ركّز على الدرس اللي اتعلمه، مش الأحداث بس."
+  },
+  "segments": [
+    {
+      "speaker": "Colleague",
+      "speaker_ar": "زميل في الشغل",
+      "voice": "am_michael",
+      "text": "So, you asked what happened on Tuesday. It was actually quite funny, although it did not feel funny at the time. I was sitting at my desk, finishing the monthly report, when the fire alarm went off. Everybody stood up, and we all walked down to the car park, the way we practised last year. While we were waiting outside, I realised that I was still holding my coffee, but I had left my laptop upstairs, unlocked, with the report open on the screen. I was thinking about running back up when the building manager told us it was a false alarm. Someone was making toast on the third floor. Anyway, when I got back to my desk, my laptop had gone to sleep and the report had not saved. I lost about forty minutes of work. So now I press save every five minutes, and I do not make toast at work."
+    }
+  ],
+  "gist_question": {
+    "q": "Why is he telling this story?",
+    "q_ar": "بيحكي القصة دي ليه؟",
+    "options": [
+      "To complain about the building's fire alarm",
+      "To explain why he now saves his work constantly",
+      "To describe the fire drill they practised last year"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What was he doing when the alarm went off?",
+      "q_ar": "كان بيعمل إيه لما الإنذار رنّ؟",
+      "options": [
+        "Finishing the monthly report",
+        "Making toast",
+        "Waiting in the car park"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What caused the alarm?",
+      "q_ar": "إيه اللي سبّب الإنذار؟",
+      "options": [
+        "A real fire on the third floor",
+        "Someone making toast",
+        "A practice drill"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did he actually lose?",
+      "q_ar": "إيه اللي ضاع منه فعلًا؟",
+      "options": [
+        "His laptop",
+        "His coffee",
+        "About forty minutes of work"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "the alarm went off",
+      "ar": "الإنذار رنّ"
+    },
+    {
+      "word": "a false alarm",
+      "ar": "إنذار كاذب"
+    },
+    {
+      "word": "unlocked",
+      "ar": "مفتوح / غير مقفول"
+    },
+    {
+      "word": "it had not saved",
+      "ar": "مكانش اتسيّف"
+    }
+  ]
+}

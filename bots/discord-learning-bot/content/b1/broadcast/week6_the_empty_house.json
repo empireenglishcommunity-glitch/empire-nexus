@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w6",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 6,
+  "title": "The Empty House",
+  "title_ar": "البيت الفاضي",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "documentary",
+  "word_count": 175,
+  "gist_ar": "برنامج وثائقي عن بيت مقفول: حد بيدفع ضرايبه، بس محدش يعرف مين.",
+  "before_listening": {
+    "en": "A television documentary about an empty house. The reporter is not certain of anything. Listen for the one thing she says CANNOT be true.",
+    "ar": "برنامج وثائقي عن بيت فاضي. المراسلة مش متأكدة من حاجة. ركّز على الحاجة الوحيدة اللي قالت إنها مستحيلة."
+  },
+  "segments": [
+    {
+      "speaker": "Reporter",
+      "speaker_ar": "المراسلة",
+      "voice": "bf_isabella",
+      "text": "Every city has a house like this one. It stands at the end of a quiet street, the windows are covered, and the garden has not been cut for at least ten years. Nobody in the neighbourhood can tell us who owns it. It must belong to somebody: the taxes are paid every year, on time, from a bank in another city. So the owner might be living abroad, or the house could be part of an old family argument that no lawyer has been able to finish. What is certain is that it cannot be abandoned, because abandoned houses do not pay their taxes. Neighbours say a car comes twice a year, always in the evening. A woman gets out, stays for about an hour, and leaves. She might be the owner. She may be a lawyer. She could simply be someone who was asked, a long time ago, to check that the roof is still there. We knocked on the door for three days. Nobody answered, and yet somebody, somewhere, is still paying."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the programme's main point about the house?",
+    "q_ar": "إيه الفكرة الأساسية في البرنامج عن البيت؟",
+    "options": [
+      "It has been completely abandoned for ten years",
+      "Somebody is clearly looking after it, but nobody knows who",
+      "The neighbours know the owner and will not say"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why does the reporter say the house cannot be abandoned?",
+      "q_ar": "ليه المراسلة قالت إن البيت مش ممكن يكون متروك؟",
+      "options": [
+        "The garden is cut regularly",
+        "The taxes are paid every year",
+        "A family sleeps there in the evening"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How often do the neighbours say the car comes?",
+      "q_ar": "الجيران قالوا العربية بتيجي كل قد إيه؟",
+      "options": [
+        "Twice a year",
+        "Every evening",
+        "Twice a month"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the reporter conclude about the woman?",
+      "q_ar": "المراسلة وصلت لإيه بخصوص الست؟",
+      "options": [
+        "She is definitely the owner",
+        "She might be the owner, a lawyer, or someone asked to check",
+        "She is one of the neighbours"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "covered",
+      "ar": "مغطّاة"
+    },
+    {
+      "word": "abandoned",
+      "ar": "متروك / مهجور"
+    },
+    {
+      "word": "taxes",
+      "ar": "ضرايب"
+    },
+    {
+      "word": "a lawyer",
+      "ar": "محامي"
+    }
+  ]
+}

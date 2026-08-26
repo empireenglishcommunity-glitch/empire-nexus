@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w9",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 9,
+  "title": "City or Village? — This Week's Comparison",
+  "title_ar": "مدينة ولا قرية؟ — مقارنة الأسبوع",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "radio",
+  "word_count": 176,
+  "gist_ar": "مقارنة بين مدرّستين، واحدة في القاهرة وواحدة في قرية، والخلاصة إن الشغلانتين مش نفس الشغلانة.",
+  "before_listening": {
+    "en": "A radio programme compares two teachers' lives. Listen for the CONCLUSION about which life is better.",
+    "ar": "برنامج راديو بيقارن حياة مدرّستين. ركّز على الخلاصة: أنهي حياة أحسن."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيع",
+      "voice": "am_adam",
+      "text": "This week we compared two lives: a teacher in Cairo and her sister, who teaches in a village three hours away. The results were not as simple as we expected. The village teacher earns almost thirty per cent less, but she saves more than her sister, because her rent is nowhere near as high. The city teacher's flat costs more than half her salary. On the other hand, the village school has far fewer resources: no library, one computer, and classes that are not nearly as small as people imagine, at forty-two children in one room. The city classes are bigger still, at forty-eight. Both sisters said the same thing about time. The city teacher spends two hours a day travelling; the village teacher walks for eleven minutes. That is the biggest difference of all, and it is the one nobody puts in a salary. So which life is better? Neither. The village is cheaper and slower, the city is richer and harder, and the honest answer is that they are not really the same job."
+    }
+  ],
+  "gist_question": {
+    "q": "What conclusion does the programme reach?",
+    "q_ar": "البرنامج وصل لإيه؟",
+    "options": [
+      "The village teacher clearly has the better life",
+      "The city teacher clearly has the better life",
+      "Neither is better; they are not really the same job"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why does the village teacher save more?",
+      "q_ar": "ليه مدرّسة القرية بتوفّر أكتر؟",
+      "options": [
+        "She earns more than her sister",
+        "Her rent is much lower",
+        "She has no children"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which school has the bigger classes?",
+      "q_ar": "أنهي مدرسة فصولها أكبر؟",
+      "options": [
+        "The village school",
+        "The city school",
+        "They are exactly the same"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which difference does the programme call the biggest?",
+      "q_ar": "أنهي فرق قال البرنامج إنه الأكبر؟",
+      "options": [
+        "The salary",
+        "The class size",
+        "The time spent travelling"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "nowhere near as high",
+      "ar": "أقل بكتير"
+    },
+    {
+      "word": "resources",
+      "ar": "موارد / إمكانيات"
+    },
+    {
+      "word": "on the other hand",
+      "ar": "من ناحية تانية"
+    },
+    {
+      "word": "salary",
+      "ar": "الراتب"
+    }
+  ]
+}

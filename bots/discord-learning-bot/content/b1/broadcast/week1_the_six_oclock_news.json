@@ -1,0 +1,98 @@
+{
+  "id": "broadcast_b1_w1",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 1,
+  "title": "The Six O'Clock News",
+  "title_ar": "نشرة الساعة ستة",
+  "can_do": [
+    "B1.R.2"
+  ],
+  "format": "news",
+  "word_count": 181,
+  "gist_ar": "نشرة أخبار: الخلاف حوالين حارة الأتوبيس الجديدة بين السواقين وأصحاب الدكاكين.",
+  "before_listening": {
+    "en": "A television news bulletin. There are three stories, but only one is reported in detail. Listen for the DISAGREEMENT in that story.",
+    "ar": "نشرة أخبار تلفزيون. فيها تلات أخبار، بس واحد بس هو اللي فيه تقرير مفصّل. ركّز على الخلاف في الخبر ده."
+  },
+  "segments": [
+    {
+      "speaker": "News anchor",
+      "speaker_ar": "مذيع الأخبار",
+      "voice": "bm_george",
+      "text": "Good evening. These are tonight's main stories. The city council has approved a new bus lane on the ring road, and work will begin next month. Doctors at the central hospital have ended their three-day strike after talks with the health ministry. And the national team has qualified for the final for the first time since two thousand and nine. First, the bus lane. Our transport correspondent, Nadia Fahmy, has been at the council meeting all afternoon."
+    },
+    {
+      "speaker": "Correspondent",
+      "speaker_ar": "المراسلة",
+      "voice": "af_sarah",
+      "text": "Thank you. The council voted at four o'clock, and the decision was closer than many people expected: fourteen votes to eleven. Supporters say the lane will cut journey times by up to twenty minutes in the morning. Shop owners on the ring road disagree. I spoke to one of them an hour ago, and she told me she has already lost customers since the road works started in March. The council has promised compensation, but it has not said how much, and that is the question everyone here has been asking tonight."
+    },
+    {
+      "speaker": "News anchor",
+      "speaker_ar": "مذيع الأخبار",
+      "voice": "bm_george",
+      "text": "Nadia, thank you. We will have more on that story at nine."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the main disagreement in the bus-lane story?",
+    "q_ar": "إيه الخلاف الأساسي في خبر حارة الأتوبيس؟",
+    "options": [
+      "Whether the council followed the correct voting rules",
+      "Whether the lane helps drivers or harms the shops",
+      "Whether the work will really begin next month"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What was the result of the vote?",
+      "q_ar": "إيه نتيجة التصويت؟",
+      "options": [
+        "Fourteen votes to eleven",
+        "Eleven votes to fourteen",
+        "Everyone voted in favour"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is the shop owner unhappy?",
+      "q_ar": "ليه صاحبة الدكان مضايقة؟",
+      "options": [
+        "She has lost customers since the road works started",
+        "She was not invited to the council meeting",
+        "Her shop is going to be demolished"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What has the council NOT said?",
+      "q_ar": "إيه اللي المجلس مقالهوش؟",
+      "options": [
+        "When the work will begin",
+        "How much compensation it will pay",
+        "Which members voted against"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "city council",
+      "ar": "المجلس المحلي"
+    },
+    {
+      "word": "bus lane",
+      "ar": "حارة مخصصة للأتوبيس"
+    },
+    {
+      "word": "compensation",
+      "ar": "تعويض"
+    },
+    {
+      "word": "correspondent",
+      "ar": "مراسل"
+    }
+  ]
+}

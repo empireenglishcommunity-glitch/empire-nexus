@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_b1_w3",
+  "level": "B1",
+  "cefr": "B1",
+  "week": 3,
+  "title": "Next Week at Work",
+  "title_ar": "الأسبوع الجاي في الشغل",
+  "can_do": [
+    "B1.R.1"
+  ],
+  "format": "briefing",
+  "word_count": 168,
+  "gist_ar": "مديرة بتشرح ترتيبات الأسبوع الجاي: المراجعين، العرض، وقفل المكتب بدري الجمعة.",
+  "before_listening": {
+    "en": "A manager runs through next week before everyone leaves. Listen for the ONE day she calls the big one.",
+    "ar": "مديرة بتراجع الأسبوع الجاي قبل ما الناس تمشي. ركّز على اليوم اللي قالت عليه إنه أهم يوم."
+  },
+  "segments": [
+    {
+      "speaker": "Manager",
+      "speaker_ar": "المديرة",
+      "voice": "bf_emma",
+      "text": "Before you go, here is next week, so nobody is surprised. On Monday the auditors are coming at nine. That is arranged, it is in the calendar, and they are staying until Wednesday. While they are here, please do not move any files out of the shared folder. On Tuesday I am meeting the two new suppliers, so I will not be at my desk in the morning. If you need me, send a message and I will answer between meetings. Wednesday is the big one: we are presenting the quarter figures at two o'clock, and I am going to ask Yusuf to open, because he built the numbers. Thursday will probably be quiet, so that is a good day to finish anything the auditors ask for. And on Friday the office is closing at one, because the lift is being repaired in the afternoon. One last thing. I am not going to send a reminder about the timesheets again. They are due Thursday. Please just do them."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the purpose of this talk?",
+    "q_ar": "إيه الغرض من الكلام ده؟",
+    "options": [
+      "To announce that the office is moving",
+      "To warn the team about the auditors' final report",
+      "To tell the team what is already arranged for next week"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "How long are the auditors staying?",
+      "q_ar": "المراجعين هيقعدوا قد إيه؟",
+      "options": [
+        "From Monday until Wednesday",
+        "Monday only",
+        "All week until Friday"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who will open the Wednesday presentation?",
+      "q_ar": "مين هيبدأ العرض يوم الأربع؟",
+      "options": [
+        "The manager herself",
+        "Yusuf",
+        "One of the auditors"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the office close early on Friday?",
+      "q_ar": "ليه المكتب هيقفل بدري يوم الجمعة؟",
+      "options": [
+        "The lift is being repaired",
+        "It is a public holiday",
+        "The auditors are leaving"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "auditors",
+      "ar": "المراجعين / المحاسبين"
+    },
+    {
+      "word": "the shared folder",
+      "ar": "الفولدر المشترك"
+    },
+    {
+      "word": "suppliers",
+      "ar": "الموردين"
+    },
+    {
+      "word": "timesheets",
+      "ar": "كشوف ساعات العمل"
+    }
+  ]
+}
