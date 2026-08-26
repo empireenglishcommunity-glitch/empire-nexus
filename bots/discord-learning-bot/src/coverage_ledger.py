@@ -447,12 +447,54 @@ def untaught_descriptors(level: str) -> set:
     return library - taught
 
 
+def unevidenceable_descriptors(level: str) -> dict:
+    """{code: why} for descriptors a student at this level can never PROVE.
+
+    `untaught_descriptors` asks "does a week target this?". That is necessary and
+    not sufficient, and the gap between the two is where C1 and C2 were quietly
+    sitting: both reported "20 descriptors — OK" while eleven of their forty
+    could not be evidenced by any exercise a student could actually do.
+
+    Two ways a descriptor ends up unprovable:
+
+      * its only evidence routes are exercises with NO CONTENT at this level.
+        C1.M.1-M.4 could only be proven by `mediation`, and C1 has no mediation
+        tasks, so a C1 student's certificate would show them unevidenced for
+        ever and the level completion contract could never be satisfied.
+      * it has no evidence route at all.
+
+    Reported separately from `untaught_descriptors` because the fix is different:
+    an untaught descriptor needs a week to target it, an unevidenceable one needs
+    the exercise to exist at that level.
+    """
+    library = curriculum.can_do_descriptor_map(level)
+    routes: dict = {}
+    for week in range(1, curriculum.max_week_for_level(level) + 1):
+        for code, exercises in curriculum.descriptor_evidence_map(week, level).items():
+            routes.setdefault(code, set()).update(exercises)
+
+    out = {}
+    for code in library:
+        allowed = routes.get(code) or set()
+        if not allowed:
+            out[code] = "no exercise can evidence it at all"
+            continue
+        real = {e for e in allowed
+                if curriculum.exercise_has_content(e, level)}
+        if not real:
+            missing = ", ".join(sorted(allowed))
+            out[code] = (f"only provable by [{missing}], which has no authored "
+                         f"content at {level}")
+    return out
+
+
 def report() -> dict:
     """The full ledger: per-level totals, shortfalls, and descriptor gaps."""
     levels = {}
     totals = {}
     all_shortfalls = []
     all_untaught = set()
+    all_unprovable: dict = {}
     for level in CEFR_LEVELS:
         rows = _atom_rows(level)
         by_kind = {}
@@ -464,6 +506,7 @@ def report() -> dict:
             k["delivered"] += r["delivered"]
         short = [r for r in rows if r["delivered"] < r["authored"]]
         untaught = untaught_descriptors(level)
+        unprovable = unevidenceable_descriptors(level)
         all_shortfalls.extend({**r, "level": level} for r in short)
         all_untaught |= untaught
         for kind, v in by_kind.items():
@@ -475,8 +518,10 @@ def report() -> dict:
             "by_kind": by_kind,
             "shortfalls": short,
             "untaught_descriptors": sorted(untaught),
+            "unevidenceable_descriptors": unprovable,
             "descriptors_in_library": len(curriculum.can_do_descriptor_map(level)),
         }
+        all_unprovable.update({f"{level}:{k}": v for k, v in unprovable.items()})
     authored = sum(v["authored"] for v in totals.values())
     delivered = sum(v["delivered"] for v in totals.values())
     return {
@@ -487,6 +532,7 @@ def report() -> dict:
         "orphaned_atoms": authored - delivered,
         "shortfalls": all_shortfalls,
         "untaught_descriptors": sorted(all_untaught),
+        "unevidenceable_descriptors": all_unprovable,
         "taught_with_reservation": {k: dict(v) for k, v
                                     in TAUGHT_WITH_RESERVATION.items()},
         "tracked_exercises": list(database.TRACKED_EXERCISES),
@@ -525,7 +571,13 @@ def format_report(rep: dict = None) -> str:
     out.append("DESCRIPTOR COVERAGE (does each level teach what it claims?)")
     for level, data in rep["levels"].items():
         n = len(data["untaught_descriptors"])
-        mark = "OK" if n == 0 else f"{n} NOT taught by any week"
+        u = len(data.get("unevidenceable_descriptors") or {})
+        bits = []
+        if n:
+            bits.append(f"{n} NOT taught by any week")
+        if u:
+            bits.append(f"{u} taught but NOT PROVABLE")
+        mark = " · ".join(bits) if bits else "OK"
         out.append(f"  {level}: {data['descriptors_in_library']:>2} descriptors — {mark}")
     if rep["untaught_descriptors"]:
         out.append("")
@@ -542,6 +594,19 @@ def format_report(rep: dict = None) -> str:
         out.append("")
         out.append("  Every descriptor every level publishes is taught by at "
                    "least one week of that level.")
+
+    # A descriptor a student can never PROVE is a coverage claim that cannot be
+    # cashed. Reported separately from "untaught", because the fix is different:
+    # untaught needs a week to target it, unprovable needs the exercise to exist
+    # at that level.
+    if rep.get("unevidenceable_descriptors"):
+        out.append("")
+        out.append("PUBLISHED BUT NOT PROVABLE  <== a student can never produce this evidence")
+        for key in sorted(rep["unevidenceable_descriptors"]):
+            level, code = key.split(":", 1)
+            out.append(f"  {level} {code:<8} {rep['unevidenceable_descriptors'][key]}")
+        out.append("  Effect: the certificate shows these permanently unevidenced,")
+        out.append("  and the level completion contract can never be satisfied.")
 
     # Printed HERE, immediately under the coverage summary, and never in a
     # separate report: a reservation that a reader has to go looking for is not
