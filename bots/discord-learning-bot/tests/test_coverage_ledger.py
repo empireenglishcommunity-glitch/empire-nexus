@@ -343,7 +343,7 @@ def test_all_weekly_exercises_are_tracked_and_none_gate_a_day():
         assert weekly not in database.PRACTICE_EXERCISES, f"{weekly} gates a day"
         assert weekly not in database.CALENDAR_EXERCISES, f"{weekly} gates a day"
     assert set(database.WEEKLY_EXERCISES) == {
-        "grammar", "reading", "mediation", "review"
+        "grammar", "reading", "mediation", "review", "broadcast"
     }, f"unexpected weekly set: {database.WEEKLY_EXERCISES}"
 
 

@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a2_w4",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 4,
+  "title": "The Results Announcement",
+  "title_ar": "إعلان النتايج",
+  "can_do": [
+    "A2.R.2"
+  ],
+  "format": "announcement",
+  "word_count": 119,
+  "gist_ar": "إعلان في مدرسة عن نتايج شهر القراءة، ومين قرا أكتر، وتغيير مواعيد المكتبة.",
+  "before_listening": {
+    "en": "A school announcement before the first lesson. Listen for what the school has DECIDED to change.",
+    "ar": "إعلان في مدرسة قبل أول حصة. ركّز على إيه اللي المدرسة قرّرت تغيّره."
+  },
+  "segments": [
+    {
+      "speaker": "Head teacher",
+      "speaker_ar": "مدير المدرسة",
+      "voice": "am_adam",
+      "text": "Good morning, everyone. Before the first lesson, here are the results of our reading month. This was the best month we have ever had. The class that read the most books is 2B, with ninety-one books. The longest book was read by Yusuf: four hundred pages, finished in nine days. The most popular book in the whole school was The Blue Door. But the hardest part, students told us, was finding a quiet time to read at home. So we have made a decision. From next week the library will open earlier, at seven thirty in the morning, and it will stay open until four in the afternoon. Well done, everybody. 2B, please come to the hall at ten."
+    }
+  ],
+  "gist_question": {
+    "q": "What has the school decided to do?",
+    "q_ar": "المدرسة قرّرت تعمل إيه؟",
+    "options": [
+      "Give 2B a prize instead of a trip",
+      "Open the library earlier and close it later",
+      "Ask students to read only at home"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Which class read the most books?",
+      "q_ar": "أنهي فصل قرا أكتر كتب؟",
+      "options": [
+        "2B",
+        "The whole school together",
+        "Yusuf's class only"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What was the hardest part for students?",
+      "q_ar": "إيه أصعب حاجة على الطلبة؟",
+      "options": [
+        "The books were too long",
+        "Finding a quiet time to read at home",
+        "Getting to the library"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What time will the library open from next week?",
+      "q_ar": "المكتبة هتفتح الساعة كام من الأسبوع الجاي؟",
+      "options": [
+        "At seven thirty",
+        "At four",
+        "At ten"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "results",
+      "ar": "النتايج"
+    },
+    {
+      "word": "the most popular",
+      "ar": "الأكتر شعبية"
+    },
+    {
+      "word": "the hardest part",
+      "ar": "أصعب جزء"
+    },
+    {
+      "word": "hall",
+      "ar": "القاعة"
+    }
+  ]
+}

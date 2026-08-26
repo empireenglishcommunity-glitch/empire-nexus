@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w9",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 9,
+  "title": "The Clinic's Recorded Message",
+  "title_ar": "رسالة العيادة المسجّلة",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.5"
+  ],
+  "format": "instructions",
+  "word_count": 122,
+  "gist_ar": "رسالة مسجّلة من عيادة: المواعيد، وإيه اللي تعمله لو تعبان قوي، وإزاي تسيب رسالة.",
+  "before_listening": {
+    "en": "You call a clinic and hear a recorded message. Listen for what to do if you feel VERY unwell.",
+    "ar": "بتكلم عيادة وسامع رسالة مسجّلة. ركّز على تعمل إيه لو تعبان قوي."
+  },
+  "segments": [
+    {
+      "speaker": "Recorded message",
+      "speaker_ar": "رسالة مسجّلة",
+      "voice": "bf_isabella",
+      "text": "Thank you for calling Doctor Samir's clinic. Please listen carefully to this message. The clinic is open daily from nine until five, and on Friday we close early, at one o'clock. If you have an appointment, please arrive ten minutes early and bring your card. If you are waiting for test results, do not come to the clinic; we will send them to you by message. If you are feeling very unwell, or if you are breathing badly, do not wait for an appointment. Go straight to the hospital on Nile Street. After the beep, please speak slowly and clearly, and leave your name, your phone number and the reason for your call. We answer messages quickly, usually on the same day."
+    }
+  ],
+  "gist_question": {
+    "q": "What should you do if you feel very unwell?",
+    "q_ar": "تعمل إيه لو حاسس إنك تعبان قوي؟",
+    "options": [
+      "Wait for an appointment at the clinic",
+      "Go straight to the hospital on Nile Street",
+      "Leave a message and wait for the same day"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What time does the clinic close on Friday?",
+      "q_ar": "العيادة بتقفل الساعة كام يوم الجمعة؟",
+      "options": [
+        "At one o'clock",
+        "At five o'clock",
+        "At nine o'clock"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What should you do if you are waiting for test results?",
+      "q_ar": "تعمل إيه لو مستني نتيجة تحاليل؟",
+      "options": [
+        "Come to the clinic ten minutes early",
+        "Do not come; they will send them by message",
+        "Go to the hospital on Nile Street"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What three things must you leave after the beep?",
+      "q_ar": "إيه التلات حاجات اللي لازم تسيبها بعد الصفارة؟",
+      "options": [
+        "Your name, phone number and the reason for your call",
+        "Your name, your card and your address",
+        "Your name, your doctor and your appointment time"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "appointment",
+      "ar": "موعد"
+    },
+    {
+      "word": "test results",
+      "ar": "نتايج التحاليل"
+    },
+    {
+      "word": "unwell",
+      "ar": "تعبان / مش كويس"
+    },
+    {
+      "word": "after the beep",
+      "ar": "بعد الصفارة"
+    }
+  ]
+}

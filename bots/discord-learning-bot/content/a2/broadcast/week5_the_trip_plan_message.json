@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w5",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 5,
+  "title": "The Trip Plan — A Group Message",
+  "title_ar": "خطة الرحلة — رسالة للمجموعة",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.5"
+  ],
+  "format": "voicemail",
+  "word_count": 126,
+  "gist_ar": "رسالة من منظم الرحلة بيشرح خطة يوم السبت وإيه اللي لازم تجيبه معاك.",
+  "before_listening": {
+    "en": "A recorded message for everybody joining Saturday's trip. Listen for what YOU have to bring.",
+    "ar": "رسالة مسجلة لكل اللي جايين رحلة السبت. ركّز على إيه اللي لازم تجيبه معاك."
+  },
+  "segments": [
+    {
+      "speaker": "Organiser",
+      "speaker_ar": "منظم الرحلة",
+      "voice": "af_sky",
+      "text": "Hello, this is a message for everyone coming on the Saturday trip. Here is what we are going to do. We are going to meet at the club gate at six in the morning. Please do not be late, because the bus is not going to wait. We are going to drive to Ain Sokhna, and we are going to stop once for breakfast on the way. Bring a hat, water and your own towel. We are not going to buy lunch there, so bring sandwiches with you. We are going to leave the beach at four, and we are going to be back in the city before seven. If you cannot come, please tell me today, because I am going to pay the driver tonight."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the purpose of this message?",
+    "q_ar": "إيه الغرض من الرسالة دي؟",
+    "options": [
+      "To invite new people to the trip",
+      "To explain the plan and what to bring for Saturday",
+      "To say the trip is going to be cancelled"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why must nobody be late?",
+      "q_ar": "ليه محدش يتأخر؟",
+      "options": [
+        "The bus is not going to wait",
+        "The gate closes at six",
+        "Breakfast will finish"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why do you have to bring sandwiches?",
+      "q_ar": "ليه لازم تجيب سندوتشات؟",
+      "options": [
+        "The food there is expensive",
+        "They are not going to buy lunch at the beach",
+        "There is no breakfast stop"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why must you tell the organiser TODAY if you cannot come?",
+      "q_ar": "ليه لازم تقول للمنظم النهاردة لو مش هتقدر تيجي؟",
+      "options": [
+        "Because she is going to pay the driver tonight",
+        "Because the bus leaves tonight",
+        "Because the club gate closes tonight"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "gate",
+      "ar": "بوابة"
+    },
+    {
+      "word": "towel",
+      "ar": "فوطة"
+    },
+    {
+      "word": "on the way",
+      "ar": "في الطريق"
+    },
+    {
+      "word": "driver",
+      "ar": "السواق"
+    }
+  ]
+}

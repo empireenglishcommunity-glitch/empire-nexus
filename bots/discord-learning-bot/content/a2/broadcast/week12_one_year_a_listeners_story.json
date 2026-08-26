@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w12",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 12,
+  "title": "One Year — A Listener's Story",
+  "title_ar": "سنة واحدة — قصة مستمع",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.4"
+  ],
+  "format": "radio",
+  "word_count": 159,
+  "gist_ar": "قصة طارق: كان خايف يغيّر شغله، فغيّر خطة مذاكرته وبقى أسعد بعد سنة.",
+  "before_listening": {
+    "en": "The last story of the week. Listen for WHAT Tarek changed, and what happened after.",
+    "ar": "آخر قصة في الأسبوع. ركّز على طارق غيّر إيه، وإيه اللي حصل بعدها."
+  },
+  "segments": [
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "المذيعة",
+      "voice": "af_nicole",
+      "text": "Our last story this week comes from Tarek in Tanta. Tarek wrote to us a year ago, because he wanted to change his job but he was afraid. He was working in his uncle's shop, and although the money was enough, he was bored. So he decided to study in the evening. First he studied for two hours after work, but he was too tired, so he changed his plan. He started waking up at five and studying before work instead. It was hard at the beginning, but after three months it became normal. Then, in March, he applied for a job in a small company in Tanta, and he got it. He earns a little less than before; however, he says he is much happier, because he is learning something new every week. Tarek, thank you for writing. And if you are waiting for the perfect moment, it is probably going to be a Tuesday morning at five."
+    }
+  ],
+  "gist_question": {
+    "q": "What did Tarek change, and what was the result?",
+    "q_ar": "طارق غيّر إيه، وإيه النتيجة؟",
+    "options": [
+      "He moved to another city, and he earns more now",
+      "He studied before work instead of after it, and he got a new job",
+      "He stopped studying, and he stayed in his uncle's shop"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why was Tarek bored in his uncle's shop?",
+      "q_ar": "ليه طارق كان زهقان في دكان عمه؟",
+      "options": [
+        "The money was not enough",
+        "The money was enough, but the work was boring",
+        "He worked in the evening"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did he stop studying after work?",
+      "q_ar": "ليه بطّل يذاكر بعد الشغل؟",
+      "options": [
+        "He was too tired",
+        "The shop closed late",
+        "He found a better teacher"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does Tarek say about his new job?",
+      "q_ar": "بيقول إيه عن شغله الجديد؟",
+      "options": [
+        "He earns more and is happier",
+        "He earns a little less but is much happier",
+        "He earns the same but works less"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "although",
+      "ar": "على الرغم من إن"
+    },
+    {
+      "word": "bored",
+      "ar": "زهقان"
+    },
+    {
+      "word": "he applied for",
+      "ar": "قدّم على"
+    },
+    {
+      "word": "however",
+      "ar": "لكن / مع ذلك"
+    }
+  ]
+}

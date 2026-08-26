@@ -1,0 +1,99 @@
+{
+  "id": "broadcast_a2_w10",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 10,
+  "title": "Have You Ever...? — A Street Interview",
+  "title_ar": "هل عملت قبل كده؟ — مقابلة في الشارع",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.4"
+  ],
+  "format": "interview",
+  "word_count": 132,
+  "gist_ar": "مقابلة قصيرة مع هالة: عمرها ما سافرت بره مصر، لكن الكلام المستمر هو اللي غيّر حياتها.",
+  "before_listening": {
+    "en": "A reporter interviews one person. Listen for the POINT Hala is making, not her details.",
+    "ar": "مراسل بيقابل واحدة. ركّز على الفكرة اللي هالة عايزة توصّلها، مش تفاصيلها."
+  },
+  "segments": [
+    {
+      "speaker": "Reporter",
+      "speaker_ar": "المراسل",
+      "voice": "am_adam",
+      "text": "We're asking one question today: have you ever done something that changed your life? Here's Hala."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_bella",
+      "text": "Yes. I have never left Egypt, but I have learned three languages from my phone. Ten years ago I had never spoken to a foreigner. Then I started working in a hotel in Hurghada, and suddenly I was speaking English every day. I have made so many mistakes, hundreds of them, but I have never stopped talking. My sister has studied English for six years at school, and she has never had a real conversation. That is the difference. It isn't about travelling. I have been in the same city all my life, and English still opened a door for me."
+    },
+    {
+      "speaker": "Reporter",
+      "speaker_ar": "المراسل",
+      "voice": "am_adam",
+      "text": "Hala, thank you. If you have a story like this one, send us a message."
+    }
+  ],
+  "gist_question": {
+    "q": "What point is Hala making?",
+    "q_ar": "إيه الفكرة اللي هالة عايزة توصّلها؟",
+    "options": [
+      "You have to travel abroad to learn a language",
+      "You have to study at school for six years",
+      "You do not need to travel; you need to keep speaking"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Has Hala ever left Egypt?",
+      "q_ar": "هالة سافرت بره مصر قبل كده؟",
+      "options": [
+        "No, never",
+        "Yes, to Hurghada only",
+        "Yes, three times"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Where did she start speaking English every day?",
+      "q_ar": "فين بدأت تتكلم إنجليزي كل يوم؟",
+      "options": [
+        "At school",
+        "In a hotel in Hurghada",
+        "On her phone"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she say about her sister?",
+      "q_ar": "قالت إيه عن أختها؟",
+      "options": [
+        "She has studied for six years but never had a real conversation",
+        "She has travelled and speaks better",
+        "She has learned three languages too"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a foreigner",
+      "ar": "أجنبي"
+    },
+    {
+      "word": "I have never stopped",
+      "ar": "عمري ما بطّلت"
+    },
+    {
+      "word": "a real conversation",
+      "ar": "مكالمة حقيقية"
+    },
+    {
+      "word": "opened a door",
+      "ar": "فتح لي باب"
+    }
+  ]
+}

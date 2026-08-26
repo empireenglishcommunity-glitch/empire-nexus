@@ -73,11 +73,15 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
     # by a passage or a relay task.
     #
     # What is left cannot be closed by writing more content of any kind. These
-    # five are about understanding SPOKEN input at length -- announcements,
-    # clear standard speech, radio/TV, lectures, films. They need recorded audio
-    # (or TTS long-form) plus comprehension items built on it. A test asserts
-    # this equality, so if someone adds a non-listening gap here it fails loudly.
-    "A2.R.2",
+    # are about understanding SPOKEN input at length -- clear standard speech,
+    # radio/TV, lectures, films -- so they need audio plus comprehension items
+    # built on it. A test asserts this equality, so if someone adds a
+    # non-listening gap here it fails loudly.
+    #
+    # Phase 11D closes them one level at a time with the `broadcast` (extended
+    # listening) exercise: about a minute of connected speech per week, with the
+    # gist question asked BEFORE the transcript unlocks, so the answer comes
+    # from the ear. A2.R.2 closed when A2's twelve scripts landed.
     "B1.R.1", "B1.R.2",
     "B2.R.1", "B2.R.2",
 })
@@ -93,7 +97,7 @@ KNOWN_UNTAUGHT_DESCRIPTORS = frozenset({
 # effort exists to remove. Kept as an explicit set rather than inferred from
 # prose, and a test pins it against DESCRIPTOR_GAP_PLAN so the two cannot drift.
 GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
-    "A2.R.2", "B1.R.1", "B1.R.2", "B2.R.1", "B2.R.2",
+    "B1.R.1", "B1.R.2", "B2.R.1", "B2.R.2",
 })
 
 # What each remaining gap actually NEEDS in order to close honestly. This is
@@ -102,7 +106,6 @@ GAPS_NEEDING_EXTENDED_LISTENING = frozenset({
 DESCRIPTOR_GAP_PLAN = {
     # --- needs EXTENDED LISTENING content (longer audio than the current
     #     single-word dictation items can ever satisfy) ---
-    "A2.R.2": "extended listening — catch the main point of short clear messages/announcements",
     "B1.R.1": "extended listening — main points of clear standard speech on familiar matters",
     "B1.R.2": "extended listening — main points of radio/TV on current affairs",
     "B2.R.1": "extended listening — extended speech/lectures, complex lines of argument",
@@ -282,6 +285,64 @@ def _atom_rows(level: str) -> list[dict]:
             "tracked_as": "mediation",
         })
 
+        # --- extended listening (Phase 11D, weekly, rolled out level by level)
+        bc = curriculum.get_broadcast_for_week(week, level)
+        has_bc = curriculum.broadcast_is_deliverable(bc)
+        authored_bc = 1 if (level in curriculum.broadcast_levels()
+                            and week in (curriculum._broadcast_data.get(level) or {})) else 0
+        rows.append({
+            "kind": "broadcast_script", "week": week,
+            "authored": authored_bc,
+            "delivered": 1 if (authored_bc and has_bc) else 0,
+            "route": "practice site extended listening page (curriculum.get_broadcast_for_week)",
+            "tracked_as": "broadcast",
+        })
+        # Segments are the actual spoken audio. A segment with no text is a
+        # silent turn, so it is authored-but-undelivered rather than ignored.
+        segs = (bc or {}).get("segments") or []
+        rows.append({
+            "kind": "broadcast_segments", "week": week,
+            "authored": len(segs),
+            "delivered": sum(1 for s in segs if (s.get("text") or "").strip()),
+            "route": "practice site extended listening page — audio playback",
+            "tracked_as": "broadcast",
+        })
+        # The gist question is the one item that carries the descriptor: it is
+        # asked before the transcript unlocks, so it is what proves the student
+        # understood by EAR. Ledgered separately from the detail questions so a
+        # script that quietly lost it shows up as a shortfall.
+        gist = (bc or {}).get("gist_question") or {}
+        rows.append({
+            "kind": "broadcast_gist_question", "week": week,
+            "authored": 1 if authored_bc else 0,
+            "delivered": 1 if (gist.get("q") and gist.get("options")
+                               and isinstance(gist.get("answer"), int)
+                               and 0 <= gist["answer"] < len(gist["options"])) else 0,
+            "route": "practice site extended listening page — main-point question",
+            "tracked_as": "broadcast",
+        })
+        bq = (bc or {}).get("questions") or []
+        rows.append({
+            "kind": "broadcast_questions", "week": week,
+            "authored": len(bq),
+            "delivered": sum(
+                1 for q in bq
+                if q.get("q") and q.get("options")
+                and isinstance(q.get("answer"), int)
+                and 0 <= q["answer"] < len(q["options"])
+            ),
+            "route": "practice site extended listening page — detail questions",
+            "tracked_as": "broadcast",
+        })
+        bg = (bc or {}).get("glossary") or []
+        rows.append({
+            "kind": "broadcast_glossary", "week": week,
+            "authored": len(bg),
+            "delivered": sum(1 for g in bg if g.get("word")),
+            "route": "practice site extended listening page — words to listen for",
+            "tracked_as": "broadcast",
+        })
+
         # --- week-level fields that used to have no surface at all ---
         week_data = curriculum._weekly_data.get(f"{level}_{week}", {}) or {}
         for field, route in (
@@ -336,6 +397,13 @@ def untaught_descriptors(level: str) -> set:
         med = curriculum.get_mediation_for_week(week, level)
         if med and med.get("source") and (med.get("key_points") or []):
             taught.update(med.get("can_do") or [])
+        # Phase 11D — extended listening. Only a script with real spoken
+        # segments AND a gist question counts: a file that plays silence, or one
+        # that never asks for the main point, teaches none of the descriptors it
+        # names.
+        bc = curriculum.get_broadcast_for_week(week, level)
+        if curriculum.broadcast_meets_descriptor_bar(bc, level):
+            taught.update(bc.get("can_do") or [])
     return library - taught
 
 

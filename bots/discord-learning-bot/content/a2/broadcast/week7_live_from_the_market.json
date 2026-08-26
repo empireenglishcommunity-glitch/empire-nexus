@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a2_w7",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 7,
+  "title": "Live from the Street Market",
+  "title_ar": "بث مباشر من السوق",
+  "can_do": [
+    "A2.R.2",
+    "A2.R.1"
+  ],
+  "format": "report",
+  "word_count": 124,
+  "gist_ar": "مراسل بيوصف السوق وهو واقف فيه: زحمة غير العادة عشان العيد بيبدأ بكرة.",
+  "before_listening": {
+    "en": "A reporter is speaking live from a market. Listen for WHY today is different from a normal day.",
+    "ar": "مراسل بيتكلم مباشر من السوق. ركّز على ليه النهاردة مختلف عن أي يوم عادي."
+  },
+  "segments": [
+    {
+      "speaker": "Reporter",
+      "speaker_ar": "المراسل",
+      "voice": "am_michael",
+      "text": "I'm standing in the middle of Al-Attaba market, and I have to speak loudly, because everybody around me is shouting. Normally this market opens at nine, but today it opened at six, because the Eid week starts tomorrow. Right now a man next to me is selling shoes from a small table, and a family is buying school bags for three children. Usually people come here in the evening, but this morning the street is already full. The sellers are happy. One woman told me she sells more in these three days than in a normal month. I'm looking at the sky now, and it's getting darker. I think the rain is coming. But nobody is going home. Back to you in the studio."
+    }
+  ],
+  "gist_question": {
+    "q": "Why is today different from a normal day at this market?",
+    "q_ar": "ليه النهاردة مختلف عن يوم عادي في السوق ده؟",
+    "options": [
+      "It is raining, so the market opened late",
+      "Eid week starts tomorrow, so it opened early and is already full",
+      "The market is closing for three days"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What time does the market normally open?",
+      "q_ar": "السوق بيفتح عادةً الساعة كام؟",
+      "options": [
+        "At six",
+        "At nine",
+        "In the evening"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did one seller tell the reporter?",
+      "q_ar": "واحدة من البياعين قالت للمراسل إيه؟",
+      "options": [
+        "She sells more in three days than in a normal month",
+        "She is going to close early",
+        "She sells only school bags"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What do the people do when the sky gets darker?",
+      "q_ar": "الناس عملت إيه لما السما غيّمت؟",
+      "options": [
+        "They go home",
+        "They stay in the market",
+        "They stop shouting"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "loudly",
+      "ar": "بصوت عالي"
+    },
+    {
+      "word": "shouting",
+      "ar": "بيزعّقوا / بينادوا"
+    },
+    {
+      "word": "sellers",
+      "ar": "البياعين"
+    },
+    {
+      "word": "back to you",
+      "ar": "نرجّع لكم في الاستوديو"
+    }
+  ]
+}

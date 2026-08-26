@@ -3114,7 +3114,14 @@ CALENDAR_EXERCISES = PRACTICE_EXERCISES + (SPEAKING_EXERCISE,)
 # `review` (Phase 11C) is the weekly retrieval-practice quiz. Weekly for the
 # same reason and, like the others, never a day gate -- a student must not lose
 # a green day because they have not yet sat the week's review.
-WEEKLY_EXERCISES = ("grammar", "reading", "mediation", "review")
+#
+# `broadcast` (Phase 11D) is the extended-listening exercise: about a minute of
+# connected speech per week with gist-first comprehension. One script authored
+# per week, rolled out level by level, so weekly and never a day gate. It is
+# deliberately a SEPARATE exercise from `listening` (which is word-level
+# dictation) because the two evidence different things -- see
+# curriculum.get_broadcast_for_week.
+WEEKLY_EXERCISES = ("grammar", "reading", "mediation", "review", "broadcast")
 # Everything the practice site may legitimately report a completion for.
 TRACKED_EXERCISES = CALENDAR_EXERCISES + WEEKLY_EXERCISES
 MASTERY_MAX_TIER = 5  # 🥉Bronze 🥈Silver 🥇Gold 💠Platinum 💎Diamond
