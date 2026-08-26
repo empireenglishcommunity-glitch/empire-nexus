@@ -195,7 +195,7 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       NEW authored field cannot go undelivered. Closed the last two orphans
       (`phoneme_focus`, `grammar_point`). *nexus #398, dojo #112*
 
-### 11B — complete the CEFR claim · ✅ A1 + A2 + B1 LIVE, B2 authoring pending
+### 11B — complete the CEFR claim · ✅ A1–B2 ALL LIVE · only extended-listening remains
 - [x] **Reading added** — CEFR reception had **no task at all**. A1 authored: 10
       passages, 50–67 words, each reusing 12–21 of its own week's vocabulary and
       only that week's grammar. Two self-caught quality bugs: every answer was in
@@ -231,16 +231,29 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       first: one passage was genuinely thin on its week's lexis (6 of 33 →
       rewritten, 18) and five model answers performed the required move without
       naming it. *nexus #408, dojo #119*
-- [ ] **10 descriptors still untaught** (A2 1, B1 2, B2 7). Each has a **named
-      plan** in `DESCRIPTOR_GAP_PLAN`, enforced by a test. Now only three needs
-      remain: **extended listening** (`A2.R.2`, `B1.R.1`, `B1.R.2`, `B2.R.1`,
-      `B2.R.2` — half the remaining list, and nothing but real audio closes
-      them), **B2 reading + mediation** (`B2.R.4`, `B2.M.1`, `B2.M.4`), and **B2
-      interaction** (`B2.I.1`, `B2.I.5` — its fluency tasks are solo monologue).
-      **Authoring reading for a level does NOT close all its `.R.` gaps** — CEFR
-      files listening and reading both under "reception". B1 proved it again:
-      14 passages shipped and `B1.R.1`/`B1.R.2` stayed open, correctly.
-      Deliberately NOT labelled as taught: claiming them would be over-claiming.
+- [x] **B2 authored (2026-08-24) — B2 is 18/20.** 16 reading passages (157–223
+      words) + 16 mediation tasks. Closes `B2.R.4`, `B2.M.1`, `B2.M.4` — and
+      `B2.I.1` + `B2.I.5` via **two documented speaking-mission edits**, since
+      interaction cannot be proven by a passage or a relay task. `B2.R.4` needed a
+      **different shape**: it is *judging whether closer study is worthwhile*, so
+      four weeks use a **news-digest** format (four short items of differing
+      reliability + "which is worth reading closely for X?"), which a single
+      passage cannot teach. `B2.M.1`'s sources each carry **two opposed views**,
+      because the descriptor requires *contrasting* them. The shared quality gate
+      caught **seven** real problems first (five passages thin on their week's
+      lexis — week 10 used 3 of 33 — one unanchored key point, one model answer
+      that didn't demonstrate its own move). *nexus #410, dojo #120*
+- [ ] **5 descriptors still untaught — and they are EXACTLY the extended-listening
+      ones** (`A2.R.2`, `B1.R.1`, `B1.R.2`, `B2.R.1`, `B2.R.2`).
+      **Everything closable by authored text is now closed.** A test asserts that
+      equality (`KNOWN_UNTAUGHT_DESCRIPTORS == GAPS_NEEDING_EXTENDED_LISTENING`),
+      so adding a reading/mediation/interaction gap to the baseline fails loudly —
+      which would mean we had stopped closing what we can.
+      These five are about understanding **spoken input at length**: announcements,
+      clear standard speech, radio/TV, lectures, films. **No amount of further
+      writing closes them.** They need recorded or long-form-TTS audio plus
+      comprehension items built on it — a different kind of job from authoring
+      text, and the honest next step for A2–B2 to reach full coverage.
 
 ### 11C — depth & proof · ✅ LIVE
 - [x] **Weekly retrieval quiz.** "Done" meant *exposed*; nothing asked a student
@@ -265,14 +278,16 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
 
-**Two things: extended-listening content, and B2 authoring.** Together they are
-what the **10 remaining descriptors** need. Every one has a named plan in
-`coverage_ledger.DESCRIPTOR_GAP_PLAN`, enforced by a test, so the list cannot
-drift or be quietly forgotten. A2 **1** · B1 **2** · B2 7 · **A1/C1/C2 = 0**.
+**One thing: extended-listening content.** That is now the *only* outstanding
+item, and it is what the **5 remaining descriptors** need — `A2.R.2`, `B1.R.1`,
+`B1.R.2`, `B2.R.1`, `B2.R.2`. A2 **1** · B1 **2** · B2 **2** · **A1/C1/C2 = 0**.
 
-Notably, **5 of the 10 are extended listening** (`A2.R.2`, `B1.R.1`, `B1.R.2`,
-`B2.R.1`, `B2.R.2`) — no amount of authored reading closes those, only real
-audio. A1, A2 and B1 now each exercise all four CEFR modes.
+**All six levels now exercise all four CEFR modes**, and every descriptor that
+authored text could close is closed. What remains is understanding **spoken input
+at length** (announcements, clear speech, radio/TV, lectures, films): it needs
+recorded or long-form-TTS audio with comprehension items, not more writing. A
+test pins the remaining set to exactly the extended-listening list, so this
+cannot quietly grow.
 
 Everything else is delivered: Phase 11 closed all ~894 orphaned atoms (coverage
 ledger reads **7,095 / 7,095 / 0**, gated in CI), added the two missing CEFR
