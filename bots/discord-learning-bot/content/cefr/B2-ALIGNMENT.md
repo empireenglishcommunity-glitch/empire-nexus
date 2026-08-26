@@ -158,9 +158,9 @@ Both weeks' replaced mission was the more duplicative of an adjacent pair:
 fluency task was a **prepared monologue** — which is why the Friday capstone was
 left untouched and Thursday became the unprepared one.
 
-**Still open for B2:** `B2.R.1` (extended speech and **lectures**) and `B2.R.2`
-(**TV news** and films). Both are spoken reception. No passage can close them, so
-they remain in `coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING`.
+**Still open for B2 at the end of Phase 11B:** `B2.R.1` (extended speech and
+**lectures**) and `B2.R.2` (**TV news** and films). Both are spoken reception, so
+no passage could close them. Both are addressed in **§4c** below.
 
 **Quality gate note.** The shared automated bar caught seven real problems in
 this B2 content before it shipped: **five passages were genuinely thin on their
@@ -169,8 +169,100 @@ rewritten so the week's language does the work), one mediation key point had **n
 anchor in the source** the student is given, and one model answer **did not
 demonstrate** the contrast it demanded. All fixed in the content.
 
+### 4c. Extended listening (added 2026-08-24 — Phase 11D)
+
+**What was missing.** `B2.R.1` (extended speech and **lectures**, following
+**complex lines of argument**) and `B2.R.2` (most **TV news** and current-affairs
+programmes, and the majority of **films** in standard dialect). **Both are now
+taught — but read the reservation below before treating `B2.R.2` as done.**
+
+**16 scripts, 221–298 spoken words** (roughly 90–120 seconds), in three formats,
+because the two descriptors name three different things:
+
+| Format | Weeks | Targets |
+|---|---|---|
+| **lecture** — one voice, argument signposted in numbered moves | 1, 4, 6, 11, 12, 14 | `B2.R.1` |
+| **news / current affairs** — bulletin, studio discussion, panel, investigation | 2, 8, 9, 10, 13 | `B2.R.2` (+ `B2.R.1` in w10) |
+| **drama scene** — multi-voice, film register | 3, 5, 7, 15, 16 | `B2.R.2` |
+
+**`B2.R.1` says "follow complex lines of argument", so the lectures contain
+arguments, not facts.** This is the part most easily faked and it was
+deliberately not:
+
+- **week 14** announces its four moves out loud, *including its concession*, then
+  demonstrates the mechanism it has just described — the closing line is *"I said
+  'nevertheless', and you knew, before you heard any of the content, that the
+  concession was about to be overruled."*
+- **week 4** opens by stating that its own headline number is wrong, and spends
+  the rest arguing why it is still worth publishing.
+- **week 6** defends a sentence historians distrust, concedes the objection, and
+  attaches a condition to the defence.
+
+The gist questions accordingly ask for the **conclusion**. A student who catches
+every fact and misses the argument gets them wrong — which is the point.
+
+**The drama scenes are written the way film dialogue behaves**: contractions,
+ellipsis, interruption, unfinished sentences, and meaning **implied rather than
+stated**. Week 3's argument is never actually about the photograph. Week 16
+describes one event twice, in two registers, and only the off-the-record version
+is true — that register contrast is the whole B2 exit skill in two minutes, which
+is why it is the review week.
+
+---
+
+#### ⚠️ The reservation on `B2.R.2` — please read this one
+
+`B2.R.2` is *"most TV news and current-affairs programmes **and the majority of
+films** in standard dialect"*.
+
+**The news and current-affairs half is delivered in full** — five multi-voice
+weeks in broadcast register.
+
+**The films half is not, and cannot be by synthesis.** Our audio is Kokoro
+text-to-speech: one clean voice per speaker turn, with **no overlapping speech,
+no background noise, no regional accents, and no emotional prosody**. In real
+films, sarcasm, tension and irony are carried by *how* a line is delivered. A
+student who understands every one of our five scenes has still **never had to
+read tone off a real actor's voice**.
+
+There were only two options here and both were dishonest:
+
+1. **Tick it** — and claim your students have practised understanding *films*
+   when what they have practised is synthesized voices reading film dialogue.
+2. **Call it untaught** — and have the ledger print *"not taught by any week"*
+   about sixteen authored weeks of news bulletins and drama scenes.
+
+So the ledger now has a **third state**, `TAUGHT_WITH_RESERVATION`. `B2.R.2` is
+counted as taught, and the ledger prints the shortfall **on the same screen as
+the word "OK"**, every time it runs. Each reservation must state what is taught,
+what is missing, and exactly what removes it.
+
+**What removes it:** authentic recorded audio for the five drama scenes — human
+actors, or licensed clips — with the existing comprehension questions re-pointed
+at tone. **No code changes and no rewriting: the scripts, the page and the
+questions all stay.** Only the audio source changes. That is why it is recorded
+as a debt rather than a gap: the remaining work is identified and small.
+
+This is your call to make, not mine. If you would rather `B2.R.2` were reported
+as **untaught** until real recordings exist, say so and I will move it — the
+reservation exists so that the choice is visible, not to make it for you.
+
 ## What to review / sign off
 
+- [ ] ⚠️ **The `B2.R.2` reservation (§4c)** — do you accept "taught, with a
+      stated reservation", or should it be reported as untaught until the drama
+      scenes have real recorded voices? **This is the one decision in Phase 11D
+      that is genuinely yours.**
+- [ ] **Extended-listening lectures (§4c)** — 6 lectures, 221–256 words. The
+      question to ask: *is this an argument a B2 student can follow to its
+      conclusion, or is it just difficult?* Weeks 6 and 14 are the most abstract;
+      if they overshoot your students, tell me and I will ground them in more
+      familiar material without losing the argument structure.
+- [ ] **Extended-listening drama scenes (§4c)** — 5 scenes. These are the most
+      unusual content in the whole course: people interrupt, trail off, and mean
+      things they do not say. Check they feel true rather than clever, and that
+      the family scene in week 7 (a father's diagnosis) is subject matter you
+      want in the course at all — **say the word and I will replace it.**
 - [ ] **Reading passages (§4b)** — 16 passages, 157–223 words. Especially the
       four **news-digest** weeks (4, 9, 13, 14): they look unusual on purpose,
       because `B2.R.4` is about *choosing what to read*, not reading one text.

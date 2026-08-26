@@ -162,8 +162,52 @@ last gate caught a real weakness here: the three `A2.M.2` model answers asked a
 checking question without ever naming the move, so a student copying the model
 wouldn't see that checking is a deliberate step. Fixed.
 
+### 4c. Extended listening (added 2026-08-24 — Phase 11D)
+
+**What was missing.** `A2.R.2` — *"can catch the main point in short, clear,
+simple messages and **announcements**"* — was taught by no week, and it was the
+last A2 descriptor open. **It now closes. A2 is 18/18.**
+
+**Why the existing listening exercise could not close it.** A2's listening page
+is word-level dictation: five words a week, heard and typed back. That is a real
+skill and worth keeping, but **its unit is smaller than the unit the descriptor
+is about**. No number of weeks of typing single words evidences "caught the main
+point of an announcement", because the exercise never presents a main point.
+
+**So extended listening is a different exercise, not a bigger dictation.** One
+script per week, **104–159 spoken words** (roughly 40–60 seconds), in the
+registers the descriptor actually names:
+
+| Format | Weeks | Why this format |
+|---|---|---|
+| voicemail / recorded message | 1, 5 | the everyday "message" half of the descriptor |
+| public announcement | 2, 4 | station and school announcements — the other half |
+| radio (segment, forecast, story) | 3, 6, 12 | listening for a conclusion, not a fact |
+| live report | 7 | present continuous in its natural habitat |
+| recorded instructions | 8, 9, 11 | also closes `A2.R.5` honestly |
+| street interview | 10 | two voices, so turn-taking starts early |
+
+**The rule that makes the claim honest: the transcript is locked.** The
+main-point question must be answered **before** the transcript and the detail
+questions unlock. If the transcript were on screen from the start, a student
+could read instead of listen, the exercise would be reading with a play button,
+and it could **not** honestly evidence a listening descriptor.
+
+**What is deliberately not claimed.** `A2.R.3` is about adverts, menus,
+timetables and short letters — **written** everyday material. No script names it,
+and a test enforces that. Secondary codes are claimed only where genuinely
+earned: `A2.R.5` on the three instruction scripts, `A2.R.4` on the three past-
+narrative ones, `A2.R.1` on the market report.
+
+**Voices.** All eleven Kokoro voices are used across the twelve weeks — male and
+female, American and British — so students do not tune to a single speaker.
+
 ## What to review / sign off
 - [ ] Themes + week order feel right for your elementary students.
+- [ ] **Extended-listening scripts (§4c)** — 12 recordings, 104–159 words. The
+      question to ask of each: *would an A2 student get the main point on one
+      listen, without the transcript?* If a script needs two listens that is
+      fine and expected; if it needs the transcript, tell me and I will simplify.
 - [ ] **Reading passages (§4b) feel right for A2** — 12 passages, 89–105 words.
       New content, so the part most worth your eyes.
 - [ ] **Mediation tasks (§4b) feel true to your students' real life** — relaying
