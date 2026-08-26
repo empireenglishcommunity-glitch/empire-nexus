@@ -195,7 +195,7 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       NEW authored field cannot go undelivered. Closed the last two orphans
       (`phoneme_focus`, `grammar_point`). *nexus #398, dojo #112*
 
-### 11B — complete the CEFR claim · ✅ A1 + A2 LIVE, B1–B2 authoring pending
+### 11B — complete the CEFR claim · ✅ A1 + A2 + B1 LIVE, B2 authoring pending
 - [x] **Reading added** — CEFR reception had **no task at all**. A1 authored: 10
       passages, 50–67 words, each reusing 12–21 of its own week's vocabulary and
       only that week's grammar. Two self-caught quality bugs: every answer was in
@@ -219,17 +219,27 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       immediately caught a real weakness in the new A2 content (the `A2.M.2`
       model answers asked a checking question without naming the move) — fixed
       in the content, not by weakening the test. *nexus #406, dojo #117*
-- [ ] **13 descriptors still untaught** (A2 **1**, B1 5, B2 7). Each has a
-      **named plan** in `DESCRIPTOR_GAP_PLAN`, enforced by a test so none can sit
-      as a vague todo. Four different needs: authored **reading** for B2,
-      authored **mediation** for B1/B2, **extended listening** for
-      `A2.R.2`/`B1.R.1`/`B1.R.2`/`B2.R.1`/`B2.R.2`, and new **interaction**
-      content for `B1.I.1`/`B2.I.1`/`B2.I.5`.
+- [x] **B1 authored (2026-08-24) — B1 is 17/19.** 14 reading passages (147–187
+      words) across the three text types B1.R.3/R.4/R.5 actually name (personal
+      letters ×6, factual ×9, argumentative-with-signalled-conclusion ×3) + 14
+      mediation tasks (relay ×5, summarise+opinion ×5, keep-a-discussion-going
+      ×4). Closes `B1.M.2` + `B1.M.3`. **`B1.I.1` closed by one documented
+      content edit:** it is *interaction*, so no passage or mediation task could
+      prove it and no B1 week had a travel theme — week 3's Thursday mission
+      (which duplicated Wednesday's) became a travel roleplay, keeping the week's
+      future-forms target. The shared quality gate caught two real problems
+      first: one passage was genuinely thin on its week's lexis (6 of 33 →
+      rewritten, 18) and five model answers performed the required move without
+      naming it. *nexus #408, dojo #119*
+- [ ] **10 descriptors still untaught** (A2 1, B1 2, B2 7). Each has a **named
+      plan** in `DESCRIPTOR_GAP_PLAN`, enforced by a test. Now only three needs
+      remain: **extended listening** (`A2.R.2`, `B1.R.1`, `B1.R.2`, `B2.R.1`,
+      `B2.R.2` — half the remaining list, and nothing but real audio closes
+      them), **B2 reading + mediation** (`B2.R.4`, `B2.M.1`, `B2.M.4`), and **B2
+      interaction** (`B2.I.1`, `B2.I.5` — its fluency tasks are solo monologue).
       **Authoring reading for a level does NOT close all its `.R.` gaps** — CEFR
-      files listening and reading both under "reception", so `A2.R.2`
-      ("announcements") stays open even though A2 reading shipped. Two ledger
-      tests were asserting that false equivalence and were corrected; the
-      distinction is now explicit as `GAPS_NEEDING_EXTENDED_LISTENING`.
+      files listening and reading both under "reception". B1 proved it again:
+      14 passages shipped and `B1.R.1`/`B1.R.2` stayed open, correctly.
       Deliberately NOT labelled as taught: claiming them would be over-claiming.
 
 ### 11C — depth & proof · ✅ LIVE
@@ -255,11 +265,14 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
 
 ## What is genuinely OUTSTANDING (the honest "not yet" list)
 
-**One thing: authoring reading + mediation for B1–B2** (and extended-listening
-content), which is what the **13 remaining descriptors** need. Every one has a
-named plan in `coverage_ledger.DESCRIPTOR_GAP_PLAN`, enforced by a test, so the
-list cannot drift or be quietly forgotten. A2 **1** · B1 5 · B2 7 ·
-**A1/C1/C2 = 0**. A1 and A2 both now exercise all four CEFR modes.
+**Two things: extended-listening content, and B2 authoring.** Together they are
+what the **10 remaining descriptors** need. Every one has a named plan in
+`coverage_ledger.DESCRIPTOR_GAP_PLAN`, enforced by a test, so the list cannot
+drift or be quietly forgotten. A2 **1** · B1 **2** · B2 7 · **A1/C1/C2 = 0**.
+
+Notably, **5 of the 10 are extended listening** (`A2.R.2`, `B1.R.1`, `B1.R.2`,
+`B2.R.1`, `B2.R.2`) — no amount of authored reading closes those, only real
+audio. A1, A2 and B1 now each exercise all four CEFR modes.
 
 Everything else is delivered: Phase 11 closed all ~894 orphaned atoms (coverage
 ledger reads **7,095 / 7,095 / 0**, gated in CI), added the two missing CEFR
