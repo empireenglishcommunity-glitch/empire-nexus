@@ -534,3 +534,140 @@ def test_a2_r_2_is_now_taught(load_curriculum):
     if "A2" not in curriculum.broadcast_levels():
         pytest.skip("A2 extended listening not authored yet")
     assert "A2.R.2" not in coverage_ledger.untaught_descriptors("A2")
+
+
+
+# ============================================================
+#  GRAIN SIZE — five dictated words cannot prove "extended speech"
+# ============================================================
+
+def test_extended_spoken_descriptors_reject_word_level_dictation(load_curriculum):
+    """The A2.R.2 lesson, generalised into a rule.
+
+    `listening` is five dictated words a week. It genuinely evidences A1.R.1
+    ("recognise familiar words when people speak slowly"). It cannot evidence
+    C1.R.1 ("understand extended speech even when it is not clearly structured")
+    or C1.R.2 ("follow films employing a considerable degree of slang") -- and
+    before EXTENDED_SPOKEN_MARKERS existed it was allowed to, which meant the
+    system would certify "understands virtually any form of spoken language at
+    fast native speed" on the strength of typing five words.
+    """
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        library = curriculum.can_do_descriptor_map(level)
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            for code, exercises in curriculum.descriptor_evidence_map(week, level).items():
+                en = ((library.get(code) or {}).get("en") or "")
+                if not curriculum.descriptor_needs_extended_listening(en):
+                    continue
+                assert "listening" not in exercises, (
+                    f"{level} w{week} {code} can be evidenced by word-level "
+                    f"dictation, but it is about continuous speech: {en[:70]}")
+
+
+@pytest.mark.parametrize("code,level", [
+    ("C1.R.1", "C1"),   # extended speech, not clearly structured
+    ("C1.R.2", "C1"),   # films with slang
+    ("C2.R.1", "C2"),   # virtually any form of spoken language
+    ("B2.R.1", "B2"),   # extended speech and lectures
+    ("B2.R.2", "B2"),   # TV news and films
+])
+def test_named_extended_speech_descriptors_need_the_broadcast_exercise(
+        load_curriculum, code, level):
+    en = curriculum.can_do_descriptor_map(level)[code]["en"]
+    assert curriculum.descriptor_needs_extended_listening(en), en
+    routes = set()
+    for week in range(1, curriculum.max_week_for_level(level) + 1):
+        routes |= set(curriculum.descriptor_evidence_map(week, level).get(code, ()))
+    assert "listening" not in routes, f"{code} routes: {sorted(routes)}"
+    assert routes <= {"broadcast"}, f"{code} routes: {sorted(routes)}"
+
+
+def test_word_level_descriptors_still_accept_dictation(load_curriculum):
+    """The rule must not over-fire. A1.R.1 and A1.R.3 are genuinely about
+    recognising words and numbers in slow speech, which is exactly what the
+    dictation does, so they must keep it."""
+    for code in ("A1.R.1", "A1.R.3"):
+        en = curriculum.can_do_descriptor_map("A1")[code]["en"]
+        assert not curriculum.descriptor_needs_extended_listening(en), (
+            f"{code} should not be treated as extended listening: {en}")
+
+
+def test_the_writer_descriptor_is_not_provable_by_ear(load_curriculum):
+    """C1.R.4 is "the attitude and implied opinions of a WRITER". It was treated
+    as channel-neutral because _narrow_by_channel kept its own inline list of
+    written markers, which knew "written" but not "write" -- the same
+    two-copies-of-one-list mistake as the "speak"/"spoken" bug, one function
+    further down. Both now read WRITTEN_MARKERS."""
+    en = curriculum.can_do_descriptor_map("C1")["C1.R.4"]["en"]
+    narrowed = curriculum._narrow_by_channel(
+        ("listening", "reading", "broadcast"), en)
+    assert set(narrowed) == {"reading"}, narrowed
+
+
+def test_narrow_by_channel_reads_the_shared_written_marker_list():
+    """Pins the de-duplication, so nobody re-inlines a second copy."""
+    import inspect
+    src = inspect.getsource(curriculum._narrow_by_channel)
+    assert "WRITTEN_MARKERS" in src
+    assert "SPOKEN_MARKERS" in src
+
+
+# ============================================================
+#  PUBLISHED BUT NOT PROVABLE
+# ============================================================
+
+def test_exercise_has_content_tracks_the_rollout(load_curriculum):
+    for level in ("A1", "A2", "B1", "B2"):
+        assert curriculum.exercise_has_content("reading", level)
+        assert curriculum.exercise_has_content("mediation", level)
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        # always-authored exercises
+        for ex in ("listening", "speaking", "writing", "grammar", "review"):
+            assert curriculum.exercise_has_content(ex, level), (ex, level)
+    # broadcast follows broadcast_levels()
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        assert curriculum.exercise_has_content("broadcast", level) == (
+            level in curriculum.broadcast_levels()), level
+
+
+def test_unevidenceable_descriptors_are_reported_not_hidden(load_curriculum):
+    """C1 and C2 reported "20 descriptors — OK" while a third of C1's could not
+    be proven by any exercise a student could actually do. `untaught` asks "does
+    a week target this?", which is necessary and not sufficient; this asks "can
+    the student ever produce the evidence?".
+
+    The test does not assert the set is empty -- it asserts that whatever is
+    unprovable is REPORTED, with a reason, and appears in the printed ledger.
+    Silence is the only unacceptable state.
+    """
+    rep = coverage_ledger.report()
+    assert "unevidenceable_descriptors" in rep
+    text = coverage_ledger.format_report(rep)
+    for key, why in rep["unevidenceable_descriptors"].items():
+        level, code = key.split(":", 1)
+        assert why, f"{key} reported with no reason"
+        assert code in text, f"{code} is unprovable but not printed in the ledger"
+    if rep["unevidenceable_descriptors"]:
+        assert "PUBLISHED BUT NOT PROVABLE" in text
+        assert "contract can never be satisfied" in text
+
+
+def test_a1_to_b2_have_no_unprovable_descriptors(load_curriculum):
+    """The four levels students are actually on must be fully provable."""
+    rep = coverage_ledger.report()
+    for level in ("A1", "A2", "B1", "B2"):
+        bad = rep["levels"][level]["unevidenceable_descriptors"]
+        assert not bad, f"{level} has unprovable descriptors: {bad}"
+
+
+def test_a_level_with_all_three_rollout_exercises_is_fully_provable(load_curriculum):
+    """States the fix for C1/C2 as an executable rule: once a level has reading,
+    mediation and broadcast authored, nothing it publishes can be unprovable."""
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        complete = all(curriculum.exercise_has_content(ex, level)
+                       for ex in ("reading", "mediation", "broadcast"))
+        if not complete:
+            continue
+        assert not coverage_ledger.unevidenceable_descriptors(level), (
+            f"{level} has every rollout exercise authored, so nothing it "
+            f"publishes should be unprovable")

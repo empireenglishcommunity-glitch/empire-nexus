@@ -855,6 +855,59 @@ WRITTEN_MARKERS = (
     "report", "news item", "menu", "timetable", "advertisement", "prose",
 )
 
+# Wording that requires CONTINUOUS speech to be understood, not word-level
+# recognition. This is the A2.R.2 lesson generalised into a rule.
+#
+# `listening` is five dictated words a week. It genuinely evidences "can
+# recognise familiar words when people speak slowly" (A1.R.1). It cannot
+# evidence "can understand extended speech even when it is not clearly
+# structured" (C1.R.1) or "can follow films employing a considerable degree of
+# slang" (C1.R.2) -- those need a minute of connected speech, which is what the
+# `broadcast` exercise is. Before this rule existed, C1.R.1, C1.R.2 and C2.R.1
+# were all being evidenced by the dictation, which meant the system was willing
+# to certify "understands virtually any form of spoken language at fast native
+# speed" on the strength of five typed words.
+EXTENDED_SPOKEN_MARKERS = (
+    "extended speech", "lecture", "film", "radio", "tv ", "broadcast",
+    "announcement", "programme", "conversation", "discussion", "debate",
+    "native speed", "spoken language", "any form of spoken",
+    "not clearly structured", "at length",
+)
+
+
+def descriptor_needs_extended_listening(descriptor_en: str) -> bool:
+    """Is this descriptor about following continuous speech?
+
+    If so, word-level dictation must not be accepted as evidence for it.
+    """
+    text = (descriptor_en or "").lower()
+    return any(k in text for k in EXTENDED_SPOKEN_MARKERS)
+
+
+# Which exercises actually have authored content, per level. reading, mediation
+# and broadcast roll out level by level; everything else is authored for all 90
+# weeks. Used to answer the question the ledger could not previously ask: "is
+# this descriptor's only evidence route an exercise that does not exist here?"
+_ROLLOUT_EXERCISES = ("reading", "mediation", "broadcast")
+
+
+def exercise_has_content(exercise: str, level: str) -> bool:
+    """Can a student at `level` actually DO this exercise?
+
+    A descriptor whose only route is an exercise with no content at its level is
+    published but unprovable -- the student can never produce the evidence, so
+    the certificate shows it permanently unevidenced and the level completion
+    contract can never be satisfied. That is a coverage claim that cannot be
+    cashed, which is exactly what this codebase exists to prevent.
+    """
+    if exercise == "reading":
+        return level in reading_levels()
+    if exercise == "mediation":
+        return level in mediation_levels()
+    if exercise == "broadcast":
+        return level in broadcast_levels()
+    return exercise in EVIDENCE_MODES_BY_EXERCISE
+
 
 def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
     """Narrow mode-matched exercises to the channel the descriptor names.
@@ -874,9 +927,13 @@ def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
     text = (descriptor_en or "").lower()
     written = any(k in text for k in ("write", "written", "letter", "note"))
     spoken_recept = any(k in text for k in SPOKEN_MARKERS)
-    read_recept = any(k in text for k in (
-        "text", "read", "article", "report", "news item", "written",
-        "menu", "timetable", "advertisement", "prose"))
+    # Reads from WRITTEN_MARKERS rather than a second inline list. The two had
+    # drifted: WRITTEN_MARKERS knew "write" (so it matched C1.R.4's "opinions of
+    # a WRITER") while the inline list did not, so C1.R.4 was treated as
+    # channel-neutral and the dictation was allowed to evidence "can recognise
+    # the attitude and implied opinions of a writer". Same duplication mistake
+    # as the "speak"/"spoken" one, one function further down.
+    read_recept = any(k in text for k in WRITTEN_MARKERS)
 
     narrowed = exercises
     if "writing" in exercises and "speaking" in exercises and written:
@@ -889,6 +946,15 @@ def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
             narrowed = tuple(e for e in narrowed if e != "reading")
         elif read_recept and not spoken_recept:
             narrowed = tuple(e for e in narrowed if e not in SPOKEN_RECEPTION)
+
+    # GRAIN SIZE. Five dictated words cannot evidence "extended speech",
+    # "films", "lectures" or "virtually any form of spoken language" however
+    # many weeks a student does them -- see EXTENDED_SPOKEN_MARKERS. Only the
+    # extended-listening exercise may.
+    if "listening" in narrowed and descriptor_needs_extended_listening(text):
+        dropped = tuple(e for e in narrowed if e != "listening")
+        if dropped:
+            narrowed = dropped
     return narrowed or exercises
 
 
