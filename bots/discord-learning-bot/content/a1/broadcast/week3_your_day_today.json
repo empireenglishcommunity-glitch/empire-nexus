@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a1_w3",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 3,
+  "title": "Your Day Today",
+  "title_ar": "يومك النهاردة",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.3"
+  ],
+  "format": "announcement",
+  "word_count": 65,
+  "gist_ar": "إعلان بمواعيد الحصص والفسحة والغدا.",
+  "before_listening": {
+    "en": "A teacher tells the class about today. Listen for the TIMES.",
+    "ar": "مدرّسة بتقول للفصل عن النهاردة. ركّز على المواعيد."
+  },
+  "segments": [
+    {
+      "speaker": "Teacher",
+      "speaker_ar": "المدرّسة",
+      "voice": "bf_emma",
+      "text": "Good morning. Here is your day. There are three classes today. The first class is at nine o'clock. There is a break at eleven. The second class is at half past eleven. Lunch is at one o'clock. The last class is at three. There are twenty students in the class today. Tomorrow is Friday, and there are no classes on Friday. Have a good day!"
+    }
+  ],
+  "gist_question": {
+    "q": "What is this recording about?",
+    "q_ar": "التسجيل ده عن إيه؟",
+    "options": [
+      "The times of today's classes",
+      "A shopping list",
+      "A family story"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "What time is the first class?",
+      "q_ar": "أول حصة الساعة كام؟",
+      "options": [
+        "At nine o'clock",
+        "At eleven",
+        "At three"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "When is the break?",
+      "q_ar": "امتى الفسحة؟",
+      "options": [
+        "At one o'clock",
+        "At eleven",
+        "At half past eleven"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What happens on Friday?",
+      "q_ar": "إيه اللي بيحصل يوم الجمعة؟",
+      "options": [
+        "There are three classes",
+        "There are no classes",
+        "Lunch is at one"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "there are",
+      "ar": "يوجد / فيه"
+    },
+    {
+      "word": "a break",
+      "ar": "فسحة / راحة"
+    },
+    {
+      "word": "half past eleven",
+      "ar": "الحداشة والنص"
+    },
+    {
+      "word": "tomorrow",
+      "ar": "بكرة"
+    }
+  ]
+}

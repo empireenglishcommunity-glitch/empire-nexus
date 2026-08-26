@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w2",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 2,
+  "title": "This Is My Family",
+  "title_ar": "دي عيلتي",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "description",
+  "word_count": 73,
+  "gist_ar": "بنت بتوصف عيلتها: أخواتها وأمها وأبوها.",
+  "before_listening": {
+    "en": "Someone talks about her family. Listen for WHAT she is describing.",
+    "ar": "بنت بتتكلم عن عيلتها. ركّز على هي بتوصف إيه."
+  },
+  "segments": [
+    {
+      "speaker": "Salma",
+      "speaker_ar": "سلمى",
+      "voice": "af_bella",
+      "text": "This is my family. I have got two sisters and one brother. My brother's name is Karim. He is ten years old. My sisters are Hana and Nour. Hana is my big sister. She has got a small car. Nour is my little sister. She has got a cat. Its name is Mimi. My mother is a nurse. My father works in a shop. Our house is small, but it is very happy."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker describing?",
+    "q_ar": "هي بتوصف إيه؟",
+    "options": [
+      "Her school",
+      "Her family",
+      "Her cat"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "How old is her brother Karim?",
+      "q_ar": "كريم عنده كام سنة؟",
+      "options": [
+        "Ten",
+        "Two",
+        "Twenty"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who has got a cat?",
+      "q_ar": "مين عندها قطة؟",
+      "options": [
+        "Hana",
+        "Nour",
+        "Her mother"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is her mother's job?",
+      "q_ar": "أمها بتشتغل إيه؟",
+      "options": [
+        "She works in a shop",
+        "She is a nurse",
+        "She is a teacher"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "I have got",
+      "ar": "عندي"
+    },
+    {
+      "word": "big sister",
+      "ar": "أخت كبيرة"
+    },
+    {
+      "word": "a nurse",
+      "ar": "ممرّضة"
+    },
+    {
+      "word": "but",
+      "ar": "لكن"
+    }
+  ]
+}

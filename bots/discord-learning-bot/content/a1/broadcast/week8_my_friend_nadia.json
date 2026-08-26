@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w8",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 8,
+  "title": "My Friend Nadia",
+  "title_ar": "صاحبتي نادية",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "description",
+  "word_count": 72,
+  "gist_ar": "واحدة بتوصف شكل صاحبتها وحاجاتها.",
+  "before_listening": {
+    "en": "Someone describes a friend. Listen for what she looks like.",
+    "ar": "واحدة بتوصف صاحبتها. ركّز على شكلها."
+  },
+  "segments": [
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_sarah",
+      "text": "My friend Nadia is tall and she has got long black hair. She is twenty years old. She is very kind and she is always happy. She has got a big blue bag. Her bag is old, but she loves it. Nadia has got a new phone. It is small and white. She lives in a big flat with her family. Her flat is near my house. Nadia is a good friend."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker doing?",
+    "q_ar": "هي بتعمل إيه؟",
+    "options": [
+      "Describing her friend Nadia",
+      "Describing her own house",
+      "Asking for a new phone"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "What does Nadia look like?",
+      "q_ar": "نادية شكلها إيه؟",
+      "options": [
+        "Short, with short hair",
+        "Tall, with long black hair",
+        "Tall, with white hair"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What do we learn about Nadia's bag?",
+      "q_ar": "إيه اللي عرفناه عن شنطة نادية؟",
+      "options": [
+        "It is new and small",
+        "It is old, but she loves it",
+        "It is white"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Where does Nadia live?",
+      "q_ar": "نادية ساكنة فين؟",
+      "options": [
+        "In a big flat near the speaker's house",
+        "In a small flat far away",
+        "With the speaker"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "tall",
+      "ar": "طويلة"
+    },
+    {
+      "word": "kind",
+      "ar": "طيبة"
+    },
+    {
+      "word": "she has got",
+      "ar": "عندها"
+    },
+    {
+      "word": "near",
+      "ar": "قريب من"
+    }
+  ]
+}

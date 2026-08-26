@@ -117,16 +117,35 @@ def test_portfolio_starts_empty_and_lists_every_taught_descriptor(load_curriculu
 
 
 def test_completing_a_task_evidences_exactly_the_right_descriptors(load_curriculum):
+    """A1 week 1's PASSAGE evidences A1.R.4 and nothing else.
+
+    It used to also evidence A1.R.1, and that was an over-claim discovered in
+    Phase 11D: A1.R.1 is "...when people SPEAK slowly and clearly", a SPOKEN
+    descriptor, which a reading passage cannot prove. It was reaching it because
+    `_narrow_by_channel` recognised "spoken" but not "speak". A1.R.1 has been
+    removed from all ten A1 passages and is now evidenced by the
+    extended-listening exercise, which is the channel the descriptor names.
+    """
     _member()
     database.record_practice_mastery("p1", "A1", 1, 1, "reading", today="2026-08-20")
     pf = assessment.descriptor_portfolio("p1", "A1")
     by_code = {d["code"]: d for d in pf["descriptors"]}
-    # A1 week 1's passage targets the two reading descriptors...
-    assert by_code["A1.R.1"]["evidenced"] is True
     assert by_code["A1.R.4"]["evidenced"] is True
-    assert by_code["A1.R.1"]["evidence"][0]["exercise"] == "reading"
-    # ...and nothing else.
-    assert pf["evidenced"] == 2, [d["code"] for d in pf["descriptors"] if d["evidenced"]]
+    assert by_code["A1.R.4"]["evidence"][0]["exercise"] == "reading"
+    assert by_code["A1.R.1"]["evidenced"] is False, (
+        "a reading passage must not evidence A1.R.1 — it is about slow, clear "
+        "SPEECH")
+    assert pf["evidenced"] == 1, [d["code"] for d in pf["descriptors"] if d["evidenced"]]
+
+
+def test_the_broadcast_exercise_evidences_a1_r_1(load_curriculum):
+    """The other half of the fix: A1.R.1 must be reachable, by the ear."""
+    _member()
+    database.record_practice_mastery("p1", "A1", 1, 1, "broadcast", today="2026-08-20")
+    by_code = {d["code"]: d for d in
+               assessment.descriptor_portfolio("p1", "A1")["descriptors"]}
+    assert by_code["A1.R.1"]["evidenced"] is True
+    assert by_code["A1.R.1"]["evidence"][0]["exercise"] == "broadcast"
 
 
 def test_an_enabling_skill_completion_evidences_nothing(load_curriculum):
@@ -214,8 +233,10 @@ def test_certificate_carries_evidence_per_can_do_statement(load_curriculum):
     assert "evidence" in cert, "certificate has no evidence summary"
     assert cert["evidence"]["total"] == len(cert["can_do"])
     by_code = {c["code"]: c for c in cert["can_do"]}
-    assert by_code["A1.R.1"]["evidenced"] is True
-    assert by_code["A1.R.1"]["evidence_count"] >= 1
+    # A1.R.4 is the descriptor the PASSAGE proves (A1.R.1 is spoken — see
+    # test_completing_a_task_evidences_exactly_the_right_descriptors).
+    assert by_code["A1.R.4"]["evidenced"] is True
+    assert by_code["A1.R.4"]["evidence_count"] >= 1
     # Untouched descriptors are explicitly marked unevidenced, never omitted:
     # hiding them would make the checklist look complete when it is not.
     assert by_code["A1.I.4"]["evidenced"] is False

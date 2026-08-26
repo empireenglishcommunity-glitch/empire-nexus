@@ -837,6 +837,23 @@ EVIDENCE_MODES_BY_EXERCISE = {
 # mode, but a reading passage and a dictation are not interchangeable evidence,
 # and this is the set that makes the difference expressible.
 SPOKEN_RECEPTION = ("listening", "broadcast")
+# Every exercise that produces reception evidence, spoken or written.
+RECEPTION_EXERCISES = ("listening", "broadcast", "reading")
+
+# Wording that tells you which CHANNEL a descriptor means. Module-level rather
+# than inline so tests can assert against the SAME list the attribution uses --
+# when these lived only inside _narrow_by_channel, a test that re-listed them
+# from memory omitted "speak" and missed a real over-claim: A1.R.1 ("...when
+# people SPEAK slowly and clearly") was being evidenced by reading passages,
+# because "spoken" was listed and "speak" was not.
+SPOKEN_MARKERS = (
+    "spoken", "speak", "speech", "listen", "hear", "aloud",
+    "radio", "tv ", "announcement", "lecture", "conversation", "film",
+)
+WRITTEN_MARKERS = (
+    "write", "written", "letter", "note", "text", "read", "article",
+    "report", "news item", "menu", "timetable", "advertisement", "prose",
+)
 
 
 def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
@@ -856,11 +873,10 @@ def _narrow_by_channel(exercises: tuple, descriptor_en: str) -> tuple:
     """
     text = (descriptor_en or "").lower()
     written = any(k in text for k in ("write", "written", "letter", "note"))
-    spoken_recept = any(k in text for k in (
-        "spoken", "speech", "listen", "hear", "radio", "tv ", "announcement",
-        "lecture", "conversation", "film"))
+    spoken_recept = any(k in text for k in SPOKEN_MARKERS)
     read_recept = any(k in text for k in (
-        "text", "read", "article", "report", "news item", "written"))
+        "text", "read", "article", "report", "news item", "written",
+        "menu", "timetable", "advertisement", "prose"))
 
     narrowed = exercises
     if "writing" in exercises and "speaking" in exercises and written:
@@ -932,8 +948,35 @@ def descriptor_evidence_map(week: int, level: str = "A1") -> dict:
     bc = get_broadcast_for_week(week, level)
     if broadcast_meets_descriptor_bar(bc, level):
         for code in bc.get("can_do") or []:
-            if code in library:
-                out[code] = ("broadcast",)
+            if code not in library:
+                continue
+            # ADDS a route; never RETRACTS one. Any spoken route the week-level
+            # mapping already granted is kept, because this exercise arrived
+            # after students had history: replacing ("listening", "broadcast")
+            # with ("broadcast",) would have quietly un-evidenced A1.R.2 and
+            # A1.R.3 for every student who had done the dictation but not the
+            # new exercise, and the descriptor portfolio is derived
+            # retroactively, so that loss would have been immediate and silent.
+            #
+            # This cannot let a dictation claim an extended-speech descriptor:
+            # `prior` only ever contains what the WEEK FILE already allowed, and
+            # no week file lists A2.R.2, B1.R.1, B1.R.2, B2.R.1 or B2.R.2 --
+            # those exist only on broadcast scripts, so they resolve to
+            # ("broadcast",) alone. A test pins that.
+            # Every prior RECEPTION route survives, including `reading`. Some
+            # descriptors are genuinely channel-neutral -- A2.R.5 is "can follow
+            # simple directions and short sets of INSTRUCTIONS", and
+            # instructions are read as often as they are heard, so the A2 week-5
+            # passage and the A2 week-5 recorded instructions both teach it
+            # honestly and both should count.
+            #
+            # Keeping `reading` here cannot over-claim, because a passage is
+            # never allowed to name a spoken-only descriptor in the first place
+            # (enforced by test_a_reading_passage_can_never_claim_a_spoken_
+            # descriptor). So if `reading` is in `prior`, the descriptor is
+            # neutral by construction.
+            prior = tuple(e for e in out.get(code, ()) if e in RECEPTION_EXERCISES)
+            out[code] = tuple(dict.fromkeys(prior + ("broadcast",)))
 
     return out
 
