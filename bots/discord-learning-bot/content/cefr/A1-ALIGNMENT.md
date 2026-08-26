@@ -187,6 +187,64 @@ It is a single prompt and trivially reversible.
 reception (listening + reading), production, interaction and mediation. A test
 (`test_a1_teaches_every_descriptor_it_publishes`) fails if that ever regresses.
 
+### 4e. Extended listening — and a correction to `A1.R.1` (2026-08-24 — Phase 11D)
+
+⚠️ **This section records a mistake that was found and fixed. Please read it,
+because it changes what A1's "complete" claim in §4d actually meant.**
+
+**What was wrong.** `A1.R.1` is *"Can recognise familiar words and very basic
+phrases about themselves, their family and immediate surroundings **when people
+speak slowly and clearly**"* — a **spoken** descriptor. All ten A1 **reading
+passages** were claiming it, and it appeared in no A1 week file, so **a reading
+passage was its only evidence route.**
+
+That means a student could have been shown as having proved *"recognises
+familiar words in slow, clear speech"* **without ever having heard anything** —
+on their certificate. When §4d above said A1 was "100% descriptor-complete", one
+of those fifteen was resting on the wrong channel.
+
+**Why it slipped through.** The code that decides which exercise may evidence
+which descriptor recognised the word *"spoken"* but not *"speak"*. So `A1.R.3`
+(*"...when **spoken** slowly"*) was handled correctly and `A1.R.1` (*"...when
+people **speak** slowly"*) was not. The test that was supposed to catch exactly
+this listed the keywords separately from the code and omitted the same word.
+Both now read one shared list, so they cannot disagree again.
+
+**What was done.**
+
+1. `A1.R.1` removed from all ten reading passages. They keep `A1.R.4` — *"very
+   short, simple **texts** a single phrase at a time"* — which is genuinely
+   theirs, and which is what those passages were always really teaching.
+2. **Ten extended-listening recordings authored**, one per week, **62–78 words**
+   (roughly 25–35 seconds), spoken slowly and clearly. This is now where
+   `A1.R.1` is proved.
+
+| wk | Recording | Also carries |
+|---|---|---|
+| 1 | Omar introduces himself and his friend | — |
+| 2 | describing a family | — |
+| 3 | a teacher reads out the day's times | `A1.R.3` |
+| 4 | directions to the pharmacy | `A1.R.2` |
+| 5 | an ordinary working day | — |
+| 6 | my sister Hana and her cooking | — |
+| 7 | today's prices at the market | `A1.R.3` |
+| 8 | describing my friend Nadia | — |
+| 9 | what Ahmed can and cannot do | — |
+| 10 | my birthday yesterday | — |
+
+**One voice per A1 recording, deliberately.** The descriptor is about following a
+*single clear speaker*; two speakers would add difficulty A1 does not ask for.
+Multi-voice starts at A2 and becomes normal from B1.
+
+**Nothing is taken away from students.** Certificate access is untouched. What
+changes is that `A1.R.1` now shows as unevidenced until a student does an
+extended-listening exercise — which is correct, and there are ten of them, one
+per week, so it is reachable immediately.
+
+**The honest version of the §4d claim** is therefore: A1 teaches all 15
+descriptors, and since this correction each one is proved **through the channel
+the descriptor actually names**.
+
 ### 5. Progression logic
 The 10 weeks build a coherent A1 arc: identity → relationships → quantities/time
 → environment → habits → consumption → transactions → description → ability →
@@ -201,6 +259,14 @@ capstone speaking task that previews the A1 exit exam.
   and promotes them to A2.
 
 ## What to review / sign off
+- [ ] ⚠️ **The `A1.R.1` correction (§4e)** — you should know this happened: for a
+      period, A1's reading passages were credited with a listening descriptor.
+      It is fixed, but the fix means A1 students now need the new
+      extended-listening exercise to prove `A1.R.1`.
+- [ ] **Extended-listening recordings (§4e)** — 10 recordings, 62–78 words. The
+      question to ask: *would a real beginner catch the main point on one or two
+      listens?* These are the most important scripts in the course to get right,
+      because a beginner has the least tolerance for speech that is too fast.
 - [ ] Themes + week order feel right for your beginners.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and A1-appropriate.

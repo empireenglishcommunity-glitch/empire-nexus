@@ -171,8 +171,65 @@ answers *performed* the required move without ever **naming** it ("Personally, I
 think…" instead of "In my opinion…"), so a student copying the model wouldn't see
 that giving an opinion is a required step. Both fixed in the content.
 
+### 4c. Extended listening (added 2026-08-24 — Phase 11D)
+
+**What was missing.** Two descriptors were taught by no week, and both were
+spoken:
+
+- `B1.R.1` — main points of **clear standard speech** on familiar matters in
+  work, school and leisure
+- `B1.R.2` — main points of many **radio or TV** programmes on current affairs,
+  *"when delivered relatively slowly and clearly"*
+
+**Both now close. B1 is 19/19.**
+
+Neither was a borderline judgement. `B1.R.2` is explicitly scoped to speech
+delivered *slowly and clearly*, which is precisely what a clearly-read bulletin
+is — so a bulletin is not a substitute for the descriptor, it is the descriptor.
+
+**14 scripts, 153–193 spoken words** (roughly 60–80 seconds), each recycling its
+own week's grammar **in the register where that grammar actually lives**:
+
+| wk | Format | Grammar it carries | Code |
+|---|---|---|---|
+| 1 | TV news bulletin (3 voices) | present perfect — *"the council **has approved**…"* | `R.2` |
+| 2 | colleague's anecdote | past continuous + past simple | `R.1` |
+| 3 | team briefing | future forms (arranged vs decided) | `R.1` |
+| 4 | exam-day rules | first conditional | `R.1` |
+| 5 | radio phone-in (4 voices) | second conditional | `R.2` |
+| 6 | TV documentary | modals of deduction | `R.2` |
+| 7 | podcast interview (4 voices) | present perfect continuous | `R.1`, `R.2` |
+| 8 | radio documentary | used to / would | `R.2` |
+| 9 | radio comparison | advanced comparatives | `R.2` |
+| 10 | walking-tour audio guide | relative clauses | `R.1` |
+| 11 | news review (4 voices) | reported speech | `R.2` |
+| 12 | factory tour | the passive | `R.1`, `R.2` |
+| 13 | radio advice show (5 voices) | quantifiers & degree | `R.2` |
+| 14 | end-of-course talk | gerunds, infinitives, linkers | `R.1` |
+
+**29 speaker turns across the level**, each with its own voice, so a phone-in
+genuinely has a host and two callers rather than one voice playing everybody.
+
+**The gist question is answered before the transcript unlocks** — that lock is
+what the listening claim rests on. And the gist questions are deliberately about
+whole clips, several of them about a *disagreement* or a refusal to answer
+plainly: *"What do the two callers agree about?"*, *"Which life does the
+programme say is better?"* (answer: **neither**). At B1, noticing that a speaker
+has **not** given a simple answer is part of comprehension.
+
+**What is deliberately not claimed.** `B1.R.3` (personal **letters**), `B1.R.4`
+(factual **texts**) and `B1.R.5` (argumentative **texts**) are written-channel
+descriptors, closed by the reading passages in §4b. No script names them, and
+the authoring pass restricts B1 scripts to `{B1.R.1, B1.R.2}`.
+
 ## What to review / sign off
 - [ ] Themes + week order feel right for your intermediate students.
+- [ ] **Extended-listening scripts (§4c)** — 14 recordings, 153–193 words. Worth
+      checking two things: that the **news and radio scripts sound like
+      broadcast** rather than like a textbook, and that the endings which
+      deliberately refuse to resolve (week 11's *"everybody was a little wrong"*,
+      week 13's caller answering his own question) feel right rather than
+      unfinished to you.
 - [ ] **Reading passages (§4b) feel right for B1** — 14 passages, 147–187 words,
       three text types.
 - [ ] **Mediation tasks (§4b)** — especially the four "keep the discussion going"
