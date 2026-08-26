@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a1_w4",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 4,
+  "title": "Where Is the Pharmacy?",
+  "title_ar": "فين الصيدلية؟",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.2"
+  ],
+  "format": "directions",
+  "word_count": 64,
+  "gist_ar": "حد بيشرح الطريق للصيدلية.",
+  "before_listening": {
+    "en": "Someone gives directions. Listen and follow them: where do you go?",
+    "ar": "حد بيشرح الطريق. اسمع واتبع: بتروح فين؟"
+  },
+  "segments": [
+    {
+      "speaker": "A man in the street",
+      "speaker_ar": "راجل في الشارع",
+      "voice": "am_michael",
+      "text": "Excuse me? Yes. Listen. Go out of this building. Turn left. Walk to the end of the street. The pharmacy is next to the bank. It is opposite the big mosque. It is not far. Five minutes. There is a bus stop in front of it. If you see the school, you are too far. Go back. The pharmacy is open now. Thank you!"
+    }
+  ],
+  "gist_question": {
+    "q": "What is the man explaining?",
+    "q_ar": "الراجل بيشرح إيه؟",
+    "options": [
+      "How to find the pharmacy",
+      "How to buy medicine",
+      "Where the school is"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Which way do you turn?",
+      "q_ar": "بتلف ناحية فين؟",
+      "options": [
+        "Left",
+        "Right",
+        "Go back"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Where is the pharmacy?",
+      "q_ar": "الصيدلية فين؟",
+      "options": [
+        "Next to the bank",
+        "Next to the school",
+        "In front of the bus stop"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does it mean if you see the school?",
+      "q_ar": "لو شفت المدرسة معناها إيه؟",
+      "options": [
+        "You are next to the pharmacy",
+        "You have gone too far",
+        "The pharmacy is closed"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "turn left",
+      "ar": "لف شمال"
+    },
+    {
+      "word": "next to",
+      "ar": "جانب"
+    },
+    {
+      "word": "opposite",
+      "ar": "قصاد"
+    },
+    {
+      "word": "too far",
+      "ar": "بعيد أوي"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w6",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 6,
+  "title": "Hana Likes Food",
+  "title_ar": "هنا بتحب الأكل",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "description",
+  "word_count": 68,
+  "gist_ar": "واحد بيتكلم عن أخته هنا وحبها للأكل والطبيخ.",
+  "before_listening": {
+    "en": "Someone talks about his sister. Listen for what she WANTS.",
+    "ar": "حد بيتكلم عن أخته. ركّز على هي عايزة إيه."
+  },
+  "segments": [
+    {
+      "speaker": "Youssef",
+      "speaker_ar": "يوسف",
+      "voice": "af_nicole",
+      "text": "My sister Hana likes food very much. She eats rice and chicken every day. She does not eat fish. She drinks coffee in the morning and tea in the evening. She cooks with my mother on Friday. They make some soup and some bread. Hana wants a big kitchen, but our kitchen is small. She says, one day I have a restaurant. I think she can do it."
+    }
+  ],
+  "gist_question": {
+    "q": "What does Hana want?",
+    "q_ar": "هنا عايزة إيه؟",
+    "options": [
+      "A big kitchen and one day a restaurant",
+      "To eat more fish",
+      "To cook every day"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "What does Hana NOT eat?",
+      "q_ar": "هنا مبتاكلش إيه؟",
+      "options": [
+        "Rice",
+        "Chicken",
+        "Fish"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "When does she cook with her mother?",
+      "q_ar": "امتى بتطبخ مع أمها؟",
+      "options": [
+        "Every day",
+        "On Friday",
+        "In the morning"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does her brother think?",
+      "q_ar": "أخوها رأيه إيه؟",
+      "options": [
+        "The kitchen is big enough",
+        "She can do it",
+        "She does not like cooking"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "she likes",
+      "ar": "هي بتحب"
+    },
+    {
+      "word": "she does not eat",
+      "ar": "هي مبتاكلش"
+    },
+    {
+      "word": "some soup",
+      "ar": "شوية شوربة"
+    },
+    {
+      "word": "a restaurant",
+      "ar": "مطعم"
+    }
+  ]
+}

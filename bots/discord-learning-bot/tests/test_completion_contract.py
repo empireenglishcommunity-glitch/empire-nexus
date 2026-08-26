@@ -40,8 +40,13 @@ def _do_everything(discord_id="c1", level="A1", joined_at="2026-01-01"):
     max_wk = curriculum.max_week_for_level(level)
     for wk in range(1, max_wk + 1):
         for day in range(1, 8):
-            for ex in ("accent", "vocab", "shadow", "listening", "speaking",
-                       "grammar", "reading", "mediation", "review"):
+            # Derived from the source sets rather than hardcoded: this helper
+            # models "a student who genuinely did everything", so when a new
+            # weekly exercise ships it must be included automatically. Spelling
+            # the list out here meant that adding `broadcast` in Phase 11D made
+            # a complete student look 40/50 and failed three tests for a reason
+            # that had nothing to do with what they were testing.
+            for ex in database.CALENDAR_EXERCISES + database.WEEKLY_EXERCISES:
                 database.record_practice_mastery(discord_id, level, wk, day, ex,
                                                 today="2026-02-01")
             d = anchor + datetime.timedelta(days=(wk - 1) * 7 + (day - 1))
@@ -163,8 +168,12 @@ def test_weekly_requirements_skip_content_that_is_not_authored(load_curriculum, 
     anchor = datetime.date.fromisoformat("2026-01-01")
     for wk in range(1, curriculum.max_week_for_level(level) + 1):
         for day in range(1, 8):
-            for ex in ("accent", "vocab", "shadow", "listening", "speaking",
-                       "grammar", "review"):
+            # Everything EXCEPT the level-by-level rollout exercises, which is
+            # the point of this test: the contract must not demand content that
+            # does not exist for this level.
+            rollout = {"reading", "mediation", "broadcast"}
+            for ex in [e for e in database.CALENDAR_EXERCISES + database.WEEKLY_EXERCISES
+                       if e not in rollout]:
                 database.record_practice_mastery("c2", level, wk, day, ex,
                                                 today="2026-02-01")
             d = anchor + datetime.timedelta(days=(wk - 1) * 7 + (day - 1))

@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w1",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 1,
+  "title": "Meet Omar and Ali",
+  "title_ar": "اتعرّف على عمر وعلي",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "introduction",
+  "word_count": 71,
+  "gist_ar": "واحد بيعرّف نفسه وبيعرّف صاحبه.",
+  "before_listening": {
+    "en": "Someone introduces himself. Listen and decide WHO is speaking.",
+    "ar": "حد بيعرّف نفسه. اسمع وحدّد مين اللي بيتكلم."
+  },
+  "segments": [
+    {
+      "speaker": "Omar",
+      "speaker_ar": "عمر",
+      "voice": "am_adam",
+      "text": "Hello. My name is Omar. I am from Cairo, in Egypt. I am twenty-five years old. I am a student. This is my friend. His name is Ali. He is from Alexandria. He is not a student. He is a teacher. We are in the same English class. Our class is on Monday and Wednesday. It is at six o'clock. Ali is a very good friend. Nice to meet you. Goodbye!"
+    }
+  ],
+  "gist_question": {
+    "q": "Who is speaking?",
+    "q_ar": "مين اللي بيتكلم؟",
+    "options": [
+      "A teacher from Alexandria",
+      "A student from Cairo",
+      "Two teachers"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "How old is Omar?",
+      "q_ar": "عمر عنده كام سنة؟",
+      "options": [
+        "Twenty-five",
+        "Twenty",
+        "Six"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is Ali's job?",
+      "q_ar": "علي بيشتغل إيه؟",
+      "options": [
+        "He is a student",
+        "He is a teacher",
+        "He is a doctor"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "When is their English class?",
+      "q_ar": "امتى حصة الإنجليزي؟",
+      "options": [
+        "Monday and Wednesday",
+        "Every day",
+        "Saturday"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "my name is",
+      "ar": "اسمي"
+    },
+    {
+      "word": "I am from",
+      "ar": "أنا من"
+    },
+    {
+      "word": "years old",
+      "ar": "سنة (في العمر)"
+    },
+    {
+      "word": "the same",
+      "ar": "نفس الـ"
+    }
+  ]
+}

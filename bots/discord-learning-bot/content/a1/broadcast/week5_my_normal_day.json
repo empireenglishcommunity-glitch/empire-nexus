@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w5",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 5,
+  "title": "My Normal Day",
+  "title_ar": "يومي العادي",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "description",
+  "word_count": 76,
+  "gist_ar": "واحد بيوصف روتينه اليومي من الصبح لبالليل.",
+  "before_listening": {
+    "en": "Someone describes an ordinary day. Listen for what he does in the EVENING.",
+    "ar": "حد بيوصف يوم عادي. ركّز على بيعمل إيه بالليل."
+  },
+  "segments": [
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "af_sky",
+      "text": "I get up at six o'clock every day. I drink tea and I eat bread with cheese. I go to work at seven. I work in an office with my friends. We start at eight. We have lunch at one. I finish work at four. I come home and I sleep for one hour. In the evening I study English. I go to bed at eleven. On Friday I do not work. I visit my family."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker describing?",
+    "q_ar": "هو بيوصف إيه؟",
+    "options": [
+      "A holiday",
+      "An ordinary working day",
+      "His first day at work"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What time does he get up?",
+      "q_ar": "بيصحى الساعة كام؟",
+      "options": [
+        "At six o'clock",
+        "At seven",
+        "At eight"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he do in the evening?",
+      "q_ar": "بيعمل إيه بالليل؟",
+      "options": [
+        "He works in the office",
+        "He studies English",
+        "He visits his family"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What happens on Friday?",
+      "q_ar": "إيه اللي بيحصل يوم الجمعة؟",
+      "options": [
+        "He works until four",
+        "He does not work",
+        "He gets up at six"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "I get up",
+      "ar": "أنا بصحى"
+    },
+    {
+      "word": "we start",
+      "ar": "إحنا بنبدأ"
+    },
+    {
+      "word": "I finish",
+      "ar": "أنا بخلّص"
+    },
+    {
+      "word": "I visit",
+      "ar": "أنا بزور"
+    }
+  ]
+}

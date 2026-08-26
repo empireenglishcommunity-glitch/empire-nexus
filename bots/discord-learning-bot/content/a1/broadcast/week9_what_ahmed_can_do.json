@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w9",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 9,
+  "title": "What Ahmed Can Do",
+  "title_ar": "أحمد بيقدر يعمل إيه",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "introduction",
+  "word_count": 62,
+  "gist_ar": "أحمد بيقول بيقدر يعمل إيه ومبيقدرش، وبيحب إيه.",
+  "before_listening": {
+    "en": "Ahmed talks about himself. Listen for the one thing he CANNOT do.",
+    "ar": "أحمد بيتكلم عن نفسه. ركّز على الحاجة اللي مبيقدرش يعملها."
+  },
+  "segments": [
+    {
+      "speaker": "Ahmed",
+      "speaker_ar": "أحمد",
+      "voice": "am_adam",
+      "text": "Hello, I am Ahmed. I can swim and I can drive a car. I can't cook. My food is not good! I like playing football with my friends on Friday. I love watching films at home. I don't like running. My brother can play the guitar, but I can't. He likes singing. I want to learn. Can you play music? Tell me!"
+    }
+  ],
+  "gist_question": {
+    "q": "What is Ahmed talking about?",
+    "q_ar": "أحمد بيتكلم عن إيه؟",
+    "options": [
+      "His family and his house",
+      "What he can and cannot do, and what he likes",
+      "His work in an office"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What can Ahmed NOT do?",
+      "q_ar": "أحمد مبيقدرش يعمل إيه؟",
+      "options": [
+        "Swim",
+        "Drive a car",
+        "Cook"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does he do on Friday?",
+      "q_ar": "بيعمل إيه يوم الجمعة؟",
+      "options": [
+        "He plays football with his friends",
+        "He goes running",
+        "He plays the guitar"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who can play the guitar?",
+      "q_ar": "مين بيعرف يعزف جيتار؟",
+      "options": [
+        "Ahmed",
+        "His brother",
+        "His friends"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "I can",
+      "ar": "أنا أقدر"
+    },
+    {
+      "word": "I can't",
+      "ar": "أنا مش أقدر"
+    },
+    {
+      "word": "I like playing",
+      "ar": "أنا بحب ألعب"
+    },
+    {
+      "word": "I want to learn",
+      "ar": "عايز أتعلّم"
+    }
+  ]
+}

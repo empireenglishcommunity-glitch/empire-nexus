@@ -1,0 +1,87 @@
+{
+  "id": "broadcast_a1_w7",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 7,
+  "title": "Today's Prices at the Market",
+  "title_ar": "أسعار النهاردة في السوق",
+  "can_do": [
+    "A1.R.1",
+    "A1.R.3"
+  ],
+  "format": "announcement",
+  "word_count": 68,
+  "gist_ar": "إعلان بأسعار النهاردة في السوق.",
+  "before_listening": {
+    "en": "A market announcement. Listen for the PRICES.",
+    "ar": "إعلان في السوق. ركّز على الأسعار."
+  },
+  "segments": [
+    {
+      "speaker": "Market announcer",
+      "speaker_ar": "منادي السوق",
+      "voice": "bm_george",
+      "text": "Welcome to the market. Listen to today's prices. Bread is three pounds. How much is the rice? The rice is twelve pounds for one kilo. The tomatoes are eight pounds. The eggs are forty pounds for thirty eggs. Tea is twenty-five pounds. We have some apples today, and they are fifteen pounds. The market is open from seven in the morning to seven in the evening. Come early!"
+    }
+  ],
+  "gist_question": {
+    "q": "What is this recording?",
+    "q_ar": "إيه التسجيل ده؟",
+    "options": [
+      "Today's prices at the market",
+      "Directions to the market",
+      "A list of the market's workers"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "How much is one kilo of rice?",
+      "q_ar": "كيلو الرز بكام؟",
+      "options": [
+        "Three pounds",
+        "Twelve pounds",
+        "Eight pounds"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What costs forty pounds?",
+      "q_ar": "إيه اللي بأربعين جنيه؟",
+      "options": [
+        "Thirty eggs",
+        "The tea",
+        "The apples"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "When does the market close?",
+      "q_ar": "السوق بيقفل امتى؟",
+      "options": [
+        "At seven in the morning",
+        "At seven in the evening",
+        "At fifteen o'clock"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "how much is...?",
+      "ar": "بكام...؟"
+    },
+    {
+      "word": "pounds",
+      "ar": "جنيه"
+    },
+    {
+      "word": "for one kilo",
+      "ar": "للكيلو"
+    },
+    {
+      "word": "come early",
+      "ar": "تعال بدري"
+    }
+  ]
+}

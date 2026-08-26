@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_a1_w10",
+  "level": "A1",
+  "cefr": "A1",
+  "week": 10,
+  "title": "My Birthday Yesterday",
+  "title_ar": "عيد ميلادي امبارح",
+  "can_do": [
+    "A1.R.1"
+  ],
+  "format": "story",
+  "word_count": 74,
+  "gist_ar": "بنت بتحكي عن عيد ميلادها امبارح.",
+  "before_listening": {
+    "en": "Someone talks about yesterday. Listen for what the day WAS.",
+    "ar": "حد بيتكلم عن امبارح. ركّز على اليوم كان إيه."
+  },
+  "segments": [
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "Yesterday was my birthday. I was very happy. My family was at home with me. My mother was in the kitchen all morning. There was a big cake on the table. It was chocolate. My friends were here at six o'clock. We were together for three hours. There were ten people in my small flat! My little brother was very excited. It was a good day. Today I am tired, but I am happy."
+    }
+  ],
+  "gist_question": {
+    "q": "What was yesterday?",
+    "q_ar": "امبارح كان إيه؟",
+    "options": [
+      "Her first day at work",
+      "Her birthday",
+      "A normal Friday"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What kind of cake was on the table?",
+      "q_ar": "الكيكة اللي على الترابيزة كانت إيه؟",
+      "options": [
+        "Chocolate",
+        "Small",
+        "There was no cake"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "When did her friends arrive?",
+      "q_ar": "أصحابها وصلوا امتى؟",
+      "options": [
+        "In the morning",
+        "At six o'clock",
+        "After three hours"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does she feel today?",
+      "q_ar": "هي حاسة بإيه النهاردة؟",
+      "options": [
+        "Tired, but happy",
+        "Sad",
+        "Excited"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "yesterday",
+      "ar": "امبارح"
+    },
+    {
+      "word": "there was",
+      "ar": "كان فيه"
+    },
+    {
+      "word": "we were together",
+      "ar": "كنا مع بعض"
+    },
+    {
+      "word": "excited",
+      "ar": "متحمّس"
+    }
+  ]
+}

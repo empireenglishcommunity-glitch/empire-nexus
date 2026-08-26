@@ -147,7 +147,10 @@ def test_a_silent_or_gistless_script_is_not_deliverable():
 #  CHANNEL ATTRIBUTION — the honesty of the evidence
 # ============================================================
 
-def test_broadcast_descriptors_are_provable_only_by_broadcast(load_curriculum):
+def test_broadcast_descriptors_are_never_provable_by_reading(load_curriculum):
+    """A broadcast script's descriptors are spoken reception, so `reading` must
+    never be an allowed route for them -- and every allowed route must be a
+    spoken one."""
     for level, week, bc in _all_scripts():
         if not curriculum.broadcast_meets_descriptor_bar(bc, level):
             continue
@@ -155,22 +158,153 @@ def test_broadcast_descriptors_are_provable_only_by_broadcast(load_curriculum):
         for code in bc.get("can_do") or []:
             if code not in curriculum.can_do_descriptor_map(level):
                 continue
-            assert emap.get(code) == ("broadcast",), (
-                f"{level} w{week} {code} evidenced by {emap.get(code)} -- a "
-                f"broadcast descriptor must not be claimable by another exercise")
+            allowed = emap.get(code) or ()
+            assert "broadcast" in allowed, f"{level} w{week} {code}: {allowed}"
+            # `reading` is only forbidden for descriptors whose wording is
+            # spoken-only. A neutral one (A2.R.5, "simple directions and short
+            # sets of instructions") is legitimately taught by both modes.
+            en = ((curriculum.can_do_descriptor_map(level).get(code) or {})
+                  .get("en") or "").lower()
+            spoken_only = (any(k in en for k in curriculum.SPOKEN_MARKERS)
+                           and not any(k in en for k in curriculum.WRITTEN_MARKERS))
+            if spoken_only:
+                assert set(allowed) <= set(curriculum.SPOKEN_RECEPTION), (
+                    f"{level} w{week} {code} is spoken-only but has route "
+                    f"{allowed}")
+            assert set(allowed) <= set(curriculum.RECEPTION_EXERCISES), (
+                f"{level} w{week} {code} has a non-reception route: {allowed}")
+
+
+# The five descriptors this whole phase exists for. None of them appears in any
+# week file, so each must resolve to `broadcast` ALONE -- five typed dictation
+# words must never be able to claim "can follow a complex line of argument".
+EXTENDED_LISTENING_DESCRIPTORS = ("A2.R.2", "B1.R.1", "B1.R.2", "B2.R.1", "B2.R.2")
+
+
+@pytest.mark.parametrize("code", EXTENDED_LISTENING_DESCRIPTORS)
+def test_extended_listening_descriptors_need_the_broadcast_exercise(load_curriculum, code):
+    level = code.split(".")[0]
+    if level not in curriculum.broadcast_levels():
+        pytest.skip(f"{level} extended listening not authored yet")
+    routes = set()
+    for week in range(1, curriculum.max_week_for_level(level) + 1):
+        routes |= set(curriculum.descriptor_evidence_map(week, level).get(code, ()))
+    assert routes == {"broadcast"}, (
+        f"{code} is evidenced by {sorted(routes)} -- it must require the "
+        f"extended-listening exercise, because word-level dictation cannot "
+        f"prove it")
+
+
+def test_adding_broadcast_never_retracted_an_existing_spoken_route(load_curriculum):
+    """`broadcast` arrived after students already had history, and the descriptor
+    portfolio is derived retroactively -- so if attributing a code to
+    `broadcast` REPLACED `listening`, every student who had done the dictation
+    but not the new exercise would silently lose that evidence overnight.
+
+    A1.R.2 and A1.R.3 are the real cases: both are named by an A1 week file AND
+    by an A1 broadcast script, so both must keep listening alongside broadcast.
+    """
+    if "A1" not in curriculum.broadcast_levels():
+        pytest.skip("A1 extended listening not authored yet")
+    for code in ("A1.R.2", "A1.R.3"):
+        routes = set()
+        for week in range(1, curriculum.max_week_for_level("A1") + 1):
+            routes |= set(curriculum.descriptor_evidence_map(week, "A1").get(code, ()))
+        assert {"listening", "broadcast"} <= routes, (
+            f"{code} routes are {sorted(routes)}; adding the broadcast exercise "
+            f"must ADD a route, never remove the dictation one")
+
+
+def test_a_descriptor_claimed_by_both_a_passage_and_a_script_keeps_both_routes(
+        load_curriculum):
+    """Some descriptors are genuinely channel-neutral and are taught by both
+    modes in the same week -- A2.R.5 is "can follow simple directions and short
+    sets of instructions", and instructions are read as often as heard, so A2's
+    week-5 passage and its week-5 recorded instructions both teach it.
+
+    When that happens BOTH routes must survive. An earlier version of the
+    broadcast attribution kept only spoken routes, which silently dropped
+    `reading` for five A2 weeks -- the same retraction bug as the listening one,
+    in a different disguise.
+
+    A neutral descriptor is one whose wording names neither channel exclusively;
+    a spoken-only one can never be in this overlap, because a passage may not
+    claim it at all.
+    """
+    found = 0
+    for level in curriculum.broadcast_levels():
+        library = curriculum.can_do_descriptor_map(level)
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            passage = curriculum.get_reading_for_week(week, level) or {}
+            bc = curriculum.get_broadcast_for_week(week, level) or {}
+            if not curriculum.broadcast_meets_descriptor_bar(bc, level):
+                continue
+            overlap = set(passage.get("can_do") or []) & set(bc.get("can_do") or [])
+            emap = curriculum.descriptor_evidence_map(week, level)
+            for code in sorted(overlap):
+                found += 1
+                en = ((library.get(code) or {}).get("en") or "").lower()
+                spoken = [k for k in curriculum.SPOKEN_MARKERS if k in en]
+                written = [k for k in curriculum.WRITTEN_MARKERS if k in en]
+                assert not (spoken and not written), (
+                    f"{level} w{week}: {code} is spoken-only yet the passage "
+                    f"claims it")
+                routes = set(emap.get(code) or ())
+                assert {"reading", "broadcast"} <= routes, (
+                    f"{level} w{week} {code}: routes are {sorted(routes)}; both "
+                    f"the passage and the script teach it, so both must count")
+    assert found, "no overlap found — update this test if the content changed"
 
 
 def test_a_reading_passage_can_never_claim_a_spoken_descriptor(load_curriculum):
-    """The whole point of the channel split. If reading could evidence
-    A2.R.2 there would have been no gap to close in the first place."""
+    """The whole point of the channel split. If reading could evidence A2.R.2
+    there would have been no gap to close in the first place.
+
+    REGRESSION: this test used to re-list the spoken keywords from memory
+    ("announcement", "lecture", "radio", "film") and so missed a real
+    over-claim -- A1.R.1 is "...when people SPEAK slowly and clearly", and all
+    ten A1 reading passages were claiming it. `_narrow_by_channel` missed it for
+    the same reason: it listed "spoken" but not "speak". Both now read the same
+    module-level curriculum.SPOKEN_MARKERS, so the test and the attribution
+    cannot disagree about what "spoken" means.
+    """
     for level in curriculum.reading_levels():
+        library = curriculum.can_do_descriptor_map(level)
         for week in range(1, curriculum.max_week_for_level(level) + 1):
             passage = curriculum.get_reading_for_week(week, level)
             for code in (passage or {}).get("can_do") or []:
-                d = curriculum.can_do_descriptor_map(level).get(code) or {}
-                en = (d.get("en") or "").lower()
-                assert not any(k in en for k in ("announcement", "lecture", "radio", "film")), (
-                    f"{level} w{week}: reading passage claims spoken descriptor {code}")
+                en = ((library.get(code) or {}).get("en") or "").lower()
+                spoken = [k for k in curriculum.SPOKEN_MARKERS if k in en]
+                written = [k for k in curriculum.WRITTEN_MARKERS if k in en]
+                assert not (spoken and not written), (
+                    f"{level} w{week}: reading passage claims {code}, which is "
+                    f"spoken-only (markers: {spoken})")
+
+
+def test_a_broadcast_script_can_never_claim_a_written_descriptor(load_curriculum):
+    """The mirror image, so the channel rule is enforced in both directions."""
+    for level, week, bc in _all_scripts():
+        library = curriculum.can_do_descriptor_map(level)
+        for code in bc.get("can_do") or []:
+            en = ((library.get(code) or {}).get("en") or "").lower()
+            spoken = [k for k in curriculum.SPOKEN_MARKERS if k in en]
+            written = [k for k in curriculum.WRITTEN_MARKERS if k in en]
+            assert not (written and not spoken), (
+                f"{level} w{week}: script claims {code}, which is written-only "
+                f"(markers: {written})")
+
+
+def test_narrow_by_channel_recognises_speak_not_only_spoken(load_curriculum):
+    """The exact bug, pinned. "when people SPEAK slowly and clearly" must
+    narrow to the ear-channel exercises, just as "when SPOKEN slowly" does."""
+    assert "speak" in curriculum.SPOKEN_MARKERS
+    a1 = curriculum.can_do_descriptor_map("A1")
+    for code in ("A1.R.1", "A1.R.3"):
+        narrowed = curriculum._narrow_by_channel(
+            ("listening", "reading", "broadcast"), a1[code]["en"])
+        assert "reading" not in narrowed, f"{code} narrowed to {narrowed}"
+        assert set(narrowed) == set(curriculum.SPOKEN_RECEPTION), (
+            f"{code} narrowed to {narrowed}")
 
 
 def test_broadcast_completion_evidences_the_descriptor(load_curriculum, tmp_path):
