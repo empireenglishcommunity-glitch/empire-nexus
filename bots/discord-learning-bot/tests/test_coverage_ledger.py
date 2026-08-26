@@ -227,6 +227,36 @@ def test_authored_reading_closes_every_reading_descriptor_it_can(rep):
         )
 
 
+def test_everything_closable_by_authored_text_is_closed(rep):
+    """THE HEADLINE CLAIM, made checkable.
+
+    Every descriptor that authored TEXT could close is now closed: reading and
+    mediation exist for A1-B2, and the interaction gaps closed via speaking
+    missions (interaction cannot be proven by a passage or a relay task).
+
+    So the remaining set must be EXACTLY the extended-listening gaps. If someone
+    later adds a reading/mediation/interaction gap to the baseline, this fails --
+    which is the point: that would mean we had stopped closing what we can.
+    """
+    assert set(coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS) == \
+        set(coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING), (
+            "remaining gaps are no longer exactly the extended-listening set: "
+            f"{sorted(set(coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS) ^ set(coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING))}"
+        )
+    # ...and every one of them is a reception descriptor, since that is the only
+    # mode long-form audio can evidence.
+    for code in rep["untaught_descriptors"]:
+        assert code.split(".")[1] == "R", f"{code} is not a reception descriptor"
+
+
+def test_every_level_has_authored_reading_and_mediation(rep):
+    """A1-B2 all have both modes authored now; C1/C2 were already complete
+    without them. A level losing its authored content should fail here."""
+    for level in ("A1", "A2", "B1", "B2"):
+        assert level in curriculum.reading_levels(), f"{level} lost its reading"
+        assert level in curriculum.mediation_levels(), f"{level} lost its mediation"
+
+
 def test_extended_listening_set_agrees_with_the_gap_plan():
     """Two sources of truth would drift, so pin them to each other: every
     listening-side gap must say so in its plan, and nothing else may."""

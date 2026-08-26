@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w2",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 2,
+  "title": "Convey what had happened, in order",
+  "title_ar": "انقل اللي حصل بالترتيب",
+  "can_do": [
+    "B2.M.2"
+  ],
+  "scenario": {
+    "en": "A colleague missed a handover. You must convey the sequence reliably and explain why it matters.",
+    "ar": "زميل فوّت التسليم. لازم تنقل التسلسل بدقة وتشرح أهميته."
+  },
+  "source": "By the time the auditor arrived, the files had already been archived. The team had prepared a summary earlier, but nobody had checked it against the originals. The error was noticed only after the report had been submitted.",
+  "task": {
+    "en": "Convey the sequence accurately and explain the significance of the order.",
+    "ar": "انقل التسلسل بدقة واشرح أهمية الترتيب."
+  },
+  "key_points": [
+    {
+      "en": "The files had been archived before the auditor arrived.",
+      "ar": "الملفات اتأرشفت قبل وصول المراجع."
+    },
+    {
+      "en": "The summary had been prepared but never checked against the originals.",
+      "ar": "الملخص اتحضّر بس ماتراجعش على الأصول."
+    },
+    {
+      "en": "The error was noticed only after the report was submitted.",
+      "ar": "الخطأ اتلاحظ بعد تسليم التقرير."
+    },
+    {
+      "en": "Explain the significance of that order.",
+      "ar": "اشرح أهمية الترتيب ده."
+    }
+  ],
+  "model_answer": {
+    "en": "Let me be precise: the files had already been archived by the time the auditor arrived. A summary had been prepared earlier, but it was never checked against the originals, and the error was noticed only after the report had been submitted. The significance is that the order made the mistake invisible until it was too late to correct.",
+    "ar": "خليني أكون دقيق: الملفات كانت اتأرشفت قبل وصول المراجع. وكان فيه ملخص اتحضّر قبل كده بس ماتراجعش على الأصول، والخطأ اتلاحظ بعد ما التقرير اتسلّم. والأهمية إن الترتيب ده خلّى الغلطة مش مرئية لحد ما فات الوقت."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me be precise.",
+      "ar": "خليني أكون دقيق."
+    },
+    {
+      "en": "The significance is...",
+      "ar": "الأهمية إن..."
+    },
+    {
+      "en": "To put it another way...",
+      "ar": "بصيغة تانية..."
+    },
+    {
+      "en": "Have I missed anything?",
+      "ar": "فوّتت حاجة؟"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w10",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 10,
+  "title": "The Simplest Explanation",
+  "title_ar": "أبسط تفسير",
+  "can_do": [
+    "B2.R.5"
+  ],
+  "word_count": 212,
+  "gist_ar": "مقطع فيه استنتاج عن سبب غياب موظف.",
+  "text": "He must have left in a hurry. The lamp was still on, the door had not been locked, and a cup of tea had been abandoned halfway through.\n\nThe office began to deduce. He can't have gone home, somebody said, because his coat was still there. He might have overslept and rushed out. He must have been angry — hadn't he argued with the director on Thursday? Everyone assumed a cause. By eleven o'clock a theory had assembled itself out of very little evidence, and by twelve the office had begun to conclude that it was the explanation.\n\nI noticed one clue nobody mentioned. The tea could not have been his: he had never drunk tea in the eleven years I had worked beside him. There was no trace of him in that detail at all, and somebody else must have been in the room. It was a small sign that we had all misunderstood.\n\nHe returned on Monday. His mother had been taken to hospital on Friday, and a colleague had waited in his office to pass on the message. He had not been angry; we had simply forgotten to suspect the obvious. Our error was not the theory. It was preferring a story that suited us to the possibility of concern.",
+  "glossary": [
+    {
+      "word": "deduce",
+      "ar": "يستنتج"
+    },
+    {
+      "word": "assume",
+      "ar": "يفترض"
+    },
+    {
+      "word": "evidence",
+      "ar": "دليل"
+    },
+    {
+      "word": "theory",
+      "ar": "نظرية"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why did the office think he could not have gone home?",
+      "q_ar": "ليه المكتب افتكر إنه مش ممكن رجع بيته؟",
+      "options": [
+        "The door was locked",
+        "The lamp was on",
+        "His coat was still there"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which detail did nobody else notice?",
+      "q_ar": "إيه التفصيلة اللي محدش لاحظها؟",
+      "options": [
+        "The tea could not have been his",
+        "The argument was on Thursday",
+        "The lamp had been left on"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What had actually happened?",
+      "q_ar": "اللي حصل فعلًا إيه؟",
+      "options": [
+        "His mother had been taken to hospital",
+        "He had been called to a meeting",
+        "He had argued and left angry"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the last sentence criticise?",
+      "q_ar": "الجملة الأخيرة بتنتقد إيه؟",
+      "options": [
+        "The lack of evidence rules",
+        "Preferring a satisfying story to concern",
+        "The colleague who waited"
+      ],
+      "answer": 1
+    }
+  ]
+}

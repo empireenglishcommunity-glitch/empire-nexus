@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w6",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 6,
+  "title": "Circumstances and Character",
+  "title_ar": "الظروف والشخصية",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 186,
+  "gist_ar": "مقال بيناقش هل الظروف ولا الشخصية اللي تحدّد النتايج.",
+  "text": "If I were a more patient person, I would have handled that meeting better. Perhaps. But if my circumstances had been different, I might be a more patient person now — and that is the harder thought.\n\nWe like explanations based on character. He is disorganised; she is confident. Such descriptions feel permanent, which is convenient, because permanent things require no action. Yet if you had been born into a different position, with different priorities and responsibilities, you would probably describe your own character differently today.\n\nThis does not remove responsibility. A person who is qualified and wealthy still chooses how to behave. The point is narrower: when we explain an outcome entirely by character, we usually stop looking, and the circumstances that influenced it survive untouched to affect the next person.\n\nA practical test is to ask what would have to change for this behaviour to become unnecessary. If the honest answer is 'nothing — he is simply like that', character may be the explanation. If the answer names a deadline, a workload or a lack of training, then we were never describing a character at all.",
+  "glossary": [
+    {
+      "word": "circumstances",
+      "ar": "ظروف"
+    },
+    {
+      "word": "priority",
+      "ar": "أولوية"
+    },
+    {
+      "word": "influence",
+      "ar": "يؤثّر"
+    },
+    {
+      "word": "qualified",
+      "ar": "مؤهّل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why does the writer say character explanations are convenient?",
+      "q_ar": "ليه تفسير الشخصية مريح؟",
+      "options": [
+        "Permanent things require no action",
+        "They remove responsibility",
+        "They are usually accurate"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer say does NOT follow?",
+      "q_ar": "إيه اللي الكاتب بيقول إنه ماينتجش؟",
+      "options": [
+        "That circumstances matter",
+        "That character can change",
+        "That responsibility disappears"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What survives when we explain everything by character?",
+      "q_ar": "إيه اللي يفضل موجود لما نفسّر كل حاجة بالشخصية؟",
+      "options": [
+        "The person's confidence",
+        "The original deadline",
+        "The circumstances that influenced it"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the practical test the writer suggests?",
+      "q_ar": "إيه الاختبار العملي اللي بيقترحه؟",
+      "options": [
+        "Ask what would have to change to make the behaviour unnecessary",
+        "Ask whether the person is qualified",
+        "Ask who is responsible"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "reading_b2_w4",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 4,
+  "title": "News Digest: The Future of Work",
+  "title_ar": "موجز أخبار: مستقبل الشغل",
+  "can_do": [
+    "B2.R.4",
+    "B2.R.3"
+  ],
+  "word_count": 185,
+  "gist_ar": "أربع أخبار قصيرة — قرّر أنهي واحدة تستاهل قراية متعمّقة.",
+  "text": "Four items crossed the desk this morning. Skim them and decide which deserves closer study.\n\n1. AUTOMATION REPORT — A government body predicts that by 2030 automation will have replaced about twelve per cent of routine administrative tasks nationally. The report includes the full method, and the raw data on this trend appears in an appendix.\n\n2. OPINION: 'ROBOTS WILL TAKE EVERYTHING' — A columnist argues, without citing figures, that artificial intelligence will have transformed every profession within five years. No sources are given, and no development is described.\n\n3. COMPANY PRESS RELEASE — A software firm announces that this time next year it will be launching a new scheduling product. The release quotes its own chief executive on the progress made so far.\n\n4. UNIVERSITY STUDY — Researchers followed 400 workers whose roles were partly automated between 2019 and 2024. By then, most had moved into work requiring more judgement, not less. The prediction that such workers would simply be replaced did not hold. Method and limitations are stated, and the dataset is complete.\n\nA reader who wants reliable evidence about what happens to people in the near future should not start with the loudest headline.",
+  "glossary": [
+    {
+      "word": "trend",
+      "ar": "اتجاه"
+    },
+    {
+      "word": "prediction",
+      "ar": "توقّع"
+    },
+    {
+      "word": "automation",
+      "ar": "الأتمتة"
+    },
+    {
+      "word": "transform",
+      "ar": "يحوّل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Which item best supports a claim about what really happened to workers?",
+      "q_ar": "أنهي خبر أنسب لدعوى عن اللي حصل فعلًا للعاملين؟",
+      "options": [
+        "Item 4, the university study",
+        "Item 2, the opinion column",
+        "Item 3, the press release"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is item 2 least worth close study?",
+      "q_ar": "ليه الخبر ٢ أقل واحد يستاهل قراية متعمقة؟",
+      "options": [
+        "It gives no figures or sources",
+        "It only discusses the near future",
+        "It is too short"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the purpose of item 3?",
+      "q_ar": "الغرض من الخبر ٣ إيه؟",
+      "options": [
+        "To promote a company's own product",
+        "To report independent research",
+        "To predict national employment"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which item would you read closely for national numbers and method?",
+      "q_ar": "أنهي خبر تقراه بعناية لو عايز أرقام قومية ومنهج؟",
+      "options": [
+        "Item 1, the automation report",
+        "Item 4, the university study",
+        "Item 2, the opinion column"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w11",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 11,
+  "title": "Convey the founder's story and why it matters",
+  "title_ar": "انقل حكاية المؤسِّسة وليه مهمة",
+  "can_do": [
+    "B2.M.2"
+  ],
+  "scenario": {
+    "en": "A heritage committee asks you to present a case in English on behalf of residents.",
+    "ar": "لجنة تراث طلبت تعرض حالة بالإنجليزي بالنيابة عن السكان."
+  },
+  "source": "The library, built in 1931, carries the name of a governor who never entered it. The woman who founded it sold her own house to pay for the land, and is recorded nowhere on the building. A historian's unpublished archive contains over three hundred such names.",
+  "task": {
+    "en": "Convey the details reliably and explain the significance for residents.",
+    "ar": "انقل التفاصيل بدقة واشرح الأهمية للسكان."
+  },
+  "key_points": [
+    {
+      "en": "The library was built in 1931 and named after a governor.",
+      "ar": "المكتبة اتبنت ١٩٣١ وباسم محافظ."
+    },
+    {
+      "en": "The founder sold her own house to pay for the land.",
+      "ar": "المؤسِّسة باعت بيتها عشان تمن الأرض."
+    },
+    {
+      "en": "She is recorded nowhere on the building.",
+      "ar": "اسمها مش مذكور على المبنى."
+    },
+    {
+      "en": "Explain the significance for residents.",
+      "ar": "اشرح الأهمية للسكان."
+    }
+  ],
+  "model_answer": {
+    "en": "Let me be precise: the library was built in 1931 and carries the name of a governor who never entered it, while the woman who founded it sold her own house to pay for the land and is recorded nowhere on the building. The significance is what this teaches residents — that places are made by officials rather than by people like them.",
+    "ar": "خليني أكون دقيق: المكتبة اتبنت ١٩٣١ وشايلة اسم محافظ عمره مادخلها، في حين إن الست اللي أسّستها باعت بيتها عشان تمن الأرض ومش مذكورة على المبنى. والأهمية هي اللي ده بيعلّمه للسكان — إن الأماكن بيعملها المسؤولين مش ناس زيهم."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me be precise.",
+      "ar": "خليني أكون دقيق."
+    },
+    {
+      "en": "The significance is...",
+      "ar": "الأهمية إن..."
+    },
+    {
+      "en": "To put it another way...",
+      "ar": "بصيغة تانية..."
+    },
+    {
+      "en": "Have I missed anything?",
+      "ar": "فوّتت حاجة؟"
+    }
+  ]
+}

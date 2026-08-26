@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w10",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 10,
+  "title": "Bridge the argument about what must have happened",
+  "title_ar": "اقرّب الخلاف حول اللي لازم حصل",
+  "can_do": [
+    "B2.M.4"
+  ],
+  "scenario": {
+    "en": "The office has split into two theories about a colleague's absence.",
+    "ar": "المكتب انقسم على نظريتين عن غياب زميل."
+  },
+  "source": "Mona insists he must have been angry, because he had argued with the director on Thursday. Ziad insists he might have been called away, because his coat was still there. Nobody has asked whether the abandoned cup of tea could have been his at all.",
+  "task": {
+    "en": "Bridge it: ask a question about the evidence, restate both theories, and suggest a way forward.",
+    "ar": "قرّب الخلاف: اسأل عن الدليل، أعِد صياغة النظريتين، واقترح طريق للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Ask whether the cup of tea could have been his.",
+      "ar": "اسأل هل الشاي كان بتاعه أصلًا."
+    },
+    {
+      "en": "Restate Mona's theory about the argument.",
+      "ar": "أعِد صياغة نظرية منى عن الخلاف."
+    },
+    {
+      "en": "Restate Ziad's theory about the coat.",
+      "ar": "أعِد صياغة نظرية زياد عن الجاكيت."
+    },
+    {
+      "en": "Suggest a way forward instead of guessing.",
+      "ar": "اقترح طريق للأمام بدل التخمين."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I check something? Could the cup of tea have been his at all? Mona, your position is that he must have been angry after the argument. Ziad, so your position is that he might have been called away, because his coat was there. Where do you actually agree? You agree he left quickly. Could we try this instead: ask him on Monday, rather than build a theory?",
+    "ar": "أقدر أتأكد من حاجة؟ هل الشاي كان بتاعه أصلًا؟ منى، موقفك إنه كان زعلان بعد الخلاف. زياد، يعني موقفك إنه ممكن اتصلوا بيه، لأن الجاكيت كان موجود. بتتفقوا فين؟ متفقين إنه خرج بسرعة. نجرّب كده بدلًا: نسأله يوم الاتنين بدل ما نبني نظرية؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check something?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "So your position is...",
+      "ar": "يعني موقفك إن..."
+    },
+    {
+      "en": "Where do you actually agree?",
+      "ar": "بتتفقوا فين بالظبط؟"
+    },
+    {
+      "en": "Could we try this instead?",
+      "ar": "نجرّب كده بدلًا؟"
+    }
+  ]
+}

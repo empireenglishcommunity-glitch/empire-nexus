@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w7",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 7,
+  "title": "The Complaint That Worked",
+  "title_ar": "الشكوى اللي نجحت",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 186,
+  "gist_ar": "مقال عن إزاي تشتكي بطريقة تجيب نتيجة.",
+  "text": "I wish more people knew how to complain. Not to complain more — most of us do enough of that — but to complain in a way that changes something.\n\nThe frustrating complaint is the one that describes a feeling. 'This service is disappointing' tells the reader that you are annoyed, which they already assumed, and gives them nothing to act on. If only we were taught the alternative at school: name the event, name the effect, name the remedy.\n\nCompare two messages about the same problem. The first says the delivery service is irritating and unprofessional. The second says a parcel due on the ninth arrived on the nineteenth, that the recipient took a day off work to receive it, and that a refund of the delivery fee would settle the matter. Only one of those can be answered.\n\nI wish organisations would say this openly: we cannot fix a mood. Behind almost every complaint there is a specific event somebody could have prevented, and a specific remedy somebody can afford. The complaint that works is the one that has already done that thinking for the reader.",
+  "glossary": [
+    {
+      "word": "complaint",
+      "ar": "شكوى"
+    },
+    {
+      "word": "frustrating",
+      "ar": "محبط"
+    },
+    {
+      "word": "annoying",
+      "ar": "مزعج"
+    },
+    {
+      "word": "disappointing",
+      "ar": "مخيّب للأمل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is wrong with describing only a feeling?",
+      "q_ar": "إيه الغلط في وصف الإحساس بس؟",
+      "options": [
+        "It gives the reader nothing to act on",
+        "It is usually exaggerated",
+        "It is impolite"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What three things does the writer say to name?",
+      "q_ar": "الكاتب بيقول تسمّي تلات حاجات إيه؟",
+      "options": [
+        "The person, the date and the cost",
+        "The event, the effect and the remedy",
+        "The feeling, the service and the delay"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why can only the second message be answered?",
+      "q_ar": "ليه الرسالة التانية بس ممكن تُجاب؟",
+      "options": [
+        "It mentions the company by name",
+        "It is longer and more polite",
+        "It names a specific event and a specific remedy"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer say organisations cannot fix?",
+      "q_ar": "إيه اللي المؤسسات مش قادرة تصلّحه؟",
+      "options": [
+        "A delivery date",
+        "A refund",
+        "A mood"
+      ],
+      "answer": 2
+    }
+  ]
+}

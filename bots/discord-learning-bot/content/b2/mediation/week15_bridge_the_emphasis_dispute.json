@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w15",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 15,
+  "title": "Bridge the disagreement about the announcement",
+  "title_ar": "اقرّب الخلاف حول البيان",
+  "can_do": [
+    "B2.M.4"
+  ],
+  "scenario": {
+    "en": "Two colleagues are rewriting an announcement and cannot agree on the order.",
+    "ar": "زميلين بيعيدوا صياغة بيان ومش متفقين على الترتيب."
+  },
+  "source": "Farida insists the delay must come first, because hiding it looks dishonest. Bassem insists the remedy must come first, because what matters is that readers leave with a plan. Both accept that the final position of a sentence carries the most weight.",
+  "task": {
+    "en": "Bridge it: ask what each wants the reader to remember, restate both positions, and suggest a way forward.",
+    "ar": "قرّب الخلاف: اسأل كل واحد عايز القارئ يفتكر إيه، أعِد صياغة الموقفين، واقترح طريق للأمام."
+  },
+  "key_points": [
+    {
+      "en": "Ask what each of them wants the reader to remember.",
+      "ar": "اسأل كل واحد عايز القارئ يفتكر إيه."
+    },
+    {
+      "en": "Restate Farida's position about honesty.",
+      "ar": "أعِد صياغة موقف فريدة عن الصدق."
+    },
+    {
+      "en": "Restate Bassem's position about the remedy.",
+      "ar": "أعِد صياغة موقف باسم عن الحل."
+    },
+    {
+      "en": "Suggest a way forward using the final position.",
+      "ar": "اقترح طريق للأمام باستخدام موضع النهاية."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I check something? What do each of you want the reader to remember? Farida, your position is that leading with the delay is more honest. Bassem, so your position is that the remedy matters most. Where do you actually agree? You both accept the end of a sentence carries the most weight. Could we try this instead: state the delay first and put the remedy last, so it is both honest and remembered?",
+    "ar": "أقدر أتأكد من حاجة؟ كل واحد عايز القارئ يفتكر إيه؟ فريدة، موقفك إن البداية بالتأخير أصدق. باسم، يعني موقفك إن الحل هو الأهم. بتتفقوا فين؟ الاتنين قابلين إن نهاية الجملة أقوى موضع. نجرّب كده: نذكر التأخير الأول ونحط الحل في الآخر، فيبقى صادق ومُتذكَّر؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check something?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "So your position is...",
+      "ar": "يعني موقفك إن..."
+    },
+    {
+      "en": "Where do you actually agree?",
+      "ar": "بتتفقوا فين بالظبط؟"
+    },
+    {
+      "en": "Could we try this instead?",
+      "ar": "نجرّب كده بدلًا؟"
+    }
+  ]
+}

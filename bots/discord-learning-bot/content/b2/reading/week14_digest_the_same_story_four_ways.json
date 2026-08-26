@@ -1,0 +1,75 @@
+{
+  "id": "reading_b2_w14",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 14,
+  "title": "News Digest: The Same Story, Four Ways",
+  "title_ar": "موجز: نفس الحكاية بأربع طرق",
+  "can_do": [
+    "B2.R.4",
+    "B2.R.3"
+  ],
+  "word_count": 189,
+  "gist_ar": "نفس الخبر معروض بأربع طرق — قرّر أنهي أنفع.",
+  "text": "A factory closed last month, and four pieces were written about it. However you feel about the closure, decide which deserves your time.\n\n1. BREAKING NEWS — 'Factory closes; 300 jobs lost.' Two sentences, published within an hour. Accurate; nevertheless, nothing is explained.\n\n2. ANALYSIS — Although it is longer, this piece sets out the causes: falling orders since 2022 and, in addition, a rent increase. Therefore, it argues, a decision was taken in March. It cites the company's accounts, and furthermore interviews two former managers.\n\n3. COMMENT — 'This is what happens when nobody cares.' Despite its confidence, and in spite of its length, the piece names no cause. Moreover, it discusses a different factory for half its length.\n\n4. FOLLOW-UP REPORT — Six weeks later: of the 300 workers, 180 have found work, whereas 60 are retraining and 60 have not. Due to careful method, the reporter explains how these numbers were obtained and notes who could not be reached.\n\nItem 1 tells you that something happened. Item 2 tells you why. Item 4, as a result of following up, tells you what it meant. Item 3, on the contrary, tells you only how the writer feels, even though it sounds certain.",
+  "glossary": [
+    {
+      "word": "nevertheless",
+      "ar": "مع ذلك"
+    },
+    {
+      "word": "consequently",
+      "ar": "وبالتالي"
+    },
+    {
+      "word": "whereas",
+      "ar": "في حين أن"
+    },
+    {
+      "word": "moreover",
+      "ar": "علاوة على ذلك"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Which item explains the causes of the closure?",
+      "q_ar": "أنهي خبر بيشرح أسباب الغلق؟",
+      "options": [
+        "Item 1, the breaking news",
+        "Item 2, the analysis",
+        "Item 3, the comment"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why is item 3 the weakest?",
+      "q_ar": "ليه الخبر ٣ الأضعف؟",
+      "options": [
+        "It uses too many statistics",
+        "It was published too late",
+        "It names no cause and cites nothing"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the follow-up report add?",
+      "q_ar": "التقرير المتابع بيضيف إيه؟",
+      "options": [
+        "The date of the decision",
+        "The company's rent",
+        "What the closure meant for the workers"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer say item 1 is good for?",
+      "q_ar": "الكاتب بيقول الخبر ١ مفيد لإيه؟",
+      "options": [
+        "Showing what it meant",
+        "Telling you that something happened",
+        "Explaining why it happened"
+      ],
+      "answer": 1
+    }
+  ]
+}

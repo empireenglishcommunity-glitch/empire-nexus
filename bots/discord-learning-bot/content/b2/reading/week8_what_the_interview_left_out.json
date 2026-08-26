@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w8",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 8,
+  "title": "What the Interview Left Out",
+  "title_ar": "اللي المقابلة سكتت عنه",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 166,
+  "gist_ar": "تحليل لمقابلة وإزاي طريقة النقل بتغيّر المعنى.",
+  "text": "A minister was interviewed on Tuesday, and by Wednesday two newspapers had reported the same twenty minutes very differently.\n\nThe first reported that she had admitted the programme was behind schedule and had refused to give a new date. The second reported that she had explained the delay, pointed out that two suppliers had failed, and promised a revised timetable within a month. Both accounts are defensible. Neither is complete.\n\nThe difference lies in the reporting verbs. 'Admitted' invites the reader to assume guilt; 'explained' invites them to assume reason. When a journalist writes that a politician denied something rather than that she disputed it, the sentence has already reached a verdict.\n\nI would advise readers to do one small thing: notice the verb. If an article tells you that somebody insisted, threatened or claimed, ask what a neutral account would have said instead. Sometimes the answer is nothing — the verb was accurate. Often the answer reveals that the reporting, not the speaker, supplied the emotion.",
+  "glossary": [
+    {
+      "word": "admit",
+      "ar": "يعترف"
+    },
+    {
+      "word": "deny",
+      "ar": "ينفي"
+    },
+    {
+      "word": "insist",
+      "ar": "يصرّ"
+    },
+    {
+      "word": "point out",
+      "ar": "يوضّح/ينبّه"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How did the two newspapers differ?",
+      "q_ar": "الجرنالين اختلفوا إزاي؟",
+      "options": [
+        "One interviewed a different minister",
+        "They reported the same interview very differently",
+        "One printed it a week later"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does 'admitted' invite the reader to assume?",
+      "q_ar": "كلمة admitted بتخلّي القارئ يفترض إيه؟",
+      "options": [
+        "Reason",
+        "Neutrality",
+        "Guilt"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What single thing does the writer advise readers to do?",
+      "q_ar": "الكاتب بينصح القارئ يعمل إيه؟",
+      "options": [
+        "Wait for the revised timetable",
+        "Read both newspapers",
+        "Notice the reporting verb"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is sometimes the honest answer about the verb?",
+      "q_ar": "ساعات الإجابة الصادقة عن الفعل إيه؟",
+      "options": [
+        "The speaker chose it",
+        "Nothing — the verb was accurate",
+        "The verb was always wrong"
+      ],
+      "answer": 1
+    }
+  ]
+}

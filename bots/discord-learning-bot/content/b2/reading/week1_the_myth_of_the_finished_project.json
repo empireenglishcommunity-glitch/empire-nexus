@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w1",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 1,
+  "title": "The Myth of the Finished Project",
+  "title_ar": "أسطورة المشروع اللي خلص",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 198,
+  "gist_ar": "مقال بيقول إن الشغل المستمر أهم من الإنجاز اللي بيتعلن.",
+  "text": "We have been measuring the wrong thing. Organisations celebrate the achievement they can announce, not the ongoing effort that produced it, and the result is a culture that rewards endings.\n\nConsider a team that has been working on the same system for two years. Lately they have improved reliability by a third, but there is nothing to launch, so their progress is invisible. Meanwhile a second team accomplishes a small, temporary fix, announces it before the deadline, and receives the credit. So far, so familiar.\n\nMy own view is that this is not merely unfair; it is expensive. When people learn that only completed targets are counted, they stop focusing on the work that cannot be finished — maintenance, documentation, the slow development of skill. Those are precisely the activities that decide whether an organisation still functions in five years.\n\nSome managers reply that you cannot reward what you cannot measure. That is true, but it is an argument for better measurement, not for none. Progress can be described even when it cannot be photographed. Until we learn to say 'this has been improving' as confidently as we say 'this is done', we will keep paying for the difference.",
+  "glossary": [
+    {
+      "word": "ongoing",
+      "ar": "مستمر"
+    },
+    {
+      "word": "accomplish",
+      "ar": "يحقّق/ينجز"
+    },
+    {
+      "word": "target",
+      "ar": "هدف"
+    },
+    {
+      "word": "temporary",
+      "ar": "مؤقت"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say organisations celebrate?",
+      "q_ar": "الكاتب بيقول المؤسسات بتحتفل بإيه؟",
+      "options": [
+        "Maintenance and documentation",
+        "The ongoing effort behind it",
+        "The achievement they can announce"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why is the first team's progress invisible?",
+      "q_ar": "ليه تقدّم الفريق الأول مش ظاهر؟",
+      "options": [
+        "They missed the deadline",
+        "They worked for only two months",
+        "There is nothing to launch"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer say is the real cost?",
+      "q_ar": "الكاتب بيقول التكلفة الحقيقية إيه؟",
+      "options": [
+        "People stop doing work that cannot be finished",
+        "Managers measure too much",
+        "Teams announce fixes too early"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How does the writer answer the managers' objection?",
+      "q_ar": "الكاتب بيرد على اعتراض المديرين إزاي؟",
+      "options": [
+        "It proves measurement is impossible",
+        "It shows endings should be rewarded",
+        "It argues for better measurement, not none"
+      ],
+      "answer": 2
+    }
+  ]
+}

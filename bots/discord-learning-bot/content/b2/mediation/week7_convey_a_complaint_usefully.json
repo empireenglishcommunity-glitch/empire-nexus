@@ -1,0 +1,60 @@
+{
+  "id": "mediation_b2_w7",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 7,
+  "title": "Convey the complaint so it can be answered",
+  "title_ar": "انقل الشكوى بشكل يمكن الرد عليه",
+  "can_do": [
+    "B2.M.2"
+  ],
+  "scenario": {
+    "en": "A relative is upset with a delivery company and wants you to write for them in English.",
+    "ar": "حد من عيلتك متضايق من شركة توصيل وعايزك تكتب بالإنجليزي بدالهم."
+  },
+  "source": "What they told you: the parcel was due on the ninth and arrived on the nineteenth. They took a day off work to receive it. They say the service is irritating and unprofessional. They would accept a refund of the delivery fee.",
+  "task": {
+    "en": "Convey the complaint in a form the company can act on, and explain the significance.",
+    "ar": "انقل الشكوى بشكل الشركة تقدر تتصرف فيه، واشرح الأهمية."
+  },
+  "key_points": [
+    {
+      "en": "State the event: due on the ninth, arrived on the nineteenth.",
+      "ar": "اذكر الواقعة: مستحق ٩ ووصل ١٩."
+    },
+    {
+      "en": "State the effect: a day off work was taken.",
+      "ar": "اذكر الأثر: أخد يوم أجازة."
+    },
+    {
+      "en": "State the remedy: a refund of the delivery fee.",
+      "ar": "اذكر الحل: استرداد مصاريف التوصيل."
+    },
+    {
+      "en": "Leave out the judgements the company cannot act on.",
+      "ar": "سيب الأحكام اللي الشركة مش قادرة تتصرف فيها."
+    }
+  ],
+  "model_answer": {
+    "en": "Let me be precise: a parcel due on the ninth arrived on the nineteenth, and the recipient took a day off work to receive it. A refund of the delivery fee would settle the matter. I have left out the judgements the company cannot act on — the significance is that this version can be answered, whereas calling the service irritating cannot.",
+    "ar": "خليني أكون دقيق: شحنة كانت مستحقة ٩ ووصلت ١٩، والمستلم أخد يوم أجازة عشان يستلمها. واسترداد مصاريف التوصيل يحل الموضوع. وسيبت الأحكام اللي الشركة مش قادرة تتصرف فيها — والأهمية إن الصيغة دي يمكن الرد عليها، لكن إننا نقول إن الخدمة مزعجة لأ."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me be precise.",
+      "ar": "خليني أكون دقيق."
+    },
+    {
+      "en": "The significance is...",
+      "ar": "الأهمية إن..."
+    },
+    {
+      "en": "To put it another way...",
+      "ar": "بصيغة تانية..."
+    },
+    {
+      "en": "Have I missed anything?",
+      "ar": "فوّتت حاجة؟"
+    }
+  ]
+}

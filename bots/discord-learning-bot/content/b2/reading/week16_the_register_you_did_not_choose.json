@@ -1,0 +1,74 @@
+{
+  "id": "reading_b2_w16",
+  "level": "B2",
+  "cefr": "B2",
+  "week": 16,
+  "title": "The Register You Did Not Choose",
+  "title_ar": "النبرة اللي مااخترتهاش",
+  "can_do": [
+    "B2.R.3"
+  ],
+  "word_count": 193,
+  "gist_ar": "مقال عن إن نبرة الكلام بتوصل رسالة قبل الكلمات.",
+  "text": "Every message carries two messages: what you said, and how close you assumed you were to the reader. Most misunderstandings I have had to sort out at work came from the second one.\n\nA colleague writes 'can you look into this?' and means it warmly. Read by somebody who was expecting 'would you mind looking into this?', it arrives as an instruction. Neither person has done anything wrong; they have simply set up different assumptions about distance. When we then try to deal with the misunderstanding, we usually discuss the task, which was never the problem.\n\nThis is why I would turn down the advice to 'just be natural' in a second language. Natural in which relationship? A learner who has picked up phrasal verbs from films may come up with something perfectly fluent and far too informal for the email they are writing.\n\nThe skill worth taking on is not formality. It is range: being able to say the same thing three ways and to notice which one the situation is asking for. Pay attention to that, and you will call off far fewer arguments you never meant to start.",
+  "glossary": [
+    {
+      "word": "deal with",
+      "ar": "يتعامل مع"
+    },
+    {
+      "word": "come up with",
+      "ar": "يبتكر/يقترح"
+    },
+    {
+      "word": "turn down",
+      "ar": "يرفض"
+    },
+    {
+      "word": "pay attention",
+      "ar": "يركّز"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What second message does every message carry?",
+      "q_ar": "كل رسالة بتحمل رسالة تانية إيه؟",
+      "options": [
+        "How close you assumed you were to the reader",
+        "How formal your language is",
+        "How long you spent writing it"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is 'can you look into this?' sometimes misread?",
+      "q_ar": "ليه الجملة دي بتتفهم غلط؟",
+      "options": [
+        "The reader expected a more distant phrasing",
+        "It is too long",
+        "It contains a phrasal verb"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What do people usually discuss instead of the real problem?",
+      "q_ar": "الناس بتناقش إيه بدل المشكلة الحقيقية؟",
+      "options": [
+        "The task",
+        "The tone",
+        "The relationship"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What skill does the writer say is worth developing?",
+      "q_ar": "إيه المهارة اللي تستاهل؟",
+      "options": [
+        "Formality in every message",
+        "Range — saying the same thing three ways",
+        "Learning phrasal verbs from films"
+      ],
+      "answer": 1
+    }
+  ]
+}
