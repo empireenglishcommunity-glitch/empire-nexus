@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w7",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 7,
+  "title": "Explain 'at the moment'",
+  "title_ar": "اشرح 'at the moment'",
+  "can_do": [
+    "A2.M.2"
+  ],
+  "scenario": {
+    "en": "Your classmate says 'I drink tea now' for everything. You have to make the idea clearer.",
+    "ar": "زميلتك بتقول 'I drink tea now' في كل حالة. لازم توضّح الفكرة."
+  },
+  "source": "The teacher said: 'At the moment means right now, not usually. For example: I am sitting now, but I usually stand. Give two examples, then ask a question to check she understands.'",
+  "task": {
+    "en": "Explain the difference, give two examples, then ask a question to check she understands.",
+    "ar": "اشرح الفرق، اعطي مثالين، وبعدين اسألها سؤال تتأكد إنها فهمت."
+  },
+  "key_points": [
+    {
+      "en": "At the moment means right now, not usually.",
+      "ar": "at the moment معناها دلوقتي، مش عادةً."
+    },
+    {
+      "en": "Give an example: I am sitting now.",
+      "ar": "مثال: أنا قاعد دلوقتي."
+    },
+    {
+      "en": "Give an example: I usually stand.",
+      "ar": "مثال: أنا عادةً بقف."
+    },
+    {
+      "en": "Ask a question to check she understands.",
+      "ar": "اسألها سؤال تتأكد إنها فهمت."
+    }
+  ],
+  "model_answer": {
+    "en": "At the moment means right now, not usually. For example, I am sitting now, but I usually stand. Now one question to check you understand: what are you doing at the moment?",
+    "ar": "at the moment معناها دلوقتي، مش عادةً. مثلًا: أنا قاعد دلوقتي، بس عادةً بقف. وسؤال كده أتأكد إنك فهمتي: بتعملي إيه دلوقتي؟"
+  },
+  "signal_phrases": [
+    {
+      "en": "For example?",
+      "ar": "مثلًا؟"
+    },
+    {
+      "en": "Do you understand?",
+      "ar": "فاهم؟"
+    },
+    {
+      "en": "Shall I explain again?",
+      "ar": "أشرح تاني؟"
+    },
+    {
+      "en": "Is that clear?",
+      "ar": "واضح؟"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "reading_a2_w9",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 9,
+  "title": "The Doctor's Instructions",
+  "title_ar": "تعليمات الدكتورة",
+  "can_do": [
+    "A2.R.5",
+    "A2.R.1"
+  ],
+  "word_count": 91,
+  "gist_ar": "عمر بيتبع تعليمات الدكتورة فيخف.",
+  "text": "Omar went to the doctor because he had a headache and a fever. The doctor listened carefully and then spoke slowly. 'Take this medicine twice a day, after food,' she said. 'Drink water often and sleep well. Don't work hard for three days. Walk quietly for twenty minutes every day, but don't run fast.' Omar wrote the instructions carefully in his phone. 'If the pain continues after three days, come back quickly,' the doctor said. Omar felt better easily after two days, because he followed the instructions well.",
+  "glossary": [
+    {
+      "word": "carefully",
+      "ar": "بعناية"
+    },
+    {
+      "word": "medicine",
+      "ar": "دوا"
+    },
+    {
+      "word": "pain",
+      "ar": "ألم"
+    },
+    {
+      "word": "twice",
+      "ar": "مرتين"
+    }
+  ],
+  "questions": [
+    {
+      "q": "When should Omar take the medicine?",
+      "q_ar": "عمر ياخد الدوا إمتى؟",
+      "options": [
+        "Once a day, before food",
+        "Only at night",
+        "Twice a day, after food"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What should he not do for three days?",
+      "q_ar": "مايعملش إيه لمدة تلات أيام؟",
+      "options": [
+        "Sleep",
+        "Work hard",
+        "Drink water"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What should he do if the pain continues?",
+      "q_ar": "لو الألم كمّل يعمل إيه؟",
+      "options": [
+        "Run fast",
+        "Come back quickly",
+        "Take more medicine"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did Omar feel better?",
+      "q_ar": "عمر خف ليه؟",
+      "options": [
+        "He slept all day",
+        "He followed the instructions well",
+        "He went to the hospital"
+      ],
+      "answer": 1
+    }
+  ]
+}

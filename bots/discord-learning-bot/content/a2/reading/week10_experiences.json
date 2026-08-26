@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w10",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 10,
+  "title": "Have You Ever...?",
+  "title_ar": "عمرك جربت...؟",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 89,
+  "gist_ar": "سلمى بتحكي عن تجاربها في الحياة.",
+  "text": "My name is Salma and I love new experiences. I have been to four countries, but I have never flown in a small plane. I have ridden a camel twice, and I have swum in the Red Sea. I have already tried Indian food, but I haven't eaten Chinese food yet. Last year I won a prize at school for my English. I have met many people from abroad, and I have seen two concerts in Cairo. My brother has done more than me: he has visited seven countries!",
+  "glossary": [
+    {
+      "word": "experience",
+      "ar": "تجربة"
+    },
+    {
+      "word": "ever",
+      "ar": "في أي وقت"
+    },
+    {
+      "word": "already",
+      "ar": "خلاص / بالفعل"
+    },
+    {
+      "word": "yet",
+      "ar": "لسه"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How many countries has Salma been to?",
+      "q_ar": "سلمى زارت كام بلد؟",
+      "options": [
+        "Four",
+        "Seven",
+        "Two"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What has Salma never done?",
+      "q_ar": "سلمى عمرها ما عملت إيه؟",
+      "options": [
+        "Swum in the Red Sea",
+        "Flown in a small plane",
+        "Ridden a camel"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What hasn't she eaten yet?",
+      "q_ar": "لسه ماكلتش إيه؟",
+      "options": [
+        "Indian food",
+        "Fish",
+        "Chinese food"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Who has visited more countries?",
+      "q_ar": "مين زار بلاد أكتر؟",
+      "options": [
+        "Salma",
+        "Her teacher",
+        "Her brother"
+      ],
+      "answer": 2
+    }
+  ]
+}

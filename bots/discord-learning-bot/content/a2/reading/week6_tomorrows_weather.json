@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w6",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 6,
+  "title": "Tomorrow's Weather",
+  "title_ar": "جو بكرة",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 94,
+  "gist_ar": "توقعات الجو لبكرة والجمعة.",
+  "text": "Good evening. Here is the weather for tomorrow. In the morning it will be cloudy and cold in the north, and the temperature will be about twelve degrees. It will probably rain in the afternoon, so take an umbrella. In the south it will be sunny and warm, about twenty-eight degrees. It will be very windy near the sea, so it won't be a good day for swimming. On Friday the weather will change: I think it will be hot everywhere. Maybe we will see the sun all weekend. Have a good evening.",
+  "glossary": [
+    {
+      "word": "cloudy",
+      "ar": "غائم"
+    },
+    {
+      "word": "temperature",
+      "ar": "درجة الحرارة"
+    },
+    {
+      "word": "windy",
+      "ar": "فيه هوا"
+    },
+    {
+      "word": "probably",
+      "ar": "على الأغلب"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What will the weather be in the north in the morning?",
+      "q_ar": "الجو في الشمال الصبح هيكون إيه؟",
+      "options": [
+        "Very hot",
+        "Cloudy and cold",
+        "Sunny and warm"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What will the temperature be in the south?",
+      "q_ar": "درجة الحرارة في الجنوب هتكون كام؟",
+      "options": [
+        "About twenty-eight degrees",
+        "Very cold",
+        "About twelve degrees"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why won't it be a good day for swimming near the sea?",
+      "q_ar": "ليه مش يوم كويس للعوم جمب البحر؟",
+      "options": [
+        "The sea is closed",
+        "It will be very windy",
+        "It will be too hot"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What will happen on Friday?",
+      "q_ar": "إيه اللي هيحصل الجمعة؟",
+      "options": [
+        "It will rain all day",
+        "It will be cold",
+        "It will be hot everywhere"
+      ],
+      "answer": 2
+    }
+  ]
+}

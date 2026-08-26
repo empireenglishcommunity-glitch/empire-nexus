@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w4",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 4,
+  "title": "The Most Famous Places",
+  "title_ar": "أشهر الأماكن",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 99,
+  "gist_ar": "أشهر وأحسن الأماكن في مصر.",
+  "text": "Egypt has some of the most famous places in the world. The Nile is the longest river in Africa. The Pyramids of Giza are the oldest buildings in the country, and they are the most popular place for visitors. The Egyptian Museum in Cairo is one of the best museums in the world. For me, the most beautiful city is Aswan, because it is the quietest. Summer is the hottest time to travel, so spring is the easiest. The cheapest way to travel between cities is the train. The busiest day at the Pyramids is Friday, so go early.",
+  "glossary": [
+    {
+      "word": "famous",
+      "ar": "مشهور"
+    },
+    {
+      "word": "popular",
+      "ar": "شائع"
+    },
+    {
+      "word": "cheapest",
+      "ar": "أرخص"
+    },
+    {
+      "word": "busiest",
+      "ar": "أزحم"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the longest river in Africa?",
+      "q_ar": "أطول نهر في أفريقيا إيه؟",
+      "options": [
+        "The Nile",
+        "The Pyramids",
+        "Aswan"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the cheapest way to travel between cities?",
+      "q_ar": "أرخص طريقة للسفر بين المدن؟",
+      "options": [
+        "A taxi",
+        "The train",
+        "A plane"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which city does the writer think is the most beautiful?",
+      "q_ar": "الكاتب شايف أجمل مدينة إيه؟",
+      "options": [
+        "Giza",
+        "Aswan",
+        "Cairo"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Which is the busiest day at the Pyramids?",
+      "q_ar": "أزحم يوم في الأهرامات؟",
+      "options": [
+        "Sunday",
+        "Monday",
+        "Friday"
+      ],
+      "answer": 2
+    }
+  ]
+}

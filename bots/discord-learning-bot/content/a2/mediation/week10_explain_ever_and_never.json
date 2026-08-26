@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w10",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 10,
+  "title": "Explain 'ever' and 'never'",
+  "title_ar": "اشرح ever و never",
+  "can_do": [
+    "A2.M.2"
+  ],
+  "scenario": {
+    "en": "Your classmate asks 'Did you ever go?' with a date. You have to make the rule clearer.",
+    "ar": "زميلك بيسأل 'Did you ever go?' مع تاريخ. لازم توضّح القاعدة."
+  },
+  "source": "The teacher said: 'We use ever for an experience in your life, not for a date. For example: Have you ever ridden a camel? Have you ever eaten Chinese food? Give two examples, then ask a question to check he understands.'",
+  "task": {
+    "en": "Explain the rule, give two examples, then ask a question to check he understands.",
+    "ar": "اشرح القاعدة، اعطي مثالين، وبعدين اسأله سؤال تتأكد إنه فهم."
+  },
+  "key_points": [
+    {
+      "en": "We use 'ever' for an experience in your life, not a date.",
+      "ar": "بنستخدم ever لتجربة في حياتك، مش لتاريخ."
+    },
+    {
+      "en": "Give an example: Have you ever ridden a camel?",
+      "ar": "مثال: Have you ever ridden a camel?"
+    },
+    {
+      "en": "Give an example: Have you ever eaten Chinese food?",
+      "ar": "مثال: Have you ever eaten Chinese food?"
+    },
+    {
+      "en": "Ask a question to check he understands.",
+      "ar": "اسأله سؤال تتأكد إنه فهم."
+    }
+  ],
+  "model_answer": {
+    "en": "We use 'ever' for an experience in your life, not for a date. For example: Have you ever ridden a camel? Have you ever eaten Chinese food? Now one question to check you understand: ask me something with 'ever'.",
+    "ar": "بنستخدم ever لتجربة في حياتك، مش لتاريخ. مثلًا: Have you ever ridden a camel؟ أو Have you ever eaten Chinese food؟ وسؤال كده أتأكد إنك فهمت: اسألني حاجة بـ ever."
+  },
+  "signal_phrases": [
+    {
+      "en": "For example?",
+      "ar": "مثلًا؟"
+    },
+    {
+      "en": "Do you understand?",
+      "ar": "فاهم؟"
+    },
+    {
+      "en": "Shall I explain again?",
+      "ar": "أشرح تاني؟"
+    },
+    {
+      "en": "Is that clear?",
+      "ar": "واضح؟"
+    }
+  ]
+}

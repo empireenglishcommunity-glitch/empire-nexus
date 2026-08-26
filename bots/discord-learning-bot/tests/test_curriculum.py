@@ -178,71 +178,94 @@ def test_reading_is_authored_for_a1_and_absent_levels_return_none():
         )
 
 
-def test_a1_reading_passages_are_wellformed_and_answerable():
-    """Every authored passage must be usable as an exercise: real text, a
-    bilingual title, glossary entries, and comprehension questions whose
-    answer index actually points at an option."""
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        r = curriculum.get_reading_for_week(week, "A1")
-        assert r["text"].strip(), f"w{week}: empty passage"
-        assert r["title"] and r["title_ar"], f"w{week}: title not bilingual"
-        assert r["gist_ar"], f"w{week}: no Arabic gist"
-        assert r["can_do"], f"w{week}: passage targets no descriptor"
-        assert r["glossary"], f"w{week}: no glossary"
-        for g in r["glossary"]:
-            assert g.get("word") and g.get("ar"), f"w{week}: glossary not bilingual"
-        assert len(r["questions"]) >= 3, f"w{week}: too few questions"
-        for q in r["questions"]:
-            assert q.get("q") and q.get("q_ar"), f"w{week}: question not bilingual"
-            assert len(q["options"]) >= 3, f"w{week}: too few options"
-            assert isinstance(q["answer"], int)
-            assert 0 <= q["answer"] < len(q["options"]), (
-                f"w{week}: answer index {q['answer']} out of range"
-            )
-            assert len(set(q["options"])) == len(q["options"]), (
-                f"w{week}: duplicate options would make two answers correct"
-            )
+# A CEFR-appropriate passage length band per level. A1.R.4 is about "very
+# short" texts, so 50-70 words is right there; by B2/C1 a passage that short
+# could not carry the descriptors those levels claim. Bands are deliberately
+# generous at the edges -- they exist to catch content that is wildly wrong for
+# its level, not to police an author's word count.
+READING_WORD_BANDS = {
+    "A1": (30, 120), "A2": (60, 175), "B1": (90, 230),
+    "B2": (120, 290), "C1": (150, 350), "C2": (180, 420),
+}
 
 
-def test_a1_reading_answers_are_not_all_in_the_same_position():
+def test_reading_passages_are_wellformed_and_answerable():
+    """Every authored passage, at EVERY level, must be usable as an exercise:
+    real text, a bilingual title, glossary entries, and comprehension questions
+    whose answer index actually points at an option.
+
+    Parametrised over `reading_levels()` so a newly authored level is held to
+    the same bar automatically, with no test to remember to update."""
+    assert curriculum.reading_levels(), "no level has authored reading"
+    for level in curriculum.reading_levels():
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            r = curriculum.get_reading_for_week(week, level)
+            assert r, f"{level} w{week} missing"
+            assert r["text"].strip(), f"{level} w{week}: empty passage"
+            assert r["title"] and r["title_ar"], f"{level} w{week}: title not bilingual"
+            assert r["gist_ar"], f"{level} w{week}: no Arabic gist"
+            assert r["can_do"], f"{level} w{week}: targets no descriptor"
+            assert r["glossary"], f"{level} w{week}: no glossary"
+            for g in r["glossary"]:
+                assert g.get("word") and g.get("ar"), f"{level} w{week}: glossary not bilingual"
+            assert len(r["questions"]) >= 3, f"{level} w{week}: too few questions"
+            for q in r["questions"]:
+                assert q.get("q") and q.get("q_ar"), f"{level} w{week}: question not bilingual"
+                assert len(q["options"]) >= 3, f"{level} w{week}: too few options"
+                assert isinstance(q["answer"], int)
+                assert 0 <= q["answer"] < len(q["options"]), (
+                    f"{level} w{week}: answer index {q['answer']} out of range"
+                )
+                assert len(set(q["options"])) == len(q["options"]), (
+                    f"{level} w{week}: duplicate options make two answers correct"
+                )
+
+
+def test_reading_answers_are_not_all_in_the_same_position():
     """Anti-gaming: if the correct option were always first, a student could
-    score full marks without reading. (The first draft of this content had
-    every answer at index 0 — caught and shuffled deterministically.)"""
-    positions = [q["answer"]
-                 for week in range(1, curriculum.max_week_for_level("A1") + 1)
-                 for q in curriculum.get_reading_for_week(week, "A1")["questions"]]
-    assert len(set(positions)) >= 3, f"answers cluster in positions {set(positions)}"
-    most_common = max(positions.count(p) for p in set(positions))
-    assert most_common < len(positions) * 0.6, (
-        "over 60% of answers share one position — guessable without reading"
-    )
+    score full marks without reading. (The A1 set's first draft had every
+    answer at index 0 — caught here, then shuffled deterministically.)"""
+    for level in curriculum.reading_levels():
+        positions = [q["answer"]
+                     for week in range(1, curriculum.max_week_for_level(level) + 1)
+                     for q in curriculum.get_reading_for_week(week, level)["questions"]]
+        assert len(set(positions)) >= 3, f"{level}: answers cluster in {set(positions)}"
+        most_common = max(positions.count(p) for p in set(positions))
+        assert most_common < len(positions) * 0.6, (
+            f"{level}: over 60% of answers share one position — guessable"
+        )
 
 
-def test_a1_reading_passages_are_level_appropriate_length():
-    """A1 reading descriptors are about VERY short texts; a 300-word wall
-    would not be A1 no matter how simple the words."""
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        r = curriculum.get_reading_for_week(week, "A1")
-        words = len(r["text"].split())
-        assert 30 <= words <= 120, f"A1 w{week} passage is {words} words"
-        assert r["word_count"] > 0
+def test_reading_passages_are_level_appropriate_length():
+    """A 300-word wall is not A1 no matter how simple the words, and a 50-word
+    note cannot carry what B2 claims."""
+    for level in curriculum.reading_levels():
+        lo, hi = READING_WORD_BANDS[level]
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            r = curriculum.get_reading_for_week(week, level)
+            words = len(r["text"].split())
+            assert lo <= words <= hi, (
+                f"{level} w{week} passage is {words} words, outside {lo}-{hi}"
+            )
+            assert r["word_count"] > 0
 
 
-def test_a1_reading_is_grounded_in_the_week_it_belongs_to():
-    """A passage must recycle the week's OWN authored vocabulary, otherwise it
+def test_reading_is_grounded_in_the_week_it_belongs_to():
+    """A passage must recycle its OWN week's authored vocabulary, otherwise it
     is generic filler bolted onto the curriculum rather than part of it."""
     import re
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        r = curriculum.get_reading_for_week(week, "A1")
-        text = r["text"].lower()
-        vocab = [w["word"].lower() for w in
-                 curriculum.get_vocabulary_for_week(week, "A1")]
-        used = [v for v in vocab if re.search(r"\b" + re.escape(v) + r"\b", text)]
-        assert len(used) >= 8, (
-            f"A1 w{week} passage only reuses {len(used)} of the week's "
-            f"{len(vocab)} authored words — not grounded in the week"
-        )
-        assert r["week"] == week and r["cefr"] == "A1"
+    for level in curriculum.reading_levels():
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            r = curriculum.get_reading_for_week(week, level)
+            text = r["text"].lower()
+            vocab = [w["word"].lower() for w in
+                     curriculum.get_vocabulary_for_week(week, level)]
+            used = [v for v in vocab if re.search(r"\b" + re.escape(v) + r"\b", text)]
+            assert len(used) >= 8, (
+                f"{level} w{week} passage only reuses {len(used)} of the week's "
+                f"{len(vocab)} authored words — not grounded in the week"
+            )
+            assert r["week"] == week and r["cefr"] == level
 
 
 def test_reading_passages_only_claim_descriptors_of_their_own_level():
@@ -269,70 +292,81 @@ def test_mediation_is_authored_for_a1_and_absent_levels_return_none():
             assert curriculum.get_mediation_for_week(1, level) is None
 
 
-def test_a1_mediation_tasks_are_wellformed_and_assessable():
-    """A mediation task is only usable if it has a source to relay, a person
-    who needs it, and CHECKABLE key points — the key points are the assessment
+# Function words that carry no content, so anchoring checks ignore them.
+_MEDIATION_STOPWORDS = {
+    "a", "an", "the", "is", "are", "was", "were", "he", "she", "it", "his",
+    "her", "they", "them", "at", "in", "on", "of", "and", "to", "with", "no",
+    "not", "please", "my", "one", "can", "has", "have", "got", "there",
+    "years", "old", "very", "well", "but", "does", "would", "like", "want",
+    "wants", "today", "from", "you", "i", "your", "that", "this", "for", "be",
+    "will", "do", "don't", "if", "we", "us", "our", "me", "say", "says",
+}
+
+
+def _content_tokens(text):
+    import re
+    return [t for t in re.findall(r"[a-z']+", (text or "").lower())
+            if t not in _MEDIATION_STOPWORDS]
+
+
+def test_mediation_tasks_are_wellformed_and_assessable():
+    """A mediation task is only usable if it has something to relay, a person
+    who needs it, and CHECKABLE key points -- the key points ARE the assessment
     criteria (did the essential information get across?), so a task without
-    them would be unmarkable."""
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        m = curriculum.get_mediation_for_week(week, "A1")
-        assert m["title"] and m["title_ar"], f"w{week}: title not bilingual"
-        assert m["source"].strip(), f"w{week}: nothing to relay"
-        assert m["scenario"]["en"] and m["scenario"]["ar"], f"w{week}: scenario"
-        assert m["task"]["en"] and m["task"]["ar"], f"w{week}: task"
-        assert m["model_answer"]["en"] and m["model_answer"]["ar"], f"w{week}: model"
-        assert len(m["key_points"]) >= 3, f"w{week}: too few key points"
-        for kp in m["key_points"]:
-            assert kp.get("en") and kp.get("ar"), f"w{week}: key point not bilingual"
-        # A1.M.2 is specifically about signalling with a short phrase.
-        assert len(m["signal_phrases"]) >= 3, f"w{week}: no signal phrases"
-        for sp in m["signal_phrases"]:
-            assert sp.get("en") and sp.get("ar")
-            assert len(sp["en"].split()) <= 6, (
-                f"w{week}: signal phrase '{sp['en']}' is not a SHORT phrase"
-            )
+    them would be unmarkable.
+
+    Parametrised over `mediation_levels()`."""
+    assert curriculum.mediation_levels(), "no level has authored mediation"
+    for level in curriculum.mediation_levels():
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            m = curriculum.get_mediation_for_week(week, level)
+            assert m, f"{level} w{week} missing"
+            assert m["title"] and m["title_ar"], f"{level} w{week}: title not bilingual"
+            assert m["source"].strip(), f"{level} w{week}: nothing to relay"
+            assert m["scenario"]["en"] and m["scenario"]["ar"], f"{level} w{week}: scenario"
+            assert m["task"]["en"] and m["task"]["ar"], f"{level} w{week}: task"
+            assert m["model_answer"]["en"] and m["model_answer"]["ar"], f"{level} w{week}: model"
+            assert len(m["key_points"]) >= 3, f"{level} w{week}: too few key points"
+            for kp in m["key_points"]:
+                assert kp.get("en") and kp.get("ar"), f"{level} w{week}: key point not bilingual"
+            # The relevant descriptors are specifically about signalling with a
+            # SHORT phrase, so long "phrases" would miss the point.
+            assert len(m["signal_phrases"]) >= 3, f"{level} w{week}: no signal phrases"
+            for sp in m["signal_phrases"]:
+                assert sp.get("en") and sp.get("ar")
+                assert len(sp["en"].split()) <= 6, (
+                    f"{level} w{week}: signal phrase '{sp['en']}' is not SHORT"
+                )
 
 
-def test_a1_mediation_key_points_are_grounded_in_the_source():
-    """Every fact the student must relay has to be findable in the source they
+def test_mediation_key_points_are_grounded_in_the_source():
+    """Every fact the student must relay has to be traceable to the source they
     were given. Otherwise the task asks them to invent information, which is
     not mediation."""
-    import re
-    stop = {"a", "an", "the", "is", "are", "was", "were", "he", "she", "it",
-            "his", "her", "they", "them", "at", "in", "on", "of", "and", "to",
-            "with", "no", "not", "please", "my", "one", "can", "has", "have",
-            "got", "there", "years", "old", "very", "well", "but", "does",
-            "would", "like", "want", "wants", "today", "from", "you", "i"}
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        m = curriculum.get_mediation_for_week(week, "A1")
-        source = m["source"].lower()
-        for kp in m["key_points"]:
-            toks = [t for t in re.findall(r"[a-z']+", kp["en"].lower())
-                    if t not in stop]
-            assert any(t in source for t in toks), (
-                f"A1 w{week}: key point '{kp['en']}' has no anchor in the "
-                f"source the student was given"
-            )
+    for level in curriculum.mediation_levels():
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            m = curriculum.get_mediation_for_week(week, level)
+            source = (m["source"] + " " + m["task"]["en"]).lower()
+            for kp in m["key_points"]:
+                toks = _content_tokens(kp["en"])
+                assert any(t in source for t in toks), (
+                    f"{level} w{week}: key point '{kp['en']}' has no anchor in "
+                    f"the source the student was given"
+                )
 
 
-def test_a1_mediation_model_answer_covers_every_key_point():
-    """The model answer must demonstrate a SUCCESSFUL relay — if it omits a
-    required fact, it teaches students to under-report."""
-    import re
-    stop = {"a", "an", "the", "is", "are", "was", "were", "he", "she", "it",
-            "his", "her", "they", "them", "at", "in", "on", "of", "and", "to",
-            "with", "no", "not", "please", "my", "one", "can", "has", "have",
-            "got", "there", "years", "old", "very", "well", "but", "does",
-            "would", "like", "want", "wants", "today", "from", "you", "i"}
-    for week in range(1, curriculum.max_week_for_level("A1") + 1):
-        m = curriculum.get_mediation_for_week(week, "A1")
-        model = m["model_answer"]["en"].lower()
-        for kp in m["key_points"]:
-            toks = [t for t in re.findall(r"[a-z']+", kp["en"].lower())
-                    if t not in stop]
-            assert any(t in model for t in toks), (
-                f"A1 w{week}: model answer omits key point '{kp['en']}'"
-            )
+def test_mediation_model_answer_demonstrates_every_key_point():
+    """The model answer must show a SUCCESSFUL mediation -- if it omits a
+    required point, it teaches students to under-report."""
+    for level in curriculum.mediation_levels():
+        for week in range(1, curriculum.max_week_for_level(level) + 1):
+            m = curriculum.get_mediation_for_week(week, level)
+            model = m["model_answer"]["en"].lower()
+            for kp in m["key_points"]:
+                toks = _content_tokens(kp["en"])
+                assert any(t in model for t in toks), (
+                    f"{level} w{week}: model answer omits key point '{kp['en']}'"
+                )
 
 
 def test_mediation_tasks_only_claim_descriptors_of_their_own_level():

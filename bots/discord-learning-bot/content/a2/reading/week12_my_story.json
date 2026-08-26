@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w12",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 12,
+  "title": "My Story",
+  "title_ar": "حكايتي",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 105,
+  "gist_ar": "حكاية إزاي الكاتب اتحسن في الإنجليزي.",
+  "text": "When I was ten, I hated English, because it was difficult and I was shy. My teacher was kind, so she gave me a small book and said, 'Read one page every night.' First, I understood only a few words, but I continued. After six months, I could read a whole page easily. Then I started to watch films in English, and I remembered new words because I heard them again and again. I also talked to my cousin in English before school. Finally, last year I explained a lesson to my class in English. My life changed, because I decided not to stop.",
+  "glossary": [
+    {
+      "word": "because",
+      "ar": "عشان / لأن"
+    },
+    {
+      "word": "continued",
+      "ar": "كمّل"
+    },
+    {
+      "word": "decided",
+      "ar": "قرّر"
+    },
+    {
+      "word": "improve",
+      "ar": "يتحسّن"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Why did the writer hate English at first?",
+      "q_ar": "الكاتب كره الإنجليزي في الأول ليه؟",
+      "options": [
+        "The book was big",
+        "The teacher was not kind",
+        "It was difficult and he was shy"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did the teacher tell him to do?",
+      "q_ar": "المدرّسة قالتله يعمل إيه؟",
+      "options": [
+        "Talk to his class",
+        "Read one page every night",
+        "Watch films every day"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did he remember new words from films?",
+      "q_ar": "افتكر الكلمات من الأفلام ليه؟",
+      "options": [
+        "His cousin taught him",
+        "He wrote them down",
+        "He heard them again and again"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What did he do last year?",
+      "q_ar": "عمل إيه السنة اللي فاتت؟",
+      "options": [
+        "He stopped studying",
+        "He read one page",
+        "He explained a lesson to his class"
+      ],
+      "answer": 2
+    }
+  ]
+}

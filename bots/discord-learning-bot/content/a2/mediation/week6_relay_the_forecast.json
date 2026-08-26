@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w6",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 6,
+  "title": "Pass on the weather forecast",
+  "title_ar": "انقل توقعات الجو",
+  "can_do": [
+    "A2.M.1"
+  ],
+  "scenario": {
+    "en": "Your family is going to the sea tomorrow. You heard the English forecast; they did not.",
+    "ar": "عيلتك رايحة البحر بكرة. انت سمعت توقعات الجو بالإنجليزي وهم لأ."
+  },
+  "source": "\"Tomorrow it will be cloudy and cold in the morning, about twelve degrees. It will probably rain in the afternoon. It will be very windy near the sea, so don't swim.\"",
+  "task": {
+    "en": "Tell your family the main points of the forecast.",
+    "ar": "قول لعيلتك النقط المهمة في توقعات الجو."
+  },
+  "key_points": [
+    {
+      "en": "It will be cloudy and cold in the morning.",
+      "ar": "الصبح هيكون غائم وبرد."
+    },
+    {
+      "en": "The temperature will be about twelve degrees.",
+      "ar": "الحرارة حوالي ١٢ درجة."
+    },
+    {
+      "en": "It will probably rain in the afternoon.",
+      "ar": "على الأغلب هتمطر بعد الضهر."
+    },
+    {
+      "en": "Don't swim: it will be windy near the sea.",
+      "ar": "مانعومش: فيه هوا جمب البحر."
+    }
+  ],
+  "model_answer": {
+    "en": "Tomorrow morning it will be cloudy and cold, about twelve degrees. It will probably rain in the afternoon, and it will be very windy near the sea, so we shouldn't swim.",
+    "ar": "بكرة الصبح غائم وبرد، حوالي ١٢ درجة. على الأغلب هتمطر بعد الضهر، وفيه هوا جمب البحر، فمانعومش."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry, can you repeat that?",
+      "ar": "آسف، تقدر تكرر؟"
+    },
+    {
+      "en": "What do you mean?",
+      "ar": "تقصد إيه؟"
+    },
+    {
+      "en": "I understand now.",
+      "ar": "فهمت دلوقتي."
+    },
+    {
+      "en": "Let me check.",
+      "ar": "خليني أتأكد."
+    }
+  ]
+}

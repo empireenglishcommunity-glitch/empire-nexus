@@ -1,0 +1,60 @@
+{
+  "id": "mediation_a2_w9",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 9,
+  "title": "Pass on the doctor's instructions",
+  "title_ar": "انقل تعليمات الدكتورة",
+  "can_do": [
+    "A2.M.1"
+  ],
+  "scenario": {
+    "en": "You went with your uncle to the doctor. He did not understand the English instructions.",
+    "ar": "رحت مع عمك للدكتورة. هو مافهمش التعليمات بالإنجليزي."
+  },
+  "source": "The doctor said: 'Take this medicine twice a day, after food. Drink water often and sleep well. Don't work hard for three days. If the pain continues, come back quickly.'",
+  "task": {
+    "en": "Tell your uncle exactly what he has to do.",
+    "ar": "قول لعمك بالظبط لازم يعمل إيه."
+  },
+  "key_points": [
+    {
+      "en": "Take the medicine twice a day, after food.",
+      "ar": "ياخد الدوا مرتين في اليوم بعد الأكل."
+    },
+    {
+      "en": "Drink water often and sleep well.",
+      "ar": "يشرب مياه كتير وينام كويس."
+    },
+    {
+      "en": "Don't work hard for three days.",
+      "ar": "مايتعبش نفسه في الشغل تلات أيام."
+    },
+    {
+      "en": "If the pain continues, come back quickly.",
+      "ar": "لو الألم كمّل، يرجع بسرعة."
+    }
+  ],
+  "model_answer": {
+    "en": "You have to take the medicine twice a day, after food. Drink water often and sleep well. Don't work hard for three days, and if the pain continues, come back quickly.",
+    "ar": "لازم تاخد الدوا مرتين في اليوم بعد الأكل، وتشرب مياه كتير وتنام كويس. وماتتعبش نفسك تلات أيام، ولو الألم كمّل ارجع بسرعة."
+  },
+  "signal_phrases": [
+    {
+      "en": "Sorry, can you repeat that?",
+      "ar": "آسف، تقدر تكرر؟"
+    },
+    {
+      "en": "What do you mean?",
+      "ar": "تقصد إيه؟"
+    },
+    {
+      "en": "I understand now.",
+      "ar": "فهمت دلوقتي."
+    },
+    {
+      "en": "Let me check.",
+      "ar": "خليني أتأكد."
+    }
+  ]
+}

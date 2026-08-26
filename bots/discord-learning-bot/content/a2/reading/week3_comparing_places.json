@@ -1,0 +1,74 @@
+{
+  "id": "reading_a2_w3",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 3,
+  "title": "Cairo and My Village",
+  "title_ar": "القاهرة وقريتي",
+  "can_do": [
+    "A2.R.1"
+  ],
+  "word_count": 100,
+  "gist_ar": "مقارنة بين القاهرة والقرية.",
+  "text": "I live in a small village, but my brother lives in Cairo. Cairo is much bigger and busier than my village. The streets there are more crowded, and life is faster. Food and rent are more expensive in the city. My village is quieter and cleaner, and the air is better. In summer Cairo is hotter than my village. My brother says the city is more interesting, because there is more work and more to do. I think my village is safer for children. For me the village is nicer, but Cairo is the best place to find a job.",
+  "glossary": [
+    {
+      "word": "crowded",
+      "ar": "مزدحم"
+    },
+    {
+      "word": "quieter",
+      "ar": "أهدى"
+    },
+    {
+      "word": "expensive",
+      "ar": "غالي"
+    },
+    {
+      "word": "safer",
+      "ar": "أأمن"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Which place is busier?",
+      "q_ar": "مين الأزحم؟",
+      "options": [
+        "Cairo",
+        "They are the same",
+        "The village"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the brother think the city is more interesting?",
+      "q_ar": "أخوه بيقول المدينة أمتع ليه؟",
+      "options": [
+        "It is quieter",
+        "The air is better",
+        "There is more work and more to do"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Where is the air better?",
+      "q_ar": "الهوا أحسن فين؟",
+      "options": [
+        "In Cairo",
+        "Near the streets",
+        "In the village"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is Cairo the best place for?",
+      "q_ar": "القاهرة أحسن حاجة فيها إيه؟",
+      "options": [
+        "Cheap food",
+        "Children",
+        "Finding a job"
+      ],
+      "answer": 2
+    }
+  ]
+}

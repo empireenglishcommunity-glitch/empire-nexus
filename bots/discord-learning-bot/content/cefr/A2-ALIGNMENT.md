@@ -105,8 +105,69 @@ exit exam.
   past, present and future) tests the A2 can-do set as a whole; passing
   certifies the student at **CEFR A2** and promotes them to B1.
 
+### 4b. Reading + Mediation (added 2026-08-24 — Phase 11B)
+
+**The gap this closes.** Section 4 above lists five skills, and that list was
+accurate — which was the problem: A2 had **no reading task and no mediation task
+at all.** CEFR treats reading as reception alongside listening, and mediation as
+a fourth mode in its own right. Measured against `can_do.json`, **five** A2
+descriptors were taught by *no week*:
+
+| Descriptor | What it asks for |
+|---|---|
+| `A2.R.1` | phrases + high-frequency vocabulary on immediately relevant areas |
+| `A2.R.5` | follow simple directions and short sets of **instructions** |
+| `A2.M.1` | convey the main point(s) of short everyday texts and messages |
+| `A2.M.2` | make an idea clearer with examples + check understanding |
+| `A2.M.3` | collaborate on a shared task, inviting and reacting to contributions |
+
+**Reading — 12 passages** (`content/a2/reading/`), one per week, 89–105 words
+(A1's are 50–67; A2 reads longer, not just harder). Each uses **only that week's
+already-taught grammar** and reuses **9–20 of that week's own authored
+vocabulary**, so a passage is part of its week rather than generic filler.
+
+Four are deliberately **instruction-shaped**, because that is the only honest way
+to teach `A2.R.5`: *Before You Travel: Five Steps* (w5), *Easy Tomato Rice — A
+Recipe* (w8), *The Doctor's Instructions* (w9), *Rules for New Workers* (w11).
+The other eight serve `A2.R.1` on immediately relevant topics — weekend, trip,
+comparing places, famous places, weather, café, experiences, personal story.
+
+**Mediation — 12 tasks** (`content/a2/mediation/`). A2's three mediation
+descriptors are genuinely different *acts*, so each task claims **only the ones it
+really performs** — tagging all three on every task would be the exact
+over-claiming this work removes:
+
+- **`A2.M.1` — relay (5 tasks):** pass on a voice message, trip details, a weather
+  forecast, the doctor's instructions, the work rules.
+- **`A2.M.2` — clarify (3 tasks):** explain *crowded*, *at the moment*, *ever* —
+  each requires two examples **and** a question to check the other person
+  understood.
+- **`A2.M.3` — collaborate (4 tasks):** agree on the class trip, plan a group
+  holiday, plan a shared meal, agree on the class story — each requires inviting
+  a named classmate to contribute and reacting to their suggestion.
+
+**Still open for A2:** `A2.R.2` — *"catch the main point in short, clear messages
+and **announcements**."* That is **spoken** reception. No reading passage can
+close it honestly, so it stays open and is recorded in
+`coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING` until real extended-listening
+content exists. **A2 is 17/18 descriptors taught.**
+
+**Quality gates.** These passages and tasks are held to the *same* automated bar
+as A1 (the tests are parametrised over every authored level, not written per
+level): bilingual throughout, valid answer indices, no duplicate options,
+answers not clustered in one position, level-appropriate length, vocabulary
+grounding, and — for mediation — every key point **anchored in the source** the
+student was given, with the model answer **demonstrating every key point**. That
+last gate caught a real weakness here: the three `A2.M.2` model answers asked a
+checking question without ever naming the move, so a student copying the model
+wouldn't see that checking is a deliberate step. Fixed.
+
 ## What to review / sign off
 - [ ] Themes + week order feel right for your elementary students.
+- [ ] **Reading passages (§4b) feel right for A2** — 12 passages, 89–105 words.
+      New content, so the part most worth your eyes.
+- [ ] **Mediation tasks (§4b) feel true to your students' real life** — relaying
+      messages, explaining a word, and agreeing on a group plan.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and A2-appropriate (builds on A1, stops below B1).
 - [ ] Speaking/writing tasks match your students' ability.

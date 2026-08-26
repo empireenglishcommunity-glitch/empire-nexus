@@ -1,0 +1,75 @@
+{
+  "id": "reading_a2_w8",
+  "level": "A2",
+  "cefr": "A2",
+  "week": 8,
+  "title": "Easy Tomato Rice — A Recipe",
+  "title_ar": "رز بالطماطم — وصفة سهلة",
+  "can_do": [
+    "A2.R.5",
+    "A2.R.1"
+  ],
+  "word_count": 100,
+  "gist_ar": "وصفة رز بالطماطم بالمقادير والخطوات.",
+  "text": "This recipe is for four people. You need a lot of rice — two cups — and a little oil. You also need three tomatoes, one onion, some salt and a few vegetables. You don't need much sugar; you don't need any at all. First, cut the onion and the tomatoes. Second, put a little oil in the pan and cook the onion for two minutes. Then add the tomatoes and some salt. Add the rice and enough water to cover it. Cook it for twenty minutes. Don't add too much water! Finally, put the vegetables on top and eat it hot.",
+  "glossary": [
+    {
+      "word": "recipe",
+      "ar": "وصفة"
+    },
+    {
+      "word": "ingredient",
+      "ar": "مكوّن"
+    },
+    {
+      "word": "enough",
+      "ar": "كفاية"
+    },
+    {
+      "word": "a few",
+      "ar": "شويّة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "How many people is the recipe for?",
+      "q_ar": "الوصفة لكام واحد؟",
+      "options": [
+        "Four",
+        "Twenty",
+        "Two"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How much rice do you need?",
+      "q_ar": "محتاج كام رز؟",
+      "options": [
+        "A little",
+        "Two cups",
+        "Three cups"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How much sugar do you need?",
+      "q_ar": "محتاج كام سكر؟",
+      "options": [
+        "A little",
+        "You don't need any",
+        "A lot"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How long do you cook the rice?",
+      "q_ar": "تطبخ الرز قد إيه؟",
+      "options": [
+        "One hour",
+        "Two minutes",
+        "Twenty minutes"
+      ],
+      "answer": 2
+    }
+  ]
+}

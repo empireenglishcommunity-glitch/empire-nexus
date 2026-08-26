@@ -192,6 +192,11 @@ def test_remaining_descriptor_gaps_are_only_unauthored_levels(rep):
     for code in untaught:
         level, mode, _ = code.split(".")
         if mode == "R":
+            # A listening-side reception descriptor is legitimately still open
+            # on a level whose READING is authored — see
+            # GAPS_NEEDING_EXTENDED_LISTENING.
+            if code in coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING:
+                continue
             assert level not in authored_reading, (
                 f"{code} is still untaught even though {level} reading is "
                 f"authored — the passage should target it"
@@ -203,14 +208,40 @@ def test_remaining_descriptor_gaps_are_only_unauthored_levels(rep):
             )
 
 
-def test_authored_reading_closes_its_levels_reading_descriptors(rep):
-    """For every level whose reading IS authored, no reading descriptor may
-    remain untaught. This is what makes 'reading is done for this level' a
-    checkable claim rather than a promise."""
+def test_authored_reading_closes_every_reading_descriptor_it_can(rep):
+    """For a level whose reading IS authored, the only `.R.` descriptors left
+    may be the LISTENING-side ones — a reading passage cannot close "understand
+    announcements" no matter how good it is.
+
+    A2 is what forced this precision: authoring its passages closed A2.R.1 and
+    A2.R.5, but A2.R.2 is about spoken messages. Asserting "authored reading =>
+    zero .R. gaps" would have been a quiet over-claim."""
     for level in curriculum.reading_levels():
         leftover = [c for c in rep["levels"][level]["untaught_descriptors"]
                     if c.split(".")[1] == "R"]
-        assert not leftover, f"{level} reading authored but {leftover} untaught"
+        unexpected = [c for c in leftover
+                      if c not in coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING]
+        assert not unexpected, (
+            f"{level} reading is authored but {unexpected} is still untaught and "
+            f"is NOT a listening-side descriptor — the passages should target it"
+        )
+
+
+def test_extended_listening_set_agrees_with_the_gap_plan():
+    """Two sources of truth would drift, so pin them to each other: every
+    listening-side gap must say so in its plan, and nothing else may."""
+    for code in coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING:
+        assert code in coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS, (
+            f"{code} is listed as needing extended listening but is not an open gap"
+        )
+        plan = coverage_ledger.DESCRIPTOR_GAP_PLAN[code]
+        assert plan.startswith("extended listening"), f"{code} plan says: {plan}"
+    for code, plan in coverage_ledger.DESCRIPTOR_GAP_PLAN.items():
+        if plan.startswith("extended listening"):
+            assert code in coverage_ledger.GAPS_NEEDING_EXTENDED_LISTENING, (
+                f"{code} plan needs extended listening but it is missing from "
+                f"GAPS_NEEDING_EXTENDED_LISTENING"
+            )
 
 
 def test_authored_mediation_closes_its_levels_mediation_descriptors(rep):
