@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w20",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 20,
+  "title": "The Capstone Brief",
+  "title_ar": "الإحاطة الختامية",
+  "can_do": [
+    "C2.M.1"
+  ],
+  "scenario": {
+    "en": "Four inputs, two spoken and two written, and fifteen minutes to brief a minister.",
+    "ar": "أربع مصادر، اتنين مسموعين واتنين مكتوبين، وربع ساعة تعرض على وزير."
+  },
+  "source": "WRITTEN 1: 'The consolidation is complete and the integration is authoritative.' WRITTEN 2 (audit): 'Two of five systems remain unmigrated.' SPOKEN 1 (programme lead): 'Effortless is not the word I would use. We have command of three.' SPOKEN 2 (user group): 'Precision has improved. Flexibility has not.'",
+  "task": {
+    "en": "Synthesise all four into one brief, with your own assessment of what is established.",
+    "ar": "اجمع الأربعة في إحاطة واحدة، مع تقييمك للمُثبت."
+  },
+  "key_points": [
+    {
+      "en": "Written 1 claims consolidation is complete.",
+      "ar": "المصدر المكتوب الأول بيدّعي إن الدمج كامل."
+    },
+    {
+      "en": "The audit records two of five systems unmigrated.",
+      "ar": "المراجعة بتسجّل إن اتنين من خمسة أنظمة منقلوش."
+    },
+    {
+      "en": "The programme lead says they have command of three.",
+      "ar": "مسؤول البرنامج بيقول إنهم متمكنين من تلاتة."
+    },
+    {
+      "en": "Users report precision improved but flexibility did not.",
+      "ar": "المستخدمين بيقولوا الدقة اتحسّنت لكن المرونة لأ."
+    }
+  ],
+  "model_answer": {
+    "en": "Three of the four converge and one does not. Written 1 claims consolidation is complete; the audit records two of five systems unmigrated, and the programme lead independently says they have command of three. Two sources therefore contradict the first on the same point, which settles it. Users report precision improved but flexibility did not, which is consistent with a partial migration. Established: three systems integrated, two outstanding, quality up and versatility not yet. The claim of completion is not supported.",
+    "ar": "تلاتة من الأربعة متفقين وواحد لأ. المصدر المكتوب الأول بيدّعي إن الدمج كامل؛ المراجعة بتسجّل إن اتنين من خمسة أنظمة منقلوش، ومسؤول البرنامج بشكل مستقل بيقول إنهم متمكنين من تلاتة. يعني مصدرين بيخالفوا الأول في نفس النقطة، وده يحسمها. والمستخدمين بيقولوا الدقة اتحسّنت لكن المرونة لأ، وده متوافق مع ترحيل جزئي. المُثبت: تلات أنظمة مدمجة، اتنين متأخرين، الجودة زادت والمرونة لسه. وادعاء الاكتمال مش مدعوم."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

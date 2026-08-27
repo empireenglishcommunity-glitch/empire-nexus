@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w1",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 1,
+  "title": "The Minute and the Recording",
+  "title_ar": "المحضر والتسجيل",
+  "can_do": [
+    "C2.M.1"
+  ],
+  "scenario": {
+    "en": "You have the written minute and a transcript of what was actually said. The board wants one account.",
+    "ar": "عندك المحضر المكتوب ونص التسجيل للي اتقال فعلًا. المجلس عايز رواية واحدة."
+  },
+  "source": "WRITTEN MINUTE: 'It was agreed that the provision is binding and that the committee recommend that the scheme proceed henceforth.' TRANSCRIPT: Chair — 'It is imperative that we are clear: I would propose that it proceed, be that as it may the provision is advisable rather than binding.' Member — 'Suffice it to say I am not persuaded, but so be it.'",
+  "task": {
+    "en": "Reconstruct one coherent account for the board, saying where the minute and the recording diverge.",
+    "ar": "أعد بناء رواية واحدة متماسكة للمجلس، وقول فين المحضر والتسجيل مختلفين."
+  },
+  "key_points": [
+    {
+      "en": "The minute says the provision is binding; the chair said advisable.",
+      "ar": "المحضر بيقول البند مُلزِم؛ الرئيس قال مستحسن."
+    },
+    {
+      "en": "The chair proposed the scheme proceed, which both sources agree on.",
+      "ar": "الرئيس اقترح إن المشروع يكمّل، والمصدرين متفقين على ده."
+    },
+    {
+      "en": "One member was not persuaded, which the minute omits entirely.",
+      "ar": "عضو واحد مكانش مقتنع، والمحضر حذف ده تمامًا."
+    },
+    {
+      "en": "The divergence matters because binding and advisable carry different obligations.",
+      "ar": "الفرق مهم لأن 'مُلزِم' و'مستحسن' التزامهم مختلف."
+    }
+  ],
+  "model_answer": {
+    "en": "The two sources agree on one thing and diverge on two. Both record that the chair proposed the scheme proceed. But the minute says the provision is binding, whereas the chair said on the recording that it is advisable rather than binding, and those carry different obligations. The minute also omits that one member said he was not persuaded. So the honest account is: proceed, with the provision advisable rather than binding, and one recorded dissent.",
+    "ar": "المصدرين متفقين على حاجة ومختلفين في اتنين. الاتنين بيسجّلوا إن الرئيس اقترح المشروع يكمّل. بس المحضر بيقول البند مُلزِم، بينما الرئيس قال في التسجيل إنه مستحسن مش مُلزِم، والاتنين التزامهم مختلف. والمحضر كمان حذف إن عضو قال إنه مش مقتنع. فالرواية الصادقة: نكمّل، والبند مستحسن مش مُلزِم، ومعاها اعتراض واحد مسجّل."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

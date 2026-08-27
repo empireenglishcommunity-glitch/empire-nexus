@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w6",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 6,
+  "title": "The Abstract, for the Public",
+  "title_ar": "الملخص للجمهور العادي",
+  "can_do": [
+    "C2.M.2"
+  ],
+  "scenario": {
+    "en": "A local radio station wants ninety seconds on this. Their audience is not specialist.",
+    "ar": "محطة راديو محلية عايزة تسعين ثانية عن ده. جمهورها مش متخصص."
+  },
+  "source": "ABSTRACT: 'The deterioration in air quality is attributable to the proliferation of unregulated generators, the onset of which coincided with the curtailment of grid supply. The cumulative ramification is a systemic trajectory of decline, the alleviation of which is predicated on the imposition of emission limits at inception rather than the mitigation of consequent harm.'",
+  "task": {
+    "en": "Reformulate that for radio: accurate, no nominalisation, and it must still say what should be done.",
+    "ar": "أعد صياغتها للراديو: دقيقة، من غير لغة اسمية، ولازم تفضل تقول المفروض يتعمل إيه."
+  },
+  "key_points": [
+    {
+      "en": "Air quality got worse because unregulated generators spread.",
+      "ar": "جودة الهوا سائت لأن المولدات غير المنظّمة انتشرت."
+    },
+    {
+      "en": "Generators spread when grid supply was cut back.",
+      "ar": "المولدات انتشرت لما الكهربا الحكومية قلّت."
+    },
+    {
+      "en": "The decline is systemic, not a one-off.",
+      "ar": "التدهور نظامي، مش حادث فردي."
+    },
+    {
+      "en": "Emission limits must come at the start, not after the harm.",
+      "ar": "حدود التلوث لازم تكون من البداية، مش بعد الضرر."
+    }
+  ],
+  "model_answer": {
+    "en": "Here it is for radio. Air quality in the city has got worse, and the main reason is that unregulated generators have spread. They spread because grid supply was cut back, so people bought their own. The important part is that this is systemic rather than a one-off: it builds. And the researchers are clear about the remedy — emission limits have to come in at the start, when generators are installed, rather than trying to clean up the harm afterwards. That is the whole finding in four sentences.",
+    "ar": "أهو للراديو. جودة الهوا في المدينة سائت، والسبب الأساسي إن المولدات غير المنظّمة انتشرت. وانتشرت لأن الكهربا الحكومية قلّت، فالناس جابت مولدات لنفسها. والجزء المهم إن ده نظامي مش حادث فردي: بيتراكم. والباحثين واضحين في الحل — حدود التلوث لازم تتحدّد من البداية وقت التركيب، مش إننا نحاول ننضّف الضرر بعدين. دي كل النتيجة في أربع جمل."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام مباشر، معناها كده."
+    },
+    {
+      "en": "Let me put that another way.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Tell me which part is unclear.",
+      "ar": "قول لي أنهي جزء مش واضح."
+    },
+    {
+      "en": "Is that any clearer now?",
+      "ar": "أوضح كده؟"
+    }
+  ]
+}

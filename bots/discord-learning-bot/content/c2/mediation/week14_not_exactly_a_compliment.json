@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w14",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 14,
+  "title": "Not Exactly a Compliment",
+  "title_ar": "مش بالظبط مجاملة",
+  "can_do": [
+    "C2.M.3"
+  ],
+  "scenario": {
+    "en": "A remark meant as dry humour has been received as an insult, and the room has gone quiet.",
+    "ar": "تعليق كان مقصود كسخرية جافة، اتفهم كإهانة، والأوضة سكتت."
+  },
+  "source": "Sami (to Hala, of her report): 'Not bad at all, considering.' Hala: 'And what is that supposed to mean, exactly?' Sami: 'It was a compliment.' Hala: 'It was hardly ideal, was it. Considering what?' Sami: 'Considering the timeline. Obviously.'",
+  "task": {
+    "en": "Mediate this without deciding who is at fault, and get the exchange closed rather than won.",
+    "ar": "توسّط من غير ما تحدّد مين الغلطان، واقفل الموقف بدل ما تخلّي حد يكسبه."
+  },
+  "key_points": [
+    {
+      "en": "Sami intended 'considering' to refer to the timeline.",
+      "ar": "سامي كان قاصد 'مع إن' تشير للجدول الزمني."
+    },
+    {
+      "en": "Hala heard 'considering' as an unstated criticism of her.",
+      "ar": "هالة سمعت 'مع إن' كنقد ضمني ليها."
+    },
+    {
+      "en": "'Considering' with nothing after it can be heard as a criticism.",
+      "ar": "'مع إن' ومن غير ما تكمّل ممكن تتسمع كنقد."
+    },
+    {
+      "en": "Ask Sami to say the compliment plainly rather than defend the phrasing.",
+      "ar": "اطلب من سامي يقول المجاملة صريحة بدل ما يدافع عن الصيغة."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I stop us there, because I do not think anything unkind has happened and it is about to. Sami, I take it 'considering' referred to the timeline — that is how I heard it. Hala, I can also hear why 'considering' with nothing after it lands as a criticism, because that is exactly the shape a criticism takes. That is the trouble with understatement: it carries its meaning in the delivery, and delivery is not evidence. Sami, rather than defending the phrasing, would you just say the compliment plainly? And Hala, if it is said plainly, would that close it? I am not asking either of you to accept you were wrong, because I do not think either of you was.",
+    "ar": "أقدر أوقفنا هنا، لأني مش شايف إن حصل حاجة سيئة، بس على وشك تحصل. سامي، أنا فاهم إن 'مع إن' كانت عن الجدول الزمني — كده أنا سمعتها. هالة، وأنا كمان فاهم ليه 'مع إن' ومن غور ما تكمّل بتوصل كنقد، لأن ده بالظبط شكل النقد. ودي مشكلة التقليل: بيحمل معناه في طريقة القول، وطريقة القول مش دليل. سامي، بدل ما تدافع عن الصيغة، تقدر تقول المجاملة صريحة؟ وهالة، لو اتقالت صريحة، ده يقفل الموضوع؟ أنا مش بطلب من حد فيكم يعترف إنه غلط، لأني مش شايف إن حد فيكم غلط."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me stop us there.",
+      "ar": "خليني أوقفنا هنا."
+    },
+    {
+      "en": "Where exactly do you differ?",
+      "ar": "مختلفين فين بالظبط؟"
+    },
+    {
+      "en": "Can I restate both positions?",
+      "ar": "أقدر أعيد صياغة الموقفين؟"
+    },
+    {
+      "en": "Let us separate those two.",
+      "ar": "خلينا نفصل الاتنين."
+    }
+  ]
+}

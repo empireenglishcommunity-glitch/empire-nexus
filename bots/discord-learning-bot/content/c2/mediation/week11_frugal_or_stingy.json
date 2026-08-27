@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w11",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 11,
+  "title": "Frugal, or Stingy?",
+  "title_ar": "مقتصد ولا بخيل؟",
+  "can_do": [
+    "C2.M.2"
+  ],
+  "scenario": {
+    "en": "A translator has rendered a profile into Arabic and every choice has flattened it. The subject is unhappy.",
+    "ar": "مترجم نقل بروفايل للعربي وكل اختيار سطّح المعنى. الشخص مضايق."
+  },
+  "source": "ORIGINAL: 'She is frugal, assertive and slim, and runs a regime that colleagues describe as childlike in its directness.' TRANSLATION returned as: 'stingy, pushy and skinny', with the regime 'childish'.",
+  "task": {
+    "en": "Explain to the translator what each substitution did, and why the subject objects.",
+    "ar": "اشرح للمترجم كل استبدال عمل إيه، وليه الشخص معترض."
+  },
+  "key_points": [
+    {
+      "en": "Frugal is complimentary; stingy is pejorative.",
+      "ar": "'مقتصد' مدح؛ 'بخيل' تحقير."
+    },
+    {
+      "en": "Assertive is neutral to positive; pushy is derogatory.",
+      "ar": "'حازم' محايد لإيجابي؛ 'متطفّل' مسيء."
+    },
+    {
+      "en": "Slim is flattering; skinny is not.",
+      "ar": "'رشيق' مجاملة؛ 'نحيف أوي' لأ."
+    },
+    {
+      "en": "Childlike praises directness; childish disparages it.",
+      "ar": "'زي الأطفال' بيمدح الصراحة؛ 'طفولي' بيقلّل منها."
+    }
+  ],
+  "model_answer": {
+    "en": "Every one of the four kept the denotation and reversed the overtone. Frugal is complimentary and stingy is pejorative — the same behaviour, opposite evaluation. Assertive is neutral to positive; pushy is derogatory. Slim is flattering; skinny is not. And childlike praises directness whereas childish disparages it, which is the one that will hurt most because it was the compliment in the original. She objects because the translation reads as a damning profile of a person the English text admired.",
+    "ar": "كل واحدة من الأربعة حافظت على المعنى الحرفي وقلبت النبرة. 'مقتصد' مدح و'بخيل' تحقير — نفس السلوك وتقييم معاكس. 'حازم' محايد لإيجابي؛ 'متطفّل' مسيء. 'رشيق' مجاملة؛ 'نحيف أوي' لأ. و'زي الأطفال' بتمدح الصراحة بينما 'طفولي' بتقلّل منها، ودي أكتر واحدة هتوجع لأنها كانت المجاملة في الأصل. هي معترضة لأن الترجمة بتقرأ كبروفايل قاسي لشخص النص الإنجليزي كان معجب بيه."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام مباشر، معناها كده."
+    },
+    {
+      "en": "Let me put that another way.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Tell me which part is unclear.",
+      "ar": "قول لي أنهي جزء مش واضح."
+    },
+    {
+      "en": "Is that any clearer now?",
+      "ar": "أوضح كده؟"
+    }
+  ]
+}

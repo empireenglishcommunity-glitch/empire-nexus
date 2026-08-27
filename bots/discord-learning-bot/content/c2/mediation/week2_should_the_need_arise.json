@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w2",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 2,
+  "title": "Should the Need Arise",
+  "title_ar": "إذا لزم الأمر",
+  "can_do": [
+    "C2.M.4"
+  ],
+  "scenario": {
+    "en": "A partner has read a clause as a promise. It is not one, and the difference is money.",
+    "ar": "شريك فهم بند على إنه وعد. مش وعد، والفرق فلوس."
+  },
+  "source": "CLAUSE: 'Additional resource will be made available should the need arise, such need to be determined by the Provider. Were it not for the ceiling at Annex C, this provision would be unlimited.'",
+  "task": {
+    "en": "Clarify for the partner what the clause commits to, and the two readings of 'should the need arise'.",
+    "ar": "وضّح للشريك البند بيلتزم بإيه، والقراءتين لـ'إذا لزم الأمر'."
+  },
+  "key_points": [
+    {
+      "en": "'Should the need arise' can mean when the partner needs it or when the Provider agrees.",
+      "ar": "'إذا لزم الأمر' ممكن تعني وقت ما الشريك يحتاج أو وقت ما المزوّد يوافق."
+    },
+    {
+      "en": "The clause itself says the Provider determines the need.",
+      "ar": "البند نفسه بيقول إن المزوّد هو اللي يحدّد الحاجة."
+    },
+    {
+      "en": "So it is a discretion, not a promise.",
+      "ar": "فهي سلطة تقديرية، مش وعد."
+    },
+    {
+      "en": "The ceiling at Annex C caps it regardless.",
+      "ar": "الحد الأقصى في الملحق ج بيحدّها في كل الأحوال."
+    }
+  ],
+  "model_answer": {
+    "en": "The phrase carries two readings and the clause settles which. 'Should the need arise' could mean when you need it, or when somebody agrees you need it. Read on: the clause says such need is to be determined by the Provider. So it is a discretion and not a promise, and the difference is that you cannot enforce a discretion. There is also a ceiling at Annex C which caps the amount regardless of who determines the need. I would not sign this believing the resource is committed.",
+    "ar": "العبارة فيها قراءتين والبند بيحسم أنهي واحدة. 'إذا لزم الأمر' ممكن تعني وقت ما إنت تحتاج، أو وقت ما حد يوافق إنك محتاج. كمّل قراية: البند بيقول إن الحاجة دي المزوّد هو اللي يحدّدها. فهي سلطة تقديرية مش وعد، والفرق إنك مش بتقدر تطالب بحق تقديري. وكمان فيه حد أقصى في الملحق ج بيحدّ المبلغ بغض النظر عن مين اللي يحدّد الحاجة. أنا مش هوقّع ده وأنا فاهم إن الموارد مضمونة."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

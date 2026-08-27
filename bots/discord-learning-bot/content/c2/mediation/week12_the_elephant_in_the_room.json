@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w12",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 12,
+  "title": "The Elephant in the Room",
+  "title_ar": "الفيل في الأوضة",
+  "can_do": [
+    "C2.M.4"
+  ],
+  "scenario": {
+    "en": "A colleague new to the company has read the minutes literally and is confused.",
+    "ar": "زميل جديد في الشركة قرا المحضر حرفيًا ومحتار."
+  },
+  "source": "MINUTES: 'The Director invited the meeting to bite the bullet on the elephant in the room, adding that the matter had been on the back burner long enough and that a storm in a teacup should not become the tip of the iceberg.'",
+  "task": {
+    "en": "Explain what each expression is doing, and what the sentence actually says.",
+    "ar": "اشرح كل تعبير بيعمل إيه، والجملة بتقول إيه فعلًا."
+  },
+  "key_points": [
+    {
+      "en": "'Bite the bullet' means accept something unpleasant and act.",
+      "ar": "'يعضّ على الرصاصة' معناها يقبل حاجة مزعجة ويتحرّك."
+    },
+    {
+      "en": "'The elephant in the room' is the obvious issue nobody names.",
+      "ar": "'الفيل في الأوضة' هي المشكلة الواضحة اللي محدش بيسمّيها."
+    },
+    {
+      "en": "'On the back burner' means deliberately postponed.",
+      "ar": "'على النار الهادية' معناها مؤجّلة بشكل متعمّد."
+    },
+    {
+      "en": "The final expression mixes two idioms that mean opposite things.",
+      "ar": "التعبير الأخير خلط تعبيرين معناهم عكس بعض."
+    }
+  ],
+  "model_answer": {
+    "en": "Taken in order: 'bite the bullet' means accept something unpleasant and get on with it. 'The elephant in the room' is the obvious problem nobody will name. 'On the back burner' means deliberately postponed, not forgotten. So the first two thirds say: the Director asked them to finally deal with the issue everyone has been avoiding, which has been postponed long enough. The last clause is where it falls apart — it mixes a storm in a teacup, meaning a fuss about nothing, with the tip of the iceberg, meaning a small visible part of something large. Those are opposites. That clause says almost nothing, and you are right to have found it confusing.",
+    "ar": "بالترتيب: 'يعضّ على الرصاصة' معناها يقبل حاجة مزعجة ويتصرّف. 'الفيل في الأوضة' هي المشكلة الواضحة اللي محدش عايز يسمّيها. 'على النار الهادية' معناها مؤجّلة بشكل متعمّد، مش منسية. فالتلتين الأولانيين معناهم: المدير طلب منهم يتعاملوا أخيرًا مع المشكلة اللي الكل بيتهرب منها، واللي اتأجلت كفاية. والجملة الأخيرة هي اللي بتنهار — خلطت 'عاصفة في فنجان' اللي معناها ضجة على مفيش، مع 'قمة جبل الجليد' اللي معناها جزء صغير ظاهر من حاجة كبيرة. ودول عكس بعض. الجملة دي مش بتقول حاجة تقريبًا، وإنت معاك حق إنك اتلخبطت."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}
