@@ -124,57 +124,87 @@ that previews the C1 exit exam.
   tests the C1 can-do set as a whole; passing certifies the student at **CEFR C1**
   and promotes them to C2.
 
-### 4b. ⚠️ Eight C1 descriptors are published but NOT PROVABLE (found 2026-08-24)
+### 4b. ✅ CLOSED — the eight unprovable C1 descriptors are now provable
 
-**This section corrects what "C1 teaches all 20 descriptors" has been taken to
-mean.** It is true that a week *targets* each of them. It is not true that a
-student can *prove* eight of them.
+**Status: closed 2026-08-27.** All three missing exercises have been authored for
+C1, and the coverage ledger reports **C1: 20 descriptors — OK** with nothing under
+*"PUBLISHED BUT NOT PROVABLE"*. This section is kept as the record of what was
+wrong, because the mis-attribution it describes is the kind of error that returns
+quietly if nobody remembers it.
 
-A1–B2 each have three exercises that C1 does not: **reading**, **mediation** and
-**extended listening**. Those three are the only routes to eight C1 descriptors,
-so a C1 student has no way to produce the evidence:
+**What the finding was.** A week *targeted* all 20 descriptors, but a student
+could *prove* only 12. A1–B2 each had three exercises C1 lacked — **reading**,
+**mediation** and **extended listening** — and those were the only routes to
+eight C1 descriptors:
 
-| Descriptor | Only provable by | Which C1 does not have |
+| Descriptor | Only provable by | Now |
 |---|---|---|
-| `C1.M.1` summarise long texts, relay detail reliably | mediation | ❌ |
-| `C1.M.2` explain complex ideas, adapt for the audience | mediation | ❌ |
-| `C1.M.3` mediate discussion, resolve misunderstandings | mediation | ❌ |
-| `C1.M.4` synthesise arguments from several sources | mediation | ❌ |
-| `C1.R.1` extended speech, relationships only implied | extended listening | ❌ |
-| `C1.R.2` follow films with considerable slang | extended listening | ❌ |
-| `C1.R.3` lengthy, complex texts in detail | reading | ❌ |
-| `C1.R.4` a writer's attitude, tone, irony, register | reading | ❌ |
-
-**The practical consequence.** A C1 student who completed **every exercise on
-every day of all 18 weeks** would still finish with those eight unevidenced on
-their certificate, and the Level Completion Contract could **never** return
-"complete" for C1. Nobody has hit this because every student is currently on A1.
+| `C1.M.1` summarise long texts, relay detail reliably | mediation | ✅ 18 weeks |
+| `C1.M.2` explain complex ideas, adapt for the audience | mediation | ✅ 18 weeks |
+| `C1.M.3` mediate discussion, resolve misunderstandings | mediation | ✅ 18 weeks |
+| `C1.M.4` synthesise arguments from several sources | mediation | ✅ 18 weeks |
+| `C1.R.1` extended speech, relationships only implied | extended listening | ✅ 9 scripts |
+| `C1.R.2` follow films with considerable slang | extended listening | ✅ 6 scripts |
+| `C1.R.3` lengthy, complex texts in detail | reading | ✅ 18 weeks |
+| `C1.R.4` a writer's attitude, tone, irony, register | reading | ✅ 18 weeks |
 
 **Two of these were worse than missing — they were mis-attributed.** Until this
 was found, `C1.R.1` (*"extended speech… relationships only implied"*) and
 `C1.R.2` (*"follow **films** employing a considerable degree of slang"*) were
 being evidenced by the **listening dictation** — five typed words a week. Five
-words cannot demonstrate following an unstructured argument or a film. The rule
-is now enforced in code for all six levels, which is what made these visible.
+words cannot demonstrate following an unstructured argument or a film. That is
+now blocked in code for all six levels by an explicit rule about descriptor grain
+size (`EXTENDED_SPOKEN_MARKERS`), which is what made these visible in the first
+place.
 
-**What closes it:** authoring **reading, mediation and extended listening for
-C1** — 18 weeks each. No code is needed; the exercises, pages, tracking and
-ledger all already exist and work, and the moment content lands they turn on.
-A test states this as a rule: once a level has all three, nothing it publishes
-can be unprovable.
+**How the content answers the descriptors, not just the exercise slot.** The nine
+`C1.R.1` scripts are deliberately **unsignposted** — no discourse markers doing
+structural work, causal links left implicit, the speaker digressing and
+correcting themselves — because that is the opposite of the B2 lectures, which
+signpost every move on purpose for `B2.R.1`. Using the B2 shape here would have
+filled the slot without testing the skill.
 
-**Until then, the ledger prints this every run** under *"PUBLISHED BUT NOT
-PROVABLE"*, with the reason and the consequence. C1 should not be described to
-students as fully CEFR-covered while that block is non-empty.
+**One reservation, recorded rather than hidden.** `C1.R.2` names **films**. Our
+audio is Kokoro TTS: one clean voice per turn, no overlapping speech, no
+regional accents, no emotional prosody. The scripts are written thick with idiom
+and the questions target what an idiom is *doing*, so the slang half is genuinely
+delivered — but a student who understands every scene has still never had to read
+tone off a real actor's voice. See the same reservation on `B2.R.2`, which the
+ledger prints in full every run.
+
+**Delivery speed is now verified, not assumed.** `C1.R.1` is about following
+*native* extended speech, so pace matters. C1 audio was measured at **189 wpm**
+against a 195 target (`empire-dojo/scripts/verify_audio_pace.py`). Before that
+check existed, several C1 clips were rendering at **120 wpm** — slower than the
+A1 target — because delivery speed was inherited from whichever TTS voice a
+script happened to name.
 
 ## What to review / sign off
-- [ ] ⚠️ **The eight unprovable C1 descriptors (§4b)** — you should know that C1
-      cannot currently be completed under the contract, and why. Nothing is
-      broken for present students (all are on A1); this is the level's readiness
-      for when someone arrives.
-- [ ] Whether C1 content (reading / mediation / extended listening) should be
-      authored **now**, or deferred until a student is close to C1. Deferring is
-      defensible — the ledger reports the gap honestly either way.
+> **None of the C1 content below has been reviewed by a human yet.** It was
+> authored by the assistant and verified only against the machine checks (tests,
+> the coverage ledger, pace verification). Every box here is unticked on purpose:
+> they are the record of what you have and have not read. Leave them unticked
+> until you have actually read the thing each one names — a ticked box you did
+> not tick yourself would destroy the only signal that separates "reviewed" from
+> "generated".
+>
+> The fastest way to read it is `/content-review/` on the live site (behind the
+> ops passcode), which lists every item with its answers.
+
+- [ ] ✅ **§4b is now closed** — read it anyway. It records that `C1.R.1` and
+      `C1.R.2` were once credited to the five-word dictation, which is the error
+      most likely to creep back in.
+- [ ] **18 C1 reading texts** — `C1.R.3` (detail in lengthy complex texts) and
+      `C1.R.4` (attitude, tone, irony, register).
+- [ ] **18 C1 mediation tasks** — `C1.M.1`–`C1.M.4`.
+- [ ] **18 C1 extended-listening scripts** — 9 unsignposted monologues
+      (`C1.R.1`), 6 idiom-heavy scenes (`C1.R.2`), 3 specialised sources
+      (`C1.R.5`). Check the unsignposted nine especially: they are *meant* to
+      feel unstructured, and the line between "authentically rambling" and
+      "badly written" is a judgement call I should not be making alone.
+- [ ] **The `C1.R.2` film reservation** — accept that synthesised audio delivers
+      the slang but not an actor's tone, or tell me to report it as untaught
+      until real recordings exist.
 - [ ] Themes + week order feel right for your advanced students.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and C1-appropriate (builds on B2, stops below C2).
