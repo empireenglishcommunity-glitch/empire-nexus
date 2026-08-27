@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_c2_w12",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 12,
+  "title": "I've Known Omar Since University",
+  "title_ar": "أنا أعرف عمر من أيام الجامعة",
+  "can_do": [
+    "C2.R.4"
+  ],
+  "format": "wedding toast",
+  "word_count": 323,
+  "gist_ar": "خطاب فرح ودّي على السطح. تحت السطح فيه اعتراض واعتذار. كله بالأسلوب.",
+  "before_listening": {
+    "en": "A best man's speech. Warm on the surface. Underneath it there is both a reproach and an apology, and neither is stated.",
+    "ar": "خطاب صاحب العريس. ودود من برّه. جوّاه عتاب واعتذار، والاتنين مش مقولين صريح."
+  },
+  "segments": [
+    {
+      "speaker": "Best man",
+      "speaker_ar": "صاحب العريس",
+      "voice": "am_michael",
+      "text": "Right. Phones down, I'll be quick, and I've been asked by three separate people not to mention Prague, so I won't mention Prague. I've known Omar since university, which is nineteen years, and in that time I have watched him become extremely good at one specific thing, which is being the person everybody rings. You all know this. You've all rung him. Some of you rang him this week about the seating. He is the man who turns up with a van. He turned up with a van for me in 2016 and he has never once mentioned it since, which is the part I'd draw your attention to, because most people would have got two years out of that story. And I want to say something to Leila, who I met four years ago and who I liked immediately, and who I'll admit I was slightly wary of for about six months, entirely on Omar's behalf and entirely unnecessarily. Leila, you are the first person I have seen ring him and ask him nothing. You ask him how he is. And you wait. It's an extraordinary thing to watch, if you've known him as long as I have, because he doesn't know what to do with the pause and he's learning. Now. There's a version of this speech where I list his flaws for laughs, and I've written it, and it's funnier than this one. But I'd rather use my ninety seconds on this: Omar, you spent most of your thirties being useful to people, and a few of us let you, and I let you more than most. I've thought about that a fair bit this year. So my toast isn't to the happy couple, if you'll forgive me, because you'll get plenty of those. It's to the next nineteen years being the ones where somebody turns up with a van for you. And Leila already has. To Omar and Leila."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker admitting about himself in this speech?",
+    "options": [
+      "That he was jealous of Leila when they first met",
+      "That he had forgotten to prepare a speech until that morning",
+      "That he no longer sees Omar as often as he used to",
+      "That he took advantage of Omar's willingness to help and did so more than others"
+    ],
+    "answer": 3
+  },
+  "questions": [
+    {
+      "q": "Why does he draw attention to Omar never mentioning the van in 2016?",
+      "options": [
+        "To show Omar does not trade on the things he does for people",
+        "To suggest Omar has a poor memory for favours",
+        "To explain why he owes Omar money",
+        "To hint that the favour was never actually completed"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he praise Leila for specifically?",
+      "options": [
+        "Organising the seating plan for the wedding",
+        "Persuading Omar to travel more",
+        "Ringing Omar to ask him how he is, and asking him for nothing",
+        "Introducing Omar to his current job"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the effect of mentioning that he wrote a funnier speech and discarded it?",
+      "options": [
+        "It apologises in advance for the speech being dull",
+        "It implies the funnier version insulted Leila",
+        "It signals that what follows is deliberately chosen sincerity, not inability to be funny",
+        "It fills time while he finds his notes"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the toast at the end actually wishing for?",
+      "options": [
+        "That Omar becomes the one who is helped rather than only the helper",
+        "That the couple move closer to their friends",
+        "That Omar becomes less available to the people who ring him",
+        "That the next nineteen years are quieter than the last"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does 'I've been asked by three separate people not to mention Prague' achieve?",
+      "options": [
+        "It sets up a joke he later returns to and completes",
+        "It explains why several guests could not attend",
+        "It signals that the speech will be entirely improvised",
+        "It raises a story and withholds it, while showing he can be trusted with it"
+      ],
+      "answer": 3
+    }
+  ],
+  "glossary": [
+    {
+      "word": "best man",
+      "ar": "صاحب العريس - الشبين"
+    },
+    {
+      "word": "wary of",
+      "ar": "متحفّظ / حاسس بريبة"
+    },
+    {
+      "word": "turn up with a van",
+      "ar": "يجي يساعد فعليًا - مش بالكلام"
+    },
+    {
+      "word": "get two years out of a story",
+      "ar": "يفضل يفكّر الناس بالجميل"
+    },
+    {
+      "word": "reproach",
+      "ar": "عتاب"
+    }
+  ]
+}

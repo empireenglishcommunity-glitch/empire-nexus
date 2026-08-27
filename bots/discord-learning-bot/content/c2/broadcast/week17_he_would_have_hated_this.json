@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_c2_w17",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 17,
+  "title": "He Would Have Hated This",
+  "title_ar": "هو كان هيكره الحكاية دي",
+  "can_do": [
+    "C2.R.4"
+  ],
+  "format": "eulogy",
+  "word_count": 427,
+  "gist_ar": "كلمة تأبين. المدح فيها مشروط، والصدق بيبان من اللي مقالوش.",
+  "before_listening": {
+    "en": "A eulogy that declines to simplify the person. What is loving in it and what is critical are carried by the same sentences.",
+    "ar": "كلمة تأبين مش بتبسّط الشخص. الحب والنقد محمولين في نفس الجُمل."
+  },
+  "segments": [
+    {
+      "speaker": "Daughter",
+      "speaker_ar": "الابنة",
+      "voice": "af_nicole",
+      "text": "He would have hated this. I want to start there, because half of you are thinking it and the other half didn't know him well enough to. He'd have hated the flowers, he'd have hated the number of people, and he would have had a view about the hymn. My father was a difficult man to be the child of and a very easy man to be the friend of, and I've spent this week listening to the friends, and I want to say honestly that some of what you told me I didn't recognise at all. Sixteen of you have told me he was patient. Sixteen. I want to be careful here, because I'm not going to stand in a church and settle scores with a man who can't reply. So let me put it the way I've come to understand it. He gave what he had, and what he had was not evenly distributed. He had enormous patience for anybody who came to him with a problem and none at all for anybody who came to him with a feeling. He could sit up until two in the morning with somebody else's son and could not manage a Sunday lunch with his own without needing to fix the shed. And I used to think that was a judgement about me, and it was not, and understanding that took me until my forties and one very expensive year. The last conversation we had, he asked me — and this is the closest he came, and it was close — he asked me whether I thought he'd been fair to my brother. Not to me. To Ismail. And I said no. I said no, and I was frightened while I said it, at forty-six years old, in a hospital chair. And he thought about it for a long time, long enough that I thought he'd gone to sleep, and he said: 'No. I don't think I was either.' That's all. That's the whole of it. He didn't apologise, and I'm not going to stand here and upgrade it into an apology for him, because he had three weeks in which to make one and he chose not to and that was also him. But he agreed with me. He was seventy-eight and he had never once agreed with me about anything that mattered and then he did. I would not trade that for a kinder father. I've thought about it properly and I wouldn't. Thank you for coming. He'd have said there were too many of you."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker's stance towards her father?",
+    "options": [
+      "She forgives him entirely and asks the congregation to remember only his kindness",
+      "She uses the eulogy to accuse him and reject his memory",
+      "She holds the love and the criticism together and refuses to resolve them",
+      "She avoids all personal judgement and confines herself to facts"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What does she mean by 'what he had was not evenly distributed'?",
+      "options": [
+        "His patience went to problems and to outsiders, not to feelings or family",
+        "He divided his money unfairly between his children",
+        "His health declined unpredictably in his last years",
+        "He was generous only when others were watching"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What happened in the last conversation?",
+      "options": [
+        "He apologised to her directly for the first time",
+        "He asked whether he had been fair to Ismail, and agreed when she said no",
+        "He refused to discuss her brother at all",
+        "He asked her to speak at his funeral"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does she say she will not 'upgrade it into an apology'?",
+      "options": [
+        "Because she did not hear his final words clearly",
+        "Because her brother has asked her not to speak for him",
+        "Because he had three weeks to apologise and chose not to, and that was also who he was",
+        "Because an apology would have embarrassed him publicly"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the effect of the repeated 'He would have hated this'?",
+      "options": [
+        "It criticises the family who arranged the service",
+        "It apologises for the length of the eulogy",
+        "It suggests he had left instructions that were ignored",
+        "It frames the whole speech as refusing to sentimentalise him"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What does she mean by 'settle scores with a man who can't reply'?",
+      "options": [
+        "She has already forgiven everything that passed between them",
+        "She intends to speak to her brother instead",
+        "She will not use his death as an opportunity to win old arguments",
+        "She thinks the friends' accounts are dishonest"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "eulogy",
+      "ar": "كلمة تأبين"
+    },
+    {
+      "word": "settle scores",
+      "ar": "يصفّي حسابات"
+    },
+    {
+      "word": "evenly distributed",
+      "ar": "موزّع بالتساوي"
+    },
+    {
+      "word": "upgrade it into",
+      "ar": "يضخّمها ويحوّلها لـ"
+    },
+    {
+      "word": "wouldn't trade it",
+      "ar": "مش مستعدّ يستبدلها"
+    }
+  ]
+}

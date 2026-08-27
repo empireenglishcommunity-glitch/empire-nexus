@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_c2_w14",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 14,
+  "title": "The Museum Would Prefer You Didn't Ask",
+  "title_ar": "المتحف يفضّل إنك ما تسألش",
+  "can_do": [
+    "C2.R.4"
+  ],
+  "format": "documentary narration",
+  "word_count": 366,
+  "gist_ar": "تعليق فيلم وثائقي هادي جدًا. الموقف الحقيقي مبني على اختيار الكلمات مش على التصريح.",
+  "before_listening": {
+    "en": "Documentary narration, very calm, apparently neutral. The stance is built entirely out of word choice.",
+    "ar": "تعليق وثائقي هادي وباين محايد. الموقف كله مبني على اختيار الألفاظ."
+  },
+  "segments": [
+    {
+      "speaker": "Narrator",
+      "speaker_ar": "الراوي",
+      "voice": "bf_isabella",
+      "text": "Gallery eleven is quiet, even by the standards of this building. Forty-one objects, most of them small, arranged with the care that this institution has always been rightly praised for. The lighting is exemplary. The label for case six reads, in full: 'Limestone relief. Nineteenth Dynasty. Acquired 1887.' Acquired. It is a serviceable word, and it has served for a hundred and thirty-eight years. The catalogue is more forthcoming, if you know to ask for the catalogue, and the catalogue records that the relief reached London in the company of a Captain Whitmore, whose diary — held four floors above us, in a collection open to any reader with a card — describes the week in which the relief left its wall. The diary is a lively document. It does not use the word acquired. The museum's position, set out in a statement of 2019 and restated without amendment in 2023, is that the object was obtained in accordance with the legislation and practice of the period. This is entirely accurate. The legislation of the period was written in London. There is a rejoinder to all of this, and it deserves to be put properly rather than dismissed: for ninety years, this relief has been conserved, catalogued, photographed, and made freely available to scholars from every country including the one it was taken from, and it is in demonstrably better physical condition than comparable pieces that stayed where they were. That is not nothing. It is, in fact, a great deal, and anybody who pretends otherwise is arguing a case rather than describing a situation. What the museum has not done, in a hundred and thirty-eight years, is put both of those sentences on the same label. There is room. We measured. The label in case six is 112 millimetres wide and carries eleven words, and the wall to its left, which is empty, is nearly two metres across. The decision not to fill it is a decision, taken by named people, at recorded meetings, and minuted. We asked for the minutes. We were told that they are held, that they are not classified, and that no member of staff is currently available to retrieve them."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the narrator's actual position?",
+    "options": [
+      "That the museum has no legal right to the object and should return it",
+      "That the object should be returned only if its condition can be guaranteed",
+      "That both the museum's care of the object and how it was taken are true, and the museum declines to say both",
+      "That the 2019 statement was factually false"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why does the narrator dwell on the word 'acquired'?",
+      "options": [
+        "Because it is the legally correct term of art for such transfers",
+        "Because it is accurate yet conceals what the captain's own diary describes",
+        "Because the catalogue uses a different word for other objects",
+        "Because it was added to the label only in 2019"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the force of 'The legislation of the period was written in London'?",
+      "options": [
+        "It notes that the law the museum relies on was made by the same power that took the object",
+        "It shows the museum broke the law of the time",
+        "It explains why the diary was never published",
+        "It confirms the acquisition was properly documented"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How does the narrator treat the argument in the museum's favour?",
+      "options": [
+        "States it fully and calls it a great deal, while noting it does not settle the matter",
+        "Mentions it only to dismiss it as special pleading",
+        "Omits it, on the grounds that the museum can make it itself",
+        "Attributes it to Captain Whitmore's diary"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the point of the measurements at the end?",
+      "options": [
+        "To show the label is too small to read comfortably",
+        "To remove lack of space as an explanation, leaving only choice",
+        "To argue the relief should be displayed on the empty wall instead",
+        "To demonstrate the gallery is under-used"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the closing sentence about the minutes imply?",
+      "options": [
+        "The minutes were destroyed in accordance with policy",
+        "The minutes are classified on legal advice",
+        "The refusal is being managed as an availability problem rather than stated as a refusal",
+        "No minutes were ever taken at those meetings"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "serviceable",
+      "ar": "يأدّي الغرض بدون تميّز"
+    },
+    {
+      "word": "forthcoming",
+      "ar": "بيقول أكتر / صريح"
+    },
+    {
+      "word": "rejoinder",
+      "ar": "ردّ مضاد"
+    },
+    {
+      "word": "conserved",
+      "ar": "اتصان وحُفظ"
+    },
+    {
+      "word": "minuted",
+      "ar": "مسجّل في محضر"
+    }
+  ]
+}

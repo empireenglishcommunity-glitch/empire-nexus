@@ -1,0 +1,202 @@
+{
+  "id": "broadcast_c2_w13",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 13,
+  "title": "I'll Take Three More",
+  "title_ar": "هاخد تلات أسئلة كمان",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "hostile press conference",
+  "word_count": 378,
+  "gist_ar": "مؤتمر صحفي متوتّر. صحفيين بيقاطعوا، والمتحدّث بيراوغ لحد ما سؤال واحد يوقفه.",
+  "before_listening": {
+    "en": "Reporters shouting over each other. The spokesman deflects successfully three times and then one question lands.",
+    "ar": "صحفيين بيتكلموا فوق بعض. المتحدّث بيتفادى تلات مرات، وبعدين سؤال واحد بيمسكه."
+  },
+  "segments": [
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "I'll take three more and then I genuinely do have to go. Yes — at the front."
+    },
+    {
+      "speaker": "Reporter 1",
+      "speaker_ar": "صحفي ١",
+      "voice": "af_bella",
+      "text": "Two questions. Did the minister see the risk register before the twelfth, and if she did, why does her statement to the House say she was 'not made aware of material concerns'?"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "On the second part, the minister's statement to the House stands, and I'd refer you to it in full rather than the phrase. On the first part, the risk register is an operational document. It's produced by officials, it's reviewed by officials, and it isn't routinely submitted to ministers."
+    },
+    {
+      "speaker": "Reporter 1",
+      "speaker_ar": "صحفي ١",
+      "voice": "af_bella",
+      "text": "That isn't what I asked."
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "It's what I'm able to tell you. Yes, Layla—"
+    },
+    {
+      "speaker": "Reporter 2",
+      "speaker_ar": "صحفي ٢",
+      "voice": "af_nicole",
+      "text": "You said 'not routinely'. Was it submitted on this occasion?"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "I'm not going to get drawn into a document-by-document commentary from a podium."
+    },
+    {
+      "speaker": "Reporter 2",
+      "speaker_ar": "صحفي ٢",
+      "voice": "af_nicole",
+      "text": "It's one document and it's the only one anybody's asking about—"
+    },
+    {
+      "speaker": "Reporter 3",
+      "speaker_ar": "صحفي ٣",
+      "voice": "am_adam",
+      "text": "—and can I come in on that, because the permanent secretary told the committee on Tuesday that it was submitted—"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "I haven't seen the transcript of Tuesday, so I'm not going to characterise what the permanent secretary said or didn't say."
+    },
+    {
+      "speaker": "Reporter 3",
+      "speaker_ar": "صحفي ٣",
+      "voice": "am_adam",
+      "text": "I have it here. Question one-forty-one. Would you like me to read it?"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "...Go on."
+    },
+    {
+      "speaker": "Reporter 3",
+      "speaker_ar": "صحفي ٣",
+      "voice": "am_adam",
+      "text": "'It went in the box on the ninth.' That's the permanent secretary, under oath, about this register. So either the minister's box was not opened, which is a different problem, or she was made aware. Which is it?"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "...Right. I'm not going to stand here and pretend I have a form of words for that, because I don't, and inventing one now would be worse than saying so. I will take that away and we will come back to you today, in writing, on whether the register was in the box and whether it was read. I'd ask you not to read anything into the fact that I can't answer it standing here, except that I can't answer it standing here."
+    },
+    {
+      "speaker": "Reporter 1",
+      "speaker_ar": "صحفي ١",
+      "voice": "af_bella",
+      "text": "Will the minister correct the record?"
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "If the answer to what I've just undertaken to find out requires a correction, then a correction will follow, and it will follow from her and not from me. That's the last one. Thank you."
+    },
+    {
+      "speaker": "Reporter 2",
+      "speaker_ar": "صحفي ٢",
+      "voice": "af_nicole",
+      "text": "Today, you said. On the record — today."
+    },
+    {
+      "speaker": "Spokesman",
+      "speaker_ar": "المتحدّث",
+      "voice": "bm_george",
+      "text": "Today. On the record. Thank you."
+    }
+  ],
+  "gist_question": {
+    "q": "What finally stops the spokesman deflecting?",
+    "options": [
+      "The minister arrives to answer in person",
+      "He admits the minister's statement was false",
+      "The chair of the committee intervenes",
+      "A reporter reads out sworn committee testimony that the register went into the box on the ninth"
+    ],
+    "answer": 3
+  },
+  "questions": [
+    {
+      "q": "What does the spokesman concede at the end?",
+      "options": [
+        "That the minister misled the House",
+        "That the risk register was never produced",
+        "That the permanent secretary was mistaken",
+        "That he has no form of words, and will answer in writing today"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "Which single word does Reporter 2 seize on, and why?",
+      "options": [
+        "'Operational' — because it implies the document had no risk content",
+        "'Routinely' — because it leaves open what happened on this occasion",
+        "'Material' — because it narrows what counts as a concern",
+        "'Podium' — because it suggests he will answer elsewhere"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the spokesman say about who would issue any correction?",
+      "options": [
+        "The minister herself, not him",
+        "The permanent secretary, as the sworn witness",
+        "The department's press office, later today",
+        "The committee, in its published report"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What alternative does Reporter 3 offer alongside 'she was made aware'?",
+      "options": [
+        "That the transcript of Tuesday is inaccurate",
+        "That the register concerned a different programme",
+        "That the box was never opened, which is a different problem",
+        "That officials withheld the register after it was submitted"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "risk register",
+      "ar": "سجل المخاطر"
+    },
+    {
+      "word": "get drawn into",
+      "ar": "يتورّط في / يتجرّ لـ"
+    },
+    {
+      "word": "under oath",
+      "ar": "تحت القسم"
+    },
+    {
+      "word": "correct the record",
+      "ar": "يصحّح ما قيل رسميًا"
+    },
+    {
+      "word": "a form of words",
+      "ar": "صيغة كلام جاهزة"
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "id": "broadcast_c2_w8",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 8,
+  "title": "You Said 'Broadly', Didn't You",
+  "title_ar": "إنت قلت «بشكل عام»، صح؟",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "courtroom cross-examination",
+  "word_count": 331,
+  "gist_ar": "استجواب في محكمة. الأسئلة قصيرة ومترابطة، والفخ في كلمة واحدة.",
+  "before_listening": {
+    "en": "A cross-examination. Short questions building on each other, and the whole thing turns on one word in an earlier answer.",
+    "ar": "استجواب في المحكمة. أسئلة قصيرة بتبني على بعضها، والقضية كلها بتتحدّد بكلمة واحدة."
+  },
+  "segments": [
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Mr Rashad, before the break you told my learned friend that the inspection regime was, and I wrote it down, 'broadly compliant'. Do you stand by that?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "I do."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Would you help me with 'broadly'? Is that a term of art in your industry, or is it a word you chose this morning?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "It's — it isn't a defined term, no. It's a fair summary."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "A fair summary of what proportion? Half? Nine tenths?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "I couldn't put a figure on it standing here."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "No. But somebody did, didn't they. Bundle four, tab nineteen. That's your own internal quarterly, your name at the top. What figure does it give for completed inspections against schedule?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "...Sixty-one per cent."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Sixty-one. Is sixty-one 'broadly'?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "In the context of a regime that was being rebuilt at the time, I'd say it—"
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "I'll come to the rebuilding. My question was whether sixty-one per cent is 'broadly compliant'."
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "On its own, no, I wouldn't describe sixty-one as broadly."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Thank you. Now the rebuilding, since you raise it. The regime was being rebuilt because of the 2019 findings."
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "Partly, yes."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "And the 2019 findings concerned the same three sites we are concerned with today."
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "Two of the three."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Two of the three. I'm grateful — that's a correction I'll accept. Which two?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "Harrow Bank and the Quay."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "So by the time of this quarterly, you knew that two of these three sites had been the subject of adverse findings four years earlier, you knew your own completion rate stood at sixty-one per cent, and the word you selected for the board was 'broadly'. That's right, isn't it?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "The word I selected was — yes. I wrote that word. I'd say in fairness the table was in the same document, two pages later."
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "It was. Two pages later, in nine-point type, in an appendix. And the board minute for that meeting records what, on the inspection regime?"
+    },
+    {
+      "speaker": "Mr Rashad",
+      "speaker_ar": "السيد رشاد",
+      "voice": "bm_lewis",
+      "text": "...'Noted as broadly compliant.'"
+    },
+    {
+      "speaker": "Counsel",
+      "speaker_ar": "المحامية",
+      "voice": "bf_emma",
+      "text": "Your word, in their minute. Nothing further, my lord."
+    }
+  ],
+  "gist_question": {
+    "q": "What does counsel establish through the questioning?",
+    "options": [
+      "That the witness fabricated the sixty-one per cent figure",
+      "That the word 'broadly' carried a figure the witness himself would not call broad, and the board adopted it",
+      "That the 2019 findings were never communicated to him",
+      "That the inspections at Harrow Bank were never carried out"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What figure did the internal quarterly give for inspections completed against schedule?",
+      "options": [
+        "Nineteen per cent",
+        "Sixty-one per cent",
+        "Ninety per cent",
+        "Fifty per cent"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How many of the three sites were covered by the 2019 findings?",
+      "options": [
+        "All three",
+        "One",
+        "Two — Harrow Bank and the Quay",
+        "None of them"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does counsel press on whether 'broadly' is a term of art?",
+      "options": [
+        "To show he had copied it from the 2019 report",
+        "To demonstrate he misunderstood the question",
+        "Because the term is defined in the bundle",
+        "To establish it was the witness's own chosen word, not an industry standard"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What is the significance of the board minute at the end?",
+      "options": [
+        "It shows the board disagreed with the witness's assessment",
+        "It proves the appendix was never circulated",
+        "It records the witness's own word as the board's finding",
+        "It contains a different figure from the quarterly"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How does counsel treat the witness's correction about 'two of the three'?",
+      "options": [
+        "She disputes it and returns to it later",
+        "She accepts it openly and then uses it in her final question",
+        "She asks the judge to strike it from the record",
+        "She ignores it entirely"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "term of art",
+      "ar": "مصطلح فنّي له تعريف محدّد"
+    },
+    {
+      "word": "bundle",
+      "ar": "حزمة مستندات القضية"
+    },
+    {
+      "word": "adverse findings",
+      "ar": "نتائج سلبية في تقرير رقابي"
+    },
+    {
+      "word": "stand by that",
+      "ar": "متمسّك بكلامه"
+    },
+    {
+      "word": "my learned friend",
+      "ar": "الزميل المحامي - تعبير قضائي"
+    }
+  ]
+}

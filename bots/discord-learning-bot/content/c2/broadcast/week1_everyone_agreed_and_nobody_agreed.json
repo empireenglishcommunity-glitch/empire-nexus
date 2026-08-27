@@ -1,0 +1,174 @@
+{
+  "id": "broadcast_c2_w1",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 1,
+  "title": "Everyone Agreed, and Nobody Agreed",
+  "title_ar": "الكل اتفق ومحدش اتفق",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "panel discussion with overlap",
+  "word_count": 354,
+  "gist_ar": "بانل تلات متكلمين بيقطعوا على بعض. الاتفاق في الآخر مش على الأرقام — على الصفة اللي اتستخدمت.",
+  "before_listening": {
+    "en": "Three people, one microphone, and they interrupt each other. Nobody announces where the agreement is — find it.",
+    "ar": "تلاتة بيتكلموا وبيقطعوا على بعض. محدش بيقول فين نقطة الاتفاق — لاقيها إنت."
+  },
+  "segments": [
+    {
+      "speaker": "Chair",
+      "speaker_ar": "مدير الجلسة",
+      "voice": "bf_emma",
+      "text": "Right, we've got eleven minutes, so I'm going to be rude and cut in. Dr Aziz — the department says the programme was resilient. You've said in print that resilience is doing a great deal of work in that sentence. Go."
+    },
+    {
+      "speaker": "Dr Aziz",
+      "speaker_ar": "د. عزيز",
+      "voice": "am_michael",
+      "text": "It's doing all of the work. Look, nobody disputes the delivery figures. The figures are the figures. What I dispute is—"
+    },
+    {
+      "speaker": "Ms Haddad",
+      "speaker_ar": "السيدة حداد",
+      "voice": "af_nicole",
+      "text": "—the framing, yes, we've heard, but you can't keep—"
+    },
+    {
+      "speaker": "Dr Aziz",
+      "speaker_ar": "د. عزيز",
+      "voice": "am_michael",
+      "text": "Let me finish the sentence, Layla, and I'll hand it straight back. What I dispute is that a programme which ran eleven weeks over, and absorbed that overrun by asking its staff to absorb it, should be described with a word implying the system took the strain. The system did not take the strain. Four people did."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "مدير الجلسة",
+      "voice": "bf_emma",
+      "text": "Ms Haddad."
+    },
+    {
+      "speaker": "Ms Haddad",
+      "speaker_ar": "السيدة حداد",
+      "voice": "af_nicole",
+      "text": "And I'd accept every word of that except the last two. Because 'four people' is the bit that gets quoted, and it is the bit that is not in the audit. There were nineteen people on that rota. Four of them went to the press. Those are not the same set, and Fadi knows they aren't."
+    },
+    {
+      "speaker": "Dr Aziz",
+      "speaker_ar": "د. عزيز",
+      "voice": "am_michael",
+      "text": "I have never claimed—"
+    },
+    {
+      "speaker": "Ms Haddad",
+      "speaker_ar": "السيدة حداد",
+      "voice": "af_nicole",
+      "text": "You've never claimed it. No. You have also never corrected anybody who read it that way, and there is a difference between a claim and a convenience."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "مدير الجلسة",
+      "voice": "bf_emma",
+      "text": "That's — sorry, that is quite a serious charge, do you want to—"
+    },
+    {
+      "speaker": "Dr Aziz",
+      "speaker_ar": "د. عزيز",
+      "voice": "am_michael",
+      "text": "No. It's a fair charge and I'll take it. I should have written to the committee in March and I didn't, and my reason for not doing it was that I thought it would look self-serving, which is itself a self-serving reason. Fine. Noted."
+    },
+    {
+      "speaker": "Ms Haddad",
+      "speaker_ar": "السيدة حداد",
+      "voice": "af_nicole",
+      "text": "...Well. That's a good deal more than I came expecting."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "مدير الجلسة",
+      "voice": "bf_emma",
+      "text": "Thirty seconds each, then I have to stop us. What word should the report have used?"
+    },
+    {
+      "speaker": "Dr Aziz",
+      "speaker_ar": "د. عزيز",
+      "voice": "am_michael",
+      "text": "'Foreseeable'. Not about the port. About the rota."
+    },
+    {
+      "speaker": "Ms Haddad",
+      "speaker_ar": "السيدة حداد",
+      "voice": "af_nicole",
+      "text": "I'd have used no adjective whatsoever. Eleven weeks, nineteen staff, the overtime figure, and let the reader do the arithmetic. Every adjective in that document is a place where somebody decided what we were permitted to feel about a number."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "مدير الجلسة",
+      "voice": "bf_emma",
+      "text": "We'll have to leave it there."
+    }
+  ],
+  "gist_question": {
+    "q": "What do the two panellists turn out to agree about?",
+    "options": [
+      "That the problem lies in the report's choice of adjective rather than in its figures",
+      "That the report's figures are wrong and should be recalculated",
+      "That the four staff who spoke to the press behaved improperly",
+      "That the committee should be replaced before the next review"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Why does Ms Haddad object to the phrase 'four people'?",
+      "options": [
+        "Because she believes no member of staff was harmed at all",
+        "Because nineteen were on the rota and only four went to the press, so the phrase describes the wrong set",
+        "Because the audit names five people rather than four",
+        "Because Dr Aziz was not himself on the rota"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Dr Aziz concede about his own conduct?",
+      "options": [
+        "That he should have written to the committee in March, and his reason for not doing so was itself self-serving",
+        "That he leaked the rota to the press in March",
+        "That he had not read the audit before speaking in print",
+        "That his published figures were taken from an early draft"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What distinction is Ms Haddad drawing with 'a claim and a convenience'?",
+      "options": [
+        "Between asserting something yourself and letting a useful misreading stand uncorrected",
+        "Between a formal complaint and an informal one",
+        "Between what the audit says and what the department says",
+        "Between a spoken statement and a written one"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "overrun",
+      "ar": "تجاوز في المدة أو الميزانية"
+    },
+    {
+      "word": "rota",
+      "ar": "جدول مناوبات"
+    },
+    {
+      "word": "self-serving",
+      "ar": "بيخدم مصلحة صاحبه"
+    },
+    {
+      "word": "take the strain",
+      "ar": "يتحمّل الضغط"
+    },
+    {
+      "word": "do the arithmetic",
+      "ar": "يحسبها بنفسه / يستنتج"
+    }
+  ]
+}

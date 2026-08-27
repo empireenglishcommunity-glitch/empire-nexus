@@ -1,0 +1,100 @@
+{
+  "id": "broadcast_c2_w4",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 4,
+  "title": "I Have a Degree in This",
+  "title_ar": "أنا معايا شهادة في الموضوع ده",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "stand-up comedy set",
+  "word_count": 372,
+  "gist_ar": "ستاند-أب كوميدي بسرعة عالية. الفكاهة في التوقيت، والنقطة الجدّية مخفية في آخر جوك.",
+  "before_listening": {
+    "en": "Live comedy, fast, with an audience. The serious point is buried in the last joke — find it.",
+    "ar": "كوميديا مباشرة وسريعة وقدّام جمهور. النقطة الجدّية مدفونة في آخر جوك — لاقيها."
+  },
+  "segments": [
+    {
+      "speaker": "Comedian",
+      "speaker_ar": "الكوميديان",
+      "voice": "bm_lewis",
+      "text": "So I have a degree in linguistics, which is a qualification that is useful in exactly one situation, and that situation is an argument with your mother. Genuinely. Genuinely the only application. Four years. Fourteen thousand pounds. So that when she says 'nobody says it like that' I can say 'nine hundred years of attested usage says it like that, Mum,' and she can say 'well, they're wrong as well.' And she wins. She wins because she's my mother, and because 'they're wrong as well' is unfalsifiable, which — yes, thank you, sir, one person. One. That's my crowd. That's my people. That man is going home to nobody. ... The thing is, everyone thinks they hate grammar and everyone is a fanatic about it. Everyone. You've all got one. You've got one thing that if somebody does it in an email you no longer respect them as a person. Don't shake your head, madam, you've got two. I can see it from here. And here's what kills me: the ones people get furious about are never the ones that stop you understanding the sentence. Nobody's ever been genuinely confused by 'less' instead of 'fewer'. Nobody's stood in a supermarket going 'ten items or less, well, now I simply do not know how many tins I may purchase.' It isn't confusion. It's a costume. It's a little flag you run up so people know which sort of person you are. My dad used to correct me at dinner. Every night. Not to teach me anything — he'd already understood me, that's the point, you can't correct what you didn't understand. He corrected me because he was thirty years into a job where nobody let him finish a sentence, and I was eleven, and I was available. And I did the same thing. I did the exact same thing to a work-experience kid three years ago, in front of people, over an apostrophe, and I watched his face do the thing my face used to do. And I thought: ah. There it is. That's what it's for. Fourteen thousand pounds to find out my degree is a weapon my dad handed me and I picked up. ... Anyway. Great to be in Manchester."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the comedian's underlying point about correcting people's grammar?",
+    "options": [
+      "That most grammatical rules were invented in the last century",
+      "That formal linguistic training should be compulsory in schools",
+      "That his mother was right about usage all along",
+      "That correcting others is usually about power and identity rather than being understood"
+    ],
+    "answer": 3
+  },
+  "questions": [
+    {
+      "q": "Why does he say 'you can't correct what you didn't understand'?",
+      "options": [
+        "Because it proves correction is not aimed at clarity — the meaning already arrived",
+        "Because his father spoke a different dialect at home",
+        "Because children's speech is often genuinely unintelligible",
+        "Because the correction always comes too late to help"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he mean by calling a grammar preference 'a costume'?",
+      "options": [
+        "It is something learned only in formal education",
+        "It changes depending on who you are speaking to",
+        "It is a display signalling what kind of person you are",
+        "It is easily removed once pointed out"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the story about the work-experience kid do in the set?",
+      "options": [
+        "It shows the comedian was unfairly blamed for someone else's remark",
+        "It proves his degree finally became useful at work",
+        "It explains why he left the job",
+        "It turns the joke back on himself and reveals he inherited the behaviour"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "Why does he single out 'ten items or less'?",
+      "options": [
+        "Because it is an example of an error nobody is actually confused by",
+        "Because supermarkets have since corrected the signs",
+        "Because it is the one error that genuinely causes confusion",
+        "Because his mother used to say it"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "unfalsifiable",
+      "ar": "مش قابل للدحض"
+    },
+    {
+      "word": "attested usage",
+      "ar": "استخدام موثّق تاريخيًا"
+    },
+    {
+      "word": "a fanatic about it",
+      "ar": "متعصّب في الموضوع"
+    },
+    {
+      "word": "run up a flag",
+      "ar": "يرفع علم / يعلن انتماءه"
+    },
+    {
+      "word": "work-experience kid",
+      "ar": "متدرّب صغير"
+    }
+  ]
+}

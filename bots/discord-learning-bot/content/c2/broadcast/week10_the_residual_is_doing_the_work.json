@@ -1,0 +1,154 @@
+{
+  "id": "broadcast_c2_w10",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 10,
+  "title": "The Residual Is Doing the Work",
+  "title_ar": "الباقي الإحصائي هو اللي شايل الموضوع",
+  "can_do": [
+    "C2.R.5"
+  ],
+  "format": "specialist seminar Q&A",
+  "word_count": 444,
+  "gist_ar": "أسئلة وأجوبة في ندوة متخصصة. مصطلحات إحصائية كثيفة، والخلاف على نقطة منهجية واحدة.",
+  "before_listening": {
+    "en": "A seminar question session in a specialist field. Dense, technical, and the disagreement is about one methodological point.",
+    "ar": "أسئلة وأجوبة في ندوة تخصصية. لغة تقنية كثيفة، والخلاف على نقطة منهجية واحدة."
+  },
+  "segments": [
+    {
+      "speaker": "Chair",
+      "speaker_ar": "رئيس الجلسة",
+      "voice": "af_sarah",
+      "text": "We've time for two questions. Dr Mansour, you've had your hand up since the third slide."
+    },
+    {
+      "speaker": "Dr Mansour",
+      "speaker_ar": "د. منصور",
+      "voice": "am_adam",
+      "text": "Thank you. It's a nice paper and I want to be clear that my problem isn't with the estimate, it's with what the estimate is being asked to carry. You regress outcomes on the reform indicator, you include region and year fixed effects, and you report a coefficient of nought-point-one-nine. Fine. But the identifying assumption is that, absent the reform, treated and untreated districts would have moved in parallel. And your own figure two shows them diverging from 2011 — two years before anybody legislated. So the residual is doing the work, and I'd want to know what's in it."
+    },
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "الباحثة",
+      "voice": "bf_isabella",
+      "text": "That's the right question and it's the one I'd have asked. Two responses. The pre-trend in figure two is driven almost entirely by four districts, all four of which are in the same governorate, and all four of which had a separate capital programme running from 2010. If I drop that governorate the pre-trend is flat to within noise — I have that as appendix table nine, and the coefficient moves from nought-point-one-nine to nought-point-one-seven, so it survives. What I'd concede is that I can't distinguish 'the pre-trend was an artefact of that programme' from 'the reform was targeted at districts already improving'. Those are observationally equivalent in my data and I should have said so in the paper rather than in answer to a question."
+    },
+    {
+      "speaker": "Dr Mansour",
+      "speaker_ar": "د. منصور",
+      "voice": "am_adam",
+      "text": "And with the governorate dropped, what happens to your standard errors?"
+    },
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "الباحثة",
+      "voice": "bf_isabella",
+      "text": "They widen. Substantially. Clustered at governorate level I'm down to eleven clusters, which is below where I'd want to be for the wild bootstrap to be reliable, so the honest statement is that the point estimate is stable and the inference is weak. I'd rather say that than report a t-statistic I don't believe."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "رئيس الجلسة",
+      "voice": "af_sarah",
+      "text": "Last question — at the back."
+    },
+    {
+      "speaker": "Questioner",
+      "speaker_ar": "سائل",
+      "voice": "af_sky",
+      "text": "A smaller one. Your outcome is administrative attainment data, and the reform changed who reports it. Is there a mechanical component?"
+    },
+    {
+      "speaker": "Presenter",
+      "speaker_ar": "الباحثة",
+      "voice": "bf_isabella",
+      "text": "There is, and I've bounded it rather than removed it. The reform moved reporting from schools to districts in 2014, which is one year into treatment. If I restrict to the 2013 cohort only — reported under the old regime throughout — I get nought-point-one-four on a third of the sample. So roughly a quarter of the headline effect could be reporting rather than attainment. I put that in the abstract in the current draft, which is not where it was in the version you were sent."
+    },
+    {
+      "speaker": "Dr Mansour",
+      "speaker_ar": "د. منصور",
+      "voice": "am_adam",
+      "text": "That's a considerably better paper than the one I came to complain about."
+    },
+    {
+      "speaker": "Chair",
+      "speaker_ar": "رئيس الجلسة",
+      "voice": "af_sarah",
+      "text": "On which note. Thank you both, and thank you all."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the presenter concede she cannot distinguish between?",
+    "options": [
+      "Two different sources of administrative attainment data",
+      "Region fixed effects and year fixed effects",
+      "An artefact of the capital programme, and the reform being targeted at already-improving districts",
+      "The 2013 cohort and the 2014 cohort"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What happens to the coefficient when the governorate is dropped?",
+      "options": [
+        "It rises from 0.17 to 0.19",
+        "It falls to 0.14 and loses significance",
+        "It becomes indistinguishable from zero",
+        "It falls from 0.19 to 0.17 and survives"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What is the presenter's stated position on her own inference?",
+      "options": [
+        "Both estimate and inference are robust",
+        "The estimate is unstable but the inference is sound",
+        "The result should be withdrawn entirely",
+        "The point estimate is stable but the inference is weak, with only eleven clusters"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "How much of the headline effect might be a reporting artefact?",
+      "options": [
+        "About a third",
+        "About a half",
+        "None of it",
+        "About a quarter"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What is Dr Mansour's objection to the identifying assumption?",
+      "options": [
+        "The sample is too small for fixed effects",
+        "The outcome variable is measured with error",
+        "Figure two shows treated and untreated districts diverging from 2011, before the legislation",
+        "Region and year effects cannot be included together"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "fixed effects",
+      "ar": "تأثيرات ثابتة - في الانحدار"
+    },
+    {
+      "word": "pre-trend",
+      "ar": "اتجاه سابق للمعالجة"
+    },
+    {
+      "word": "observationally equivalent",
+      "ar": "متكافئين من ناحية الرصد"
+    },
+    {
+      "word": "clustered standard errors",
+      "ar": "أخطاء معيارية متجمّعة"
+    },
+    {
+      "word": "bounded it",
+      "ar": "حدّد له سقف بدل ما يشيله"
+    }
+  ]
+}

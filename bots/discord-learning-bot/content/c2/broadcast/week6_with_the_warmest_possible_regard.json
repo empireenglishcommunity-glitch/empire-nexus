@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_c2_w6",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 6,
+  "title": "With the Warmest Possible Regard",
+  "title_ar": "بكل التقدير الممكن",
+  "can_do": [
+    "C2.R.4"
+  ],
+  "format": "valedictory address",
+  "word_count": 378,
+  "gist_ar": "خطاب توديع مهذّب جدًا. كل النقد مخفي في الأسلوب — مفيش كلمة سلبية واحدة.",
+  "before_listening": {
+    "en": "A farewell speech. Every criticism in it is carried by style alone — not one negative word is used. Hear what is actually being said.",
+    "ar": "خطاب وداع. كل نقد جوّاه محمول بالأسلوب لوحده — ولا كلمة سلبية واحدة. اسمع المعنى الحقيقي."
+  },
+  "segments": [
+    {
+      "speaker": "Departing director",
+      "speaker_ar": "المدير المنتهية خدمته",
+      "voice": "bf_isabella",
+      "text": "Thank you. Thank you, and thank you particularly to Hisham for an introduction of which I recognised most of the details. Fourteen years. I've been asked to be brief, by the same office that asked me to be brief in 2019, so at least there is continuity somewhere in this building. I want to say three things. The first is about the people in this room, and I mean it without qualification, which is why I'm putting it first and separately: the scientific staff of this institute are the best I have worked with anywhere, and everything that has been achieved here was achieved by them, frequently in spite of arrangements that were not designed with them in mind. The second thing is about the arrangements. I have been fortunate to serve under four board chairs, each of whom brought a fresh strategic vision, and I mean four entirely fresh ones. I have signed off eleven organisational restructures. I am told that the twelfth is in preparation, and I am confident it will be received with all the enthusiasm the previous eleven enjoyed. I should say that I have never once been asked whether the eleventh had finished before the twelfth was drafted, and I want to record my gratitude for the consistency of that approach. The third thing is a request, and it is the only request I'm going to make, so I'd be glad if it were minuted. When my successor asks for the figures on the Aleppo collection — and she will ask, she's rather good — somebody in this room will be tempted to give her the summary. I'd ask you not to. Give her the spreadsheet. All nine tabs of it, including the tab that nobody has been willing to put a name to since 2021. She will draw her own conclusions, which she is perfectly capable of doing, and she will draw them in her first year rather than her fourth. That is the entire favour I would like, and it costs nobody anything except a certain amount of discomfort in about March. Right. I'm told the food is excellent, and unlike the restructures, I've seen the plan for it. It has been the privilege of my working life. Thank you all."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the speaker's actual attitude to the institute's management?",
+    "options": [
+      "Sharply critical, expressed entirely through politeness and understatement",
+      "Grateful, with mild regret at leaving so soon",
+      "Neutral — she confines herself to factual recollection",
+      "Openly hostile and calling for the board's resignation"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "What is she implying with 'an introduction of which I recognised most of the details'?",
+      "options": [
+        "That the introduction was too long",
+        "That parts of Hisham's introduction were inaccurate",
+        "That Hisham had not met her before",
+        "That she had written the introduction herself"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the point of 'four entirely fresh ones'?",
+      "options": [
+        "That the chairs were all newly qualified",
+        "That all four chairs were appointed at the same time",
+        "That each chair discarded the previous strategy rather than continuing it",
+        "That she got on well with all four"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does she ask that her successor be given the spreadsheet rather than the summary?",
+      "options": [
+        "So that the successor sees the unattributed 2021 tab and reaches her own conclusions early",
+        "Because the summary has not yet been written",
+        "Because the spreadsheet is required by the auditors",
+        "Because her successor prefers working with raw data"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the closing joke about the food imply?",
+      "options": [
+        "That she was not consulted about the catering",
+        "That the catering budget was excessive",
+        "That the restructures were carried out without a visible plan",
+        "That she intends to stay for the meal"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does she deliberately separate her praise of the scientific staff from everything else?",
+      "options": [
+        "So it cannot be read as part of the criticism that follows",
+        "Because the staff are leaving with her",
+        "Because the board asked her to mention them first",
+        "Because she has less to say about them"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "valedictory",
+      "ar": "خطاب وداع"
+    },
+    {
+      "word": "without qualification",
+      "ar": "بدون أي تحفّظ"
+    },
+    {
+      "word": "restructure",
+      "ar": "إعادة هيكلة"
+    },
+    {
+      "word": "minuted",
+      "ar": "مسجّل في محضر الاجتماع"
+    },
+    {
+      "word": "understatement",
+      "ar": "التقليل المقصود في التعبير"
+    }
+  ]
+}

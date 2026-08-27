@@ -1,0 +1,148 @@
+{
+  "id": "broadcast_c2_w3",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 3,
+  "title": "Handover at the End of a Night Shift",
+  "title_ar": "تسليم شغل في آخر وردية ليل",
+  "can_do": [
+    "C2.R.5"
+  ],
+  "format": "technical handover",
+  "word_count": 495,
+  "gist_ar": "تسليم فني بسرعة وبمصطلحات مغلقة. المطلوب: التفاصيل الرقمية بالظبط.",
+  "before_listening": {
+    "en": "A night engineer handing over, fast, in his own shorthand. Nothing is explained twice.",
+    "ar": "مهندس ورديّة الليل بيسلّم بسرعة وبمختصراته. مفيش حاجة تتشرح مرتين."
+  },
+  "segments": [
+    {
+      "speaker": "Yousef (night)",
+      "speaker_ar": "يوسف - ليل",
+      "voice": "am_adam",
+      "text": "Right, I'll do this once because I want my bed. Pumps: three and four are fine, don't touch them. Two is the one. Two has been cavitating on and off since about half one, and it's not the impeller because I pulled the inspection plate and it's clean. My money is on the suction side — I think we're drawing air past the gland, and the reason I think that is the noise changes when the header tank drops below about a third. So: keep that tank above a third and it behaves. It's a bodge, not a fix. Day shift can have the fix."
+    },
+    {
+      "speaker": "Rania (day)",
+      "speaker_ar": "رانيا - نهار",
+      "voice": "af_nicole",
+      "text": "Above a third. And if it goes below?"
+    },
+    {
+      "speaker": "Yousef (night)",
+      "speaker_ar": "يوسف - ليل",
+      "voice": "am_adam",
+      "text": "Then it'll start hammering, you'll hear it from the door, and you drop it to manual and bring it down over about ninety seconds. Don't trip it. If you trip it you'll take the line with it, because the interlock on two is still wired to the old logic — that's job number four-oh-nine, it's been open since February, and no, nobody is doing it this week either. Second thing. The chiller. Ignore the alarm on the panel, the alarm is the sensor and not the chiller. Actual outlet temp is reading seven-point-two on the local gauge and the panel is telling you eleven. The gauge is right. I put a bit of tape on it with 'GAUGE IS RIGHT' on it so nobody panics at ten in the morning."
+    },
+    {
+      "speaker": "Rania (day)",
+      "speaker_ar": "رانيا - نهار",
+      "voice": "af_nicole",
+      "text": "Panel eleven, gauge seven-two, believe the gauge. Have you logged that?"
+    },
+    {
+      "speaker": "Yousef (night)",
+      "speaker_ar": "يوسف - ليل",
+      "voice": "am_adam",
+      "text": "Logged it, and I've raised it as a sensor swap, but it's low priority so it'll sit. Third thing, and this is the one I'd actually worry about. Somebody has changed a setpoint on line two overnight and it wasn't me. Fill weight was two hundred and fifty grams at ten last night and it is two hundred and forty-six now. Four grams. Nobody has logged it, there's no initials against it, and four grams across a night is roughly — I did the sum at four in the morning so check me — about eleven kilos of product we have not put in a pot."
+    },
+    {
+      "speaker": "Rania (day)",
+      "speaker_ar": "رانيا - نهار",
+      "voice": "af_nicole",
+      "text": "You're saying it drifted or you're saying somebody set it?"
+    },
+    {
+      "speaker": "Yousef (night)",
+      "speaker_ar": "يوسف - ليل",
+      "voice": "am_adam",
+      "text": "I'm saying I don't know, and that's exactly why I'm telling you rather than just putting it back. If I put it back the evidence goes with it. So it's still sitting at two-four-six, the line is still running, and I've written the time I found it — three-fifty — on the sheet. If it drifted, we have a controller problem. If somebody set it, we have a different problem entirely, and I'd rather the person who has to answer for it isn't whichever of us happens to be standing here."
+    },
+    {
+      "speaker": "Rania (day)",
+      "speaker_ar": "رانيا - نهار",
+      "voice": "af_nicole",
+      "text": "No, that's right. Leave it. I'll get Nadia down before I change anything."
+    },
+    {
+      "speaker": "Yousef (night)",
+      "speaker_ar": "يوسف - ليل",
+      "voice": "am_adam",
+      "text": "Good. So: tank above a third, gauge over panel, don't touch two-four-six. Everything else is boring. Sign here and I'm gone."
+    }
+  ],
+  "gist_question": {
+    "q": "Why has Yousef deliberately left the fill weight at 246 grams?",
+    "options": [
+      "Because 246 grams is the correct specification",
+      "Because changing it back would destroy the evidence of who or what altered it",
+      "Because the controller cannot be adjusted during a running shift",
+      "Because Nadia had already approved the new figure"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What must be done to keep pump two behaving?",
+      "options": [
+        "Keep the header tank above a third full",
+        "Replace the impeller before the line restarts",
+        "Run it in manual for the whole shift",
+        "Keep the header tank below a third"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which temperature reading does Yousef say is correct?",
+      "options": [
+        "The local gauge reading of seven-point-two",
+        "The panel reading of eleven",
+        "Neither, both need recalibration",
+        "The panel, once the sensor is swapped"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What will happen if pump two is tripped rather than brought down manually?",
+      "options": [
+        "The chiller alarm will reset itself",
+        "The gland will need replacing immediately",
+        "It will take the line down, because the interlock is still on the old logic",
+        "The fill weight will drift further"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How much product does Yousef estimate the four-gram difference represents?",
+      "options": [
+        "About four kilos",
+        "About eleven kilos across the night",
+        "About two hundred and forty-six kilos",
+        "About ninety kilos"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "cavitating",
+      "ar": "بيعمل فقاعات بخار جوّه المضخة"
+    },
+    {
+      "word": "a bodge",
+      "ar": "حل مؤقّت غير سليم"
+    },
+    {
+      "word": "setpoint",
+      "ar": "القيمة المضبوطة"
+    },
+    {
+      "word": "interlock",
+      "ar": "قاطع أمان مترابط"
+    },
+    {
+      "word": "trip it",
+      "ar": "يقطعه فجأة"
+    }
+  ]
+}
