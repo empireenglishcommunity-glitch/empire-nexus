@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w17",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 17,
+  "title": "A Growing Body of Evidence",
+  "title_ar": "حجم متزايد من الأدلة",
+  "can_do": [
+    "C1.R.5",
+    "C1.R.3"
+  ],
+  "word_count": 280,
+  "gist_ar": "نص متخصص: العبارات الاسمية المكثّفة بتكدّس معلومات وبتخفي مين اللي بيدّعي إيه.",
+  "text": "Consider the phrase \"the well-documented long-term impact of export-driven,\nlabour-intensive growth on deeply rooted regional inequality\". Twelve words, one\nhead noun, and at least four claims that are not being defended.\n\nDense premodification is the characteristic register of the policy literature,\nand its economy of expression is real. To condense that phrase into clauses would\ntake three sentences, and a reader who works in the field will encapsulate it\ncorrectly without effort. Precision of a kind is achieved: the writer has\nspecified which impact, of which growth, on which inequality.\n\nWhat is lost is the distinction between what is established and what is\nasserted. \"Well-documented\" is a modifier, so it is not a proposition and cannot\nbe challenged as one. A significant proportion of the increasingly complex\napparatus of this genre works the same way. A widely held belief becomes an\nadjective; a contested causal mechanism becomes a compound premodifier; and\n\"state-of-the-art\" or \"purpose-built\" or \"cutting-edge\" arrive as description\nrather than evaluation, having been evaluated by nobody in particular.\n\nThe effect compounds. Because the head noun is late, the reader assembles the\nqualifications first and meets the subject already framed. The extent of the\ndamage is difficult to quantify — which is itself a sentence of this type, and\none I would not be able to substantiate if pressed.\n\nThere is no remedy in shorter sentences, streamlined prose being perfectly\ncapable of the same manoeuvre. The remedy is a reading habit: unpack the noun\nphrase into the claims it contains, and ask of each which is evidence and which\nis furniture. In this literature the underlying causes of disagreement are\nusually sitting inside a modifier, where they cannot be cited.",
+  "glossary": [
+    {
+      "word": "premodification",
+      "ar": "وصف قبل الاسم"
+    },
+    {
+      "word": "a head noun",
+      "ar": "الاسم الرئيسي في العبارة"
+    },
+    {
+      "word": "apparatus",
+      "ar": "منظومة / أدوات"
+    },
+    {
+      "word": "to unpack",
+      "ar": "يفكّك ويحلّل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say is lost in dense noun phrases?",
+      "q_ar": "إيه اللي بيضيع في العبارات الاسمية المكثّفة؟",
+      "options": [
+        "Precision about which impact is meant",
+        "The distinction between what is established and what is asserted",
+        "Economy of expression"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why can 'well-documented' not be challenged?",
+      "q_ar": "ليه مش ممكن تعترض على 'موثّق جيدًا'؟",
+      "options": [
+        "It is a modifier, not a proposition",
+        "It is always true",
+        "It appears in the appendix"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer admit about his own sentence on quantifying damage?",
+      "q_ar": "الكاتب اعترف بإيه عن جملته عن قياس حجم الضرر؟",
+      "options": [
+        "It is an example of the same construction, which he could not substantiate",
+        "It contradicts his argument",
+        "It was added by an editor"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What remedy does the writer propose?",
+      "q_ar": "إيه العلاج اللي اقترحه؟",
+      "options": [
+        "Writing shorter sentences",
+        "Avoiding compound adjectives",
+        "Unpacking each noun phrase and asking which parts are evidence"
+      ],
+      "answer": 2
+    }
+  ]
+}

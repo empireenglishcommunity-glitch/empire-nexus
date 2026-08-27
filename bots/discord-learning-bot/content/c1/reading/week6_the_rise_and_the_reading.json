@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w6",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 6,
+  "title": "The Rise and the Reading",
+  "title_ar": "الارتفاع وقراءته",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.5"
+  ],
+  "word_count": 265,
+  "gist_ar": "نص أكاديمي مكثّف: الارتفاع في التشخيص مش نفس الارتفاع في الحالة.",
+  "text": "The rise in recorded diagnoses is not in dispute. The interpretation of that\nrise is, and the distinction turns almost entirely on the reliability of\ndetection rather than on any change in prevalence.\n\nThree processes coincided after 2014. The introduction of routine screening in\nsecondary schools produced a step change in ascertainment. The implementation of\na broader diagnostic threshold widened the category itself. And the expansion of\nregional clinics reduced the geographical scarcity of assessment, with the\npredictable consequence that areas previously showing low rates showed rates\nclose to the national mean within two years.\n\nThe significance of this ordering is easily missed. Because the three overlapped,\nthe accumulation of cases looks like a single emergent trend. Differentiation\nbetween them requires the raw distribution, which is available, and the\ncorrelation with clinic openings, which is strong enough that its omission from\nthe 2019 summary is difficult to explain.\n\nNone of this supports the more comfortable conclusion, namely that nothing has\nchanged. Even after adjustment for ascertainment, a residual increase of roughly\nfour per cent per decade persists, and its verification is the one genuinely open\nquestion. The utilisation of services has risen far faster, which is a separate\nmatter, and the deterioration in waiting times follows from that rather than from\nany change in the underlying condition.\n\nThe tendency in public discussion is to treat the whole rise as either artefact\nor emergency. The compilation of evidence supports neither. It supports a modest\nreal increase, a large measurement effect, and an intervention problem in\ncapacity that the diagnostic argument has been extremely useful in obscuring.",
+  "glossary": [
+    {
+      "word": "ascertainment",
+      "ar": "معدل الكشف عن الحالات"
+    },
+    {
+      "word": "prevalence",
+      "ar": "نسبة انتشار"
+    },
+    {
+      "word": "an artefact",
+      "ar": "نتيجة زائفة سببها طريقة القياس"
+    },
+    {
+      "word": "residual",
+      "ar": "متبقٍ بعد التعديل"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say the rise mainly reflects?",
+      "q_ar": "الكاتب بيقول الارتفاع بيعكس إيه بشكل أساسي؟",
+      "options": [
+        "A pure measurement artefact with no real change",
+        "A large measurement effect plus a modest real increase",
+        "A genuine epidemic"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why did low-rate areas move towards the national mean?",
+      "q_ar": "ليه المناطق منخفضة المعدل اقتربت من المتوسط القومي؟",
+      "options": [
+        "The condition spread to them",
+        "New regional clinics made assessment available there",
+        "The threshold was narrowed"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer find hard to explain about the 2019 summary?",
+      "q_ar": "إيه اللي الكاتب شايفه صعب تفسيره في ملخص 2019؟",
+      "options": [
+        "It used the wrong diagnostic threshold",
+        "It omitted the correlation with clinic openings",
+        "It was never published"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer say the diagnostic argument has obscured?",
+      "q_ar": "الجدل حوالين التشخيص خبّى إيه؟",
+      "options": [
+        "The real increase of four per cent per decade",
+        "The 2014 screening programme",
+        "A capacity problem in services"
+      ],
+      "answer": 2
+    }
+  ]
+}

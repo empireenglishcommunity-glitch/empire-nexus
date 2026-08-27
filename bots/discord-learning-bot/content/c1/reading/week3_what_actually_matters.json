@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w3",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 3,
+  "title": "What Actually Matters",
+  "title_ar": "اللي يهم فعلًا",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.4"
+  ],
+  "word_count": 273,
+  "gist_ar": "مقال عن تقييم المدارس: الكاتب بيقول إن اللي بيتقاس مش هو اللي مهم.",
+  "text": "It is not the size of a school's budget that predicts what its pupils learn.\nThat much is well established. What is less often said, and what this article\nsets out to underline, is that we know which factor does predict it and have\nchosen to measure something else.\n\nThe crux is teacher retention. Schools that keep their staff for five years\noutperform comparable schools that do not, and the gap is decisive rather than\nsubtle. It is precisely this that our inspection framework fails to capture. What\nthe framework prioritises is documentation: lesson plans, marking policies,\nevidence of intervention. All of these are visible in a single day's visit, which\nis, one suspects, the actual criterion.\n\nAbove all, it is worth noting what the published rankings reward. A school can\nrise two bands by improving its paperwork while losing a third of its teachers,\nand several have. Little wonder that headteachers pinpoint compliance rather than\nretention as their priority. They are not confused about what matters. They are\nresponding accurately to what is counted.\n\nThere is a striking asymmetry here. The significance of retention is\nacknowledged in every policy document; the aspect of school life it depends on —\nwhether teaching there is bearable — appears in none of them. Namely: workload,\nautonomy, and whether a complaint from a parent is investigated or simply\nforwarded.\n\nThe essence of the problem is therefore not measurement error. It is that we\nhave a metric which is cheap, defensible and nearly irrelevant, and another which\nis expensive, contestable and nearly sufficient. We have made the choice any\ninstitution makes, and we describe it as rigour.",
+  "glossary": [
+    {
+      "word": "retention",
+      "ar": "الاستمرار في الوظيفة / عدم التسرّب"
+    },
+    {
+      "word": "a framework",
+      "ar": "إطار عمل / منظومة"
+    },
+    {
+      "word": "compliance",
+      "ar": "الالتزام الشكلي بالقواعد"
+    },
+    {
+      "word": "an asymmetry",
+      "ar": "عدم تناسب / اختلال"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer identify as the crux?",
+      "q_ar": "إيه الجوهر حسب الكاتب؟",
+      "options": [
+        "School budgets",
+        "Marking policies",
+        "Teacher retention"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does the writer say headteachers prioritise compliance?",
+      "q_ar": "ليه الكاتب بيقول إن المديرين بيهتموا بالالتزام الشكلي؟",
+      "options": [
+        "They are responding accurately to what is actually counted",
+        "They do not understand what matters",
+        "They are required to by law"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the writer's tone when saying inspections favour what is visible in one day?",
+      "q_ar": "إيه نبرة الكاتب لما قال إن التفتيش بيفضّل اللي بيبان في يوم واحد؟",
+      "options": [
+        "Approving; a single visit is efficient",
+        "Dryly sceptical — 'one suspects' signals the real motive",
+        "Uncertain; the writer does not know why"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does the writer characterise the final choice between the two metrics?",
+      "q_ar": "الكاتب وصف الاختيار بين المقياسين إزاي؟",
+      "options": [
+        "A measurement error that can be corrected",
+        "An institutional preference for the cheap metric, presented as rigour",
+        "An unavoidable technical limitation"
+      ],
+      "answer": 1
+    }
+  ]
+}

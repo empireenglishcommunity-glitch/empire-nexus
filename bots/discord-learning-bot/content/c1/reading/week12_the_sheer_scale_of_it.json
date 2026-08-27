@@ -1,0 +1,74 @@
+{
+  "id": "reading_c1_w12",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 12,
+  "title": "The Sheer Scale of It",
+  "title_ar": "الحجم الهائل",
+  "can_do": [
+    "C1.R.4"
+  ],
+  "word_count": 284,
+  "gist_ar": "نص بيستخدم مبالغات كتير: الكاتب بيحلّل إزاي التشديد بيقنع من غير أدلة.",
+  "text": "The campaign material is remarkably consistent. The need is \"utterly urgent\",\nthe current provision \"nowhere near adequate\", the proposal \"by far the most\neffective option available\". I do appreciate the sincerity behind this. I also\nnotice that not one of those three phrases contains a number.\n\nIntensification is not deception, and it would be downright unfair to suggest\notherwise. Where a writer is thoroughly familiar with a subject and profoundly\nconvinced, emphatic language is the natural register, and prose that refuses it\naltogether reads as evasive. Far too much professional writing is flattened by a\nfear of seeming committed.\n\nBut emphasis substitutes for evidence with unusual ease, and it does so all the\nmore effectively because it is not a claim. \"Considerably worse\" cannot be\nchecked. \"Worse by eleven per cent\" can, and is markedly less persuasive, which\nis decidedly the point. A reader who asks what \"vastly\" means is treated as\npedantic, and a writer who avoids the word is thought weak. The incentives run\none way.\n\nWhat did happen — and this is the part the material does state plainly, once, in\na footnote — is that provision fell by six per cent over four years. That is a\nreal decline. It is distinctly less than the text implies, and it is beyond doubt\nenough to justify the proposal on its own.\n\nWhich is what makes the rhetoric self-defeating. The case is sound. By\nunderscoring it with language that cannot be verified, the campaign has made a\nverifiable argument look like an unverifiable one, and has invited the only\nrebuttal that was ever available: not that the need is small, but that the people\ndescribing it were unwilling to say how large.",
+  "glossary": [
+    {
+      "word": "provision",
+      "ar": "الخدمة المتاحة / التوفير"
+    },
+    {
+      "word": "intensification",
+      "ar": "التشديد والمبالغة"
+    },
+    {
+      "word": "pedantic",
+      "ar": "مدقّق بشكل ممل"
+    },
+    {
+      "word": "a rebuttal",
+      "ar": "ردّ يدحض الحجة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's overall verdict on the campaign?",
+      "q_ar": "إيه حكم الكاتب النهائي على الحملة؟",
+      "options": [
+        "The case is weak and the rhetoric conceals it",
+        "The case and the rhetoric are both effective",
+        "The case is sound but the rhetoric has damaged it"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer concede about emphatic language?",
+      "q_ar": "الكاتب بيقرّ بإيه عن لغة التشديد؟",
+      "options": [
+        "It is the natural register of genuine conviction, and prose without it reads evasive",
+        "It is always deceptive",
+        "It belongs only in footnotes"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the writer say 'worse by eleven per cent' is less persuasive?",
+      "q_ar": "ليه 'أسوأ بـ11 في المية' أقل إقناعًا؟",
+      "options": [
+        "It is harder to read",
+        "It can be checked, and that is precisely the point",
+        "It is usually inaccurate"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What rebuttal does the writer say the campaign has invited?",
+      "q_ar": "إيه الردّ اللي الحملة فتحت الباب له؟",
+      "options": [
+        "That the need is small",
+        "That those describing the need would not say how large it was",
+        "That the footnote was hidden"
+      ],
+      "answer": 1
+    }
+  ]
+}

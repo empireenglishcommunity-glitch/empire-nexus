@@ -1,0 +1,74 @@
+{
+  "id": "reading_c1_w8",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 8,
+  "title": "Arguably, the Safest Word",
+  "title_ar": "'يمكن القول' — أأمن كلمة",
+  "can_do": [
+    "C1.R.4"
+  ],
+  "word_count": 276,
+  "gist_ar": "نص عن التحفّظ في اللغة: الكاتب بيهاجم استخدام الحيطة كغطاء، والموقف مش معلن.",
+  "text": "The report is, by and large, a model of caution. It concludes that the scheme\n\"appears to have delivered benefits to some extent\", that costs were \"relatively\ncontained\", and that the approach is \"arguably suitable for wider adoption,\nsubject to further work\". Each of those is defensible. Together they are\nsomething else.\n\nHedging has a legitimate function. Where evidence is genuinely tentative, \"the\ndata tend to suggest\" is more honest than a flat assertion, and a good analyst\nwould be right to qualify a finding that is only apparent. On the whole, our\nprofessional literature would be improved by rather more of this and rather less\nconfidence.\n\nThat is not what is happening here. Notice which claims are hedged and which are\nnot. The benefits, which are contested, appear with every available qualifier.\nThe costs, which are documented and substantial, are described as contained\nwithout reservation. Ostensibly the register is uniformly cautious; in practice\nthe caution is applied asymmetrically, and it is applied to precisely the\nfindings that would be inconvenient if stated plainly.\n\nOne might presume this is accidental. It is conceivable. Somewhat against that\nreading, however, the executive summary drops the qualifiers altogether, and it\nis the summary that will be quoted.\n\nThe caveat, then, is not really addressed to the reader. It is addressed to the\nfuture — to whoever, up to a point reasonably, might later ask why the scheme was\nrecommended. Broadly speaking, that is what provisional language is for in\ndocuments of this kind. It is not there to describe uncertainty. It is there to\nbe produced afterwards, in principle as evidence of care, and in practice as a\nreceipt.",
+  "glossary": [
+    {
+      "word": "to hedge",
+      "ar": "يستخدم لغة متحفّظة"
+    },
+    {
+      "word": "a qualifier",
+      "ar": "كلمة تخفّف من الجزم"
+    },
+    {
+      "word": "asymmetrically",
+      "ar": "بشكل غير متكافئ"
+    },
+    {
+      "word": "a receipt",
+      "ar": "إيصال / دليل يحتفظ به للاحتياط"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's real objection to the report?",
+      "q_ar": "إيه اعتراض الكاتب الحقيقي على التقرير؟",
+      "options": [
+        "It is too confident about its findings",
+        "It hedges everything equally, which is unhelpful",
+        "Its caution is applied asymmetrically, only to inconvenient findings"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer concede about hedging in general?",
+      "q_ar": "الكاتب بيقرّ بإيه عن اللغة المتحفّظة عمومًا؟",
+      "options": [
+        "It is always evasive",
+        "It is legitimate where evidence is genuinely tentative",
+        "It belongs only in executive summaries"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the executive summary matter to the argument?",
+      "q_ar": "ليه الملخص التنفيذي مهم في الحجة؟",
+      "options": [
+        "It is the most cautious section",
+        "It was written by someone else",
+        "It drops the qualifiers, and it is the part that will be quoted"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer say provisional language is really for here?",
+      "q_ar": "الكاتب بيقول اللغة المتحفّظة موجودة ليه فعلًا هنا؟",
+      "options": [
+        "To be produced later as evidence of care",
+        "To describe genuine uncertainty",
+        "To make the report shorter"
+      ],
+      "answer": 0
+    }
+  ]
+}

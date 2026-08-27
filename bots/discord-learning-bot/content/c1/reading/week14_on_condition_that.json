@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w14",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 14,
+  "title": "On Condition That",
+  "title_ar": "بشرط أن",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.5"
+  ],
+  "word_count": 288,
+  "gist_ar": "نص عن صياغة العقود: الشرط اللي مش مكتوب بيبقى واجب على الطرف الأضعف.",
+  "text": "A grant agreement is a machine for allocating uncertainty, and it works only\ninsofar as every condition in it is attached to somebody who can satisfy it.\nProvided that this holds, the document is a genuine allocation of risk. Where it\ndoes not, the risk has not disappeared; it has simply been left where it fell.\n\nConsider a clause of a familiar type. Funds are released on condition that\nconstruction begins within twelve months, unless delay is attributable to\nregulatory approval, in which case the period is extended. Supposing the approval\ntakes fourteen months — as it did — the extension is triggered and nobody is at\nfault. So far the machine works.\n\nNow consider what the agreement did not stipulate. Assuming, as both parties\nevidently did, that the contractor's price would hold for those fourteen months,\nno provision was made for the eventuality that it would not. But for that\nomission, the escalation would have been a shared contingency. As long as it went\nunmentioned, it remained wholly with the recipient, who had no means of hedging\nit and no standing to renegotiate.\n\nThis is the general form of the problem. A condition that is written is a\ncondition that has been priced by somebody. A prerequisite that is merely\npresupposed is subject to no such discipline, and it will hinge on whichever\nparty is least able to walk away.\n\nGiven that drafting time is finite, the practical counsel is narrow: for every\nassumption on which the schedule depends, ask who bears it if it fails. Were the\nanswer to be \"the weaker party, by default\", the clause has not been drafted. It\nhas been declined, and the reciprocal obligation everyone believes they signed\ndoes not exist.",
+  "glossary": [
+    {
+      "word": "to allocate",
+      "ar": "يوزّع / يخصّص"
+    },
+    {
+      "word": "to hedge",
+      "ar": "يغطّي المخاطرة"
+    },
+    {
+      "word": "standing",
+      "ar": "الحق القانوني في المطالبة"
+    },
+    {
+      "word": "escalation",
+      "ar": "ارتفاع التكلفة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say a grant agreement is for?",
+      "q_ar": "اتفاقية التمويل موجودة ليه حسب الكاتب؟",
+      "options": [
+        "Recording the parties' intentions",
+        "Protecting the funder",
+        "Allocating uncertainty to whoever can satisfy each condition"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which risk was left entirely with the recipient?",
+      "q_ar": "أنهي مخاطرة وقعت بالكامل على المستفيد؟",
+      "options": [
+        "The contractor's price not holding",
+        "Regulatory approval taking fourteen months",
+        "Construction beginning late"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the difference between a written and a presupposed condition?",
+      "q_ar": "إيه الفرق بين شرط مكتوب وشرط مفترض؟",
+      "options": [
+        "A written one is legally binding, a presupposed one is moral",
+        "A written one has been priced by somebody; a presupposed one has not",
+        "There is no practical difference"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What test does the writer recommend when drafting?",
+      "q_ar": "إيه الاختبار اللي بينصح بيه عند الصياغة؟",
+      "options": [
+        "Count the conditions",
+        "Ask who bears each assumption if it fails",
+        "Have a lawyer review every clause"
+      ],
+      "answer": 1
+    }
+  ]
+}

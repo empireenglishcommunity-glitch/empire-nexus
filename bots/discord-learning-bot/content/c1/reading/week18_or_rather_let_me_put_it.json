@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w18",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 18,
+  "title": "Or Rather, Let Me Put It Another Way",
+  "title_ar": "أو بالأحرى، خليني أقولها بطريقة تانية",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.4"
+  ],
+  "word_count": 288,
+  "gist_ar": "نص عن الطلاقة: التصحيح الذاتي والاستطراد علامات كفاءة، مش ضعف.",
+  "text": "There is a persistent belief among advanced learners that fluency means never\nstopping. The point I'm making is close to the opposite, and it is worth\nelaborating rather than asserting.\n\nConsider what a proficient speaker actually does. They signpost — \"to return to\nyour first question\" — which allows a listener to survive a digression of thirty\nseconds without losing the thread. They correct themselves openly: \"the policy\nwas introduced in 2011, or rather it was drafted in 2011 and introduced two years\nlater.\" And having said that, they recap at intervals, not because they have\nforgotten but because they can hear that the listener might have.\n\nNone of this is smooth. Transcribed, it looks repetitive. What it is, is\ncoherent, and coherence is what the descriptors reward. Spontaneity without\nsignposting produces speech that is easy to produce and hard to follow, which is\nthe failure mode of the confident learner. Long-winded is not the opposite of\nsuccinct; both can be perfectly coherent, and both can fail.\n\nTo sum up — and in a nutshell this is the whole argument — the ability to hold\nthe floor is not the ability to keep talking. It is the ability to keep a\nlistener oriented while you think. Paraphrase, clarify, digress and consolidate:\nthese are load-bearing, and a speaker who has none of them is not fluent but\nmerely quick.\n\nWhat I mean is this, and bear with me because it sounds like a paradox. The most\neloquent people you know are the ones you have most often heard say \"let me put\nit another way\". They are not struggling. They have simply noticed something you\ndid not say, and they are the only kind of speaker who ever does.",
+  "glossary": [
+    {
+      "word": "to signpost",
+      "ar": "يوجّه السامع بعبارات دالة"
+    },
+    {
+      "word": "a digression",
+      "ar": "استطراد / خروج عن الموضوع"
+    },
+    {
+      "word": "load-bearing",
+      "ar": "حامل للمعنى / أساسي"
+    },
+    {
+      "word": "succinct",
+      "ar": "موجز ودقيق"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's central claim about fluency?",
+      "q_ar": "إيه ادعاء الكاتب الأساسي عن الطلاقة؟",
+      "options": [
+        "Fluency means speaking without pausing",
+        "Fluency requires a large vocabulary",
+        "Fluency is keeping a listener oriented while you think"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer call the failure mode of the confident learner?",
+      "q_ar": "إيه الخطأ اللي بيقع فيه الدارس الواثق؟",
+      "options": [
+        "Speaking too slowly",
+        "Correcting themselves too often",
+        "Spontaneity without signposting — easy to produce, hard to follow"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does a proficient speaker recap?",
+      "q_ar": "ليه المتحدث المتمكن بيلخّص من وقت للتاني؟",
+      "options": [
+        "Because they have forgotten what they said",
+        "Because the descriptors require it",
+        "Because they can hear that the listener might have lost it"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer imply about people who say 'let me put it another way'?",
+      "q_ar": "إيه اللي الكاتب بيلمّح له عن اللي بيقولوا 'خليني أقولها بطريقة تانية'؟",
+      "options": [
+        "They are struggling to find words",
+        "They are being long-winded",
+        "They have noticed a misunderstanding, which is a mark of skill"
+      ],
+      "answer": 2
+    }
+  ]
+}
