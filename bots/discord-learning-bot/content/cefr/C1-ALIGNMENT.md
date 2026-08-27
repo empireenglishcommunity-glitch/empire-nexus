@@ -124,7 +124,57 @@ that previews the C1 exit exam.
   tests the C1 can-do set as a whole; passing certifies the student at **CEFR C1**
   and promotes them to C2.
 
+### 4b. ⚠️ Eight C1 descriptors are published but NOT PROVABLE (found 2026-08-24)
+
+**This section corrects what "C1 teaches all 20 descriptors" has been taken to
+mean.** It is true that a week *targets* each of them. It is not true that a
+student can *prove* eight of them.
+
+A1–B2 each have three exercises that C1 does not: **reading**, **mediation** and
+**extended listening**. Those three are the only routes to eight C1 descriptors,
+so a C1 student has no way to produce the evidence:
+
+| Descriptor | Only provable by | Which C1 does not have |
+|---|---|---|
+| `C1.M.1` summarise long texts, relay detail reliably | mediation | ❌ |
+| `C1.M.2` explain complex ideas, adapt for the audience | mediation | ❌ |
+| `C1.M.3` mediate discussion, resolve misunderstandings | mediation | ❌ |
+| `C1.M.4` synthesise arguments from several sources | mediation | ❌ |
+| `C1.R.1` extended speech, relationships only implied | extended listening | ❌ |
+| `C1.R.2` follow films with considerable slang | extended listening | ❌ |
+| `C1.R.3` lengthy, complex texts in detail | reading | ❌ |
+| `C1.R.4` a writer's attitude, tone, irony, register | reading | ❌ |
+
+**The practical consequence.** A C1 student who completed **every exercise on
+every day of all 18 weeks** would still finish with those eight unevidenced on
+their certificate, and the Level Completion Contract could **never** return
+"complete" for C1. Nobody has hit this because every student is currently on A1.
+
+**Two of these were worse than missing — they were mis-attributed.** Until this
+was found, `C1.R.1` (*"extended speech… relationships only implied"*) and
+`C1.R.2` (*"follow **films** employing a considerable degree of slang"*) were
+being evidenced by the **listening dictation** — five typed words a week. Five
+words cannot demonstrate following an unstructured argument or a film. The rule
+is now enforced in code for all six levels, which is what made these visible.
+
+**What closes it:** authoring **reading, mediation and extended listening for
+C1** — 18 weeks each. No code is needed; the exercises, pages, tracking and
+ledger all already exist and work, and the moment content lands they turn on.
+A test states this as a rule: once a level has all three, nothing it publishes
+can be unprovable.
+
+**Until then, the ledger prints this every run** under *"PUBLISHED BUT NOT
+PROVABLE"*, with the reason and the consequence. C1 should not be described to
+students as fully CEFR-covered while that block is non-empty.
+
 ## What to review / sign off
+- [ ] ⚠️ **The eight unprovable C1 descriptors (§4b)** — you should know that C1
+      cannot currently be completed under the contract, and why. Nothing is
+      broken for present students (all are on A1); this is the level's readiness
+      for when someone arrives.
+- [ ] Whether C1 content (reading / mediation / extended listening) should be
+      authored **now**, or deferred until a student is close to C1. Deferring is
+      defensible — the ledger reports the gap honestly either way.
 - [ ] Themes + week order feel right for your advanced students.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and C1-appropriate (builds on B2, stops below C2).
