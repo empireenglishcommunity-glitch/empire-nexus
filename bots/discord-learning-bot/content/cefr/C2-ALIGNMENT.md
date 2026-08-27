@@ -125,7 +125,47 @@ explicit review + a 120-second mastery capstone that previews the C2 exit exam.
   finer shades of meaning) tests the C2 can-do set as a whole; passing certifies
   the student at **CEFR C2** — the top of the Empire English ladder.
 
+### 4b. ⚠️ Seven C2 descriptors are published but NOT PROVABLE (found 2026-08-24)
+
+Same finding as C1 §4b. A week *targets* all 20 C2 descriptors; a student can
+*prove* only 13, because the three exercises that would carry the other seven
+have no C2 content:
+
+| Descriptor | Only provable by | Which C2 does not have |
+|---|---|---|
+| `C2.M.1` summarise spoken **and** written sources, reconstruct arguments | mediation | ❌ |
+| `C2.M.2` reformulate specialised material for different audiences | mediation | ❌ |
+| `C2.M.3` mediate diplomatically, convey subtle nuance | mediation | ❌ |
+| `C2.M.4` clarify ambiguous points, differentiate shades of meaning | mediation | ❌ |
+| `C2.R.1` virtually any spoken language, **at fast native speed** | extended listening | ❌ |
+| `C2.R.2` virtually all written forms, incl. structurally complex | reading | ❌ |
+| `C2.R.3` fine points, humour, irony, implicit cultural meaning | reading | ❌ |
+
+**`C2.R.1` was the single worst attribution in the whole system.** It reads
+*"can understand with ease **virtually any form of spoken language**, whether
+live or broadcast, **delivered at fast native speed**"* — and it was being
+evidenced by the **five-word listening dictation**. The system was prepared to
+put that sentence on a certificate because a student had typed five words
+correctly. It is now blocked in code, for every level, by an explicit rule about
+descriptor grain size.
+
+**C2 is the level where this matters most and costs least.** It is the terminal
+level, its descriptors are the strongest claims the programme makes, and no
+student is anywhere near it — so there is time to author the content properly
+rather than quickly. `C2.R.3` in particular (*humour, irony and implicit cultural
+meaning*) needs genuinely literary source texts, and rushing it would produce
+exactly the kind of unearned claim the rest of this work removed.
+
+**What closes it:** reading, mediation and extended listening for C2 — 20 weeks
+each. No code required.
+
 ## What to review / sign off
+- [ ] ⚠️ **The seven unprovable C2 descriptors (§4b)** — in particular that
+      `C2.R.1` was being credited to the dictation, and that C2 cannot currently
+      be completed under the contract.
+- [ ] Whether to author C2 content now or later. My recommendation is **later,
+      and slowly**: C2 is terminal, unreached, and its claims are the strongest
+      in the programme, so it is the worst place to author at speed.
 - [ ] Themes + week order feel right for your most advanced students.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and C2/mastery-appropriate (builds on C1).
