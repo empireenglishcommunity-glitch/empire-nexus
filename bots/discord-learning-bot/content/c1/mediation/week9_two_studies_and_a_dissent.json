@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w9",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 9,
+  "title": "Two Studies and a Dissent",
+  "title_ar": "دراستين ورأي مخالف",
+  "can_do": [
+    "C1.M.4"
+  ],
+  "scenario": {
+    "en": "A working group must brief the minister, and the three papers before it do not agree.",
+    "ar": "مجموعة عمل لازم تعرض على الوزير، والتلات ورقات اللي عندها مش متفقين."
+  },
+  "source": "SOURCE A: 'Hence the intervention is effective: outcomes improved in eleven of thirteen sites.' SOURCE B: 'Conversely, the two sites where outcomes did not improve are the two largest, accounting for 46 per cent of users.' SOURCE C (dissent): 'Notwithstanding both, no site was randomly allocated, whereby the comparison is between volunteers and non-volunteers and cannot support a causal claim.'",
+  "task": {
+    "en": "Synthesise these into a briefing that neither overstates nor discards the evidence.",
+    "ar": "اجمع دول في إحاطة لا تبالغ ولا ترمي الدليل."
+  },
+  "key_points": [
+    {
+      "en": "Outcomes improved in eleven of thirteen sites.",
+      "ar": "النتايج اتحسّنت في حداشر من تلتاشر موقع."
+    },
+    {
+      "en": "The two sites without improvement are the largest, 46 per cent of users.",
+      "ar": "الموقعين اللي متحسّنوش هما الأكبر، 46% من المستخدمين."
+    },
+    {
+      "en": "No site was randomly allocated, so a causal claim is not supported.",
+      "ar": "مفيش موقع اتخصّص عشوائيًا، فادعاء السببية مش مدعوم."
+    },
+    {
+      "en": "Recommend a limited claim plus one randomised site before scaling.",
+      "ar": "أوصي بادعاء محدود وموقع عشوائي واحد قبل التوسّع."
+    }
+  ],
+  "model_answer": {
+    "en": "Taken together the picture is narrower than paper A suggests and stronger than paper C implies. Outcomes improved in eleven of thirteen sites, which is real. But the two sites without improvement are the largest and account for 46 per cent of users, so counting sites rather than people flatters the result. And the dissent is correct on method: no site was randomly allocated, so the comparison is between volunteers and non-volunteers and a causal claim is not supported. The coherent brief is therefore: promising, not proven, and disproportionately unproven where most users are. I would recommend a limited claim plus one randomly allocated site before any scaling decision.",
+    "ar": "لو جمعناهم، الصورة أضيق من ورقة A وأقوى من اللي ورقة C بتوحي بيه. النتايج اتحسّنت في حداشر من تلتاشر موقع، وده حقيقي. بس الموقعين اللي متحسّنوش هما الأكبر وبيمثلوا 46% من المستخدمين، فعدّ المواقع بدل الناس بيجمّل النتيجة. والرأي المخالف صح منهجيًا: مفيش موقع اتخصّص عشوائيًا، فالمقارنة بين متطوعين وغير متطوعين وادعاء السببية مش مدعوم. فالإحاطة المتماسكة: واعد، مش مثبت، وغير مثبت بشكل خاص في المكان اللي فيه أغلب المستخدمين. وأنا أوصي بادعاء محدود وموقع واحد بتخصيص عشوائي قبل أي قرار توسّع."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

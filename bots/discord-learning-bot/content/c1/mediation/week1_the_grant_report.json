@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w1",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 1,
+  "title": "The Grant Report Nobody Read",
+  "title_ar": "تقرير المنحة اللي محدش قراه",
+  "can_do": [
+    "C1.M.1"
+  ],
+  "scenario": {
+    "en": "Your director has ten minutes before a board meeting and has not read the 40-page funder report. You have.",
+    "ar": "مديرك عنده عشر دقايق قبل اجتماع مجلس الإدارة ومقراش تقرير الممول. إنت قرأته."
+  },
+  "source": "Extract from the funder's report: 'Seldom has a first-year programme retained so high a proportion of participants; retention stood at 91 per cent. Not only was the target exceeded, the cost per participant fell to 1,240 pounds against a budgeted 1,600. Under no circumstances, however, should the pilot be scaled before the staffing shortfall is addressed: two of the six posts remain unfilled, and the evaluation notes that the workload has been absorbed by existing staff rather than removed. Renewal is recommended, conditional on a recruitment plan being submitted by March.'",
+  "task": {
+    "en": "Tell your director, in under a minute, what the report says and what she must not miss.",
+    "ar": "قول لمديرتك في أقل من دقيقة التقرير بيقول إيه وإيه اللي لازم متفوّتهوش."
+  },
+  "key_points": [
+    {
+      "en": "Retention was 91 per cent and the target was exceeded.",
+      "ar": "نسبة الاستمرار 91% والهدف اتحقق وزيادة."
+    },
+    {
+      "en": "Cost per participant fell to 1,240 pounds, below the budgeted 1,600.",
+      "ar": "التكلفة للفرد نزلت لـ1,240 جنيه بدل 1,600 المرصودة."
+    },
+    {
+      "en": "Renewal is recommended but conditional on a recruitment plan by March.",
+      "ar": "التجديد موصى بيه لكن بشرط خطة تعيين قبل مارس."
+    },
+    {
+      "en": "Two of six posts are unfilled and the workload was absorbed by existing staff.",
+      "ar": "وظيفتين من ستة فاضيين والشغل اتحمّله الموظفين الحاليين."
+    }
+  ],
+  "model_answer": {
+    "en": "The report is positive but it is conditional. Retention was 91 per cent and we exceeded the target; cost per participant fell to 1,240 pounds against a budgeted 1,600. Renewal is recommended, but it is conditional on us submitting a recruitment plan by March, because two of the six posts are unfilled and the evaluation says the workload was absorbed by existing staff rather than removed. So the headline is good and the condition is the part the board will ask about.",
+    "ar": "التقرير إيجابي لكن مشروط. نسبة الاستمرار 91% والهدف اتحقق وزيادة، والتكلفة للفرد نزلت لـ1,240 جنيه بدل 1,600. التجديد موصى بيه بشرط نقدّم خطة تعيين قبل مارس، لأن وظيفتين من ستة فاضيين والشغل اتحمّله الموظفين الحاليين. فالخلاصة كويسة، والشرط هو اللي المجلس هيسأل عنه."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

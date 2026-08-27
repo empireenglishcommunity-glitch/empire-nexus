@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w6",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 6,
+  "title": "The Statistical Brief",
+  "title_ar": "الموجز الإحصائي",
+  "can_do": [
+    "C1.M.1"
+  ],
+  "scenario": {
+    "en": "A colleague must present these figures tomorrow and cannot follow the dense summary she has been sent.",
+    "ar": "زميلتك لازم تعرض الأرقام دي بكرة ومش قادرة تفهم الملخص المكثّف اللي وصلها."
+  },
+  "source": "Summary: 'The rise in referrals reflects the introduction of screening rather than any change in prevalence. The expansion of clinics reduced the scarcity of assessment, with the consequence that low-rate districts converged on the mean. After adjustment, a residual increase of four per cent per decade persists, the verification of which remains open. The deterioration in waiting times follows from the utilisation of services, not from the condition itself.'",
+  "task": {
+    "en": "Explain to her, reliably and in order, what the four points actually are.",
+    "ar": "اشرح لها بدقة وبالترتيب إيه النقاط الأربعة فعلًا."
+  },
+  "key_points": [
+    {
+      "en": "The rise in referrals comes from screening, not from more illness.",
+      "ar": "ارتفاع الإحالات سببه الفحص المبكر، مش زيادة المرض."
+    },
+    {
+      "en": "Low-rate districts converged on the mean because clinics expanded.",
+      "ar": "المناطق منخفضة المعدل اقتربت من المتوسط عشان العيادات زادت."
+    },
+    {
+      "en": "A residual increase of four per cent per decade remains and is unverified.",
+      "ar": "فيه زيادة متبقية 4% كل عشر سنين ولسه مش متحققة."
+    },
+    {
+      "en": "Waiting times worsened because of utilisation, not the condition.",
+      "ar": "أوقات الانتظار سائت بسبب الإقبال على الخدمة، مش المرض."
+    }
+  ],
+  "model_answer": {
+    "en": "There are four points and the order matters. First, the rise in referrals comes from screening being introduced, not from more illness. Second, low-rate districts converged on the mean because clinics expanded, so assessment simply became available. Third, after adjustment a residual increase of four per cent per decade remains, and its verification is still open. Fourth, waiting times worsened because of utilisation of services, not because of the condition.",
+    "ar": "فيه أربع نقاط والترتيب مهم. الأولى: ارتفاع الإحالات سببه الفحص المبكر، مش زيادة المرض. التانية: المناطق منخفضة المعدل اقتربت من المتوسط عشان العيادات زادت. التالتة: بعد التعديل فيه زيادة متبقية 4% كل عشر سنين ولسه مش متحققة. الرابعة: أوقات الانتظار سائت بسبب الإقبال على الخدمة، مش المرض."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

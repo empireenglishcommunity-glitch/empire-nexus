@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w2",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 2,
+  "title": "The Clause in Plain Words",
+  "title_ar": "البند بكلام واضح",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A shopkeeper has been asked to sign this and does not read legal English. He trusts you to tell him what he is agreeing to.",
+    "ar": "صاحب دكان مطلوب منه يوقّع ده ومش بيقرا إنجليزي قانوني. بيثق فيك تقول له بيوافق على إيه."
+  },
+  "source": "Clause 7.2: 'Were it not for a delay attributable to regulatory approval, the twelve-month commencement period shall apply. Should approval be outstanding at that date, the period is extended for an equivalent term, provided the Recipient has notified the Funder in writing. Otherwise the grant lapses. Nothing in this clause shall be construed as extending any period on the assumption of a price held by a third party.'",
+  "task": {
+    "en": "Explain what it means for him, without legal words, including the part that is a trap.",
+    "ar": "اشرح له معناها من غير كلام قانوني، وفيها الجزء اللي فخ."
+  },
+  "key_points": [
+    {
+      "en": "He has twelve months to start, or the grant lapses.",
+      "ar": "عنده اتناشر شهر يبدأ، وإلا المنحة تسقط."
+    },
+    {
+      "en": "If approval is late, the period extends by the same amount.",
+      "ar": "لو الموافقة اتأخرت، المدة تزيد بنفس المقدار."
+    },
+    {
+      "en": "The extension only applies if he notifies the funder in writing.",
+      "ar": "التمديد بيسري بس لو بلّغ الممول كتابةً."
+    },
+    {
+      "en": "It does not protect him if the contractor's price rises.",
+      "ar": "مش بيحميه لو سعر المقاول زاد."
+    }
+  ],
+  "model_answer": {
+    "en": "In plain terms it says four things. You have twelve months to start, or the grant lapses. If a government approval is late, the period extends by the same amount of time. But the extension only applies if you notify the funder in writing -- if you do not write, you lose it even though the delay was not your fault. And the trap is the last sentence: it does not protect you if the contractor's price rises while you wait. That risk stays with you.",
+    "ar": "بكلام بسيط بتقول أربع حاجات. عندك اتناشر شهر تبدأ، وإلا المنحة تسقط. لو موافقة حكومية اتأخرت، المدة تزيد بنفس المدة. بس التمديد بيسري بس لو بلّغت الممول كتابةً — لو مكتبتش تخسره حتى لو التأخير مش غلطتك. والفخ في الجملة الأخيرة: مش بتحميك لو سعر المقاول زاد وإنت مستني. المخاطرة دي عليك."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}

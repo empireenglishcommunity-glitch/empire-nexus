@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w14",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 14,
+  "title": "Who Bears It If It Fails",
+  "title_ar": "مين هيتحمّل لو فشلت",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A small contractor is about to sign, and the risk that will hurt her is not in any clause.",
+    "ar": "مقاولة صغيرة على وشك التوقيع، والمخاطرة اللي هتضرّها مش في أي بند."
+  },
+  "source": "Draft: 'Funds are released on condition that construction begins within twelve months, unless delay is attributable to regulatory approval, in which case the period is extended. The Recipient shall be subject to the schedule at Annex B. Supposing any milestone is missed, the Funder may waive or enforce at its discretion.'",
+  "task": {
+    "en": "Explain plainly which risks are shared, which fall entirely on her, and what the draft says nothing about regarding price.",
+    "ar": "اشرح ببساطة أنهي مخاطر مشتركة، وأنهي واقعة عليها لوحدها، والمسودة ساكتة عن إيه بخصوص الأسعار."
+  },
+  "key_points": [
+    {
+      "en": "Regulatory delay is shared: the period extends.",
+      "ar": "تأخير الموافقات مشترك: المدة تزيد."
+    },
+    {
+      "en": "A missed milestone is at the Funder's discretion to waive or enforce.",
+      "ar": "تفويت أي مرحلة متروك لتقدير الممول يتجاوز أو يطبّق."
+    },
+    {
+      "en": "Price rises are not mentioned, so they fall entirely on her.",
+      "ar": "ارتفاع الأسعار مش مذكور، فواقع عليها بالكامل."
+    },
+    {
+      "en": "Price rises are not covered, so ask for that clause before signing.",
+      "ar": "ارتفاع الأسعار مش مغطّى، فاطلبي البند ده قبل التوقيع."
+    }
+  ],
+  "model_answer": {
+    "en": "Two of these are shared and one is not. Regulatory delay is shared -- if approval is late the period extends, and that is fine. A missed milestone is at the Funder's discretion to waive or enforce, which is not shared but is at least written down, so you can ask what they usually do. The one that should worry you is the risk that is not mentioned at all: price rises. Because they are not in the contract, they fall entirely on you, and you have no way to recover them. Ask for a price-escalation clause before you sign. If they refuse, at least you will be pricing the risk knowingly.",
+    "ar": "اتنين من دول مشتركين وواحدة لأ. تأخير الموافقات مشترك — لو الموافقة اتأخرت المدة تزيد، وده تمام. تفويت أي مرحلة متروك لتقدير الممول يتجاوز أو يطبّق، وده مش مشترك بس على الأقل مكتوب، فتقدري تسألي بيعملوا إيه عادةً. اللي المفروض يقلقك هي المخاطرة اللي مش مذكورة خالص: ارتفاع الأسعار. وعشان مش في العقد، واقعة عليك بالكامل ومفيش طريقة تعوّضيها. اطلبي بند لارتفاع الأسعار قبل التوقيع. ولو رفضوا، على الأقل هتسعّري المخاطرة وإنتي عارفة."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}

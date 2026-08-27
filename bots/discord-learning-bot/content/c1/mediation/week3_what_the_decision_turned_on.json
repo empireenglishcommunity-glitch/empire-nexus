@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w3",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 3,
+  "title": "What the Decision Turned On",
+  "title_ar": "القرار اتخذ على أساس إيه",
+  "can_do": [
+    "C1.M.1"
+  ],
+  "scenario": {
+    "en": "A colleague missed the meeting where a supplier was chosen and believes it was decided on price. It was not.",
+    "ar": "زميلك محضرش الاجتماع اللي اختاروا فيه المورّد وفاهم إن السعر هو اللي حكم. مش صح."
+  },
+  "source": "Minutes: 'It was not the price that decided the matter, although Meridian was marginally cheaper. What proved decisive was delivery: Meridian could not commit before week 14, and the crux was that our own deadline is week 11. The point several members emphasised was that a late delivery costs more than the saving. Above all, the committee wanted a supplier who would accept a penalty clause, and only Castell agreed to one. Worth noting: the quality assessments were judged equivalent.'",
+  "task": {
+    "en": "Correct your colleague's understanding and tell him precisely what the decision rested on.",
+    "ar": "صحّح فهم زميلك وقول له القرار اتخذ على أساس إيه بالظبط."
+  },
+  "key_points": [
+    {
+      "en": "Price did not decide it, although Meridian was slightly cheaper.",
+      "ar": "السعر مش هو اللي حكم، رغم إن ميريديان كانت أرخص شوية."
+    },
+    {
+      "en": "Delivery was decisive: Meridian could not commit before week 14 and our deadline is week 11.",
+      "ar": "التسليم كان الفاصل: ميريديان مش قبل أسبوع 14 وموعدنا أسبوع 11."
+    },
+    {
+      "en": "Only Castell accepted a penalty clause.",
+      "ar": "كاستل بس هي اللي قبلت شرط الغرامة."
+    },
+    {
+      "en": "Quality was judged equivalent between them.",
+      "ar": "الجودة اتقيّمت متساوية بينهم."
+    }
+  ],
+  "model_answer": {
+    "en": "It was not price. Meridian was marginally cheaper, and quality was judged equivalent, so neither settled it. What was decisive was delivery: Meridian could not commit before week 14 and our deadline is week 11, and a late delivery costs more than the saving. The other factor was that only Castell accepted a penalty clause.",
+    "ar": "مكانش السعر. ميريديان كانت أرخص شوية والجودة اتقيّمت متساوية، فمحدش منهم حسم. الفاصل كان التسليم: ميريديان مش قبل أسبوع 14 وموعدنا أسبوع 11، والتأخير بيكلّف أكتر من الوفر. والعامل التاني إن كاستل بس قبلت شرط الغرامة."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

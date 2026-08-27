@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w11",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 11,
+  "title": "They Think They Agree",
+  "title_ar": "فاكرين إنهم متفقين",
+  "can_do": [
+    "C1.M.3"
+  ],
+  "scenario": {
+    "en": "Two colleagues have shaken hands on a plan. From what each has said, they have agreed different things.",
+    "ar": "زميلين اتفقوا على خطة وسلّموا على بعض. من كلام كل واحد، هما اتفقوا على حاجتين مختلفتين."
+  },
+  "source": "Rania: 'So we'll do the pilot first, and the full rollout if it works.' Tarek: 'Agreed -- the pilot first, then rollout.' Rania (later): 'The pilot is the two northern districts. If those go well, we rollout.' Tarek (later): 'The pilot is one district. The others are already part of the rollout, so they don't need to wait.'",
+  "task": {
+    "en": "Intervene before they leave the room. Steer them to name what they actually disagree about.",
+    "ar": "اتدخّل قبل ما يمشوا. وجّههم يسمّوا هما مختلفين في إيه فعلًا."
+  },
+  "key_points": [
+    {
+      "en": "They agree on the sequence: pilot first, then rollout.",
+      "ar": "متفقين على الترتيب: تجربة أول، بعدها تعميم."
+    },
+    {
+      "en": "They disagree on what counts as the pilot: two districts or one.",
+      "ar": "مختلفين على إيه اللي يحسب تجربة: منطقتين ولا واحدة."
+    },
+    {
+      "en": "Check each position back to its owner before naming the gap.",
+      "ar": "راجع موقف كل واحد معاه قبل ما تسمّي الخلاف."
+    },
+    {
+      "en": "Get them to decide what the pilot is before they leave the room.",
+      "ar": "خلّيهم يحدّدوا التجربة إيه قبل ما يمشوا من الأوضة."
+    }
+  ],
+  "model_answer": {
+    "en": "Can I stop you there before we finish? I think you agree on the sequence -- pilot first, then rollout -- and that part is settled. Rania, let me check I follow: for you the pilot is the two northern districts. Tarek, for you the pilot is one district and the others are already inside the rollout. Is that right on both sides? Then what you disagree about is not the plan, it is what counts as the pilot, and it changes the scope by a district. Could we decide that now rather than after the handshake? If we leave it, you will each report a different agreement next week.",
+    "ar": "أقدر أوقفكم لحظة قبل ما نخلص؟ أنا شايف إنكم متفقين على الترتيب — تجربة أول، بعدها تعميم — والجزء ده محسوم. رانيا، خليني أتأكد إني فاهم: عندك التجربة هي المنطقتين الشماليتين. طارق، عندك التجربة منطقة واحدة والباقي داخل في التعميم أصلًا. صح كده للطرفين؟ يعني إنتم مختلفين مش على الخطة، لكن على إيه اللي يحسب تجربة، وده بيغيّر النطاق بمنطقة كاملة. نقدر نحدّدها دلوقتي بدل بعد السلام؟ لو سيبناها، كل واحد هيحكي اتفاق مختلف الأسبوع الجاي."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me put that differently.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Can I stop you there?",
+      "ar": "أقدر أوقفك هنا؟"
+    },
+    {
+      "en": "So where do you disagree?",
+      "ar": "فأنتم مختلفين في إيه؟"
+    },
+    {
+      "en": "Let us take that separately.",
+      "ar": "خلينا ناخد دي لوحدها."
+    }
+  ]
+}

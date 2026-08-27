@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w16",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 16,
+  "title": "The Same News, Twice",
+  "title_ar": "نفس الخبر مرتين",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A decision must be conveyed to an applicant who has worked for months on it. The internal note is blunt.",
+    "ar": "لازم توصّل قرار لشخص اشتغل شهور عليه. الملاحظة الداخلية صريحة وجافة."
+  },
+  "source": "Internal note: 'We're not going ahead. It's not the proposal, it's that we've got loads of these and only two slots, and honestly the other lot know the sector better. Tell folks it was competitive, which it was.'",
+  "task": {
+    "en": "Convey this to the applicant: truthful, courteous, and without pretending a decision was not made.",
+    "ar": "وصّل ده للمتقدّم: صادق ومهذّب ومن غير ما تخفي إن فيه قرار اتخذ."
+  },
+  "key_points": [
+    {
+      "en": "Say plainly it was not successful, and that it was competitive.",
+      "ar": "قول بوضوح إنه مكانش ناجح، وإنه كان فيه تنافس."
+    },
+    {
+      "en": "It was competitive: many applications and only two slots.",
+      "ar": "كان فيه تنافس: تقديمات كتير وفرصتين بس."
+    },
+    {
+      "en": "The proposal itself was not the problem.",
+      "ar": "المقترح نفسه مكانش المشكلة."
+    },
+    {
+      "en": "Do not use 'unable', which implies nobody chose.",
+      "ar": "متستخدمش 'مش قادرين'، عشان بتوحي إن محدش اختار."
+    }
+  ],
+  "model_answer": {
+    "en": "Thank you for the work you put into this. I am sorry to tell you the application was not successful. I want to be straight about why: it was genuinely competitive -- we had many applications and only two slots -- and the proposal itself was not the problem. The panel judged that another applicant had closer experience of the sector. I am deliberately not saying we were 'unable' to proceed, because that would imply nobody chose, and somebody did. If it would help, I am willing to go through what would strengthen a future application.",
+    "ar": "شكرًا على المجهود اللي حطّيته. يأسفني أقول لك إن التقديم مكانش ناجح. عايز أكون صريح في السبب: كان فيه تنافس حقيقي — وصلنا تقديمات كتير وفيه فرصتين بس — والمقترح نفسه مكانش المشكلة. اللجنة شافت إن متقدّم تاني خبرته أقرب للمجال. وأنا بتعمّد مقولش إننا 'مش قادرين' نكمّل، عشان دي توحي إن محدش اختار، وفي الحقيقة حد اختار. ولو هيساعد، مستعد أمرّ معاك على اللي يقوّي تقديم جاي."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}

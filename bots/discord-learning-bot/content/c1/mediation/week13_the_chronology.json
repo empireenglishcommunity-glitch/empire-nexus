@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w13",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 13,
+  "title": "The Chronology",
+  "title_ar": "التسلسل الزمني",
+  "can_do": [
+    "C1.M.1"
+  ],
+  "scenario": {
+    "en": "An auditor wants to know the order of events at the factory in 2008, and the order is the whole point.",
+    "ar": "مراجع عايز يعرف ترتيب الأحداث في المصنع سنة 2008، والترتيب هو كل الحكاية."
+  },
+  "source": "Case note: 'The closure was due in September. In April the company chose not to announce the date to customers until the transfer was complete. The transfer was to have happened in June, by which time the receiving plant was on the point of a labour dispute, so nothing moved. Because customers had not been told, orders continued to arrive, and the six-week extension was therefore defensible. As it turned out it was never revisited. Forty per cent of staff had left by August.'",
+  "task": {
+    "en": "Relay the sequence so the auditor can see which decision made the rest follow.",
+    "ar": "انقل التسلسل بحيث المراجع يشوف أنهي قرار خلّى الباقي يحصل."
+  },
+  "key_points": [
+    {
+      "en": "In April the company decided not to tell customers the closure date.",
+      "ar": "في أبريل الشركة قرّرت متقولش للعملاء موعد الغلق."
+    },
+    {
+      "en": "The June transfer failed because of a labour dispute at the receiving plant.",
+      "ar": "نقل يونيو فشل بسبب نزاع عمالي في المصنع المستقبِل."
+    },
+    {
+      "en": "Orders continued because customers had not been told, so the extension was defensible.",
+      "ar": "الأوردرات كملت عشان العملاء مكانوش عارفين، فالتمديد كان مبرَّر."
+    },
+    {
+      "en": "Forty per cent of staff had left by August.",
+      "ar": "40% من العمال مشيوا قبل أغسطس."
+    }
+  ],
+  "model_answer": {
+    "en": "Take it in order. In April the company decided not to tell customers the closure date until the transfer was complete. The transfer was due in June and failed, because the receiving plant was on the point of a labour dispute. Because customers had not been told, orders continued to arrive, so the six-week extension was defensible and was then never revisited. Meanwhile forty per cent of staff had left by August. The April decision is the one everything else follows from.",
+    "ar": "خدها بالترتيب. في أبريل الشركة قرّرت متقولش للعملاء موعد الغلق لحد ما النقل يخلص. النقل كان مفروض في يونيو وفشل بسبب نزاع عمالي في المصنع المستقبِل. وعشان العملاء مكانوش عارفين، الأوردرات كملت، فالتمديد ست أسابيع كان مبرَّر وبعدين محدش رجع له. وفي نفس الوقت 40% من العمال مشيوا قبل أغسطس. قرار أبريل هو اللي كل حاجة اتبعت منه."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w15",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 15,
+  "title": "The Grey Area",
+  "title_ar": "المنطقة الرمادية",
+  "can_do": [
+    "C1.M.3"
+  ],
+  "scenario": {
+    "en": "A committee has agreed something in idiom, and two members have understood it in opposite ways.",
+    "ar": "لجنة اتفقت على حاجة بتعبير مجازي، واتنين فهموها بشكلين متناقضين."
+  },
+  "source": "Minutes: 'The committee agreed the matter was a grey area and resolved not to open a can of worms.' Hala: 'So it is unresolved and we come back to it next quarter.' Fouad: 'No -- we agreed to leave it. Reopening it is exactly what we said we would not do.'",
+  "task": {
+    "en": "Resolve the misunderstanding by getting the idiom out of the way, and secure one decision.",
+    "ar": "حلّ اللبس بإنك تشيل التعبير المجازي من الطريق، واخرج بقرار واحد."
+  },
+  "key_points": [
+    {
+      "en": "The idiom hides two different decisions: postpone, or drop.",
+      "ar": "التعبير المجازي مخبّي قرارين: تأجيل، ولا إسقاط."
+    },
+    {
+      "en": "Hala read 'grey area' as unresolved and returning next quarter.",
+      "ar": "هالة فهمت 'رمادية' إنها معلّقة وترجع الربع الجاي."
+    },
+    {
+      "en": "Fouad read 'a can of worms' as agreeing to leave it.",
+      "ar": "فؤاد فهم 'باب لا يُغلق' إنهم اتفقوا يسيبوها."
+    },
+    {
+      "en": "Ask the committee to record either a review date or a decision to drop it.",
+      "ar": "اطلب من اللجنة تسجّل تاريخ مراجعة أو قرار بالإسقاط."
+    }
+  ],
+  "model_answer": {
+    "en": "You are both reading the minutes correctly, which is the problem. 'A grey area' and 'a can of worms' are doing two different jobs, and neither is a decision. Hala has read them as: unresolved, return next quarter. Fouad has read them as: agreed to leave it. Can I suggest we stop using either phrase? What the committee has to record is one of two things: a review date, or a decision to drop it with a reason. Those have different consequences and only one of them generates a follow-up. Which did we actually mean? If nobody is sure, then we did not decide, and the honest minute says so.",
+    "ar": "إنتم الاتنين بتقرأوا المحضر صح، ودي هي المشكلة. 'منطقة رمادية' و'باب لا يُغلق' بيعملوا حاجتين مختلفتين، ومحدش منهم قرار. هالة قرأتهم: معلّقة، نرجع لها الربع الجاي. فؤاد قرأهم: اتفقنا نسيبها. أقدر أقترح إننا نبطّل نستخدم الاتنين؟ اللي اللجنة لازم تسجّله واحد من حاجتين: تاريخ مراجعة، أو قرار بإسقاطها وسببه. الاتنين نتايجهم مختلفة وواحد بس فيهم بيولّد متابعة. إحنا قصدنا إيه فعلًا؟ ولو محدش متأكد، يعني إحنا مقرّرناش، والمحضر الصادق يقول كده."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me put that differently.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Can I stop you there?",
+      "ar": "أقدر أوقفك هنا؟"
+    },
+    {
+      "en": "So where do you disagree?",
+      "ar": "فأنتم مختلفين في إيه؟"
+    },
+    {
+      "en": "Let us take that separately.",
+      "ar": "خلينا ناخد دي لوحدها."
+    }
+  ]
+}

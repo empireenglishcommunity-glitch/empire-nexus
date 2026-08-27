@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w10",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 10,
+  "title": "The Specification",
+  "title_ar": "المواصفات الفنية",
+  "can_do": [
+    "C1.M.1"
+  ],
+  "scenario": {
+    "en": "A technician needs the tolerances from a document he cannot access, and getting one number wrong ruins the batch.",
+    "ar": "فني محتاج المقاسات من مستند مش قادر يوصل له، وأي رقم غلط يفسد الدفعة."
+  },
+  "source": "Specification: 'The seals, most of which are supplied pre-cut, must be seated at a torque of between 18 and 22 newton metres, the upper limit beyond which deformation occurs. The curing period, the length of which depends on ambient humidity, is a minimum of six hours and must not be shortened. Batches in which any seal has been re-seated more than twice are to be rejected. The threshold at which the adhesive fails is 65 degrees.'",
+  "task": {
+    "en": "Relay the four figures precisely, and say which one has no tolerance at all.",
+    "ar": "انقل الأرقام الأربعة بدقة وقول أنهي واحد مفيهوش أي تهاون."
+  },
+  "key_points": [
+    {
+      "en": "Torque must be between 18 and 22 newton metres.",
+      "ar": "ربط العزم لازم بين 18 و22 نيوتن متر."
+    },
+    {
+      "en": "Curing is a minimum of six hours and must not be shortened.",
+      "ar": "فترة المعالجة ست ساعات كحد أدنى وميصحّ تتقصّر."
+    },
+    {
+      "en": "Reject any batch where a seal was re-seated more than twice.",
+      "ar": "ارفض أي دفعة فيها جلدة اترجّعت أكتر من مرتين."
+    },
+    {
+      "en": "The adhesive fails at 65 degrees.",
+      "ar": "اللاصق بيفشل عند 65 درجة."
+    }
+  ],
+  "model_answer": {
+    "en": "Four numbers. Torque is between 18 and 22 newton metres, and 22 is the limit beyond which deformation occurs. Curing is a minimum of six hours and must not be shortened -- that is the one with no tolerance. Reject any batch in which a seal has been re-seated more than twice. And the adhesive fails at 65 degrees.",
+    "ar": "أربعة أرقام. العزم بين 18 و22 نيوتن متر، و22 هو الحد اللي بعده يحصل تشوّه. المعالجة ست ساعات كحد أدنى وميصحّ تتقصّر — دي اللي مفيهاش تهاون. ارفض أي دفعة فيها جلدة اترجّعت أكتر من مرتين. واللاصق بيفشل عند 65 درجة."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

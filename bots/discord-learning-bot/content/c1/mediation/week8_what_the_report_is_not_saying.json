@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w8",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 8,
+  "title": "What the Report Is Not Saying",
+  "title_ar": "التقرير مش بيقول إيه",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A committee member wants to know whether the report supports the scheme. Every sentence in it is hedged.",
+    "ar": "عضو لجنة عايز يعرف التقرير بيدعم المشروع ولا لأ. كل جملة فيه متحفّظة."
+  },
+  "source": "Report: 'The scheme appears to have delivered benefits to some extent. Costs were relatively contained. The approach is arguably suitable for wider adoption, subject to further work. On the whole the evidence tends to suggest a positive direction, with reservations.'",
+  "task": {
+    "en": "Explain what the report actually claims, and what its hedging pattern reveals.",
+    "ar": "اشرح التقرير بيدّعي إيه فعلًا، وإيه اللي نمط التحفّظ بيكشفه."
+  },
+  "key_points": [
+    {
+      "en": "Every benefit is hedged; the costs are stated flatly as contained.",
+      "ar": "كل فايدة متحفّظة؛ التكاليف مكتوبة بشكل قاطع إنها محتواة."
+    },
+    {
+      "en": "Hedging applied only to contested findings is a signal, not caution.",
+      "ar": "التحفّظ على النتايج المتنازع عليها بس مؤشر، مش حيطة."
+    },
+    {
+      "en": "The report supports the scheme weakly and commits to nothing.",
+      "ar": "التقرير بيدعم المشروع بشكل ضعيف ومش بيلتزم بحاجة."
+    },
+    {
+      "en": "Ask for the cost figures and the reservations in full before deciding.",
+      "ar": "اطلب أرقام التكاليف والتحفّظات بالكامل قبل ما تقرّر."
+    }
+  ],
+  "model_answer": {
+    "en": "The short answer is that it supports the scheme weakly and commits to nothing. Look at the pattern rather than the words: every benefit is hedged -- 'appears to', 'to some extent', 'arguably' -- while the costs are stated flatly as contained, with no qualifier at all. Caution applied only to the contested findings is a signal, not carefulness. Before you decide, I would ask for two things: the cost figures in full, and the reservations written out. If both are solid the scheme may still be right, but this document is not the evidence for it.",
+    "ar": "الإجابة القصيرة إنه بيدعم المشروع بشكل ضعيف ومش بيلتزم بحاجة. بصّ على النمط مش على الكلمات: كل فايدة متحفّظة — 'يبدو أن'، 'إلى حد ما'، 'يمكن القول' — بينما التكاليف مكتوبة بشكل قاطع إنها محتواة من غير أي تخفيف. التحفّظ اللي بيتحطّ على النتايج المتنازع عليها بس مؤشر، مش حيطة. قبل ما تقرّر، أنا هطلب حاجتين: أرقام التكاليف بالكامل، والتحفّظات مكتوبة. لو الاتنين سليمين يمكن المشروع صح، بس المستند ده مش هو الدليل."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}
