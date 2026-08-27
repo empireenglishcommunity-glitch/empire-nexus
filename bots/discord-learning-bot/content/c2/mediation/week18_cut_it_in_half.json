@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w18",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 18,
+  "title": "Cut It in Half",
+  "title_ar": "قصّرها للنص",
+  "can_do": [
+    "C2.M.2"
+  ],
+  "scenario": {
+    "en": "A colleague's 300-word paragraph must fit a 120-word box, and he believes nothing can go.",
+    "ar": "فقرة زميلك 300 كلمة لازم تدخل في خانة 120 كلمة، وهو شايف إن مفيش حاجة تتشال."
+  },
+  "source": "HIS PARAGRAPH: 'It is important to note at this juncture that, in the final analysis, the vast majority of the various different stakeholders who were consulted during the consultation period expressed the view that the proposals as currently drafted are, at least in their present form, somewhat lacking in the requisite degree of clarity that would be necessary in order to enable them to arrive at a fully informed decision.'",
+  "task": {
+    "en": "Reformulate it for the box, and explain to him what was deadwood and what was the finding.",
+    "ar": "أعد صياغتها للخانة، واشرح له إيه الحشو وإيه النتيجة."
+  },
+  "key_points": [
+    {
+      "en": "The finding is that most consultees found the proposals unclear.",
+      "ar": "النتيجة إن أغلب المستشارين شافوا المقترحات غير واضحة."
+    },
+    {
+      "en": "They said they could not make an informed decision.",
+      "ar": "قالوا إنهم مش قادرين ياخدوا قرار مستنير."
+    },
+    {
+      "en": "Phrases like 'at this juncture' and 'in the final analysis' carry no content.",
+      "ar": "عبارات زي 'في هذه المرحلة' و'في التحليل النهائي' مش شايلة معنى."
+    },
+    {
+      "en": "'Various different' and 'as currently drafted, at least in their present form' are redundant.",
+      "ar": "'مختلفة ومتنوعة' و'بصيغتها الحالية على الأقل في شكلها الراهن' تكرار."
+    }
+  ],
+  "model_answer": {
+    "en": "Here is the box version: 'Most consultees said the proposals are unclear and that they could not make an informed decision.' Nineteen words. Nothing was lost, and here is why. 'At this juncture' and 'in the final analysis' carry no content at all. 'Various different' says one thing twice, and 'as currently drafted, at least in their present form' says it three times. What remains is the finding, which was always two clauses long and was sitting under about forty words of padding.",
+    "ar": "أهي نسخة الخانة: 'أغلب المستشارين قالوا إن المقترحات غير واضحة وإنهم مش قادرين ياخدوا قرار مستنير.' تسعتاشر كلمة. مضاعش حاجة، وأقول لك ليه. 'في هذه المرحلة' و'في التحليل النهائي' مش شايلين أي معنى. 'مختلفة ومتنوعة' بتقول حاجة واحدة مرتين، و'بصيغتها الحالية على الأقل في شكلها الراهن' بتقولها تلاتة. اللي باقي هو النتيجة، وكانت دايمًا جملتين وكانت مدفونة تحت حوالي أربعين كلمة حشو."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام مباشر، معناها كده."
+    },
+    {
+      "en": "Let me put that another way.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Tell me which part is unclear.",
+      "ar": "قول لي أنهي جزء مش واضح."
+    },
+    {
+      "en": "Is that any clearer now?",
+      "ar": "أوضح كده؟"
+    }
+  ]
+}

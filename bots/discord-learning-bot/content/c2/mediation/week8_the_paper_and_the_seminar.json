@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w8",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 8,
+  "title": "The Paper and the Seminar",
+  "title_ar": "الورقة والندوة",
+  "can_do": [
+    "C2.M.1"
+  ],
+  "scenario": {
+    "en": "A colleague read the paper but missed the seminar where the author qualified it heavily.",
+    "ar": "زميلك قرا الورقة لكن فوّت الندوة اللي الكاتب حدّد فيها تحفّظات كبيرة."
+  },
+  "source": "PAPER: 'As will be shown, the effect is robust across all cohorts.' SEMINAR (author, in response to a question): 'To digress briefly — it should be borne in mind that cohort four is where the effect is weakest, and needless to say the framework was not designed for it. That said, returning to the main thread, the finding holds for one to three.'",
+  "task": {
+    "en": "Reconstruct for your colleague what the author actually claims, using both sources.",
+    "ar": "أعد بناء اللي الكاتب بيدّعيه فعلًا لزميلك، بالمصدرين."
+  },
+  "key_points": [
+    {
+      "en": "The paper claims the effect is robust across all cohorts.",
+      "ar": "الورقة بتدّعي إن الأثر قوي في كل المجموعات."
+    },
+    {
+      "en": "In the seminar the author conceded cohort four is weakest.",
+      "ar": "في الندوة الكاتب أقرّ إن المجموعة الرابعة الأضعف."
+    },
+    {
+      "en": "The author said the framework was not designed for cohort four.",
+      "ar": "الكاتب قال إن الإطار مش مصمّم للمجموعة الرابعة."
+    },
+    {
+      "en": "The defensible claim is cohorts one to three, not all.",
+      "ar": "الادعاء القابل للدفاع هو المجموعات واحد لتلاتة، مش كلها."
+    }
+  ],
+  "model_answer": {
+    "en": "The paper and the seminar do not say the same thing. In print the author claims the effect is robust across all cohorts. Asked directly, he conceded that cohort four is where it is weakest and that the framework was not designed for it, before returning to the main thread. So the defensible claim is cohorts one to three. If you cite it as all cohorts you are citing the paper accurately and the author inaccurately.",
+    "ar": "الورقة والندوة مش بيقولوا نفس الحاجة. في المطبوع الكاتب بيدّعي إن الأثر قوي في كل المجموعات. ولما اتسأل مباشرة، أقرّ إن المجموعة الرابعة هي الأضعف وإن الإطار مش مصمّم لها، وبعدين رجع للخط الأساسي. فالادعاء القابل للدفاع هو المجموعات من واحد لتلاتة. لو نقلته على إنه كل المجموعات، تكون نقلت الورقة بدقة والكاتب بغير دقة."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

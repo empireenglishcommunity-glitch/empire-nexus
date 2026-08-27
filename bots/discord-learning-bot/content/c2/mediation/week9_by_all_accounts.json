@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w9",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 9,
+  "title": "By All Accounts",
+  "title_ar": "على حسب كل الروايات",
+  "can_do": [
+    "C2.M.1"
+  ],
+  "scenario": {
+    "en": "Three accounts of the same incident, each hedged differently. The report needs one paragraph.",
+    "ar": "تلات روايات لنفس الحادثة، كل واحدة متحفّظة بشكل مختلف. التقرير محتاج فقرة واحدة."
+  },
+  "source": "SOURCE A (written): 'All the evidence suggests the valve was closed.' SOURCE B (interview): 'To the best of my knowledge it was closed, though as far as I can tell nobody checked it that morning.' SOURCE C (written log): 'Valve state: not recorded.'",
+  "task": {
+    "en": "Write one paragraph that reconstructs what is known, distinguishing evidence from belief.",
+    "ar": "اكتب فقرة واحدة تعيد بناء المعروف، وتفرّق بين الدليل والاعتقاد."
+  },
+  "key_points": [
+    {
+      "en": "Two sources believe the valve was closed.",
+      "ar": "مصدرين معتقدين إن الصمام كان مقفول."
+    },
+    {
+      "en": "Nobody checked it that morning, on source B's account.",
+      "ar": "محدش تحقّق منه الصبح، حسب المصدر ب."
+    },
+    {
+      "en": "The log records the valve state as not recorded.",
+      "ar": "السجل بيقول إن حالة الصمام مش مسجّلة."
+    },
+    {
+      "en": "So the closed state is belief, not evidence.",
+      "ar": "فكونه مقفول اعتقاد، مش دليل."
+    }
+  ],
+  "model_answer": {
+    "en": "Reconstructed: two sources believe the valve was closed, one on the strength of the evidence generally and one to the best of his knowledge. But the same interview states that nobody checked it that morning, and the log records the valve state as not recorded. Taken together, the closed state is a shared belief rather than evidence, and the report should say so in those words.",
+    "ar": "بإعادة البناء: مصدرين معتقدين إن الصمام كان مقفول، واحد على أساس الأدلة عمومًا وواحد على حسب علمه. بس نفس المقابلة بتقول إن محدش تحقّق منه الصبح، والسجل بيقول إن حالة الصمام مش مسجّلة. لو جمعناهم، كونه مقفول اعتقاد مشترك مش دليل، والتقرير لازم يقول كده بالحرف."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

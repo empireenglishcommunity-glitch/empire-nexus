@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w10",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 10,
+  "title": "Refute, or Rebut?",
+  "title_ar": "يدحض ولا يردّ؟",
+  "can_do": [
+    "C2.M.2"
+  ],
+  "scenario": {
+    "en": "A journalist is about to write that the study was 'refuted'. It was not, and the difference is publishable.",
+    "ar": "صحفي على وشك يكتب إن الدراسة 'اتدحضت'. مش صح، والفرق ممكن ينشر."
+  },
+  "source": "PEER COMMENT: 'We contest the interpretation and dispute the sampling, but we do not refute the finding; a substantial and significant reassessment is warranted, though we would not say the result should be terminated so much as that the authors' conclusion is not felicitous.'",
+  "task": {
+    "en": "Explain to the journalist precisely what was and was not claimed, and which word she may use.",
+    "ar": "اشرح للصحفية بالظبط اتقال إيه ومااتقالش إيه، وأنهي كلمة تقدر تستخدمها."
+  },
+  "key_points": [
+    {
+      "en": "They contest the interpretation and dispute the sampling.",
+      "ar": "هما بيعترضوا على التفسير وبيشكّكوا في العيّنة."
+    },
+    {
+      "en": "They explicitly do not refute the finding.",
+      "ar": "وبيقولوا صريح إنهم مش بيدحضوا النتيجة."
+    },
+    {
+      "en": "They call for a reassessment, not a withdrawal.",
+      "ar": "بيطالبوا بإعادة تقييم، مش سحب."
+    },
+    {
+      "en": "She may write dispute or contest, but not refute.",
+      "ar": "تقدر تكتب 'محل خلاف' أو 'معترض عليها'، لكن مش 'اتدحضت'."
+    }
+  ],
+  "model_answer": {
+    "en": "The distinction is the story. They contest the interpretation and dispute the sampling — both of which mean they are arguing with it. They explicitly do not refute the finding, and refute means to disprove, which nobody here claims to have done. What they call for is a reassessment, not a withdrawal. So 'refuted' would misreport them and they would be entitled to complain. 'Disputed' or 'contested' is accurate and just as strong a headline.",
+    "ar": "الفرق هو الخبر. هما بيعترضوا على التفسير وبيشكّكوا في العيّنة — والاتنين معناهم إنهم بيجادلوا. وبيقولوا صريح إنهم مش بيدحضوا النتيجة، ودحض معناه إثبات الخطأ، ومحدش هنا بيدّعي إنه عمل كده. اللي بيطالبوا بيه إعادة تقييم، مش سحب. فكلمة 'اتدحضت' هتنقلهم غلط ومن حقهم يشتكوا. 'محل خلاف' أو 'معترض عليها' دقيقة وعنوان قوي بنفس القدر."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام مباشر، معناها كده."
+    },
+    {
+      "en": "Let me put that another way.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Tell me which part is unclear.",
+      "ar": "قول لي أنهي جزء مش واضح."
+    },
+    {
+      "en": "Is that any clearer now?",
+      "ar": "أوضح كده؟"
+    }
+  ]
+}

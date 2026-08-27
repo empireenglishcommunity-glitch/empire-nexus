@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w17",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 17,
+  "title": "Admittedly, However",
+  "title_ar": "لا شك، ومع ذلك",
+  "can_do": [
+    "C2.M.3"
+  ],
+  "scenario": {
+    "en": "Two reviewers have written contradictory recommendations on the same grant and both are entrenched.",
+    "ar": "مراجعين كتبوا توصيات متناقضة على نفس المنحة والاتنين متمسكين."
+  },
+  "source": "Reviewer 1: 'Admittedly the methodology is sound, however this overlooks the fact that the sample is not representative. Reject.' Reviewer 2: 'Granted that the sample is small, while it is true that generalisation is limited, the contribution is nonetheless valid. Fund.'",
+  "task": {
+    "en": "Mediate to a recommendation the panel can adopt, conceding what each reviewer established.",
+    "ar": "توسّط لتوصية اللجنة تقدر تتبناها، مع الإقرار باللي كل مراجع أثبته."
+  },
+  "key_points": [
+    {
+      "en": "Both agree the methodology is sound.",
+      "ar": "الاتنين متفقين إن المنهجية سليمة."
+    },
+    {
+      "en": "Both agree the sample limits generalisation.",
+      "ar": "الاتنين متفقين إن العيّنة بتحدّ من التعميم."
+    },
+    {
+      "en": "One says reject and one says fund, on the same shared facts.",
+      "ar": "واحد بيقول ارفض وواحد بيقول موّل، على نفس الوقائع المشتركة."
+    },
+    {
+      "en": "Propose funding conditional on the generalisation claim being narrowed.",
+      "ar": "اقترح التمويل بشرط تضييق ادعاء التعميم."
+    }
+  ],
+  "model_answer": {
+    "en": "These two reviews agree far more than they appear to. Both accept the methodology is sound — reviewer 1 concedes it in her first clause. Both accept the sample limits generalisation; reviewer 2 grants it explicitly. So the factual position is shared, and the disagreement is a single judgement: whether that limitation is disqualifying or a caveat. That is not a question either reviewer can settle by restating it. What I would put to the panel is funding conditional on the generalisation claim being narrowed in the proposal itself. Reviewer 1's objection is then met, because the overclaim goes. Reviewer 2's position is met, because the contribution survives. Neither has to be overruled.",
+    "ar": "المراجعتين دول متفقين أكتر بكتير من اللي بيبان. الاتنين بيقبلوا إن المنهجية سليمة — المراجعة الأولى بتقرّ بده في أول جملة. والاتنين بيقبلوا إن العيّنة بتحدّ من التعميم؛ والمراجع التاني بيقرّ بده صريح. فالموقف الواقعي مشترك، والخلاف حكم واحد: هل القيد ده مانع ولا تحفّظ. ودي مش حاجة أي مراجع يحسمها بإعادة كلامه. اللي هحطّه على اللجنة هو تمويل مشروط بتضييق ادعاء التعميم في المقترح نفسه. وكده اعتراض المراجعة الأولى بيتلبّى، لأن المبالغة بتروح. وموقف المراجع التاني بيتلبّى، لأن الإسهام بيفضل. ومحدش محتاج حكمه يتلغى."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me stop us there.",
+      "ar": "خليني أوقفنا هنا."
+    },
+    {
+      "en": "Where exactly do you differ?",
+      "ar": "مختلفين فين بالظبط؟"
+    },
+    {
+      "en": "Can I restate both positions?",
+      "ar": "أقدر أعيد صياغة الموقفين؟"
+    },
+    {
+      "en": "Let us separate those two.",
+      "ar": "خلينا نفصل الاتنين."
+    }
+  ]
+}

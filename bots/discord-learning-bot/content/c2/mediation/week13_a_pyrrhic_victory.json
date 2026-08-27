@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w13",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 13,
+  "title": "A Pyrrhic Victory",
+  "title_ar": "نصر بأهوَن الخسائر",
+  "can_do": [
+    "C2.M.4"
+  ],
+  "scenario": {
+    "en": "A press release calls the outcome a victory. A colleague wants to know whether that is praise.",
+    "ar": "بيان صحفي بيسمّي النتيجة نصر. زميل عايز يعرف ده مدح ولا لأ."
+  },
+  "source": "RELEASE: 'After a Herculean effort, and at the eleventh hour, the team crossed the Rubicon and secured what can only be described as a Pyrrhic victory — a catch-22 resolved, if resolved is the word.'",
+  "task": {
+    "en": "Explain the allusions and say whether the sentence is praising the outcome.",
+    "ar": "اشرح الإشارات وقول هل الجملة بتمدح النتيجة ولا لأ."
+  },
+  "key_points": [
+    {
+      "en": "A Herculean effort means an enormous one.",
+      "ar": "'مجهود هرقلي' معناه مجهود ضخم."
+    },
+    {
+      "en": "The eleventh hour means at the last possible moment.",
+      "ar": "'الساعة الحادية عشرة' معناها في آخر لحظة ممكنة."
+    },
+    {
+      "en": "Crossing the Rubicon means passing a point of no return.",
+      "ar": "'عبور الروبيكون' معناه تجاوز نقطة اللاعودة."
+    },
+    {
+      "en": "A Pyrrhic victory is one won at a cost that outweighs it, so this is not praise.",
+      "ar": "'نصر بيروس' هو نصر تكلفته أكبر منه، فدي مش مدح."
+    }
+  ],
+  "model_answer": {
+    "en": "Take the allusions in turn. A Herculean effort is an enormous one — that part is praise. The eleventh hour means at the last possible moment. Crossing the Rubicon means passing a point of no return, which is neutral but implies they cannot now retreat. But a Pyrrhic victory is one won at a cost greater than the prize, and that is not praise at all. Add 'if resolved is the word' and the writer is signalling doubt twice. So no — read carefully, this sentence says the team worked enormously hard, committed irreversibly, and won something that may not have been worth winning. Whether that was intended is a fair question to put to whoever signed it off.",
+    "ar": "خد الإشارات واحدة واحدة. 'مجهود هرقلي' معناه ضخم — الجزء ده مدح. 'الساعة الحادية عشرة' معناها في آخر لحظة ممكنة. و'عبور الروبيكون' معناه تجاوز نقطة اللاعودة، ودي محايدة بس بتوحي إنهم مش قادرين يرجعوا. لكن 'نصر بيروس' هو نصر تكلفته أكبر من المكسب، ودي مش مدح خالص. وضيف 'لو كلمة حُلّت هي الكلمة الصح' يبقى الكاتب بيشاور بالشك مرتين. فلأ — بالقراية المتمعنة، الجملة بتقول إن الفريق اشتغل بجهد ضخم، والتزم بشكل لا رجعة فيه، وكسب حاجة يمكن مكانتش تستاهل. وهل ده كان مقصود؟ سؤال عادل تسأله للي اعتمد البيان."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

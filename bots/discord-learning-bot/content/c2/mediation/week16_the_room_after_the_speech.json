@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w16",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 16,
+  "title": "The Room After the Speech",
+  "title_ar": "الأوضة بعد الخطبة",
+  "can_do": [
+    "C2.M.3"
+  ],
+  "scenario": {
+    "en": "A rousing speech has split the team: some are galvanised, others feel manipulated.",
+    "ar": "خطبة حماسية قسمت الفريق: ناس اتحمّست وناس حاسة إنها اتلعب بيها."
+  },
+  "source": "Nour: 'That was compelling and it was exactly what people needed to hear.' Karim: 'It was rhetoric. Three tricolons and a rhetorical question, and not one number. I felt handled.' Nour: 'You always say that.' Karim: 'Because it is always true.'",
+  "task": {
+    "en": "Mediate. Take both reactions seriously and find what would satisfy each.",
+    "ar": "توسّط. خد ردّ الفعلين بجدية ولاقي إيه اللي يرضي كل واحد."
+  },
+  "key_points": [
+    {
+      "en": "Nour responded to the speech being persuasive and well-timed.",
+      "ar": "نور اتأثرت بإن الخطبة كانت مقنعة وفي وقتها."
+    },
+    {
+      "en": "Karim objects that it used rhetoric and contained no numbers.",
+      "ar": "كريم معترض إنها استخدمت بلاغة ومفيهاش أرقام."
+    },
+    {
+      "en": "Both can be true: a speech can be moving and unevidenced.",
+      "ar": "الاتنين ممكن يكونوا صح: الخطبة تكون مؤثرة وبدون أدلة."
+    },
+    {
+      "en": "The remedy is the number in writing, not more argument about the speech.",
+      "ar": "الحل هو الأرقام مكتوبة، مش مناقشة أكتر عن الخطبة."
+    }
+  ],
+  "model_answer": {
+    "en": "I think you are both describing the same speech accurately, which is why this is going nowhere. Nour, you are responding to the fact that it was persuasive and well-timed, and it was — people left the room ready to work. Karim, your objection is that it used rhetoric and contained no numbers, and that is also true, I counted as well. Those are not in conflict. A speech can be genuinely moving and genuinely unevidenced, and the second does not cancel the first. What I would suggest is not that we argue about the speech but that we ask for the figures in writing this week. If they are there, Karim's worry dissolves and Nour keeps the momentum. If they are not there, Karim was right to ask, and it is much better that we found out.",
+    "ar": "أنا شايف إن إنتم الاتنين بتوصفوا نفس الخطبة بدقة، وعشان كده النقاش واقف. نور، إنتي بتتفاعلي مع إنها كانت مقنعة وفي وقتها، وفعلًا كده — الناس خرجت مستعدة تشتغل. كريم، اعتراضك إنها استخدمت بلاغة ومفيهاش أرقام، وده كمان صح، وأنا كنت بعدّ برضه. والاتنين مش متعارضين. الخطبة ممكن تكون مؤثرة فعلًا وبدون أدلة فعلًا، والتانية مش بتلغي الأولى. واللي أقترحه إننا منتخانقش على الخطبة، لكن نطلب الأرقام مكتوبة الأسبوع ده. لو موجودة، قلق كريم بيروح ونور بتحافظ على الزخم. ولو مش موجودة، يبقى كريم كان صح إنه سأل، وأحسن بكتير إننا عرفنا."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me stop us there.",
+      "ar": "خليني أوقفنا هنا."
+    },
+    {
+      "en": "Where exactly do you differ?",
+      "ar": "مختلفين فين بالظبط؟"
+    },
+    {
+      "en": "Can I restate both positions?",
+      "ar": "أقدر أعيد صياغة الموقفين؟"
+    },
+    {
+      "en": "Let us separate those two.",
+      "ar": "خلينا نفصل الاتنين."
+    }
+  ]
+}

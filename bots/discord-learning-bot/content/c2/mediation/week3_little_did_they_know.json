@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w3",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 3,
+  "title": "Little Did They Know",
+  "title_ar": "وما كانوا يدرون",
+  "can_do": [
+    "C2.M.4"
+  ],
+  "scenario": {
+    "en": "A dramatic account has been read as an accusation. The writer says it was not one.",
+    "ar": "سرد درامي اتفهم على إنه اتهام. الكاتب بيقول إنه مكانش كده."
+  },
+  "source": "THE SENTENCE: 'So great was the confidence in the design that never before had a review been waived at this stage; little did they know how stark the consequence would be.'",
+  "task": {
+    "en": "Clarify the two readings of 'little did they know', and which the syntax supports.",
+    "ar": "وضّح القراءتين لـ'وما كانوا يدرون'، وأنهي واحدة الصياغة بتدعمها."
+  },
+  "key_points": [
+    {
+      "en": "It can imply they should have known, or simply that they could not.",
+      "ar": "ممكن تعني إنهم كان لازم يعرفوا، أو ببساطة إنهم مكانوش يقدروا."
+    },
+    {
+      "en": "The first reading is an accusation of negligence.",
+      "ar": "القراءة الأولى اتهام بالتقصير."
+    },
+    {
+      "en": "The other reading is that they could not have known, which is not blame.",
+      "ar": "القراءة التانية إنهم مكانوش يقدروا يعرفوا، ودي مش لوم."
+    },
+    {
+      "en": "The syntax supports neither, so only the writer can settle it.",
+      "ar": "الصياغة مش بتدعم أي واحدة، فالكاتب بس اللي يحسمها."
+    }
+  ],
+  "model_answer": {
+    "en": "The phrase is genuinely ambiguous and the sentence does not resolve it. 'Little did they know' can imply they should have known — in which case it is an accusation of negligence — or simply that they could not have known, in which case it is dramatic irony and carries no blame. English uses the inversion for both. The syntax here supports neither reading over the other, which is why two careful readers have disagreed. Only the writer can settle it, and if the intent was the second, one added clause would remove the ambiguity entirely.",
+    "ar": "العبارة غامضة فعلًا والجملة مش بتحسمها. 'وما كانوا يدرون' ممكن تعني إنهم كان لازم يعرفوا — وساعتها بتبقى اتهام بالتقصير — أو ببساطة إنهم مكانوش يقدروا يعرفوا، وساعتها بتبقى سخرية درامية من غير لوم. والإنجليزي بيستخدم نفس القلب النحوي للاتنين. والصياغة هنا مش بتدعم قراءة على التانية، وعشان كده قارئين متمعنين اختلفوا. الكاتب بس هو اللي يحسمها، ولو كان قاصد التانية، جملة واحدة زيادة تشيل الغموض خالص."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

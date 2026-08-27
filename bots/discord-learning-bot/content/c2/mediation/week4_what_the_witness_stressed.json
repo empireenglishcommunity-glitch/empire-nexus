@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w4",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 4,
+  "title": "What the Witness Stressed",
+  "title_ar": "اللي الشاهد شدّد عليه",
+  "can_do": [
+    "C2.M.1"
+  ],
+  "scenario": {
+    "en": "A written statement and an interview transcript emphasise different things. Counsel needs both.",
+    "ar": "إفادة مكتوبة ونص مقابلة بيشدّدوا على حاجات مختلفة. المحامي محتاج الاتنين."
+  },
+  "source": "STATEMENT: 'The gate was locked. The lights were off. I saw a vehicle.' TRANSCRIPT: 'What strikes me, looking back, is the vehicle — that much is clear, I am certain of the vehicle. Of particular note is that I cannot say whether the gate was locked; I assumed it, because it always is.'",
+  "task": {
+    "en": "Relay to counsel what is certain, what is assumed, and what the written statement makes look equal.",
+    "ar": "انقل للمحامي إيه المؤكد وإيه المفترض وإيه اللي الإفادة المكتوبة خلّته يبان متساوي."
+  },
+  "key_points": [
+    {
+      "en": "He is certain about the vehicle.",
+      "ar": "هو متأكد بخصوص العربية."
+    },
+    {
+      "en": "He assumed the gate was locked because it always is.",
+      "ar": "افترض إن البوابة مقفولة لأنها دايمًا مقفولة."
+    },
+    {
+      "en": "The written statement presents both as equally observed.",
+      "ar": "الإفادة المكتوبة بتقدّم الاتنين كأنهم مشاهدة بنفس الدرجة."
+    },
+    {
+      "en": "Counsel should treat the gate as inference, not observation.",
+      "ar": "المحامي لازم يعتبر البوابة استنتاج مش مشاهدة."
+    }
+  ],
+  "model_answer": {
+    "en": "There is a difference of certainty the statement conceals. He is certain about the vehicle — he says so twice. He assumed the gate was locked, because it always is, and he says explicitly that he cannot say. The written statement lists both in the same flat sequence, so it presents them as equally observed. Counsel should treat the vehicle as observation and the gate as inference.",
+    "ar": "فيه فرق في درجة اليقين المحضر المكتوب مخبّيه. هو متأكد بخصوص العربية — قالها مرتين. وافترض إن البوابة مقفولة لأنها دايمًا كده، وقال صريح إنه مش قادر يجزم. الإفادة المكتوبة حاطّة الاتنين في نفس التسلسل المسطّح، فبتقدّمهم كأنهم مشاهدة بنفس الدرجة. المحامي لازم يعتبر العربية مشاهدة والبوابة استنتاج."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

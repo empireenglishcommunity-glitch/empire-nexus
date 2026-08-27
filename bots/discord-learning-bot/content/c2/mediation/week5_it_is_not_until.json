@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w5",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 5,
+  "title": "It Is Not Until",
+  "title_ar": "ليس إلا عندما",
+  "can_do": [
+    "C2.M.4"
+  ],
+  "scenario": {
+    "en": "A specification sentence has been read as permitting something it may forbid.",
+    "ar": "جملة في المواصفات اتفهمت على إنها بتسمح بحاجة يمكن بتمنعها."
+  },
+  "source": "SPECIFICATION: 'It is not until the seal has cured that the assembly may be pressurised. What must be avoided is pressurisation during curing; the thing that matters is the sequence.'",
+  "task": {
+    "en": "Clarify whether pressurising at the moment curing ends is permitted, and what is genuinely unclear.",
+    "ar": "وضّح هل الضغط في لحظة انتهاء المعالجة مسموح، وإيه اللي فعلًا غامض."
+  },
+  "key_points": [
+    {
+      "en": "The cleft makes the sequence the point: curing must finish first.",
+      "ar": "الصيغة بتخلّي الترتيب هو المهم: المعالجة تخلص الأول."
+    },
+    {
+      "en": "Pressurisation during curing must be avoided.",
+      "ar": "الضغط أثناء المعالجة لازم يتجنّب."
+    },
+    {
+      "en": "What is unclear is whether 'cured' means the stated six hours or a tested state.",
+      "ar": "الغامض هو هل 'معالَج' معناها الست ساعات المذكورة ولا حالة تُختبر."
+    },
+    {
+      "en": "Confirm which meaning of cured applies before pressurising the assembly.",
+      "ar": "أكّد أنهي معنى لـ'معالَج' هو المطبّق قبل الضغط على المجموعة."
+    }
+  ],
+  "model_answer": {
+    "en": "The sequence is not in doubt: the cleft construction makes it the point, so curing must finish before pressurisation, and pressurising during curing must be avoided. Answering your question directly, at the moment curing ends it is permitted. What is genuinely unclear is different and more important: whether 'cured' means the stated six hours have elapsed, or that a tested state has been reached. Those are not the same in humid conditions, and the specification does not say. I would ask the engineer before running the batch.",
+    "ar": "الترتيب مش محل شك: الصيغة بتخلّيه هو النقطة، فالمعالجة لازم تخلص قبل الضغط، والضغط أثناء المعالجة لازم يتجنّب. وردًّا على سؤالك مباشرة، في لحظة انتهاء المعالجة مسموح. اللي فعلًا غامض حاجة تانية وأهم: هل 'معالَج' معناها إن الست ساعات عدّت، ولا إن حالة معيّنة اتحققت بالاختبار. والاتنين مش نفس الحاجة في الرطوبة، والمواصفات مش بتقول. أنا هسأل المهندس قبل تشغيل الدفعة."
+  },
+  "signal_phrases": [
+    {
+      "en": "May I check one thing?",
+      "ar": "أقدر أتأكد من حاجة؟"
+    },
+    {
+      "en": "Have I read that correctly?",
+      "ar": "فهمت ده صح؟"
+    },
+    {
+      "en": "Am I right in thinking so?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you confirm that reading?",
+      "ar": "تقدر تأكّد الفهم ده؟"
+    }
+  ]
+}

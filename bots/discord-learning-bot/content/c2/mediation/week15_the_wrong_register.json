@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c2_w15",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 15,
+  "title": "The Wrong Register",
+  "title_ar": "المستوى اللغوي الغلط",
+  "can_do": [
+    "C2.M.3"
+  ],
+  "scenario": {
+    "en": "A message written in the wrong register has caused genuine offence to a partner organisation.",
+    "ar": "رسالة مكتوبة بمستوى لغوي غلط زعّلت منظمة شريكة فعلًا."
+  },
+  "source": "THE MESSAGE (sent to the partner's director): 'Hi folks — bit of a mess at your end by the sound of it. Give us a shout when you've sorted it.' THE PARTNER'S REPLY: 'We note the tone of your correspondence and will respond formally in due course.'",
+  "task": {
+    "en": "Mediate between the two organisations, naming what went wrong without humiliating the sender.",
+    "ar": "توسّط بين المنظمتين، وسمّي الغلط من غير ما تحرج اللي بعت."
+  },
+  "key_points": [
+    {
+      "en": "The message was informal and the relationship is formal.",
+      "ar": "الرسالة كانت غير رسمية والعلاقة رسمية."
+    },
+    {
+      "en": "'A bit of a mess at your end' reads as blame, not sympathy.",
+      "ar": "'فيه لخبطة عندكم' بتقرأ لوم، مش تعاطف."
+    },
+    {
+      "en": "The partner's reply is itself a formal signal of offence.",
+      "ar": "ردّ الشريك في حد ذاته إشارة رسمية بالاستياء."
+    },
+    {
+      "en": "Propose a plainly worded apology for the tone, not for the content.",
+      "ar": "اقترح اعتذار واضح عن النبرة، مش عن المضمون."
+    }
+  ],
+  "model_answer": {
+    "en": "Here is what I think happened, and I do not think anyone acted badly. The message was written in a register that would be entirely normal internally — friendly, quick, no ceremony — and the relationship with this partner is a formal one. On top of that, 'a bit of a mess at your end' reads as blame rather than sympathy, which I am fairly sure was not the intent. And their reply is doing a specific job: 'we note the tone' is a formal signal that offence has been taken, and 'in due course' means they are not going to discuss it warmly. My suggestion is a short note apologising plainly for the tone and not for the content, because the content was reasonable. Apologising for both would concede something untrue and would make the next conversation harder.",
+    "ar": "أنا شايف إن اللي حصل ده، ومش شايف إن حد اتصرّف بسوء. الرسالة اتكتبت بمستوى لغوي طبيعي تمامًا لو كانت داخلية — ودّية وسريعة ومن غير رسميات — والعلاقة مع الشريك ده رسمية. وفوق كده، 'فيه لخبطة عندكم' بتقرأ لوم مش تعاطف، وأنا شبه متأكد إن ده مكانش المقصود. وردّهم بيعمل حاجة محددة: 'نلاحظ نبرة مراسلتكم' إشارة رسمية إن فيه استياء، و'في الوقت المناسب' معناها إنهم مش ناويين يتكلموا بدفء. اقتراحي رسالة قصيرة تعتذر بوضوح عن النبرة مش عن المضمون، لأن المضمون كان معقول. الاعتذار عن الاتنين هيعترف بحاجة مش صح وهيصعّب المكالمة الجاية."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me stop us there.",
+      "ar": "خليني أوقفنا هنا."
+    },
+    {
+      "en": "Where exactly do you differ?",
+      "ar": "مختلفين فين بالظبط؟"
+    },
+    {
+      "en": "Can I restate both positions?",
+      "ar": "أقدر أعيد صياغة الموقفين؟"
+    },
+    {
+      "en": "Let us separate those two.",
+      "ar": "خلينا نفصل الاتنين."
+    }
+  ]
+}
