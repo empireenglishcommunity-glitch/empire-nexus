@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w17",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 17,
+  "title": "Four Sources, One Briefing",
+  "title_ar": "أربع مصادر وإحاطة واحدة",
+  "can_do": [
+    "C1.M.4"
+  ],
+  "scenario": {
+    "en": "You have four documents of very different reliability and one page to brief a decision-maker.",
+    "ar": "عندك أربع مستندات موثوقيتها مختلفة جدًا وصفحة واحدة تعرض على صاحب القرار."
+  },
+  "source": "SOURCE A (peer-reviewed): 'A growing body of evidence links export-driven growth to widening regional inequality.' SOURCE B (industry): 'Our state-of-the-art facilities have had a well-documented long-term impact on local employment.' SOURCE C (audit office): 'A significant proportion of claimed jobs -- 38 per cent -- were transfers from existing sites.' SOURCE D (press): 'Officials describe the deeply rooted underlying causes as a matter of concern.'",
+  "task": {
+    "en": "Synthesise into one briefing, ranking the sources and saying what is actually known.",
+    "ar": "اجمعهم في إحاطة واحدة، رتّب المصادر وقول إيه المعروف فعلًا."
+  },
+  "key_points": [
+    {
+      "en": "The audit finding is the most load-bearing: 38 per cent were transfers.",
+      "ar": "نتيجة المراجعة هي الأهم: 38% كانوا نقل من مواقع قايمة."
+    },
+    {
+      "en": "Industry's employment claim is undermined by that transfer figure.",
+      "ar": "ادعاء التوظيف من الصناعة بيضعف بسبب رقم النقل."
+    },
+    {
+      "en": "The peer-reviewed link to widening inequality is the strongest evidence.",
+      "ar": "الربط المحكّم بزيادة التفاوت هو أقوى دليل."
+    },
+    {
+      "en": "The press quote adds no evidence and should not carry weight.",
+      "ar": "خبر الصحافة مش بيضيف دليل وميصحّ يتحسب."
+    }
+  ],
+  "model_answer": {
+    "en": "Ranked by what they can support: the audit office finding is the most load-bearing -- 38 per cent of the claimed jobs were transfers from existing sites -- because it is a specific, checkable number. That directly undermines the industry claim about long-term impact on local employment, which is asserted rather than evidenced. The peer-reviewed paper is the strongest evidence in the set and points the other way: it links export-driven growth to widening regional inequality. The press quote adds no evidence at all and should carry no weight. So what is actually known is that the employment gain is substantially smaller than claimed, and the inequality effect has real support.",
+    "ar": "بترتيب اللي يقدروا يدعموه: نتيجة مكتب المراجعة هي الأهم — 38% من الوظايف المُدّعاة كانوا نقل من مواقع قايمة — لأنها رقم محدد وقابل للتحقق. ودي بتضعف مباشرةً ادعاء الصناعة عن الأثر طويل المدى على التوظيف المحلي، اللي مُدّعى مش مدعوم بدليل. والورقة المحكّمة أقوى دليل في المجموعة وبتشاور في الاتجاه التاني: بتربط النمو القائم على التصدير بزيادة التفاوت بين المناطق. وخبر الصحافة مش بيضيف دليل خالص وميصحّ يتحسب. فاللي معروف فعلًا إن المكسب الوظيفي أقل بكتير من المُعلن، وتأثير التفاوت عنده سند حقيقي."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

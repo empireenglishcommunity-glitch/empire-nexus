@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w7",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 7,
+  "title": "Required, or Advisable?",
+  "title_ar": "واجب ولا مستحسن؟",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A new employee has had four things said to her and cannot tell which are orders. She is anxious about getting it wrong.",
+    "ar": "موظفة جديدة اتقال لها أربع حاجات ومش عارفة أنهي أوامر. قلقانة تغلط."
+  },
+  "source": "What she was told: 'You ought to have flagged this earlier. You needn't have stayed late. You'd better speak to Legal before Friday. And you're supposed to log every case within a day.'",
+  "task": {
+    "en": "Tell her which of the four is an actual obligation, and how to treat the others.",
+    "ar": "قول لها أنهي واحدة من الأربعة إلزام فعلي، وتتعامل مع الباقي إزاي."
+  },
+  "key_points": [
+    {
+      "en": "Only 'you're supposed to log every case within a day' is an obligation.",
+      "ar": "بس 'المفروض تسجّل كل حالة في يوم' هي الإلزام."
+    },
+    {
+      "en": "'You ought to have flagged this' is a comment about the past, not an instruction.",
+      "ar": "'كان لازم تنبّه' تعليق على اللي فات، مش أمر."
+    },
+    {
+      "en": "'You needn't have stayed late' is ambiguous and depends on tone.",
+      "ar": "'مكانش لازم تقعدي متأخر' غامضة وبتعتمد على النبرة."
+    },
+    {
+      "en": "Treat 'you'd better speak to Legal' as advice with a consequence, and do it.",
+      "ar": "خدي 'الأفضل تكلمي القانوني' كنصيحة ورايها نتيجة، واعمليها."
+    }
+  ],
+  "model_answer": {
+    "en": "Only one of those four is an obligation: 'you're supposed to log every case within a day' -- that is the rule, even though it sounds the mildest. 'You ought to have flagged this earlier' is a comment about the past, not an instruction, so there is nothing to do about it now. 'You needn't have stayed late' is genuinely ambiguous and depends on tone; do not read criticism into it without evidence. And 'you'd better speak to Legal before Friday' is advice with a consequence attached -- treat it as something to do. If you are unsure again, ask which of the three it is. That is a reasonable question and it protects you.",
+    "ar": "واحدة بس من الأربعة إلزام: 'المفروض تسجّلي كل حالة في يوم' — دي القاعدة، رغم إنها أخف في الصيغة. 'كان لازم تنبّهي بدري' تعليق على اللي فات، مش أمر، فمفيش حاجة تتعمل دلوقتي. 'مكانش لازم تقعدي متأخر' غامضة فعلًا وبتعتمد على النبرة؛ متفهميهاش نقد من غير دليل. و'الأفضل تكلمي القانوني قبل الجمعة' نصيحة ورايها نتيجة — اعمليها. ولو مش متأكدة تاني، اسألي هي واحدة من التلاتة دول. سؤال معقول وبيحميكي."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}

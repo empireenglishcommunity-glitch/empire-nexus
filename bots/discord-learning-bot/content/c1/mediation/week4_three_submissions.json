@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w4",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 4,
+  "title": "Three Submissions, One Recommendation",
+  "title_ar": "تلات إفادات وتوصية واحدة",
+  "can_do": [
+    "C1.M.4"
+  ],
+  "scenario": {
+    "en": "Three departments have written separately about the same programme. The board wants one coherent answer.",
+    "ar": "تلات إدارات كتبوا كل واحد لوحده عن نفس البرنامج. المجلس عايز إجابة واحدة متماسكة."
+  },
+  "source": "SOURCE A (Operations): 'Having reviewed 1,400 cases, processing time fell by under two per cent -- within normal variation.' SOURCE B (Quality): 'Errors at handover fell by thirty-one per cent, handover having been the original justification for funding.' SOURCE C (Finance): 'Given a business case built on recovering cost through time saved, the programme has not recovered its cost and will not.'",
+  "task": {
+    "en": "Synthesise the three into one recommendation the board can act on.",
+    "ar": "اجمع التلاتة في توصية واحدة المجلس يقدر يتحرّك بيها."
+  },
+  "key_points": [
+    {
+      "en": "Processing time did not fall meaningfully, under two per cent.",
+      "ar": "وقت المعالجة منقصش بشكل مؤثر، أقل من 2%."
+    },
+    {
+      "en": "Handover errors fell thirty-one per cent, which was the original justification.",
+      "ar": "أخطاء التسليم نزلت 31%، وده كان المبرر الأصلي."
+    },
+    {
+      "en": "The business case assumed cost recovery through time saved, which failed.",
+      "ar": "دراسة الجدوى افترضت استرداد التكلفة من الوقت، وده فشل."
+    },
+    {
+      "en": "Recommend continuing it as a risk-reduction measure under a corrected case.",
+      "ar": "أوصي بالاستمرار كإجراء لتقليل المخاطر بدراسة جدوى مصححة."
+    }
+  ],
+  "model_answer": {
+    "en": "The three do not conflict; they answer different questions. Operations is right that processing time did not fall meaningfully -- under two per cent. Quality is right that handover errors fell thirty-one per cent, and that handover was the original justification for the funding. Finance is right that the business case assumed cost recovery through time saved, and that has failed. Put together, the programme works and was approved against the wrong objective. So the recommendation is to continue it as a risk-reduction measure under a corrected business case, rather than to judge it against a target nobody should have set.",
+    "ar": "التلاتة مش متعارضين؛ بيجاوبوا على أسئلة مختلفة. العمليات صح إن وقت المعالجة منقصش بشكل مؤثر — أقل من 2%. الجودة صح إن أخطاء التسليم نزلت 31%، وإن التسليم كان المبرر الأصلي للتمويل. المالية صح إن دراسة الجدوى افترضت استرداد التكلفة من الوقت المُوفَّر، وده فشل. لو جمعناهم، البرنامج ناجح لكنه اتوافق عليه على أساس هدف غلط. فالتوصية إننا نكمّله كإجراء لتقليل المخاطر بدراسة جدوى مصححة، مش إننا نحكم عليه بهدف مكانش المفروض يتحدّد."
+  },
+  "signal_phrases": [
+    {
+      "en": "Can I check I follow?",
+      "ar": "أقدر أتأكد إني فاهم؟"
+    },
+    {
+      "en": "Have I understood that correctly?",
+      "ar": "فهمت صح؟"
+    },
+    {
+      "en": "Am I right in thinking that?",
+      "ar": "صح إني فاهم كده؟"
+    },
+    {
+      "en": "Could you clarify one point?",
+      "ar": "تقدر توضّح نقطة واحدة؟"
+    }
+  ]
+}

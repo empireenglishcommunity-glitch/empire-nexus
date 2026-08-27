@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w5",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 5,
+  "title": "Who Actually Says So",
+  "title_ar": "مين اللي قال ده فعلًا",
+  "can_do": [
+    "C1.M.2"
+  ],
+  "scenario": {
+    "en": "A parent has read that the water is safe and wants to know whether that is established. The briefing hides who is claiming what.",
+    "ar": "أب قرا إن المية آمنة وعايز يعرف ده مؤكد ولا لأ. البيان مخبّي مين اللي بيدّعي إيه."
+  },
+  "source": "Briefing: 'It is widely believed that supply quality has improved. It is estimated that contamination fell by 31 per cent, although the figure is reported to be provisional. The authorities are said to have commissioned an independent review. It is understood that publication is not currently envisaged. The 2011 baseline is generally used and is known to have been collected during a drought.'",
+  "task": {
+    "en": "Explain to him what is actually established and what is only being asserted.",
+    "ar": "اشرح له إيه المؤكد فعلًا وإيه اللي مجرد ادعاء."
+  },
+  "key_points": [
+    {
+      "en": "Nothing is established: every claim is written as believed or estimated.",
+      "ar": "مفيش حاجة مثبتة: كل ادعاء مكتوب 'من المعتقد' أو 'من المقدّر'."
+    },
+    {
+      "en": "The 31 per cent figure is provisional and uses a drought year as baseline.",
+      "ar": "رقم 31% مبدئي وبيستخدم سنة جفاف كأساس مقارنة."
+    },
+    {
+      "en": "An independent review exists but publication is not envisaged.",
+      "ar": "فيه مراجعة مستقلة لكن مفيش نية للنشر."
+    },
+    {
+      "en": "So improvement is asserted, not established.",
+      "ar": "يعني التحسّن مُدّعى، مش مثبت."
+    }
+  ],
+  "model_answer": {
+    "en": "Here is the honest version. Nothing in it is attributed to a named person who could be wrong -- every claim is written as 'it is believed' or 'it is estimated', which means nobody has put their name to it. The 31 per cent figure is described as provisional, and it is measured against a 2011 baseline collected during a drought, which makes almost any later year look better. An independent review exists, but publication is not envisaged. So improvement here is asserted, not established. That is not the same as saying the water is unsafe -- it means this document cannot tell you either way.",
+    "ar": "دي النسخة الصادقة. مفيش حاجة فيها منسوبة لشخص محدد يمكن يكون غلطان — كل ادعاء مكتوب 'من المعتقد' أو 'من المقدّر'، يعني محدش حطّ اسمه عليه. رقم 31% موصوف إنه مبدئي، ومقاس على أساس سنة 2011 اللي اتجمعت في جفاف، وده بيخلّي أي سنة بعدها تبان أحسن. فيه مراجعة مستقلة لكن مفيش نية للنشر. فالتحسّن هنا مُدّعى، مش مثبت. ده مش معناه إن المية مش آمنة — معناه إن المستند ده مش بيقدر يقول لك."
+  },
+  "signal_phrases": [
+    {
+      "en": "In plain terms, it means this.",
+      "ar": "بكلام بسيط، معناها كده."
+    },
+    {
+      "en": "Let me strip out the jargon.",
+      "ar": "خليني أشيل المصطلحات."
+    },
+    {
+      "en": "Is that clearer put that way?",
+      "ar": "أوضح كده؟"
+    },
+    {
+      "en": "Tell me what is unclear.",
+      "ar": "قول لي إيه المش واضح."
+    }
+  ]
+}

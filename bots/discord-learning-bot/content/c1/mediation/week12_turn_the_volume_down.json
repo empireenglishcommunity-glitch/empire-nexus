@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w12",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 12,
+  "title": "Turn the Volume Down",
+  "title_ar": "خفّف الصوت",
+  "can_do": [
+    "C1.M.3"
+  ],
+  "scenario": {
+    "en": "Two people in a meeting have stopped arguing about the problem and started arguing about each other.",
+    "ar": "اتنين في اجتماع بطّلوا يتخانقوا على المشكلة وبدأوا يتخانقوا على بعض."
+  },
+  "source": "Sami: 'This is utterly indefensible. You were told in March and you did nothing.' Layla: 'That is downright unfair. I raised it twice and nobody replied. I am not going to sit here and be blamed for a decision I did not make.' Sami: 'Nobody is blaming you, I am simply stating a fact.'",
+  "task": {
+    "en": "Intervene. Separate the factual dispute from the accusation, and keep both in the room.",
+    "ar": "اتدخّل. افصل الخلاف على الوقائع عن الاتهام، وخلّي الاتنين يفضلوا في الأوضة."
+  },
+  "key_points": [
+    {
+      "en": "There are two disputes: what happened in March, and who is being blamed.",
+      "ar": "فيه خلافين: إيه اللي حصل في مارس، ومين اللي بيتلام."
+    },
+    {
+      "en": "Layla says she raised it twice and got no reply.",
+      "ar": "ليلى بتقول إنها نبّهت مرتين ومحدش ردّ."
+    },
+    {
+      "en": "Sami says stating a fact, which Layla is hearing as blame.",
+      "ar": "سامي بيقول بيذكر واقعة، وليلى سامعاها لوم."
+    },
+    {
+      "en": "Take the record first and the accusation separately.",
+      "ar": "خد السجل الأول والاتهام لوحده."
+    }
+  ],
+  "model_answer": {
+    "en": "Let me stop both of you. There are two separate disputes here and we are losing both. The first is factual: what happened in March. Layla says she raised it twice and had no reply, and that is checkable -- we can look today. The second is not factual: Sami, you say you are stating a fact, and Layla is hearing blame. Both of those can be true at once, which is why it is escalating. Can we take the record first, separately, and come back to the second thing when we know what the record says? If the emails are there, the accusation dissolves on its own.",
+    "ar": "خليني أوقف الاتنين. فيه خلافين منفصلين هنا وإحنا بنخسر الاتنين. الأول واقعي: إيه اللي حصل في مارس. ليلى بتقول نبّهت مرتين ومحدش ردّ، وده ممكن نتحقق منه — نقدر نبصّ النهاردة. التاني مش واقعي: سامي، إنت بتقول بتذكر واقعة، وليلى سامعة لوم. والاتنين ممكن يكونوا صح في نفس الوقت، وده سبب التصاعد. نقدر ناخد السجل الأول لوحده، ونرجع للحاجة التانية لما نعرف السجل بيقول إيه؟ لو الإيميلات موجودة، الاتهام هيتحلّ لوحده."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me put that differently.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Can I stop you there?",
+      "ar": "أقدر أوقفك هنا؟"
+    },
+    {
+      "en": "So where do you disagree?",
+      "ar": "فأنتم مختلفين في إيه؟"
+    },
+    {
+      "en": "Let us take that separately.",
+      "ar": "خلينا ناخد دي لوحدها."
+    }
+  ]
+}

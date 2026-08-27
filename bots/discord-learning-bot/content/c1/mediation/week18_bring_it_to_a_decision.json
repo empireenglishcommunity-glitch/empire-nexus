@@ -1,0 +1,60 @@
+{
+  "id": "mediation_c1_w18",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 18,
+  "title": "Bring It to a Decision",
+  "title_ar": "وصّلها لقرار",
+  "can_do": [
+    "C1.M.3"
+  ],
+  "scenario": {
+    "en": "You are chairing. The discussion has been going for forty minutes and has circled twice.",
+    "ar": "إنت بتدير الاجتماع. النقاش ماشي أربعين دقيقة ولفّ في نفس الدايرة مرتين."
+  },
+  "source": "Where it stands: Nour wants to delay until the audit is finished. Karim wants to start now and adjust later. Both have said 'I take your point' twice. Nour's real concern is being held responsible if the audit contradicts the plan. Karim's real concern is losing the contractor's availability in April.",
+  "task": {
+    "en": "Close the discussion: name each concern, and put one decision to the room.",
+    "ar": "اقفل النقاش: سمّي قلق كل واحد، وحطّ قرار واحد على الطرابيزة."
+  },
+  "key_points": [
+    {
+      "en": "Nour's concern is responsibility if the audit contradicts the plan.",
+      "ar": "قلق نور المسؤولية لو المراجعة خالفت الخطة."
+    },
+    {
+      "en": "Karim's concern is losing the contractor's availability in April.",
+      "ar": "قلق كريم يخسر توفّر المقاول في أبريل."
+    },
+    {
+      "en": "These are not the same disagreement and can both be met.",
+      "ar": "دول مش نفس الخلاف وممكن نلبّي الاتنين."
+    },
+    {
+      "en": "Put one proposal to the room: start now, with a written audit review point.",
+      "ar": "حطّ مقترح واحد: نبدأ دلوقتي، مع نقطة مراجعة مكتوبة بعد المراجعة."
+    }
+  ],
+  "model_answer": {
+    "en": "Let me sum up, because I think we have been having two conversations. To return to what each of you actually said: Nour, your concern is responsibility -- that you will be held answerable if the audit contradicts the plan. Karim, yours is timing -- that we lose the contractor's availability in April. Those are not the same disagreement, and I think both can be met. So here is one proposal to the room: we start now, and we write into the minute that the plan is reviewed against the audit within two weeks of it landing, with Nour not carrying that decision alone. If that does not address it, tell me which half it fails.",
+    "ar": "خليني ألخّص، لأني شايف إن إحنا بنعمل نقاشين. أرجع للي كل واحد قاله فعلًا: نور، قلقك المسؤولية — إنك تتحاسبي لو المراجعة خالفت الخطة. كريم، قلقك التوقيت — إننا نخسر توفّر المقاول في أبريل. دول مش نفس الخلاف، وأنا شايف إن الاتنين ممكن يتلبّوا. فده مقترح واحد على الطرابيزة: نبدأ دلوقتي، ونكتب في المحضر إن الخطة تتراجع مع المراجعة في خلال أسبوعين من وصولها، ومن غير ما نور تحمل القرار ده لوحدها. لو ده مش بيحل الموضوع، قول لي بيفشل في أنهي نص."
+  },
+  "signal_phrases": [
+    {
+      "en": "Let me put that differently.",
+      "ar": "خليني أقولها بطريقة تانية."
+    },
+    {
+      "en": "Can I stop you there?",
+      "ar": "أقدر أوقفك هنا؟"
+    },
+    {
+      "en": "So where do you disagree?",
+      "ar": "فأنتم مختلفين في إيه؟"
+    },
+    {
+      "en": "Let us take that separately.",
+      "ar": "خلينا ناخد دي لوحدها."
+    }
+  ]
+}
