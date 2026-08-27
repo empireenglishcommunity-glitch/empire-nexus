@@ -125,47 +125,98 @@ explicit review + a 120-second mastery capstone that previews the C2 exit exam.
   finer shades of meaning) tests the C2 can-do set as a whole; passing certifies
   the student at **CEFR C2** — the top of the Empire English ladder.
 
-### 4b. ⚠️ Seven C2 descriptors are published but NOT PROVABLE (found 2026-08-24)
+### 4b. ✅ CLOSED — the seven unprovable C2 descriptors are now provable
 
-Same finding as C1 §4b. A week *targets* all 20 C2 descriptors; a student can
-*prove* only 13, because the three exercises that would carry the other seven
-have no C2 content:
+**Status: closed 2026-08-27.** Mediation, reading and extended listening have all
+been authored for C2 (20 weeks each), and the coverage ledger reports **C2: 20
+descriptors — OK**. With C2 done, the *"PUBLISHED BUT NOT PROVABLE"* block is
+**empty for the whole programme** — all six levels — for the first time.
 
-| Descriptor | Only provable by | Which C2 does not have |
+**What the finding was.** A week *targeted* all 20 C2 descriptors; a student could
+*prove* only 13, because the three exercises carrying the other seven had no C2
+content:
+
+| Descriptor | Only provable by | Now |
 |---|---|---|
-| `C2.M.1` summarise spoken **and** written sources, reconstruct arguments | mediation | ❌ |
-| `C2.M.2` reformulate specialised material for different audiences | mediation | ❌ |
-| `C2.M.3` mediate diplomatically, convey subtle nuance | mediation | ❌ |
-| `C2.M.4` clarify ambiguous points, differentiate shades of meaning | mediation | ❌ |
-| `C2.R.1` virtually any spoken language, **at fast native speed** | extended listening | ❌ |
-| `C2.R.2` virtually all written forms, incl. structurally complex | reading | ❌ |
-| `C2.R.3` fine points, humour, irony, implicit cultural meaning | reading | ❌ |
+| `C2.M.1` summarise spoken **and** written sources, reconstruct arguments | mediation | ✅ 20 weeks |
+| `C2.M.2` reformulate specialised material for different audiences | mediation | ✅ 20 weeks |
+| `C2.M.3` mediate diplomatically, convey subtle nuance | mediation | ✅ 20 weeks |
+| `C2.M.4` clarify ambiguous points, differentiate shades of meaning | mediation | ✅ 20 weeks |
+| `C2.R.1` virtually any spoken language, **at fast native speed** | extended listening | ✅ 20 scripts |
+| `C2.R.2` virtually all written forms, incl. structurally complex | reading | ✅ 9 texts |
+| `C2.R.3` fine points, humour, irony, implicit cultural meaning | reading | ✅ 12 texts |
 
-**`C2.R.1` was the single worst attribution in the whole system.** It reads
-*"can understand with ease **virtually any form of spoken language**, whether
-live or broadcast, **delivered at fast native speed**"* — and it was being
-evidenced by the **five-word listening dictation**. The system was prepared to
-put that sentence on a certificate because a student had typed five words
-correctly. It is now blocked in code, for every level, by an explicit rule about
-descriptor grain size.
+**`C2.R.1` was the single worst attribution in the whole system.** It reads *"can
+understand with ease **virtually any form of spoken language**, whether live or
+broadcast, **delivered at fast native speed**"* — and it was being evidenced by
+the **five-word listening dictation**. The system was prepared to put that
+sentence on a certificate because a student had typed five words correctly. That
+is now blocked in code, for every level, by an explicit rule about descriptor
+grain size.
 
-**C2 is the level where this matters most and costs least.** It is the terminal
-level, its descriptors are the strongest claims the programme makes, and no
-student is anywhere near it — so there is time to author the content properly
-rather than quickly. `C2.R.3` in particular (*humour, irony and implicit cultural
-meaning*) needs genuinely literary source texts, and rushing it would produce
-exactly the kind of unearned claim the rest of this work removed.
+**How the twenty scripts answer "virtually any form".** Twenty long monologues
+would not evidence that phrase however long each one was, so the set varies by
+**form**, not topic: a panel where speakers talk over each other, a phone call
+that keeps dropping, a night-shift technical handover in closed shorthand, a
+stand-up set, an unscripted argument, a valedictory address, a radio phone-in, a
+courtroom cross-examination, live sports commentary, a specialist seminar Q&A,
+four voicemails out of chronological order, a wedding toast, a hostile press
+conference, documentary narration, an unedited podcast digression, contradictory
+station announcements, a eulogy, a negotiation carried by implicature, a live
+auction, and an after-action debrief. Split 11 / 5 / 4 across `C2.R.1`, `C2.R.4`
+and `C2.R.5`.
 
-**What closes it:** reading, mediation and extended listening for C2 — 20 weeks
-each. No code required.
+The `C2.R.4` five contain **no explicit evaluative statement anywhere in the
+script** — the stance exists only in word choice, because the descriptor says
+"conveyed **only** through subtle stylistic choices" — and every distractor is a
+defensible reading of the surface, so a student who hears only the literal
+content can answer them all and be wrong. The `C2.R.5` four are genuinely
+*fragmented*, not merely technical: numbers said wrongly and corrected, a reading
+that cannot be timestamped, messages that have to be put back in order.
+
+**"Fast native speed" is now measured, not asserted.** C2 audio renders at
+**199 wpm** against a 205 target, verified from the files on disk by
+`empire-dojo/scripts/verify_audio_pace.py` (reference: normal conversation
+150–160 wpm, fast native 200+). This matters because the first render was a
+**voice lottery** — the eleven Kokoro voices differ by 1.84x at the same speed
+setting, so some C2 clips came out at 120 wpm, slower than our own A1 target,
+while the page claimed fast native delivery. Pace is now derived per clip from the
+measured rate of its voice and checked in a closed loop.
+
+**Earlier recommendation, now superseded.** This section previously advised
+authoring C2 *"later, and slowly"* on the grounds that C2 is terminal, unreached,
+and makes the programme's strongest claims. You chose to finish it now. The
+reasoning was about *review* risk rather than authoring risk, and it still
+applies: the content passes every machine check, and none of it has been read by
+a human. See the sign-off list below.
 
 ## What to review / sign off
-- [ ] ⚠️ **The seven unprovable C2 descriptors (§4b)** — in particular that
-      `C2.R.1` was being credited to the dictation, and that C2 cannot currently
-      be completed under the contract.
-- [ ] Whether to author C2 content now or later. My recommendation is **later,
-      and slowly**: C2 is terminal, unreached, and its claims are the strongest
-      in the programme, so it is the worst place to author at speed.
+> **None of the C2 content below has been reviewed by a human yet.** It passes
+> every machine check — tests, coverage ledger, pace verification — and that is
+> not the same thing as being right. C2 makes the strongest claims in the
+> programme, so this is the level where an unreviewed sentence costs the most.
+> Every box is unticked deliberately: they record what you have and have not
+> read. Do not let me tick them.
+>
+> `/content-review/` on the live site (behind the ops passcode) lists all 270
+> items with their answers, which is the fastest way through it.
+
+- [ ] ✅ **§4b is now closed** — read it anyway, especially the part recording
+      that `C2.R.1` ("fast native speed") was once evidenced by a five-word
+      dictation.
+- [ ] **20 C2 reading texts** — 9 for `C2.R.2`, 12 for `C2.R.3`. The `C2.R.3`
+      twelve turn on irony and implicit cultural meaning, which is the easiest
+      thing in this whole programme to get subtly wrong for an Arabic-speaking
+      audience. Please read these first.
+- [ ] **20 C2 mediation tasks** — `C2.M.1`–`C2.M.4`.
+- [ ] **20 C2 extended-listening scripts** — check the *forms* as much as the
+      content: the claim being made is "virtually any form of spoken language",
+      and if you think a form is missing that your students will actually meet,
+      that is a real gap even though the ledger is satisfied.
+- [ ] **The register of the `C2.R.4` five** — they carry criticism entirely
+      through politeness and understatement (a farewell speech, a eulogy, a
+      museum narration). British-inflected irony is a specific cultural idiom;
+      tell me if it is the wrong one for your students.
 - [ ] Themes + week order feel right for your most advanced students.
 - [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
 - [ ] Grammar sequence is correct and C2/mastery-appropriate (builds on C1).
