@@ -150,6 +150,37 @@ TAUGHT_WITH_RESERVATION = {
                       "The scripts and the page need no changes; only the audio "
                       "source does.",
     },
+    # Same class of reservation as B2.R.2, at C1: the descriptor names FILMS.
+    # Recorded on the owner's explicit decision (2026-08-27) to accept the
+    # reservation rather than report the descriptor untaught. C1.R.2 IS taught
+    # -- six C1 drama-scene broadcasts written thick with slang and idiom, with
+    # questions that target what an idiom is DOING rather than what its words
+    # mean -- so the SLANG half of the descriptor is delivered. What synthesis
+    # cannot deliver is the same thing it cannot deliver at B2: an actor's tone.
+    "C1.R.2": {
+        "descriptor": "Can follow films employing a considerable degree of "
+                      "slang and idiomatic usage.",
+        "taught_by": "6 C1 weeks of extended listening written as drama scenes "
+                     "-- multi-voice, thick with slang and idiom, contractions "
+                     "and ellipsis -- with comprehension items that ask what an "
+                     "idiom is DOING in the exchange rather than what the words "
+                     "literally mean, which is the skill the descriptor names.",
+        "reservation": "The SLANG and idiomatic half is delivered in full. The "
+                       "FILM half is not, and cannot be by synthesis, for the "
+                       "same reason as B2.R.2: our audio is Kokoro TTS, one "
+                       "clean voice per turn with no overlapping speech, no "
+                       "regional accents and no emotional prosody. In a real "
+                       "film an idiom's force -- whether it is a joke, a threat "
+                       "or a kindness -- is carried by HOW the line is "
+                       "delivered, and a student who understands every one of "
+                       "our scenes has still never had to read that off a real "
+                       "actor's voice.",
+        "removed_by": "Authentic recorded audio for the C1 drama scenes -- "
+                      "human actors, or licensed clips -- with the existing "
+                      "comprehension items re-pointed at tone and delivery. As "
+                      "with B2.R.2 the scripts and the page need no changes; "
+                      "only the audio source does.",
+    },
 }
 
 
