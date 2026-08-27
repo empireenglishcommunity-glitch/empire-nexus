@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w1",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 1,
+  "title": "The Triumph Narrative",
+  "title_ar": "حكاية الانتصار",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.4"
+  ],
+  "word_count": 277,
+  "gist_ar": "تقرير عن عيادة: الكاتب مش مقتنع بحكاية 'الإصرار'، وبيلمّح إن المشكلة كانت إدارية.",
+  "text": "Rarely does a training programme survive its first year unchanged, and seldom\ndoes one survive it twice. What follows is not a triumph narrative, although it\nhas been sold as one.\n\nThe clinic opened with fourteen staff and a daunting brief: to treat, within\neighteen months, a population that had never had access to physiotherapy. No\nsooner had the doors opened than the first setback arrived. The equipment,\ndelayed at the port, did not clear customs for eleven weeks. Not only did the\nstaff have no machines; they had no protocol for working without them.\n\nWhat they did next is described, in the funder's report, as remarkable\nresilience. It was certainly perseverance. Whether it was good practice is a\nseparate question, and one the report under no circumstances raises. Staff\nimprovised, using furniture and their own body weight, and they persisted for\nnearly three months. Two of them developed the injuries they had been hired to\ntreat.\n\nHardly anyone reading the published account would guess that. The word\n\"adversity\" appears four times. The word \"injury\" does not appear at all. The\nrelentless emphasis on grit obscures a simpler finding: the obstacle was\nadministrative, it was foreseeable, and it had nothing to do with anybody's\ncharacter.\n\nThere is a version of this story in which fourteen people overcame adversity\nagainst all expectations. There is another in which they endured an avoidable\nfailure of logistics and were then congratulated for enduring it. Both are\naccurate. Only one raises money.\n\nThe clinic now treats two hundred patients a week. It also keeps a customs\nofficer on retainer, which is what actually solved the problem, and which nobody\nhas called extraordinary.",
+  "glossary": [
+    {
+      "word": "a brief",
+      "ar": "مهمة موكلة / تكليف"
+    },
+    {
+      "word": "to clear customs",
+      "ar": "يخرج من الجمارك"
+    },
+    {
+      "word": "on retainer",
+      "ar": "متعاقد معه بأجر ثابت"
+    },
+    {
+      "word": "foreseeable",
+      "ar": "كان يمكن توقّعه"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's attitude to the funder's report?",
+      "q_ar": "إيه موقف الكاتب من تقرير الجهة الممولة؟",
+      "options": [
+        "Broadly supportive, with minor reservations",
+        "Critical — it praises character to avoid naming an administrative failure",
+        "Neutral; the writer only summarises it"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer imply actually solved the problem?",
+      "q_ar": "الكاتب بيلمّح إن إيه اللي حلّ المشكلة فعلًا؟",
+      "options": [
+        "The staff's perseverance",
+        "The eventual arrival of the equipment",
+        "Keeping a customs officer on retainer"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does the writer point out that the word 'injury' never appears?",
+      "q_ar": "ليه الكاتب نبّه إن كلمة 'إصابة' مش موجودة خالص؟",
+      "options": [
+        "To suggest the report omits the cost of the improvisation it praises",
+        "To show the report was written carelessly",
+        "To blame the staff for being injured"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "'Both are accurate. Only one raises money.' What is being implied?",
+      "q_ar": "'الاتنين صح. واحد بس هو اللي بيجمع فلوس.' إيه المعنى الضمني؟",
+      "options": [
+        "The fundraising version is dishonest",
+        "Both versions should have been published",
+        "Accuracy is not what determined which version was told"
+      ],
+      "answer": 2
+    }
+  ]
+}

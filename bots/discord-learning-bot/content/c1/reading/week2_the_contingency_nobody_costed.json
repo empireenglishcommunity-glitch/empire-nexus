@@ -1,0 +1,74 @@
+{
+  "id": "reading_c1_w2",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 2,
+  "title": "The Contingency Nobody Costed",
+  "title_ar": "الاحتمال اللي محدش حسبه",
+  "can_do": [
+    "C1.R.3"
+  ],
+  "word_count": 271,
+  "gist_ar": "تحليل لقرار بناء: كل الاحتمالات كانت متوقّعة إلا واحد، والنتايج كانت بعيدة المدى.",
+  "text": "Were it not for a single omitted line in the 2019 tender, the eastern water\nnetwork would probably have been finished on schedule. That is a strong claim,\nand it is worth setting out the reasoning before accepting it.\n\nThe tender priced every contingency the engineers could anticipate: ground\nconditions, currency movement, a labour shortage, and the possibility that the\nmain supplier would withdraw. Had it not been for the last of these, the project\nwould have carried no reserve at all. What the document did not price was\naccess. It was assumed, on the assumption that the municipality would grant a\nright of way, that machinery could reach the western trench from the ring road.\n\nGranted that this looked reasonable in 2019, the implication should have been\nobvious: the right of way was not a certainty but a prerequisite, and a\nprerequisite outside your control is a hypothetical, not a provision. Should the\nmunicipality have refused — and it did refuse, twice — the only remaining route\nadded nine kilometres to every delivery.\n\nThe outcome was far-reaching. Provided the reader accepts that a schedule is a\nchain of dependencies, the nine kilometres were not a delay of nine kilometres\nbut of four months, because the trench could not be opened before the rains, and\notherwise the pumping stations could not be commissioned in sequence.\n\nNone of this was unforeseeable. Two engineers said so in writing, and their\nmemorandum survives. What is regrettable is not that the circumstance arose. It\nis that it was described, in every subsequent review, as inevitable — a word\nwhich quietly converts a decision into weather.",
+  "glossary": [
+    {
+      "word": "a tender",
+      "ar": "عطاء / كراسة شروط"
+    },
+    {
+      "word": "a right of way",
+      "ar": "حق مرور"
+    },
+    {
+      "word": "to commission",
+      "ar": "يشغّل ويسلّم للاستخدام"
+    },
+    {
+      "word": "a memorandum",
+      "ar": "مذكرة رسمية"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What single factor does the writer identify as the root cause?",
+      "q_ar": "إيه العامل الواحد اللي الكاتب حدّده كسبب أساسي؟",
+      "options": [
+        "Access to the western trench being assumed, not secured",
+        "Currency movement",
+        "The supplier withdrawing"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the writer call the right of way a prerequisite rather than a provision?",
+      "q_ar": "ليه الكاتب سمّى حق المرور شرطًا مسبقًا وليس بندًا احتياطيًا؟",
+      "options": [
+        "Because it was outside the project's control",
+        "Because it was cheap to obtain",
+        "Because the engineers priced it"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How did nine extra kilometres become a four-month delay?",
+      "q_ar": "إزاي تسعة كيلومترات زيادة بقت تأخير أربع شهور؟",
+      "options": [
+        "The machinery broke down repeatedly",
+        "The municipality refused a third time",
+        "The trench missed the window before the rains, so the stations could not be commissioned in sequence"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does the writer object to in the later reviews?",
+      "q_ar": "الكاتب معترض على إيه في المراجعات اللاحقة؟",
+      "options": [
+        "That they called the outcome inevitable, turning a decision into something like weather",
+        "That they blamed the two engineers",
+        "That they were never published"
+      ],
+      "answer": 0
+    }
+  ]
+}

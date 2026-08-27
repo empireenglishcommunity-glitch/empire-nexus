@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w9",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 9,
+  "title": "The Case and Its Joints",
+  "title_ar": "الحجة ومفاصلها",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.5"
+  ],
+  "word_count": 275,
+  "gist_ar": "نص متخصص عن بناء الحجج: الحجة بتفشل عند المفصل، مش عند الدليل.",
+  "text": "An argument fails at its joints far more often than at its premises. This is\nworth stating plainly, insofar as most training in critical reading concentrates\non evidence, whereas the errors that survive peer review are almost invariably\nerrors of connection.\n\nConsider a structure common in policy writing. A premise is established;\nevidence is presented; a conclusion follows, introduced by \"thus\" or \"hence\" or,\nmore ambitiously, \"accordingly\". The evidence may be impeccable. Nevertheless the\nconjunction is doing work that has not been earned, in that it asserts a relation\nthe data do not contain. Correlation is reported and causation is inferred,\nwhereby a marker becomes a mechanism without anybody claiming that it is one.\n\nConversely, a genuinely cohesive argument can be recognised by a simple test.\nRemove every discourse marker and read what remains. If the sequence still\ncompels, the markers were describing a structure that was there. If it collapses\ninto a list, they were supplying one that was not. Coherence, in other words, is\na property of the reasoning; cohesion is a property of the prose, and the second\nis regularly mistaken for the first.\n\nNotwithstanding this, moreover is not a crime. Furthermore, the practice of\nsignposting is what allows a reader to follow a long chain at all, and papers\nstripped of it are measurably harder to use.\n\nThe rationale for attending to joints is therefore practical. Evidence can be\nchecked by anyone with the data. A connective cannot, which is why it is where a\nweak case is most safely concealed, and why the reviewer who concedes the\nevidence and interrogates the conjunction is the one who tends to refute\nsomething.",
+  "glossary": [
+    {
+      "word": "a premise",
+      "ar": "مقدمة منطقية"
+    },
+    {
+      "word": "impeccable",
+      "ar": "لا يُعاب عليه"
+    },
+    {
+      "word": "a connective",
+      "ar": "أداة ربط"
+    },
+    {
+      "word": "to interrogate",
+      "ar": "يفحص بدقة وتشكيك"
+    }
+  ],
+  "questions": [
+    {
+      "q": "Where does the writer say arguments most often fail?",
+      "q_ar": "فين بتفشل الحجج أكتر حسب الكاتب؟",
+      "options": [
+        "At their joints — the connections",
+        "In their evidence",
+        "In their conclusions"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the test for a genuinely cohesive argument?",
+      "q_ar": "إيه اختبار الحجة المترابطة فعلًا؟",
+      "options": [
+        "Count the discourse markers",
+        "Check the evidence against the raw data",
+        "Remove every marker and see whether the sequence still compels"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What distinction does the writer draw between coherence and cohesion?",
+      "q_ar": "إيه الفرق بين الترابط المنطقي والترابط اللغوي؟",
+      "options": [
+        "They are the same thing",
+        "Coherence belongs to the reasoning, cohesion to the prose",
+        "Cohesion is more important"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why is a connective the safest place to conceal a weak case?",
+      "q_ar": "ليه أداة الربط أأمن مكان لإخفاء حجة ضعيفة؟",
+      "options": [
+        "Readers skip them",
+        "It cannot be checked against data the way evidence can",
+        "Editors always delete them"
+      ],
+      "answer": 1
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w4",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 4,
+  "title": "Having Reviewed the Evidence",
+  "title_ar": "بعد مراجعة الأدلة",
+  "can_do": [
+    "C1.R.3",
+    "C1.R.5"
+  ],
+  "word_count": 272,
+  "gist_ar": "ملخص تنفيذي متخصص: خلاصة مراجعة لبرنامج تدريب، بأسلوب مكثّف ورسمي.",
+  "text": "Having considered the submissions of all four departments, and taking into\naccount the pilot data gathered between March and September, the review reaches\nthree conclusions.\n\nFirst, and being aware that this contradicts the interim report, the programme\ndoes not reduce processing time. Measured across 1,400 cases, the mean fell by\nunder two per cent, a figure well within normal variation. Faced with this, the\ndepartment has argued that the benefit is qualitative. That may be so, but it was\nnot what was funded.\n\nSecond, the programme does streamline handover. Cases transferred between\nofficers now carry a single concise summary rather than the previous file note,\nand errors at handover fell by thirty-one per cent. Given that handover errors\nwere the original justification for the funding, this is the finding that should\nhave led the interim report, and did not.\n\nThird, and in light of the above, the underlying design assumption requires\nrevision. The programme was intended to save time by improving quality, thereby\nrecovering its cost within a year. Compared with that projection, it has improved\nquality without saving time, and is thus better understood as a risk-reduction\nmeasure. Assessed on that basis it performs well; assessed on the basis it was\napproved on, it does not.\n\nAccordingly, and notwithstanding the department's preference for a further pilot,\nthis review recommends that the programme be continued, with a view to\nre-approval under a corrected business case, and that the interim report be\nformally withdrawn. Having said that, no reader should conclude that the\nprogramme failed. It succeeded at something nobody asked it to do, which is a\ngovernance problem, not a design one.",
+  "glossary": [
+    {
+      "word": "a submission",
+      "ar": "إفادة / مستند مقدّم"
+    },
+    {
+      "word": "interim",
+      "ar": "مؤقت / مبدئي"
+    },
+    {
+      "word": "handover",
+      "ar": "تسليم الحالة لموظف تاني"
+    },
+    {
+      "word": "a business case",
+      "ar": "دراسة جدوى"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the review's finding on processing time?",
+      "q_ar": "إيه نتيجة المراجعة بخصوص وقت المعالجة؟",
+      "options": [
+        "It fell substantially",
+        "It increased",
+        "It fell by under two per cent, within normal variation"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Which finding does the writer say should have led the interim report?",
+      "q_ar": "أنهي نتيجة كان لازم التقرير المؤقت يبدأ بيها؟",
+      "options": [
+        "The qualitative benefit",
+        "The need for a further pilot",
+        "The thirty-one per cent fall in handover errors"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How should the programme now be understood?",
+      "q_ar": "إزاي المفروض نفهم البرنامج دلوقتي؟",
+      "options": [
+        "As a risk-reduction measure rather than a time-saving one",
+        "As a failed pilot",
+        "As a time-saving measure"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer mean by 'a governance problem, not a design one'?",
+      "q_ar": "إيه معنى 'مشكلة إدارة، مش مشكلة تصميم'؟",
+      "options": [
+        "The programme worked, but was approved against the wrong objective",
+        "The programme was badly built",
+        "The department should be replaced"
+      ],
+      "answer": 0
+    }
+  ]
+}

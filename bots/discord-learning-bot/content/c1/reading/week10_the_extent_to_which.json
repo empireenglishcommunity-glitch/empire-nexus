@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w10",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 10,
+  "title": "The Extent to Which",
+  "title_ar": "إلى أي مدى",
+  "can_do": [
+    "C1.R.5",
+    "C1.R.3"
+  ],
+  "word_count": 277,
+  "gist_ar": "نص فني متخصص عن تحديد المعايير: الرقم الواحد اللي بيلخّص كل حاجة بيخفي أكتر مما يوضح.",
+  "text": "The index, most of whom who cite it have never examined, combines nine\nindicators, many of which measure the same underlying quantity. This note\ndelineates what it can and cannot support.\n\nBegin with the parameters. Each indicator is normalised to a scale of one to\nten, a step by means of which incommensurable quantities are made addable, and at\nwhich point most of the interpretive damage is done. Air quality, a continuous\nvariable with a well-characterised threshold above which harm is documented, is\nthereby rendered comparable to institutional trust, for which no threshold has\never been specified. The way in which the two are then averaged implies a\nspectrum of equivalent magnitude. There is none.\n\nTwo consequences follow, as a result of which the index is routinely\nmisapplied. First, movement is uninterpretable at the margin: a city may rise\nfour places on changes in three indicators, none of which is individually\nsignificant, in which case the aggregate is precise without being accurate.\nSecond, the criterion by which cities are grouped into bands is a quantile, not a\nsubstantive cut, whereby a difference of 0.2 becomes a difference of category.\n\nThe index does one thing well, and it is worth being explicit about it. Where the\ndegree to which two cities differ is large — a point at which the composite\ncomfortably exceeds its own error — the ranking is robust and has been validated\nagainst nuanced local data on four occasions.\n\nUsed comprehensively, it is a screening instrument. Used to quantify improvement\nyear on year, it characterises noise. The distinction is not subtle, and the\nelaborate methodological appendix, which does specify it, is not what gets read.",
+  "glossary": [
+    {
+      "word": "normalised",
+      "ar": "مُعاد ضبطه على نفس المقياس"
+    },
+    {
+      "word": "incommensurable",
+      "ar": "غير قابل للقياس بنفس الوحدة"
+    },
+    {
+      "word": "a quantile",
+      "ar": "شريحة إحصائية"
+    },
+    {
+      "word": "composite",
+      "ar": "مؤشر مركّب"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say the index is genuinely good for?",
+      "q_ar": "المؤشر كويس في إيه فعلًا؟",
+      "options": [
+        "Comparing cities that differ by a wide margin",
+        "Measuring year-on-year improvement",
+        "Setting policy thresholds"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is the problem with normalising to a one-to-ten scale?",
+      "q_ar": "إيه مشكلة التوحيد على مقياس من واحد لعشرة؟",
+      "options": [
+        "It loses decimal precision",
+        "It favours large cities",
+        "It makes incommensurable quantities addable and implies equivalent magnitude"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why is movement at the margin uninterpretable?",
+      "q_ar": "ليه الحركة عند الحدود مش قابلة للتفسير؟",
+      "options": [
+        "The data are collected annually",
+        "A city can move several places on changes none of which is individually significant",
+        "Cities are grouped alphabetically"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer note about the methodological appendix?",
+      "q_ar": "قال إيه عن الملحق المنهجي؟",
+      "options": [
+        "It does specify the limitation, and is not what gets read",
+        "It contradicts the index",
+        "It has never been written"
+      ],
+      "answer": 0
+    }
+  ]
+}

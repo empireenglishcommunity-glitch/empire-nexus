@@ -1,0 +1,74 @@
+{
+  "id": "reading_c1_w16",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 16,
+  "title": "We Regret to Inform You",
+  "title_ar": "يأسفنا أن نبلغكم",
+  "can_do": [
+    "C1.R.4"
+  ],
+  "word_count": 290,
+  "gist_ar": "مقارنة بين نسختين من نفس الخبر: الرسمية بتخفي الفاعل، وغير الرسمية بتقوله.",
+  "text": "Two documents describe the same decision. The first is the letter that was sent.\nThe second is the email a manager wrote to her own team an hour earlier, which\nwas later disclosed. Reading them together is the most efficient lesson in\nregister I know.\n\nThe letter commences: \"Please be advised that, with respect to your application,\nwe regret to inform you that the panel has been unable to proceed on this\noccasion.\" It requires eighteen words to say no. It attributes the decision to a\npanel, which is courteous and also true in a limited sense, and it uses\n\"unable\", which implies constraint where a choice was in fact made. Nothing in it\nis false. Its formality is not decoration; it is doing the work of obscuring\nagency.\n\nThe email reads: \"We're not going ahead. It's not the proposal, it's that we've\ngot loads of these and only two slots, and honestly the other lot know the\nsector better. Tell folks it was competitive, which it was.\"\nThat is blunt, colloquial, and considerably more informative. It supplies the\nactual criterion, the comparison, and a suggested public formulation, and it\nwould be indefensible to send to an applicant.\n\nThe interesting question is not which is honest. Both are. The letter conceals\nwho decided and why; the email conceals nothing and would humiliate the reader.\nRegister is not a scale from evasive to plain. It is a choice about which\ninformation to purchase and what to pay for it.\n\nWhat a professional writer should be able to do is name that price. To paraphrase\nthe letter accurately, one has to obtain something it declines to state — and\nknowing that a euphemism is present is a different skill from resenting it.",
+  "glossary": [
+    {
+      "word": "to disclose",
+      "ar": "يفصح / يكشف"
+    },
+    {
+      "word": "agency",
+      "ar": "الفاعلية / مين اللي قرّر"
+    },
+    {
+      "word": "colloquial",
+      "ar": "عامي / دارج"
+    },
+    {
+      "word": "a euphemism",
+      "ar": "تلطيف في التعبير"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say the letter's formality is doing?",
+      "q_ar": "الرسمية في الخطاب بتعمل إيه حسب الكاتب؟",
+      "options": [
+        "Showing respect for the applicant",
+        "Obscuring who made the decision and why",
+        "Making the letter shorter"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the writer object to the word 'unable'?",
+      "q_ar": "ليه الكاتب معترض على كلمة 'لم يتمكن'؟",
+      "options": [
+        "It is too informal",
+        "It implies constraint where a choice was made",
+        "It is factually false"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does the writer say about which document is honest?",
+      "q_ar": "قال إيه عن أي مستند هو الصادق؟",
+      "options": [
+        "The email is honest and the letter is not",
+        "Neither is honest",
+        "Both are honest; they conceal different things"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What skill does the writer say a professional should have?",
+      "q_ar": "إيه المهارة اللي المفروض تكون عند المحترف؟",
+      "options": [
+        "Naming the price of a register choice, and noticing a euphemism is present",
+        "Always writing plainly",
+        "Refusing to use formal language"
+      ],
+      "answer": 0
+    }
+  ]
+}

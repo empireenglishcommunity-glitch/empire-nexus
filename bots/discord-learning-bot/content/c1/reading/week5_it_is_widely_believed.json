@@ -1,0 +1,75 @@
+{
+  "id": "reading_c1_w5",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 5,
+  "title": "It Is Widely Believed",
+  "title_ar": "من المعتقد على نطاق واسع",
+  "can_do": [
+    "C1.R.4",
+    "C1.R.5"
+  ],
+  "word_count": 284,
+  "gist_ar": "نص مكتوب بصيغة المجهول: الكاتب بيوضح إن الصيغة دي بتخفي مين اللي قال الكلام.",
+  "text": "It is widely believed that the reservoir project reduced regional water stress\nby a third. It is also claimed, in the same paragraph of the same briefing, that\nthe figure is provisional. Both statements are unattributed, and the difference\nbetween them is the subject of this note.\n\nConsider what the impersonal construction does. When it is reported that\nconsumption fell, the reader is not told who reported it, how, or whether anyone\ndisagreed. The claim is thought to be credible because it is presented as though\nalready settled. It is estimated that the reduction was 31 per cent — but\nestimated by whom, and against which baseline? The 2011 figure is generally used;\nit is also known to have been collected during a drought, which makes any later\nyear look like an improvement.\n\nThe authorities are said to have commissioned an independent review. They are\nalso reported, by two of the three engineers involved, to have declined to\npublish it. Note that both sentences are equally passive and equally\nunverifiable, and that only one of them is likely to be repeated.\n\nNone of this is an allegation of bad faith. The construction is standard in\nofficial writing, and it is often used simply to avoid a clumsy attribution. But\nit has a systematic effect: it converts contested findings into consensus. Where\na named author must defend a hypothesis, \"it is argued\" needs no defence at all,\nbecause nobody is arguing.\n\nThe reader's practical test is short. If a claim cannot be traced to somebody who\ncould be wrong, it has not yet been substantiated — however widely it is\nbelieved, and however often it is allegedly disputed by people the text will not\nname.",
+  "glossary": [
+    {
+      "word": "unattributed",
+      "ar": "غير مُنسوب لأحد"
+    },
+    {
+      "word": "a baseline",
+      "ar": "سنة أو رقم أساس للمقارنة"
+    },
+    {
+      "word": "to substantiate",
+      "ar": "يدعم بالأدلة"
+    },
+    {
+      "word": "in bad faith",
+      "ar": "بسوء نية"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's main point about the impersonal passive?",
+      "q_ar": "إيه فكرة الكاتب الأساسية عن صيغة المجهول؟",
+      "options": [
+        "It is grammatically incorrect in official writing",
+        "It converts contested findings into apparent consensus by removing who is responsible",
+        "It is always used to deceive"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the writer question the 31 per cent figure?",
+      "q_ar": "ليه الكاتب بيشكّك في رقم 31 في المية؟",
+      "options": [
+        "The baseline year was collected during a drought",
+        "The reservoir was never built",
+        "Consumption actually rose"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the writer say about the two passive sentences concerning the review?",
+      "q_ar": "قال إيه عن الجملتين المبنيتين للمجهول عن المراجعة؟",
+      "options": [
+        "Both are equally unverifiable, but only one will be repeated",
+        "The first is true and the second false",
+        "Both should be deleted"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Does the writer accuse the authorities of dishonesty?",
+      "q_ar": "هل الكاتب بيتهم الجهات بعدم الأمانة؟",
+      "options": [
+        "Yes, explicitly",
+        "The writer does not mention the authorities",
+        "No — the objection is to a systematic effect, not to bad faith"
+      ],
+      "answer": 2
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_c1_w13",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 13,
+  "title": "As It Turned Out",
+  "title_ar": "وكما تبيّن لاحقًا",
+  "can_do": [
+    "C1.R.3"
+  ],
+  "word_count": 297,
+  "gist_ar": "سرد لقصة مصنع: القرار اللي بان تافه في وقته هو اللي حدّد كل حاجة بعدها.",
+  "text": "In the spring of 2008 the factory was going to close. Everyone involved\nunderstood this, and the only question was the order of events. As it turned out,\nthe order was the whole story.\n\nThe closure had been due to take effect in September. Prior to that, in June, the\ncompany was to have transferred its two largest contracts to a plant three\nhundred kilometres away. Little did anyone know that the receiving plant would\nitself be on the point of a labour dispute, which by the time the transfer was\nscheduled had escalated to the extent that nothing could be moved. The factory\nwas therefore kept open, at first for six weeks, thereafter indefinitely.\n\nMeanwhile the workforce, which had been told in March that it would later be\noffered relocation, had begun to leave. Forty per cent had gone by August. What\nwas destined to be a managed wind-down became, without anyone deciding it, an\nunderstaffed continuation, and the plant that was to become a distribution depot\nsubsequently spent four years as neither.\n\nIn retrospect the turning point is easy to identify, and it is not the labour\ndispute. It is a decision taken in April, which at the outset looked purely\nadministrative: the company chose not to announce the closure date to customers\nuntil the transfer was complete. Because customers were not told, orders\ncontinued to arrive. Because orders arrived, the six-week extension was\ncommercially defensible. Because it was defensible, it was granted, and it was\nnever seriously revisited.\n\nThe site is profitable today. Its survival is regularly attributed to loyalty,\nand occasionally to foresight. Neither is quite it. It was bound to close, and it\ndid not, because a communications decision made in April was allowed to\ntranspire into a strategy nobody had chosen.",
+  "glossary": [
+    {
+      "word": "a wind-down",
+      "ar": "إنهاء تدريجي للنشاط"
+    },
+    {
+      "word": "a depot",
+      "ar": "مستودع توزيع"
+    },
+    {
+      "word": "to escalate",
+      "ar": "يتصاعد"
+    },
+    {
+      "word": "understaffed",
+      "ar": "ناقص عمالة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer identify as the real turning point?",
+      "q_ar": "إيه نقطة التحوّل الحقيقية حسب الكاتب؟",
+      "options": [
+        "The April decision not to tell customers the closure date",
+        "The labour dispute at the receiving plant",
+        "The workforce leaving in August"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why was the six-week extension commercially defensible?",
+      "q_ar": "ليه تمديد الست أسابيع كان مبرَّرًا تجاريًا؟",
+      "options": [
+        "The receiving plant paid for it",
+        "Orders kept arriving because customers had not been told",
+        "Forty per cent of staff had left"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What happened to the plan for a distribution depot?",
+      "q_ar": "إيه اللي حصل لخطة مستودع التوزيع؟",
+      "options": [
+        "It was completed in September",
+        "The site spent four years as neither factory nor depot",
+        "It was moved to the other plant"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does the writer regard the explanations of loyalty and foresight?",
+      "q_ar": "إيه رأي الكاتب في تفسيرات الولاء وبُعد النظر؟",
+      "options": [
+        "Both are essentially correct",
+        "Neither is quite right; an unchosen strategy emerged from one decision",
+        "Loyalty is right, foresight is not"
+      ],
+      "answer": 1
+    }
+  ]
+}
