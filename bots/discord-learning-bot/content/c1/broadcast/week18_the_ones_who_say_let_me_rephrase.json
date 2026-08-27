@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w18",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 18,
+  "title": "The Ones Who Say 'Let Me Rephrase'",
+  "title_ar": "اللي بيقولوا 'خليني أعيد الصياغة'",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured talk",
+  "word_count": 285,
+  "gist_ar": "حديث حر عن الطلاقة: الطلاقة مش إنك متسكتش، لكن إنك تخلّي السامع متابع.",
+  "before_listening": {
+    "en": "A teacher talking without notes. She contradicts a common belief — work out what she replaces it with.",
+    "ar": "مدرّسة بتتكلم من غير ورق. بتخالف اعتقاد شائع — استنتج بتحطّ إيه مكانه."
+  },
+  "segments": [
+    {
+      "speaker": "Teacher",
+      "speaker_ar": "مدرّسة",
+      "voice": "af_sky",
+      "text": "Every advanced group I've had believes the same thing and I've stopped arguing with it directly because that doesn't work. They think fluency is not stopping. And so they don't stop, and they're exhausting to listen to, and they can't understand why the examiner marked them down when they spoke for four minutes without a pause. Transcribe a really good speaker sometimes. It looks awful on paper. Repetitive, they double back, they say 'or rather', they correct a date halfway through and then recap something they already said two minutes ago — not because they forgot, that's the bit people miss, they recap because they can hear that you might have lost it. That's a listening skill deployed while talking. Which is — I mean that's the whole thing, isn't it. Long-winded isn't the opposite of concise, both of those can be perfectly coherent and both can fail. Where it goes wrong is spontaneity with no signposting, which is easy to produce and impossible to follow, and it's the confident ones who do it, never the nervous ones. Anyway. Bear with me, this sounds like a paradox. The most eloquent people you know are the ones you've most often heard say 'let me put that another way'. They're not stuck. They've noticed something you didn't say. And the last thing, which I say to every group and about half of them believe me: the pause you're frightened of is the thing the examiner is listening for. Not its length. What you do inside it. Fill it with 'um' and you've told them nothing. Fill it with 'let me come at that differently' and you've told them you can hear yourself, which is the entire skill."
+    }
+  ],
+  "gist_question": {
+    "q": "What does she replace 'fluency is not stopping' with?",
+    "q_ar": "بتحطّ إيه مكان 'الطلاقة إنك متسكتش'؟",
+    "options": [
+      "Fluency is speaking for four minutes without a pause",
+      "Fluency is avoiding repetition",
+      "Fluency is keeping a listener oriented while you think"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why does she say a good speaker recaps?",
+      "q_ar": "ليه بتقول إن المتحدث الجيد بيلخّص؟",
+      "options": [
+        "Because they can hear the listener may have lost it",
+        "Because they have forgotten what they said",
+        "Because examiners require it"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Who does she say produces spontaneity without signposting?",
+      "q_ar": "مين بتقول إنه بيتكلم بعفوية من غير توجيه؟",
+      "options": [
+        "The nervous students",
+        "The confident students, never the nervous ones",
+        "Only native speakers"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she say 'let me put that another way' indicates?",
+      "q_ar": "'خليني أقولها بطريقة تانية' معناها إيه عندها؟",
+      "options": [
+        "The speaker is stuck for words",
+        "The speaker is being long-winded",
+        "The speaker has noticed something you did not say"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to double back",
+      "ar": "يرجع على كلامه"
+    },
+    {
+      "word": "to recap",
+      "ar": "يلخّص اللي فات"
+    },
+    {
+      "word": "long-winded",
+      "ar": "مطوّل ومملّ"
+    },
+    {
+      "word": "to signpost",
+      "ar": "يوجّه السامع"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w9",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 9,
+  "title": "The Joint, Not the Evidence",
+  "title_ar": "المفصل مش الدليل",
+  "can_do": [
+    "C1.R.5"
+  ],
+  "format": "specialised seminar",
+  "word_count": 293,
+  "gist_ar": "ندوة متخصصة: الحجج بتفشل عند أدوات الربط، مش عند الأدلة.",
+  "before_listening": {
+    "en": "A methods seminar. Listen for the test he proposes and what it is for.",
+    "ar": "ندوة منهجية. ركّز على الاختبار اللي بيقترحه وهو لإيه."
+  },
+  "segments": [
+    {
+      "speaker": "Seminar lead",
+      "speaker_ar": "قائد الندوة",
+      "voice": "bm_lewis",
+      "text": "An argument fails at its joints far more often than at its premises, and that is worth stating plainly insofar as most training in critical reading concentrates on evidence, whereas the errors surviving peer review are almost invariably errors of connection. Consider a structure common in policy writing. A premise is established, evidence is presented, and a conclusion follows introduced by 'thus' or 'hence' or, more ambitiously, 'accordingly'. The evidence may be impeccable. Nevertheless the conjunction is doing work that has not been earned, in that it asserts a relation the data do not contain: correlation is reported and causation inferred, whereby a marker becomes a mechanism without anybody having claimed that it is one. Conversely, a genuinely cohesive argument can be recognised by a simple test. Remove every discourse marker and read what remains. If the sequence still compels, the markers were describing a structure that was there; if it collapses into a list, they were supplying one that was not. Coherence is a property of the reasoning, cohesion a property of the prose, and the second is regularly mistaken for the first. Notwithstanding this, 'moreover' is not a crime; signposting is what allows a reader to follow a long chain at all, and papers stripped of it are measurably harder to use. The rationale for attending to joints is practical. Evidence can be checked by anyone with the data; a connective cannot, which is why it is where a weak case is most safely concealed, and why the reviewer who concedes the evidence and interrogates the conjunction is the one who tends to refute something. And I'd add that this is learnable in an afternoon, which is why I find its absence from most methods training genuinely difficult to account for."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the test he proposes, and what is it for?",
+    "q_ar": "إيه الاختبار اللي بيقترحه، وهو لإيه؟",
+    "options": [
+      "Count the markers, to measure cohesion",
+      "Check every figure against the raw data",
+      "Remove every marker and see whether the reasoning still compels"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Where does he say surviving errors are located?",
+      "q_ar": "فين بيقول إن الأخطاء الباقية بتكون؟",
+      "options": [
+        "In the premises",
+        "In the connections, not the premises or evidence",
+        "In the raw data"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What distinction does he draw?",
+      "q_ar": "إيه الفرق اللي بيوضّحه؟",
+      "options": [
+        "Premises differ from conclusions",
+        "Correlation differs from reporting",
+        "Coherence belongs to the reasoning, cohesion to the prose"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why is a connective a safe place to conceal a weak case?",
+      "q_ar": "ليه أداة الربط مكان آمن لإخفاء حجة ضعيفة؟",
+      "options": [
+        "Readers skip over them",
+        "Unlike evidence, it cannot be checked against data",
+        "Editors remove them"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a premise",
+      "ar": "مقدمة منطقية"
+    },
+    {
+      "word": "impeccable",
+      "ar": "لا يُعاب عليه"
+    },
+    {
+      "word": "a connective",
+      "ar": "أداة ربط"
+    },
+    {
+      "word": "to interrogate",
+      "ar": "يفحص بتشكيك"
+    }
+  ]
+}

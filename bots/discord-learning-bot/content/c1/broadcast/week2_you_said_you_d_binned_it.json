@@ -1,0 +1,158 @@
+{
+  "id": "broadcast_c1_w2",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 2,
+  "title": "You Said You'd Binned It",
+  "title_ar": "قلت إنك رميتها",
+  "can_do": [
+    "C1.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 282,
+  "gist_ar": "مشهد فيلم بتعبيرات عامية: الخلاف على إنه قال إنه رمى كل حاجة.",
+  "before_listening": {
+    "en": "A scene full of idiom. Two people, one photograph. Listen for what she actually accuses him of.",
+    "ar": "مشهد مليان تعبيرات عامية. شخصين وصورة واحدة. ركّز على هي بتتهمه بإيه فعلًا."
+  },
+  "segments": [
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "You kept it. Don't — don't give me the face. You told me you'd binned the lot."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I said I'd binned the letters. Which I did, and it nearly did me in, if we're keeping score."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Oh, we're keeping score now, are we. Because from where I'm sitting you've been sitting on this for eight months and letting me think otherwise."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "That's a bit rich. It's been in the drawer since we moved. I haven't been sitting on anything, it's been sitting there, which is not the same and you know it isn't."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Fine. Splitting hairs. Go on then."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "The letters were doing my head in. Every time I read them I came out worse. The photo's four of us on a beach. Nobody's kicking off in it. That's the whole point of it."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "That is exactly what's wrong with it. Sorry. That came out — no, actually, I'll stand by that. I don't see a beach. I see the morning after, and you in the kitchen saying nothing while I'd been asking you all week."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "I know."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Do you? Because 'I know' has been doing a lot of heavy lifting in this house."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "What do you want me to say? I fudged it. In the car, coming back, you were in bits and I took the short version because the long one was going to take an hour."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Right. So the short version was a lie you could live with."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_michael",
+      "text": "The short version was 'I've binned everything' and what I meant was 'I'm not going to be the bloke who keeps a shrine'. Those aren't the same and I knew it at the time."
+    },
+    {
+      "speaker": "Mona",
+      "speaker_ar": "منى",
+      "voice": "af_nicole",
+      "text": "Thank you. That's all I was after."
+    }
+  ],
+  "gist_question": {
+    "q": "What is she actually accusing him of?",
+    "q_ar": "هي بتتهمه بإيه فعلًا؟",
+    "options": [
+      "Keeping a photograph he had no right to keep",
+      "Throwing away the letters without telling her",
+      "Saying something he knew was not what he meant, and letting it stand"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What does 'that's a bit rich' mean here?",
+      "q_ar": "إيه معنى 'دي زيادة شوية' هنا؟",
+      "options": [
+        "That her accusation is unfair coming from her",
+        "That he agrees with her",
+        "That the photograph is valuable"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she mean by \"'I know' has been doing a lot of heavy lifting\"?",
+      "q_ar": "إيه معنى إن 'أنا عارف' شايلة حمل كبير؟",
+      "options": [
+        "He uses it to end conversations instead of answering",
+        "He says it too quietly",
+        "He has admitted everything already"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he admit at the end?",
+      "q_ar": "اعترف بإيه في الآخر؟",
+      "options": [
+        "He knew at the time that what he said was not what he meant",
+        "He never binned the letters",
+        "He put the photograph in the drawer deliberately"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to bin something",
+      "ar": "يرمي حاجة"
+    },
+    {
+      "word": "that's a bit rich",
+      "ar": "دي زيادة منك"
+    },
+    {
+      "word": "to fudge it",
+      "ar": "يمرّرها بغموض"
+    },
+    {
+      "word": "in bits",
+      "ar": "منهار / متأثر جدًا"
+    }
+  ]
+}

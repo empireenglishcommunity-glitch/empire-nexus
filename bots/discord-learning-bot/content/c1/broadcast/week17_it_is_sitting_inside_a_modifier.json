@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w17",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 17,
+  "title": "It's Sitting Inside a Modifier",
+  "title_ar": "الحاجة مدفونة جوه صفة",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured talk",
+  "word_count": 291,
+  "gist_ar": "حديث غير منظّم: الادعاءات المتنازع عليها بتتحوّل لصفات فمش ممكن تعترض عليها.",
+  "before_listening": {
+    "en": "An editor complaining about a genre of writing. Find the practical advice she never states as advice.",
+    "ar": "محرّرة بتشتكي من نوع من الكتابة. لاقي النصيحة العملية اللي عمرها ما قالتها كنصيحة."
+  },
+  "segments": [
+    {
+      "speaker": "Editor",
+      "speaker_ar": "محرّرة",
+      "voice": "bf_emma",
+      "text": "'The well-documented long-term impact of export-driven, labour-intensive growth on deeply rooted regional inequality.' That's twelve words and one noun and I count four claims in it, none of which is being defended, and I get thirty of these a week. Well-documented. It's an adjective. You can't argue with an adjective — there's nothing to argue with, it's not a proposition, it's furniture. If the author had written 'this impact is well-documented' I could ask where, and they'd have to tell me, and half the time they can't. Deeply rooted, same. State-of-the-art, purpose-built, cutting-edge — those are evaluations wearing description as a coat, and they've been evaluated by nobody. And the head noun comes last, so by the time you meet the subject you've already accepted five things about it. I do understand why people write like this. It's dense and it's economical and a specialist unpacks it without effort, and if I made them write it out in clauses it'd be three sentences and they'd lose the journal's word count. But when I'm reading for whether something is true rather than whether it's publishable, I break the phrase up. Every time. Claim by claim. And nine times out of ten the disagreement — the actual thing the field is fighting about — turns out to be one of the modifiers, sitting there where nobody has to cite it. I had one last year — I won't say which journal — where the entire contribution of the paper was the word 'sustained'. Take 'sustained' out and there is no finding. I flagged it. The author's reply ran to three pages and never once said where the sustaining had been measured. We published it. I'd like to be able to say we didn't."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the practical advice she never states as advice?",
+    "q_ar": "إيه النصيحة العملية اللي عمرها ما قالتها كنصيحة؟",
+    "options": [
+      "Write shorter sentences",
+      "Avoid submitting to journals with word counts",
+      "Break a dense noun phrase into its separate claims and check each one"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why can you not argue with 'well-documented' as written?",
+      "q_ar": "ليه مش ممكن تعترض على 'موثّق جيدًا' بصيغتها؟",
+      "options": [
+        "It is a modifier, not a proposition",
+        "It is always true",
+        "It appears in the abstract"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she concede about this style?",
+      "q_ar": "بتقرّ بإيه عن الأسلوب ده؟",
+      "options": [
+        "It is dense, economical, and a specialist unpacks it easily",
+        "It is never justified",
+        "It is required by editors"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Where does she say the field's real disagreement usually sits?",
+      "q_ar": "فين بتقول إن الخلاف الحقيقي في المجال بيكون؟",
+      "options": [
+        "In the conclusion",
+        "Inside one of the modifiers, where nobody has to cite it",
+        "In the choice of head noun"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "furniture (figurative)",
+      "ar": "حشو / ديكور"
+    },
+    {
+      "word": "a head noun",
+      "ar": "الاسم الرئيسي"
+    },
+    {
+      "word": "to unpack",
+      "ar": "يفكّك"
+    },
+    {
+      "word": "a proposition",
+      "ar": "قضية قابلة للنقاش"
+    }
+  ]
+}

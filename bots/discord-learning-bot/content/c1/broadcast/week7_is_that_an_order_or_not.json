@@ -1,0 +1,188 @@
+{
+  "id": "broadcast_c1_w7",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 7,
+  "title": "Is That an Order or Not",
+  "title_ar": "ده أمر ولا مش أمر",
+  "can_do": [
+    "C1.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 303,
+  "gist_ar": "مشهد في الشغل بلغة دارجة: الموظفة عايزة تعرف الكلام إلزام ولا نصيحة.",
+  "before_listening": {
+    "en": "A workplace scene. She is trying to pin him down. Listen for whether she gets an answer.",
+    "ar": "مشهد شغل. هي بتحاول تثبّته على إجابة. ركّز هل خدت إجابة ولا لأ."
+  },
+  "segments": [
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "Can I just check something. When you said I might as well finish it today — was that a 'do it today'?"
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "It was a — I mean, you'd know better than me how long it takes."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "Right, but I don't know whether I'm in trouble on Monday if it's not done. That's the bit I'm after."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "You're not in trouble. Nobody's talking about trouble. I'd have thought you'd want the leeway, honestly, most people bite my hand off for that."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "Leeway's great when I know it's leeway. When I can't tell, I do the cautious thing and stay till eight, and then you say I needn't have, and I can't work out if that's a thank you or a ticking off."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "It's a thank you."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "Last time it wasn't. Last time you said it and then it came up in my review."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "Did it? That wasn't — that's not how I meant it."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "I'm not having a go. I'm asking you to say the word 'must' when you mean must, and 'up to you' when it's up to me. That's it. That's the whole ask."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "That feels a bit heavy-handed for what's basically a friendly working relationship."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "It feels heavy-handed to you because you're the one who gets to be vague. For me it's the difference between going home and not."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "..."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "So. Today, or up to me?"
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "Up to you. Genuinely. Put it in writing if you like."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "And you'll say it like that? Not 'if you get a chance'?"
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "Not 'if you get a chance'. I hear it. I do it without noticing, that's the honest answer, and I'd rather you pulled me up on it."
+    },
+    {
+      "speaker": "Nour",
+      "speaker_ar": "نور",
+      "voice": "af_bella",
+      "text": "That's all I needed. Thanks."
+    },
+    {
+      "speaker": "Sami",
+      "speaker_ar": "سامي",
+      "voice": "bm_lewis",
+      "text": "No — thank you. I'd rather be told than have you sitting here till eight, guessing what I meant."
+    }
+  ],
+  "gist_question": {
+    "q": "Does she get what she asked for?",
+    "q_ar": "خدت اللي طلبته؟",
+    "options": [
+      "No — he avoids answering to the end",
+      "She withdraws the question",
+      "Yes — he finally states plainly that it is her choice"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What does 'bite my hand off' mean?",
+      "q_ar": "إيه معنى 'يخطفها من إيدي'؟",
+      "options": [
+        "Accept eagerly",
+        "Refuse angrily",
+        "Ask for more time"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does she say vagueness costs her and not him?",
+      "q_ar": "ليه بتقول إن الغموض بيكلّفها هي مش هو؟",
+      "options": [
+        "He gets to be vague; for her it decides whether she goes home",
+        "She is paid less than him",
+        "He does not attend her reviews"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is 'the whole ask'?",
+      "q_ar": "إيه 'كل المطلوب'؟",
+      "options": [
+        "Give her more leeway",
+        "Remove the comment from her review",
+        "Say 'must' when it is required and 'up to you' when it is not"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "leeway",
+      "ar": "مساحة حرية"
+    },
+    {
+      "word": "to bite someone's hand off",
+      "ar": "يقبل بلهفة"
+    },
+    {
+      "word": "a ticking off",
+      "ar": "لوم / تنبيه"
+    },
+    {
+      "word": "to have a go at",
+      "ar": "يهجم على"
+    }
+  ]
+}

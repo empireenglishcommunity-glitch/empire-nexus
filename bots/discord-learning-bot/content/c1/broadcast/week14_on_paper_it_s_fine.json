@@ -1,0 +1,182 @@
+{
+  "id": "broadcast_c1_w14",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 14,
+  "title": "On Paper It's Fine",
+  "title_ar": "على الورق تمام",
+  "can_do": [
+    "C1.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 294,
+  "gist_ar": "مشهد تفاوض بلغة دارجة: المقاولة بتكتشف إن المخاطرة اللي هتضرّها مش مكتوبة.",
+  "before_listening": {
+    "en": "A negotiation. Listen for the risk she notices that is not written anywhere.",
+    "ar": "مفاوضة. ركّز على المخاطرة اللي هي لاحظتها ومش مكتوبة في أي حاجة."
+  },
+  "segments": [
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "So on paper it's fine. Twelve months, and if the permits drag, the clock stops. I've no problem with that."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "Good. It's fairly standard, to be honest. Most people sign it as is."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Most people aren't carrying the concrete. Here's my thing. Permits drag — fine, we're covered. Milestone slips — that's your call, you can waive it or come after me, and at least I can see that coming."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "We've never enforced it. Not once."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "I believe you. It's still your call, though, isn't it. Anyway that's not what's keeping me up. What's keeping me up isn't in here at all."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "Go on."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Steel. If the permits take fourteen months and my supplier's quote lapses at six, I'm eating the difference. There's nothing in this about price."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "That's — well, that's between you and your supplier, strictly speaking."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Strictly speaking, yes. Which is a polite way of saying it lands on me. And I can't hedge it, I'm too small to hedge it, and I can't walk away in month thirteen because I'll have poured foundations."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "I hear you. I'm not sure I can get an escalation clause past the committee."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Then let's do this. Put in writing that if the permit delay runs past nine months we sit down again. That's not money. That's a conversation."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "A review trigger. That I can probably do."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Then we're close. Because as it stands, the only person in this room taking a risk nobody has priced is me."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "I'll take the review trigger to them on Thursday. I think it goes through."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "And if it doesn't?"
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_george",
+      "text": "Then you'd be signing it as it stands, and I'd understand if you didn't sign it."
+    },
+    {
+      "speaker": "Dalia",
+      "speaker_ar": "داليا",
+      "voice": "af_bella",
+      "text": "Good. I'd rather hear that than be told it's standard one more time."
+    }
+  ],
+  "gist_question": {
+    "q": "What risk does she identify that the contract ignores?",
+    "q_ar": "أنهي مخاطرة حدّدتها والعقد متجاهلها؟",
+    "options": [
+      "That the permits will be refused",
+      "That her steel price will rise while she waits for permits",
+      "That the milestone penalty will be enforced"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What does 'I'm eating the difference' mean?",
+      "q_ar": "إيه معنى 'أنا اللي هدفع الفرق'؟",
+      "options": [
+        "She absorbs the extra cost herself",
+        "She will cancel the contract",
+        "She will pass it to the supplier"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why can she not simply walk away later?",
+      "q_ar": "ليه مش تقدر تمشي بعدين؟",
+      "options": [
+        "She will have poured foundations by then",
+        "The contract forbids it",
+        "Her supplier would sue her"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does she settle for instead of a price clause?",
+      "q_ar": "قبلت بإيه بدل بند الأسعار؟",
+      "options": [
+        "A larger advance payment",
+        "A review trigger if permit delay passes nine months",
+        "Removal of the milestone penalty"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "as is",
+      "ar": "كما هو من غير تعديل"
+    },
+    {
+      "word": "to eat the difference",
+      "ar": "يتحمّل الفرق"
+    },
+    {
+      "word": "to hedge",
+      "ar": "يغطّي المخاطرة"
+    },
+    {
+      "word": "a review trigger",
+      "ar": "شرط يفتح التفاوض"
+    }
+  ]
+}
