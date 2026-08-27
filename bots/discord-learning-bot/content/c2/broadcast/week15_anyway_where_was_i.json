@@ -1,0 +1,110 @@
+{
+  "id": "broadcast_c2_w15",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 15,
+  "title": "Anyway — Where Was I",
+  "title_ar": "على فكرة، كنت واقف فين؟",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "unedited podcast digression",
+  "word_count": 427,
+  "gist_ar": "بودكاست غير محرّر. المتكلم بيسرح وبيرجع، وبيوصل للنقطة من طريق ملوي.",
+  "before_listening": {
+    "en": "An unedited podcast. He digresses twice, loses his thread, and arrives at the point sideways. Nothing is signposted.",
+    "ar": "بودكاست بدون مونتاج. بيسرح مرتين، وبينسى كان بيقول إيه، وبيوصل للنقطة بطريقة ملويّة."
+  },
+  "segments": [
+    {
+      "speaker": "Host",
+      "speaker_ar": "المُقدّم",
+      "voice": "am_adam",
+      "text": "—so the reason I wanted to do this one is that somebody wrote in, and I want to read the question because the question's better than my answer. She says: 'You keep saying you learned to write by being edited. What did that actually feel like?' Which. Yeah. Okay. So the first thing to say is that I had a brilliant editor and I disliked her intensely for about two years, and both of those are true at once, and I don't think I understood that until about 2020. Her name was Prue. Prue would — right, and here's a thing that'll sound small — Prue never wrote on the page. Ever. Not a single mark. Which at first I thought was politeness and it absolutely was not politeness. Sorry, hang on, I've got to back up, because this doesn't make sense without the desk arrangement. So the office was one long room and there were no partitions, and the way it worked was you'd finish something and you'd walk it over — physically walk it, this is 2004 — and you'd stand there while she read it. Standing. That was the method. And she'd read, and then she'd hand it back and say something like 'read me the third paragraph.' And you'd read it out loud. And roughly half the time you'd stop in the middle of your own sentence, on your own, because you could hear it. You could hear the thing was wrong the second it was in your mouth. ... Which is the answer, actually, and I've just got there by accident. What it felt like was humiliating and it wasn't humiliation. Those came apart later. It felt like being caught. But the thing she was doing was refusing to be the person who found the problem. Because if she circles it, it's her sentence and her judgement and you can be quietly annoyed about it for a week, and I would have been, I was exactly that sort of twenty-four-year-old. If you hear it yourself, it's yours. There's nobody to be annoyed with. ... And I'll tell you what I do now that I hate: I circle things. I circle everything. I write 'clunky?' in the margin like an absolute coward, because it's four seconds and standing there while somebody reads is twenty minutes, and I've got eleven of them and Prue had four. Which isn't an excuse, it's an explanation, and I'd like to be clear I know the difference, even though I've spent nine years using one as the other."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the host realise while telling the story?",
+    "options": [
+      "That Prue was in fact being polite by not marking the page",
+      "That refusing to mark the page made the writer own the error, leaving nobody to resent",
+      "That he only disliked Prue because she was overworked",
+      "That reading aloud is an unreliable way to check prose"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What was Prue's method?",
+      "options": [
+        "Marking every weak sentence in the margin",
+        "Rewriting the opening and letting the writer compare",
+        "Discussing the piece the following morning",
+        "Handing the piece back and asking the writer to read a paragraph aloud"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What does the host admit he does now?",
+      "options": [
+        "Refuses to edit other people's work at all",
+        "Circles things and writes 'clunky?' in the margin, which he calls cowardly",
+        "Asks writers to email their drafts rather than walk them over",
+        "Edits only the third paragraph of anything"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does he interrupt himself to explain the desk arrangement?",
+      "options": [
+        "Because the office layout later changed",
+        "Because the method depends on standing there while she reads",
+        "To establish how many editors the paper employed",
+        "Because he had forgotten Prue's name"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What distinction does he insist on at the very end?",
+      "options": [
+        "Between editing and rewriting",
+        "Between being caught and being corrected",
+        "Between an excuse and an explanation",
+        "Between a margin note and a conversation"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does 'those came apart later' refer to?",
+      "options": [
+        "His relationship with Prue and his relationship with the paper",
+        "The two years of dislike and the two years of learning",
+        "The feeling of humiliation and actual humiliation",
+        "Reading aloud and reading silently"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "digression",
+      "ar": "استطراد / خروج عن الموضوع"
+    },
+    {
+      "word": "back up",
+      "ar": "يرجع خطوة في الكلام"
+    },
+    {
+      "word": "partitions",
+      "ar": "فواصل مكتبية"
+    },
+    {
+      "word": "clunky",
+      "ar": "ثقيل / مش سلس"
+    },
+    {
+      "word": "lose your thread",
+      "ar": "تنسى كنت بتقول إيه"
+    }
+  ]
+}

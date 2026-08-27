@@ -1,0 +1,128 @@
+{
+  "id": "broadcast_c2_w11",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 11,
+  "title": "Four Messages, Left Out of Order",
+  "title_ar": "أربع رسايل، مش بالترتيب",
+  "can_do": [
+    "C2.R.5"
+  ],
+  "format": "voicemail chain",
+  "word_count": 411,
+  "gist_ar": "أربع رسايل على الرد الآلي، مش مرتّبة زمنيًا. لازم ترتّبها وتستنتج اللي حصل.",
+  "before_listening": {
+    "en": "Four voicemails played back in the order they were left, which is not the order the events happened. Work out the sequence.",
+    "ar": "أربع رسايل صوتية بترتيب تركها، وهو مش ترتيب الأحداث. رتّب الأحداث بنفسك."
+  },
+  "segments": [
+    {
+      "speaker": "Message one — Hala",
+      "speaker_ar": "الرسالة الأولى - هالة",
+      "voice": "af_nicole",
+      "text": "Hi, it's Hala, it's about ten past nine on the Tuesday. Look, ignore my last one, I'd got it completely the wrong way round. The valuation didn't come in low, the valuation came in fine — it's the survey that's flagged the retaining wall at the back. So the number in the email is right, the reason is wrong. I've asked Marwan to send you the survey itself rather than his summary of it, because his summary says 'movement noted' and the actual survey says 'no evidence of recent movement', and those are quite different sentences to be making a decision on. Ring me."
+    },
+    {
+      "speaker": "Message two — Marwan",
+      "speaker_ar": "الرسالة الثانية - مروان",
+      "voice": "bm_lewis",
+      "text": "It's Marwan, Tuesday about half eleven. Hala's told me off, entirely fairly. I've sent the full survey. Page fourteen is the wall. What it says is the crack is historic, it's been pointed at some stage, and the surveyor's recommendation is monitoring rather than works. So the eight thousand in my summary was my own estimate for rebuilding it, which I shouldn't have put in a document without labelling it as mine. There's no eight thousand anywhere in the survey. Sorry. Genuinely."
+    },
+    {
+      "speaker": "Message three — Hala",
+      "speaker_ar": "الرسالة الثالثة - هالة",
+      "voice": "af_nicole",
+      "text": "Me again, Tuesday, just gone two. Right, so the seller has come back and they'll do monitoring at their cost for twelve months, in writing, and they want an answer by Friday because there's a second party. I have no way of telling you whether the second party is real. In my experience it's real about half the time. What I can tell you is that the monitoring offer is unusual and it's worth more than the eight thousand you were braced for, because it transfers the uncertainty to them. Friday, then. And don't ring Marwan about the valuation, he's had enough."
+    },
+    {
+      "speaker": "Message four — Nadia",
+      "speaker_ar": "الرسالة الرابعة - نادية",
+      "voice": "af_sky",
+      "text": "It's your sister. It's Wednesday morning. I've had all three of them forwarded to me and I want to say one thing and then I'll leave you alone. Everyone in those messages is talking about the wall. Nobody is talking about the fact that you told me in January you didn't want to live that far from Baba, and the wall is the thing you've found to be worried about instead. That may be completely unfair. If it is, ignore me and buy the house, and I'll help you paint it. But if I'm right, you've got until Friday and a retaining wall is a much easier conversation than the real one, so I thought somebody should say the real one out loud."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the actual state of the retaining wall?",
+    "options": [
+      "It needs rebuilding at a cost of eight thousand",
+      "The valuation has come in low because of it",
+      "There is a historic crack with no recent movement; the surveyor recommends monitoring",
+      "The survey found evidence of recent movement"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Where did the figure of eight thousand actually come from?",
+      "options": [
+        "The surveyor's recommendation on page fourteen",
+        "Marwan's own unlabelled estimate for rebuilding, not the survey",
+        "The seller's opening offer",
+        "The valuation report"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What has the seller offered?",
+      "options": [
+        "Eight thousand off the asking price",
+        "Monitoring at their own cost for twelve months, in writing",
+        "To rebuild the wall before completion",
+        "A second survey by a different firm"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Hala correct in her first message?",
+      "options": [
+        "That the deadline is Friday, not Thursday",
+        "That Marwan is no longer acting on the sale",
+        "That the survey, not the valuation, is the source of the problem",
+        "That the wall is at the front, not the back"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does Nadia argue in the last message?",
+      "options": [
+        "That the wall may be a substitute worry for not wanting to live far from their father",
+        "That the second party is unlikely to be real",
+        "That the survey should be redone before Friday",
+        "That Marwan has behaved unprofessionally and should be replaced"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does Hala say the monitoring offer is worth more than eight thousand?",
+      "options": [
+        "Because monitoring costs more than eight thousand over twelve months",
+        "Because it removes the need for a survey",
+        "Because the second party has offered less",
+        "Because it shifts the uncertainty onto the seller"
+      ],
+      "answer": 3
+    }
+  ],
+  "glossary": [
+    {
+      "word": "retaining wall",
+      "ar": "حيطة ساندة"
+    },
+    {
+      "word": "valuation",
+      "ar": "تقييم سعري"
+    },
+    {
+      "word": "pointed",
+      "ar": "اتّرمّم باللحام الأسمنتي"
+    },
+    {
+      "word": "braced for",
+      "ar": "كان مستعد ونفسه معمولة عليه"
+    },
+    {
+      "word": "historic crack",
+      "ar": "شقّ قديم مش جديد"
+    }
+  ]
+}

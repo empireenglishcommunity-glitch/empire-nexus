@@ -1,0 +1,136 @@
+{
+  "id": "broadcast_c2_w9",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 9,
+  "title": "And That's the Flag Up — No, It Isn't",
+  "title_ar": "ورفع الرايه — لأ، مرفعهاش",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "live sports commentary",
+  "word_count": 453,
+  "gist_ar": "تعليق رياضي مباشر بأقصى سرعة. المعلّق بيصحّح نفسه مرتين وهو بيتكلم.",
+  "before_listening": {
+    "en": "Commentary at full speed, two commentators, and the main commentator corrects himself twice while still speaking.",
+    "ar": "تعليق بأقصى سرعة، معلّقين اتنين، والمعلّق الرئيسي بيصحّح نفسه مرتين وهو لسه بيتكلم."
+  },
+  "segments": [
+    {
+      "speaker": "Commentator",
+      "speaker_ar": "المعلّق",
+      "voice": "bm_george",
+      "text": "—and Farouk has it, Farouk turns, he's got Idrissi outside him and he's not going to use him, he's going himself, he's going himself and he's through! He's through on the angle, it's a tight one, and that's — that's the flag up. No. No, it isn't, the flag stayed down, the linesman's kept it down and Farouk knew, Farouk absolutely knew, look at him, he hasn't broken stride once. Squares it — Nabil — NABIL — off the bar, off the underside of the bar and out, and Selim gets a hand to it, or does he, I don't think he touches it at all."
+    },
+    {
+      "speaker": "Co-commentator",
+      "speaker_ar": "المحلّل",
+      "voice": "am_michael",
+      "text": "He doesn't touch it. And Peter, the reason that goes over the bar rather than in is entirely Nabil's standing foot. He's planted a good foot behind the ball because he's arrived a fraction early, and the moment you do that the ball climbs. Nothing to do with Selim. Selim's beaten from the second Farouk squares it."
+    },
+    {
+      "speaker": "Commentator",
+      "speaker_ar": "المعلّق",
+      "voice": "bm_george",
+      "text": "Corner, then. No — goal kick, they've given a goal kick, and there's a conversation to be had about that because that came off Fathi's shin on the way through. Twenty-two minutes gone, still nothing between them, and this has been a far better half than the first twenty suggested it would be. Fathi takes it short. Short to Idrissi, Idrissi's under pressure immediately — he's got Warda coming, he's got nowhere, and he does brilliantly there, he just lets it run across his body and buys himself the yard he needed."
+    },
+    {
+      "speaker": "Co-commentator",
+      "speaker_ar": "المحلّل",
+      "voice": "am_michael",
+      "text": "That's the most under-appreciated skill in the game, that. He hasn't touched the ball. He's changed his shoulders and Warda's committed."
+    },
+    {
+      "speaker": "Commentator",
+      "speaker_ar": "المعلّق",
+      "voice": "bm_george",
+      "text": "Now here's Souleyman. First time in the half he's had it in that pocket, and you sense the crowd lift, they can hear it too — sorry, they can SEE it, they can see what's coming — he's looking for Nabil again, and it's cut out. It's cut out by Zayd, who has had an outstanding forty minutes, and who I said before kick-off was the one player in this side I'd have concerns about. I'll say that again because I got it wrong: I said Zayd would struggle against pace and he has been the best defender on the pitch."
+    },
+    {
+      "speaker": "Co-commentator",
+      "speaker_ar": "المحلّل",
+      "voice": "am_michael",
+      "text": "You did say it, and you were wrong, and I'll enjoy that for a moment. But I'd add the reason: he isn't being asked to turn. The line's sitting eight yards deeper than it did last week, so his weakness is simply never being tested."
+    },
+    {
+      "speaker": "Commentator",
+      "speaker_ar": "المعلّق",
+      "voice": "bm_george",
+      "text": "Which is coaching rather than the player. Twenty-four minutes, goalless, and Farouk is down. Farouk is down and the physio is coming on, and that changes the shape of this entirely."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the main commentator openly admit during the passage?",
+    "options": [
+      "That he missed the moment Farouk was fouled",
+      "That the goal kick decision was correct after all",
+      "That his own pre-match prediction about Zayd was wrong",
+      "That Selim touched the ball on its way over"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "According to the co-commentator, why did Nabil's shot go over the bar?",
+      "options": [
+        "He planted his standing foot too far behind the ball, having arrived early",
+        "Selim got a fingertip to it",
+        "It deflected off Fathi's shin",
+        "He was off balance from Warda's challenge"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What explanation does the co-commentator give for Zayd's strong performance?",
+      "options": [
+        "The defensive line is sitting deeper, so he is never asked to turn",
+        "He has been man-marking Souleyman all half",
+        "He has recovered his pace since last week",
+        "He is being helped by the linesman's positioning"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does the commentator praise Idrissi under pressure from Warda?",
+      "options": [
+        "He wins a free kick by standing his ground",
+        "He plays a first-time pass into the pocket",
+        "He dribbles past him twice in succession",
+        "He beats him without touching the ball, by changing his shoulders"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "What is the score and time at the end of the passage?",
+      "options": [
+        "One-nil at twenty-two minutes",
+        "Goalless at forty minutes",
+        "One-one at twenty-four minutes",
+        "Goalless at twenty-four minutes"
+      ],
+      "answer": 3
+    }
+  ],
+  "glossary": [
+    {
+      "word": "the flag up",
+      "ar": "رفع رايه التسلّل"
+    },
+    {
+      "word": "squares it",
+      "ar": "يمرّرها بالعرض"
+    },
+    {
+      "word": "off the underside of the bar",
+      "ar": "من تحت العارضة"
+    },
+    {
+      "word": "standing foot",
+      "ar": "الرجل الثابتة عند التسديد"
+    },
+    {
+      "word": "cut out",
+      "ar": "اعترضها / قطعها"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "id": "broadcast_c2_w18",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 18,
+  "title": "We're Some Way Apart on That",
+  "title_ar": "احنا بعيدين شويّة عن بعض في النقطة دي",
+  "can_do": [
+    "C2.R.4"
+  ],
+  "format": "negotiation",
+  "word_count": 405,
+  "gist_ar": "تفاوض مؤدّب. كل رقم بيتقال بصيغة مش مباشرة، والرفض بيجي على شكل موافقة.",
+  "before_listening": {
+    "en": "A negotiation in which almost nothing is said directly. Refusals arrive dressed as agreement, and every number is offered sideways.",
+    "ar": "تفاوض مفيهوش كلام مباشر. الرفض بيجي بشكل موافقة، وكل رقم بيتقال بطريقة غير مباشرة."
+  },
+  "segments": [
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "Before we start — is Tuesday still realistic for you, or are we being optimistic?"
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Tuesday's realistic. Tuesday's realistic if the schedule attached on Thursday is the schedule we're working from."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "I'd have thought so. Broadly. There's a question about item nine that our technical people would like to be comfortable with, and I don't think it's a large question."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Item nine is the indexation."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "It is."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Then it's a large question. I'd rather say so now than at four o'clock."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "That's fair, and I'd rather you did. Look — we can live with indexation. In principle. What we're finding difficult is indexation from year one, with no collar, on a seven-year term. If somebody put year three in front of me I don't say I'd sign it today, but I'd take it to Hisham without a covering note explaining why I was wasting his time."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Year three. ... We're some way apart on that. Year two I could probably defend. Year three, I'd be going back to my board and telling them I'd given away two years of the thing I was sent here to protect, and they'd ask me what I got."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "Well. What would you want to have got?"
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Off the top of my head — and this is me thinking aloud, not an offer — the volume commitment in schedule two is currently a target. If it were a commitment, with the termination right falling away, then the indexation date becomes a much smaller conversation for me."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "Mm. The termination right is not mine to give away in this room."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "No. I didn't imagine it was."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "But I could take the volume commitment on its own, with the termination right surviving, and I think that lands. And if that's where we are, then I'd want the collar as well as the date."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "A collar at what?"
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "Nought. A floor at nought."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "...That I can do standing here. That costs me nothing I can think of, which probably means I should think about it for another minute. No — I can do it. Year two, floor at nought, volume becomes a commitment, termination survives."
+    },
+    {
+      "speaker": "Ms Sabbagh",
+      "speaker_ar": "السيدة صبّاغ",
+      "voice": "bf_emma",
+      "text": "Then I think we're closer than either of us expected to be before lunch. I'll have that written up and with you by six, and Tuesday stays Tuesday."
+    },
+    {
+      "speaker": "Mr Kettani",
+      "speaker_ar": "السيد الكتّاني",
+      "voice": "am_michael",
+      "text": "Tuesday stays Tuesday. And Farida — thank you for saying 'large question' rather than letting me find out at four."
+    }
+  ],
+  "gist_question": {
+    "q": "What has actually been agreed by the end?",
+    "options": [
+      "Indexation from year three with a collar at nought",
+      "Nothing — the parties remain too far apart to proceed",
+      "Indexation from year two, a floor at nought, volume becomes a commitment, termination right survives",
+      "The termination right is given up in exchange for year three"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What does Ms Sabbagh mean by 'I'd take it to Hisham without a covering note'?",
+      "options": [
+        "That she would need Hisham's written approval first",
+        "That the proposal would be credible enough to pass on without having to excuse it",
+        "That Hisham has already rejected the proposal once",
+        "That she would send it informally rather than officially"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does Mr Kettani say 'this is me thinking aloud, not an offer'?",
+      "options": [
+        "Because he does not have authority to negotiate at all",
+        "To keep the volume commitment from being treated as a concession he has already made",
+        "Because he has misread schedule two",
+        "To signal the meeting should be adjourned"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does 'We're some way apart on that' actually do?",
+      "options": [
+        "Rejects year three politely while keeping the negotiation open",
+        "Accepts year three subject to board approval",
+        "Ends discussion of indexation altogether",
+        "Asks for the figure to be repeated"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does Mr Kettani hesitate before agreeing to the collar?",
+      "options": [
+        "Because he needs his board's consent for any floor",
+        "Because a floor at nought is worth more than year two",
+        "Because it seems to cost him nothing, which makes him suspect he has missed something",
+        "Because the collar was not in the Thursday schedule"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does Mr Kettani thank her for at the end?",
+      "options": [
+        "Agreeing to keep Tuesday as the deadline",
+        "Consulting Hisham before the meeting",
+        "Naming item nine as a large question early rather than letting him discover it late",
+        "Dropping the termination right"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "indexation",
+      "ar": "ربط السعر بمؤشّر التضخّم"
+    },
+    {
+      "word": "collar / floor",
+      "ar": "حدّ أدنى للتغيّر السعري"
+    },
+    {
+      "word": "some way apart",
+      "ar": "بعيدين عن الاتفاق"
+    },
+    {
+      "word": "off the top of my head",
+      "ar": "من غير تفكير عميق"
+    },
+    {
+      "word": "that lands",
+      "ar": "ده هيلقى قبول"
+    }
+  ]
+}

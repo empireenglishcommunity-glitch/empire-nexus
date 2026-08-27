@@ -1,0 +1,176 @@
+{
+  "id": "broadcast_c2_w20",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 20,
+  "title": "The Debrief Nobody Wanted",
+  "title_ar": "المراجعة اللي محدش كان عايزها",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "after-action debrief",
+  "word_count": 549,
+  "gist_ar": "مراجعة بعد حادث. متعدد المتكلمين، لغة تشغيلية، والخلاف على السؤال نفسه مش على الإجابة.",
+  "before_listening": {
+    "en": "A multi-speaker review after an incident. Operational shorthand, and the disagreement is about what question the review is for.",
+    "ar": "مراجعة بعد حادث. كلام تشغيلي مختصر، والخلاف على الغرض من المراجعة نفسها."
+  },
+  "segments": [
+    {
+      "speaker": "Facilitator",
+      "speaker_ar": "الميسّرة",
+      "voice": "af_sky",
+      "text": "Ground rules, quickly, because we've done this badly before. This is not a disciplinary. Nothing said here goes in anybody's file. I will write one page and you will all see it before anybody else does. Ehab, you had the desk — start at the alarm."
+    },
+    {
+      "speaker": "Ehab",
+      "speaker_ar": "إيهاب",
+      "voice": "am_adam",
+      "text": "Alarm came in at eleven fifty-one as a low-level pressure warning on the west loop. I've had four of those this month, all four were the sensor, so I did what I've done four times: acknowledged it, logged it, and carried on with the changeover. At eleven fifty-eight it escalated and I called it in. So seven minutes. And I want to say the seven minutes out loud before somebody else does, because it's the number this whole thing is about."
+    },
+    {
+      "speaker": "Nadia",
+      "speaker_ar": "نادية",
+      "voice": "af_nicole",
+      "text": "Can I stop you there. It isn't the number this is about. Ehab, four out of four of those alarms were false, and the procedure you followed is the procedure we wrote. If seven minutes is the finding then the finding is about me, because I signed the procedure off in the spring and I signed it off knowing the sensor on the west loop was unreliable."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "With respect, that's generous but it's also a bit convenient. The procedure says acknowledge and log. It doesn't say carry on with a changeover. There's a line in it about not undertaking non-essential work with an unresolved alarm."
+    },
+    {
+      "speaker": "Ehab",
+      "speaker_ar": "إيهاب",
+      "voice": "am_adam",
+      "text": "The changeover isn't non-essential, it's on the schedule."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "I know, and that's my point, not a criticism of you. We've got a procedure that forbids non-essential work and a schedule that makes everything essential. Those two documents have never been read next to each other."
+    },
+    {
+      "speaker": "Facilitator",
+      "speaker_ar": "الميسّرة",
+      "voice": "af_sky",
+      "text": "Say that again slowly, because I think that's the finding."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "Any operator on that desk at eleven fifty-one, following both documents exactly, does what Ehab did. Which means Ehab is not the variable. If you put me on that desk, or Nadia, we get the same seven minutes, and a review that ends with 'operator response time' has told us the one thing we already knew."
+    },
+    {
+      "speaker": "Nadia",
+      "speaker_ar": "نادية",
+      "voice": "af_nicole",
+      "text": "And the sensor is still in. That's the other thing. It's been on the list since March as low priority, and 'low priority' is a judgement somebody made when the failure mode looked like nuisance alarms rather than seven minutes."
+    },
+    {
+      "speaker": "Facilitator",
+      "speaker_ar": "الميسّرة",
+      "voice": "af_sky",
+      "text": "Right. So what I'm hearing is three findings and none of them is about Ehab. One: the alarm procedure and the maintenance schedule contradict each other. Two: the west loop sensor was triaged on a failure mode we now know was wrong. Three — and this one's mine to fix — we ran the last two reviews looking for the person, so the honest answer is that people have stopped bringing us the near misses. Ehab, is that fair to you?"
+    },
+    {
+      "speaker": "Ehab",
+      "speaker_ar": "إيهاب",
+      "voice": "am_adam",
+      "text": "It's fairer than I expected walking in. I'd add a fourth, and I'd rather it came from me. I didn't ring Nadia at eleven fifty-two. I could have. It's a thirty-second call and I've got her number, and I didn't make it because I didn't want to be the man who rings about a sensor for the fifth time. That's not the procedure. That's me. And if the page doesn't say that, the page is missing something."
+    },
+    {
+      "speaker": "Facilitator",
+      "speaker_ar": "الميسّرة",
+      "voice": "af_sky",
+      "text": "...Then the page will say it. Thank you."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the review conclude the real problem was?",
+    "options": [
+      "Ehab's seven-minute delay in escalating the alarm",
+      "A contradiction between the alarm procedure and the maintenance schedule, plus a mis-triaged sensor",
+      "Nadia's decision to sign off the procedure in the spring",
+      "The failure of the west loop sensor itself"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "Why does Fouad say Ehab 'is not the variable'?",
+      "options": [
+        "Because any operator following both documents exactly would have done the same thing",
+        "Because Ehab was not actually at the desk at 11:51",
+        "Because the alarm was a false one, like the previous four",
+        "Because the seven minutes was recorded incorrectly"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does the facilitator identify as her own contribution to the problem?",
+      "options": [
+        "She signed off the unreliable procedure in the spring",
+        "Previous reviews hunted for individuals, so staff stopped reporting near misses",
+        "She triaged the sensor as low priority in March",
+        "She approved the changeover schedule"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does Ehab add about himself at the end?",
+      "options": [
+        "That he had not read the alarm procedure",
+        "That he silenced the alarm rather than logging it",
+        "That he did not ring Nadia because he did not want to be seen raising the sensor a fifth time",
+        "That he was covering two desks at the time"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does Nadia say 'low priority' is significant?",
+      "options": [
+        "Because the sensor had already been replaced once",
+        "Because it was a judgement made on the assumption the failure mode was only nuisance alarms",
+        "Because low-priority items are reviewed weekly",
+        "Because it was Fouad who set the priority"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the facilitator set out the ground rules at the start?",
+      "options": [
+        "Because previous reviews were run badly and she wants it clear this is not disciplinary",
+        "Because attendance is voluntary",
+        "Because the findings will be published externally",
+        "Because a written statement is required by the regulator"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "debrief",
+      "ar": "مراجعة بعد الحدث"
+    },
+    {
+      "word": "escalated",
+      "ar": "ارتفع لمستوى أخطر / تمّ تصعيده"
+    },
+    {
+      "word": "changeover",
+      "ar": "تحويل خط الإنتاج"
+    },
+    {
+      "word": "triaged",
+      "ar": "اتحدّدت أولويته"
+    },
+    {
+      "word": "near miss",
+      "ar": "حادث كاد يحصل"
+    }
+  ]
+}

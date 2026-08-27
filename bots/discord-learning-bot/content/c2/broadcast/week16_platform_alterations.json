@@ -1,0 +1,146 @@
+{
+  "id": "broadcast_c2_w16",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 16,
+  "title": "Platform Alterations",
+  "title_ar": "تغييرات الأرصفة",
+  "can_do": [
+    "C2.R.1"
+  ],
+  "format": "public address announcements",
+  "word_count": 367,
+  "gist_ar": "إعلانات محطة متتالية وسريعة ومتناقضة. لازم تستخلص المعلومة الصح من الزحمة.",
+  "before_listening": {
+    "en": "Station announcements, one after another, contradicting each other, over background noise. Extract what a specific traveller should do.",
+    "ar": "إعلانات محطة ورا بعض، بتناقض بعضها، ووسط دوشة. استخلص المسافر لازم يعمل إيه."
+  },
+  "segments": [
+    {
+      "speaker": "Announcer A",
+      "speaker_ar": "المذيعة أ",
+      "voice": "af_sarah",
+      "text": "Good morning. This is a platform alteration. The zero nine forty-two service to Alexandria, calling at Tanta, Damanhur and Alexandria, will now depart from platform four. Platform four. This is due to a points failure at the north end of the station. Passengers already on platform two are asked to make their way over the bridge, not through the underpass, as the underpass is closed for cleaning."
+    },
+    {
+      "speaker": "Announcer B",
+      "speaker_ar": "المذيع ب",
+      "voice": "bm_lewis",
+      "text": "We are sorry to announce that the zero nine fifty-eight to Port Said has been cancelled. This is due to a shortage of train crew. Passengers for Port Said may travel on the ten twenty-six, which will call additionally at Ismailia, or may use the replacement road service departing from stand C outside the main entrance. Tickets will be accepted on either. We are sorry for the disruption this causes."
+    },
+    {
+      "speaker": "Announcer A",
+      "speaker_ar": "المذيعة أ",
+      "voice": "af_sarah",
+      "text": "This is a further alteration to the zero nine forty-two to Alexandria. This service will now depart from platform two. Platform two, as originally advertised. Passengers who have moved to platform four are asked to return over the bridge. The service is now expected to depart at ten oh nine and will no longer call at Damanhur. Passengers for Damanhur should travel to Tanta and change."
+    },
+    {
+      "speaker": "Announcer B",
+      "speaker_ar": "المذيع ب",
+      "voice": "bm_lewis",
+      "text": "Would passenger Nour Al-Sayed, travelling to Aswan, please make herself known to a member of staff at the information point on the concourse. Passenger Nour Al-Sayed, to the information point, please."
+    },
+    {
+      "speaker": "Announcer A",
+      "speaker_ar": "المذيعة أ",
+      "voice": "af_sarah",
+      "text": "The ten twenty-six to Port Said, calling additionally at Ismailia, is now ready for boarding at platform one. This service is expected to be extremely busy and will be formed of six coaches rather than the advertised nine. Reservations on this service are not valid. Please move right down inside the train and do not leave luggage in the vestibules."
+    },
+    {
+      "speaker": "Announcer B",
+      "speaker_ar": "المذيع ب",
+      "voice": "bm_lewis",
+      "text": "A reminder that the underpass remains closed. Step-free access between platforms is available via the accessible route at the south end of the station only, and staff are on hand at the information point to assist. Passengers requiring step-free access to platform two should allow an additional ten minutes."
+    },
+    {
+      "speaker": "Announcer A",
+      "speaker_ar": "المذيعة أ",
+      "voice": "af_sarah",
+      "text": "Platform two for the delayed ten oh nine to Alexandria. Tanta and Alexandria only. This is the final call for this service. Platform two."
+    }
+  ],
+  "gist_question": {
+    "q": "A passenger heading to Damanhur with a heavy suitcase and no lift access — what applies to them?",
+    "options": [
+      "Go to platform two by the south accessible route allowing ten extra minutes, travel to Tanta and change",
+      "Take the 10:26 from platform one and change at Ismailia",
+      "Use the replacement road service from stand C",
+      "Remain on platform four, where the service now departs"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Which platform does the Alexandria service finally leave from?",
+      "options": [
+        "Platform four",
+        "Platform one",
+        "Platform three",
+        "Platform two"
+      ],
+      "answer": 3
+    },
+    {
+      "q": "Why was the Port Said service cancelled?",
+      "options": [
+        "A points failure",
+        "The underpass closure",
+        "A shortage of train crew",
+        "Overcrowding on the 10:26"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is true of the 10:26 to Port Said?",
+      "options": [
+        "It has nine coaches and reservations are honoured",
+        "It departs from stand C outside the main entrance",
+        "It calls additionally at Ismailia, has six coaches, and reservations are not valid",
+        "It no longer calls at Ismailia"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How should passengers move between platforms?",
+      "options": [
+        "Over the bridge; the underpass is closed",
+        "Through the underpass, which has reopened",
+        "Only via the north end of the station",
+        "Via the concourse information point"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What changed about the Alexandria service besides the platform?",
+      "options": [
+        "It now departs at 10:09 and no longer calls at Damanhur",
+        "It now calls additionally at Ismailia",
+        "It has been cancelled entirely",
+        "It will be formed of nine coaches"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "platform alteration",
+      "ar": "تغيير رصيف القطار"
+    },
+    {
+      "word": "points failure",
+      "ar": "عطل في مفاتيح السكة"
+    },
+    {
+      "word": "step-free access",
+      "ar": "مسار بدون سلالم"
+    },
+    {
+      "word": "vestibule",
+      "ar": "المدخل بين عربات القطار"
+    },
+    {
+      "word": "final call",
+      "ar": "النداء الأخير"
+    }
+  ]
+}
