@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w15",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 15,
+  "title": "Striking the Wrong Note",
+  "title_ar": "النغمة الغلط",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 300,
+  "gist_ar": "نص فيه تنقّل مقصود بين المستويات اللغوية، وبيسخر من نفسه وهو بيعمل كده.",
+  "text": "It is incumbent upon the present author to observe that the foregoing memorandum has, not to put too fine a point on it, gone down like a lead balloon.\n\nThat sentence is doing something on purpose, and it is the subject of this piece. The first half is elevated to the point of parody — incumbent, present author, foregoing — and the second is plain-spoken to the point of cliché. The juxtaposition is jarring, deliberately, and if you found it faintly comic then the bathos worked; if you found it merely clumsy, that is the risk one runs.\n\nRegister is not a dial from formal to casual. It is a set of promises about the relationship, and mixing registers breaks one of them, which is why it is funny when controlled and merely incongruous when not. Mock-formal diction — the highfalutin word deployed about something trivial — is the oldest reliable joke in English, and it works because gravitas is a costume. Put it on a small subject and the costume is visible.\n\nThe failure mode is instructive. A writer who modulates well is audience-aware: she calibrates the levity against what the reader can bear, tempers the flippancy where the subject is raw, and the seams do not show. A writer who modulates badly produces something worse than uniformity, because the reader cannot tell which register is the sincere one. Irreverence about a redundancy programme does not read as deft. It reads as a man who has not understood what he is discussing.\n\nWhich brings us, with a deftness I shall let the reader assess, to the counterpoint. The memorandum was not badly written. It was written in one register throughout, and that register was wrong, and one uniform wrong note resonates a great deal longer than several right ones.",
+  "glossary": [
+    {
+      "word": "bathos",
+      "ar": "الهبوط المفاجئ من الجليل للتافه"
+    },
+    {
+      "word": "highfalutin",
+      "ar": "متكلّف الفخامة"
+    },
+    {
+      "word": "gravitas",
+      "ar": "هيبة ووقار"
+    },
+    {
+      "word": "to temper",
+      "ar": "يعدّل ويلطّف"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer demonstrating in his opening sentence?",
+      "q_ar": "إيه اللي الكاتب بيعرضه في جملته الأولى؟",
+      "options": [
+        "That formal English is superior to plain English",
+        "The deliberate register clash the piece goes on to discuss",
+        "An accidental stylistic lapse he later apologises for"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does he say mock-formal diction is funny?",
+      "q_ar": "ليه بيقول إن الفخامة الساخرة مضحكة؟",
+      "options": [
+        "Formal words are inherently absurd",
+        "Gravitas is a costume, and on a small subject the costume is visible",
+        "Readers dislike long words"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he call worse than uniformity?",
+      "q_ar": "إيه اللي قال إنه أسوأ من الثبات على مستوى واحد؟",
+      "options": [
+        "Modulating badly, so the reader cannot tell which register is sincere",
+        "Writing entirely in the formal register",
+        "Avoiding humour altogether"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What was actually wrong with the memorandum?",
+      "q_ar": "إيه الغلط الحقيقي في المذكرة؟",
+      "options": [
+        "It mixed too many registers",
+        "It was too short to establish a tone",
+        "It was consistent, but in the wrong register throughout"
+      ],
+      "answer": 2
+    }
+  ]
+}

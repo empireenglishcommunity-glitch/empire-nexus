@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w9",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 9,
+  "title": "On the Face of It",
+  "title_ar": "في الظاهر",
+  "can_do": [
+    "C2.R.2"
+  ],
+  "word_count": 298,
+  "gist_ar": "نص عن درجات اليقين: كل عبارة تحوّط بتحدّد مصدر المعرفة، والفروق بينها كبيرة.",
+  "text": "By all accounts the valve was closed. It stands to reason that it was: the procedure requires it, the operator is experienced, and to the best of my knowledge no one has suggested otherwise. On the face of it, then, the matter is settled.\n\nIt is not, and the reason is that every sentence in that paragraph reports a different kind of warrant. 'By all accounts' is testimony. 'It stands to reason' is inference from the general to the particular, which is the weakest of the three and the most persuasive. 'To the best of my knowledge' is an absence of contrary evidence, which is not evidence. Presumably the reader aggregates them into a single impression of likelihood, and in all likelihood that impression is stronger than any of the components warrants.\n\nIf anything, the epistemic vocabulary of English is too rich here rather than too poor. Purportedly, ostensibly, seemingly, evidently, demonstrably — the last of these is a claim about proof and the other four are claims about appearance, and they arrive in the same syntactic slot with the same unremarkable rhythm. As far as I can tell, no reader distinguishes them reliably at speed, and I include myself.\n\nWhat is tenable, then? Only this: that a conjecture may be plausible, that a surmise may be warranted, and that neither is verifiable until somebody has attested to something specific. To my mind the test is procedural rather than logical. Postulate the opposite and ask what would have to be found. If the answer is 'a record', the claim is speculative until the record is produced.\n\nAll the evidence suggests we are poor at this. There is reason to believe we are poorest precisely where the stakes make care most necessary, which is where the vocabulary is thickest.",
+  "glossary": [
+    {
+      "word": "a warrant",
+      "ar": "مبرّر معرفي / سند"
+    },
+    {
+      "word": "epistemic",
+      "ar": "متعلق بدرجة المعرفة"
+    },
+    {
+      "word": "a conjecture",
+      "ar": "تخمين"
+    },
+    {
+      "word": "tenable",
+      "ar": "قابل للدفاع عنه"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's central point about the opening paragraph?",
+      "q_ar": "إيه فكرته الأساسية عن الفقرة الأولى؟",
+      "options": [
+        "Each sentence reports a different kind of warrant, which readers aggregate wrongly",
+        "The valve was probably not closed",
+        "Testimony is always stronger than inference"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Which does he call the weakest and most persuasive?",
+      "q_ar": "أنهي واحدة قال إنها الأضعف والأكثر إقناعًا؟",
+      "options": [
+        "'By all accounts' — testimony",
+        "'It stands to reason' — inference from the general to the particular",
+        "'Demonstrably' — a claim about proof"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What procedural test does he propose?",
+      "q_ar": "إيه الاختبار الإجرائي اللي بيقترحه؟",
+      "options": [
+        "Count the hedges per paragraph",
+        "Require testimony from two independent sources",
+        "Postulate the opposite and ask what would have to be found"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Where does he say we are poorest at this?",
+      "q_ar": "فين بيقول إننا الأسوأ في ده؟",
+      "options": [
+        "Precisely where the stakes make care most necessary",
+        "In informal conversation",
+        "In technical specifications"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w11",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 11,
+  "title": "A Regime of Thrift",
+  "title_ar": "نظام من التوفير",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 276,
+  "gist_ar": "نص عن الكلمات المحمّلة: نفس السلوك يوصف بالمدح أو التحقير حسب اختيار الكلمة.",
+  "text": "The new director is frugal. Her predecessor was stingy. As far as anyone can establish, they operate identical expenses policies.\n\nThis is not hypocrisy; it is vocabulary, and it is worth being precise about how it works. Frugal and stingy denote the same behaviour and connote opposite evaluations — the first is complimentary, the second pejorative, and a writer choosing between them has already delivered a verdict while appearing to report. Thrifty sits between, faintly approving and faintly dated.\n\nThe pairs are everywhere once noticed. Assertive and pushy. Slim and skinny. Childlike and childish, where the same directness is extolled in one and belittled in the other. A regime, incidentally, is what other people's arrangements are called; ours are policies.\n\nWhat makes this hard to police is that neither word is false. Nobody can be corrected for writing 'stingy' the way they can for writing a wrong date. The slant is carried in the overtone, which is deniable by construction, and a writer accused of bias can retreat to the denotation with perfect honesty: I merely said she does not spend much.\n\nThe euphemism and its opposite are the same instrument pointed in different directions. To laud is to insinuate merit; to denigrate is to insinuate its absence; and the neutral term, where one exists, is usually clumsy, which is why it loses. 'She spends less than the budget permits' is accurate, damning of nobody, and nine words long.\n\nA modest proposal, then, for anyone drafting a profile. Choose the flattering word or the damning one, but notice that you have chosen. The one thing not available is the belief that you have simply described her.",
+  "glossary": [
+    {
+      "word": "to connote",
+      "ar": "يحمل معنى ضمنيًا"
+    },
+    {
+      "word": "pejorative",
+      "ar": "تحقيري"
+    },
+    {
+      "word": "to extol",
+      "ar": "يمتدح بقوة"
+    },
+    {
+      "word": "to denigrate",
+      "ar": "يحقّر"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's main point?",
+      "q_ar": "إيه فكرة الكاتب الأساسية؟",
+      "options": [
+        "The two directors have different expenses policies",
+        "Loaded words deliver a verdict while appearing to report",
+        "Pejorative words should be banned from profiles"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the joke in 'A regime, incidentally, is what other people's arrangements are called; ours are policies'?",
+      "q_ar": "إيه الطرفة في 'النظام هو اللي بنسمّي بيه ترتيبات غيرنا؛ وبتاعنا سياسات'؟",
+      "options": [
+        "Regimes are always authoritarian",
+        "The same structure is labelled sinister or legitimate depending on whose it is",
+        "Policies are more carefully drafted than regimes"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why is the slant hard to police?",
+      "q_ar": "ليه الانحياز صعب يتحاسب عليه؟",
+      "options": [
+        "It is carried in the overtone, so the writer can retreat to the denotation honestly",
+        "Editors rarely read profiles",
+        "There are no neutral terms available"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he say is the one thing not available?",
+      "q_ar": "إيه الحاجة الوحيدة اللي مش متاحة عنده؟",
+      "options": [
+        "The belief that you have simply described her",
+        "The use of a flattering word",
+        "A neutral nine-word formulation"
+      ],
+      "answer": 0
+    }
+  ]
+}

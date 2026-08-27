@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w7",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 7,
+  "title": "Much as One Admires It",
+  "title_ar": "مع كل الإعجاب",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 282,
+  "gist_ar": "نقد مهذّب بشكل مبالغ فيه: كل تنازل بيسبق طعنة، والمدح هو الوسيلة.",
+  "text": "Much as one admires the ambition of this proposal, and for all the evident labour behind it, a reader may be forgiven for wondering whether the labour was the point.\n\nGranted, the framework is comprehensive. However hard one looks, one will not find a consideration it has failed to consider. Whatever the topic, wherever the reader turns, there is a subsection — and be that as it may, the effect is of a map drawn at a scale of one to one, which is admirable, and which is also the size of the territory.\n\nTry as one might, it is difficult to identify the recommendation. There are forty. Notwithstanding that each is defensible, and irrespective of the merits of any given one, a document that recommends forty things has, paradoxically, recommended nothing, since the reader is left to choose and the choosing was the difficult part. Even so, one concedes the steadfastness: nobody could accuse the authors of having taken a position they might later regret.\n\nThe downside, if it must be named, is counterintuitive. It is not that the report says too little. It is that in saying everything it has transferred the entire burden of judgement to a committee which commissioned the report precisely in order not to bear it. Regardless of intention, that is what has happened, and the committee will now do what committees unwaveringly do, which is to select the three recommendations that were already policy.\n\nOne does not wish to appear ungenerous. The prose is unfailingly courteous, the evidence is real, and the authors have plainly withstood a great deal of consultation. It is a considerable achievement, and it will prevail on the shelf for years.",
+  "glossary": [
+    {
+      "word": "a concession",
+      "ar": "تنازل في الحجة"
+    },
+    {
+      "word": "steadfastness",
+      "ar": "ثبات على الموقف"
+    },
+    {
+      "word": "unwaveringly",
+      "ar": "بثبات لا يتزعزع"
+    },
+    {
+      "word": "ungenerous",
+      "ar": "غير منصف / قاسي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's actual verdict?",
+      "q_ar": "إيه حكم الكاتب الحقيقي؟",
+      "options": [
+        "The report is comprehensive and should be adopted",
+        "The report is damning: by recommending everything it recommends nothing",
+        "The report is too short to be useful"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the function of the concessions ('granted', 'much as one admires')?",
+      "q_ar": "إيه وظيفة عبارات التنازل زي 'مع كل الإعجاب'؟",
+      "options": [
+        "They express genuine approval of the framework",
+        "They precede and soften each criticism, making the attack deniable",
+        "They are required by the review format"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does 'a map drawn at a scale of one to one' mean here?",
+      "q_ar": "إيه معنى 'خريطة بمقياس واحد إلى واحد' هنا؟",
+      "options": [
+        "It is as large and unwieldy as the thing it describes, so it is useless",
+        "It is exceptionally accurate and therefore valuable",
+        "It was drawn without consulting the territory"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What is implied by 'it will prevail on the shelf for years'?",
+      "q_ar": "إيه المعنى الضمني في 'هيفضل على الرف لسنين'؟",
+      "options": [
+        "It will remain influential",
+        "It will be ignored",
+        "It will be reprinted repeatedly"
+      ],
+      "answer": 1
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "reading_c2_w20",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 20,
+  "title": "The Consummate Thing",
+  "title_ar": "الشيء المكتمل",
+  "can_do": [
+    "C2.R.2",
+    "C2.R.3"
+  ],
+  "word_count": 295,
+  "gist_ar": "نص ختامي: التمكّن مش إنك تعرف كل حاجة، لكن إنك تعرف إيه اللي المقام محتاجه.",
+  "text": "Mastery is the most oversold word in language teaching, and I have sold it myself, so let me try to say what it is not.\n\nIt is not range. A learner with an enormous vocabulary and no sense of occasion is not accomplished; he is equipped. It is not precision either, though precision is nearer. The most precise speaker I ever taught was incomprehensible at parties, because he brought the same finesse to a joke that he brought to a specification, and finesse in the wrong register is just conspicuousness.\n\nWhat consummate command looks like, as far as I can tell, is dexterity in the choosing. The versatility to hear what a situation wants — brevity here, elaboration there, and in a surprising number of cases nothing at all — and then to do that, seamlessly, without the doing being visible. Which means mastery is mostly invisible, and therefore mostly unrewarded, and therefore not what anybody trains for.\n\nThere is a hallmark, though, and I would offer it as the capstone of everything in this course. An assured speaker is one who can be brief without seeming curt, elaborate without seeming long-winded, and — this is the rare one — silent without seeming absent. Those three are not separate skills. They are one skill, which is the integration of everything else, and it is the culmination of a great deal of orchestration nobody sees.\n\nSo the authoritative version of the advice is disappointing. Consolidate. Adapt. Notice what the room needs. And accept that the more polished you become, the less anyone will remark on it, because the distinguished quality of really accomplished English is that it draws no attention to itself at all.\n\nWhich is, I concede, a difficult thing to put on a certificate.",
+  "glossary": [
+    {
+      "word": "finesse",
+      "ar": "براعة ولباقة"
+    },
+    {
+      "word": "conspicuousness",
+      "ar": "لفت الانتباه بشكل زائد"
+    },
+    {
+      "word": "dexterity",
+      "ar": "مهارة ورشاقة في التصرّف"
+    },
+    {
+      "word": "consummate",
+      "ar": "بالغ الكمال"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer say mastery actually is?",
+      "q_ar": "إيه التمكّن فعلًا حسب الكاتب؟",
+      "options": [
+        "An enormous vocabulary combined with precision",
+        "The ability to speak at length on any topic",
+        "Dexterity in choosing what the situation wants, done invisibly"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why was his most precise student incomprehensible at parties?",
+      "q_ar": "ليه أدقّ طالب عنده مكانش مفهوم في المناسبات؟",
+      "options": [
+        "He had too small a vocabulary",
+        "He brought the same finesse to a joke as to a specification",
+        "He refused to speak informally"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the rare third element of his hallmark?",
+      "q_ar": "إيه العنصر التالت النادر في علامته؟",
+      "options": [
+        "Being brief without seeming curt",
+        "Being silent without seeming absent",
+        "Elaborating without seeming long-winded"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the irony of the closing line?",
+      "q_ar": "إيه السخرية في السطر الأخير؟",
+      "options": [
+        "The best English draws no attention, which makes it hard to certify",
+        "Certificates are worthless",
+        "He has never issued a certificate"
+      ],
+      "answer": 0
+    }
+  ]
+}
