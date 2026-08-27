@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w8",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 8,
+  "title": "I Wouldn't Want to Overstate It",
+  "title_ar": "مش عايز أبالغ",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured talk",
+  "word_count": 290,
+  "gist_ar": "متكلم بيهدّئ كلامه بشكل مفرط: التحفّظ نفسه هو اللي بيكشف موقفه.",
+  "before_listening": {
+    "en": "Notice how much he hedges — and which single thing he says without hedging at all.",
+    "ar": "لاحظ قد إيه بيتحفّظ — وأنهي حاجة واحدة قالها من غير أي تحفّظ."
+  },
+  "segments": [
+    {
+      "speaker": "Committee chair",
+      "speaker_ar": "رئيس لجنة",
+      "voice": "am_adam",
+      "text": "I'd be reluctant to put it too strongly. Arguably the scheme has delivered something, and to some extent the figures point that way, broadly speaking, with the usual caveats. On the whole I'd say the direction is positive. Ostensibly, at least. Now the costs came in at four hundred and ten thousand against a budget of two hundred and sixty. That's the number. It's four hundred and ten. And I mention it because presumably someone will ask. Whether that represents value is, I suppose, a matter of judgement, and reasonable people might differ, up to a point. What I'd be cautious about is the adoption question. It seems to me — and I could be wrong, I'm not close to the delivery side — that we'd want rather more evidence before extending it, though I appreciate others feel the timetable is tight, which it is. Tentatively, if pressed, I'd say pause. Not stop. Pause. And I'd want that minuted in those words rather than as a recommendation, because a recommendation implies a degree of confidence I don't have, and I'd rather be on record as uncertain than on record as supportive. That may sound like fence-sitting. It probably is. But the one thing I'm not uncertain about is the four hundred and ten thousand. And I'll say one more thing and then I'll stop. If anybody wants to argue the value question with me I'm genuinely open, I don't hold a fixed view on it. But I'd ask them to do it with the four-ten in front of them rather than round it to 'somewhat over budget', because I have watched that happen in this room, and it isn't a rounding. It's a decision about what we're allowed to notice."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the one thing he is not hedging, and what does that tell you?",
+    "q_ar": "إيه الحاجة الوحيدة اللي مش متحفّظ فيها، وده بيقول إيه؟",
+    "options": [
+      "The scheme's benefits, which he is certain about",
+      "The timetable, which he says is not tight",
+      "The overspend — it is the fact he actually wants on the record"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What were the costs against budget?",
+      "q_ar": "التكاليف كانت كام مقابل الميزانية؟",
+      "options": [
+        "410,000 against a budget of 260,000",
+        "260,000 against a budget of 410,000",
+        "He does not give a figure"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does he want 'pause' minuted in those words?",
+      "q_ar": "ليه عايز كلمة 'توقّف مؤقت' تتسجّل بالحرف؟",
+      "options": [
+        "He wants to stop the scheme entirely",
+        "The minutes are usually inaccurate",
+        "A recommendation would imply confidence he does not have"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "How does he characterise his own position?",
+      "q_ar": "وصف موقفه إزاي؟",
+      "options": [
+        "As decisive and evidence-based",
+        "As fence-sitting, and he concedes it probably is",
+        "As the committee's agreed view"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to hedge",
+      "ar": "يتحفّظ في الكلام"
+    },
+    {
+      "word": "a caveat",
+      "ar": "تحذير / تحفّظ"
+    },
+    {
+      "word": "fence-sitting",
+      "ar": "الوقوف على الحياد"
+    },
+    {
+      "word": "minuted",
+      "ar": "مُسجّل في المحضر"
+    }
+  ]
+}

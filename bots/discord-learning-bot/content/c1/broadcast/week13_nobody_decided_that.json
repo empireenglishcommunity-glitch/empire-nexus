@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w13",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 13,
+  "title": "Nobody Decided That",
+  "title_ar": "محدش قرّر كده",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured account",
+  "word_count": 300,
+  "gist_ar": "حكاية غير مرتّبة عن مصنع: القرار الحقيقي كان قرار تواصل في أبريل.",
+  "before_listening": {
+    "en": "He tells this out of order. Work out which decision he thinks caused all the others.",
+    "ar": "بيحكي بترتيب مختلط. استنتج أنهي قرار شايف إنه سبب كل الباقي."
+  },
+  "segments": [
+    {
+      "speaker": "Plant supervisor",
+      "speaker_ar": "مشرف مصنع",
+      "voice": "bm_george",
+      "text": "People say it survived because of loyalty and that's — look, the people were loyal, forty per cent of them left, which tells you what loyalty was worth against a mortgage. It was going to close in September. That was settled, everybody knew, the only question was the order things happened in. And the transfer was to have gone in June, to the plant up north, which by the time June came was three days off a strike, so nothing moved. Six weeks' extension. Then indefinitely. Now. Back up. April. Somebody — and I've never found out who, and I've asked — somebody decided we wouldn't tell customers the closure date until the transfer was done. Purely administrative, that's how it read at the time. Except that customers weren't told, so the orders kept coming, so at the end of the six weeks there was a commercial case for another six, and once there's a commercial case nobody has to be brave. It was never revisited. Not once. We were to have become a distribution depot and for four years we were neither one thing nor the other. I'd say the turning point was April and I'd say nobody in April thought they were making a decision at all. That's what I find difficult about it, not the closing. The site's profitable now, by the way. Which people also attribute to foresight. There's a version of this in the company history. Two paragraphs, and it uses the word 'commitment' twice. Nobody in those two paragraphs is making a decision — everybody in them is displaying a virtue. And I was there. What I remember is a lot of tired people finding out on a Tuesday that the thing they'd been told was finished wasn't finished, and getting on with it."
+    }
+  ],
+  "gist_question": {
+    "q": "Which decision does he think caused everything else?",
+    "q_ar": "أنهي قرار شايف إنه سبب كل حاجة تانية؟",
+    "options": [
+      "The April decision not to tell customers the closure date",
+      "The June transfer to the northern plant",
+      "The decision to close in September"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Why did the June transfer fail?",
+      "q_ar": "ليه نقل يونيو فشل؟",
+      "options": [
+        "The northern plant was three days from a strike",
+        "Customers refused the change",
+        "Forty per cent of staff had left"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he mean by 'once there's a commercial case nobody has to be brave'?",
+      "q_ar": "إيه معنى 'لما يكون فيه مبرر تجاري محدش محتاج يكون جسور'؟",
+      "options": [
+        "Continuing became the easy option that required no one to decide",
+        "The managers were cowards",
+        "The commercial case was fabricated"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he say about loyalty?",
+      "q_ar": "قال إيه عن الولاء؟",
+      "options": [
+        "It was the reason the plant survived",
+        "It was real but worth little against a mortgage",
+        "Nobody was loyal at all"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to back up (in speech)",
+      "ar": "يرجع لورا في الكلام"
+    },
+    {
+      "word": "indefinitely",
+      "ar": "لأجل غير مسمى"
+    },
+    {
+      "word": "a depot",
+      "ar": "مستودع"
+    },
+    {
+      "word": "foresight",
+      "ar": "بُعد نظر"
+    }
+  ]
+}

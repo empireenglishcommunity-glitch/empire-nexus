@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w6",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 6,
+  "title": "Detection Is Not Prevalence",
+  "title_ar": "الكشف مش نفس الانتشار",
+  "can_do": [
+    "C1.R.5"
+  ],
+  "format": "specialised lecture",
+  "word_count": 300,
+  "gist_ar": "محاضرة متخصصة: الارتفاع في التشخيص أغلبه أثر قياس، مع زيادة حقيقية صغيرة.",
+  "before_listening": {
+    "en": "A specialist lecture with dense nominalisation. Listen for what the rise actually reflects.",
+    "ar": "محاضرة متخصصة بلغة اسمية مكثّفة. ركّز على الارتفاع بيعكس إيه فعلًا."
+  },
+  "segments": [
+    {
+      "speaker": "Epidemiologist",
+      "speaker_ar": "أخصائي وبائيات",
+      "voice": "bf_isabella",
+      "text": "The rise in recorded diagnoses is not in dispute; its interpretation is, and the distinction turns on the reliability of detection rather than on any change in prevalence. Three processes coincided after 2014. The introduction of routine school screening produced a step change in ascertainment. The implementation of a broader diagnostic threshold widened the category itself. And the expansion of regional clinics reduced the geographical scarcity of assessment, with the predictable consequence that districts previously showing low rates showed rates close to the national mean within two years. The significance of that ordering is easily missed. Because the three overlapped, the accumulation of cases presents as a single emergent trend; differentiation between them requires the raw distribution, which is available, and the correlation with clinic openings, which is strong enough that its omission from the 2019 summary is difficult to explain. None of this supports the more comfortable conclusion, namely that nothing has changed. Even after adjustment for ascertainment a residual increase of roughly four per cent per decade persists, and its verification is the one genuinely open question. The utilisation of services has risen far faster, which is a separate matter, and the deterioration in waiting times follows from that rather than from any change in the underlying condition. The tendency in public discussion is to treat the whole rise as either artefact or emergency. The compilation of evidence supports neither. A final methodological point, since it determines what any of this is worth. The screening cohort was not randomly sampled; participation was by school, and schools opted in. The 2014 step change is therefore itself measured on a self-selected population, and the correction we apply for that is an estimate rather than an adjustment. I would not build policy on the residual figure until that has been settled."
+    }
+  ],
+  "gist_question": {
+    "q": "What does the rise actually reflect?",
+    "q_ar": "الارتفاع بيعكس إيه فعلًا؟",
+    "options": [
+      "A large measurement effect plus a modest real increase",
+      "A genuine epidemic",
+      "Nothing has changed; it is entirely an artefact"
+    ],
+    "answer": 0
+  },
+  "questions": [
+    {
+      "q": "Why did low-rate districts move towards the national mean?",
+      "q_ar": "ليه المناطق منخفضة المعدل اقتربت من المتوسط؟",
+      "options": [
+        "The condition spread there",
+        "New regional clinics made assessment available",
+        "The threshold was narrowed"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she find difficult to explain?",
+      "q_ar": "إيه اللي شايفة صعب تفسيره؟",
+      "options": [
+        "The 2014 screening programme",
+        "The omission of the clinic-opening correlation from the 2019 summary",
+        "The residual four per cent increase"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What causes the deterioration in waiting times?",
+      "q_ar": "إيه سبب سوء أوقات الانتظار؟",
+      "options": [
+        "The broader diagnostic threshold",
+        "Rising utilisation of services, not the condition itself",
+        "The closure of regional clinics"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "ascertainment",
+      "ar": "معدل الكشف"
+    },
+    {
+      "word": "prevalence",
+      "ar": "نسبة الانتشار"
+    },
+    {
+      "word": "an artefact",
+      "ar": "نتيجة زائفة من طريقة القياس"
+    },
+    {
+      "word": "residual",
+      "ar": "متبقٍ بعد التعديل"
+    }
+  ]
+}

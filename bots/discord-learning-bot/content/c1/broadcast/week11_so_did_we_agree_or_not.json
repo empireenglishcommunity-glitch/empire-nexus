@@ -1,0 +1,242 @@
+{
+  "id": "broadcast_c1_w11",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 11,
+  "title": "So Did We Agree or Not",
+  "title_ar": "يعني اتفقنا ولا لأ",
+  "can_do": [
+    "C1.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 288,
+  "gist_ar": "مشهد فيه حذف كتير: تلاتة فاكرين إنهم اتفقوا، وكل واحد فاهم حاجة.",
+  "before_listening": {
+    "en": "A scene where almost nothing is said in full. Three people. Listen for what they have NOT agreed.",
+    "ar": "مشهد مفيهوش جمل كاملة تقريبًا. تلات أشخاص. ركّز على إيه اللي متفقوش عليه."
+  },
+  "segments": [
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Pilot first, then rollout. Yes?"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Yes."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Same."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Good. So that's the two northern districts done by March and if they're fine, the rest in the summer."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Sorry — the two?"
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "The pilot. The two."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "I had the pilot as one. The other one's in the rollout, so it doesn't wait."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Neither did I. One."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "You did? Both of you?"
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Well — I assumed. Nobody said otherwise."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Nobody said anything, that's the trouble. We've all been nodding at a word."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Does it matter that much? One or two, it's the same programme."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "It's a district. It's four thousand people and a budget line. So yes."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Fair enough. Point taken."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Can I say — I'd rather we sorted it now than found out in April. We've done that before and it cost us a quarter."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Precisely. So: one or two, out loud, and somebody writes it down. Tarek?"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Two. If it's four thousand people, two."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Two. And I'll minute it this time."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "And while we're here — the summer date. Is that all of the rest, or the rest minus the two we've just been arguing about?"
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "...See, now I don't know."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Nor do I, and I wrote the timeline."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Right. So we have two words doing this to us. 'Pilot' and 'the rest'."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Shall we just list the districts? Names and dates, one page, no nouns that can mean two things."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Yes. And circulate it before anybody says the word 'rollout' again."
+    },
+    {
+      "speaker": "Rania",
+      "speaker_ar": "رانيا",
+      "voice": "af_nicole",
+      "text": "Agreed. And Tarek — no offence meant — if it lands and it doesn't match what you think you agreed, say so that day. Not in April."
+    },
+    {
+      "speaker": "Tarek",
+      "speaker_ar": "طارق",
+      "voice": "am_adam",
+      "text": "Fair. That one's on me last time, I'll own it."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Then we're done. One page, names and dates, by Friday."
+    }
+  ],
+  "gist_question": {
+    "q": "What had they not actually agreed?",
+    "q_ar": "إيه اللي مكانوش متفقين عليه فعلًا؟",
+    "options": [
+      "Whether to run a pilot at all",
+      "Who would write the minutes",
+      "What counted as the pilot — one district or two"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "Why had nobody noticed?",
+      "q_ar": "ليه محدش لاحظ؟",
+      "options": [
+        "They had all been nodding at the same word meaning different things",
+        "Two of them were absent",
+        "The minutes were wrong"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What changes Tarek's mind?",
+      "q_ar": "إيه اللي غيّر رأي طارق؟",
+      "options": [
+        "That Hala disagreed with him",
+        "That Rania outranks him",
+        "That it is a district — four thousand people and a budget line"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does Hala say happened before?",
+      "q_ar": "هالة قالت إيه اللي حصل قبل كده؟",
+      "options": [
+        "They found out late and it cost them a quarter",
+        "They ran the pilot twice",
+        "Nobody minuted the meeting"
+      ],
+      "answer": 0
+    }
+  ],
+  "glossary": [
+    {
+      "word": "point taken",
+      "ar": "الفكرة وصلت / معاك حق"
+    },
+    {
+      "word": "fair enough",
+      "ar": "معقول / تمام"
+    },
+    {
+      "word": "to minute something",
+      "ar": "يسجّله في المحضر"
+    },
+    {
+      "word": "a budget line",
+      "ar": "بند في الميزانية"
+    }
+  ]
+}

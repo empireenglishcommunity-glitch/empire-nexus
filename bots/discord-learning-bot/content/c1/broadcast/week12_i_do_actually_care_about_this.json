@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w12",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 12,
+  "title": "I Do Actually Care About This",
+  "title_ar": "أنا فعلًا بيهمّني الموضوع ده",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured talk",
+  "word_count": 292,
+  "gist_ar": "متكلم متحمّس: بيهاجم حملته الخاصة لأنها استخدمت مبالغات بدل أرقام.",
+  "before_listening": {
+    "en": "He is criticising his own campaign. Listen for what he says the real damage was.",
+    "ar": "بيهاجم حملته هو. ركّز على إيه اللي قال إنه الضرر الحقيقي."
+  },
+  "segments": [
+    {
+      "speaker": "Campaign lead",
+      "speaker_ar": "مسؤول حملة",
+      "voice": "af_sarah",
+      "text": "I wrote most of it, so this is not me having a go at somebody else. Utterly urgent. Nowhere near adequate. By far the most effective option available. I wrote those. And I did mean them, that's the thing, I wasn't being cynical, I was absolutely convinced and I still am. But go and count the numbers in that leaflet. There's one. It's in a footnote. Provision fell six per cent over four years, and six per cent is real, it's more than enough on its own, and I buried it under 'vastly' and 'profoundly' and — what else — 'sheer scale', I think I wrote 'the sheer scale of the crisis'. Which cannot be checked. That's the point I've come round to. 'Considerably worse' can't be checked and 'worse by six per cent' can, and the second one is markedly less exciting, which is exactly why it's the one that survives contact with somebody hostile. We handed them the only argument they ever needed. Not that the need is small — nobody can say that, the need isn't small — but that the people describing it wouldn't say how large. And you can't come back from that in a follow-up, because now you're arguing about your own adjectives. Anyway. Next one, we lead with the six per cent. I've had that argument twice already and I expect to have it again on Thursday. What I'd say to anybody doing this work is: write the number first. Write the number, and then see whether you still need the adjective. Nine times out of ten you don't. And the tenth time you discover the number isn't there, which is worth finding out yourself, before somebody hostile finds it out for you in public."
+    }
+  ],
+  "gist_question": {
+    "q": "What does he say the real damage was?",
+    "q_ar": "قال إن الضرر الحقيقي كان إيه؟",
+    "options": [
+      "The campaign exaggerated a need that was actually small",
+      "The six per cent figure was inaccurate",
+      "Unverifiable language handed opponents the argument that the campaign would not say how large the need was"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "How many numbers were in the leaflet?",
+      "q_ar": "كام رقم كان في المنشور؟",
+      "options": [
+        "None at all",
+        "One, in a footnote",
+        "Several, in the main text"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does he now prefer 'worse by six per cent'?",
+      "q_ar": "ليه بيفضّل دلوقتي 'أسوأ بستة في المية'؟",
+      "options": [
+        "It is more emotionally persuasive",
+        "It is shorter to print",
+        "It survives contact with a hostile reader because it can be checked"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is his attitude to his own earlier writing?",
+      "q_ar": "إيه موقفه من كتابته السابقة؟",
+      "options": [
+        "He was being cynical at the time",
+        "He meant every word and still thinks the case is sound",
+        "He blames a colleague for it"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to have a go at",
+      "ar": "يهجم على / ينتقد"
+    },
+    {
+      "word": "to bury something",
+      "ar": "يخفي حاجة وسط كلام"
+    },
+    {
+      "word": "to come round to",
+      "ar": "يتوصّل لاقتناع"
+    },
+    {
+      "word": "hostile",
+      "ar": "معادي"
+    }
+  ]
+}

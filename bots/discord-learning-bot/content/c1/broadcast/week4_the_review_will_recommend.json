@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w4",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 4,
+  "title": "The Review Will Recommend",
+  "title_ar": "المراجعة هتوصي بإيه",
+  "can_do": [
+    "C1.R.5"
+  ],
+  "format": "specialised briefing",
+  "word_count": 297,
+  "gist_ar": "إحاطة متخصصة مكثّفة: البرنامج ناجح لكنه اتوافق عليه على أساس هدف غلط.",
+  "before_listening": {
+    "en": "A dense internal briefing. Listen for the recommendation and the reason behind it.",
+    "ar": "إحاطة داخلية مكثّفة. ركّز على التوصية والسبب وراها."
+  },
+  "segments": [
+    {
+      "speaker": "Review lead",
+      "speaker_ar": "رئيس المراجعة",
+      "voice": "am_adam",
+      "text": "Having considered all four submissions and taking into account the pilot data from March to September, the review reaches three conclusions and one recommendation. First, and being aware that this contradicts the interim report, the programme does not reduce processing time. Measured across fourteen hundred cases the mean fell by under two per cent, comfortably within normal variation. Faced with that, the department has argued the benefit is qualitative, which may be so, but is not what was funded. Second, it does streamline handover. Cases transferred between officers now carry a single concise summary rather than the previous file note, and errors at handover fell by thirty-one per cent. Given that handover error was the original justification for the funding, this is the finding that should have led the interim report and did not. Third, and in light of the above, the underlying design assumption requires revision. The business case assumed cost recovery through time saved, thereby breaking even inside a year. Compared with that projection it has improved quality without saving time, and is thus better understood as a risk-reduction measure. Assessed on that basis it performs well; assessed on the basis it was approved on, it does not. Accordingly, and notwithstanding the department's preference for a further pilot, we recommend continuation under a corrected business case, and formal withdrawal of the interim report. Having said that, nobody should conclude the programme failed. It succeeded at something nobody asked it to do, which is a governance problem and not a design one. One procedural note. The interim report remains on the department's website and is being cited externally, including in two funding applications of which we are aware. We recommend its withdrawal be actioned within ten working days rather than held to the next scheduled review."
+    }
+  ],
+  "gist_question": {
+    "q": "What is the recommendation and why?",
+    "q_ar": "إيه التوصية وليه؟",
+    "options": [
+      "Stop the programme, because it did not save time",
+      "Continue it under a corrected business case, because it works against a different objective",
+      "Run a further pilot, as the department prefers"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What happened to processing time?",
+      "q_ar": "إيه اللي حصل لوقت المعالجة؟",
+      "options": [
+        "It fell by thirty-one per cent",
+        "It fell by under two per cent, within normal variation",
+        "It rose slightly"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why should the handover finding have led the interim report?",
+      "q_ar": "ليه كان لازم التقرير المؤقت يبدأ بنتيجة التسليم؟",
+      "options": [
+        "It was the largest number in the data",
+        "Handover error was the original justification for the funding",
+        "The department requested it"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does 'a governance problem, not a design one' mean?",
+      "q_ar": "إيه معنى 'مشكلة إدارة مش مشكلة تصميم'؟",
+      "options": [
+        "The programme was built badly",
+        "It was approved against the wrong objective, though it works",
+        "The department should be reorganised"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "an interim report",
+      "ar": "تقرير مؤقت"
+    },
+    {
+      "word": "to streamline",
+      "ar": "يبسّط ويسرّع"
+    },
+    {
+      "word": "a business case",
+      "ar": "دراسة جدوى"
+    },
+    {
+      "word": "to break even",
+      "ar": "يغطّي تكاليفه"
+    }
+  ]
+}

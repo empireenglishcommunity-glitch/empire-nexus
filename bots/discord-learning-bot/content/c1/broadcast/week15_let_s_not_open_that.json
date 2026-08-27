@@ -1,0 +1,176 @@
+{
+  "id": "broadcast_c1_w15",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 15,
+  "title": "Let's Not Open That",
+  "title_ar": "ميصحّ نفتح الموضوع ده",
+  "can_do": [
+    "C1.R.2"
+  ],
+  "format": "drama scene",
+  "word_count": 296,
+  "gist_ar": "مشهد مليان تعبيرات مجازية: التعبيرات نفسها هي اللي بتوقف التفكير.",
+  "before_listening": {
+    "en": "A scene thick with idiom. Listen for what the idioms are being used to avoid.",
+    "ar": "مشهد مليان تعبيرات مجازية. ركّز على التعبيرات بتستخدم لتجنّب إيه."
+  },
+  "segments": [
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "So we're calling it a grey area and moving on. That's where we landed."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "It is a grey area. I don't think anybody's pretending otherwise."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Is it, though. Because a grey area is when the rule doesn't tell you what to do, and the rule here is crystal clear. It's just expensive."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "Well, quite. And if we get into it we'll open a right can of worms, and then we're into three years of it."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "That I'll grant you. But notice what you just did. You said the answer would be inconvenient, not that the question was hard. Those are different animals."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "You're splitting hairs."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "I'm reading the minutes. Because 'grey area' goes in the file as unresolved-ish and generates nothing, whereas 'we decided not to look' gets a review date. One of those comes back and the other doesn't, and we both know which is which."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "You'd have us write 'we decided not to look'? That's a hostage to fortune."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "It's the truth, though, isn't it. And I'd rather hand a hostage to fortune than kick this down the road for somebody who wasn't in the room."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "..."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Look. I'm not trying to reopen it today. I'm saying pick your words on purpose. If we're parking it, say parked, and put a date on it. If we're dropping it, say dropped, and say why. Either's defensible. What isn't is a phrase that means whatever the next person needs it to mean."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "Parked. Six months. I'll draft it."
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Thank you. And put your name on the draft, not the committee's."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "Why does that matter?"
+    },
+    {
+      "speaker": "Hala",
+      "speaker_ar": "هالة",
+      "voice": "af_sky",
+      "text": "Because in six months somebody will ask who parked it, and 'the committee' isn't a person you can put that question to."
+    },
+    {
+      "speaker": "Fouad",
+      "speaker_ar": "فؤاد",
+      "voice": "bm_lewis",
+      "text": "...That's a fair point, annoyingly. Fine. My name on it."
+    }
+  ],
+  "gist_question": {
+    "q": "What are the idioms being used to avoid?",
+    "q_ar": "التعبيرات المجازية بتستخدم لتجنّب إيه؟",
+    "options": [
+      "Naming the colleague responsible",
+      "Admitting the rule is clear and applying it would be costly",
+      "Explaining a genuinely ambiguous regulation"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What distinction does Hala draw?",
+      "q_ar": "إيه الفرق اللي هالة وضّحته؟",
+      "options": [
+        "Between a grey area and a review date",
+        "Between parking and dropping a decision",
+        "Between the answer being inconvenient and the question being hard"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does the wording matter administratively?",
+      "q_ar": "ليه الصياغة مهمة إداريًا؟",
+      "options": [
+        "The minutes are published externally",
+        "'Grey area' generates no follow-up; a decision gets a review date",
+        "Fouad drafts the minutes himself"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does she say is not defensible?",
+      "q_ar": "قالت إيه اللي مش ممكن الدفاع عنه؟",
+      "options": [
+        "Parking a decision for six months",
+        "A phrase that means whatever the next person needs it to mean",
+        "Dropping the matter with a reason"
+      ],
+      "answer": 1
+    }
+  ],
+  "glossary": [
+    {
+      "word": "a can of worms",
+      "ar": "باب لا يُغلق"
+    },
+    {
+      "word": "to split hairs",
+      "ar": "يدقّق في التفاصيل بشكل ممل"
+    },
+    {
+      "word": "a hostage to fortune",
+      "ar": "مجازفة قد تُستخدم ضدك"
+    },
+    {
+      "word": "to kick something down the road",
+      "ar": "يأجّل المشكلة لغيره"
+    }
+  ]
+}

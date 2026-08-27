@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w5",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 5,
+  "title": "Everyone Says It, So Nobody Checked",
+  "title_ar": "الكل بيقولها فمحدش تحقّق",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured talk",
+  "word_count": 289,
+  "gist_ar": "حديث غير منظّم عن الأرقام المتداولة: الفكرة إن الشيوع بقى بديل عن الدليل.",
+  "before_listening": {
+    "en": "A researcher talking loosely to colleagues. He never states his thesis — find it.",
+    "ar": "باحث بيتكلم بشكل حر مع زملاء. عمره ما بيقول أطروحته — لاقيها."
+  },
+  "segments": [
+    {
+      "speaker": "Researcher",
+      "speaker_ar": "باحث",
+      "voice": "bm_lewis",
+      "text": "The thirty-one per cent. I've been trying to find where it comes from for about a year now, on and off, mostly off. It's in the briefing, it's in two ministerial answers, it's on a poster in the lobby of the building I work in. And it is estimated — that's the phrasing, it is estimated — which, fine, estimates are legitimate, I make them. But estimated by whom, against what. The baseline is 2011, generally, when people bother to say, and 2011 is a drought year. Now I'm not alleging anything. It's widely believed to be a reduction and it may well be a reduction. What I'd like is one name. One person who, if it turned out to be wrong, would have been wrong. Because that's the whole difference, isn't it. My hypothesis has my name on it and I can be shown to have erred, and that is not a burden, it's the thing that makes it worth reading. Whereas 'it is argued' — nobody's arguing. There's no one there. And the consensus forms anyway, that's the part that gets me, the consensus forms out of a construction rather than out of anybody's findings, and then it's cited, and the citation is to the briefing, and the briefing cites nothing. I raised it once. I was told it had been reviewed independently. I asked to see the review. That was February. I've asked twice since, politely both times, and I've had a very courteous reply on each occasion explaining that it isn't in a form suitable for circulation. Which may be entirely true. I'd only note that a review nobody may read and a review that doesn't exist are, from where I'm standing, the same object."
+    }
+  ],
+  "gist_question": {
+    "q": "What is his underlying argument?",
+    "q_ar": "إيه حجته الأساسية؟",
+    "options": [
+      "The reduction did not happen",
+      "Estimates should never be used in official briefings",
+      "A claim nobody can be wrong about has not been established, however widely repeated"
+    ],
+    "answer": 2
+  },
+  "questions": [
+    {
+      "q": "What is his objection to the 2011 baseline?",
+      "q_ar": "إيه اعتراضه على سنة الأساس 2011؟",
+      "options": [
+        "It is too recent to compare",
+        "The data were never collected",
+        "It is a drought year, so later years look better"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "Why does he say being shown to be wrong is not a burden?",
+      "q_ar": "ليه بيقول إن إنك تُثبَت غلطك مش عبء؟",
+      "options": [
+        "It is what makes a claim worth reading",
+        "Because mistakes are rarely noticed",
+        "Because his name is not on the briefing"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What happened when he raised it?",
+      "q_ar": "إيه اللي حصل لما أثار الموضوع؟",
+      "options": [
+        "He was given the raw data",
+        "The poster was removed",
+        "He was told there was an independent review, and asked to see it"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "on and off",
+      "ar": "على فترات متقطعة"
+    },
+    {
+      "word": "a baseline",
+      "ar": "سنة أساس للمقارنة"
+    },
+    {
+      "word": "to err",
+      "ar": "يخطئ"
+    },
+    {
+      "word": "consensus",
+      "ar": "إجماع"
+    }
+  ]
+}

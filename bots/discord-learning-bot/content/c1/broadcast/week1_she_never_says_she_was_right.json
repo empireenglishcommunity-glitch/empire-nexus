@@ -1,0 +1,86 @@
+{
+  "id": "broadcast_c1_w1",
+  "level": "C1",
+  "cefr": "C1",
+  "week": 1,
+  "title": "She Never Says She Was Right",
+  "title_ar": "هي عمرها ما قالت إنها كانت صح",
+  "can_do": [
+    "C1.R.1"
+  ],
+  "format": "unstructured account",
+  "word_count": 290,
+  "gist_ar": "حديث غير منظّم: هي بتحكي عن العيادة، ومش بتقول صريح إنها كانت محقّة، لكن ده المعنى.",
+  "before_listening": {
+    "en": "One person thinking aloud. She never states her conclusion — work out what she believes.",
+    "ar": "واحدة بتفكّر بصوت عالي. عمرها ما بتقول استنتاجها — استنتج هي مقتنعة بإيه."
+  },
+  "segments": [
+    {
+      "speaker": "Former clinic manager",
+      "speaker_ar": "مديرة عيادة سابقة",
+      "voice": "af_nicole",
+      "text": "Seldom do I talk about this, and I'm not sure I should now. The equipment. Right — eleven weeks at the port, which everybody knows. What nobody puts in the report is that I'd flagged the customs thing in the January meeting, and I have the note somewhere, though I'd have to look. Anyway. They wrote it up as resilience. Perseverance. Grit, which is a word I have come to dislike intensely. Two of my staff — and these are physiotherapists, they know exactly what they're doing to themselves — two of them ended up with the injuries they were hired to treat, because we were lifting patients by hand for three months. Nobody asked me before the report went out. I did tell Marwan afterwards. He said it was a fundraising document. Which it was, and I'm not naive, I know what those are for. But then the following year they put a customs officer on retainer, four hundred pounds a month, and the problem simply stopped existing. Nobody wrote that up. There's no inspirational language available for four hundred pounds a month. And I keep thinking about the two of them, one of whom is still on reduced hours, and then I think — well. Under no circumstances would I say the programme shouldn't have run. It should. It helped a great many people. I just wish somebody had once used the word 'logistics' out loud, at the beginning, when it was still cheap to say. And I'd add one more thing, because people assume I'm bitter and I'm not. I'd run it again. I'd just want the January note read into the minutes, and somebody senior to have to write the word 'foreseeable' in their own hand."
+    }
+  ],
+  "gist_question": {
+    "q": "What does she believe, without ever saying it?",
+    "q_ar": "هي مقتنعة بإيه من غير ما تقولها؟",
+    "options": [
+      "The programme should never have run",
+      "The failure was administrative and foreseeable, and calling it resilience hid that",
+      "Her staff were careless about their own safety"
+    ],
+    "answer": 1
+  },
+  "questions": [
+    {
+      "q": "What had she done in January?",
+      "q_ar": "عملت إيه في يناير؟",
+      "options": [
+        "Flagged the customs problem",
+        "Hired the customs officer",
+        "Written the funder's report"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why does she mention the four hundred pounds a month?",
+      "q_ar": "ليه ذكرت الأربعميت جنيه في الشهر؟",
+      "options": [
+        "It was too expensive to justify",
+        "It shows the fix was cheap and unglamorous, so nobody wrote it up",
+        "It paid for her staff's treatment"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "How does she treat Marwan's explanation?",
+      "q_ar": "اتعاملت إزاي مع تفسير مروان؟",
+      "options": [
+        "She rejects it as a lie",
+        "She had not heard it before",
+        "She accepts it as true but not as sufficient"
+      ],
+      "answer": 2
+    }
+  ],
+  "glossary": [
+    {
+      "word": "to flag something",
+      "ar": "ينبّه على حاجة"
+    },
+    {
+      "word": "on retainer",
+      "ar": "متعاقد بأجر ثابت"
+    },
+    {
+      "word": "reduced hours",
+      "ar": "ساعات عمل مخفّضة"
+    },
+    {
+      "word": "naive",
+      "ar": "ساذج"
+    }
+  ]
+}
