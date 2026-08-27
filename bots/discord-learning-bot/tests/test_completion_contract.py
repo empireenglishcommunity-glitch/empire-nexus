@@ -160,20 +160,32 @@ def test_weekly_requirements_skip_content_that_is_not_authored(load_curriculum, 
     unsatisfiable for those students — which would be worse than not having a
     contract at all."""
     monkeypatch.setattr(config, "SPEAKING_LAUNCH_DATE", "2099-01-01")
-    unauthored = [l for l in ("A2", "B1", "B2", "C1", "C2")
-                  if l not in curriculum.reading_levels()]
-    assert unauthored, "test assumes some level has no reading yet"
-    level = unauthored[0]
+    # Any level still missing ANY of the three rollout exercises will do. Was
+    # keyed on reading alone, which stopped finding a level once C2 reading
+    # landed; the property under test is "some rollout exercise is unauthored
+    # here", not "reading specifically".
+    incomplete = [l for l in ("A2", "B1", "B2", "C1", "C2")
+                  if not all(curriculum.exercise_has_content(e, l)
+                             for e in ("reading", "mediation", "broadcast"))]
+    if not incomplete:
+        pytest.skip("every level now has all three rollout exercises authored — "
+                    "the unsatisfiable-contract risk this guards against is gone")
+    level = incomplete[0]
     _member("c2", level=level)
     anchor = datetime.date.fromisoformat("2026-01-01")
+    # Everything the student COULD actually do at this level. Derived from
+    # curriculum.exercise_has_content rather than a hardcoded skip list: the
+    # rollout is per level AND per exercise, so once C2 had mediation but still
+    # no reading, a fixed list of "skip all three" under-recorded a complete
+    # student and failed this test for a reason that had nothing to do with what
+    # it tests. This way it keeps expressing its actual intent as content lands.
+    doable = [e for e in database.CALENDAR_EXERCISES + database.WEEKLY_EXERCISES
+              if curriculum.exercise_has_content(e, level)]
+    missing = [e for e in ("reading", "mediation", "broadcast") if e not in doable]
+    assert missing, f"{level} has all rollout content; pick a level that does not"
     for wk in range(1, curriculum.max_week_for_level(level) + 1):
         for day in range(1, 8):
-            # Everything EXCEPT the level-by-level rollout exercises, which is
-            # the point of this test: the contract must not demand content that
-            # does not exist for this level.
-            rollout = {"reading", "mediation", "broadcast"}
-            for ex in [e for e in database.CALENDAR_EXERCISES + database.WEEKLY_EXERCISES
-                       if e not in rollout]:
+            for ex in doable:
                 database.record_practice_mastery("c2", level, wk, day, ex,
                                                 today="2026-02-01")
             d = anchor + datetime.timedelta(days=(wk - 1) * 7 + (day - 1))
