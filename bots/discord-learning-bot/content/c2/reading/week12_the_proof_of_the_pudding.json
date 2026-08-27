@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w12",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 12,
+  "title": "The Proof of the Pudding",
+  "title_ar": "الحكم بالتجربة",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 294,
+  "gist_ar": "نص ساخر عن الكليشيهات في الاجتماعات: التعبيرات بتحلّ محلّ القرار.",
+  "text": "The minutes of the March meeting run to two pages and contain, by my count, eleven idioms and no decisions.\n\nThe Director opened by inviting the meeting to bite the bullet on the elephant in the room. The elephant, which is never named, had apparently been on the back burner long enough. It was agreed that a storm in a teacup should not be allowed to become the tip of the iceberg, a formulation that detained me for some minutes, since a storm in a teacup is a fuss about nothing and the tip of an iceberg is a small sign of something enormous, and a thing cannot be both unless the meeting had discovered a new category.\n\nTwo members had, we are told, burned the midnight oil. One proposed hedging our bets. Another observed that a stitch in time saves nine, which was minuted without comment, and which in context appeared to mean that the matter should be dealt with promptly — a view the meeting endorsed by resolving to revisit it in June.\n\nIt was noted that actions speak louder than words. The proof of the pudding, we are reminded, is in the eating, and every cloud has a silver lining. The Director closed by cautioning against counting our chickens, and by observing that the matter was, in the final analysis, a blessing in disguise, though nobody had yet said what the matter was.\n\nI do not think anybody was being evasive, and that is the part that troubles me. A hackneyed phrase is apt in the way a shrug is apt: it fits any occasion because it commits to none. Eleven of them in two pages is not a failure of style. It is a meeting that never happened, faithfully recorded.",
+  "glossary": [
+    {
+      "word": "hackneyed",
+      "ar": "مبتذل من كثرة الاستخدام"
+    },
+    {
+      "word": "to detain (someone's attention)",
+      "ar": "يستوقف الانتباه"
+    },
+    {
+      "word": "apt",
+      "ar": "مناسب / موفّق"
+    },
+    {
+      "word": "evasive",
+      "ar": "متهرّب"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's conclusion?",
+      "q_ar": "إيه خلاصة الكاتب؟",
+      "options": [
+        "The members were deliberately concealing a decision",
+        "The minutes faithfully record a meeting at which nothing was decided",
+        "The idioms were used incorrectly throughout"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does the teacup/iceberg formulation detain him?",
+      "q_ar": "ليه صيغة الفنجان وجبل الجليد استوقفته؟",
+      "options": [
+        "Both idioms are too informal for minutes",
+        "He had not encountered either before",
+        "The two idioms mean opposite things, so the sentence is incoherent"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the irony in the meeting's response to 'a stitch in time saves nine'?",
+      "q_ar": "إيه السخرية في رد الاجتماع على 'الوقاية خير من العلاج'؟",
+      "options": [
+        "They rejected the proverb as irrelevant",
+        "They minuted it without understanding it",
+        "They endorsed acting promptly by deciding to revisit it in June"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does he compare a hackneyed phrase to?",
+      "q_ar": "بيشبّه التعبير المبتذل بإيه؟",
+      "options": [
+        "A shrug — it fits any occasion because it commits to none",
+        "A signature — it identifies the speaker",
+        "A footnote — nobody reads it"
+      ],
+      "answer": 0
+    }
+  ]
+}

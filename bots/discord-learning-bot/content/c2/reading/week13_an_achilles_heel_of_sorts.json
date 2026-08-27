@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w13",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 13,
+  "title": "An Achilles' Heel, of Sorts",
+  "title_ar": "نقطة ضعف نوعًا ما",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 307,
+  "gist_ar": "نص ساخر عن الإفراط في الإشارات الثقافية: الكاتب بيسخر من الأسلوب اللي بيستخدمه.",
+  "text": "It has become the eleventh hour for a certain kind of business prose, and one can only hope the Rubicon has been crossed.\n\nConsider the following, from a strategy document I am not at liberty to name. The company's legacy systems are described as an Achilles' heel; migrating them is a Herculean task; the vendor's proposal is a Trojan horse; and the whole situation constitutes a catch-22 which, if resolved at all, will be a Pyrrhic victory. Four allusions and a paradox in ninety words, and not one of them conjures anything, because they have been invoked so often that the imagery has worn through to the metaphor beneath.\n\nThe tongue-in-cheek defence is that this is a shared vocabulary, and there is something in it. An allusion that lands does real work: it imports a whole narrative in two syllables, and the resonance is genuinely economical. But resonance requires that something be resonating. An Achilles' heel is a vulnerability in an otherwise invulnerable thing, and the legacy systems in question were, by the document's own account, weak throughout. The allusion is not merely tired; it is wrong, and it is wrong in a way that flatters the subject.\n\nThat is the fine point, and it is not a matter of taste. The layered meaning of a good allusion constrains what you may say with it. Use one carelessly and it will smuggle in a claim you did not make — here, that everything else was sound.\n\nThere is a subtext to prose of this kind, and the motif is unmistakable once you look: each phrase juxtaposes a heroic register against an administrative problem. Somebody wanted the migration to feel like a siege. I have no doubt it felt like one. But wit is not the same as allusion, and the document, which is witty nowhere, alludes constantly.",
+  "glossary": [
+    {
+      "word": "an allusion",
+      "ar": "إشارة ثقافية / تلميح"
+    },
+    {
+      "word": "to conjure",
+      "ar": "يستحضر صورة"
+    },
+    {
+      "word": "resonance",
+      "ar": "رنين / صدى دلالي"
+    },
+    {
+      "word": "subtext",
+      "ar": "معنى تحتي"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's central criticism of the allusions?",
+      "q_ar": "إيه نقده الأساسي للإشارات؟",
+      "options": [
+        "They are worn out and one of them is factually wrong in a flattering way",
+        "They are too obscure for a business audience",
+        "There are not enough of them to sustain the argument"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Why is 'Achilles' heel' the wrong allusion here?",
+      "q_ar": "ليه 'نقطة ضعف أخيل' إشارة غلط هنا؟",
+      "options": [
+        "It implies the rest was invulnerable, and the systems were weak throughout",
+        "Achilles was not vulnerable at the heel",
+        "It is too literary for a strategy document"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he say a careless allusion smuggles in?",
+      "q_ar": "بيقول إن الإشارة المتسرّعة بتدخّل إيه؟",
+      "options": [
+        "An unnecessary digression",
+        "A second, contradictory metaphor",
+        "A claim you did not make"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the sting in the final sentence?",
+      "q_ar": "إيه اللدغة في الجملة الأخيرة؟",
+      "options": [
+        "The document alludes constantly but is witty nowhere",
+        "The migration was genuinely heroic",
+        "The writer admits he cannot name the document"
+      ],
+      "answer": 0
+    }
+  ]
+}

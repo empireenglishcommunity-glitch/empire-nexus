@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w8",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 8,
+  "title": "As Noted Above",
+  "title_ar": "كما أُشير أعلاه",
+  "can_do": [
+    "C2.R.2"
+  ],
+  "word_count": 295,
+  "gist_ar": "نص عن لغة الميتا-خطاب: الإشارات بتوجّه القارئ، وكمان بتوهم بترابط غير موجود.",
+  "text": "As will be shown, the apparatus of signposting in academic prose does two jobs, and it is worth stressing at the outset that only one of them is acknowledged.\n\nThe first is navigational and uncontroversial. It should be borne in mind that a reader entering a forty-page argument has no map, and phrases such as 'as noted above', 'to put it briefly' and 'as we shall see' constitute one. By way of illustration: strip the meta-discourse from a long methods section and comprehension of the individual claims is unaffected while recall of the throughline collapses. The framework is doing real work.\n\nThe second job is less innocent. To digress briefly — though the digression is the point — a signpost asserts a relation as well as marking one. 'As noted above' presupposes that the thing was noted, and that it was noted in the sense now being relied upon. Needless to say, those are different claims, and the second is rarely checked. In parenthesis: I have twice found 'as demonstrated earlier' pointing at a paragraph that raised a possibility and demonstrated nothing, and in neither case had a reviewer queried it.\n\nThat said, the remedy is not less signposting. Returning to the earlier point, a text without a thread is worse. The proviso is narrower: a signpost is a claim about your own text, and it should be verifiable in the same way as any other. Recapitulate what you actually established, not what you meant to.\n\nTo delineate the caveat precisely, and then I will expound no further: the danger is not that readers are misled by 'as noted above'. It is that writers are. A discursive habit that foreshadows coherence will, given a succinct enough summary, persuade its author that the coherence was achieved.",
+  "glossary": [
+    {
+      "word": "meta-discourse",
+      "ar": "لغة الحديث عن النص نفسه"
+    },
+    {
+      "word": "a throughline",
+      "ar": "الخط الناظم"
+    },
+    {
+      "word": "a proviso",
+      "ar": "شرط / تحفّظ"
+    },
+    {
+      "word": "to expound",
+      "ar": "يشرح مطوّلًا"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What are the two jobs of signposting?",
+      "q_ar": "إيه الوظيفتين للإشارات النصية؟",
+      "options": [
+        "Shortening the text, and impressing reviewers",
+        "Navigating the reader, and asserting a relation as well as marking one",
+        "Introducing evidence, and concluding an argument"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What did he find twice?",
+      "q_ar": "إيه اللي لقاه مرتين؟",
+      "options": [
+        "Reviewers deleting all meta-discourse",
+        "'As demonstrated earlier' pointing at a paragraph that demonstrated nothing",
+        "A methods section with no signposting at all"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he say the remedy is NOT?",
+      "q_ar": "بيقول إن الحل مش إيه؟",
+      "options": [
+        "Verifying each signpost",
+        "Less signposting — a text without a thread is worse",
+        "Recapitulating what was established"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Who does he say is chiefly at risk of being misled?",
+      "q_ar": "مين الأكثر عرضة للتضليل عنده؟",
+      "options": [
+        "The reader, who cannot check the references",
+        "The reviewer, who skips the summary",
+        "The writer, who is persuaded the coherence was achieved"
+      ],
+      "answer": 2
+    }
+  ]
+}

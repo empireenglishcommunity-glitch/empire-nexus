@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w4",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 4,
+  "title": "This Much Is Clear",
+  "title_ar": "ده على الأقل واضح",
+  "can_do": [
+    "C2.R.2"
+  ],
+  "word_count": 292,
+  "gist_ar": "نص عن ترتيب المعلومة في الجملة: الحاجة اللي بتحطها في الآخر هي اللي القارئ بياخدها معاه.",
+  "text": "What strikes me, reading a hundred of these a week, is how rarely the sentence ends where the argument does. That much is clear from any sample: the finding sits in the middle, and the qualification takes the end-focus.\n\nOf particular note is what this does to a reader. End-weight is not decoration; it is where attention settles, and a writer who puts the caveat last has made the caveat the theme whether or not that was the intention. One thing is certain — the reader will carry away the final clause. This I must say plainly, because it is treated as a matter of taste and it is not. It is a matter of what gets remembered.\n\nConsider two arrangements of one finding. 'The intervention improved outcomes, although the sample was small.' And: 'Although the sample was small, the intervention improved outcomes.' The propositional content is identical. The salient element is not, and in the second the improvement is foregrounded while the limitation is subordinate. Neither is dishonest. But a reader skimming forty abstracts will retain the first as a caveat and the second as a result, and both writers will believe they reported the same thing.\n\nWhat follows is not a rule but a discipline: decide which element you want prominent, and arrange the sentence so that it arrives last. Downplay by subordinating, prioritise by placing. Juxtapose the two versions before you submit, and if they read differently to you, they will read differently to a committee.\n\nThe orderly version of this advice is duller than the phenomenon deserves. Deliberate sequencing is the cheapest instrument of emphasis in the language, and the only one that costs nothing and signals nothing. It is also, for that reason, the one nobody checks.",
+  "glossary": [
+    {
+      "word": "end-focus",
+      "ar": "التركيز في نهاية الجملة"
+    },
+    {
+      "word": "salient",
+      "ar": "بارز / لافت"
+    },
+    {
+      "word": "to foreground",
+      "ar": "يبرز في المقدمة"
+    },
+    {
+      "word": "to subordinate",
+      "ar": "يخفض رتبته / يجعله ثانويًا"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's main claim?",
+      "q_ar": "إيه ادعاء الكاتب الأساسي؟",
+      "options": [
+        "Caveats should always be omitted from abstracts",
+        "Long sentences are harder to remember than short ones",
+        "Word order in a sentence determines what a reader remembers"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does he say about the two arrangements of the same finding?",
+      "q_ar": "قال إيه عن الصياغتين لنفس النتيجة؟",
+      "options": [
+        "One of them is dishonest",
+        "The content is identical but what is salient differs",
+        "Only the second is grammatical"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does he say this is not a matter of taste?",
+      "q_ar": "ليه بيقول إن دي مش مسألة ذوق؟",
+      "options": [
+        "It is a matter of what gets remembered",
+        "Because journals have style rules",
+        "Because committees prefer short sentences"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What does he call the cheapest instrument of emphasis?",
+      "q_ar": "إيه أرخص أداة للتوكيد عنده؟",
+      "options": [
+        "Deliberate sequencing, which costs and signals nothing",
+        "Italics and bold type",
+        "Repetition of the key finding"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w14",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 14,
+  "title": "Not Bad, Considering",
+  "title_ar": "مش وحش، بالنسبة",
+  "can_do": [
+    "C2.R.3"
+  ],
+  "word_count": 289,
+  "gist_ar": "نص عن التقليل والسخرية الجافة: 'مش وحش' ممكن تكون أعلى مدح أو أقسى نقد.",
+  "text": "'Not bad at all,' said my supervisor, of a thesis chapter that had taken eleven weeks. I spent a further two working out what he meant, which was, I now believe, that it was good.\n\nLitotes is the figure in which affirmation is achieved by denying the contrary, and English is unusually committed to it. 'No small feat' means considerable. 'Not exactly a triumph' means a disaster. 'Somewhat concerned' means alarmed, and 'I'm not entirely convinced' has ended more projects than any sentence containing the word 'no'.\n\nWhat makes it treacherous is not the construction but the delivery. The same four words, deadpan, can be the highest praise available to a certain kind of person, or the driest possible dismissal, and the only thing distinguishing them is an intonation that no transcript preserves. This is why understatement travels badly and why it is the last thing a very advanced learner acquires: every component is simple and the meaning is carried entirely outside them.\n\nIt is also, one has to concede, sometimes a coward's instrument. 'Hardly ideal' permits a manager to register serious criticism while retaining the option of having meant it mildly, and if challenged he may deflate the whole thing — banter, surely — leaving the recipient to look sardonic for having noticed. Irony is double-edged in precisely that way: it insinuates while preserving deniability, and the deniability is the appeal.\n\n'It's just a scratch,' says the man with the severed arm, and we laugh because the gap between the words and the world is doing the work. Wry, mock-modest, facetious: the family is large, and its members are not interchangeable. Getting one wrong is not a small error either, though I would not call it a catastrophe.",
+  "glossary": [
+    {
+      "word": "litotes",
+      "ar": "التقليل بنفي النقيض"
+    },
+    {
+      "word": "deadpan",
+      "ar": "بوجه جامد بلا انفعال"
+    },
+    {
+      "word": "to deflate",
+      "ar": "يفرّغ الموقف من جديته"
+    },
+    {
+      "word": "sardonic",
+      "ar": "ساخر بمرارة"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What makes understatement treacherous, according to the writer?",
+      "q_ar": "إيه اللي بيخلّي التقليل خطر حسب الكاتب؟",
+      "options": [
+        "The vocabulary is too advanced for most learners",
+        "The meaning is carried in the delivery, which no transcript preserves",
+        "It is only used by supervisors"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What does he concede about 'hardly ideal'?",
+      "q_ar": "بيقرّ بإيه عن 'مش مثالي'؟",
+      "options": [
+        "It is always intended kindly",
+        "It is too vague to convey criticism",
+        "It lets a manager criticise seriously while keeping the option of having meant it mildly"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What is the effect of the final sentence?",
+      "q_ar": "إيه تأثير الجملة الأخيرة؟",
+      "options": [
+        "It withdraws the argument",
+        "It demonstrates litotes while describing it",
+        "It states the conclusion plainly for the first time"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Why does 'It's just a scratch' make us laugh?",
+      "q_ar": "ليه 'مجرد خرمشة' بتضحّكنا؟",
+      "options": [
+        "The speaker is being modest",
+        "The gap between the words and the world does the work",
+        "It is a well-known idiom"
+      ],
+      "answer": 1
+    }
+  ]
+}

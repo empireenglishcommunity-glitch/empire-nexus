@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w1",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 1,
+  "title": "So Be It",
+  "title_ar": "فليكن",
+  "can_do": [
+    "C2.R.2"
+  ],
+  "word_count": 300,
+  "gist_ar": "نص رسمي مكثّف عن صيغة الإلزام: الفرق بين 'يوصي بأن' و'يشترط أن' هو الفرق بين الرجاء والإلزام.",
+  "text": "It is essential that a drafter know the difference between a wish and a provision, and it is imperative that the reader be able to tell which he has been handed. Be that as it may, the mandative subjunctive has become so formulaic that it now conceals precisely the distinction it once marked.\n\nSuffice it to say that 'the committee recommend that the scheme proceed' and 'the committee require that the scheme proceed' are, in the syntax, identical. Both take the bare subjunctive; both would be indistinguishable were the verbs exchanged. Yet one is advisable and the other binding, and the whole weight of the sentence rests on a lexical choice the form does nothing to mark. Far be it from me to propose that we ordain a new grammar. The remedy is duller: that drafters stipulate, in a decree's opening provision, which of their verbs carry obligation and which do not.\n\nConsider what happens when they do not. A reader encountering 'it is vital that the record be retained' cannot know whether retention is a duty or a counsel of prudence, and lest that seem a small thing, it is the difference between a breach and a preference. God forbid the question ever reaches a tribunal, where the solemn decorum of the construction will be read as evidence of intent — the form is grave, therefore the obligation was meant to bind.\n\nThat inference is unwarranted, and it is made daily. Long live the subjunctive, by all means; it is one of the few genuinely economical things left in formal English. But henceforth, come what may, let the verb do the binding and not the mood. Otherwise the most solemn sentence in the document will also be its least determinate, which is a peculiar way to write a rule.",
+  "glossary": [
+    {
+      "word": "mandative",
+      "ar": "صيغة الإلزام النحوية"
+    },
+    {
+      "word": "to stipulate",
+      "ar": "يشترط بنص صريح"
+    },
+    {
+      "word": "a tribunal",
+      "ar": "هيئة قضائية"
+    },
+    {
+      "word": "determinate",
+      "ar": "محدّد المعنى"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What is the writer's central complaint about the mandative subjunctive?",
+      "q_ar": "إيه شكوى الكاتب الأساسية من صيغة الإلزام؟",
+      "options": [
+        "It is archaic and should be abandoned",
+        "Its form no longer marks the distinction between advice and obligation",
+        "It is too economical for legal drafting"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What remedy does he propose?",
+      "q_ar": "إيه الحل اللي بيقترحه؟",
+      "options": [
+        "That drafters state which of their verbs carry obligation",
+        "That the subjunctive be replaced by modal verbs",
+        "That tribunals ignore the construction"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "What unwarranted inference does he say is made daily?",
+      "q_ar": "إيه الاستنتاج غير المبرَّر اللي بيقول إنه بيحصل كل يوم؟",
+      "options": [
+        "That a grave form implies a binding obligation",
+        "That recommendations are never enforceable",
+        "That drafters intend ambiguity"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "How would he describe a document's most solemn sentence?",
+      "q_ar": "إزاي بيوصف أكثر جملة مهيبة في المستند؟",
+      "options": [
+        "Its clearest statement of duty",
+        "The one a tribunal will disregard",
+        "Also its least determinate, which he finds peculiar"
+      ],
+      "answer": 2
+    }
+  ]
+}

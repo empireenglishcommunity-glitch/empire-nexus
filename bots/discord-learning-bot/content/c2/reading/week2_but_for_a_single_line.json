@@ -1,0 +1,74 @@
+{
+  "id": "reading_c2_w2",
+  "level": "C2",
+  "cefr": "C2",
+  "week": 2,
+  "title": "But for a Single Line",
+  "title_ar": "لولا سطر واحد",
+  "can_do": [
+    "C2.R.2"
+  ],
+  "word_count": 298,
+  "gist_ar": "نص افتراضي مكثّف: قرار واحد كان يمكن يتجنّب الكارثة، والافتراض ده مفيد ومضلّل في نفس الوقت.",
+  "text": "Were it not for a supposition nobody troubled to test, the eastern network would have been commissioned on schedule. That is the counterfactual on which the entire inquiry has been predicated, and it is worth asking whether it can bear the weight.\n\nHad it not been for the omission of a right of way from the 2019 tender, the contingency would have been priced. But for that omission, the delay was conceivable rather than inevitable, and every subsequent eventuality — machinery routed nine kilometres about, a trench unopened before the rains, pumping stations commissioned out of sequence — hinges upon it. Should the need arise to apportion blame, the line is short and it is clear.\n\nAnd yet. Were she to be asked, the lead engineer would say, as she said at the time, that a project of this scale forestalls nothing by listing risks it cannot avert; that the reprieve everyone imagines was contingent upon a municipality behaving as it had never behaved; and that a document which anticipated every dire eventuality would be a document nobody read.\n\nSave for one thing, she would be right. The omitted item was not a risk in the ordinary sense but a prerequisite — something the schedule was predicated on and which lay outside the contractor's control. Hypothetically, a prerequisite can be insured; a hazard can only be reserved against. The distinction is not academic, and had they known it, the reviewers would have looked for the provision rather than the reserve.\n\nWhat precipitated the downfall, then, was neither negligence nor bad luck. It was a taxonomy: the thing was filed as a contingency, and contingencies are priced, whereas prerequisites are secured. Providential, in a sense, that it failed so publicly. A quieter failure would have taught nobody the difference.",
+  "glossary": [
+    {
+      "word": "a counterfactual",
+      "ar": "افتراض مخالف للواقع"
+    },
+    {
+      "word": "to be predicated on",
+      "ar": "يقوم على"
+    },
+    {
+      "word": "to forestall",
+      "ar": "يستبق ويمنع"
+    },
+    {
+      "word": "a taxonomy",
+      "ar": "تصنيف"
+    }
+  ],
+  "questions": [
+    {
+      "q": "What does the writer identify as the real cause?",
+      "q_ar": "إيه السبب الحقيقي حسب الكاتب؟",
+      "options": [
+        "Negligence by the reviewers",
+        "A misclassification: a prerequisite was filed as a contingency",
+        "The municipality behaving unpredictably"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What is the engineer's defence?",
+      "q_ar": "إيه دفاع المهندسة؟",
+      "options": [
+        "The omission was deliberate and justified",
+        "A document listing every risk it cannot avert would go unread",
+        "The municipality was legally obliged to grant the right of way"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "What distinction does the writer say is not academic?",
+      "q_ar": "أنهي فرق بيقول إنه مش نظري؟",
+      "options": [
+        "Between negligence and bad luck",
+        "Between a tender and a schedule",
+        "Between a prerequisite, which can be secured, and a hazard, which can only be reserved against"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "What does 'providential, in a sense' convey?",
+      "q_ar": "إيه اللي بتوصّله 'من حسن الحظ نوعًا ما'؟",
+      "options": [
+        "The outcome was divinely ordained",
+        "The failure was fortunate because a quieter one would have taught nobody",
+        "The engineer was fortunate to escape blame"
+      ],
+      "answer": 1
+    }
+  ]
+}
