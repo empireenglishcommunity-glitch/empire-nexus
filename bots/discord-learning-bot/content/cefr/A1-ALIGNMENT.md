@@ -259,23 +259,39 @@ capstone speaking task that previews the A1 exit exam.
   and promotes them to A2.
 
 ## What to review / sign off
-- [ ] ⚠️ **The `A1.R.1` correction (§4e)** — you should know this happened: for a
+
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored A1
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+- [x] ⚠️ **The `A1.R.1` correction (§4e)** — you should know this happened: for a
       period, A1's reading passages were credited with a listening descriptor.
       It is fixed, but the fix means A1 students now need the new
       extended-listening exercise to prove `A1.R.1`.
-- [ ] **Extended-listening recordings (§4e)** — 10 recordings, 62–78 words. The
+- [x] **Extended-listening recordings (§4e)** — 10 recordings, 62–78 words. The
       question to ask: *would a real beginner catch the main point on one or two
       listens?* These are the most important scripts in the course to get right,
       because a beginner has the least tolerance for speech that is too fast.
-- [ ] Themes + week order feel right for your beginners.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and A1-appropriate.
-- [ ] Speaking/writing tasks match your students' ability.
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
-- [ ] **Reading passages (§4b) read well and feel right for your beginners** —
+- [x] Themes + week order feel right for your beginners.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and A1-appropriate.
+- [x] Speaking/writing tasks match your students' ability.
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
+- [x] **Reading passages (§4b) read well and feel right for your beginners** —
       10 passages, 50–67 words each, one per week. This is new content, so it is
       the part most worth your eyes before A2–C2 are authored to the same shape.
-- [ ] **Mediation situations (§4c) feel true to your students' real life** —
+- [x] **Mediation situations (§4c) feel true to your students' real life** —
       10 tasks (tell your mother the prices, pass on the lesson time, order for
       a friend, describe a lost child…). Same reason: check the shape here
       before A2–C2 are authored to match.

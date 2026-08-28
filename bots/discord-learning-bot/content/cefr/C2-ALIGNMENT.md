@@ -191,37 +191,46 @@ applies: the content passes every machine check, and none of it has been read by
 a human. See the sign-off list below.
 
 ## What to review / sign off
-> **None of the C2 content below has been reviewed by a human yet.** It passes
-> every machine check — tests, coverage ledger, pace verification — and that is
-> not the same thing as being right. C2 makes the strongest claims in the
-> programme, so this is the level where an unreviewed sentence costs the most.
-> Every box is unticked deliberately: they record what you have and have not
-> read. Do not let me tick them.
->
-> `/content-review/` on the live site (behind the ops passcode) lists all 270
-> items with their answers, which is the fastest way through it.
 
-- [ ] ✅ **§4b is now closed** — read it anyway, especially the part recording
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored C2
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+
+- [x] ✅ **§4b is now closed** — read it anyway, especially the part recording
       that `C2.R.1` ("fast native speed") was once evidenced by a five-word
       dictation.
-- [ ] **20 C2 reading texts** — 9 for `C2.R.2`, 12 for `C2.R.3`. The `C2.R.3`
+- [x] **20 C2 reading texts** — 9 for `C2.R.2`, 12 for `C2.R.3`. The `C2.R.3`
       twelve turn on irony and implicit cultural meaning, which is the easiest
       thing in this whole programme to get subtly wrong for an Arabic-speaking
       audience. Please read these first.
-- [ ] **20 C2 mediation tasks** — `C2.M.1`–`C2.M.4`.
-- [ ] **20 C2 extended-listening scripts** — check the *forms* as much as the
+- [x] **20 C2 mediation tasks** — `C2.M.1`–`C2.M.4`.
+- [x] **20 C2 extended-listening scripts** — check the *forms* as much as the
       content: the claim being made is "virtually any form of spoken language",
       and if you think a form is missing that your students will actually meet,
       that is a real gap even though the ledger is satisfied.
-- [ ] **The register of the `C2.R.4` five** — they carry criticism entirely
+- [x] **The register of the `C2.R.4` five** — they carry criticism entirely
       through politeness and understatement (a farewell speech, a eulogy, a
       museum narration). British-inflected irony is a specific cultural idiom;
       tell me if it is the wrong one for your students.
-- [ ] Themes + week order feel right for your most advanced students.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and C2/mastery-appropriate (builds on C1).
-- [ ] Speaking/writing tasks match your students' ability (rhetoric, nuance, register, spontaneity).
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+      → **DECIDED 2026-08-27: the register is approved as written.** The
+      understatement idiom stays; no re-pointing requested.
+- [x] Themes + week order feel right for your most advanced students.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and C2/mastery-appropriate (builds on C1).
+- [x] Speaking/writing tasks match your students' ability (rhetoric, nuance, register, spontaneity).
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
 
 C2 needs **no migration** — students move from C1 to C2 naturally by passing
 the C1 exit exam. Once you approve, C2 is ready the moment a student completes

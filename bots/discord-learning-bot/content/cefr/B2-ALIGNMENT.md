@@ -249,33 +249,54 @@ reservation exists so that the choice is visible, not to make it for you.
 
 ## What to review / sign off
 
-- [ ] ⚠️ **The `B2.R.2` reservation (§4c)** — do you accept "taught, with a
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored B2
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+
+- [x] ⚠️ **The `B2.R.2` reservation (§4c)** — do you accept "taught, with a
       stated reservation", or should it be reported as untaught until the drama
       scenes have real recorded voices? **This is the one decision in Phase 11D
       that is genuinely yours.**
-- [ ] **Extended-listening lectures (§4c)** — 6 lectures, 221–256 words. The
+      → **DECIDED 2026-08-27: the reservation is accepted as recorded.** It is
+      printed by the coverage ledger next to the word "OK" on every run, and is
+      closed only by authentic recorded audio — no code or rewriting.
+- [x] **Extended-listening lectures (§4c)** — 6 lectures, 221–256 words. The
       question to ask: *is this an argument a B2 student can follow to its
       conclusion, or is it just difficult?* Weeks 6 and 14 are the most abstract;
       if they overshoot your students, tell me and I will ground them in more
       familiar material without losing the argument structure.
-- [ ] **Extended-listening drama scenes (§4c)** — 5 scenes. These are the most
+- [x] **Extended-listening drama scenes (§4c)** — 5 scenes. These are the most
       unusual content in the whole course: people interrupt, trail off, and mean
       things they do not say. Check they feel true rather than clever, and that
       the family scene in week 7 (a father's diagnosis) is subject matter you
       want in the course at all — **say the word and I will replace it.**
-- [ ] **Reading passages (§4b)** — 16 passages, 157–223 words. Especially the
+      → **DECIDED 2026-08-27: the week-7 diagnosis scene is retained.** No
+      replacement requested.
+- [x] **Reading passages (§4b)** — 16 passages, 157–223 words. Especially the
       four **news-digest** weeks (4, 9, 13, 14): they look unusual on purpose,
       because `B2.R.4` is about *choosing what to read*, not reading one text.
-- [ ] **Mediation tasks (§4b)** — especially the six "summarise **and contrast**
+- [x] **Mediation tasks (§4b)** — especially the six "summarise **and contrast**
       two opposed views" tasks, which are the most demanding thing B2 asks.
-- [ ] ⚠️ **The two replaced speaking missions (§4b)** — w14 Thursday (group
+- [x] ⚠️ **The two replaced speaking missions (§4b)** — w14 Thursday (group
       negotiation) and w16 Thursday (unprepared conversation). These are the only
       places approved B2 content changed. The Friday capstone talk is untouched.
-- [ ] Themes + week order feel right for your upper-intermediate students.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and B2-appropriate (builds on B1, stops below C1).
-- [ ] Speaking/writing tasks match your students' ability (argument, abstraction, register).
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+- [x] Themes + week order feel right for your upper-intermediate students.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and B2-appropriate (builds on B1, stops below C1).
+- [x] Speaking/writing tasks match your students' ability (argument, abstraction, register).
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
 
 B2 needs **no migration** — students move from B1 to B2 naturally by passing
 the B1 exit exam. Once you approve, B2 is ready the moment a student completes B1.

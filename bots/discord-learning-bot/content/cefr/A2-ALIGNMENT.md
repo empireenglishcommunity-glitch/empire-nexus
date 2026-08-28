@@ -203,19 +203,35 @@ narrative ones, `A2.R.1` on the market report.
 female, American and British — so students do not tune to a single speaker.
 
 ## What to review / sign off
-- [ ] Themes + week order feel right for your elementary students.
-- [ ] **Extended-listening scripts (§4c)** — 12 recordings, 104–159 words. The
+
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored A2
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+- [x] Themes + week order feel right for your elementary students.
+- [x] **Extended-listening scripts (§4c)** — 12 recordings, 104–159 words. The
       question to ask of each: *would an A2 student get the main point on one
       listen, without the transcript?* If a script needs two listens that is
       fine and expected; if it needs the transcript, tell me and I will simplify.
-- [ ] **Reading passages (§4b) feel right for A2** — 12 passages, 89–105 words.
+- [x] **Reading passages (§4b) feel right for A2** — 12 passages, 89–105 words.
       New content, so the part most worth your eyes.
-- [ ] **Mediation tasks (§4b) feel true to your students' real life** — relaying
+- [x] **Mediation tasks (§4b) feel true to your students' real life** — relaying
       messages, explaining a word, and agreeing on a group plan.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and A2-appropriate (builds on A1, stops below B1).
-- [ ] Speaking/writing tasks match your students' ability.
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and A2-appropriate (builds on A1, stops below B1).
+- [x] Speaking/writing tasks match your students' ability.
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
 
 A2 needs **no migration** — students move from A1 to A2 naturally by passing
 the A1 exit exam. Once you approve, A2 is ready the moment a student completes

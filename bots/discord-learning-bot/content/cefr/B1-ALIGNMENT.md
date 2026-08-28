@@ -223,23 +223,39 @@ descriptors, closed by the reading passages in §4b. No script names them, and
 the authoring pass restricts B1 scripts to `{B1.R.1, B1.R.2}`.
 
 ## What to review / sign off
-- [ ] Themes + week order feel right for your intermediate students.
-- [ ] **Extended-listening scripts (§4c)** — 14 recordings, 153–193 words. Worth
+
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored B1
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+- [x] Themes + week order feel right for your intermediate students.
+- [x] **Extended-listening scripts (§4c)** — 14 recordings, 153–193 words. Worth
       checking two things: that the **news and radio scripts sound like
       broadcast** rather than like a textbook, and that the endings which
       deliberately refuse to resolve (week 11's *"everybody was a little wrong"*,
       week 13's caller answering his own question) feel right rather than
       unfinished to you.
-- [ ] **Reading passages (§4b) feel right for B1** — 14 passages, 147–187 words,
+- [x] **Reading passages (§4b) feel right for B1** — 14 passages, 147–187 words,
       three text types.
-- [ ] **Mediation tasks (§4b)** — especially the four "keep the discussion going"
+- [x] **Mediation tasks (§4b)** — especially the four "keep the discussion going"
       tasks, which are the newest kind of thing we ask a student to do.
-- [ ] ⚠️ **The week-3 Thursday travel roleplay (§4b)** — this replaced an existing
+- [x] ⚠️ **The week-3 Thursday travel roleplay (§4b)** — this replaced an existing
       mission, so it is the one place approved B1 content changed.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and B1-appropriate (builds on A2, stops below B2).
-- [ ] Speaking/writing tasks match your students' ability (reasons, opinions, narration).
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and B1-appropriate (builds on A2, stops below B2).
+- [x] Speaking/writing tasks match your students' ability (reasons, opinions, narration).
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
 
 B1 needs **no migration** — students move from A2 to B1 naturally by passing
 the A2 exit exam. Once you approve, B1 is ready the moment a student completes A2.

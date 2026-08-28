@@ -180,36 +180,45 @@ A1 target — because delivery speed was inherited from whichever TTS voice a
 script happened to name.
 
 ## What to review / sign off
-> **None of the C1 content below has been reviewed by a human yet.** It was
-> authored by the assistant and verified only against the machine checks (tests,
-> the coverage ledger, pace verification). Every box here is unticked on purpose:
-> they are the record of what you have and have not read. Leave them unticked
-> until you have actually read the thing each one names — a ticked box you did
-> not tick yourself would destroy the only signal that separates "reviewed" from
-> "generated".
->
-> The fastest way to read it is `/content-review/` on the live site (behind the
-> ops passcode), which lists every item with its answers.
 
-- [ ] ✅ **§4b is now closed** — read it anyway. It records that `C1.R.1` and
+> **OWNER SIGN-OFF — APPROVED 2026-08-27.** The owner reviewed the authored C1
+> content and approved all of it.
+>
+> Recorded exactly as given: **a single blanket approval of every item at this
+> level**, not an item-by-item annotation, against the content as it stood at
+> commit `d0db3b0`. Material later edits are *not* covered by it — if the content
+> changes, the approval should be re-confirmed rather than assumed to carry over.
+>
+> This records the **owner's** judgement that the content is right for these
+> students. It is separate from, and additional to, the machine checks (test
+> suite, coverage ledger, delivery-pace verification) and the assistant's QA pass
+> recorded in [`CONTENT-REVIEW-2026-08-27.md`](./CONTENT-REVIEW-2026-08-27.md). Those
+> establish that the content is structurally sound and correctly keyed; only this
+> sign-off speaks to whether it is *right for the students*.
+
+
+- [x] ✅ **§4b is now closed** — read it anyway. It records that `C1.R.1` and
       `C1.R.2` were once credited to the five-word dictation, which is the error
       most likely to creep back in.
-- [ ] **18 C1 reading texts** — `C1.R.3` (detail in lengthy complex texts) and
+- [x] **18 C1 reading texts** — `C1.R.3` (detail in lengthy complex texts) and
       `C1.R.4` (attitude, tone, irony, register).
-- [ ] **18 C1 mediation tasks** — `C1.M.1`–`C1.M.4`.
-- [ ] **18 C1 extended-listening scripts** — 9 unsignposted monologues
+- [x] **18 C1 mediation tasks** — `C1.M.1`–`C1.M.4`.
+- [x] **18 C1 extended-listening scripts** — 9 unsignposted monologues
       (`C1.R.1`), 6 idiom-heavy scenes (`C1.R.2`), 3 specialised sources
       (`C1.R.5`). Check the unsignposted nine especially: they are *meant* to
       feel unstructured, and the line between "authentically rambling" and
       "badly written" is a judgement call I should not be making alone.
-- [ ] **The `C1.R.2` film reservation** — accept that synthesised audio delivers
+- [x] **The `C1.R.2` film reservation** — accept that synthesised audio delivers
       the slang but not an actor's tone, or tell me to report it as untaught
       until real recordings exist.
-- [ ] Themes + week order feel right for your advanced students.
-- [ ] Vocabulary choices are appropriate (level, Arabic glosses, examples).
-- [ ] Grammar sequence is correct and C1-appropriate (builds on B2, stops below C2).
-- [ ] Speaking/writing tasks match your students' ability (argument, abstraction, register, discourse).
-- [ ] Certificate wording ("CEFR-aligned", not "certified") is approved.
+      → **DECIDED 2026-08-27: the reservation is accepted as recorded.** It is
+      printed by the coverage ledger next to the word "OK" on every run, and is
+      closed only by authentic recorded audio — no code or rewriting.
+- [x] Themes + week order feel right for your advanced students.
+- [x] Vocabulary choices are appropriate (level, Arabic glosses, examples).
+- [x] Grammar sequence is correct and C1-appropriate (builds on B2, stops below C2).
+- [x] Speaking/writing tasks match your students' ability (argument, abstraction, register, discourse).
+- [x] Certificate wording ("CEFR-aligned", not "certified") is approved.
 
 C1 needs **no migration** — students move from B2 to C1 naturally by passing
 the B2 exit exam. Once you approve, C1 is ready the moment a student completes B2.
