@@ -35,7 +35,7 @@
       "q_ar": "ليه تفسير الشخصية مريح؟",
       "options": [
         "Permanent things require no action",
-        "They remove responsibility",
+        "They remove the person's responsibility for the outcome",
         "They are usually accurate"
       ],
       "answer": 0
@@ -44,7 +44,7 @@
       "q": "What does the writer say does NOT follow?",
       "q_ar": "إيه اللي الكاتب بيقول إنه ماينتجش؟",
       "options": [
-        "That circumstances matter",
+        "That the surrounding circumstances genuinely matter to the outcome",
         "That character can change",
         "That responsibility disappears"
       ],

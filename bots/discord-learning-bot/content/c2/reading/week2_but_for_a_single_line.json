@@ -36,7 +36,7 @@
       "options": [
         "Negligence by the reviewers",
         "A misclassification: a prerequisite was filed as a contingency",
-        "The municipality behaving unpredictably"
+        "The municipality behaving unpredictably, in a way no engineer could have anticipated"
       ],
       "answer": 1
     },
@@ -64,7 +64,7 @@
       "q": "What does 'providential, in a sense' convey?",
       "q_ar": "إيه اللي بتوصّله 'من حسن الحظ نوعًا ما'؟",
       "options": [
-        "The outcome was divinely ordained",
+        "The outcome was divinely ordained and therefore nobody can be held responsible for it",
         "The failure was fortunate because a quieter one would have taught nobody",
         "The engineer was fortunate to escape blame"
       ],

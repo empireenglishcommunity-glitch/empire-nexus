@@ -49,7 +49,7 @@
       "q_ar": "إيه الاعتراض المنطقي اللي هي قبلته؟",
       "options": [
         "They cannot be tested, because everything else would change too",
-        "They are grammatically incorrect",
+        "They are grammatically incorrect and should be avoided in serious writing",
         "Historians never actually use them"
       ],
       "answer": 0
@@ -58,7 +58,7 @@
       "q": "What does she say history without counterfactuals becomes?",
       "q_ar": "قالت إن التاريخ من غير الجمل دي بيبقى إيه؟",
       "options": [
-        "More rigorous and more scientific",
+        "A far more rigorous and genuinely scientific kind of history",
         "A chronicle that cannot say what mattered",
         "Impossible to write at all"
       ],

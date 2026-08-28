@@ -34,7 +34,7 @@
       "q": "What does the writer say persuades people?",
       "q_ar": "الكاتب بيقول إيه اللي يقنع الناس؟",
       "options": [
-        "The number of facts",
+        "The sheer number of facts a writer includes",
         "The order the facts arrive in",
         "The use of bold type"
       ],
@@ -46,7 +46,7 @@
       "options": [
         "The reader remembers a problem",
         "The facts change",
-        "The reader remembers a plan"
+        "The reader comes away remembering a clear plan"
       ],
       "answer": 0
     },

@@ -96,7 +96,7 @@
       "q": "Which temperature reading does Yousef say is correct?",
       "options": [
         "The local gauge reading of seven-point-two",
-        "The panel reading of eleven",
+        "The panel reading of eleven, which the outgoing engineer says is the accurate one",
         "Neither, both need recalibration",
         "The panel, once the sensor is swapped"
       ],
@@ -105,7 +105,7 @@
     {
       "q": "What will happen if pump two is tripped rather than brought down manually?",
       "options": [
-        "The chiller alarm will reset itself",
+        "The chiller alarm will reset itself and the pump will return to normal running",
         "The gland will need replacing immediately",
         "It will take the line down, because the interlock is still on the old logic",
         "The fill weight will drift further"

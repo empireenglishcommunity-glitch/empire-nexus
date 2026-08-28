@@ -46,7 +46,7 @@
       "options": [
         "The reader expected a more distant phrasing",
         "It is too long",
-        "It contains a phrasal verb"
+        "It contains an informal phrasal verb that reads as rude"
       ],
       "answer": 0
     },
@@ -64,7 +64,7 @@
       "q": "What skill does the writer say is worth developing?",
       "q_ar": "إيه المهارة اللي تستاهل؟",
       "options": [
-        "Formality in every message",
+        "Achieving a high level of formality in every message",
         "Range — saying the same thing three ways",
         "Learning phrasal verbs from films"
       ],

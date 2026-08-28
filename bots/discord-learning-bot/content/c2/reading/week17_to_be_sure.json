@@ -54,7 +54,7 @@
       "q": "What would make his argument fail, on his own account?",
       "q_ar": "إيه اللي هيفشّل حجته بإقراره هو؟",
       "options": [
-        "If the consultation was perfunctory",
+        "If the consultation was perfunctory, which he says would sink his whole case",
         "If the 2021 approval was flawed",
         "If the completion estimate is as tenuous as the audit suggests"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "إيه اللافت في وصفه للخلاف؟",
       "options": [
         "He says neither side has seen the key figure, which flatters nobody",
-        "He claims his side has all the evidence",
+        "He claims his side alone has seen the key figure and the critics have not",
         "He says the critics are being deliberately evasive"
       ],
       "answer": 0

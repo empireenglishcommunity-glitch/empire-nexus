@@ -139,7 +139,7 @@
       "options": [
         "Six hours at minus four",
         "Eight hours at minus eighteen",
-        "A steady minus four across the whole journey",
+        "A steady minus eighteen across the whole journey, with no excursion at all",
         "Eight hours rising to minus four, within the 19th–23rd window"
       ],
       "answer": 3
@@ -157,7 +157,7 @@
     {
       "q": "What discrepancy makes Karim ring in the first place?",
       "options": [
-        "The pallet is in the wrong bay",
+        "The pallet is sitting in the wrong bay, which is why he could not read the number",
         "The seal is broken on the top rather than the short side",
         "The paperwork says Meridian but the crate and strip are Volkert",
         "The port stamp is missing altogether"

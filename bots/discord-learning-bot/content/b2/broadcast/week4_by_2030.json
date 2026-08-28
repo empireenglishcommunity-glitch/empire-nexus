@@ -48,7 +48,7 @@
       "q": "Why does he say such projections are always wrong?",
       "q_ar": "ليه قال إن التوقّعات دي دايمًا بتطلع غلط؟",
       "options": [
-        "The underlying data is poor",
+        "The underlying population data collected by the city is poor",
         "People respond to the projection and change their behaviour",
         "Nobody ever reads them"
       ],
@@ -58,7 +58,7 @@
       "q": "What does he say the alternative would be in practice?",
       "q_ar": "قال إن البديل عمليًا هيكون إيه؟",
       "options": [
-        "A more accurate number",
+        "A far more accurate and reliable population number",
         "Planning for the city that already exists",
         "Waiting until 2030 to decide"
       ],

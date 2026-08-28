@@ -48,7 +48,7 @@
       "q": "What is the concession he flags?",
       "q_ar": "إيه التنازل اللي أشار له؟",
       "options": [
-        "That markers are only decoration after all",
+        "That discourse markers turn out to be only decoration after all, as critics claim",
         "That the effect is smaller in writing, because readers can go back",
         "That lecturers are usually poor writers"
       ],
@@ -59,7 +59,7 @@
       "q_ar": "قال إن 'however' بتعمل إيه و'but' مبتعملهوش؟",
       "options": [
         "It signals that what follows will outweigh what preceded",
-        "It is simply the more formal of the two",
+        "It is simply the more formal and polished version of the word but",
         "It marks the end of the argument"
       ],
       "answer": 0

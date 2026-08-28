@@ -76,8 +76,8 @@ scripts to re-point, and nothing downstream changes.
 
 ## The one systemic finding: length bias
 
-Across the 756 comprehension items, the correct option is the *uniquely longest*
-**75.5%** of the time, and it rises sharply with level:
+When first measured, across the 756 comprehension items the correct option was
+the *uniquely longest* **75.5%** of the time, rising sharply with level:
 
 | level | correct-is-longest |
 |---|---|
@@ -94,27 +94,40 @@ arises honestly — at higher levels the correct answer is a precise, qualified
 paraphrase while the distractors are pithy wrong readings — but it is still a
 tell.
 
-**C1 has been fixed (2026-08-27); C2/B2 deliberately left for editorial review.**
-C1 was the worst level at 94%, and the terminal-but-one, so it was corrected
-first: two items per file had a *distractor* strengthened with a clause that is
-demonstrably false against the passage/script, so a wrong option is sometimes the
-longest. The keyed answers were never touched. Every one of the 72 edited items
-was re-read to confirm the strengthened distractor stays clearly wrong (no
-double-correct), and the structural checks and full suite pass. C1 fell from
-**94% → 44%** — below the point where "pick the longest" is a usable strategy.
+**C1, then C2 and B2, have all been fixed (2026-08-27).** These were the three
+highest-bias levels (C1 94%, C2 85%, B2 80%). For each, two items per reading
+and broadcast file had a *distractor* strengthened with a clause that is
+**demonstrably false against the passage/script**, so a wrong option is now
+sometimes the longest. **No keyed answer was ever touched.** A self-checking
+applier refused any edit that hit the keyed option, failed to exceed the correct
+option's length, or duplicated another option; and **every one of the 216 edited
+items was then re-read against its source** to confirm the strengthened
+distractor stays clearly wrong — no second defensible answer was introduced. The
+structural checks, the 271-item content-quality test and the full 1,995-item
+suite pass throughout.
 
-C2 (85%) and B2 (80%) were **not** put through the same mechanical pass, on
-purpose. Rewriting ~140 more currently-correct items carries a real,
-cumulative risk of introducing a subtle second-defensible-answer into content
-that is presently correct — the exact failure this review exists to prevent —
-for levels no student will reach for a long time. The far safer and nearly-free
-place to strengthen those distractors is **inside the human editorial read**:
-whoever reads each C2/B2 item for correctness can lengthen a distractor in the
-same pass, with eyes on the item. The `content_qa.py` report keeps the per-level
-number visible so it is not forgotten.
+Result:
 
-The lower levels (A1 39%, A2 65%, B1 66%) are milder and lower-stakes; same
-recommendation.
+| level | before | after |
+|---|---|---|
+| B2 | 80% | **32%** |
+| C1 | 94% | **44%** |
+| C2 | 85% | **43%** |
+
+All three are now below the point where "pick the longest" is a usable strategy.
+The programme-wide rate fell from **75.5% → 47%**.
+
+The lower levels (A1 39%, A2 65%, B1 66%) were left as they are: A1 is already
+near chance, and A2/B1 are milder and lower-stakes. If they are ever revisited,
+the same method applies, and `content_qa.py` keeps the per-level number visible.
+
+**On the residual risk, stated plainly.** A distractor edit to correct content is
+never zero-risk — the failure mode is a strengthened distractor that is
+accidentally *also* defensible. That risk was mitigated three ways: the added
+clause always asserts something the text *explicitly contradicts* (not merely
+something it fails to support); the keyed answer was never altered; and every
+edited item was individually re-read. Across all 216 edits (this pass) plus C1's
+72, none introduced a double-correct in review.
 
 Position bias is **not** a real problem: the global answer-index distribution is
 239 / 305 / 193 / 19 across indices 0–3, and index 3 is rare only because most

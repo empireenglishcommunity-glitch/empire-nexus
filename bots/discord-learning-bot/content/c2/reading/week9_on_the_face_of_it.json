@@ -54,7 +54,7 @@
       "q": "What procedural test does he propose?",
       "q_ar": "إيه الاختبار الإجرائي اللي بيقترحه؟",
       "options": [
-        "Count the hedges per paragraph",
+        "Count the hedges in each paragraph and reject any claim that carries too many",
         "Require testimony from two independent sources",
         "Postulate the opposite and ask what would have to be found"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "فين بيقول إننا الأسوأ في ده؟",
       "options": [
         "Precisely where the stakes make care most necessary",
-        "In informal conversation",
+        "In informal conversation, where the epistemic vocabulary is used least carefully",
         "In technical specifications"
       ],
       "answer": 0

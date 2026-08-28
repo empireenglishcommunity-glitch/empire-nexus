@@ -35,7 +35,7 @@
       "q_ar": "البيت حصل له إيه قبل ما عادل يوصل؟",
       "options": [
         "It had already been emptied",
-        "It had been repainted",
+        "It had been completely repainted throughout before he arrived",
         "It had been sold"
       ],
       "answer": 0
@@ -44,7 +44,7 @@
       "q": "What does the detail of the faded curtain suggest?",
       "q_ar": "تفصيلة الستارة الباهتة بتوحي بإيه؟",
       "options": [
-        "Somebody had cleaned carelessly",
+        "Somebody had cleaned the room carelessly and damaged the curtain",
         "Time had passed unnoticed in that room",
         "The house was badly built"
       ],

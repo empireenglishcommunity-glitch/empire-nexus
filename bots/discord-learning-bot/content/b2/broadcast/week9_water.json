@@ -67,7 +67,7 @@
       "q_ar": "ليه التصليح واخد وقت أطول؟",
       "options": [
         "The section is being replaced rather than patched",
-        "The contractor was suspended",
+        "The contractor was suspended and had to be replaced mid-repair",
         "The street had to be closed first"
       ],
       "answer": 0
@@ -76,7 +76,7 @@
       "q": "Which question was not asked at the press conference?",
       "q_ar": "أنهي سؤال محدش سألهوش في المؤتمر الصحفي؟",
       "options": [
-        "When the water would come back",
+        "When exactly the water supply would be fully restored to homes",
         "How many other pipes contractors are not required to check",
         "Who suspended the contractor"
       ],

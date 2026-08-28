@@ -111,7 +111,7 @@
     "q": "What do the two panellists turn out to agree about?",
     "options": [
       "That the problem lies in the report's choice of adjective rather than in its figures",
-      "That the report's figures are wrong and should be recalculated",
+      "That the report's underlying figures are wrong and must be recalculated before publication",
       "That the four staff who spoke to the press behaved improperly",
       "That the committee should be replaced before the next review"
     ],
@@ -144,7 +144,7 @@
         "Between asserting something yourself and letting a useful misreading stand uncorrected",
         "Between a formal complaint and an informal one",
         "Between what the audit says and what the department says",
-        "Between a spoken statement and a written one"
+        "Between a claim spoken aloud in the meeting and one written down in the formal report afterwards"
       ],
       "answer": 0
     }

@@ -55,7 +55,7 @@
       "q_ar": "الكاتب بيعمل إيه في أول فقرة وآخر سطر؟",
       "options": [
         "He uses the same devices he is criticising, and says so",
-        "He quotes the speech verbatim",
+        "He quotes the speech verbatim, reproducing its anaphora and refrain in full",
         "He apologises for his tone"
       ],
       "answer": 0
@@ -64,7 +64,7 @@
       "q": "What does he concede about rhetoric?",
       "q_ar": "بيقرّ بإيه عن البلاغة؟",
       "options": [
-        "It is always a substitute for argument",
+        "It is always a substitute for argument and never carries any genuine content",
         "A speech that galvanises does something a memorandum cannot",
         "It belongs only in political speech"
       ],

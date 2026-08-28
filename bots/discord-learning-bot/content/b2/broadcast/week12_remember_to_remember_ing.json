@@ -49,7 +49,7 @@
       "q_ar": "علماء النفس لاقوا إيه عن سؤال الـ '-ing'؟",
       "options": [
         "People reconstruct the event, and reconstruction feels like recall",
-        "People usually refuse to answer it",
+        "People usually refuse to answer the '-ing' question at all when asked",
         "It produces more reliable answers than the alternative"
       ],
       "answer": 0
@@ -58,7 +58,7 @@
       "q": "What does the lecturer explicitly refuse to claim?",
       "q_ar": "إيه اللي رفضت تقوله بشكل صريح؟",
       "options": [
-        "That the distinction is real",
+        "That the grammatical distinction is genuinely real and meaningful",
         "That knowing this makes the grammar easier",
         "That learners make this mistake"
       ],

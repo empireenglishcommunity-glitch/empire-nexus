@@ -63,7 +63,7 @@
     "q": "What does the main commentator openly admit during the passage?",
     "options": [
       "That he missed the moment Farouk was fouled",
-      "That the goal kick decision was correct after all",
+      "That the goal kick decision was correct after all, and he had been wrong to question it",
       "That his own pre-match prediction about Zayd was wrong",
       "That Selim touched the ball on its way over"
     ],
@@ -104,7 +104,7 @@
       "q": "What is the score and time at the end of the passage?",
       "options": [
         "One-nil at twenty-two minutes",
-        "Goalless at forty minutes",
+        "Goalless at forty minutes, with the second half already well under way",
         "One-one at twenty-four minutes",
         "Goalless at twenty-four minutes"
       ],

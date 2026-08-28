@@ -46,7 +46,7 @@
       "q_ar": "أنهي خبر أنفع لتجربة السكان؟",
       "options": [
         "Item 3, the local news article",
-        "Item 1, the council statement",
+        "Item 1, the one-paragraph council statement about the pipes",
         "Item 2, the inspection report"
       ],
       "answer": 0
@@ -66,7 +66,7 @@
       "q_ar": "إيه الناقص في الخبر ١؟",
       "options": [
         "The date of the repair",
-        "The name of the district",
+        "The name of the specific district the statement concerns",
         "Cost, contractor and timetable"
       ],
       "answer": 2

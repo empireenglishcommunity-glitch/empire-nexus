@@ -56,7 +56,7 @@
       "options": [
         "That a grave form implies a binding obligation",
         "That recommendations are never enforceable",
-        "That drafters intend ambiguity"
+        "That drafters deliberately intend the ambiguity in order to deceive the reader"
       ],
       "answer": 0
     },
@@ -64,7 +64,7 @@
       "q": "How would he describe a document's most solemn sentence?",
       "q_ar": "إزاي بيوصف أكثر جملة مهيبة في المستند؟",
       "options": [
-        "Its clearest statement of duty",
+        "Its clearest and most binding statement of duty, which a tribunal will always uphold",
         "The one a tribunal will disregard",
         "Also its least determinate, which he finds peculiar"
       ],

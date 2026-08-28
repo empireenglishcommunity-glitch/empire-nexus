@@ -34,7 +34,7 @@
       "q": "What is the writer demonstrating in his opening sentence?",
       "q_ar": "إيه اللي الكاتب بيعرضه في جملته الأولى؟",
       "options": [
-        "That formal English is superior to plain English",
+        "That formal English is always superior to plain English in professional writing",
         "The deliberate register clash the piece goes on to discuss",
         "An accidental stylistic lapse he later apologises for"
       ],
@@ -64,7 +64,7 @@
       "q": "What was actually wrong with the memorandum?",
       "q_ar": "إيه الغلط الحقيقي في المذكرة؟",
       "options": [
-        "It mixed too many registers",
+        "It mixed far too many clashing registers within a single short paragraph",
         "It was too short to establish a tone",
         "It was consistent, but in the wrong register throughout"
       ],

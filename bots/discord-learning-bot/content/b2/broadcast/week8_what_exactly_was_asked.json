@@ -75,7 +75,7 @@
     "q": "What do both guests agree the coverage has got wrong?",
     "q_ar": "إيه اللي الضيفين متفقين إن التغطية غلطت فيه؟",
     "options": [
-      "That she denied everything",
+      "That she flatly denied every single one of the allegations put to her in the interview",
       "That the third question, in which she made a commitment, has been ignored",
       "That the interviewer treated her unfairly"
     ],
@@ -86,7 +86,7 @@
       "q": "What did she say when asked whether she had seen the file?",
       "q_ar": "قالت إيه لما اتسألت لو كانت شافت الملف؟",
       "options": [
-        "That she had not seen it",
+        "That she had definitely never seen the file at any point",
         "That she could not recall",
         "That she would resign"
       ],

@@ -35,7 +35,7 @@
       "q_ar": "إيه نقده الأساسي للإشارات؟",
       "options": [
         "They are worn out and one of them is factually wrong in a flattering way",
-        "They are too obscure for a business audience",
+        "They are far too obscure for a business audience to recognise or understand at all",
         "There are not enough of them to sustain the argument"
       ],
       "answer": 0
@@ -65,7 +65,7 @@
       "q_ar": "إيه اللدغة في الجملة الأخيرة؟",
       "options": [
         "The document alludes constantly but is witty nowhere",
-        "The migration was genuinely heroic",
+        "The migration was genuinely heroic, and the allusions therefore fit it well",
         "The writer admits he cannot name the document"
       ],
       "answer": 0

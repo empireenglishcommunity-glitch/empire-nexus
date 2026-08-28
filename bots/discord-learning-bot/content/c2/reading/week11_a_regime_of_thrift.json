@@ -34,7 +34,7 @@
       "q": "What is the writer's main point?",
       "q_ar": "إيه فكرة الكاتب الأساسية؟",
       "options": [
-        "The two directors have different expenses policies",
+        "The two directors operate genuinely different expenses policies from one another",
         "Loaded words deliver a verdict while appearing to report",
         "Pejorative words should be banned from profiles"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "إيه الحاجة الوحيدة اللي مش متاحة عنده؟",
       "options": [
         "The belief that you have simply described her",
-        "The use of a flattering word",
+        "The use of a flattering word, which the writer says is never permissible",
         "A neutral nine-word formulation"
       ],
       "answer": 0

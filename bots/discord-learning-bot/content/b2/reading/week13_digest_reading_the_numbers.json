@@ -36,7 +36,7 @@
       "q_ar": "ليه الخبر ١ ضعيف؟",
       "options": [
         "It surveyed forty people in one place",
-        "It gives no proportion",
+        "It gives no proportion or percentage of any kind",
         "It is too long to skim"
       ],
       "answer": 0
@@ -66,7 +66,7 @@
       "q_ar": "الخبر ٢ بيقول إيه عن الانتقال؟",
       "options": [
         "Most movement was within the region",
-        "A generation is disappearing",
+        "A whole generation is quietly disappearing from the region",
         "Most young people left the region"
       ],
       "answer": 0

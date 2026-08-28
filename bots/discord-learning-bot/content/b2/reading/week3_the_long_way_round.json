@@ -45,7 +45,7 @@
       "q_ar": "عملت إيه في الامتحان؟",
       "options": [
         "She put down her pen and left",
-        "She finished it badly",
+        "She finished the examination badly but did complete it",
         "She asked for more time"
       ],
       "answer": 0
@@ -55,7 +55,7 @@
       "q_ar": "التدريس بدأ إزاي؟",
       "options": [
         "For nothing, then for a small fee",
-        "As part of her course",
+        "As a required part of her engineering course at the university",
         "As a paid job at a school"
       ],
       "answer": 0

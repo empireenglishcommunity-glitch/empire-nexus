@@ -55,7 +55,7 @@
       "q_ar": "إيه الغريب في أرشيف المؤرخة؟",
       "options": [
         "It has not been published yet",
-        "It covers only one district",
+        "It covers only the single district where the library stands",
         "It contains only receipts"
       ],
       "answer": 0
@@ -64,7 +64,7 @@
       "q": "What does the writer say is really at stake?",
       "q_ar": "إيه اللي على المحك فعلًا؟",
       "options": [
-        "The condition of the monument",
+        "The physical condition of the monument, now surrounded by parked cars",
         "Residents' belief that people like them make places",
         "Fairness to people who have died"
       ],

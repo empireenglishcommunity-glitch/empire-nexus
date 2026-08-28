@@ -102,7 +102,7 @@
       "q": "What is the presenter's stated position on her own inference?",
       "options": [
         "Both estimate and inference are robust",
-        "The estimate is unstable but the inference is sound",
+        "The estimate is unstable but the inference is sound, so the result can be relied upon",
         "The result should be withdrawn entirely",
         "The point estimate is stable but the inference is weak, with only eleven clusters"
       ],
@@ -113,7 +113,7 @@
       "options": [
         "About a third",
         "About a half",
-        "None of it",
+        "None of it at all; she removed the mechanical component entirely from the estimate",
         "About a quarter"
       ],
       "answer": 3

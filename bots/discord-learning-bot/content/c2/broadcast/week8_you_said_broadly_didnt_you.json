@@ -169,7 +169,7 @@
     {
       "q": "What figure did the internal quarterly give for inspections completed against schedule?",
       "options": [
-        "Nineteen per cent",
+        "Nineteen per cent, the figure recorded in tab nineteen of the quarterly",
         "Sixty-one per cent",
         "Ninety per cent",
         "Fifty per cent"
@@ -179,7 +179,7 @@
     {
       "q": "How many of the three sites were covered by the 2019 findings?",
       "options": [
-        "All three",
+        "All three of the sites we are concerned with today were covered",
         "One",
         "Two — Harrow Bank and the Quay",
         "None of them"

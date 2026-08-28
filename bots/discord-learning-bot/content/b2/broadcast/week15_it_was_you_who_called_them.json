@@ -172,7 +172,7 @@
       "q": "What does Karim say about Monday?",
       "q_ar": "كريم قال إيه عن يوم الاتنين؟",
       "options": [
-        "He will resign on Monday",
+        "He is planning to resign from the company first thing on Monday morning",
         "Nothing happens on Monday; it is March he cannot discuss",
         "The audit result is published on Monday"
       ],
@@ -183,7 +183,7 @@
       "q_ar": "كريم استنتج إيه من إن محدش نقله من مكانه؟",
       "options": [
         "That the company does not consider him important",
-        "That the company has not yet noticed anything",
+        "That the company has not yet noticed anything he has done at all",
         "That Hana protected him"
       ],
       "answer": 0
