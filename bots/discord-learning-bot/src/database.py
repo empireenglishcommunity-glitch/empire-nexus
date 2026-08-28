@@ -105,6 +105,23 @@ def _migrate(conn: sqlite3.Connection):
     if "level_started_at" not in member_cols:
         conn.execute("ALTER TABLE members ADD COLUMN level_started_at TEXT DEFAULT NULL")
 
+    # `level` on daily_submissions. Writing and community are Discord-only
+    # tasks, so they never reach practice_mastery (which IS level-scoped) and
+    # `practice_completions` has to bridge them onto a content day. Without a
+    # level here that bridge had to attribute a submission to whichever level was
+    # being queried, so a C2 student's writing also appeared as evidence at A1.
+    # That could never grant anything (the WORK criterion is 0/70 at a level you
+    # never studied, and the certificate re-targets to the exam actually passed),
+    # but it over-reported evidence on a level the student never took.
+    #
+    # Nullable on purpose. Rows written before this column existed keep NULL, and
+    # the bridge deliberately falls back to the old anchor-only behaviour for
+    # them — so no existing student loses a single piece of retroactive evidence.
+    # New rows carry their level and are matched exactly.
+    ds_cols = {row["name"] for row in conn.execute("PRAGMA table_info(daily_submissions)")}
+    if "level" not in ds_cols:
+        conn.execute("ALTER TABLE daily_submissions ADD COLUMN level TEXT DEFAULT NULL")
+
     # Wuslah W0.4: last_used on link_tokens table (for token expiry)
     lt_cols = {row["name"] for row in conn.execute("PRAGMA table_info(link_tokens)")}
     if "last_used" not in lt_cols:
@@ -1186,13 +1203,31 @@ def consume_proof_message(message_id: str, discord_id: str, task_id: str) -> boo
 def log_submission(discord_id: str, date: str, task_id: str,
                    content: str = "", score: float = None,
                    feedback: str = "") -> bool:
-    """Log a task submission. Returns True if new, False if already exists."""
+    """Log a task submission. Returns True if new, False if already exists.
+
+    Stamps the member's CURRENT level on the row, which is by definition the
+    level the work was done at. `practice_completions` uses it to attribute
+    Discord-only tasks (writing/community) to the right level instead of to
+    whichever level happens to be queried.
+
+    The lookup is best-effort: submissions are a hot path and must never fail
+    because a level could not be read, so on any error the row is still written
+    with level NULL and the bridge falls back to its previous behaviour.
+    """
+    level = None
+    try:
+        member = get_member(discord_id)
+        if member and member.get("level"):
+            level = config.cefr_key(member["level"])
+    except Exception:  # noqa: BLE001 - never block a submission on this
+        level = None
+
     conn = _connect()
     try:
         conn.execute(
-            """INSERT INTO daily_submissions (discord_id, date, task_id, content, score, feedback)
-               VALUES (?, ?, ?, ?, ?, ?)""",
-            (discord_id, date, task_id, content, score, feedback),
+            """INSERT INTO daily_submissions (discord_id, date, task_id, content, score, feedback, level)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (discord_id, date, task_id, content, score, feedback, level),
         )
         conn.commit()
         # Update last_active
@@ -3417,13 +3452,21 @@ def practice_completions(discord_id: str, level: str) -> list[dict]:
             if anchor is not None:
                 from . import curriculum
                 max_week = curriculum.max_week_for_level(level)
+                # `level` is matched only when the row HAS one. Rows predating
+                # that column are NULL and keep the old anchor-only behaviour, so
+                # existing students lose no retroactive evidence; new rows are
+                # attributed exactly and no longer leak across levels.
+                want_level = config.cefr_key(level)
                 sub_rows = conn.execute(
-                    "SELECT date, task_id FROM daily_submissions "
+                    "SELECT date, task_id, level FROM daily_submissions "
                     "WHERE discord_id=? AND task_id IN ('writing','community') "
                     "ORDER BY date",
                     (discord_id,),
                 ).fetchall()
                 for r in sub_rows:
+                    row_level = r["level"]
+                    if row_level and config.cefr_key(row_level) != want_level:
+                        continue  # work done at a different level
                     try:
                         d = datetime.date.fromisoformat(str(r["date"])[:10])
                     except (ValueError, TypeError):

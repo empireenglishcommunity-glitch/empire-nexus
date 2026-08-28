@@ -279,9 +279,10 @@ LEVELS = {
 # ============================================================
 #
 # Additive + backwards-compatible: the legacy LEVELS dict (L0–L3) is left
-# untouched so nothing breaks while Mi'yar is built behind the
-# `cefr_curriculum` flag. Once a student is migrated (Phase 2), their
-# member.level becomes a CEFR key (A1–C2) and code resolves display info via
+# untouched as a defensive key normaliser (not lesson content). Mi'yar was built
+# behind a `cefr_curriculum` flag, which was RETIRED on 2026-08-28 once all six
+# levels went live — the curriculum is now unconditional. A migrated student's
+# member.level is a CEFR key (A1–C2) and code resolves display info via
 # level_info() below, which accepts BOTH legacy and CEFR keys.
 
 CEFR_LEVELS = {

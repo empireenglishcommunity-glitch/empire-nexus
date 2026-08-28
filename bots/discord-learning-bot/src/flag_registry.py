@@ -98,7 +98,21 @@ REGISTRY = [
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
     # ── MI'YAR (CEFR curriculum) ──
-    ("cefr_curriculum", "Mi'yar: CEFR-aligned curriculum — six levels (A1–C2), CEFR can-do objectives + grammar + vocabulary bands, CEFR placement + level exit exams + certificates (built level-by-level behind this flag)", "miyar", False),
+    # RETIRED 2026-08-28: `cefr_curriculum` was the rollout gate for Mi'yar, the
+    # CEFR restructure. That rollout is complete — all six levels (A1–C2) are
+    # authored, live and student-facing — so the gate has no job left.
+    #
+    # It is removed rather than left in place because it was ON in the live DB and
+    # read by NO code, which is the worst state for a flag: it looks like a
+    # control, so a future maintainer could disable it expecting CEFR to switch
+    # off, and nothing would happen. Dead config that appears live is a trap.
+    #
+    # Removing it from this list only stops it appearing in `!flag list`;
+    # `sync_feature_flags` inserts missing flags and never prunes, so the existing
+    # DB row is left exactly as it is. It is inert either way — nothing calls
+    # `is_feature_enabled("cefr_curriculum")`. To tidy the row itself (optional,
+    # never required):
+    #     DELETE FROM feature_flags WHERE name='cefr_curriculum';
 ]
 
 # Initiative display names and emoji

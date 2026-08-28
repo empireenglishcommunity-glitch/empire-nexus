@@ -1,9 +1,10 @@
 """Phase 8 — CEFR placement RUNNER (interactive session on top of placement.py).
 
-Full 4-skill flow: vocab/grammar (adaptive MC) → listening (dictation, browser
-TTS) → writing (AI-rated) → speaking (AI-rated) → conservative overall level.
-The AI rater is stubbed (no network); answers are read from the server-side
-session (never exposed to the client).
+Full 4-skill flow: vocab/grammar (adaptive MC) → listening (adaptive real
+broadcast comprehension, with a dictation fallback) → writing (AI-rated) →
+speaking (AI-rated, band-specific prompt) → conservative overall level. The AI
+rater is stubbed (no network); answers are read from the server-side session
+(never exposed to the client).
 """
 import pytest
 
@@ -71,9 +72,17 @@ async def test_objective_phase_flows_vocab_then_listening_then_writing(stub_rate
     while out.get("phase") in ("vocab", "listening") and guard < 12:
         if out["phase"] == "listening":
             seen_listening = True
-            # listening items carry say_en (for TTS) but no options/answer
-            for it in out["block"]:
-                assert "say_en" in it and "answer" not in it and "options" not in it
+            if out.get("mode") == "comprehension":
+                # Real broadcast audio + its own questions.
+                assert out["audio_url"].startswith("/audio/")
+                assert out["audio_url"].endswith(".mp3")
+                assert out["items"]
+                for it in out["items"]:
+                    assert it["options"] and "answer" not in it
+            else:
+                # Dictation fallback: say_en for TTS, no options/answer.
+                for it in out["block"]:
+                    assert "say_en" in it and "answer" not in it and "options" not in it
         out = await placement_runner.submit_answers("plc2", _answer_current("plc2"))
         guard += 1
     assert seen_listening, "listening phase should occur between vocab and writing"
@@ -139,3 +148,124 @@ async def test_slot_is_opt_in_and_sets_level(stub_rater):
 async def test_answer_without_session_errors():
     out = await placement_runner.submit_answers("ghost", {})
     assert out == {"ok": False, "error": "no_session"}
+
+
+
+# ============================================================
+#  LISTENING DEPTH (real comprehension, adaptive)
+# ============================================================
+
+def test_listening_pool_covers_every_band_with_real_audio():
+    """Each band needs an eligible clip, or that band silently degrades to the
+    weaker dictation probe."""
+    pool = placement.build_listening_pool()
+    for band in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        assert band in pool, f"{band} has no listening-comprehension clip"
+        entry = pool[band]
+        assert entry["audio_id"].startswith(band.lower() + "-w")
+        assert entry["audio_id"].endswith("-bc0")
+        # gist + 2 details = 3 items from a single listen
+        assert len(entry["questions"]) >= 3, entry["audio_id"]
+        for q in entry["questions"]:
+            assert q["prompt"] and len(q["options"]) >= 3
+            assert q["answer"] in q["options"]
+
+
+def test_listening_probe_never_leaks_the_answer_to_the_client():
+    block = placement_runner._comprehension_block(
+        "B1", placement.build_listening_pool())
+    payload = placement_runner._client_comprehension_block(block)
+    assert payload["mode"] == "comprehension"
+    assert payload["audio_url"] == "/audio/b1-w2-bc0.mp3"
+    for it in payload["items"]:
+        assert "answer" not in it
+    # the answer is still available server-side for scoring
+    assert all(it["answer"] in it["options"] for it in block)
+
+
+@pytest.mark.asyncio
+async def test_listening_can_resolve_above_the_vocab_band(stub_rater, monkeypatch):
+    """The old probe was one block pinned at the vocab band, so a strong listener
+    with weaker vocabulary could never be measured higher. It must branch up."""
+    database.register_member("plc_lift", "Listener")
+    placement_runner.start_session("plc_lift", seed="fixed")
+
+    # Settle vocab low, deterministically: answer every vocab block wrong.
+    out = {"phase": "vocab"}
+    guard = 0
+    while out.get("phase") != "listening" and guard < 12:
+        out = await placement_runner.submit_answers(
+            "plc_lift", _answer_current("plc_lift", correct=False))
+        guard += 1
+    assert out["phase"] == "listening"
+    vocab_band = database.placement_session_get("plc_lift")["skill_bands"]["vocab_grammar"]
+    start_idx = placement.band_index(vocab_band)
+
+    # Now ace every listening block; it should climb above the vocab band.
+    guard = 0
+    while out.get("phase") == "listening" and guard < 6:
+        out = await placement_runner.submit_answers("plc_lift", _answer_current("plc_lift"))
+        guard += 1
+    listening_band = database.placement_session_get("plc_lift")["skill_bands"]["listening"]
+    assert placement.band_index(listening_band) > start_idx, (
+        f"listening stuck at/below vocab band: vocab={vocab_band} "
+        f"listening={listening_band}")
+
+
+@pytest.mark.asyncio
+async def test_dictation_fallback_when_no_clip_is_available(stub_rater, monkeypatch):
+    """A missing clip must degrade to dictation, never break placement."""
+    monkeypatch.setattr(placement, "build_listening_pool", lambda: {})
+    database.register_member("plc_fb", "Fallback")
+    placement_runner.start_session("plc_fb", seed="fixed")
+    out = {"phase": "vocab"}
+    guard = 0
+    while out.get("phase") != "listening" and guard < 12:
+        out = await placement_runner.submit_answers("plc_fb", _answer_current("plc_fb"))
+        guard += 1
+    assert out["phase"] == "listening"
+    assert out["mode"] == "dictation"
+    assert out["block"] and "say_en" in out["block"][0]
+    # and the session still completes
+    out = await placement_runner.submit_answers("plc_fb", _answer_current("plc_fb"))
+    assert out["phase"] == "writing"
+
+
+# ============================================================
+#  SPEAKING DEPTH (a speaking task, not a writing task)
+# ============================================================
+
+def test_speaking_prompt_exists_for_every_band_and_is_bilingual():
+    for band in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        p = placement.speaking_prompt(band)
+        assert p["prompt_en"] and p["prompt_ar"], band
+        assert any("\u0600" <= ch <= "\u06FF" for ch in p["prompt_ar"]), band
+        # same contract as a Part B prompt, so existing consumers keep working
+        for key in ("duration_sec", "prep_time_sec", "descriptors"):
+            assert key in p, f"{band} missing {key}"
+        assert all(d.startswith(band) for d in p["descriptors"]), p["descriptors"]
+
+
+def test_speaking_prompts_are_distinct_per_band():
+    """One prompt reused across bands cannot discriminate between them."""
+    prompts = {b: placement.speaking_prompt(b)["prompt_en"] for b in
+               ("A1", "A2", "B1", "B2", "C1", "C2")}
+    assert len(set(prompts.values())) == 6, prompts
+
+
+@pytest.mark.asyncio
+async def test_speaking_uses_a_speaking_prompt_not_the_writing_prompt(stub_rater):
+    """Regression guard: speaking used to reuse assessment.get_part_b_prompt —
+    the WRITING generator — so students were asked to speak a writing task."""
+    database.register_member("plc_sp", "Speaker")
+    placement_runner.start_session("plc_sp", seed="fixed")
+    await _run_objective_to_writing("plc_sp")
+    sp = await placement_runner.submit_writing("plc_sp", "sample " * 10)
+    assert sp["phase"] == "speaking"
+    band = sp["band"]
+    expected = placement.speaking_prompt(band)
+    assert sp["prompt"] == expected
+    # Same shape as a Part B prompt, so the page and rater need no changes.
+    assert sp["prompt"]["prompt_en"] and sp["prompt"]["prompt_ar"]
+    assert sp["prompt"] != assessment.get_part_b_prompt(band), (
+        "speaking is still handing out the writing prompt")
