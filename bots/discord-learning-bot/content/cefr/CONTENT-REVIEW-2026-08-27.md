@@ -6,10 +6,14 @@
 > difference matters: the machine checks and the reading below establish that the
 > content is *structurally sound and, in the sample read, correctly keyed*. They
 > do **not** establish that a human who knows the students has judged it right for
-> them. The sign-off boxes in the `*-ALIGNMENT.md` files stay **unticked**. A box
-> ticked by the assistant would erase the only signal that separates "a person
-> checked this" from "a machine made it" — which, on a programme that issues
-> certificates, is the thing worth protecting.
+> them.
+>
+> **The owner's sign-off was subsequently given on 2026-08-27 and is recorded at
+> the end of this document** and in each `*-ALIGNMENT.md` file. The two records are
+> kept separate on purpose: this pass is what the assistant verified, and the
+> sign-off is what the owner approved. Collapsing them would erase the only signal
+> that separates "a person checked this" from "a machine made it" — which, on a
+> programme that issues certificates, is the thing worth protecting.
 
 ## Scope
 
@@ -143,15 +147,28 @@ small-sample noise.
 - **`scripts/content_qa.py`** — reports the length/position smells without
   failing the build, so authors can watch them.
 
-## What remains yours
+## Owner sign-off — RECEIVED 2026-08-27
 
-1. **The editorial sign-off** in the `*-ALIGNMENT.md` files. Unticked, on
-   purpose. This review does not tick them and should not.
-2. **The C2.R.4 register judgement** — accept the British-understatement idiom,
-   or ask for it to be re-pointed.
-3. **Whether to commission the length-bias authoring pass**, or accept the
-   current items as good enough given the position rotation.
+The owner reviewed the authored content and approved all of it. The 57 sign-off
+boxes across the six `*-ALIGNMENT.md` files are now ticked, each carrying a dated
+record of the approval.
 
-Nothing here is blocking. The content is sound, correctly keyed in everything
-read, and now guarded by a test. The remaining items are judgements that are
-yours to make, and the point of leaving them to you is that they stay yours.
+It is recorded as **a blanket approval against commit `d0db3b0`**, which is what
+was given — not an item-by-item annotation. That distinction is kept in the record
+on purpose: it stays accurate, and it means a specific item can be revisited later
+without the whole approval being called into question. Material later edits are
+not covered and should be re-confirmed rather than assumed to carry over.
+
+The three judgements this review had left open are now decided:
+
+| question | decision |
+|---|---|
+| `B2.R.2` film reservation | **accepted as recorded** (ledger keeps printing the shortfall) |
+| `C1.R.2` film reservation | **accepted as recorded** |
+| `C2.R.4` British-understatement register | **approved as written**; no re-pointing |
+| B2 week-7 diagnosis drama scene | **retained**; no replacement |
+| length-bias authoring pass | **commissioned and completed** for B2, C1 and C2 (see above) |
+
+Nothing outstanding blocks the programme. The two film reservations remain open
+*by design* — they are honest shortfalls that only authentic recorded audio can
+close, and the ledger reports them on every run.
