@@ -38,7 +38,7 @@
       "q": "Where does he say surviving errors are located?",
       "q_ar": "فين بيقول إن الأخطاء الباقية بتكون؟",
       "options": [
-        "In the premises",
+        "In the premises, which is where most surviving peer-review errors are found",
         "In the connections, not the premises or evidence",
         "In the raw data"
       ],
@@ -58,7 +58,7 @@
       "q": "Why is a connective a safe place to conceal a weak case?",
       "q_ar": "ليه أداة الربط مكان آمن لإخفاء حجة ضعيفة؟",
       "options": [
-        "Readers skip over them",
+        "Readers habitually skip over connectives, so they are never scrutinised at all",
         "Unlike evidence, it cannot be checked against data",
         "Editors remove them"
       ],

@@ -135,7 +135,7 @@
       "q_ar": "إيه معنى 'أنا اللي هدفع الفرق'؟",
       "options": [
         "She absorbs the extra cost herself",
-        "She will cancel the contract",
+        "She will cancel the contract rather than accept the steel-price risk herself",
         "She will pass it to the supplier"
       ],
       "answer": 0
@@ -145,7 +145,7 @@
       "q_ar": "ليه مش تقدر تمشي بعدين؟",
       "options": [
         "She will have poured foundations by then",
-        "The contract forbids it",
+        "The contract explicitly forbids any withdrawal after the permit stage",
         "Her supplier would sue her"
       ],
       "answer": 0

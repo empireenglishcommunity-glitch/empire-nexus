@@ -44,7 +44,7 @@
       "q": "Why does the writer call 'a can of worms' more candid?",
       "q_ar": "ليه الكاتب قال إن 'فتح باب لا يُغلق' أكثر صراحة؟",
       "options": [
-        "It is a more common expression",
+        "It is a far more common expression in committee minutes than 'a grey area' is",
         "It appears in the formal minutes",
         "It concedes that further enquiry would find something"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "إيه موقف الكاتب من التعبيرات المجازية عمومًا؟",
       "options": [
         "It should be banned from official documents",
-        "It is only acceptable in speech",
+        "It is only acceptable in speech and should be edited out of every written record",
         "Prose without it would be unreadable and no more honest"
       ],
       "answer": 2

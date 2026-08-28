@@ -49,7 +49,7 @@
       "q_ar": "ليه بيفضّل دلوقتي 'أسوأ بستة في المية'؟",
       "options": [
         "It is more emotionally persuasive",
-        "It is shorter to print",
+        "It is shorter to print and fits more comfortably into a campaign footnote",
         "It survives contact with a hostile reader because it can be checked"
       ],
       "answer": 2
@@ -58,7 +58,7 @@
       "q": "What is his attitude to his own earlier writing?",
       "q_ar": "إيه موقفه من كتابته السابقة؟",
       "options": [
-        "He was being cynical at the time",
+        "He was being cynical at the time and no longer believes the case at all",
         "He meant every word and still thinks the case is sound",
         "He blames a colleague for it"
       ],

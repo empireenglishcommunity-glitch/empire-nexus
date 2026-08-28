@@ -46,7 +46,7 @@
       "q_ar": "ليه مش ممكن تعترض على 'موثّق جيدًا'؟",
       "options": [
         "It is a modifier, not a proposition",
-        "It is always true",
+        "It is always true, because a well-documented claim has by definition been verified",
         "It appears in the appendix"
       ],
       "answer": 0
@@ -65,7 +65,7 @@
       "q": "What remedy does the writer propose?",
       "q_ar": "إيه العلاج اللي اقترحه؟",
       "options": [
-        "Writing shorter sentences",
+        "Writing shorter sentences, since streamlined prose cannot perform the same manoeuvre",
         "Avoiding compound adjectives",
         "Unpacking each noun phrase and asking which parts are evidence"
       ],

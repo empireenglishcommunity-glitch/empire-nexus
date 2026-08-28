@@ -117,7 +117,7 @@
     "q": "What are the idioms being used to avoid?",
     "q_ar": "التعبيرات المجازية بتستخدم لتجنّب إيه؟",
     "options": [
-      "Naming the colleague responsible",
+      "Naming the individual colleague who would be held responsible for the outcome",
       "Admitting the rule is clear and applying it would be costly",
       "Explaining a genuinely ambiguous regulation"
     ],
@@ -150,7 +150,7 @@
       "options": [
         "Parking a decision for six months",
         "A phrase that means whatever the next person needs it to mean",
-        "Dropping the matter with a reason"
+        "Dropping the matter altogether, as long as the reason for doing so is minuted"
       ],
       "answer": 1
     }

@@ -94,15 +94,27 @@ arises honestly — at higher levels the correct answer is a precise, qualified
 paraphrase while the distractors are pithy wrong readings — but it is still a
 tell.
 
-**Decision: not mass-edited, deliberately.** Rewriting ~570 currently-correct
-items to equalise option length is a large, risky edit whose most likely outcome
-is *introducing* a defect — a typo, or worse, a lengthened distractor that
-becomes a second defensible answer — into content that is presently correct and
-human-verifiable. The downside outweighs defeating a guessing strategy that is
-already partly blunted by the SHA-256 answer-position rotation. The right fix is
-a **dedicated, human-reviewed authoring pass** that strengthens distractors, and
-it should be done with eyes on each item, not by a script. Until then the
-`content_qa.py` report makes the number visible so it cannot be forgotten.
+**C1 has been fixed (2026-08-27); C2/B2 deliberately left for editorial review.**
+C1 was the worst level at 94%, and the terminal-but-one, so it was corrected
+first: two items per file had a *distractor* strengthened with a clause that is
+demonstrably false against the passage/script, so a wrong option is sometimes the
+longest. The keyed answers were never touched. Every one of the 72 edited items
+was re-read to confirm the strengthened distractor stays clearly wrong (no
+double-correct), and the structural checks and full suite pass. C1 fell from
+**94% → 44%** — below the point where "pick the longest" is a usable strategy.
+
+C2 (85%) and B2 (80%) were **not** put through the same mechanical pass, on
+purpose. Rewriting ~140 more currently-correct items carries a real,
+cumulative risk of introducing a subtle second-defensible-answer into content
+that is presently correct — the exact failure this review exists to prevent —
+for levels no student will reach for a long time. The far safer and nearly-free
+place to strengthen those distractors is **inside the human editorial read**:
+whoever reads each C2/B2 item for correctness can lengthen a distractor in the
+same pass, with eyes on the item. The `content_qa.py` report keeps the per-level
+number visible so it is not forgotten.
+
+The lower levels (A1 39%, A2 65%, B1 66%) are milder and lower-stakes; same
+recommendation.
 
 Position bias is **not** a real problem: the global answer-index distribution is
 239 / 305 / 193 / 19 across indices 0–3, and index 3 is rare only because most

@@ -36,7 +36,7 @@
       "q_ar": "اتفاقية التمويل موجودة ليه حسب الكاتب؟",
       "options": [
         "Recording the parties' intentions",
-        "Protecting the funder",
+        "Protecting the funder's contribution against any conceivable escalation in cost",
         "Allocating uncertainty to whoever can satisfy each condition"
       ],
       "answer": 2
@@ -65,7 +65,7 @@
       "q": "What test does the writer recommend when drafting?",
       "q_ar": "إيه الاختبار اللي بينصح بيه عند الصياغة؟",
       "options": [
-        "Count the conditions",
+        "Count the conditions and make sure each one has been formally priced by the funder",
         "Ask who bears each assumption if it fails",
         "Have a lawyer review every clause"
       ],

@@ -38,7 +38,7 @@
       "q": "What happened to processing time?",
       "q_ar": "إيه اللي حصل لوقت المعالجة؟",
       "options": [
-        "It fell by thirty-one per cent",
+        "It fell by thirty-one per cent, comfortably recovering the programme's cost",
         "It fell by under two per cent, within normal variation",
         "It rose slightly"
       ],
@@ -58,7 +58,7 @@
       "q": "What does 'a governance problem, not a design one' mean?",
       "q_ar": "إيه معنى 'مشكلة إدارة مش مشكلة تصميم'؟",
       "options": [
-        "The programme was built badly",
+        "The programme was built badly and failed to deliver any measurable benefit at all",
         "It was approved against the wrong objective, though it works",
         "The department should be reorganised"
       ],

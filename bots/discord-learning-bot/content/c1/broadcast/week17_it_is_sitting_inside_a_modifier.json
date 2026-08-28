@@ -39,7 +39,7 @@
       "q_ar": "ليه مش ممكن تعترض على 'موثّق جيدًا' بصيغتها؟",
       "options": [
         "It is a modifier, not a proposition",
-        "It is always true",
+        "It is always true, since a well-documented claim has by definition been verified",
         "It appears in the abstract"
       ],
       "answer": 0
@@ -58,7 +58,7 @@
       "q": "Where does she say the field's real disagreement usually sits?",
       "q_ar": "فين بتقول إن الخلاف الحقيقي في المجال بيكون؟",
       "options": [
-        "In the conclusion",
+        "In the paper's stated conclusion, which is where reviewers concentrate their attention",
         "Inside one of the modifiers, where nobody has to cite it",
         "In the choice of head noun"
       ],

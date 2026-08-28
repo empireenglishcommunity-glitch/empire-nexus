@@ -140,7 +140,7 @@
       "q": "Why does she call the honest answer 'much worse'?",
       "q_ar": "ليه سمّت الإجابة الصادقة 'أسوأ بكتير'؟",
       "options": [
-        "Because it is untrue",
+        "Because it is untrue and she would be lying to the public if she ever said it",
         "Because it is longer",
         "Worse for her, which is why the formal line was given instead"
       ],
@@ -161,7 +161,7 @@
       "q_ar": "إيه معنى 'محدش كان نفسه يكون هو اللي يفتح الموضوع'؟",
       "options": [
         "Nobody wanted to be the person who raised it",
-        "Nobody understood the issue",
+        "Nobody on the team actually understood the safety issue that was involved",
         "Nobody was asked"
       ],
       "answer": 0

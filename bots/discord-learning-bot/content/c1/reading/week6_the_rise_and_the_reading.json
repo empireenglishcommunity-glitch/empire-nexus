@@ -45,7 +45,7 @@
       "q": "Why did low-rate areas move towards the national mean?",
       "q_ar": "ليه المناطق منخفضة المعدل اقتربت من المتوسط القومي؟",
       "options": [
-        "The condition spread to them",
+        "The underlying condition genuinely spread into those areas in the years after 2014",
         "New regional clinics made assessment available there",
         "The threshold was narrowed"
       ],
@@ -55,7 +55,7 @@
       "q": "What does the writer find hard to explain about the 2019 summary?",
       "q_ar": "إيه اللي الكاتب شايفه صعب تفسيره في ملخص 2019؟",
       "options": [
-        "It used the wrong diagnostic threshold",
+        "It used the wrong diagnostic threshold and double-counted the school screening cohort",
         "It omitted the correlation with clinic openings",
         "It was never published"
       ],

@@ -46,7 +46,7 @@
       "q_ar": "ليه الكاتب بيشكّك في رقم 31 في المية؟",
       "options": [
         "The baseline year was collected during a drought",
-        "The reservoir was never built",
+        "The reservoir was never actually built, so the entire figure has been fabricated",
         "Consumption actually rose"
       ],
       "answer": 0
@@ -56,7 +56,7 @@
       "q_ar": "قال إيه عن الجملتين المبنيتين للمجهول عن المراجعة؟",
       "options": [
         "Both are equally unverifiable, but only one will be repeated",
-        "The first is true and the second false",
+        "The first sentence is demonstrably true and the second was fabricated by the engineers",
         "Both should be deleted"
       ],
       "answer": 0

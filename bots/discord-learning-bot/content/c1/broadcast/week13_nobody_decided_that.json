@@ -39,7 +39,7 @@
       "q_ar": "ليه نقل يونيو فشل؟",
       "options": [
         "The northern plant was three days from a strike",
-        "Customers refused the change",
+        "Customers refused the change and cancelled their orders before June arrived",
         "Forty per cent of staff had left"
       ],
       "answer": 0
@@ -58,7 +58,7 @@
       "q": "What does he say about loyalty?",
       "q_ar": "قال إيه عن الولاء؟",
       "options": [
-        "It was the reason the plant survived",
+        "It was the single decisive reason the plant survived its scheduled closure",
         "It was real but worth little against a mortgage",
         "Nobody was loyal at all"
       ],

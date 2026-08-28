@@ -27,7 +27,7 @@
     "q": "What does he think the index is safe to be used for?",
     "q_ar": "هو شايف المؤشر آمن يُستخدم في إيه؟",
     "options": [
-      "Tracking a city's year-on-year movement",
+      "Tracking a single city's year-on-year movement, which it measures reliably",
       "Setting the threshold for air quality",
       "Comparing cities that are far apart, further than the error"
     ],
@@ -59,7 +59,7 @@
       "q_ar": "قال إيه عن الملحق؟",
       "options": [
         "It states the limitation, and he has never met anyone who read it",
-        "It contradicts the index",
+        "It contradicts the index's own rankings and calls for the composite to be dropped",
         "It has not been published"
       ],
       "answer": 0

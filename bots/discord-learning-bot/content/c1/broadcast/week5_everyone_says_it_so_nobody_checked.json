@@ -38,7 +38,7 @@
       "q": "What is his objection to the 2011 baseline?",
       "q_ar": "إيه اعتراضه على سنة الأساس 2011؟",
       "options": [
-        "It is too recent to compare",
+        "It is far too recent a year to serve as any meaningful comparison baseline",
         "The data were never collected",
         "It is a drought year, so later years look better"
       ],
@@ -58,7 +58,7 @@
       "q": "What happened when he raised it?",
       "q_ar": "إيه اللي حصل لما أثار الموضوع؟",
       "options": [
-        "He was given the raw data",
+        "He was immediately given the full raw data and the independent review to examine",
         "The poster was removed",
         "He was told there was an independent review, and asked to see it"
       ],

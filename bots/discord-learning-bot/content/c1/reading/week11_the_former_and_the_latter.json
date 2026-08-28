@@ -34,7 +34,7 @@
       "q": "Which of the two conventions does the writer say goes untaught?",
       "q_ar": "أنهي قاعدة من الاتنين مش بتتعلّم؟",
       "options": [
-        "That repetition should be avoided",
+        "That repetition should always be avoided, which the writer calls the more important of the two",
         "That prose should be formal",
         "That meaning should not depend on the reader's memory"
       ],
@@ -46,7 +46,7 @@
       "options": [
         "It is grammatically incorrect",
         "If the reader has lost the order, the sentence silently reverses",
-        "It is too formal for professional prose"
+        "It is too formal for professional prose, and most editors now forbid the construction outright"
       ],
       "answer": 1
     },

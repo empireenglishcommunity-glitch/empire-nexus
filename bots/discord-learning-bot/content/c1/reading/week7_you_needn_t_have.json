@@ -35,7 +35,7 @@
       "q_ar": "أنهي جملة من الأربعة بتعبّر عن إلزام حقيقي؟",
       "options": [
         "You ought to have flagged this",
-        "You'd better speak to Legal",
+        "You'd better speak to Legal, which the writer classes as the clearest direct order of the four",
         "You're supposed to log it within a day"
       ],
       "answer": 2
@@ -54,7 +54,7 @@
       "q": "What does the writer say indirect managers are often actually doing?",
       "q_ar": "الكاتب بيقول إن المديرين غير المباشرين بيعملوا إيه فعلًا؟",
       "options": [
-        "Extending genuine discretion",
+        "Extending genuine discretion and thereby reducing the employee's exposure to blame",
         "Transferring risk to the employee",
         "Following legal advice"
       ],
