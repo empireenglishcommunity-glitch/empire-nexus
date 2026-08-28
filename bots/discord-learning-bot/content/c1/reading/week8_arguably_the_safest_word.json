@@ -44,7 +44,7 @@
       "q": "What does the writer concede about hedging in general?",
       "q_ar": "الكاتب بيقرّ بإيه عن اللغة المتحفّظة عمومًا؟",
       "options": [
-        "It is always evasive",
+        "It is always evasive and has no legitimate place anywhere in professional analysis",
         "It is legitimate where evidence is genuinely tentative",
         "It belongs only in executive summaries"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "الكاتب بيقول اللغة المتحفّظة موجودة ليه فعلًا هنا؟",
       "options": [
         "To be produced later as evidence of care",
-        "To describe genuine uncertainty",
+        "To describe the genuine statistical uncertainty in the report's benefit estimates",
         "To make the report shorter"
       ],
       "answer": 0

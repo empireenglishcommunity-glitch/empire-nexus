@@ -38,7 +38,7 @@
       "q": "What does he now think the penalty clause revealed?",
       "q_ar": "بيفكّر دلوقتي إن شرط الغرامة كشف إيه؟",
       "options": [
-        "That Castell was more expensive",
+        "That Castell was significantly more expensive and knew it when they signed",
         "That the committee was disorganised",
         "What Meridian thought of their own chances"
       ],
@@ -48,7 +48,7 @@
       "q": "Why does he say the minutes tell you nothing?",
       "q_ar": "ليه بيقول إن المحضر مش بيقول حاجة؟",
       "options": [
-        "The minutes were never written",
+        "The minutes were never actually written up after the meeting had concluded",
         "'Delivery was decisive' is true but omits how",
         "They recorded the price instead"
       ],

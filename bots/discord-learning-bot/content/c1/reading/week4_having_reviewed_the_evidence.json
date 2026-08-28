@@ -35,7 +35,7 @@
       "q": "What is the review's finding on processing time?",
       "q_ar": "إيه نتيجة المراجعة بخصوص وقت المعالجة؟",
       "options": [
-        "It fell substantially",
+        "It fell substantially, comfortably exceeding the projection in the interim report",
         "It increased",
         "It fell by under two per cent, within normal variation"
       ],
@@ -45,7 +45,7 @@
       "q": "Which finding does the writer say should have led the interim report?",
       "q_ar": "أنهي نتيجة كان لازم التقرير المؤقت يبدأ بيها؟",
       "options": [
-        "The qualitative benefit",
+        "The qualitative benefit the department fell back on once the time finding had collapsed",
         "The need for a further pilot",
         "The thirty-one per cent fall in handover errors"
       ],

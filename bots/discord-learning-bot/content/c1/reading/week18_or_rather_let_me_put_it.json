@@ -35,7 +35,7 @@
       "q": "What is the writer's central claim about fluency?",
       "q_ar": "إيه ادعاء الكاتب الأساسي عن الطلاقة؟",
       "options": [
-        "Fluency means speaking without pausing",
+        "Fluency means speaking continuously without pausing, which is the writer's whole thesis",
         "Fluency requires a large vocabulary",
         "Fluency is keeping a listener oriented while you think"
       ],
@@ -56,7 +56,7 @@
       "q_ar": "ليه المتحدث المتمكن بيلخّص من وقت للتاني؟",
       "options": [
         "Because they have forgotten what they said",
-        "Because the descriptors require it",
+        "Because the assessment descriptors formally require a recap at fixed intervals",
         "Because they can hear that the listener might have lost it"
       ],
       "answer": 2

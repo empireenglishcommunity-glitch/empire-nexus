@@ -111,7 +111,7 @@
       "q_ar": "إيه معنى 'دي زيادة شوية' هنا؟",
       "options": [
         "That her accusation is unfair coming from her",
-        "That he agrees with her",
+        "That he agrees with her and is admitting he was wrong to keep the photograph",
         "That the photograph is valuable"
       ],
       "answer": 0
@@ -122,7 +122,7 @@
       "options": [
         "He uses it to end conversations instead of answering",
         "He says it too quietly",
-        "He has admitted everything already"
+        "He has already admitted everything, so the phrase adds nothing new to the argument"
       ],
       "answer": 0
     },

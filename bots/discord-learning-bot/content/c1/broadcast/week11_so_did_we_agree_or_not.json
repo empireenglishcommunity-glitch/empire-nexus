@@ -183,7 +183,7 @@
     "q": "What had they not actually agreed?",
     "q_ar": "إيه اللي مكانوش متفقين عليه فعلًا؟",
     "options": [
-      "Whether to run a pilot at all",
+      "Whether to run a pilot at all before committing to the summer rollout",
       "Who would write the minutes",
       "What counted as the pilot — one district or two"
     ],
@@ -215,7 +215,7 @@
       "q_ar": "هالة قالت إيه اللي حصل قبل كده؟",
       "options": [
         "They found out late and it cost them a quarter",
-        "They ran the pilot twice",
+        "They ran the pilot twice and had to repeat the whole northern rollout",
         "Nobody minuted the meeting"
       ],
       "answer": 0

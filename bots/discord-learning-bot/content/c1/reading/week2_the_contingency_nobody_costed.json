@@ -36,7 +36,7 @@
       "options": [
         "Access to the western trench being assumed, not secured",
         "Currency movement",
-        "The supplier withdrawing"
+        "The main supplier withdrawing, a risk the tender had failed to anticipate or price at all"
       ],
       "answer": 0
     },
@@ -46,7 +46,7 @@
       "options": [
         "Because it was outside the project's control",
         "Because it was cheap to obtain",
-        "Because the engineers priced it"
+        "Because the engineers had priced it into the tender as a formal contingency reserve"
       ],
       "answer": 0
     },

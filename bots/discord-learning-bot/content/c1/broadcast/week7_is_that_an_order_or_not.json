@@ -129,7 +129,7 @@
     "q": "Does she get what she asked for?",
     "q_ar": "خدت اللي طلبته؟",
     "options": [
-      "No — he avoids answering to the end",
+      "No — he avoids giving a straight answer right up until the very end of the conversation",
       "She withdraws the question",
       "Yes — he finally states plainly that it is her choice"
     ],
@@ -151,7 +151,7 @@
       "q_ar": "ليه بتقول إن الغموض بيكلّفها هي مش هو؟",
       "options": [
         "He gets to be vague; for her it decides whether she goes home",
-        "She is paid less than him",
+        "She is paid considerably less than him and cannot afford to work the extra hours",
         "He does not attend her reviews"
       ],
       "answer": 0

@@ -36,7 +36,7 @@
       "options": [
         "Showing respect for the applicant",
         "Obscuring who made the decision and why",
-        "Making the letter shorter"
+        "Making the letter shorter and more efficient than the manager's blunt internal email"
       ],
       "answer": 1
     },
@@ -44,7 +44,7 @@
       "q": "Why does the writer object to the word 'unable'?",
       "q_ar": "ليه الكاتب معترض على كلمة 'لم يتمكن'؟",
       "options": [
-        "It is too informal",
+        "It is too informal for a decision letter of this kind and quietly undermines the panel",
         "It implies constraint where a choice was made",
         "It is factually false"
       ],

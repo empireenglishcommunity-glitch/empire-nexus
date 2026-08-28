@@ -56,7 +56,7 @@
       "q_ar": "ليه الكاتب نبّه إن كلمة 'إصابة' مش موجودة خالص؟",
       "options": [
         "To suggest the report omits the cost of the improvisation it praises",
-        "To show the report was written carelessly",
+        "To show the report was written carelessly and without the funder ever reading the clinical notes",
         "To blame the staff for being injured"
       ],
       "answer": 0
@@ -65,7 +65,7 @@
       "q": "'Both are accurate. Only one raises money.' What is being implied?",
       "q_ar": "'الاتنين صح. واحد بس هو اللي بيجمع فلوس.' إيه المعنى الضمني؟",
       "options": [
-        "The fundraising version is dishonest",
+        "The fundraising version is dishonest and ought never to have been published by the funder",
         "Both versions should have been published",
         "Accuracy is not what determined which version was told"
       ],

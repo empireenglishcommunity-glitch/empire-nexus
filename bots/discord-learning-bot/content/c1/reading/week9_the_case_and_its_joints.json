@@ -36,7 +36,7 @@
       "q_ar": "فين بتفشل الحجج أكتر حسب الكاتب؟",
       "options": [
         "At their joints — the connections",
-        "In their evidence",
+        "In their evidence, which is where peer review most reliably catches them",
         "In their conclusions"
       ],
       "answer": 0
@@ -65,7 +65,7 @@
       "q": "Why is a connective the safest place to conceal a weak case?",
       "q_ar": "ليه أداة الربط أأمن مكان لإخفاء حجة ضعيفة؟",
       "options": [
-        "Readers skip them",
+        "Readers routinely skip over connectives, so no reviewer ever stops to examine them",
         "It cannot be checked against data the way evidence can",
         "Editors always delete them"
       ],

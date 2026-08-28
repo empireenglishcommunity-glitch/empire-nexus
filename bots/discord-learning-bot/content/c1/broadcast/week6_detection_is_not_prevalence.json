@@ -28,7 +28,7 @@
     "q_ar": "الارتفاع بيعكس إيه فعلًا؟",
     "options": [
       "A large measurement effect plus a modest real increase",
-      "A genuine epidemic",
+      "A genuine epidemic driven by a real and rapid rise in the underlying prevalence",
       "Nothing has changed; it is entirely an artefact"
     ],
     "answer": 0
@@ -38,7 +38,7 @@
       "q": "Why did low-rate districts move towards the national mean?",
       "q_ar": "ليه المناطق منخفضة المعدل اقتربت من المتوسط؟",
       "options": [
-        "The condition spread there",
+        "The underlying condition genuinely spread into those districts in the years after 2014",
         "New regional clinics made assessment available",
         "The threshold was narrowed"
       ],

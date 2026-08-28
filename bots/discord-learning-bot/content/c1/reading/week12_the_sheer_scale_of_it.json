@@ -34,7 +34,7 @@
       "q": "What is the writer's overall verdict on the campaign?",
       "q_ar": "إيه حكم الكاتب النهائي على الحملة؟",
       "options": [
-        "The case is weak and the rhetoric conceals it",
+        "The case itself is fundamentally weak, and the emphatic rhetoric is there to conceal that weakness",
         "The case and the rhetoric are both effective",
         "The case is sound but the rhetoric has damaged it"
       ],
@@ -56,7 +56,7 @@
       "options": [
         "It is harder to read",
         "It can be checked, and that is precisely the point",
-        "It is usually inaccurate"
+        "It is usually inaccurate, since such precise-looking figures are rarely reliable in practice"
       ],
       "answer": 1
     },
