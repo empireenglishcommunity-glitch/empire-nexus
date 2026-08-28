@@ -1,8 +1,9 @@
 # Mi'yar — CEFR content
 
-This directory holds the CEFR-aligned curriculum scaffolding for the six
-levels (A1–C2). Built level-by-level during the Mi'yar rollout, behind the
-`cefr_curriculum` flag.
+This directory holds the CEFR-aligned curriculum for the six levels (A1–C2).
+It was built level-by-level during the Mi'yar rollout behind a
+`cefr_curriculum` flag; that rollout is complete, all six levels are live, and
+**the flag was retired on 2026-08-28** — the curriculum is not gated by anything.
 
 ## Files
 

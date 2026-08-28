@@ -18,10 +18,37 @@ from src import config, curriculum, database, flag_registry
 #  FLAG
 # ============================================================
 
-def test_cefr_flag_registered_and_off():
-    names = {f[0]: f[3] for f in [(x[0], x[1], x[2], x[3]) for x in flag_registry.REGISTRY]}
-    assert "cefr_curriculum" in names
-    assert names["cefr_curriculum"] is False
+def test_cefr_curriculum_flag_is_retired():
+    """`cefr_curriculum` was the Mi'yar rollout gate. RETIRED 2026-08-28.
+
+    The rollout is complete — all six levels are authored, live and
+    student-facing — and the flag was ON in the live DB while being read by NO
+    code. That is the worst state a flag can be in: it looks like a control, so a
+    maintainer could disable it expecting CEFR to switch off and nothing would
+    happen. It is removed from the registry so it stops presenting itself as one.
+    """
+    names = {f[0] for f in flag_registry.REGISTRY}
+    assert "cefr_curriculum" not in names, (
+        "cefr_curriculum is back in the registry — if CEFR genuinely needs a gate "
+        "again it must be WIRED (read by is_feature_enabled) in the same change, "
+        "not registered and left inert")
+
+
+def test_no_flag_can_switch_off_the_live_cefr_curriculum():
+    """The programme is live for real students at every level, so nothing may
+    gate the curriculum behind a flag that could turn it off underneath them."""
+    import inspect
+
+    from src import assessment, curriculum as curr, database as db, placement
+    for mod in (curr, assessment, placement, db):
+        src = inspect.getsource(mod)
+        assert "cefr_curriculum" not in src, (
+            f"{mod.__name__} references the retired cefr_curriculum flag")
+
+    # And the curriculum is available unconditionally.
+    curr.load_all()
+    for level in ("A1", "A2", "B1", "B2", "C1", "C2"):
+        assert curr.max_week_for_level(level), level
 
 
 def test_miyar_initiative_registered():

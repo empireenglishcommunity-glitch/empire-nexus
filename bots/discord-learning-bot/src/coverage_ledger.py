@@ -43,7 +43,9 @@ Two deliberate distinctions:
     the number can never drift silently in either direction.
 """
 
+import json
 import logging
+import pathlib
 
 from . import config, curriculum, database
 
@@ -149,6 +151,10 @@ TAUGHT_WITH_RESERVATION = {
                       "comprehension items re-pointed at tone and implication. "
                       "The scripts and the page need no changes; only the audio "
                       "source does.",
+        # Scenes that must carry authentic human audio before this reservation
+        # lifts. Declared in content/cefr/authentic_audio.json; see
+        # `authentic_scenes()` and `reservation_is_closed()` below.
+        "requires_authentic_scenes": ["b2-w3", "b2-w5", "b2-w7", "b2-w15", "b2-w16"],
     },
     # Same class of reservation as B2.R.2, at C1: the descriptor names FILMS.
     # Recorded on the owner's explicit decision (2026-08-27) to accept the
@@ -180,8 +186,64 @@ TAUGHT_WITH_RESERVATION = {
                       "comprehension items re-pointed at tone and delivery. As "
                       "with B2.R.2 the scripts and the page need no changes; "
                       "only the audio source does.",
+        "requires_authentic_scenes": ["c1-w2", "c1-w7", "c1-w11", "c1-w14",
+                                      "c1-w15", "c1-w16"],
     },
 }
+
+
+# ---------------------------------------------------------------------------
+#  AUTHENTIC AUDIO — how a film reservation closes itself
+# ---------------------------------------------------------------------------
+# A reservation is a debt, and a debt needs a defined way to be paid. Both film
+# reservations are closed by the same thing: real recorded voices for the drama
+# scenes. Rather than require someone to remember to hand-edit this file on that
+# day, the closure is DECLARATIVE — record the scene, list it in
+# content/cefr/authentic_audio.json, and the reservation lifts on the next run.
+#
+# Deliberately a declaration and not a detection: nothing can automatically prove
+# a recording features human actors. What IS checked automatically lives in
+# empire-dojo/scripts/verify_authentic_audio.py — it fails if a listed scene's
+# file is missing or is still one of our own TTS renders, which catches the
+# realistic mistake (declaring a scene that was never actually replaced).
+
+_AUTHENTIC_AUDIO_PATH = (pathlib.Path(__file__).resolve().parent.parent
+                         / "content" / "cefr" / "authentic_audio.json")
+
+
+def authentic_scenes() -> set:
+    """Scene ids declared as authentic human recordings (e.g. {'b2-w3'}).
+
+    Never raises: a missing or malformed manifest simply means nothing is
+    authentic yet, which keeps the reservations printed — the safe direction.
+    """
+    try:
+        with open(_AUTHENTIC_AUDIO_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+        return {str(s).strip().lower() for s in (data.get("scenes") or []) if s}
+    except (OSError, ValueError):
+        return set()
+
+
+def reservation_is_closed(code: str, declared: set | None = None) -> bool:
+    """True when every scene a reservation depends on has authentic audio.
+
+    A reservation with no `requires_authentic_scenes` can never auto-close: it
+    has no defined completion condition, so it stays until someone states one.
+    """
+    entry = TAUGHT_WITH_RESERVATION.get(code) or {}
+    required = {s.lower() for s in entry.get("requires_authentic_scenes") or []}
+    if not required:
+        return False
+    return required <= (authentic_scenes() if declared is None else declared)
+
+
+def open_reservations() -> dict:
+    """The reservations still outstanding, i.e. not yet closed by real audio."""
+    declared = authentic_scenes()
+    return {code: dict(entry)
+            for code, entry in TAUGHT_WITH_RESERVATION.items()
+            if not reservation_is_closed(code, declared)}
 
 
 def _atom_rows(level: str) -> list[dict]:
@@ -564,8 +626,13 @@ def report() -> dict:
         "shortfalls": all_shortfalls,
         "untaught_descriptors": sorted(all_untaught),
         "unevidenceable_descriptors": all_unprovable,
-        "taught_with_reservation": {k: dict(v) for k, v
-                                    in TAUGHT_WITH_RESERVATION.items()},
+        # Only the reservations still OUTSTANDING. One whose scenes now carry
+        # authentic audio has been paid off and stops being reported, so the
+        # ledger reflects reality without anyone editing this file that day.
+        "taught_with_reservation": open_reservations(),
+        "reservations_closed_by_authentic_audio": sorted(
+            code for code in TAUGHT_WITH_RESERVATION
+            if reservation_is_closed(code)),
         "tracked_exercises": list(database.TRACKED_EXERCISES),
         "weekly_exercises": list(database.WEEKLY_EXERCISES),
     }

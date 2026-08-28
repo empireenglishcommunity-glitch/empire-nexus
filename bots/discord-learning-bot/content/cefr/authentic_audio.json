@@ -1,0 +1,7 @@
+{
+  "_what": "Scenes whose audio is an AUTHENTIC HUMAN RECORDING rather than Kokoro TTS.",
+  "_why": "Two descriptors name FILMS: B2.R.2 ('the majority of films in standard dialect') and C1.R.2 ('follow films employing a considerable degree of slang'). Synthesised audio delivers the words, the slang and the ellipsis, but not what a real actor does with a line -- no overlapping speech, no regional accent, no emotional prosody. A student who understands every synthesised scene has still never had to read tone off a real voice. Both descriptors therefore carry a RESERVATION in coverage_ledger.TAUGHT_WITH_RESERVATION.",
+  "_how": "Record the scene as ONE continuous file with real actors and drop it in at empire-dojo/site/audio/{scene}.mp3 -- e.g. 'b2-w3' becomes 'b2-w3-scene.mp3'. Then add the scene id to the list below. The coverage ledger drops that descriptor's reservation automatically once every scene it needs is listed, and empire-dojo/scripts/verify_authentic_audio.py fails if a listed scene's file is missing or is still a TTS render.",
+  "_honesty": "Listing a scene here is a CLAIM that the audio is a real recording. Nothing can prove that automatically -- the checksum guard only proves the file is not one of our own TTS clips. Do not list a scene you have not actually recorded: the whole point of the reservation is that it is true.",
+  "scenes": []
+}
