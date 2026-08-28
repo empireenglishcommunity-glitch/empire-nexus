@@ -36,7 +36,7 @@
       "options": [
         "The vocabulary is too advanced for most learners",
         "The meaning is carried in the delivery, which no transcript preserves",
-        "It is only used by supervisors"
+        "It is only ever used by supervisors and never appears in ordinary conversation"
       ],
       "answer": 1
     },
@@ -64,7 +64,7 @@
       "q": "Why does 'It's just a scratch' make us laugh?",
       "q_ar": "ليه 'مجرد خرمشة' بتضحّكنا؟",
       "options": [
-        "The speaker is being modest",
+        "The speaker is being sincerely modest about a genuinely minor injury",
         "The gap between the words and the world does the work",
         "It is a well-known idiom"
       ],

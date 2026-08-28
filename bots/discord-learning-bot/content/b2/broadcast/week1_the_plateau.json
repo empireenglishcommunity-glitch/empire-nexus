@@ -48,7 +48,7 @@
       "q": "What does she say about learners on a plateau?",
       "q_ar": "قالت إيه عن الدارسين اللي واقفين على الهضبة؟",
       "options": [
-        "They have usually reduced their effort",
+        "They have usually reduced their effort and are coasting comfortably",
         "They are usually working harder than at the start",
         "They have stopped studying altogether"
       ],
@@ -58,7 +58,7 @@
       "q": "Which question does she say measures progress?",
       "q_ar": "أنهي سؤال قالت إنه بيقيس التقدّم؟",
       "options": [
-        "How long have you been studying?",
+        "How long have you been studying English so far?",
         "What have you actually completed?",
         "How hard have you been working?"
       ],

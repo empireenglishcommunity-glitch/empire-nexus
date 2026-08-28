@@ -129,7 +129,7 @@
     "q": "What finally stops the spokesman deflecting?",
     "options": [
       "The minister arrives to answer in person",
-      "He admits the minister's statement was false",
+      "He suddenly admits the minister's statement to the House was false and offers to withdraw it on the spot",
       "The chair of the committee intervenes",
       "A reporter reads out sworn committee testimony that the register went into the box on the ninth"
     ],
@@ -139,7 +139,7 @@
     {
       "q": "What does the spokesman concede at the end?",
       "options": [
-        "That the minister misled the House",
+        "That the minister deliberately misled the House in her formal statement",
         "That the risk register was never produced",
         "That the permanent secretary was mistaken",
         "That he has no form of words, and will answer in writing today"

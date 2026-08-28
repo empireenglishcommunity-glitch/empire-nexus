@@ -35,7 +35,7 @@
       "q_ar": "السخرية في النص جاية منين؟",
       "options": [
         "The writer insulting the mayor directly",
-        "A series of exaggerated statistics",
+        "A series of exaggerated statistics about the building's cost and attendance",
         "Grand ceremonial language applied to a small, undignified event"
       ],
       "answer": 2
@@ -44,7 +44,7 @@
       "q": "What is the effect of 'The minister was unhurt. The buffet was not.'?",
       "q_ar": "إيه تأثير 'الوزير مأذاش. البوفيه اتأذى.'؟",
       "options": [
-        "It establishes the seriousness of the injuries",
+        "It establishes the seriousness of the injuries sustained by the minister at the event",
         "It deflates the drama by equating a person with a table of food",
         "It criticises the minister's conduct"
       ],

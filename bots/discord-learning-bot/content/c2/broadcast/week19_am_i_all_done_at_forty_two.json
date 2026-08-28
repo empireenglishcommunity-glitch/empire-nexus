@@ -69,7 +69,7 @@
     {
       "q": "What happened to lot 216?",
       "options": [
-        "Sold at 7,400",
+        "Sold at seven thousand four hundred to paddle four-oh-two",
         "Sold to a commission bid",
         "Passed with no bids",
         "Withdrawn at the vendor's instruction"
@@ -89,7 +89,7 @@
     {
       "q": "Where must buyers collect their purchases?",
       "options": [
-        "From the saleroom after two o'clock",
+        "From the saleroom itself once the two o'clock manuscripts session has finished",
         "From the Bermondsey store, not the saleroom",
         "From the vendor directly",
         "From the manuscripts department"

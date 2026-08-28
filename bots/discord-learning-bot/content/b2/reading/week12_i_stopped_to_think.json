@@ -44,7 +44,7 @@
       "q": "What does 'I regret telling them' mean?",
       "q_ar": "معنى 'I regret telling them' إيه؟",
       "options": [
-        "Bad news is about to be delivered",
+        "Bad news is about to be delivered to the person",
         "It has already happened and is regretted",
         "The speaker intends to tell them"
       ],
@@ -54,7 +54,7 @@
       "q": "What danger does the writer mention for learners?",
       "q_ar": "إيه الخطر اللي بيذكره للمتعلّمين؟",
       "options": [
-        "Speaking too slowly",
+        "Speaking too slowly and hesitantly in an important meeting",
         "Forgetting vocabulary lists",
         "Being misunderstood at an important moment"
       ],

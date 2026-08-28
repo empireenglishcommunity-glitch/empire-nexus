@@ -46,7 +46,7 @@
       "options": [
         "Reticent is a compliment; taciturn is not",
         "Reticent is about a topic; taciturn is about a person's disposition",
-        "They differ only in formality"
+        "They differ only in formality, not in what they attribute to the speaker"
       ],
       "answer": 1
     },
@@ -65,7 +65,7 @@
       "q_ar": "إيه اختباره لمعرفة إن المترادفين قابلين للتبديل؟",
       "options": [
         "Whether substituting one changes what a reader is entitled to infer",
-        "Whether a dictionary lists them together",
+        "Whether a dictionary lists them together as synonyms, which he calls the decisive test",
         "Whether the register is the same"
       ],
       "answer": 0

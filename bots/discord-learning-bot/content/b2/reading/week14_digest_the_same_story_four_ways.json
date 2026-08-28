@@ -45,7 +45,7 @@
       "q": "Why is item 3 the weakest?",
       "q_ar": "ليه الخبر ٣ الأضعف؟",
       "options": [
-        "It uses too many statistics",
+        "It uses far too many statistics and confusing tables",
         "It was published too late",
         "It names no cause and cites nothing"
       ],
@@ -65,7 +65,7 @@
       "q": "What does the writer say item 1 is good for?",
       "q_ar": "الكاتب بيقول الخبر ١ مفيد لإيه؟",
       "options": [
-        "Showing what it meant",
+        "Showing what the closure ultimately meant for workers",
         "Telling you that something happened",
         "Explaining why it happened"
       ],

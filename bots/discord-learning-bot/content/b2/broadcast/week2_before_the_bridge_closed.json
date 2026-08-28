@@ -39,7 +39,7 @@
     "q": "What does the report conclude the real failure was?",
     "q_ar": "التقرير وصل لإيه بخصوص الفشل الحقيقي؟",
     "options": [
-      "The engineers stayed silent about the danger",
+      "The engineers stayed completely silent about the danger for eighteen months",
       "The system did not act, although it had been warned repeatedly",
       "The bridge was closed with no warning to anyone"
     ],
@@ -80,7 +80,7 @@
       "q": "What does the reporter imply about the sentence 'we consider our obligation discharged'?",
       "q_ar": "المراسلة بتلمّح لإيه بخصوص جملة 'نعتبر واجبنا قد انتهى'؟",
       "options": [
-        "The engineers were satisfied the bridge was safe",
+        "The engineers were entirely satisfied that the bridge was safe to remain open",
         "The engineers were signalling they no longer accepted responsibility",
         "The authority itself wrote that sentence"
       ],

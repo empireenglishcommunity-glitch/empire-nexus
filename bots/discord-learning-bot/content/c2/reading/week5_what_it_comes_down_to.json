@@ -44,7 +44,7 @@
       "q": "What single question does he propose as a discipline?",
       "q_ar": "إيه السؤال الواحد اللي بيقترحه كمنهج؟",
       "options": [
-        "Is this claim supported by the data?",
+        "Is this claim supported by the data, and would a hostile reviewer accept it?",
         "What has this sentence assumed in order to ask its question?",
         "Would a committee find this persuasive?"
       ],
@@ -54,7 +54,7 @@
       "q": "Why do such paragraphs survive review?",
       "q_ar": "ليه الفقرات دي بتنجح في المراجعة؟",
       "options": [
-        "Reviewers rarely read the whole paragraph",
+        "Reviewers rarely read the whole paragraph, so the buried presupposition is never reached at all",
         "Reviewers are trained on claims, and the disagreement is not in the disputed clause",
         "The presuppositions are usually correct"
       ],

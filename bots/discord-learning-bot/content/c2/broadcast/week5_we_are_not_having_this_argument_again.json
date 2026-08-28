@@ -134,7 +134,7 @@
   "gist_question": {
     "q": "What is the argument really about?",
     "options": [
-      "Whether the timeline in the minutes is factually accurate",
+      "Whether the timeline recorded in the minutes is factually accurate and complete",
       "Who will attend the meeting in April",
       "Whether Bilal should have been at the October meeting",
       "Whose work Sabah credits, and therefore who will be asked in future"
@@ -145,7 +145,7 @@
     {
       "q": "What concrete change do they agree on?",
       "options": [
-        "Bilal will stop attending meetings with Sabah",
+        "Bilal will stop attending any meetings that Sabah is also present at",
         "Bilal will count to five and then offer the handover out loud",
         "Samira will circulate the timeline before each meeting",
         "The minutes will be rewritten to credit Samira"

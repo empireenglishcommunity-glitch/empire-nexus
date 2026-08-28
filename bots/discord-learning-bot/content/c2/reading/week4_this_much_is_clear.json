@@ -44,7 +44,7 @@
       "q": "What does he say about the two arrangements of the same finding?",
       "q_ar": "قال إيه عن الصياغتين لنفس النتيجة؟",
       "options": [
-        "One of them is dishonest",
+        "One of the two arrangements is dishonest and misrepresents the finding",
         "The content is identical but what is salient differs",
         "Only the second is grammatical"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "إيه أرخص أداة للتوكيد عنده؟",
       "options": [
         "Deliberate sequencing, which costs and signals nothing",
-        "Italics and bold type",
+        "Italics and bold type, which he recommends as the clearest form of emphasis",
         "Repetition of the key finding"
       ],
       "answer": 0

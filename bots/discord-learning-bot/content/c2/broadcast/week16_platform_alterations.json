@@ -93,7 +93,7 @@
     {
       "q": "What is true of the 10:26 to Port Said?",
       "options": [
-        "It has nine coaches and reservations are honoured",
+        "It will be formed of nine coaches as advertised, and existing seat reservations are honoured",
         "It departs from stand C outside the main entrance",
         "It calls additionally at Ismailia, has six coaches, and reservations are not valid",
         "It no longer calls at Ismailia"
@@ -114,7 +114,7 @@
       "q": "What changed about the Alexandria service besides the platform?",
       "options": [
         "It now departs at 10:09 and no longer calls at Damanhur",
-        "It now calls additionally at Ismailia",
+        "It now calls additionally at Ismailia and Damanhur on the way to Alexandria",
         "It has been cancelled entirely",
         "It will be formed of nine coaches"
       ],

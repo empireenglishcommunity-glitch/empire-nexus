@@ -54,7 +54,7 @@
       "q": "What is the irony in the meeting's response to 'a stitch in time saves nine'?",
       "q_ar": "إيه السخرية في رد الاجتماع على 'الوقاية خير من العلاج'؟",
       "options": [
-        "They rejected the proverb as irrelevant",
+        "They rejected the proverb as irrelevant and struck it from the minutes entirely",
         "They minuted it without understanding it",
         "They endorsed acting promptly by deciding to revisit it in June"
       ],
@@ -65,7 +65,7 @@
       "q_ar": "بيشبّه التعبير المبتذل بإيه؟",
       "options": [
         "A shrug — it fits any occasion because it commits to none",
-        "A signature — it identifies the speaker",
+        "A signature — it identifies the speaker and reveals exactly what they think",
         "A footnote — nobody reads it"
       ],
       "answer": 0

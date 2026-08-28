@@ -34,7 +34,7 @@
       "q": "How did the two newspapers differ?",
       "q_ar": "الجرنالين اختلفوا إزاي؟",
       "options": [
-        "One interviewed a different minister",
+        "One newspaper had interviewed an entirely different minister that week",
         "They reported the same interview very differently",
         "One printed it a week later"
       ],
@@ -64,7 +64,7 @@
       "q": "What is sometimes the honest answer about the verb?",
       "q_ar": "ساعات الإجابة الصادقة عن الفعل إيه؟",
       "options": [
-        "The speaker chose it",
+        "The speaker personally chose the reporting verb themselves",
         "Nothing — the verb was accurate",
         "The verb was always wrong"
       ],

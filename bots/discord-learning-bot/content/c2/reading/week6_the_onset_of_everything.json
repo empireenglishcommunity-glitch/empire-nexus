@@ -34,7 +34,7 @@
       "q": "What does the writer say abstraction chiefly removes?",
       "q_ar": "بيقول إن التجريد بيشيل إيه أساسًا؟",
       "options": [
-        "The evidence for the claim",
+        "The evidence for the claim and the data on which the whole argument rests",
         "The chronological sequence",
         "The participant — who did the thing"
       ],
@@ -54,7 +54,7 @@
       "q": "What diagnostic does he suggest?",
       "q_ar": "إيه الفحص اللي بيقترحه�?",
       "options": [
-        "Count the abstract nouns per paragraph",
+        "Count the abstract nouns in each paragraph and cut those above a fixed threshold",
         "Apply the question 'who?' to each nominalisation",
         "Rewrite every clause in the active voice"
       ],

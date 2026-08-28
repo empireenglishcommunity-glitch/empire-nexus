@@ -54,7 +54,7 @@
       "q": "What does he say the remedy is NOT?",
       "q_ar": "بيقول إن الحل مش إيه؟",
       "options": [
-        "Verifying each signpost",
+        "Verifying each signpost against the paragraph it actually points back to",
         "Less signposting — a text without a thread is worse",
         "Recapitulating what was established"
       ],
@@ -64,7 +64,7 @@
       "q": "Who does he say is chiefly at risk of being misled?",
       "q_ar": "مين الأكثر عرضة للتضليل عنده؟",
       "options": [
-        "The reader, who cannot check the references",
+        "The reader, who cannot check the references and is misled by 'as noted above'",
         "The reviewer, who skips the summary",
         "The writer, who is persuaded the coherence was achieved"
       ],

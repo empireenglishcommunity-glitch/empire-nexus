@@ -36,7 +36,7 @@
       "q_ar": "أنهي خبر أنسب لدعوى عن اللي حصل فعلًا للعاملين؟",
       "options": [
         "Item 4, the university study",
-        "Item 2, the opinion column",
+        "Item 2, the opinion column with its bold five-year prediction",
         "Item 3, the press release"
       ],
       "answer": 0
@@ -67,7 +67,7 @@
       "options": [
         "Item 1, the automation report",
         "Item 4, the university study",
-        "Item 2, the opinion column"
+        "Item 2, the opinion column, for its national figures and method"
       ],
       "answer": 0
     }

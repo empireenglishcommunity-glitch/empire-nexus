@@ -34,7 +34,7 @@
       "q": "Why did the office think he could not have gone home?",
       "q_ar": "ليه المكتب افتكر إنه مش ممكن رجع بيته؟",
       "options": [
-        "The door was locked",
+        "The front door had been left securely locked from the inside",
         "The lamp was on",
         "His coat was still there"
       ],
@@ -45,7 +45,7 @@
       "q_ar": "إيه التفصيلة اللي محدش لاحظها؟",
       "options": [
         "The tea could not have been his",
-        "The argument was on Thursday",
+        "The argument with the director had happened on Thursday, not Friday",
         "The lamp had been left on"
       ],
       "answer": 0

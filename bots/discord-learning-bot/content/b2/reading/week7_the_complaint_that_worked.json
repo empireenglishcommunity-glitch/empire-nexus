@@ -35,7 +35,7 @@
       "q_ar": "إيه الغلط في وصف الإحساس بس؟",
       "options": [
         "It gives the reader nothing to act on",
-        "It is usually exaggerated",
+        "It is almost always wildly exaggerated and untrue",
         "It is impolite"
       ],
       "answer": 0
@@ -54,7 +54,7 @@
       "q": "Why can only the second message be answered?",
       "q_ar": "ليه الرسالة التانية بس ممكن تُجاب؟",
       "options": [
-        "It mentions the company by name",
+        "It mentions the delivery company by its full name and address",
         "It is longer and more polite",
         "It names a specific event and a specific remedy"
       ],

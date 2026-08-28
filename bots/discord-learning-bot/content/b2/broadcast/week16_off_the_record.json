@@ -117,7 +117,7 @@
       "q_ar": "السيدة فريد قالت إيه في الكلام المسجّل؟",
       "options": [
         "That the product no longer aligned with strategic priorities",
-        "That nobody had checked the product",
+        "That nobody had actually checked the product before it went to market",
         "That there was a genuine safety concern"
       ],
       "answer": 0
@@ -127,7 +127,7 @@
       "q_ar": "قالت إن اللي حصل فعلًا إيه، بعيد عن التسجيل؟",
       "options": [
         "Everyone assumed somebody else had checked, and nobody had",
-        "The product was known to be unsafe from the start",
+        "The product had been known to be unsafe right from the very start",
         "A competitor copied the design"
       ],
       "answer": 0

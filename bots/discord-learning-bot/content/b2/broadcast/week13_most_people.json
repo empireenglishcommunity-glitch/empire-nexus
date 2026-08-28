@@ -63,7 +63,7 @@
     "q": "What is the pollster's main criticism of the phrase?",
     "q_ar": "إيه نقدها الأساسي للجملة؟",
     "options": [
-      "The underlying polling data is simply inaccurate",
+      "The underlying polling data itself is simply inaccurate and cannot be trusted at all",
       "It can be technically true while hiding that few understand and support is fragile",
       "Politicians should stop commissioning polls altogether"
     ],
@@ -84,7 +84,7 @@
       "q": "How does the minister respond to the criticism?",
       "q_ar": "الوزير ردّ على النقد إزاي؟",
       "options": [
-        "He disputes the figures themselves",
+        "He disputes the underlying figures and the way they were gathered",
         "He says all politics rests on numbers that thin",
         "He agrees the scheme should be abandoned"
       ],
