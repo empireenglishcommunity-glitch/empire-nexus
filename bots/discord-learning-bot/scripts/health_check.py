@@ -10,8 +10,9 @@ crashed on startup, never connected to Discord, or loaded a broken
 curriculum):
 
   1. Database reachable  — a real query succeeds, not just "file exists"
-  2. Curriculum loaded    — exactly 38 weeks across all 4 levels, not
-                             just "some number greater than zero"
+  2. Curriculum loaded    — every authored week loads (90 across the six
+                             CEFR levels A1-C2 as of 2026-08), not just
+                             "some number greater than zero"
   3. Commands registered  — at least MIN_EXPECTED_COMMANDS, catching an
                              import error that silently drops a whole
                              command's registration without crashing
@@ -46,11 +47,21 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src import config, database, curriculum  # noqa: E402
 
-# Curriculum size is now dynamic: legacy L0–L3 (38) + any authored CEFR levels
-# (Mi'yar A1–C2). curriculum.expected_week_count() counts the week files that
-# should exist on disk, so this auto-adapts as CEFR levels ship while still
+# Curriculum size is dynamic: curriculum.expected_week_count() counts the week
+# files that should exist on disk, so this auto-adapts as levels ship while still
 # catching a file that fails to load (loaded < expected).
-MIN_LEGACY_WEEKS = 38  # L0=8 + L1=10 + L2=12 + L3=8 — the floor that must always load
+#
+# MIN_TOTAL_WEEKS is a *floor* underneath that, so a catastrophic content loss
+# can't pass by making `expected` collapse to match a broken `loaded` — if the
+# week files vanished, expected would drop too and `weeks == expected` alone
+# would still be true.
+#
+# Renamed from MIN_LEGACY_WEEKS (=38) on 2026-08-29. That name and value referred
+# to the legacy L0-L3 curriculum, which was DELETED on 2026-08-25 —
+# LEVEL_WEEK_COUNTS is now an empty dict. The check still passed, but only
+# incidentally, because CEFR's 90 happens to exceed 38; the floor no longer
+# described anything real. Set to the six CEFR levels' actual total.
+MIN_TOTAL_WEEKS = 90  # A1=10 + A2=12 + B1=14 + B2=16 + C1=18 + C2=20
 MIN_EXPECTED_COMMANDS = 24  # as of Aegis Phase 1 (!flag/!systemstatus added); bump this
                             # deliberately whenever a real new command is added, so it
                             # stays a meaningful floor rather than a stale number nobody
@@ -73,9 +84,10 @@ def check_curriculum() -> tuple[bool, str]:
         stats = curriculum.stats()
         weeks = stats.get("weeks_loaded", 0)
         expected = curriculum.expected_week_count()
-        # Healthy when every curriculum file on disk loaded AND we're at or
-        # above the legacy floor (never silently below 38).
-        if weeks == expected and weeks >= MIN_LEGACY_WEEKS:
+        # Healthy when every curriculum file on disk loaded AND we are at or
+        # above the absolute floor — so a content loss that shrinks BOTH
+        # `loaded` and `expected` together still fails instead of matching.
+        if weeks == expected and weeks >= MIN_TOTAL_WEEKS:
             return True, f"Curriculum loaded ({weeks}/{expected} weeks)"
         return False, f"Curriculum incomplete ({weeks}/{expected} weeks loaded)"
     except Exception as e:
