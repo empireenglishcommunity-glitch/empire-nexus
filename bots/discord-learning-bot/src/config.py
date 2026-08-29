@@ -487,22 +487,31 @@ POINTS_ASSESSMENT = 50
 # second hardcoded constant for the same idea was worse than nothing: whoever
 # found it next would not know which one was authoritative.
 
-# ⚠️ These two are DECLARED BUT NEVER USED — verified 2026-08-29: zero references
-# outside this file. Unlike POINTS_VOICE_LOUNGE they are NOT deleted, because they
-# look like unimplemented *intentions* rather than dead duplicates, and deleting
-# them would erase the only record that they were ever meant to exist:
+# POINTS_PEER_FEEDBACK = 15 was REMOVED 2026-08-29 (Ijtihad Phase 0.3). It had
+# zero references outside this file and, unlike the two constants below, no
+# feature anywhere plans to award it — the approved Ijtihad design
+# (.kiro/specs/ijtihad-effort-economy/) contains no peer-feedback award. Keeping
+# it would have left a third state between "feature" and "dead code", which the
+# previous version of this comment explicitly warned against.
 #
-#   POINTS_ADVANCEMENT — promoting a student A1→A2 currently awards NO points at
-#   all. The only things that award points are: task:<id>, all_7_tasks, the streak
-#   bonus (tasks.py), web_<exercise> (api_server.py), tutorial_quest
-#   (features.py) and community:together_reward. Level promotion — the single
-#   biggest milestone in the programme — awards nothing.
+# ⚠️ THE TWO BELOW ARE STILL DECLARED BUT NEVER AWARDED — now by SCHEDULE, not
+# by neglect. This is the single worst property of the current economy and it is
+# what the Ijtihad rework exists to fix:
 #
-#   POINTS_PEER_FEEDBACK — no peer-feedback award exists.
+#   POINTS_ASSESSMENT — passing the weekly mastery assessment awards NOTHING.
+#   Scoring a ≥90% distinction also awards nothing.
 #
-# Decide both during the XP rework: wire them up, or delete them. Do not leave
-# them here indefinitely as a third state between "feature" and "dead code".
-POINTS_PEER_FEEDBACK = 15
+#   POINTS_ADVANCEMENT — promoting a student A1→A2 awards NOTHING. The single
+#   biggest milestone in the programme is worth zero on the leaderboard.
+#
+# Everything that DOES award points is attendance-shaped: task:<id>,
+# all_7_tasks, the streak bonus (tasks.py), web_<exercise> / weekly:<exercise>
+# (api_server.py), tutorial_quest (features.py), community:together_reward.
+#
+# These are wired up in **Ijtihad Phase 3** ("Achievement payouts"), which
+# replaces both values with the season-scoped awards in that spec's design §2.4
+# (mastery +150, distinction +250, monthly review +300, promotion +500 IP).
+# Do not add a second, different award for the same events in the meantime.
 POINTS_ADVANCEMENT = 500
 
 # Attendance intervention thresholds (days missed)
