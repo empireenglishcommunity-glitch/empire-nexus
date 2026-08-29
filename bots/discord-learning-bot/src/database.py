@@ -3759,6 +3759,118 @@ def itqan_upsert_mastery(discord_id: str, level: str, week: int,
     conn.close()
 
 
+def sijil_record(discord_id: str) -> dict:
+    """Ijtihad Phase 1 — the permanent Record of Honour, READ ONLY.
+
+    Returns every durable achievement a student has accumulated, across ALL
+    levels. Writes nothing and computes nothing new: every value here is already
+    stored, it has simply never been shown to the student in one place.
+
+    This exists so that seasonal effort (which resets, by design) never erases
+    the record of what someone actually built. See
+    .kiro/specs/ijtihad-effort-economy/ design §3.
+
+    A brand-new member with no history returns a fully-populated dict of zeros
+    and empty lists -- never None, never a missing key -- so the renderer can be
+    unconditional.
+    """
+    member = get_member(discord_id)
+    conn = _connect()
+    try:
+        weeks = conn.execute(
+            """SELECT
+                   COALESCE(SUM(CASE WHEN mastered    = 1 THEN 1 ELSE 0 END), 0) AS mastered,
+                   COALESCE(SUM(CASE WHEN distinction = 1 THEN 1 ELSE 0 END), 0) AS distinctions
+               FROM week_mastery WHERE discord_id = ?""",
+            (discord_id,),
+        ).fetchone()
+
+        lifetime_tasks = conn.execute(
+            "SELECT COUNT(*) AS n FROM daily_submissions WHERE discord_id = ?",
+            (discord_id,),
+        ).fetchone()
+
+        active_days = conn.execute(
+            "SELECT COUNT(*) AS n FROM streaks WHERE discord_id = ? AND tasks_completed > 0",
+            (discord_id,),
+        ).fetchone()
+
+        perfect_days = conn.execute(
+            "SELECT COUNT(*) AS n FROM streaks WHERE discord_id = ? AND all_seven = 1",
+            (discord_id,),
+        ).fetchone()
+
+        reviews = conn.execute(
+            "SELECT COUNT(*) AS n FROM monthly_reviews WHERE discord_id = ? AND passed = 1",
+            (discord_id,),
+        ).fetchone()
+
+        # Levels earned by examination. `promoted` is the durable truth (an exam
+        # can pass while promotion is applied separately), so accept either.
+        levels = conn.execute(
+            """SELECT level, MIN(attempted_at) AS earned_at
+               FROM advancement_exams
+               WHERE discord_id = ? AND (promoted = 1 OR passed = 1)
+               GROUP BY level ORDER BY earned_at""",
+            (discord_id,),
+        ).fetchall()
+    finally:
+        conn.close()
+
+    return {
+        "exists": member is not None,
+        # Pre-Ijtihad lifetime points, preserved verbatim and labelled as history.
+        "legacy_xp": (member or {}).get("total_points", 0) or 0,
+        "longest_streak": (member or {}).get("longest_streak", 0) or 0,
+        "current_level": (member or {}).get("level", "A1") or "A1",
+        "joined_at": (member or {}).get("joined_at", "") or "",
+        "weeks_mastered": weeks["mastered"] if weeks else 0,
+        "distinctions": weeks["distinctions"] if weeks else 0,
+        "monthly_reviews_passed": reviews["n"] if reviews else 0,
+        "lifetime_tasks": lifetime_tasks["n"] if lifetime_tasks else 0,
+        "active_days": active_days["n"] if active_days else 0,
+        "perfect_days": perfect_days["n"] if perfect_days else 0,
+        "levels_earned": [
+            {"level": r["level"], "earned_at": r["earned_at"]} for r in levels
+        ],
+    }
+
+
+def sijil_hall_of_honour(limit: int = 5) -> list:
+    """Ijtihad Phase 1 — the Hall of Honour: the permanent board.
+
+    Ranked by durable achievement, NOT by lifetime points and NOT by tenure:
+    weeks mastered first, then distinctions, then levels earned by exam. A
+    student who joined last week and mastered 3 weeks outranks a student who has
+    been present for six months and mastered none -- which is the whole point of
+    separating this from the seasonal effort board.
+
+    Only students with at least one real achievement are returned, so this can
+    never become a list that quietly ranks people by how long they have existed.
+    """
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            """SELECT m.discord_id, m.discord_name, m.level,
+                      COALESCE(SUM(CASE WHEN w.mastered    = 1 THEN 1 ELSE 0 END), 0) AS weeks_mastered,
+                      COALESCE(SUM(CASE WHEN w.distinction = 1 THEN 1 ELSE 0 END), 0) AS distinctions,
+                      (SELECT COUNT(DISTINCT level) FROM advancement_exams a
+                        WHERE a.discord_id = m.discord_id
+                          AND (a.promoted = 1 OR a.passed = 1)) AS levels_earned
+               FROM members m
+               LEFT JOIN week_mastery w ON w.discord_id = m.discord_id
+               WHERE m.status = 'active'
+               GROUP BY m.discord_id
+               HAVING weeks_mastered > 0 OR distinctions > 0 OR levels_earned > 0
+               ORDER BY weeks_mastered DESC, distinctions DESC, levels_earned DESC
+               LIMIT ?""",
+            (limit,),
+        ).fetchall()
+    finally:
+        conn.close()
+    return [dict(r) for r in rows]
+
+
 def itqan_mastered_weeks(discord_id: str, level: str) -> set:
     conn = _connect()
     rows = conn.execute(

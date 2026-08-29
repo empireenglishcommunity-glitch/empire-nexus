@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -2634,6 +2634,35 @@ async def cmd_level(ctx):
         "ℹ️ مستواك وأسبوعك وطريقة الترقية دلوقتي كلها في `!progress`.\n"
         "ℹ️ Your level, week, and how to advance are now all in `!progress`."
     )
+
+
+@bot.command(name="sijil", aliases=["honour", "honor", "سجل"])
+async def cmd_sijil(ctx):
+    """Ijtihad Phase 1: your permanent Record of Honour.
+
+    Deliberately separate from !top / points: this shows only what you EARNED
+    (weeks mastered, distinctions, levels passed, perfect days, best streak),
+    never how long you have been a member. It never resets, which is what makes
+    a seasonal effort reset safe.
+    """
+    if not database.is_feature_enabled(sijil.FLAG, str(ctx.author.id)):
+        return
+    member = database.get_member(str(ctx.author.id))
+    if not member:
+        await ctx.send("🔒 Register first with `!start` — then your Sijil begins.\n"
+                       "🔒 اعمل `!start` الأول — وبعدها يبدأ سجلك.")
+        return
+    record = sijil.build_record(str(ctx.author.id))
+    await ctx.send(sijil.format_record(record, ctx.author.display_name))
+
+
+@bot.command(name="hall", aliases=["قاعة-الشرف"])
+async def cmd_hall_of_honour(ctx):
+    """Ijtihad Phase 1: the Hall of Honour — ranked by achievement, not tenure."""
+    if not database.is_feature_enabled(sijil.FLAG, str(ctx.author.id)):
+        return
+    entries = database.sijil_hall_of_honour(limit=5)
+    await ctx.send(sijil.format_hall_of_honour(entries))
 
 
 @bot.command(name="ping-me", aliases=["pingme", "إشعارات-المجلس"])

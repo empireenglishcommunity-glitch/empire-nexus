@@ -44,14 +44,33 @@
 *Phase 0 result: full suite 2,130 passed / 2 skipped (+17 new tests), coverage
 ledger 9866/9866/0.*
 
-## Phase 1 — Sijil, the Record of Honour (additive, read-only)
+## Phase 1 — Sijil, the Record of Honour (additive, read-only) ✅ DONE
 
-- [ ] **1.1** Read-model computing Legacy XP, weeks mastered, distinctions, levels
-      earned, longest-ever streak, lifetime tasks. Pure reads — writes nothing.
-- [ ] **1.2** `!sijil` (+ Arabic alias) rendering a student's own record.
-- [ ] **1.3** Hall of Honour surface (top permanent achievements).
-- [ ] **1.4** Flag `ijtihad_sijil`; tests incl. a brand-new student (empty record
-      must render gracefully, never an error or an insulting blank).
+- [x] **1.1** `database.sijil_record()` — read-model returning Legacy XP, weeks
+      mastered, distinctions, monthly reviews passed, levels earned by exam,
+      perfect (7/7) days, active days, lifetime tasks and longest-ever streak.
+      Cross-level (promotion never hides history) and **writes nothing** — locked
+      by a test that snapshots four tables before/after and asserts equality.
+- [x] **1.2** `!sijil` (aliases `!honour`, `!honor`, `!سجل`) renders a student's
+      own record, in `src/sijil.py`.
+- [x] **1.3** `!hall` (alias `!قاعة-الشرف`) + `database.sijil_hall_of_honour()` —
+      ranked by **weeks mastered → distinctions → levels earned**, explicitly
+      *not* by points or tenure, and it excludes students with no achievement so
+      it can never quietly become a seniority ladder. The board states its own
+      ranking basis out loud ("not by how long anyone has been here").
+- [x] **1.4** Flag `ijtihad_sijil` registered default **OFF** in the same commit.
+      28 tests, including the empty state (a new student gets an encouraging
+      "your record starts now" that explains *work* earns this page, never a wall
+      of zeros), zero-row omission, an unknown member id, and the core inversion:
+      a newcomer who masters 3 weeks outranks a 50,000-point veteran with no
+      mastery.
+
+*Phase 1 result: full suite 2,158 passed / 2 skipped (+28), ledger 9866/9866/0.
+`bot.py` verified to import with both commands registered and Arabic aliases live.*
+
+**Owner action after merge:** `!flag enable ijtihad_sijil` (then record it in
+`PRODUCTION-FLAG-STATE.md`). Safe to enable immediately — it is read-only and
+additive; it shows students a record they already earned.
 
 ## Phase 2 — Seasons and Ijtihad Points
 

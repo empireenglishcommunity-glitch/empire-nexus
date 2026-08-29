@@ -98,6 +98,9 @@ REGISTRY = [
     ("assessment_monthly_review", "Taqdeem: Monthly Progress Review — retention-focused assessment after every 4 weekly passes (diagnostic + prerequisite for advancement)", "taqdeem", False),
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
+    # ── IJTIHAD (effort economy) ──
+    ("ijtihad_sijil", "Ijtihad Phase 1: Sijil — the permanent Record of Honour (!sijil, !honour). Read-only view of durable achievements (weeks mastered, distinctions, levels passed, perfect days, best streak, legacy XP) so seasonal effort resets never erase what a student built", "ijtihad", False),
+
     # ── MI'YAR (CEFR curriculum) ──
     # RETIRED 2026-08-28: `cefr_curriculum` was the rollout gate for Mi'yar, the
     # CEFR restructure. That rollout is complete — all six levels (A1–C2) are
