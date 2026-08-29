@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -454,6 +454,8 @@ async def on_ready():
         beacon_cleanup_loop.start()
     if not community_hour_loop.is_running():
         community_hour_loop.start()
+    if not bot_integrity_monitor.is_running():
+        bot_integrity_monitor.start()
 
     # Majlis Phase 3: set anchor capacity + ensure hub channel on startup.
     # Best-effort, flag-gated internally.
@@ -1568,6 +1570,20 @@ async def markaz_daily_digest():
         else:
             lines.append("   ✅ No suspicious token sharing detected")
 
+    # Hissar: bot-profile integrity (daily visible heartbeat; the fast alarm is
+    # the bot_integrity_monitor loop). Added after the 2026-08-29 Ops-token theft.
+    if database.is_feature_enabled("hissar_bot_integrity"):
+        try:
+            ok, findings = await bot_integrity.run_integrity_check()
+            if ok:
+                lines.append("   🛡️ Bot profiles: intact")
+            else:
+                lines.append("   🚨 *BOT PROFILE TAMPERING:*")
+                for f in findings[:4]:
+                    lines.append(f"      • {ops_hub.escape_markdown(f)}")
+        except Exception as e:  # noqa: BLE001 — digest must never crash
+            logger.warning(f"bot_integrity: digest check failed: {e}")
+
     lines.append("")
     lines.append("*All systems healthy\\.* ✅")
 
@@ -1665,6 +1681,57 @@ async def midnight_voice_reset():
     verification.reset_daily_voice()
     verification.reset_daily_together()
     community.reset_beacons()
+
+
+@tasks.loop(hours=6)
+async def bot_integrity_monitor():
+    """Hissar: watch each bot's public identity for tampering and alert the owner
+    FAST if it drifts. Added after the 2026-08-29 Ops-token theft, whose spam bio
+    went unnoticed for ~4 days precisely because nothing watched for this.
+
+    Every 6h it compares the Ops (Telegram) name/description/bio and the Discord
+    bot username against their baselines (src/bot_integrity.py) and scans for spam
+    signatures. On any drift it sends an immediate Empire Ops alert. Flag-gated
+    (`hissar_bot_integrity`); best-effort, never crashes. The daily digest carries
+    the same check as a visible heartbeat, but this is the fast alarm.
+
+    De-dupes: it alerts on the transition into a tampered state and once per new
+    distinct finding-set, not every 6h, so a slow owner response isn't spammed.
+    """
+    if not database.is_feature_enabled("hissar_bot_integrity"):
+        return
+    try:
+        ok, findings = await bot_integrity.run_integrity_check()
+    except Exception as e:  # noqa: BLE001
+        logger.warning(f"bot_integrity_monitor: check errored: {e}")
+        return
+
+    prev = getattr(bot, "_last_integrity_findings", None)
+    if ok:
+        if prev:  # recovered — tell the owner it's clean again
+            await ops_hub.send_ops_message(
+                "🛡️ *Bot profile integrity restored* — all bot identities match "
+                "their baseline again\\.")
+        bot._last_integrity_findings = None
+        return
+
+    signature = tuple(findings)
+    if signature == prev:
+        return  # already alerted for this exact state; don't re-spam
+    bot._last_integrity_findings = signature
+
+    # send_ops_alert escapes title/body itself, so pass PLAIN text (no markdown,
+    # no manual escaping) or it double-escapes into literal backslashes.
+    body = "\n".join(f"- {f}" for f in findings[:6])
+    await ops_hub.send_ops_alert(
+        "BOT PROFILE TAMPERING DETECTED",
+        ("A bot's public identity no longer matches its baseline. This is the "
+         "signature of a stolen token.\n\n" + body + "\n\n"
+         "Act now: revoke/rotate the affected bot's token (BotFather /revoke for "
+         "the Ops bot; Discord Developer Portal for the Discord bot), then restore "
+         "the profile. See INCIDENT-2026-08-29-ops-bot-token.md."),
+        severity="critical")
+    logger.error(f"bot_integrity_monitor: TAMPERING — {findings}")
 
 
 @tasks.loop(minutes=5)
