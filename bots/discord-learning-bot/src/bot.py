@@ -2723,6 +2723,71 @@ async def _send_guide_topic(ctx, topic: str) -> None:
         )
 
 
+def _voice_requirement_text(ctx) -> str:
+    """Describe the voice half of task #7 accurately for THIS student.
+
+    Majlis Phase 1 added a second, easier path (5 min together in the lounge)
+    alongside the original 10-min any-voice path. `!help` kept describing only
+    the old one, so the cheaper route was invisible.
+    """
+    try:
+        did = str(ctx.author.id)
+        if database.is_feature_enabled("community_together_credit", did):
+            mins = community.get_together_minutes_threshold()
+            return (f"**{mins} min together in 🎙️ voice-lounge** "
+                    f"— or 10 min in any voice channel")
+    except Exception:  # noqa: BLE001 — help must never fail to render
+        pass
+    return "10 min in voice"
+
+
+def _majlis_help_section(ctx) -> str:
+    """The Majlis block for `!help`, gated per flag.
+
+    Written because of a real gap found 2026-08-29: Majlis went live on
+    2026-08-22 and `!ping-me` / `!knock` were documented NOWHERE — not in
+    `!help`, not in the channel guides. So the `community-pings` role had **zero
+    members**, and every beacon and all six Community Hour rallies @-mentioned an
+    empty role for a week. The feature worked and reached nobody.
+
+    Steering §6 already required the `!help` entry to land in the same commit
+    that flips a flag on. This is that entry, arriving late.
+    """
+    lines = []
+    try:
+        did = str(ctx.author.id)
+        pings_on = database.is_feature_enabled("community_pings_optin", did)
+        if pings_on:
+            # Arabic aliases sit on their OWN lines, one LTR island each.
+            # Putting an alias inline (`!ping-me` … (`!إشعارات-المجلس`)) puts two
+            # `!` islands on one Arabic-containing line, which is exactly the
+            # disorienting bidi pattern scripts/bidi_check.py rejects — verified
+            # against it rather than assumed. See steering §6 (Sahin rule).
+            lines.append(
+                "`!ping-me` — get pinged when someone's in the lounge "
+                "· run it again to turn pings off\n"
+                "`!knock` — in the lounge and want company? ping the "
+                "opted-in members\n"
+                "`!إشعارات-المجلس`\n"
+                "`!طق`\n")
+        if database.is_feature_enabled("community_power_hour", did):
+            cfg = community.get_config()
+            # Only nudge toward `!ping-me` when that flag is actually on —
+            # steering §6: never advertise a dormant command.
+            nudge = (" Turn on `!ping-me` so you hear about it."
+                     if pings_on else "")
+            lines.append(
+                f"🕘 **Community Hour** — every day at "
+                f"{cfg.get('community_hour_start', '21:00')} "
+                f"({cfg.get('community_hour_tz', 'Africa/Cairo')}) in "
+                f"#community-live.{nudge}\n")
+    except Exception:  # noqa: BLE001
+        return ""
+    if not lines:
+        return ""
+    return "**🏛️ The Majlis (voice lounge):**\n" + "".join(lines) + "\n"
+
+
 @bot.command(name="help")
 async def cmd_help(ctx, *, topic: str = ""):
     """Show commands, or deep-link to a guide section with `!help <topic>`.
@@ -2739,7 +2804,7 @@ async def cmd_help(ctx, *, topic: str = ""):
         "They log **automatically** when you finish them.\n"
         "In Discord you log the 2 community tasks:\n"
         "✍️ `!6` — writing (write in #text-practice first, 20+ chars)\n"
-        "💬 `!7` — community (post in #general-chat or 10 min in voice)\n\n"
+        f"💬 `!7` — community (post in #general-chat + {_voice_requirement_text(ctx)})\n\n"
         "**Track your progress:**\n"
         "`!today` — what's left today\n"
         "`!progress` — your dashboard (level, week, streak, points, how to advance)\n"
@@ -2748,6 +2813,7 @@ async def cmd_help(ctx, *, topic: str = ""):
         "`!week` · `!words` — this week's focus · your vocabulary\n"
         "`!guide` — open your full guide · `!help <topic>` — jump to a section (e.g. `!help streaks`)\n"
         "_(you'll get an honest weekly recap of your activity every Sunday)_\n\n"
+        + _majlis_help_section(ctx) +
         "**Account:**\n"
         "`!join <goal>` — set your learning goal\n"
         "`!notifications` — notification settings\n"
