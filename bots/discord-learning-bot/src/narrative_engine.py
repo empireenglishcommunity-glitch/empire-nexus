@@ -215,16 +215,15 @@ def momentum_score(discord_id: str) -> dict:
 
 async def _call_groq(system_prompt: str, user_prompt: str,
                       temperature: float = 0.7) -> Optional[str]:
-    """Primary provider — a standard Groq chat-completion call with a
-    timeout and failure tracking."""
+    """Primary provider — a Groq chat-completion call.
+
+    Goes through groq_client, which retries once on a transient 429
+    rate-limit (bounded — see that module). On any failure we track it
+    for the ops alert, tagged with the final HTTP status."""
     if not config.GROQ_API_KEY:
         return None
 
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {config.GROQ_API_KEY}",
-    }
+    from . import groq_client
     payload = {
         "model": config.GROQ_MODEL,
         "temperature": temperature,
@@ -234,26 +233,17 @@ async def _call_groq(system_prompt: str, user_prompt: str,
             {"role": "user", "content": user_prompt},
         ],
     }
-
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=payload, headers=headers,
-                                    timeout=aiohttp.ClientTimeout(total=15)) as resp:
-                if resp.status != 200:
-                    logger.warning(f"Groq API error for narrative_engine: {resp.status}")
-                    from . import ops_monitoring
-                    import asyncio
-                    asyncio.create_task(ops_monitoring.track_groq_failure(resp.status))
-                    return None
-                data = await resp.json()
-                text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
-                return text.strip() if text else None
-    except Exception as e:
-        logger.error(f"Groq call failed for narrative_engine: {e}")
-        from . import ops_monitoring
-        import asyncio
-        asyncio.create_task(ops_monitoring.track_groq_failure())
-        return None
+    result = await groq_client.chat_completion(payload, timeout_seconds=15)
+    if result.ok:
+        return result.text
+    if result.status is not None:
+        logger.warning(f"Groq API error for narrative_engine: {result.status}")
+    else:
+        logger.warning("Groq call failed for narrative_engine (no response)")
+    from . import ops_monitoring
+    import asyncio
+    asyncio.create_task(ops_monitoring.track_groq_failure(result.status))
+    return None
 
 
 async def _call_gemini(system_prompt: str, user_prompt: str,
