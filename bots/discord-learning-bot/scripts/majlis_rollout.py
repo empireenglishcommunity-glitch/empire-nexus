@@ -83,8 +83,24 @@ def _hr(title):
 #  status — DB only, no Discord
 # ----------------------------------------------------------------------
 
+def _flag_audit():
+    """{name: (updated_at, updated_by)} straight from feature_flags.
+
+    `feature_flag_status()` deliberately returns only the decision (enabled /
+    allowlist), but when a flag's live state disagrees with the registry the
+    first question is always *who set it, and when* — and guessing that from a
+    document is what produced the drift in the first place.
+    """
+    out = {}
+    for row in database.list_feature_flags():
+        out[row["name"]] = (row.get("updated_at") or "?",
+                            row.get("updated_by") or "?")
+    return out
+
+
 def cmd_status(_args):
     _hr("MAJLIS — current flag state")
+    audit = _flag_audit()
     for phase, (flag, _desc) in sorted(PHASES.items()):
         st = database.feature_flag_status(flag)
         if st["everyone"]:
@@ -93,7 +109,38 @@ def cmd_status(_args):
             state = f"PILOT ({len(st['allowed_ids'])} student(s))"
         else:
             state = "off"
-        print(f"  Phase {phase}  {flag:<28} {state}")
+        when, who = audit.get(flag, ("?", "?"))
+        print(f"  Phase {phase}  {flag:<28} {state:<22} last set {when} by {who}")
+
+    # Is it actually WORKING, not just switched on? together_minutes only gets
+    # rows when a student is in a Majlis lounge WITH company, so a non-empty
+    # table is the difference between "released" and "released and functioning".
+    _hr("MAJLIS — is together-credit actually accruing?")
+    try:
+        conn = database._connect()
+        row = conn.execute(
+            "SELECT COUNT(*) n, COUNT(DISTINCT discord_id) students, "
+            "       COALESCE(SUM(minutes),0) mins, MIN(date) first, MAX(date) last "
+            "FROM together_minutes").fetchone()
+        recent = conn.execute(
+            "SELECT date, COUNT(DISTINCT discord_id) students, "
+            "       ROUND(SUM(minutes),1) mins FROM together_minutes "
+            "GROUP BY date ORDER BY date DESC LIMIT 7").fetchall()
+        conn.close()
+        if not row or not row["n"]:
+            print("  together_minutes is EMPTY — no student has yet earned "
+                  "together-time.\n"
+                  "  That is expected if the flags were only just enabled, or if\n"
+                  "  nobody has sat in the lounge WITH COMPANY since. It is NOT\n"
+                  "  proof of a fault, but it is also not proof it works.")
+        else:
+            print(f"  rows={row['n']}  students={row['students']}  "
+                  f"total_minutes={row['mins']}  span={row['first']} -> {row['last']}")
+            print("\n  last 7 active days:")
+            for r in recent:
+                print(f"    {r['date']}  {r['students']} student(s)  {r['mins']} min")
+    except Exception as e:  # noqa: BLE001
+        print(f"  could not read together_minutes: {e!r}")
 
     _hr("MAJLIS — config (settings overrides over defaults)")
     for k, v in sorted(community.get_config().items()):
