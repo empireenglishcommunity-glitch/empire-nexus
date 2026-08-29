@@ -77,6 +77,7 @@ REGISTRY = [
     ("hissar_role_gate", "Role-gate system: new members must accept rules before seeing channels (replaces removed Discord Rules Screening)", "hissar", True),
     ("hissar_anti_cheat", "P4: increased cooldown (180s), persistent cooldown across restarts, progressive quiz delay", "hissar", True),
     ("hissar_ip_detection", "P5: log IPs per token, auto-flag on 5+ unique IPs, Telegram alert to owner", "hissar", True),
+    ("hissar_bot_integrity", "Bot-profile tamper detection: alerts the owner if the Ops/Discord bot name, description or bio drifts from its baseline or contains spam (added after the 2026-08-29 Ops-token compromise)", "hissar", False),
 
     # ── HAFIZ (motivational engagement) ──
     ("hafiz_motivation", "Phase F (E4): AI-generated, always-varied motivational replies in #lN-text-practice + #lN-showcase, correction-free, throttled", "hafiz", False),
