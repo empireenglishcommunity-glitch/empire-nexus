@@ -11,21 +11,38 @@
 
 ---
 
-## Phase 0 — Preconditions (no behaviour change, no flag needed)
+## Phase 0 — Preconditions (no behaviour change, no flag needed) ✅ DONE
 
-- [ ] **0.1** Clamp the dashboard progress bar at ≥0, and stop deriving it from
-      `CEFR_XP_THRESHOLDS` (which real progression ignores). Fixes the negative
-      bar shown to the fastest-advancing students. Regression test for a promoted
-      student with low lifetime points.
-- [ ] **0.2** Consolidate the three award paths (`tasks.process_submission`,
-      `/api/complete-exercise`, `/api/practice-complete` weekly branch) into one
-      awarding function, preserving today's amounts exactly. Tests proving Discord
-      and web award identically.
-- [ ] **0.3** Resolve dead constants: wire up `POINTS_ASSESSMENT` +
-      `POINTS_ADVANCEMENT` (Phase 3 uses them) and delete `POINTS_PEER_FEEDBACK`.
-      No third state between feature and dead code.
-- [ ] **0.4** Enable `masar_momentum_score` (already built + tested; tenure-blind).
-      Owner flips the flag; record in `PRODUCTION-FLAG-STATE.md`.
+- [x] **0.1** Clamped the dashboard progress bar at ≥0. Extracted the arithmetic
+      into `api_server._level_progress()` so it is unit-testable, and documented
+      that the *root* cause (promotion awarding nothing) is Phase 3's job — after
+      which this bar is superseded outright. 10 tests incl. a promoted student
+      with low lifetime points, every CEFR level at 0 points, the C2 top of the
+      ladder, legacy L0–L3 keys and a missing level.
+- [x] **0.2** `/api/complete-exercise` now routes through
+      `tasks.process_submission` — the same single path as Discord `!done` and
+      `/api/practice-complete`. It previously awarded points but **never called
+      `update_streak`**, so the identical action scored differently on web vs
+      Discord; its own spec (ecosystem-harmony W2.1) always said it should behave
+      "exactly like `!done`". Verified the Dubai-date audit fix is preserved:
+      `tasks.today_str()` is the canonical logging date that every reader compares
+      against (per `database._today_local()`'s docstring), so this is *more*
+      correct, not a regression. The `/api/practice-complete` weekly branch keeps
+      its deliberate bypass (documented: logging a weekly exercise as a daily
+      submission would hand out the all-7 bonus unearned).
+- [x] **0.3** Deleted `POINTS_PEER_FEEDBACK` (never awarded; no peer-feedback
+      award exists in the approved design). **Kept** `POINTS_ASSESSMENT` and
+      `POINTS_ADVANCEMENT` with the comment rewritten so they are unawarded *by
+      schedule* (Phase 3), not by neglect — the previous comment's "do not leave
+      these in a third state" warning is now satisfied by an explicit decision.
+- [ ] **0.4** ⏳ **OWNER ACTION** — enable `masar_momentum_score` (already built,
+      already tested, tenure-blind; zero new code). Run `!flag enable
+      masar_momentum_score` in Discord, then record the flip in
+      `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md`. Agent has no standing
+      server access, so this one cannot be done from the sandbox.
+
+*Phase 0 result: full suite 2,130 passed / 2 skipped (+17 new tests), coverage
+ledger 9866/9866/0.*
 
 ## Phase 1 — Sijil, the Record of Honour (additive, read-only)
 

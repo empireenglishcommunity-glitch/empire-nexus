@@ -135,6 +135,37 @@ def _cors_headers(request=None) -> dict:
     }
 
 
+def _level_progress(total_points: int, level: str) -> tuple[int, int, float]:
+    """Cosmetic XP bar for the dashboard: lifetime points relative to the CEFR
+    level thresholds. Returns (xp_in_level, xp_needed, level_pct).
+
+    Any level key works — a legacy record (L0-L3) is normalized to its CEFR level
+    via config.cefr_key(), and at the top of the ladder (C2, no next level) the
+    bar reads 100%.
+
+    🔴 CLAMPED AT ZERO, deliberately (Ijtihad Phase 0.1). Level promotion is
+    exam-gated and awards NO points, while these thresholds assume points and
+    level advance together. So a student who advances FASTER than they accumulate
+    points -- i.e. the strongest, hardest-working ones -- had
+    total_points < current_threshold and were shown a NEGATIVE progress bar
+    (e.g. a promoted A2 student on 800 points rendered (800-2000)/3000 = -40%).
+    The clamp makes the display honest and is correct regardless of the root
+    cause; the root cause (achievement awarding nothing) is fixed in Ijtihad
+    Phase 3, after which this bar is superseded outright. See
+    .kiro/specs/ijtihad-effort-economy/.
+    """
+    cefr = config.cefr_key(level or "A1")
+    next_level = config.next_cefr_level(cefr)
+    if not next_level:
+        return int(total_points), 0, 100.0
+    current_threshold = config.level_xp_threshold(cefr)
+    next_threshold = config.level_xp_threshold(next_level)
+    xp_in_level = max(0, int(total_points) - current_threshold)
+    xp_needed = next_threshold - current_threshold
+    level_pct = min(100.0, round(xp_in_level / max(xp_needed, 1) * 100, 1))
+    return xp_in_level, xp_needed, level_pct
+
+
 def _touch_token(token: str) -> None:
     """Update last_used timestamp on the token for expiry tracking (W0.4)."""
     try:
@@ -429,18 +460,8 @@ async def get_dashboard(request: web.Request) -> web.Response:
     # is normalized to its CEFR level via config.cefr_key(), and at the top of
     # the ladder (C2, no next level) the bar reads 100%.
     current_level = member.get("level", "A1")
-    cefr = config.cefr_key(current_level)
-    next_level = config.next_cefr_level(cefr)
-    if next_level:
-        current_threshold = config.level_xp_threshold(cefr)
-        next_threshold = config.level_xp_threshold(next_level)
-        xp_in_level = member["total_points"] - current_threshold
-        xp_needed = next_threshold - current_threshold
-        level_pct = min(100, round(xp_in_level / max(xp_needed, 1) * 100, 1))
-    else:
-        xp_in_level = member["total_points"]
-        xp_needed = 0
-        level_pct = 100
+    xp_in_level, xp_needed, level_pct = _level_progress(
+        member["total_points"], current_level)
 
     # --- Days since active ---
     last_active = member.get("last_active_at", "")
@@ -598,20 +619,36 @@ async def post_complete_exercise(request: web.Request) -> web.Response:
 
     import datetime
     discord_id = member["discord_id"]
-    # Asia/Dubai "today" (audit fix): must match how the rest of the bot reads
-    # submissions, otherwise a web confirmation during the 00:00-04:00 Dubai
-    # window would be logged under the UTC date and read back under the Dubai
-    # date — the exact "I did it but it still shows remaining" symptom.
-    today = database._today_local().isoformat()
+    # NOTE on dates: this handler no longer computes its own "today". The
+    # submission is logged by tasks.process_submission under tasks.today_str(),
+    # which is the CANONICAL Asia/Dubai logging date every reader compares
+    # against (see database._today_local()'s docstring). That preserves the
+    # audit fix for the 00:00-04:00 Dubai window -- a web confirmation must be
+    # logged under the same date it is later read back under, or it shows as
+    # "still remaining".
 
-    # log_submission handles UNIQUE constraint (returns False if already exists)
-    added = database.log_submission(discord_id, today, exercise_type)
+    # ONE award path (Ijtihad Phase 0.2). This endpoint used to call
+    # log_submission + add_points(POINTS_PER_TASK) directly and NEVER call
+    # update_streak -- so a task completed here earned points but no streak
+    # credit, unlike the identical action on Discord (!done) or via
+    # /api/practice-complete, which both go through tasks.process_submission.
+    # Its own spec (ecosystem-harmony W2.1) always said this endpoint should
+    # "update streak, award points exactly like !done does"; it just never did.
+    # Routing through process_submission makes that true, and gives seasonal
+    # scoring a single choke point so Discord and web can never disagree.
+    # process_submission calls log_submission itself and returns new=False on a
+    # duplicate, preserving this endpoint's idempotency.
+    from . import tasks
+    name = member.get("discord_name") or "Student"
+    try:
+        result = await tasks.process_submission(discord_id, name, exercise_type)
+        added = bool(result.get("new"))
+    except Exception as e:
+        logger.warning(f"complete-exercise: process_submission failed: {e}")
+        added = False
 
     if added:
-        # Award points (same as !done: POINTS_PER_TASK)
-        from . import config
-        database.add_points(discord_id, config.POINTS_PER_TASK, f"web_{exercise_type}")
-        # Touch last_active
+        # Touch last_active (process_submission does not do this).
         database.update_member(discord_id, last_active_at=datetime.datetime.now().isoformat())
 
     # Return current tasks_today count

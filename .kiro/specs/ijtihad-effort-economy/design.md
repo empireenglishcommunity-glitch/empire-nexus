@@ -286,16 +286,34 @@ creates them (per project convention), all recorded in
 
 ---
 
-## 11. Open design questions for the owner
+## 11. Design decisions (delegated to agent, 2026-08-29)
 
-1. **Season length** — 4 weeks proposed. It aligns with the monthly review cadence
-   (`progression_monthly_weeks_per_review = 4`). Prefer 2 weeks (faster fresh
-   starts) or 6–8 (less churn)?
-2. **Season naming** — numbered ("Season 3") or themed?
-3. **PDT default** — 5 proposed. Should returning-from-absence students be offered
-   a lower target as a soft landing?
-4. **Does anything visible happen at season end** — a closing summary DM, a
-   podium post, a Sijil stamp for the winner? (Recommended: yes, a Sijil stamp —
-   it converts a seasonal win into permanent honour.)
-5. **Do we keep `!top` as a command name** (pointing at the new season board), or
-   rename to something that signals "this season"?
+The owner delegated these five. Decisions recorded here so implementation has no
+ambiguity:
+
+1. **Season length: 4 weeks.** Deliberately aligned to
+   `progression_monthly_weeks_per_review = 4`, so a season boundary and a monthly
+   review land together and a season can close with real achievement news rather
+   than only effort totals. 2 weeks was rejected as too much churn for a 90-week
+   curriculum; 6–8 weeks was rejected because a student who has a bad start waits
+   too long for a clean slate.
+2. **Season naming: numbered, with the month range as a subtitle** —
+   *"Season 3 · Sep–Oct"*. Themed names are charming but need someone to invent
+   one every 4 weeks forever; numbering is self-maintaining, and the subtitle
+   keeps it human. Arabic label alongside (`الموسم ٣`).
+3. **PDT default: 5**, and **yes to the soft landing** — a student returning after
+   ≥7 days away is *offered* (never forced) a target of 3 for their first week
+   back. Rationale: the moment someone returns is the moment they are most likely
+   to quit again; asking them for 7/7 on day one guarantees it.
+4. **Season end: yes, and it writes to Sijil.** At season close: a private summary
+   DM to every active student (their own numbers, their best moment, one thing to
+   aim at), a single public podium post for the top 3, and a **permanent Sijil
+   stamp** for the season winner *and* for the most-improved student. This is the
+   mechanism that converts a temporary win into lasting honour — without it,
+   seasonal reset feels like erasure to the people who win.
+5. **Rename `!top` → `!season`** (aliases: `!top` kept working as a pointer, plus
+   Arabic `!الموسم`). Reason: `!top` currently *means* "lifetime ranking", and
+   silently changing what a familiar command measures is how you lose a student's
+   trust in the numbers. `!top` will reply with a one-line explanation and show
+   the season board, so nobody hits a dead command. `!sijil` covers the permanent
+   record.
