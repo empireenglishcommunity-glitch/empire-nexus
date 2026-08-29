@@ -271,6 +271,48 @@ already locks this in for `channel_guides.py`; extend that pattern to
 any NEW Arabic content map added to this codebase, don't invent a
 separate check per file.
 
+### Audio-upload API endpoints — Taqdeem standing rule
+Found live on 2026-08-29: a student (Mai) was stuck on the Monthly
+Review — every Speaking item showed *"Couldn't save that answer — check
+your connection"* and retrying never worked. It was **not** a
+connection problem. The `/api/assessment/monthly/item` and
+`/api/assessment/advancement/item` handlers parsed the request with
+`await request.json()` **only**. But a pronunciation/speaking answer is
+always sent as **multipart/form-data** with an `audio` blob, so
+`request.json()` raised, the handler returned
+`{"ok": false, "error": "bad_json"}`, and the client rendered its
+generic save-failed message. The audio recorded and played back fine on
+the device — it just could never reach the server. Only the *weekly*
+endpoint parsed multipart. The three endpoints had silently drifted:
+weekly correct, monthly + advancement broken.
+
+**Rule going forward: any API endpoint that can receive a student
+recording MUST parse BOTH `multipart/form-data` (audio) AND JSON (text),
+never JSON-only.** In `discord-learning-bot/src/api_server.py` the
+canonical way is the shared helper **`_read_item_submission(request)`** —
+route every assessment item endpoint (weekly / monthly / advancement,
+and any future exam family) through it and pass its `audio_bytes` /
+`audio_filename` into `assessment.submit_item(...)`. Do **not** write a
+new endpoint that calls `request.json()` directly for a submission that
+might carry audio, and do **not** clone the multipart-parsing block into
+yet another divergent copy — reuse the one helper so the three (soon
+four) endpoints can never drift apart again.
+
+- The regression is locked by
+  `tests/test_assessment_item_submission.py` (multipart audio is parsed,
+  filename-by-content-type, JSON text still works, and the error paths).
+  When adding a new recording endpoint, extend that test file — do not
+  ship an audio endpoint with no multipart test.
+- `/api/placement/speaking` and `/api/submit-recording` (Nutq daily
+  practice) already accept multipart correctly; `/api/placement/speaking`
+  still has its own inline copy of the parse and is a candidate to fold
+  onto `_read_item_submission` if it is touched again.
+- Client side: a save failure currently surfaces as *"check your
+  connection"* even for a server-side 400. If you touch
+  `empire-dojo/site/js/assessment.js`, prefer distinguishing a real
+  network error from a server rejection so a future backend bug is not
+  again misread as a connectivity problem by the student and the owner.
+
 ### General
 - Commit messages: `type(scope): description`
 - Branch naming: `component/description`
