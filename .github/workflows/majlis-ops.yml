@@ -1,0 +1,167 @@
+name: majlis ops (preflight / status / enable / rollback)
+
+# Run the Majlis rollout tool against the live bot, from the Actions tab.
+#
+# WHY THIS EXISTS
+# ---------------
+# Releasing Majlis needs a command run on the production box. The obvious way to
+# do that is to hand someone the SSH private key, which is the worst option
+# available: the key gets pasted into a chat or a transcript, and there is no
+# record of what was actually run.
+#
+# This workflow reuses the SAME `DEPLOY_SSH_KEY` secret the deploy workflow
+# already uses, so:
+#   * the credential never leaves GitHub Secrets and nobody needs a copy,
+#   * the host key stays pinned (no MITM window),
+#   * every invocation is recorded in the Actions log with who triggered it.
+#
+# SAFETY
+# ------
+# `preflight` and `status` are strictly READ-ONLY.
+# `enable` and `rollback` are DRY-RUN unless you tick `apply`.
+# `majlis_rollout.py` itself refuses `--all` to everyone even with --yes — the
+# big-bang release Aegis exists to prevent — so the tool is the backstop, not
+# this form.
+#
+# START WITH `preflight`. It answers the one question that cannot be answered
+# from a sandbox: whether a voice channel named `voice-lounge` still exists in
+# the guild after the CEFR restructure. Without it Majlis is inert but SILENT —
+# no together-credit is ever granted and nothing raises.
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "What to run (start with preflight)"
+        required: true
+        default: "preflight"
+        type: choice
+        options:
+          - preflight
+          - status
+          - enable
+          - rollback
+      phase:
+        description: "Phase 1-6 (enable only). 1 = together-credit."
+        required: false
+        default: "1"
+      pilot:
+        description: "Comma-separated discord IDs to limit the release to (enable only). Digits and commas only. Leave blank for everyone."
+        required: false
+        default: ""
+      apply:
+        description: "Actually write. Leave UNTICKED for a dry run."
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: majlis-ops
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: "77.42.43.250"
+  DEPLOY_USER: "root"
+  CONTAINER: "empire-english-bot"
+  # Pinned server host key (public — safe to commit), same value the deploy
+  # workflow pins. Prevents man-in-the-middle.
+  SERVER_HOST_KEY: "77.42.43.250 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICcuZBY58cKkrjHY5y6FnSllTTgHlnKkr1DQg/qzkyII"
+
+jobs:
+  majlis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inputs
+        # Inputs are interpolated into a remote command, so validate them here
+        # rather than trusting the form. Anything not matching these patterns
+        # fails the job before SSH is even configured.
+        env:
+          IN_PHASE: ${{ inputs.phase }}
+          IN_PILOT: ${{ inputs.pilot }}
+        run: |
+          set -euo pipefail
+          if ! printf '%s' "$IN_PHASE" | grep -qE '^[1-6]$'; then
+            echo "::error::phase must be a single digit 1-6 (got: '$IN_PHASE')"
+            exit 1
+          fi
+          if [ -n "$IN_PILOT" ] && ! printf '%s' "$IN_PILOT" | grep -qE '^[0-9]+(,[0-9]+)*$'; then
+            echo "::error::pilot must be digits separated by commas, e.g. 123,456 (got: '$IN_PILOT')"
+            exit 1
+          fi
+          echo "inputs valid: action=${{ inputs.action }} phase=$IN_PHASE pilot='$IN_PILOT' apply=${{ inputs.apply }}"
+
+      - name: Announce what will happen
+        run: |
+          echo "::group::Plan"
+          case "${{ inputs.action }}" in
+            preflight|status)
+              echo "READ-ONLY. Nothing on the server will be modified." ;;
+            enable|rollback)
+              if [ "${{ inputs.apply }}" = "true" ]; then
+                echo "!! APPLY MODE — this WILL write to the live feature_flags table."
+                echo "   Flags take effect immediately: no restart, no redeploy."
+                echo "   Kill switch: re-run this workflow with action=rollback, apply=true."
+              else
+                echo "DRY RUN. The tool will print what it would do and write nothing."
+              fi ;;
+          esac
+          echo "::endgroup::"
+
+      - name: Configure SSH (key from secrets + pinned host)
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SERVER_HOST_KEY" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Run majlis_rollout.py in the bot container
+        env:
+          IN_ACTION: ${{ inputs.action }}
+          IN_PHASE: ${{ inputs.phase }}
+          IN_PILOT: ${{ inputs.pilot }}
+          IN_APPLY: ${{ inputs.apply }}
+        run: |
+          set -euo pipefail
+
+          ARGS="$IN_ACTION"
+          if [ "$IN_ACTION" = "enable" ]; then
+            ARGS="$ARGS --phase $IN_PHASE"
+            [ -n "$IN_PILOT" ] && ARGS="$ARGS --pilot $IN_PILOT"
+          fi
+          if [ "$IN_APPLY" = "true" ] && { [ "$IN_ACTION" = "enable" ] || [ "$IN_ACTION" = "rollback" ]; }; then
+            ARGS="$ARGS --yes"
+          fi
+
+          echo "remote command: python3 scripts/majlis_rollout.py $ARGS"
+          echo
+
+          ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=yes \
+              -o ConnectTimeout=20 \
+              "${DEPLOY_USER}@${DEPLOY_HOST}" \
+              "CONTAINER='${CONTAINER}' ARGS='${ARGS}' bash -s" <<'REMOTE'
+          set -euo pipefail
+          if ! docker ps --format '{{.Names}}' | grep -qx "$CONTAINER"; then
+            echo "::error::container '$CONTAINER' is not running"
+            docker ps --format '  {{.Names}}\t{{.Status}}'
+            exit 1
+          fi
+          # shellcheck disable=SC2086
+          docker exec -w /app "$CONTAINER" python3 scripts/majlis_rollout.py $ARGS
+          REMOTE
+
+      - name: Always print current flag state afterwards
+        if: always()
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=yes \
+              -o ConnectTimeout=20 \
+              "${DEPLOY_USER}@${DEPLOY_HOST}" \
+              "docker exec -w /app ${CONTAINER} python3 scripts/majlis_rollout.py status" || true
+
+      - name: Remove key material
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
