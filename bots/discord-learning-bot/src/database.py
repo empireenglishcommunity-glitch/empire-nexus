@@ -706,6 +706,24 @@ CREATE TABLE IF NOT EXISTS placement_session (
     state       TEXT NOT NULL DEFAULT '{}',  -- JSON: runner state (see placement_runner)
     updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Ijtihad Phase 2: effort seasons. Fixed, community-wide 4-week windows (not
+-- per-student) so everyone shares one rhythm and boards are comparable.
+--
+-- Season effort is DERIVED, never stored: it is SUM(points_log.points) with
+-- date(logged_at) inside a season's window. points_log already timestamps every
+-- award, so this needs no migration of historical data and no new points column.
+-- Two deliberate consequences:
+--   * all pre-Ijtihad points fall outside every season window, so they become
+--     legacy-only (they show in Sijil, never on a season board);
+--   * rollback is flipping a flag -- nothing was rewritten.
+CREATE TABLE IF NOT EXISTS seasons (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    label       TEXT NOT NULL,                  -- "Season 1"
+    started_on  TEXT NOT NULL,                  -- ISO date, inclusive
+    ends_on     TEXT NOT NULL,                  -- ISO date, inclusive
+    UNIQUE(started_on)
+);
 """
 
 
@@ -3757,6 +3775,235 @@ def itqan_upsert_mastery(discord_id: str, level: str, week: int,
     )
     conn.commit()
     conn.close()
+
+
+# ============================================================
+#  IJTIHAD (EFFORT ECONOMY) — SEASONS
+# ============================================================
+
+# Owner-tunable, same pattern as ITQAN_CONFIG_DEFAULTS. `ijtihad_season1_start`
+# is deliberately blank by default: the first season's anchor is chosen ONCE (see
+# ijtihad_ensure_seasons) and then persisted, so season boundaries can never
+# silently shift under students later.
+IJTIHAD_CONFIG_DEFAULTS = {
+    "ijtihad_season_weeks": 4,       # int: season length. 4 aligns with the
+                                     # monthly-review cadence, so a season can
+                                     # close with real achievement news.
+    "ijtihad_season1_start": "",     # str: ISO date anchor. Blank = auto-pick
+                                     # the most recent Saturday and persist it.
+}
+
+
+def get_ijtihad_config() -> dict:
+    """Ijtihad config with `settings` overrides over the defaults.
+    Never raises: blank/invalid values fall back to the default."""
+    cfg = {}
+    for key, default in IJTIHAD_CONFIG_DEFAULTS.items():
+        raw = get_setting(key, "")
+        if raw == "":
+            cfg[key] = default
+            continue
+        try:
+            cfg[key] = type(default)(raw)
+        except (ValueError, TypeError):
+            cfg[key] = default
+    return cfg
+
+
+def set_ijtihad_config(key: str, value) -> bool:
+    """Set one Ijtihad config value. Returns False for unknown keys so typos are
+    rejected rather than written as junk settings."""
+    if key not in IJTIHAD_CONFIG_DEFAULTS:
+        return False
+    set_setting(key, str(value))
+    return True
+
+
+def _season_anchor(today: datetime.date) -> datetime.date:
+    """The most recent Saturday on/before `today`.
+
+    Saturday because the curriculum week itself starts on Saturday (the Sat=0
+    convention used throughout curriculum.py), so a season boundary lands on a
+    week boundary rather than mid-week.
+    """
+    # weekday(): Mon=0 .. Sat=5, Sun=6
+    return today - datetime.timedelta(days=(today.weekday() - 5) % 7)
+
+
+def ijtihad_ensure_seasons(today: Optional[datetime.date] = None) -> Optional[dict]:
+    """Create any seasons needed so that `today` is covered, and return the
+    season containing `today` (or None if the anchor is still in the future).
+
+    Idempotent and safe to call on every read. Fills gaps, so a bot that was
+    offline for two months still produces a correct, contiguous season history
+    rather than one giant window.
+    """
+    today = today or _today_local()
+    cfg = get_ijtihad_config()
+    weeks = max(1, int(cfg["ijtihad_season_weeks"]))
+    span = datetime.timedelta(days=weeks * 7 - 1)
+
+    raw_anchor = (cfg.get("ijtihad_season1_start") or "").strip()
+    if raw_anchor:
+        try:
+            anchor = datetime.date.fromisoformat(raw_anchor)
+        except ValueError:
+            anchor = _season_anchor(today)
+    else:
+        anchor = _season_anchor(today)
+        # Persist the chosen anchor so boundaries are stable from now on.
+        set_setting("ijtihad_season1_start", anchor.isoformat())
+
+    if today < anchor:
+        return None  # the owner scheduled season 1 to start later
+
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT id, label, started_on, ends_on FROM seasons ORDER BY started_on DESC LIMIT 1"
+        ).fetchone()
+        if row is None:
+            start = anchor
+            n = 1
+        else:
+            start = datetime.date.fromisoformat(row["ends_on"]) + datetime.timedelta(days=1)
+            n = conn.execute("SELECT COUNT(*) AS c FROM seasons").fetchone()["c"] + 1
+            if datetime.date.fromisoformat(row["started_on"]) <= today <= datetime.date.fromisoformat(row["ends_on"]):
+                return dict(row)
+
+        # Create forward until `today` is covered (fills any gap).
+        created = None
+        while start <= today:
+            end = start + span
+            conn.execute(
+                "INSERT OR IGNORE INTO seasons (label, started_on, ends_on) VALUES (?,?,?)",
+                (f"Season {n}", start.isoformat(), end.isoformat()),
+            )
+            created = (start, end)
+            start = end + datetime.timedelta(days=1)
+            n += 1
+        conn.commit()
+
+        if created is None:
+            return None
+        out = conn.execute(
+            "SELECT id, label, started_on, ends_on FROM seasons WHERE started_on = ?",
+            (created[0].isoformat(),),
+        ).fetchone()
+        return dict(out) if out else None
+    finally:
+        conn.close()
+
+
+def ijtihad_current_season(today: Optional[datetime.date] = None) -> Optional[dict]:
+    """The season covering today, creating it if the calendar has moved on."""
+    return ijtihad_ensure_seasons(today)
+
+
+def ijtihad_season_for_date(day: str) -> Optional[dict]:
+    """The season containing an ISO date, or None. Pure read — does not create."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT id, label, started_on, ends_on FROM seasons "
+            "WHERE ? BETWEEN started_on AND ends_on LIMIT 1",
+            (day,),
+        ).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+
+def ijtihad_all_seasons() -> list:
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT id, label, started_on, ends_on FROM seasons ORDER BY started_on"
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def ijtihad_season_points(discord_id: str, season: dict) -> int:
+    """Effort points earned by one student inside a season window.
+
+    Derived from points_log, so it reflects whatever awards were actually made
+    in that window and needs no separate ledger. date(logged_at) is used because
+    logged_at is a full 'YYYY-MM-DD HH:MM:SS' timestamp.
+    """
+    if not season:
+        return 0
+    conn = _connect()
+    try:
+        row = conn.execute(
+            """SELECT COALESCE(SUM(points), 0) AS total FROM points_log
+               WHERE discord_id = ? AND date(logged_at) BETWEEN ? AND ?""",
+            (discord_id, season["started_on"], season["ends_on"]),
+        ).fetchone()
+        return int(row["total"] or 0)
+    finally:
+        conn.close()
+
+
+def ijtihad_season_leaderboard(season: dict, limit: int = 5) -> list:
+    """Season effort board.
+
+    Only students who actually earned something this season appear (HAVING > 0).
+    That is deliberate: with ~17 active students a board that lists everyone
+    tells the bottom half they are losing, which the spec forbids (R7/N3).
+    """
+    if not season:
+        return []
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            """SELECT m.discord_id, m.discord_name, m.level,
+                      COALESCE(SUM(p.points), 0) AS season_points
+               FROM members m
+               LEFT JOIN points_log p
+                      ON p.discord_id = m.discord_id
+                     AND date(p.logged_at) BETWEEN ? AND ?
+               WHERE m.status = 'active'
+               GROUP BY m.discord_id
+               HAVING season_points > 0
+               ORDER BY season_points DESC, m.discord_name ASC
+               LIMIT ?""",
+            (season["started_on"], season["ends_on"], limit),
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def ijtihad_season_rank(discord_id: str, season: dict) -> int:
+    """1-indexed rank within the season by effort points; 0 if nothing earned.
+
+    Shown privately to the student rather than published, so everyone knows
+    where they stand without a public bottom half.
+    """
+    if not season:
+        return 0
+    mine = ijtihad_season_points(discord_id, season)
+    if mine <= 0:
+        return 0
+    conn = _connect()
+    try:
+        row = conn.execute(
+            """SELECT COUNT(*) + 1 AS rank FROM (
+                   SELECT m.discord_id, COALESCE(SUM(p.points), 0) AS pts
+                   FROM members m
+                   LEFT JOIN points_log p
+                          ON p.discord_id = m.discord_id
+                         AND date(p.logged_at) BETWEEN ? AND ?
+                   WHERE m.status = 'active'
+                   GROUP BY m.discord_id
+               ) WHERE pts > ?""",
+            (season["started_on"], season["ends_on"], mine),
+        ).fetchone()
+        return int(row["rank"] or 1)
+    finally:
+        conn.close()
 
 
 def sijil_record(discord_id: str) -> dict:
