@@ -72,16 +72,56 @@ ledger 9866/9866/0.*
 `PRODUCTION-FLAG-STATE.md`). Safe to enable immediately — it is read-only and
 additive; it shows students a record they already earned.
 
-## Phase 2 — Seasons and Ijtihad Points
+## Phase 2 — Seasons (the accounting) ✅ DONE
 
-- [ ] **2.1** `seasons` table + season resolution helpers (current season, window
-      for a date, boundaries).
-- [ ] **2.2** Season IP derived by summing `points_log` within the window. No
-      schema change to `points_log`; no history rewrite.
-- [ ] **2.3** `BASE_IP` / `FULL_DAY_IP` and all multipliers as owner-tunable
-      `settings` rows (never hardcoded), mirroring the Itqan/Taqdeem convention.
-- [ ] **2.4** Flag `ijtihad_seasons`; tests for season rollover, a student joining
-      mid-season, and a season with zero activity.
+> **Scope note:** Phase 2 deliberately ships **no new points maths**. Time-scoping
+> alone breaks the lifetime integral that made rank ≈ tenure, so it is the
+> highest-value, lowest-risk increment available — and it is fully reversible
+> because no award value and no stored row changes. `BASE_IP` / `FULL_DAY_IP` /
+> multipliers moved to the phases that actually consume them (4 and 7) rather
+> than being added here as unused settings, which would have recreated exactly
+> the "declared but never used" state Phase 0.3 just cleaned up.
+
+- [x] **2.1** `seasons` table + resolution helpers:
+      `ijtihad_ensure_seasons()` (idempotent; creates and backfills so a long
+      offline gap still yields a contiguous history, never one giant window),
+      `ijtihad_current_season()`, `ijtihad_season_for_date()` (pure read — never
+      creates), `ijtihad_all_seasons()`. Seasons start on a **Saturday** to match
+      the curriculum's own week boundary (Sat=0), and the chosen anchor is
+      **persisted on first use** so boundaries can never silently shift under
+      students later.
+- [x] **2.2** Season effort **derived** from `points_log` date windows —
+      `ijtihad_season_points()`, `ijtihad_season_leaderboard()`,
+      `ijtihad_season_rank()`. No new column, no history rewrite, no second
+      ledger to disagree with the first. All pre-Ijtihad points fall outside
+      every window and so become legacy-only (they appear in Sijil, never on a
+      season board). The board excludes anyone with zero season activity, so it
+      can never publish a bottom half (R7/N3), and rank is returned for private
+      display rather than published.
+- [x] **2.3** ~~Moved to Phases 4 and 7~~ — see scope note. Season *length* is
+      owner-tunable now (`ijtihad_season_weeks`, default 4) along with
+      `ijtihad_season1_start`, via `get_ijtihad_config()`/`set_ijtihad_config()`
+      mirroring the Itqan convention (blank/invalid values fall back to default;
+      unknown keys are rejected so typos can't write junk settings).
+- [x] **2.4** Flag `ijtihad_seasons` registered default **OFF**. 25 tests:
+      Saturday anchoring, mid-week start, 4-week inclusive span, anchor
+      persistence, idempotency, rollover contiguity, multi-month offline
+      backfill, future anchor (no current season), invalid anchor fallback,
+      inclusive window boundaries, legacy points excluded, empty/limited boards,
+      inactive members excluded, missing-season tolerance, and a
+      non-destructiveness check that `total_points`/`points_log` are untouched.
+
+*Phase 2 result: full suite 2,183 passed / 2 skipped (+25), ledger 9866/9866/0.
+Verified on a fresh database: Season 1 = 2026-08-29 → 2026-09-25, anchor
+persisted, idempotent.*
+
+**Headline test** (`test_a_newcomer_can_outrank_a_veteran_in_the_same_season`):
+a veteran with **50,000 lifetime points** who coasts is ranked **below** a
+newcomer who joined this season and worked — on the season board. That is the
+owner's complaint, fixed, as an executable assertion.
+
+**Owner decisions needed BEFORE enabling** (this is the first phase that changes
+what a number *means*): the Season 1 start date, and the announcement wording.
 
 ## Phase 3 — Achievement payouts (the key inversion)
 

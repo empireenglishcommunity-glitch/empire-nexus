@@ -99,6 +99,7 @@ REGISTRY = [
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
     # ── IJTIHAD (effort economy) ──
+    ("ijtihad_seasons", "Ijtihad Phase 2: effort seasons — fixed community-wide 4-week windows. Season effort is DERIVED from points_log date windows (no migration, no new points column), so rank stops being a lifetime integral that rewards seniority over current work", "ijtihad", False),
     ("ijtihad_sijil", "Ijtihad Phase 1: Sijil — the permanent Record of Honour (!sijil, !honour). Read-only view of durable achievements (weeks mastered, distinctions, levels passed, perfect days, best streak, legacy XP) so seasonal effort resets never erase what a student built", "ijtihad", False),
 
     # ── MI'YAR (CEFR curriculum) ──
