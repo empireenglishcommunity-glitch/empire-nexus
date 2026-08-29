@@ -1,6 +1,32 @@
 # Implementation Plan — Community Lounge ("Majlis")
 
-## Status — BUILT THROUGH PHASE 7, NOT RELEASED (corrected 2026-08-29)
+## Status — LIVE FOR EVERYONE SINCE 2026-08-22, AND WORKING
+
+> ✅ **Verified against the live database and guild on 2026-08-29.** All six flags
+> have been **ON for everyone since 2026-08-22 23:25:41** (`updated_by`
+> `kiro-rollout` — a prior session, the day before the CEFR restructure began).
+> **No document recorded that release**, which is why this header said "not
+> released" earlier the same day.
+>
+> **It is functioning, not just enabled:** `together_minutes` holds **7 rows across
+> 3 students, ~274 minutes, 2026-08-26 → 2026-08-28**. A row only appears when a
+> student is in a Majlis lounge **with company**, so the Phase 1 together-credit
+> path works end to end.
+>
+> **Preflight passed** (Actions run 33253382924): anchor `voice-lounge` exists —
+> id `1519798168684986560`, category `🌍 المجتمع | COMMUNITY`, `user_limit=6`
+> already matching `lounge_capacity`. `#community-live` and the `community-pings`
+> role exist too, and since neither is created by `setup_server.py` their existence
+> is further evidence Majlis has genuinely run.
+>
+> **Still worth doing:** Phases 2–6 (beacon, dynamic pods, opt-in pings, Community
+> Hour, together-reward) have been live for a week with **no Phase-7 test file** and
+> no recorded observation of a beacon firing or a pod being spawned/reaped in
+> production. Watch `#community-live` around 21:00 Africa/Cairo once before
+> assuming all six phases behave as designed.
+>
+> The boxes below remain unticked and are **not** a work queue — see the note under
+> "Evidence" for why they were never mass-ticked.
 
 > 🔴 **The checkboxes below are stale — do NOT read them as the state of this
 > work, and do NOT rebuild any of it.** This header said "PLAN APPROVED, Phase 0
@@ -23,11 +49,15 @@
 > - **7 test files**, `tests/test_community_phase0.py` → `phase6.py`, all passing
 >   inside the suite's 2,044
 >
+> **On the registry defaults:** all 6 are `default_enabled=False`, and that is
+> **correct and deliberate** — it is the fail-closed ship state a *fresh* database
+> gets, guarded by `test_majlis_flags_default_off`. It is **not** a claim that
+> Majlis is off in production. Do not "sync" it; see steering §6.
+>
 > **What is genuinely NOT done:**
-> - **All 6 flags are `default_enabled=False`** — so none of this is live to a
->   student. Releasing it is a rollout decision, not a build.
 > - **Phase 7 has no dedicated test file** (`test_community_phase7.py` does not
 >   exist) — the one real coverage gap.
+> - No production observation of Phases 2–6 actually firing.
 >
 > Boxes below are left unticked rather than mass-ticked, because ticking them
 > would require verifying all 28 sub-items individually and this header is the

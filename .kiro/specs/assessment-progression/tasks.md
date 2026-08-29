@@ -1,12 +1,28 @@
 # Implementation Plan — Assessment Progression (Monthly Review + Level Advancement)
 
-## Status — ALL PHASES COMPLETE, AWAITING ROLLOUT (2026-08-23)
+## Status — ALL PHASES COMPLETE AND LIVE (verified 2026-08-29)
 
-Owner approved and all 7 phases implemented + deployed. The system is
-feature-complete. **Flags are OFF — waiting for owner to enable after
-verifying the guides are updated.**
+Owner approved and all 7 phases implemented + deployed.
 
-**Deployed:** Bot v1.3.0 with all Taqdeem code (dormant, flags OFF).
+> ✅ **Corrected 2026-08-29 by reading the live database.** This header said
+> "AWAITING ROLLOUT — flags are OFF, waiting for owner to enable". **Both Taqdeem
+> flags are ON in production:**
+>
+> | Flag | Live | Since | By |
+> |---|:-:|---|---|
+> | `assessment_advancement_exam` | **ON** | 2026-08-25 | `phase8_autoenable` |
+> | `assessment_monthly_review` | **ON** | 2026-08-23 | `kiro-rollout` |
+>
+> The monthly-review release was never recorded anywhere — same unrecorded pass
+> that switched Majlis on the night before.
+>
+> Their registry `default_enabled` values (True / **False**) are the fail-closed
+> *ship state*, not a statement about production — `test_taqdeem_phase0` asserts the
+> False deliberately. Do not "sync" it; see steering §6.
+>
+> **Unverified:** whether any student has actually reached a monthly review yet (it
+> needs 4 weekly passes). `monthly_reviews` was not queried.
+> Live state: `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md`.
 
 ---
 

@@ -21,9 +21,14 @@
 > - owner controls (`/nutq grant` / `cap` / `check`) and `!help` / `!guide`
 >   deep-links are live
 >
-> **Genuinely still true:** `tatawwur_pronunciation` is `default_enabled=False`
-> (pilot). Advancement remains **manual** (`!setlevel`). Default per-student cap is
-> **1 official graded read per day**.
+> **Live pilot, confirmed 2026-08-29:** `tatawwur_pronunciation` is enabled in
+> production with an **allowlist of 4 students**, set 2026-08-14 19:45 by the owner
+> from Discord. So Nutq is genuinely in front of real students — its
+> `default_enabled=False` is the fail-closed ship state, not "off in production".
+> Advancement remains **manual** (`!setlevel`). Default per-student cap is
+> **1 official graded read per day**, so the Azure spend is bounded by
+> `azure_usage` + `nutq_daily_cap_overrides`.
+> Live state: `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md`.
 >
 > ⚠️ **Deploy trap, worth reading before any Nutq change:** `nutq-scorer`'s compose
 > entry uses a **relative** build context (`../../services/nutq-scorer`) that does
