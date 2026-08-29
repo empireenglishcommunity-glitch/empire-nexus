@@ -243,7 +243,27 @@ publish. Coverage ledger: 7,095 authored / 7,095 delivered / 0 orphaned.**
       caught **seven** real problems first (five passages thin on their week's
       lexis — week 10 used 3 of 33 — one unanchored key point, one model answer
       that didn't demonstrate its own move). *nexus #410, dojo #120*
-- [ ] **5 descriptors still untaught — and they are EXACTLY the extended-listening
+- [x] **CLOSED by Phase 11D (ticked 2026-08-29).** These five were the last
+      untaught descriptors and the note below correctly predicted what would close
+      them: extended listening. Phase 11D built the `broadcast` exercise — one
+      ~1-minute script per week, multi-voice speaker turns, transcript and detail
+      questions **locked until the gist question is answered** — and all **465**
+      clips are rendered and live at verified per-level pace.
+      **Verified in code 2026-08-29:** `coverage_ledger.KNOWN_UNTAUGHT_DESCRIPTORS`
+      is now `frozenset()` (empty), `GAPS_NEEDING_EXTENDED_LISTENING` is
+      `frozenset()`, `DESCRIPTOR_GAP_PLAN` is `{}`, and
+      `python3.12 -m src.coverage_ledger` exits 0 with **9,866 / 9,866 / 0
+      orphaned** and an empty `PUBLISHED BUT NOT PROVABLE` block.
+      **One nuance, deliberately not hidden:** `B2.R.2` did not close cleanly. It
+      names *films*, which synthesis cannot deliver (no overlapping speech, no
+      regional accent, no emotional prosody), so it moved to the third state —
+      `coverage_ledger.TAUGHT_WITH_RESERVATION`, alongside `C1.R.2` — which prints
+      its shortfall on the same screen as the word "OK". Both close only when the
+      **11 authentic scene recordings** land. So: 4 of these 5 are clean ticks and
+      `B2.R.2` is a recorded reservation, not a clean one.
+      *(Original note, preserved because its reasoning was right:)*
+
+      **5 descriptors still untaught — and they are EXACTLY the extended-listening
       ones** (`A2.R.2`, `B1.R.1`, `B1.R.2`, `B2.R.1`, `B2.R.2`).
       **Everything closable by authored text is now closed.** A test asserts that
       equality (`KNOWN_UNTAUGHT_DESCRIPTORS == GAPS_NEEDING_EXTENDED_LISTENING`),

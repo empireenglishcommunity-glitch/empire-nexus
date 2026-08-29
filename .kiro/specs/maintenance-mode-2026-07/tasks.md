@@ -1,5 +1,26 @@
 # Maintenance Mode & "What's New" — Tasks
 
+## Status — BUILT AND LIVE (header added 2026-08-29)
+
+> 🔴 **All 29 boxes below are unticked and that is WRONG — this shipped.** Added
+> after the 2026-08-29 audit found this spec reading 0% complete while
+> `empire-chronicle`'s `SYSTEM-MAP.md` §10b documents the whole system as live.
+> **Do not rebuild it.**
+>
+> **Evidence** (verified 2026-08-29, file and line refs re-checked):
+> - `src/maintenance.py` (318 lines — the status brain) and `src/changelog.py`
+>   (65 lines — release notes)
+> - `GET /api/status` at `api_server.py:213` and `GET /api/changelog` at `:231`,
+>   both public with `OPTIONS` preflight handlers, both fail-open
+> - `empire-dojo/site/js/status.js` exists (banner / overlay / "What's New" toast)
+> - tests: `tests/test_maintenance.py`, `tests/test_changelog.py`, both passing
+>   inside the suite's 2,044
+>
+> Operational detail — how to actually run a maintenance window, the soft-vs-hard
+> distinction, the 2-hour auto-resume failsafe, and the streak-bridging behaviour
+> that stops a maintenance day breaking a student's streak — is in
+> `SYSTEM-MAP.md` §10b. Read that, not the phase list below.
+
 Each phase = its own PR → full test suite → owner merge → deploy → live-verify.
 
 ## Phase 1 — Status brain + API + page reaction

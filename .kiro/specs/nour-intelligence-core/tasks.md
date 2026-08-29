@@ -1,5 +1,37 @@
 # Nour Intelligence Core — Implementation Tasks
 
+## Status — ⛔ SUPERSEDED / REMOVED FROM THE CODEBASE (header added 2026-08-29)
+
+> **Do not resume this spec. The code it describes no longer exists.**
+>
+> Aql was built through Phase A8/A9 and then **deleted in the session-29 cleanup**
+> (~12,500 lines) because it was fully OFF in production and the owner had tested
+> it live and found the quality unacceptable. Verified absent 2026-08-29:
+>
+> | Artefact | State |
+> |---|---|
+> | `src/nour/` (the RAG / tool-calling package) | **ABSENT** |
+> | `src/nour_concierge.py` | **ABSENT** |
+> | `nour_aql_core` flag | **ABSENT** from `flag_registry.py` |
+> | 9 Aql flags, 13 test files, 10 tables | **all removed** |
+>
+> **What was deliberately KEPT** (and is what the remaining `nour_*` files are):
+> `nour_journey.py`, `nour_onboarding.py`, `nour_personality.py`, plus
+> `narrative_engine.py` for growth letters. `#ask-nour` and AI DM replies are now
+> **intentionally silent**. See `empire-chronicle/SYSTEM-MAP.md` §8 for the full
+> removal rationale.
+>
+> The 7 unticked boxes below are therefore **not a work queue** — they describe a
+> system that was removed on purpose. This file is kept as the design record of an
+> approach that was tried and rejected, which is genuinely useful: the honest
+> Phase-A8 sign-off (`data/nour_eval/A8.7-SIGNOFF.md`) documents that 2 of 4
+> quality gates could never be measured. **If conversational AI is ever revisited,
+> read this spec as history and start from a fresh decision — do not continue it.**
+>
+> ⚠️ Note also that `nour_msa` and `nour_journey` are `default_enabled=True` in the
+> registry while `SYSTEM-MAP.md` §4 records the Nour flags as turned **OFF**. That
+> contradiction is unresolved and needs the live `feature_flags` table to settle.
+
 > **Initiative #15 — Codename: Aql**
 > Arabic: العقل
 > Read `requirements.md` and `design.md` first. Phases are sequential;
