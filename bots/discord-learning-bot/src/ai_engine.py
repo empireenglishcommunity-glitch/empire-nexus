@@ -76,10 +76,12 @@ async def _call_groq(prompt: str, temperature: float = 0.8) -> Optional[str]:
             async with session.post(url, json=payload, headers=headers, timeout=aiohttp.ClientTimeout(total=30)) as resp:
                 if resp.status != 200:
                     logger.warning(f"Groq API error: {resp.status}")
-                    # Markaz M5.2: track Groq failures for alerting
+                    # Markaz M5.2: track Groq failures for alerting (pass the
+                    # HTTP status so the alert can distinguish 429 rate-limits
+                    # from a real Groq outage).
                     from . import ops_monitoring
                     import asyncio
-                    asyncio.create_task(ops_monitoring.track_groq_failure())
+                    asyncio.create_task(ops_monitoring.track_groq_failure(resp.status))
                     return None
                 data = await resp.json()
                 text = data.get("choices", [{}])[0].get("message", {}).get("content", "")

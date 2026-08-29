@@ -243,7 +243,7 @@ async def _call_groq(system_prompt: str, user_prompt: str,
                     logger.warning(f"Groq API error for narrative_engine: {resp.status}")
                     from . import ops_monitoring
                     import asyncio
-                    asyncio.create_task(ops_monitoring.track_groq_failure())
+                    asyncio.create_task(ops_monitoring.track_groq_failure(resp.status))
                     return None
                 data = await resp.json()
                 text = data.get("choices", [{}])[0].get("message", {}).get("content", "")

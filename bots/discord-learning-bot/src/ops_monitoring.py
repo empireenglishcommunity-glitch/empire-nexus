@@ -29,23 +29,80 @@ logger = logging.getLogger("empire-bot.ops_monitoring")
 # historical counts). A restart itself already sends a separate
 # "bot restarted" alert (M5.1), so the Groq counter naturally
 # resetting after a restart is a feature, not a bug.
-_groq_failures: list[float] = []  # timestamps of recent failures
+# Each entry is (timestamp, http_status). http_status is the HTTP status
+# of the failed Groq response when one was received (e.g. 429 = rate-limit,
+# 5xx = Groq-side outage), or None when the call failed before any response
+# (timeout / connection error). We keep the status so the alert can tell the
+# owner *why* Groq is failing instead of guessing.
+_groq_failures: list[tuple[float, Optional[int]]] = []
 _GROQ_FAILURE_THRESHOLD = 5
 _GROQ_FAILURE_WINDOW = 3600  # 1 hour
 _groq_alert_sent_at: float = 0  # throttle: max 1 alert per hour
 
 
-async def track_groq_failure() -> None:
+def _build_groq_alert_body(failures: list[tuple[float, Optional[int]]]) -> str:
+    """Build the PLAIN-TEXT body for the Groq failure alert.
+
+    Returns plain, UN-escaped text — send_ops_alert() escapes it for
+    MarkdownV2 itself. (The old version pre-escaped punctuation here,
+    which send_ops_alert then escaped a second time, so the owner saw
+    literal backslashes like "rate\\-limited\\.".)
+
+    The wording states what actually happens on failure: requests fall
+    back to the bot's built-in content (curated tasks + rule-based
+    scoring). Gemini does NOT handle them — the Google project is
+    access-denied (HTTP 403), so it is a dormant fallback only.
+    """
+    total = len(failures)
+    rate_limited = sum(1 for _, s in failures if s == 429)
+    server_errors = sum(1 for _, s in failures if s is not None and 500 <= s < 600)
+    no_status = sum(1 for _, s in failures if s is None)
+
+    if rate_limited and rate_limited >= server_errors and rate_limited >= no_status:
+        cause = (
+            f"Most ({rate_limited} of {total}) are rate-limits (HTTP 429) — "
+            f"the Groq free-tier quota is being hit. This is usually transient."
+        )
+    elif server_errors and server_errors >= no_status:
+        cause = (
+            f"{server_errors} of {total} are Groq server errors (HTTP 5xx) — "
+            f"likely a Groq-side outage."
+        )
+    elif no_status:
+        cause = (
+            f"{no_status} of {total} failed with no response (timeouts or "
+            f"connection errors) — Groq may be unreachable from the server."
+        )
+    else:
+        cause = "Groq may be down or rate-limited."
+
+    return (
+        f"{total} Groq failures in the last hour. {cause}\n\n"
+        f"Requests are falling back to the bot's built-in content "
+        f"(curated tasks + rule-based scoring), so students still get "
+        f"replies — just not AI-generated ones. Gemini is NOT handling "
+        f"them; the Google project is access-denied (403)."
+    )
+
+
+async def track_groq_failure(status: Optional[int] = None) -> None:
     """Call this from any Groq API call site on failure. If failures
     exceed the threshold within the window, sends a single alert to
-    the owner (throttled to at most 1 per hour)."""
+    the owner (throttled to at most 1 per hour).
+
+    Args:
+        status: HTTP status code of the failed Groq response when known
+            (429 = rate-limit, 5xx = server-side outage), or None when
+            the call failed before a response was received (timeout /
+            connection error). Used only to make the alert actionable.
+    """
     global _groq_alert_sent_at
     now = time.time()
-    _groq_failures.append(now)
+    _groq_failures.append((now, status))
 
     # Prune old entries outside the window
     cutoff = now - _GROQ_FAILURE_WINDOW
-    while _groq_failures and _groq_failures[0] < cutoff:
+    while _groq_failures and _groq_failures[0][0] < cutoff:
         _groq_failures.pop(0)
 
     if len(_groq_failures) >= _GROQ_FAILURE_THRESHOLD:
@@ -53,9 +110,7 @@ async def track_groq_failure() -> None:
             _groq_alert_sent_at = now
             await ops_hub.send_ops_alert(
                 "Groq API Issues",
-                f"{len(_groq_failures)} failures in the last hour\\. "
-                f"Gemini fallback is handling requests, but Groq may be "
-                f"down or rate\\-limited\\.",
+                _build_groq_alert_body(_groq_failures),
                 severity="warning",
             )
 
