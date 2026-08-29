@@ -1,5 +1,24 @@
 # Tasks — Wuslah (وُصلة): Ecosystem Harmony
 
+## Status — ALL PHASES BUILT AND DEPLOYED (header added 2026-08-29)
+
+> 🔴 **Only W0 is ticked below; W1–W5 shipped too and were never checked off.**
+> Added after the 2026-08-29 audit found 30 of 36 boxes unticked while
+> `empire-chronicle`'s `README.md` records Wuslah as complete. **Do not rebuild.**
+>
+> **Evidence** (verified 2026-08-29):
+> - **W1** — `empire-dojo/site/dash/` **exists** (the student dashboard page).
+>   Its absence from the live site was defect **D008** in the Hisn campaign, which
+>   is also how the "merging is not deploying" rule for `empire-dojo` was found.
+> - **W2–W5** — all **4** `wuslah_*` flags are registered and
+>   `default_enabled=True`: `wuslah_dashboard_api`, `wuslah_exercise_confirm`,
+>   `wuslah_nour_tips`, `wuslah_adaptive`.
+>
+> ⚠️ **One caveat:** `wuslah_nour_tips` (W4) drives AI study tips through Nour, and
+> **Nour was retired** in the session-29 cleanup — so that flag is ON while the
+> subsystem behind it is intentionally silent. Do not "fix" this by reviving Nour;
+> see `SYSTEM-MAP.md` §8 and `nour-intelligence-core/tasks.md`'s header.
+
 ## Phase W0 — Expanded Student API ✅ COMPLETE
 
 - [x] **W0.1** Add `/api/dashboard` endpoint — aggregates: streak,

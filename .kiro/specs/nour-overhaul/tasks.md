@@ -1,5 +1,21 @@
 # Nour Overhaul — Implementation Tasks
 
+## Status — ⛔ ABANDONED (header added 2026-08-29)
+
+> **Do not resume this spec.** All 72 boxes are unticked, which here means what it
+> looks like — but the reason is that **Nour itself was retired**, not that the
+> work is queued.
+>
+> Rawiya's ideas were partly absorbed elsewhere (`nour_msa` for Modern Standard
+> Arabic, `nour_journey` for the 7-day onboarding journey, growth letters via
+> `narrative_engine.py`), and then the wider Nour concierge was **removed in the
+> session-29 cleanup** — see `nour-intelligence-core/tasks.md`'s header and
+> `empire-chronicle/SYSTEM-MAP.md` §8. `#ask-nour` and AI DM replies are
+> intentionally silent today.
+>
+> Kept as a design record only. The 2026-08-29 audit flagged this spec because 72
+> unticked boxes in a live repo look like a large backlog; they are not.
+
 > **Initiative #14 — Codename: Rawiya (الراوية)**
 > 8 phases, executed in order. Each phase is independently deployable.
 

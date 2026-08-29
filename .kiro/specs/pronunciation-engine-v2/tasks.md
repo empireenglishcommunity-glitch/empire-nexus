@@ -1,8 +1,41 @@
 # Nutq — Implementation Plan (CONSOLIDATED, FINAL)
 
-**Status:** DRAFT — awaiting owner approval. **No code until approved.** Each phase:
-own PR → tests green → owner merges → deploy → live-verify → check off. Flag stays
-OFF until the pilot (Phase A4). Legend: [ ] todo · [~] wip · [x] done.
+## Status — BUILT AND DEPLOYED, flag still OFF/pilot (header added 2026-08-29)
+
+> 🔴 **The "DRAFT — awaiting owner approval / no code until approved" line below is
+> false.** Nutq shipped (nexus PRs #319–#322, plus dojo #74/#76 for guide wiring).
+> Added after the 2026-08-29 audit found 20 of 25 boxes unticked here. **Do not
+> rebuild it.**
+>
+> **Evidence** (verified 2026-08-29):
+> - `src/pronunciation_scorer.py` (523 lines — the engine selector) and
+>   `src/pronunciation_azure.py` (253 lines — Azure client + bilingual feedback)
+> - `services/nutq-scorer/` — the free self-hosted fallback, its own container
+>   with its own tests
+> - tables `pronunciation_scores`, `azure_usage`, `azure_shadow_calls`,
+>   `nutq_daily_cap_overrides`
+> - **8** test files: `test_nutq_engine.py`, `test_nutq_grade_best_read.py`,
+>   `test_nutq_owner_controls.py`, `test_nutq_pronunciation.py`,
+>   `test_nutq_api_config.py`, `test_nutq_teacher_feed.py`,
+>   `test_pronunciation_scorer.py`, `test_pronunciation_azure.py`
+> - owner controls (`/nutq grant` / `cap` / `check`) and `!help` / `!guide`
+>   deep-links are live
+>
+> **Genuinely still true:** `tatawwur_pronunciation` is `default_enabled=False`
+> (pilot). Advancement remains **manual** (`!setlevel`). Default per-student cap is
+> **1 official graded read per day**.
+>
+> ⚠️ **Deploy trap, worth reading before any Nutq change:** `nutq-scorer`'s compose
+> entry uses a **relative** build context (`../../services/nutq-scorer`) that does
+> not resolve in the server's flattened sparse checkout. Rebuild the bot **by
+> service name** (`docker compose up -d --build empire-english-bot`); a bare
+> `--build` dies with `path "/services/nutq-scorer" not found`. See
+> `SYSTEM-MAP.md` §9.
+>
+> Live behaviour is documented in `SYSTEM-MAP.md` §2 (`pronunciation_scorer.py`).
+
+**Original status line (superseded):** DRAFT — awaiting owner approval.
+Legend: [ ] todo · [~] wip · [x] done.
 
 ---
 

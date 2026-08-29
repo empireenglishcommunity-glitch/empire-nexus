@@ -1,6 +1,39 @@
 
 # Tasks — Hissar: System Security, Anti-Cheat & Copyright Protection
 
+## Status — SUBSTANTIALLY BUILT AND LIVE (header added 2026-08-29)
+
+> 🔴 **All 31 boxes below are unticked and that under-reports reality.** Added
+> after the 2026-08-29 audit. **Verify against the code before starting any phase
+> here** — the P0/P1 work this file says "MUST be done before students are
+> invited" appears to be done.
+>
+> **Evidence** (verified 2026-08-29):
+> - all **3** `hissar_*` flags registered and `default_enabled=True`:
+>   `hissar_role_gate`, `hissar_anti_cheat`, `hissar_ip_detection`
+> - `src/role_gate.py` — **549 lines** (new members must accept rules before
+>   seeing channels), with `tests/test_role_gate_onboarding.py`
+> - `token_ip_log` table in `_SCHEMA` (9 references in `database.py`) — the
+>   per-token IP logging behind `hissar_ip_detection`
+> - `device_sessions` table + the HMAC `empire_session` edge gate in
+>   `empire-dojo/functions/_middleware.js`, including per-level scoping and the
+>   student watermark
+> - anti-cheat hardening from the session-9 stress-test pass is merged and live
+>   (persistent cooldowns across restarts, progressive quiz delay, and the
+>   `midnight_voice_reset` loop that fixed a permanent bypass)
+>
+> **Known gaps this header does NOT claim are closed** (from the same audit):
+> - the `/ops-guide` + `/content-review` passcode gate has **no rate limiting,
+>   lockout or delay** — brute-forcing the unsalted SHA-256 is unthrottled at the
+>   edge. This is the most concrete open security item in the ecosystem.
+> - `PUBLIC_PATHS` in `_middleware.js` matches by **prefix**, so `/guide`
+>   whitelists any path starting `/guide`. Harmless today; a trap when a new
+>   `/guide…`-prefixed path is added.
+> - only **1** test file targets this initiative directly.
+>
+> Copyright-protection items are the least verified part of this spec — treat
+> those boxes as genuinely unknown rather than done.
+
 > **How to use this file:** work top to bottom, phase by phase.
 > P0 and P1 MUST be done before students are invited. The rest can
 > follow incrementally. Check off tasks in the same commit that

@@ -1,8 +1,42 @@
 # Implementation Plan — Community Lounge ("Majlis")
 
-## Status — PLAN APPROVED, Phase 0 IN PROGRESS (2026-07-31 → resumed)
+## Status — BUILT THROUGH PHASE 7, NOT RELEASED (corrected 2026-08-29)
 
-Owner reviewed and approved the direction. Implementation begins with Phase 0.
+> 🔴 **The checkboxes below are stale — do NOT read them as the state of this
+> work, and do NOT rebuild any of it.** This header said "PLAN APPROVED, Phase 0
+> IN PROGRESS (2026-07-31)" with 0 of 28 boxes ticked until 2026-08-29, when a
+> full ecosystem audit found Majlis had in fact shipped through **Phase 7**. It
+> was also missing from `empire-chronicle`'s `SYSTEM-MAP.md`, `STATUS.md` and
+> `README.md` entirely, so **no document anywhere recorded that this exists.**
+> It is now documented in `SYSTEM-MAP.md` §13.
+>
+> **Evidence it is built** (verified 2026-08-29, all reproducible):
+> - `src/community.py` — **1,028 lines**, covering every phase below
+> - all **6** `community_*` flags registered in `flag_registry.py` under
+>   initiative `majlis`, and wired into `bot.py`, `verification.py`,
+>   `ops_commands.py`
+> - `together_minutes` table in `database.py`'s `_SCHEMA`
+> - scheduled loops `community_hour_loop` + `beacon_cleanup_loop` in `bot.py`,
+>   plus `community.reap_empty_majlis_rooms`
+> - Phase 7 owner controls: `/majlis` in `ops_commands.py` (Telegram) and the
+>   `majlis` slash command in `bot.py`
+> - **7 test files**, `tests/test_community_phase0.py` → `phase6.py`, all passing
+>   inside the suite's 2,044
+>
+> **What is genuinely NOT done:**
+> - **All 6 flags are `default_enabled=False`** — so none of this is live to a
+>   student. Releasing it is a rollout decision, not a build.
+> - **Phase 7 has no dedicated test file** (`test_community_phase7.py` does not
+>   exist) — the one real coverage gap.
+>
+> Boxes below are left unticked rather than mass-ticked, because ticking them
+> would require verifying all 28 sub-items individually and this header is the
+> honest signal. Use the legend from `cefr-curriculum/tasks.md`: treat Phases 0–7
+> as `[~]` (built + tested, **not live**). **Verify against the code before
+> resuming any phase.**
+
+Owner reviewed and approved the direction. Implementation began with Phase 0 and
+ran through Phase 7.
 
 **Owner-confirmed decisions:**
 - ✅ **Majlis** direction approved.

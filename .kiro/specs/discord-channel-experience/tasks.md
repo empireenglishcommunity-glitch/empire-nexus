@@ -1,6 +1,35 @@
 
 # Tasks — Sahin: Discord Channel & Community Experience
 
+## Status — PHASE 1 SHIPPED BUT UNTICKED; 14 boxes open (header added 2026-08-29)
+
+> ⚠️ **Partly stale.** Added after the 2026-08-29 audit. Phase 1's boxes (1.1–1.5)
+> read as todo but the work exists:
+>
+> - `scripts/channel_guides.py` — **361 lines**, containing the `CHANNEL_GUIDES`
+>   content map that task 1.1 describes
+> - `scripts/bidi_check.py` + `tests/test_bidi_check.py`, including the regression
+>   test `test_real_channel_guides_have_zero_bidi_issues` that locks in the bidi
+>   fix from "Phase 1 (cont'd)"
+> - `scripts/cefr_repin_content.py` — re-pins the per-channel guides after the
+>   CEFR restructure, i.e. this content has been through a second migration since
+>   this spec was written
+>
+> The Sahin **standing rule** that came out of this work is now in
+> `empire-nexus/.kiro/steering/project-rules.md` §6: never write an Arabic line
+> containing 2+ embedded LTR tokens, and run `bidi_check.py` before shipping new
+> Arabic content. That rule is live and enforced by test.
+>
+> Also note this spec predates the CEFR restructure, so its channel names and
+> counts refer to the retired `l0`–`l3` zones. Those zones are **archived**
+> (`📦 Archive — …`, hidden and locked) and the L1/L2/L3 ones were purged by the
+> owner on 2026-08-25. **Re-verify channel state against the live guild before
+> acting on Phase 2 or 3.**
+>
+> Phase 4a (`#cheat-sheets` redesign) is real remaining work, though note the
+> `vocab_cheat_sheet` flag and a `vocab_cheat_sheet_delivery` loop already exist
+> (flag is `default_enabled=False`).
+
 > **How to use this file:** work top to bottom, phase by phase. Check off
 > a task (`- [x]`) in the SAME commit/PR that completes it, so this file
 > is always an accurate live progress record — never mark something done

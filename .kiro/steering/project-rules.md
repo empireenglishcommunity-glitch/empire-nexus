@@ -35,7 +35,13 @@ is kept only as historical record of the pre-consolidation rules.
 - **Parent Brand:** MACAL Empire ("Common Sense First")
 - **Owner:** Mahmoud Ashri (@macal_emperor / @macal.empire)
 - **Target Audience:** Arabic speakers learning English (Egyptian dialect primary)
-- **Repository:** `empireenglishcommunity-glitch/empire-english-community` (consolidated monorepo)
+- **Repository:** `empireenglishcommunity-glitch/empire-nexus` (consolidated
+  monorepo). *(Corrected 2026-08-29: this said `empire-english-community`, a name
+  this repo has never had. It was `EEC-REPO` until the 2026-07-12 org-wide rename,
+  and `empire-nexus` since.)*
+- **Levels:** the **six CEFR levels A1–C2**, 90 curriculum weeks. The home-grown
+  `L0`–`L3` model was retired in 2026-08 and its content deleted on 2026-08-25.
+  Student-facing wording is always **"CEFR-aligned, not certified."**
 
 ---
 
@@ -56,37 +62,49 @@ is kept only as historical record of the pre-consolidation rules.
 
 ## 3. Repository Structure
 
+> **Corrected 2026-08-29.** This tree previously showed `workers/`, `apps/`
+> (`mobile/` + `web/`), `infrastructure/` and `bots/telegram-sales-bot/`. **None of
+> them exist in this repo** — `infrastructure/` moved to `empire-server-forge` in
+> the 2026-07-12 restructure, and the others are gone. `README.md` and
+> `empire-chronicle/SYSTEM-MAP.md` §7 carried the same phantom tree and were fixed
+> in the same pass. Verified by `ls`; 942 tracked files total.
+
 ```
-empire-english-community/
-├── README.md                    ← Project index (start here)
-├── PROJECT_STATUS.md            ← Current status & handover doc
-├── .kiro/steering/              ← AI agent rules
-├── .github/workflows/           ← CI/CD pipelines
-├── docs/                        ← All documentation
-│   ├── strategy/                ← Business strategy & roadmaps
-│   ├── specs/                   ← Phase build specifications
-│   ├── operations/              ← Server, recovery, audits, guides
-│   ├── business/                ← Feasibility studies, pricing, launch
-│   ├── infrastructure/          ← n8n patterns, quiz audit, server ref
-│   └── checkpoints/             ← Session checkpoint files
-├── bots/                        ← Bot source code
-│   ├── discord-learning-bot/    ← Discord L0 learning system (Python/Docker)
-│   ├── discord-challenge-bot/   ← 30-day challenge bot (Python/Docker)
-│   └── telegram-sales-bot/      ← Telegram sales bot (Cloudflare Worker)
-├── workers/                     ← Cloudflare Workers
-│   └── linkedin-engine/         ← LinkedIn content automation
-├── apps/                        ← Web & mobile applications
-│   ├── mobile/                  ← React Native / Expo pronunciation app
-│   └── web/                     ← Web apps (Next.js + static landing pages)
-├── infrastructure/              ← Deployment & server configs
-│   ├── server-hardening/        ← Security scripts for Hetzner VPS
-│   ├── n8n-mcp/                 ← MCP server deployment
-│   └── n8n-workflows/           ← n8n workflow JSON exports
-└── content/                     ← Content & marketing assets
-    ├── telegram-posts/          ← 6 weeks of Telegram channel posts
-    ├── build-kit/               ← CRM templates, quiz logic, build assets
-    └── brand/                   ← MACAL brand bible & voice guide
+empire-nexus/
+├── README.md                    ← Project index
+├── PROJECT_STATUS.md            ← ⚠️ STALE (2026-07-11), historical record only
+├── REPOSITORY_AUDIT.md          ← ⚠️ STALE (2026-06-27), historical record only
+├── .kiro/
+│   ├── steering/                ← AI agent rules (this file)
+│   └── specs/                   ← 24 initiative specs. ⚠️ tasks.md checkboxes are
+│                                   NOT a reliable progress signal — read each
+│                                   spec's status header instead.
+├── .github/workflows/           ← learning-bot-test · deploy-learning-bot
+│                                   · challenge-bot-test
+├── bots/
+│   ├── discord-learning-bot/    ← THE PRODUCT (Python/Docker, auto-deploys)
+│   │   ├── src/                 ← 35 modules, ~29,600 lines
+│   │   ├── content/{a1..c2}/    ← accent · grammar · reading · mediation · broadcast
+│   │   ├── content/cefr/        ← can_do.json · grammar_syllabus.json
+│   │   │                          · {LEVEL}-ALIGNMENT.md (owner sign-off)
+│   │   │                          · authentic_audio.json
+│   │   ├── content/placement/   ← placement test content
+│   │   ├── data/                ← 90 × {level}_week{n}.json
+│   │   ├── tests/               ← 89 files → 2,044 passing / 2 skipped
+│   │   └── scripts/             ← ops, migration + verification tooling
+│   └── discord-challenge-bot/   ← separate 30-day challenge bot (own project)
+├── services/
+│   └── nutq-scorer/             ← self-hosted pronunciation scorer (own container)
+├── content/                     ← marketing/brand: telegram-posts · build-kit · brand
+├── docs/                        ← ⚠️ largely HISTORICAL. strategy · specs
+│                                   · operations · business · infrastructure
+│                                   · checkpoints. Several files still say L0–L3.
+└── scripts/fix_quiz.py          ← one-off
 ```
+
+**Current cross-project state lives in the private `empire-chronicle`**, not here:
+`STATUS.md` (read first), `SYSTEM-MAP.md`, and
+`audits/2026-08-29-ECOSYSTEM-AUDIT.md`.
 
 ---
 
@@ -168,6 +186,28 @@ else:
   feature — reuse `database.is_feature_enabled()`/`set_feature_flag()`
   every time, so `!flag list` stays the single place to see everything
   that's dormant or in beta.
+- 🔴 **THIS RULE IS CURRENTLY BROKEN FOR 6 FLAGS — fix it before adding a 7th.**
+  Found by the 2026-08-29 audit. The registry's `default_enabled` and the
+  documented live state disagree:
+
+  | Flag | registry | documented as |
+  |---|:-:|---|
+  | `itqan_weekly_assessment` | `False` | ON, all 16 students |
+  | `itqan_progression_gate` | `False` | ON, all 16 students |
+  | `hafiz_motivation` | `False` | ON for everyone |
+  | `masar_momentum_score` | `False` | ON |
+  | `nour_msa` | `True` | OFF (Nour retired) |
+  | `nour_journey` | `True` | OFF (Nour retired) |
+
+  Why it matters beyond tidiness: flags **fail closed when unset**, so a fresh or
+  restored database boots from `default_enabled`, not from the docs. Today that
+  means a restored DB would come up with Itqan, Hafiz and the momentum score
+  **off** and Nour MSA + journey **on** — close to the inverse of production. It
+  also means `!flag list`, the owner's own control surface, shows wrong defaults.
+  **Resolve by reading the live table first** (`!flag list`, or
+  `database.list_feature_flags()`), then correcting registry and docs together.
+  Do not infer either one from the other.
+
 - **Flag registry (`src/flag_registry.py`) MUST be updated in the SAME
   commit that creates or enables a new flag.** Never as a separate PR
   or afterthought. The registry is the source of truth for what flags

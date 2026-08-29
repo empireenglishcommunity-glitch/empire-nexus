@@ -1,5 +1,35 @@
 # Implementation Plan — Weekly Assessment ("Itqan")
 
+## Status — BUILT, DEPLOYED AND LIVE (header added 2026-08-29)
+
+> 🔴 **All 45 boxes below are unticked and that is WRONG — Itqan is live.** Added
+> after the 2026-08-29 audit found this spec reading 0% complete while
+> `empire-chronicle`'s `SYSTEM-MAP.md` §11 documents the same system as built
+> across 12 owner-merged phases, deployed, live-verified, with both flags ON for
+> all 16 students and 0 lockouts. **Do not rebuild any of this.**
+>
+> **Evidence** (verified 2026-08-29):
+> - `src/assessment.py` (2,355 lines — the engine) and `src/itqan_outcomes.py`
+>   (482 lines — the consequences)
+> - flags `itqan_weekly_assessment` + `itqan_progression_gate` registered under
+>   initiative `itqan`
+> - tables `assessment_attempts`, `assessment_items`, `week_mastery`,
+>   `assessment_recordings` all in `database.py`'s `_SCHEMA`
+> - scheduled loops `itqan_weekly_report` + `itqan_due_nudge` in `bot.py`
+> - the practice-site surface exists at `empire-dojo/site/assessment/`
+>
+> ⚠️ **One real discrepancy to resolve before touching this:** both flags are
+> `default_enabled=False` in `flag_registry.py`, while `SYSTEM-MAP.md` §4 records
+> them as **ON for all 16 students**. Flags fail closed when unset, so a restored
+> database would boot with Itqan **off**. **Read the live `feature_flags` table
+> first** — do not "fix" the registry from the docs or the docs from the registry.
+>
+> Later refinements are recorded in `SYSTEM-MAP.md` §11, not here — notably that
+> `itqan_progression_gate` is now **SOFT** (it never freezes daily tasks; the old
+> `gate_locked` day-freeze was removed from `darb.py`), and that abandoned or
+> timed-out attempts are **voided** with no score, fail or cooldown. Anything
+> below that contradicts §11 is superseded.
+
 Build order. **Every phase is its own owner-merged PR, fully tested, and
 deployed + live-verified with zero disruption to the 16 students.** Everything
 is behind the `itqan_weekly_assessment` flag (OFF) until Phase 9, so nothing is

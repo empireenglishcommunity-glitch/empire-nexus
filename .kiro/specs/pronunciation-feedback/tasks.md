@@ -1,8 +1,26 @@
 # Pronunciation Feedback — Implementation Plan (Tasks)
 
-**Status:** DRAFT — awaiting owner approval. **No implementation starts until the
-owner approves this spec.** Every phase: feature branch → full test suite green →
-owner merges → deploy → live-verify → check off here. Flag stays OFF until Phase 4.
+## Status — ⛔ SUPERSEDED by `pronunciation-engine-v2` (header added 2026-08-29)
+
+> **This is the earlier of two pronunciation specs. Do not work from it.**
+> `.kiro/specs/pronunciation-engine-v2/` is the consolidated, final plan and is
+> the one that shipped as **Nutq**.
+>
+> The "DRAFT — awaiting owner approval / no implementation starts" line below is
+> **false as of 2026-08-29**: pronunciation feedback is built and deployed.
+> Evidence — `src/pronunciation_scorer.py` (523 lines, engine selector),
+> `src/pronunciation_azure.py` (253 lines, Azure Pronunciation Assessment client),
+> the standalone `services/nutq-scorer/` container (free self-hosted fallback),
+> the `pronunciation_scores` / `azure_usage` / `azure_shadow_calls` /
+> `nutq_daily_cap_overrides` tables, and **8** test files (`test_nutq_*.py`,
+> `test_pronunciation_*.py`).
+>
+> See `empire-chronicle/SYSTEM-MAP.md` §2 for how the live "🏅 Grade my best read"
+> model actually works — notably that a normal practice send uses the free engine
+> and shows no number, while the one official daily grade goes to Azure under an
+> atomic per-day cap. Kept as a design record.
+
+**Original status line (superseded):** DRAFT — awaiting owner approval.
 
 Legend: [ ] not started · [~] in progress · [x] done
 

@@ -1,247 +1,169 @@
-# Empire English Community
+# Empire English Community — `empire-nexus`
 
-> **Speak like an Emperor.** — An online English-learning community for Arabic speakers.
-> Sub-brand of MACAL Empire.
+> **Speak like an Emperor.** — An online English-learning community for Arabic
+> speakers. Sub-brand of MACAL Empire.
+
+The canonical monorepo. The **Discord Learning Bot** lives at
+`bots/discord-learning-bot/` and is the heart of the product.
+
+> **Rewritten 2026-08-29.** The previous version of this file described a
+> repository that no longer exists — it drew `apps/mobile`, `apps/web`,
+> `workers/linkedin-engine`, `bots/telegram-sales-bot` and `infrastructure/` in
+> its structure tree, listed them as LIVE, and gave Quick Start commands for them.
+> **None of those directories are in this repo.** Some moved out in the 2026-07-12
+> restructure (`infrastructure/` → `empire-server-forge`); others predate it. It
+> also described the curriculum as "L0", which was retired in favour of CEFR
+> A1–C2 in 2026-08. See
+> [`empire-chronicle`'s 2026-08-29 ecosystem audit](https://github.com/empireenglishcommunity-glitch/empire-chronicle/blob/main/audits/2026-08-29-ECOSYSTEM-AUDIT.md)
+> (private repo).
 
 ---
 
-## What This Repository Is
+## Where current state actually lives
 
-This is the **single source of truth** for all Empire English Community assets — strategy, code, infrastructure, content, documentation, and automation. Everything lives here.
+**Not in this repo.** Cross-project state lives in the private
+`empireenglishcommunity-glitch/empire-chronicle`:
+
+| Read | For |
+|---|---|
+| `empire-chronicle/STATUS.md` | **Start here.** What is live, what is open, what is decided. |
+| `empire-chronicle/SYSTEM-MAP.md` | What exists in the bot + practice site and why. Every count re-derived from code. |
+| `empire-chronicle/audits/2026-08-29-ECOSYSTEM-AUDIT.md` | What is *verified* vs merely claimed. |
+| `.kiro/steering/project-rules.md` (here) | Constraints and conventions for this repo. |
+| `.kiro/specs/*/` (here) | Per-initiative requirements / design / tasks. |
+
+> ⚠️ **`PROJECT_STATUS.md` and `REPOSITORY_AUDIT.md` in this repo are STALE
+> historical records** (dated 2026-07-11 and 2026-06-27). `PROJECT_STATUS.md` even
+> tells you to treat itself as current — it is not; it predates the entire CEFR
+> restructure. Kept for history only.
+>
+> ⚠️ **`.kiro/specs/*/tasks.md` checkboxes are not a reliable progress signal.**
+> The 2026-08-29 audit found two specs reading 0% complete while live in
+> production, and one open box describing work that had already shipped. Each
+> affected spec now carries a **status header** stating the verified reality —
+> read that header before trusting any box beneath it.
 
 ---
 
-## Repository Structure
+## Repository Structure (verified 2026-08-29 — 942 tracked files)
 
 ```
-empire-english-community/
+empire-nexus/
 │
-├── bots/                               ← All bot source code
-│   ├── discord-learning-bot/           ← Discord L0 learning system (Python/Docker)
-│   │   ├── src/                        ← Bot modules (ai_engine, database, tasks)
-│   │   ├── content/                    ← L0 curriculum (accent, grammar, speaking, writing, immersion)
-│   │   ├── data/                       ← Week 1-8 JSON data files + advancement exam
-│   │   ├── scripts/                    ← Server setup automation
-│   │   ├── Dockerfile + docker-compose.yml
-│   │   └── requirements.txt
+├── bots/
+│   ├── discord-learning-bot/     ← THE PRODUCT. Python/Docker. Auto-deploys on
+│   │   │                            merge to main.
+│   │   ├── src/                  ← 35 modules, ~29,600 lines. bot.py is the hub;
+│   │   │                            database.py owns all SQLite (39 tables);
+│   │   │                            api_server.py is the API the practice site calls.
+│   │   ├── content/              ← CEFR curriculum: a1/ a2/ b1/ b2/ c1/ c2/ each with
+│   │   │                            accent/ grammar/ reading/ mediation/ broadcast/,
+│   │   │                            plus cefr/ (can-do descriptors, per-level
+│   │   │                            ALIGNMENT.md + owner sign-off), placement/,
+│   │   │                            patterns/, governance/, milestones/
+│   │   ├── data/                 ← 90 weekly files {level}_week{n}.json (+1 index)
+│   │   ├── tests/                ← 89 files, ~16,800 lines → 2,044 passing / 2 skipped
+│   │   ├── scripts/              ← ops + migration tooling (setup_server.py,
+│   │   │                            cefr_migrate_server.py, deploy.py, rollback.py,
+│   │   │                            health_check.py, backup.py, bidi_check.py, …)
+│   │   └── Dockerfile · docker-compose.yml · requirements*.txt · run.py
 │   │
-│   ├── discord-challenge-bot/          ← 30-day challenge bot (Python/Docker)
-│   │   ├── src/                        ← Bot, AI coach, certificates, challenges, database
-│   │   ├── data/                       ← Challenge data, captions, promo content
-│   │   ├── tests/                      ← 49 pytest tests
-│   │   ├── fonts/                      ← Cairo Arabic font (PDF certificates)
-│   │   ├── scripts/                    ← Backup, server setup
-│   │   ├── Dockerfile + docker-compose.yml
-│   │   └── DEPLOYMENT.md
-│   │
-│   └── telegram-sales-bot/             ← Telegram sales/funnel bot (Cloudflare Worker)
-│       ├── worker.js                   ← Live bot (v13) — single-file deployment
-│       └── SETUP.md
+│   └── discord-challenge-bot/    ← Separate 30-day challenge bot. Also deployed,
+│                                    but its own project — out of scope for the
+│                                    learning-bot system map.
 │
-├── workers/                            ← Cloudflare Workers (serverless)
-│   └── linkedin-engine/                ← LinkedIn content automation (v3.0)
-│       ├── worker.js                   ← 55 hooks, 25 styles, 15 formats, carousel
-│       ├── wrangler.toml               ← Cloudflare Worker config
-│       ├── SETUP.md
-│       └── _test.mjs                   ← Smoke test
+├── services/
+│   └── nutq-scorer/              ← Free self-hosted pronunciation scorer (Nutq's
+│                                    fallback engine). Own container + tests.
+│                                    ⚠️ relative build context — see deploy note below.
 │
-├── apps/                               ← Web & mobile applications
-│   ├── mobile/                         ← React Native / Expo pronunciation dictionary
-│   │   ├── app/                        ← Expo Router screens
-│   │   ├── src/                        ← Components, data, services, theme
-│   │   ├── package.json
-│   │   ├── app.json
-│   │   └── tsconfig.json
-│   │
-│   └── web/                            ← Web applications
-│       ├── landing-pages/              ← Static HTML (EN + AR RTL)
-│       │   ├── index.html
-│       │   └── index-ar.html
-│       └── next-app/                   ← Next.js web app (student dashboard)
-│           ├── app/
-│           ├── components/
-│           └── lib/
+├── .kiro/
+│   ├── steering/                 ← AI agent rules for this repo
+│   └── specs/                    ← 24 initiative specs (requirements/design/tasks)
 │
-├── infrastructure/                     ← Deployment & server configuration
-│   ├── server-hardening/               ← Hetzner VPS security (7 hardening scripts)
-│   │   ├── deploy.sh                   ← Master deployment script
-│   │   ├── scripts/                    ← Swap, firewall, SSH, fail2ban, Docker, monitoring, backup
-│   │   ├── configs/                    ← docker-compose.yml, watchdog.sh
-│   │   └── systemd/                    ← Monitor timer + service
-│   │
-│   ├── n8n-mcp/                        ← MCP server for AI workflow building
-│   │   ├── docker-compose.yml
-│   │   ├── deploy.sh
-│   │   └── deploy_mcp.py
-│   │
-│   └── n8n-workflows/                  ← n8n workflow JSON exports
-│       ├── EMPIRE-BOT-FINAL.json
-│       ├── empire-bot-main-v2.json
-│       └── IMPORT_INSTRUCTIONS.md
+├── .github/workflows/            ← learning-bot-test.yml · deploy-learning-bot.yml
+│                                    · challenge-bot-test.yml
 │
-├── content/                            ← Content & marketing assets
-│   ├── telegram-posts/                 ← 6 weeks of Telegram channel posts
-│   │   ├── WEEK_1_POSTS.md → WEEK_6_POSTS.md
-│   │   ├── GROUP_SEEDING_WEEK1.md
-│   │   └── WORD_OF_THE_DAY_14.md
-│   │
-│   ├── build-kit/                      ← CRM templates, quiz logic, operational assets
-│   │   ├── crm/                        ← Google Sheets CRM templates (CSV)
-│   │   ├── quiz-logic.md
-│   │   ├── botfather-setup.md
-│   │   └── weekly-report.gs
-│   │
-│   └── brand/                          ← MACAL brand voice & identity
-│       └── macal-brand-bible.md
-│
-├── docs/                               ← All documentation
-│   ├── strategy/                       ← Business strategy & roadmaps
-│   │   ├── Empire English Community Learning System.md
-│   │   ├── STRATEGIC_EXPANSION_ROADMAP.md
-│   │   ├── CHANNEL_GROWTH_CONVERSION_BLUEPRINT.md
-│   │   ├── MASTER_IMPLEMENTATION_ROADMAP.md
-│   │   └── FULL_IMPLEMENTATION_ROADMAP.md
-│   │
-│   ├── specs/                          ← Phase build specifications
-│   │   ├── phase-0/                    ← Bot, quiz, CRM, automations
-│   │   ├── phase-1/                    ← Content, discussion group, 3 American Sounds
-│   │   ├── learning-system/            ← Discord L0 curriculum plan
-│   │   └── ecosystem/                  ← Brand universe, ecosystem architecture
-│   │
-│   ├── operations/                     ← Server, recovery, audits, operational guides
-│   │   ├── SERVER_REFERENCE.md
-│   │   ├── EMERGENCY-RECOVERY.md
-│   │   ├── SERVER_AUDIT.md
-│   │   ├── GUIDE.md
-│   │   ├── PROJECT-CONTEXT.md
-│   │   └── PROJECTS-CHECKLIST.md
-│   │
-│   ├── business/                       ← Feasibility studies, pricing, launch
-│   │   ├── EEC-Feasibility-Study.md
-│   │   ├── EEC-International-Pricing-and-Feasibility.md
-│   │   ├── EEC-Launch-Night-Playbook.md
-│   │   └── تحدي-30-يوم-المنطقة-غير-المريحة.md
-│   │
-│   ├── infrastructure/                 ← Technical infrastructure docs
-│   │   ├── N8N_WORKFLOW_PATTERNS.md
-│   │   ├── QUIZ_SYSTEM_TECHNICAL_AUDIT.md
-│   │   └── EEC_SERVER_REFERENCE.md
-│   │
-│   └── checkpoints/                    ← Session checkpoint history
-│       ├── CHECKPOINT_2026-06-19.md
-│       ├── CHECKPOINT_2026-06-20.md
-│       ├── CHECKPOINT_2026-06-25.md
-│       └── CHECKPOINT_2026-06-25-B.md
-│
-├── .github/workflows/                  ← CI/CD pipelines
-│   ├── challenge-bot-test.yml
-│   └── linkedin-engine-smoke-test.yml
-│
-├── .kiro/steering/                     ← AI agent rules & protocols
-│   ├── project-rules.md
-│   └── sync-protocol.md
-│
-├── PROJECT_STATUS.md                   ← Current project status & handover
-├── .gitignore
-└── README.md                           ← This file
+├── content/                      ← Marketing/brand assets: brand/ build-kit/
+│                                    telegram-posts/
+├── docs/                         ← business/ checkpoints/ infrastructure/
+│                                    operations/ specs/ strategy/ — largely
+│                                    HISTORICAL; several files still say L0–L3
+└── scripts/fix_quiz.py           ← one-off
 ```
 
----
-
-## Live Systems (Deployed)
-
-| System | Platform | Status | Source |
-|--------|----------|:------:|--------|
-| Telegram Sales Bot | Cloudflare Worker | LIVE (v13) | `bots/telegram-sales-bot/` |
-| Discord Learning Bot | Docker on Hetzner | LIVE | `bots/discord-learning-bot/` |
-| Discord Challenge Bot | Docker on Hetzner | LIVE | `bots/discord-challenge-bot/` |
-| LinkedIn Engine | Cloudflare Worker | LIVE (v3.0) | `workers/linkedin-engine/` |
-| n8n Workflows (7) | Docker on Hetzner | RUNNING | `infrastructure/n8n-workflows/` |
-| Server Hardening | Hetzner VPS | DEPLOYED | `infrastructure/server-hardening/` |
-| MCP Server | Docker on Hetzner | RUNNING | `infrastructure/n8n-mcp/` |
+**The practice website is a separate repo:** `empire-dojo` (Cloudflare Pages, live
+at practice.empireenglish.online). It generates its pages *from* this repo's
+`content/` and `data/`.
 
 ---
 
-## Infrastructure
+## The product, in one paragraph
 
-| Layer | Tool | Status |
-|-------|------|:------:|
-| **Server** | Hetzner CX23 (Helsinki, 4GB RAM, Ubuntu 26.04) | Running |
-| **Automation** | n8n (Docker, pinned v2.26.8) | Running |
-| **Routing** | Cloudflare Tunnel → `bot.empireenglish.online` | Running |
-| **MCP** | AI workflow builder → `mcp.empireenglish.online` | Running |
-| **Monitoring** | Telegram watchdog (60s) + BetterStack (3min) | Active |
-| **Security** | Key-only SSH, Fail2Ban, UFW, resource limits | Hardened |
-| **Backups** | Daily 3AM, 14-day rotation | Automated |
-
----
-
-## Project Phases
-
-| Phase | Description | Status |
-|:-----:|-------------|:------:|
-| 0 | Funnel (Telegram bot, quiz, CRM, automations, booking) | COMPLETE |
-| 1 | Content (6 weeks posts, discussion group, report + KPI) | IN PROGRESS |
-| L0 | Learning System (Discord, curriculum, bot, 8 weeks) | DEPLOYED |
-| 2 | Growth (paid ads, content scaling) | NOT STARTED |
-| 3 | Scale (team, multi-level, paid tools) | NOT STARTED |
+Students do 7 daily tasks. Five of them (accent, vocabulary, shadowing, listening,
+speaking) happen on the **practice site**, which calls this bot's `/api/*`
+endpoints; two (writing, community) happen in **Discord**. The bot records
+progress in SQLite, posts recordings to `#showcase`, runs ~30 scheduled jobs
+(daily task posts, reminders, weekly reports) and answers commands (`!done`,
+`!progress`, `!today`, …). Levels are the **six CEFR levels A1–C2** across **90
+curriculum weeks**. Student-facing wording is always **"CEFR-aligned, not
+certified."**
 
 ---
 
-## Quick Start (by component)
+## Deploying
 
-### Telegram Sales Bot (live)
+**The learning bot auto-deploys.** Merging to `main` triggers
+`.github/workflows/deploy-learning-bot.yml`, which SSHes to the server with a
+pinned host key, pulls, rebuilds the container, and **fails the build if the
+container is unhealthy or the curriculum does not load**. No manual SSH, and no
+key to re-add after a sandbox reset.
+
+⚠️ **If you ever deploy by hand, rebuild by service name:**
+
 ```bash
-# Already deployed on Cloudflare Workers
-# Edit: bots/telegram-sales-bot/worker.js → paste in Cloudflare dashboard → Deploy
+cd /opt/empire-english-bot && git pull --ff-only
+docker compose up -d --build empire-english-bot   # NOT a bare --build
 ```
 
-### LinkedIn Engine (live)
-```bash
-# Already deployed on Cloudflare Workers
-# Edit: workers/linkedin-engine/worker.js → wrangler deploy
-```
+A bare `docker compose up -d --build` fails with
+`path "/services/nutq-scorer" not found`, because `nutq-scorer`'s build context is
+relative and does not resolve in the server's flattened sparse checkout. It is
+non-destructive — the running containers are untouched — but the deploy silently
+does not happen.
 
-### Discord Learning Bot (deployed)
-```bash
-# On Hetzner: /opt/empire-english-bot/
-# Update: ssh in → cd /opt/empire-english-bot && git pull && docker compose up -d --build
-```
-
-### Discord Challenge Bot (deployed)
-```bash
-# On Hetzner: /opt/empire-challenge/empire-challenge-bot/
-# Update: ssh in → cd /opt/empire-challenge && git pull && docker compose up -d --build
-```
-
-### Mobile App (Expo)
-```bash
-cd apps/mobile
-npm install
-npx expo start --tunnel
-```
+⚠️ **`empire-dojo` does NOT auto-deploy.** Merging is not deploying there; it
+needs an explicit `wrangler pages deploy`. And when the bot and the page change
+together, **deploy the page first** — the page renders both payload shapes, the
+bot does not guess which page is live.
 
 ---
 
-## For New AI Agents / Developers
+## Running the tests
 
-Start with these files in order:
-1. **This README** — understand the project map
-2. **`PROJECT_STATUS.md`** — current state & priorities
-3. **`docs/operations/PROJECT-CONTEXT.md`** — full handoff context
-4. **`docs/operations/SERVER_REFERENCE.md`** — server architecture
-5. **`.kiro/steering/project-rules.md`** — constraints & conventions
+```bash
+cd bots/discord-learning-bot
+python3.12 -m pip install -r requirements.txt -r requirements-dev.txt
+python3.12 -m pytest -q            # 2,044 passed, 2 skipped
+python3.12 -m src.coverage_ledger  # exit 0; content-coverage hard gate
+```
+
+**Use `python3.12`.** Under 3.9 collection fails with ~50 `X | Y` union-type
+errors. CI uses 3.12 and runs both commands above.
 
 ---
 
 ## Design Principles
 
 - **Zero vendor lock-in** — self-hosted, open-source tools preferred
-- **Zero/near-zero cost** — Cloudflare free, Hetzner $7/mo, all APIs on free tiers
-- **No AI dependency for critical paths** — keyword banks + fallback pools for 100% uptime
+- **Zero/near-zero cost** — Hetzner ~$7/mo, all APIs on free tiers
+- **No AI dependency for critical paths** — keyword banks + fallback pools, so
+  uptime never depends on a model being available
 - **Human-in-the-loop** — all sensitive actions require admin approval
-- **Single-file deployments** — each Cloudflare Worker is one self-contained `.js` file
-- **Arabic-first UX** — all customer-facing copy in Egyptian Arabic dialect
+- **Arabic-first UX** — customer-facing copy in Egyptian Arabic dialect
+- **Every risky feature behind a flag** — deploy and release are separate. Flags
+  are declared in `src/flag_registry.py` (51 flags, 15 initiatives) and fail
+  **closed** when unset. Register a flag in the same commit that creates it.
 
 ---
 
