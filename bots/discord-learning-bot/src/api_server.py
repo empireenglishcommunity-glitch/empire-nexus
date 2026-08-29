@@ -1987,18 +1987,20 @@ async def post_assessment_start(request: web.Request) -> web.Response:
 
 
 @routes.post("/api/assessment/item")
-async def post_assessment_item(request: web.Request) -> web.Response:
-    """Submit one item's answer. Text items send JSON
-    {attempt_id, item_no, answer}; recording items send multipart/form-data
-    with an `audio` part plus `attempt_id` and `item_no` fields. Scoring is
-    stored server-side; the correctness is intentionally NOT returned during
-    the test."""
-    from . import assessment
-    payload, err = _itqan_gate(request)
-    if err:
-        return err
-    discord_id = payload["did"]
+async def _read_item_submission(request: web.Request):
+    """Parse an assessment item submission that may arrive as EITHER
+    JSON ({attempt_id, item_no, answer} for text items) OR
+    multipart/form-data (an `audio` part + `attempt_id`/`item_no` fields
+    for pronunciation/speaking items). Returns (data, None) on success or
+    (None, error_response), following the _itqan_gate idiom.
 
+    Every assessment family (weekly, monthly, advancement) MUST parse
+    submissions through this one helper: a speaking/pronunciation answer is
+    always multipart, so an endpoint that only reads JSON silently rejects
+    every recording. That was the 2026-08 bug where the monthly and
+    advancement endpoints called request.json() only — audio items returned
+    "bad_json" and the student saw "Couldn't save that answer" no matter how
+    many times they retried."""
     attempt_id = item_no = None
     answer = ""
     audio_bytes = None
@@ -2009,8 +2011,8 @@ async def post_assessment_item(request: web.Request) -> web.Response:
         try:
             reader = await request.multipart()
         except Exception:
-            return web.json_response({"ok": False, "error": "multipart required"},
-                                     status=400, headers=_cors_headers(request))
+            return None, web.json_response({"ok": False, "error": "multipart required"},
+                                           status=400, headers=_cors_headers(request))
         while True:
             part = await reader.next()
             if part is None:
@@ -2049,12 +2051,31 @@ async def post_assessment_item(request: web.Request) -> web.Response:
             attempt_id = item_no = None
 
     if attempt_id is None or item_no is None:
-        return web.json_response({"ok": False, "error": "attempt_id and item_no required"},
-                                 status=400, headers=_cors_headers(request))
+        return None, web.json_response({"ok": False, "error": "attempt_id and item_no required"},
+                                       status=400, headers=_cors_headers(request))
+    return {"attempt_id": attempt_id, "item_no": item_no, "answer": answer,
+            "audio_bytes": audio_bytes, "audio_filename": audio_filename}, None
+
+
+async def post_assessment_item(request: web.Request) -> web.Response:
+    """Submit one item's answer. Text items send JSON
+    {attempt_id, item_no, answer}; recording items send multipart/form-data
+    with an `audio` part plus `attempt_id` and `item_no` fields. Scoring is
+    stored server-side; the correctness is intentionally NOT returned during
+    the test."""
+    from . import assessment
+    payload, err = _itqan_gate(request)
+    if err:
+        return err
+    discord_id = payload["did"]
+    data, err = await _read_item_submission(request)
+    if err:
+        return err
     database.touch_device_session(payload["sid"])
-    result = await assessment.submit_item(discord_id, attempt_id, item_no,
-                                          answer=answer, audio_bytes=audio_bytes,
-                                          audio_filename=audio_filename)
+    result = await assessment.submit_item(discord_id, data["attempt_id"], data["item_no"],
+                                          answer=data["answer"],
+                                          audio_bytes=data["audio_bytes"],
+                                          audio_filename=data["audio_filename"])
     status = 200 if result.get("ok") else 400
     return web.json_response(result, status=status, headers=_cors_headers(request))
 
@@ -2135,28 +2156,26 @@ async def post_monthly_start(request: web.Request) -> web.Response:
 @routes.post("/api/assessment/monthly/item")
 async def post_monthly_item(request: web.Request) -> web.Response:
     """Submit an answer for a monthly review item. Reuses the same item
-    scoring as weekly (Whisper for audio, AI for text, objective for vocab)."""
+    scoring as weekly (Whisper for audio, AI for text, objective for vocab)
+    and the same submission parser, so speaking/pronunciation recordings
+    (multipart audio) are accepted here exactly as they are on the weekly
+    endpoint."""
     from . import assessment
     payload, err = _itqan_gate(request)
     if err:
         return err
     discord_id = payload["did"]
+    data, err = await _read_item_submission(request)
+    if err:
+        return err
     database.touch_device_session(payload["sid"])
-    try:
-        body = await request.json()
-    except Exception:
-        return web.json_response({"ok": False, "error": "bad_json"},
-                                 status=400, headers=_cors_headers(request))
-    attempt_id = body.get("attempt_id")
-    item_no = body.get("item_no")
-    answer = body.get("answer", "")
-    if not attempt_id or item_no is None:
-        return web.json_response({"ok": False, "error": "missing fields"},
-                                 status=400, headers=_cors_headers(request))
     # Reuse the same submit_item (it works on any attempt_id regardless of type)
-    result = await assessment.submit_item(discord_id, int(attempt_id), int(item_no),
-                                          answer=answer)
-    return web.json_response(result, headers=_cors_headers(request))
+    result = await assessment.submit_item(discord_id, data["attempt_id"], data["item_no"],
+                                          answer=data["answer"],
+                                          audio_bytes=data["audio_bytes"],
+                                          audio_filename=data["audio_filename"])
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
 
 
 @routes.post("/api/assessment/monthly/finish")
@@ -2230,27 +2249,24 @@ async def post_advancement_start(request: web.Request) -> web.Response:
 
 @routes.post("/api/assessment/advancement/item")
 async def post_advancement_item(request: web.Request) -> web.Response:
-    """Submit an answer for an advancement exam item (Part A)."""
+    """Submit an answer for an advancement exam item (Part A). Uses the same
+    submission parser as the weekly/monthly endpoints, so speaking and
+    pronunciation recordings (multipart audio) are accepted here too."""
     from . import assessment
     payload, err = _itqan_gate(request)
     if err:
         return err
     discord_id = payload["did"]
+    data, err = await _read_item_submission(request)
+    if err:
+        return err
     database.touch_device_session(payload["sid"])
-    try:
-        body = await request.json()
-    except Exception:
-        return web.json_response({"ok": False, "error": "bad_json"},
-                                 status=400, headers=_cors_headers(request))
-    attempt_id = body.get("attempt_id")
-    item_no = body.get("item_no")
-    answer = body.get("answer", "")
-    if not attempt_id or item_no is None:
-        return web.json_response({"ok": False, "error": "missing fields"},
-                                 status=400, headers=_cors_headers(request))
-    result = await assessment.submit_item(discord_id, int(attempt_id), int(item_no),
-                                          answer=answer)
-    return web.json_response(result, headers=_cors_headers(request))
+    result = await assessment.submit_item(discord_id, data["attempt_id"], data["item_no"],
+                                          answer=data["answer"],
+                                          audio_bytes=data["audio_bytes"],
+                                          audio_filename=data["audio_filename"])
+    status = 200 if result.get("ok") else 400
+    return web.json_response(result, status=status, headers=_cors_headers(request))
 
 
 @routes.post("/api/assessment/advancement/finish-a")
