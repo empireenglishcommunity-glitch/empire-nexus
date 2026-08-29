@@ -478,9 +478,31 @@ ASSESSMENT_DIMENSIONS = [
 STREAK_BONUS_POINTS = {7: 200, 14: 400, 30: 1000, 60: 2500, 100: 5000}
 POINTS_PER_TASK = 15
 POINTS_ALL_TASKS = 100  # Bonus for completing all 7 in a day
-POINTS_VOICE_LOUNGE = 20
-POINTS_PEER_FEEDBACK = 15
 POINTS_ASSESSMENT = 50
+
+# POINTS_VOICE_LOUNGE = 20 was REMOVED 2026-08-29. It had zero references
+# anywhere in the repo — it was the original intent for rewarding lounge time and
+# was never wired up. Rewarding the lounge is now Majlis Phase 6's job
+# (`community_together_reward_points`, a DB-tunable setting, currently 10), so a
+# second hardcoded constant for the same idea was worse than nothing: whoever
+# found it next would not know which one was authoritative.
+
+# ⚠️ These two are DECLARED BUT NEVER USED — verified 2026-08-29: zero references
+# outside this file. Unlike POINTS_VOICE_LOUNGE they are NOT deleted, because they
+# look like unimplemented *intentions* rather than dead duplicates, and deleting
+# them would erase the only record that they were ever meant to exist:
+#
+#   POINTS_ADVANCEMENT — promoting a student A1→A2 currently awards NO points at
+#   all. The only things that award points are: task:<id>, all_7_tasks, the streak
+#   bonus (tasks.py), web_<exercise> (api_server.py), tutorial_quest
+#   (features.py) and community:together_reward. Level promotion — the single
+#   biggest milestone in the programme — awards nothing.
+#
+#   POINTS_PEER_FEEDBACK — no peer-feedback award exists.
+#
+# Decide both during the XP rework: wire them up, or delete them. Do not leave
+# them here indefinitely as a third state between "feature" and "dead code".
+POINTS_PEER_FEEDBACK = 15
 POINTS_ADVANCEMENT = 500
 
 # Attendance intervention thresholds (days missed)
