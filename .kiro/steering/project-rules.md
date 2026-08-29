@@ -186,31 +186,50 @@ else:
   feature — reuse `database.is_feature_enabled()`/`set_feature_flag()`
   every time, so `!flag list` stays the single place to see everything
   that's dormant or in beta.
-- 🔴 **THIS RULE IS CURRENTLY BROKEN FOR 6 FLAGS — fix it before adding a 7th.**
-  Found by the 2026-08-29 audit. The registry's `default_enabled` and the
-  documented live state disagree:
+- 🔴 **`default_enabled` is a SHIP STATE, not a mirror of production. Do not
+  "sync" it to the live table.** *(Rule corrected 2026-08-29 — the previous
+  wording was itself the bug.)*
 
-  | Flag | registry | documented as |
-  |---|:-:|---|
-  | `itqan_weekly_assessment` | `False` | ON, all 16 students |
-  | `itqan_progression_gate` | `False` | ON, all 16 students |
-  | `hafiz_motivation` | `False` | ON for everyone |
-  | `masar_momentum_score` | `False` | ON |
-  | `nour_msa` | `True` | OFF (Nour retired) |
-  | `nour_journey` | `True` | OFF (Nour retired) |
+  This rule used to say: when you enable a flag, flip `default_enabled` to True in
+  the same commit, "so `default_enabled` always reflects the intended production
+  state." **That instruction is wrong and cannot be followed**, because four tests
+  deliberately assert the opposite, with docstrings explaining why:
 
-  Why it matters beyond tidiness: flags **fail closed when unset**, so a fresh or
-  restored database boots from `default_enabled`, not from the docs. Today that
-  means a restored DB would come up with Itqan, Hafiz and the momentum score
-  **off** and Nour MSA + journey **on** — close to the inverse of production. It
-  also means `!flag list`, the owner's own control surface, shows wrong defaults.
-  **Resolve by reading the live table first** (`!flag list`, or
-  `database.list_feature_flags()`), then correcting registry and docs together.
-  Do not infer either one from the other.
+  | Test | Asserts |
+  |---|---|
+  | `test_community_phase0::test_majlis_flags_default_off` | *"never accidentally active"* |
+  | `test_itqan_phase0::test_flag_registered_and_off_by_default` | *"must default OFF"* |
+  | `test_taqdeem_phase0` | `assessment_monthly_review` default False |
+  | `test_motivation` | `hafiz_motivation` *"default off until verified"* |
 
-- **Flag registry (`src/flag_registry.py`) MUST be updated in the SAME
-  commit that creates or enables a new flag.** Never as a separate PR
-  or afterthought. The registry is the source of truth for what flags
+  Following the old rule would have meant deleting those tests. **The tests are
+  right.** For a system with 17 live students, a restored database coming up
+  **inert** is the correct failure mode: an operator noticing "nothing is running"
+  is far safer than students silently receiving half-configured features during a
+  recovery.
+
+  So `default_enabled` answers *"what does a FRESH database do?"* — nothing else.
+  Reading it as production state is what made four separate documents wrong; the
+  live table was finally read on 2026-08-29 and **16 of 51 flags** differ from
+  their default.
+
+  **What to do instead when you flip a flag:**
+  1. Flip it live (`!flag enable <name>`, or Telegram `/flag`).
+  2. **Record it in `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md` in the same
+     session.** A flag flip is a release. That file is the only place production
+     state is written down — `updated_by` in the DB is a breadcrumb that happened
+     to survive, not documentation.
+  3. Leave `default_enabled` alone unless you are genuinely changing what a fresh
+     install should do.
+
+  **Consequence to remember:** `sync_flag_registry()` only INSERTs and never
+  updates, so after a DB restore the ON rows must be re-applied deliberately from
+  that file.
+
+- **A new flag MUST be added to `src/flag_registry.py` in the SAME commit that
+  creates it** — with its name, description, initiative and (default-OFF)
+  `default_enabled`. Never as a separate PR or afterthought. The registry is what
+  `!flag list` renders, so an unregistered flag is invisible to the owner. The registry is the source of truth for what flags
   exist, what they do, and which initiative they belong to. When adding
   a flag: add the REGISTRY entry with its name, description, initiative,
   and default_enabled state in the same commit. When enabling a flag

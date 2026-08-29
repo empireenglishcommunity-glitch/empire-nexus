@@ -14,10 +14,14 @@
 >   `default_enabled=True`: `wuslah_dashboard_api`, `wuslah_exercise_confirm`,
 >   `wuslah_nour_tips`, `wuslah_adaptive`.
 >
-> ⚠️ **One caveat:** `wuslah_nour_tips` (W4) drives AI study tips through Nour, and
-> **Nour was retired** in the session-29 cleanup — so that flag is ON while the
-> subsystem behind it is intentionally silent. Do not "fix" this by reviving Nour;
-> see `SYSTEM-MAP.md` §8 and `nour-intelligence-core/tasks.md`'s header.
+> ⚠️ **Correction (2026-08-29):** an earlier version of this header said
+> `wuslah_nour_tips` was "ON while the subsystem behind it is intentionally
+> silent". **That was wrong** — it was inferred from the registry default
+> (`True`) without reading production. The live table says **off**, turned off on
+> 2026-07-28 by `nour_retire_2026-07-28` along with the rest of the Nour
+> retirement. So W4 is coherent, not contradictory: the flag and the retired
+> subsystem agree. The other three `wuslah_*` flags are **ON** in production.
+> Live state: `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md`.
 
 ## Phase W0 — Expanded Student API ✅ COMPLETE
 

@@ -18,11 +18,15 @@
 > - scheduled loops `itqan_weekly_report` + `itqan_due_nudge` in `bot.py`
 > - the practice-site surface exists at `empire-dojo/site/assessment/`
 >
-> ⚠️ **One real discrepancy to resolve before touching this:** both flags are
-> `default_enabled=False` in `flag_registry.py`, while `SYSTEM-MAP.md` §4 records
-> them as **ON for all 16 students**. Flags fail closed when unset, so a restored
-> database would boot with Itqan **off**. **Read the live `feature_flags` table
-> first** — do not "fix" the registry from the docs or the docs from the registry.
+> ✅ **Live state confirmed 2026-08-29** (read from the DB, not inferred): both
+> `itqan_weekly_assessment` and `itqan_progression_gate` are **ON for everyone**,
+> set 2026-07-27 16:08 by `updated_by='rollout'`.
+>
+> Their `default_enabled=False` is the deliberate fail-closed **ship state** —
+> `test_itqan_phase0` asserts it, and a restored DB coming up inert is the intended
+> failure mode. **Do not "sync" the default to True**; see steering §6, which was
+> corrected on 2026-08-29 for demanding exactly that. Production state lives in
+> `empire-chronicle/docs/PRODUCTION-FLAG-STATE.md`.
 >
 > Later refinements are recorded in `SYSTEM-MAP.md` §11, not here — notably that
 > `itqan_progression_gate` is now **SOFT** (it never freezes daily tasks; the old
