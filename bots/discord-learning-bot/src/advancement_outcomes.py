@@ -95,6 +95,19 @@ async def _promote_and_celebrate(discord_id: str, level: str, result: dict) -> N
     finally:
         conn.close()
 
+    # 2b. Ijtihad Phase 3: promotion — the single biggest milestone in the
+    #     programme — used to award ZERO points (POINTS_ADVANCEMENT was dead
+    #     code). It is now the largest award in the economy. Best-effort and
+    #     deduped per level left behind; a failed award must never break a real
+    #     promotion.
+    try:
+        from . import ijtihad
+        awarded = ijtihad.award_promotion(discord_id, level)
+        if awarded:
+            result = {**result, "ijtihad_points": awarded}
+    except Exception as e:
+        logger.warning(f"advancement: ijtihad award failed: {e}")
+
     # 3. DM the student (private congratulation + certificate link)
     await _send_promotion_dm(discord_id, level, next_level, result)
 

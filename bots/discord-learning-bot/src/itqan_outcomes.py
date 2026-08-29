@@ -45,6 +45,19 @@ async def deliver_outcome(discord_id: str, level: str, week: int,
             return
 
         if result == "mastered":
+            # Ijtihad Phase 3: mastering a week used to award ZERO points, and a
+            # distinction awarded zero as well. Pay before celebrating so the
+            # celebration can mention it. Best-effort and deduped -- a failed
+            # award must never turn a real achievement into an error.
+            try:
+                from . import ijtihad
+                awarded = ijtihad.award_week_mastery(
+                    discord_id, level, week,
+                    distinction=bool(verdict.get("distinction")))
+                if awarded:
+                    verdict = {**verdict, "ijtihad_points": awarded}
+            except Exception as e:
+                logger.warning(f"itqan: ijtihad award failed: {e}")
             await _celebrate_champion(discord_id, level, week, verdict)
             return
 
@@ -167,9 +180,17 @@ async def _celebrate_champion(discord_id: str, level: str, week: int, verdict: d
     total = len(mastered)
     dist = " ⭐ **Distinction!**" if verdict.get("distinction") else ""
     streak_line = (f"🔥 {streak} weeks in a row · " if streak > 1 else "")
+    # Ijtihad Phase 3: show the award. Crediting points a student never sees is
+    # the same as not paying them.
+    award_line = ""
+    try:
+        from . import ijtihad
+        award_line = ijtihad.format_award_line(verdict.get("ijtihad_points", 0))
+    except Exception:
+        award_line = ""
     msg = (f"🏅 **{name}** mastered **Week {week}**!{dist}\n"
            f"{streak_line}{total} week{'s' if total != 1 else ''} mastered so far.\n"
-           f"Keep leading the way! 👑")
+           f"Keep leading the way! 👑{award_line}")
     try:
         await ch.send(msg)
         logger.info(f"itqan: champions post for {name} week {week} ({level})")
