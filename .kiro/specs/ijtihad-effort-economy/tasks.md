@@ -204,17 +204,44 @@ are both OFF). **Promotion is live today**, so enabling
 The freeze tests were also made date-independent; they had been implicitly
 depending on which weekday the suite ran on, which is how bug (1) stayed hidden.
 
-## Phase 5 — Boards
+## Phase 5 — Boards ✅ DONE
 
-- [ ] **5.1** Season Effort board (top 3–5 only; own standing shown privately).
-- [ ] **5.2** Journey-Stage peer view with degradation
-      `journey cohort (min 3) → CEFR level → whole community`.
-- [ ] **5.3** Consistency board (full-day streaks).
-- [ ] **5.4** Reform nightly `#streak-tracker`: celebrate today's Full Days as a
-      roll + top 3 streaks; stop naming the bottom half. **Put it behind a flag**
-      (it currently has none).
-- [ ] **5.5** Flag `ijtihad_boards`. Tests for tiny cohorts (N=0,1,2) and for the
-      "never publish bottom half" rule.
+- [x] **5.1** `!season` (alias `!الموسم`) — season effort board, capped at top 5,
+      listing only students who earned something. The caller's own rank is
+      appended to the reply *they* asked for rather than published in a ranked
+      list naming everyone.
+- [x] **5.2** `!peers` (alias `!زمايلي`) — `ijtihad_journey_peers()` compares
+      students within ±2 of your **personal week number**, the fair unit under
+      rolling enrolment. Degrades `journey (min 3) → CEFR level → community`,
+      because a one-person "ranking" is worse than no ranking. The rendered board
+      **states which scope it used** — a ranking whose basis is hidden is just a
+      number someone asserts.
+- [x] **5.3** `!consistency` (alias `!استمرارية`) — `ijtihad_consistency_board()`
+      ranks current full-day streaks. Computed per member (a full-day streak
+      depends on each student's own target and freeze history), and passes
+      `consume_freezes=False`: merely **looking** at a leaderboard must never
+      spend a student's allowance. A student on a target of 3 can top it.
+- [x] **5.4** Nightly `#streak-tracker` reformed into a **roll**, not a ranking —
+      `ijtihad_full_days_on()` + `format_full_day_roll()`. No positions, so nobody
+      can appear in a losing one; a small top-3 of runs is appended for
+      aspiration. The legacy path is kept verbatim for when the flag is off (it
+      previously had **no flag at all**).
+- [x] **5.5** Flag `ijtihad_boards` default **OFF**. 30 tests covering the cap,
+      the "only students who earned something" rule, the caller-sees-own-rank
+      rule, cohort degradation at N=0/1, scoped boards, the freeze-safety of
+      board building, roll wording (singular/plural/empty), and discriminator
+      stripping.
+
+- [x] **5.6** *(added)* `!top` redirects to the season board with a one-line
+      explanation instead of being silently redefined or removed. It has always
+      meant "lifetime ranking" — the very thing that rewarded seniority over work
+      — so it neither lies nor dies.
+- [x] **5.7** *(added)* `!ijtihad-config` (admin) to view/set the tunables.
+      Needed because the Season 1 start date must be set **before** the seasons
+      flag is enabled, and hand-editing settings on the server is exactly the
+      step that gets skipped or mistyped.
+
+*Phase 5 result: full suite 2,268 passed / 2 skipped (+30), ledger 9866/9866/0.*
 
 ## Phase 6 — Growth, grit, spotlight
 
