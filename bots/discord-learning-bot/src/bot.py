@@ -2738,6 +2738,123 @@ async def cmd_consistency(ctx):
     await ctx.send(ijtihad_boards.format_consistency_board(rows))
 
 
+def build_ijtihad_announcement(season: dict = None) -> str:
+    """The launch announcement, bilingual.
+
+    Ordered deliberately: *your history is safe* BEFORE *the race restarts*. The
+    reverse order reads as a threat to the students who have been here longest,
+    and they are the ones with most to lose from a reset.
+
+    Follows the Sahin bidi rule — no Arabic line carries two embedded LTR tokens,
+    and every command sits alone on its own line.
+    """
+    window = ""
+    if season:
+        window = f"\n_{season['started_on']} → {season['ends_on']}_"
+    return (
+        "🏛️ **حاجة جديدة في الإمبراطورية / Something new**\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        "**أولًا: سجلك بقى دائم.**\n"
+        "كل أسبوع أتقنته، كل امتياز، كل مستوى عديته — محفوظ للأبد. مايتصفّرش أبدًا.\n"
+        "**First: your record is now permanent.**\n"
+        "Every week you mastered, every distinction, every level you passed — kept "
+        "forever. It never resets.\n\n"
+        "`!sijil`\n\n"
+        "**واللي اتغيّر: الاجتهاد بقى بمواسم من ٤ أسابيع.**\n"
+        "**What changed: effort now runs in 4-week seasons.**\n"
+        f"{window}\n\n"
+        "يعني اللي بيشتغل بجد **دلوقتي** هو اللي يتقدّم — مهم مش إمتى انضممت.\n"
+        "So whoever works hardest **right now** leads — not whoever joined first.\n\n"
+        "**وكمان:**\n"
+        "• اختار هدفك اليومي — ٣ أو ٥ أو ٧ مهام. توصله؟ يومك كامل.\n"
+        "  Choose your own daily target — 3, 5 or 7. Hit it and your day counts.\n"
+        "• عندك ٢ أيام إجازة في الموسم — يوم واحد ناقص مش بيكسر سلسلتك.\n"
+        "  You get 2 streak freezes a season — one missed day won't break you.\n"
+        "• التقدّم بيتقاس عليك إنت، مش على غيرك.\n"
+        "  Improvement is measured against you, not against anyone else.\n\n"
+        "`!target`  ·  `!season`  ·  `!growth`\n\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "الشغل هو اللي بيتحسب. / **Work is what counts.** 🏛️"
+    )
+
+
+@bot.command(name="ijtihad-announce")
+@commands.has_permissions(administrator=True)
+async def cmd_ijtihad_announce(ctx, channel_name: str = "announcements",
+                               confirm: str = ""):
+    """Owner: post the Ijtihad launch announcement.
+
+    Requires an explicit `confirm` argument, because this writes to a public
+    channel and there is no undo for something 17 students have already read.
+    Without it, previews to the current channel instead.
+    """
+    season = database.ijtihad_current_season()
+    text = build_ijtihad_announcement(season)
+    if confirm != "confirm":
+        await ctx.send("👀 **Preview** (nothing posted). To post for real:\n"
+                       f"`!ijtihad-announce {channel_name} confirm`\n\n"
+                       "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" + text)
+        return
+    channel = discord.utils.get(ctx.guild.text_channels, name=channel_name)
+    if not channel:
+        await ctx.send(f"❌ No channel named `#{channel_name}`.")
+        return
+    try:
+        await channel.send(text)
+        await ctx.send(f"✅ Posted to #{channel_name}.")
+    except Exception as e:
+        await ctx.send(f"❌ Couldn't post to #{channel_name}: {e}")
+
+
+@bot.command(name="ijtihad-reanchor")
+@commands.has_permissions(administrator=True)
+async def cmd_ijtihad_reanchor(ctx, new_start: str = "", confirm: str = ""):
+    """Owner: move the season calendar to a new start date.
+
+    Built to fix one specific thing: Season 1 began a day before the new award
+    table was enabled, so it holds ~2 days of points earned at roughly double the
+    current rate — about a 220-point head start for whoever worked those days.
+    Re-anchoring pushes those days OUTSIDE the season window, where they become
+    legacy points (still counted for life, still in `!sijil`), leaving Season 1
+    with one consistent rule set. Nobody's history is rewritten.
+    """
+    if not new_start:
+        season = database.ijtihad_current_season()
+        cur = (f"{season['label']}: {season['started_on']} → {season['ends_on']}"
+               if season else "no season")
+        await ctx.send(f"Current — {cur}\n"
+                       f"Usage: `!ijtihad-reanchor YYYY-MM-DD confirm`")
+        return
+    if confirm != "confirm":
+        await ctx.send(
+            f"⚠️ This will restart the season calendar at **{new_start}**.\n"
+            f"Points earned before that date become legacy (still counted for "
+            f"life, still in `!sijil`) and leave the season board.\n"
+            f"Nothing is deleted or rewritten.\n\n"
+            f"To proceed: `!ijtihad-reanchor {new_start} confirm`")
+        return
+    ok, detail = database.ijtihad_reanchor_seasons(new_start)
+    if not ok:
+        msg = {
+            "bad_date": "❌ Use YYYY-MM-DD.",
+            "multiple_seasons": "❌ Refused: more than one season exists. "
+                                "Re-anchoring now would move a window students "
+                                "already competed in.",
+            "season_completed": "❌ Refused: a season has already finished.",
+        }.get(detail, f"❌ Refused: {detail}")
+        await ctx.send(msg)
+        return
+    s = detail.get("season")
+    if not s:
+        await ctx.send(f"✅ Anchor set to {new_start} (still in the future — no "
+                       f"active season yet).")
+        return
+    await ctx.send(f"✅ **{s['label']}** now runs "
+                   f"**{s['started_on']} → {s['ends_on']}**.\n"
+                   f"Earlier points are legacy now — still counted for life, "
+                   f"still in `!sijil`.")
+
+
 @bot.command(name="ijtihad-metrics")
 @commands.has_permissions(administrator=True)
 async def cmd_ijtihad_metrics(ctx):

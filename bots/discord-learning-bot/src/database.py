@@ -4020,6 +4020,60 @@ def ijtihad_ensure_seasons(today: Optional[datetime.date] = None) -> Optional[di
         conn.close()
 
 
+def ijtihad_reanchor_seasons(new_start: str) -> tuple:
+    """Move the season calendar to a new start date. Returns (ok, reason|detail).
+
+    WHY THIS EXISTS
+    Season 1 launched on 2026-08-29 while the old award table was still active,
+    and the new table (Phase 7) was enabled a day later. That left Season 1
+    holding ~2 days of points earned at roughly double the current rate -- a
+    ~220-point (~8% of a season) head start for whoever happened to work those two
+    days. Small, but real, and invisible to the students it affects.
+
+    Re-anchoring is the fix that requires no rewriting of anyone's history: the
+    mixed-rate days simply fall OUTSIDE the season window and become legacy points
+    (still counted for life, still shown in Sijil), exactly as every pre-Ijtihad
+    point already does. Season 1 then contains one consistent rule set.
+
+    It is explainable in one sentence to a student -- "your earlier work still
+    counts in your record; the season race now starts fresh for everyone" --
+    which a downward points adjustment would not be.
+
+    GUARDED: refuses once a season has actually completed, because re-anchoring
+    then would retroactively move a window students had already finished
+    competing in. Only safe while the very first season is still running.
+    """
+    try:
+        anchor = datetime.date.fromisoformat(new_start)
+    except (ValueError, TypeError):
+        return False, "bad_date"
+
+    seasons = ijtihad_all_seasons()
+    today = _today_local()
+    if len(seasons) > 1:
+        return False, "multiple_seasons"
+    if seasons:
+        try:
+            if datetime.date.fromisoformat(seasons[0]["ends_on"]) < today:
+                return False, "season_completed"
+        except (ValueError, TypeError):
+            return False, "bad_existing_season"
+
+    conn = _connect()
+    try:
+        conn.execute("DELETE FROM seasons")
+        conn.commit()
+    finally:
+        conn.close()
+    # Season rows are only date WINDOWS -- points_log, streaks, targets and
+    # recognitions are all untouched, so this is non-destructive to student data.
+    set_setting("ijtihad_season1_start", anchor.isoformat())
+    season = ijtihad_ensure_seasons(today)
+    if not season:
+        return True, {"season": None, "note": "anchor is in the future"}
+    return True, {"season": season}
+
+
 def ijtihad_current_season(today: Optional[datetime.date] = None) -> Optional[dict]:
     """The season covering today, creating it if the calendar has moved on."""
     return ijtihad_ensure_seasons(today)
