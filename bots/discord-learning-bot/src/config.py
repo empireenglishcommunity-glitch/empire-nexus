@@ -203,6 +203,13 @@ MAINTENANCE_TG_CHAT_IDS = [
 # OWNER via the Discord path (fail-safe default, not fail-open).
 OWNER_DISCORD_ID = os.getenv("OWNER_DISCORD_ID", "")
 
+# Owner contact details, shown to students in renewal / suspension notices.
+# A wa.me URL rather than a bare number on purpose: a tappable link converts
+# far better than digits a student has to copy, and the international dialling
+# prefix (00) must be dropped for wa.me to resolve.
+OWNER_WHATSAPP_URL = os.getenv("OWNER_WHATSAPP_URL", "https://wa.me/971565868882")
+OWNER_TELEGRAM = os.getenv("OWNER_TELEGRAM", "@macal_emperor")
+
 # ============================================================
 #  PATHS
 # ============================================================
