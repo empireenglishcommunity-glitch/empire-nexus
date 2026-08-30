@@ -2023,7 +2023,6 @@ async def post_assessment_start(request: web.Request) -> web.Response:
     return web.json_response(result, status=status, headers=_cors_headers(request))
 
 
-@routes.post("/api/assessment/item")
 async def _read_item_submission(request: web.Request):
     """Parse an assessment item submission that may arrive as EITHER
     JSON ({attempt_id, item_no, answer} for text items) OR
@@ -2094,12 +2093,24 @@ async def _read_item_submission(request: web.Request):
             "audio_bytes": audio_bytes, "audio_filename": audio_filename}, None
 
 
+@routes.post("/api/assessment/item")
 async def post_assessment_item(request: web.Request) -> web.Response:
     """Submit one item's answer. Text items send JSON
     {attempt_id, item_no, answer}; recording items send multipart/form-data
     with an `audio` part plus `attempt_id` and `item_no` fields. Scoring is
     stored server-side; the correctness is intentionally NOT returned during
-    the test."""
+    the test.
+
+    ⚠️ The route decorator belongs HERE, on the handler. It was accidentally
+    left on `_read_item_submission` when that helper was extracted (commit
+    ebb266d), which un-registered this handler entirely: aiohttp then called
+    the helper as the handler, the helper returned a `(data, error)` TUPLE
+    instead of a Response, and every weekly item submission answered
+    HTTP 500 -- before even reaching the session gate. Verified live on
+    2026-08-30: `/api/assessment/item` returned 500 while the correctly
+    decorated `/api/assessment/monthly/item` returned 401. See
+    test_assessment_routes_wiring.py, which now fails if any declared route
+    resolves to a handler that cannot return a Response."""
     from . import assessment
     payload, err = _itqan_gate(request)
     if err:

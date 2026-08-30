@@ -494,6 +494,65 @@ async def submit_item(discord_id: str, attempt_id: int, item_no: int,
     return {"ok": True}
 
 
+# ============================================================
+#  SHARED ITEM-SCORE RESOLUTION (weekly + monthly + advancement)
+# ============================================================
+#
+# `assessment_items` stores a scored answer in `auto_score` (objective items) or
+# `ai_score` (pronunciation / speaking / writing). There is NO `score` column.
+#
+# The monthly and advancement finishers each read `row.get("score")`, which is
+# therefore always None. Every item scored 0.0, the "all scores zero" void guard
+# concluded the attempt was unanswered, and the attempt plus its items were
+# DELETED before the result row was ever written -- so `monthly_reviews` sat at
+# zero rows community-wide while students were completing reviews and being told
+# nothing had been recorded. Found 2026-08-30 from Mai Mohamed's report.
+#
+# Both helpers live here so the three flows share one definition of "what did
+# this item score" and "was this item answered at all", instead of three copies
+# that can drift apart. That drift is the whole bug.
+
+def _resolve_item_score(row: dict) -> tuple:
+    """Return (score, ai_error) for one `assessment_items` row.
+
+    An item awaiting manual review (`feedback == '__pending_review__'`) scores 0
+    but flags `ai_error`, so the attempt is FLAGGED for the owner rather than
+    quietly failed -- identical to the weekly behaviour.
+    """
+    if row.get("feedback") == "__pending_review__":
+        return 0.0, True
+    auto, ai = row.get("auto_score"), row.get("ai_score")
+    if auto is not None:
+        return float(auto), False
+    if ai is not None:
+        return float(ai), False
+    return 0.0, False
+
+
+def _safe_json(raw) -> dict:
+    """Parse a stored JSON payload, never raising on a malformed row."""
+    try:
+        return _json.loads(raw or "{}")
+    except Exception:
+        return {}
+
+
+def _answered_count(rows: list) -> int:
+    """How many items the student actually answered.
+
+    Answeredness is NOT "scored above zero": a wrong answer is still an answer.
+    An item counts as answered if it carries a score, is pending manual review,
+    or has non-empty answer text.
+    """
+    return sum(
+        1 for r in rows
+        if r.get("auto_score") is not None
+        or r.get("ai_score") is not None
+        or r.get("feedback") == "__pending_review__"
+        or (r.get("answer") or "").strip()
+    )
+
+
 def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = None) -> dict:
     """Aggregate item scores + consistency → verdict; persist; on mastery
     upsert week_mastery. Returns the results payload."""
@@ -511,14 +570,7 @@ def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = Non
     # taken (the student opened the test and left; the client auto-finishes it
     # when the timer has lapsed on their return). Fixed 2026-07-28 after Mai's
     # week-1 attempt was auto-scored 0% "not_yet" from an abandoned session.
-    answered = sum(
-        1 for it in items
-        if it.get("auto_score") is not None
-        or it.get("ai_score") is not None
-        or it.get("feedback") == "__pending_review__"
-        or (it.get("answer") or "").strip()
-    )
-    if answered == 0:
+    if _answered_count(items) == 0:
         database.itqan_delete_attempt(attempt_id)
         return {"ok": True, "voided": True}
 
@@ -526,12 +578,8 @@ def finish_attempt(discord_id: str, attempt_id: int, integrity_flags: dict = Non
     has_ai_error = False
     per_item = []
     for it in items:
-        if it.get("feedback") == "__pending_review__":
-            has_ai_error = True
-            score = 0.0
-        else:
-            score = it["auto_score"] if it["auto_score"] is not None else \
-                    (it["ai_score"] if it["ai_score"] is not None else 0.0)
+        score, ai_error = _resolve_item_score(it)
+        has_ai_error = has_ai_error or ai_error
         item_scores.append(score)
         per_item.append({"item_no": it["item_no"], "skill": it["skill"],
                          "correct": it["correct"], "feedback": it["feedback"],
@@ -1037,6 +1085,33 @@ def start_monthly_attempt(discord_id: str, level: str) -> dict:
     if not database.is_feature_enabled("assessment_monthly_review", discord_id):
         return {"ok": False, "error": "disabled"}
 
+    # RESUME an attempt the student already has open, rather than starting a
+    # second one. The weekly flow has guarded this since Itqan Phase 3
+    # (`itqan_active_attempt` -> 'attempt_in_progress'); monthly never did, and
+    # `get_monthly_state` cannot detect it either -- its docstring advertises an
+    # `in_progress` state it has no query to produce. So every visit to the
+    # monthly review minted a NEW attempt and abandoned the previous one with
+    # the student's answers still in it. Returning the open attempt preserves
+    # that work and stops orphan rows accumulating; the response shape is
+    # identical, so the page resumes with no frontend change.
+    open_attempt = database.itqan_active_attempt_of_type(discord_id, level, "monthly")
+    if open_attempt:
+        rows = database.itqan_get_items(open_attempt["id"])
+        return {
+            "ok": True,
+            "attempt_id": open_attempt["id"],
+            "review_number": open_attempt.get("week", 1),
+            "resumed": True,
+            "time_limit_min": 20,
+            "items": [
+                {"item_no": r["item_no"], "skill": r["skill"],
+                 "source_week": r["source_week"],
+                 "payload": _public_payload(
+                     r["skill"], _safe_json(r.get("prompt_ref")))}
+                for r in rows
+            ],
+        }
+
     state = get_monthly_state(discord_id, level)
     if state["state"] not in ("available",):
         return {"ok": False, "error": state["state"]}
@@ -1106,11 +1181,9 @@ def finish_monthly_attempt(discord_id: str, attempt_id: int,
     items_data = []
     has_ai_error = False
     for row in sorted(items_rows, key=lambda r: r["item_no"]):
-        score = row.get("score")
-        if score is None:
-            score = 0.0
-            has_ai_error = True
-        item_scores.append(float(score))
+        score, ai_error = _resolve_item_score(row)
+        has_ai_error = has_ai_error or ai_error
+        item_scores.append(score)
         try:
             payload = _json.loads(row.get("prompt_ref") or "{}")
         except Exception:
@@ -1121,13 +1194,21 @@ def finish_monthly_attempt(discord_id: str, attempt_id: int,
             "payload": payload,
         })
 
-    # Void empty attempts (same as Itqan)
-    if not item_scores or all(s == 0 for s in item_scores):
-        conn = database._connect()
-        conn.execute("DELETE FROM assessment_attempts WHERE id=?", (attempt_id,))
-        conn.execute("DELETE FROM assessment_items WHERE attempt_id=?", (attempt_id,))
-        conn.commit()
-        conn.close()
+    # Void a genuinely UNANSWERED attempt -- never a merely low-scoring one.
+    # This deliberately mirrors the weekly `finish_attempt` answeredness test
+    # rather than asking "are all the scores zero?". The old test conflated
+    # "scored 0" with "not attempted", so a student who answered everything and
+    # happened to score 0 would have had their attempt silently deleted.
+    #
+    # Deletion goes through `itqan_delete_attempt`, which removes items and
+    # recordings BEFORE the parent row. The hand-rolled version here deleted the
+    # parent first and raised `sqlite3.IntegrityError: FOREIGN KEY constraint
+    # failed` (`_connect` sets `PRAGMA foreign_keys=ON`) -- and because the old
+    # score bug made this branch fire on EVERY attempt, every monthly finish
+    # raised, so the student got an outright HTTP 500. It also leaked
+    # `assessment_recordings` rows, which the helper cleans up.
+    if _answered_count(items_rows) == 0:
+        database.itqan_delete_attempt(attempt_id)
         return {"ok": True, "voided": True, "reason": "no_answers"}
 
     # Score
@@ -1702,11 +1783,9 @@ def finish_advancement_part_a(discord_id: str, attempt_id: int,
     items_data = []
     has_ai_error = False
     for row in sorted(items_rows, key=lambda r: r["item_no"]):
-        score = row.get("score")
-        if score is None:
-            score = 0.0
-            has_ai_error = True
-        item_scores.append(float(score))
+        score, ai_error = _resolve_item_score(row)
+        has_ai_error = has_ai_error or ai_error
+        item_scores.append(score)
         try:
             payload = _json.loads(row.get("prompt_ref") or "{}")
         except Exception:
@@ -1717,14 +1796,16 @@ def finish_advancement_part_a(discord_id: str, attempt_id: int,
             "payload": payload,
         })
 
-    # Void empty attempts
-    if not item_scores or all(s == 0 for s in item_scores):
+    # Void a genuinely UNANSWERED attempt only -- see finish_monthly_attempt for
+    # why the ordering matters and why this must not use "all scores zero".
+    if _answered_count(items_rows) == 0:
         conn = database._connect()
-        conn.execute("DELETE FROM assessment_attempts WHERE id=?", (attempt_id,))
-        conn.execute("DELETE FROM assessment_items WHERE attempt_id=?", (attempt_id,))
-        conn.execute("DELETE FROM advancement_exams WHERE attempt_id=?", (attempt_id,))
-        conn.commit()
-        conn.close()
+        try:
+            conn.execute("DELETE FROM advancement_exams WHERE attempt_id=?", (attempt_id,))
+            conn.commit()
+        finally:
+            conn.close()
+        database.itqan_delete_attempt(attempt_id)
         return {"ok": True, "voided": True, "reason": "no_answers"}
 
     # Score Part A
