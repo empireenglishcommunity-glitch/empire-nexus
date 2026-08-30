@@ -2889,9 +2889,13 @@ async def cmd_ijtihad_metrics(ctx):
         f"  Active rate (7d): **{m['active_rate_7d']}%**",
         "",
         "🛡️ **Guard — veterans must not disengage**",
-        f"  Veterans (>60d): {m['veterans']}",
+        f"  Veterans (>{m['veteran_days']}d): {m['veterans']}",
         f"  Active this week: **{m['veterans_active_7d']}** "
         f"({m['veteran_active_rate_7d']}%)",
+        ("" if m["guard_meaningful"] else
+         "  ⚠️ _No student is older than the veteran threshold yet, so this "
+         "guard cannot see anything. Lower it with_ "
+         "`!ijtihad-config ijtihad_veteran_days <days>`_._"),
         "",
         "_Run this again in a week and compare — the numbers only mean something "
         "against their own history._",
