@@ -4296,6 +4296,141 @@ def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = No
     return {"streak": streak, "freezes_used": len(frozen), "frozen_days": frozen}
 
 
+# ============================================================
+#  IJTIHAD PHASE 5 — BOARDS
+# ============================================================
+
+# How small a journey cohort may be before we widen the comparison. Below this a
+# "ranking" is meaningless (and, with 2 people, it is just telling one of them
+# they lost), so we fall back: journey cohort -> CEFR level -> whole community.
+IJTIHAD_MIN_COHORT = 3
+
+
+def ijtihad_journey_peers(discord_id: str, window: int = 2) -> dict:
+    """Peers at the same STAGE of their journey, not the same tenure.
+
+    Rolling enrollment means calendar comparison is meaningless: a student in
+    their week 3 has nothing to prove against someone in week 40. This compares
+    students whose personal week number is within +/- `window` of yours, which is
+    the fair unit -- and the curriculum already computes that number
+    (member_week_number), it was simply never used for comparison.
+
+    Returns {"scope": "journey"|"level"|"community", "week": int, "peers": [ids]}.
+    Degrades deliberately: with ~17 active students a journey cohort is often
+    tiny, and an empty or one-person "ranking" is worse than no ranking at all.
+    """
+    me = get_member(discord_id)
+    if not me:
+        return {"scope": "community", "week": 0, "peers": []}
+    my_week = member_week_number(discord_id)
+    my_level = me.get("level", "A1")
+
+    everyone = [m for m in all_active_members()]
+    journey, same_level = [], []
+    for m in everyone:
+        mid = str(m["discord_id"])
+        if m.get("level") == my_level:
+            same_level.append(mid)
+            try:
+                if abs(member_week_number(mid) - my_week) <= window:
+                    journey.append(mid)
+            except Exception:
+                continue
+
+    if len(journey) >= IJTIHAD_MIN_COHORT:
+        return {"scope": "journey", "week": my_week, "peers": journey}
+    if len(same_level) >= IJTIHAD_MIN_COHORT:
+        return {"scope": "level", "week": my_week, "peers": same_level}
+    return {"scope": "community", "week": my_week,
+            "peers": [str(m["discord_id"]) for m in everyone]}
+
+
+def ijtihad_season_board_scoped(season: dict, discord_ids: list,
+                                limit: int = 5) -> list:
+    """Season effort board restricted to a set of students (a cohort).
+
+    Same rule as the open board: only students who actually earned something
+    appear, so a cohort board can never publish a bottom half.
+    """
+    if not season or not discord_ids:
+        return []
+    marks = ",".join("?" for _ in discord_ids)
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            f"""SELECT m.discord_id, m.discord_name, m.level,
+                       COALESCE(SUM(p.points), 0) AS season_points
+                FROM members m
+                LEFT JOIN points_log p
+                       ON p.discord_id = m.discord_id
+                      AND date(p.logged_at) BETWEEN ? AND ?
+                WHERE m.status = 'active' AND m.discord_id IN ({marks})
+                GROUP BY m.discord_id
+                HAVING season_points > 0
+                ORDER BY season_points DESC, m.discord_name ASC
+                LIMIT ?""",
+            (season["started_on"], season["ends_on"], *discord_ids, limit),
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def ijtihad_consistency_board(limit: int = 5) -> list:
+    """Students ranked by CURRENT full-day streak.
+
+    Computed per member rather than in SQL because a full-day streak depends on
+    each student's own target and their freeze history. At community scale (~17
+    active students) that is a handful of cheap reads, and correctness matters
+    more here than shaving queries.
+
+    Read-only: freezes are NOT consumed by building a board (consume_freezes=
+    False), otherwise merely *looking* at the leaderboard would spend a
+    student's allowance.
+    """
+    out = []
+    for m in all_active_members():
+        mid = str(m["discord_id"])
+        try:
+            fd = ijtihad_full_day_streak(mid, consume_freezes=False)
+        except Exception:
+            continue
+        if fd["streak"] > 0:
+            out.append({
+                "discord_id": mid,
+                "discord_name": m.get("discord_name") or "Student",
+                "level": m.get("level", "A1"),
+                "streak": fd["streak"],
+                "target": ijtihad_get_target(mid),
+            })
+    out.sort(key=lambda r: (-r["streak"], r["discord_name"]))
+    return out[:limit]
+
+
+def ijtihad_full_days_on(day: str, limit: int = 50) -> list:
+    """Everyone who completed a Full Day on an ISO date.
+
+    Powers the reformed nightly post: a ROLL of who did their work, not a
+    ranking. Nobody appears in a losing position, because there are no positions.
+    """
+    out = []
+    for m in all_active_members():
+        mid = str(m["discord_id"])
+        try:
+            if ijtihad_is_full_day(mid, day):
+                out.append({
+                    "discord_id": mid,
+                    "discord_name": m.get("discord_name") or "Student",
+                    "level": m.get("level", "A1"),
+                    "tasks": ijtihad_tasks_on(mid, day),
+                    "target": ijtihad_get_target(mid),
+                })
+        except Exception:
+            continue
+    out.sort(key=lambda r: (-r["tasks"], r["discord_name"]))
+    return out[:limit]
+
+
 def ijtihad_already_awarded(discord_id: str, reason: str) -> bool:
     """True if this exact award reason was already paid to this student."""
     conn = _connect()

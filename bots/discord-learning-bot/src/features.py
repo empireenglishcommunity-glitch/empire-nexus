@@ -648,9 +648,29 @@ async def check_english_only(message: discord.Message) -> bool:
 # ============================================================
 
 async def post_streak_tracker(guild: discord.Guild):
-    """Post daily streak summary to #streak-tracker."""
+    """Post daily streak summary to #streak-tracker.
+
+    Ijtihad Phase 5: when `ijtihad_boards` is enabled this becomes a ROLL of who
+    completed their own daily target today, instead of a RANKING of up to 15
+    students by a streak that counted any day with >= 1 task. That old version was
+    the most frequent public surface in the system, it measured the least
+    meaningful thing, and it named the bottom half while doing it. The legacy
+    behaviour is kept verbatim below for when the flag is off.
+    """
     channel = discord.utils.get(guild.text_channels, name="streak-tracker")
     if not channel:
+        return
+
+    if database.is_feature_enabled("ijtihad_boards"):
+        from . import ijtihad_boards
+        today = database._today_local().isoformat()
+        try:
+            rows = database.ijtihad_full_days_on(today)
+            streaks = database.ijtihad_consistency_board(limit=3)
+            await channel.send(
+                ijtihad_boards.format_full_day_roll(today, rows, streaks))
+        except Exception as e:
+            logger.warning(f"ijtihad: full-day roll post failed: {e}")
         return
 
     members = database.all_active_members()
