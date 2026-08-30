@@ -3866,7 +3866,32 @@ IJTIHAD_CONFIG_DEFAULTS = {
     # Phase 4 — Personal Daily Target + streak freezes.
     "ijtihad_target_default": 5,      # int: target for a student who never chose
     "ijtihad_freezes_per_season": 2,  # int: missed days that don't break a streak
+    # Phase 7 — the award table. Replaces POINTS_PER_TASK (15) and
+    # POINTS_ALL_TASKS (100) when `ijtihad_award_table` is on. Lower per-task
+    # values are deliberate: they make achievement payouts (150-500) dominant, so
+    # a promotion is worth ~5 perfect days instead of ~2.
+    "ijtihad_base_ip": 10,            # int: per completed task, before multipliers
+    "ijtihad_full_day_ip": 25,        # int: bonus for meeting YOUR daily target
+    # Difficulty multipliers (x100 to stay integer-tunable in settings).
+    "ijtihad_mult_easy": 100,         # 1.00
+    "ijtihad_mult_standard": 125,     # 1.25
+    "ijtihad_mult_challenging": 150,  # 1.50
+    # Quality multipliers by score band (x100). NEVER below 100: quality is a
+    # bonus, never a penalty, so trying and doing badly is never punished.
+    "ijtihad_quality_90": 130,        # >=90 -> 1.30
+    "ijtihad_quality_80": 120,        # >=80 -> 1.20
+    "ijtihad_quality_70": 110,        # >=70 -> 1.10
+    # Seasonal full-day streak bonuses. Bounded and season-scoped, replacing the
+    # legacy {7:200 ... 100:5000} tenure ladder whose top rung was worth 333
+    # tasks and was unreachable for anyone who had not been present for months.
+    "ijtihad_streak_7": 100,
+    "ijtihad_streak_14": 200,
+    "ijtihad_streak_21": 350,
+    "ijtihad_streak_28": 600,
 }
+
+# Full-day streak thresholds that pay a seasonal bonus, in ascending order.
+IJTIHAD_STREAK_THRESHOLDS = (7, 14, 21, 28)
 
 # The only targets a student may choose. Deliberately coarse: a free-text number
 # would invite optimising the denominator instead of doing the work.
@@ -4737,6 +4762,136 @@ def ijtihad_best_previous_week(discord_id: str,
         total = ijtihad_points_between(discord_id, start.isoformat(), end.isoformat())
         best = max(best, total)
     return best
+
+
+def ijtihad_metrics(today: Optional[datetime.date] = None) -> dict:
+    """Ijtihad Phase 8 — did the rework actually work?
+
+    The spec committed to measuring this rather than assuming it (design §9), and
+    committed to a GUARD metric too: if veterans disengaged, the honour track
+    failed and that matters more than any improvement elsewhere.
+
+    Every number here comes from data already collected, so it can be run at any
+    time and compared against itself later.
+    """
+    today = today or _today_local()
+    season = ijtihad_current_season(today)
+    week_ago = (today - datetime.timedelta(days=6)).isoformat()
+    month_ago = (today - datetime.timedelta(days=29)).isoformat()
+    members = all_active_members()
+
+    conn = _connect()
+    try:
+        # Recognition circulation: how many DISTINCT students were celebrated.
+        distinct_recognised = conn.execute(
+            "SELECT COUNT(DISTINCT discord_id) AS n FROM recognition_log "
+            "WHERE date(created_at) >= ?", (month_ago,)).fetchone()["n"]
+        recognitions_total = conn.execute(
+            "SELECT COUNT(*) AS n FROM recognition_log "
+            "WHERE date(created_at) >= ?", (month_ago,)).fetchone()["n"]
+        # 7-day active rate.
+        active_7d = conn.execute(
+            "SELECT COUNT(DISTINCT discord_id) AS n FROM streaks "
+            "WHERE date >= ? AND tasks_completed > 0", (week_ago,)).fetchone()["n"]
+    finally:
+        conn.close()
+
+    # Full-Day rate: complete days per active student over the last week.
+    full_days = 0
+    for m in members:
+        mid = str(m["discord_id"])
+        target = ijtihad_get_target(mid, season)
+        cur = today - datetime.timedelta(days=6)
+        while cur <= today:
+            if ijtihad_tasks_on(mid, cur.isoformat()) >= target:
+                full_days += 1
+            cur += datetime.timedelta(days=1)
+
+    # Newcomer visibility: is anyone who joined in the last 14 days in a top 3?
+    newcomers = set()
+    for m in members:
+        try:
+            joined = datetime.datetime.fromisoformat(
+                (m.get("joined_at") or "").replace("Z", "")).date()
+            if (today - joined).days <= 14:
+                newcomers.add(str(m["discord_id"]))
+        except (ValueError, TypeError, AttributeError):
+            continue
+    top_ids = set()
+    if season:
+        top_ids |= {str(r["discord_id"])
+                    for r in ijtihad_season_leaderboard(season, limit=3)}
+    top_ids |= {str(r["discord_id"]) for r in ijtihad_consistency_board(limit=3)}
+    top_ids |= {str(r["discord_id"])
+                for r in ijtihad_most_improved_board(limit=3, today=today)}
+
+    # GUARD METRIC: veteran engagement must not drop. A veteran is anyone who
+    # joined more than 60 days ago.
+    vet_ids, vet_active = [], 0
+    for m in members:
+        try:
+            joined = datetime.datetime.fromisoformat(
+                (m.get("joined_at") or "").replace("Z", "")).date()
+        except (ValueError, TypeError, AttributeError):
+            continue
+        if (today - joined).days > 60:
+            vet_ids.append(str(m["discord_id"]))
+    for mid in vet_ids:
+        cur = today - datetime.timedelta(days=6)
+        while cur <= today:
+            if ijtihad_tasks_on(mid, cur.isoformat()) > 0:
+                vet_active += 1
+                break
+            cur += datetime.timedelta(days=1)
+
+    total = len(members) or 1
+    return {
+        "season": season,
+        "active_members": len(members),
+        "newcomers_14d": len(newcomers),
+        "newcomer_in_a_top3": bool(newcomers & top_ids),
+        "distinct_recognised_30d": distinct_recognised,
+        "recognitions_30d": recognitions_total,
+        "full_days_7d": full_days,
+        "full_days_per_student_7d": round(full_days / total, 2),
+        "active_rate_7d": round(active_7d / total * 100, 1),
+        # Guard
+        "veterans": len(vet_ids),
+        "veterans_active_7d": vet_active,
+        "veteran_active_rate_7d": (round(vet_active / len(vet_ids) * 100, 1)
+                                   if vet_ids else 0.0),
+    }
+
+
+def ijtihad_task_score(discord_id: str, task_id: str, day: str) -> Optional[float]:
+    """The best score recorded for this task on this date, or None.
+
+    Checks the submission's own score column first, then pronunciation_scores.
+    Both are frequently empty (pronunciation scoring is a separate, currently
+    disabled engine), so None is the normal case and callers must treat it as
+    "no quality signal" rather than "scored zero".
+    """
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT score FROM daily_submissions "
+            "WHERE discord_id=? AND date=? AND task_id=? AND score IS NOT NULL",
+            (discord_id, day, task_id),
+        ).fetchone()
+        if row and row["score"] is not None:
+            return float(row["score"])
+        row = conn.execute(
+            "SELECT MAX(score) AS s FROM pronunciation_scores "
+            "WHERE discord_id=? AND date=? AND task_id=?",
+            (discord_id, day, task_id),
+        ).fetchone()
+        if row and row["s"] is not None:
+            return float(row["s"])
+        return None
+    except Exception:
+        return None
+    finally:
+        conn.close()
 
 
 def ijtihad_already_awarded(discord_id: str, reason: str) -> bool:

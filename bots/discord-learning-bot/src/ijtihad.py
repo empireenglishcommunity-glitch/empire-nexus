@@ -122,6 +122,178 @@ def award_promotion(discord_id: str, from_level: str) -> int:
         return 0
 
 
+# ============================================================
+#  PHASE 7 — THE AWARD TABLE
+# ============================================================
+#
+# This is the change the earlier phases deliberately deferred, because it can
+# only be done coherently in one piece. It REPLACES POINTS_PER_TASK (15) and
+# POINTS_ALL_TASKS (100) and the STREAK_BONUS_POINTS ladder. Introducing any one
+# of them alongside the legacy values would have produced two overlapping awards
+# for the same action -- the exact double-award class of bug Phase 0.2 removed.
+#
+# Two behaviours it fixes that no amount of tuning could:
+#
+#   1. ATTEMPTING HARDER WORK WAS IRRATIONAL. Adaptive difficulty made tasks
+#      longer and faster at "Challenging" for exactly the same 15 points as
+#      "Easy", so a points-maximising student should have deliberately scored
+#      badly. Difficulty now multiplies the award.
+#
+#   2. QUALITY WAS INVISIBLE. A 95%-accurate recording and a mumbled one paid
+#      identically. Quality now multiplies too -- but only UPWARDS. The band
+#      floor is 1.0, so a student who tries and does badly still receives the
+#      full base award. Punishing low scores would hit precisely the
+#      struggling-but-persistent students this whole rework exists to keep.
+#
+# Both multipliers degrade to x1.0 when their engine is disabled, so this works
+# today with `tatawwur_adaptive` and `tatawwur_pronunciation` still off.
+
+TABLE_FLAG = "ijtihad_award_table"
+
+
+def award_table_enabled(discord_id: str) -> bool:
+    try:
+        return database.is_feature_enabled(TABLE_FLAG, str(discord_id))
+    except Exception:
+        return False
+
+
+def difficulty_multiplier(discord_id: str, cfg: dict = None) -> float:
+    """1.0 / 1.25 / 1.5 by adaptive difficulty tier.
+
+    Returns 1.0 when `tatawwur_adaptive` is OFF: the difficulty column still holds
+    a default of 2 for everyone, and paying a 1.25x bonus to the whole community
+    for a tier nothing is actually assigning would be a silent across-the-board
+    inflation rather than a reward for choosing harder work.
+    """
+    cfg = cfg or database.get_ijtihad_config()
+    try:
+        if not database.is_feature_enabled("tatawwur_adaptive", str(discord_id)):
+            return 1.0
+    except Exception:
+        return 1.0
+    member = database.get_member(discord_id) or {}
+    tier = int(member.get("difficulty_level", 2) or 2)
+    key = {1: "ijtihad_mult_easy", 2: "ijtihad_mult_standard",
+           3: "ijtihad_mult_challenging"}.get(tier, "ijtihad_mult_standard")
+    return max(1.0, int(cfg[key]) / 100.0)
+
+
+def quality_multiplier(discord_id: str, task_id: str, day: str = None,
+                       cfg: dict = None) -> float:
+    """1.0 -> 1.3 by the score on this task, if a score exists.
+
+    NEVER below 1.0 (see the module note): trying is never punished. Returns 1.0
+    when no score is available, which is the normal case while pronunciation
+    scoring is disabled.
+    """
+    cfg = cfg or database.get_ijtihad_config()
+    day = day or database._today_local().isoformat()
+    score = None
+    try:
+        score = database.ijtihad_task_score(discord_id, task_id, day)
+    except Exception:
+        score = None
+    if score is None:
+        return 1.0
+    if score >= 90:
+        return max(1.0, int(cfg["ijtihad_quality_90"]) / 100.0)
+    if score >= 80:
+        return max(1.0, int(cfg["ijtihad_quality_80"]) / 100.0)
+    if score >= 70:
+        return max(1.0, int(cfg["ijtihad_quality_70"]) / 100.0)
+    return 1.0
+
+
+def compute_task_award(discord_id: str, task_id: str, day: str = None,
+                       cfg: dict = None) -> dict:
+    """Points for ONE completed task under the new table.
+
+    Returns {"points", "base", "difficulty_mult", "quality_mult"} so the caller
+    (and the tests) can see how the number was reached rather than trusting it.
+    """
+    cfg = cfg or database.get_ijtihad_config()
+    base = int(cfg["ijtihad_base_ip"])
+    dm = difficulty_multiplier(discord_id, cfg)
+    qm = quality_multiplier(discord_id, task_id, day, cfg)
+    return {"points": int(round(base * dm * qm)), "base": base,
+            "difficulty_mult": dm, "quality_mult": qm}
+
+
+def award_full_day(discord_id: str, day: str = None, cfg: dict = None) -> int:
+    """Bonus for meeting YOUR OWN daily target. Paid once per day.
+
+    Replaces POINTS_ALL_TASKS, which only ever paid at 7/7 and so was
+    unreachable for a student whose honest capacity is 3 a day.
+    """
+    cfg = cfg or database.get_ijtihad_config()
+    day = day or database._today_local().isoformat()
+    return database.ijtihad_award_once(
+        discord_id, f"ijtihad:fullday:{day}", int(cfg["ijtihad_full_day_ip"]))
+
+
+def award_streak_bonus(discord_id: str, cfg: dict = None) -> tuple:
+    """Seasonal full-day streak bonus. Returns (threshold, points) or (0, 0).
+
+    Season-scoped and bounded at 28 days, replacing the legacy ladder whose
+    100-day rung was worth 333 tasks -- a prize only long tenure could reach, and
+    the single clearest way the old economy paid for seniority rather than work.
+    """
+    cfg = cfg or database.get_ijtihad_config()
+    season = database.ijtihad_current_season()
+    if not season:
+        return 0, 0
+    try:
+        streak = database.ijtihad_full_day_streak(
+            discord_id, consume_freezes=False)["streak"]
+    except Exception:
+        return 0, 0
+    # Pay the highest threshold reached that has not been paid this season.
+    for threshold in reversed(database.IJTIHAD_STREAK_THRESHOLDS):
+        if streak < threshold:
+            continue
+        reason = f"ijtihad:streak:{season['id']}:{threshold}"
+        points = int(cfg.get(f"ijtihad_streak_{threshold}", 0))
+        awarded = database.ijtihad_award_once(discord_id, reason, points)
+        if awarded:
+            return threshold, awarded
+        return 0, 0
+    return 0, 0
+
+
+def award_submission(discord_id: str, task_id: str, tasks_today: int) -> dict:
+    """The whole per-submission award under the new table.
+
+    Returns {"points", "task_points", "full_day_points", "streak_threshold",
+    "streak_points", "detail"}. The caller decides what to show the student.
+    """
+    cfg = database.get_ijtihad_config()
+    day = database._today_local().isoformat()
+
+    detail = compute_task_award(discord_id, task_id, day, cfg)
+    task_points = detail["points"]
+    database.add_points(discord_id, task_points, f"task:{task_id}")
+
+    target = database.ijtihad_get_target(discord_id)
+    full_day_points = 0
+    if tasks_today >= target:
+        full_day_points = award_full_day(discord_id, day, cfg)
+
+    threshold, streak_points = (0, 0)
+    if full_day_points or tasks_today >= target:
+        threshold, streak_points = award_streak_bonus(discord_id, cfg)
+
+    return {
+        "points": task_points + full_day_points + streak_points,
+        "task_points": task_points,
+        "full_day_points": full_day_points,
+        "streak_threshold": threshold,
+        "streak_points": streak_points,
+        "target": target,
+        "detail": detail,
+    }
+
+
 def format_award_line(points: int) -> str:
     """One bilingual line to append to an existing celebration message.
 

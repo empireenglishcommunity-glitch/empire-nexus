@@ -254,14 +254,62 @@ depending on which weekday the suite ran on, which is how bug (1) stayed hidden.
 - [ ] **6.5** Flag `ijtihad_growth_recognition`; tests proving recognitions are
       independent of absolute skill (a low-scoring persistent student is eligible).
 
-## Phase 7 — Quality multipliers (as engines come online)
+## Phase 7 — The award table + multipliers ✅ DONE
 
-- [ ] **7.1** `difficulty_mult` from `adaptive_engine` tiers; ×1.0 when
-      `tatawwur_adaptive` is OFF.
-- [ ] **7.2** `quality_mult` bonus band (1.0→1.3, **never below 1.0**) from
-      pronunciation/assessment scores; ×1.0 when unavailable.
-- [ ] **7.3** Flag `ijtihad_quality_multipliers`; tests proving graceful ×1.0
-      degradation with every engine OFF.
+> This is the coherent change Phases 4 and 5 deliberately deferred. It **replaces**
+> `POINTS_PER_TASK` (15), `POINTS_ALL_TASKS` (100) and the `STREAK_BONUS_POINTS`
+> ladder. Introducing any one piece alongside the legacy values would have created
+> two overlapping awards for the same action — the exact double-award bug class
+> Phase 0.2 removed. Flag `ijtihad_award_table` is a **hard either/or**, not a
+> blend, and there is a test asserting the legacy amounts never appear in the
+> ledger while it is on.
+
+- [x] **7.1** `difficulty_multiplier()` — Easy 1.0 / Standard 1.25 / Challenging
+      1.5, and **×1.0 when `tatawwur_adaptive` is OFF**. That degradation is
+      deliberate: everyone sits at the default tier while adaptive is disabled, so
+      paying the whole community 1.25× for a tier nothing assigns would be silent
+      inflation rather than a reward for choosing harder work. **This fixes the
+      worst incentive in the old economy** — Challenging content was longer and
+      faster for identical pay, so a points-maximiser should have scored badly.
+- [x] **7.2** `quality_multiplier()` — bands 1.0 / 1.1 / 1.2 / 1.3 by score, with
+      a hard floor of **1.0**. Quality is a bonus, never a penalty: punishing low
+      scores would hit precisely the struggling-but-persistent students this
+      rework exists to keep. A test asserts a 5% score still earns the full base
+      award. Returns 1.0 when no score exists, which is the normal case while
+      pronunciation scoring is off — "no signal", never "scored zero".
+- [x] **7.3** `FULL_DAY_IP` (25) for meeting **your own** target — the deferred
+      Phase 4 item, now safe because it replaces `POINTS_ALL_TASKS` rather than
+      joining it. Paid once per day.
+- [x] **7.4** Bounded **seasonal** streak bonuses at 7/14/21/28 days
+      (100/200/350/600), replacing the legacy `{7:200 … 100:5000}` ladder whose
+      top rung was worth 333 tasks and needed months of tenure to reach — the
+      clearest single way the old economy paid for seniority rather than work.
+      Deduped per season, pays the highest threshold reached.
+- [x] **7.5** Flag `ijtihad_award_table` default **OFF**. 29 tests, including the
+      load-bearing one (legacy amounts must never appear while the new table is
+      on), multiplier compounding, band boundaries, 7/7 still out-earning 3/3, and
+      achievement remaining dominant (a promotion is now worth ~5 perfect days
+      instead of ~2).
+
+## Phase 8 — Migration, launch, measurement ✅ DONE
+
+- [x] **8.1** `!ijtihad-preview` (admin) — per-student dry run: season points,
+      legacy XP, weeks mastered, distinctions, full-day streak and target. A reset
+      is only safe if you can see in advance exactly what each student will see.
+- [x] **8.2** Bilingual announcement copy recorded in design.md §11b, ordered
+      *your history is safe* → *the race restarts*.
+- [x] **8.3/8.5** `!ijtihad-metrics` (admin) + `database.ijtihad_metrics()` —
+      the §9 metrics: newcomer visibility (is someone <14 days old in a top 3?),
+      recognition circulation (**distinct** students recognised, which is what
+      detects ossification — a total would look healthy even if one person won
+      everything), full-day rate, 7-day active rate, and the **guard metric**:
+      veteran engagement. Reported alongside the good news rather than buried,
+      because if veterans disengaged the honour track failed and that outweighs
+      any other gain. 9 tests incl. an empty community (no division by zero).
+- [x] **8.4** Staged enable via the existing per-member flag allowlists; owner
+      flipped each flag as its phase merged.
+
+*Phases 7+8 result: full suite 2,344 passed / 2 skipped, ledger 9866/9866/0.*
 
 ## Phase 8 — Migration, launch, measurement
 

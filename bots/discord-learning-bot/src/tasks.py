@@ -637,7 +637,45 @@ async def process_submission(discord_id: str, member_name: str,
     tasks_today = database.count_submissions_for_date(discord_id, date)
     database.update_streak(discord_id, date, tasks_today)
 
-    # Award points
+    # ── Award points ──────────────────────────────────────────────
+    # Ijtihad Phase 7: when `ijtihad_award_table` is on, the NEW table replaces
+    # POINTS_PER_TASK / POINTS_ALL_TASKS / STREAK_BONUS_POINTS entirely. The two
+    # systems must never both fire for one submission -- that is the double-award
+    # bug class Phase 0.2 removed -- so this is a hard either/or, not a blend.
+    from . import ijtihad as _ijtihad
+    new_table = _ijtihad.award_table_enabled(discord_id)
+
+    if new_table:
+        award = _ijtihad.award_submission(discord_id, task_id, tasks_today)
+        points = award["points"]
+        current_streak, _ = database.get_streak(discord_id)
+        streak_bonus_awarded = bool(award["streak_points"])
+        feedback = await ai_engine.quick_feedback(member_name, task_id)
+
+        recognitions = []
+        try:
+            from . import ijtihad_growth
+            recognitions = ijtihad_growth.detect_new(discord_id)
+        except Exception as e:
+            logger.warning(f"ijtihad: recognition detection failed: {e}")
+
+        milestones = []
+        if award["full_day_points"]:
+            milestones.append(("all_7", {}))
+        if streak_bonus_awarded:
+            milestones.append(("streak", {"days": award["streak_threshold"],
+                                          "bonus": award["streak_points"]}))
+        return {
+            "new": True,
+            "tasks_today": tasks_today,
+            "streak": current_streak,
+            "points": points,
+            "feedback": feedback,
+            "milestones": milestones,
+            "recognitions": recognitions,
+            "ijtihad": award,
+        }
+
     points = config.POINTS_PER_TASK
     database.add_points(discord_id, points, f"task:{task_id}")
 
