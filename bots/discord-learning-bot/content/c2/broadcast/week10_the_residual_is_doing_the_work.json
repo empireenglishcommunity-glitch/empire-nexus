@@ -31,7 +31,7 @@
     {
       "speaker": "Presenter",
       "speaker_ar": "الباحثة",
-      "voice": "bf_isabella",
+      "voice": "af_nicole",
       "text": "That's the right question and it's the one I'd have asked. Two responses. The pre-trend in figure two is driven almost entirely by four districts, all four of which are in the same governorate, and all four of which had a separate capital programme running from 2010. If I drop that governorate the pre-trend is flat to within noise — I have that as appendix table nine, and the coefficient moves from nought-point-one-nine to nought-point-one-seven, so it survives. What I'd concede is that I can't distinguish 'the pre-trend was an artefact of that programme' from 'the reform was targeted at districts already improving'. Those are observationally equivalent in my data and I should have said so in the paper rather than in answer to a question."
     },
     {
@@ -43,7 +43,7 @@
     {
       "speaker": "Presenter",
       "speaker_ar": "الباحثة",
-      "voice": "bf_isabella",
+      "voice": "af_nicole",
       "text": "They widen. Substantially. Clustered at governorate level I'm down to eleven clusters, which is below where I'd want to be for the wild bootstrap to be reliable, so the honest statement is that the point estimate is stable and the inference is weak. I'd rather say that than report a t-statistic I don't believe."
     },
     {
@@ -61,7 +61,7 @@
     {
       "speaker": "Presenter",
       "speaker_ar": "الباحثة",
-      "voice": "bf_isabella",
+      "voice": "af_nicole",
       "text": "There is, and I've bounded it rather than removed it. The reform moved reporting from schools to districts in 2014, which is one year into treatment. If I restrict to the 2013 cohort only — reported under the old regime throughout — I get nought-point-one-four on a third of the sample. So roughly a quarter of the headline effect could be reporting rather than attainment. I put that in the abstract in the current draft, which is not where it was in the version you were sent."
     },
     {
