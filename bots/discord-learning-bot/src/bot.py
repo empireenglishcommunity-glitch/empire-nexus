@@ -2738,6 +2738,81 @@ async def cmd_consistency(ctx):
     await ctx.send(ijtihad_boards.format_consistency_board(rows))
 
 
+@bot.command(name="ijtihad-metrics")
+@commands.has_permissions(administrator=True)
+async def cmd_ijtihad_metrics(ctx):
+    """Owner: did the Ijtihad rework actually work? (spec design §9)
+
+    Includes the GUARD metric. If veteran engagement dropped, the honour track
+    failed to do its job and that matters more than any improvement elsewhere —
+    so it is reported alongside the good news, not buried.
+    """
+    m = database.ijtihad_metrics()
+    season = m["season"]
+    season_line = (f"{season['label']} ({season['started_on']} → {season['ends_on']})"
+                   if season else "no season yet")
+    newcomer = "✅ yes" if m["newcomer_in_a_top3"] else "—  not yet"
+    lines = [
+        "📊 **Ijtihad metrics**",
+        f"Season: {season_line}",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"Active students: **{m['active_members']}**",
+        "",
+        "**Is a newcomer visible?**",
+        f"  Joined in last 14 days: {m['newcomers_14d']}",
+        f"  A newcomer in some top-3: {newcomer}",
+        "",
+        "**Is recognition circulating?**",
+        f"  Distinct students recognised (30d): **{m['distinct_recognised_30d']}**",
+        f"  Recognitions total (30d): {m['recognitions_30d']}",
+        "",
+        "**Are students doing the work?**",
+        f"  Complete days (7d): **{m['full_days_7d']}** "
+        f"({m['full_days_per_student_7d']}/student)",
+        f"  Active rate (7d): **{m['active_rate_7d']}%**",
+        "",
+        "🛡️ **Guard — veterans must not disengage**",
+        f"  Veterans (>60d): {m['veterans']}",
+        f"  Active this week: **{m['veterans_active_7d']}** "
+        f"({m['veteran_active_rate_7d']}%)",
+        "",
+        "_Run this again in a week and compare — the numbers only mean something "
+        "against their own history._",
+    ]
+    await ctx.send("\n".join(lines))
+
+
+@bot.command(name="ijtihad-preview")
+@commands.has_permissions(administrator=True)
+async def cmd_ijtihad_preview(ctx, limit: int = 10):
+    """Owner: dry-run — what each student's record and season standing looks like.
+
+    Exists so the migration could be reviewed BEFORE anything was announced
+    (spec task 8.1): a reset is safe only if you can see, in advance, exactly what
+    each student will see.
+    """
+    season = database.ijtihad_current_season()
+    lines = ["🔍 **Ijtihad preview** — per-student state",
+             f"Season: {season['label'] if season else 'none'}",
+             "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"]
+    for m in database.all_active_members()[:limit]:
+        mid = str(m["discord_id"])
+        rec = database.sijil_record(mid)
+        sp = database.ijtihad_season_points(mid, season) if season else 0
+        fd = database.ijtihad_full_day_streak(mid, consume_freezes=False)
+        name = (m.get("discord_name") or "?").split("#")[0]
+        lines.append(
+            f"**{name}** ({m.get('level','?')}) — season **{sp}** · "
+            f"legacy {rec['legacy_xp']} · 📚{rec['weeks_mastered']} "
+            f"⭐{rec['distinctions']} · 🔥{fd['streak']}d · "
+            f"target {database.ijtihad_get_target(mid, season)}")
+    total = database.member_count()
+    if total > limit:
+        lines.append(f"_…and {total - limit} more (raise the limit: "
+                     f"`!ijtihad-preview {total}`)_")
+    await ctx.send("\n".join(lines)[:1900])
+
+
 @bot.command(name="ijtihad-config")
 @commands.has_permissions(administrator=True)
 async def cmd_ijtihad_config(ctx, key: str = "", value: str = ""):
