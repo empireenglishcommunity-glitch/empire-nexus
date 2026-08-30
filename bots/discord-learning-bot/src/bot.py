@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -2652,6 +2652,45 @@ async def cmd_level(ctx):
         "ℹ️ مستواك وأسبوعك وطريقة الترقية دلوقتي كلها في `!progress`.\n"
         "ℹ️ Your level, week, and how to advance are now all in `!progress`."
     )
+
+
+@bot.command(name="growth", aliases=["تقدمي"])
+async def cmd_growth(ctx):
+    """Ijtihad Phase 6: your improvement against your OWN recent baseline."""
+    if not database.is_feature_enabled(ijtihad_growth.FLAG, str(ctx.author.id)):
+        return
+    did = str(ctx.author.id)
+    if not database.get_member(did):
+        await ctx.send("🔒 Register first with `!start`.\n🔒 اعمل `!start` الأول.")
+        return
+    g = database.ijtihad_growth(did)
+    lines = [f"📈 **{ctx.author.display_name}** — "
+             f"Your growth / تقدّمك", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+             ijtihad_growth.format_my_growth(g)]
+    recs = database.ijtihad_recognitions_for(did, limit=5)
+    if recs:
+        lines.append("")
+        lines.append("🏅 **Recent recognitions / آخر التقديرات**")
+        for r in recs:
+            lines.append(f"  {ijtihad_growth.format_recognition(r['kind'])}")
+    await ctx.send("\n".join(lines))
+
+
+@bot.command(name="improved", aliases=["الأكثر-تقدما"])
+async def cmd_improved(ctx):
+    """Ijtihad Phase 6: the Most Improved board — a beginner can top it."""
+    if not database.is_feature_enabled(ijtihad_growth.FLAG, str(ctx.author.id)):
+        return
+    rows = database.ijtihad_most_improved_board(limit=5)
+    await ctx.send(ijtihad_growth.format_most_improved(rows))
+
+
+@bot.command(name="spotlight", aliases=["ضوء-الأسبوع"])
+async def cmd_spotlight(ctx):
+    """Ijtihad Phase 6: this week's spotlight — the metric rotates weekly."""
+    if not database.is_feature_enabled(ijtihad_growth.FLAG, str(ctx.author.id)):
+        return
+    await ctx.send(ijtihad_growth.format_spotlight(ijtihad_growth.build_spotlight()))
 
 
 @bot.command(name="season", aliases=["الموسم"])

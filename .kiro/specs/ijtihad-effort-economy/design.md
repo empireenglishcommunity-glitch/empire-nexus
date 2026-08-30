@@ -320,7 +320,17 @@ ambiguity:
 
 ### 11b. Season 1 launch decisions (delegated to agent, 2026-08-29)
 
-**Season 1 starts Saturday 2026-09-05** — the *next* Saturday, not the current one.
+> ⚡ **OWNER OVERRIDE, 2026-08-30: Season 1 starts NOW.** The owner enabled every
+> Ijtihad flag and chose to launch immediately rather than wait for 2026-09-05.
+> The auto-anchor therefore sets **Season 1 = 2026-08-29 → 2026-09-25** (the
+> current curriculum week's Saturday), and the announcement is posted alongside
+> the launch instead of ahead of it. The reasoning below is kept as the record of
+> what was recommended and why — it was a judgement call about announcement
+> timing, not a correctness constraint, and launching now costs only that the
+> first day or two of the season predate the announcement.
+
+**Recommended (superseded): Season 1 starts Saturday 2026-09-05** — the *next*
+Saturday, not the current one.
 
 Rejected starting immediately (2026-08-29, which the auto-anchor would pick) for a
 reason that matters more than tidiness: a competitive score that begins before the
