@@ -9,6 +9,7 @@ and level advancement tracking described in the Learning System blueprint.
 import sqlite3
 import datetime
 import json
+import statistics
 from typing import Optional
 
 from . import config
@@ -761,6 +762,32 @@ CREATE TABLE IF NOT EXISTS streak_freezes (
     PRIMARY KEY (discord_id, used_on),
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
+
+-- Ijtihad Phase 6: grit and growth recognitions.
+--
+-- These exist to answer the part of the brief that points alone cannot: "highlight
+-- the ones who really work". A student with weak absolute English who keeps
+-- showing up after a bad score is doing the hardest thing in the programme, and
+-- no leaderboard sorted by any score will ever surface them.
+--
+-- Crucially these are RECOGNITION, not points: they never inflate a student above
+-- a stronger student on the effort board. That separation is what lets us
+-- celebrate determination honestly without corrupting the ranking.
+--
+-- period_key makes each recognition idempotent (one Personal Best per week, one
+-- Comeback per day, one Persistence per level+week), so the detector can run as
+-- often as we like without spamming a student.
+CREATE TABLE IF NOT EXISTS recognition_log (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    discord_id  TEXT NOT NULL,
+    kind        TEXT NOT NULL,              -- personal_best|comeback|uphill|persistence|refinement
+    period_key  TEXT NOT NULL,              -- dedup scope for this kind
+    detail      TEXT DEFAULT '',            -- JSON: whatever the kind wants to show
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(discord_id, kind, period_key),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_recognition_member ON recognition_log(discord_id, created_at);
 """
 
 
@@ -4429,6 +4456,198 @@ def ijtihad_full_days_on(day: str, limit: int = 50) -> list:
             continue
     out.sort(key=lambda r: (-r["tasks"], r["discord_name"]))
     return out[:limit]
+
+
+# ============================================================
+#  IJTIHAD PHASE 6 — GROWTH, PAR, RECOGNITIONS
+# ============================================================
+
+def ijtihad_points_between(discord_id: str, start: str, end: str) -> int:
+    """Points earned in an inclusive ISO date range."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            """SELECT COALESCE(SUM(points), 0) AS t FROM points_log
+               WHERE discord_id = ? AND date(logged_at) BETWEEN ? AND ?""",
+            (discord_id, start, end),
+        ).fetchone()
+        return int(row["t"] or 0)
+    finally:
+        conn.close()
+
+
+def ijtihad_daily_points(discord_id: str, start: str, end: str) -> dict:
+    """{iso_date: points} for an inclusive range. Missing days are absent."""
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            """SELECT date(logged_at) AS d, COALESCE(SUM(points), 0) AS t
+               FROM points_log
+               WHERE discord_id = ? AND date(logged_at) BETWEEN ? AND ?
+               GROUP BY date(logged_at)""",
+            (discord_id, start, end),
+        ).fetchall()
+        return {r["d"]: int(r["t"] or 0) for r in rows}
+    finally:
+        conn.close()
+
+
+def ijtihad_growth(discord_id: str, today: Optional[datetime.date] = None) -> dict:
+    """This week's effort measured against the student's OWN recent baseline.
+
+    Returns {"eligible", "now", "par_week", "growth_pct", "reason"}.
+
+    Why par is a MEDIAN of the 14 days *before* this week: a mean would let one
+    heroic day (or one illness) redefine the baseline, and comparing this week
+    against a window that includes itself would flatten every result toward zero.
+
+    Why par_week must be > 0 to be eligible: with a zero baseline any activity is
+    infinite improvement, which would put every returning student permanently on
+    top of a "Most Improved" board. Those students are surfaced by the Comeback
+    recognition instead -- the honest place for them.
+    """
+    today = today or _today_local()
+    now_start = today - datetime.timedelta(days=6)
+    base_end = today - datetime.timedelta(days=7)
+    base_start = today - datetime.timedelta(days=20)
+
+    member = get_member(discord_id)
+    if not member:
+        return {"eligible": False, "now": 0, "par_week": 0, "growth_pct": 0.0,
+                "reason": "no_member"}
+
+    # Require a real history before judging improvement.
+    try:
+        joined = datetime.datetime.fromisoformat(
+            (member.get("joined_at") or "").replace("Z", "")).date()
+        if (today - joined).days < 7:
+            return {"eligible": False, "now": 0, "par_week": 0, "growth_pct": 0.0,
+                    "reason": "too_new"}
+    except (ValueError, TypeError, AttributeError):
+        pass
+
+    now_total = ijtihad_points_between(discord_id, now_start.isoformat(),
+                                       today.isoformat())
+    daily = ijtihad_daily_points(discord_id, base_start.isoformat(),
+                                 base_end.isoformat())
+    series = []
+    cur = base_start
+    while cur <= base_end:
+        series.append(daily.get(cur.isoformat(), 0))
+        cur += datetime.timedelta(days=1)
+
+    par_daily = statistics.median(series) if series else 0
+    par_week = int(round(par_daily * 7))
+    if par_week <= 0:
+        return {"eligible": False, "now": now_total, "par_week": 0,
+                "growth_pct": 0.0, "reason": "no_baseline"}
+
+    growth_pct = round((now_total - par_week) / par_week * 100, 1)
+    return {"eligible": True, "now": now_total, "par_week": par_week,
+            "growth_pct": growth_pct, "reason": "ok"}
+
+
+def ijtihad_most_improved_board(limit: int = 5,
+                                today: Optional[datetime.date] = None) -> list:
+    """Students improving most against their OWN baseline.
+
+    A beginner can top this board, which is the point: it measures change, not
+    level. Only positive growth is listed -- this is never a board of who declined.
+    """
+    today = today or _today_local()
+    out = []
+    for m in all_active_members():
+        mid = str(m["discord_id"])
+        try:
+            g = ijtihad_growth(mid, today)
+        except Exception:
+            continue
+        if g["eligible"] and g["growth_pct"] > 0:
+            out.append({
+                "discord_id": mid,
+                "discord_name": m.get("discord_name") or "Student",
+                "level": m.get("level", "A1"),
+                "growth_pct": g["growth_pct"],
+                "now": g["now"],
+                "par_week": g["par_week"],
+            })
+    out.sort(key=lambda r: (-r["growth_pct"], r["discord_name"]))
+    return out[:limit]
+
+
+def ijtihad_recognition_exists(discord_id: str, kind: str, period_key: str) -> bool:
+    conn = _connect()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM recognition_log WHERE discord_id=? AND kind=? AND period_key=? LIMIT 1",
+            (discord_id, kind, period_key),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
+
+def ijtihad_record_recognition(discord_id: str, kind: str, period_key: str,
+                               detail: str = "") -> bool:
+    """Record a recognition once. Returns True if newly recorded."""
+    if ijtihad_recognition_exists(discord_id, kind, period_key):
+        return False
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT OR IGNORE INTO recognition_log (discord_id, kind, period_key, detail) "
+            "VALUES (?,?,?,?)",
+            (discord_id, kind, period_key, detail),
+        )
+        conn.commit()
+        return True
+    except Exception:
+        return False
+    finally:
+        conn.close()
+
+
+def ijtihad_recognitions_for(discord_id: str, limit: int = 20) -> list:
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT kind, period_key, detail, created_at FROM recognition_log "
+            "WHERE discord_id=? ORDER BY created_at DESC LIMIT ?",
+            (discord_id, limit),
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def ijtihad_days_absent_before(discord_id: str, day: datetime.date,
+                               lookback: int = 14) -> int:
+    """Consecutive days with zero tasks immediately before `day`."""
+    n = 0
+    cur = day - datetime.timedelta(days=1)
+    for _ in range(lookback):
+        if ijtihad_tasks_on(discord_id, cur.isoformat()) > 0:
+            break
+        n += 1
+        cur -= datetime.timedelta(days=1)
+    return n
+
+
+def ijtihad_best_previous_week(discord_id: str,
+                              today: Optional[datetime.date] = None,
+                              weeks_back: int = 26) -> int:
+    """Best points total across previous (non-overlapping) 7-day blocks.
+
+    Used by the Personal Best recognition, so "best week ever" means measured
+    against the student's own history rather than anyone else's.
+    """
+    today = today or _today_local()
+    best = 0
+    for i in range(1, weeks_back + 1):
+        end = today - datetime.timedelta(days=7 * i)
+        start = end - datetime.timedelta(days=6)
+        total = ijtihad_points_between(discord_id, start.isoformat(), end.isoformat())
+        best = max(best, total)
+    return best
 
 
 def ijtihad_already_awarded(discord_id: str, reason: str) -> bool:

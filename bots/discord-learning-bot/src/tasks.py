@@ -674,6 +674,17 @@ async def process_submission(discord_id: str, member_name: str,
     # Generate quick feedback
     feedback = await ai_engine.quick_feedback(member_name, task_id)
 
+    # Ijtihad Phase 6: detect grit/growth recognitions after the day's work is
+    # recorded. Best-effort and flag-gated -- a recognition is a nicety and must
+    # never break a submission. Awards no points by design, so this cannot affect
+    # the numbers computed above.
+    recognitions = []
+    try:
+        from . import ijtihad_growth
+        recognitions = ijtihad_growth.detect_new(discord_id)
+    except Exception as e:
+        logger.warning(f"ijtihad: recognition detection failed: {e}")
+
     # Detect milestones for Nabd N3 celebrations
     milestones = []
     if tasks_today == 7:
@@ -688,6 +699,7 @@ async def process_submission(discord_id: str, member_name: str,
         "points": points,
         "feedback": feedback,
         "milestones": milestones,
+        "recognitions": recognitions,
     }
 
 
