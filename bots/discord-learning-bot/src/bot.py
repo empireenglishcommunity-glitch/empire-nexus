@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -2570,7 +2570,25 @@ async def cmd_top(ctx):
     already shown — mirroring the web `/api/leaderboard`, which has always
     returned `your_rank`/`your_points`. Purely additive: the top-10 board
     is unchanged, and it stays a top-N board (passes the 5-year/10x scale
-    test — we never dump all members)."""
+    test — we never dump all members).
+
+    Ijtihad Phase 5: when `ijtihad_boards` is on, this redirects to the SEASON
+    board and says so in one line. `!top` has always meant "lifetime ranking", and
+    lifetime ranking is precisely what rewarded seniority over work — but silently
+    redefining a familiar command is how students stop trusting the numbers, so the
+    old name keeps working and explains itself instead of either lying or dying."""
+    if database.is_feature_enabled(ijtihad_boards.FLAG, str(ctx.author.id)):
+        did = str(ctx.author.id)
+        season = database.ijtihad_current_season()
+        srows = database.ijtihad_season_leaderboard(season, limit=5) if season else []
+        board = ijtihad_boards.format_season_board(
+            season, srows, me_id=did,
+            my_rank=database.ijtihad_season_rank(did, season) if season else 0,
+            my_points=database.ijtihad_season_points(did, season) if season else 0)
+        await ctx.send(
+            "ℹ️ `!top` now shows **this season's effort** — lifetime totals moved "
+            "to `!sijil`.\n\n" + board)
+        return
     rows = database.leaderboard(10)
     if not rows:
         await ctx.send("No members yet. Be the first to `!join`! 🌱")
@@ -2634,6 +2652,79 @@ async def cmd_level(ctx):
         "ℹ️ مستواك وأسبوعك وطريقة الترقية دلوقتي كلها في `!progress`.\n"
         "ℹ️ Your level, week, and how to advance are now all in `!progress`."
     )
+
+
+@bot.command(name="season", aliases=["الموسم"])
+async def cmd_season(ctx):
+    """Ijtihad Phase 5: this season's effort board.
+
+    Replaces `!top` as the headline ranking. `!top` still works and points here,
+    because silently changing what a familiar command measures is how a student
+    stops trusting the numbers.
+    """
+    if not database.is_feature_enabled(ijtihad_boards.FLAG, str(ctx.author.id)):
+        return
+    did = str(ctx.author.id)
+    season = database.ijtihad_current_season()
+    rows = database.ijtihad_season_leaderboard(season, limit=5) if season else []
+    my_rank = database.ijtihad_season_rank(did, season) if season else 0
+    my_points = database.ijtihad_season_points(did, season) if season else 0
+    await ctx.send(ijtihad_boards.format_season_board(
+        season, rows, me_id=did, my_rank=my_rank, my_points=my_points))
+
+
+@bot.command(name="peers", aliases=["زمايلي"])
+async def cmd_peers(ctx):
+    """Ijtihad Phase 5: how you compare with students at YOUR stage."""
+    if not database.is_feature_enabled(ijtihad_boards.FLAG, str(ctx.author.id)):
+        return
+    did = str(ctx.author.id)
+    if not database.get_member(did):
+        await ctx.send("🔒 Register first with `!start`.\n🔒 اعمل `!start` الأول.")
+        return
+    season = database.ijtihad_current_season()
+    cohort = database.ijtihad_journey_peers(did)
+    rows = (database.ijtihad_season_board_scoped(season, cohort["peers"], limit=5)
+            if season else [])
+    await ctx.send(ijtihad_boards.format_peers_board(
+        cohort["scope"], cohort["week"], season, rows, me_id=did))
+
+
+@bot.command(name="consistency", aliases=["استمرارية"])
+async def cmd_consistency(ctx):
+    """Ijtihad Phase 5: longest current runs of complete days."""
+    if not database.is_feature_enabled(ijtihad_boards.FLAG, str(ctx.author.id)):
+        return
+    rows = database.ijtihad_consistency_board(limit=5)
+    await ctx.send(ijtihad_boards.format_consistency_board(rows))
+
+
+@bot.command(name="ijtihad-config")
+@commands.has_permissions(administrator=True)
+async def cmd_ijtihad_config(ctx, key: str = "", value: str = ""):
+    """Owner: view or set Ijtihad tunables (season length, Season 1 start,
+    award amounts, target default, freezes per season).
+
+    Exists because the Season 1 start date must be set BEFORE the seasons flag is
+    enabled, and editing settings on the server by hand is exactly the kind of
+    step that gets skipped or mistyped.
+    """
+    cfg = database.get_ijtihad_config()
+    if not key:
+        lines = ["⚙️ **Ijtihad config**", "```"]
+        for k, v in cfg.items():
+            lines.append(f"{k} = {v if v != '' else '(auto)'}")
+        lines.append("```")
+        lines.append("Set with: `!ijtihad-config <key> <value>`")
+        await ctx.send("\n".join(lines))
+        return
+    if not value:
+        await ctx.send(f"`{key}` = `{cfg.get(key, '(unknown key)')}`")
+        return
+    if database.set_ijtihad_config(key, value):
+        await ctx.send(f"✅ `{key}` set to `{value}`")
+    else:
+        await ctx.send(f"❌ Unknown key `{key}`. Run `!ijtihad-config` to list them.")
 
 
 @bot.command(name="target", aliases=["هدفي"])
