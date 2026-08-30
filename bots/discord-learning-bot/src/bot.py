@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth, suspension
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -448,6 +448,8 @@ async def on_ready():
         at_risk_check.start()
     if not missed_day_report.is_running():
         missed_day_report.start()
+    if not retention_cycle.is_running():
+        retention_cycle.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
     if not beacon_cleanup_loop.is_running():
@@ -5657,6 +5659,312 @@ async def cmd_link(ctx):
 # Add Arabic aliases
 ARABIC_COMMAND_ALIASES["ربط"] = "link"
 ARABIC_COMMAND_ALIASES["صعوبة"] = "difficulty"
+
+
+# ============================================================
+#  SUSPENSION LIFECYCLE (monthly membership cycle)
+# ============================================================
+#
+# Every one of these is destructive or student-visible, so they share three
+# guardrails: DRY RUN IS THE DEFAULT, a typed confirmation is required to act,
+# and the result is reported per student rather than as a single "done".
+# A silent bulk action over 16 students is how the wrong person gets cut off.
+
+SUSPENSION_CONFIRM_TIMEOUT = 120
+
+
+async def _suspension_confirm(ctx, word: str, preview: str) -> bool:
+    """Show the preview, then require the exact word typed back."""
+    await ctx.send(preview)
+    await ctx.send(f"Type **`{word}`** to proceed, or anything else to cancel. "
+                   f"(expires in {SUSPENSION_CONFIRM_TIMEOUT}s)")
+
+    def _check(m):
+        return m.author.id == ctx.author.id and m.channel.id == ctx.channel.id
+
+    try:
+        reply = await bot.wait_for("message", check=_check,
+                                   timeout=SUSPENSION_CONFIRM_TIMEOUT)
+    except asyncio.TimeoutError:
+        await ctx.send("⌛ Timed out — **nothing was changed.**")
+        return False
+    if reply.content.strip() != word:
+        await ctx.send("✅ Cancelled — **nothing was changed.**")
+        return False
+    return True
+
+
+def _suspension_targets(ctx, members, selector):
+    """Mentions win; otherwise fall back to a bulk selector."""
+    if members:
+        rows = []
+        for m in members:
+            row = database.get_member(str(m.id))
+            if row:
+                rows.append(row)
+        return rows, f"{len(rows)} mentioned"
+    return suspension.resolve_selection(selector or "")
+
+
+@bot.command(name="suspend")
+@commands.has_permissions(administrator=True)
+async def cmd_suspend(ctx, *args):
+    """Withdraw access when a membership lapses.
+
+    !suspend @a @b            specific students (dry run)
+    !suspend all              every active student (dry run)
+    !suspend all go           actually do it (asks for confirmation)
+    """
+    if not database.is_feature_enabled(suspension.FLAG):
+        await ctx.send(f"⚠️ `{suspension.FLAG}` is disabled. "
+                       f"Enable it with `!flag enable {suspension.FLAG}`.")
+        return
+
+    tokens = [a for a in args]
+    live = "go" in [t.lower() for t in tokens]
+    selector = next((t for t in tokens
+                     if t.lower() in ("all", "expired", "suspended")), "")
+    rows, desc = _suspension_targets(ctx, ctx.message.mentions, selector)
+
+    if not rows:
+        await ctx.send(
+            "**Usage**\n"
+            "`!suspend @student [@student2 ...]` — dry run for those students\n"
+            "`!suspend all` — dry run for every active student\n"
+            "`!suspend all go` — actually suspend (you'll be asked to confirm)\n\n"
+            "Suspension removes the Student role (channels disappear), revokes "
+            "practice-site sessions and tokens, and starts the "
+            f"{database.RETENTION_DAYS}-day retention clock. **It deletes nothing.**")
+        return
+
+    guild = ctx.guild or bot.get_guild(config.GUILD_ID)
+
+    # --- always preview first ---
+    preview = await asyncio.gather(*[
+        suspension.suspend_one(guild, r, dry_run=True) for r in rows])
+    lines = []
+    for p in preview:
+        if p["already"]:
+            lines.append(f"• {p['name']} — already suspended, will be skipped")
+        elif p["role_removed"] is None:
+            lines.append(f"• {p['name']} — ⚠️ not in the server (role step will be skipped)")
+        else:
+            lines.append(f"• {p['name']} — sessions: {p['sessions']}, "
+                         f"token: {'yes' if p['tokens'] else 'no'}, "
+                         f"role: {'will be removed' if p['role_removed'] else 'not held'}")
+    body = "\n".join(lines[:30])
+    if len(lines) > 30:
+        body += f"\n… and {len(lines) - 30} more"
+
+    if not live:
+        await ctx.send(f"🔍 **DRY RUN — nothing changed.** Target: {desc}\n\n{body}\n\n"
+                       f"Add `go` to the command to actually suspend.")
+        return
+
+    actionable = [r for r, p in zip(rows, preview) if not p["already"]]
+    if not actionable:
+        await ctx.send("Everyone selected is already suspended — nothing to do.")
+        return
+
+    if not await _suspension_confirm(
+            ctx, "SUSPEND",
+            f"⚠️ **About to suspend {len(actionable)} student(s).** "
+            f"Target: {desc}\n\n{body}"):
+        return
+
+    results = []
+    for r in actionable:
+        results.append(await suspension.suspend_one(guild, r, dry_run=False))
+
+    ok = [r for r in results if r["flagged"]]
+    problems = [r for r in results if r["errors"]]
+    msg = [f"🔒 **Suspended {len(ok)}/{len(actionable)}.**"]
+    roles_removed = sum(1 for r in results if r["role_removed"] is True)
+    sessions = sum(r["sessions"] for r in results)
+    msg.append(f"• Student role removed: **{roles_removed}**")
+    msg.append(f"• Practice sessions revoked: **{sessions}**")
+    msg.append(f"• Retention clock started — purge in **{database.RETENTION_DAYS} days** "
+               f"unless restored.")
+    if problems:
+        msg.append("\n⚠️ **Issues (each student's data is still intact):**")
+        for r in problems[:10]:
+            msg.append(f"• {r['name']}: {'; '.join(r['errors'])}")
+    await ctx.send("\n".join(msg))
+
+
+@bot.command(name="restore")
+@commands.has_permissions(administrator=True)
+async def cmd_restore(ctx, *args):
+    """Give access back after a renewal. Resumes, never restarts.
+
+    !restore @student          dry run
+    !restore @student go       actually restore
+    !restore suspended         dry run over everyone suspended
+    """
+    if not database.is_feature_enabled(suspension.FLAG):
+        await ctx.send(f"⚠️ `{suspension.FLAG}` is disabled.")
+        return
+
+    tokens = [a.lower() for a in args]
+    live = "go" in tokens
+    selector = next((t for t in tokens if t in ("suspended", "all")), "")
+    rows, desc = _suspension_targets(ctx, ctx.message.mentions,
+                                     "suspended" if selector else "")
+
+    if not rows:
+        pending = database.suspended_members()
+        listing = "\n".join(
+            f"• {m['discord_name']} — suspended {m['days_suspended']}d, "
+            f"purges in {m['days_until_purge']}d" for m in pending[:20]
+        ) or "_nobody is currently suspended_"
+        await ctx.send(
+            "**Usage**\n`!restore @student` — dry run\n"
+            "`!restore @student go` — actually restore\n\n"
+            f"**Currently suspended ({len(pending)}):**\n{listing}")
+        return
+
+    guild = ctx.guild or bot.get_guild(config.GUILD_ID)
+    preview = await asyncio.gather(*[
+        suspension.restore_one(guild, r, dry_run=True) for r in rows])
+    lines = []
+    for r, p in zip(rows, preview):
+        if p["not_suspended"]:
+            lines.append(f"• {p['name']} — not suspended, will be skipped")
+        else:
+            lines.append(f"• {p['name']} — will bridge **{p['bridged_days']} day(s)** "
+                         f"so the streak survives")
+    body = "\n".join(lines[:30])
+
+    if not live:
+        await ctx.send(f"🔍 **DRY RUN — nothing changed.**\n\n{body}\n\n"
+                       f"Add `go` to actually restore.")
+        return
+
+    actionable = [r for r, p in zip(rows, preview) if not p["not_suspended"]]
+    if not actionable:
+        await ctx.send("Nobody selected is suspended — nothing to do.")
+        return
+
+    results = []
+    for r in actionable:
+        res = await suspension.restore_one(guild, r, dry_run=False)
+        if res["cleared"]:
+            await suspension.dm_restored(guild, res["discord_id"], res["name"])
+        results.append(res)
+
+    ok = [r for r in results if r["cleared"]]
+    msg = [f"✅ **Restored {len(ok)}/{len(actionable)}.**"]
+    for r in results:
+        bits = [f"streak bridged {r['bridged_days']}d",
+                f"role {'restored' if r['role_added'] else 'NOT restored'}"]
+        if r["errors"]:
+            bits.append("⚠️ " + "; ".join(r["errors"]))
+        msg.append(f"• {r['name']} — {', '.join(bits)}")
+    msg.append("\nThey each got a DM telling them to run `!link` for a fresh "
+               "practice-page code (the old session was revoked).")
+    await ctx.send("\n".join(msg))
+
+
+@bot.command(name="announce-renewal")
+@commands.has_permissions(administrator=True)
+async def cmd_announce_renewal(ctx, *args):
+    """Send the end-of-month renewal notice everywhere.
+
+    !announce-renewal "الأربعاء ٢ سبتمبر"        dry run
+    !announce-renewal "الأربعاء ٢ سبتمبر" go     actually send
+    """
+    if not database.is_feature_enabled(suspension.FLAG):
+        await ctx.send(f"⚠️ `{suspension.FLAG}` is disabled.")
+        return
+
+    tokens = list(args)
+    live = bool(tokens) and tokens[-1].lower() == "go"
+    if live:
+        tokens = tokens[:-1]
+    cutoff = " ".join(tokens).strip()
+    if not cutoff:
+        await ctx.send(
+            "**Usage**\n"
+            '`!announce-renewal "الأربعاء ٢ سبتمبر"` — dry run\n'
+            '`!announce-renewal "الأربعاء ٢ سبتمبر" go` — send for real\n\n'
+            "Sends a DM to every active student, posts to #announcements, and "
+            "posts to the Telegram student groups. **Always state the cutoff "
+            "date explicitly** — never a relative phrase like 'in 5 days'.")
+        return
+
+    res = await suspension.broadcast_renewal(bot, cutoff, dry_run=True)
+    if not live:
+        await ctx.send(
+            f"🔍 **DRY RUN — nothing sent.**\n"
+            f"• Cutoff shown to students: **{cutoff}**\n"
+            f"• Would DM: **{res['targets']}** active student(s)\n"
+            f"• Would post to #announcements and "
+            f"{len(getattr(config, 'MAINTENANCE_TG_CHAT_IDS', []) or [])} "
+            f"Telegram group(s)\n\n"
+            f"Here is the exact DM a student would receive:\n\n"
+            f"{suspension.renewal_dm('اسم الطالب', cutoff)[:1500]}")
+        return
+
+    if not await _suspension_confirm(
+            ctx, "SEND",
+            f"⚠️ **About to message {res['targets']} students** with cutoff "
+            f"**{cutoff}**, plus #announcements and the Telegram groups."):
+        return
+
+    await ctx.send("📤 Sending — this takes a moment (throttled to respect "
+                   "Discord's DM rate limits)…")
+    out = await suspension.broadcast_renewal(bot, cutoff, dry_run=False)
+    msg = [f"📬 **Renewal notice sent.**",
+           f"• DMs delivered: **{len(out['sent'])}/{out['targets']}**",
+           f"• #announcements: {'✅' if out['announcement'] else '❌'}",
+           f"• Telegram groups: **{out['telegram_groups']}**"]
+    if out["left_server"]:
+        msg.append(f"\n⚠️ **Not in the server (reach them another way):** "
+                   f"{', '.join(out['left_server'])}")
+    if out["failed"]:
+        msg.append("\n⚠️ **DM failed (likely DMs closed):**")
+        for n, why in out["failed"][:10]:
+            msg.append(f"• {n}: {why}")
+    await ctx.send("\n".join(msg))
+
+
+@bot.command(name="suspended")
+@commands.has_permissions(manage_guild=True)
+async def cmd_suspended(ctx):
+    """Who is suspended, and how long until their data is purged."""
+    rows = database.suspended_members()
+    if not rows:
+        await ctx.send("✅ Nobody is currently suspended.")
+        return
+    lines = [f"🔒 **Suspended students ({len(rows)})** — "
+             f"retention {database.RETENTION_DAYS} days"]
+    for m in rows:
+        warn = " ⚠️" if m["days_until_purge"] <= database.PURGE_WARNING_DAYS else ""
+        lines.append(f"• **{m['discord_name']}** — suspended {m['days_suspended']}d, "
+                     f"purge in **{m['days_until_purge']}d**{warn}")
+    lines.append("\n`!restore @student go` to bring someone back.")
+    await ctx.send("\n".join(lines))
+
+
+@tasks.loop(time=datetime.time(hour=4, minute=30, tzinfo=_zone()))
+async def retention_cycle():
+    """Daily: warn the owner at day 53, purge at day 60.
+
+    Runs at 04:30 — deliberately off-hours, since a purge VACUUMs the database
+    and these students work 21:00-04:00. Flag-gated and fully wrapped: a
+    retention job must never be able to take the bot down.
+    """
+    if config.IS_GHOST_INSTANCE:
+        return
+    if not database.is_feature_enabled(suspension.FLAG):
+        return
+    try:
+        summary = await suspension.run_retention_cycle(dry_run=False)
+        if summary["warned"] or summary["purged"]:
+            logger.info("retention_cycle: warned=%s purged=%s",
+                        summary["warned"], len(summary["purged"]))
+    except Exception as e:
+        logger.error(f"retention_cycle failed: {e}")
 
 
 # ============================================================

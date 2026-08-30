@@ -98,6 +98,9 @@ REGISTRY = [
     ("assessment_monthly_review", "Taqdeem: Monthly Progress Review — retention-focused assessment after every 4 weekly passes (diagnostic + prerequisite for advancement)", "taqdeem", False),
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
+    # ── SUSPENSION (membership lifecycle) ──
+    ("suspension_lifecycle", "Monthly membership lifecycle: !announce-renewal (notice to students), !suspend (withdraw access — clock + status + Darb sessions + link tokens + the Student gateway role, which is what hides the channels), !restore (give it back and bridge the no-access days so a 40-day streak survives), and the 60-day retention cycle (owner warned at day 53, then JSON archive → permanent purge → VACUUM). Suspension deletes NOTHING; only the purge deletes, and it refuses to run if the archive cannot be written", "suspension", False),
+
     # ── IJTIHAD (effort economy) ──
     ("ijtihad_award_table", "Ijtihad Phase 7: the new award table — REPLACES POINTS_PER_TASK (15), POINTS_ALL_TASKS (100) and the STREAK_BONUS_POINTS tenure ladder. Base 10/task x difficulty (1.0-1.5) x quality (1.0-1.3, never below 1.0 so trying is never punished), + 25 for meeting YOUR target, + bounded seasonal streak bonuses at 7/14/21/28 days. Fixes the incentive where attempting Challenging content paid the same as Easy. Hard either/or with the legacy table — they can never both fire", "ijtihad", False),
     ("ijtihad_growth_recognition", "Ijtihad Phase 6: growth + grit — !growth, !improved, !spotlight, and five recognitions (Personal Best, Persistence, Comeback, Uphill, Refinement). Growth is measured against the student's OWN 14-day baseline so a beginner can lead; recognitions award NO points, so determination is celebrated without moving anyone above a stronger student on the effort board", "ijtihad", False),

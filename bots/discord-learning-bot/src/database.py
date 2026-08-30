@@ -106,6 +106,18 @@ def _migrate(conn: sqlite3.Connection):
     if "level_started_at" not in member_cols:
         conn.execute("ALTER TABLE members ADD COLUMN level_started_at TEXT DEFAULT NULL")
 
+    # Suspension lifecycle: when a membership lapsed and access was withdrawn.
+    # NULL = active (every existing student). This column is the ONLY clock the
+    # 60-day retention policy has: nothing else in the schema recorded when a
+    # student was suspended, so without it the policy is unenforceable.
+    # `members.status` is deliberately NOT reused as the clock -- it is a free
+    # text field that no code path reads for authorisation, and it carries no
+    # date. Applied by hand on the live DB on 2026-08-30 ahead of this code
+    # landing; the guard below makes that a no-op there and a real migration
+    # everywhere else (fresh deploys, CI, other environments).
+    if "suspended_at" not in member_cols:
+        conn.execute("ALTER TABLE members ADD COLUMN suspended_at TEXT DEFAULT NULL")
+
     # `level` on daily_submissions. Writing and community are Discord-only
     # tasks, so they never reach practice_mastery (which IS level-scoped) and
     # `practice_completions` has to bridge them onto a content day. Without a
@@ -1226,6 +1238,22 @@ def all_active_members() -> list[dict]:
     """Get all members with status='active'."""
     conn = _connect()
     rows = conn.execute("SELECT * FROM members WHERE status='active' ORDER BY total_points DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def all_members() -> list[dict]:
+    """Every member row regardless of status, including suspended ones.
+
+    `all_active_members()` filters on status, which is exactly what makes the
+    nightly loops skip suspended students -- but it also means suspension
+    tooling cannot see its own subjects through it. Callers here filter on
+    `suspended_at` themselves, which is the authoritative flag.
+    """
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM members ORDER BY discord_name COLLATE NOCASE"
+    ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
@@ -6032,3 +6060,296 @@ def latest_placement_result(discord_id: str) -> dict | None:
     except Exception:
         d["skill_bands"] = {}
     return d
+
+
+
+# ============================================================
+#  SUSPENSION LIFECYCLE + 60-DAY RETENTION
+# ============================================================
+#
+# Three states, one column (`members.suspended_at`):
+#   active     -> suspended_at IS NULL
+#   suspended  -> suspended_at = when access was withdrawn
+#   purged     -> the member row (and everything else) is gone
+#
+# Why not `members.status`? It is free text, no code path reads it for
+# authorisation, and it carries no date. The retention clock needs a date.
+# `status` is still maintained alongside for human readability and because
+# `all_active_members()` filters on it -- which is what stops the nightly DM
+# loops and the leaderboards from targeting suspended students.
+#
+# DATA GUARANTEE (owner condition, 2026-08-30): suspension deletes NOTHING.
+# Points, streaks, submissions, mastery, assessments and the SRS queue are
+# untouched, so `restore_member` returns a student to the exact point they
+# stopped. Only the 60-day purge deletes, and it snapshots first.
+
+RETENTION_DAYS = 60          # permanent purge this many days after suspension
+PURGE_WARNING_DAYS = 7       # owner is warned this many days before a purge
+
+# Never purged: these are not the student's learning history.
+#   settings / feature_flags / seasons / azure_usage -> system-wide config
+#   reset_consent_log                                -> the append-only proof
+#     ledger; purging it would destroy the record that a wipe was authorised.
+PURGE_PROTECTED_TABLES = ("reset_consent_log",)
+
+
+def suspend_member(discord_id: str, when: str = None) -> bool:
+    """Mark a member suspended. Idempotent -- re-suspending does NOT move the
+    clock, so a second `!suspend` can never silently extend someone's retention
+    window. Returns True if this call changed the row."""
+    conn = _connect()
+    try:
+        # SQLite's own datetime('now') -- deliberately, not a Python local
+        # timestamp. `suspended_members()` measures elapsed time with
+        # julianday('now'), which is UTC, so the stored value must be UTC too.
+        # A local (UTC+4) timestamp compared against a UTC 'now' would skew
+        # every retention calculation by 4 hours, which straddles the 60-day
+        # purge boundary.
+        if when:
+            cur = conn.execute(
+                "UPDATE members SET status='suspended', "
+                "suspended_at=COALESCE(suspended_at, ?) "
+                "WHERE discord_id=? AND suspended_at IS NULL",
+                (when, discord_id),
+            )
+        else:
+            cur = conn.execute(
+                "UPDATE members SET status='suspended', "
+                "suspended_at=COALESCE(suspended_at, datetime('now')) "
+                "WHERE discord_id=? AND suspended_at IS NULL",
+                (discord_id,),
+            )
+        conn.commit()
+        return cur.rowcount > 0
+    finally:
+        conn.close()
+
+
+def restore_member(discord_id: str) -> Optional[str]:
+    """Clear a suspension. Returns the `suspended_at` value that was cleared
+    (so the caller can bridge exactly that gap for streaks), or None if the
+    member was not suspended.
+
+    Deletes nothing and resets nothing -- deliberately. The student's points,
+    streak counters, submissions and mastery rows were never touched by the
+    suspension, so clearing the flag is genuinely all that is required for them
+    to continue from where they stopped.
+    """
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT suspended_at FROM members WHERE discord_id=?", (discord_id,)
+        ).fetchone()
+        if not row or not row["suspended_at"]:
+            return None
+        was = row["suspended_at"]
+        conn.execute(
+            "UPDATE members SET status='active', suspended_at=NULL WHERE discord_id=?",
+            (discord_id,),
+        )
+        conn.commit()
+        return was
+    finally:
+        conn.close()
+
+
+def is_suspended(discord_id: str) -> bool:
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT suspended_at FROM members WHERE discord_id=?", (discord_id,)
+        ).fetchone()
+        return bool(row and row["suspended_at"])
+    finally:
+        conn.close()
+
+
+def suspended_members() -> list[dict]:
+    """Every suspended member, oldest suspension first, with days elapsed and
+    days remaining before the retention window closes."""
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT discord_id, discord_name, level, suspended_at, "
+            "       CAST(julianday('now') - julianday(suspended_at) AS INTEGER) AS days_suspended "
+            "FROM members WHERE suspended_at IS NOT NULL "
+            "ORDER BY suspended_at ASC"
+        ).fetchall()
+        out = []
+        for r in rows:
+            d = dict(r)
+            d["days_suspended"] = int(d.get("days_suspended") or 0)
+            d["days_until_purge"] = max(0, RETENTION_DAYS - d["days_suspended"])
+            out.append(d)
+        return out
+    finally:
+        conn.close()
+
+
+def members_due_for_purge(retention_days: int = RETENTION_DAYS) -> list[dict]:
+    """Suspended members whose retention window has fully elapsed."""
+    return [m for m in suspended_members()
+            if m["days_suspended"] >= retention_days]
+
+
+def members_due_for_purge_warning(retention_days: int = RETENTION_DAYS,
+                                  warn_days: int = PURGE_WARNING_DAYS) -> list[dict]:
+    """Suspended members entering the final `warn_days` of their window and not
+    yet purged -- the set the owner is warned about."""
+    return [m for m in suspended_members()
+            if 0 < m["days_until_purge"] <= warn_days]
+
+
+# ---- Streak bridging (reuses the existing maintenance_days mechanism) ----
+
+def add_maintenance_days(days) -> int:
+    """Add ISO dates to the `maintenance_days` setting, which `_recompute_streak`
+    already treats as bridged (a gap that neither breaks nor counts toward a
+    streak). Returns how many dates were newly added.
+
+    This is how a suspension is prevented from destroying a streak. Note the
+    setting is GLOBAL, not per-student: there is no per-student bridge in this
+    schema (`streak_freezes` exists but `_recompute_streak` does not read it).
+    That is acceptable here precisely BECAUSE the days being bridged are days
+    the student had no access -- nobody could have submitted, so forgiving them
+    for everyone is correct rather than generous. Callers must therefore add
+    ONLY genuine no-access days, never an arbitrary range.
+    """
+    if isinstance(days, str):
+        days = [days]
+    incoming = {str(d)[:10] for d in days if d}
+    if not incoming:
+        return 0
+    conn = _connect()
+    try:
+        try:
+            current = set(json.loads(get_setting("maintenance_days", "[]")))
+        except Exception:
+            current = set()
+        new = incoming - current
+        if not new:
+            return 0
+        merged = sorted(current | incoming)
+        conn.execute(
+            "INSERT INTO settings (key, value) VALUES ('maintenance_days', ?) "
+            "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+            (json.dumps(merged),),
+        )
+        conn.commit()
+        return len(new)
+    finally:
+        conn.close()
+
+
+def date_range_iso(start: str, end: str, cap: int = 400) -> list[str]:
+    """Inclusive list of ISO dates from `start` to `end`. Bounded so a bad
+    input can never generate an unbounded list."""
+    try:
+        d = datetime.date.fromisoformat(str(start)[:10])
+        last = datetime.date.fromisoformat(str(end)[:10])
+    except (TypeError, ValueError):
+        return []
+    out = []
+    while d <= last and len(out) < cap:
+        out.append(d.isoformat())
+        d += datetime.timedelta(days=1)
+    return out
+
+
+# ---- Permanent purge -----------------------------------------------------
+
+def member_snapshot(discord_id: str) -> dict:
+    """Every row this member owns, across EVERY table that has a discord_id
+    column -- discovered dynamically rather than from a hardcoded list.
+
+    Deliberately not reusing RESET_WIPE_TABLES: that list names 24 tables while
+    38 carry a discord_id, and it is scoped to a *reset* (which intentionally
+    preserves the account, its sessions and its notification preferences). Using
+    it for a *purge* would silently leave rows behind in 10 tables --
+    recognition_log, placement_result, student_targets, streak_freezes,
+    azure_shadow_calls, cefr_migration_log, nutq_daily_cap_overrides,
+    exit_exam_reviews, pending_resets and placement_session -- i.e. we would
+    report the data as deleted while it was still there. Dynamic discovery also
+    means any table added in future is covered without anyone remembering to
+    update a list.
+    """
+    conn = _connect()
+    try:
+        snap = {
+            "discord_id": discord_id,
+            "captured_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "retention_days": RETENTION_DAYS,
+            "tables": {},
+        }
+        for table in _tables_with_discord_id(conn):
+            if table in PURGE_PROTECTED_TABLES:
+                continue
+            try:
+                rows = conn.execute(
+                    f"SELECT * FROM {table} WHERE discord_id=?", (discord_id,)
+                ).fetchall()
+            except sqlite3.OperationalError:
+                continue
+            if rows:
+                snap["tables"][table] = [dict(r) for r in rows]
+        snap["total_rows"] = sum(len(v) for v in snap["tables"].values())
+        return snap
+    finally:
+        conn.close()
+
+
+def purge_member(discord_id: str) -> dict:
+    """PERMANENTLY delete every row belonging to a member, including the
+    `members` row itself. Irreversible from the database's point of view --
+    callers MUST have written `member_snapshot()` to disk first.
+
+    Returns {table: rows_deleted, ...} plus a '_total' key.
+    """
+    conn = _connect()
+    try:
+        tables = [t for t in _tables_with_discord_id(conn)
+                  if t not in PURGE_PROTECTED_TABLES]
+        # FKs off: children and parent go in one transaction and the delete
+        # order across 38 tables would otherwise have to be dependency-sorted.
+        # Integrity holds once every row for this member is gone.
+        conn.execute("PRAGMA foreign_keys=OFF")
+        deleted = {}
+        for table in tables:
+            if table == "members":
+                continue  # parent row last, so a mid-way failure is obvious
+            try:
+                cur = conn.execute(f"DELETE FROM {table} WHERE discord_id=?", (discord_id,))
+                if cur.rowcount:
+                    deleted[table] = cur.rowcount
+            except sqlite3.OperationalError:
+                continue
+        cur = conn.execute("DELETE FROM members WHERE discord_id=?", (discord_id,))
+        deleted["members"] = cur.rowcount
+        conn.commit()
+        deleted["_total"] = sum(v for k, v in deleted.items() if not k.startswith("_"))
+        return deleted
+    finally:
+        conn.close()
+
+
+def vacuum() -> dict:
+    """Reclaim free pages. Returns before/after byte sizes.
+
+    Worth knowing: on 2026-08-30 the live database was 15.67 MB of which
+    5.54 MB was already free list -- i.e. a VACUUM reclaims more space than
+    purging several students would. Space is not the reason this retention
+    policy exists (data minimisation is); VACUUM is simply good hygiene after
+    a large delete.
+    """
+    import os
+    path = str(config.DB_PATH)
+    before = os.path.getsize(path) if os.path.exists(path) else 0
+    conn = _connect()
+    try:
+        conn.execute("VACUUM")
+        conn.commit()
+    finally:
+        conn.close()
+    after = os.path.getsize(path) if os.path.exists(path) else 0
+    return {"before_bytes": before, "after_bytes": after,
+            "reclaimed_bytes": max(0, before - after)}
