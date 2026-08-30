@@ -3755,6 +3755,26 @@ def itqan_active_attempt(discord_id: str, level: str, week: int):
     return dict(row) if row else None
 
 
+def itqan_active_attempt_of_type(discord_id: str, level: str, attempt_type: str):
+    """Newest unfinished attempt of a given type ('monthly' / 'advancement').
+
+    Monthly and advancement attempts are not keyed by a content week the way
+    weekly ones are (they overload the `week` column to hold a review number),
+    so `itqan_active_attempt` cannot find them. Without this, starting a monthly
+    review could not tell that the student already had one open: each visit
+    created a fresh attempt and stranded the previous one, with the student's
+    answers still inside it, as an `in_progress` row nothing would ever finish.
+    """
+    conn = _connect()
+    row = conn.execute(
+        "SELECT * FROM assessment_attempts WHERE discord_id=? AND level=? "
+        "AND type=? AND status='in_progress' ORDER BY id DESC LIMIT 1",
+        (discord_id, level, attempt_type),
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
 def itqan_get_attempt(attempt_id: int):
     conn = _connect()
     row = conn.execute("SELECT * FROM assessment_attempts WHERE id=?", (attempt_id,)).fetchone()
