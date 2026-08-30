@@ -99,6 +99,7 @@ REGISTRY = [
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
     # ── IJTIHAD (effort economy) ──
+    ("ijtihad_achievement_awards", "Ijtihad Phase 3: achievement payouts — mastery 150 / distinction 250 / monthly review 300 / promotion 500. Before this, all four awarded ZERO while pure attendance paid 105-205/day, so the economy could not express 'this student improved'. Deduped: each achievement pays once, ever", "ijtihad", False),
     ("ijtihad_seasons", "Ijtihad Phase 2: effort seasons — fixed community-wide 4-week windows. Season effort is DERIVED from points_log date windows (no migration, no new points column), so rank stops being a lifetime integral that rewards seniority over current work", "ijtihad", False),
     ("ijtihad_sijil", "Ijtihad Phase 1: Sijil — the permanent Record of Honour (!sijil, !honour). Read-only view of durable achievements (weeks mastered, distinctions, levels passed, perfect days, best streak, legacy XP) so seasonal effort resets never erase what a student built", "ijtihad", False),
 

@@ -33,6 +33,14 @@ async def deliver_monthly_outcome(discord_id: str, level: str,
             return
 
         if verdict == "passed":
+            # Ijtihad Phase 3: passing a monthly review used to award ZERO.
+            try:
+                from . import ijtihad
+                awarded = ijtihad.award_monthly_review(discord_id, level, review_number)
+                if awarded:
+                    result = {**result, "ijtihad_points": awarded}
+            except Exception as e:
+                logger.warning(f"monthly: ijtihad award failed: {e}")
             await _send_pass_dm(discord_id, level, review_number, result)
             return
 

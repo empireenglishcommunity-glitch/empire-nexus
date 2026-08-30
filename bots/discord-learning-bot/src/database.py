@@ -3791,6 +3791,14 @@ IJTIHAD_CONFIG_DEFAULTS = {
                                      # close with real achievement news.
     "ijtihad_season1_start": "",     # str: ISO date anchor. Blank = auto-pick
                                      # the most recent Saturday and persist it.
+    # Phase 3 — achievement payouts. These are deliberately the LARGEST awards in
+    # the economy: before this, mastering a week, scoring a distinction, passing a
+    # monthly review and being promoted a level were each worth ZERO, while pure
+    # attendance paid 105-205/day. Promotion at 500 is worth ~33 tasks.
+    "ijtihad_ip_mastery": 150,       # int: weekly mastery pass
+    "ijtihad_ip_distinction": 250,   # int: mastery at >=90% (replaces the above)
+    "ijtihad_ip_monthly": 300,       # int: monthly review pass
+    "ijtihad_ip_promotion": 500,     # int: level promotion (A1->A2, ...)
 }
 
 
@@ -4004,6 +4012,37 @@ def ijtihad_season_rank(discord_id: str, season: dict) -> int:
         return int(row["rank"] or 1)
     finally:
         conn.close()
+
+
+def ijtihad_already_awarded(discord_id: str, reason: str) -> bool:
+    """True if this exact award reason was already paid to this student."""
+    conn = _connect()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM points_log WHERE discord_id = ? AND reason = ? LIMIT 1",
+            (discord_id, reason),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
+
+def ijtihad_award_once(discord_id: str, reason: str, points: int) -> int:
+    """Award `points` under a unique `reason`, at most once ever.
+
+    Returns the points actually awarded (0 if it was already paid, or if points
+    is non-positive). Achievements are permanent facts, so the dedup key is the
+    reason string itself -- the same pattern the streak bonus already uses
+    (tasks.py), which is what fixed the 7x200 double-award bug.
+
+    Because season effort is derived from points_log date windows, an award made
+    here automatically counts toward the current season with no extra plumbing.
+    """
+    if points <= 0:
+        return 0
+    if ijtihad_already_awarded(discord_id, reason):
+        return 0
+    add_points(discord_id, points, reason)
+    return points
 
 
 def sijil_record(discord_id: str) -> dict:
