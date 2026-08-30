@@ -155,3 +155,44 @@ def test_metrics_include_the_season_window():
     s = _season()
     m = database.ijtihad_metrics(TODAY)
     assert m["season"]["label"] == s["label"]
+
+
+# ============================================================
+#  The guard must be able to tell "nobody disengaged" from "I can see nothing"
+# ============================================================
+
+def test_veteran_threshold_is_tunable():
+    """Hardcoded at 60 days it reported ZERO veterans on a ~33-day-old community,
+    so the guard read 0.0% no matter what happened."""
+    assert database.get_ijtihad_config()["ijtihad_veteran_days"] == 30
+    database.set_ijtihad_config("ijtihad_veteran_days", 10)
+    assert database.get_ijtihad_config()["ijtihad_veteran_days"] == 10
+
+
+def test_guard_reports_when_it_cannot_see_anything():
+    """A guard that cannot fire is worse than no guard, because it looks like
+    reassurance. It must say so explicitly."""
+    _season()
+    _student("young", "Young", joined_days_ago=3)
+    m = database.ijtihad_metrics(TODAY)
+    assert m["veterans"] == 0
+    assert m["guard_meaningful"] is False
+
+
+def test_guard_becomes_meaningful_once_someone_is_old_enough():
+    _season()
+    _student("older", "Older", joined_days_ago=45)
+    m = database.ijtihad_metrics(TODAY)
+    assert m["veterans"] == 1
+    assert m["guard_meaningful"] is True
+
+
+def test_lowering_the_threshold_makes_the_guard_see_a_young_community():
+    _season()
+    _student("y1", "Y1", joined_days_ago=20)
+    assert database.ijtihad_metrics(TODAY)["guard_meaningful"] is False
+    database.set_ijtihad_config("ijtihad_veteran_days", 14)
+    m = database.ijtihad_metrics(TODAY)
+    assert m["veterans"] == 1
+    assert m["guard_meaningful"] is True
+    assert m["veteran_days"] == 14

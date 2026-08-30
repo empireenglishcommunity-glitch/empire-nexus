@@ -3866,6 +3866,13 @@ IJTIHAD_CONFIG_DEFAULTS = {
     # Phase 4 — Personal Daily Target + streak freezes.
     "ijtihad_target_default": 5,      # int: target for a student who never chose
     "ijtihad_freezes_per_season": 2,  # int: missed days that don't break a streak
+    # Who counts as a "veteran" for the guard metric. Tunable because it must
+    # track the community's actual age: hardcoded at 60 days it reported ZERO
+    # veterans on 2026-08-30 (the community was ~33 days old), so the one metric
+    # that is supposed to catch long-standing students disengaging read 0.0%
+    # regardless of what happened. A guard that cannot fire is worse than no
+    # guard, because it looks like reassurance.
+    "ijtihad_veteran_days": 30,
     # Phase 7 — the award table. Replaces POINTS_PER_TASK (15) and
     # POINTS_ALL_TASKS (100) when `ijtihad_award_table` is on. Lower per-task
     # values are deliberate: they make achievement payouts (150-500) dominant, so
@@ -4879,8 +4886,10 @@ def ijtihad_metrics(today: Optional[datetime.date] = None) -> dict:
     top_ids |= {str(r["discord_id"])
                 for r in ijtihad_most_improved_board(limit=3, today=today)}
 
-    # GUARD METRIC: veteran engagement must not drop. A veteran is anyone who
-    # joined more than 60 days ago.
+    # GUARD METRIC: veteran engagement must not drop. "Veteran" is tunable
+    # (ijtihad_veteran_days) because the threshold has to track how old the
+    # community actually is -- see the config note.
+    veteran_days = int(get_ijtihad_config()["ijtihad_veteran_days"])
     vet_ids, vet_active = [], 0
     for m in members:
         try:
@@ -4888,7 +4897,7 @@ def ijtihad_metrics(today: Optional[datetime.date] = None) -> dict:
                 (m.get("joined_at") or "").replace("Z", "")).date()
         except (ValueError, TypeError, AttributeError):
             continue
-        if (today - joined).days > 60:
+        if (today - joined).days > veteran_days:
             vet_ids.append(str(m["discord_id"]))
     for mid in vet_ids:
         cur = today - datetime.timedelta(days=6)
@@ -4910,10 +4919,14 @@ def ijtihad_metrics(today: Optional[datetime.date] = None) -> dict:
         "full_days_per_student_7d": round(full_days / total, 2),
         "active_rate_7d": round(active_7d / total * 100, 1),
         # Guard
+        "veteran_days": veteran_days,
         "veterans": len(vet_ids),
         "veterans_active_7d": vet_active,
         "veteran_active_rate_7d": (round(vet_active / len(vet_ids) * 100, 1)
                                    if vet_ids else 0.0),
+        # Explicit rather than inferred: a caller must be able to tell "no veteran
+        # has disengaged" apart from "this metric cannot see anything yet".
+        "guard_meaningful": bool(vet_ids),
     }
 
 
