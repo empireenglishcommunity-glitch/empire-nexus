@@ -34,6 +34,7 @@ repeatable action.
 
 See .kiro/specs/ijtihad-effort-economy/ design §2.4.
 """
+import datetime
 import logging
 
 from . import database
@@ -248,6 +249,27 @@ def award_streak_bonus(discord_id: str, cfg: dict = None) -> tuple:
             discord_id, consume_freezes=False)["streak"]
     except Exception:
         return 0, 0
+
+    # 🔴 CAP THE STREAK AT THE SEASON'S AGE.
+    #
+    # Found live on 2026-08-30, on day ONE of Season 1: a student with a 28-day
+    # full-day streak built BEFORE the season immediately collected the top
+    # 28-day bonus (600). The streak is computed over all history, so without
+    # this cap a long-standing student banks the maximum seasonal bonus on the
+    # season's first submission -- which is precisely the "reward tenure, not
+    # work" behaviour this entire rework exists to remove. The bug was in the
+    # one place best positioned to reintroduce it.
+    #
+    # Capping at days-elapsed means the bonus can only ever be earned by days
+    # actually worked INSIDE the season: on day 1 the effective streak is 1, so
+    # nothing is payable until the 7th day of a season at the earliest.
+    try:
+        start = datetime.date.fromisoformat(season["started_on"])
+        elapsed = (database._today_local() - start).days + 1
+        streak = min(streak, max(0, elapsed))
+    except (ValueError, TypeError, KeyError):
+        return 0, 0
+
     # Pay the highest threshold reached that has not been paid this season.
     for threshold in reversed(database.IJTIHAD_STREAK_THRESHOLDS):
         if streak < threshold:
