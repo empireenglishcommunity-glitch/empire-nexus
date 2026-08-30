@@ -317,3 +317,43 @@ ambiguity:
    trust in the numbers. `!top` will reply with a one-line explanation and show
    the season board, so nobody hits a dead command. `!sijil` covers the permanent
    record.
+
+### 11b. Season 1 launch decisions (delegated to agent, 2026-08-29)
+
+**Season 1 starts Saturday 2026-09-05** — the *next* Saturday, not the current one.
+
+Rejected starting immediately (2026-08-29, which the auto-anchor would pick) for a
+reason that matters more than tidiness: a competitive score that begins before the
+announcement means the first days are judged under rules nobody was told. That is
+precisely the kind of silent change that makes students distrust the numbers — the
+same reasoning behind keeping `!top` alive as a pointer instead of quietly
+redefining it. Starting next Saturday also lets **Sijil land first**, so veterans
+watch their record become permanent *before* they see anything reset.
+
+Set before enabling the flag:
+```
+ijtihad_season1_start = 2026-09-05
+```
+
+**Announcement copy.** Arabic (Egyptian) and English, with no Arabic line carrying
+two embedded LTR tokens (the Sahin bidi rule), and commands isolated on their own
+lines:
+
+> 🏛️ **حاجة جديدة في الإمبراطورية / Something new**
+>
+> سجلك بقى دائم. كل أسبوع أتقنته، كل امتياز، كل مستوى عديته — محفوظ للأبد.
+> Your record is now permanent — every week you mastered, every distinction,
+> every level you passed. Forever.
+>
+> `!sijil`
+>
+> واللي اتغيّر: الاجتهاد بقى بمواسم من ٤ أسابيع.
+> What changed: effort now runs in **4-week seasons**.
+>
+> يعني اللي بيشتغل بجد **دلوقتي** هو اللي يتقدّم — مهم مش إمتى انضممت.
+> So whoever works hardest **right now** leads — not whoever joined first.
+>
+> الموسم الأول يبدأ السبت. / **Season 1 starts Saturday.**
+
+The two ideas are deliberately in this order — *your history is safe* before
+*the race restarts* — because the reverse order reads as a threat.

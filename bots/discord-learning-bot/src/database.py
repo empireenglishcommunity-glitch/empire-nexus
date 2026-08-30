@@ -724,6 +724,43 @@ CREATE TABLE IF NOT EXISTS seasons (
     ends_on     TEXT NOT NULL,                  -- ISO date, inclusive
     UNIQUE(started_on)
 );
+
+-- Ijtihad Phase 4: Personal Daily Target. A student commits to 3, 5 or 7 tasks a
+-- day, and "did I do my work today?" is judged against THAT, not a fixed 7.
+--
+-- This is the busy-adult fix: someone who can genuinely only manage 3 gets full
+-- Full-Day status (streak + consistency) for 3/3, instead of being permanently
+-- 4 tasks short of a bar built for someone with more free time. Absolute volume
+-- still scales, so 7/7 continues to earn more points than 3/3 -- the target
+-- changes what counts as *complete*, never what counts as *more*.
+--
+-- One row per student per season: the target is changeable once a season, so real
+-- life is accommodated without the target becoming a dial to game mid-race.
+CREATE TABLE IF NOT EXISTS student_targets (
+    discord_id  TEXT NOT NULL,
+    season_id   INTEGER NOT NULL,
+    target      INTEGER NOT NULL,
+    set_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, season_id),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+
+-- Ijtihad Phase 4: streak freezes. A small, finite number of missed days per
+-- season that do not break a full-day streak.
+--
+-- Loss aversion is a powerful motivator, but an unforgiving streak converts one
+-- sick day into a quit -- and the students most likely to be hit are the adults
+-- with jobs and families, i.e. exactly the ones this rework is meant to keep.
+-- Freezes are recorded (not recomputed on the fly) so the same gap always
+-- resolves the same way no matter how often the streak is recalculated.
+CREATE TABLE IF NOT EXISTS streak_freezes (
+    discord_id  TEXT NOT NULL,
+    season_id   INTEGER NOT NULL,
+    used_on     TEXT NOT NULL,              -- the missed ISO date being bridged
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, used_on),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
 """
 
 
@@ -3799,7 +3836,14 @@ IJTIHAD_CONFIG_DEFAULTS = {
     "ijtihad_ip_distinction": 250,   # int: mastery at >=90% (replaces the above)
     "ijtihad_ip_monthly": 300,       # int: monthly review pass
     "ijtihad_ip_promotion": 500,     # int: level promotion (A1->A2, ...)
+    # Phase 4 — Personal Daily Target + streak freezes.
+    "ijtihad_target_default": 5,      # int: target for a student who never chose
+    "ijtihad_freezes_per_season": 2,  # int: missed days that don't break a streak
 }
+
+# The only targets a student may choose. Deliberately coarse: a free-text number
+# would invite optimising the denominator instead of doing the work.
+IJTIHAD_TARGET_CHOICES = (3, 5, 7)
 
 
 def get_ijtihad_config() -> dict:
@@ -4012,6 +4056,244 @@ def ijtihad_season_rank(discord_id: str, season: dict) -> int:
         return int(row["rank"] or 1)
     finally:
         conn.close()
+
+
+# ============================================================
+#  IJTIHAD PHASE 4 — PERSONAL DAILY TARGET + FULL-DAY STREAKS
+# ============================================================
+
+def ijtihad_get_target(discord_id: str, season: Optional[dict] = None) -> int:
+    """The student's committed daily target for a season (3, 5 or 7).
+
+    Falls back to the configured default when they have never chosen one, so
+    every student always has a target and no caller needs to handle None.
+    """
+    cfg = get_ijtihad_config()
+    default = int(cfg["ijtihad_target_default"])
+    season = season or ijtihad_current_season()
+    if not season:
+        return default
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT target FROM student_targets WHERE discord_id=? AND season_id=?",
+            (discord_id, season["id"]),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not row:
+        return default
+    try:
+        return int(row["target"])
+    except (TypeError, ValueError):
+        return default
+
+
+def ijtihad_target_is_set(discord_id: str, season: Optional[dict] = None) -> bool:
+    """True if the student explicitly chose a target this season (vs defaulting)."""
+    season = season or ijtihad_current_season()
+    if not season:
+        return False
+    conn = _connect()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM student_targets WHERE discord_id=? AND season_id=? LIMIT 1",
+            (discord_id, season["id"]),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
+
+def ijtihad_set_target(discord_id: str, target: int,
+                       season: Optional[dict] = None) -> tuple:
+    """Commit to a daily target. Returns (ok: bool, reason: str).
+
+    Changeable ONCE per season: real life changes, but the target must not become
+    a dial someone spins mid-race to make a bad week look complete. reason is a
+    machine-readable code ('ok' | 'bad_target' | 'no_season' | 'already_set') so
+    the caller owns the student-facing wording.
+    """
+    if int(target) not in IJTIHAD_TARGET_CHOICES:
+        return False, "bad_target"
+    season = season or ijtihad_current_season()
+    if not season:
+        return False, "no_season"
+    if ijtihad_target_is_set(discord_id, season):
+        return False, "already_set"
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT OR REPLACE INTO student_targets (discord_id, season_id, target) "
+            "VALUES (?,?,?)",
+            (discord_id, season["id"], int(target)),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return True, "ok"
+
+
+def ijtihad_tasks_on(discord_id: str, day: str) -> int:
+    """How many tasks the student completed on an ISO date."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT tasks_completed FROM streaks WHERE discord_id=? AND date=?",
+            (discord_id, day),
+        ).fetchone()
+        return int(row["tasks_completed"]) if row else 0
+    finally:
+        conn.close()
+
+
+def ijtihad_is_full_day(discord_id: str, day: str, target: Optional[int] = None) -> bool:
+    """Did the student meet THEIR target on this date?
+
+    This is the Phase 4 definition of "did the work". The legacy streak counted
+    any day with >= 1 task, so a single 30-second task looked identical to 7/7 --
+    which is how a streak leaderboard ended up measuring attendance instead of
+    effort.
+    """
+    if target is None:
+        target = ijtihad_get_target(discord_id, ijtihad_season_for_date(day))
+    return ijtihad_tasks_on(discord_id, day) >= int(target)
+
+
+def ijtihad_freezes_used(discord_id: str, season: dict) -> int:
+    if not season:
+        return 0
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT COUNT(*) AS n FROM streak_freezes WHERE discord_id=? AND season_id=?",
+            (discord_id, season["id"]),
+        ).fetchone()
+        return int(row["n"] or 0)
+    finally:
+        conn.close()
+
+
+def ijtihad_freezes_remaining(discord_id: str, season: Optional[dict] = None) -> int:
+    season = season or ijtihad_current_season()
+    if not season:
+        return 0
+    allowed = int(get_ijtihad_config()["ijtihad_freezes_per_season"])
+    return max(0, allowed - ijtihad_freezes_used(discord_id, season))
+
+
+def ijtihad_freeze_on(discord_id: str, day: str) -> bool:
+    """True if a freeze is already recorded for this exact date."""
+    conn = _connect()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM streak_freezes WHERE discord_id=? AND used_on=? LIMIT 1",
+            (discord_id, day),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
+
+def _ijtihad_record_freeze(discord_id: str, day: str, season_id: int) -> None:
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT OR IGNORE INTO streak_freezes (discord_id, season_id, used_on) "
+            "VALUES (?,?,?)",
+            (discord_id, season_id, day),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = None,
+                            consume_freezes: bool = True) -> dict:
+    """Consecutive Full Days ending today (or yesterday if today isn't done yet).
+
+    Returns {"streak": int, "freezes_used": int, "frozen_days": [iso, ...]}.
+
+    Deliberately additive: this does NOT touch members.current_streak or the
+    legacy `_recompute_streak`. The legacy "active day" streak keeps working
+    exactly as before (it is referenced by DMs, alerts, bonuses and the nightly
+    post), and this new value is what the reformed, effort-based surfaces use.
+    Two coexisting notions is a feature, not a fudge: a gentle "you showed up"
+    streak still has a place, it just must not be the thing we publicly rank.
+
+    Freezes: a missed day is bridged if a freeze is already recorded for it, or
+    if the student still has freezes left that season. Freezes are PERSISTED on
+    first use so recomputation is stable -- the same gap always resolves the same
+    way. Maintenance days bridge for free (never consuming a freeze), reusing the
+    existing maintenance_days setting.
+    """
+    today = today or _today_local()
+    try:
+        maintenance = set(json.loads(get_setting("maintenance_days", "[]")))
+    except Exception:
+        maintenance = set()
+
+    # Today is not over: if it isn't a Full Day yet, start from yesterday rather
+    # than declaring the streak broken at breakfast.
+    cursor = today
+    if not ijtihad_is_full_day(discord_id, cursor.isoformat()):
+        cursor = today - datetime.timedelta(days=1)
+
+    def _bridged_free(day: str) -> bool:
+        """Days that cost nothing to cross: our own maintenance, or a freeze the
+        student already spent on that date (so recomputation is stable)."""
+        return day in maintenance or ijtihad_freeze_on(discord_id, day)
+
+    streak = 0
+    frozen: list = []
+    for _ in range(800):
+        day = cursor.isoformat()
+        if _bridged_free(day):
+            if day not in maintenance:
+                frozen.append(day)
+            cursor -= datetime.timedelta(days=1)
+            continue
+        if ijtihad_is_full_day(discord_id, day):
+            streak += 1
+            cursor -= datetime.timedelta(days=1)
+            continue
+
+        # A missed day. A freeze may bridge it, but ONLY if this is a genuine gap
+        # BETWEEN two worked days -- never if it is simply the beginning of the
+        # student's history. Otherwise the walk would march back through
+        # prehistory burning freezes on days before they ever joined.
+        #
+        # A student's history can also predate Season 1, so the gap day may belong
+        # to no season. Freezes are a CURRENT allowance, so such a day is charged
+        # to the current season rather than bridged for free.
+        season = ijtihad_season_for_date(day) or ijtihad_current_season()
+        remaining = (ijtihad_freezes_remaining(discord_id, season)
+                     if (consume_freezes and season and streak > 0) else 0)
+        if remaining <= 0:
+            break
+
+        # Probe backwards over the run of consecutive missed days, up to what the
+        # budget allows, and only bridge if a Full Day sits on the far side.
+        run: list = []
+        probe = cursor
+        while len(run) < remaining:
+            pday = probe.isoformat()
+            if _bridged_free(pday):
+                probe -= datetime.timedelta(days=1)
+                continue
+            if ijtihad_is_full_day(discord_id, pday):
+                break
+            run.append(pday)
+            probe -= datetime.timedelta(days=1)
+
+        if run and ijtihad_is_full_day(discord_id, probe.isoformat()):
+            for gap_day in run:
+                gap_season = ijtihad_season_for_date(gap_day) or season
+                _ijtihad_record_freeze(discord_id, gap_day, gap_season["id"])
+                frozen.append(gap_day)
+            cursor = probe
+            continue
+        break
+
+    return {"streak": streak, "freezes_used": len(frozen), "frozen_days": frozen}
 
 
 def ijtihad_already_awarded(discord_id: str, reason: str) -> bool:

@@ -2636,6 +2636,69 @@ async def cmd_level(ctx):
     )
 
 
+@bot.command(name="target", aliases=["هدفي"])
+async def cmd_target(ctx, value: str = ""):
+    """Ijtihad Phase 4: view or set your Personal Daily Target (3, 5 or 7).
+
+    The point of this command: "did I do my work today?" is judged against YOUR
+    committed target, not a fixed 7. A student with a job and kids who genuinely
+    manages 3 a day gets full credit for 3/3, instead of being permanently four
+    tasks short of a bar built for someone with more free time.
+    """
+    if not database.is_feature_enabled("ijtihad_personal_target", str(ctx.author.id)):
+        return
+    did = str(ctx.author.id)
+    if not database.get_member(did):
+        await ctx.send("🔒 Register first with `!start`.\n🔒 اعمل `!start` الأول.")
+        return
+
+    season = database.ijtihad_current_season()
+    current = database.ijtihad_get_target(did, season)
+    choices = "/".join(str(c) for c in database.IJTIHAD_TARGET_CHOICES)
+
+    if not value:
+        chosen = database.ijtihad_target_is_set(did, season)
+        fd = database.ijtihad_full_day_streak(did)
+        left = database.ijtihad_freezes_remaining(did, season)
+        note = ("" if chosen else
+                f"\n_(default — pick your own with_ `!target {choices}`_)_")
+        await ctx.send(
+            f"🎯 **Your daily target: {current} tasks**{note}\n"
+            f"🎯 **هدفك اليومي: {current} مهام**\n\n"
+            f"🔥 Full-day streak: **{fd['streak']}**\n"
+            f"🧊 Streak freezes left this season: **{left}**\n\n"
+            f"A day counts as complete when you hit your own target.\n"
+            f"اليوم يتحسب كامل لما توصل هدفك إنت."
+        )
+        return
+
+    try:
+        wanted = int(value)
+    except ValueError:
+        await ctx.send(f"❌ Pick one of: {choices}\n❌ اختار واحد من: {choices}")
+        return
+
+    ok, reason = database.ijtihad_set_target(did, wanted, season)
+    if ok:
+        await ctx.send(
+            f"✅ Target set to **{wanted} tasks a day** for this season.\n"
+            f"✅ هدفك بقى **{wanted} مهام في اليوم** للموسم ده.\n\n"
+            f"Hit it and the day counts as complete — even on a busy day.\n"
+            f"لما توصله اليوم يتحسب كامل — حتى لو يوم مشغول."
+        )
+    elif reason == "bad_target":
+        await ctx.send(f"❌ Pick one of: {choices}\n❌ اختار واحد من: {choices}")
+    elif reason == "already_set":
+        await ctx.send(
+            f"🔒 You already set your target this season (**{current}**).\n"
+            f"🔒 إنت اخترت هدفك الموسم ده (**{current}**).\n\n"
+            f"You can change it next season.\n"
+            f"تقدر تغيّره الموسم الجاي."
+        )
+    else:
+        await ctx.send("⏳ Seasons haven't started yet.\n⏳ المواسم لسه مبدأتش.")
+
+
 @bot.command(name="sijil", aliases=["honour", "honor", "سجل"])
 async def cmd_sijil(ctx):
     """Ijtihad Phase 1: your permanent Record of Honour.
