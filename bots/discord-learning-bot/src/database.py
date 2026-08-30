@@ -3875,11 +3875,32 @@ IJTIHAD_TARGET_CHOICES = (3, 5, 7)
 
 def get_ijtihad_config() -> dict:
     """Ijtihad config with `settings` overrides over the defaults.
-    Never raises: blank/invalid values fall back to the default."""
+    Never raises: blank/invalid values fall back to the default.
+
+    Reads every key in ONE query rather than one connection per key. That matters
+    because this is called inside per-day loops (streak walks, board building):
+    the naive version cost 6 connections every time it was consulted, which was
+    the single biggest contributor to the consistency board taking 5.4s.
+    """
+    overrides = {}
+    try:
+        conn = _connect()
+        try:
+            marks = ",".join("?" for _ in IJTIHAD_CONFIG_DEFAULTS)
+            rows = conn.execute(
+                f"SELECT key, value FROM settings WHERE key IN ({marks})",
+                tuple(IJTIHAD_CONFIG_DEFAULTS.keys()),
+            ).fetchall()
+            overrides = {r["key"]: r["value"] for r in rows}
+        finally:
+            conn.close()
+    except Exception:
+        overrides = {}
+
     cfg = {}
     for key, default in IJTIHAD_CONFIG_DEFAULTS.items():
-        raw = get_setting(key, "")
-        if raw == "":
+        raw = overrides.get(key, "")
+        if raw == "" or raw is None:
             cfg[key] = default
             continue
         try:
@@ -4258,16 +4279,56 @@ def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = No
     except Exception:
         maintenance = set()
 
-    # Today is not over: if it isn't a Full Day yet, start from yesterday rather
-    # than declaring the streak broken at breakfast.
-    cursor = today
-    if not ijtihad_is_full_day(discord_id, cursor.isoformat()):
-        cursor = today - datetime.timedelta(days=1)
+    # PERFORMANCE: load this student's whole history ONCE and walk it in memory.
+    # The first version called ijtihad_is_full_day()/ijtihad_freeze_on() per day,
+    # and each of those re-read the config and opened its own connection -- ~600
+    # connections per student, which made the consistency board 5.4s for 17
+    # students. Same logic, ~4 queries instead.
+    cfg = get_ijtihad_config()
+    target = ijtihad_get_target(discord_id, ijtihad_current_season(today))
+    conn = _connect()
+    try:
+        tasks_by_day = {
+            r["date"]: int(r["tasks_completed"] or 0)
+            for r in conn.execute(
+                "SELECT date, tasks_completed FROM streaks WHERE discord_id = ?",
+                (discord_id,),
+            ).fetchall()
+        }
+        frozen_days = {
+            r["used_on"] for r in conn.execute(
+                "SELECT used_on FROM streak_freezes WHERE discord_id = ?",
+                (discord_id,),
+            ).fetchall()
+        }
+        freezes_allowed = int(cfg["ijtihad_freezes_per_season"])
+        used_by_season = {
+            r["season_id"]: int(r["n"]) for r in conn.execute(
+                "SELECT season_id, COUNT(*) AS n FROM streak_freezes "
+                "WHERE discord_id = ? GROUP BY season_id", (discord_id,),
+            ).fetchall()
+        }
+    finally:
+        conn.close()
+
+    def _full(day: str) -> bool:
+        return tasks_by_day.get(day, 0) >= target
 
     def _bridged_free(day: str) -> bool:
         """Days that cost nothing to cross: our own maintenance, or a freeze the
         student already spent on that date (so recomputation is stable)."""
-        return day in maintenance or ijtihad_freeze_on(discord_id, day)
+        return day in maintenance or day in frozen_days
+
+    def _remaining_for(season: dict) -> int:
+        if not season:
+            return 0
+        return max(0, freezes_allowed - used_by_season.get(season["id"], 0))
+
+    # Today is not over: if it isn't a Full Day yet, start from yesterday rather
+    # than declaring the streak broken at breakfast.
+    cursor = today
+    if not _full(cursor.isoformat()):
+        cursor = today - datetime.timedelta(days=1)
 
     streak = 0
     frozen: list = []
@@ -4278,7 +4339,7 @@ def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = No
                 frozen.append(day)
             cursor -= datetime.timedelta(days=1)
             continue
-        if ijtihad_is_full_day(discord_id, day):
+        if _full(day):
             streak += 1
             cursor -= datetime.timedelta(days=1)
             continue
@@ -4291,8 +4352,8 @@ def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = No
         # A student's history can also predate Season 1, so the gap day may belong
         # to no season. Freezes are a CURRENT allowance, so such a day is charged
         # to the current season rather than bridged for free.
-        season = ijtihad_season_for_date(day) or ijtihad_current_season()
-        remaining = (ijtihad_freezes_remaining(discord_id, season)
+        season = ijtihad_season_for_date(day) or ijtihad_current_season(today)
+        remaining = (_remaining_for(season)
                      if (consume_freezes and season and streak > 0) else 0)
         if remaining <= 0:
             break
@@ -4306,15 +4367,18 @@ def ijtihad_full_day_streak(discord_id: str, today: Optional[datetime.date] = No
             if _bridged_free(pday):
                 probe -= datetime.timedelta(days=1)
                 continue
-            if ijtihad_is_full_day(discord_id, pday):
+            if _full(pday):
                 break
             run.append(pday)
             probe -= datetime.timedelta(days=1)
 
-        if run and ijtihad_is_full_day(discord_id, probe.isoformat()):
+        if run and _full(probe.isoformat()):
             for gap_day in run:
                 gap_season = ijtihad_season_for_date(gap_day) or season
                 _ijtihad_record_freeze(discord_id, gap_day, gap_season["id"])
+                used_by_season[gap_season["id"]] = \
+                    used_by_season.get(gap_season["id"], 0) + 1
+                frozen_days.add(gap_day)
                 frozen.append(gap_day)
             cursor = probe
             continue
@@ -4440,20 +4504,45 @@ def ijtihad_full_days_on(day: str, limit: int = 50) -> list:
     Powers the reformed nightly post: a ROLL of who did their work, not a
     ranking. Nobody appears in a losing position, because there are no positions.
     """
+    # PERFORMANCE: one query for the day's task counts and one for the targets,
+    # rather than three per member. This runs in the nightly post, so it should
+    # not scale with members x queries.
+    season = ijtihad_season_for_date(day) or ijtihad_current_season()
+    default_target = int(get_ijtihad_config()["ijtihad_target_default"])
+    conn = _connect()
+    try:
+        tasks_by_member = {
+            str(r["discord_id"]): int(r["tasks_completed"] or 0)
+            for r in conn.execute(
+                "SELECT discord_id, tasks_completed FROM streaks WHERE date = ?",
+                (day,),
+            ).fetchall()
+        }
+        targets = {}
+        if season:
+            targets = {
+                str(r["discord_id"]): int(r["target"])
+                for r in conn.execute(
+                    "SELECT discord_id, target FROM student_targets WHERE season_id = ?",
+                    (season["id"],),
+                ).fetchall()
+            }
+    finally:
+        conn.close()
+
     out = []
     for m in all_active_members():
         mid = str(m["discord_id"])
-        try:
-            if ijtihad_is_full_day(mid, day):
-                out.append({
-                    "discord_id": mid,
-                    "discord_name": m.get("discord_name") or "Student",
-                    "level": m.get("level", "A1"),
-                    "tasks": ijtihad_tasks_on(mid, day),
-                    "target": ijtihad_get_target(mid),
-                })
-        except Exception:
-            continue
+        tasks = tasks_by_member.get(mid, 0)
+        target = targets.get(mid, default_target)
+        if tasks >= target:
+            out.append({
+                "discord_id": mid,
+                "discord_name": m.get("discord_name") or "Student",
+                "level": m.get("level", "A1"),
+                "tasks": tasks,
+                "target": target,
+            })
     out.sort(key=lambda r: (-r["tasks"], r["discord_name"]))
     return out[:limit]
 
