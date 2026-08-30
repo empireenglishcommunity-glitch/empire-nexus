@@ -98,6 +98,9 @@ REGISTRY = [
     ("assessment_monthly_review", "Taqdeem: Monthly Progress Review — retention-focused assessment after every 4 weekly passes (diagnostic + prerequisite for advancement)", "taqdeem", False),
     ("assessment_advancement_exam", "Taqdeem: Level Advancement Exam — two-part gate (structured skills + integrated production task) for level promotion", "taqdeem", True),
 
+    # ── ASSESSMENT WATCHDOG (find breakage before a student does) ──
+    ("assessment_watchdog", "Every 3h, probe the assessment endpoints and look for stranded attempts, finished monthly reviews with no recorded result, and orphan item rows — alerting Empire Ops on a change of state. Added after three assessment defects in a row were found from student complaints rather than monitoring, including /api/assessment/item answering HTTP 500 to every request for ~24h. Read-only: it reports, never repairs. Also exposes !assessment-health", "assessment", False),
+
     # ── SUSPENSION (membership lifecycle) ──
     ("suspension_lifecycle", "Monthly membership lifecycle: !announce-renewal (notice to students), !suspend (withdraw access — clock + status + Darb sessions + link tokens + the Student gateway role, which is what hides the channels), !restore (give it back and bridge the no-access days so a 40-day streak survives), and the 60-day retention cycle (owner warned at day 53, then JSON archive → permanent purge → VACUUM). Suspension deletes NOTHING; only the purge deletes, and it refuses to run if the archive cannot be written", "suspension", False),
 

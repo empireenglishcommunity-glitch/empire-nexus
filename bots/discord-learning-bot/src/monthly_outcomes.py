@@ -87,7 +87,12 @@ async def _send_pass_dm(discord_id: str, level: str, review_number: int,
         f"🌟 **مراجعتك الشهرية #{review_number} — ممتاز!**\n"
         f"Retention Score: **{retention}%** ✅\n\n"
         f"📊 **مهاراتك / Your skills:**\n{radar}\n\n"
-        f"أنت ماشي صح — الاحتفاظ بالمعلومات ممتاز. كمّل كده! 🚀\n"
+        # Gender-neutral on purpose. Egyptian Arabic inflects the second person,
+        # `members.gender` is '' for every student, and 13 of 16 students are
+        # women -- so the old masculine "أنت ماشي صح" addressed most of the
+        # community incorrectly. Phrasing it about the WORK ("شغلك ماشي صح")
+        # carries the same warmth and is correct for everyone, with no guess.
+        f"شغلك ماشي صح — الاحتفاظ بالمعلومات ممتاز. كمّل كده! 🚀\n"
         f"━━━━━━━━━━\n"
         f"🌟 **Monthly Review #{review_number} — passed!**\n"
         f"Your retention across the last 4 weeks is solid. Keep it up!"
@@ -145,7 +150,10 @@ async def _send_not_pass_dm(discord_id: str, level: str, review_number: int,
         f"Retention Score: **{retention}%** (المطلوب 65%)\n\n"
         f"📊 **مهاراتك:**\n{radar}\n\n"
         f"📝 **راجع دول:**\n{review_text}\n\n"
-        f"⏳ تقدر تعيد المراجعة بعد {cooldown_h} ساعة. "
+        # Neutral phrasing: "تقدر" inflects to "تقدري" for a woman, and gender
+        # is unknown for every student. Stating that the retake is AVAILABLE
+        # avoids addressing the student's gender at all. See _send_pass_dm.
+        f"⏳ الإعادة متاحة بعد {cooldown_h} ساعة. "
         f"تقدّمك اليومي في أمان — مفيش حاجة اتقفلت. 🌱\n"
         f"━━━━━━━━━━\n"
         f"📊 **Monthly Review #{review_number}**\n"

@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth, suspension
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth, suspension, assessment_watchdog
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -450,6 +450,8 @@ async def on_ready():
         missed_day_report.start()
     if not retention_cycle.is_running():
         retention_cycle.start()
+    if not assessment_watchdog_loop.is_running():
+        assessment_watchdog_loop.start()
     if not midnight_voice_reset.is_running():
         midnight_voice_reset.start()
     if not beacon_cleanup_loop.is_running():
@@ -5944,6 +5946,40 @@ async def cmd_suspended(ctx):
                      f"purge in **{m['days_until_purge']}d**{warn}")
     lines.append("\n`!restore @student go` to bring someone back.")
     await ctx.send("\n".join(lines))
+
+
+@tasks.loop(hours=3)
+async def assessment_watchdog_loop():
+    """Watch the assessment surface and alert Empire Ops before a student has to.
+
+    Every 3 hours rather than daily: the dead `/api/assessment/item` endpoint
+    blocked every weekly submission for roughly a day before a student mentioned
+    it, and a day is far too long to be silently broken. Read-only by design —
+    it reports, it never repairs.
+    """
+    if config.IS_GHOST_INSTANCE:
+        return
+    if not database.is_feature_enabled(assessment_watchdog.FLAG):
+        return
+    try:
+        report = await assessment_watchdog.run_and_alert(bot)
+        if report["findings"]:
+            logger.warning("assessment_watchdog: %d finding(s): %s",
+                           len(report["findings"]), report["findings"][:3])
+    except Exception as e:
+        logger.error(f"assessment_watchdog_loop failed: {e}")
+
+
+@bot.command(name="assessment-health")
+@commands.has_permissions(manage_guild=True)
+async def cmd_assessment_health(ctx):
+    """Run the assessment watchdog checks now and show the result."""
+    await ctx.send("🔍 Checking the assessment surface…")
+    try:
+        report = await assessment_watchdog.run_checks()
+        await ctx.send(assessment_watchdog.format_report(report))
+    except Exception as e:
+        await ctx.send(f"❌ The health check itself failed: `{e}`")
 
 
 @tasks.loop(time=datetime.time(hour=4, minute=30, tzinfo=_zone()))
