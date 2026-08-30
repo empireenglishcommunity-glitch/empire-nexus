@@ -123,25 +123,86 @@ owner's complaint, fixed, as an executable assertion.
 **Owner decisions needed BEFORE enabling** (this is the first phase that changes
 what a number *means*): the Season 1 start date, and the announcement wording.
 
-## Phase 3 — Achievement payouts (the key inversion)
+## Phase 3 — Achievement payouts (the key inversion) ✅ DONE
 
-- [ ] **3.1** Award IP + Sijil entry on weekly mastery pass / distinction.
-- [ ] **3.2** Award IP + Sijil entry on monthly review pass.
-- [ ] **3.3** Award IP + permanent Sijil entry on level promotion.
-- [ ] **3.4** Dedup guarantees (an achievement pays once, ever) with tests —
-      mirroring the existing streak-bonus dedup pattern.
+- [x] **3.1** `ijtihad.award_week_mastery()` — 150 for a mastery pass, 250 for a
+      distinction. Wired into `itqan_outcomes.deliver_outcome`, computed *before*
+      the celebration so the Week Champions post can show it.
+- [x] **3.2** `ijtihad.award_monthly_review()` — 300, wired into
+      `monthly_outcomes.deliver_monthly_outcome` on a pass.
+- [x] **3.3** `ijtihad.award_promotion()` — 500, wired into
+      `advancement_outcomes._promote_and_celebrate`. The single biggest milestone
+      in the programme previously awarded nothing.
+- [x] **3.4** Dedup via `database.ijtihad_award_once()` + `ijtihad_already_awarded()`,
+      using the same points_log reason-dedup pattern that fixed the 7×200
+      streak-bonus double-award. Keys include the level (week 1 of A2 ≠ week 1 of
+      A1); promotion is keyed on the level *left behind*. The mastery→distinction
+      order is handled precisely: mastering (150) then later re-passing with
+      distinction pays only the **100 difference**, so the week converges on 250
+      and can never pay 400 — and distinction-first cannot then also collect the
+      base. Both directions tested.
 
-## Phase 4 — Personal Daily Target + streak reform
+*Sijil entries need no separate write: Sijil is a read-model over `week_mastery`,
+`advancement_exams` and `monthly_reviews`, so an achievement appears there the
+moment the underlying feature records it (Phase 1 design).*
 
-- [ ] **4.1** `student_targets` (3/5/7, default 5, one change per season).
-- [ ] **4.2** Full Day = `tasks_today >= target`; `FULL_DAY_IP` on Full Days.
-- [ ] **4.3** Full-day streak computation replacing the ≥1-task rule, with the
-      seasonal bonus table.
-- [ ] **4.4** `streak_freezes` (2/season), consumed automatically and **announced**
-      to the student, never silently.
-- [ ] **4.5** Flag `ijtihad_personal_target` + `ijtihad_streak_reform`. Tests:
-      target 3 met = Full Day; 3 of target 7 = not; freeze consumption; existing
-      maintenance-day bridging still honoured.
+*Phase 3 result: 21 tests, full suite 2,204 passed / 2 skipped, ledger 9866/9866/0.*
+
+**Award amounts are owner-tunable** (`ijtihad_ip_mastery` / `_distinction` /
+`_monthly` / `_promotion` via `get_ijtihad_config()`), never hardcoded.
+
+**Note on what is live:** two of the three triggers are dormant until their own
+features are enabled (`itqan_weekly_assessment` and `assessment_monthly_review`
+are both OFF). **Promotion is live today**, so enabling
+`ijtihad_achievement_awards` makes the next real promotion pay 500.
+
+## Phase 4 — Personal Daily Target + streak reform ✅ DONE (points deferred)
+
+- [x] **4.1** `student_targets` (3/5/7, default 5, **one change per season**) +
+      `ijtihad_get_target()` / `ijtihad_set_target()` / `ijtihad_target_is_set()`.
+      Choices are deliberately coarse rather than free text: an arbitrary number
+      invites optimising the denominator instead of doing the work.
+      `!target` (alias `!هدفي`) views or sets it.
+- [x] **4.2** Full Day = `tasks_today >= target` (`ijtihad_is_full_day`), judged
+      against the target in force **that day**, so raising your target later
+      cannot retroactively delete past Full Days.
+      🔸 **`FULL_DAY_IP` deliberately NOT implemented here.** Adding a new
+      "you finished your day" award alongside the existing `POINTS_ALL_TASKS`
+      (100 at 7/7) would create two overlapping bonuses for the same idea —
+      exactly the double-award inconsistency Phase 0.2 just removed. Full Day
+      grants **status** (streak, consistency, eligibility) in this phase; the
+      award-table restructure (BASE_IP/FULL_DAY_IP replacing 15/100) belongs in
+      one coherent change, together with Phase 7's multipliers.
+- [x] **4.3** `ijtihad_full_day_streak()` — consecutive Full Days.
+      **Additive, not a rewrite:** `members.current_streak` and the legacy
+      `_recompute_streak` are untouched, because DMs, alerts, bonuses and the
+      nightly post all still read them. Two coexisting notions is deliberate — a
+      gentle "you showed up" streak may exist, it just must not be what we
+      publicly rank. Pinned by a test: 1 task keeps the legacy streak alive and
+      leaves the full-day streak at 0.
+      🔸 The **seasonal streak-bonus table** is deferred with `FULL_DAY_IP` for
+      the same reason (it would overlap the live `STREAK_BONUS_POINTS` ladder).
+- [x] **4.4** `streak_freezes` — 2/season, **persisted on first use** so
+      recomputation is stable and a streak never flickers. Maintenance days
+      bridge for free (server downtime is our fault, not the student's). Never
+      spent before a streak exists. `!target` surfaces how many remain.
+- [x] **4.5** Flag `ijtihad_personal_target` default **OFF**. 34 tests.
+
+*Phase 4 result: full suite 2,238 passed / 2 skipped (+34), ledger 9866/9866/0.*
+
+**Two real bugs the tests caught** (both genuine design gaps, not test mistakes):
+1. *Streak history predates Season 1*, so a bridged day can belong to **no**
+   season. The first implementation required the gap day to have a season and so
+   silently ended every streak at the season boundary. Freezes are a **current**
+   allowance, so such a day is now charged to the current season — otherwise
+   pre-season gaps would bridge for free, without limit.
+2. *Freezes were burned on prehistory* — after fixing (1) the walk marched back
+   through empty days from before the student joined. A freeze now only bridges a
+   **genuine gap between two worked days**: the algorithm probes the run of missed
+   days and bridges only if a Full Day sits on the far side, within budget.
+
+The freeze tests were also made date-independent; they had been implicitly
+depending on which weekday the suite ran on, which is how bug (1) stayed hidden.
 
 ## Phase 5 — Boards
 
