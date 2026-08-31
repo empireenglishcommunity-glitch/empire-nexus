@@ -5424,6 +5424,44 @@ async def cmd_announce(ctx, *, message: str = ""):
         await ctx.send("❌ #announcements channel not found.")
 
 
+@bot.command(name="dm")
+@commands.has_permissions(administrator=True)
+async def cmd_dm(ctx, member: discord.Member = None, *, message: str = ""):
+    """DM one student directly.
+
+    !dm @student <message>
+
+    Added because there was no way to say anything to ONE student. Everything
+    was either a channel announcement (!announce) or a DM to the whole roster
+    (!announce-renewal), so when the bot got something wrong and owed a single
+    person a correction, the only options were to message all 16 or to open
+    Discord and type it by hand.
+
+    Deliberately plain text with no header: an apology or a personal note
+    should not arrive wearing a "📢 Announcement" banner.
+    """
+    if member is None or not message.strip():
+        await ctx.send("Usage: `!dm @student <message>`")
+        return
+    # A real Discord message caps at 2000 characters. Refuse rather than
+    # truncate — the tail of a personal message is exactly the part that
+    # carries the point, same reasoning as !announce.
+    if len(message) > 1950:
+        await ctx.send(f"❌ Too long ({len(message)} chars). Keep it under 1950.")
+        return
+    try:
+        await member.send(message)
+    except discord.Forbidden:
+        await ctx.send(f"❌ {member.display_name} has DMs closed — not sent.")
+        return
+    except discord.HTTPException as exc:
+        await ctx.send(f"❌ Discord refused it: {exc}")
+        return
+    logger.info(f"!dm by {ctx.author} -> {member} ({member.id}): "
+                f"{len(message)} chars")
+    await ctx.send(f"✅ Sent to {member.display_name}.")
+
+
 @bot.command(name="attention")
 @commands.has_permissions(manage_guild=True)
 async def cmd_attention(ctx):
