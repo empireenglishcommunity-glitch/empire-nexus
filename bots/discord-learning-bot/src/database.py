@@ -2062,9 +2062,33 @@ def get_recent_conversation(discord_id: str, limit: int = 5) -> list[dict]:
 def days_since_active(member: dict) -> int:
     """Whole days since a member's last_active_at, from a member dict
     already fetched (e.g. via all_active_members()) — avoids a second
-    query per member when scanning the whole roster."""
-    last = datetime.datetime.fromisoformat(member["last_active_at"])
-    return (datetime.datetime.now() - last).days
+    query per member when scanning the whole roster.
+
+    last_active_at is stored in UTC (SQL datetime('now')), so it must be
+    compared against UTC. This used datetime.datetime.now(), which is naive
+    LOCAL time, so every result was off by the host's UTC offset — 3-4 hours
+    for this deployment. Because .days truncates, that offset silently became
+    a WHOLE EXTRA DAY for anyone whose last activity fell inside it, which is
+    how "1 day inactive" appeared for students who had worked that evening.
+
+    Returns 0 rather than raising when the column is NULL or unparseable: a
+    member who has never been active is not "infinitely inactive", and this is
+    called while rendering owner-facing reports where an exception would take
+    the whole report down.
+    """
+    raw = (member or {}).get("last_active_at")
+    if not raw:
+        return 0
+    try:
+        last = datetime.datetime.fromisoformat(str(raw).replace("Z", "").strip())
+    except (TypeError, ValueError):
+        return 0
+    # Stored values are UTC but written without an offset, so attach one
+    # instead of comparing a naive UTC stamp to local time.
+    if last.tzinfo is None:
+        last = last.replace(tzinfo=datetime.timezone.utc)
+    delta = datetime.datetime.now(datetime.timezone.utc) - last
+    return max(0, delta.days)
 
 
 def declining_assessment_members() -> list[dict]:
@@ -2107,13 +2131,50 @@ def declining_assessment_members() -> list[dict]:
     return result
 
 
+def utc_now_str() -> str:
+    """UTC timestamp in the SAME format SQLite's datetime('now') produces.
+
+    Every writer of a timestamp column must use this (or SQL datetime('now')),
+    never datetime.datetime.now().isoformat(). See inactive_members() for what
+    mixing them cost.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+
+
 def inactive_members(days: int = 3) -> list[dict]:
-    """Get members who haven't been active for N+ days."""
-    cutoff = (datetime.datetime.now() - datetime.timedelta(days=days)).isoformat()
+    """Members with no recorded activity for N+ days.
+
+    THIS COMPARISON WAS WRONG AND DMed ACTIVE STUDENTS (fixed 2026-08-31).
+    A student with 100% weekly completion and a 43-day live streak received
+    "We noticed you haven't been active" — because two things were mixed:
+
+      * `last_active_at` is written in TWO formats. add_submission() and
+        update_member() use SQL datetime('now') -> "2026-08-30 23:59:00":
+        UTC, SPACE separator. api_server used .isoformat() ->
+        "2026-08-30T23:59:00.123": LOCAL, "T" separator.
+      * the cutoff was Python .isoformat(), so "T", and LOCAL.
+
+    The comparison was a plain STRING compare, and at index 10 " " (32) sorts
+    before "T" (84). So for any student whose last activity fell on the
+    cutoff's own calendar date, "2026-08-30 23:59:00" < "2026-08-30T16:00:00"
+    was TRUE — active 17 hours ago, reported as inactive for a day. The net
+    effect was that anyone who had not submitted yet TODAY looked inactive, so
+    students who study in the evening were nudged every single day, forever,
+    no matter how perfect their record.
+
+    Now compared as real instants with julianday(), which parses both the
+    space and "T" forms, against a cutoff computed by SQLite itself so both
+    sides are unambiguously UTC. Suspended members are excluded — they are
+    meant to be inactive and must not be nudged about it.
+    """
     conn = _connect()
     rows = conn.execute(
-        "SELECT * FROM members WHERE status='active' AND last_active_at < ?",
-        (cutoff,),
+        """SELECT * FROM members
+             WHERE status='active'
+               AND suspended_at IS NULL
+               AND (last_active_at IS NULL
+                    OR julianday(last_active_at) < julianday('now', ?))""",
+        (f"-{int(days)} days",),
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]

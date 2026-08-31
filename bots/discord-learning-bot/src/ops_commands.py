@@ -723,13 +723,12 @@ async def handle_check(args: str, bot) -> str:
     tasks_today = len(database.tasks_completed_today(discord_id))
     safe_name = ops_hub.escape_markdown((member.get("discord_name", "?").split("#")[0]))
 
-    # Days since active
-    last_active = member.get("last_active_at", "")
-    try:
-        last_dt = datetime.datetime.fromisoformat(last_active)
-        days_inactive = (datetime.datetime.now() - last_dt).days
-    except (ValueError, TypeError):
-        days_inactive = 0
+    # Days since active — via the shared helper, which compares in UTC. Doing
+    # it here against a naive datetime.now() was off by the host's UTC offset,
+    # and .days truncation turned that into a whole extra day, so this owner
+    # report could show "1d inactive" for a student who worked last evening.
+    days_inactive = database.days_since_active(
+        {"last_active_at": member.get("last_active_at", "")})
 
     # Journey status
     from . import nour_journey

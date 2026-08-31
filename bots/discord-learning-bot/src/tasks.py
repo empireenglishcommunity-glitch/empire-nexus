@@ -750,13 +750,26 @@ def check_inactive_members() -> dict[str, list[dict]]:
 
     Returns dict keyed by intervention type with member lists.
     """
-    results = {}
-    for days, action in config.INTERVENTION_THRESHOLDS.items():
-        members = database.inactive_members(days)
-        # Filter to only those who are exactly at this threshold
-        # (not already triggered for a higher threshold)
-        if members:
-            results[action] = members
+    # ONE intervention per member: the most serious one they qualify for.
+    #
+    # The old code said it filtered "to only those who are exactly at this
+    # threshold" in a comment and then did not do it — every bucket got every
+    # member at or past its own threshold. So a student inactive for 7 days was
+    # simultaneously queued for dm_reminder AND buddy_outreach AND
+    # moderator_checkin AND reengagement_conversation AND membership_pause: five
+    # interventions for one person, the mildest of them wrong by then.
+    #
+    # Walking thresholds from the largest gap down and claiming each member once
+    # gives the documented behaviour.
+    results: dict[str, list[dict]] = {}
+    claimed: set[str] = set()
+    for days in sorted(config.INTERVENTION_THRESHOLDS, reverse=True):
+        action = config.INTERVENTION_THRESHOLDS[days]
+        bucket = [m for m in database.inactive_members(days)
+                  if str(m["discord_id"]) not in claimed]
+        if bucket:
+            results[action] = bucket
+            claimed.update(str(m["discord_id"]) for m in bucket)
     return results
 
 

@@ -1224,7 +1224,8 @@ async def streak_update():
     if not guild:
         return
 
-    today = _now().date().isoformat()
+    today = task_engine.today_str()
+    yesterday = (_now().date() - datetime.timedelta(days=1)).isoformat()
     for action, members in inactive.items():
         if action != "dm_reminder":
             continue
@@ -1233,13 +1234,44 @@ async def streak_update():
             key = f"streak_nudged_{did}"
             if database.get_setting(key, "") == today:
                 continue  # already nudged today — never double-send
+
+            # NEVER tell a student who is working that she is not working.
+            # A student with a 43-day streak and 100% weekly completion was
+            # sent "we noticed you haven't been active" at 4 PM, nine hours
+            # after the bot had congratulated her by name for a perfect week.
+            # last_active_at alone is not enough to make that claim, so check
+            # the submissions themselves: if she has handed in work today or
+            # yesterday she is active, whatever the members row says.
+            if (database.count_submissions_for_date(did, today) > 0
+                    or database.count_submissions_for_date(did, yesterday) > 0):
+                continue
+
+            # A live streak means the same thing, from the other direction:
+            # the message offers to keep a streak alive, so it makes no sense
+            # to anyone whose streak is already alive. streak_at_risk() at
+            # 21:00 is the task that legitimately says "do one task today",
+            # and it checks properly.
+            if (m.get("current_streak") or 0) > 0:
+                continue
+
+            # Parity with streak_at_risk(): this nudge used to ignore both of
+            # these, so a student who had switched reminders off, or was
+            # asleep, got it anyway.
+            prefs = database.get_notification_prefs(did)
+            if not prefs.get("streak_alert", 1):
+                continue
+            if database.is_quiet_hours(did):
+                continue
+
             discord_member = guild.get_member(int(did))
             if not discord_member:
                 continue
             try:
                 await discord_member.send(
-                    f"👋 Hey {m['discord_name']}! We noticed you haven't been active. "
-                    f"Even one task today keeps your streak alive. You got this! 🏛️"
+                    f"👋 Hey {m['discord_name']}! We haven't seen any tasks from "
+                    f"you for a couple of days. Whenever you're ready, one task "
+                    f"is enough to get going again — and if something is in the "
+                    f"way, just reply here. 🏛️"
                 )
                 database.set_setting(key, today)
             except (discord.Forbidden, discord.HTTPException):
