@@ -278,12 +278,35 @@ def test_check_inactive_members_empty_when_all_active():
 
 
 def test_check_inactive_members_flags_by_threshold():
+    """A member gets the ONE intervention matching their gap.
+
+    This used to say "5 days inactive should trigger every threshold <= 5",
+    which described a bug rather than a requirement: the same student was
+    simultaneously queued for a DM, a buddy call, a moderator check-in, a
+    re-engagement conversation and a membership pause.
+
+    The gap is deliberately 5 days AND 6 hours. At exactly 5 days this sits on
+    the threshold itself, and since the comparison is now made on real instants
+    rather than on strings, whether "5 days ago" is strictly less than "5 days
+    ago" comes down to milliseconds — which made this test fail about one run
+    in ten.
+    """
     database.register_member("u1", "Alice")
-    old_time = (datetime.datetime.now() - datetime.timedelta(days=5)).isoformat()
-    database.update_member("u1", last_active_at=old_time)
+    old_time = (datetime.datetime.now(datetime.timezone.utc)
+                - datetime.timedelta(days=5, hours=6))
+    database.update_member("u1",
+                           last_active_at=old_time.strftime("%Y-%m-%d %H:%M:%S"))
     result = tasks.check_inactive_members()
-    # 5 days inactive should trigger every threshold <= 5 (1, 2, 3, 5)
+
+    # 5d6h clears the 5-day threshold but not the 7-day one.
     assert "reengagement_conversation" in result
+    assert [m["discord_id"] for m in result["reengagement_conversation"]] == ["u1"]
+
+    # And appears nowhere else.
+    elsewhere = [action for action, members in result.items()
+                 if action != "reengagement_conversation"
+                 and any(m["discord_id"] == "u1" for m in members)]
+    assert elsewhere == [], f"u1 also queued for: {elsewhere}"
 
 
 # ============================================================
