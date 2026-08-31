@@ -1077,12 +1077,21 @@ async def evening_reminder():
         logger.info(f"Nabd evening reminder: sent to {sent} member(s)")
 
 
-@tasks.loop(time=datetime.time(hour=21, minute=0, tzinfo=_zone()))
+@tasks.loop(hours=1)
 async def streak_at_risk():
-    """Nabd N2: Streak-at-risk alert (9 PM).
+    """Nabd N2: warn a student whose streak really is about to break.
 
-    Urgent DM to students with streak >= 3 who completed ZERO tasks today.
-    Their streak will break at midnight if they don't do at least one task.
+    Hourly evaluation, not an hourly message: tasks.streak_alert_decision()
+    decides per student, and log_notification() allows one per day.
+
+    This used to fire at 21:00 for the whole roster and DM anyone with zero
+    submissions "for today", where today meant the Asia/Dubai date. A student
+    who habitually studies later than 21:00 Dubai was therefore told her 43-day
+    streak "will break tonight" EVERY NIGHT, and made it every time — more
+    alarming than the inactivity nudge that prompted this work, and the same
+    mistake of judging everyone by one clock. The alert now goes only to a
+    student who has deviated from her OWN pattern with the day genuinely
+    running out.
     """
     if not database.is_feature_enabled("nabd_streak_alert"):
         return
@@ -1113,15 +1122,31 @@ async def streak_at_risk():
         if completed > 0:
             continue  # streak is safe
 
+        hours_left = task_engine.hours_to_streak_boundary()
+        at_risk, why = task_engine.streak_alert_decision(
+            discord_id, hours_left=hours_left)
+        if not at_risk:
+            logger.debug(f"streak alert skipped for {discord_id}: {why}")
+            continue
+
         discord_member = guild.get_member(int(discord_id))
         if not discord_member:
             continue
+        logger.info(f"streak alert -> {discord_id}: {why}")
+        # Stated as a REMAINING DURATION, which is true wherever the student is.
+        # "before midnight" was only true in Dubai — 23:00 in Cairo, and further
+        # out elsewhere — so the old wording gave every student a wrong deadline.
+        left_en = ("less than an hour" if hours_left < 1
+                   else f"about {int(round(hours_left))} hour"
+                        f"{'s' if int(round(hours_left)) != 1 else ''}")
+        left_ar = ("أقل من ساعة" if hours_left < 1
+                   else f"حوالي {int(round(hours_left))} ساعة")
 
         phase = features.response_language(discord_id)
         if phase == "arabic":
             msg = (
                 f"\u26a0\ufe0f **\u0633\u0644\u0633\u0644\u062a\u0643 ({streak} \u064a\u0648\u0645) \u0647\u062a\u0646\u0643\u0633\u0631 \u0627\u0644\u0644\u064a\u0644\u0629!**\n\n"
-                f"\u0644\u0648 \u0639\u0645\u0644\u062a \u0645\u0647\u0645\u0629 \u0648\u0627\u062d\u062f\u0629 \u0628\u0633 \u0642\u0628\u0644 12 \u0627\u0644\u0644\u064a\u0644\u060c \u0647\u062a\u062d\u0627\u0641\u0638 \u0639\u0644\u064a\u0647\u0627.\n\n"
+                f"\u0644\u0648 \u0639\u0645\u0644\u062a \u0645\u0647\u0645\u0629 \u0648\u0627\u062d\u062f\u0629 \u0628\u0633 \u062e\u0644\u0627\u0644 {left_ar}\u060c \u0647\u062a\u062d\u0627\u0641\u0638 \u0639\u0644\u064a\u0647\u0627.\n\n"
                 f"\U0001f4a1 \u0623\u0633\u0647\u0644 \u062d\u0627\u062c\u0629 \u062a\u0639\u0645\u0644\u0647\u0627 \u062f\u0644\u0648\u0642\u062a\u064a:\n"
                 f"\u0627\u0643\u062a\u0628 \u062c\u0645\u0644\u0629 \u0648\u0627\u062d\u062f\u0629 \u0641\u064a #general-chat \u0648\u0628\u0639\u062f\u064a\u0646 \u0627\u0643\u062a\u0628 `!7`\n\n"
                 f"\u0645\u0627 \u062a\u0636\u064a\u0639\u0634 **{streak} \u064a\u0648\u0645** \u0634\u063a\u0644! \U0001f525"
@@ -1129,7 +1154,7 @@ async def streak_at_risk():
         else:
             msg = (
                 f"\u26a0\ufe0f **Your streak ({streak} days) will break tonight!**\n\n"
-                f"Complete just ONE task before midnight to save it.\n\n"
+                f"Complete just ONE task in the next {left_en} to save it.\n\n"
                 f"\U0001f4a1 Easiest thing to do right now:\n"
                 f"Type a sentence in #general-chat then type `!7`\n\n"
                 f"Don't lose **{streak} days** of work! \U0001f525"

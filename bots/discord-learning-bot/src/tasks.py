@@ -887,6 +887,67 @@ def nudge_decision(discord_id: str, now_utc=None) -> tuple[bool, str]:
                   f"silent {silence:.1f}h")
 
 
+# The streak day rolls over at midnight in config.TIMEZONE, because that is
+# what today_str() uses to decide which day a submission counts for. That
+# boundary is a real property of the system, so the honest thing is to report
+# the time REMAINING rather than to name an hour: "in about 3 hours" is true for
+# every student, while "before midnight" is only true in Dubai — it is 23:00 in
+# Cairo and further out elsewhere, so the old alert stated a deadline that was
+# wrong for everyone it was sent to.
+STREAK_ALERT_LEAD_HOURS = 3.5
+
+# How long after their own usual slot a student counts as having deviated. Short,
+# because by this point the day really is ending.
+STREAK_ALERT_GRACE_HOURS = 1.0
+
+
+def hours_to_streak_boundary(now=None) -> float:
+    """Hours until today's submissions stop counting toward the streak."""
+    now = now or _now()
+    tomorrow = (now + datetime.timedelta(days=1)).replace(
+        hour=0, minute=0, second=0, microsecond=0)
+    return (tomorrow - now).total_seconds() / 3600.0
+
+
+def streak_alert_decision(discord_id: str, now_utc=None,
+                          hours_left: float = None) -> tuple[bool, str]:
+    """Should this student be warned their streak is about to break?
+
+    The old version fired at 21:00 for the whole roster, so a student who
+    habitually studies later than that was told her 43-day streak "will break
+    tonight" EVERY NIGHT, and made it every time. That is more alarming than the
+    inactivity nudge Mai complained about, and it was the same mistake: judging
+    everyone against one clock.
+
+    The alert is now only sent to a student who has DEVIATED FROM HER OWN
+    pattern with the day genuinely running out. Someone who reliably works in
+    the last hours of the day is not at risk and is left alone.
+    """
+    now_utc = now_utc or datetime.datetime.now(datetime.timezone.utc)
+    if hours_left is None:
+        hours_left = hours_to_streak_boundary()
+
+    if hours_left > STREAK_ALERT_LEAD_HOURS:
+        return False, (f"{hours_left:.1f}h of the day left — too early to call "
+                       f"the streak at risk")
+
+    last = database.last_submission_utc(discord_id)
+    rhythm = activity_rhythm(discord_id)
+    if rhythm["observations"] < 3:
+        # Too little history to know their habits. With the day nearly over and
+        # nothing submitted, warning is the kinder error than silently letting a
+        # streak go.
+        return True, (f"only {rhythm['observations']} active days on record; "
+                      f"{hours_left:.1f}h left and nothing submitted")
+
+    late = _hours_since_usual_slot(now_utc, rhythm["usual_hour_utc"], last)
+    if late < STREAK_ALERT_GRACE_HOURS:
+        return False, (f"normally works around {rhythm['usual_hour_utc']:.1f}:00 "
+                       f"UTC and that has not passed yet — on pattern, not at risk")
+    return True, (f"usual slot ~{rhythm['usual_hour_utc']:.1f}:00 UTC passed "
+                  f"{late:.1f}h ago and {hours_left:.1f}h of the day remain")
+
+
 def check_inactive_members() -> dict[str, list[dict]]:
     """Check for members who need intervention.
 

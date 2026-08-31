@@ -214,3 +214,61 @@ def test_a_long_absence_is_still_caught_at_the_next_slot():
         days=4, hours=task_engine.NUDGE_GRACE_HOURS)
     send, reason = task_engine.nudge_decision("gone", now_utc=probe)
     assert send is True, f"missed a 4-day absence: {reason}"
+
+
+
+# ============================================================
+#  STREAK-AT-RISK — same defect, higher stakes
+# ============================================================
+#
+# This alert says "your streak will break tonight!". It fired at 21:00 for the
+# whole roster, judging "did you work today" by the Asia/Dubai date — so a
+# student who habitually studies later than that was alarmed EVERY NIGHT about
+# a streak she never lost. More alarming than the nudge that started all this.
+
+
+def test_late_studier_is_not_alarmed_every_night():
+    """The regression. She works in the last hours of the day, every day, and
+    is not at risk — so she must not be told she is."""
+    _now, last = _seed("cutter", days=14, hour_utc=21.0)
+    # 22:00 UTC: 2h of the day left, and her 21:00 slot is where she always is.
+    # She worked at 21:00 yesterday and will again tonight.
+    now = last + datetime.timedelta(days=1, hours=0)   # her slot, next day
+    send, reason = task_engine.streak_alert_decision(
+        "cutter", now_utc=now, hours_left=2.0)
+    assert send is False, f"alarmed a student who is on her own pattern: {reason}"
+    assert "on pattern" in reason
+
+
+def test_student_who_actually_deviated_is_warned():
+    """Not silent: someone who normally works in the morning and still has not
+    by late evening is genuinely about to lose the streak."""
+    _now, last = _seed("morningperson", days=14, hour_utc=7.0)
+    now = last + datetime.timedelta(days=1, hours=14)   # ~21:00 UTC, 14h past slot
+    send, reason = task_engine.streak_alert_decision(
+        "morningperson", now_utc=now, hours_left=2.0)
+    assert send is True, f"failed to warn a genuinely at-risk student: {reason}"
+
+
+def test_no_alarm_early_in_the_day():
+    """With most of the day left, nothing is at risk yet."""
+    _now, last = _seed("anyone", days=14, hour_utc=8.0)
+    send, reason = task_engine.streak_alert_decision(
+        "anyone", now_utc=last + datetime.timedelta(days=1, hours=6),
+        hours_left=11.0)
+    assert send is False and "too early" in reason
+
+
+def test_new_student_is_warned_rather_than_losing_a_streak_silently():
+    """With too little history we cannot know their habits. Near the boundary,
+    warning is the kinder error."""
+    database.register_member("brandnew", "New")
+    send, reason = task_engine.streak_alert_decision(
+        "brandnew", hours_left=1.0)
+    assert send is True
+    assert "active days on record" in reason
+
+
+def test_hours_to_boundary_is_a_positive_duration():
+    left = task_engine.hours_to_streak_boundary()
+    assert 0.0 < left <= 24.0
