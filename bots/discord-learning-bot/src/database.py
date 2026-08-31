@@ -1381,6 +1381,68 @@ def get_submissions_since(discord_id: str, days: int = 7) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def last_submission_utc(discord_id: str) -> Optional[datetime.datetime]:
+    """When this member last submitted anything, as a UTC datetime.
+
+    Reads daily_submissions.submitted_at, which SQLite stamps with
+    datetime('now') — real UTC, unlike the `date` column, which is stamped with
+    a Asia/Dubai calendar date and therefore encodes one region's idea of when
+    a day starts. Anything deciding whether a student is BEHIND must use this,
+    so the answer does not depend on which timezone the server thinks in.
+
+    Returns None if they have never submitted.
+    """
+    conn = _connect()
+    row = conn.execute(
+        "SELECT MAX(submitted_at) AS last FROM daily_submissions WHERE discord_id=?",
+        (discord_id,),
+    ).fetchone()
+    conn.close()
+    raw = row["last"] if row else None
+    if not raw:
+        return None
+    try:
+        dt = datetime.datetime.fromisoformat(str(raw).replace("Z", "").strip())
+    except (TypeError, ValueError):
+        return None
+    return dt.replace(tzinfo=datetime.timezone.utc) if dt.tzinfo is None else dt
+
+
+def daily_first_submission_hours_utc(discord_id: str, days: int = 28) -> list[float]:
+    """The UTC hour-of-day at which this member STARTED work, per day.
+
+    One value per day they were active, over the last `days` days. This is the
+    raw material for learning a student's own rhythm: a student who studies at
+    22:00 their time produces a tight cluster of UTC hours whatever their
+    timezone is, so we never need to know or ask what that timezone is.
+
+    Grouped by the UTC date of submitted_at rather than by the `date` column,
+    because `date` is a Dubai calendar date — grouping by it would fold a
+    late-evening session into the wrong day for anyone east or west of Dubai.
+    """
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT MIN(submitted_at) AS first_at
+             FROM daily_submissions
+            WHERE discord_id=?
+              AND submitted_at IS NOT NULL
+              AND julianday(submitted_at) >= julianday('now', ?)
+         GROUP BY date(submitted_at)
+         ORDER BY first_at""",
+        (discord_id, f"-{int(days)} days"),
+    ).fetchall()
+    conn.close()
+    hours = []
+    for r in rows:
+        try:
+            dt = datetime.datetime.fromisoformat(
+                str(r["first_at"]).replace("Z", "").strip())
+        except (TypeError, ValueError):
+            continue
+        hours.append(dt.hour + dt.minute / 60.0)
+    return hours
+
+
 def count_submissions_for_date(discord_id: str, date: str) -> int:
     """Count tasks submitted on a specific date."""
     conn = _connect()

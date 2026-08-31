@@ -9,6 +9,7 @@ to generate and post content at the configured times.
 import datetime
 import json
 import logging
+import math
 from pathlib import Path
 
 from . import config, database, ai_engine
@@ -744,6 +745,147 @@ async def process_submission(discord_id: str, member_name: str,
 # ============================================================
 #  INACTIVE MEMBER DETECTION
 # ============================================================
+
+# ============================================================
+#  PER-STUDENT RHYTHM — why the nudge is not on a clock
+# ============================================================
+#
+# Owner directive (2026-08-31): "I don't want the nudges tied to a specific
+# timezone. Students complete their tasks at different times based on their own
+# schedules. The system needs to be smart enough to adapt and only send a
+# reminder if a task genuinely hasn't been completed, rather than relying on a
+# rigid clock."
+#
+# The old nudge fired at 16:00 Asia/Dubai for everybody, which is the opposite
+# of that: a student who studies at 22:00 had done nothing wrong at 16:00, and
+# got told she had not been active. There is no single hour that is "late" for
+# every student, so the hour is learned per student instead of chosen.
+#
+# HOW: a student's own submission history in UTC already encodes their local
+# schedule. Somebody who studies each evening produces a tight cluster of UTC
+# hours, whatever their timezone, so we never need to know or ask for it. A
+# nudge is only sent once BOTH are true:
+#
+#   1. they have genuinely skipped a full cycle — no submission for 24h+; and
+#   2. their own usual moment has passed, plus a grace period.
+#
+# Until a student has enough history to have a rhythm, no hour is assumed: they
+# are only nudged after a gap so long it cannot be a scheduling difference.
+
+# A student is only "late" once their usual slot has passed by this much. Wide
+# enough to absorb ordinary day-to-day variation.
+NUDGE_GRACE_HOURS = 3.0
+
+# ...and the reminder is only delivered while it is still close to that slot.
+#
+# This replaces the old quiet-hours check, which asked whether the current time
+# was between 23:00 and 05:00 *in Asia/Dubai* — one region's night, applied to
+# everybody, which is the assumption this whole change removes. Anchoring
+# delivery to the student's own slot is strictly better: the hour they study is,
+# by demonstration, an hour they are awake and using the app.
+#
+# It also bounds the damage from a restart. Without a window, a bot that came
+# back up 20 hours into someone's gap would fire immediately, at whatever hour
+# that happened to be for them. Now a missed window simply waits for their next
+# slot — by which time they have usually moved to the next intervention tier
+# anyway.
+NUDGE_WINDOW_HOURS = 6.0
+
+# Below this many observed active days there is no rhythm worth trusting.
+MIN_RHYTHM_OBSERVATIONS = 5
+
+# Fallback gap for students with no established rhythm. Deliberately longer
+# than a day: without knowing when they study, only a gap this size proves the
+# task was genuinely missed rather than merely not done yet.
+UNKNOWN_RHYTHM_GAP_HOURS = 40.0
+
+# Never claim someone is inactive inside this window, whatever the rhythm says.
+MIN_SILENCE_HOURS = 24.0
+
+
+def _circular_mean_hour(hours: list[float]) -> float:
+    """Mean hour-of-day, on a 24-hour circle.
+
+    A plain average is wrong here and fails worst for the students most likely
+    to be misjudged: someone who studies around midnight UTC produces hours
+    like 23.5 and 0.5, whose arithmetic mean is 12:00 — the middle of their
+    day, twelve hours off. Averaging the unit vectors instead keeps the wrap.
+    """
+    if not hours:
+        return 0.0
+    xs = sum(math.cos(h / 24.0 * 2 * math.pi) for h in hours)
+    ys = sum(math.sin(h / 24.0 * 2 * math.pi) for h in hours)
+    if abs(xs) < 1e-12 and abs(ys) < 1e-12:
+        return float(hours[0]) % 24.0        # perfectly opposed; no meaningful mean
+    ang = math.atan2(ys / len(hours), xs / len(hours))
+    return (ang / (2 * math.pi) * 24.0) % 24.0
+
+
+def activity_rhythm(discord_id: str, days: int = 28) -> dict:
+    """What time of day this student normally starts, learned from their data."""
+    hours = database.daily_first_submission_hours_utc(discord_id, days=days)
+    return {
+        "observations": len(hours),
+        "usual_hour_utc": _circular_mean_hour(hours) if hours else None,
+        "known": len(hours) >= MIN_RHYTHM_OBSERVATIONS,
+    }
+
+
+def _hours_since_usual_slot(now_utc, usual_hour: float, last_sub_utc) -> float:
+    """How long since the student's own usual moment last came round.
+
+    Returns 0.0 when they have already worked since it, i.e. they are on
+    schedule and nothing is owed.
+    """
+    slot = now_utc.replace(hour=int(usual_hour) % 24,
+                           minute=int((usual_hour % 1) * 60),
+                           second=0, microsecond=0)
+    if slot > now_utc:                      # today's slot has not arrived yet
+        slot -= datetime.timedelta(days=1)
+    if last_sub_utc is not None and last_sub_utc >= slot:
+        return 0.0                          # worked since the slot — on schedule
+    return (now_utc - slot).total_seconds() / 3600.0
+
+
+def nudge_decision(discord_id: str, now_utc=None) -> tuple[bool, str]:
+    """Should this student be reminded right now? Pure and timezone-free.
+
+    Separated from the Discord loop so it can be tested directly at any
+    simulated moment — the previous version could only be reasoned about by
+    reading it, and it was wrong.
+
+    Returns (send, reason); the reason is logged so a decision can always be
+    explained to a student who asks why she was or was not messaged.
+    """
+    now_utc = now_utc or datetime.datetime.now(datetime.timezone.utc)
+    last = database.last_submission_utc(discord_id)
+    if last is None:
+        return False, "never submitted anything — onboarding's job, not a nudge"
+
+    silence = (now_utc - last).total_seconds() / 3600.0
+    if silence < MIN_SILENCE_HOURS:
+        return False, f"submitted {silence:.1f}h ago — not behind"
+
+    rhythm = activity_rhythm(discord_id)
+    if not rhythm["known"]:
+        if silence >= UNKNOWN_RHYTHM_GAP_HOURS:
+            return True, (f"no rhythm yet ({rhythm['observations']} active days) "
+                          f"and silent {silence:.1f}h")
+        return False, (f"no rhythm yet ({rhythm['observations']} active days); "
+                       f"{silence:.1f}h is not conclusive")
+
+    slot = rhythm["usual_hour_utc"]
+    late = _hours_since_usual_slot(now_utc, slot, last)
+    if late < NUDGE_GRACE_HOURS:
+        return False, (f"usual slot ~{slot:.1f}:00 UTC only {late:.1f}h ago — "
+                       f"too early to call it missed")
+    if late > NUDGE_GRACE_HOURS + NUDGE_WINDOW_HOURS:
+        return False, (f"usual slot ~{slot:.1f}:00 UTC was {late:.1f}h ago — "
+                       f"outside the delivery window; waiting for the next one "
+                       f"rather than messaging at a random hour for them")
+    return True, (f"usual slot ~{slot:.1f}:00 UTC passed {late:.1f}h ago, "
+                  f"silent {silence:.1f}h")
+
 
 def check_inactive_members() -> dict[str, list[dict]]:
     """Check for members who need intervention.

@@ -1208,64 +1208,69 @@ async def weekly_recap():
     logger.info(f"Weekly recap: sent to {sent} member(s)")
 
 
-@tasks.loop(time=datetime.time(hour=16, minute=0, tzinfo=_zone()))
+@tasks.loop(hours=1)
 async def streak_update():
-    """Daily (4 PM) gentle nudge to members who've gone inactive.
+    """Nudge students who have genuinely missed work — at THEIR hour, not ours.
 
-    Fixed 2026-07-28: this used to run @tasks.loop(hours=1), so an inactive
-    student received the SAME "haven't been active" DM every hour, all day
-    long (the owner's "coming a lot" complaint). It now runs once per day,
-    and a per-student per-day guard in the `settings` table makes a repeat
-    send impossible even if on_ready restarts the loop after a gateway
-    reconnect.
+    This runs hourly, but that is not when anyone gets messaged: it is how
+    often each student is re-evaluated against their OWN rhythm
+    (tasks.nudge_decision). A student who studies at 22:00 is considered late
+    in the small hours after her slot; one who studies at 07:00 is considered
+    late that afternoon. No single hour is treated as "late" for everybody,
+    because there isn't one.
+
+    It used to fire at 16:00 Asia/Dubai for the whole roster, which is how a
+    student with a 43-day streak was told at 15:00 her time that she had not
+    been active — she simply had not reached her evening session yet.
+
+    An hourly loop was ALSO the shape of an older bug (2026-07-28), where an
+    inactive student got the same DM every hour all day. What made that
+    possible was the absence of a per-day guard, not the frequency. Three
+    things now make a repeat impossible: the settings-table guard below,
+    nudge_decision() requiring 24h+ of silence, and the fact that a student
+    who stays away moves into the next intervention tier tomorrow rather than
+    back into this one.
     """
     inactive = task_engine.check_inactive_members()
     guild = bot.get_guild(config.GUILD_ID)
     if not guild:
         return
 
-    today = task_engine.today_str()
-    yesterday = (_now().date() - datetime.timedelta(days=1)).isoformat()
+    # The guard is keyed on the UTC date, not a Dubai date, so "once a day"
+    # means the same thing for every student regardless of where they are.
+    utc_today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
     for action, members in inactive.items():
         if action != "dm_reminder":
             continue
         for m in members:
             did = str(m["discord_id"])
             key = f"streak_nudged_{did}"
-            if database.get_setting(key, "") == today:
+            if database.get_setting(key, "") == utc_today:
                 continue  # already nudged today — never double-send
 
-            # NEVER tell a student who is working that she is not working.
-            # A student with a 43-day streak and 100% weekly completion was
-            # sent "we noticed you haven't been active" at 4 PM, nine hours
-            # after the bot had congratulated her by name for a perfect week.
-            # last_active_at alone is not enough to make that claim, so check
-            # the submissions themselves: if she has handed in work today or
-            # yesterday she is active, whatever the members row says.
-            if (database.count_submissions_for_date(did, today) > 0
-                    or database.count_submissions_for_date(did, yesterday) > 0):
+            # The whole decision, per student, against their own rhythm and
+            # their real submission times. Never a shared wall clock.
+            send, reason = task_engine.nudge_decision(did)
+            if not send:
+                logger.debug(f"streak nudge skipped for {did}: {reason}")
                 continue
 
-            # A live streak means the same thing, from the other direction:
-            # the message offers to keep a streak alive, so it makes no sense
-            # to anyone whose streak is already alive. streak_at_risk() at
-            # 21:00 is the task that legitimately says "do one task today",
-            # and it checks properly.
+            # A live streak contradicts the message on its face: it offers to
+            # help keep a streak alive, so it cannot go to someone whose
+            # streak already is. streak_at_risk() at 21:00 is the task that
+            # legitimately says "do one task today".
             if (m.get("current_streak") or 0) > 0:
+                logger.debug(f"streak nudge skipped for {did}: streak alive")
                 continue
 
-            # Parity with streak_at_risk(): this nudge used to ignore both of
-            # these, so a student who had switched reminders off, or was
-            # asleep, got it anyway.
             prefs = database.get_notification_prefs(did)
             if not prefs.get("streak_alert", 1):
-                continue
-            if database.is_quiet_hours(did):
                 continue
 
             discord_member = guild.get_member(int(did))
             if not discord_member:
                 continue
+            logger.info(f"streak nudge -> {did}: {reason}")
             try:
                 await discord_member.send(
                     f"👋 Hey {m['discord_name']}! We haven't seen any tasks from "
@@ -1273,7 +1278,7 @@ async def streak_update():
                     f"is enough to get going again — and if something is in the "
                     f"way, just reply here. 🏛️"
                 )
-                database.set_setting(key, today)
+                database.set_setting(key, utc_today)
             except (discord.Forbidden, discord.HTTPException):
                 pass
 
