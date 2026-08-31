@@ -272,3 +272,32 @@ def test_new_student_is_warned_rather_than_losing_a_streak_silently():
 def test_hours_to_boundary_is_a_positive_duration():
     left = task_engine.hours_to_streak_boundary()
     assert 0.0 < left <= 24.0
+
+
+
+def test_a_stale_streak_counter_must_not_block_re_engagement():
+    """current_streak is only recalculated when a student SUBMITS, so it goes
+    stale the moment they stop.
+
+    Verified against production: ten students carried a non-zero streak while
+    absent 7 to 33 days — Abeer at 798h with streak 2, ياسمين at 643h with
+    streak 12. An earlier version of this fix skipped anyone with
+    current_streak > 0 on the reasoning that the message must never contradict a
+    live streak, which would have silently disabled the re-engagement nudge for
+    exactly the students it exists for.
+    """
+    _now, last = _seed("churned", days=8, hour_utc=9.0)
+    conn = database._connect()
+    conn.execute("UPDATE members SET current_streak=12 WHERE discord_id='churned'")
+    conn.commit()
+    conn.close()
+
+    assert database.get_member("churned")["current_streak"] == 12, "stale counter set"
+
+    # Three weeks later, at her usual slot plus grace.
+    probe = last + datetime.timedelta(days=21,
+                                      hours=task_engine.NUDGE_GRACE_HOURS)
+    send, reason = task_engine.nudge_decision("churned", now_utc=probe)
+    assert send is True, (
+        f"a student absent three weeks was not nudged because a stale streak "
+        f"counter said 12: {reason}")
