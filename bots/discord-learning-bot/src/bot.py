@@ -1280,14 +1280,20 @@ async def streak_update():
                 logger.debug(f"streak nudge skipped for {did}: {reason}")
                 continue
 
-            # A live streak contradicts the message on its face: it offers to
-            # help keep a streak alive, so it cannot go to someone whose
-            # streak already is. streak_at_risk() at 21:00 is the task that
-            # legitimately says "do one task today".
-            if (m.get("current_streak") or 0) > 0:
-                logger.debug(f"streak nudge skipped for {did}: streak alive")
-                continue
-
+            # NOTE: there is deliberately no `current_streak > 0` guard here.
+            # An earlier version of this fix had one, on the reasoning that the
+            # message must never contradict a live streak. Checked against
+            # production, that was wrong: current_streak is only recalculated
+            # when a student SUBMITS, so it goes stale the moment they stop. Ten
+            # students carried a non-zero streak while absent 7 to 33 days —
+            # Abeer at 798h with streak 2, ياسمين at 643h with streak 12 — so
+            # the guard would have silently blocked re-engagement for exactly
+            # the people this nudge exists for.
+            #
+            # It is also unnecessary. nudge_decision() already requires 24h+ of
+            # silence AND that the student's own slot has passed, so anyone
+            # reaching this line has genuinely missed work whatever the counter
+            # says.
             prefs = database.get_notification_prefs(did)
             if not prefs.get("streak_alert", 1):
                 continue
@@ -1296,13 +1302,39 @@ async def streak_update():
             if not discord_member:
                 continue
             logger.info(f"streak nudge -> {did}: {reason}")
+            # State the gap ACCURATELY rather than guessing at it. The first
+            # version said "for a couple of days" to everybody, which is wrong
+            # in both directions: wrong at 25 hours, and absurd for a student
+            # who has been gone a month.
+            last_sub = database.last_submission_utc(did)
+            gap_h = (24.0 if last_sub is None else
+                     (datetime.datetime.now(datetime.timezone.utc)
+                      - last_sub).total_seconds() / 3600.0)
+            gap_days = int(gap_h // 24)
             try:
-                await discord_member.send(
-                    f"👋 Hey {m['discord_name']}! We haven't seen any tasks from "
-                    f"you for a couple of days. Whenever you're ready, one task "
-                    f"is enough to get going again — and if something is in the "
-                    f"way, just reply here. 🏛️"
-                )
+                # Arabic where that is the student's language, matching
+                # streak_at_risk(). An English-only re-engagement message to an
+                # Arabic-speaking student is a wasted message.
+                if features.response_language(did) == "arabic":
+                    since = ("من امبارح" if gap_days < 2
+                             else f"من حوالي {gap_days} يوم")
+                    body = (
+                        f"👋 أهلاً {m['discord_name']}! مشوفناش أي مهمة منك "
+                        f"{since}.\n\n"
+                        f"مهمة واحدة بس تكفي ترجع تبدأ من جديد — ولو في حاجة "
+                        f"واقفة قصادك، ابعتلنا هنا وإحنا نساعدك. 🏛️"
+                    )
+                else:
+                    since = ("since yesterday" if gap_days < 2
+                             else f"for about {gap_days} days")
+                    body = (
+                        f"👋 Hey {m['discord_name']}! We haven't seen a task "
+                        f"from you {since}.\n\n"
+                        f"One task is enough to get going again — and if "
+                        f"something is in the way, just reply here and we'll "
+                        f"help. 🏛️"
+                    )
+                await discord_member.send(body)
                 database.set_setting(key, utc_today)
             except (discord.Forbidden, discord.HTTPException):
                 pass
