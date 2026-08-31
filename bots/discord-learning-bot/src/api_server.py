@@ -465,11 +465,12 @@ async def get_dashboard(request: web.Request) -> web.Response:
 
     # --- Days since active ---
     last_active = member.get("last_active_at", "")
-    try:
-        last_dt = datetime.datetime.fromisoformat(last_active.replace("Z", ""))
-        days_since_active = (datetime.datetime.now() - last_dt).days
-    except (ValueError, TypeError, AttributeError):
-        days_since_active = 0
+    # Via database.days_since_active(), which compares in UTC. Doing the
+    # arithmetic here against a naive datetime.now() made this off by the
+    # host's UTC offset, and .days truncation turned that into a whole extra
+    # day of apparent inactivity for evening students.
+    days_since_active = database.days_since_active(
+        {"last_active_at": last_active})
 
     # --- Masar M1.2: Momentum Score (fixes Hisn D012) ---
     # Only included when the flag is enabled for this specific member
@@ -649,7 +650,13 @@ async def post_complete_exercise(request: web.Request) -> web.Response:
 
     if added:
         # Touch last_active (process_submission does not do this).
-        database.update_member(discord_id, last_active_at=datetime.datetime.now().isoformat())
+        # MUST be database.utc_now_str(), not datetime.now().isoformat(): this
+        # column is also written by SQL datetime('now'), which is UTC with a
+        # SPACE separator. Writing local time with a "T" here put two different
+        # timezones AND two different formats in one column, and the inactivity
+        # check compared them as strings — which is how a student at 100%
+        # completion got told she had not been active.
+        database.update_member(discord_id, last_active_at=database.utc_now_str())
 
     # Return current tasks_today count
     tasks_today = len(database.tasks_completed_today(discord_id))
@@ -710,11 +717,12 @@ async def get_progress_v2(request: web.Request) -> web.Response:
 
     # Days since active
     last_active = member.get("last_active_at", "")
-    try:
-        last_dt = datetime.datetime.fromisoformat(last_active.replace("Z", ""))
-        days_since_active = (datetime.datetime.now() - last_dt).days
-    except (ValueError, TypeError, AttributeError):
-        days_since_active = 0
+    # Via database.days_since_active(), which compares in UTC. Doing the
+    # arithmetic here against a naive datetime.now() made this off by the
+    # host's UTC offset, and .days truncation turned that into a whole extra
+    # day of apparent inactivity for evening students.
+    days_since_active = database.days_since_active(
+        {"last_active_at": last_active})
 
     # SRS due count
     conn = database._connect()
