@@ -2382,8 +2382,10 @@ async def cmd_done(ctx, task: str = None):
     allowed = features.get_allowed_tasks_for_member(str(ctx.author.id))
     if task not in allowed:
         member = database.get_member(str(ctx.author.id))
-        joined = datetime.datetime.fromisoformat(member["joined_at"]) if member else datetime.datetime.now()
-        days = (datetime.datetime.now() - joined).days
+        # UTC on both sides. This parsed joined_at (naive UTC) and subtracted it
+        # from datetime.datetime.now() (naive LOCAL), so the day number shown to
+        # the student ran the host's offset ahead and could read a day early.
+        days = database.days_since((member or {}).get("joined_at")) or 0
         await ctx.send(
             f"🔒 مهمة `{task}` مش متاحة لسه.\n"
             f"انت في اليوم {days + 1}. المهام المتاحة ليك:\n"
