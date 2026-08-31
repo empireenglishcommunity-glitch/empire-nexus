@@ -63,6 +63,86 @@ def _today_local() -> datetime.date:
         return datetime.date.today()
 
 
+def utcnow() -> datetime.datetime:
+    """NAIVE UTC 'now' — the only correct thing to compare a stored stamp to.
+
+    Every timestamp column in this database is written by SQLite's
+    `datetime('now')`, which is naive UTC ("2026-08-30 22:39:00"). So the
+    Python side of any comparison must be naive UTC too. The two wrong
+    neighbours are both easy to reach by accident:
+
+      * `datetime.datetime.now()` is naive LOCAL. It compares without error
+        and is simply wrong by the host's offset (+4h here). That is the bug
+        that made the nudge job tell a 43-day-streak student she had not been
+        active (nexus #463), and `.days` truncation turns those 4 hours into a
+        whole extra day.
+      * `datetime.datetime.now(datetime.timezone.utc)` is AWARE. Subtracting a
+        naive stored stamp from it raises TypeError. Where that sits inside a
+        `except (ValueError, TypeError)` the feature does not crash — it goes
+        SILENT, which is how the churn alert ran for six weeks without ever
+        firing (found 2026-08-31).
+
+    Matches `assessment._utcnow()` deliberately; do not add a third spelling.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+
+
+def parse_stamp(raw) -> "datetime.datetime | None":
+    """Parse a stored timestamp into NAIVE UTC, or None if unusable.
+
+    Tolerant on READ by design, because the database genuinely contains more
+    than one format: SQLite writes "2026-08-30 22:39:00" (space) while some
+    older Python paths wrote `.isoformat()` ("...T22:39:00"), and the practice
+    site wrote local time for a while. Accepts the space and "T" forms, a
+    trailing "Z", and fractional seconds.
+
+    An offset-aware value is CONVERTED to UTC rather than having its tzinfo
+    stripped — stripping would silently keep a local wall-clock reading and
+    reintroduce exactly the defect this helper exists to remove.
+
+    Returns None instead of raising: callers are reports and scheduled jobs
+    where one unparseable row must not take down the whole run. Callers must
+    treat None as "unknown", never as 0.
+    """
+    if raw in (None, ""):
+        return None
+    try:
+        txt = str(raw).strip()
+        if txt.endswith("Z"):
+            txt = txt[:-1]
+        stamp = datetime.datetime.fromisoformat(txt)
+    except (TypeError, ValueError):
+        return None
+    if stamp.tzinfo is not None:
+        stamp = stamp.astimezone(datetime.timezone.utc).replace(tzinfo=None)
+    return stamp
+
+
+def seconds_since(raw, now: "datetime.datetime | None" = None) -> "float | None":
+    """Seconds between a stored stamp and now, in UTC. None if unparseable.
+
+    `now` is injectable so tests can pin an instant instead of sleeping, and
+    so a caller scanning the whole roster reads the clock once.
+    """
+    stamp = parse_stamp(raw)
+    if stamp is None:
+        return None
+    return ((now or utcnow()) - stamp).total_seconds()
+
+
+def days_since(raw, now: "datetime.datetime | None" = None) -> "int | None":
+    """WHOLE days between a stored stamp and now, in UTC. None if unparseable.
+
+    Returns None rather than 0 for an unusable value so a caller can tell
+    "never active" apart from "active today" — conflating those is what makes
+    a re-engagement job message the wrong people.
+    """
+    secs = seconds_since(raw, now)
+    if secs is None:
+        return None
+    return max(0, int(secs // 86400))
+
+
 def init_db():
     """Create all tables if they don't exist. Safe to call on every startup."""
     conn = _connect()
@@ -1229,9 +1309,19 @@ def set_level(discord_id: str, new_level: str):
     calendar and week number restart at Week 1 Day 1 of the NEW level
     (instead of the anchor staying on the original bot-join date, which
     would make the L1 calendar think the student is already 8 weeks deep
-    and show most of L1 as 'missed')."""
+    and show most of L1 as 'missed').
+
+    The stamp is written as naive UTC to match every other timestamp in this
+    database. It used `datetime.datetime.now().isoformat()`, which is naive
+    LOCAL with a "T" separator — so `level_started_at` was being written in TWO
+    zones and TWO formats depending on which path set it: this one (local, "T")
+    and the placement/slotting path, which uses SQL `datetime('now')` (UTC,
+    space). That is the identical defect shape that broke the inactivity nudge
+    (nexus #463), in a column that anchors each student's personal calendar.
+    Readers go through `parse_stamp()`, which still accepts the old rows.
+    """
     update_member(discord_id, level=new_level,
-                  level_started_at=datetime.datetime.now().isoformat())
+                  level_started_at=utcnow().isoformat(sep=" ", timespec="seconds"))
 
 
 def all_active_members() -> list[dict]:
@@ -2137,20 +2227,14 @@ def days_since_active(member: dict) -> int:
     member who has never been active is not "infinitely inactive", and this is
     called while rendering owner-facing reports where an exception would take
     the whole report down.
+
+    Now routed through `days_since()` so there is ONE implementation of "how
+    long since this stamp" rather than a correct copy here and a broken copy
+    somewhere else — which is precisely how the churn alert ended up dead while
+    this function worked. Keeps returning 0 (not None) on a missing/unparseable
+    value because its callers render owner-facing reports.
     """
-    raw = (member or {}).get("last_active_at")
-    if not raw:
-        return 0
-    try:
-        last = datetime.datetime.fromisoformat(str(raw).replace("Z", "").strip())
-    except (TypeError, ValueError):
-        return 0
-    # Stored values are UTC but written without an offset, so attach one
-    # instead of comparing a naive UTC stamp to local time.
-    if last.tzinfo is None:
-        last = last.replace(tzinfo=datetime.timezone.utc)
-    delta = datetime.datetime.now(datetime.timezone.utc) - last
-    return max(0, delta.days)
+    return days_since((member or {}).get("last_active_at")) or 0
 
 
 def declining_assessment_members() -> list[dict]:
@@ -2347,8 +2431,11 @@ def level_anchor_iso(member: dict) -> str:
     student who has never been promoted), so behaviour is identical to
     before for them. Single source of truth for both the personal
     calendar (darb.py) and the week number below, so they never diverge."""
+    # Last-resort fallback is naive UTC, matching the stored columns. It was
+    # naive LOCAL, which meant a member row with neither stamp anchored the
+    # calendar to a wall clock the rest of this module does not use.
     return (member.get("level_started_at") or member.get("joined_at") or
-            datetime.datetime.now().isoformat())
+            utcnow().isoformat(sep=" ", timespec="seconds"))
 
 
 def member_week_number(discord_id: str) -> int:
@@ -2358,8 +2445,16 @@ def member_week_number(discord_id: str) -> int:
     member = get_member(discord_id)
     if not member:
         return 1
-    anchor = datetime.datetime.fromisoformat(level_anchor_iso(member))
-    days = (datetime.datetime.now() - anchor).days
+    # Compared in UTC. This did `datetime.datetime.now() - anchor`, which is
+    # naive LOCAL minus a UTC-stored anchor, so it ran the host's offset (+4h
+    # here) ahead of real time. With `// 7` that moved the week boundary four
+    # hours early, and because `level_started_at` used to be written in two
+    # different zones, two students who started at the same real instant could
+    # land in different weeks. This decides WHICH WEEK'S CONTENT a student
+    # gets, so the drift is not cosmetic.
+    days = days_since(level_anchor_iso(member))
+    if days is None:
+        return 1
     return max(1, (days // 7) + 1)
 
 

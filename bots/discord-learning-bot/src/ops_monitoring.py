@@ -324,7 +324,14 @@ async def check_churn_risk() -> None:
     if not database.is_feature_enabled("markaz_churn_alerts"):
         return
     members = database.all_active_members()
-    now = datetime.datetime.now(datetime.timezone.utc)
+    # Read the clock ONCE for the whole scan, and read it as naive UTC to match
+    # the stored stamps. This used datetime.datetime.now(timezone.utc), which is
+    # AWARE, and subtracted a naive parsed stamp from it — a guaranteed
+    # TypeError for every member, swallowed by the except below. So `at_risk`
+    # was ALWAYS empty and this alert never fired once, from 2026-07-15 (when
+    # markaz_churn_alerts went ON) until 2026-08-31. Nothing reported it,
+    # because "no churn alert" is indistinguishable from "no churn".
+    now = database.utcnow()
     at_risk = []
 
     for m in members:
@@ -333,14 +340,11 @@ async def check_churn_risk() -> None:
         if longest < 3:
             continue
 
-        last_active = m.get("last_active_at", "")
-        if not last_active:
-            continue
-
-        try:
-            last_dt = datetime.datetime.fromisoformat(last_active.replace("Z", ""))
-            days_silent = (now - last_dt).days
-        except (ValueError, TypeError):
+        # None means the stamp is missing or unparseable — that is NOT "silent
+        # for 0 days" and it is not "silent forever" either; skip rather than
+        # guess, so a bad row cannot invent or suppress an alert.
+        days_silent = database.days_since(m.get("last_active_at"), now)
+        if days_silent is None:
             continue
 
         if days_silent >= 3:
