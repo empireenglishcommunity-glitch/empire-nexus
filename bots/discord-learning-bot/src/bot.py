@@ -1901,6 +1901,13 @@ async def onboarding_gate_check():
         await role_gate.run_onboarding_reconciliation(guild)
     except Exception as e:
         logger.error(f"onboarding_gate_check failed: {e}")
+    # Tripwire for the admin-channel exposure bug: alert the owner if any
+    # admin/hidden channel becomes visible to students (only on a change of
+    # state, so no daily spam). Read-only — never changes permissions.
+    try:
+        await role_gate.run_admin_exposure_check(guild)
+    except Exception as e:
+        logger.error(f"admin_exposure_check failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
@@ -5177,6 +5184,15 @@ async def cmd_checkgate(ctx):
     """Onboarding audit (session-33): who passed the gate / has a guided
     journey, and flags anyone who slipped past either. Read-only."""
     await role_gate.cmd_checkgate(ctx)
+
+
+@bot.command(name="checkadmin")
+@commands.has_permissions(administrator=True)
+async def cmd_checkadmin(ctx):
+    """Admin-channel exposure audit: reports any admin/hidden channel a student
+    could see (the failure !setupgate used to cause). Read-only — fix with
+    !setupgate."""
+    await role_gate.cmd_checkadmin(ctx)
 
 
 @bot.command(name="revoke")
