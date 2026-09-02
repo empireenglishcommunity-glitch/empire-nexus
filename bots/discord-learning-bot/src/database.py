@@ -535,9 +535,10 @@ CREATE TABLE IF NOT EXISTS token_ip_log (
 );
 CREATE INDEX IF NOT EXISTS idx_token_ip ON token_ip_log(token);
 
--- Rawiya R2: structured onboarding journey state machine.
--- Tracks where each student is in their guided first-week experience.
--- This is the ACTIVE onboarding journey (nour_journey.py).
+-- Structured onboarding journey state machine (Nour, retired 2026-09-03).
+-- Kept for historical data only — nothing writes to or reads from this
+-- table anymore now that the Nour journey has been removed. Left in place
+-- (non-destructive) rather than dropped; safe to remove in a later cleanup.
 CREATE TABLE IF NOT EXISTS student_journey (
     discord_id      TEXT PRIMARY KEY,
     current_step    TEXT NOT NULL DEFAULT 'welcome',
@@ -552,8 +553,9 @@ CREATE TABLE IF NOT EXISTS student_journey (
 -- boolean facts about what a new student has already discovered
 -- (daily tasks, platform link, streaks, channels, first task done).
 -- Each flips based on a real signal (task completion, !link usage,
--- channel visits), written by set_journey_coverage(). Actively used
--- by the onboarding journey / nudges (nour_onboarding, nour_journey).
+-- channel visits), written by set_journey_coverage() from the live
+-- !done/!link/!streak/on_message handlers. This is ACTIVE and is NOT
+-- part of the retired Nour subsystem.
 CREATE TABLE IF NOT EXISTS journey_coverage (
     discord_id          TEXT PRIMARY KEY,
     knows_daily_tasks   INTEGER NOT NULL DEFAULT 0,

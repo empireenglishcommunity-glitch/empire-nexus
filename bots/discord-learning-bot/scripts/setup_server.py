@@ -226,20 +226,10 @@ CATEGORIES_CONFIG = [
             {"name": "leaderboard", "type": "text", "topic": "🏆 لوحة المتصدرين — تتحدث تلقائيًا",
              "override": {**_all_levels_ow(_VIEW_ONLY)}},
             {"name": "support", "type": "text", "topic": "🆘 محتاج مساعدة؟ اسأل هنا"},
-            # Hisn D031: ask-nour was created manually, outside this
-            # script, at some point after initial server setup -- it was
-            # never added here, so it never got the standard @everyone
-            # VIEW_CHANNEL grant every other channel in this file
-            # explicitly has. Confirmed live during Hisn H6.4: the
-            # channel had ZERO permission overwrites and no parent
-            # category, silently falling back to this server's actual
-            # @everyone default (VIEW_CHANNEL denied), making Nour's
-            # dedicated student-help channel invisible to every real
-            # student. Fixed directly on the live server (a one-time
-            # permission PUT, not a code deploy), and added here so a
-            # future full server rebuild creates it correctly the first
-            # time instead of silently reintroducing the exact same gap.
-            {"name": "ask-nour", "type": "text", "topic": "🤝 اسأل نور — مساعدتك الشخصية بالذكاء الاصطناعي"},
+            # Nour retired 2026-09-03: the #ask-nour channel (Nour's dedicated
+            # AI student-help channel) is no longer created. Student help now
+            # goes through #support. The channel can be deleted on the live
+            # server via /deletechannel; a fresh rebuild simply won't recreate it.
             {"name": "suggestions", "type": "text", "topic": "💡 عندك فكرة لتحسين المجتمع؟"},
         ],
     },
@@ -402,12 +392,12 @@ It is a complete **Learning Operating System.**
 📋 **ابدأ من هنا:**
 ١. اقرأ قناة `#rules`
 ٢. اضغط ✅ على الرسالة المثبّتة هناك للموافقة على القوانين
-٣. ستُفتح باقي القنوات فورًا، وستراسلك **نور** (مدربتك الشخصية) مباشرة لترشدك خطوة بخطوة
+٣. ستُفتح باقي القنوات فورًا، وسيرشدك الفريق خطوة بخطوة — وإذا احتجت أي مساعدة اسأل في `#support`
 
 **START HERE:**
 1. Read the pinned message in `#rules`
 2. React with ✅ to accept the rules
-3. Channels unlock immediately, and **Nour** (your personal guide) will DM you right away to walk you through everything
+3. Channels unlock immediately, the team will guide you step by step — and if you need help anytime, ask in `#support`
 
 🏛️ *النظام فوق المدرّس. التنفيذ فوق النظرية. المنطق السليم أولًا.*
 🏛️ *System over instructor. Execution over theory. Common sense first.*
@@ -680,11 +670,11 @@ class ServerSetup(discord.Client):
             posted_message = None
             # Sahin Phase 1 bugfix: the ORIGINAL idempotency check here
             # was "any bot message > 100 chars in the last 5" — far too
-            # broad. Channels like #ask-nour, #daily-word,
-            # #streak-tracker, #bot-commands, etc. already have REAL,
-            # long, automated bot activity from normal operation (Nour
-            # replies, daily digests, welcome DMs echoed into the
-            # channel, etc.) that has nothing to do with this guide.
+            # broad. Channels like #daily-word, #streak-tracker,
+            # #bot-commands, etc. already have REAL, long, automated bot
+            # activity from normal operation (daily digests, welcome DMs
+            # echoed into the channel, etc.) that has nothing to do with
+            # this guide.
             # Confirmed live: this caused 14 of 39 channels to be
             # WRONGLY pinned on an unrelated old message instead of
             # ever actually posting/pinning the real guide. Fixed by
