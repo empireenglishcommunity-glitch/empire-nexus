@@ -43,6 +43,44 @@ logger = logging.getLogger("empire-bot.role-gate")
 STUDENT_ROLE_NAME = "\u2705 Student | \u0637\u0627\u0644\u0628"
 GATE_EMOJI = "\u2705"  # ✅
 
+# Channels that stay visible to @everyone (even before the rules gate).
+PUBLIC_CHANNELS = {"rules", "welcome"}
+
+# ADMIN / hidden channels the STUDENT gateway role must NEVER be able to see.
+# These are staff-only (set up by scripts/setup_server.py to deny @everyone and
+# all level roles, allow only Admin/Moderator/bot). !setupgate used to loop EVERY
+# non-rules/welcome channel and grant the Student role view+send — which silently
+# unhid these admin channels to every student once the role was granted. The
+# detection is deliberately belt-and-suspenders:
+#   * by CATEGORY name — the two hidden categories from setup_server.py, and
+#   * by CHANNEL name — the exact admin/ghost channels, in case a channel is
+#     ever moved out of its category or the category is renamed.
+# Matching is accent/emoji-insensitive on a normalised lower-case name.
+ADMIN_CATEGORY_HINTS = ("admin", "\u0627\u0644\u0625\u062f\u0627\u0631\u0629", "ghost", "\u063a\u0648\u0633\u062a", "staff", "mod")
+ADMIN_CHANNEL_NAMES = {
+    "admin-chat", "mod-actions", "member-notes", "bot-logs", "dev-log",
+    "ghost-commands", "ghost-showcase", "ghost-writing",
+}
+
+
+def _norm_name(name: str) -> str:
+    return (name or "").lower().replace("-", "").replace("_", "").replace(" ", "")
+
+
+def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
+    """True if `channel` is a staff-only channel the Student gateway role must
+    never be granted access to. Checks the channel's own name AND its category
+    name, so moving a channel between categories cannot silently expose it."""
+    if channel.name in ADMIN_CHANNEL_NAMES:
+        return True
+    cat = getattr(channel, "category", None)
+    cat_norm = _norm_name(cat.name) if cat else ""
+    if cat_norm and any(h.replace(" ", "") in cat_norm for h in ADMIN_CATEGORY_HINTS):
+        return True
+    # Also treat the channel's own name as a hint (e.g. a stray "admin-..." chan).
+    chan_norm = _norm_name(channel.name)
+    return any(h.replace(" ", "") in chan_norm for h in ("admin", "modactions", "botlogs", "devlog", "ghost"))
+
 # The agreement message posted in #rules. MSA, bidi-safe.
 # Students react ✅ to this message to get the Student role.
 GATE_MESSAGE_AR = (
@@ -308,17 +346,41 @@ async def cmd_setupgate(ctx) -> bool:
     guild = ctx.guild
     student_role = await get_or_create_student_role(guild)
 
-    # Channels that remain visible to everyone (even without Student role)
-    PUBLIC_CHANNELS = {"rules", "welcome"}
-
     modified = 0
     errors = 0
+    admin_locked = 0        # admin channels the Student role was DENIED on
 
     for channel in guild.channels:
         if not isinstance(channel, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel)):
             continue
 
-        channel_name = channel.name.lower().replace("-", "").replace("_", "")
+        # SECURITY: never grant the Student gateway role access to a staff-only
+        # channel. The old loop granted Student view+send on EVERY non-public
+        # channel, which unhid the admin/ghost channels to every student. Now we
+        # actively DENY the Student role there and also re-assert the @everyone
+        # deny, so re-running !setupgate REPAIRS a server that was already exposed.
+        if is_admin_only_channel(channel):
+            try:
+                await channel.set_permissions(
+                    student_role,
+                    overwrite=None,        # drop any prior (erroneous) allow first
+                    reason="Hissar: role-gate — remove any Student access to admin channel",
+                )
+                await channel.set_permissions(
+                    student_role,
+                    view_channel=False,
+                    send_messages=False,
+                    reason="Hissar: role-gate — Student role must never see admin channels",
+                )
+                await channel.set_permissions(
+                    guild.default_role,
+                    view_channel=False,
+                    reason="Hissar: role-gate — admin channel hidden from @everyone",
+                )
+                admin_locked += 1
+            except discord.Forbidden:
+                errors += 1
+            continue
 
         if channel.name in PUBLIC_CHANNELS:
             # These stay visible to @everyone
@@ -334,7 +396,7 @@ async def cmd_setupgate(ctx) -> bool:
             except discord.Forbidden:
                 errors += 1
         else:
-            # All other channels: deny @everyone, allow Student role
+            # Student (non-admin) channels: deny @everyone, allow Student role
             try:
                 await channel.set_permissions(
                     guild.default_role,
@@ -366,6 +428,7 @@ async def cmd_setupgate(ctx) -> bool:
     result = (
         f"\u2705 **\u062a\u0645 \u0625\u0639\u062f\u0627\u062f \u0646\u0638\u0627\u0645 \u0627\u0644\u0628\u0648\u0627\u0628\u0629!**\n\n"
         f"\U0001f4dd \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u0639\u062f\u0644\u0629: {modified}\n"
+        f"\U0001f512 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0645\u064f\u0642\u0641\u0644\u0629 \u0623\u0645\u0627\u0645 \u0627\u0644\u0637\u0644\u0627\u0628: {admin_locked}\n"
         f"\u2705 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u062d\u0627\u0644\u064a\u0648\u0646 (\u0645\u0646\u062d \u0627\u0644\u062f\u0648\u0631): {retroactive}\n"
     )
     if errors:
@@ -546,4 +609,113 @@ async def cmd_checkgate(ctx) -> bool:
     database.set_setting("onboarding_recon_fingerprint", ",".join(problem_ids))
 
     await ctx.send(f"**Onboarding gate check | فحص البوابة**\n```\n{report}\n```")
+    return True
+
+
+
+# ============================================================
+#  ADMIN-CHANNEL EXPOSURE AUDIT — the guardrail for THIS bug
+# ============================================================
+#
+#  The onboarding audit above checks MEMBERS. This one checks CHANNEL
+#  PERMISSIONS: it reads the live overwrites on every admin/hidden channel
+#  and reports any that a student could see — either because @everyone is
+#  allowed view, or because the Student gateway role (or a CEFR level role)
+#  is allowed view. This is exactly the failure !setupgate used to cause.
+#  Read-only: it reports, never changes permissions. Fix with !setupgate.
+
+def audit_admin_exposure(guild: discord.Guild) -> dict:
+    """Return {'exposed': [...], 'ok_count': int, 'checked': int} where each
+    exposed entry is {'channel', 'reasons': [...]}. A channel is 'exposed' if a
+    student-reachable role/@everyone is granted view_channel on it."""
+    student_role = discord.utils.get(guild.roles, name=STUDENT_ROLE_NAME)
+    level_role_names = set(config.all_managed_level_role_names())
+    exposed, ok_count, checked = [], 0, 0
+
+    for channel in guild.channels:
+        if not isinstance(channel, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel)):
+            continue
+        if not is_admin_only_channel(channel):
+            continue
+        checked += 1
+        reasons = []
+        for target, ow in channel.overwrites.items():
+            # ow.view_channel is True (allow), False (deny), or None (neutral).
+            if ow.view_channel is not True:
+                continue
+            if target == guild.default_role:
+                reasons.append("@everyone is allowed to view")
+            elif student_role is not None and target == student_role:
+                reasons.append(f"the '{STUDENT_ROLE_NAME}' role is allowed to view")
+            elif getattr(target, "name", None) in level_role_names:
+                reasons.append(f"the student level role '{target.name}' is allowed to view")
+        if reasons:
+            exposed.append({"channel": channel.name, "reasons": reasons})
+        else:
+            ok_count += 1
+
+    return {"exposed": exposed, "ok_count": ok_count, "checked": checked}
+
+
+def format_admin_exposure(audit: dict) -> str:
+    """Plain-text summary of audit_admin_exposure(). Markdown-free (ops_hub
+    escapes)."""
+    if audit["checked"] == 0:
+        return ("No admin/hidden channels found to check. If the server has admin "
+                "channels, confirm their names/category match role_gate's detection.")
+    if not audit["exposed"]:
+        return (f"OK: all {audit['checked']} admin/hidden channel(s) are hidden "
+                f"from students (no student-reachable role can view them).")
+    lines = [
+        f"[!] {len(audit['exposed'])} of {audit['checked']} admin/hidden channel(s) "
+        f"are VISIBLE to students — run !setupgate to re-lock:",
+        "",
+    ]
+    for e in audit["exposed"]:
+        lines.append(f"- #{e['channel']}: " + "; ".join(e["reasons"]))
+    return "\n".join(lines)
+
+
+async def run_admin_exposure_check(guild: discord.Guild, force: bool = False):
+    """Audit admin-channel exposure and alert the owner via Empire Ops when the
+    exposed set changes (so a daily loop doesn't spam). force=True always reports.
+    Returns the audit dict. Never raises for an alert failure; never changes perms."""
+    audit = audit_admin_exposure(guild)
+    fingerprint = ",".join(sorted(e["channel"] for e in audit["exposed"]))
+    last = database.get_setting("admin_exposure_fingerprint", "")
+    changed = fingerprint != last
+
+    if force or (audit["exposed"] and changed):
+        try:
+            from . import ops_hub
+            await ops_hub.send_ops_alert(
+                "Admin-channel exposure check",
+                format_admin_exposure(audit),
+                severity="critical" if audit["exposed"] else "info",
+            )
+        except Exception as e:  # never let an alert failure crash a loop
+            logger.error(f"run_admin_exposure_check: ops alert failed: {e}")
+
+    database.set_setting("admin_exposure_fingerprint", fingerprint)
+    return audit
+
+
+async def cmd_checkadmin(ctx) -> bool:
+    """Admin command: on-demand admin-channel exposure audit, reported in-channel.
+
+    Usage: !checkadmin  (admin-only, admin-channel-gated via bot.py)
+    Reports whether any admin/hidden channel is visible to students. Read-only —
+    to FIX an exposure, run !setupgate (which re-locks admin channels).
+    """
+    guild = getattr(ctx, "guild", None)
+    if guild is None:
+        await ctx.send("Run `!checkadmin` inside the server.", delete_after=15)
+        return True
+    audit = audit_admin_exposure(guild)
+    database.set_setting(
+        "admin_exposure_fingerprint",
+        ",".join(sorted(e["channel"] for e in audit["exposed"])),
+    )
+    report = format_admin_exposure(audit)
+    await ctx.send(f"**Admin-channel exposure | تسريب قنوات الإدارة**\n```\n{report}\n```")
     return True

@@ -36,6 +36,13 @@ from dotenv import load_dotenv
 from channel_guides import CHANNEL_GUIDES
 from src import config  # single source of truth for the CEFR level model
 
+# The role-gate gateway role (src/role_gate.py STUDENT_ROLE_NAME). setup_server
+# does not create it, but the hidden ADMIN/Ghost categories explicitly DENY it
+# so that even after !setupgate grants the gateway role to every student, the
+# admin channels stay hidden. Kept as a literal (not an import of role_gate,
+# which pulls in discord.py bot deps) — asserted below to match role_gate.
+STUDENT_GATEWAY_ROLE_NAME = "\u2705 Student | \u0637\u0627\u0644\u0628"
+
 
 def _cefr_level_role_configs():
     """The six CEFR level roles (C2→A1 for hierarchy, highest first). Names +
@@ -325,6 +332,7 @@ CATEGORIES_CONFIG = [
         "overwrites": {
             "@everyone": _DENY_ALL,
             **_all_levels_ow(_DENY_ALL),
+            STUDENT_GATEWAY_ROLE_NAME: _DENY_ALL,   # gateway role — never sees admin
             "🌟 سفير | Ambassador": _DENY_ALL,
             "⚔️ Moderator": _VIEW_SEND,
             "🛡️ Admin": _VIEW_SEND,
@@ -348,6 +356,7 @@ CATEGORIES_CONFIG = [
         "overwrites": {
             "@everyone": _DENY_ALL,
             **_all_levels_ow(_DENY_ALL),
+            STUDENT_GATEWAY_ROLE_NAME: _DENY_ALL,   # gateway role — never sees ghost/testing
             "🌟 سفير | Ambassador": _DENY_ALL,
             "⚔️ Moderator": _VIEW_SEND,
             "🛡️ Admin": _VIEW_SEND,
