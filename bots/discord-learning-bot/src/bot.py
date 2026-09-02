@@ -5315,11 +5315,15 @@ async def _do_onboard(guild, member: discord.Member, level: str):
     granted_gate = await role_gate.grant_student_role(member, start_journey=False)
     database.set_level(str(member.id), level)
     await _assign_level_role(member, level)
+    # Add the student to the community-pings audience so they hear about lounge
+    # activity from day one (they can opt out later with !ping-me). Grant-only.
+    granted_pings = await community.ensure_pings_role(member, guild)
 
     info = config.level_info(level)
     bits = []
     bits.append("registered" if was_new else "already registered")
     bits.append("gateway role granted" if granted_gate else "gateway role already held")
+    bits.append("community-pings added" if granted_pings else "community-pings already set")
     return (f"✅ Onboarded {member.mention} at **{level}** — "
             f"{info['emoji']} {info['name']}.\n"
             f"• {', '.join(bits)}; level role + channel access set.\n"

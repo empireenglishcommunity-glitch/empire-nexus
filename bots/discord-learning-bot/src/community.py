@@ -703,6 +703,27 @@ async def toggle_pings_role(member, guild) -> str:
         return "error"
 
 
+async def ensure_pings_role(member, guild) -> bool:
+    """Grant the community-pings role to `member` if they don't have it.
+
+    Grant-only (never removes) and idempotent — used by team onboarding so a
+    newly-onboarded student is in the community-pings audience from day one.
+    Returns True if newly added, False if already had it or on failure. The
+    student can still opt OUT later with !ping-me.
+    """
+    if has_pings_role(member):
+        return False
+    role = await get_or_create_pings_role(guild)
+    if not role:
+        return False
+    try:
+        await member.add_roles(role, reason="onboarding: add to community-pings audience")
+        return True
+    except Exception as e:  # never let this block onboarding
+        logger.warning(f"community: ensure_pings_role failed for {member.id}: {e}")
+        return False
+
+
 def build_beacon_mention(guild) -> str:
     """Build the @-mention for the pings role, or empty string if the flag
     is OFF or role doesn't exist. Used by beacon messages."""
