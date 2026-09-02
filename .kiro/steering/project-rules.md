@@ -161,8 +161,12 @@ When telling the owner/team to run an admin action, ALWAYS phrase it as `/` —
 `/setupgate`, `/checkchannels`, `/onboard`, `/setlevel`, `/status`, `/flag …` —
 never `!setupgate` etc. (writing the `!` form is a documentation slip that keeps
 happening; don't).
-- 9 admin commands have first-class native slash versions (`/onboard`,
-  `/setlevel`, `/find`, `/reset-student`, the `/itqan-*` set) + the `/nutq` group.
+- Several admin commands have first-class native slash versions (`/onboard`,
+  `/setlevel`, `/find`, `/reset-student`, `/deletechannel`, the membership
+  lifecycle `/suspend` · `/restore` · `/suspended`, the `/itqan-*` set) + the
+  `/nutq` group. The lifecycle trio previews first and only acts when
+  `confirm: True` (the slash equivalent of the `!` commands' typed `go` +
+  confirmation prompt); they are gated behind the `suspension_lifecycle` flag.
 - EVERY other admin command is reachable through the generic bridge
   **`/admin command:<name> args:<rest as typed after !>`** — it re-dispatches to
   the exact same prefix-command code via `get_context()`/`bot.invoke()`, so `/`
