@@ -90,18 +90,41 @@ def resolve_selection(raw: str) -> tuple[list[dict], str]:
 #  SUSPEND
 # ============================================================
 
-async def suspend_one(guild, member_row: dict, dry_run: bool = False) -> dict:
+async def suspend_one(guild, member_row: dict, dry_run: bool = False,
+                      reenforce: bool = False) -> dict:
     """Withdraw all access from one student. Returns a per-step result so the
     caller can report exactly what did and did not happen -- a partial failure
-    (e.g. missing Manage Roles) must be visible, never silent."""
+    (e.g. missing Manage Roles) must be visible, never silent.
+
+    reenforce: when True, an ALREADY-suspended student is not skipped — instead
+    the access-role removal is re-run (and only that). This repairs a student
+    whose DB status is 'suspended' but who still holds their Discord roles
+    (e.g. from before the 2026-09-03 level-role bugfix), WITHOUT touching the
+    retention clock, sessions, or tokens. Idempotent and safe to run repeatedly.
+    """
     discord_id = str(member_row["discord_id"])
     name = member_row.get("discord_name", discord_id)
     result = {"name": name, "discord_id": discord_id, "dry_run": dry_run,
               "flagged": False, "sessions": 0, "tokens": False,
-              "role_removed": None, "already": False, "errors": []}
+              "role_removed": None, "already": False, "reenforced": False,
+              "errors": []}
 
     if member_row.get("suspended_at"):
         result["already"] = True
+        if not reenforce:
+            return result
+        # Re-enforce path: they're already suspended; just make sure their
+        # Discord access roles are actually gone. Nothing else is re-run.
+        result["reenforced"] = True
+        if dry_run:
+            result["role_removed"] = _has_student_role(guild, discord_id)
+            return result
+        ok, err = await _remove_student_role(guild, discord_id)
+        result["role_removed"] = ok
+        if err:
+            result["errors"].append(f"role: {err}")
+        logger.info("suspension: re-enforced roles for already-suspended %s (%s) role=%s",
+                    name, discord_id, ok)
         return result
 
     if dry_run:
@@ -135,7 +158,9 @@ async def suspend_one(guild, member_row: dict, dry_run: bool = False) -> dict:
 
 
 def _has_student_role(guild, discord_id: str):
-    """True/False if we can see the member, None if they've left the server."""
+    """Whether the member holds ANY access-granting role (gateway OR a level
+    role) — i.e. whether suspension has something to remove. None if they've
+    left the server (so the caller can report 'not in the server')."""
     if guild is None:
         return None
     try:
@@ -143,18 +168,33 @@ def _has_student_role(guild, discord_id: str):
         m = guild.get_member(int(discord_id))
         if m is None:
             return None
-        return role_gate.has_student_role(m)
+        access_names = {role_gate.STUDENT_ROLE_NAME}
+        access_names.update(config.all_managed_level_role_names())
+        return any(r.name in access_names for r in m.roles)
     except Exception:
         return None
 
 
 async def _remove_student_role(guild, discord_id: str) -> tuple:
-    """Remove the gateway role that grants channel visibility.
+    """Remove EVERY role that grants a suspended student channel visibility.
 
-    Nothing in the codebase did this before -- `role_gate.grant_student_role`
-    has no counterpart -- so this is the piece that actually makes the channels
-    disappear. A member who has left the server is reported as such rather than
-    as a failure: two students had already left by 2026-08-30.
+    This is the piece that actually makes the Discord channels disappear.
+    Two roles matter (bugfix 2026-09-03):
+
+      • the gateway role (`STUDENT_ROLE_NAME`) — unlocks the SHARED channels
+        (community, resources, accountability, system).
+      • the student's CEFR **level role** (e.g. `🌱 A1 | مبتدئ`) — unlocks the
+        per-level ZONE channels (a1-daily-tasks, a1-voice-1, …). Since the PR
+        #474 level-zone isolation, the gateway role is explicitly DENIED on the
+        zones and the LEVEL role is what grants them. Removing only the gateway
+        role therefore left suspended students still seeing their daily-tasks
+        zone — the exact symptom reported. So we strip ALL managed level roles
+        the member holds too.
+
+    A member who has left the server is reported as such rather than as a
+    failure: two students had already left by 2026-08-30. Returns
+    (removed_any, error) — removed_any is True if we successfully removed at
+    least one access-granting role (or the member simply held none).
     """
     if guild is None:
         return False, "no guild"
@@ -164,14 +204,30 @@ async def _remove_student_role(guild, discord_id: str) -> tuple:
         m = guild.get_member(int(discord_id))
         if m is None:
             return False, "not in server"
-        role = dlib.utils.get(guild.roles, name=role_gate.STUDENT_ROLE_NAME)
-        if role is None:
-            return False, "student role not found"
-        if role not in m.roles:
-            return False, "did not have the role"
-        await m.remove_roles(role, reason="Suspension: membership lapsed")
-        return True, ""
-    except Exception as e:  # includes discord.Forbidden -> missing Manage Roles
+
+        # The full set of access-granting role names to strip: the gateway role
+        # + every managed CEFR/legacy level role. We match by NAME against what
+        # the member actually holds, so drift between the stored level and the
+        # Discord role can't leave a stale zone role behind.
+        target_names = {role_gate.STUDENT_ROLE_NAME}
+        target_names.update(config.all_managed_level_role_names())
+        to_remove = [r for r in m.roles if r.name in target_names]
+
+        if not to_remove:
+            # Nothing to strip — treat as a successful no-op (they already lack
+            # every access role). Not an error, so return no error text.
+            return True, ""
+
+        errors = []
+        removed_any = False
+        for role in to_remove:
+            try:
+                await m.remove_roles(role, reason="Suspension: membership lapsed")
+                removed_any = True
+            except Exception as e:  # discord.Forbidden -> missing Manage Roles / hierarchy
+                errors.append(f"{role.name}: {str(e)[:80]}")
+        return removed_any, ("; ".join(errors) if errors else "")
+    except Exception as e:
         return False, str(e)[:120]
 
 
@@ -238,22 +294,49 @@ def _gap_days(suspended_at: str) -> list:
 
 
 async def _add_student_role(guild, discord_id: str) -> tuple:
+    """Re-grant a restored student's access roles: the gateway role AND their
+    CEFR level role.
+
+    Symmetric with `_remove_student_role` (bugfix 2026-09-03): suspension now
+    strips the level role too, so restore must put it back — otherwise a
+    restored student would get the gateway role (shared channels) but still be
+    locked out of their own level ZONE (daily-tasks etc.), since the level role
+    is what grants those. The level to re-add comes from the member's stored
+    `level` (unchanged by suspension). Returns (added_any, error).
+    """
     if guild is None:
         return False, "no guild"
     try:
+        import discord as dlib
         from . import role_gate
         m = guild.get_member(int(discord_id))
         if m is None:
             return False, "not in server"
+
         await role_gate.get_or_create_student_role(guild)
-        import discord as dlib
-        role = dlib.utils.get(guild.roles, name=role_gate.STUDENT_ROLE_NAME)
-        if role is None:
-            return False, "student role not found"
-        if role in m.roles:
-            return True, ""
-        await m.add_roles(role, reason="Restore: membership renewed")
-        return True, ""
+
+        # Names to (re)grant: gateway role + the student's own CEFR level role.
+        want_names = [role_gate.STUDENT_ROLE_NAME]
+        row = database.get_member(discord_id)
+        if row and row.get("level"):
+            want_names.append(config.level_role_name(row["level"]))
+
+        errors = []
+        added_any = False
+        for name in want_names:
+            role = dlib.utils.get(guild.roles, name=name)
+            if role is None:
+                errors.append(f"{name}: role not found")
+                continue
+            if role in m.roles:
+                added_any = True  # already present counts as granted
+                continue
+            try:
+                await m.add_roles(role, reason="Restore: membership renewed")
+                added_any = True
+            except Exception as e:
+                errors.append(f"{name}: {str(e)[:80]}")
+        return added_any, ("; ".join(errors) if errors else "")
     except Exception as e:
         return False, str(e)[:120]
 

@@ -4912,6 +4912,16 @@ async def slash_suspend(interaction: discord.Interaction,
 
     actionable = [r for r, p in zip(rows, preview) if not p["already"]]
     if not actionable:
+        # Everyone selected is already suspended. For a SINGLE targeted student,
+        # re-enforce role removal — this repairs someone whose DB says suspended
+        # but who still holds their Discord roles (the pre-2026-09-03 bug), and
+        # is harmless (idempotent) if their roles are already gone. For a bulk
+        # selector we don't auto-reenforce (resolve_selection excludes suspended
+        # members anyway), so this only ever runs for an explicit student pick.
+        if student and len(rows) == 1:
+            result = await _suspend_run_text(guild, rows, reenforce=True)
+            await interaction.followup.send(result, ephemeral=True)
+            return
         await interaction.followup.send(
             "Everyone selected is already suspended — nothing to do.", ephemeral=True)
         return
@@ -6236,11 +6246,27 @@ async def _suspend_preview_lines(guild, rows):
     return preview, body
 
 
-async def _suspend_run_text(guild, actionable) -> str:
+async def _suspend_run_text(guild, actionable, reenforce=False) -> str:
     """Actually suspend the given rows and return the result summary text."""
     results = []
     for r in actionable:
-        results.append(await suspension.suspend_one(guild, r, dry_run=False))
+        results.append(await suspension.suspend_one(
+            guild, r, dry_run=False, reenforce=reenforce))
+
+    if any(r.get("reenforced") for r in results):
+        # Re-enforce path: repairing already-suspended students whose Discord
+        # roles were left behind (pre-2026-09-03 bug). Report role outcomes.
+        fixed = [r for r in results if r["role_removed"] is True]
+        problems = [r for r in results if r["errors"]]
+        msg = [f"🔁 **Re-applied access removal to {len(fixed)}/{len(results)} "
+               f"already-suspended student(s).**",
+               "• The retention clock, sessions, and tokens were left as-is.",
+               "• Their Student + level roles are now removed (channels hidden)."]
+        if problems:
+            msg.append("\n⚠️ **Issues:**")
+            for r in problems[:10]:
+                msg.append(f"• {r['name']}: {'; '.join(r['errors'])}")
+        return "\n".join(msg)
 
     ok = [r for r in results if r["flagged"]]
     problems = [r for r in results if r["errors"]]
