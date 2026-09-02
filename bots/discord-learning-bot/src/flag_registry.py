@@ -48,11 +48,13 @@ REGISTRY = [
     ("tatawwur_showcase", "Auto-post success stories to showcase channels", "tatawwur", True),
     ("tatawwur_adaptive", "Adaptive difficulty pacing", "tatawwur", False),
 
-    # ── NOUR (onboarding journey + personality) ──
-    # The AI concierge and Aql cognitive core were removed; only the
-    # rule-based onboarding journey and MSA voice remain active.
-    ("nour_msa", "Rawiya R0: Nour speaks Modern Standard Arabic (فصحى) instead of Egyptian colloquial", "nour", True),
-    ("nour_journey", "Rawiya R2: structured 7-day onboarding journey for new students", "nour", True),
+    # ── NOUR retired (2026-09-03) ──
+    # The Nour subsystem (AI concierge, Aql cognitive core, rule-based
+    # onboarding journey, MSA voice) has been fully retired. Its flags
+    # (nour_msa, nour_journey) and the "nour" initiative were removed.
+    # Onboarding is now team-run via /onboard. Any leftover nour_* rows in
+    # the DB are inert. NOTE: the dormant Weekly Growth Letter path lives
+    # under the "masar"/"wuslah" initiatives, not here.
 
     # ── MARKAZ (Telegram operations hub) ──
     ("markaz_daily_digest", "Morning Telegram digest via Empire Ops bot (7 AM Dubai)", "markaz", True),
@@ -139,7 +141,6 @@ INITIATIVES = {
     "bawaba": ("🌍", "BAWABA", "zero-English onboarding"),
     "nabd": ("🔔", "NABD", "student notifications"),
     "tatawwur": ("🚀", "TATAWWUR", "system evolution"),
-    "nour": ("💬", "NOUR", "autonomous student concierge"),
     "sahin": ("🦅", "SAHIN", "Discord channel experience"),
     "markaz": ("📡", "MARKAZ", "Telegram operations hub"),
     "wuslah": ("🔗", "WUSLAH", "ecosystem harmony"),

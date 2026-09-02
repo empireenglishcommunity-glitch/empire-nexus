@@ -730,15 +730,7 @@ async def handle_check(args: str, bot) -> str:
     days_inactive = database.days_since_active(
         {"last_active_at": member.get("last_active_at", "")})
 
-    # Journey status
-    from . import nour_journey
-    journey = nour_journey._get_journey(discord_id)
-    if journey and journey.get("completed_at"):
-        journey_status = "✅ Completed"
-    elif journey:
-        journey_status = f"Step: {ops_hub.escape_markdown(journey['current_step'])}"
-    else:
-        journey_status = "Not started"
+    # (Nour retired 2026-09-03: the Journey status line was removed here.)
 
     # Pronunciation
     pron_avg = database.get_pronunciation_average(discord_id)
@@ -751,8 +743,7 @@ async def handle_check(args: str, bot) -> str:
         f"💎 Points: {points:,}\n"
         f"✅ Today: {tasks_today}/7 tasks\n"
         f"⏱ Last active: {days_inactive} day\\(s\\) ago\n"
-        f"🎙 Pronunciation avg: {pron_avg:.0f}%\n"
-        f"🗺 Journey: {journey_status}"
+        f"🎙 Pronunciation avg: {pron_avg:.0f}%"
     )
 
 

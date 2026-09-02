@@ -1,23 +1,26 @@
 """Tests for team-run manual onboarding (replaces student self-onboarding).
 
 Owner decision: the team trains + onboards each student in person via
-!onboard @student <level>. The self-serve rules gate (✅-react / !agree) and the
-automated Nour journey are disabled by the `manual_onboarding` flag. Channel
-security (the gateway role + channel overwrites) is UNCHANGED — only the
-self-grant paths and the journey DMs are turned off.
+!onboard @student <level>. The self-serve rules gate (✅-react / !agree) is
+disabled by the `manual_onboarding` flag. Channel security (the gateway role +
+channel overwrites) is UNCHANGED — only the self-grant paths are turned off.
+
+Nour was retired (2026-09-03): there is no longer an automated onboarding
+journey, so `grant_student_role` never kicks one off (the `start_journey`
+parameter is retained only for backward compatibility and is now inert).
 
 These tests lock in:
-  1. grant_student_role(start_journey=False) grants the gateway role but does
-     NOT kick off the journey.
+  1. grant_student_role grants the gateway role and starts NO journey,
+     regardless of the (deprecated) start_journey argument.
   2. manual_onboarding ON => handle_reaction_gate and cmd_agree no-op (so a
      student cannot self-onboard).
-  3. nour_journey.start_journey bails when manual_onboarding is on.
+  3. self-serve still works when manual_onboarding is OFF (no regression).
 """
 from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from src import database, role_gate, nour_journey, community
+from src import database, role_gate, community
 
 
 class FakeRole:
@@ -44,31 +47,41 @@ def _set_manual(on: bool):
     database.set_feature_flag("manual_onboarding", on)
 
 
-# ── 1. grant_student_role(start_journey=False) ──────────────────────────────
+# ── 1. grant_student_role grants the gateway role, starts no journey ────────
 @pytest.mark.asyncio
-async def test_grant_without_journey_grants_role_but_no_journey():
-    _set_manual(False)  # isolate: prove start_journey=False alone suppresses it
+async def test_grant_grants_role_but_no_journey():
+    _set_manual(False)
     member = FakeMember("501")
     fake_role = FakeRole(role_gate.STUDENT_ROLE_NAME)
     with patch.object(role_gate, "get_or_create_student_role",
-                      AsyncMock(return_value=fake_role)), \
-         patch.object(nour_journey, "start_journey", AsyncMock()) as journey:
+                      AsyncMock(return_value=fake_role)):
         granted = await role_gate.grant_student_role(member, start_journey=False)
     assert granted is True
     assert any(r.name == role_gate.STUDENT_ROLE_NAME for r in member.roles)
-    journey.assert_not_called()
 
 
 @pytest.mark.asyncio
-async def test_grant_with_journey_starts_journey():
+async def test_grant_starts_no_journey_even_when_start_journey_true():
+    """Nour retired: the deprecated start_journey=True argument is inert — the
+    role is still granted, and no onboarding journey is ever started."""
     _set_manual(False)
     member = FakeMember("502")
     fake_role = FakeRole(role_gate.STUDENT_ROLE_NAME)
     with patch.object(role_gate, "get_or_create_student_role",
-                      AsyncMock(return_value=fake_role)), \
-         patch.object(nour_journey, "start_journey", AsyncMock()) as journey:
-        await role_gate.grant_student_role(member, start_journey=True)
-    journey.assert_called_once()
+                      AsyncMock(return_value=fake_role)):
+        granted = await role_gate.grant_student_role(member, start_journey=True)
+    assert granted is True
+    assert any(r.name == role_gate.STUDENT_ROLE_NAME for r in member.roles)
+    # role_gate no longer imports or references any journey module.
+    assert not hasattr(role_gate, "nour_journey")
+
+
+@pytest.mark.asyncio
+async def test_grant_noop_when_already_has_role():
+    _set_manual(False)
+    member = FakeMember("504", role_names=[role_gate.STUDENT_ROLE_NAME])
+    granted = await role_gate.grant_student_role(member, start_journey=False)
+    assert granted is False
 
 
 # ── 2. manual_onboarding disables the self-serve gate ───────────────────────
@@ -95,17 +108,6 @@ async def test_agree_noop_when_manual_onboarding_on():
     handled = await role_gate.cmd_agree(ctx)
     assert handled is False
     ctx.send.assert_not_called()   # silent — no prompt to the student
-
-
-@pytest.mark.asyncio
-async def test_journey_bails_when_manual_onboarding_on():
-    _set_manual(True)
-    database.set_feature_flag("nour_journey", True)  # even with journey ON
-    member = FakeMember("503")
-    # _get_journey should never be reached; patch it to blow up if it is.
-    with patch.object(nour_journey, "_get_journey",
-                      side_effect=AssertionError("journey must not start")):
-        await nour_journey.start_journey(member)   # must simply return
 
 
 # ── 3. self-serve still works when manual_onboarding OFF (no regression) ────

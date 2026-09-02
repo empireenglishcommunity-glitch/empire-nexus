@@ -181,10 +181,10 @@ async def grant_student_role(member: discord.Member, start_journey: bool = True)
     """Assign the Student gateway role to a member (the key that unlocks
     channels). Returns True if newly assigned, False if already had it.
 
-    start_journey: kick off the automated onboarding journey DMs. Defaults True
-    for the self-serve rules gate. Team-run onboarding (!onboard) passes False —
-    the owner's team trains + guides each student in person, so the automated
-    journey is not wanted (see the onboarding-model change).
+    start_journey: retained for backward compatibility only. It used to kick
+    off the automated Nour onboarding journey DMs, but Nour was retired
+    (2026-09-03), so this parameter is now inert — no journey is ever started.
+    Onboarding is team-run via /onboard.
     """
     if has_student_role(member):
         return False
@@ -193,10 +193,7 @@ async def grant_student_role(member: discord.Member, start_journey: bool = True)
     try:
         await member.add_roles(role, reason="role-gate: gateway role granted (unlocks channels)")
         logger.info(f"Role-gate: granted Student role to {member.display_name} ({member.id})")
-        if start_journey:
-            from . import nour_journey
-            import asyncio
-            asyncio.create_task(nour_journey.start_journey(member))
+        # Nour retired 2026-09-03: no onboarding journey is started here anymore.
         return True
     except discord.Forbidden:
         logger.error(f"Role-gate: cannot assign role to {member.display_name} — missing permissions")
