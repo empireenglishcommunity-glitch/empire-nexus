@@ -4764,6 +4764,121 @@ async def nutq_capreset(interaction: discord.Interaction, student: str):
 bot.tree.add_command(nutq_group)
 
 
+# ============================================================
+#  /admin — generic bridge to EVERY admin prefix command
+# ============================================================
+#
+#  Owner decision: admins drive the bot with slash commands, students keep `!`.
+#  Nine admin commands already have rich, first-class slash versions (/onboard,
+#  /setlevel, /find, /reset-student, the /itqan-* set, /nutq …). This bridge
+#  covers ALL the OTHER admin commands in one place WITHOUT reimplementing any
+#  of them: it re-dispatches to the exact same prefix-command code via the bot's
+#  own get_context()/invoke() path — the identical mechanism the tutorial
+#  re-invoker in features.py already uses in production. So behavior can't drift
+#  from `!` because it IS `!` under the hood; the only new thing is the slash
+#  entry point.
+#
+#  Usage:  /admin command:<name> args:<rest>
+#          e.g. /admin command:status
+#               /admin command:flag args:enable manual_onboarding
+#               /admin command:announce args:Class tonight at 8!
+
+
+def _admin_command_names() -> list[str]:
+    """Every registered ADMIN prefix command name (permission-gated), sorted.
+    Derived at runtime from the command table so it can never fall out of sync
+    with the actual commands."""
+    names = set()
+    for cmd in bot.commands:
+        if _is_admin_command(cmd):
+            names.add(cmd.name)
+    return sorted(names)
+
+
+class _SlashBridgeMessage:
+    """A minimal message-like object carrying the interaction's REAL author,
+    channel and guild, so bot.get_context() builds a Context whose checks
+    (admin permission + #admin-commands gate) evaluate exactly as they would for
+    a typed prefix command. Only the attributes get_context()/invoke() and the
+    admin commands actually read are provided."""
+
+    def __init__(self, interaction: discord.Interaction, content: str):
+        self.content = content
+        self.author = interaction.user
+        self.channel = interaction.channel
+        self.guild = interaction.guild
+        self.id = interaction.id
+        self.webhook_id = None
+        self.mentions = []
+        self.role_mentions = []
+        self.channel_mentions = []
+        self.attachments = []
+        self.stickers = []
+        self.reference = None
+        self.flags = discord.MessageFlags._from_value(0)
+        self.type = discord.MessageType.default
+        self._state = interaction._state
+        self.tts = False
+        self.pinned = False
+        self.mention_everyone = False
+        self.embeds = []
+        self.components = []
+
+    async def reply(self, content=None, **kwargs):   # some commands use ctx.reply
+        return await self.channel.send(content, **kwargs)
+
+
+async def _admin_command_autocomplete(interaction: discord.Interaction, current: str):
+    cur = (current or "").strip().casefold()
+    out = []
+    for name in _admin_command_names():
+        if cur and cur not in name.casefold():
+            continue
+        out.append(app_commands.Choice(name=name, value=name))
+        if len(out) >= 25:
+            break
+    return out
+
+
+@bot.tree.command(name="admin",
+                  description="Run any admin command as a slash command (students keep !).")
+@app_commands.describe(command="Pick the admin command",
+                       args="Arguments, exactly as you'd type after the ! command (optional)")
+@app_commands.autocomplete(command=_admin_command_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_admin(interaction: discord.Interaction, command: str, args: str = ""):
+    await interaction.response.defer(ephemeral=True)
+
+    name = (command or "").strip().lstrip(config.BOT_PREFIX)
+    cmd = bot.get_command(name)
+    if cmd is None or not _is_admin_command(cmd):
+        # Unknown, or not an admin command — never dispatch a non-admin/unknown
+        # name through the admin bridge.
+        await interaction.followup.send(
+            f"Unknown admin command: `{name}`. Pick one from the list.",
+            ephemeral=True)
+        return
+
+    content = f"{config.BOT_PREFIX}{name}" + (f" {args}" if args else "")
+    fake_msg = _SlashBridgeMessage(interaction, content)
+    try:
+        ctx = await bot.get_context(fake_msg)
+        ctx.command = cmd
+        await bot.invoke(ctx)
+        await interaction.followup.send(
+            f"✅ Ran `{config.BOT_PREFIX}{name}`" + (f" {args}" if args else "")
+            + " — see the channel for its output.",
+            ephemeral=True)
+    except Exception as e:            # never leak a traceback to the channel
+        logger.error(f"/admin bridge failed for {name!r}: {type(e).__name__}: {e}")
+        await interaction.followup.send(
+            f"⚠️ `{config.BOT_PREFIX}{name}` did not complete: {type(e).__name__}. "
+            f"Check the logs / try the `!` form.",
+            ephemeral=True)
+
+
 @bot.tree.command(name="itqan-review",
                   description="Coaching brief + recordings for a student's weekly assessment.")
 @app_commands.describe(student="Start typing a student's name, then pick them",
