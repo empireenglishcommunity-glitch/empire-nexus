@@ -228,6 +228,10 @@ async def start_journey(member: discord.Member) -> None:
     """
     if not database.is_feature_enabled("nour_journey"):
         return
+    # Manual-onboarding mode: the team guides each student in person, so the
+    # automated journey DMs are not wanted even if nour_journey is left on.
+    if database.is_feature_enabled("manual_onboarding"):
+        return
 
     discord_id = str(member.id)
 
