@@ -1908,6 +1908,12 @@ async def onboarding_gate_check():
         await role_gate.run_admin_exposure_check(guild)
     except Exception as e:
         logger.error(f"admin_exposure_check failed: {e}")
+    # Tripwire for cross-level leakage: alert if any level zone becomes visible
+    # to @everyone / the gateway role / another level's role (change-of-state).
+    try:
+        await role_gate.run_level_isolation_check(guild)
+    except Exception as e:
+        logger.error(f"level_isolation_check failed: {e}")
 
 
 @tasks.loop(time=datetime.time(hour=22, minute=0, tzinfo=_zone()))
@@ -5373,6 +5379,14 @@ async def cmd_checkadmin(ctx):
     could see (the failure !setupgate used to cause). Read-only — fix with
     !setupgate."""
     await role_gate.cmd_checkadmin(ctx)
+
+
+@bot.command(name="checkchannels")
+@commands.has_permissions(administrator=True)
+async def cmd_checkchannels(ctx):
+    """Full channel-security audit: admin-channel exposure + per-level isolation
+    (each student sees only their own level). Read-only — fix with !setupgate."""
+    await role_gate.cmd_checkchannels(ctx)
 
 
 @bot.command(name="revoke")

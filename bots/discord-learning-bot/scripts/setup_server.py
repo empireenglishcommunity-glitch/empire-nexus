@@ -159,7 +159,11 @@ def _cefr_zone_configs():
         info = config.CEFR_LEVELS[lvl]
         slug = config.level_slug(lvl)          # 'a1'
         own_role = config.level_role_name(lvl)
-        overwrites = {"@everyone": _DENY_ALL, "🌟 سفير | Ambassador": _VIEW_SEND_VOICE, "bot": _BOT_FULL}
+        overwrites = {"@everyone": _DENY_ALL, "🌟 سفير | Ambassador": _VIEW_SEND_VOICE, "bot": _BOT_FULL,
+                      # The shared gateway role must NOT open a per-level zone —
+                      # only the level's OWN role may. Deny it explicitly so the
+                      # role-gate's blanket grant can never expose other levels.
+                      STUDENT_GATEWAY_ROLE_NAME: _DENY_ALL}
         for other in config.CEFR_ORDER:
             overwrites[config.level_role_name(other)] = _VIEW_SEND_VOICE if other == lvl else _DENY_ALL
         channels = [
