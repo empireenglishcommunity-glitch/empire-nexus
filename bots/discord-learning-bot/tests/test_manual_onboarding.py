@@ -17,7 +17,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from src import database, role_gate, nour_journey
+from src import database, role_gate, nour_journey, community
 
 
 class FakeRole:
@@ -120,3 +120,26 @@ async def test_agree_active_when_manual_onboarding_off():
     handled = await role_gate.cmd_agree(ctx)
     # In a non-#rules channel it sends the "only in #rules" notice and returns.
     assert ctx.send.await_count >= 1
+
+
+
+# ── 4. community-pings role is granted (grant-only, idempotent) ─────────────
+@pytest.mark.asyncio
+async def test_ensure_pings_role_grants_when_missing():
+    member = FakeMember("601")
+    fake_role = FakeRole(community.COMMUNITY_PINGS_ROLE)
+    with patch.object(community, "get_or_create_pings_role",
+                      AsyncMock(return_value=fake_role)):
+        added = await community.ensure_pings_role(member, guild=object())
+    assert added is True
+    assert any(r.name == community.COMMUNITY_PINGS_ROLE for r in member.roles)
+
+
+@pytest.mark.asyncio
+async def test_ensure_pings_role_noop_when_already_has_it():
+    member = FakeMember("602", role_names=[community.COMMUNITY_PINGS_ROLE])
+    with patch.object(community, "get_or_create_pings_role",
+                      AsyncMock()) as getrole:
+        added = await community.ensure_pings_role(member, guild=object())
+    assert added is False
+    getrole.assert_not_called()   # short-circuits before touching the role
