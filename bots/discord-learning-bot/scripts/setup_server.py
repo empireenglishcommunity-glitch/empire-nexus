@@ -193,22 +193,15 @@ CATEGORIES_CONFIG = [
             "🛡️ Admin": _ow(send_messages=True),
         },
         "channels": [
-            {"name": "start-here", "type": "text", "topic": "ابدأ من هنا — أول مكان تروحله لما تدخل السيرفر 🏛️"},
+            # start-here, roles-info and دليل-القنوات were removed 2026-09-03
+            # (owner decision — redundant now that onboarding is team-run and
+            # the student guide covers the same ground). Keep only welcome,
+            # rules and announcements. #rules and #welcome are load-bearing
+            # (role_gate PUBLIC_CHANNELS / the ✅ gate); #announcements is used
+            # by /announce and /ijtihad-announce.
             {"name": "welcome", "type": "text", "topic": "مرحبًا بيك في Empire English Community 🏛️"},
             {"name": "rules", "type": "text", "topic": "قوانين المجتمع — اقرأها واقبلها"},
-            {"name": "roles-info", "type": "text", "topic": "إزاي المستويات شغالة وإزاي تترقى"},
             {"name": "announcements", "type": "text", "topic": "إعلانات رسمية وتحديثات"},
-            # Found live on the production server but missing from this
-            # script during Hisn's H1.6 channel audit (2026-07-15) — the
-            # channel is real and functionally used: features.py's
-            # ARABIC_ALLOWED_CHANNELS explicitly references it by name,
-            # and the bot has posted real content to it (a full Arabic
-            # channel map/guide). Added here so setup_server.py is once
-            # again a complete, accurate source of truth for the live
-            # server's structure — without this, re-running the script
-            # against a fresh server would silently omit a channel the
-            # rest of the codebase actually depends on.
-            {"name": "دليل-القنوات", "type": "text", "topic": "🗺️ خريطة كاملة لكل قنوات السيرفر بالعربي"},
         ],
     },
     # ── Category 2: SYSTEM ──
@@ -468,52 +461,9 @@ Questions? → #support
 """
 
 
-ROLES_INFO_MESSAGE = """🏛️ **HOW LEVELS WORK**
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Every member starts at their placement level.
-You advance ONLY by passing the Level Exit Exam.
-Our six levels are aligned to the CEFR (A1–C2).
-No shortcuts. No exceptions. The system works because the standards are real.
-
-🌱 **A1 — Breakthrough (Beginner)**
-• ~340 active words | English sounds, greetings, family, numbers
-• Goal: 60-second self-introduction
-• Duration: 10 weeks
-
-🌿 **A2 — Waystage (Elementary)**
-• Past tense, comparisons, future plans, everyday situations
-• Goal: a short personal story (past + present + future)
-• Duration: 12 weeks
-
-🚀 **B1 — Threshold (Intermediate)**
-• Handle situations independently; express opinions & experiences
-• Duration: 14 weeks
-
-💪 **B2 — Vantage (Upper-Intermediate)**
-• Greater fluency; discuss and argue with detail
-• Duration: 16 weeks
-
-🏆 **C1 — Effective Operational Proficiency (Advanced)**
-• Flexible, effective language across a wide range of contexts
-• Duration: 18 weeks
-
-👑 **C2 — Mastery (Proficiency)**
-• Near-complete mastery with native-like flow
-• Duration: 20 weeks
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📈 **HOW TO ADVANCE:**
-1. Complete daily tasks consistently (7/day)
-2. Score well on weekly assessments (Sunday)
-3. When ready: request the Exit Exam
-4. Pass ALL 5 sections → automatic level-up 🎉
-
-No one advances without earning it.
-That's what makes an Empire credential real.
-"""
+# ROLES_INFO_MESSAGE removed 2026-09-03 along with the #roles-info channel
+# (owner decision). Level structure + advancement is covered by the student
+# guide and #rules; nothing else consumed this constant.
 
 
 # ============================================================
@@ -717,7 +667,7 @@ class ServerSetup(discord.Client):
         content_map = {
             "welcome": WELCOME_MESSAGE,
             "rules": RULES_MESSAGE,
-            "roles-info": ROLES_INFO_MESSAGE,
+            # roles-info removed 2026-09-03 (channel deleted).
             **CHANNEL_GUIDES,
         }
         for ch_name, content in content_map.items():

@@ -38,7 +38,7 @@ GUILD_ID = int(os.getenv("GUILD_ID", "0") or "0")
 _REFRESH = {
     "welcome": ss.WELCOME_MESSAGE,
     "rules": ss.RULES_MESSAGE,
-    "roles-info": ss.ROLES_INFO_MESSAGE,
+    # roles-info removed 2026-09-03 (channel deleted; ROLES_INFO_MESSAGE gone).
 }
 
 
