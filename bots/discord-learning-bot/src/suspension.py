@@ -107,7 +107,7 @@ async def suspend_one(guild, member_row: dict, dry_run: bool = False,
     result = {"name": name, "discord_id": discord_id, "dry_run": dry_run,
               "flagged": False, "sessions": 0, "tokens": False,
               "role_removed": None, "already": False, "reenforced": False,
-              "errors": []}
+              "blocked_roles": [], "errors": []}
 
     if member_row.get("suspended_at"):
         result["already"] = True
@@ -118,6 +118,7 @@ async def suspend_one(guild, member_row: dict, dry_run: bool = False,
         result["reenforced"] = True
         if dry_run:
             result["role_removed"] = _has_student_role(guild, discord_id)
+            result["blocked_roles"] = _roles_bot_cannot_remove(guild, discord_id)
             return result
         ok, err = await _remove_student_role(guild, discord_id)
         result["role_removed"] = ok
@@ -131,6 +132,7 @@ async def suspend_one(guild, member_row: dict, dry_run: bool = False,
         result["sessions"] = len(database.active_device_sessions(discord_id))
         result["tokens"] = bool(database.get_token_for_member(discord_id))
         result["role_removed"] = _has_student_role(guild, discord_id)
+        result["blocked_roles"] = _roles_bot_cannot_remove(guild, discord_id)
         return result
 
     # 1+2. clock + status
@@ -146,14 +148,17 @@ async def suspend_one(guild, member_row: dict, dry_run: bool = False,
     except Exception as e:
         result["errors"].append(f"tokens: {e}")
 
-    # 5. Discord visibility
+    # 5. Discord visibility. Capture any hierarchy blocks BEFORE removal so the
+    # caller can report roles the bot couldn't touch even on the live run.
+    result["blocked_roles"] = _roles_bot_cannot_remove(guild, discord_id)
     ok, err = await _remove_student_role(guild, discord_id)
     result["role_removed"] = ok
     if err:
         result["errors"].append(f"role: {err}")
 
-    logger.info("suspension: suspended %s (%s) sessions=%s tokens=%s role=%s",
-                name, discord_id, result["sessions"], result["tokens"], ok)
+    logger.info("suspension: suspended %s (%s) sessions=%s tokens=%s role=%s blocked=%s",
+                name, discord_id, result["sessions"], result["tokens"], ok,
+                result["blocked_roles"])
     return result
 
 
@@ -173,6 +178,40 @@ def _has_student_role(guild, discord_id: str):
         return any(r.name in access_names for r in m.roles)
     except Exception:
         return None
+
+
+def _roles_bot_cannot_remove(guild, discord_id: str) -> list:
+    """Pre-flight role-hierarchy check.
+
+    Discord only lets a bot remove a role that sits BELOW the bot's own top
+    role. If the bot's role is dragged below a student's gateway/level role in
+    the server's role list, `remove_roles` raises Forbidden and suspension
+    silently leaves that role on the student. This returns the NAMES of the
+    access roles the member holds that the bot could not remove, so /suspend
+    can warn up front instead of appearing to work and then not.
+
+    Returns [] when everything is removable (or when we can't evaluate — e.g.
+    no guild / member left the server — so we never invent a false alarm)."""
+    if guild is None:
+        return []
+    try:
+        from . import role_gate
+        m = guild.get_member(int(discord_id))
+        me = getattr(guild, "me", None)
+        if m is None or me is None:
+            return []
+        my_top = me.top_role
+        access_names = {role_gate.STUDENT_ROLE_NAME}
+        access_names.update(config.all_managed_level_role_names())
+        blocked = []
+        for r in m.roles:
+            if r.name in access_names and r >= my_top:
+                # r >= my_top means the bot cannot manage it (equal or higher).
+                blocked.append(r.name)
+        return blocked
+    except Exception:
+        # Never turn an evaluation error into a false "blocked" warning.
+        return []
 
 
 async def _remove_student_role(guild, discord_id: str) -> tuple:
@@ -359,6 +398,56 @@ async def dm_restored(guild, discord_id: str, name: str) -> bool:
             "لمنصة التمرين (الكود القديم اتلغى).\n\n"
             "يلا نكمّل من حيث ما وقفنا. 💪"
         )
+        return True
+    except Exception:
+        return False
+
+
+def farewell_dm(name: str) -> str:
+    """The warm goodbye a student receives the moment they're suspended.
+
+    Tone: grateful and encouraging, never punitive. It (1) thanks them for their
+    journey, (2) gives the renewal contact so coming back is one tap away,
+    (3) reassures them their whole record is kept for the retention window, and
+    (4) leaves them practical tips to keep improving even if they don't return —
+    because we wish them well either way. Egyptian Arabic to match every other
+    student-facing DM in this module."""
+    first = (name or "").split()[0] or name
+    return (
+        f"🏛️ **شكراً يا {first} على رحلتك معانا.**\n\n"
+        "اشتراكك خلص، والوصول للقنوات ولمنصة التمرين وقف مؤقتاً — "
+        "بس ده مش وداع، ده وقفة صغيرة.\n\n"
+        "كل يوم ذاكرت فيه، كل مهمة خلّصتها، كل كلمة اتعلمتها — دي مكسب ليك انت، "
+        "وإحنا فخورين بكل خطوة مشيتها. 🌟\n\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        "🔁 **عايز ترجع تكمّل؟**\n"
+        "كل تقدمك محفوظ — نقاطك، أسابيعك، امتحاناتك، وسلسلة أيامك — "
+        f"ومحتفظين بيه **{database.RETENTION_DAYS} يوم**. لو رجعت، بتكمّل من "
+        "مكانك بالظبط، مش من الأول.\n\n"
+        "كلّمني في أي وقت — محمود عشري:\n"
+        f"📱 واتساب: {config.OWNER_WHATSAPP_URL}\n"
+        f"✈️ تليجرام: {config.OWNER_TELEGRAM}\n\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        "💡 **ولو حابب تكمّل تمرين لوحدك، خُد دول معاك:**\n"
+        "• اسمع إنجليزي كل يوم — بودكاست أو فيديو — ولو ١٠ دقايق.\n"
+        "• كلّم نفسك بصوت عالي بالإنجليزي، ولو جملة واحدة في اليوم.\n"
+        "• اتعلّم كلمة جديدة كل يوم واستخدمها في جملة من عندك.\n"
+        "• الاستمرار أهم من الكمية — يوم بسيط كل يوم أحسن من يوم كبير كل أسبوع.\n"
+        "• اقرأ بصوت عالي عشان النطق والطلاقة يتحسّنوا مع بعض.\n\n"
+        "الباب مفتوح دايماً، وإحنا بنتمنّالك كل الخير في رحلتك. 🌱\n"
+        "دُمت بخير. 🏛️"
+    )
+
+
+async def dm_suspended(guild, discord_id: str, name: str) -> bool:
+    """Send the warm farewell DM to a just-suspended student. Failure-tolerant:
+    a student with DMs closed simply doesn't receive it (never blocks or fails
+    the suspension itself)."""
+    try:
+        m = guild.get_member(int(discord_id)) if guild else None
+        if m is None:
+            return False
+        await m.send(farewell_dm(name))
         return True
     except Exception:
         return False
