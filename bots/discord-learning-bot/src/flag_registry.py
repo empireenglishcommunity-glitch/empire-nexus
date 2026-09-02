@@ -75,6 +75,7 @@ REGISTRY = [
 
     # ── HISSAR (security / anti-cheat / copyright) ──
     ("hissar_role_gate", "Role-gate system: new members must accept rules before seeing channels (replaces removed Discord Rules Screening)", "hissar", True),
+    ("manual_onboarding", "Team-run onboarding: students do NOT self-onboard. The self-serve rules gate (✅-react and !agree) and the automated Nour journey are disabled; a team member fully sets up each student with !onboard @student <level>, which grants the gateway role (unlocks channels) + the CEFR level role in one step. Channel security (gateway role + overwrites) is UNCHANGED — only the self-grant paths are off.", "hissar", True),
     ("hissar_anti_cheat", "P4: increased cooldown (180s), persistent cooldown across restarts, progressive quiz delay", "hissar", True),
     ("hissar_ip_detection", "P5: log IPs per token, auto-flag on 5+ unique IPs, Telegram alert to owner", "hissar", True),
     ("hissar_bot_integrity", "Bot-profile tamper detection: alerts the owner if the Ops/Discord bot name, description or bio drifts from its baseline or contains spam (added after the 2026-08-29 Ops-token compromise)", "hissar", False),

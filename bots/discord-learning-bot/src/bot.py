@@ -4533,6 +4533,24 @@ async def slash_setlevel(interaction: discord.Interaction,
         f"✅ {name} is now **{lvl}** — {li['emoji']} {li['name']}{role_note}", ephemeral=True)
 
 
+@bot.tree.command(name="onboard",
+                  description="Fully onboard a new student (gateway + level + register) in one step.")
+@app_commands.describe(member="Pick the new student (Discord member)", level="Starting level")
+@app_commands.choices(level=_LEVEL_CHOICES)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_onboard(interaction: discord.Interaction,
+                        member: discord.Member, level: app_commands.Choice[str]):
+    await interaction.response.defer(ephemeral=True)
+    try:
+        summary = await _do_onboard(interaction.guild, member, level.value)
+    except ValueError as e:
+        await interaction.followup.send(f"❌ {e}", ephemeral=True)
+        return
+    await interaction.followup.send(summary, ephemeral=True)
+
+
 @bot.tree.command(name="find", description="Find registered students by name and show their IDs.")
 @app_commands.describe(query="Part of a name (or a user ID)")
 @app_commands.default_permissions(manage_guild=True)
@@ -5274,6 +5292,60 @@ async def cmd_status(ctx):
         await ctx.send("📩 Status sent to your DMs.", delete_after=5)
     except discord.Forbidden:
         await ctx.send(msg)
+
+
+async def _do_onboard(guild, member: discord.Member, level: str):
+    """Fully onboard ONE member at `level` in a single, idempotent operation —
+    the team-run replacement for student self-onboarding. Does all four things
+    that make a student complete:
+      1. register in the DB (no-op if already registered),
+      2. grant the "✅ Student | طالب" gateway role (WITHOUT the automated
+         journey — the team trains each student in person),
+      3. set their level in the DB,
+      4. assign the CEFR level role (and strip any stale level role).
+    Re-running it just updates the level; it never creates duplicates.
+
+    Returns a short human summary string. Raises ValueError on a bad level.
+    """
+    level = (level or "").upper()
+    if level not in config.CEFR_LEVELS:
+        raise ValueError("Invalid level. Use: A1, A2, B1, B2, C1, C2")
+
+    was_new = database.register_member(str(member.id), member.display_name, level=level)
+    granted_gate = await role_gate.grant_student_role(member, start_journey=False)
+    database.set_level(str(member.id), level)
+    await _assign_level_role(member, level)
+
+    info = config.level_info(level)
+    bits = []
+    bits.append("registered" if was_new else "already registered")
+    bits.append("gateway role granted" if granted_gate else "gateway role already held")
+    return (f"✅ Onboarded {member.mention} at **{level}** — "
+            f"{info['emoji']} {info['name']}.\n"
+            f"• {', '.join(bits)}; level role + channel access set.\n"
+            f"• Daily tasks will appear in #{config.level_slug(level)}-daily-tasks.")
+
+
+@bot.command(name="onboard")
+@commands.has_permissions(manage_guild=True)
+async def cmd_onboard(ctx, member: discord.Member = None, level: str = None):
+    """Team onboarding — the ONE command to fully set up a new student.
+
+    Usage: !onboard @student <A1-C2>
+    Grants the gateway role (unlocks channels) + the CEFR level role, registers
+    them, and sets their level — all at once. Idempotent (re-run to change
+    level). Replaces student self-onboarding: the team trains each student and
+    runs this, so no ✅-react / !agree / automated-journey step is needed.
+    """
+    if not member or not level:
+        await ctx.send("Usage: `!onboard @student <A1|A2|B1|B2|C1|C2>`")
+        return
+    try:
+        summary = await _do_onboard(ctx.guild, member, level)
+    except ValueError as e:
+        await ctx.send(f"❌ {e}")
+        return
+    await ctx.send(summary)
 
 
 @bot.command(name="setlevel")

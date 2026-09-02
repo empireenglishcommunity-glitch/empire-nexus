@@ -116,22 +116,26 @@ def has_student_role(member: discord.Member) -> bool:
     return any(r.name == STUDENT_ROLE_NAME for r in member.roles)
 
 
-async def grant_student_role(member: discord.Member) -> bool:
-    """Assign the Student gateway role to a member.
+async def grant_student_role(member: discord.Member, start_journey: bool = True) -> bool:
+    """Assign the Student gateway role to a member (the key that unlocks
+    channels). Returns True if newly assigned, False if already had it.
 
-    Returns True if newly assigned, False if already had it.
+    start_journey: kick off the automated onboarding journey DMs. Defaults True
+    for the self-serve rules gate. Team-run onboarding (!onboard) passes False —
+    the owner's team trains + guides each student in person, so the automated
+    journey is not wanted (see the onboarding-model change).
     """
     if has_student_role(member):
         return False
 
     role = await get_or_create_student_role(member.guild)
     try:
-        await member.add_roles(role, reason="Hissar P1.2: member agreed to rules")
+        await member.add_roles(role, reason="role-gate: gateway role granted (unlocks channels)")
         logger.info(f"Role-gate: granted Student role to {member.display_name} ({member.id})")
-        # Rawiya R2: start the onboarding journey when student accepts rules
-        from . import nour_journey
-        import asyncio
-        asyncio.create_task(nour_journey.start_journey(member))
+        if start_journey:
+            from . import nour_journey
+            import asyncio
+            asyncio.create_task(nour_journey.start_journey(member))
         return True
     except discord.Forbidden:
         logger.error(f"Role-gate: cannot assign role to {member.display_name} — missing permissions")
@@ -152,6 +156,12 @@ async def handle_reaction_gate(
     False if it should fall through to other handlers.
     """
     if not database.is_feature_enabled("hissar_role_gate"):
+        return False
+
+    # Manual-onboarding mode: the team onboards each student in person via
+    # !onboard, so the self-serve ✅-react path is disabled. Channel security
+    # (the gateway role + overwrites) is unchanged — only the SELF-grant is off.
+    if database.is_feature_enabled("manual_onboarding"):
         return False
 
     # Only handle ✅ emoji
@@ -196,6 +206,11 @@ async def cmd_agree(ctx) -> bool:
     Returns True if handled, False if not applicable (wrong channel, etc.)
     """
     if not database.is_feature_enabled("hissar_role_gate"):
+        return False
+
+    # Manual-onboarding mode: self-serve !agree is disabled; the team onboards
+    # each student via !onboard. Silent no-op so nothing prompts the student.
+    if database.is_feature_enabled("manual_onboarding"):
         return False
 
     # Only works in #rules channel
