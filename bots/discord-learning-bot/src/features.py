@@ -572,7 +572,7 @@ async def assign_buddy(new_member: discord.Member, guild: discord.Guild):
 _ARABIC_PATTERN = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]{3,}')
 
 # Channels where Arabic is allowed
-ARABIC_ALLOWED_CHANNELS = {"a1-questions", "support", "دليل-القنوات"}
+ARABIC_ALLOWED_CHANNELS = {"a1-questions", "support"}  # دليل-القنوات removed 2026-09-03 (channel deleted)
 
 
 async def check_english_only(message: discord.Message) -> bool:
@@ -1643,43 +1643,9 @@ async def handle_tutorial_dm(message: discord.Message) -> bool:
 #  26. BAWABA B6: #START-HERE CHANNEL CONTENT
 # ============================================================
 
-START_HERE_MESSAGE = """🏛️ **ابدأ من هنا — Empire English**
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-**مرحبًا!** ده أول مكان تبدأ منه.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📋 **3 خطوات وتبدأ:**
-
-**1️⃣ سجّل نفسك**
-└ روح `#bot-commands` واكتب: `!انضم`
-└ أو اعمل ✅ على أي رسالة في السيرفر
-
-**2️⃣ شوف مهامك اليومية**
-└ كل يوم الساعة 6 الصبح في `#a1-daily-tasks`
-└ 7 مهام مرقمة (كل مهمة 10 دقايق)
-
-**3️⃣ سجّل إنك خلصت**
-└ التمارين الأساسية على منصة التمرين (`!link`) بتتسجّل لوحدها
-└ الكتابة اكتب `!6` والمجتمع اكتب `!7`
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💡 **مش محتاج تعرف إنجليزي عشان تبدأ!**
-كل الأوامر شغالة بالعربي.
-اكتب `!مساعدة` في أي وقت لو محتاج مساعدة.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🎯 **أوامر مهمة:**
-• `!انضم` — سجل نفسك
-• `!link` — افتح منصة التمرين (تمارينك الأساسية)
-• `!6` / `!7` — سجل الكتابة / المجتمع
-• `!تقدم` — شوف نقاطك · `!مساعدة` — كل الأوامر
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*System over instructor. Common Sense First.* 🏛️"""
+# START_HERE_MESSAGE removed 2026-09-03 — the #start-here channel was deleted
+# (owner decision; onboarding is team-run). Its only consumer was
+# bot.cmd_poststart, also removed.
 
 
 

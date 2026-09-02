@@ -28,7 +28,8 @@ REGISTRY = [
     ("bawaba_multimedia", "Text journey guide + audio clips in welcome DM", "bawaba", True),
     ("bawaba_buddy_prompt", "Rich buddy DM with voice message suggestion", "bawaba", True),
     ("bawaba_gradual_english", "Bot response language evolves by week (Arabic → bilingual)", "bawaba", True),
-    ("bawaba_start_channel", "#start-here mention in welcome DM", "bawaba", True),
+    # bawaba_start_channel removed 2026-09-03 — the #start-here channel was
+    # deleted and its only consumer (the welcome-DM mention) removed with it.
 
     # ── NABD (student notifications) ──
     ("nabd_preferences", "Notification settings command (!notifications / !إشعارات)", "nabd", True),

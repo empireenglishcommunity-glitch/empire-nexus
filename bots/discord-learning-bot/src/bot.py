@@ -5138,14 +5138,9 @@ async def cmd_testwelcome(ctx):
     tutorial quest. Useful for testing B3 without needing to rejoin.
     """
     try:
-        start_here_note = ""
-        if database.is_feature_enabled("bawaba_start_channel"):
-            start_here_note = "\n📌 **روح `#start-here` أول حاجة** — هتلاقي كل اللي محتاجه هناك.\n"
-
         await ctx.author.send(
             f"🏛️ **أهلًا بيك في Empire English, {ctx.author.display_name}!**\n\n"
             f"ده نظام تعلّم يومي هيخليك تتكلم إنجليزي.\n"
-            f"{start_here_note}"
             f"خلينا نبدأ بـ 5 خطوات سريعة (دقيقتين بس) 👇"
         )
 
@@ -5314,30 +5309,8 @@ async def cmd_pulse(ctx):
     await ctx.send("\n".join(lines))
 
 
-@bot.command(name="poststart")
-@commands.has_permissions(manage_guild=True)
-async def cmd_poststart(ctx):
-    """(Admin) Post the #start-here pinned message.
-
-    Bawaba B6: posts the START_HERE_MESSAGE content to #start-here and
-    pins it. Run this once after creating the channel. Idempotent — if
-    the message already exists (pinned), it won't post a duplicate.
-    """
-    channel = _find_channel(ctx.guild, "start-here")
-    if not channel:
-        await ctx.send("❌ `#start-here` channel not found. Create it first.")
-        return
-
-    # Check if already pinned (avoid duplicates)
-    pins = await channel.pins()
-    for pin in pins:
-        if pin.author == bot.user and "ابدأ من هنا" in pin.content:
-            await ctx.send("✅ `#start-here` already has the pinned message.")
-            return
-
-    msg = await channel.send(features.START_HERE_MESSAGE)
-    await msg.pin()
-    await ctx.send("✅ Posted and pinned in `#start-here`!", delete_after=10)
+# cmd_poststart / !poststart removed 2026-09-03 — the #start-here channel was
+# deleted (owner decision; onboarding is team-run). Nothing else referenced it.
 
 
 @bot.command(name="confirm-delete")
