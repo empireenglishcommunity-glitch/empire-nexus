@@ -4885,6 +4885,20 @@ async def slash_admin(interaction: discord.Interaction, command: str, args: str 
             ephemeral=True)
 
 
+@bot.tree.command(name="deletechannel",
+                  description="Delete a channel (safe): refuses load-bearing channels; needs confirm.")
+@app_commands.describe(channel="The channel to delete",
+                       confirm="Set TRUE to actually delete (otherwise a dry run)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_deletechannel(interaction: discord.Interaction,
+                              channel: discord.abc.GuildChannel, confirm: bool = False):
+    await interaction.response.defer(ephemeral=True)
+    result = await _do_delete_channel(interaction.guild, channel, confirm)
+    await interaction.followup.send(result, ephemeral=True)
+
+
 @bot.tree.command(name="itqan-review",
                   description="Coaching brief + recordings for a student's weekly assessment.")
 @app_commands.describe(student="Start typing a student's name, then pick them",
@@ -5360,6 +5374,49 @@ async def cmd_checkchannels(ctx):
     """Full channel-security audit: admin-channel exposure + per-level isolation
     (each student sees only their own level). Read-only — fix with !setupgate."""
     await role_gate.cmd_checkchannels(ctx)
+
+
+async def _do_delete_channel(guild, channel, confirm: bool):
+    """Safely delete one channel. Returns a human result string; deletes only a
+    non-protected channel when confirm is True. Never raises for a normal miss.
+
+    Guardrails (so a load-bearing channel can never be nuked by accident):
+      * role_gate.protected_channel_reason() refuses rules/welcome/announcements,
+        the bot/admin command channels, admin/ghost channels, and level zones.
+      * confirm must be True — a dry run otherwise, listing what WOULD happen.
+    """
+    if channel is None:
+        return "❌ Channel not found. Pick it from the list."
+    reason = role_gate.protected_channel_reason(channel)
+    if reason:
+        return (f"🔒 Refusing to delete **#{channel.name}** — {reason}. "
+                f"Protected channels can't be deleted with this command.")
+    if not confirm:
+        return (f"⚠️ This will permanently delete **#{channel.name}** and all its "
+                f"history. Re-run with confirm **true** to proceed.")
+    try:
+        await channel.delete(reason="admin: /deletechannel")
+        return f"🗑️ Deleted **#{channel.name}**."
+    except discord.Forbidden:
+        return (f"❌ Missing permission to delete **#{channel.name}** — the bot's "
+                f"role must be above it / have Manage Channels.")
+    except Exception as e:                                  # noqa: BLE001
+        logger.error(f"deletechannel failed for {getattr(channel,'name','?')}: {e}")
+        return f"⚠️ Could not delete #{getattr(channel,'name','?')}: {type(e).__name__}"
+
+
+@bot.command(name="deletechannel")
+@commands.has_permissions(administrator=True)
+async def cmd_deletechannel(ctx, channel: discord.TextChannel = None, confirm: str = ""):
+    """(Admin) Delete a channel — safely. Usage: !deletechannel #channel confirm
+
+    Refuses load-bearing channels (rules/welcome/announcements, the command
+    channels, admin channels, level zones). Requires the literal word `confirm`.
+    Prefer the /deletechannel slash version — its picker works in #admin-commands.
+    """
+    result = await _do_delete_channel(
+        ctx.guild, channel, confirm.strip().lower() in ("confirm", "true", "yes"))
+    await ctx.send(result)
 
 
 @bot.command(name="revoke")

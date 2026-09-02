@@ -110,6 +110,38 @@ def level_zone_of(channel: "discord.abc.GuildChannel"):
             return lvl
     return None
 
+
+def protected_channel_reason(channel: "discord.abc.GuildChannel"):
+    """Why a channel must NOT be deleted, or None if it is safe to delete.
+
+    The delete command (bot.cmd_deletechannel) refuses any channel this flags.
+    Protects everything the bot/onboarding/security depend on, so an admin can
+    never accidentally destroy a load-bearing channel:
+      * #rules / #welcome  — role-gate PUBLIC_CHANNELS + the ✅ onboarding gate
+      * #announcements     — /announce and /ijtihad-announce post here by name
+      * the #bot-commands / #admin-commands channels (by configured id)
+      * admin/ghost channels (is_admin_only_channel)
+      * per-level zones (level_zone_of) — deleting one strands that level
+    Returns a short human reason string, or None.
+    """
+    name = (channel.name or "").lower()
+    if name in PUBLIC_CHANNELS:
+        return f"#{channel.name} is required by the onboarding role-gate"
+    if name == "announcements":
+        return "#announcements is used by /announce and /ijtihad-announce"
+    cid = getattr(channel, "id", 0)
+    if cid and cid == getattr(config, "ADMIN_COMMANDS_CHANNEL_ID", 0):
+        return "this is the #admin-commands channel (admin commands run here)"
+    if cid and cid == getattr(config, "BOT_COMMANDS_CHANNEL_ID", 0):
+        return "this is the #bot-commands channel (students run commands here)"
+    if is_admin_only_channel(channel):
+        return f"#{channel.name} is a staff/admin channel"
+    lvl = level_zone_of(channel)
+    if lvl is not None:
+        return f"#{channel.name} belongs to the {lvl} level zone"
+    return None
+
+
 # The agreement message posted in #rules. MSA, bidi-safe.
 # Students react ✅ to this message to get the Student role.
 GATE_MESSAGE_AR = (
