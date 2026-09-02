@@ -4831,6 +4831,147 @@ async def slash_deletechannel(interaction: discord.Interaction,
     await interaction.followup.send(result, ephemeral=True)
 
 
+# ── Membership lifecycle: first-class slash commands ─────────────────────────
+# /suspend, /restore, /suspended are native slash versions of the ! commands.
+# They reuse the SAME suspension.* primitives and shared text builders, so the
+# behavior is identical. The ! commands remain and are unchanged. The core
+# safety rule is preserved: /suspend and /restore preview first and only act
+# when confirm=True (the slash equivalent of the ! commands' typed "go" +
+# confirmation prompt).
+
+async def _slash_suspension_targets(interaction, student, target):
+    """Resolve a slash (student, target) pair into (rows, desc, error_text).
+
+    Exactly one of student / target should be given. `student` is a value from
+    the member autocomplete (a discord_id) or a typed name; `target` is a bulk
+    selector ('all'). Returns error_text (str) instead of rows when the input
+    can't be resolved so the caller can surface it verbatim."""
+    if student:
+        did, member, row = await _resolve_student_arg(interaction, student)
+        if not row:
+            return [], "", ("Couldn't identify that student. Start typing the "
+                            "name and **pick from the list**.")
+        return [row], f"1 selected ({row.get('discord_name', did)})", None
+    if target:
+        rows, desc = suspension.resolve_selection(target)
+        return rows, desc, None
+    return [], "", None
+
+
+@bot.tree.command(name="suspend",
+                  description="Withdraw a student's access (safe): previews first; needs confirm.")
+@app_commands.describe(student="Start typing a student's name, then pick them",
+                       target="Or suspend a whole group instead of one student",
+                       confirm="Set TRUE to actually suspend (otherwise a dry run)")
+@app_commands.choices(target=[
+    app_commands.Choice(name="all active students", value="all"),
+])
+@app_commands.autocomplete(student=_member_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_suspend(interaction: discord.Interaction,
+                        student: str = None,
+                        target: app_commands.Choice[str] = None,
+                        confirm: bool = False):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled(suspension.FLAG):
+        await interaction.followup.send(
+            f"⚠️ `{suspension.FLAG}` is disabled. Enable it with "
+            f"`/admin command:flag args:enable {suspension.FLAG}`.", ephemeral=True)
+        return
+
+    target_val = target.value if target else ""
+    if bool(student) == bool(target_val):
+        await interaction.followup.send(
+            "Pick **either** a single `student` **or** a `target` group — not both, "
+            "and not neither.", ephemeral=True)
+        return
+
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    rows, desc, err = await _slash_suspension_targets(interaction, student, target_val)
+    if err:
+        await interaction.followup.send(err, ephemeral=True)
+        return
+    if not rows:
+        await interaction.followup.send(
+            "Nobody matched that selection — nothing to do.\n\n"
+            "Suspension removes the Student role (channels disappear), revokes "
+            "practice-site sessions and tokens, and starts the "
+            f"{database.RETENTION_DAYS}-day retention clock. **It deletes nothing.**",
+            ephemeral=True)
+        return
+
+    preview, body = await _suspend_preview_lines(guild, rows)
+
+    if not confirm:
+        await interaction.followup.send(
+            f"🔍 **DRY RUN — nothing changed.** Target: {desc}\n\n{body}\n\n"
+            f"Re-run with **confirm: True** to actually suspend.", ephemeral=True)
+        return
+
+    actionable = [r for r, p in zip(rows, preview) if not p["already"]]
+    if not actionable:
+        await interaction.followup.send(
+            "Everyone selected is already suspended — nothing to do.", ephemeral=True)
+        return
+
+    result = await _suspend_run_text(guild, actionable)
+    await interaction.followup.send(result, ephemeral=True)
+
+
+@bot.tree.command(name="restore",
+                  description="Give a suspended student their access back (bridges the streak).")
+@app_commands.describe(student="Start typing a suspended student's name, then pick them",
+                       confirm="Set TRUE to actually restore (otherwise a dry run)")
+@app_commands.autocomplete(student=_member_autocomplete)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_restore(interaction: discord.Interaction,
+                        student: str, confirm: bool = False):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled(suspension.FLAG):
+        await interaction.followup.send(
+            f"⚠️ `{suspension.FLAG}` is disabled.", ephemeral=True)
+        return
+
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    did, member, row = await _resolve_student_arg(interaction, student)
+    if not row:
+        await interaction.followup.send(
+            "Couldn't identify that student. Start typing the name and "
+            "**pick from the list**.", ephemeral=True)
+        return
+
+    preview, body = await _restore_preview_lines(guild, [row])
+
+    if not confirm:
+        await interaction.followup.send(
+            f"🔍 **DRY RUN — nothing changed.**\n\n{body}\n\n"
+            f"Re-run with **confirm: True** to actually restore.", ephemeral=True)
+        return
+
+    actionable = [r for r, p in zip([row], preview) if not p["not_suspended"]]
+    if not actionable:
+        await interaction.followup.send(
+            "That student isn't suspended — nothing to do.", ephemeral=True)
+        return
+
+    result = await _restore_run_text(guild, actionable)
+    await interaction.followup.send(result, ephemeral=True)
+
+
+@bot.tree.command(name="suspended",
+                  description="List suspended students and days until their data is purged.")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_suspended(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    await interaction.followup.send(_suspended_list_text(), ephemeral=True)
+
+
 @bot.tree.command(name="itqan-review",
                   description="Coaching brief + recordings for a student's weekly assessment.")
 @app_commands.describe(student="Start typing a student's name, then pick them",
@@ -6068,6 +6209,106 @@ def _suspension_targets(ctx, members, selector):
     return suspension.resolve_selection(selector or "")
 
 
+# ── Shared suspend/restore text builders ─────────────────────────────────────
+# The prefix (!) and slash (/) commands share one source of truth here so both
+# entry points produce IDENTICAL output and behavior. Each helper returns the
+# text to send; the caller decides how to deliver it (ctx.send vs. an ephemeral
+# interaction followup). All of these preserve the core safety rule: preview
+# first, and never act unless explicitly told to.
+
+async def _suspend_preview_lines(guild, rows):
+    """Run the per-student dry-run and return (preview_results, body_text)."""
+    preview = await asyncio.gather(*[
+        suspension.suspend_one(guild, r, dry_run=True) for r in rows])
+    lines = []
+    for p in preview:
+        if p["already"]:
+            lines.append(f"• {p['name']} — already suspended, will be skipped")
+        elif p["role_removed"] is None:
+            lines.append(f"• {p['name']} — ⚠️ not in the server (role step will be skipped)")
+        else:
+            lines.append(f"• {p['name']} — sessions: {p['sessions']}, "
+                         f"token: {'yes' if p['tokens'] else 'no'}, "
+                         f"role: {'will be removed' if p['role_removed'] else 'not held'}")
+    body = "\n".join(lines[:30])
+    if len(lines) > 30:
+        body += f"\n… and {len(lines) - 30} more"
+    return preview, body
+
+
+async def _suspend_run_text(guild, actionable) -> str:
+    """Actually suspend the given rows and return the result summary text."""
+    results = []
+    for r in actionable:
+        results.append(await suspension.suspend_one(guild, r, dry_run=False))
+
+    ok = [r for r in results if r["flagged"]]
+    problems = [r for r in results if r["errors"]]
+    msg = [f"🔒 **Suspended {len(ok)}/{len(actionable)}.**"]
+    roles_removed = sum(1 for r in results if r["role_removed"] is True)
+    sessions = sum(r["sessions"] for r in results)
+    msg.append(f"• Student role removed: **{roles_removed}**")
+    msg.append(f"• Practice sessions revoked: **{sessions}**")
+    msg.append(f"• Retention clock started — purge in **{database.RETENTION_DAYS} days** "
+               f"unless restored.")
+    if problems:
+        msg.append("\n⚠️ **Issues (each student's data is still intact):**")
+        for r in problems[:10]:
+            msg.append(f"• {r['name']}: {'; '.join(r['errors'])}")
+    return "\n".join(msg)
+
+
+async def _restore_preview_lines(guild, rows):
+    """Run the per-student restore dry-run and return (preview_results, body)."""
+    preview = await asyncio.gather(*[
+        suspension.restore_one(guild, r, dry_run=True) for r in rows])
+    lines = []
+    for r, p in zip(rows, preview):
+        if p["not_suspended"]:
+            lines.append(f"• {p['name']} — not suspended, will be skipped")
+        else:
+            lines.append(f"• {p['name']} — will bridge **{p['bridged_days']} day(s)** "
+                         f"so the streak survives")
+    return preview, "\n".join(lines[:30])
+
+
+async def _restore_run_text(guild, actionable) -> str:
+    """Actually restore the given rows (DMing each) and return the summary."""
+    results = []
+    for r in actionable:
+        res = await suspension.restore_one(guild, r, dry_run=False)
+        if res["cleared"]:
+            await suspension.dm_restored(guild, res["discord_id"], res["name"])
+        results.append(res)
+
+    ok = [r for r in results if r["cleared"]]
+    msg = [f"✅ **Restored {len(ok)}/{len(actionable)}.**"]
+    for r in results:
+        bits = [f"streak bridged {r['bridged_days']}d",
+                f"role {'restored' if r['role_added'] else 'NOT restored'}"]
+        if r["errors"]:
+            bits.append("⚠️ " + "; ".join(r["errors"]))
+        msg.append(f"• {r['name']} — {', '.join(bits)}")
+    msg.append("\nThey each got a DM telling them to run `!link` for a fresh "
+               "practice-page code (the old session was revoked).")
+    return "\n".join(msg)
+
+
+def _suspended_list_text() -> str:
+    """The read-only 'who is suspended' listing (shared by ! and /)."""
+    rows = database.suspended_members()
+    if not rows:
+        return "✅ Nobody is currently suspended."
+    lines = [f"🔒 **Suspended students ({len(rows)})** — "
+             f"retention {database.RETENTION_DAYS} days"]
+    for m in rows:
+        warn = " ⚠️" if m["days_until_purge"] <= database.PURGE_WARNING_DAYS else ""
+        lines.append(f"• **{m['discord_name']}** — suspended {m['days_suspended']}d, "
+                     f"purge in **{m['days_until_purge']}d**{warn}")
+    lines.append("\n`/restore student:<name> confirm:true` to bring someone back.")
+    return "\n".join(lines)
+
+
 @bot.command(name="suspend")
 @commands.has_permissions(administrator=True)
 async def cmd_suspend(ctx, *args):
@@ -6102,21 +6343,7 @@ async def cmd_suspend(ctx, *args):
     guild = ctx.guild or bot.get_guild(config.GUILD_ID)
 
     # --- always preview first ---
-    preview = await asyncio.gather(*[
-        suspension.suspend_one(guild, r, dry_run=True) for r in rows])
-    lines = []
-    for p in preview:
-        if p["already"]:
-            lines.append(f"• {p['name']} — already suspended, will be skipped")
-        elif p["role_removed"] is None:
-            lines.append(f"• {p['name']} — ⚠️ not in the server (role step will be skipped)")
-        else:
-            lines.append(f"• {p['name']} — sessions: {p['sessions']}, "
-                         f"token: {'yes' if p['tokens'] else 'no'}, "
-                         f"role: {'will be removed' if p['role_removed'] else 'not held'}")
-    body = "\n".join(lines[:30])
-    if len(lines) > 30:
-        body += f"\n… and {len(lines) - 30} more"
+    preview, body = await _suspend_preview_lines(guild, rows)
 
     if not live:
         await ctx.send(f"🔍 **DRY RUN — nothing changed.** Target: {desc}\n\n{body}\n\n"
@@ -6134,24 +6361,7 @@ async def cmd_suspend(ctx, *args):
             f"Target: {desc}\n\n{body}"):
         return
 
-    results = []
-    for r in actionable:
-        results.append(await suspension.suspend_one(guild, r, dry_run=False))
-
-    ok = [r for r in results if r["flagged"]]
-    problems = [r for r in results if r["errors"]]
-    msg = [f"🔒 **Suspended {len(ok)}/{len(actionable)}.**"]
-    roles_removed = sum(1 for r in results if r["role_removed"] is True)
-    sessions = sum(r["sessions"] for r in results)
-    msg.append(f"• Student role removed: **{roles_removed}**")
-    msg.append(f"• Practice sessions revoked: **{sessions}**")
-    msg.append(f"• Retention clock started — purge in **{database.RETENTION_DAYS} days** "
-               f"unless restored.")
-    if problems:
-        msg.append("\n⚠️ **Issues (each student's data is still intact):**")
-        for r in problems[:10]:
-            msg.append(f"• {r['name']}: {'; '.join(r['errors'])}")
-    await ctx.send("\n".join(msg))
+    await ctx.send(await _suspend_run_text(guild, actionable))
 
 
 @bot.command(name="restore")
@@ -6186,16 +6396,7 @@ async def cmd_restore(ctx, *args):
         return
 
     guild = ctx.guild or bot.get_guild(config.GUILD_ID)
-    preview = await asyncio.gather(*[
-        suspension.restore_one(guild, r, dry_run=True) for r in rows])
-    lines = []
-    for r, p in zip(rows, preview):
-        if p["not_suspended"]:
-            lines.append(f"• {p['name']} — not suspended, will be skipped")
-        else:
-            lines.append(f"• {p['name']} — will bridge **{p['bridged_days']} day(s)** "
-                         f"so the streak survives")
-    body = "\n".join(lines[:30])
+    preview, body = await _restore_preview_lines(guild, rows)
 
     if not live:
         await ctx.send(f"🔍 **DRY RUN — nothing changed.**\n\n{body}\n\n"
@@ -6207,24 +6408,7 @@ async def cmd_restore(ctx, *args):
         await ctx.send("Nobody selected is suspended — nothing to do.")
         return
 
-    results = []
-    for r in actionable:
-        res = await suspension.restore_one(guild, r, dry_run=False)
-        if res["cleared"]:
-            await suspension.dm_restored(guild, res["discord_id"], res["name"])
-        results.append(res)
-
-    ok = [r for r in results if r["cleared"]]
-    msg = [f"✅ **Restored {len(ok)}/{len(actionable)}.**"]
-    for r in results:
-        bits = [f"streak bridged {r['bridged_days']}d",
-                f"role {'restored' if r['role_added'] else 'NOT restored'}"]
-        if r["errors"]:
-            bits.append("⚠️ " + "; ".join(r["errors"]))
-        msg.append(f"• {r['name']} — {', '.join(bits)}")
-    msg.append("\nThey each got a DM telling them to run `!link` for a fresh "
-               "practice-page code (the old session was revoked).")
-    await ctx.send("\n".join(msg))
+    await ctx.send(await _restore_run_text(guild, actionable))
 
 
 @bot.command(name="announce-renewal")
@@ -6294,18 +6478,7 @@ async def cmd_announce_renewal(ctx, *args):
 @commands.has_permissions(manage_guild=True)
 async def cmd_suspended(ctx):
     """Who is suspended, and how long until their data is purged."""
-    rows = database.suspended_members()
-    if not rows:
-        await ctx.send("✅ Nobody is currently suspended.")
-        return
-    lines = [f"🔒 **Suspended students ({len(rows)})** — "
-             f"retention {database.RETENTION_DAYS} days"]
-    for m in rows:
-        warn = " ⚠️" if m["days_until_purge"] <= database.PURGE_WARNING_DAYS else ""
-        lines.append(f"• **{m['discord_name']}** — suspended {m['days_suspended']}d, "
-                     f"purge in **{m['days_until_purge']}d**{warn}")
-    lines.append("\n`!restore @student go` to bring someone back.")
-    await ctx.send("\n".join(lines))
+    await ctx.send(_suspended_list_text())
 
 
 @tasks.loop(hours=3)
