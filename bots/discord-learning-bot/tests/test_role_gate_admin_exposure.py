@@ -144,3 +144,43 @@ def test_no_exposure_when_only_staff_allowed():
     assert audit["exposed"] == []
     assert audit["ok_count"] == 1
     assert "OK" in role_gate.format_admin_exposure(audit)
+
+
+
+# ── Archived legacy "Level 0" material must be admin-only (never student) ─────
+# Bug: the server was migrated L0–L3 → CEFR A1–C2. The old "Level 0" category
+# and its channels were archived for staff, but level_zone_of only recognizes
+# a1–c2 (and config.level_slug("L0") → "a1"), so a legacy Level-0 channel matched
+# no zone/admin rule and fell through to the SHARED branch — visible to students.
+def test_archived_level0_category_is_admin_only():
+    for cat_name in ("🌱 Level 0 | مبتدئ", "LEVEL 0", "level-0", "Level Zero"):
+        ch = FakeTextChannel("some-old-chan", category=FakeCategory(cat_name))
+        assert role_gate.is_admin_only_channel(ch), f"{cat_name!r} must be admin-only"
+
+
+def test_archived_level0_channel_slugs_are_admin_only():
+    for name in ("l0-daily-tasks", "l0-showcase", "level0-chat",
+                 "level-0-questions", "level0"):
+        ch = FakeTextChannel(name)
+        assert role_gate.is_admin_only_channel(ch), f"{name} must be admin-only"
+
+
+def test_level0_detection_does_not_catch_cefr_or_community_or_other_legacy():
+    # Must NOT accidentally hide student-facing channels or other legacy levels.
+    safe = [
+        FakeTextChannel("community-live", category=FakeCategory("🌍 المجتمع | COMMUNITY")),
+        FakeTextChannel("general-chat"),
+        FakeTextChannel("a1-daily-tasks", category=FakeCategory("🌱 A1 ZONE | مبتدئ")),
+        FakeTextChannel("level-1-tasks"),          # legacy A2, NOT Level 0
+        FakeTextChannel("level-2-showcase"),       # legacy B1, NOT Level 0
+        FakeTextChannel("control-room"),           # contains 'l0'? no — sanity
+    ]
+    for ch in safe:
+        assert not role_gate.is_admin_only_channel(ch), f"{ch.name} must stay visible"
+
+
+def test_archived_level0_is_protected_from_deletion():
+    """A nice side effect: since it's now admin-only, /deletechannel also refuses
+    it (protected_channel_reason flags admin channels). Confirms consistency."""
+    ch = FakeTextChannel("l0-daily-tasks", category=FakeCategory("🌱 Level 0 | مبتدئ"))
+    assert role_gate.protected_channel_reason(ch) is not None

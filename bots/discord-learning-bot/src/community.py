@@ -291,6 +291,31 @@ def reset_beacons():
 #  #COMMUNITY-LIVE CHANNEL (Phase 2)
 # ============================================================
 
+async def _grant_student_access(guild, channel) -> None:
+    """Make a freshly-created community channel visible to students immediately.
+
+    Community channels (#community-live, the Majlis hub) are created at RUNTIME
+    here, not by scripts/setup_server.py, so they inherit the COMMUNITY
+    category's overwrites — which deny @everyone. Until an admin re-ran
+    !setupgate, the student gateway role had no view overwrite on the new
+    channel, so students hit 'no permission'. We now grant the gateway role
+    view/send (and deny @everyone) at creation time, so the channel is student-
+    visible the moment it exists. Failure-tolerant: a missing Manage Roles /
+    hierarchy issue is logged, never raised (channel creation must not break)."""
+    try:
+        from . import role_gate
+        student_role = await role_gate.get_or_create_student_role(guild)
+        await channel.set_permissions(
+            guild.default_role, view_channel=False,
+            reason="community: hidden from @everyone until rules accepted")
+        await channel.set_permissions(
+            student_role, view_channel=True, send_messages=True,
+            reason="community: visible to gated students (shared channel)")
+    except Exception as e:
+        logger.warning("community: couldn't grant student access on #%s: %s",
+                       getattr(channel, "name", "?"), e)
+
+
 _COMMUNITY_LIVE_KEY = "community_live_channel_id"
 
 
@@ -324,6 +349,7 @@ async def get_or_create_community_live(guild) -> Optional[object]:
             category=category,
             topic="🎙️ من في المجلس دلوقتي — إشعارات تلقائية | Who's in the Majlis — live presence")
         database.set_setting(_COMMUNITY_LIVE_KEY, str(ch.id))
+        await _grant_student_access(guild, ch)
         logger.info(f"community: created #{COMMUNITY_LIVE_CHANNEL} ({ch.id})")
         return ch
     except Exception as e:
@@ -490,6 +516,7 @@ async def ensure_hub_channel(guild) -> Optional[object]:
             user_limit=1,  # one person at a time triggers the spawn
         )
         database.set_setting(_MAJLIS_HUB_KEY, str(ch.id))
+        await _grant_student_access(guild, ch)
         logger.info(f"community: created hub channel '{MAJLIS_HUB_NAME}' ({ch.id})")
         return ch
     except Exception as e:
