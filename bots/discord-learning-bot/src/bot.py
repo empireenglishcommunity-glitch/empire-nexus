@@ -6232,6 +6232,9 @@ async def _suspend_preview_lines(guild, rows):
         suspension.suspend_one(guild, r, dry_run=True) for r in rows])
     lines = []
     for p in preview:
+        blocked = p.get("blocked_roles") or []
+        warn = (f"  ⚠️ bot can't remove: {', '.join(blocked)} "
+                f"(move the bot's role ABOVE these)") if blocked else ""
         if p["already"]:
             lines.append(f"• {p['name']} — already suspended, will be skipped")
         elif p["role_removed"] is None:
@@ -6239,10 +6242,24 @@ async def _suspend_preview_lines(guild, rows):
         else:
             lines.append(f"• {p['name']} — sessions: {p['sessions']}, "
                          f"token: {'yes' if p['tokens'] else 'no'}, "
-                         f"role: {'will be removed' if p['role_removed'] else 'not held'}")
+                         f"role: {'will be removed' if p['role_removed'] else 'not held'}"
+                         f"{warn}")
     body = "\n".join(lines[:30])
     if len(lines) > 30:
         body += f"\n… and {len(lines) - 30} more"
+
+    # Pre-flight hierarchy banner: if the bot can't remove SOME access role for
+    # anyone in this batch, say so loudly at the top so the owner fixes the role
+    # order before confirming — otherwise suspension would appear to run but
+    # leave those students with access.
+    any_blocked = sorted({rn for p in preview for rn in (p.get("blocked_roles") or [])})
+    if any_blocked:
+        body = ("🚨 **Role hierarchy problem — fix before confirming.**\n"
+                "The bot's own role sits at or below these roles, so Discord "
+                "won't let it remove them:\n"
+                f"   {', '.join(any_blocked)}\n"
+                "Drag the bot's role ABOVE them in **Server Settings → Roles**, "
+                "then re-run.\n\n") + body
     return preview, body
 
 
@@ -6268,6 +6285,16 @@ async def _suspend_run_text(guild, actionable, reenforce=False) -> str:
                 msg.append(f"• {r['name']}: {'; '.join(r['errors'])}")
         return "\n".join(msg)
 
+    # Send each newly-suspended student a warm farewell DM (thanks + renewal
+    # contact + keep-practicing tips). Only for a real, first-time suspension —
+    # the re-enforce path above returns early, so this never re-DMs someone who
+    # was already suspended. Failure-tolerant (closed DMs just don't receive it).
+    dm_sent = 0
+    for r in results:
+        if r["flagged"]:
+            if await suspension.dm_suspended(guild, r["discord_id"], r["name"]):
+                dm_sent += 1
+
     ok = [r for r in results if r["flagged"]]
     problems = [r for r in results if r["errors"]]
     msg = [f"🔒 **Suspended {len(ok)}/{len(actionable)}.**"]
@@ -6275,8 +6302,15 @@ async def _suspend_run_text(guild, actionable, reenforce=False) -> str:
     sessions = sum(r["sessions"] for r in results)
     msg.append(f"• Student role removed: **{roles_removed}**")
     msg.append(f"• Practice sessions revoked: **{sessions}**")
+    msg.append(f"• Farewell DM delivered: **{dm_sent}/{len(ok)}** "
+               f"(closed DMs don't receive it)")
     msg.append(f"• Retention clock started — purge in **{database.RETENTION_DAYS} days** "
                f"unless restored.")
+    # Surface any hierarchy blocks that slipped through to the live run too.
+    blocked = sorted({rn for r in results for rn in (r.get("blocked_roles") or [])})
+    if blocked:
+        msg.append(f"\n🚨 **Bot couldn't remove (role hierarchy):** {', '.join(blocked)} "
+                   f"— move the bot's role ABOVE these, then re-run `/suspend`.")
     if problems:
         msg.append("\n⚠️ **Issues (each student's data is still intact):**")
         for r in problems[:10]:
