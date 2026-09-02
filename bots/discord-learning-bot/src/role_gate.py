@@ -81,6 +81,35 @@ def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
     chan_norm = _norm_name(channel.name)
     return any(h.replace(" ", "") in chan_norm for h in ("admin", "modactions", "botlogs", "devlog", "ghost"))
 
+
+def level_zone_of(channel: "discord.abc.GuildChannel"):
+    """Which CEFR level a channel belongs to, or None if it is not a level zone.
+
+    Level zones are per-level and MUST stay isolated — only that level's role
+    (plus staff) may see them. Detected two ways (belt-and-suspenders):
+      * the channel's CATEGORY name contains the level code + "ZONE"
+        (setup_server names them e.g. "🌱 A1 ZONE | مبتدئ"), and
+      * the channel's own name is slug-prefixed a1-/a2-/…/c2- (a1-daily-tasks…).
+    Returns the upper-case level code (e.g. "A1") or None.
+
+    This is what !setupgate uses to STOP granting the shared gateway role access
+    to level zones — the bug that let every student see every level.
+    """
+    cat = getattr(channel, "category", None)
+    cat_norm = _norm_name(cat.name) if cat else ""
+    chan_lower = (channel.name or "").lower()
+    for lvl in config.CEFR_ORDER:
+        code = lvl.lower()                       # 'a1'
+        slug = config.level_slug(lvl).lower()    # 'a1'
+        # (a) category named like "🌱 A1 ZONE | مبتدئ" -> normalised has "a1zone"
+        if cat_norm and (code + "zone") in cat_norm:
+            return lvl
+        # (b) channel slug-prefixed: a1-daily-tasks, a1_voice, ... (real prefix
+        #     only, so 'a1' never matches the middle of another word)
+        if chan_lower.startswith(f"{slug}-") or chan_lower.startswith(f"{slug}_"):
+            return lvl
+    return None
+
 # The agreement message posted in #rules. MSA, bidi-safe.
 # Students react ✅ to this message to get the Student role.
 GATE_MESSAGE_AR = (
@@ -364,6 +393,7 @@ async def cmd_setupgate(ctx) -> bool:
     modified = 0
     errors = 0
     admin_locked = 0        # admin channels the Student role was DENIED on
+    zones_locked = 0        # level zones re-isolated to their own level role
 
     for channel in guild.channels:
         if not isinstance(channel, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel)):
@@ -397,6 +427,43 @@ async def cmd_setupgate(ctx) -> bool:
                 errors += 1
             continue
 
+        # LEVEL ZONES are per-level, NOT shared. The gateway role must NOT open
+        # them — only the channel's OWN level role may see it. The old loop
+        # granted the shared Student role view on every non-admin channel, which
+        # let every student see every level's zone. Re-assert isolation here so
+        # re-running !setupgate REPAIRS the leak.
+        zone_level = level_zone_of(channel)
+        if zone_level is not None:
+            try:
+                own_role_name = config.level_role_name(zone_level)
+                # gateway role must NOT grant access to a level zone
+                await channel.set_permissions(
+                    student_role, overwrite=None,
+                    reason="isolation: drop stale Student overwrite on level zone")
+                await channel.set_permissions(
+                    student_role, view_channel=False,
+                    reason="isolation: gateway role does not open per-level zones")
+                await channel.set_permissions(
+                    guild.default_role, view_channel=False,
+                    reason="isolation: level zone hidden from @everyone")
+                # own level sees it; every other level denied
+                for lvl in config.CEFR_ORDER:
+                    role = discord.utils.get(guild.roles, name=config.level_role_name(lvl))
+                    if role is None:
+                        continue
+                    if lvl == zone_level:
+                        await channel.set_permissions(
+                            role, view_channel=True, send_messages=True,
+                            reason=f"isolation: {zone_level} zone visible to its own level")
+                    else:
+                        await channel.set_permissions(
+                            role, view_channel=False,
+                            reason=f"isolation: {zone_level} zone hidden from other levels")
+                zones_locked += 1
+            except discord.Forbidden:
+                errors += 1
+            continue
+
         if channel.name in PUBLIC_CHANNELS:
             # These stay visible to @everyone
             try:
@@ -411,7 +478,9 @@ async def cmd_setupgate(ctx) -> bool:
             except discord.Forbidden:
                 errors += 1
         else:
-            # Student (non-admin) channels: deny @everyone, allow Student role
+            # SHARED student channels (community, resources, accountability, …):
+            # deny @everyone, allow the gateway role. These are the same for all
+            # levels, so the gateway role is the right key here.
             try:
                 await channel.set_permissions(
                     guild.default_role,
@@ -444,6 +513,7 @@ async def cmd_setupgate(ctx) -> bool:
         f"\u2705 **\u062a\u0645 \u0625\u0639\u062f\u0627\u062f \u0646\u0638\u0627\u0645 \u0627\u0644\u0628\u0648\u0627\u0628\u0629!**\n\n"
         f"\U0001f4dd \u0627\u0644\u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u0639\u062f\u0644\u0629: {modified}\n"
         f"\U0001f512 \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0645\u064f\u0642\u0641\u0644\u0629 \u0623\u0645\u0627\u0645 \u0627\u0644\u0637\u0644\u0627\u0628: {admin_locked}\n"
+        f"\U0001f3af \u0642\u0646\u0648\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u0648\u064a\u0627\u062a \u0627\u0644\u0645\u0639\u0632\u0648\u0644\u0629 (\u0643\u0644 \u0645\u0633\u062a\u0648\u0649 \u0644\u0637\u0644\u0627\u0628\u0647 \u0641\u0642\u0637): {zones_locked}\n"
         f"\u2705 \u0627\u0644\u0623\u0639\u0636\u0627\u0621 \u0627\u0644\u062d\u0627\u0644\u064a\u0648\u0646 (\u0645\u0646\u062d \u0627\u0644\u062f\u0648\u0631): {retroactive}\n"
     )
     if errors:
@@ -733,4 +803,110 @@ async def cmd_checkadmin(ctx) -> bool:
     )
     report = format_admin_exposure(audit)
     await ctx.send(f"**Admin-channel exposure | تسريب قنوات الإدارة**\n```\n{report}\n```")
+    return True
+
+
+
+# ============================================================
+#  LEVEL-ISOLATION AUDIT — the guardrail for cross-level leakage
+# ============================================================
+#
+#  Each per-level zone (a1-*, …, c2-*) must be visible ONLY to its own level
+#  role (plus staff). This read-only audit flags any zone channel that a
+#  student-reachable target that should NOT see it can view: @everyone, the
+#  shared gateway role, or ANOTHER level's role. It reports; !setupgate fixes.
+
+def audit_level_isolation(guild: discord.Guild) -> dict:
+    """Return {'leaks': [...], 'ok_count': int, 'checked': int}. Each leak is
+    {'channel', 'level', 'reasons':[...]} where a wrong target can view the zone."""
+    student_role = discord.utils.get(guild.roles, name=STUDENT_ROLE_NAME)
+    leaks, ok_count, checked = [], 0, 0
+
+    for channel in guild.channels:
+        if not isinstance(channel, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel)):
+            continue
+        zone_level = level_zone_of(channel)
+        if zone_level is None:
+            continue
+        checked += 1
+        own_role_name = config.level_role_name(zone_level)
+        other_level_names = {config.level_role_name(l) for l in config.CEFR_ORDER
+                             if l != zone_level}
+        reasons = []
+        for target, ow in channel.overwrites.items():
+            if ow.view_channel is not True:
+                continue
+            tname = getattr(target, "name", None)
+            if target == guild.default_role:
+                reasons.append("@everyone can view")
+            elif student_role is not None and target == student_role:
+                reasons.append(f"the shared '{STUDENT_ROLE_NAME}' gateway role can view")
+            elif tname in other_level_names:
+                reasons.append(f"another level's role '{tname}' can view")
+            # own level role viewing is CORRECT — never flagged
+        if reasons:
+            leaks.append({"channel": channel.name, "level": zone_level, "reasons": reasons})
+        else:
+            ok_count += 1
+
+    return {"leaks": leaks, "ok_count": ok_count, "checked": checked}
+
+
+def format_level_isolation(audit: dict) -> str:
+    if audit["checked"] == 0:
+        return "No level-zone channels found to check."
+    if not audit["leaks"]:
+        return (f"OK: all {audit['checked']} level-zone channel(s) are isolated "
+                f"(each visible only to its own level).")
+    lines = [
+        f"[!] {len(audit['leaks'])} of {audit['checked']} level-zone channel(s) "
+        f"leak to the wrong students — run !setupgate to re-isolate:",
+        "",
+    ]
+    for e in audit["leaks"]:
+        lines.append(f"- #{e['channel']} ({e['level']} zone): " + "; ".join(e["reasons"]))
+    return "\n".join(lines)
+
+
+async def run_level_isolation_check(guild: discord.Guild, force: bool = False):
+    """Alert Empire Ops on a change of leak state (no daily spam). Read-only."""
+    audit = audit_level_isolation(guild)
+    fingerprint = ",".join(sorted(e["channel"] for e in audit["leaks"]))
+    last = database.get_setting("level_isolation_fingerprint", "")
+    changed = fingerprint != last
+    if force or (audit["leaks"] and changed):
+        try:
+            from . import ops_hub
+            await ops_hub.send_ops_alert(
+                "Level-isolation check",
+                format_level_isolation(audit),
+                severity="critical" if audit["leaks"] else "info",
+            )
+        except Exception as e:
+            logger.error(f"run_level_isolation_check: ops alert failed: {e}")
+    database.set_setting("level_isolation_fingerprint", fingerprint)
+    return audit
+
+
+async def cmd_checkchannels(ctx) -> bool:
+    """Admin command: audit BOTH admin-channel exposure AND per-level isolation.
+
+    Usage: !checkchannels (admin-only). Read-only — fix either finding with
+    !setupgate.
+    """
+    guild = getattr(ctx, "guild", None)
+    if guild is None:
+        await ctx.send("Run `!checkchannels` inside the server.", delete_after=15)
+        return True
+    admin_audit = audit_admin_exposure(guild)
+    level_audit = audit_level_isolation(guild)
+    database.set_setting(
+        "admin_exposure_fingerprint",
+        ",".join(sorted(e["channel"] for e in admin_audit["exposed"])))
+    database.set_setting(
+        "level_isolation_fingerprint",
+        ",".join(sorted(e["channel"] for e in level_audit["leaks"])))
+    report = (format_admin_exposure(admin_audit) + "\n\n"
+              + format_level_isolation(level_audit))
+    await ctx.send(f"**Channel security check | فحص أمان القنوات**\n```\n{report}\n```")
     return True
