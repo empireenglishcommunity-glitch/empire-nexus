@@ -4414,6 +4414,36 @@ async def _student_autocomplete(interaction: discord.Interaction, current: str):
     return out
 
 
+async def _member_autocomplete(interaction: discord.Interaction, current: str):
+    """Bot-supplied list of GUILD MEMBERS for onboarding slash options.
+
+    Distinct from _student_autocomplete, which lists only REGISTERED students —
+    onboarding targets brand-new members who are not registered yet, so we list
+    the guild's members instead. Like _student_autocomplete, the choices come
+    from the BOT (which sees every member via the members intent), NOT Discord's
+    native user-picker — the native picker is scoped to members who can view the
+    current channel, so from the private #admin-commands channel it shows nobody.
+    That mismatch is exactly why typing @ / the native picker didn't list
+    students here. Returns choices whose value is the member's id.
+    """
+    cur = (current or "").strip().casefold()
+    guild = interaction.guild
+    out = []
+    if guild is None:
+        return out
+    for m in guild.members:
+        if m.bot:
+            continue
+        name = m.display_name or m.name
+        did = str(m.id)
+        if cur and cur not in name.casefold() and cur not in did:
+            continue
+        out.append(app_commands.Choice(name=name[:100], value=did))
+        if len(out) >= 25:   # Discord caps autocomplete at 25
+            break
+    return out
+
+
 async def _resolve_student_arg(interaction: discord.Interaction, value: str):
     """Turn a slash `student` value (a discord_id from autocomplete, or a
     free-typed name) into (discord_id, member_or_None, db_row_or_None)."""
@@ -4535,14 +4565,31 @@ async def slash_setlevel(interaction: discord.Interaction,
 
 @bot.tree.command(name="onboard",
                   description="Fully onboard a new student (gateway + level + register) in one step.")
-@app_commands.describe(member="Pick the new student (Discord member)", level="Starting level")
+@app_commands.describe(student="Start typing the member's name, then pick them from the list",
+                       level="Starting level")
+@app_commands.autocomplete(student=_member_autocomplete)
 @app_commands.choices(level=_LEVEL_CHOICES)
 @app_commands.default_permissions(manage_guild=True)
 @app_commands.checks.has_permissions(manage_guild=True)
 @app_commands.guild_only()
 async def slash_onboard(interaction: discord.Interaction,
-                        member: discord.Member, level: app_commands.Choice[str]):
+                        student: str, level: app_commands.Choice[str]):
+    # `student` is a member id from the bot-supplied picker (which works from the
+    # private #admin-commands channel, unlike Discord's native member picker).
     await interaction.response.defer(ephemeral=True)
+    member = None
+    if student.isdigit() and interaction.guild:
+        member = interaction.guild.get_member(int(student))
+        if member is None:
+            try:
+                member = await interaction.guild.fetch_member(int(student))
+            except Exception:
+                member = None
+    if member is None:
+        await interaction.followup.send(
+            "Couldn't identify that member. Start typing the name and **pick from the list**.",
+            ephemeral=True)
+        return
     try:
         summary = await _do_onboard(interaction.guild, member, level.value)
     except ValueError as e:
