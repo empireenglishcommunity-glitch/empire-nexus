@@ -155,6 +155,56 @@ empire-nexus/
 - Tests: `pytest` in `tests/` — must pass before deployment
 - Docker: `docker compose up -d --build` to deploy changes
 
+### Discord admin commands are SLASH (`/`); `!` is for students
+Owner decision: admins drive the bot with **slash commands**, students keep `!`.
+When telling the owner/team to run an admin action, ALWAYS phrase it as `/` —
+`/setupgate`, `/checkchannels`, `/onboard`, `/setlevel`, `/status`, `/flag …` —
+never `!setupgate` etc. (writing the `!` form is a documentation slip that keeps
+happening; don't).
+- 9 admin commands have first-class native slash versions (`/onboard`,
+  `/setlevel`, `/find`, `/reset-student`, the `/itqan-*` set) + the `/nutq` group.
+- EVERY other admin command is reachable through the generic bridge
+  **`/admin command:<name> args:<rest as typed after !>`** — it re-dispatches to
+  the exact same prefix-command code via `get_context()`/`bot.invoke()`, so `/`
+  and `!` behave identically. Add new admin commands as normal `@bot.command`
+  with a `has_permissions` check and they appear in `/admin` automatically.
+- Why not `!` for admins: in the private `#admin-commands` channel, Discord's
+  native `@`-picker can't list students (they can't see the channel). Slash
+  pickers are bot-supplied, so they always work there.
+- Onboarding is team-run (`manual_onboarding` flag ON): students do NOT
+  self-onboard. Use **`/onboard`** — it grants the gateway role + level role +
+  registers + adds community-pings in one idempotent step.
+
+### `!setupgate` / channel-security contract (do NOT reintroduce leaks)
+Channel visibility is enforced by Discord permission **overwrites**, set once by
+`scripts/setup_server.py` and re-asserted by `/setupgate` (`role_gate.cmd_setupgate`).
+`/setupgate` used to blanket-grant the shared `✅ Student | طالب` gateway role
+`view_channel=True` on **every** non-`#rules`/`#welcome` channel — which twice
+caused real security leaks:
+1. students could see **admin channels** (fixed: PR #469), and
+2. students could see **every level's zone**, not just their own (fixed: PR #474).
+
+The permanent rules `/setupgate` now enforces — keep them:
+- The gateway role unlocks **SHARED** channels only (community, resources,
+  accountability, feedback, system). It must **NEVER** be granted view on:
+  - **admin/hidden channels** — detected by `role_gate.is_admin_only_channel()`
+    (the 🔒 ADMIN + 👻 Ghost categories; `admin-chat`, `mod-actions`,
+    `member-notes`, `bot-logs`, `dev-log`, `ghost-*`). Deny it there.
+  - **per-level zones** — detected by `role_gate.level_zone_of()` (slug-prefixed
+    `a1-…c2-` channels / the `<lvl> ZONE` categories). Each zone is visible to
+    its OWN level role only; every other level role AND the gateway role denied.
+- `setup_server.py` also denies the gateway role on those categories
+  (`STUDENT_GATEWAY_ROLE_NAME` — keep it in sync with `role_gate.STUDENT_ROLE_NAME`).
+- If you add a NEW channel type that should be private/segmented, teach BOTH
+  `setup_server.py` (the overwrites) AND `/setupgate`'s special-casing — do not
+  rely on the blanket "student channel" branch, which grants the shared gateway
+  role.
+- **Guardrail:** `/checkchannels` (and the daily loop via
+  `run_admin_exposure_check` + `run_level_isolation_check`) audits both admin
+  exposure and level isolation and alerts Empire Ops on any leak. After any
+  change to channels/roles/`/setupgate`, run `/checkchannels` and confirm
+  "all … hidden" + "all … isolated".
+
 ### Feature flags (discord-learning-bot — Aegis Phase 1)
 Any new risky or student-facing behavior added to `discord-learning-bot`
 should be wrapped behind a feature flag rather than going live the
