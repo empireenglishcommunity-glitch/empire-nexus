@@ -143,3 +143,39 @@ async def test_ensure_pings_role_noop_when_already_has_it():
         added = await community.ensure_pings_role(member, guild=object())
     assert added is False
     getrole.assert_not_called()   # short-circuits before touching the role
+
+
+
+# ── 5. /onboard member picker lists guild members (works in admin channel) ──
+@pytest.mark.asyncio
+async def test_member_autocomplete_lists_guild_members():
+    """The bot-supplied picker for /onboard must list guild members regardless
+    of channel visibility (the native picker didn't, from #admin-commands)."""
+    from src import bot as botmod
+
+    class FakeM:
+        def __init__(self, mid, name, is_bot=False):
+            self.id = mid
+            self.display_name = name
+            self.name = name
+            self.bot = is_bot
+
+    class FakeGuild:
+        members = [FakeM(1, "Nada Ibrahim"), FakeM(2, "Ahmed"),
+                   FakeM(3, "Empire Bot", is_bot=True)]
+
+    class FakeInteraction:
+        guild = FakeGuild()
+
+    # No filter → both humans, no bots.
+    res = await botmod._member_autocomplete(FakeInteraction(), "")
+    names = [c.name for c in res]
+    values = [c.value for c in res]
+    assert "Nada Ibrahim" in names and "Ahmed" in names
+    assert "Empire Bot" not in names          # bots excluded
+    assert "1" in values                        # value is the member id
+
+    # Filter by partial name.
+    res2 = await botmod._member_autocomplete(FakeInteraction(), "nada")
+    assert [c.name for c in res2] == ["Nada Ibrahim"]
+    assert res2[0].value == "1"
