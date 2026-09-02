@@ -62,9 +62,42 @@ ADMIN_CHANNEL_NAMES = {
     "ghost-commands", "ghost-showcase", "ghost-writing",
 }
 
+# Archived LEGACY "Level 0" material (pre-CEFR). The server was migrated from
+# the L0–L3 scheme to CEFR (A1–C2); the old "Level 0" category and its channels
+# were kept only as an ARCHIVE for staff and must NOT be visible to students.
+# The CEFR level detector (level_zone_of) recognizes only a1–c2 — and
+# config.level_slug("L0") maps to "a1" — so a legacy Level-0 category/channel
+# matches no zone and used to fall through to the SHARED branch, which granted
+# the student gateway role. We now treat archived Level-0 material as admin-only
+# (hidden from students). Matched on the normalised (lower, no separators) name,
+# so "l0", "level0", "levelzero" all hit; the CEFR "l1"…"c2" never contain "l0".
+LEGACY_ARCHIVE_NAME_HINTS = ("level0", "levelzero", "l0")
+
 
 def _norm_name(name: str) -> str:
     return (name or "").lower().replace("-", "").replace("_", "").replace(" ", "")
+
+
+def _is_legacy_level0(channel: "discord.abc.GuildChannel") -> bool:
+    """True if `channel` is part of the archived legacy 'Level 0' category or is
+    itself a legacy Level-0 channel (l0-/level0-/level-0- slug). Kept separate so
+    the intent — 'archived, staff-only' — is explicit and testable.
+
+    Guard against false positives: a bare 'l0' substring is risky (it could sit
+    inside an unrelated word), so a channel name only counts when it has a
+    legacy Level-0 slug PREFIX; the category match is the primary, reliable
+    signal (the archived category is literally named 'Level 0'). This never
+    matches community-live or any CEFR a1–c2 channel."""
+    cat = getattr(channel, "category", None)
+    cat_norm = _norm_name(cat.name) if cat else ""
+    if cat_norm and any(h in cat_norm for h in LEGACY_ARCHIVE_NAME_HINTS):
+        return True
+    chan_lower = (channel.name or "").lower()
+    # Slug prefixes only (real archived channel names), not loose substrings.
+    return (chan_lower.startswith("l0-") or chan_lower.startswith("l0_")
+            or chan_lower.startswith("level0-") or chan_lower.startswith("level0_")
+            or chan_lower.startswith("level-0-") or chan_lower.startswith("level-0_")
+            or chan_lower.startswith("level0"))
 
 
 def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
@@ -76,6 +109,9 @@ def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
     cat = getattr(channel, "category", None)
     cat_norm = _norm_name(cat.name) if cat else ""
     if cat_norm and any(h.replace(" ", "") in cat_norm for h in ADMIN_CATEGORY_HINTS):
+        return True
+    # Archived legacy "Level 0" material is staff-only — never expose to students.
+    if _is_legacy_level0(channel):
         return True
     # Also treat the channel's own name as a hint (e.g. a stray "admin-..." chan).
     chan_norm = _norm_name(channel.name)
