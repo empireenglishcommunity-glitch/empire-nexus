@@ -35,7 +35,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands, tasks
 
-from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, nour_journey, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth, suspension, assessment_watchdog
+from . import config, database, curriculum, tasks as task_engine, ai_engine, verification, features, ops_hub, ops_poller, ops_monitoring, role_gate, maintenance as maintenance_mod, changelog as changelog_mod, community, bot_integrity, sijil, ijtihad_boards, ijtihad_growth, suspension, assessment_watchdog
 
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -471,11 +471,7 @@ async def on_ready():
                 await community.ensure_hub_channel(_guild)
         except Exception as e:
             logger.warning(f"community: Phase 3 startup setup failed: {e}")
-    # Nour retired (owner decision 2026-07-28): all Nour scheduled jobs are
-    # disabled so no Nour-voiced DMs/reports go out. Task defs are kept for
-    # history but are never started.
-    # if not nour_journey_daily_check.is_running():
-    #     nour_journey_daily_check.start()
+    # Nour retired: no Nour scheduled jobs (removed 2026-09-03).
     if not onboarding_gate_check.is_running():
         onboarding_gate_check.start()
     if not markaz_daily_digest.is_running():
@@ -515,12 +511,6 @@ async def on_ready():
         nabd_weekly_summary.start()
     if not nabd_absence_check.is_running():
         nabd_absence_check.start()
-    # Nour retired (owner decision 2026-07-28): weekly self-review + weekly
-    # growth letter disabled (were the source of the "رسالة نور الأسبوعية" DM).
-    # if not nour_weekly_review.is_running():
-    #     nour_weekly_review.start()
-    # if not nour_growth_letter_task.is_running():
-    #     nour_growth_letter_task.start()
     # Audit fix (E5 robustness): voice minutes are persisted on voice-LEAVE
     # (verification.on_voice_leave). If the bot restarts while a student is
     # already sitting in a voice channel, there was no join event for that
@@ -1619,7 +1609,7 @@ async def markaz_daily_digest():
 
     Summarizes YESTERDAY's activity in one phone-readable message via
     the Empire Ops bot: active students, tasks completed, new
-    registrations, streak milestones, Nour conversations, and pending
+    registrations, streak milestones, and pending
     escalations. Gated behind 'markaz_daily_digest' so it can be
     disabled instantly without a redeploy if it ever misbehaves.
     """
@@ -1635,7 +1625,6 @@ async def markaz_daily_digest():
     tasks_done = database.total_submissions_on_date(yesterday_str)
     new_members = database.count_new_members_on(yesterday_str)
     milestones = database.streak_milestones_on(yesterday_str)
-    nour_convos = database.count_nour_conversations_on(yesterday_str)
 
     lines = [
         f"📊 *Daily Digest — {ops_hub.escape_markdown(display_date)}*",
@@ -1652,7 +1641,6 @@ async def markaz_daily_digest():
     else:
         lines.append("🔥 Streak milestones: 0")
     lines.append(f"🆕 New registrations: {new_members}")
-    lines.append(f"💬 Nour conversations: {nour_convos}")
 
     # Hissar P6: Security monitoring section
     if database.is_feature_enabled("hissar_ip_detection"):
@@ -1860,26 +1848,9 @@ async def community_hour_loop():
         pass
 
 
-@tasks.loop(time=datetime.time(hour=1, minute=0, tzinfo=_zone()))
-async def nour_journey_daily_check():
-    """Rawiya R2/R8: advance time-based onboarding journey steps once
-    per day (platform_intro -> streaks_explained -> channels_tour ->
-    independent). Runs once daily, well after midnight, so it fires at
-    most once per calendar day per student regardless of when they
-    joined. Safe no-op for every student not currently on one of these
-    specific steps (check_advancement's own step-transition table
-    already guards this — this loop just supplies the 'day_passed'
-    trigger to everyone with an active journey).
-    """
-    if not database.is_feature_enabled("nour_journey"):
-        return
-    conn = database._connect()
-    rows = conn.execute(
-        "SELECT discord_id FROM student_journey WHERE completed_at IS NULL"
-    ).fetchall()
-    conn.close()
-    for row in rows:
-        await nour_journey.check_advancement(row["discord_id"], "day_passed", bot)
+# nour_journey_daily_check loop removed 2026-09-03 (Nour retired). It was already
+# disabled (commented out in on_ready) and only supplied the journey 'day_passed'
+# trigger.
 
 
 @tasks.loop(time=datetime.time(hour=3, minute=0, tzinfo=_zone()))
@@ -2043,16 +2014,8 @@ async def nabd_absence_check():
         await features.check_absence_recovery(guild)
 
 
-@tasks.loop(time=datetime.time(hour=10, minute=0, tzinfo=_zone()))
-async def nour_weekly_review():
-    """Nour N5.1: weekly self-review — runs every Sunday at 10 AM."""
-    if _now().weekday() != 6:  # 6 = Sunday
-        return
-    from . import nour_personality
-    try:
-        await nour_personality.run_weekly_review(bot)
-    except Exception as e:
-        logger.error(f"Nour weekly review error: {e}")
+# nour_weekly_review loop removed 2026-09-03 (Nour retired; was never scheduled
+# and used nour_personality.run_weekly_review over the dead nour_conversations table).
 
 
 @tasks.loop(time=datetime.time(hour=11, minute=0, tzinfo=_zone()))
@@ -2496,18 +2459,10 @@ async def cmd_done(ctx, task: str = None):
         except Exception as e:
             logger.warning(f"!done mastery recording failed (non-fatal): {e}")
 
-    # Rawiya R2/R8: advance onboarding journey on first task completion
-    # (safe no-op if student isn't in journey or already past this step)
-    await nour_journey.check_advancement(str(ctx.author.id), "task_completed", bot)
-
-    # Aql (#15) Phase A6.4: journey_coverage's independent-flags model
-    # replaces the FSM above -- fires on the SAME real signal
-    # (task_completed), at the SAME call site, but flips a durable fact
-    # rather than advancing a state pointer. Both mechanisms coexist
-    # during Aql's dormant build-out (nour_journey.py is still the only
-    # thing that actually sends onboarding DMs today); this call has
-    # zero user-visible effect until Phase A9's cutover starts reading
-    # journey_coverage instead of student_journey.
+    # (Nour retired 2026-09-03: the journey check_advancement call was removed.)
+    # journey_coverage's independent-flags model fires on the real
+    # task_completed signal and flips a durable journey_coverage fact
+    # (independent of the retired Nour journey).
     database.set_journey_coverage(
         str(ctx.author.id), knows_daily_tasks=True, first_task_done=True,
     )
@@ -3545,48 +3500,25 @@ async def on_message(message: discord.Message):
             handled = await features.handle_tutorial_dm(message)
             if handled:
                 return
-        # Journey advancement: check if this DM advances the onboarding
-        # journey. The rule-based onboarding journey is still active even
-        # though the AI concierge has been removed — a non-command DM that
-        # advances the journey gets the scripted next-step reply; anything
-        # else simply falls through (no AI response).
-        if not message.content.startswith(config.BOT_PREFIX):
-            from . import nour_journey
-            try:
-                journey_reply = await nour_journey.try_message_triggered_advance(
-                    str(message.author.id), message.content.strip()
-                )
-                if journey_reply:
-                    # Journey advanced — send the scripted next-step message
-                    async with message.channel.typing():
-                        await asyncio.sleep(1.5)  # Human-like delay
-                    await message.channel.send(journey_reply)
-                    return
-            except Exception as e:
-                logger.error(f"Journey DM advance error: {e}")
+        # (Nour retired 2026-09-03: the rule-based onboarding journey's
+        # DM-advance step was removed here. Onboarding is team-run via
+        # /onboard now — see the journey removal.)
 
-    # Aql (#15) Phase A6.4: posting in one of the "tour" channels
-    # nour_journey.py's own channels_tour step introduces (daily-word,
-    # cheat-sheets, general-chat, ask-nour) is a real observed signal
-    # that this student has found and used channels beyond the
-    # default daily-tasks/bot-commands pair -- a genuine behavior, not
-    # a scripted checkpoint. Cheap membership check, no extra query
-    # unless the channel actually matches.
+    # journey_coverage signal: posting in one of these community channels is a
+    # real observed signal that the student has found channels beyond
+    # daily-tasks/bot-commands — a genuine behavior. This is the journey_coverage
+    # model (written by !done/!link/!streak too), NOT the retired Nour journey —
+    # kept intact. Cheap membership check, no extra query unless it matches.
     if hasattr(message.channel, "name") and message.channel.name in (
-        "daily-word", "cheat-sheets", "general-chat", "ask-nour",
+        "daily-word", "cheat-sheets", "general-chat",
     ):
         database.set_journey_coverage(str(message.author.id), knows_channels=True)
 
     # English-only detection (before processing commands)
     await features.check_english_only(message)
 
-    # Nour N4: Onboarding intelligence — catch confused new students
-    from . import nour_onboarding
-    try:
-        await nour_onboarding.check_wrong_channel(message)
-        await nour_onboarding.check_command_typo(message)
-    except Exception as e:
-        logger.error(f"Nour onboarding check error: {e}")
+    # (Nour retired 2026-09-03: the onboarding-intelligence nudges
+    # [wrong-channel / command-typo DMs] were removed here.)
 
     # BAWABA (Phase B0): rewrite Arabic aliases to English commands
     # before process_commands() sees them. Gated behind feature flag.
@@ -6079,12 +6011,8 @@ async def cmd_link(ctx):
             f"لو خلص أو ضاع، اكتب `!link` تاني عشان تاخد كود جديد."
         )
         await ctx.send("✅ Check your DMs! / شوف الرسائل الخاصة 📩")
-        # Rawiya R2/R8: advance onboarding journey when student links the platform
-        await nour_journey.check_advancement(discord_id, "link_used", bot)
-        # Aql (#15) Phase A6.4: same real signal, feeds the
-        # journey_coverage independent-flags model too -- see
-        # cmd_done's identical comment above for why both mechanisms
-        # coexist right now with zero user-visible effect.
+        # (Nour retired 2026-09-03: the journey check_advancement call was removed.)
+        # journey_coverage's independent-flags model — same real signal, kept.
         database.set_journey_coverage(discord_id, knows_platform_link=True)
     except discord.Forbidden:
         await ctx.send("❌ I can't DM you. Enable DMs from server members and try again.")
