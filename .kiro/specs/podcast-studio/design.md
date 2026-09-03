@@ -225,3 +225,39 @@ Bot-side scope for this phase (all additive, flag-gated, off by default):
   explains that rendering happens via the offline workflow, and points the owner
   to it. When an engine IS available (CI / GPU host / future service) the same
   code path produces the audio.
+
+
+## Phase 3 — Offline renderer (shipped 2026-09-02)
+
+The "render offline" half of the decision above is now concrete:
+
+- **`bots/discord-learning-bot/scripts/render_podcast_episode.py`** — the CLI
+  renderer. It imports the bot's OWN `src.sawt_tts.parse_script` + `voice_for`,
+  so the renderer and the bot can never disagree on how a script is split or
+  which voice a speaker gets. Co-host lines synthesize with Kokoro
+  (`af_heart` / `am_adam`); owner lines use a Chatterbox clone from a reference
+  clip when one is supplied, and otherwise fall back to a Kokoro voice so an
+  episode always renders. Delivery pace is graded per level from the profile's
+  `pace` descriptor (`very_slow` → `native`). Segments are stitched with natural
+  pauses (longer on speaker change and on `[PAUSE]`) and peak-normalized.
+
+- **`.github/workflows/podcast-render.yml`** — the `workflow_dispatch` renderer,
+  modeled on empire-dojo's `audio-render.yml`. Inputs: `script_path` (a file
+  under `content/podcast-scripts/`), `level`, optional `voice_ref_url` + `clone`
+  for owner cloning. It downloads the verified Kokoro model, installs Chatterbox
+  only when cloning, runs the script, and uploads the MP3 as the
+  **`episode-audio`** artifact.
+
+- **`content/podcast-scripts/`** — where reviewed scripts live (one `.txt` per
+  episode, `Speaker: text` lines). See its README for the full owner flow.
+
+**Owner flow:** `/generate-script` → review → save script to
+`content/podcast-scripts/<name>.txt` → run **podcast render (sawt)** → download
+the `episode-audio` MP3 → `/create-episode` (attach MP3) → `/publish-episode`.
+`/generate-audio` on the bot prints this exact plan + these steps.
+
+**Voice cloning** stays owner-only + consent-gated: `!sawt-consent` (attach the
+clip) records consent and stores the clip server-side; the same clip is passed
+to the renderer via `voice_ref_url` (with `clone: true`) to synthesize the
+owner's lines. Cloning is best-effort — if Chatterbox can't install/run, the
+owner's lines fall back to Kokoro and the episode still renders.

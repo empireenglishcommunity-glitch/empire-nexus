@@ -5863,11 +5863,20 @@ async def _generate_audio_text(guild, episode_id: int) -> str:
     # Graceful degrade — the normal case on the 512MB bot host.
     if result["reason"] == "engine_unavailable":
         lines.append(
-            "\nℹ️ **No TTS engine runs on the bot host** (it's a small container). "
-            "Render this episode's audio **offline** — the GitHub Actions renderer "
-            "uses this exact plan (Kokoro for co-hosts, your cloned voice for your "
-            "lines) — then attach the finished file with `/create-episode` and "
-            "publish with `/publish-episode`.")
+            "\nℹ️ **No TTS engine runs on the bot host** (it's a small container), "
+            "so render this episode's audio **offline**:\n"
+            "1. Save the reviewed script to `content/podcast-scripts/<name>.txt`.\n"
+            "2. Run the **podcast render (sawt)** GitHub Actions workflow "
+            "(`script_path` = that file, `level` = "
+            f"`{config.cefr_key(ep['level'])}`"
+            + (", set `clone` + `voice_ref_url` to use your cloned voice"
+               if plan["needs_clone"] else "")
+            + ").\n"
+            "3. Download the **episode-audio** MP3 artifact, attach it with "
+            "`/create-episode`, then `/publish-episode`.\n"
+            "The renderer uses this exact plan (Kokoro for co-hosts"
+            + (", your cloned voice for your lines" if plan["needs_clone"] else "")
+            + ").")
     else:
         lines.append(f"\n⚠️ Couldn't render ({result['reason']}).")
     return "\n".join(lines)
