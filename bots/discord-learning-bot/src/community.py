@@ -298,10 +298,13 @@ async def _grant_student_access(guild, channel) -> None:
     here, not by scripts/setup_server.py, so they inherit the COMMUNITY
     category's overwrites — which deny @everyone. Until an admin re-ran
     !setupgate, the student gateway role had no view overwrite on the new
-    channel, so students hit 'no permission'. We now grant the gateway role
-    view/send (and deny @everyone) at creation time, so the channel is student-
-    visible the moment it exists. Failure-tolerant: a missing Manage Roles /
-    hierarchy issue is logged, never raised (channel creation must not break)."""
+    channel, so students hit 'no permission'. We now grant the gateway role the
+    right access (and deny @everyone) at creation time, so the channel is
+    student-usable the moment it exists. For a TEXT channel that's view+send;
+    for a VOICE channel it's view+connect+speak (view alone lets a student SEE
+    the channel but not JOIN it — the reported 'no access to community voice'
+    bug). Failure-tolerant: a missing Manage Roles / hierarchy issue is logged,
+    never raised (channel creation must not break)."""
     try:
         from . import role_gate
         student_role = await role_gate.get_or_create_student_role(guild)
@@ -309,8 +312,9 @@ async def _grant_student_access(guild, channel) -> None:
             guild.default_role, view_channel=False,
             reason="community: hidden from @everyone until rules accepted")
         await channel.set_permissions(
-            student_role, view_channel=True, send_messages=True,
-            reason="community: visible to gated students (shared channel)")
+            student_role,
+            **role_gate._access_kwargs(channel, allow=True),
+            reason="community: usable by gated students (shared channel)")
     except Exception as e:
         logger.warning("community: couldn't grant student access on #%s: %s",
                        getattr(channel, "name", "?"), e)
