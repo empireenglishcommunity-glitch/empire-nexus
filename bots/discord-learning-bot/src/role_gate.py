@@ -62,16 +62,22 @@ ADMIN_CHANNEL_NAMES = {
     "ghost-commands", "ghost-showcase", "ghost-writing",
 }
 
-# Archived LEGACY "Level 0" material (pre-CEFR). The server was migrated from
-# the L0–L3 scheme to CEFR (A1–C2); the old "Level 0" category and its channels
-# were kept only as an ARCHIVE for staff and must NOT be visible to students.
-# The CEFR level detector (level_zone_of) recognizes only a1–c2 — and
-# config.level_slug("L0") maps to "a1" — so a legacy Level-0 category/channel
-# matches no zone and used to fall through to the SHARED branch, which granted
-# the student gateway role. We now treat archived Level-0 material as admin-only
-# (hidden from students). Matched on the normalised (lower, no separators) name,
-# so "l0", "level0", "levelzero" all hit; the CEFR "l1"…"c2" never contain "l0".
+# Archived material that must NOT be visible to students. Two flavours:
+#  * the legacy "Level 0" category/channels (pre-CEFR). The server was migrated
+#    from L0–L3 to CEFR (A1–C2); the old "Level 0" category and its channels were
+#    kept only as an ARCHIVE for staff. The CEFR detector (level_zone_of) knows
+#    only a1–c2 — and config.level_slug("L0") maps to "a1" — so a legacy Level-0
+#    category/channel matched no zone and fell through to the SHARED branch,
+#    which granted the student gateway role.
+#  * any ARCHIVE category (named "archive" / "أرشيف"), which is where the owner
+#    parks retired categories/channels. These are staff-only by definition.
+# All matched on the normalised (lower, no separators, ASCII-lower) name, so
+# emoji + Arabic + English wrappers like "🌱 Level 0 | مبتدئ" or "📦 Archive |
+# الأرشيف" all hit. The CEFR codes "a1"…"c2" never contain "level0"/"l0"/"archive".
 LEGACY_ARCHIVE_NAME_HINTS = ("level0", "levelzero", "l0")
+# Category-name hints for a generic archive (checked on the CATEGORY only, so a
+# real archive category is caught even if it doesn't mention "Level 0").
+ARCHIVE_CATEGORY_HINTS = ("archive", "archived", "\u0623\u0631\u0634\u064a\u0641", "\u0627\u0644\u0623\u0631\u0634\u064a\u0641")
 
 
 def _norm_name(name: str) -> str:
@@ -79,17 +85,20 @@ def _norm_name(name: str) -> str:
 
 
 def _is_legacy_level0(channel: "discord.abc.GuildChannel") -> bool:
-    """True if `channel` is part of the archived legacy 'Level 0' category or is
-    itself a legacy Level-0 channel (l0-/level0-/level-0- slug). Kept separate so
-    the intent — 'archived, staff-only' — is explicit and testable.
+    """True if `channel` is archived material that must stay staff-only: the
+    legacy 'Level 0' category/channels (l0-/level0-/level-0- slug), OR any
+    channel sitting inside an ARCHIVE category ('archive'/'أرشيف'). Kept separate
+    so the intent — 'archived, staff-only' — is explicit and testable.
 
     Guard against false positives: a bare 'l0' substring is risky (it could sit
     inside an unrelated word), so a channel name only counts when it has a
     legacy Level-0 slug PREFIX; the category match is the primary, reliable
-    signal (the archived category is literally named 'Level 0'). This never
-    matches community-live or any CEFR a1–c2 channel."""
+    signal (the archived category is literally named 'Level 0' or 'Archive').
+    This never matches community-live or any CEFR a1–c2 channel."""
     cat = getattr(channel, "category", None)
     cat_norm = _norm_name(cat.name) if cat else ""
+    if cat_norm and any(h in cat_norm for h in ARCHIVE_CATEGORY_HINTS):
+        return True
     if cat_norm and any(h in cat_norm for h in LEGACY_ARCHIVE_NAME_HINTS):
         return True
     chan_lower = (channel.name or "").lower()
@@ -454,6 +463,28 @@ async def cmd_setupgate(ctx) -> bool:
 
     guild = ctx.guild
     student_role = await get_or_create_student_role(guild)
+
+    # Immediate acknowledgement BEFORE the heavy loop. setupgate makes many
+    # sequential, rate-limited set_permissions calls (a level zone alone is ~9
+    # calls, and there can be dozens of channels), so the full run takes a while.
+    # Without this the channel — and the /admin slash bridge that awaits it —
+    # just shows "thinking…" for minutes and can hit Discord's interaction
+    # timeout. This early message makes it clear the work has started; the final
+    # summary is posted when it finishes.
+    channel_count = sum(
+        1 for c in guild.channels
+        if isinstance(c, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel))
+    )
+    try:
+        await ctx.send(
+            f"⏳ **إعداد البوابة بدأ…** بأمّن {channel_count} قناة "
+            f"(ممكن ياخد دقيقة أو اتنين بسبب حدود ديسكورد). هبعت الملخص لما أخلص.\n"
+            f"⏳ **Setting up the gate…** securing {channel_count} channels "
+            f"(this can take a minute or two due to Discord rate limits). "
+            f"I'll post a summary when done."
+        )
+    except discord.HTTPException:
+        pass
 
     modified = 0
     errors = 0

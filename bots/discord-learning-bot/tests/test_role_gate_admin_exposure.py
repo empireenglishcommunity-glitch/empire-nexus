@@ -184,3 +184,21 @@ def test_archived_level0_is_protected_from_deletion():
     it (protected_channel_reason flags admin channels). Confirms consistency."""
     ch = FakeTextChannel("l0-daily-tasks", category=FakeCategory("🌱 Level 0 | مبتدئ"))
     assert role_gate.protected_channel_reason(ch) is not None
+
+
+
+# ── An ARCHIVE category (not just "Level 0") must be admin-only ───────────────
+# The owner parks retired categories under an "Archive"/"أرشيف" category. Any
+# channel inside it must be staff-only, even if its own name looks ordinary.
+def test_archive_category_is_admin_only():
+    for cat_name in ("📦 Archive | الأرشيف", "ARCHIVE", "أرشيف",
+                     "🗄️ Archived — old zones", "archived"):
+        ch = FakeTextChannel("some-old-chan", category=FakeCategory(cat_name))
+        assert role_gate.is_admin_only_channel(ch), f"{cat_name!r} must be admin-only"
+
+
+def test_archive_detection_matches_category_not_channel_name():
+    # A channel literally named 'archives-of-honour' but NOT inside an archive
+    # category must stay student-visible (we key archive on the CATEGORY only).
+    ch = FakeTextChannel("archives-of-honour", category=FakeCategory("🏆 HONOUR"))
+    assert not role_gate.is_admin_only_channel(ch)

@@ -4801,20 +4801,38 @@ async def slash_admin(interaction: discord.Interaction, command: str, args: str 
 
     content = f"{config.BOT_PREFIX}{name}" + (f" {args}" if args else "")
     fake_msg = _SlashBridgeMessage(interaction, content)
+
+    # Acknowledge the interaction IMMEDIATELY, before running the command. Some
+    # admin commands (notably setupgate) make many sequential, rate-limited API
+    # calls and take a minute or more; if we waited for the whole run before
+    # sending the followup, the slash command would show "thinking…" the entire
+    # time and could exceed Discord's interaction window entirely. The command
+    # posts its own progress + summary into the channel, so this ack just closes
+    # the interaction promptly.
+    try:
+        await interaction.followup.send(
+            f"▶️ Running `{config.BOT_PREFIX}{name}`" + (f" {args}" if args else "")
+            + " — output will appear in this channel"
+            + " (longer commands like setupgate can take a minute or two).",
+            ephemeral=True)
+    except Exception:
+        pass
+
     try:
         ctx = await bot.get_context(fake_msg)
         ctx.command = cmd
         await bot.invoke(ctx)
-        await interaction.followup.send(
-            f"✅ Ran `{config.BOT_PREFIX}{name}`" + (f" {args}" if args else "")
-            + " — see the channel for its output.",
-            ephemeral=True)
     except Exception as e:            # never leak a traceback to the channel
         logger.error(f"/admin bridge failed for {name!r}: {type(e).__name__}: {e}")
-        await interaction.followup.send(
-            f"⚠️ `{config.BOT_PREFIX}{name}` did not complete: {type(e).__name__}. "
-            f"Check the logs / try the `!` form.",
-            ephemeral=True)
+        try:
+            await interaction.followup.send(
+                f"⚠️ `{config.BOT_PREFIX}{name}` did not complete: {type(e).__name__}. "
+                f"Check the logs / try the `!` form.",
+                ephemeral=True)
+        except Exception:
+            # Interaction may have expired on a very long run; the channel output
+            # (or its absence) is the source of truth at that point.
+            pass
 
 
 @bot.tree.command(name="deletechannel",
