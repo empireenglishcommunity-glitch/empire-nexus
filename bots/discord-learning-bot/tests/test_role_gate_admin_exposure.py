@@ -202,3 +202,39 @@ def test_archive_detection_matches_category_not_channel_name():
     # category must stay student-visible (we key archive on the CATEGORY only).
     ch = FakeTextChannel("archives-of-honour", category=FakeCategory("🏆 HONOUR"))
     assert not role_gate.is_admin_only_channel(ch)
+
+
+
+# ── "Not ready yet" categories (RESOURCES, FEEDBACK) are hidden from students ─
+# Owner decision: these sections are built but not ready, so students must not
+# see them. Hidden by CATEGORY name; un-hidden later by removing the hint and
+# re-running /setupgate.
+def test_resources_category_is_hidden_from_students():
+    for chan in ("cheat-sheets", "video-library", "podcast-recs", "book-club"):
+        ch = FakeTextChannel(chan, category=FakeCategory("📚 المصادر | RESOURCES"))
+        assert role_gate.is_admin_only_channel(ch), f"{chan} (RESOURCES) must be hidden"
+
+
+def test_feedback_category_is_hidden_from_students():
+    for chan in ("speaking-feedback", "writing-feedback", "accent-feedback"):
+        ch = FakeTextChannel(chan, category=FakeCategory("💬 التقييم | FEEDBACK"))
+        assert role_gate.is_admin_only_channel(ch), f"{chan} (FEEDBACK) must be hidden"
+
+
+def test_hidden_category_matches_english_or_arabic_name():
+    for cat_name in ("RESOURCES", "📚 المصادر", "Feedback", "التقييم", "💬 FEEDBACK | التقييم"):
+        ch = FakeTextChannel("some-chan", category=FakeCategory(cat_name))
+        assert role_gate.is_admin_only_channel(ch), f"{cat_name!r} must be hidden"
+
+
+def test_hidden_category_does_not_catch_community_or_cefr():
+    # A channel that merely mentions feedback/resources in its OWN name but sits
+    # in a student category must stay visible (we key on the CATEGORY only).
+    safe = [
+        FakeTextChannel("speaking-practice", category=FakeCategory("🌍 المجتمع | COMMUNITY")),
+        FakeTextChannel("general-chat", category=FakeCategory("🌍 المجتمع | COMMUNITY")),
+        FakeTextChannel("a1-showcase", category=FakeCategory("🌱 A1 ZONE | مبتدئ")),
+        FakeTextChannel("a1-questions", category=FakeCategory("🌱 A1 ZONE | مبتدئ")),
+    ]
+    for ch in safe:
+        assert not role_gate.is_admin_only_channel(ch), f"{ch.name} must stay visible"
