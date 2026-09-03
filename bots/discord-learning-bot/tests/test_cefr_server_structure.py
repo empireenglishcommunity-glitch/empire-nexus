@@ -111,3 +111,44 @@ def test_migration_script_imports_and_targets_legacy_zones():
     # It archives exactly the four legacy zone categories.
     assert len(mig._LEGACY_ZONE_NAMES) == 4
     assert "🌱 المستوى 0 | LEVEL 0" in mig._LEGACY_ZONE_NAMES
+
+
+
+# ============================================================
+#  Enriched #rules: copyright / legal + message chunking
+# ============================================================
+
+def test_rules_message_includes_copyright_and_legal_rules():
+    """#rules must carry the IP/copyright, privacy, account, and own-work rules,
+    attributed to MACAL EMPIRE (parent brand) / EEC (branch)."""
+    m = ss.RULES_MESSAGE
+    for token in ("RULE 8", "RULE 9", "RULE 10", "RULE 11",
+                  "Copyright", "MACAL EMPIRE", "© MACAL EMPIRE", "EEC"):
+        assert token in m, f"#rules must mention {token!r}"
+
+
+def test_rules_message_is_bilingual():
+    """The new rules include Arabic alongside English."""
+    assert "الأكاديمية" in ss.RULES_MESSAGE or "ملك MACAL EMPIRE" in ss.RULES_MESSAGE
+
+
+def test_chunk_message_respects_discord_limit():
+    chunks = ss._chunk_message(ss.RULES_MESSAGE)
+    assert len(chunks) >= 1
+    assert all(len(c) <= 2000 for c in chunks), "every chunk must fit Discord's 2000-char limit"
+    # nothing important is lost across the split
+    joined = "\n".join(chunks)
+    for token in ("RULE 1", "RULE 8", "RULE 11", "© MACAL EMPIRE"):
+        assert token in joined
+
+
+def test_chunk_message_keeps_short_content_single():
+    assert ss._chunk_message(ss.WELCOME_MESSAGE) == [ss.WELCOME_MESSAGE]
+    assert ss._chunk_message("short") == ["short"]
+
+
+def test_chunk_message_hard_splits_a_giant_line():
+    giant = "x" * 4500          # a single line with no boundaries
+    chunks = ss._chunk_message(giant)
+    assert all(len(c) <= 2000 for c in chunks)
+    assert "".join(chunks) == giant   # no characters lost

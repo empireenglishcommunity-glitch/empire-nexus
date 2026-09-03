@@ -43,6 +43,52 @@ from src import config  # single source of truth for the CEFR level model
 # which pulls in discord.py bot deps) — asserted below to match role_gate.
 STUDENT_GATEWAY_ROLE_NAME = "\u2705 Student | \u0637\u0627\u0644\u0628"
 
+# Discord's hard limit on a single message.
+_DISCORD_MSG_LIMIT = 2000
+
+
+def _chunk_message(content: str, limit: int = _DISCORD_MSG_LIMIT) -> list:
+    """Split `content` into a list of ≤`limit`-char chunks on paragraph/line
+    boundaries, so long pinned content (e.g. the bilingual #rules) posts as
+    several messages instead of failing Discord's 2000-char limit.
+
+    Splits on blank lines first (keeps rules whole), then single newlines, and
+    only hard-splits a single oversized line as a last resort. Returns at least
+    one chunk (the original content) when it already fits."""
+    content = content or ""
+    if len(content) <= limit:
+        return [content]
+
+    chunks, current = [], ""
+    # Prefer paragraph boundaries (blank line), preserving the separators.
+    for para in content.split("\n\n"):
+        block = para if not current else current + "\n\n" + para
+        if len(block) <= limit:
+            current = block
+            continue
+        if current:
+            chunks.append(current)
+            current = ""
+        # `para` alone is too big → split on single newlines.
+        if len(para) <= limit:
+            current = para
+            continue
+        for line in para.split("\n"):
+            piece = line if not current else current + "\n" + line
+            if len(piece) <= limit:
+                current = piece
+            else:
+                if current:
+                    chunks.append(current)
+                # A single line longer than the limit → hard slice it.
+                while len(line) > limit:
+                    chunks.append(line[:limit])
+                    line = line[limit:]
+                current = line
+    if current:
+        chunks.append(current)
+    return chunks or [content]
+
 
 def _cefr_level_role_configs():
     """The six CEFR level roles (C2→A1 for hierarchy, highest first). Names +
@@ -444,10 +490,35 @@ No skipping levels. No exceptions.
 You advance when you demonstrate competency.
 The exit exam is the only way up.
 
+🛡️ **RULE 8: Copyright & Intellectual Property**
+All lessons, daily tasks, cheat-sheets, materials, and content shared by the academy are the property of MACAL EMPIRE (© MACAL EMPIRE).
+They are for your personal learning only — no redistribution, reselling, reposting, or sharing outside EEC.
+Do not post copyrighted material you do not own.
+كل الدروس والمهام والملخصات والمحتوى بتاع الأكاديمية ملك MACAL EMPIRE — للتعلّم الشخصي بس.
+ممنوع إعادة النشر أو البيع أو المشاركة برّه المجتمع، وممنوع تنشر محتوى مش من حقك.
+
+🔒 **RULE 9: Privacy & Recordings**
+Voice sessions may be recorded for feedback and quality — by joining, you consent.
+Never share another member's recordings, screenshots, or personal info outside EEC without their consent.
+الجلسات الصوتية ممكن تتسجّل للمراجعة وتحسين الجودة، ودخولك معناه موافقتك.
+ممنوع تشارك تسجيلات أو صور أو بيانات أي عضو برّه المجتمع من غير إذنه.
+
+👤 **RULE 10: Your Account & Access**
+One account per person. Your practice-platform link is personal — never share it.
+Membership is personal and non-transferable.
+حساب واحد لكل شخص، ورابط منصة التمرين بتاعك شخصي — ممنوع تشاركه.
+العضوية شخصية ومش قابلة للتحويل.
+
+✍️ **RULE 11: Do Your Own Work**
+Submit your own speaking and writing — do not pass off AI-generated audio or text as yours.
+The point is your growth, and assessments must reflect your real level.
+قدّم شغلك أنت — ممنوع تبعت صوت أو كتابة من الذكاء الاصطناعي على إنها بتاعتك.
+الهدف تطوّرك أنت، والتقييم لازم يعكس مستواك الحقيقي.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-By being here, you agree to these rules.
-Questions? → #support
+By being here, you agree to these rules. Rules may be updated; continued membership means acceptance.
+© MACAL EMPIRE — Empire English Community (EEC). Questions? → #support
 """
 
 
@@ -696,15 +767,25 @@ class ServerSetup(discord.Client):
             # reopening the original bug (an unrelated long message
             # would still need to match everywhere but trailing
             # whitespace, which is a much narrower, safe allowance).
-            target = content.rstrip()
+            # Discord caps a single message at 2000 chars. Most content fits in
+            # one message, but the enriched bilingual #rules is longer, so we
+            # split over-long content into ≤2000-char chunks on paragraph
+            # boundaries and post them in order. The FIRST chunk is the one we
+            # pin and idempotency-check against, so re-runs never double-post.
+            chunks = _chunk_message(content)
+            first_target = chunks[0].rstrip()
             async for msg in channel.history(limit=20):
-                if msg.author == self.user and msg.content.rstrip() == target:
+                if msg.author == self.user and msg.content.rstrip() == first_target:
                     posted_message = msg
                     print(f"  ⏭️  #{ch_name} already has this exact content — skipped posting")
                     break
             else:
-                posted_message = await channel.send(content)
-                print(f"  ✅ Posted content in #{ch_name}")
+                posted_message = await channel.send(chunks[0])
+                for extra in chunks[1:]:
+                    await channel.send(extra)
+                    await asyncio.sleep(0.3)
+                print(f"  ✅ Posted content in #{ch_name}"
+                      + (f" ({len(chunks)} messages)" if len(chunks) > 1 else ""))
 
             # Pin it, if it isn't already (idempotent — Discord's own
             # API is a no-op if the message is already pinned, but
