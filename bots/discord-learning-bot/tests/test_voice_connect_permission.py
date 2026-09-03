@@ -34,14 +34,18 @@ def test_text_channel_grant_is_view_and_send():
 def test_voice_channel_grant_includes_connect_and_speak():
     kw = role_gate._access_kwargs(FakeVoice(), allow=True)
     assert kw["view_channel"] is True
-    assert kw["connect"] is True          # <-- the fix: JOIN permission
+    assert kw["connect"] is True          # <-- JOIN permission
     assert kw["speak"] is True
+    # use_voice_activation lets a student talk hands-free; without it Discord
+    # forces "Push to Talk Required".
+    assert kw["use_voice_activation"] is True
     assert "send_messages" not in kw
 
 
 def test_voice_channel_deny_blocks_connect():
     kw = role_gate._access_kwargs(FakeVoice(), allow=False)
-    assert kw == {"view_channel": False, "connect": False, "speak": False}
+    assert kw == {"view_channel": False, "connect": False, "speak": False,
+                  "use_voice_activation": False}
 
 
 def test_is_voice_detection():
