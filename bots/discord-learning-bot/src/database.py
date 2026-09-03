@@ -6705,6 +6705,19 @@ def publish_episode(episode_id: int) -> bool:
         conn.close()
 
 
+def get_episode_by_message_id(message_id: str) -> Optional[dict]:
+    """Find a published episode by the Discord message it was posted as, or None.
+    Used to turn a ✅ reaction on an episode message into a listen credit."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT * FROM podcast_episodes WHERE audio_message_id=?",
+            (str(message_id),)).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+
 def set_episode_audio_message_id(episode_id: int, message_id: str) -> None:
     """Store the Discord message ID after the episode is posted to a channel."""
     conn = _connect()

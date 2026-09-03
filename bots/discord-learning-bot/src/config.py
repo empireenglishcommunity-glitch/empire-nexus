@@ -486,6 +486,10 @@ STREAK_BONUS_POINTS = {7: 200, 14: 400, 30: 1000, 60: 2500, 100: 5000}
 POINTS_PER_TASK = 15
 POINTS_ALL_TASKS = 100  # Bonus for completing all 7 in a day
 POINTS_ASSESSMENT = 50
+# Sawt: small acknowledgement for listening to a podcast episode. Kept low and
+# once-per-episode so it can never rival real task work, only gently encourage
+# extra listening. Gated behind the sawt_listen_credit flag.
+POINTS_PODCAST_LISTEN = 5
 
 # POINTS_VOICE_LOUNGE = 20 was REMOVED 2026-08-29. It had zero references
 # anywhere in the repo — it was the original intent for rewarding lounge time and
