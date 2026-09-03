@@ -681,6 +681,13 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
         if handled:
             return
 
+    # Sawt: ✅ on a published podcast episode → listening credit. Checked here
+    # (before the bawaba_reactions gate and the role-gate ✅ early-return) so a
+    # student reacting to an episode gets credit regardless of those flags.
+    if str(payload.emoji) == "✅" and guild:
+        if await _handle_podcast_listen_reaction(payload, guild):
+            return
+
     # Check feature flag (use None for discord_id since this is a global check)
     if not database.is_feature_enabled("bawaba_reactions"):
         return
@@ -5745,6 +5752,62 @@ async def cmd_publish_episode(ctx, episode_id: int = None):
         return
     guild = ctx.guild or bot.get_guild(config.GUILD_ID)
     await ctx.send(await _publish_episode_text(guild, episode_id))
+
+
+def _award_listen_credit(discord_id: str, episode_id: int) -> bool:
+    """Record a listen and award the (small, capped, once-per-episode) credit.
+    Returns True if this was a NEW listen (credit awarded), False if the student
+    already listened or the flag is off. Gated behind sawt_listen_credit."""
+    if not database.is_feature_enabled("sawt_listen_credit"):
+        return False
+    # Only registered students can earn credit (FK + it's a student reward).
+    if not database.get_member(str(discord_id)):
+        return False
+    newly = database.record_listen(str(discord_id), episode_id)
+    if newly:
+        try:
+            database.add_points(str(discord_id), config.POINTS_PODCAST_LISTEN,
+                                f"podcast_listen:{episode_id}")
+        except Exception as e:  # noqa: BLE001 — never let a credit error break the flow
+            logger.warning(f"sawt: listen-credit points failed for {discord_id}: {e}")
+    return newly
+
+
+async def _handle_podcast_listen_reaction(payload, guild) -> bool:
+    """✅ on a published episode message → record the listen + award credit.
+    Returns True if this reaction was a podcast episode (handled), else False."""
+    ep = database.get_episode_by_message_id(str(payload.message_id))
+    if not ep:
+        return False  # not an episode message — let other handlers run
+    member = guild.get_member(payload.user_id)
+    if not member or member.bot:
+        return True  # it IS an episode message, just nothing to credit
+    _award_listen_credit(str(payload.user_id), ep["episode_id"])
+    return True
+
+
+@bot.command(name="listened")
+async def cmd_listened(ctx, episode_id: int = None):
+    """(Student) Mark a podcast episode as listened to earn a small credit.
+    Usage: !listened <episode_id>"""
+    if not database.is_feature_enabled("sawt_listen_credit"):
+        return  # silent no-op when the feature is off
+    if episode_id is None:
+        await ctx.send("Usage: `!listened <episode_id>`")
+        return
+    ep = database.get_episode(episode_id)
+    if not ep or not ep["published"]:
+        await ctx.send("❌ I couldn't find a published episode with that id.")
+        return
+    if database.has_listened(str(ctx.author.id), episode_id):
+        await ctx.send("✅ You already got credit for that episode — nice!")
+        return
+    awarded = _award_listen_credit(str(ctx.author.id), episode_id)
+    if awarded:
+        await ctx.send(f"🎧 Nice work! +{config.POINTS_PODCAST_LISTEN} points for "
+                       f"listening to **{ep['title']}**.")
+    else:
+        await ctx.send("✅ Recorded.")
 
 
 @bot.command(name="revoke")
