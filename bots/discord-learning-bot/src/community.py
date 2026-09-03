@@ -387,6 +387,13 @@ async def maybe_post_beacon(guild, lounge_channel) -> None:
     if not live_ch:
         return
 
+    # A beacon is useless if students can't SEE #community-live. It's only
+    # granted the gateway role at creation time, so a channel that already
+    # existed (or had its perms edited later) might be hidden from students.
+    # Re-assert student visibility here — idempotent and best-effort, so it
+    # silently self-repairs the common "beacon posts but nobody sees it" case.
+    await _grant_student_access(guild, live_ch)
+
     # Build and send the beacon
     lounge_name = getattr(lounge_channel, "name", MAJLIS_ANCHOR_NAME)
     text = build_beacon_text(member_ids, lounge_name, lounge_id)
@@ -757,12 +764,31 @@ async def ensure_pings_role(member, guild) -> bool:
 
 def build_beacon_mention(guild) -> str:
     """Build the @-mention for the pings role, or empty string if the flag
-    is OFF or role doesn't exist. Used by beacon messages."""
+    is OFF or the role genuinely doesn't exist. Used by beacon messages.
+
+    Self-heals the stored role ID: if `community_pings_role_id` was never saved
+    (the role exists in Discord but its ID was never persisted), the mention
+    used to silently resolve to "" — so the beacon posted with NO ping and
+    students were never notified. We now fall back to looking the role up by
+    NAME and store its ID, so the ping fires from then on. Purely a lookup +
+    save (guild.roles and get/set_setting are synchronous); it never creates a
+    role here."""
     if not database.is_feature_enabled("community_pings_optin"):
         return ""
     stored = database.get_setting(_PINGS_ROLE_KEY, "")
     if stored.isdigit():
         return f"<@&{stored}> "
+    # Self-heal: the ID was never stored — find the role by name and save it.
+    try:
+        import discord as dlib
+        role = dlib.utils.get(getattr(guild, "roles", []), name=COMMUNITY_PINGS_ROLE)
+        if role is not None:
+            database.set_setting(_PINGS_ROLE_KEY, str(role.id))
+            logger.info("community: self-healed pings role id (%s) from name lookup",
+                        role.id)
+            return f"<@&{role.id}> "
+    except Exception as e:
+        logger.warning("community: pings-role self-heal failed: %s", e)
     return ""
 
 

@@ -256,3 +256,48 @@ async def test_do_knock_rate_limited():
         result = await community.do_knock(member, guild)
 
     assert result.startswith("cooldown:")
+
+
+
+# ============================================================
+#  build_beacon_mention — self-heal (ID never stored)
+# ============================================================
+
+def test_build_beacon_mention_self_heals_from_name():
+    """If the pings-role ID was never stored but the role exists in the guild,
+    the mention must self-heal by looking the role up by NAME and persist its
+    id — so the beacon actually @-pings instead of silently posting no ping."""
+    database.sync_flag_registry()
+    _enable_flag("community_pings_optin")
+    # Simulate the broken state: no stored id.
+    database.set_setting("community_pings_role_id", "")
+
+    role = _FakeRole("community-pings", "912")
+    guild = _FakeGuild(roles=[role])
+
+    mention = community.build_beacon_mention(guild)
+    assert mention == "<@&912> "
+    # …and it persisted the id so subsequent calls are cheap/consistent.
+    assert database.get_setting("community_pings_role_id", "") == "912"
+
+
+def test_build_beacon_mention_empty_when_role_absent_and_unstored():
+    """Flag ON, no stored id, and the role genuinely doesn't exist → no ping
+    (never invents a mention)."""
+    database.sync_flag_registry()
+    _enable_flag("community_pings_optin")
+    database.set_setting("community_pings_role_id", "")
+
+    guild = _FakeGuild(roles=[])   # no community-pings role anywhere
+    assert community.build_beacon_mention(guild) == ""
+
+
+def test_build_beacon_mention_prefers_stored_id_over_name():
+    """When a valid id is already stored, it's used as-is (no name lookup)."""
+    database.sync_flag_registry()
+    _enable_flag("community_pings_optin")
+    database.set_setting("community_pings_role_id", "800")
+
+    # Guild has a DIFFERENT role id by name; stored id must win.
+    guild = _FakeGuild(roles=[_FakeRole("community-pings", "999")])
+    assert community.build_beacon_mention(guild) == "<@&800> "
