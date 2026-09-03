@@ -73,3 +73,67 @@ async def test_setupgate_admin_only_guard(monkeypatch):
     assert len(ctx.messages) == 1
     assert "Admin only" in ctx.messages[0]
     ctx.author.guild_permissions.administrator = True   # restore for other tests
+
+
+
+# ── setupgate retroactive grant must SKIP suspended members ──────────────────
+# Incident (2026-09-03): re-running /setupgate re-granted the Student role to
+# EVERY member without it — including suspended students — silently undoing all
+# active suspensions and putting them all back in the community at once.
+
+class _RetroMember:
+    def __init__(self, mid, has_role=False):
+        from src import role_gate as rg
+        self.id = int(mid)
+        self.display_name = f"user{mid}"
+        self.bot = False
+        self.roles = [type("R", (), {"name": rg.STUDENT_ROLE_NAME})()] if has_role else []
+        self.granted = False
+
+    async def add_roles(self, role, reason=None):
+        self.granted = True
+        self.roles.append(role)
+
+
+class _RetroGuild:
+    def __init__(self, members):
+        self.channels = []          # skip the permission loop
+        self.roles = []
+        self.members = members
+        self.default_role = object()
+
+
+class _RetroCtx:
+    def __init__(self, guild):
+        self.author = FakeAuthor()
+        self.guild = guild
+        self.messages = []
+
+    async def send(self, content, **kwargs):
+        self.messages.append(content)
+
+
+@pytest.mark.asyncio
+async def test_setupgate_retroactive_skips_suspended_members(monkeypatch):
+    from src import database, role_gate
+
+    active_id, susp_id = "9101", "9102"
+    database.register_member(active_id, "Active One", level="A1")
+    database.register_member(susp_id, "Suspended One", level="A1")
+    database.suspend_member(susp_id)
+    assert database.is_suspended(susp_id) is True
+
+    active = _RetroMember(active_id, has_role=False)
+    suspended = _RetroMember(susp_id, has_role=False)
+    ctx = _RetroCtx(_RetroGuild([active, suspended]))
+
+    fake_role = type("R", (), {"name": role_gate.STUDENT_ROLE_NAME})()
+
+    async def fake_get_or_create(guild):
+        return fake_role
+    monkeypatch.setattr(role_gate, "get_or_create_student_role", fake_get_or_create)
+
+    await role_gate.cmd_setupgate(ctx)
+
+    assert active.granted is True        # active member retro-granted
+    assert suspended.granted is False    # suspended member SKIPPED

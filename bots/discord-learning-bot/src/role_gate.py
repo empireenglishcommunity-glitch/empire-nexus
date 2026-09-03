@@ -856,17 +856,25 @@ async def cmd_setupgate(ctx) -> bool:
             except discord.Forbidden:
                 errors += 1
 
-    # Also grant existing members the Student role (retroactive)
+    # Also grant existing members the Student role (retroactive).
+    # CRITICAL: skip SUSPENDED members — they had their roles stripped for a
+    # reason. An earlier version of this loop re-granted the Student role to
+    # EVERY member without it, which silently undid every active suspension
+    # the moment an admin re-ran /setupgate (the exact incident that put ALL
+    # suspended students back in the community at once).
     retroactive = 0
     for member in guild.members:
         if member.bot:
             continue
-        if not has_student_role(member):
-            try:
-                await member.add_roles(student_role, reason="Hissar P1.2: retroactive grant for existing members")
-                retroactive += 1
-            except discord.Forbidden:
-                pass
+        if has_student_role(member):
+            continue
+        if database.is_suspended(str(member.id)):
+            continue
+        try:
+            await member.add_roles(student_role, reason="Hissar P1.2: retroactive grant for existing members")
+            retroactive += 1
+        except discord.Forbidden:
+            pass
 
     result = (
         f"\u2705 **\u062a\u0645 \u0625\u0639\u062f\u0627\u062f \u0646\u0638\u0627\u0645 \u0627\u0644\u0628\u0648\u0627\u0628\u0629!**\n\n"
