@@ -286,6 +286,22 @@ async def grant_student_role(member: discord.Member, start_journey: bool = True)
     if has_student_role(member):
         return False
 
+    # SECURITY (2026-09-03): never re-grant access to a SUSPENDED student.
+    # This is the single chokepoint every grant path flows through — the
+    # self-serve ✅ reaction gate, the on-rejoin self-heal
+    # (check_existing_reaction_on_join), and !onboard. A suspended student who
+    # left and rejoined the server was silently re-granted the gateway role
+    # here (their old ✅ reaction is still on #rules), which put them back in
+    # the community despite being suspended. Guarding here closes ALL of those
+    # holes at once. To bring a suspended student back, use /restore (which
+    # clears suspended_at first), not a re-grant.
+    if database.is_suspended(str(member.id)):
+        logger.warning(
+            "Role-gate: REFUSED to grant Student role to suspended member "
+            "%s (%s) — use /restore to bring them back.",
+            member.display_name, member.id)
+        return False
+
     role = await get_or_create_student_role(member.guild)
     try:
         await member.add_roles(role, reason="role-gate: gateway role granted (unlocks channels)")
@@ -433,6 +449,13 @@ async def check_existing_reaction_on_join(member: discord.Member) -> None:
         return
     if has_student_role(member):
         return  # already has it, nothing to heal
+    # A SUSPENDED student who left and rejoined still has their old ✅ on the
+    # rules message — do NOT self-heal them back in. (grant_student_role also
+    # refuses, but skip the whole message fetch here for clarity + safety.)
+    if database.is_suspended(str(member.id)):
+        logger.info("Role-gate: skipping rejoin self-heal for suspended member "
+                    "%s (%s).", member.display_name, member.id)
+        return
 
     gate_msg_id = database.get_setting("role_gate_message_id", "")
     if not gate_msg_id:
