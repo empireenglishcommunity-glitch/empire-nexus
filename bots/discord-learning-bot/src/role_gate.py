@@ -101,7 +101,12 @@ def _access_kwargs(channel, *, allow: bool) -> dict:
     why students could SEE community/level voice channels but got 'no access'
     when trying to join."""
     if _is_voice(channel):
-        return {"view_channel": allow, "connect": allow, "speak": allow}
+        # use_voice_activation lets a student talk hands-free. Without granting
+        # it, Discord forces Push-to-Talk ("Push to Talk Required") — students
+        # could join and hear but not speak normally. setup_server grants it;
+        # setupgate must too, or a re-apply strands students on PTT.
+        return {"view_channel": allow, "connect": allow, "speak": allow,
+                "use_voice_activation": allow}
     return {"view_channel": allow, "send_messages": allow}
 
 
