@@ -43,51 +43,11 @@ from src import config  # single source of truth for the CEFR level model
 # which pulls in discord.py bot deps) — asserted below to match role_gate.
 STUDENT_GATEWAY_ROLE_NAME = "\u2705 Student | \u0637\u0627\u0644\u0628"
 
-# Discord's hard limit on a single message.
-_DISCORD_MSG_LIMIT = 2000
-
-
-def _chunk_message(content: str, limit: int = _DISCORD_MSG_LIMIT) -> list:
-    """Split `content` into a list of ≤`limit`-char chunks on paragraph/line
-    boundaries, so long pinned content (e.g. the bilingual #rules) posts as
-    several messages instead of failing Discord's 2000-char limit.
-
-    Splits on blank lines first (keeps rules whole), then single newlines, and
-    only hard-splits a single oversized line as a last resort. Returns at least
-    one chunk (the original content) when it already fits."""
-    content = content or ""
-    if len(content) <= limit:
-        return [content]
-
-    chunks, current = [], ""
-    # Prefer paragraph boundaries (blank line), preserving the separators.
-    for para in content.split("\n\n"):
-        block = para if not current else current + "\n\n" + para
-        if len(block) <= limit:
-            current = block
-            continue
-        if current:
-            chunks.append(current)
-            current = ""
-        # `para` alone is too big → split on single newlines.
-        if len(para) <= limit:
-            current = para
-            continue
-        for line in para.split("\n"):
-            piece = line if not current else current + "\n" + line
-            if len(piece) <= limit:
-                current = piece
-            else:
-                if current:
-                    chunks.append(current)
-                # A single line longer than the limit → hard slice it.
-                while len(line) > limit:
-                    chunks.append(line[:limit])
-                    line = line[limit:]
-                current = line
-    if current:
-        chunks.append(current)
-    return chunks or [content]
+# The message chunker lives in config now (shared with the bot's /repost-rules
+# so the two never drift). Kept as a module-level alias so the rest of this
+# script (and its tests) can keep calling _chunk_message unchanged.
+_DISCORD_MSG_LIMIT = config.DISCORD_MSG_LIMIT
+_chunk_message = config.chunk_message
 
 
 def _cefr_level_role_configs():
@@ -449,77 +409,9 @@ It is a complete **Learning Operating System.**
 🏛️ *System over instructor. Execution over theory. Common sense first.*
 """
 
-RULES_MESSAGE = """🏛️ **EMPIRE ENGLISH — COMMUNITY RULES**
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🗣️ **RULE 1: English Only**
-All text and voice channels are English-only.
-Exception: your level's questions channel (e.g. #a1-questions) — one-sentence Arabic clarifications.
-A1-A2: gentle reminders. B1+: enforcement applies.
-
-📚 **RULE 2: Complete Your Daily Tasks**
-The system works when YOU work it.
-7 tasks daily. Check in morning. Report evening.
-Consistency > perfection.
-
-🤝 **RULE 3: Support, Don't Judge**
-Everyone here started at zero.
-Correct with kindness. Celebrate small wins.
-Never mock pronunciation or mistakes.
-
-🎙️ **RULE 4: Voice Lounges**
-Mic required (camera optional).
-Max 2 minutes continuous talking (let others speak).
-10-minute minimum for it to count.
-Stay on topic during structured sessions.
-
-📝 **RULE 5: Submissions & Feedback**
-Record and submit your speaking missions.
-Give constructive feedback to others.
-Accept feedback gracefully — it's how you grow.
-
-🚫 **RULE 6: Zero Tolerance**
-No harassment, hate speech, or bullying.
-No spam, self-promotion, or off-topic flooding.
-No sharing of private recordings without consent.
-Violations → immediate mod review.
-
-📈 **RULE 7: Advancement**
-No skipping levels. No exceptions.
-You advance when you demonstrate competency.
-The exit exam is the only way up.
-
-🛡️ **RULE 8: Copyright & Intellectual Property**
-All lessons, daily tasks, cheat-sheets, materials, and content shared by the academy are the property of MACAL EMPIRE (© MACAL EMPIRE).
-They are for your personal learning only — no redistribution, reselling, reposting, or sharing outside EEC.
-Do not post copyrighted material you do not own.
-كل الدروس والمهام والملخصات والمحتوى بتاع الأكاديمية ملك MACAL EMPIRE — للتعلّم الشخصي بس.
-ممنوع إعادة النشر أو البيع أو المشاركة برّه المجتمع، وممنوع تنشر محتوى مش من حقك.
-
-🔒 **RULE 9: Privacy & Recordings**
-Voice sessions may be recorded for feedback and quality — by joining, you consent.
-Never share another member's recordings, screenshots, or personal info outside EEC without their consent.
-الجلسات الصوتية ممكن تتسجّل للمراجعة وتحسين الجودة، ودخولك معناه موافقتك.
-ممنوع تشارك تسجيلات أو صور أو بيانات أي عضو برّه المجتمع من غير إذنه.
-
-👤 **RULE 10: Your Account & Access**
-One account per person. Your practice-platform link is personal — never share it.
-Membership is personal and non-transferable.
-حساب واحد لكل شخص، ورابط منصة التمرين بتاعك شخصي — ممنوع تشاركه.
-العضوية شخصية ومش قابلة للتحويل.
-
-✍️ **RULE 11: Do Your Own Work**
-Submit your own speaking and writing — do not pass off AI-generated audio or text as yours.
-The point is your growth, and assessments must reflect your real level.
-قدّم شغلك أنت — ممنوع تبعت صوت أو كتابة من الذكاء الاصطناعي على إنها بتاعتك.
-الهدف تطوّرك أنت، والتقييم لازم يعكس مستواك الحقيقي.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-By being here, you agree to these rules. Rules may be updated; continued membership means acceptance.
-© MACAL EMPIRE — Empire English Community (EEC). Questions? → #support
-"""
+# The pinned #rules text is the canonical copy in config (shared with the bot's
+# /repost-rules command so they never drift). Aliased here for the content map.
+RULES_MESSAGE = config.RULES_MESSAGE
 
 
 # ROLES_INFO_MESSAGE removed 2026-09-03 along with the #roles-info channel

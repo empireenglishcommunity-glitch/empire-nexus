@@ -5454,6 +5454,15 @@ async def cmd_cleanrules(ctx, confirm: str = ""):
         ctx, confirm=confirm.strip().lower() in ("confirm", "true", "yes", "go"))
 
 
+@bot.command(name="repost-rules")
+@commands.has_permissions(administrator=True)
+async def cmd_repost_rules(ctx, confirm: str = ""):
+    """(Re)post the canonical #rules content, pinned; keeps the ✅ gate.
+    `!repost-rules` = dry run; `!repost-rules confirm` = actually repost."""
+    await role_gate.cmd_repost_rules(
+        ctx, confirm=confirm.strip().lower() in ("confirm", "true", "yes", "go"))
+
+
 @bot.command(name="setupgate")
 @commands.has_permissions(administrator=True)
 async def cmd_setupgate(ctx):
