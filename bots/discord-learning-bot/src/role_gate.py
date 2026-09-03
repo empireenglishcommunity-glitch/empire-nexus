@@ -497,6 +497,98 @@ async def cmd_postgate(ctx) -> bool:
 
 
 # ============================================================
+#  ADMIN: !cleanrules — tidy up the #rules channel safely
+# ============================================================
+
+async def cmd_cleanrules(ctx, confirm: bool = False) -> bool:
+    """Admin command: clean up a messy #rules channel.
+
+    Deletes messages in #rules EXCEPT the ones worth keeping — pinned messages
+    and the stored role-gate ✅ message — so the onboarding gate and reactions
+    survive. This is deliberately non-destructive to the gate: we do NOT delete
+    and recreate the channel (that would break the reaction gate, drop the pin,
+    and un-react everyone). Requires confirm=True to actually delete; otherwise
+    it's a dry run that just reports what it would remove.
+
+    Usage:
+      !cleanrules          — dry run (counts what would be deleted)
+      !cleanrules confirm  — actually delete the non-kept messages
+    """
+    if not ctx.author.guild_permissions.administrator:
+        await ctx.send("\U0001f512 Admin only.", delete_after=10)
+        return True
+
+    rules_channel = discord.utils.get(ctx.guild.text_channels, name="rules")
+    if not rules_channel:
+        await ctx.send("\u274c Cannot find `#rules` channel.", delete_after=10)
+        return True
+
+    # Messages to KEEP: anything pinned, plus the stored gate message id (belt
+    # and suspenders in case the gate message was never pinned).
+    try:
+        pinned = await rules_channel.pins()
+        keep_ids = {m.id for m in pinned}
+    except Exception:
+        keep_ids = set()
+    stored_gate = database.get_setting("role_gate_message_id", "")
+    if stored_gate.isdigit():
+        keep_ids.add(int(stored_gate))
+
+    # Count / collect deletable messages (everything not in keep_ids).
+    to_delete = []
+    try:
+        async for msg in rules_channel.history(limit=None):
+            if msg.id not in keep_ids:
+                to_delete.append(msg)
+    except Exception as e:
+        await ctx.send(f"\u274c Couldn't read #rules history: {type(e).__name__}.",
+                       delete_after=15)
+        return True
+
+    if not to_delete:
+        await ctx.send("\u2705 #rules is already clean \u2014 nothing to remove "
+                       f"(keeping {len(keep_ids)} pinned/gate message(s)).")
+        return True
+
+    if not confirm:
+        await ctx.send(
+            f"\U0001f9f9 **DRY RUN.** Would delete **{len(to_delete)}** message(s) in "
+            f"{rules_channel.mention}, keeping **{len(keep_ids)}** pinned/gate message(s).\n"
+            f"Run `!cleanrules confirm` (or `/admin command:cleanrules args:confirm`) "
+            f"to actually clean it.")
+        return True
+
+    # Delete. Prefer bulk purge (fast, but Discord only bulk-deletes messages
+    # < 14 days old); fall back to per-message delete for anything older.
+    deleted = 0
+    errors = 0
+    try:
+        purged = await rules_channel.purge(
+            limit=None,
+            check=lambda m: m.id not in keep_ids,
+            reason="cleanrules: tidy up #rules (admin)")
+        deleted = len(purged)
+    except Exception:
+        # Fallback: delete one by one (handles >14-day-old messages too).
+        for msg in to_delete:
+            try:
+                await msg.delete()
+                deleted += 1
+            except Exception:
+                errors += 1
+
+    msg = [f"\u2705 **#rules cleaned.** Deleted **{deleted}** message(s); "
+           f"kept **{len(keep_ids)}** pinned/gate message(s)."]
+    if errors:
+        msg.append(f"\u26a0\ufe0f {errors} message(s) couldn't be deleted "
+                   f"(likely older than 14 days \u2014 delete those manually if needed).")
+    msg.append("\U0001f4dd #rules is now read-only for students (run `!setupgate` "
+               "if you haven't since this update).")
+    await ctx.send("\n".join(msg))
+    return True
+
+
+# ============================================================
 #  ADMIN: !setupgate — auto-configure channel permissions
 # ============================================================
 
@@ -613,13 +705,19 @@ async def cmd_setupgate(ctx) -> bool:
             continue
 
         if channel.name in PUBLIC_CHANNELS:
-            # These stay visible to @everyone
+            # These stay VISIBLE to @everyone (even before the rules gate).
+            # #rules is READ-ONLY: @everyone can view but NOT write. Onboarding
+            # is by REACTION (✅ on the pinned message), never by typing, so
+            # nobody needs send access — this is what stops students messing up
+            # #rules. (It used to grant send=True, which is why #rules got messy.)
+            # NOTE: add_reactions is intentionally NOT denied — the gate needs
+            # students to be able to react ✅.
             try:
                 await channel.set_permissions(
                     guild.default_role,
                     view_channel=True,
-                    send_messages=True if channel.name == "rules" else None,
-                    reason="Hissar P1.2: public channel (visible pre-gate)",
+                    send_messages=False if channel.name == "rules" else None,
+                    reason="Hissar P1.2: public channel (visible pre-gate; #rules read-only)",
                 )
                 # Student role doesn't need overwrite here (inherits)
                 modified += 1

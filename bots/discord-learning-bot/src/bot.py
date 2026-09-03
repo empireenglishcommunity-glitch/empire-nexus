@@ -5445,6 +5445,15 @@ async def cmd_postgate(ctx):
     await role_gate.cmd_postgate(ctx)
 
 
+@bot.command(name="cleanrules")
+@commands.has_permissions(administrator=True)
+async def cmd_cleanrules(ctx, confirm: str = ""):
+    """Clean up #rules: delete non-pinned messages, keeping the ✅ gate.
+    `!cleanrules` = dry run; `!cleanrules confirm` = actually delete."""
+    await role_gate.cmd_cleanrules(
+        ctx, confirm=confirm.strip().lower() in ("confirm", "true", "yes", "go"))
+
+
 @bot.command(name="setupgate")
 @commands.has_permissions(administrator=True)
 async def cmd_setupgate(ctx):
