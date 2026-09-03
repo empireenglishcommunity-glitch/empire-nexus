@@ -133,6 +133,10 @@ REGISTRY = [
     # `is_feature_enabled("cefr_curriculum")`. To tidy the row itself (optional,
     # never required):
     #     DELETE FROM feature_flags WHERE name='cefr_curriculum';
+
+    # ── SAWT (podcast studio) ──
+    ("sawt_episodes", "Sawt Phase 1: podcast episode management — /create-episode + /publish-episode post level-graded episodes to the per-level #<slug>-podcast channel (level-isolated). OFF until content is ready", "sawt", False),
+    ("sawt_listen_credit", "Sawt Phase 1: award a small, capped acknowledgement when a student marks a podcast episode listened (✅ / !listened). Additive; never breaks existing points/streak rules", "sawt", False),
 ]
 
 # Initiative display names and emoji
@@ -151,6 +155,7 @@ INITIATIVES = {
     "majlis": ("🏛️", "MAJLIS", "community lounge"),
     "taqdeem": ("🎓", "TAQDEEM", "assessment progression"),
     "miyar": ("📚", "MI'YAR", "CEFR curriculum"),
+    "sawt": ("🎙️", "SAWT", "podcast studio"),
 }
 
 
