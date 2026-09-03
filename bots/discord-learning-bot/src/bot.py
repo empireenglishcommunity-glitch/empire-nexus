@@ -5764,8 +5764,10 @@ async def slash_generate_script(interaction: discord.Interaction,
     script = await sawt_script.generate_script(topic, level.value, format.value)
     if not script:
         await interaction.followup.send(
-            "⚠️ Couldn't generate a script (the LLM returned nothing or is "
-            "unavailable). Try again, or check the API keys.", ephemeral=True)
+            "⚠️ Couldn't generate a script — the LLM returned nothing. This is "
+            "usually the Groq API key being missing/exhausted, or the configured "
+            "model being unavailable. Check `GROQ_API_KEY` and `GROQ_MODEL`, then "
+            "try again.", ephemeral=True)
         return
     ep_title = (title or topic).strip()[:200]
     eid = database.create_episode(level.value, ep_title, format.value,
