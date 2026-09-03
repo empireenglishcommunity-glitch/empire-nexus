@@ -138,6 +138,8 @@ REGISTRY = [
     ("sawt_episodes", "Sawt Phase 1: podcast episode management — /create-episode + /publish-episode post level-graded episodes to the per-level #<slug>-podcast channel (level-isolated). OFF until content is ready", "sawt", False),
     ("sawt_listen_credit", "Sawt Phase 1: award a small, capped acknowledgement when a student marks a podcast episode listened (✅ / !listened). Additive; never breaks existing points/streak rules", "sawt", False),
     ("sawt_script_gen", "Sawt Phase 2: LLM-assisted podcast script generation — /generate-script turns a topic + level + format into a level-graded conversation script for the owner to review before recording. Nothing publishes automatically", "sawt", False),
+    ("sawt_tts_pipeline", "Sawt Phase 3: in-bot audio assembly — /generate-audio parses a reviewed script into per-speaker segments and renders them via the configured TTS engine. On the 512MB bot host no engine is available, so it explains to render offline (GitHub Actions); the same path produces audio where an engine IS available", "sawt", False),
+    ("sawt_voice_clone", "Sawt Phase 3: use the owner's CLONED voice for their lines (Chatterbox). Requires explicit stored consent (!sawt-consent) + a reference clip; refuses without both. Owner voice only — never clones anyone else", "sawt", False),
 ]
 
 # Initiative display names and emoji

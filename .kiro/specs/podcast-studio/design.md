@@ -184,3 +184,44 @@ PODCAST_VOICES = {
 - Episode management commands are admin-only.
 - Voice cloning requires explicit stored consent; the ref clip is stored
   server-side, never exposed to students.
+
+
+
+## Phase 3 — REVISED architecture decision (2026-09-04)
+
+Investigation found two hard infra facts that change the Phase 3 plan:
+
+1. **The Discord bot runs in a 512MB / 0.5-CPU container** (docker-compose.yml).
+   Chatterbox voice-cloning needs ~2–3GB + real CPU; even Kokoro is not
+   installed in the bot. Running any TTS *inside the bot process* would OOM/crash
+   it. So in-process synthesis is off the table.
+2. **empire-dojo already solved this**: it renders all Kokoro audio **offline in
+   GitHub Actions** (.github/workflows/audio-render.yml) and commits the files.
+   Its own comment notes the *voice-cloning engines needed a GPU*, which is why
+   dojo uses Kokoro. Runtime never synthesizes.
+
+**Decision: mirror dojo — "render offline, publish inside."**
+- The bot does NOT synthesize audio in-process. It handles consent, the voice
+  registry, script→segment parsing, and publishing (Phase 1 commands).
+- A GitHub Actions workflow renders a script into a multi-speaker episode
+  (Chatterbox for the owner's cloned lines from a stored reference clip; Kokoro
+  for AI co-hosts), then the finished audio is attached via /create-episode.
+- The bot-side TTS adapter is **pluggable and degrades gracefully**: if the
+  engine isn't importable on the host (the normal case for the 512MB bot), it
+  returns a clear "render this offline" result instead of crashing. This keeps
+  everything flag-gated, testable, and safe, and leaves a clean seam to plug in
+  the CI renderer (or a future dedicated GPU service / ElevenLabs API) with no
+  redesign.
+
+Bot-side scope for this phase (all additive, flag-gated, off by default):
+- `sawt_voice_clone` + `sawt_tts_pipeline` flags.
+- `!sawt-consent` — records the owner's voice-clone consent; the clone path
+  refuses without it. Reference clip stored at data_persist/sawt/owner_voice_ref.*.
+- `sawt_tts` module: parse a script into per-speaker segments, a voice registry
+  (owner→clone, co-hosts→Kokoro voices), and an `assemble_episode` interface
+  that calls a pluggable engine adapter — which no-ops with a clear message when
+  no engine is available in-process.
+- `/generate-audio` (admin, flag-gated): wires the pipeline; on the bot host it
+  explains that rendering happens via the offline workflow, and points the owner
+  to it. When an engine IS available (CI / GPU host / future service) the same
+  code path produces the audio.

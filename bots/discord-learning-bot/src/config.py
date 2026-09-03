@@ -229,6 +229,11 @@ if _PERSIST_DIR.is_dir():
 else:
     DB_PATH = BASE_DIR / "empire_english.db"
 
+# Sawt (podcast) assets — the owner's voice reference clip etc. Lives beside the
+# DB so it survives a container rebuild (same persistent volume). Resolved off
+# DB_PATH's parent so the local-fallback path works in tests too.
+SAWT_DIR = DB_PATH.parent / "sawt"
+
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
