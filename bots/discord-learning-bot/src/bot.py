@@ -5739,6 +5739,50 @@ async def cmd_episodes(ctx, level: str = None):
     await ctx.send(_episodes_list_text(level))
 
 
+@bot.command(name="sawt-consent")
+@commands.has_permissions(administrator=True)
+async def cmd_sawt_consent(ctx, *args):
+    """(Owner) Record voice-clone consent + save your reference clip.
+
+    Run with a short (~10s) recording of YOUR voice ATTACHED to enable cloning
+    your voice for podcast lines. `!sawt-consent revoke` withdraws consent.
+    Only your own voice may be cloned — never anyone else's.
+    """
+    from . import sawt_voice
+    if args and args[0].lower() in ("revoke", "off", "no"):
+        sawt_voice.revoke_consent()
+        await ctx.send("🔇 Voice-clone consent **revoked**. The bot will not use "
+                       "your cloned voice until you grant it again.")
+        return
+
+    # Save an attached reference clip if provided.
+    saved = ""
+    if ctx.message.attachments:
+        att = ctx.message.attachments[0]
+        try:
+            data = await att.read()
+            saved = sawt_voice.save_ref_clip(data, att.filename)
+        except ValueError as e:
+            await ctx.send(f"⚠️ {e}")
+            return
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"sawt: ref-clip save failed: {e}")
+            await ctx.send("⚠️ Couldn't save that clip — try again.")
+            return
+
+    sawt_voice.grant_consent()
+    have_clip = bool(sawt_voice.ref_clip_path())
+    msg = ["✅ **Voice-clone consent recorded.** Only your own voice will be cloned."]
+    if saved:
+        msg.append("🎙️ Reference clip saved.")
+    elif not have_clip:
+        msg.append("⚠️ No reference clip yet — re-run `!sawt-consent` with a short "
+                   "(~10s) recording of your voice **attached** before generating audio.")
+    else:
+        msg.append("🎙️ Using your existing reference clip.")
+    await ctx.send("\n".join(msg))
+
+
 @bot.tree.command(name="generate-script",
                   description="Draft a level-graded podcast script from a topic (LLM-assisted, for review).")
 @app_commands.describe(topic="What the episode is about",
@@ -5780,6 +5824,85 @@ async def slash_generate_script(interaction: discord.Interaction,
     await interaction.followup.send(header, ephemeral=True)
     for chunk in config.chunk_message(script):
         await interaction.followup.send(chunk, ephemeral=True)
+
+
+async def _generate_audio_text(guild, episode_id: int) -> str:
+    """Assemble (or plan) audio for an episode's script. On the bot host no TTS
+    engine runs in-process, so this reports the synthesis PLAN and points to the
+    offline renderer; where an engine is available the same path produces audio."""
+    from . import sawt_tts, sawt_voice
+    ep = database.get_episode(episode_id)
+    if not ep:
+        return f"❌ Episode #{episode_id} not found."
+    if not ep["script"]:
+        return (f"⚠️ Episode #{episode_id} (**{ep['title']}**) has no script. "
+                f"Generate one with `/generate-script` first.")
+
+    plan = sawt_tts.plan_episode(ep["script"])
+    if plan["segment_count"] == 0:
+        return (f"⚠️ Episode #{episode_id}'s script has no speaker lines I can "
+                f"parse (expected `Speaker: text`).")
+
+    voices = ", ".join(f"{role}×{n}" for role, n in plan["voices"].items())
+    lines = [f"🎧 **Audio plan for episode #{episode_id}** — **{ep['title']}** "
+             f"({config.cefr_key(ep['level'])})",
+             f"• Segments: **{plan['segment_count']}**  ·  Voices: {voices}"]
+
+    # Owner-voice readiness (only relevant if a clone segment is needed).
+    if plan["needs_clone"]:
+        ready, reason = sawt_voice.clone_ready()
+        lines.append("• Owner voice: " + ("✅ ready (consent + clip on file)"
+                     if ready else f"⚠️ not ready — {reason}"))
+
+    result = await sawt_tts.assemble_episode(ep["script"])
+    if result["ok"]:
+        database.update_episode_audio(episode_id, result["out_path"] or "")
+        lines.append(f"✅ Audio rendered → attach/publish with `/publish-episode id:{episode_id}`.")
+        return "\n".join(lines)
+
+    # Graceful degrade — the normal case on the 512MB bot host.
+    if result["reason"] == "engine_unavailable":
+        lines.append(
+            "\nℹ️ **No TTS engine runs on the bot host** (it's a small container). "
+            "Render this episode's audio **offline** — the GitHub Actions renderer "
+            "uses this exact plan (Kokoro for co-hosts, your cloned voice for your "
+            "lines) — then attach the finished file with `/create-episode` and "
+            "publish with `/publish-episode`.")
+    else:
+        lines.append(f"\n⚠️ Couldn't render ({result['reason']}).")
+    return "\n".join(lines)
+
+
+@bot.tree.command(name="generate-audio",
+                  description="Plan/render audio for an episode's script (renders offline on the bot host).")
+@app_commands.describe(id="The episode id (must already have a script)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_generate_audio(interaction: discord.Interaction, id: int):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled("sawt_tts_pipeline"):
+        await interaction.followup.send(
+            "⚠️ `sawt_tts_pipeline` is disabled. Enable it with "
+            "`/admin command:flag args:enable sawt_tts_pipeline`.", ephemeral=True)
+        return
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    await interaction.followup.send(await _generate_audio_text(guild, id), ephemeral=True)
+
+
+@bot.command(name="generate-audio")
+@commands.has_permissions(administrator=True)
+async def cmd_generate_audio(ctx, episode_id: int = None):
+    """(Admin) Plan/render audio for an episode's script.
+    Usage: !generate-audio <id>"""
+    if episode_id is None:
+        await ctx.send("Usage: `!generate-audio <id>` (the episode needs a script).")
+        return
+    if not database.is_feature_enabled("sawt_tts_pipeline"):
+        await ctx.send("⚠️ `sawt_tts_pipeline` is disabled.")
+        return
+    guild = ctx.guild or bot.get_guild(config.GUILD_ID)
+    await ctx.send(await _generate_audio_text(guild, episode_id))
 
 
 @bot.command(name="publish-episode")
