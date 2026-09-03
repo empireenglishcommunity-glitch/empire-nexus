@@ -79,6 +79,17 @@ LEGACY_ARCHIVE_NAME_HINTS = ("level0", "levelzero", "l0")
 # real archive category is caught even if it doesn't mention "Level 0").
 ARCHIVE_CATEGORY_HINTS = ("archive", "archived", "\u0623\u0631\u0634\u064a\u0641", "\u0627\u0644\u0623\u0631\u0634\u064a\u0641")
 
+# Categories that are built but NOT ready for students yet, so they must stay
+# hidden (owner decision — showing half-finished sections looks unprofessional).
+# Matched on the CATEGORY name only (normalised: lower, no separators/spaces),
+# emoji/Arabic-insensitive, so "📚 المصادر | RESOURCES" and "💬 التقييم | FEEDBACK"
+# both hit via their English words. TO UN-HIDE a category once it's ready: remove
+# its hint from this tuple and re-run /setupgate — that restores student access.
+HIDDEN_CATEGORY_HINTS = (
+    "resources", "\u0627\u0644\u0645\u0635\u0627\u062f\u0631",   # RESOURCES / المصادر
+    "feedback", "\u0627\u0644\u062a\u0642\u064a\u064a\u0645",     # FEEDBACK / التقييم
+)
+
 
 def _norm_name(name: str) -> str:
     return (name or "").lower().replace("-", "").replace("_", "").replace(" ", "")
@@ -135,6 +146,17 @@ def _is_legacy_level0(channel: "discord.abc.GuildChannel") -> bool:
             or chan_lower.startswith("level0"))
 
 
+def _is_hidden_category(channel: "discord.abc.GuildChannel") -> bool:
+    """True if `channel` sits in a category that is built but not ready for
+    students yet (HIDDEN_CATEGORY_HINTS — e.g. RESOURCES, FEEDBACK). Keyed on
+    the CATEGORY name only, so it hides the whole section regardless of the
+    individual channel names, and never matches a channel that merely mentions
+    'feedback'/'resources' in its own name outside those categories."""
+    cat = getattr(channel, "category", None)
+    cat_norm = _norm_name(cat.name) if cat else ""
+    return bool(cat_norm) and any(h in cat_norm for h in HIDDEN_CATEGORY_HINTS)
+
+
 def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
     """True if `channel` is a staff-only channel the Student gateway role must
     never be granted access to. Checks the channel's own name AND its category
@@ -147,6 +169,10 @@ def is_admin_only_channel(channel: "discord.abc.GuildChannel") -> bool:
         return True
     # Archived legacy "Level 0" material is staff-only — never expose to students.
     if _is_legacy_level0(channel):
+        return True
+    # Categories built but not ready for students yet (RESOURCES, FEEDBACK) stay
+    # hidden until the owner un-hides them (remove from HIDDEN_CATEGORY_HINTS).
+    if _is_hidden_category(channel):
         return True
     # Also treat the channel's own name as a hint (e.g. a stray "admin-..." chan).
     chan_norm = _norm_name(channel.name)
