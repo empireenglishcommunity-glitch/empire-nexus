@@ -5739,6 +5739,47 @@ async def cmd_episodes(ctx, level: str = None):
     await ctx.send(_episodes_list_text(level))
 
 
+@bot.tree.command(name="generate-script",
+                  description="Draft a level-graded podcast script from a topic (LLM-assisted, for review).")
+@app_commands.describe(topic="What the episode is about",
+                       level="Which CEFR level to write for",
+                       format="Episode format",
+                       title="Episode title (optional — defaults to the topic)")
+@app_commands.choices(level=_LEVEL_CHOICES, format=_FORMAT_CHOICES)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_generate_script(interaction: discord.Interaction,
+                                topic: str,
+                                level: app_commands.Choice[str],
+                                format: app_commands.Choice[str],
+                                title: str = ""):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled("sawt_script_gen"):
+        await interaction.followup.send(
+            "⚠️ `sawt_script_gen` is disabled. Enable it with "
+            "`/admin command:flag args:enable sawt_script_gen`.", ephemeral=True)
+        return
+    from . import sawt_script
+    script = await sawt_script.generate_script(topic, level.value, format.value)
+    if not script:
+        await interaction.followup.send(
+            "⚠️ Couldn't generate a script (the LLM returned nothing or is "
+            "unavailable). Try again, or check the API keys.", ephemeral=True)
+        return
+    ep_title = (title or topic).strip()[:200]
+    eid = database.create_episode(level.value, ep_title, format.value,
+                                  description=f"Topic: {topic}", script=script)
+    header = (f"📝 **Draft script for episode #{eid}** — **{ep_title}** "
+              f"({config.cefr_key(level.value)}, {format.value}).\n"
+              f"Review/edit it, record the audio, then attach it via "
+              f"`/create-episode` (or re-use this draft) and `/publish-episode id:{eid}`.\n"
+              f"━━━━━━━━━━━━━━━━━━━━")
+    await interaction.followup.send(header, ephemeral=True)
+    for chunk in config.chunk_message(script):
+        await interaction.followup.send(chunk, ephemeral=True)
+
+
 @bot.command(name="publish-episode")
 @commands.has_permissions(administrator=True)
 async def cmd_publish_episode(ctx, episode_id: int = None):
