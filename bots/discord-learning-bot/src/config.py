@@ -724,3 +724,76 @@ def chunk_message(content: str, limit: int = DISCORD_MSG_LIMIT) -> list:
     if current:
         chunks.append(current)
     return chunks or [content]
+
+
+
+# ============================================================
+#  PODCAST STUDIO (Sawt صوت) — level profiles
+# ============================================================
+# Each CEFR level has a podcast profile controlling the language mix, pace,
+# vocabulary band, and target duration. Used by the script generator (Phase 2)
+# and as metadata on every published episode so the owner + the system know
+# what a level-appropriate episode looks like.
+#
+# arabic_ratio: fraction of content in Arabic (0.0 = English-only, 0.4 = 40%).
+# pace:         speaking speed descriptor (guides TTS speed + script density).
+# vocab:        vocabulary band (guides script word choice).
+# duration_min/max: target episode length in seconds.
+
+PODCAST_LEVEL_PROFILES = {
+    "A1": {
+        "arabic_ratio": 0.40,
+        "pace": "very_slow",
+        "vocab": "basic",
+        "duration_min": 180,
+        "duration_max": 300,
+        "description": "Heavy Arabic support (~40%), very simple English, every new word explained, short episodes.",
+    },
+    "A2": {
+        "arabic_ratio": 0.20,
+        "pace": "slow",
+        "vocab": "elementary",
+        "duration_min": 300,
+        "duration_max": 420,
+        "description": "Light Arabic (~20%) for clarifications, slow pace, short sentences.",
+    },
+    "B1": {
+        "arabic_ratio": 0.05,
+        "pace": "moderate",
+        "vocab": "everyday",
+        "duration_min": 420,
+        "duration_max": 600,
+        "description": "Mostly English (~5% Arabic for hard words), everyday pace.",
+    },
+    "B2": {
+        "arabic_ratio": 0.00,
+        "pace": "natural",
+        "vocab": "varied",
+        "duration_min": 600,
+        "duration_max": 720,
+        "description": "English 100%, natural pace, real dialogue.",
+    },
+    "C1": {
+        "arabic_ratio": 0.00,
+        "pace": "fast",
+        "vocab": "advanced",
+        "duration_min": 720,
+        "duration_max": 900,
+        "description": "English 100%, faster pace, idioms and depth.",
+    },
+    "C2": {
+        "arabic_ratio": 0.00,
+        "pace": "native",
+        "vocab": "academic",
+        "duration_min": 900,
+        "duration_max": 1200,
+        "description": "English 100%, near-native speed, academic/cultural topics.",
+    },
+}
+
+
+def podcast_level_profile(level: str) -> dict:
+    """Get the podcast profile for a CEFR level (or its legacy equivalent).
+    Returns the profile dict, or the A1 profile as a safe fallback."""
+    key = cefr_key(level)
+    return PODCAST_LEVEL_PROFILES.get(key, PODCAST_LEVEL_PROFILES["A1"])
