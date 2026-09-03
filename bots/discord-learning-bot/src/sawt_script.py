@@ -73,16 +73,56 @@ Write ONLY the script (speaker-labelled lines). No preamble, no explanation."""
 async def generate_script(topic: str, level: str, format: str,
                           speakers: list = None) -> Optional[str]:
     """Generate a level-graded conversation script for a topic. Returns the
-    script text, or None if the LLM is unavailable / returns nothing."""
+    script text, or None if the LLM is unavailable / returns nothing.
+
+    Uses a PLAIN-TEXT LLM call (not ai_engine._call_llm) on purpose: that path
+    hardcodes a 'always return valid JSON' system prompt, which mangles a
+    free-form podcast script. Here the model is told it's a scriptwriter and to
+    return only the script."""
     if format not in FORMAT_SPEAKERS:
         raise ValueError(f"Invalid format {format!r}; must be one of "
                          f"{tuple(FORMAT_SPEAKERS)}")
     prompt = build_prompt(topic, level, format, speakers)
     try:
-        text = await ai_engine._call_llm(prompt, temperature=0.85)
+        text = await _call_llm_text(prompt, temperature=0.85)
     except Exception as e:  # noqa: BLE001 — never crash the command on an LLM error
         logger.warning("sawt: script generation failed: %s", e)
         return None
     if not text or not text.strip():
         return None
     return text.strip()
+
+
+_SCRIPT_SYSTEM = ("You are an expert scriptwriter for an English-learning "
+                  "podcast for Arabic speakers. Return ONLY the script — "
+                  "speaker-labelled lines of natural spoken dialogue. No JSON, "
+                  "no preamble, no explanation.")
+
+
+async def _call_llm_text(prompt: str, temperature: float = 0.85) -> Optional[str]:
+    """Plain-text LLM call for scripts: Groq primary (with a scriptwriter system
+    prompt, NOT the JSON-forcing one), Gemini fallback. Returns text or None."""
+    # Groq primary.
+    if config.GROQ_API_KEY:
+        from . import groq_client
+        payload = {
+            "model": config.GROQ_MODEL,
+            "temperature": temperature,
+            "messages": [
+                {"role": "system", "content": _SCRIPT_SYSTEM},
+                {"role": "user", "content": prompt},
+            ],
+        }
+        try:
+            result = await groq_client.chat_completion(payload, timeout_seconds=45)
+            if result.ok and result.text:
+                return result.text
+            logger.warning("sawt: Groq script call failed (status=%s)", result.status)
+        except Exception as e:  # noqa: BLE001
+            logger.warning("sawt: Groq script call error: %s", e)
+    # Gemini fallback (plain text — ai_engine._call_gemini has no JSON system prompt).
+    try:
+        return await ai_engine._call_gemini(prompt, temperature)
+    except Exception as e:  # noqa: BLE001
+        logger.warning("sawt: Gemini script fallback error: %s", e)
+        return None

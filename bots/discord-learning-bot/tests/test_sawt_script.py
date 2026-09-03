@@ -44,7 +44,7 @@ def test_prompt_uses_legacy_level_mapping():
 @pytest.mark.asyncio
 async def test_generate_script_returns_llm_text():
     fake = "Host (you): Hello!\nAI co-host: Hi there!"
-    with patch.object(sawt_script.ai_engine, "_call_llm",
+    with patch.object(sawt_script, "_call_llm_text",
                       AsyncMock(return_value=fake)):
         out = await sawt_script.generate_script("Coffee", "A1", "solo_ai")
     assert out == fake
@@ -52,14 +52,14 @@ async def test_generate_script_returns_llm_text():
 
 @pytest.mark.asyncio
 async def test_generate_script_none_when_llm_empty():
-    with patch.object(sawt_script.ai_engine, "_call_llm",
+    with patch.object(sawt_script, "_call_llm_text",
                       AsyncMock(return_value="")):
         assert await sawt_script.generate_script("Coffee", "A1", "solo_ai") is None
 
 
 @pytest.mark.asyncio
 async def test_generate_script_none_when_llm_errors():
-    with patch.object(sawt_script.ai_engine, "_call_llm",
+    with patch.object(sawt_script, "_call_llm_text",
                       AsyncMock(side_effect=RuntimeError("boom"))):
         assert await sawt_script.generate_script("Coffee", "A1", "solo_ai") is None
 
@@ -68,6 +68,35 @@ async def test_generate_script_none_when_llm_errors():
 async def test_generate_script_rejects_invalid_format():
     with pytest.raises(ValueError):
         await sawt_script.generate_script("Coffee", "A1", "not_a_format")
+
+
+@pytest.mark.asyncio
+async def test_script_llm_call_does_not_force_json(monkeypatch):
+    """The script path must NOT reuse the JSON-forcing system prompt (which
+    mangles a free-form script). Its Groq system message is a scriptwriter one."""
+    from src import config
+    monkeypatch.setattr(config, "GROQ_API_KEY", "test-key")
+    captured = {}
+
+    class FakeResult:
+        ok = True
+        text = "Host: hi"
+        status = 200
+
+    async def fake_chat(payload, timeout_seconds):
+        captured["payload"] = payload
+        return FakeResult()
+
+    from src import groq_client
+    monkeypatch.setattr(groq_client, "chat_completion", fake_chat)
+
+    out = await sawt_script._call_llm_text("prompt")
+    assert out == "Host: hi"
+    sys_msg = captured["payload"]["messages"][0]["content"]
+    # It must NOT be the ai_engine JSON-forcing prompt, and must be scriptwriter-y.
+    assert "Always return valid JSON" not in sys_msg
+    assert "return only the script" in sys_msg.lower()
+    assert captured["payload"]["model"] == config.GROQ_MODEL
 
 
 # ── command registration ─────────────────────────────────────────────────────

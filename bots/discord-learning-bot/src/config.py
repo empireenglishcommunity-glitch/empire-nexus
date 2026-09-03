@@ -66,7 +66,12 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
 # (design.md Section 11's cost analysis).
 GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+# Groq's llama-3.3-70b-versatile was deprecated (2026-06-17) and shut down
+# (2026-08-16), so the old default now returns errors and breaks every AI
+# feature. Groq points production traffic at the openai/gpt-oss-* models, so the
+# default is updated accordingly. Override via the GROQ_MODEL env var if Groq's
+# lineup changes again — no code change needed.
+GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")
 
 # Nutq — self-hosted phoneme pronunciation scorer (services/nutq-scorer).
