@@ -5555,6 +5555,198 @@ async def cmd_deletechannel(ctx, channel: discord.TextChannel = None, confirm: s
     await ctx.send(result)
 
 
+# ============================================================
+#  PODCAST STUDIO (Sawt صوت) — Phase 1 commands
+# ============================================================
+
+async def _ensure_podcast_channel(guild, level: str):
+    """Find (or create) the #<slug>-podcast text channel for a CEFR level,
+    placed inside that level's ZONE category and isolated to that level's role
+    (plus staff/bot). Because the channel name is slug-prefixed (e.g. a1-podcast),
+    role_gate.level_zone_of already treats it as a level zone, so /setupgate keeps
+    it isolated too. Returns the channel, or None on failure."""
+    slug = config.level_slug(level).lower()
+    name = f"{slug}-podcast"
+    existing = discord.utils.get(guild.text_channels, name=name)
+    if existing:
+        return existing
+
+    # Locate the level's ZONE category (named like "🌱 A1 ZONE | مبتدئ").
+    code = config.cefr_key(level).lower()
+    category = None
+    for cat in guild.categories:
+        if (code + "zone") in role_gate._norm_name(cat.name):
+            category = cat
+            break
+
+    try:
+        overwrites = {}
+        # @everyone: denied. Own level role: allowed. Other level roles: denied.
+        overwrites[guild.default_role] = discord.PermissionOverwrite(view_channel=False)
+        for lvl in config.CEFR_ORDER:
+            role = discord.utils.get(guild.roles, name=config.level_role_name(lvl))
+            if role is None:
+                continue
+            allow = (config.cefr_key(lvl) == config.cefr_key(level))
+            overwrites[role] = discord.PermissionOverwrite(
+                view_channel=allow, send_messages=False if allow else None)
+        ch = await guild.create_text_channel(
+            name, category=category, overwrites=overwrites,
+            topic=f"🎙️ Podcast episodes for {config.cefr_key(level)} — listen and learn")
+        logger.info(f"sawt: created #{name} ({ch.id}) in category {getattr(category,'name','(none)')}")
+        return ch
+    except Exception as e:
+        logger.warning(f"sawt: couldn't create #{name}: {e}")
+        return None
+
+
+async def _publish_episode_text(guild, episode_id: int) -> str:
+    """Publish a draft episode to its level's #<slug>-podcast channel and mark it
+    published. Returns a human result string. Idempotent-ish: re-publishing an
+    already-published episode is refused."""
+    ep = database.get_episode(episode_id)
+    if not ep:
+        return f"❌ Episode #{episode_id} not found."
+    if ep["published"]:
+        return f"⚠️ Episode #{episode_id} (**{ep['title']}**) is already published."
+    if not ep["audio_url"]:
+        return (f"⚠️ Episode #{episode_id} (**{ep['title']}**) has no audio yet. "
+                f"Re-create it with an audio attachment, or set the audio first.")
+
+    channel = await _ensure_podcast_channel(guild, ep["level"])
+    if not channel:
+        return (f"❌ Couldn't find/create the #{config.level_slug(ep['level'])}-podcast "
+                f"channel. Check the bot's Manage Channels permission.")
+
+    li = config.level_info(ep["level"])
+    body = (f"🎙️ **{ep['title']}**  ·  {li['emoji']} {config.cefr_key(ep['level'])}\n"
+            f"{ep['description']}\n\n{ep['audio_url']}\n\n"
+            f"React ✅ when you've listened.")
+    try:
+        msg = await channel.send(body[:1900])
+        try:
+            await msg.add_reaction("✅")
+        except Exception:
+            pass
+        database.set_episode_audio_message_id(episode_id, str(msg.id))
+        database.publish_episode(episode_id)
+        return (f"✅ Published **{ep['title']}** to {channel.mention} "
+                f"({config.cefr_key(ep['level'])}). Students at that level can see it now.")
+    except discord.Forbidden:
+        return f"❌ Missing permission to post in #{channel.name}."
+    except Exception as e:  # noqa: BLE001
+        logger.error(f"sawt publish failed for ep {episode_id}: {e}")
+        return f"⚠️ Could not publish: {type(e).__name__}"
+
+
+def _episodes_list_text(level: str = None) -> str:
+    """Admin listing of episodes (all, or for one level)."""
+    eps = database.list_episodes(level)
+    if not eps:
+        scope = f" for {config.cefr_key(level)}" if level else ""
+        return f"🎙️ No podcast episodes{scope} yet. Create one with `/create-episode`."
+    lines = [f"🎙️ **Podcast episodes ({len(eps)})**"]
+    for e in eps[:30]:
+        status = "✅ published" if e["published"] else "📝 draft"
+        listens = database.episode_listen_count(e["episode_id"])
+        lines.append(f"• #{e['episode_id']} — **{e['title']}** "
+                     f"({config.cefr_key(e['level'])}, {e['format']}) — {status}, "
+                     f"{listens} listen(s)")
+    return "\n".join(lines)
+
+
+_FORMAT_CHOICES = [
+    app_commands.Choice(name="Solo + AI co-host", value="solo_ai"),
+    app_commands.Choice(name="Owner + group of AI voices", value="owner_group"),
+    app_commands.Choice(name="AI voices only", value="ai_only"),
+]
+
+
+@bot.tree.command(name="create-episode",
+                  description="Create a podcast episode draft (attach the audio file).")
+@app_commands.describe(level="Which CEFR level this episode is for",
+                       title="Episode title",
+                       format="Episode format",
+                       audio="The finished audio file (mp3/m4a/wav/ogg)",
+                       description="Short description (optional)")
+@app_commands.choices(level=_LEVEL_CHOICES, format=_FORMAT_CHOICES)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_create_episode(interaction: discord.Interaction,
+                               level: app_commands.Choice[str],
+                               title: str,
+                               format: app_commands.Choice[str],
+                               audio: discord.Attachment = None,
+                               description: str = ""):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled("sawt_episodes"):
+        await interaction.followup.send(
+            "⚠️ `sawt_episodes` is disabled. Enable it with "
+            "`/admin command:flag args:enable sawt_episodes`.", ephemeral=True)
+        return
+    audio_url = audio.url if audio else ""
+    eid = database.create_episode(
+        level.value, title, format.value, description=description, audio_url=audio_url)
+    note = "" if audio_url else " _(no audio attached yet — add it before publishing)_"
+    await interaction.followup.send(
+        f"📝 Created draft episode **#{eid}** — **{title}** "
+        f"({config.cefr_key(level.value)}, {format.value}).{note}\n"
+        f"Publish it with `/publish-episode id:{eid}`.", ephemeral=True)
+
+
+@bot.tree.command(name="publish-episode",
+                  description="Publish a draft episode to its level's #<slug>-podcast channel.")
+@app_commands.describe(id="The episode id (from /create-episode or /episodes)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_publish_episode(interaction: discord.Interaction, id: int):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled("sawt_episodes"):
+        await interaction.followup.send("⚠️ `sawt_episodes` is disabled.", ephemeral=True)
+        return
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    result = await _publish_episode_text(guild, id)
+    await interaction.followup.send(result, ephemeral=True)
+
+
+@bot.tree.command(name="episodes",
+                  description="List podcast episodes (all, or filtered by level).")
+@app_commands.describe(level="Filter by CEFR level (optional)")
+@app_commands.choices(level=_LEVEL_CHOICES)
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(manage_guild=True)
+@app_commands.guild_only()
+async def slash_episodes(interaction: discord.Interaction,
+                         level: app_commands.Choice[str] = None):
+    await interaction.response.defer(ephemeral=True)
+    await interaction.followup.send(
+        _episodes_list_text(level.value if level else None), ephemeral=True)
+
+
+@bot.command(name="episodes")
+@commands.has_permissions(manage_guild=True)
+async def cmd_episodes(ctx, level: str = None):
+    """(Admin) List podcast episodes, optionally filtered by level."""
+    await ctx.send(_episodes_list_text(level))
+
+
+@bot.command(name="publish-episode")
+@commands.has_permissions(administrator=True)
+async def cmd_publish_episode(ctx, episode_id: int = None):
+    """(Admin) Publish a draft podcast episode to its level channel.
+    Usage: !publish-episode <id>"""
+    if episode_id is None:
+        await ctx.send("Usage: `!publish-episode <id>` (see `!episodes`).")
+        return
+    if not database.is_feature_enabled("sawt_episodes"):
+        await ctx.send("⚠️ `sawt_episodes` is disabled.")
+        return
+    guild = ctx.guild or bot.get_guild(config.GUILD_ID)
+    await ctx.send(await _publish_episode_text(guild, episode_id))
+
+
 @bot.command(name="revoke")
 @commands.has_permissions(administrator=True)
 async def cmd_revoke(ctx, member: discord.Member = None):

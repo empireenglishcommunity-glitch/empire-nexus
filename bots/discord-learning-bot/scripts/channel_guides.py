@@ -201,6 +201,18 @@ CHANNEL_GUIDES: dict[str, str] = {
         )
         for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
     },
+    # Sawt: per-level podcast channel — episodes graded for this exact level.
+    **{
+        f"{slug}-podcast": (
+            f"🎙️ **ما هذه القناة؟**\n"
+            f"حلقات بودكاست مصمّمة خصيصًا لمستوى {slug.upper()} — استمع وتعلّم.\n\n"
+            f"✅ اسمع الحلقة كاملة، وكرّر لو محتاج\n"
+            f"✅ اضغط ✅ على الحلقة لما تخلّص سماعها\n"
+            f"❌ لا تكتب هنا — للأسئلة استخدم `#support`\n\n"
+            f"الحلقات متدرّجة على مستواك، فكل ما تتقدّم يزيد الإنجليزي ويقل العربي."
+        )
+        for slug in ("a1", "a2", "b1", "b2", "c1", "c2")
+    },
 
     # ── COMMUNITY ──
     "general-chat": (
