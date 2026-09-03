@@ -5000,6 +5000,23 @@ async def slash_suspended(interaction: discord.Interaction):
     await interaction.followup.send(_suspended_list_text(), ephemeral=True)
 
 
+@bot.tree.command(name="reenforce-suspensions",
+                  description="Re-strip roles from students already flagged suspended (repair after re-grant).")
+@app_commands.describe(confirm="Set TRUE to actually re-apply (otherwise a dry run)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_reenforce_suspensions(interaction: discord.Interaction, confirm: bool = False):
+    await interaction.response.defer(ephemeral=True)
+    if not database.is_feature_enabled(suspension.FLAG):
+        await interaction.followup.send(
+            f"⚠️ `{suspension.FLAG}` is disabled.", ephemeral=True)
+        return
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    result = await _reenforce_suspensions_text(guild, confirm)
+    await interaction.followup.send(result, ephemeral=True)
+
+
 @bot.tree.command(name="itqan-review",
                   description="Coaching brief + recordings for a student's weekly assessment.")
 @app_commands.describe(student="Start typing a student's name, then pick them",
@@ -6405,6 +6422,34 @@ def _suspended_list_text() -> str:
     return "\n".join(lines)
 
 
+async def _reenforce_suspensions_text(guild, confirm: bool) -> str:
+    """Re-strip Discord roles from EVERY student already flagged suspended in
+    the DB (database.suspended_members()) — and NOBODY else. This repairs the
+    students who slipped back into the community after the /setupgate
+    retroactive-grant bug re-granted their roles: their DB status is still
+    'suspended', only their Discord roles came back. Uses the re-enforce path,
+    so the retention clock / sessions / tokens are untouched and no farewell DM
+    is re-sent. Dry run unless confirm=True."""
+    rows = database.suspended_members()
+    if not rows:
+        return "✅ Nobody is currently flagged suspended — nothing to re-enforce."
+
+    if not confirm:
+        names = ", ".join(m["discord_name"] for m in rows[:30])
+        extra = f" … and {len(rows) - 30} more" if len(rows) > 30 else ""
+        return (
+            f"🔍 **DRY RUN — nothing changed.** Would re-apply access removal to "
+            f"the **{len(rows)}** student(s) already flagged suspended:\n{names}{extra}\n\n"
+            f"Only these DB-suspended students are affected — nobody else. The "
+            f"retention clock, sessions, and tokens stay as-is.\n"
+            f"Re-run with **confirm: True** (or `/admin command:reenforce-suspensions "
+            f"args:confirm`) to actually do it.")
+
+    # Re-enforce each suspended student's role removal. suspend_one with
+    # reenforce=True strips their roles again without touching the clock/DM.
+    return await _suspend_run_text(guild, rows, reenforce=True)
+
+
 @bot.command(name="suspend")
 @commands.has_permissions(administrator=True)
 async def cmd_suspend(ctx, *args):
@@ -6575,6 +6620,21 @@ async def cmd_announce_renewal(ctx, *args):
 async def cmd_suspended(ctx):
     """Who is suspended, and how long until their data is purged."""
     await ctx.send(_suspended_list_text())
+
+
+@bot.command(name="reenforce-suspensions")
+@commands.has_permissions(administrator=True)
+async def cmd_reenforce_suspensions(ctx, confirm: str = ""):
+    """Re-strip Discord roles from every student already flagged suspended in
+    the DB (repairs students who slipped back in). Dry run unless confirmed.
+    `!reenforce-suspensions` = dry run; `!reenforce-suspensions confirm` = do it."""
+    if not database.is_feature_enabled(suspension.FLAG):
+        await ctx.send(f"⚠️ `{suspension.FLAG}` is disabled.")
+        return
+    guild = ctx.guild or bot.get_guild(config.GUILD_ID)
+    result = await _reenforce_suspensions_text(
+        guild, confirm.strip().lower() in ("confirm", "true", "yes", "go"))
+    await ctx.send(result)
 
 
 @tasks.loop(hours=3)
