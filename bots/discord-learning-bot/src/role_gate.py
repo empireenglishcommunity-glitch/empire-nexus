@@ -589,6 +589,97 @@ async def cmd_cleanrules(ctx, confirm: bool = False) -> bool:
 
 
 # ============================================================
+#  ADMIN: !repost-rules — refresh the pinned #rules content
+# ============================================================
+
+# The first line of the rules message — used to recognise (and remove) an
+# EXISTING rules post by this bot, so re-posting replaces it rather than stacking.
+_RULES_HEADER = config.RULES_MESSAGE.splitlines()[0].strip()
+
+
+async def cmd_repost_rules(ctx, confirm: bool = False) -> bool:
+    """Admin command: (re)post the canonical #rules content, pinned.
+
+    Replaces any existing bot-posted rules message with the current
+    config.RULES_MESSAGE, split into Discord-safe chunks (the bilingual rules
+    exceed the 2000-char limit). The FIRST chunk is pinned. The onboarding ✅
+    gate message is NEVER touched. Dry run by default; posts only with confirm.
+
+    Usage:
+      !repost-rules          — dry run (shows what it will do)
+      !repost-rules confirm  — actually repost + pin
+    """
+    if not ctx.author.guild_permissions.administrator:
+        await ctx.send("\U0001f512 Admin only.", delete_after=10)
+        return True
+
+    rules_channel = discord.utils.get(ctx.guild.text_channels, name="rules")
+    if not rules_channel:
+        await ctx.send("\u274c Cannot find `#rules` channel.", delete_after=10)
+        return True
+
+    chunks = config.chunk_message(config.RULES_MESSAGE)
+    gate_id = database.get_setting("role_gate_message_id", "")
+    gate_id = int(gate_id) if gate_id.isdigit() else 0
+
+    # Find existing bot-posted rules messages to replace: any message by this bot
+    # whose content starts with the rules header (covers the current + previous
+    # versions). The ✅ gate message is explicitly excluded.
+    old_rules = []
+    try:
+        async for m in rules_channel.history(limit=50):
+            if m.author == ctx.bot.user and m.id != gate_id \
+                    and (m.content or "").lstrip().startswith(_RULES_HEADER):
+                old_rules.append(m)
+    except Exception:
+        pass
+
+    if not confirm:
+        await ctx.send(
+            f"\U0001f9f9 **DRY RUN.** Would post the rules as **{len(chunks)}** "
+            f"message(s) in {rules_channel.mention} (pinning the first) and remove "
+            f"**{len(old_rules)}** old rules post(s). The \u2705 gate message is "
+            f"kept.\nRun `!repost-rules confirm` "
+            f"(or `/admin command:repost-rules args:confirm`) to do it.")
+        return True
+
+    # Remove the old rules posts (never the gate message).
+    removed = 0
+    for m in old_rules:
+        try:
+            await m.delete()
+            removed += 1
+        except Exception:
+            pass
+
+    # Post the fresh rules; pin the FIRST chunk.
+    first = None
+    posted = 0
+    for i, chunk in enumerate(chunks):
+        try:
+            sent = await rules_channel.send(chunk)
+            posted += 1
+            if i == 0:
+                first = sent
+        except Exception as e:
+            await ctx.send(f"\u26a0\ufe0f Failed to post rules chunk {i+1}: "
+                           f"{type(e).__name__}.", delete_after=15)
+    if first is not None:
+        try:
+            await first.pin()
+        except discord.HTTPException:
+            pass
+
+    await ctx.send(
+        f"\u2705 **Rules reposted.** Posted **{posted}** message(s) in "
+        f"{rules_channel.mention} (pinned the first), removed **{removed}** old "
+        f"post(s). The \u2705 gate message was left untouched.\n"
+        f"\U0001f4dd Tip: run `!setupgate` if you haven't, so #rules stays "
+        f"read-only for students.")
+    return True
+
+
+# ============================================================
 #  ADMIN: !setupgate — auto-configure channel permissions
 # ============================================================
 
