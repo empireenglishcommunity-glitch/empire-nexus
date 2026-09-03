@@ -882,6 +882,38 @@ CREATE TABLE IF NOT EXISTS recognition_log (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id)
 );
 CREATE INDEX IF NOT EXISTS idx_recognition_member ON recognition_log(discord_id, created_at);
+
+-- ── PODCAST STUDIO (Sawt صوت) ────────────────────────────────────────────────
+
+-- Each episode belongs to a CEFR level and a format (solo_ai, owner_group,
+-- ai_only). Starts as a draft (published=0); the owner reviews + publishes,
+-- which posts it to the level's podcast channel and sets published=1.
+CREATE TABLE IF NOT EXISTS podcast_episodes (
+    episode_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    level           TEXT NOT NULL,              -- CEFR code (A1–C2)
+    title           TEXT NOT NULL,
+    description     TEXT DEFAULT '',
+    format          TEXT NOT NULL DEFAULT 'solo_ai',  -- solo_ai|owner_group|ai_only
+    speakers        TEXT DEFAULT '[]',          -- JSON list of speaker names
+    audio_url       TEXT DEFAULT '',            -- URL or local path to the audio file
+    audio_message_id TEXT DEFAULT '',           -- Discord message ID once published
+    duration_seconds INTEGER DEFAULT 0,
+    arabic_ratio    REAL DEFAULT 0.0,           -- from the level profile at creation
+    script          TEXT DEFAULT '',            -- multi-speaker conversation script
+    published       INTEGER NOT NULL DEFAULT 0, -- 0=draft, 1=published
+    published_at    TEXT DEFAULT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- One listen per student per episode (deduped by PK).
+CREATE TABLE IF NOT EXISTS podcast_listens (
+    discord_id      TEXT NOT NULL,
+    episode_id      INTEGER NOT NULL,
+    listened_at     TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, episode_id),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id),
+    FOREIGN KEY (episode_id) REFERENCES podcast_episodes(episode_id)
+);
 """
 
 
@@ -6593,3 +6625,144 @@ def vacuum() -> dict:
     after = os.path.getsize(path) if os.path.exists(path) else 0
     return {"before_bytes": before, "after_bytes": after,
             "reclaimed_bytes": max(0, before - after)}
+
+
+
+# ============================================================
+#  PODCAST STUDIO (Sawt صوت) — CRUD helpers
+# ============================================================
+
+PODCAST_FORMATS = ("solo_ai", "owner_group", "ai_only")
+
+
+def create_episode(level: str, title: str, format: str,
+                   description: str = "", speakers: str = "[]",
+                   audio_url: str = "", duration_seconds: int = 0,
+                   script: str = "") -> int:
+    """Create a draft podcast episode. Returns the new episode_id."""
+    from . import config as _cfg
+    key = _cfg.cefr_key(level)
+    profile = _cfg.podcast_level_profile(key)
+    if format not in PODCAST_FORMATS:
+        raise ValueError(f"Invalid format {format!r}; must be one of {PODCAST_FORMATS}")
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            """INSERT INTO podcast_episodes
+               (level, title, description, format, speakers, audio_url,
+                duration_seconds, arabic_ratio, script)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (key, title, description, format, speakers, audio_url,
+             duration_seconds, profile["arabic_ratio"], script))
+        conn.commit()
+        return cur.lastrowid
+    finally:
+        conn.close()
+
+
+def get_episode(episode_id: int) -> Optional[dict]:
+    """Get a single episode by ID, or None."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT * FROM podcast_episodes WHERE episode_id=?",
+            (episode_id,)).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+
+def list_episodes(level: str = None, published_only: bool = False) -> list:
+    """List episodes, optionally filtered by level and/or published status."""
+    conn = _connect()
+    try:
+        sql = "SELECT * FROM podcast_episodes WHERE 1=1"
+        params = []
+        if level:
+            from . import config as _cfg
+            sql += " AND level=?"
+            params.append(_cfg.cefr_key(level))
+        if published_only:
+            sql += " AND published=1"
+        sql += " ORDER BY created_at DESC"
+        return [dict(r) for r in conn.execute(sql, params).fetchall()]
+    finally:
+        conn.close()
+
+
+def publish_episode(episode_id: int) -> bool:
+    """Mark an episode as published (sets published=1 and published_at).
+    Returns True if updated, False if not found or already published."""
+    conn = _connect()
+    try:
+        cur = conn.execute(
+            """UPDATE podcast_episodes SET published=1, published_at=datetime('now')
+               WHERE episode_id=? AND published=0""",
+            (episode_id,))
+        conn.commit()
+        return cur.rowcount > 0
+    finally:
+        conn.close()
+
+
+def set_episode_audio_message_id(episode_id: int, message_id: str) -> None:
+    """Store the Discord message ID after the episode is posted to a channel."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE podcast_episodes SET audio_message_id=? WHERE episode_id=?",
+            (message_id, episode_id))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def update_episode_audio(episode_id: int, audio_url: str,
+                         duration_seconds: int = 0) -> None:
+    """Update the audio URL (and optionally duration) on a draft episode."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "UPDATE podcast_episodes SET audio_url=?, duration_seconds=? WHERE episode_id=?",
+            (audio_url, duration_seconds, episode_id))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def record_listen(discord_id: str, episode_id: int) -> bool:
+    """Record that a student listened to an episode. Returns True if newly
+    recorded, False if they already listened (deduplicated by PK)."""
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT OR IGNORE INTO podcast_listens (discord_id, episode_id) VALUES (?, ?)",
+            (discord_id, episode_id))
+        conn.commit()
+        return conn.total_changes > 0
+    finally:
+        conn.close()
+
+
+def has_listened(discord_id: str, episode_id: int) -> bool:
+    """Check if a student already listened to an episode."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT 1 FROM podcast_listens WHERE discord_id=? AND episode_id=?",
+            (discord_id, episode_id)).fetchone()
+        return row is not None
+    finally:
+        conn.close()
+
+
+def episode_listen_count(episode_id: int) -> int:
+    """How many students have listened to an episode."""
+    conn = _connect()
+    try:
+        row = conn.execute(
+            "SELECT COUNT(*) AS cnt FROM podcast_listens WHERE episode_id=?",
+            (episode_id,)).fetchone()
+        return row["cnt"] if row else 0
+    finally:
+        conn.close()
