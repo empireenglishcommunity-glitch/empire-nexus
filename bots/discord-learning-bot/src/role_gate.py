@@ -84,6 +84,27 @@ def _norm_name(name: str) -> str:
     return (name or "").lower().replace("-", "").replace("_", "").replace(" ", "")
 
 
+def _is_voice(channel) -> bool:
+    """True for a voice/stage channel (where 'connect' is the gate to JOIN)."""
+    try:
+        vt = (discord.VoiceChannel, getattr(discord, "StageChannel", discord.VoiceChannel))
+        return isinstance(channel, vt)
+    except Exception:
+        return False
+
+
+def _access_kwargs(channel, *, allow: bool) -> dict:
+    """Permission kwargs to grant (allow=True) or deny (allow=False) a student
+    access to `channel`. For TEXT channels this is view + send. For VOICE/stage
+    channels, `send_messages` is meaningless — the gate to actually JOIN is
+    `connect` (and `speak`), so we set those instead. Missing this is exactly
+    why students could SEE community/level voice channels but got 'no access'
+    when trying to join."""
+    if _is_voice(channel):
+        return {"view_channel": allow, "connect": allow, "speak": allow}
+    return {"view_channel": allow, "send_messages": allow}
+
+
 def _is_legacy_level0(channel: "discord.abc.GuildChannel") -> bool:
     """True if `channel` is archived material that must stay staff-only: the
     legacy 'Level 0' category/channels (l0-/level0-/level-0- slug), OR any
@@ -549,11 +570,11 @@ async def cmd_setupgate(ctx) -> bool:
                         continue
                     if lvl == zone_level:
                         await channel.set_permissions(
-                            role, view_channel=True, send_messages=True,
+                            role, **_access_kwargs(channel, allow=True),
                             reason=f"isolation: {zone_level} zone visible to its own level")
                     else:
                         await channel.set_permissions(
-                            role, view_channel=False,
+                            role, **_access_kwargs(channel, allow=False),
                             reason=f"isolation: {zone_level} zone hidden from other levels")
                 zones_locked += 1
             except discord.Forbidden:
@@ -585,8 +606,7 @@ async def cmd_setupgate(ctx) -> bool:
                 )
                 await channel.set_permissions(
                     student_role,
-                    view_channel=True,
-                    send_messages=True,
+                    **_access_kwargs(channel, allow=True),
                     reason="Hissar P1.2: role-gate — visible after rules accepted",
                 )
                 modified += 1
