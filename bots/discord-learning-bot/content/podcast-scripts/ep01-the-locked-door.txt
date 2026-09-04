@@ -2,23 +2,24 @@ Narrator: Welcome to Empire Chronicles. A new story, every day. Are you ready? L
 Narrator: Our story today is called... The Locked Door.
 Narrator: Maya was new in the city. She did not know anyone. Her apartment was small, but it was hers.
 Maya: Okay. First day. New home. I can do this.
-Narrator: But that night, Maya heard something. A sound. It came from the empty apartment next door.
+Narrator: But that night, Maya heard something. A sound. It came from the empty apartment next door. [SFX:knock]
 Maya: Hello? Is... is someone there?
-Narrator: No answer. Only the sound again. [SFX:knock]
+Narrator: No answer. Only the sound again, patient and slow. [SFX:knock]
 Maya: That's strange. Nobody lives there. The door has been locked for years.
-Narrator: Maya walked into the hallway. [SFX:creak] The old wooden door was closed. But under the door, she saw something. A soft, blue light. [SFX:shimmer]
+Narrator: The air in the hallway felt suddenly colder. Maya stepped closer. [SFX:creak] The old wooden door was shut tight. But underneath it, a soft blue light was glowing. [SFX:shimmer]
 Maya: A light? But the power is off in that apartment...
+Narrator: Behind her, a floorboard creaked. [SFX:creak]
 Leo: You hear it too, right? The tapping?
-Narrator: Maya turned around. A young man stood behind her. He looked worried.
-Maya: Who are you?
-Leo: I'm Leo. I live upstairs. I've heard that sound every night this week. [SFX:knock]
+Narrator: Maya spun around. A young man stood in the shadows. His face was pale, and worried.
+Maya: Who... who are you?
+Leo: I'm Leo. I live upstairs. I've heard that sound every single night this week. [SFX:knock]
 Maya: Every night? And nobody knows what it is?
 Leo: Nobody. The last person who opened that door... never told anyone what they saw.
-Narrator: Maya looked at the door. Her heart was beating fast. The blue light was getting brighter.
+Narrator: For a moment, the hallway was completely silent. Maya's heart was pounding. The blue light grew brighter, and brighter.
 Maya: We have to open it. We have to know.
-Leo: Are you sure? Once we open it, we can't go back.
-Narrator: Maya reached for the handle. It was cold. Very cold. And slowly... [SFX:creak] it began to turn by itself.
+Leo: Are you sure? Once we open that door... we can't undo it.
+Narrator: Maya reached for the handle. It was freezing cold under her fingers. [SFX:creak] And slowly, so slowly... the handle began to turn. All by itself. [PAUSE 2s]
 Narrator: And that... is where we stop. For today.
-Narrator: So, what should Maya do? Should she open the door and step inside? Or should she run, and call for help?
-Narrator: You decide. Vote below. Tomorrow, the story continues... the way YOU choose.
+Narrator: So, what should Maya do? Should she open the door, and step inside? Or should she run, and call for help?
+Narrator: You decide. Vote below. Tomorrow, the story continues... the way you choose.
 Narrator: This has been Empire Chronicles. I'll see you tomorrow. Same door. Same light. Goodbye.

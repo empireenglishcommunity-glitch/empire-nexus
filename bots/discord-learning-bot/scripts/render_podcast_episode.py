@@ -187,6 +187,15 @@ COHOST_REF_URLS = {
 # Matching is ordered: the FIRST character whose "match" token appears in the
 # label wins, so specific names beat generic ones. Unknown speakers fall back to
 # the narrator (owner). This bank is data — new characters are added here.
+# Each voice SLOT maps to a DISTINCT reference clip so no two characters share a
+# voice. This is critical: Chatterbox reuses the last-loaded reference if a
+# generate() call omits audio_prompt_path — which once made "Leo" inherit Mai's
+# voice. So EVERY slot (including the "built-in" American ones) has its own real
+# reference clip; cloned slots (owner/mai) get the uploaded clips at runtime.
+#   * owner    → owner's uploaded clip
+#   * mai      → Mai's consented clip
+#   * male_us_1/male_us_2/female_us_1 → distinct clean American voices shipped in
+#     content/sfx/voices/ (public-domain Wikimedia voice intros).
 CHARACTER_VOICES = {
     # The recurring host/narrator — the owner's voice threads every episode.
     "narrator": {"slot": "owner", "match": ("narrator", "host", "(you)", "owner"),
@@ -194,15 +203,20 @@ CHARACTER_VOICES = {
     # Female lead — Mai's real, clean, expressive voice.
     "maya":     {"slot": "mai", "match": ("maya", "mai"),
                  "exaggeration": 0.7, "cfg_weight": 0.4},
-    # Male character — built-in American voice, a touch more measured.
-    "leo":      {"slot": "builtin_m", "match": ("leo",),
+    # Male character — a distinct American male reference (Leo).
+    "leo":      {"slot": "male_us_1", "match": ("leo",),
                  "exaggeration": 0.6, "cfg_weight": 0.35},
-    # A spare built-in female character voice for one-off roles.
-    "extra_f":  {"slot": "builtin_f", "match": ("woman", "girl"),
+    # Spare distinct voices for one-off roles.
+    "extra_f":  {"slot": "female_us_1", "match": ("woman", "girl", "she"),
                  "exaggeration": 0.65, "cfg_weight": 0.4},
-    # A spare built-in male voice for unnamed male one-off roles.
-    "extra_m":  {"slot": "builtin_m", "match": ("man", "stranger", "guard"),
+    "extra_m":  {"slot": "male_us_2", "match": ("man", "stranger", "guard", "he"),
                  "exaggeration": 0.6, "cfg_weight": 0.4},
+}
+# Distinct American reference clips for the non-cloned slots (shipped in repo).
+BUILTIN_VOICE_FILES = {
+    "male_us_1": "voices/male_us_1.ogg",
+    "male_us_2": "voices/male_us_2.ogg",
+    "female_us_1": "voices/female_us_1.ogg",
 }
 # Whole-word match keeps names clean: a token matches only as a standalone word
 # (so "man" won't fire inside "woman"/"Alien"). Names are still substring-safe.
@@ -612,6 +626,8 @@ MUSIC_FILES = {
 _SFX_SYNTH = {"tap": _sd_tap, "knock": _sd_tap, "creak": _sd_creak,
               "shimmer": _sd_shimmer}
 _SFX_RE = re.compile(r"\[SFX:([a-z_]+)\]", re.I)
+# Dramatic-timing marker: [PAUSE 2s] / [PAUSE 1.5s] / [PAUSE] (defaults to 1s).
+_PAUSE_RE = re.compile(r"\[PAUSE\s*([0-9.]+)?s?\]", re.I)
 
 
 def _load_audio(path, sr):
@@ -698,6 +714,15 @@ class _StorySynth:
                   "temperature": s["temperature"], "cfg_weight": cfg_weight,
                   "repetition_penalty": s["repetition_penalty"],
                   "min_p": s["min_p"], "top_p": s["top_p"]}
+        # ALWAYS pass a reference. Chatterbox reuses the last-loaded reference
+        # when audio_prompt_path is omitted, which would make one character
+        # inherit another's voice — so a ref is required per character. If a slot
+        # truly has none, fall back to a shipped American voice rather than
+        # silently reuse whoever spoke last.
+        if not ref:
+            fb = os.path.join(_SFX_DIR, BUILTIN_VOICE_FILES["male_us_1"])
+            if os.path.exists(fb):
+                ref = _to_clean_wav(fb)
         if ref:
             kwargs["audio_prompt_path"] = ref
         wav = self.model.generate(text, **kwargs)
@@ -812,10 +837,13 @@ def _build_slot_refs(segments, owner_ref, mai_ref):
         refs["owner"] = owner_ref
     if "mai" in slots and mai_ref and os.path.exists(mai_ref):
         refs["mai"] = mai_ref
-    # builtin_m / builtin_f need no reference (native American voice).
+    # Each non-cloned slot gets its OWN distinct American reference clip so no
+    # character ever inherits another's voice (the Leo-sounded-like-Mai bug).
     for s in slots:
-        if s.startswith("builtin"):
-            refs[s] = ""
+        fn = BUILTIN_VOICE_FILES.get(s)
+        if fn:
+            p = os.path.join(_SFX_DIR, fn)
+            refs[s] = p if os.path.exists(p) else ""
     return refs
 
 
@@ -904,7 +932,11 @@ def render_story(script: str, out_path: str, owner_ref: str = "",
             if len(fx):
                 pieces.append(fx)
                 pieces.append(np.zeros(int(sr * 0.15), dtype="float32"))
-        clean_text = _SFX_RE.sub(" ", text).strip()
+        # Inline [PAUSE Ns] markers: insert a real silence for dramatic timing.
+        for pm in _PAUSE_RE.finditer(text):
+            secs = float(pm.group(1)) if pm.group(1) else 1.0
+            pieces.append(np.zeros(int(sr * min(secs, 5.0)), dtype="float32"))
+        clean_text = _PAUSE_RE.sub(" ", _SFX_RE.sub(" ", text)).strip()
         if clean_text:
             pieces.append(synth.say(clean_text, ch))
         prev_slot = ch["slot"]

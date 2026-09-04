@@ -126,6 +126,12 @@ DAILY_TASK_HOUR = int(os.getenv("DAILY_TASK_HOUR", "6") or "6")
 WEEKLY_ASSESSMENT_HOUR = int(os.getenv("WEEKLY_ASSESSMENT_HOUR", "10") or "10")
 TIMEZONE = os.getenv("TIMEZONE", "Asia/Dubai")
 
+# Empire Chronicles daily story: the hour (local TIMEZONE) the bot posts the
+# newest rendered episode, and the name of the single shared podcast channel it
+# posts to (the owner's existing channel). Both overridable via env.
+SAWT_STORY_HOUR = int(os.getenv("SAWT_STORY_HOUR", "8") or "8")
+SAWT_STORY_CHANNEL = os.getenv("SAWT_STORY_CHANNEL", "podcast")
+
 # ---- Speaking as the 5th required practice exercise (calendar green) ----
 # Speaking (E1) is a 5th practice-page exercise. A practice day whose calendar
 # DATE is on/after SPEAKING_LAUNCH_DATE requires all 5 exercises (accent, vocab,

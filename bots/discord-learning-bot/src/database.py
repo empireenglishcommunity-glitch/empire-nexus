@@ -914,6 +914,17 @@ CREATE TABLE IF NOT EXISTS podcast_listens (
     FOREIGN KEY (discord_id) REFERENCES members(discord_id),
     FOREIGN KEY (episode_id) REFERENCES podcast_episodes(episode_id)
 );
+
+-- Empire Chronicles serialized-story votes: one A/B vote per student per
+-- episode (deduped by PK). The winning choice steers the next episode.
+CREATE TABLE IF NOT EXISTS podcast_votes (
+    discord_id      TEXT NOT NULL,
+    episode_id      INTEGER NOT NULL,
+    choice          TEXT NOT NULL,           -- 'A' or 'B'
+    voted_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (discord_id, episode_id),
+    FOREIGN KEY (episode_id) REFERENCES podcast_episodes(episode_id)
+);
 """
 
 
@@ -6777,5 +6788,37 @@ def episode_listen_count(episode_id: int) -> int:
             "SELECT COUNT(*) AS cnt FROM podcast_listens WHERE episode_id=?",
             (episode_id,)).fetchone()
         return row["cnt"] if row else 0
+    finally:
+        conn.close()
+
+
+def record_vote(discord_id: str, episode_id: int, choice: str) -> bool:
+    """Record a student's A/B vote on a story episode. First vote wins (deduped
+    by PK); a student can't change their vote. Returns True if newly recorded."""
+    choice = (choice or "").strip().upper()
+    if choice not in ("A", "B"):
+        return False
+    conn = _connect()
+    try:
+        conn.execute(
+            "INSERT OR IGNORE INTO podcast_votes (discord_id, episode_id, choice) "
+            "VALUES (?, ?, ?)", (discord_id, episode_id, choice))
+        conn.commit()
+        return conn.total_changes > 0
+    finally:
+        conn.close()
+
+
+def vote_counts(episode_id: int) -> dict:
+    """Return {'A': n, 'B': n} vote tallies for a story episode."""
+    conn = _connect()
+    try:
+        rows = conn.execute(
+            "SELECT choice, COUNT(*) AS cnt FROM podcast_votes "
+            "WHERE episode_id=? GROUP BY choice", (episode_id,)).fetchall()
+        out = {"A": 0, "B": 0}
+        for r in rows:
+            out[r["choice"]] = r["cnt"]
+        return out
     finally:
         conn.close()

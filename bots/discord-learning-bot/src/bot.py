@@ -29,6 +29,7 @@ Admin:
 import asyncio
 import datetime
 import logging
+import pathlib
 from typing import Optional
 
 import discord
@@ -434,6 +435,8 @@ async def on_ready():
         friday_feedback_survey.start()
     if not monday_progress_report.is_running():
         monday_progress_report.start()
+    if not daily_story_post.is_running():
+        daily_story_post.start()
     if not grammar_card_delivery.is_running():
         grammar_card_delivery.start()
     if not vocab_cheat_sheet_delivery.is_running():
@@ -686,6 +689,11 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
     # student reacting to an episode gets credit regardless of those flags.
     if str(payload.emoji) == "✅" and guild:
         if await _handle_podcast_listen_reaction(payload, guild):
+            return
+
+    # Sawt: 🅰️ / 🅱️ on an Empire Chronicles story episode → record the vote.
+    if str(payload.emoji) in ("🅰️", "🅱️") and guild:
+        if await _handle_story_vote_reaction(payload, guild):
             return
 
     # Check feature flag (use None for discord_id since this is a global check)
@@ -5983,6 +5991,233 @@ async def cmd_listened(ctx, episode_id: int = None):
                        f"listening to **{ep['title']}**.")
     else:
         await ctx.send("✅ Recorded.")
+
+
+# ============================================================
+#  EMPIRE CHRONICLES — daily serialized story (Sawt Phase 4)
+# ============================================================
+# The offline pipeline (podcast-daily.yml) generates + renders the next episode
+# and commits its MP3 + episode-meta.json into the repo. The bot's daily loop
+# picks up the newest READY episode, posts it to the podcast channel for the
+# owner's APPROVAL (students don't see it until /story-approve), and collects
+# 🅰️/🅱️ votes that steer tomorrow's episode.
+
+_STORY_DIR = pathlib.Path(__file__).resolve().parent.parent / "content"
+_STORY_META = _STORY_DIR / "podcast-scripts" / "episode-meta.json"
+_STORY_STATE = _STORY_DIR / "podcast-scripts" / "story-state.json"
+_VOTE_EMOJI = {"🅰️": "A", "🅱️": "B"}
+
+
+def _story_channel(guild):
+    """The single podcast channel the story posts to (owner's existing channel).
+    Looked up by the configured exact name."""
+    return discord.utils.get(guild.text_channels, name=config.SAWT_STORY_CHANNEL)
+
+
+def _load_episode_meta() -> Optional[dict]:
+    """Read the newest rendered episode's metadata committed by the pipeline."""
+    import json
+    try:
+        return json.loads(_STORY_META.read_text(encoding="utf-8"))
+    except Exception:                                            # noqa: BLE001
+        return None
+
+
+def _story_audio_path(slug: str) -> Optional[pathlib.Path]:
+    p = _STORY_DIR / "podcast-audio" / f"{slug}.mp3"
+    return p if p.exists() else None
+
+
+async def _post_story_episode(guild, meta: dict, *, to_students: bool) -> Optional[int]:
+    """Create + post a story episode to the podcast channel. Posts the audio
+    file, the two vote options, adds 🅰️/🅱️ reactions, and records the DB row
+    (audio_message_id) so votes can be tied back. Returns the episode_id."""
+    channel = _story_channel(guild)
+    if not channel:
+        logger.warning("sawt.story: podcast channel #%s not found",
+                       config.SAWT_STORY_CHANNEL)
+        return None
+    audio = _story_audio_path(meta["slug"])
+    if not audio:
+        logger.warning("sawt.story: audio file for %s not found", meta["slug"])
+        return None
+
+    # One DB episode per story slug — reuse if it already exists.
+    existing = next((e for e in database.list_episodes()
+                     if e["title"] == meta["title"]
+                     and str(meta["episode_number"]) in (e["description"] or "")), None)
+    if existing:
+        episode_id = existing["episode_id"]
+    else:
+        episode_id = database.create_episode(
+            level=sawt_story_level(), title=meta["title"], format="ai_only",
+            description=f"Empire Chronicles episode {meta['episode_number']}",
+            audio_url=str(audio))
+
+    body = (f"🎙️ **Empire Chronicles — Episode {meta['episode_number']}**\n"
+            f"**{meta['title']}**\n\n"
+            f"🅰️ {meta['vote_a']}\n"
+            f"🅱️ {meta['vote_b']}\n\n"
+            f"React 🅰️ or 🅱️ to choose what happens next — tomorrow's episode "
+            f"follows your vote!\n"
+            f"_Music: \"Lights\" by Rafael Krux (CC-BY 4.0)._")
+    try:
+        with open(audio, "rb") as fh:
+            msg = await channel.send(
+                content=body, file=discord.File(fh, filename=f"{meta['slug']}.mp3"))
+        database.set_episode_audio_message_id(episode_id, str(msg.id))
+        database.publish_episode(episode_id)
+        for emoji in ("🅰️", "🅱️"):
+            try:
+                await msg.add_reaction(emoji)
+            except discord.HTTPException:
+                break
+        logger.info("sawt.story: posted episode %s (id=%s) to #%s",
+                    meta["slug"], episode_id, channel.name)
+        return episode_id
+    except Exception as e:                                       # noqa: BLE001
+        logger.warning("sawt.story: failed to post episode: %s", e)
+        return None
+
+
+def sawt_story_level() -> str:
+    """Level tag stored on story episodes (mixed; A2-ish anchor)."""
+    try:
+        from . import sawt_story
+        return sawt_story.STORY_LEVEL
+    except Exception:                                            # noqa: BLE001
+        return "A2"
+
+
+async def _handle_story_vote_reaction(payload, guild) -> bool:
+    """🅰️/🅱️ on a story episode message → record the student's vote. Returns
+    True if this was a story episode message (handled)."""
+    ep = database.get_episode_by_message_id(str(payload.message_id))
+    if not ep or "Empire Chronicles" not in (ep.get("description") or ""):
+        return False
+    member = guild.get_member(payload.user_id)
+    if not member or member.bot:
+        return True
+    choice = _VOTE_EMOJI.get(str(payload.emoji))
+    if choice:
+        database.record_vote(str(payload.user_id), ep["episode_id"], choice)
+    return True
+
+
+@tasks.loop(time=datetime.time(hour=config.SAWT_STORY_HOUR, tzinfo=_zone()))
+async def daily_story_post():
+    """Post the newest rendered Empire Chronicles episode to the podcast channel
+    for the owner's approval. Gated behind sawt_daily_story (keep its allowlist
+    empty). Idempotent: skips if this episode was already posted."""
+    if not database.is_feature_enabled("sawt_daily_story"):
+        return
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return
+    meta = _load_episode_meta()
+    if not meta:
+        return
+    # Skip if we already posted this episode number.
+    already = any(("Empire Chronicles" in (e.get("description") or "")
+                   and f"episode {meta['episode_number']}" in (e.get("description") or "").lower()
+                   and e["published"])
+                  for e in database.list_episodes())
+    if already:
+        return
+    await _post_story_episode(guild, meta, to_students=False)
+
+
+@bot.tree.command(name="story-status",
+                  description="Empire Chronicles: show the current episode + live A/B vote tally.")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_story_status(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    meta = _load_episode_meta()
+    if not meta:
+        await interaction.followup.send("No rendered episode found yet.", ephemeral=True)
+        return
+    # Find the posted episode + tally.
+    ep = next((e for e in database.list_episodes()
+               if "Empire Chronicles" in (e.get("description") or "")
+               and f"episode {meta['episode_number']}" in (e.get("description") or "").lower()),
+              None)
+    lines = [f"🎙️ **Empire Chronicles — Episode {meta['episode_number']}: {meta['title']}**",
+             f"🅰️ {meta['vote_a']}",
+             f"🅱️ {meta['vote_b']}"]
+    if ep:
+        vc = database.vote_counts(ep["episode_id"])
+        lines.append(f"\n**Votes so far:** 🅰️ {vc['A']}  ·  🅱️ {vc['B']}")
+        lines.append("Posted ✅ — approve for students with "
+                     f"`/story-approve id:{ep['episode_id']}`.")
+    else:
+        lines.append("\n_Not posted yet — the daily loop posts it, or use "
+                     "`/story-approve` after it posts._")
+    await interaction.followup.send("\n".join(lines), ephemeral=True)
+
+
+@bot.tree.command(name="story-approve",
+                  description="Empire Chronicles: lock in the winning vote so tomorrow's episode continues it.")
+@app_commands.describe(id="The story episode id (from /story-status)")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_story_approve(interaction: discord.Interaction, id: int):
+    await interaction.response.defer(ephemeral=True)
+    import json
+    ep = database.get_episode(id)
+    if not ep or "Empire Chronicles" not in (ep.get("description") or ""):
+        await interaction.followup.send("❌ That isn't a story episode id.", ephemeral=True)
+        return
+    meta = _load_episode_meta() or {}
+    vc = database.vote_counts(id)
+    winner = "A" if vc["A"] >= vc["B"] else "B"
+    winning_label = meta.get("vote_a" if winner == "A" else "vote_b", "")
+    # Write the winning choice into story-state.json so tomorrow's generation
+    # (podcast-daily.yml) continues from it.
+    try:
+        state = json.loads(_STORY_STATE.read_text(encoding="utf-8")) if _STORY_STATE.exists() else {}
+    except Exception:                                            # noqa: BLE001
+        state = {}
+    state["winning_choice"] = winning_label
+    try:
+        _STORY_STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n",
+                                encoding="utf-8")
+    except Exception as e:                                       # noqa: BLE001
+        await interaction.followup.send(f"⚠️ Couldn't write story state: {e}", ephemeral=True)
+        return
+    await interaction.followup.send(
+        f"✅ Locked in **{winner}** — _{winning_label}_ (🅰️ {vc['A']} · 🅱️ {vc['B']}).\n"
+        f"Tomorrow's episode will continue from that choice. "
+        f"Give students access with `/reveal-podcast` if you haven't yet.",
+        ephemeral=True)
+
+
+@bot.tree.command(name="reveal-podcast",
+                  description="Give students access to the podcast channel (Empire Chronicles).")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_reveal_podcast(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    channel = _story_channel(guild)
+    if not channel:
+        await interaction.followup.send(
+            f"❌ Couldn't find #{config.SAWT_STORY_CHANNEL}. Set SAWT_STORY_CHANNEL "
+            f"to the right channel name.", ephemeral=True)
+        return
+    try:
+        student_role = await role_gate.get_or_create_student_role(guild)
+        await channel.set_permissions(
+            student_role, view_channel=True, send_messages=False,
+            add_reactions=True, reason="Empire Chronicles: reveal podcast to students")
+        await interaction.followup.send(
+            f"✅ Students can now see **#{channel.name}**, listen, and vote "
+            f"(🅰️/🅱️). They can't post — only react.", ephemeral=True)
+    except Exception as e:                                       # noqa: BLE001
+        await interaction.followup.send(f"⚠️ Couldn't update permissions: {e}", ephemeral=True)
 
 
 @bot.command(name="revoke")

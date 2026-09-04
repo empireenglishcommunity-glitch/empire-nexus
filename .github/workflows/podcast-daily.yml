@@ -1,0 +1,110 @@
+name: podcast daily (empire chronicles)
+
+# The DAILY automation for the Empire Chronicles serialized story. Once a day it:
+#   1. generates the next episode's script (continuing the audience's winning
+#      vote, read from content/podcast-scripts/story-state.json),
+#   2. renders it to an MP3 with the cast + real sound design,
+#   3. commits the script + MP3 + episode-meta.json back to the repo,
+# so the bot can pick up the newest ready episode and post it to the hidden
+# podcast channel for the owner's approval (students only see it after approval).
+#
+# Voice references are read from repo SECRETS (private, stable URLs) so nothing
+# personal is committed to this public repo:
+#   OWNER_VOICE_URL  — owner's English voice clip
+#   MAI_VOICE_URL    — Mai's consented voice clip
+# The bot writes the winning choice into story-state.json before this runs; you
+# can also override it manually via the workflow_dispatch input.
+on:
+  schedule:
+    # 03:00 UTC = 07:00 Asia/Dubai — the episode is ready before the morning.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      winning_choice:
+        description: "Override the audience's winning choice to continue from"
+        default: ""
+
+concurrency:
+  group: podcast-daily
+  cancel-in-progress: false
+
+jobs:
+  build-episode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: bots/discord-learning-bot
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (generator + renderer engine)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg || true
+          pip install --quiet aiohttp python-dotenv
+          pip install --quiet setuptools soundfile librosa numpy scipy
+          pip install --quiet chatterbox-tts
+
+      - name: Generate the next episode script (continuing the winning vote)
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          WINNING_CHOICE: ${{ inputs.winning_choice }}
+        run: |
+          python3 scripts/generate_daily_story.py \
+            --out-dir content/podcast-scripts \
+            ${WINNING_CHOICE:+--winning-choice "$WINNING_CHOICE"}
+
+      - name: Fetch + clean the cast voice clips (from secrets)
+        id: refs
+        env:
+          OWNER_VOICE_URL: ${{ secrets.OWNER_VOICE_URL }}
+          MAI_VOICE_URL: ${{ secrets.MAI_VOICE_URL }}
+        run: |
+          fetch() {
+            local url="$1" out="$2"
+            [ -z "$url" ] && return 0
+            local clean="${url%%\?*}" ext="${clean##*.}"
+            case "$ext" in wav|mp3|m4a|ogg|flac|webm) ;; *) ext="bin" ;; esac
+            local raw="raw_${out%.wav}.$ext"
+            curl -sSL --retry 3 --fail -o "$raw" "$url" || return 0
+            ffmpeg -y -i "$raw" -ac 1 -ar 24000 "$out" >/dev/null 2>&1 || cp "$raw" "$out"
+          }
+          fetch "$OWNER_VOICE_URL" owner_voice_ref.wav
+          fetch "$MAI_VOICE_URL"   mai_voice_ref.wav
+          [ -f owner_voice_ref.wav ] && echo "owner=owner_voice_ref.wav" >> "$GITHUB_OUTPUT"
+          [ -f mai_voice_ref.wav ]   && echo "mai=mai_voice_ref.wav"     >> "$GITHUB_OUTPUT"
+
+      - name: Render the episode (cast + real sound design)
+        env:
+          REF_OWNER: ${{ steps.refs.outputs.owner }}
+          REF_MAI: ${{ steps.refs.outputs.mai }}
+        run: |
+          SCRIPT_PATH=$(python3 -c "import json;print(json.load(open('content/podcast-scripts/episode-meta.json'))['script_path'])")
+          SLUG=$(python3 -c "import json;print(json.load(open('content/podcast-scripts/episode-meta.json'))['slug'])")
+          mkdir -p content/podcast-audio
+          python3 scripts/render_podcast_episode.py \
+            --script "$SCRIPT_PATH" \
+            --story --music mystery \
+            --out "content/podcast-audio/$SLUG.mp3" \
+            ${REF_OWNER:+--ref-clip "$REF_OWNER"} \
+            ${REF_MAI:+--ref-mai "$REF_MAI"}
+
+      - name: Commit the new episode (script + audio + meta) for the bot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/podcast-scripts/ content/podcast-audio/
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"; exit 0
+          fi
+          SLUG=$(python3 -c "import json;print(json.load(open('content/podcast-scripts/episode-meta.json'))['slug'])")
+          git commit -m "chore(sawt): daily Empire Chronicles episode $SLUG [skip ci]"
+          git push
+          echo "committed episode $SLUG"
