@@ -189,9 +189,38 @@ def test_character_for_maps_cast_and_defaults():
 
 def test_sfx_registry_and_marker_regex():
     mod = _load()
-    assert set(mod.SFX) >= {"tap", "creak", "shimmer"}
-    found = mod._SFX_RE.findall("She heard it. [SFX:tap] Then [SFX:CREAK] silence.")
-    assert [f.lower() for f in found] == ["tap", "creak"]
+    # Real-audio SFX names + inline marker parsing.
+    assert set(mod.SFX_FILES) >= {"knock", "creak"}
+    found = mod._SFX_RE.findall("She heard it. [SFX:knock] Then [SFX:CREAK] silence.")
+    assert [f.lower() for f in found] == ["knock", "creak"]
+
+
+def test_real_sfx_assets_present_and_load():
+    mod = _load()
+    import os
+    # The real CC assets must ship in content/sfx/.
+    for fn in ("knock.ogg", "creak.ogg", "music_mystery.ogg"):
+        assert os.path.exists(os.path.join(mod._SFX_DIR, fn)), fn
+    # load_sfx returns real audio; load_music returns the bed.
+    knock = mod.load_sfx("knock", 24000)
+    assert len(knock) > 0
+    assert mod.load_music("mystery", 24000) is not None
+    assert mod.load_music("none", 24000) is None
+
+
+def test_duck_music_lowers_bed_under_speech():
+    mod = _load()
+    import numpy as np
+    sr = 24000
+    music = 0.5 * np.sin(2 * np.pi * 440 * np.arange(sr * 8) / sr).astype("float32")
+    voice = np.zeros(sr * 5, dtype="float32")
+    voice[sr:sr * 3] = 0.4 * np.sin(2 * np.pi * 200 * np.arange(sr * 2) / sr)
+    mixed = mod._duck_music(voice, music, sr, base=0.24, ducked=0.10)
+    v = np.concatenate([voice, np.zeros(len(mixed) - len(voice), dtype="float32")])
+    music_only = mixed - v
+    under_speech = np.sqrt(np.mean(music_only[int(sr*1.5):int(sr*2.5)]**2))
+    under_silence = np.sqrt(np.mean(music_only[int(sr*3.5):int(sr*4.5)]**2))
+    assert under_silence > under_speech * 1.5   # music ducks under speech
 
 
 def test_sound_design_generators_produce_audio():

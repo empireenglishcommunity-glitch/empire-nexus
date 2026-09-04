@@ -31,6 +31,9 @@ on:
         description: "Storytelling mode (Empire Chronicles): English cast + sound design"
         type: boolean
         default: false
+      music:
+        description: "Story background music bed (mystery | none)"
+        default: "mystery"
       voice_ref_mai_url:
         description: "Story cast: Mai's consented voice reference clip URL (optional)"
         default: ""
@@ -113,6 +116,7 @@ jobs:
           SCRIPT_PATH: ${{ inputs.script_path }}
           LEVEL: ${{ inputs.level }}
           STORY: ${{ inputs.story_mode }}
+          MUSIC: ${{ inputs.music }}
           REF_EN: ${{ steps.refclip.outputs.ref_en }}
           REF_AR: ${{ steps.refclip.outputs.ref_ar }}
           REF_MAI: ${{ steps.refclip.outputs.ref_mai }}
@@ -122,6 +126,7 @@ jobs:
             --level "$LEVEL" \
             --out output/episode.mp3 \
             ${STORY:+$([ "$STORY" = "true" ] && echo --story)} \
+            ${MUSIC:+--music "$MUSIC"} \
             ${REF_EN:+--ref-clip "$REF_EN"} \
             ${REF_AR:+--ref-clip-ar "$REF_AR"} \
             ${REF_MAI:+--ref-mai "$REF_MAI"}
