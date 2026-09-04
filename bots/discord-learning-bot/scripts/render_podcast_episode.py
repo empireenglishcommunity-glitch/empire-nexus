@@ -470,6 +470,39 @@ class _MultilingualSynth:
 
 
 # ── Synthesized cinematic sound design (100% generated — no licensed assets) ──
+def _filt(x, sr, low=None, high=None):
+    """Band/low/high-pass filter. Uses scipy when available; otherwise falls
+    back to a simple FFT brick-wall filter so the renderer (and its tests) never
+    hard-depend on scipy. `low`/`high` are cutoff Hz (either may be None)."""
+    import numpy as np
+    x = np.asarray(x, dtype="float32")
+    if len(x) < 8:
+        return x
+    try:
+        import scipy.signal as ss
+        nyq = sr / 2.0
+        if low and high:
+            b, a = ss.butter(2, [low / nyq, high / nyq], btype="band")
+        elif high:
+            b, a = ss.butter(2, high / nyq, btype="low")
+        elif low:
+            b, a = ss.butter(2, low / nyq, btype="high")
+        else:
+            return x
+        return ss.lfilter(b, a, x).astype("float32")
+    except Exception:                                            # noqa: BLE001
+        # FFT fallback (no scipy): zero the bins outside [low, high].
+        spec = np.fft.rfft(x)
+        freqs = np.fft.rfftfreq(len(x), 1.0 / sr)
+        mask = np.ones(len(spec), dtype=bool)
+        if low:
+            mask &= freqs >= low
+        if high:
+            mask &= freqs <= high
+        spec = spec * mask
+        return np.fft.irfft(spec, n=len(x)).astype("float32")
+
+
 def _sd_reverb(x, sr, decay=0.3, mix=0.25):
     """A cheap Schroeder-ish reverb tail for space/atmosphere."""
     import numpy as np
@@ -514,9 +547,7 @@ def _sd_ambient(sr, seconds, kind="room"):
     rng = np.random.default_rng(7)
     noise = rng.standard_normal(n).astype("float32")
     # Low-pass the noise heavily → soft 'air', not hiss.
-    import scipy.signal as ss
-    b, a = ss.butter(2, 900 / (sr / 2), btype="low")
-    air = ss.lfilter(b, a, noise).astype("float32")
+    air = _filt(noise, sr, high=900)
     # A barely-there low hum for 'presence'.
     t = np.arange(n) / sr
     hum = 0.04 * np.sin(2 * np.pi * 60 * t).astype("float32")
@@ -526,18 +557,17 @@ def _sd_ambient(sr, seconds, kind="room"):
 
 def _sd_tap(sr):
     """A single 'tap' knock (short filtered transient)."""
-    import numpy as np, scipy.signal as ss
+    import numpy as np
     n = int(sr * 0.12)
     t = np.arange(n) / sr
     click = (np.exp(-t * 60) * np.sin(2 * np.pi * 180 * t)).astype("float32")
-    b, a = ss.butter(2, [120/(sr/2), 2500/(sr/2)], btype="band")
-    click = ss.lfilter(b, a, click).astype("float32")
+    click = _filt(click, sr, low=120, high=2500)
     return _sd_reverb(click, sr, decay=0.4, mix=0.3) * 0.5
 
 
 def _sd_creak(sr):
     """A slow door-creak: pitch-rising filtered noise."""
-    import numpy as np, scipy.signal as ss
+    import numpy as np
     n = int(sr * 1.1)
     rng = np.random.default_rng(3)
     noise = rng.standard_normal(n).astype("float32")
@@ -545,8 +575,7 @@ def _sd_creak(sr):
     # sweep a narrow band-pass upward → 'creeeak'
     out = np.zeros(n, dtype="float32")
     for f0 in np.linspace(300, 900, 6):
-        b, a = ss.butter(2, [max(80,f0-60)/(sr/2), (f0+60)/(sr/2)], btype="band")
-        out += ss.lfilter(b, a, noise).astype("float32")
+        out += _filt(noise, sr, low=max(80, f0 - 60), high=f0 + 60)
     env = np.minimum(t/0.2, 1.0) * np.minimum((1.1 - t)/0.3, 1.0)
     out = out / (np.max(np.abs(out)) or 1.0) * np.clip(env, 0, 1)
     return _sd_reverb(out.astype("float32"), sr, mix=0.35) * 0.35
