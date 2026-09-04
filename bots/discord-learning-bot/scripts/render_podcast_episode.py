@@ -151,23 +151,25 @@ def plan(script: str) -> dict:
     return sawt_tts.plan_episode(script)
 
 
-# Reference-voice clips for each speaker role. Chatterbox Multilingual clones the
-# voice in the reference clip for EVERY language, so a single clip per speaker
-# gives that speaker one consistent voice across English and Arabic. The co-host
-# defaults are ResembleAI's own multilingual demo prompts (distinct male/female
-# speakers), so the two co-hosts and the owner all sound different. The owner's
-# role uses the uploaded owner clip (passed via --ref-clip), so the owner speaks
-# both English and Arabic in the owner's OWN voice.
+# Reference-voice clips per speaker role, PER LANGUAGE. This is the key accent
+# fix: an English-speaker reference cloned into Arabic sounds non-natively
+# accented, so for Arabic runs we use ResembleAI's own NATIVE ARABIC demo
+# prompts (ar_f / ar_m1) and for English runs a native English prompt. Each
+# co-host therefore sounds native in BOTH languages while staying a distinct
+# person. The owner's clips are supplied at runtime (see _build_ref_map): ideally
+# a native-Arabic recording of the owner for `ar` and an English one for `en`.
 COHOST_REF_URLS = {
-    # female co-host — ResembleAI's own English demo prompt (en_f1). The model
-    # clones the TIMBRE and re-synthesises in whatever language_id we ask, so
-    # this voice speaks Arabic too.
-    "cohost_f": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/en_f1.flac",
-    # male co-host — a distinct MALE demo prompt. There is no en_m demo clip, so
-    # we use it_m1 (Italian male): only the timbre is cloned, and it's rendered
-    # in English/Arabic like any other reference, giving a clearly different
-    # (male) voice from the female co-host and the owner.
-    "cohost_m": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/it_m1.flac",
+    "cohost_f": {
+        "en": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/en_f1.flac",
+        # native female Arabic prompt → naturally-accented Arabic
+        "ar": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/ar_f/ar_prompts2.flac",
+    },
+    "cohost_m": {
+        # no en_m demo clip exists; it_m1 is a distinct MALE English-ish timbre
+        "en": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/it_m1.flac",
+        # native male Arabic prompt
+        "ar": "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/ar_m1.flac",
+    },
 }
 
 
@@ -192,15 +194,23 @@ def _to_clean_wav(ref_clip: str) -> str:
     return out
 
 
-# Per-language generation settings. Higher `exaggeration` = more emotion/warmth
-# (0.5 is neutral/flat); pairing it with a lower `cfg_weight` keeps delivery
-# natural and better-paced (ResembleAI's own guidance). For Arabic we set
-# cfg_weight=0.0: the ResembleAI docs note this reduces the reference voice's
-# accent bleeding into the target language, so the owner's/co-host's Arabic
-# sounds more natively Arabic instead of English-accented.
+# Per-language generation settings for ChatterboxMultilingualTTS.generate().
+# Two goals:
+#   1. EMOTION: exaggeration > 0.5 (0.5 is flat/neutral) with a lower cfg_weight
+#      keeps delivery warm and well-paced (ResembleAI's own guidance). Arabic
+#      uses cfg_weight=0.0 — the documented language-transfer setting that stops
+#      the reference accent bleeding into Arabic (→ natively-accented Arabic).
+#   2. ANTI-HALLUCINATION: the model can otherwise repeat a phrase or emit stray
+#      breaths/hums on short/cross-language segments (we measured a doubled
+#      "I am from the Emirates" + hum in a gap). Lower `temperature` and a
+#      higher `repetition_penalty` (default 1.2) suppress that, and a small
+#      `min_p` trims low-probability garbage tokens. These are real generate()
+#      kwargs (verified against resemble-ai/chatterbox mtl_tts.py).
 GEN_SETTINGS = {
-    "en": {"exaggeration": 0.7, "cfg_weight": 0.4, "temperature": 0.8},
-    "ar": {"exaggeration": 0.6, "cfg_weight": 0.0, "temperature": 0.8},
+    "en": {"exaggeration": 0.6, "cfg_weight": 0.4, "temperature": 0.6,
+           "repetition_penalty": 1.6, "min_p": 0.08, "top_p": 0.95},
+    "ar": {"exaggeration": 0.55, "cfg_weight": 0.0, "temperature": 0.5,
+           "repetition_penalty": 2.0, "min_p": 0.10, "top_p": 0.90},
 }
 
 
@@ -255,12 +265,44 @@ def _chunk_text(text: str, limit: int = 280) -> list:
     return parts or ([text.strip()] if text.strip() else [])
 
 
+def _trim_and_gate(samples, sr):
+    """Clean a single synthesized segment: trim silence/breath at the head and
+    tail and gate very-low-energy frames to remove stray breaths/hums the model
+    sometimes emits at segment edges. Speech-safe (conservative threshold)."""
+    import numpy as np
+    if not len(samples):
+        return samples
+    x = np.asarray(samples, dtype="float32")
+    # Frame energy at 20ms.
+    fr = max(1, int(sr * 0.02))
+    n = len(x) // fr
+    if n < 2:
+        return x
+    frames = x[:n * fr].reshape(n, fr)
+    energy = np.sqrt((frames ** 2).mean(axis=1) + 1e-9)
+    peak = float(energy.max())
+    if peak <= 0:
+        return x
+    # A frame counts as "voice" if it's above ~4% of this segment's peak.
+    thr = peak * 0.04
+    voiced = energy > thr
+    if not voiced.any():
+        return x
+    first = int(np.argmax(voiced))
+    last = int(n - 1 - np.argmax(voiced[::-1]))
+    # Keep a small 60ms pad around the speech so we don't clip onsets/offsets.
+    pad = int(sr * 0.06)
+    a = max(0, first * fr - pad)
+    b = min(len(x), (last + 1) * fr + pad)
+    return x[a:b]
+
+
 class _MultilingualSynth:
     """One Chatterbox Multilingual model that voices EVERY speaker in EVERY
-    language. Each speaker is a reference clip (owner clip for the owner, a
-    distinct demo voice per co-host); the model clones that voice for whichever
-    language_id ("en"/"ar") each run needs — so the owner speaks Arabic in the
-    owner's own voice, and co-hosts keep a consistent voice across languages."""
+    language. Each speaker maps to a PER-LANGUAGE reference clip so both its
+    English and its Arabic sound native; the owner uses their own recording(s).
+    Anti-hallucination generate() settings + per-segment trim/gate suppress the
+    stray breaths, hums, and repeated phrases the model can otherwise emit."""
 
     def __init__(self, ref_by_role: dict):
         # Same perth watermarker bug as the English model (resemble-ai/chatterbox
@@ -278,19 +320,33 @@ class _MultilingualSynth:
             pass
 
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS  # type: ignore
-        # Normalise every reference clip to a clean WAV the loader accepts.
-        self.ref_by_role = {role: _to_clean_wav(p)
-                            for role, p in ref_by_role.items() if p}
+        # ref_by_role: {role: {"en": path, "ar": path}}. Normalise each clip to a
+        # clean WAV the loader accepts; skip missing ones.
+        self.ref_by_role = {}
+        for role, by_lang in ref_by_role.items():
+            cleaned = {}
+            for lang, p in (by_lang or {}).items():
+                if p:
+                    cleaned[lang] = _to_clean_wav(p)
+            if cleaned:
+                self.ref_by_role[role] = cleaned
         self.model = ChatterboxMultilingualTTS.from_pretrained("cpu")
         self.sr = int(getattr(self.model, "sr", 24000))
 
+    def _ref_for(self, role: str, lang: str) -> str:
+        """Best reference clip for (role, lang): the language-specific one if we
+        have it, else the other language's clip (better a real voice than none)."""
+        by_lang = self.ref_by_role.get(role, {})
+        return by_lang.get(lang) or by_lang.get("en") or by_lang.get("ar") or ""
+
     def _one(self, text: str, lang: str, ref: str):
         import numpy as np
-        # Per-language emotion/pacing (see GEN_SETTINGS): more expressive delivery
-        # for English, and cfg_weight=0 for Arabic to keep it natively Arabic.
+        # Per-language emotion + anti-hallucination settings (see GEN_SETTINGS).
         s = GEN_SETTINGS.get(lang, GEN_SETTINGS["en"])
         kwargs = {"language_id": lang, "exaggeration": s["exaggeration"],
-                  "temperature": s["temperature"], "cfg_weight": s["cfg_weight"]}
+                  "temperature": s["temperature"], "cfg_weight": s["cfg_weight"],
+                  "repetition_penalty": s["repetition_penalty"],
+                  "min_p": s["min_p"], "top_p": s["top_p"]}
         if ref:
             kwargs["audio_prompt_path"] = ref
         wav = self.model.generate(text, **kwargs)
@@ -298,17 +354,19 @@ class _MultilingualSynth:
             arr = wav.squeeze(0).detach().cpu().numpy()
         except (AttributeError, TypeError):
             arr = np.asarray(wav).squeeze()
-        return np.asarray(arr, dtype="float32").reshape(-1)
+        arr = np.asarray(arr, dtype="float32").reshape(-1)
+        return _trim_and_gate(arr, self.sr)
 
     def say_runs(self, runs: list, role: str):
         """Synthesize an ordered list of (lang, text) runs in one speaker's voice
         and concatenate them with short beats. Arabic runs are diacritized first
-        so they're pronounced correctly. Returns (samples, sr)."""
+        so they're pronounced correctly; each run uses the role's native ref for
+        that language. Returns (samples, sr)."""
         import numpy as np
-        ref = self.ref_by_role.get(role, "")
         pieces = []
         for lang, run in runs:
             text = _diacritize_arabic(run) if lang == "ar" else run
+            ref = self._ref_for(role, lang)
             for j, chunk in enumerate(_chunk_text(text)):
                 if pieces:
                     pieces.append(np.zeros(int(self.sr * 0.12), dtype="float32"))
@@ -361,32 +419,51 @@ def _download(url: str, dest: str) -> str:
         return ""
 
 
-def _build_ref_map(segments: list, owner_ref: str, work_dir: str) -> dict:
-    """Assign every speaker role present in the episode a reference clip:
-    owner → the uploaded owner clip; co-hosts → distinct downloaded demo voices.
-    A role with no available clip is omitted (the model uses its built-in voice)."""
+def _build_ref_map(segments: list, owner_ref_en: str, owner_ref_ar: str,
+                   work_dir: str) -> dict:
+    """Build a PER-LANGUAGE reference map {role: {"en": path, "ar": path}}:
+    owner → the owner's own recording(s) (a native-Arabic clip for `ar` gives the
+    best Arabic; falls back to whichever owner clip exists); co-hosts → native
+    English + native Arabic demo prompts. Roles with no clip are omitted (the
+    model uses its built-in voice)."""
     roles = {sawt_tts.voice_for(label)["role"] for label, _ in segments}
     ref = {}
-    if "owner" in roles and owner_ref and os.path.exists(owner_ref):
-        ref["owner"] = owner_ref
+    if "owner" in roles:
+        owner = {}
+        if owner_ref_en and os.path.exists(owner_ref_en):
+            owner["en"] = owner_ref_en
+        if owner_ref_ar and os.path.exists(owner_ref_ar):
+            owner["ar"] = owner_ref_ar
+        # If only one owner clip was given, use it for both languages.
+        if owner.get("en") and not owner.get("ar"):
+            owner["ar"] = owner["en"]
+        if owner.get("ar") and not owner.get("en"):
+            owner["en"] = owner["ar"]
+        if owner:
+            ref["owner"] = owner
     for role in ("cohost_f", "cohost_m"):
         if role in roles and role in COHOST_REF_URLS:
-            dest = os.path.join(work_dir, f"cohost_ref_{role}.flac")
-            got = _download(COHOST_REF_URLS[role], dest)
-            if got:
-                ref[role] = got
+            by_lang = {}
+            for lang, url in COHOST_REF_URLS[role].items():
+                dest = os.path.join(work_dir, f"cohost_{role}_{lang}.flac")
+                got = _download(url, dest)
+                if got:
+                    by_lang[lang] = got
+            if by_lang:
+                ref[role] = by_lang
     return ref
 
 
 def render(script: str, level: str, out_path: str,
-           kokoro_dir: str = "", ref_clip: str = "") -> dict:
+           kokoro_dir: str = "", ref_clip: str = "", ref_clip_ar: str = "") -> dict:
     """Render a full multi-speaker, multilingual episode to `out_path` (MP3).
 
-    Every speaker is voiced by Chatterbox Multilingual: the owner in the owner's
-    cloned voice (from --ref-clip), co-hosts in distinct reference voices. Each
-    line is split into Arabic/English runs and each run synthesised with the
-    right language_id, so Arabic is spoken as Arabic (not letter-by-letter) and
-    the owner's Arabic is in the owner's own voice.
+    Every speaker is voiced by Chatterbox Multilingual, per language:
+      * co-hosts use native English + native Arabic reference prompts;
+      * the owner uses their own recording(s): `ref_clip` (English) and, ideally,
+        `ref_clip_ar` (a native-Arabic recording of the owner) for Arabic runs.
+    Each line is split into Arabic/English runs, Arabic is diacritized, and
+    anti-hallucination settings + per-segment trimming keep it clean.
 
     Returns {ok, segment_count, duration_seconds, out_path, cloned}. `kokoro_dir`
     is accepted but unused (kept for CLI/back-compat)."""
@@ -400,10 +477,10 @@ def render(script: str, level: str, out_path: str,
 
     work_dir = str(pathlib.Path(out_path).resolve().parent)
     pathlib.Path(work_dir).mkdir(parents=True, exist_ok=True)
-    ref_map = _build_ref_map(segments, ref_clip, work_dir)
-    print(f"  reference voices: "
-          + ", ".join(f"{r}={pathlib.Path(p).name}" for r, p in ref_map.items())
-          + (" (none)" if not ref_map else ""))
+    ref_map = _build_ref_map(segments, ref_clip, ref_clip_ar, work_dir)
+    print("  reference voices: " + (", ".join(
+        f"{r}=[{'+'.join(sorted(by))}]" for r, by in ref_map.items())
+        or "none"))
 
     synth = _MultilingualSynth(ref_map)
     print("  multilingual engine: loaded (Chatterbox Multilingual, en+ar)")
@@ -469,7 +546,10 @@ def main():
     ap.add_argument("--kokoro-dir", default="",
                     help="(deprecated / ignored — kept for back-compat)")
     ap.add_argument("--ref-clip", default="",
-                    help="owner voice reference clip for cloning (optional)")
+                    help="owner ENGLISH voice reference clip (optional)")
+    ap.add_argument("--ref-clip-ar", default="",
+                    help="owner ARABIC (MSA) voice reference clip — best Arabic "
+                         "quality; falls back to --ref-clip if omitted")
     ap.add_argument("--plan", action="store_true",
                     help="print the render plan and exit (no synthesis)")
     args = ap.parse_args()
@@ -485,7 +565,8 @@ def main():
     if p["segment_count"] == 0:
         raise SystemExit("Script has no parseable `Speaker: text` lines.")
 
-    render(script, args.level, args.out, args.kokoro_dir, args.ref_clip)
+    render(script, args.level, args.out, args.kokoro_dir, args.ref_clip,
+           args.ref_clip_ar)
     return 0
 
 

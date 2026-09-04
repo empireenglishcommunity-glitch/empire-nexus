@@ -128,12 +128,51 @@ def test_chunk_text_respects_limit():
     assert all(len(p) <= 200 for p in parts)   # each chunk well under the cap
 
 
-def test_cohost_reference_urls_are_distinct_and_present():
+def test_cohost_reference_urls_are_per_language_and_distinct():
     mod = _load()
-    # Both co-host roles must have a reference URL, and they must differ so the
-    # two co-hosts don't sound identical.
+    # Both co-host roles must have BOTH a native English and native Arabic ref,
+    # and the two co-hosts must differ so they don't sound identical.
     assert set(mod.COHOST_REF_URLS) == {"cohost_f", "cohost_m"}
-    assert mod.COHOST_REF_URLS["cohost_f"] != mod.COHOST_REF_URLS["cohost_m"]
+    for role in ("cohost_f", "cohost_m"):
+        assert set(mod.COHOST_REF_URLS[role]) == {"en", "ar"}
+    assert mod.COHOST_REF_URLS["cohost_f"]["en"] != mod.COHOST_REF_URLS["cohost_m"]["en"]
+    # The Arabic prompts are native Arabic samples (…/ar_…).
+    assert "ar_" in mod.COHOST_REF_URLS["cohost_f"]["ar"]
+    assert "ar_" in mod.COHOST_REF_URLS["cohost_m"]["ar"]
+
+
+def test_anti_hallucination_settings_present():
+    mod = _load()
+    # Both languages must set a repetition_penalty above the model default (1.2)
+    # and a tightened sampling window to suppress repeats/breaths.
+    for lang in ("en", "ar"):
+        s = mod.GEN_SETTINGS[lang]
+        assert s["repetition_penalty"] > 1.2
+        assert 0 < s["min_p"] <= 0.2
+        assert s["temperature"] <= 0.7
+
+
+def test_trim_and_gate_removes_edge_silence():
+    mod = _load()
+    import numpy as np
+    sr = 24000
+    sig = np.concatenate([
+        np.zeros(int(sr * 0.4), dtype="float32"),
+        (0.3 * np.sin(2 * np.pi * 200 * np.arange(sr) / sr)).astype("float32"),
+        np.zeros(int(sr * 0.4), dtype="float32"),
+    ])
+    out = mod._trim_and_gate(sig, sr)
+    assert len(out) < len(sig)          # edges trimmed
+    assert len(out) > sr * 0.5          # speech kept
+
+
+def test_trim_and_gate_handles_empty_and_silent():
+    mod = _load()
+    import numpy as np
+    assert len(mod._trim_and_gate(np.zeros(0, dtype="float32"), 24000)) == 0
+    # All-silence input must not crash and must not blow up in size.
+    sil = np.zeros(2400, dtype="float32")
+    assert len(mod._trim_and_gate(sil, 24000)) <= len(sil)
 
 
 # ── emotion + Arabic diacritics settings ─────────────────────────────────────

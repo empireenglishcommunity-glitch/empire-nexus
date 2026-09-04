@@ -22,7 +22,10 @@ on:
         description: "CEFR level (A1–C2) — sets the delivery pace"
         default: "A1"
       voice_ref_url:
-        description: "Direct URL to the owner's ~10s voice reference clip (owner's lines are cloned from it)"
+        description: "URL to the owner's ENGLISH voice reference clip (owner's English lines cloned from it)"
+        default: ""
+      voice_ref_ar_url:
+        description: "URL to the owner's ARABIC (MSA) voice reference clip — best Arabic quality (falls back to the English clip if empty)"
         default: ""
 
 jobs:
@@ -67,42 +70,47 @@ jobs:
           # Best-effort: the renderer falls back to raw Arabic if it's missing.
           pip install --quiet text2tashkeel || echo "text2tashkeel install failed — Arabic will render without added tashkeel"
 
-      - name: Fetch the owner voice reference clip (if provided)
+      - name: Fetch the owner voice reference clips (English + Arabic, if provided)
         id: refclip
-        if: ${{ inputs.voice_ref_url != '' }}
+        if: ${{ inputs.voice_ref_url != '' || inputs.voice_ref_ar_url != '' }}
         env:
-          REF_URL: ${{ inputs.voice_ref_url }}
+          REF_URL_EN: ${{ inputs.voice_ref_url }}
+          REF_URL_AR: ${{ inputs.voice_ref_ar_url }}
         run: |
-          # Strip any query string (Discord CDN URLs carry ?ex=&is=&hm=) BEFORE
-          # reading the extension, else "m4a?ex=..." is treated as an unknown ext.
-          clean_url="${REF_URL%%\?*}"
-          ext="${clean_url##*.}"
-          case "$ext" in wav|mp3|m4a|ogg|flac|webm) ;; *) ext="bin" ;; esac
-          raw="owner_voice_raw.$ext"
-          curl -sSL --retry 3 --fail -o "$raw" "$REF_URL"
-          echo "  downloaded reference clip -> $raw ($(stat -c%s "$raw") bytes, ext=$ext)"
-          # Re-encode to a real 24kHz mono PCM WAV with ffmpeg so the loader never
-          # sees a surprising container (the renderer also re-decodes defensively).
-          out="owner_voice_ref.wav"
-          if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -y -i "$raw" -ac 1 -ar 24000 "$out" >/dev/null 2>&1; then
-            echo "  re-encoded -> $out ($(stat -c%s "$out") bytes)"
-          else
-            echo "  ffmpeg re-encode skipped/failed; passing raw file to the renderer"
-            out="$raw"
-          fi
-          echo "ref_path=$out" >> "$GITHUB_OUTPUT"
+          # Download a URL and re-encode to clean 24kHz mono PCM WAV. Strips the
+          # query string (Discord CDN URLs carry ?ex=&is=&hm=) before reading ext.
+          fetch_ref() {
+            local url="$1" out="$2"
+            [ -z "$url" ] && return 0
+            local clean="${url%%\?*}" ext="${clean##*.}"
+            case "$ext" in wav|mp3|m4a|ogg|flac|webm) ;; *) ext="bin" ;; esac
+            local raw="raw_${out%.wav}.$ext"
+            curl -sSL --retry 3 --fail -o "$raw" "$url"
+            echo "  downloaded $url -> $raw ($(stat -c%s "$raw") bytes)"
+            if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -y -i "$raw" -ac 1 -ar 24000 "$out" >/dev/null 2>&1; then
+              echo "  re-encoded -> $out ($(stat -c%s "$out") bytes)"
+            else
+              cp "$raw" "$out"
+            fi
+          }
+          fetch_ref "$REF_URL_EN" "owner_voice_ref.wav"
+          fetch_ref "$REF_URL_AR" "owner_voice_ref_ar.wav"
+          [ -f owner_voice_ref.wav ]    && echo "ref_en=owner_voice_ref.wav"    >> "$GITHUB_OUTPUT"
+          [ -f owner_voice_ref_ar.wav ] && echo "ref_ar=owner_voice_ref_ar.wav" >> "$GITHUB_OUTPUT"
 
       - name: Render the episode
         env:
           SCRIPT_PATH: ${{ inputs.script_path }}
           LEVEL: ${{ inputs.level }}
-          REF_PATH: ${{ steps.refclip.outputs.ref_path }}
+          REF_EN: ${{ steps.refclip.outputs.ref_en }}
+          REF_AR: ${{ steps.refclip.outputs.ref_ar }}
         run: |
           python3 scripts/render_podcast_episode.py \
             --script "$SCRIPT_PATH" \
             --level "$LEVEL" \
             --out output/episode.mp3 \
-            ${REF_PATH:+--ref-clip "$REF_PATH"}
+            ${REF_EN:+--ref-clip "$REF_EN"} \
+            ${REF_AR:+--ref-clip-ar "$REF_AR"}
 
       - name: Upload the episode audio
         uses: actions/upload-artifact@v4
