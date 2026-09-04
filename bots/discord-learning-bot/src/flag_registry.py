@@ -140,6 +140,7 @@ REGISTRY = [
     ("sawt_script_gen", "Sawt Phase 2: LLM-assisted podcast script generation — /generate-script turns a topic + level + format into a level-graded conversation script for the owner to review before recording. Nothing publishes automatically", "sawt", False),
     ("sawt_tts_pipeline", "Sawt Phase 3: in-bot audio assembly — /generate-audio parses a reviewed script into per-speaker segments and renders them via the configured TTS engine. On the 512MB bot host no engine is available, so it explains to render offline (GitHub Actions); the same path produces audio where an engine IS available", "sawt", False),
     ("sawt_voice_clone", "Sawt Phase 3: use the owner's CLONED voice for their lines (Chatterbox). Requires explicit stored consent (!sawt-consent) + a reference clip; refuses without both. Owner voice only — never clones anyone else", "sawt", False),
+    ("sawt_daily_story", "Sawt Phase 4: Empire Chronicles daily serialized story — the scheduled loop posts the newest rendered episode to the podcast channel with A/B vote reactions. Keep the allowlist EMPTY (a scheduled task has no member context). OFF until the daily render pipeline + approval flow are live", "sawt", False),
 ]
 
 # Initiative display names and emoji
