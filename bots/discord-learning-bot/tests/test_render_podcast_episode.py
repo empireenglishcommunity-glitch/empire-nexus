@@ -181,7 +181,7 @@ def test_character_for_maps_cast_and_defaults():
     # Named characters map to their slots; the narrator is the owner's clone.
     assert mod.character_for("Narrator")["slot"] == "owner"
     assert mod.character_for("Maya")["slot"] == "mai"
-    assert mod.character_for("Leo")["slot"] == "builtin_m"
+    assert mod.character_for("Leo")["slot"] == "male_us_1"
     # Unknown speaker → narrator fallback (never crashes).
     assert mod.character_for("Zorblax the Alien")["name"] == "narrator"
     assert mod.character_for("")["name"] == "narrator"
@@ -248,7 +248,7 @@ def test_sound_design_generators_produce_audio():
     assert float(np.max(np.abs(mod._sd_ambient(sr, 2)))) < 0.2
 
 
-def test_build_slot_refs_selects_needed_slots(tmp_path):
+def test_build_slot_refs_gives_every_character_a_distinct_ref(tmp_path):
     mod = _load()
     from src import sawt_tts
     script = "Narrator: Hello.\nMaya: Hi there.\nLeo: Good evening."
@@ -256,9 +256,32 @@ def test_build_slot_refs_selects_needed_slots(tmp_path):
     owner = tmp_path / "owner.wav"; owner.write_bytes(b"x")
     mai = tmp_path / "mai.wav"; mai.write_bytes(b"x")
     refs = mod._build_slot_refs(segs, str(owner), str(mai))
-    assert refs["owner"] == str(owner)     # narrator → owner clip
-    assert refs["mai"] == str(mai)         # Maya → Mai clip
-    assert refs["builtin_m"] == ""         # Leo → built-in (no clip)
+    assert refs["owner"] == str(owner)         # narrator → owner clip
+    assert refs["mai"] == str(mai)             # Maya → Mai clip
+    # Leo (male_us_1) must have his OWN distinct reference file — NOT empty and
+    # NOT Mai's — this is the fix for "Leo sounded like Mai".
+    assert refs["male_us_1"] and refs["male_us_1"] != str(mai)
+    assert refs["male_us_1"].endswith("male_us_1.ogg")
+
+
+def test_distinct_american_voice_files_ship():
+    mod = _load()
+    import os
+    for slot, rel in mod.BUILTIN_VOICE_FILES.items():
+        assert os.path.exists(os.path.join(mod._SFX_DIR, rel)), rel
+    # The three built-in slots must be distinct files (distinct voices).
+    assert len(set(mod.BUILTIN_VOICE_FILES.values())) == 3
+
+
+def test_pause_marker_parsing():
+    mod = _load()
+    assert mod._PAUSE_RE.findall("turn. [PAUSE 2s]") == ["2"]
+    assert mod._PAUSE_RE.findall("wait [PAUSE 1.5s] then") == ["1.5"]
+    assert mod._PAUSE_RE.findall("beat [PAUSE]") == [""]      # defaults to 1s
+    # Markers are stripped from spoken text.
+    stripped = mod._PAUSE_RE.sub(" ", mod._SFX_RE.sub(" ",
+               "He froze. [SFX:creak] [PAUSE 2s] Then silence.")).strip()
+    assert "PAUSE" not in stripped and "SFX" not in stripped
 
 
 # ── emotion + Arabic diacritics settings ─────────────────────────────────────
