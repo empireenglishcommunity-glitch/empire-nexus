@@ -108,7 +108,10 @@ jobs:
         run: |
           # librosa (with ffmpeg, installed in the fetch step) decodes the clip
           # to a clean WAV for Chatterbox, whose own loader is picky about formats.
-          pip install --quiet librosa || true
+          # setuptools must be present or chatterbox's perth watermarker init can
+          # resolve to None (resemble-ai/chatterbox#198); the renderer also
+          # monkeypatches that watermarker to a no-op as a belt-and-suspenders.
+          pip install --quiet setuptools librosa || true
           pip install --quiet chatterbox-tts || echo "chatterbox install failed — owner lines will use Kokoro"
 
       - name: Render the episode

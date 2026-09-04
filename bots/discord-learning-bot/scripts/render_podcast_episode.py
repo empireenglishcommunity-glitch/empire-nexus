@@ -124,6 +124,22 @@ class _CloneSynth:
     engine or clip is missing, the caller falls back to Kokoro."""
 
     def __init__(self, ref_clip: str):
+        # Known chatterbox-tts bug (resemble-ai/chatterbox#198): its constructor
+        # calls perth.PerthImplicitWatermarker(), which resolves to None when the
+        # perth watermarking dep doesn't fully initialize → "'NoneType' object is
+        # not callable" at from_pretrained. The watermark is inaudible and purely
+        # optional for us, so neutralize it with a no-op before building the model.
+        try:
+            import perth  # type: ignore
+
+            class _NoWatermark:
+                def apply_watermark(self, wav, *a, **k):
+                    return wav
+
+            perth.PerthImplicitWatermarker = _NoWatermark
+        except Exception:
+            pass
+
         from chatterbox.tts import ChatterboxTTS  # type: ignore
         # Normalise the reference clip to a format Chatterbox reliably loads.
         self.ref_clip = _to_clean_wav(ref_clip)
@@ -215,8 +231,10 @@ def render(script: str, level: str, out_path: str,
             clone = _CloneSynth(ref_clip)
             print(f"  owner voice clone: enabled (ref {ref_clip})")
         except Exception as e:                                   # noqa: BLE001
+            import traceback
             print(f"  owner voice clone: UNAVAILABLE ({type(e).__name__}: {e}) "
                   f"— owner lines fall back to Kokoro {FALLBACK_VOICE}")
+            traceback.print_exc()
     else:
         print("  owner voice clone: no reference clip — owner lines use Kokoro")
 
