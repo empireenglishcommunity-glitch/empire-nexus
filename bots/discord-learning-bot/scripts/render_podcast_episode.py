@@ -593,9 +593,75 @@ def _sd_shimmer(sr):
     return _sd_reverb(sig.astype("float32"), sr, decay=0.6, mix=0.4) * 0.3
 
 
-# Inline [SFX:name] markers a script can use. Mapped to a generator above.
-SFX = {"tap": _sd_tap, "creak": _sd_creak, "shimmer": _sd_shimmer}
+# ── REAL audio assets (CC/public-domain, in content/sfx/) ────────────────────
+# We prefer REAL recorded sound effects + music over synthesized tones. Each SFX
+# name maps to an audio file; if the file is missing we fall back to a synth
+# generator so the renderer never hard-fails. The narrator should NOT read
+# onomatopoeia ("tap tap") — use the [SFX:knock] marker so a REAL knock plays.
+_SFX_DIR = str(BOT_DIR / "content" / "sfx")
+SFX_FILES = {
+    "knock": "knock.ogg",     # a real door knock (replaces spoken "tap tap tap")
+    "tap": "knock.ogg",       # alias
+    "creak": "creak.ogg",     # a real door-handle creak
+}
+# Named background-music beds (real CC tracks). Scores the whole episode, ducked.
+MUSIC_FILES = {
+    "mystery": "music_mystery.ogg",   # Rafael Krux "Lights" (CC-BY) — attribute!
+}
+# Synth fallbacks if an asset file is absent (keeps the pipeline resilient).
+_SFX_SYNTH = {"tap": _sd_tap, "knock": _sd_tap, "creak": _sd_creak,
+              "shimmer": _sd_shimmer}
 _SFX_RE = re.compile(r"\[SFX:([a-z_]+)\]", re.I)
+
+
+def _load_audio(path, sr):
+    """Load an audio file → mono float32 at `sr`. Returns None on any failure.
+    Tries soundfile first (reads WAV/OGG/FLAC natively via libsndfile — no ffmpeg
+    needed), then librosa (which can decode more formats but needs an audio
+    backend). Resamples with numpy if the file's rate differs from `sr`."""
+    import numpy as np
+    # 1) soundfile — native OGG/WAV/FLAC, present wherever the renderer runs.
+    try:
+        import soundfile as sf
+        y, file_sr = sf.read(path, dtype="float32", always_2d=False)
+        if y is not None and len(y):
+            if getattr(y, "ndim", 1) > 1:
+                y = y.mean(axis=1)
+            y = np.asarray(y, dtype="float32")
+            if file_sr != sr:
+                y = _resample(y, file_sr, sr)
+            return y.astype("float32")
+    except Exception:                                            # noqa: BLE001
+        pass
+    # 2) librosa fallback (mp3/m4a via audioread/ffmpeg).
+    try:
+        import librosa
+        y, _ = librosa.load(path, sr=sr, mono=True)
+        return y.astype("float32") if y is not None and len(y) else None
+    except Exception:                                            # noqa: BLE001
+        return None
+
+
+def load_sfx(name, sr):
+    """Return the REAL sound effect for `name` (mono float32 @ sr). Falls back to
+    a synthesized version if the asset file is missing."""
+    import numpy as np
+    fn = SFX_FILES.get(name.lower())
+    if fn:
+        y = _load_audio(os.path.join(_SFX_DIR, fn), sr)
+        if y is not None:
+            pk = float(np.max(np.abs(y))) or 1.0
+            return (y * (0.7 / pk)).astype("float32")
+    synth = _SFX_SYNTH.get(name.lower())
+    return synth(sr) if synth else np.zeros(0, dtype="float32")
+
+
+def load_music(name, sr):
+    """Return a background-music bed (mono float32 @ sr), or None if unavailable."""
+    fn = MUSIC_FILES.get((name or "").lower())
+    if not fn:
+        return None
+    return _load_audio(os.path.join(_SFX_DIR, fn), sr)
 
 
 class _StorySynth:
@@ -764,12 +830,48 @@ def _mix_under(voice, bed, sr, level=0.5):
     return (voice + bed).astype("float32")
 
 
+def _duck_music(voice, music, sr, base=0.22, ducked=0.09,
+                intro=3.0, outro=3.0):
+    """Score a story with a MUSIC bed that automatically ducks under speech —
+    like a film. The music plays at `base` level during silence and drops to
+    `ducked` while someone is talking (sidechain compression, done by tracking
+    the voice envelope). An `intro`/`outro` of music at full base level tops and
+    tails the episode. Returns the voice+music mix (same length as voice+outro)."""
+    import numpy as np
+    if music is None or len(music) == 0:
+        return voice
+    total = len(voice) + int(sr * outro)
+    # Tile/trim the music to the full length.
+    if len(music) < total:
+        music = np.tile(music, int(np.ceil(total / len(music))))
+    music = music[:total].astype("float32").copy()
+    # Voice envelope (smoothed) → duck amount. Pad voice to total length.
+    v = np.concatenate([voice, np.zeros(total - len(voice), dtype="float32")])
+    win = max(1, int(sr * 0.15))
+    env = np.convolve(np.abs(v), np.ones(win) / win, mode="same")
+    vpk = float(env.max()) or 1.0
+    speaking = env > (vpk * 0.06)
+    gain = np.where(speaking, ducked, base).astype("float32")
+    # Smooth the gain so ducking is gradual, not clicky (~250ms).
+    sw = max(1, int(sr * 0.25))
+    gain = np.convolve(gain, np.ones(sw) / sw, mode="same").astype("float32")
+    # Music intro fade-in + let the intro breathe before speech.
+    fin = min(int(sr * 1.0), total)
+    music[:fin] *= np.linspace(0, 1, fin, dtype="float32")
+    fout = min(int(sr * 2.0), total)
+    music[-fout:] *= np.linspace(1, 0, fout, dtype="float32")
+    mixed = v + music * gain
+    return mixed.astype("float32")
+
+
 def render_story(script: str, out_path: str, owner_ref: str = "",
-                 mai_ref: str = "", sound_design: bool = True) -> dict:
+                 mai_ref: str = "", sound_design: bool = True,
+                 music: str = "mystery") -> dict:
     """Render a STORYTELLING episode (Empire Chronicles): English-only, a named
-    CAST (narrator=owner clone, characters=Mai clone / built-in American), with
-    a signature intro sting, an ambient bed under the whole piece, and inline
-    [SFX:tap|creak|shimmer] sound effects. Returns a result dict."""
+    CAST (narrator=owner clone, characters=Mai clone / built-in American), scored
+    like a short film with a REAL cinematic music bed that ducks under speech,
+    plus REAL inline [SFX:knock|creak] sound effects. `music` selects a bed from
+    MUSIC_FILES (or "" / "none" for no music). Returns a result dict."""
     import numpy as np
     import soundfile as sf
 
@@ -795,11 +897,12 @@ def render_story(script: str, out_path: str, owner_ref: str = "",
         gap = PAUSE_BETWEEN_SPEAKERS if ch["slot"] != prev_slot else PAUSE_SAME_SPEAKER
         if pieces:
             pieces.append(np.zeros(int(sr * gap), dtype="float32"))
-        # Inline SFX markers: emit the effect where it appears, strip from speech.
+        # Inline SFX markers: play the REAL effect where it appears, strip the
+        # marker from the spoken text (so the narrator never reads "tap tap").
         for m in _SFX_RE.finditer(text):
-            gen = SFX.get(m.group(1).lower())
-            if gen:
-                pieces.append(gen(sr))
+            fx = load_sfx(m.group(1), sr)
+            if len(fx):
+                pieces.append(fx)
                 pieces.append(np.zeros(int(sr * 0.15), dtype="float32"))
         clean_text = _SFX_RE.sub(" ", text).strip()
         if clean_text:
@@ -812,34 +915,37 @@ def render_story(script: str, out_path: str, owner_ref: str = "",
     body = np.concatenate(pieces) if pieces else np.zeros(0, dtype="float32")
     body = _trim_and_gate(body, sr)
 
+    used_music = None
     if sound_design:
-        # Ambient bed under the spoken body, then the intro sting in front.
+        # A subtle ambient room bed adds 'presence' under the whole piece.
         body = _mix_under(body, _sd_ambient(sr, len(body) / sr), sr, level=1.0)
-        sting = _sd_intro_sting(sr)
-        # Small crossfade: let the sting tail overlap the first ~0.4s of speech.
-        overlap = int(sr * 0.4)
-        if len(body) > overlap and len(sting) > overlap:
-            head = sting.copy()
-            head[-overlap:] *= np.linspace(1, 0, overlap, dtype="float32")
-            body[:overlap] *= np.linspace(0, 1, overlap, dtype="float32")
-            audio = np.concatenate([head[:-overlap], head[-overlap:] + body[:overlap],
-                                    body[overlap:]]).astype("float32")
+        bed = load_music(music, sr) if music and music.lower() != "none" else None
+        if bed is not None:
+            used_music = music
+            # A ~3s music intro plays alone, THEN speech starts (music ducks).
+            intro = int(sr * 3.0)
+            voice = np.concatenate([np.zeros(intro, dtype="float32"), body])
+            audio = _duck_music(voice, bed, sr, base=0.24, ducked=0.10,
+                                intro=3.0, outro=3.0)
         else:
+            # No music available → keep the synth intro sting as a fallback.
+            sting = _sd_intro_sting(sr)
             audio = np.concatenate([sting, body]).astype("float32")
+            audio = np.concatenate([audio, np.zeros(int(sr * 0.8), dtype="float32")])
     else:
-        audio = body
+        audio = np.concatenate([body, np.zeros(int(sr * 0.8), dtype="float32")])
 
-    audio = np.concatenate([audio, np.zeros(int(sr * 0.8), dtype="float32")])
     audio = _normalize(audio)
     out = pathlib.Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, sr, format="MP3")
     dur = len(audio) / sr
     print(f"\n  wrote {out} — {dur/60:.1f} min, {len(segments)} lines, "
-          f"cast={sorted(slot_refs)}, sound_design={sound_design}, "
-          f"in {time.time()-t0:.1f}s")
+          f"cast={sorted(slot_refs)}, music={used_music or 'none'}, "
+          f"sound_design={sound_design}, in {time.time()-t0:.1f}s")
     return {"ok": True, "segment_count": len(segments),
-            "duration_seconds": int(dur), "out_path": str(out)}
+            "duration_seconds": int(dur), "out_path": str(out),
+            "music": used_music}
 
 
 def render(script: str, level: str, out_path: str,
@@ -949,7 +1055,10 @@ def main():
     ap.add_argument("--ref-mai", default="",
                     help="Mai's consented voice reference clip (story cast)")
     ap.add_argument("--no-sound-design", action="store_true",
-                    help="story mode: skip the intro sting / ambient bed / SFX")
+                    help="story mode: skip the music / ambient bed / SFX")
+    ap.add_argument("--music", default="mystery",
+                    help="story mode: background music bed name "
+                         "(mystery | none). Default: mystery")
     ap.add_argument("--plan", action="store_true",
                     help="print the render plan and exit (no synthesis)")
     args = ap.parse_args()
@@ -970,7 +1079,8 @@ def main():
             raise SystemExit("Story script has no parseable `Speaker: text` lines.")
         render_story(script, args.out, owner_ref=args.ref_clip,
                      mai_ref=args.ref_mai,
-                     sound_design=not args.no_sound_design)
+                     sound_design=not args.no_sound_design,
+                     music=args.music)
         return 0
 
     p = plan(script)
