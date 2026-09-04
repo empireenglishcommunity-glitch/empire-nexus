@@ -99,20 +99,23 @@ class _KokoroSynth:
 
 
 def _to_clean_wav(ref_clip: str) -> str:
-    """Chatterbox's reference loader is finicky about container formats (an
-    .m4a can make its internal loader return None → "'NoneType' object is not
-    callable" at generate time). So decode ANY input to a clean 24kHz mono WAV
-    with librosa/soundfile (already present for Kokoro) and hand THAT to the
-    clone. Returns the original path unchanged if it's already a .wav."""
+    """Chatterbox's reference loader is finicky about container formats: hand it
+    an m4a (even one misnamed .wav) and its loader returns None → "'NoneType'
+    object is not callable" at generate time. So ALWAYS re-decode the clip to a
+    real 24kHz mono PCM WAV with librosa/soundfile (present for Kokoro) — we do
+    NOT trust the file extension, because an upload/download can name m4a bytes
+    ".wav". Always returns a freshly written .clean.wav."""
     import pathlib
-    if pathlib.Path(ref_clip).suffix.lower() == ".wav":
-        return ref_clip
     import librosa
     import soundfile as sf
+    # librosa uses ffmpeg/audioread to decode whatever the real container is,
+    # regardless of the filename's suffix.
     y, _sr = librosa.load(ref_clip, sr=24000, mono=True)
+    if y is None or len(y) == 0:
+        raise ValueError(f"reference clip {ref_clip!r} decoded to no audio")
     out = str(pathlib.Path(ref_clip).with_suffix(".clean.wav"))
-    sf.write(out, y, 24000, format="WAV")
-    print(f"  converted reference clip → {out} ({len(y)/24000:.1f}s, 24kHz mono)")
+    sf.write(out, y, 24000, format="WAV", subtype="PCM_16")
+    print(f"  converted reference clip → {out} ({len(y)/24000:.1f}s, 24kHz mono PCM)")
     return out
 
 

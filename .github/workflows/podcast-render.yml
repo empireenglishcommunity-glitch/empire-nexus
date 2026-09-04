@@ -80,20 +80,34 @@ jobs:
         env:
           REF_URL: ${{ inputs.voice_ref_url }}
         run: |
-          ext="${REF_URL##*.}"
-          case "$ext" in wav|mp3|m4a|ogg|flac|webm) ;; *) ext="wav" ;; esac
-          out="owner_voice_ref.$ext"
-          curl -sSL --retry 3 --fail -o "$out" "$REF_URL"
-          echo "  saved reference clip -> $out ($(stat -c%s "$out") bytes)"
+          # ffmpeg is needed both here (re-encode) and by librosa in the renderer.
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg || true
+          # Strip any query string (Discord CDN URLs carry ?ex=&is=&hm=) BEFORE
+          # reading the extension, else "m4a?ex=..." is treated as an unknown ext.
+          clean_url="${REF_URL%%\?*}"
+          ext="${clean_url##*.}"
+          case "$ext" in wav|mp3|m4a|ogg|flac|webm) ;; *) ext="bin" ;; esac
+          raw="owner_voice_raw.$ext"
+          curl -sSL --retry 3 --fail -o "$raw" "$REF_URL"
+          echo "  downloaded reference clip -> $raw ($(stat -c%s "$raw") bytes, ext=$ext)"
+          # Re-encode to a real 24kHz mono PCM WAV with ffmpeg so Chatterbox's
+          # loader never sees a surprising container (the renderer also re-decodes
+          # defensively, but this guarantees a truthful file up front).
+          out="owner_voice_ref.wav"
+          if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -y -i "$raw" -ac 1 -ar 24000 "$out" >/dev/null 2>&1; then
+            echo "  re-encoded -> $out ($(stat -c%s "$out") bytes)"
+          else
+            echo "  ffmpeg re-encode skipped/failed; passing raw file to the renderer"
+            out="$raw"
+          fi
           echo "ref_path=$out" >> "$GITHUB_OUTPUT"
 
       - name: Install Chatterbox (owner voice clone)
         if: ${{ inputs.clone && inputs.voice_ref_url != '' }}
         continue-on-error: true    # cloning is best-effort; renderer falls back to Kokoro
         run: |
-          # ffmpeg lets librosa decode the reference clip (m4a/ogg/…) → clean WAV,
-          # which Chatterbox's own loader is picky about. librosa is the decoder.
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg || true
+          # librosa (with ffmpeg, installed in the fetch step) decodes the clip
+          # to a clean WAV for Chatterbox, whose own loader is picky about formats.
           pip install --quiet librosa || true
           pip install --quiet chatterbox-tts || echo "chatterbox install failed — owner lines will use Kokoro"
 
