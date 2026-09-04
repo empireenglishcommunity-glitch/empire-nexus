@@ -192,6 +192,52 @@ def _to_clean_wav(ref_clip: str) -> str:
     return out
 
 
+# Per-language generation settings. Higher `exaggeration` = more emotion/warmth
+# (0.5 is neutral/flat); pairing it with a lower `cfg_weight` keeps delivery
+# natural and better-paced (ResembleAI's own guidance). For Arabic we set
+# cfg_weight=0.0: the ResembleAI docs note this reduces the reference voice's
+# accent bleeding into the target language, so the owner's/co-host's Arabic
+# sounds more natively Arabic instead of English-accented.
+GEN_SETTINGS = {
+    "en": {"exaggeration": 0.7, "cfg_weight": 0.4, "temperature": 0.8},
+    "ar": {"exaggeration": 0.6, "cfg_weight": 0.0, "temperature": 0.8},
+}
+
+
+# ── Arabic diacritization (tashkeel) ─────────────────────────────────────────
+# Undiacritized Arabic is pronunciation-ambiguous: the TTS guesses vowels/shadda
+# and gets words like "تشرفنا" wrong (missing the shadda). We restore diacritics
+# on Arabic runs at render time with text2tashkeel (offline ONNX, no API key),
+# which fixes the internal vowels + shaddas that drive pronunciation. Lazy,
+# cached, and fully graceful: if it can't load/run, we use the raw Arabic.
+_DIACRITIZER = None
+_DIACRITIZER_TRIED = False
+
+
+def _diacritize_arabic(text: str) -> str:
+    """Return `text` with Arabic diacritics restored, or unchanged on any error.
+    The diacritizer model is loaded once and reused."""
+    global _DIACRITIZER, _DIACRITIZER_TRIED
+    if not text or not text.strip():
+        return text
+    if not _DIACRITIZER_TRIED:
+        _DIACRITIZER_TRIED = True
+        try:
+            import text2tashkeel as t2t  # type: ignore
+            _DIACRITIZER = t2t.Diacritizer()
+            print("  diacritizer: text2tashkeel loaded (Arabic tashkeel on)")
+        except Exception as e:                                   # noqa: BLE001
+            print(f"  diacritizer: unavailable ({type(e).__name__}) — raw Arabic")
+            _DIACRITIZER = None
+    if _DIACRITIZER is None:
+        return text
+    try:
+        out = _DIACRITIZER.diacritize(text)
+        return out or text
+    except Exception:                                            # noqa: BLE001
+        return text
+
+
 def _chunk_text(text: str, limit: int = 280) -> list:
     """Split text into pieces under `limit` chars on sentence boundaries, so a
     long turn isn't truncated by the model's ~300-char input cap."""
@@ -240,10 +286,11 @@ class _MultilingualSynth:
 
     def _one(self, text: str, lang: str, ref: str):
         import numpy as np
-        # cfg_weight 0.5 is the balanced default; the ResembleAI cog notes 0 is
-        # better for pure "language transfer" (voice in a language it never spoke).
-        kwargs = {"language_id": lang, "exaggeration": 0.5,
-                  "temperature": 0.8, "cfg_weight": 0.5}
+        # Per-language emotion/pacing (see GEN_SETTINGS): more expressive delivery
+        # for English, and cfg_weight=0 for Arabic to keep it natively Arabic.
+        s = GEN_SETTINGS.get(lang, GEN_SETTINGS["en"])
+        kwargs = {"language_id": lang, "exaggeration": s["exaggeration"],
+                  "temperature": s["temperature"], "cfg_weight": s["cfg_weight"]}
         if ref:
             kwargs["audio_prompt_path"] = ref
         wav = self.model.generate(text, **kwargs)
@@ -255,12 +302,14 @@ class _MultilingualSynth:
 
     def say_runs(self, runs: list, role: str):
         """Synthesize an ordered list of (lang, text) runs in one speaker's voice
-        and concatenate them with short beats. Returns (samples, sr)."""
+        and concatenate them with short beats. Arabic runs are diacritized first
+        so they're pronounced correctly. Returns (samples, sr)."""
         import numpy as np
         ref = self.ref_by_role.get(role, "")
         pieces = []
         for lang, run in runs:
-            for j, chunk in enumerate(_chunk_text(run)):
+            text = _diacritize_arabic(run) if lang == "ar" else run
+            for j, chunk in enumerate(_chunk_text(text)):
                 if pieces:
                     pieces.append(np.zeros(int(self.sr * 0.12), dtype="float32"))
                 pieces.append(self._one(chunk, lang, ref))
@@ -284,11 +333,20 @@ def _resample(samples, sr_from, sr_to):
 
 
 def _normalize(samples):
-    """Peak-normalise to a safe headroom so episodes have consistent loudness."""
+    """Peak-normalise to a safe headroom + gentle fade-in/out for a polished,
+    story-like open and close (no abrupt starts/stops)."""
     import numpy as np
-    peak = float(np.max(np.abs(samples))) if len(samples) else 0.0
+    if not len(samples):
+        return samples.astype("float32")
+    peak = float(np.max(np.abs(samples)))
     if peak > 0:
         samples = samples * (0.97 / peak)
+    # ~120ms fades at the very start and end.
+    fade = min(int(0.12 * 24000), len(samples) // 2)
+    if fade > 0:
+        ramp = np.linspace(0.0, 1.0, fade, dtype="float32")
+        samples[:fade] *= ramp
+        samples[-fade:] *= ramp[::-1]
     return samples.astype("float32")
 
 
