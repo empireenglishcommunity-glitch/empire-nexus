@@ -615,7 +615,25 @@ _SFX_RE = re.compile(r"\[SFX:([a-z_]+)\]", re.I)
 
 
 def _load_audio(path, sr):
-    """Load an audio file → mono float32 at `sr`. Returns None on any failure."""
+    """Load an audio file → mono float32 at `sr`. Returns None on any failure.
+    Tries soundfile first (reads WAV/OGG/FLAC natively via libsndfile — no ffmpeg
+    needed), then librosa (which can decode more formats but needs an audio
+    backend). Resamples with numpy if the file's rate differs from `sr`."""
+    import numpy as np
+    # 1) soundfile — native OGG/WAV/FLAC, present wherever the renderer runs.
+    try:
+        import soundfile as sf
+        y, file_sr = sf.read(path, dtype="float32", always_2d=False)
+        if y is not None and len(y):
+            if getattr(y, "ndim", 1) > 1:
+                y = y.mean(axis=1)
+            y = np.asarray(y, dtype="float32")
+            if file_sr != sr:
+                y = _resample(y, file_sr, sr)
+            return y.astype("float32")
+    except Exception:                                            # noqa: BLE001
+        pass
+    # 2) librosa fallback (mp3/m4a via audioread/ffmpeg).
     try:
         import librosa
         y, _ = librosa.load(path, sr=sr, mono=True)
