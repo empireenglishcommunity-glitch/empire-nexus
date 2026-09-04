@@ -182,15 +182,56 @@ def _to_clean_wav(ref_clip: str) -> str:
     ".wav". Always returns a freshly written .clean.wav."""
     import pathlib
     import librosa
+    import numpy as np
     import soundfile as sf
     # librosa uses ffmpeg/audioread to decode whatever the real container is,
     # regardless of the filename's suffix.
     y, _sr = librosa.load(ref_clip, sr=24000, mono=True)
     if y is None or len(y) == 0:
         raise ValueError(f"reference clip {ref_clip!r} decoded to no audio")
+    sr = 24000
+    y = y.astype("float32")
+    before = len(y) / sr
+
+    # ── Reference cleanup (so the clone copies a CLEAN voice, not breaths/noise) ──
+    # 1) high-pass ~70Hz to kill rumble/DC.
+    try:
+        import scipy.signal as ss
+        b, a = ss.butter(2, 70 / (sr / 2), btype="high")
+        y = ss.lfilter(b, a, y).astype("float32")
+    except Exception:                                            # noqa: BLE001
+        pass
+    # 2) trim leading/trailing silence + breath.
+    try:
+        y2, _ = librosa.effects.trim(y, top_db=30)
+        if len(y2) > sr * 0.5:      # keep only if trimming left real speech
+            y = y2
+    except Exception:                                            # noqa: BLE001
+        pass
+    # 3) gentle noise gate: duck (not zero) frames near the noise floor so quiet
+    #    breaths/hiss between words don't get cloned, while speech stays natural.
+    hop = int(sr * 0.02)
+    n = len(y) // hop
+    if n >= 4:
+        fr = y[:n * hop].reshape(n, hop)
+        e = np.sqrt((fr ** 2).mean(axis=1) + 1e-12)
+        thr = float(np.percentile(e, 10)) * 3.0
+        gain = np.ones(n, dtype="float32")
+        gain[e < thr] = 0.25
+        g = np.repeat(gain, hop)
+        g = np.concatenate([g, np.ones(len(y) - len(g), dtype="float32")])
+        k = max(1, int(sr * 0.01))
+        g = np.convolve(g, np.ones(k) / k, mode="same").astype("float32")
+        y = (y * g).astype("float32")
+    # 4) peak-normalise to ~-1 dBFS.
+    peak = float(np.max(np.abs(y))) if len(y) else 0.0
+    if peak > 0:
+        y = (y * (0.89 / peak)).astype("float32")
+
     out = str(pathlib.Path(ref_clip).with_suffix(".clean.wav"))
-    sf.write(out, y, 24000, format="WAV", subtype="PCM_16")
-    print(f"  converted reference clip → {out} ({len(y)/24000:.1f}s, 24kHz mono PCM)")
+    sf.write(out, y, sr, format="WAV", subtype="PCM_16")
+    print(f"  cleaned reference clip → {out} "
+          f"({before:.1f}s→{len(y)/sr:.1f}s, HPF+trim+gate+norm)")
     return out
 
 

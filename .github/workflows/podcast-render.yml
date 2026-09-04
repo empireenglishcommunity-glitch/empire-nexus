@@ -62,7 +62,7 @@ jobs:
           # setuptools must be present or chatterbox's perth watermarker init can
           # resolve to None (resemble-ai/chatterbox#198); the renderer also
           # monkeypatches that watermarker to a no-op as a belt-and-suspenders.
-          pip install --quiet setuptools soundfile librosa numpy
+          pip install --quiet setuptools soundfile librosa numpy scipy
           # chatterbox-tts ships ChatterboxMultilingualTTS (chatterbox.mtl_tts).
           pip install --quiet chatterbox-tts
           # text2tashkeel: offline Arabic diacritization (ONNX) — restores the
