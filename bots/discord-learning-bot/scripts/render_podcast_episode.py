@@ -98,25 +98,70 @@ class _KokoroSynth:
         return samples, sr
 
 
+def _to_clean_wav(ref_clip: str) -> str:
+    """Chatterbox's reference loader is finicky about container formats (an
+    .m4a can make its internal loader return None → "'NoneType' object is not
+    callable" at generate time). So decode ANY input to a clean 24kHz mono WAV
+    with librosa/soundfile (already present for Kokoro) and hand THAT to the
+    clone. Returns the original path unchanged if it's already a .wav."""
+    import pathlib
+    if pathlib.Path(ref_clip).suffix.lower() == ".wav":
+        return ref_clip
+    import librosa
+    import soundfile as sf
+    y, _sr = librosa.load(ref_clip, sr=24000, mono=True)
+    out = str(pathlib.Path(ref_clip).with_suffix(".clean.wav"))
+    sf.write(out, y, 24000, format="WAV")
+    print(f"  converted reference clip → {out} ({len(y)/24000:.1f}s, 24kHz mono)")
+    return out
+
+
 class _CloneSynth:
     """Owner voice clone via Chatterbox + a reference clip. Optional: if the
     engine or clip is missing, the caller falls back to Kokoro."""
 
     def __init__(self, ref_clip: str):
         from chatterbox.tts import ChatterboxTTS  # type: ignore
-        self.ref_clip = ref_clip
-        self.model = ChatterboxTTS.from_pretrained(device="cpu")
+        # Normalise the reference clip to a format Chatterbox reliably loads.
+        self.ref_clip = _to_clean_wav(ref_clip)
+        # from_pretrained takes the device positionally (per ResembleAI's app).
+        self.model = ChatterboxTTS.from_pretrained("cpu")
+
+    def _one(self, text: str):
+        import numpy as np
+        wav = self.model.generate(text, audio_prompt_path=self.ref_clip)
+        # Chatterbox returns a torch tensor shaped (1, N); normalise to 1-D numpy.
+        try:
+            arr = wav.squeeze(0).detach().cpu().numpy()
+        except (AttributeError, TypeError):
+            arr = np.asarray(wav).squeeze()
+        return np.asarray(arr, dtype="float32").reshape(-1)
 
     def say(self, text: str, speed: float):
         import numpy as np
-        wav = self.model.generate(text, audio_prompt_path=self.ref_clip)
-        # Chatterbox returns a torch tensor; normalise to a 1-D numpy array.
-        try:
-            arr = wav.squeeze().detach().cpu().numpy()
-        except AttributeError:
-            arr = np.asarray(wav).squeeze()
         sr = int(getattr(self.model, "sr", 24000))
-        return arr.astype("float32"), sr
+        # Chatterbox caps input length (~300 chars). Split long lines on
+        # sentence boundaries and concatenate with a short pause so a long turn
+        # doesn't get truncated.
+        parts, buf = [], ""
+        for tok in re.split(r"(?<=[.!?])\s+", text.strip()):
+            if not tok:
+                continue
+            if buf and len(buf) + len(tok) + 1 > 280:
+                parts.append(buf)
+                buf = tok
+            else:
+                buf = f"{buf} {tok}".strip()
+        if buf:
+            parts.append(buf)
+        if not parts:
+            parts = [text.strip()]
+        pieces = []
+        for i, p in enumerate(parts):
+            if i:
+                pieces.append(np.zeros(int(sr * 0.15), dtype="float32"))
+            pieces.append(self._one(p))
+        return np.concatenate(pieces), sr
 
 
 def _resample(samples, sr_from, sr_to):

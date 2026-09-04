@@ -90,7 +90,12 @@ jobs:
       - name: Install Chatterbox (owner voice clone)
         if: ${{ inputs.clone && inputs.voice_ref_url != '' }}
         continue-on-error: true    # cloning is best-effort; renderer falls back to Kokoro
-        run: pip install --quiet chatterbox-tts || echo "chatterbox install failed — owner lines will use Kokoro"
+        run: |
+          # ffmpeg lets librosa decode the reference clip (m4a/ogg/…) → clean WAV,
+          # which Chatterbox's own loader is picky about. librosa is the decoder.
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg || true
+          pip install --quiet librosa || true
+          pip install --quiet chatterbox-tts || echo "chatterbox install failed — owner lines will use Kokoro"
 
       - name: Render the episode
         env:
