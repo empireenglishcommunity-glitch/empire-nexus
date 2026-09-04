@@ -1,17 +1,17 @@
-AI co-host: Hello everyone, and welcome to the Empire English podcast. أهلاً وسهلاً بكم.
-Host (you): Good morning! صباح الخير. Today we learn how to introduce ourselves.
-AI co-host: Introduce yourself means أن تعرّف عن نفسك — you tell people your name.
-Host (you): Yes. Let's start. My name is Mahmoud. اسمي محمود.
-AI co-host: Nice to meet you, Mahmoud! تشرفنا.
+AI co-host: أهلاً وسهلاً بكم. Hello everyone, and welcome to the Empire English podcast.
+Host (you): صباح الخير everyone. Good morning! Today we learn how to introduce ourselves.
+AI co-host: To introduce yourself, أن تعرّف عن نفسك — you tell people your name.
+Host (you): اسمي محمود. My name is Mahmoud. Let's start.
+AI co-host: تشرّفنا يا محمود. Nice to meet you, Mahmoud!
 Host (you): Nice to meet you too. And what is your name?
-AI co-host: My name is Sara. I am a teacher. أنا معلمة.
-Host (you): Where are you from? من أين أنت؟
-AI co-host: I am from Egypt. أنا من مصر. And you?
-Host (you): I am from the Emirates. أنا من الإمارات.
-AI co-host: Very good. Now, how old are you? كم عمرك؟
+AI co-host: أنا سارة، وأنا معلمة. My name is Sara, and I am a teacher.
+Host (you): من أين أنت؟ Where are you from?
+AI co-host: أنا من مصر. I am from Egypt. And you?
+Host (you): أنا من الإمارات. I am from the Emirates.
+AI co-host: كم عمرك؟ How old are you?
 Host (you): I am thirty years old. This is a simple question.
-AI co-host: Let's practice one more time. Say your name.
-Host (you): My name is Mahmoud. Nice to meet you.
-AI co-host: Perfect! ممتاز. Now you try at home. Say your name out loud.
-Host (you): Thank you for listening. See you next time. مع السلامة!
-AI co-host: Bye bye! إلى اللقاء.
+AI co-host: Now let's practice. Say your name.
+Host (you): اسمي محمود. My name is Mahmoud. Nice to meet you.
+AI co-host: ممتاز! Perfect. Now you try at home. Say your name out loud.
+Host (you): شكراً لكم. Thank you for listening. See you next time!
+AI co-host: مع السلامة. Bye bye!
