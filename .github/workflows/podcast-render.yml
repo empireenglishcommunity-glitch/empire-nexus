@@ -62,6 +62,10 @@ jobs:
           pip install --quiet setuptools soundfile librosa numpy
           # chatterbox-tts ships ChatterboxMultilingualTTS (chatterbox.mtl_tts).
           pip install --quiet chatterbox-tts
+          # text2tashkeel: offline Arabic diacritization (ONNX) — restores the
+          # vowels/shaddas so Arabic is pronounced correctly, not letter-guessed.
+          # Best-effort: the renderer falls back to raw Arabic if it's missing.
+          pip install --quiet text2tashkeel || echo "text2tashkeel install failed — Arabic will render without added tashkeel"
 
       - name: Fetch the owner voice reference clip (if provided)
         id: refclip

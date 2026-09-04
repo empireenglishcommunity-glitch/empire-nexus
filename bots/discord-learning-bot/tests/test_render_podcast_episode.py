@@ -134,3 +134,22 @@ def test_cohost_reference_urls_are_distinct_and_present():
     # two co-hosts don't sound identical.
     assert set(mod.COHOST_REF_URLS) == {"cohost_f", "cohost_m"}
     assert mod.COHOST_REF_URLS["cohost_f"] != mod.COHOST_REF_URLS["cohost_m"]
+
+
+# ── emotion + Arabic diacritics settings ─────────────────────────────────────
+def test_gen_settings_expressive_and_arabic_language_transfer():
+    mod = _load()
+    # English is more expressive than flat-neutral 0.5, and Arabic uses
+    # cfg_weight 0 so the reference accent doesn't bleed into Arabic.
+    assert mod.GEN_SETTINGS["en"]["exaggeration"] > 0.5
+    assert mod.GEN_SETTINGS["ar"]["cfg_weight"] == 0.0
+    assert 0.25 <= mod.GEN_SETTINGS["ar"]["exaggeration"] <= 2.0
+
+
+def test_diacritize_is_graceful_without_engine():
+    mod = _load()
+    # If text2tashkeel isn't importable, _diacritize_arabic must return the
+    # input unchanged rather than raise. (When it IS present it adds tashkeel.)
+    out = mod._diacritize_arabic("صباح الخير")
+    assert isinstance(out, str) and out.strip()          # never empty / never raises
+    assert mod._diacritize_arabic("") == ""              # blank stays blank
