@@ -33,6 +33,7 @@ The Kokoro model directory must contain kokoro-v1.0.onnx and voices-v1.0.bin.
 import argparse
 import os
 import pathlib
+import re
 import sys
 import time
 
@@ -262,11 +263,21 @@ def render(script: str, level: str, out_path: str,
 
         if speak:
             use_clone = clone is not None and v["engine"] == "clone"
+            samples = sr = None
             if use_clone:
-                samples, sr = clone.say(speak, speed)
-                cloned_segments += 1
-            else:
-                voice_id = v.get("voice_id", FALLBACK_VOICE)
+                try:
+                    samples, sr = clone.say(speak, speed)
+                    cloned_segments += 1
+                except Exception as e:                           # noqa: BLE001
+                    # A per-segment clone failure must not lose the whole
+                    # episode — fall back to Kokoro for just this line.
+                    print(f"  ⚠️ clone failed on segment {i} "
+                          f"({type(e).__name__}: {e}) — Kokoro for this line")
+                    samples = None
+            if samples is None:
+                # Clone lines have no Kokoro voice_id of their own; use the
+                # fallback voice for the owner when cloning is off/failed.
+                voice_id = v.get("voice_id") or FALLBACK_VOICE
                 samples, sr = kokoro.say(speak, voice_id, speed)
 
             samples = np.asarray(samples, dtype="float32")
