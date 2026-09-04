@@ -27,6 +27,13 @@ on:
       voice_ref_ar_url:
         description: "URL to the owner's ARABIC (MSA) voice reference clip — best Arabic quality (falls back to the English clip if empty)"
         default: ""
+      story_mode:
+        description: "Storytelling mode (Empire Chronicles): English cast + sound design"
+        type: boolean
+        default: false
+      voice_ref_mai_url:
+        description: "Story cast: Mai's consented voice reference clip URL (optional)"
+        default: ""
 
 jobs:
   render:
@@ -72,10 +79,11 @@ jobs:
 
       - name: Fetch the owner voice reference clips (English + Arabic, if provided)
         id: refclip
-        if: ${{ inputs.voice_ref_url != '' || inputs.voice_ref_ar_url != '' }}
+        if: ${{ inputs.voice_ref_url != '' || inputs.voice_ref_ar_url != '' || inputs.voice_ref_mai_url != '' }}
         env:
           REF_URL_EN: ${{ inputs.voice_ref_url }}
           REF_URL_AR: ${{ inputs.voice_ref_ar_url }}
+          REF_URL_MAI: ${{ inputs.voice_ref_mai_url }}
         run: |
           # Download a URL and re-encode to clean 24kHz mono PCM WAV. Strips the
           # query string (Discord CDN URLs carry ?ex=&is=&hm=) before reading ext.
@@ -95,22 +103,28 @@ jobs:
           }
           fetch_ref "$REF_URL_EN" "owner_voice_ref.wav"
           fetch_ref "$REF_URL_AR" "owner_voice_ref_ar.wav"
+          fetch_ref "$REF_URL_MAI" "mai_voice_ref.wav"
           [ -f owner_voice_ref.wav ]    && echo "ref_en=owner_voice_ref.wav"    >> "$GITHUB_OUTPUT"
           [ -f owner_voice_ref_ar.wav ] && echo "ref_ar=owner_voice_ref_ar.wav" >> "$GITHUB_OUTPUT"
+          [ -f mai_voice_ref.wav ]      && echo "ref_mai=mai_voice_ref.wav"      >> "$GITHUB_OUTPUT"
 
       - name: Render the episode
         env:
           SCRIPT_PATH: ${{ inputs.script_path }}
           LEVEL: ${{ inputs.level }}
+          STORY: ${{ inputs.story_mode }}
           REF_EN: ${{ steps.refclip.outputs.ref_en }}
           REF_AR: ${{ steps.refclip.outputs.ref_ar }}
+          REF_MAI: ${{ steps.refclip.outputs.ref_mai }}
         run: |
           python3 scripts/render_podcast_episode.py \
             --script "$SCRIPT_PATH" \
             --level "$LEVEL" \
             --out output/episode.mp3 \
+            ${STORY:+$([ "$STORY" = "true" ] && echo --story)} \
             ${REF_EN:+--ref-clip "$REF_EN"} \
-            ${REF_AR:+--ref-clip-ar "$REF_AR"}
+            ${REF_AR:+--ref-clip-ar "$REF_AR"} \
+            ${REF_MAI:+--ref-mai "$REF_MAI"}
 
       - name: Upload the episode audio
         uses: actions/upload-artifact@v4
