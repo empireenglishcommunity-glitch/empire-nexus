@@ -563,7 +563,12 @@ def render(script: str, level: str, out_path: str,
     if not pieces:
         raise SystemExit("Nothing synthesised (script had only pauses?).")
 
-    audio = _normalize(np.concatenate(pieces))
+    audio = np.concatenate(pieces)
+    # Trim any dead air / stray tail after the last speech, then leave ~0.8s.
+    audio = _trim_and_gate(audio, target_sr)
+    tail = int(target_sr * 0.8)
+    audio = np.concatenate([audio, np.zeros(tail, dtype="float32")])
+    audio = _normalize(audio)
     out = pathlib.Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, target_sr, format="MP3")
