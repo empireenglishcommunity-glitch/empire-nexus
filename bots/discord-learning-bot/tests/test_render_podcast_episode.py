@@ -175,6 +175,52 @@ def test_trim_and_gate_handles_empty_and_silent():
     assert len(mod._trim_and_gate(sil, 24000)) <= len(sil)
 
 
+# ── Storytelling cast + sound design ─────────────────────────────────────────
+def test_character_for_maps_cast_and_defaults():
+    mod = _load()
+    # Named characters map to their slots; the narrator is the owner's clone.
+    assert mod.character_for("Narrator")["slot"] == "owner"
+    assert mod.character_for("Maya")["slot"] == "mai"
+    assert mod.character_for("Leo")["slot"] == "builtin_m"
+    # Unknown speaker → narrator fallback (never crashes).
+    assert mod.character_for("Zorblax the Alien")["name"] == "narrator"
+    assert mod.character_for("")["name"] == "narrator"
+
+
+def test_sfx_registry_and_marker_regex():
+    mod = _load()
+    assert set(mod.SFX) >= {"tap", "creak", "shimmer"}
+    found = mod._SFX_RE.findall("She heard it. [SFX:tap] Then [SFX:CREAK] silence.")
+    assert [f.lower() for f in found] == ["tap", "creak"]
+
+
+def test_sound_design_generators_produce_audio():
+    mod = _load()
+    import numpy as np
+    sr = 24000
+    for gen in (lambda: mod._sd_intro_sting(sr), lambda: mod._sd_tap(sr),
+                lambda: mod._sd_creak(sr), lambda: mod._sd_shimmer(sr),
+                lambda: mod._sd_ambient(sr, 2)):
+        a = gen()
+        assert len(a) > 0
+        assert float(np.max(np.abs(a))) <= 1.0        # never clips
+    # Ambient bed must be quiet (sits UNDER speech).
+    assert float(np.max(np.abs(mod._sd_ambient(sr, 2)))) < 0.2
+
+
+def test_build_slot_refs_selects_needed_slots(tmp_path):
+    mod = _load()
+    from src import sawt_tts
+    script = "Narrator: Hello.\nMaya: Hi there.\nLeo: Good evening."
+    segs = sawt_tts.parse_script(script)
+    owner = tmp_path / "owner.wav"; owner.write_bytes(b"x")
+    mai = tmp_path / "mai.wav"; mai.write_bytes(b"x")
+    refs = mod._build_slot_refs(segs, str(owner), str(mai))
+    assert refs["owner"] == str(owner)     # narrator → owner clip
+    assert refs["mai"] == str(mai)         # Maya → Mai clip
+    assert refs["builtin_m"] == ""         # Leo → built-in (no clip)
+
+
 # ── emotion + Arabic diacritics settings ─────────────────────────────────────
 def test_gen_settings_expressive_and_arabic_language_transfer():
     mod = _load()

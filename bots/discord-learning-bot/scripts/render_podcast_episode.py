@@ -173,6 +173,58 @@ COHOST_REF_URLS = {
 }
 
 
+# ── STORYTELLING CAST (Empire Chronicles) ────────────────────────────────────
+# The narrative podcast uses named CHARACTERS, not podcast "roles". Each script
+# speaker label is matched (case-insensitive substring) to a voice "slot":
+#   * "owner"   → the owner's cloned voice   (reference = --ref-clip)
+#   * "mai"     → Mai's cloned voice         (reference = --ref-mai, consented)
+#   * "builtin" → the model's native American English voice (NO reference clip)
+# Each slot also carries generation tweaks so distinct characters that share a
+# slot still sound a little different (pitch of delivery via exaggeration, pace
+# via cfg_weight). Voice cloning copies the REFERENCE's accent, so American
+# clarity for non-cloned characters comes from the built-in American voice.
+#
+# Matching is ordered: the FIRST character whose "match" token appears in the
+# label wins, so specific names beat generic ones. Unknown speakers fall back to
+# the narrator (owner). This bank is data — new characters are added here.
+CHARACTER_VOICES = {
+    # The recurring host/narrator — the owner's voice threads every episode.
+    "narrator": {"slot": "owner", "match": ("narrator", "host", "(you)", "owner"),
+                 "exaggeration": 0.55, "cfg_weight": 0.4},
+    # Female lead — Mai's real, clean, expressive voice.
+    "maya":     {"slot": "mai", "match": ("maya", "mai"),
+                 "exaggeration": 0.7, "cfg_weight": 0.4},
+    # Male character — built-in American voice, a touch more measured.
+    "leo":      {"slot": "builtin_m", "match": ("leo",),
+                 "exaggeration": 0.6, "cfg_weight": 0.35},
+    # A spare built-in female character voice for one-off roles.
+    "extra_f":  {"slot": "builtin_f", "match": ("woman", "girl"),
+                 "exaggeration": 0.65, "cfg_weight": 0.4},
+    # A spare built-in male voice for unnamed male one-off roles.
+    "extra_m":  {"slot": "builtin_m", "match": ("man", "stranger", "guard"),
+                 "exaggeration": 0.6, "cfg_weight": 0.4},
+}
+# Whole-word match keeps names clean: a token matches only as a standalone word
+# (so "man" won't fire inside "woman"/"Alien"). Names are still substring-safe.
+_DEFAULT_CHARACTER = "narrator"
+
+
+def character_for(speaker_label: str) -> dict:
+    """Map a script speaker label to a storytelling character voice entry.
+    First matching token wins (specific names before generic words); unknown
+    labels fall back to the narrator. Returns {"name", "slot", params...}."""
+    low = (speaker_label or "").lower()
+    words = set(re.findall(r"[a-z()]+", low))
+    for name, entry in CHARACTER_VOICES.items():
+        for token in entry["match"]:
+            # Whole-word match (token is one of the label's words) OR the token
+            # is itself the full label — avoids "man" firing inside "woman".
+            if token in words or token == low.strip():
+                return {"name": name, **entry}
+    d = CHARACTER_VOICES[_DEFAULT_CHARACTER]
+    return {"name": _DEFAULT_CHARACTER, **d}
+
+
 def _to_clean_wav(ref_clip: str) -> str:
     """Chatterbox's reference loader is finicky about container formats: hand it
     an m4a (even one misnamed .wav) and its loader returns None → "'NoneType'
@@ -417,6 +469,166 @@ class _MultilingualSynth:
         return np.concatenate(pieces), self.sr
 
 
+# ── Synthesized cinematic sound design (100% generated — no licensed assets) ──
+def _sd_reverb(x, sr, decay=0.3, mix=0.25):
+    """A cheap Schroeder-ish reverb tail for space/atmosphere."""
+    import numpy as np
+    out = x.copy()
+    for delay_ms, g in ((37, 0.7), (53, 0.6), (71, 0.5), (97, 0.4)):
+        d = int(sr * delay_ms / 1000.0)
+        if d < len(x):
+            echo = np.zeros_like(x)
+            echo[d:] = x[:-d] * g * decay
+            out = out + echo
+    return (1 - mix) * x + mix * out
+
+
+def _sd_intro_sting(sr, seconds=3.2):
+    """A warm, cinematic intro sting: a soft rising chord swell + a shimmer, so
+    every episode opens with the same recognizable 'brand' sound."""
+    import numpy as np
+    n = int(sr * seconds)
+    t = np.arange(n) / sr
+    # Minor-add chord (A2, E3, A3, C4) swelling in — warm but slightly mysterious.
+    freqs = [110.0, 164.81, 220.0, 261.63]
+    sig = np.zeros(n, dtype="float32")
+    for f in freqs:
+        sig += np.sin(2 * np.pi * f * t) / len(freqs)
+    # High shimmer that fades in then out.
+    shimmer = 0.15 * np.sin(2 * np.pi * 1320 * t) * np.exp(-((t - seconds*0.6)**2) / 0.4)
+    sig = sig + shimmer
+    # Swell envelope: fade in, hold, fade out.
+    env = np.minimum(t / 0.8, 1.0) * np.minimum((seconds - t) / 1.0, 1.0)
+    env = np.clip(env, 0, 1)
+    sig = (sig * env).astype("float32")
+    sig = _sd_reverb(sig, sr, decay=0.5, mix=0.35)
+    pk = float(np.max(np.abs(sig))) or 1.0
+    return (sig * (0.5 / pk)).astype("float32")
+
+
+def _sd_ambient(sr, seconds, kind="room"):
+    """A soft ambient bed to sit UNDER narration. 'room' = airy hiss + low hum
+    (a quiet indoor space); very low level so speech stays clear."""
+    import numpy as np
+    n = int(sr * seconds)
+    rng = np.random.default_rng(7)
+    noise = rng.standard_normal(n).astype("float32")
+    # Low-pass the noise heavily → soft 'air', not hiss.
+    import scipy.signal as ss
+    b, a = ss.butter(2, 900 / (sr / 2), btype="low")
+    air = ss.lfilter(b, a, noise).astype("float32")
+    # A barely-there low hum for 'presence'.
+    t = np.arange(n) / sr
+    hum = 0.04 * np.sin(2 * np.pi * 60 * t).astype("float32")
+    bed = air / (np.max(np.abs(air)) or 1.0) * 0.5 + hum
+    return (bed * 0.06).astype("float32")     # ~ -24 dB under speech
+
+
+def _sd_tap(sr):
+    """A single 'tap' knock (short filtered transient)."""
+    import numpy as np, scipy.signal as ss
+    n = int(sr * 0.12)
+    t = np.arange(n) / sr
+    click = (np.exp(-t * 60) * np.sin(2 * np.pi * 180 * t)).astype("float32")
+    b, a = ss.butter(2, [120/(sr/2), 2500/(sr/2)], btype="band")
+    click = ss.lfilter(b, a, click).astype("float32")
+    return _sd_reverb(click, sr, decay=0.4, mix=0.3) * 0.5
+
+
+def _sd_creak(sr):
+    """A slow door-creak: pitch-rising filtered noise."""
+    import numpy as np, scipy.signal as ss
+    n = int(sr * 1.1)
+    rng = np.random.default_rng(3)
+    noise = rng.standard_normal(n).astype("float32")
+    t = np.arange(n) / sr
+    # sweep a narrow band-pass upward → 'creeeak'
+    out = np.zeros(n, dtype="float32")
+    for f0 in np.linspace(300, 900, 6):
+        b, a = ss.butter(2, [max(80,f0-60)/(sr/2), (f0+60)/(sr/2)], btype="band")
+        out += ss.lfilter(b, a, noise).astype("float32")
+    env = np.minimum(t/0.2, 1.0) * np.minimum((1.1 - t)/0.3, 1.0)
+    out = out / (np.max(np.abs(out)) or 1.0) * np.clip(env, 0, 1)
+    return _sd_reverb(out.astype("float32"), sr, mix=0.35) * 0.35
+
+
+def _sd_shimmer(sr):
+    """A soft 'magic'/blue-light shimmer (bell-like partials, quick fade)."""
+    import numpy as np
+    n = int(sr * 1.4)
+    t = np.arange(n) / sr
+    sig = np.zeros(n, dtype="float32")
+    for f in (880, 1320, 1760, 2640):
+        sig += np.sin(2 * np.pi * f * t) * np.exp(-t * 3)
+    sig = sig / (np.max(np.abs(sig)) or 1.0)
+    return _sd_reverb(sig.astype("float32"), sr, decay=0.6, mix=0.4) * 0.3
+
+
+# Inline [SFX:name] markers a script can use. Mapped to a generator above.
+SFX = {"tap": _sd_tap, "creak": _sd_creak, "shimmer": _sd_shimmer}
+_SFX_RE = re.compile(r"\[SFX:([a-z_]+)\]", re.I)
+
+
+class _StorySynth:
+    """English-only, character-based synthesizer for the storytelling podcast.
+    Each character maps to a voice SLOT with its own reference clip (a cloned
+    voice) or no clip (the model's native American voice). Slots + per-character
+    params keep characters distinct and clear."""
+
+    def __init__(self, slot_refs: dict):
+        try:
+            import perth  # type: ignore
+
+            class _NoWatermark:
+                def apply_watermark(self, wav, *a, **k):
+                    return wav
+
+            perth.PerthImplicitWatermarker = _NoWatermark
+        except Exception:
+            pass
+
+        from chatterbox.mtl_tts import ChatterboxMultilingualTTS  # type: ignore
+        # slot_refs: {slot_name: clip_path}. Clean each; builtin_* slots have no
+        # clip (None) → the model's native American English voice.
+        self.slot_refs = {}
+        for slot, p in (slot_refs or {}).items():
+            self.slot_refs[slot] = _to_clean_wav(p) if p else ""
+        self.model = ChatterboxMultilingualTTS.from_pretrained("cpu")
+        self.sr = int(getattr(self.model, "sr", 24000))
+
+    def _one(self, text: str, ref: str, exaggeration: float, cfg_weight: float):
+        import numpy as np
+        s = GEN_SETTINGS["en"]
+        kwargs = {"language_id": "en", "exaggeration": exaggeration,
+                  "temperature": s["temperature"], "cfg_weight": cfg_weight,
+                  "repetition_penalty": s["repetition_penalty"],
+                  "min_p": s["min_p"], "top_p": s["top_p"]}
+        if ref:
+            kwargs["audio_prompt_path"] = ref
+        wav = self.model.generate(text, **kwargs)
+        try:
+            arr = wav.squeeze(0).detach().cpu().numpy()
+        except (AttributeError, TypeError):
+            arr = np.asarray(wav).squeeze()
+        arr = np.asarray(arr, dtype="float32").reshape(-1)
+        return _trim_and_gate(arr, self.sr)
+
+    def say(self, text: str, character: dict):
+        """Synthesize one character's line (English), chunked. Returns samples."""
+        import numpy as np
+        ref = self.slot_refs.get(character["slot"], "")
+        exg = character.get("exaggeration", 0.6)
+        cfg = character.get("cfg_weight", 0.4)
+        pieces = []
+        for chunk in _chunk_text(text):
+            if pieces:
+                pieces.append(np.zeros(int(self.sr * 0.1), dtype="float32"))
+            pieces.append(self._one(chunk, ref, exg, cfg))
+        if not pieces:
+            return np.zeros(0, dtype="float32")
+        return np.concatenate(pieces)
+
+
 def _resample(samples, sr_from, sr_to):
     """Linear resample so every segment shares one sample rate before stitching.
     A podcast is speech, so linear interpolation is perceptually fine here."""
@@ -493,6 +705,112 @@ def _build_ref_map(segments: list, owner_ref_en: str, owner_ref_ar: str,
             if by_lang:
                 ref[role] = by_lang
     return ref
+
+
+def _build_slot_refs(segments, owner_ref, mai_ref):
+    """Which voice slots does this story need, and what clip backs each? Cloned
+    slots (owner/mai) use the given clips; builtin_* slots use the native voice
+    (no clip). A cloned slot with no clip is dropped (→ built-in fallback)."""
+    slots = {character_for(lbl)["slot"] for lbl, _ in segments}
+    refs = {}
+    if "owner" in slots and owner_ref and os.path.exists(owner_ref):
+        refs["owner"] = owner_ref
+    if "mai" in slots and mai_ref and os.path.exists(mai_ref):
+        refs["mai"] = mai_ref
+    # builtin_m / builtin_f need no reference (native American voice).
+    for s in slots:
+        if s.startswith("builtin"):
+            refs[s] = ""
+    return refs
+
+
+def _mix_under(voice, bed, sr, level=0.5):
+    """Mix an ambient bed UNDER a voice track (bed tiled/truncated to length)."""
+    import numpy as np
+    if bed is None or len(bed) == 0:
+        return voice
+    if len(bed) < len(voice):
+        bed = np.tile(bed, int(np.ceil(len(voice) / len(bed))))
+    bed = bed[:len(voice)] * level
+    return (voice + bed).astype("float32")
+
+
+def render_story(script: str, out_path: str, owner_ref: str = "",
+                 mai_ref: str = "", sound_design: bool = True) -> dict:
+    """Render a STORYTELLING episode (Empire Chronicles): English-only, a named
+    CAST (narrator=owner clone, characters=Mai clone / built-in American), with
+    a signature intro sting, an ambient bed under the whole piece, and inline
+    [SFX:tap|creak|shimmer] sound effects. Returns a result dict."""
+    import numpy as np
+    import soundfile as sf
+
+    segments = sawt_tts.parse_script(script)
+    if not segments:
+        raise SystemExit("No speaker lines found (expected `Speaker: text`).")
+
+    work_dir = str(pathlib.Path(out_path).resolve().parent)
+    pathlib.Path(work_dir).mkdir(parents=True, exist_ok=True)
+
+    slot_refs = _build_slot_refs(segments, owner_ref, mai_ref)
+    print("  cast slots: " + ", ".join(
+        f"{s}={'clip' if p else 'builtin'}" for s, p in slot_refs.items()))
+    synth = _StorySynth(slot_refs)
+    sr = synth.sr
+    print("  story engine: loaded (Chatterbox Multilingual, English cast)")
+
+    pieces = []
+    prev_slot = None
+    t0 = time.time()
+    for i, (label, text) in enumerate(segments, 1):
+        ch = character_for(label)
+        gap = PAUSE_BETWEEN_SPEAKERS if ch["slot"] != prev_slot else PAUSE_SAME_SPEAKER
+        if pieces:
+            pieces.append(np.zeros(int(sr * gap), dtype="float32"))
+        # Inline SFX markers: emit the effect where it appears, strip from speech.
+        for m in _SFX_RE.finditer(text):
+            gen = SFX.get(m.group(1).lower())
+            if gen:
+                pieces.append(gen(sr))
+                pieces.append(np.zeros(int(sr * 0.15), dtype="float32"))
+        clean_text = _SFX_RE.sub(" ", text).strip()
+        if clean_text:
+            pieces.append(synth.say(clean_text, ch))
+        prev_slot = ch["slot"]
+        if i % 5 == 0 or i == len(segments):
+            print(f"  [{i}/{len(segments)}] rendered ({time.time()-t0:.0f}s)",
+                  flush=True)
+
+    body = np.concatenate(pieces) if pieces else np.zeros(0, dtype="float32")
+    body = _trim_and_gate(body, sr)
+
+    if sound_design:
+        # Ambient bed under the spoken body, then the intro sting in front.
+        body = _mix_under(body, _sd_ambient(sr, len(body) / sr), sr, level=1.0)
+        sting = _sd_intro_sting(sr)
+        # Small crossfade: let the sting tail overlap the first ~0.4s of speech.
+        overlap = int(sr * 0.4)
+        if len(body) > overlap and len(sting) > overlap:
+            head = sting.copy()
+            head[-overlap:] *= np.linspace(1, 0, overlap, dtype="float32")
+            body[:overlap] *= np.linspace(0, 1, overlap, dtype="float32")
+            audio = np.concatenate([head[:-overlap], head[-overlap:] + body[:overlap],
+                                    body[overlap:]]).astype("float32")
+        else:
+            audio = np.concatenate([sting, body]).astype("float32")
+    else:
+        audio = body
+
+    audio = np.concatenate([audio, np.zeros(int(sr * 0.8), dtype="float32")])
+    audio = _normalize(audio)
+    out = pathlib.Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    sf.write(str(out), audio, sr, format="MP3")
+    dur = len(audio) / sr
+    print(f"\n  wrote {out} — {dur/60:.1f} min, {len(segments)} lines, "
+          f"cast={sorted(slot_refs)}, sound_design={sound_design}, "
+          f"in {time.time()-t0:.1f}s")
+    return {"ok": True, "segment_count": len(segments),
+            "duration_seconds": int(dur), "out_path": str(out)}
 
 
 def render(script: str, level: str, out_path: str,
@@ -596,11 +914,35 @@ def main():
     ap.add_argument("--ref-clip-ar", default="",
                     help="owner ARABIC (MSA) voice reference clip — best Arabic "
                          "quality; falls back to --ref-clip if omitted")
+    ap.add_argument("--story", action="store_true",
+                    help="STORYTELLING mode (Empire Chronicles): English-only "
+                         "named cast + sound design")
+    ap.add_argument("--ref-mai", default="",
+                    help="Mai's consented voice reference clip (story cast)")
+    ap.add_argument("--no-sound-design", action="store_true",
+                    help="story mode: skip the intro sting / ambient bed / SFX")
     ap.add_argument("--plan", action="store_true",
                     help="print the render plan and exit (no synthesis)")
     args = ap.parse_args()
 
     script = pathlib.Path(args.script).read_text(encoding="utf-8")
+
+    if args.story:
+        segs = sawt_tts.parse_script(script)
+        cast = {}
+        for lbl, _ in segs:
+            cast.setdefault(character_for(lbl)["name"], 0)
+            cast[character_for(lbl)["name"]] += 1
+        print(f"Story plan: {len(segs)} lines · cast "
+              + ", ".join(f"{c}×{n}" for c, n in cast.items()))
+        if args.plan:
+            return 0
+        if not segs:
+            raise SystemExit("Story script has no parseable `Speaker: text` lines.")
+        render_story(script, args.out, owner_ref=args.ref_clip,
+                     mai_ref=args.ref_mai,
+                     sound_design=not args.no_sound_design)
+        return 0
 
     p = plan(script)
     voices = ", ".join(f"{r}×{n}" for r, n in p["voices"].items())
