@@ -6008,10 +6008,96 @@ _STORY_STATE = _STORY_DIR / "podcast-scripts" / "story-state.json"
 _VOTE_EMOJI = {"🅰️": "A", "🅱️": "B"}
 
 
+_STORY_CHANNEL_KEY = "sawt_story_channel_id"
+
+
 def _story_channel(guild):
-    """The single podcast channel the story posts to (owner's existing channel).
-    Looked up by the configured exact name."""
-    return discord.utils.get(guild.text_channels, name=config.SAWT_STORY_CHANNEL)
+    """The single podcast channel the story posts to. Resolve by the stored
+    channel ID first (survives a rename), then fall back to the configured
+    name — mirroring how community.py resolves its runtime-created channel."""
+    stored = database.get_setting(_STORY_CHANNEL_KEY, "")
+    if stored.isdigit():
+        ch = guild.get_channel(int(stored))
+        if ch is not None:
+            return ch
+    ch = discord.utils.get(guild.text_channels, name=config.SAWT_STORY_CHANNEL)
+    if ch is not None:
+        database.set_setting(_STORY_CHANNEL_KEY, str(ch.id))
+    return ch
+
+
+# The channel's "topic" (shown under the channel name) — a short, student-facing
+# statement of why this channel exists and how it helps them learn.
+_STORY_CHANNEL_TOPIC = (
+    "🎙️ Empire Chronicles — one short English story every day. Listen, follow "
+    "the cast, then VOTE 🅰️/🅱️ to decide what happens next. Train your "
+    "listening, pronunciation & vocabulary through a story YOU help write."
+)
+
+# A richer welcome message pinned in the channel the first time it's set up.
+_STORY_CHANNEL_INTRO = (
+    "🎙️ **Welcome to Empire Chronicles**\n"
+    "_A daily storytelling podcast — and you decide where the story goes._\n\n"
+    "**How it works**\n"
+    "• Every day a new ~2-minute English episode is posted here.\n"
+    "• Listen to the cast — the Narrator, Maya, and Leo.\n"
+    "• At the end of each episode you get **two choices**. React **🅰️** or "
+    "**🅱️** to vote.\n"
+    "• Tomorrow's episode continues **the way the majority voted** — so the "
+    "whole community writes the story together.\n\n"
+    "**Why it's good for your English**\n"
+    "• 🎧 **Listening** — natural, clear, spoken English at a friendly pace.\n"
+    "• 🗣️ **Pronunciation & rhythm** — hear how real sentences flow.\n"
+    "• 📖 **Vocabulary in context** — new words inside a story you actually "
+    "care about, which is how words stick.\n"
+    "• 🔁 **A daily habit** — a tiny, fun reason to practise English every "
+    "single day.\n\n"
+    "No pressure, no grades — just listen, enjoy, and vote. See you in the "
+    "story! 🕯️"
+)
+
+
+async def _ensure_story_channel(guild):
+    """Find or CREATE the dedicated Empire Chronicles podcast channel, hidden
+    from students until /reveal-podcast. Idempotent: resolves an existing channel
+    (stored id → name) first; otherwise creates one named config.SAWT_STORY_CHANNEL
+    with the student-facing topic, denies @everyone + the Student role (approval-
+    first), and stores its id. Returns (channel, created_bool) or (None, False)."""
+    existing = _story_channel(guild)
+    if existing is not None:
+        # Keep the topic current even if the channel pre-existed.
+        try:
+            if (existing.topic or "") != _STORY_CHANNEL_TOPIC:
+                await existing.edit(topic=_STORY_CHANNEL_TOPIC,
+                                    reason="Empire Chronicles: set channel topic")
+        except Exception:                                        # noqa: BLE001
+            pass
+        return existing, False
+    try:
+        overwrites = {
+            # Hidden from everyone until the owner reveals it to students.
+            guild.default_role: discord.PermissionOverwrite(view_channel=False),
+            guild.me: discord.PermissionOverwrite(
+                view_channel=True, send_messages=True, add_reactions=True,
+                manage_messages=True, attach_files=True),
+        }
+        # Also explicitly deny the Student gateway role, so a broad setupgate
+        # pass can't accidentally reveal a half-set-up channel before approval.
+        try:
+            student_role = await role_gate.get_or_create_student_role(guild)
+            overwrites[student_role] = discord.PermissionOverwrite(view_channel=False)
+        except Exception:                                        # noqa: BLE001
+            pass
+        ch = await guild.create_text_channel(
+            config.SAWT_STORY_CHANNEL, overwrites=overwrites,
+            topic=_STORY_CHANNEL_TOPIC,
+            reason="Empire Chronicles: create dedicated podcast channel")
+        database.set_setting(_STORY_CHANNEL_KEY, str(ch.id))
+        logger.info("sawt.story: created podcast channel #%s (%s)", ch.name, ch.id)
+        return ch, True
+    except Exception as e:                                       # noqa: BLE001
+        logger.warning("sawt.story: couldn't create podcast channel: %s", e)
+        return None, False
 
 
 def _load_episode_meta() -> Optional[dict]:
@@ -6218,6 +6304,45 @@ async def slash_reveal_podcast(interaction: discord.Interaction):
             f"(🅰️/🅱️). They can't post — only react.", ephemeral=True)
     except Exception as e:                                       # noqa: BLE001
         await interaction.followup.send(f"⚠️ Couldn't update permissions: {e}", ephemeral=True)
+
+
+@bot.tree.command(name="setup-podcast",
+                  description="Empire Chronicles: create the dedicated podcast channel (hidden until /reveal-podcast).")
+@app_commands.default_permissions(manage_guild=True)
+@app_commands.checks.has_permissions(administrator=True)
+@app_commands.guild_only()
+async def slash_setup_podcast(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    guild = interaction.guild or bot.get_guild(config.GUILD_ID)
+    if guild is None:
+        await interaction.followup.send("❌ No guild.", ephemeral=True)
+        return
+    channel, created = await _ensure_story_channel(guild)
+    if channel is None:
+        await interaction.followup.send(
+            "⚠️ Couldn't create the podcast channel. Check the bot's "
+            "**Manage Channels** permission.", ephemeral=True)
+        return
+    if created:
+        # Post + pin the student-facing intro so the channel explains itself.
+        try:
+            intro = await channel.send(_STORY_CHANNEL_INTRO)
+            await intro.pin(reason="Empire Chronicles: pin channel intro")
+        except Exception:                                        # noqa: BLE001
+            pass
+        await interaction.followup.send(
+            f"✅ Created **#{channel.name}** — the dedicated Empire Chronicles "
+            f"channel, with an intro pinned.\n"
+            f"It's **hidden from students** for now (approval-first). When "
+            f"you're ready to launch, run `/reveal-podcast` to let students see "
+            f"it, listen, and vote.\n\n"
+            f"Next: seed Episode 1 (run the **podcast daily** workflow), then "
+            f"`/story-status` to review before revealing.", ephemeral=True)
+    else:
+        await interaction.followup.send(
+            f"ℹ️ **#{channel.name}** already exists — reusing it (topic refreshed). "
+            f"Use `/reveal-podcast` when you want students to see it.",
+            ephemeral=True)
 
 
 @bot.command(name="revoke")
