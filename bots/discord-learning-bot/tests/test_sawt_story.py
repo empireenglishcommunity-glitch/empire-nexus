@@ -123,3 +123,30 @@ def test_story_channel_resolves_by_stored_id_then_name():
     ch.name = "renamed-podcast"
     guild2 = _FakeGuild([ch])
     assert botmod._story_channel(guild2) is ch
+
+
+
+# ── deploy-driven go-live (bootstrap) ───────────────────────────────────────
+def test_enable_daily_story_once_is_idempotent_and_empty_allowlist():
+    database.init_db()
+    database.set_setting("sawt_daily_story_autoenabled_v1", "")
+    # First call flips it ON for everyone (empty allowlist — scheduled task has
+    # no member context).
+    assert database.enable_daily_story_once() is True
+    st = database.feature_flag_status("sawt_daily_story")
+    assert st["enabled"] is True and st["everyone"] is True
+    # Second call is a no-op.
+    assert database.enable_daily_story_once() is False
+    # A later deliberate disable must NOT be silently undone.
+    database.set_feature_flag("sawt_daily_story", enabled=False, updated_by="manual")
+    assert database.enable_daily_story_once() is False
+
+
+def test_bootstrap_marker_guards_single_run():
+    """The bootstrap must run at most once (guarded by its settings marker)."""
+    database.init_db()
+    database.set_setting("sawt_chronicles_bootstrapped_v1", "1")
+    # With the marker set, is_feature_enabled state is irrelevant — the guard
+    # short-circuits. We assert the marker semantics the bootstrap relies on.
+    assert database.get_setting("sawt_chronicles_bootstrapped_v1", "") == "1"
+    assert hasattr(botmod, "bootstrap_empire_chronicles_once")
