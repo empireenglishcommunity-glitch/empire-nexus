@@ -437,6 +437,13 @@ async def on_ready():
         monday_progress_report.start()
     if not daily_story_post.is_running():
         daily_story_post.start()
+    # One-time deploy-driven go-live for Empire Chronicles: enable the daily
+    # loop, create the (hidden) podcast channel, and post Episode 1 for the
+    # owner's approval. Idempotent; students see nothing until /reveal-podcast.
+    try:
+        await bootstrap_empire_chronicles_once()
+    except Exception as e:                                       # noqa: BLE001
+        logger.warning(f"Empire Chronicles bootstrap error (non-fatal): {e}")
     if not grammar_card_delivery.is_running():
         grammar_card_delivery.start()
     if not vocab_cheat_sheet_delivery.is_running():
@@ -6211,6 +6218,51 @@ async def daily_story_post():
     if already:
         return
     await _post_story_episode(guild, meta, to_students=False)
+
+
+async def bootstrap_empire_chronicles_once():
+    """One-time, deploy-driven go-live for Empire Chronicles (owner's 2026-09-05
+    directive to take the podcast live). Idempotent — guarded by a settings
+    marker so it runs exactly once and never fights a later manual change.
+
+    On the first run after deploy it:
+      1. enables sawt_daily_story (empty allowlist) via enable_daily_story_once,
+      2. creates the dedicated podcast channel (hidden from students), pinning
+         the student-facing intro — same as /setup-podcast,
+      3. posts the seeded Episode 1 to that channel FOR THE OWNER'S APPROVAL.
+
+    Students see NOTHING until the owner runs /reveal-podcast — that deliberate
+    step is the public launch and is intentionally left to a human."""
+    if database.get_setting("sawt_chronicles_bootstrapped_v1", "") == "1":
+        return
+    guild = bot.get_guild(config.GUILD_ID)
+    if not guild:
+        return                                   # retry on the next on_ready
+    try:
+        flipped = database.enable_daily_story_once()
+        if flipped:
+            logger.info("sawt.story: sawt_daily_story auto-enabled on deploy")
+        channel, created = await _ensure_story_channel(guild)
+        if channel is None:
+            logger.warning("sawt.story: bootstrap couldn't create the channel "
+                           "(Manage Channels permission?) — will retry next boot")
+            return                               # not marked done → retry
+        if created:
+            try:
+                intro = await channel.send(_STORY_CHANNEL_INTRO)
+                await intro.pin(reason="Empire Chronicles: pin channel intro")
+            except Exception:                                    # noqa: BLE001
+                pass
+        # Post the seeded episode for approval (hidden channel; not to students).
+        meta = _load_episode_meta()
+        if meta:
+            await _post_story_episode(guild, meta, to_students=False)
+        database.set_setting("sawt_chronicles_bootstrapped_v1", "1")
+        logger.info("sawt.story: Empire Chronicles bootstrapped — channel #%s "
+                    "ready, Episode 1 posted for approval. Run /reveal-podcast "
+                    "to launch to students.", channel.name)
+    except Exception as e:                                       # noqa: BLE001
+        logger.warning("sawt.story: bootstrap failed (%s) — will retry next boot", e)
 
 
 @bot.tree.command(name="story-status",

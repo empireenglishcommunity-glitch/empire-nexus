@@ -2065,6 +2065,28 @@ def enable_exit_exam_once() -> bool:
     return True
 
 
+def enable_daily_story_once() -> bool:
+    """One-time, idempotent activation of the Empire Chronicles daily story
+    loop (`sawt_daily_story`) on deploy — per the owner's 2026-09-05 directive
+    to take the podcast live.
+
+    The allowlist is left EMPTY on purpose: the scheduled loop has no member
+    context, and is_feature_enabled(name, discord_id=None) is only true for an
+    empty allowlist. Enabling it makes the bot post the newest rendered episode
+    to the podcast channel FOR THE OWNER'S APPROVAL — students do not see it
+    until /reveal-podcast, so this is safe to switch on automatically.
+
+    Guarded by a settings marker so a later deliberate `!flag disable
+    sawt_daily_story` is NOT silently undone on the next restart. Returns True
+    only on the run that actually flips it on."""
+    if get_setting("sawt_daily_story_autoenabled_v1", "") == "1":
+        return False
+    set_feature_flag("sawt_daily_story", enabled=True,
+                     updated_by="sawt_autoenable")
+    set_setting("sawt_daily_story_autoenabled_v1", "1")
+    return True
+
+
 def set_feature_flag(name: str, enabled: bool, allowed_ids: str = "", updated_by: str = ""):
     """Enable/disable a feature flag, optionally restricted to an
     allowlist of comma-separated discord_ids. Upserts so the same
