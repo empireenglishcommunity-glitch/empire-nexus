@@ -6036,18 +6036,19 @@ def _story_channel(guild):
 # The channel's "topic" (shown under the channel name) — a short, student-facing
 # statement of why this channel exists and how it helps them learn.
 _STORY_CHANNEL_TOPIC = (
-    "🎙️ Empire Chronicles — one short English story every day. Listen, follow "
-    "the cast, then VOTE 🅰️/🅱️ to decide what happens next. Train your "
+    "🎙️ Empire English Chronicles — one short English story every day. Listen, "
+    "follow the cast, then VOTE 🅰️/🅱️ to decide what happens next. Train your "
     "listening, pronunciation & vocabulary through a story YOU help write."
 )
 
 # A richer welcome message pinned in the channel the first time it's set up.
 _STORY_CHANNEL_INTRO = (
-    "🎙️ **Welcome to Empire Chronicles**\n"
-    "_A daily storytelling podcast — and you decide where the story goes._\n\n"
+    "🎙️ **Welcome to Empire English Chronicles**\n"
+    "_A daily storytelling podcast from Empire English — and YOU decide where "
+    "the story goes._\n\n"
     "**How it works**\n"
     "• Every day a new ~2-minute English episode is posted here.\n"
-    "• Listen to the cast — the Narrator, Maya, and Leo.\n"
+    "• Listen to the cast — your host (the Narrator), Maya, Leo, and more.\n"
     "• At the end of each episode you get **two choices**. React **🅰️** or "
     "**🅱️** to vote.\n"
     "• Tomorrow's episode continues **the way the majority voted** — so the "
@@ -6147,7 +6148,7 @@ async def _post_story_episode(guild, meta: dict, *, to_students: bool) -> Option
             description=f"Empire Chronicles episode {meta['episode_number']}",
             audio_url=str(audio))
 
-    body = (f"🎙️ **Empire Chronicles — Episode {meta['episode_number']}**\n"
+    body = (f"🎙️ **Empire English Chronicles — Episode {meta['episode_number']}**\n"
             f"**{meta['title']}**\n\n"
             f"🅰️ {meta['vote_a']}\n"
             f"🅱️ {meta['vote_b']}\n\n"
@@ -6281,7 +6282,7 @@ async def slash_story_status(interaction: discord.Interaction):
                if "Empire Chronicles" in (e.get("description") or "")
                and f"episode {meta['episode_number']}" in (e.get("description") or "").lower()),
               None)
-    lines = [f"🎙️ **Empire Chronicles — Episode {meta['episode_number']}: {meta['title']}**",
+    lines = [f"🎙️ **Empire English Chronicles — Episode {meta['episode_number']}: {meta['title']}**",
              f"🅰️ {meta['vote_a']}",
              f"🅱️ {meta['vote_b']}"]
     if ep:

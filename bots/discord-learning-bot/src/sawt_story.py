@@ -26,7 +26,7 @@ logger = logging.getLogger("empire-bot.sawt.story")
 
 # The recurring cast the renderer knows how to voice (see render_podcast_episode
 # CHARACTER_VOICES). Keep new characters within these names/roles or add a voice.
-STORY_CAST = ["Narrator", "Maya", "Leo"]
+STORY_CAST = ["Narrator", "Maya", "Leo", "Sara", "Omar", "The Stranger", "Mrs. Adel"]
 
 # Available inline effect + timing markers the script may use.
 STORY_SFX = ["knock", "creak", "shimmer"]
@@ -37,8 +37,8 @@ STORY_LEVEL = "A2"
 
 
 _STORY_SYSTEM = (
-    "You are the head writer of 'Empire Chronicles', a serialized audio drama "
-    "for English learners. You write natural, cinematic, suspenseful spoken "
+    "You are the head writer of 'Empire English Chronicles', a serialized audio "
+    "drama for English learners. You write natural, cinematic, suspenseful spoken "
     "scripts in CLEAR, simple English. Return ONLY valid JSON — no preamble.")
 
 
@@ -63,12 +63,20 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
 
     return f"""{continuity}
 
-Write the next ~2-minute episode of Empire Chronicles as a spoken audio script.
+Write the next ~2-minute episode of Empire English Chronicles as a spoken audio script.
 
-CAST (use these names exactly; the audio engine maps each to a distinct voice):
-- Narrator — warm host who tells the story and speaks directly to the audience.
+CAST (use these names exactly; the audio engine maps each to a distinct voice).
+The three LEADS appear often; the others are recurring/guest roles you may bring
+in when the story calls for them, to keep the cast varied and alive:
+- Narrator — warm host who tells the story slowly and speaks directly to the audience.
 - Maya — the protagonist (young woman, curious, brave).
 - Leo — a supporting character (young man, cautious).
+- Sara — a bright, quick friend (young woman).
+- Omar — a warm, steady man (a friend or ally).
+- The Stranger — a mysterious, low-voiced figure (use sparingly, for tension).
+- Mrs. Adel — an older, gentle mentor.
+Use 2–4 speaking characters per episode (not all at once) — enough for lively
+dialogue, not so many it gets confusing for a learner.
 
 STYLE:
 - CLEAR simple English (learners), but genuinely suspenseful and cinematic.
@@ -76,8 +84,8 @@ STYLE:
 - Weave in sound effects on their own where they fit: {sfx}. Do NOT have a
   character SAY the sound (never write "tap tap tap" — use [SFX:knock] instead).
 - Use [PAUSE 2s] to hold tension, especially right before the cliffhanger.
-- Open with the Narrator's signature: "Welcome to Empire Chronicles..." and a
-  one-line recap if this is not episode 1.
+- Open with the Narrator's signature: "Welcome to Empire English Chronicles..."
+  and a one-line recap if this is not episode 1.
 - END on a strong cliffhanger, then the Narrator asks the audience to choose
   between EXACTLY TWO options and says "Vote below. Tomorrow, the story continues
   the way you choose."
@@ -85,7 +93,7 @@ STYLE:
 Return ONLY this JSON object:
 {{
   "title": "short episode title",
-  "script": "the full speaker-labelled script, one line per speaker turn, using Narrator:/Maya:/Leo: and inline [SFX:...] and [PAUSE 2s] markers",
+  "script": "the full speaker-labelled script, one line per speaker turn, using Narrator:/Maya:/Leo:/Sara:/Omar:/The Stranger:/Mrs. Adel: and inline [SFX:...] and [PAUSE 2s] markers",
   "recap": "2-3 sentence summary of what happened this episode (used to seed the next one)",
   "vote_a": "short label for choice A (what Maya could do)",
   "vote_b": "short label for choice B (the other option)"
@@ -115,9 +123,11 @@ def _valid_episode(d: dict) -> bool:
     for k in ("title", "script", "vote_a", "vote_b"):
         if not str(d.get(k, "")).strip():
             return False
-    # The script must contain at least a couple of "Speaker: line" turns.
+    # The script must contain at least a few "Speaker: line" turns. Match any
+    # capitalized speaker label (Narrator/Maya/Leo/Sara/Omar/The Stranger/…),
+    # not a fixed list, so the expanded cast doesn't get rejected.
     lines = [ln for ln in d["script"].splitlines()
-             if re.match(r"^\s*(Narrator|Maya|Leo)\s*:", ln)]
+             if re.match(r"^\s*[A-Z][\w.'\- ]{0,30}:\s*\S", ln)]
     return len(lines) >= 4
 
 
