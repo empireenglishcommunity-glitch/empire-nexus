@@ -8,10 +8,15 @@ name: podcast daily (empire chronicles)
 # so the bot can pick up the newest ready episode and post it to the hidden
 # podcast channel for the owner's approval (students only see it after approval).
 #
-# Voice references are read from repo SECRETS (private, stable URLs) so nothing
-# personal is committed to this public repo:
-#   OWNER_VOICE_URL  — owner's English voice clip
-#   MAI_VOICE_URL    — Mai's consented voice clip
+# Voices are SELF-CONTAINED: every character (narrator, Maya, Leo, extras) has a
+# distinct, freely-licensed reference clip committed in content/sfx/voices/, so
+# this workflow needs NO secrets and NO external URLs to render — it just works.
+#
+# OPTIONAL overrides (only if you want the owner's own / Mai's consented voice):
+# set repo secrets OWNER_VOICE_URL and/or MAI_VOICE_URL to stable, non-expiring
+# direct URLs. Leave them unset and the committed default voices are used.
+# NOTE: Discord CDN URLs expire (~24h) and must NOT be used here — use a stable
+# host (a GitHub release asset, etc.) or just rely on the committed defaults.
 # The bot writes the winning choice into story-state.json before this runs; you
 # can also override it manually via the workflow_dispatch input.
 on:
@@ -61,7 +66,7 @@ jobs:
             --out-dir content/podcast-scripts \
             ${WINNING_CHOICE:+--winning-choice "$WINNING_CHOICE"}
 
-      - name: Fetch + clean the cast voice clips (from secrets)
+      - name: Fetch + clean cast voice OVERRIDES (optional; committed defaults used otherwise)
         id: refs
         env:
           OWNER_VOICE_URL: ${{ secrets.OWNER_VOICE_URL }}

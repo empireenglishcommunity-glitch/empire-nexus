@@ -273,6 +273,45 @@ def test_distinct_american_voice_files_ship():
     assert len(set(mod.BUILTIN_VOICE_FILES.values())) == 3
 
 
+def test_pipeline_is_self_contained_without_runtime_clips():
+    """The daily automation must render with NO runtime clips, NO secrets, and
+    NO expiring URLs: the narrator (owner) and Maya (mai) fall back to committed
+    default reference clips, and EVERY needed slot is backed (never empty — an
+    empty ref is what caused Leo to inherit Mai's voice)."""
+    mod = _load()
+    import os
+    from src import sawt_tts
+    # The two default clips must actually ship in the repo.
+    for slot, rel in mod.SLOT_DEFAULT_FILES.items():
+        assert os.path.exists(os.path.join(mod._SFX_DIR, rel)), rel
+    # A story with all three recurring characters, resolved with NO clips given.
+    segs = sawt_tts.parse_script(
+        "Narrator: Hello.\nMaya: Hi there.\nLeo: Good evening.")
+    refs = mod._build_slot_refs(segs, owner_ref="", mai_ref="")
+    assert refs["owner"].endswith("narrator_default.ogg")   # self-contained
+    assert refs["mai"].endswith("maya_default.ogg")
+    assert refs["male_us_1"].endswith("male_us_1.ogg")
+    # No needed slot may be left unbacked.
+    assert all(p for p in refs.values())
+    # The default narrator and default Maya must be DISTINCT files from Leo's.
+    assert len({refs["owner"], refs["mai"], refs["male_us_1"]}) == 3
+
+
+def test_runtime_clip_overrides_committed_default():
+    """A real owner/Mai clip supplied at runtime still WINS over the default."""
+    mod = _load()
+    from src import sawt_tts
+    import tempfile
+    import os
+    segs = sawt_tts.parse_script("Narrator: Hi.\nMaya: Hello.")
+    with tempfile.TemporaryDirectory() as d:
+        owner = os.path.join(d, "owner.wav")
+        open(owner, "wb").write(b"x")
+        refs = mod._build_slot_refs(segs, owner_ref=owner, mai_ref="")
+        assert refs["owner"] == owner                        # override wins
+        assert refs["mai"].endswith("maya_default.ogg")      # unset → default
+
+
 def test_pause_marker_parsing():
     mod = _load()
     assert mod._PAUSE_RE.findall("turn. [PAUSE 2s]") == ["2"]

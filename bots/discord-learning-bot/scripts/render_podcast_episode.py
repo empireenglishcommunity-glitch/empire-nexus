@@ -218,6 +218,16 @@ BUILTIN_VOICE_FILES = {
     "male_us_2": "voices/male_us_2.ogg",
     "female_us_1": "voices/female_us_1.ogg",
 }
+# Committed DEFAULT reference clips for the "cloned" slots, so the daily pipeline
+# is fully SELF-CONTAINED: it needs no runtime clips, no repo secrets, and no
+# expiring Discord CDN URLs. The narrator (owner slot) and Maya (mai slot) each
+# get a distinct, clean, freely-licensed voice shipped in content/sfx/voices/.
+# A real runtime clip (--ref-clip / --ref-mai) still OVERRIDES these when the
+# owner wants their own / Mai's consented voice — these are only the fallback.
+SLOT_DEFAULT_FILES = {
+    "owner": "voices/narrator_default.ogg",   # warm host narrator (Terry Bollinger, CC-BY 4.0)
+    "mai": "voices/maya_default.ogg",         # clear female lead   (Jessamyn West, CC-BY-SA 4.0)
+}
 # Whole-word match keeps names clean: a token matches only as a standalone word
 # (so "man" won't fire inside "woman"/"Alien"). Names are still substring-safe.
 _DEFAULT_CHARACTER = "narrator"
@@ -833,10 +843,23 @@ def _build_slot_refs(segments, owner_ref, mai_ref):
     (no clip). A cloned slot with no clip is dropped (→ built-in fallback)."""
     slots = {character_for(lbl)["slot"] for lbl, _ in segments}
     refs = {}
-    if "owner" in slots and owner_ref and os.path.exists(owner_ref):
-        refs["owner"] = owner_ref
-    if "mai" in slots and mai_ref and os.path.exists(mai_ref):
-        refs["mai"] = mai_ref
+    # Cloned slots: a runtime clip (owner's own / Mai's consented voice) wins;
+    # otherwise fall back to the committed DEFAULT clip so the pipeline is
+    # self-contained (no expiring URLs). Never leave a needed slot unbacked —
+    # an empty ref makes Chatterbox reuse the last-loaded voice (the Leo=Mai bug).
+    def _cloned_ref(slot: str, runtime_ref: str) -> str:
+        if runtime_ref and os.path.exists(runtime_ref):
+            return runtime_ref
+        fn = SLOT_DEFAULT_FILES.get(slot)
+        if fn:
+            p = os.path.join(_SFX_DIR, fn)
+            if os.path.exists(p):
+                return p
+        return ""
+    if "owner" in slots:
+        refs["owner"] = _cloned_ref("owner", owner_ref)
+    if "mai" in slots:
+        refs["mai"] = _cloned_ref("mai", mai_ref)
     # Each non-cloned slot gets its OWN distinct American reference clip so no
     # character ever inherits another's voice (the Leo-sounded-like-Mai bug).
     for s in slots:
