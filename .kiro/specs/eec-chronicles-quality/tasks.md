@@ -130,13 +130,18 @@ passes; the gate runs in CI.
       against the budget (R5.4, R5.7).
 - [x] **3.4** Generate `CREDITS.md` from the manifest, and emit CC-BY attribution
       automatically into episode posts (R5.4).
-- [ ] **3.5** Source and ingest the initial library to the R5.2 floor: **≥ 12 music
+- [x] **3.5** Source and ingest the initial library to the R5.2 floor: **≥ 12 music
       beds** (≥ 6 moods), **≥ 10 ambiences**, **≥ 60 SFX**, **≥ 6 stings** — all
       CC0/public-domain/CC-BY, each with recorded attribution.
+      _Done (PR #525): 101 assets — music 14, ambience 14, SFX 67, stings 6; 7.62 MB;_
+      _all 10 moods covered; CC0/PD/CC-BY only; reproducible `source_*.py` scripts._
 - [x] **3.6** Expose the legal SFX/mood vocabulary to the generator from the
       manifest, and enforce it in the validator (R5.6).
 - [ ] **3.7** Implement mood-aware scoring: the story's requested mood selects an
       appropriate bed/ambience.
+      _Data ready: `podcast_lab.by_tag()` + `available_moods()` resolve any of the 10_
+      _moods to a bed/ambience. Remaining: wire the render pipeline to call it (the_
+      _pipeline does not yet import `podcast_lab`). Folds into Phase 4 integration._
 - [x] **3.8** Tests: manifest↔disk parity, licence completeness, ingest
       normalisation, generator vocabulary derived from the manifest.
 
