@@ -81,8 +81,17 @@ dialogue, not so many it gets confusing for a learner.
 STYLE:
 - CLEAR simple English (learners), but genuinely suspenseful and cinematic.
 - Real spoken dialogue, short sentences, natural rhythm.
-- Weave in sound effects on their own where they fit: {sfx}. Do NOT have a
-  character SAY the sound (never write "tap tap tap" — use [SFX:knock] instead).
+- IMPORTANT — who says what: CHARACTERS speak ONLY the words they say out loud.
+  The NARRATOR describes all ACTION and scene. NEVER put narration in a
+  character's line — do NOT write "Maya: I push the door open" or "Leo: I hear a
+  sound". Instead: "Narrator: Maya pushes the door open." A character line is
+  only the actual spoken words (e.g. "Maya: Hello? Is someone there?").
+- Do NOT write stage directions or delivery hints in parentheses (no "(low)",
+  "(whisper)", "(through comm)") — they get read aloud. Show tone through the
+  words themselves and the Narrator.
+- Sound effects: ONLY these exist — {sfx}. Use them on their OWN, never spoken by
+  a character. Do NOT invent other effects (no [SFX:wind], [SFX:heartbeat], etc.);
+  if you need atmosphere, have the Narrator describe it in words instead.
 - Use [PAUSE 2s] to hold tension, especially right before the cliffhanger.
 - Open with the Narrator's signature: "Welcome to Empire English Chronicles..."
   and a one-line recap if this is not episode 1.

@@ -694,6 +694,11 @@ _SFX_SYNTH = {"tap": _sd_tap, "knock": _sd_tap, "creak": _sd_creak,
 _SFX_RE = re.compile(r"\[SFX:([a-z_]+)\]", re.I)
 # Dramatic-timing marker: [PAUSE 2s] / [PAUSE 1.5s] / [PAUSE] (defaults to 1s).
 _PAUSE_RE = re.compile(r"\[PAUSE\s*([0-9.]+)?s?\]", re.I)
+# Stage directions the TTS must NEVER read aloud: parentheticals like "(low)",
+# "(whisper)", "(through comm)" and any leftover square-bracket note. LLM scripts
+# sometimes put a delivery hint in parentheses at the start of a line — spoken,
+# it becomes the model literally saying "low" or "whisper". Strip them.
+_STAGE_DIR_RE = re.compile(r"\((?:[^()]{0,40})\)|\[[^\]]*\]")
 
 
 def _load_audio(path, sr):
@@ -1108,7 +1113,11 @@ def render_story(script: str, out_path: str, owner_ref: str = "",
         for pm in _PAUSE_RE.finditer(text):
             secs = float(pm.group(1)) if pm.group(1) else 1.0
             pieces.append(np.zeros(int(sr * min(secs, 5.0)), dtype="float32"))
-        clean_text = _PAUSE_RE.sub(" ", _SFX_RE.sub(" ", text)).strip()
+        clean_text = _PAUSE_RE.sub(" ", _SFX_RE.sub(" ", text))
+        # Strip any remaining stage directions / parentheticals so the model
+        # never SPEAKS a delivery hint like "(low)" or "(through comm)".
+        clean_text = _STAGE_DIR_RE.sub(" ", clean_text)
+        clean_text = re.sub(r"\s{2,}", " ", clean_text).strip()
         if clean_text:
             pieces.append(synth.say(clean_text, ch))
         prev_slot = ch["slot"]
