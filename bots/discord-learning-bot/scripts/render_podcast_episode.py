@@ -250,13 +250,16 @@ BUILTIN_VOICE_FILES = {
 # A real runtime clip (--ref-clip / --ref-mai) still OVERRIDES these when the
 # owner wants their own / Mai's consented voice — these are only the fallback.
 SLOT_DEFAULT_FILES = {
-    # The owner's + Mai's OWN cloned voices (consented) — the Narrator is the
-    # owner and Maya is Mai, as the owner requires. Cleaned + de-muffled from
-    # their real recordings. These ship committed so the daily pipeline stays
-    # self-contained (no expiring URLs). A runtime --ref-clip / --ref-mai still
-    # overrides (e.g. a fresh higher-quality recording).
-    "owner": "voices/owner_voice.ogg",   # the owner's real voice (Narrator + owner character)
-    "mai": "voices/mai_voice.ogg",       # Mai's real, consented voice (Maya)
+    # Narrator: a clean, clearly-AMERICAN male voice (derived from Kokoro's
+    # am_michael — the same American voice family the practice site uses). The
+    # owner's original phone recording was telephone-bandwidth (99% energy below
+    # ~3.7kHz), which made the clone sound muffled AND drift to a British accent
+    # (a band-limited reference gives the model too few American cues, so it
+    # leans to its own default). Replaced per the owner's decision.
+    # Maya: MAI'S real, consented voice (kept — the owner asked to keep it).
+    # A runtime --ref-clip / --ref-mai still overrides (e.g. a studio recording).
+    "owner": "voices/owner_voice.ogg",   # Narrator — clean American male
+    "mai": "voices/mai_voice.ogg",       # Maya — Mai's real, consented voice
 }
 # Whole-word match keeps names clean: a token matches only as a standalone word
 # (so "man" won't fire inside "woman"/"Alien"). Names are still substring-safe.
