@@ -41,18 +41,32 @@ VOICE_REGISTRY = {
 # in the text so the synth step can insert a real pause.
 _LINE_RE = re.compile(r"^\s*([^:\n]{1,40}):\s*(.+)$")
 
+# A DIRECTION line is a standalone marker/stage note, e.g. "[SFX:shimmer]",
+# "[PAUSE 2s]", "[Maya pauses]". It is NOT dialogue and must never be spoken.
+#
+# WHY THIS EXISTS (real shipped bug, found by the audio QA harness): a bare
+# "[SFX:shimmer]" line MATCHES the "Speaker: text" pattern — speaker "[SFX",
+# text "shimmer]" — so it was parsed as dialogue and the narrator literally SAID
+# "shimmer]" and "creak]" in published episodes, while the sound effect never
+# played. Any line that starts with a bracket is a direction, full stop.
+_DIRECTION_RE = re.compile(r"^\s*[\[(]")
+
 
 def parse_script(script: str) -> list:
     """Parse a speaker-labelled script into ordered [(speaker, text), ...].
 
     Lines without a "Speaker: text" shape (blank lines, section rules, stray
-    notes) are skipped. A line's speaker keeps its original label; mapping to a
-    voice happens in voice_for()."""
+    notes) are skipped, as are standalone direction/marker lines such as
+    "[SFX:knock]" or "[Maya pauses]" — those are stage directions, not speech.
+    A line's speaker keeps its original label; mapping to a voice happens in
+    voice_for()."""
     segments = []
     for raw in (script or "").splitlines():
         line = raw.strip()
         if not line:
             continue
+        if _DIRECTION_RE.match(line):
+            continue                    # standalone direction — never spoken
         m = _LINE_RE.match(line)
         if not m:
             continue
