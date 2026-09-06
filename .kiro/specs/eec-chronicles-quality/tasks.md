@@ -93,24 +93,24 @@ the voices by ear.
 
 ---
 
-## Phase 2 — The quality gate, wired in and fail-closed
+## Phase 2 — The quality gate, wired in and fail-closed  ✅ COMPLETE
 
 *Goal: an unverified or bad episode can no longer reach a student.*
 
-- [ ] **2.1** Wire the Phase 0 harness into the render pipeline as a mandatory
+- [x] **2.1** Wire the Phase 0 harness into the render pipeline as a mandatory
       post-master stage (R4.1).
-- [ ] **2.2** Implement per-line metrics so failures can be localised.
-- [ ] **2.3** Implement the retry ladder: line-level re-render → full re-render →
+- [x] **2.2** Implement per-line metrics so failures can be localised.
+- [x] **2.3** Implement the retry ladder: line-level re-render → full re-render →
       escalate, with bounded attempts (R4.2, R9.6).
-- [ ] **2.4** Implement fail-closed behaviour: on final failure **do not publish**,
+- [x] **2.4** Implement fail-closed behaviour: on final failure **do not publish**,
       alert the owner with failing metrics, leave story state untouched (R4.3,
       R9.4).
-- [ ] **2.5** Write the per-episode metrics report alongside the episode (R4.4).
-- [ ] **2.6** Add the gate to CI so a code change that degrades audio fails the
+- [x] **2.5** Write the per-episode metrics report alongside the episode (R4.4).
+- [x] **2.6** Add the gate to CI so a code change that degrades audio fails the
       build (R4.5).
-- [ ] **2.7** Prove fail-closed end-to-end: inject a corrupted episode and show it
+- [x] **2.7** Prove fail-closed end-to-end: inject a corrupted episode and show it
       is blocked, not posted, and the owner is alerted (acceptance criterion 2).
-- [ ] **2.8** Tests for gate pass/fail, retry ladder, and escalation.
+- [x] **2.8** Tests for gate pass/fail, retry ladder, and escalation.
 
 **Exit criteria:** a deliberately bad episode is provably blocked; a good one
 passes; the gate runs in CI.
