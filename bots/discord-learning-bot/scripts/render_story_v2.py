@@ -29,6 +29,7 @@ Usage
     python3.12 scripts/render_story_v2.py --script ep.txt --out ep.mp3 --stems-dir stems/
 """
 import argparse
+import os
 import pathlib
 import re
 import sys
@@ -56,7 +57,12 @@ _PAUSE_RE = re.compile(r"\[PAUSE\s*([0-9.]+)?\s*s?\]", re.I)
 # Delivery hints must never be SPOKEN ("(low)" became the word "low" in v1).
 _STAGE_RE = re.compile(r"\((?:[^()]{0,40})\)|\[[^\]]*\]")
 
-_KOKORO_DIR = pathlib.Path("/root/.cache/kokoro")
+# Where the Kokoro model files are cached. Configurable so the SAME code works on
+# the root server (/root/.cache) AND on a non-root CI runner (~/.cache), where
+# /root is not writable. Honour an explicit override first, then the user's home.
+_KOKORO_DIR = pathlib.Path(
+    os.environ.get("KOKORO_CACHE_DIR")
+    or (pathlib.Path.home() / ".cache" / "kokoro"))
 _KOKORO_URLS = {
     "kokoro-v1.0.onnx":
         "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx",
