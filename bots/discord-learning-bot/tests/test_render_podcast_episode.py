@@ -323,6 +323,23 @@ def test_pause_marker_parsing():
     assert "PAUSE" not in stripped and "SFX" not in stripped
 
 
+def test_stage_directions_stripped_from_spoken_text():
+    """Delivery hints must NEVER be spoken: '(low)', '(whisper)', '(through comm)'
+    and stray [notes] are removed so the model doesn't literally say them."""
+    mod = _load()
+    import re
+    def clean(t):
+        t = mod._PAUSE_RE.sub(" ", mod._SFX_RE.sub(" ", t))
+        t = mod._STAGE_DIR_RE.sub(" ", t)
+        return re.sub(r"\s{2,}", " ", t).strip()
+    assert clean("(low) Who are you?") == "Who are you?"
+    assert clean("Maya, the door is closing! (through comm)") == "Maya, the door is closing!"
+    assert clean("(whisper) Choose... stay... or run...") == "Choose... stay... or run..."
+    # A real SFX marker + a stage-direction bracket both go.
+    assert "shimmer" not in clean("It hums [SFX:shimmer] quietly").lower() or \
+           clean("It hums [SFX:shimmer] quietly") == "It hums quietly"
+
+
 # ── emotion + Arabic diacritics settings ─────────────────────────────────────
 def test_gen_settings_expressive_and_arabic_language_transfer():
     mod = _load()
