@@ -112,13 +112,15 @@ class KokoroEngine:
 
     def __init__(self):
         import urllib.request
+        # Import the engine FIRST so a missing dependency fails fast — before we
+        # spend time/bandwidth downloading ~350MB of model files.
+        from kokoro_onnx import Kokoro
         _KOKORO_DIR.mkdir(parents=True, exist_ok=True)
         for name, url in _KOKORO_URLS.items():
             p = _KOKORO_DIR / name
             if not p.exists():
                 print(f"  downloading {name} …", flush=True)
                 urllib.request.urlretrieve(url, str(p))
-        from kokoro_onnx import Kokoro
         self.k = Kokoro(str(_KOKORO_DIR / "kokoro-v1.0.onnx"),
                         str(_KOKORO_DIR / "voices-v1.0.bin"))
 
@@ -504,6 +506,80 @@ def synth_line(text, ch, level, kokoro, clone):
     return line
 
 
+# ── engine isolation (Option A) ──────────────────────────────────────────────
+#
+# Kokoro needs numpy>=2, Chatterbox needs numpy<2 — they cannot share one env. When
+# isolation is enabled, each line is synthesised by scripts/voice_worker.py running
+# under the interpreter of a venv that has ONLY that engine. Assembly/mastering/gate
+# stay in this process and need no engine. Off by default, so the server (single
+# env) and the test suite keep the simple in-process path.
+ISOLATION_ENABLED = os.environ.get("EEC_ISOLATE_ENGINES", "") not in ("", "0", "false")
+_WORKER_PY = {
+    "kokoro": os.environ.get("EEC_KOKORO_PYTHON", ""),
+    "clone": os.environ.get("EEC_CLONE_PYTHON", ""),
+}
+
+
+def _worker_python_for(engine_kind: str) -> str:
+    """The interpreter to run the worker for `engine_kind`, or '' to stay in-process."""
+    return _WORKER_PY.get(engine_kind, "") if ISOLATION_ENABLED else ""
+
+
+def _synth_line_isolated(text, ch, level, engine_kind: str):
+    """Synthesise one line by shelling out to voice_worker.py under the engine's
+    dedicated venv. Returns mono float32 @ SR, or None on failure (caller decides
+    the fallback). Uses a text FILE for the line so no shell-quoting edge case can
+    corrupt it."""
+    import subprocess
+    import tempfile
+    import numpy as np
+    import soundfile as sf
+
+    py = _worker_python_for(engine_kind)
+    if not py:
+        return None
+    work = pathlib.Path(tempfile.mkdtemp(prefix="eec_voice_"))
+    try:
+        txt = work / "line.txt"
+        txt.write_text(text, encoding="utf-8")
+        out = work / "line.wav"
+        cmd = [py, str(BOT_DIR / "scripts" / "voice_worker.py"),
+               "--engine", engine_kind, "--character", ch["display"],
+               "--level", level, "--text-file", str(txt), "--out", str(out)]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        if r.returncode != 0 or not out.exists():
+            print(f"    ⚠️ isolated {engine_kind} worker failed: "
+                  f"{(r.stderr or '').strip()[:200]}")
+            return None
+        y, file_sr = sf.read(str(out), dtype="float32", always_2d=False)
+        if getattr(y, "ndim", 1) > 1:
+            y = y.mean(axis=1)
+        y = np.asarray(y, dtype="float32")
+        return resample(y, file_sr, SR) if file_sr != SR else y
+    except Exception as e:                                       # noqa: BLE001
+        print(f"    ⚠️ isolated {engine_kind} worker error: {e}")
+        return None
+    finally:
+        import shutil
+        shutil.rmtree(work, ignore_errors=True)
+
+
+def synth_line_for(text, ch, level, kokoro, clone):
+    """Synthesise one line, choosing isolation-vs-in-process automatically.
+
+    If engine isolation is enabled AND a worker interpreter is configured for the
+    line's engine, run it in that subprocess; otherwise use the in-process engine
+    passed in (kokoro/clone). This is the single seam the render loop calls."""
+    engine_kind = ("clone"
+                   if ch.get("engine") == sawt_cast.ENGINE_CLONE else "kokoro")
+    if _worker_python_for(engine_kind):
+        y = _synth_line_isolated(text, ch, level, engine_kind)
+        if y is not None and len(y):
+            return y
+        # fall through to in-process if a worker is somehow unavailable
+    return synth_line(text, ch, level, kokoro, clone)
+
+
 def plan(script: str) -> dict:
     """Engine-free plan: who speaks, how often, with which voice."""
     segs = sawt_tts.parse_script(script)
@@ -541,9 +617,15 @@ def render(script: str, out_path, level="A2", music="mystery",
     need_clone = any(sawt_cast.CAST[k]["engine"] == sawt_cast.ENGINE_CLONE
                      for k in needed)
 
-    kokoro = KokoroEngine() if need_kokoro else None
+    # If a line's engine is handled by an isolated worker, we do NOT load that
+    # engine in-process (that's the whole point — avoid the numpy conflict). Only
+    # load an in-process engine for an engine we actually need AND is not isolated.
+    kokoro_isolated = bool(_worker_python_for("kokoro"))
+    clone_isolated = bool(_worker_python_for("clone"))
+
+    kokoro = KokoroEngine() if (need_kokoro and not kokoro_isolated) else None
     clone = None
-    if need_clone:
+    if need_clone and not clone_isolated:
         ref = _SFX_DIR / sawt_cast.CLONE_REF_MAI
         if ref.exists():
             clone = CloneEngine(ref)
@@ -551,8 +633,8 @@ def render(script: str, out_path, level="A2", music="mystery",
             print(f"  ⚠️ clone reference missing ({ref}); those lines will be "
                   f"voiced by the narrator instead")
 
-    print(f"  engines: kokoro={'yes' if kokoro else 'no'} "
-          f"clone={'yes' if clone else 'no'}")
+    print(f"  engines: kokoro={'isolated' if kokoro_isolated else ('yes' if kokoro else 'no')} "
+          f"clone={'isolated' if clone_isolated else ('yes' if clone else 'no')}")
 
     body = np.zeros(0, dtype="float32")
     prev_key = None
@@ -585,9 +667,9 @@ def render(script: str, out_path, level="A2", music="mystery",
             prev_key = key
             continue
 
-        # Synthesise one line (extracted so the gated orchestrator can re-render a
-        # single failing line in isolation — spec task 2.3).
-        line = synth_line(text, ch, level, kokoro, clone)
+        # Synthesise one line. `synth_line_for` routes to an isolated per-engine
+        # subprocess when configured (Option A), else uses the in-process engine.
+        line = synth_line_for(text, ch, level, kokoro, clone)
         if len(line):
             if stems_dir:
                 sp = pathlib.Path(stems_dir)
