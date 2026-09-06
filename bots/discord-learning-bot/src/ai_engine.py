@@ -23,35 +23,61 @@ logger = logging.getLogger("empire-bot.ai")
 #  LLM API CALLS
 # ============================================================
 
-async def _call_gemini(prompt: str, temperature: float = 0.8) -> Optional[str]:
-    """Call Google Gemini API. Returns raw text or None on failure."""
+async def _call_gemini(prompt: str, temperature: float = 0.8,
+                       max_output_tokens: int = 0) -> Optional[str]:
+    """Call Google Gemini. Returns raw text, or None if every model failed.
+
+    Tries `config.GEMINI_MODEL` then `config.GEMINI_MODEL_FALLBACKS`, because two
+    real failure modes are transient/per-model rather than fatal:
+      * **404 "no longer available"** — the model was RETIRED. Measured 2026-09-06:
+        the previous default (`gemini-2.5-flash-lite`) had been retired, so this
+        fallback was silently dead and Groq had no safety net when it rate-limited.
+      * **503 "high demand"** — a temporary spike on one model; another usually works.
+    Anything else (401/400) is not retried, since a different model won't fix it."""
     if not config.GEMINI_API_KEY:
         return None
-    url = (
-        f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{config.GEMINI_MODEL}:generateContent?key={config.GEMINI_API_KEY}"
-    )
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": temperature},
-    }
+    models = [config.GEMINI_MODEL] + [
+        m for m in getattr(config, "GEMINI_MODEL_FALLBACKS", [])
+        if m != config.GEMINI_MODEL
+    ]
+    gen_cfg = {"temperature": temperature}
+    if max_output_tokens:
+        gen_cfg["maxOutputTokens"] = int(max_output_tokens)
+    payload = {"contents": [{"parts": [{"text": prompt}]}],
+               "generationConfig": gen_cfg}
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=payload, timeout=aiohttp.ClientTimeout(total=30)) as resp:
-                if resp.status != 200:
-                    logger.warning(f"Gemini API error: {resp.status}")
-                    return None
-                data = await resp.json()
-                text = (
-                    data.get("candidates", [{}])[0]
-                    .get("content", {})
-                    .get("parts", [{}])[0]
-                    .get("text", "")
-                )
-                return text.strip() if text else None
+            for model in models:
+                url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
+                       f"{model}:generateContent?key={config.GEMINI_API_KEY}")
+                try:
+                    async with session.post(
+                            url, json=payload,
+                            timeout=aiohttp.ClientTimeout(total=90)) as resp:
+                        if resp.status == 200:
+                            data = await resp.json()
+                            text = (
+                                data.get("candidates", [{}])[0]
+                                .get("content", {})
+                                .get("parts", [{}])[0]
+                                .get("text", "")
+                            )
+                            if text and text.strip():
+                                return text.strip()
+                            logger.warning(
+                                "Gemini %s returned no text; trying next model",
+                                model)
+                            continue
+                        logger.warning("Gemini API error (%s): %s", model,
+                                       resp.status)
+                        # 404 = retired model, 503 = transient spike → try another.
+                        if resp.status not in (404, 503, 429, 500):
+                            return None
+                except Exception as e:                           # noqa: BLE001
+                    logger.warning("Gemini call failed (%s): %s", model, e)
     except Exception as e:
-        logger.error(f"Gemini call failed: {e}")
-        return None
+        logger.error(f"Gemini session failed: {e}")
+    return None
 
 
 async def _call_groq(prompt: str, temperature: float = 0.8) -> Optional[str]:

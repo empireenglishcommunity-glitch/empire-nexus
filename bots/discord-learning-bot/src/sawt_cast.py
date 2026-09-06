@@ -75,11 +75,16 @@ CAST = {
         "display": "Narrator",
         "gender": "male",
         "engine": ENGINE_KOKORO,
-        "voice_id": "am_onyx",          # deepest male (~83Hz): authoritative host
+        # OWNER-CHOSEN (2026-09-06): picked by ear from three measured-equal options
+        # ("I liked this narrator very much"). The warmest and slowest of the three
+        # — the most storyteller-like — which is exactly the brief for this role.
+        # Measured at narrator speed: 0 glitches, WER 0.0000, flatness 0.00232.
+        "voice_id": "am_santa",
         "speed_factor": 0.92,           # slower than the cast: storytelling
         "match": ("narrator", "host", "storyteller", "narration"),
         "role": "Warm, deliberate host. Tells the story and speaks to the audience.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00079, "glitches": 0},
+        "benchmark": {"passage_wer": 0.0, "flatness": 0.00232, "glitches": 0,
+                      "owner_approved": True},
     },
     "maya": {
         "display": "Maya",

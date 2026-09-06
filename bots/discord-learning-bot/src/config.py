@@ -57,7 +57,23 @@ ADMIN_COMMANDS_CHANNEL_ID = int(os.getenv("ADMIN_COMMANDS_CHANNEL_ID", "15292079
 #  AI PROVIDERS
 # ============================================================
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+# ⚠️ Gemini models get RETIRED, and a retired model returns HTTP 404 — which looks
+# exactly like a broken fallback. Measured 2026-09-06: `gemini-2.5-flash-lite` (the
+# previous default) and `gemini-2.5-flash`/`gemini-2.5-pro` all returned 404 "no longer
+# available to new users", so the Gemini fallback had been silently DEAD — leaving
+# Groq with no safety net whenever it rate-limited. Verified working on that date:
+# gemini-3.5-flash-lite, gemini-3.6-flash, gemini-3.1-flash-lite,
+# gemini-3-flash-preview, gemini-flash-lite-latest.
+# If generation starts failing with 404, re-list the models the key can use
+# (GET /v1beta/models) and update this — do not assume the key or the code is wrong.
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+# Ordered fallbacks tried when GEMINI_MODEL itself fails (retirement / 503 spikes).
+GEMINI_MODEL_FALLBACKS = [
+    m.strip() for m in os.getenv(
+        "GEMINI_MODEL_FALLBACKS",
+        "gemini-3.1-flash-lite,gemini-3.6-flash,gemini-flash-lite-latest"
+    ).split(",") if m.strip()
+]
 # Aql (#15) Phase A1.2: separate from GEMINI_MODEL above (which is the
 # CHAT model) -- this is Gemini's dedicated embedding model, used only
 # by src/nour/knowledge/embedder.py for chunk/query embeddings.
