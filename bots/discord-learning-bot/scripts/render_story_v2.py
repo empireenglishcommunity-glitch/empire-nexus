@@ -441,6 +441,24 @@ def duck_music(voice, bed, sr, base=0.20, ducked=0.06, outro=2.5):
 
 
 # ── the render ───────────────────────────────────────────────────────────────
+def synth_line(text, ch, level, kokoro, clone):
+    """Synthesise ONE character line: chunk on sentence boundaries, synthesise each
+    piece with the right engine at the CEFR-native speed, trim softly, and join with
+    crossfades. Returns mono float32 @ SR. Extracted so a single failing line can be
+    re-rendered in isolation (spec task 2.3) without re-rendering the episode."""
+    import numpy as np
+    engine = clone if (ch["engine"] == sawt_cast.ENGINE_CLONE and clone) else kokoro
+    voice_id = ch.get("voice_id")
+    speed = sawt_cast.speed_for_level(level, ch["key"])
+    line = np.zeros(0, dtype="float32")
+    for piece in chunk_text(text):
+        samples, sr = engine.say(piece, voice_id, speed)
+        samples = resample(samples, sr, SR) if sr != SR else samples
+        samples = trim_soft(samples, SR)
+        line = crossfade_append(line, samples, SR)
+    return line
+
+
 def plan(script: str) -> dict:
     """Engine-free plan: who speaks, how often, with which voice."""
     segs = sawt_tts.parse_script(script)
@@ -516,16 +534,9 @@ def render(script: str, out_path, level="A2", music="mystery",
             prev_key = key
             continue
 
-        # Synthesise, chunked on sentence boundaries, joined with crossfades.
-        engine = clone if (ch["engine"] == sawt_cast.ENGINE_CLONE and clone) else kokoro
-        voice_id = ch.get("voice_id")
-        speed = sawt_cast.speed_for_level(level, key)
-        line = np.zeros(0, dtype="float32")
-        for piece in chunk_text(text):
-            samples, sr = engine.say(piece, voice_id, speed)
-            samples = resample(samples, sr, SR) if sr != SR else samples
-            samples = trim_soft(samples, SR)
-            line = crossfade_append(line, samples, SR)
+        # Synthesise one line (extracted so the gated orchestrator can re-render a
+        # single failing line in isolation — spec task 2.3).
+        line = synth_line(text, ch, level, kokoro, clone)
         if len(line):
             if stems_dir:
                 sp = pathlib.Path(stems_dir)

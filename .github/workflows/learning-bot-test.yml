@@ -44,3 +44,15 @@ jobs:
       # route to a student.
       - name: Content coverage ledger (fails on any orphaned atom)
         run: python -m src.coverage_ledger
+
+      # Audio quality gate (Empire English Chronicles — see docs/AUDIO-STANDARDS.md).
+      # The gate's own correctness is enforced by tests/test_audio_qa.py above
+      # (proven to fail on bad audio, pass on good). This step additionally asserts
+      # the analyser MODULE imports and its standard is self-consistent, so a change
+      # that breaks the gate fails the build here too — spec R4.5.
+      - name: Audio quality standard is loadable and complete
+        run: |
+          python -c "from src import audio_standards as s; d=s.summary(); \
+          assert d['bandwidth_is_diagnostic_only'] is True; \
+          assert 'wer' in d['critical_metrics']; \
+          print('audio standard OK:', d)"
