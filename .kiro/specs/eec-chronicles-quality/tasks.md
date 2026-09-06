@@ -28,24 +28,24 @@ Each phase ends in a reviewable PR and leaves `main` working.
 
 ---
 
-## Phase 0 — Measurement harness and the written standard
+## Phase 0 — Measurement harness and the written standard  ✅ COMPLETE
 
 *Goal: quality becomes a number that anyone can reproduce.*
 
-- [ ] **0.1** Create the quality-standard module: all R1.3 thresholds in one place,
+- [x] **0.1** Create the quality-standard module: all R1.3 thresholds in one place,
       with a comment on each explaining **why** it has that value (R1.1, R1.5).
-- [ ] **0.2** Build the audio analysis tool: computes WER (via ASR), spectral
+- [x] **0.2** Build the audio analysis tool: computes WER (via ASR), spectral
       flatness, hard-cut/discontinuity count, integrated LUFS, true peak, dead-air
       spans, duration, speech-to-bed ratio, per-line presence; reports bandwidth as
       **diagnostics only** (R1.2, R1.4).
-- [ ] **0.3** Make it CLI-runnable on any file and exit non-zero on violation.
-- [ ] **0.4** Prove the harness both ways: it must FAIL on deliberately degraded
+- [x] **0.3** Make it CLI-runnable on any file and exit non-zero on violation.
+- [x] **0.4** Prove the harness both ways: it must FAIL on deliberately degraded
       fixtures (injected clicks, wrong loudness, dropped words) and PASS on a
       known-good reference (R4.6 groundwork).
-- [ ] **0.5** Baseline the four existing episodes and record the numbers, so
+- [x] **0.5** Baseline the four existing episodes and record the numbers, so
       improvement is provable rather than claimed.
-- [ ] **0.6** Write `STANDARDS.md` — the human-readable quality contract.
-- [ ] **0.7** Tests for the harness itself.
+- [x] **0.6** Write `STANDARDS.md` — the human-readable quality contract.
+- [x] **0.7** Tests for the harness itself.
 
 **Exit criteria:** the tool reproduces the audit findings (≈237–386 hard cuts,
 flatness spread across voices), fails on bad fixtures, passes on good, and the
