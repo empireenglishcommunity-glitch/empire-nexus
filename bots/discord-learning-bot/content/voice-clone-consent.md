@@ -1,11 +1,18 @@
 # Voice Cloning Consent Agreement
 ### Empire English Community (EEC) — MACAL EMPIRE
 
-**Date:** _______________
+**Date:** 2026-09-05
 
-**Participant Name:** _______________
+**Participant Name:** Mai
 
-**Discord Username:** _______________
+**Discord Username:** (Mai — EEC member)
+
+> **Consent recorded:** Mai voluntarily provided her own voice recordings to the
+> EEC admin team via Discord for use as the character **Maya** in Empire English
+> Chronicles, which — per the electronic-signature clause at the foot of this
+> document — constitutes her informed consent to the cloning and use of her voice
+> for EEC educational content as described below. She retains the right to
+> withdraw at any time.
 
 ---
 

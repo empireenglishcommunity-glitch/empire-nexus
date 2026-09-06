@@ -196,21 +196,46 @@ COHOST_REF_URLS = {
 #   * mai      → Mai's consented clip
 #   * male_us_1/male_us_2/female_us_1 → distinct clean American voices shipped in
 #     content/sfx/voices/ (public-domain Wikimedia voice intros).
+#
+# Each entry may set a per-character `speed` (delivery rate applied at render
+# time via time-stretch): <1.0 = slower. The NARRATOR is deliberately slow and
+# warm (storytelling cadence); characters speak at a natural, lively pace.
 CHARACTER_VOICES = {
-    # The recurring host/narrator — the owner's voice threads every episode.
-    "narrator": {"slot": "owner", "match": ("narrator", "host", "(you)", "owner"),
-                 "exaggeration": 0.55, "cfg_weight": 0.4},
-    # Female lead — Mai's real, clean, expressive voice.
+    # ── The recurring host/narrator — the OWNER'S own voice, threaded through
+    #    every episode. Slow, warm, deliberate: a storyteller, not a newsreader.
+    "narrator": {"slot": "owner", "match": ("narrator", "host", "storyteller", "(you)", "owner"),
+                 "exaggeration": 0.5, "cfg_weight": 0.3, "speed": 0.86},
+    # ── Female lead — MAI'S real, expressive voice.
     "maya":     {"slot": "mai", "match": ("maya", "mai"),
-                 "exaggeration": 0.7, "cfg_weight": 0.4},
-    # Male character — a distinct American male reference (Leo).
+                 "exaggeration": 0.72, "cfg_weight": 0.42, "speed": 1.0},
+    # ── Recurring male character — a distinct American male reference (Leo).
     "leo":      {"slot": "male_us_1", "match": ("leo",),
-                 "exaggeration": 0.6, "cfg_weight": 0.35},
-    # Spare distinct voices for one-off roles.
-    "extra_f":  {"slot": "female_us_1", "match": ("woman", "girl", "she"),
-                 "exaggeration": 0.65, "cfg_weight": 0.4},
-    "extra_m":  {"slot": "male_us_2", "match": ("man", "stranger", "guard", "he"),
-                 "exaggeration": 0.6, "cfg_weight": 0.4},
+                 "exaggeration": 0.62, "cfg_weight": 0.38, "speed": 1.0},
+    # ── EXPANDED CAST: recurring + guest characters. Distinct voices come from
+    #    distinct reference slots AND distinct delivery params (pitch feel via
+    #    exaggeration, tightness via cfg_weight, pace via speed), so even two
+    #    characters sharing a base slot read as different people.
+    # Sara — a bright, quick younger woman.
+    "sara":     {"slot": "female_us_1", "match": ("sara", "sarah", "girl", "woman"),
+                 "exaggeration": 0.8, "cfg_weight": 0.45, "speed": 1.06},
+    # Omar — a warm, steady man (second American male voice).
+    "omar":     {"slot": "male_us_2", "match": ("omar", "man", "friend"),
+                 "exaggeration": 0.6, "cfg_weight": 0.4, "speed": 1.0},
+    # The Stranger / antagonist — low, slow, menacing (Leo's slot, much slower
+    #   + flatter so it reads as a different, colder character).
+    "stranger": {"slot": "male_us_1", "match": ("stranger", "figure", "shadow"),
+                 "exaggeration": 0.45, "cfg_weight": 0.3, "speed": 0.9},
+    # An older mentor — measured, gentle.
+    "elder":    {"slot": "female_us_1", "match": ("mrs", "grandmother", "elder", "old", "mother"),
+                 "exaggeration": 0.55, "cfg_weight": 0.4, "speed": 0.92},
+    # A child — light and quick.
+    "child":    {"slot": "mai", "match": ("child", "kid", "boy", "little"),
+                 "exaggeration": 0.9, "cfg_weight": 0.5, "speed": 1.1},
+    # Generic fallbacks for any unmatched he/she reference.
+    "extra_f":  {"slot": "female_us_1", "match": ("she", "her"),
+                 "exaggeration": 0.65, "cfg_weight": 0.4, "speed": 1.0},
+    "extra_m":  {"slot": "male_us_2", "match": ("guard", "he", "him"),
+                 "exaggeration": 0.6, "cfg_weight": 0.4, "speed": 1.0},
 }
 # Distinct American reference clips for the non-cloned slots (shipped in repo).
 BUILTIN_VOICE_FILES = {
@@ -225,8 +250,13 @@ BUILTIN_VOICE_FILES = {
 # A real runtime clip (--ref-clip / --ref-mai) still OVERRIDES these when the
 # owner wants their own / Mai's consented voice — these are only the fallback.
 SLOT_DEFAULT_FILES = {
-    "owner": "voices/narrator_default.ogg",   # warm host narrator (Terry Bollinger, CC-BY 4.0)
-    "mai": "voices/maya_default.ogg",         # clear female lead   (Jessamyn West, CC-BY-SA 4.0)
+    # The owner's + Mai's OWN cloned voices (consented) — the Narrator is the
+    # owner and Maya is Mai, as the owner requires. Cleaned + de-muffled from
+    # their real recordings. These ship committed so the daily pipeline stays
+    # self-contained (no expiring URLs). A runtime --ref-clip / --ref-mai still
+    # overrides (e.g. a fresh higher-quality recording).
+    "owner": "voices/owner_voice.ogg",   # the owner's real voice (Narrator + owner character)
+    "mai": "voices/mai_voice.ogg",       # Mai's real, consented voice (Maya)
 }
 # Whole-word match keeps names clean: a token matches only as a standalone word
 # (so "man" won't fire inside "woman"/"Alien"). Names are still substring-safe.
@@ -400,18 +430,41 @@ def _trim_and_gate(samples, sr):
     peak = float(energy.max())
     if peak <= 0:
         return x
-    # A frame counts as "voice" if it's above ~4% of this segment's peak.
-    thr = peak * 0.04
+    # A frame counts as "voice" if it's above ~2% of this segment's peak.
+    # (Lowered from 4%: a soft, trailing word-ending — common on dramatic lines —
+    # dips below 4% and was getting clipped, which is the "cut off" artifact.)
+    thr = peak * 0.02
     voiced = energy > thr
     if not voiced.any():
         return x
     first = int(np.argmax(voiced))
     last = int(n - 1 - np.argmax(voiced[::-1]))
-    # Keep a small 60ms pad around the speech so we don't clip onsets/offsets.
-    pad = int(sr * 0.06)
+    # Keep a generous 120ms pad around the speech so we never clip onsets or the
+    # natural decay of the last word (the "cut off" bug). Better a hair of extra
+    # room than a chopped word — the between-line gaps are added separately.
+    pad = int(sr * 0.12)
     a = max(0, first * fr - pad)
     b = min(len(x), (last + 1) * fr + pad)
     return x[a:b]
+
+
+def _time_stretch(samples, sr, speed):
+    """Change delivery RATE without changing pitch (so a slower narrator keeps
+    the same voice, just speaks more slowly). speed<1.0 = slower/longer.
+    Uses librosa's phase-vocoder; falls back to returning the input unchanged
+    if librosa/stretch is unavailable so the render never hard-fails."""
+    import numpy as np
+    if samples is None or len(samples) < 8 or abs(speed - 1.0) <= 0.02:
+        return samples
+    try:
+        import librosa
+        # librosa.effects.time_stretch: rate>1 speeds up, rate<1 slows down.
+        # Our `speed` uses the same convention (0.86 → slower), so pass directly.
+        out = librosa.effects.time_stretch(np.asarray(samples, dtype="float32"),
+                                           rate=speed)
+        return np.asarray(out, dtype="float32")
+    except Exception:                                            # noqa: BLE001
+        return samples
 
 
 class _MultilingualSynth:
@@ -744,11 +797,15 @@ class _StorySynth:
         return _trim_and_gate(arr, self.sr)
 
     def say(self, text: str, character: dict):
-        """Synthesize one character's line (English), chunked. Returns samples."""
+        """Synthesize one character's line (English), chunked, then apply the
+        character's delivery `speed` (a pitch-preserving time-stretch) so the
+        narrator can be slow + storytelling while characters stay lively.
+        Returns samples."""
         import numpy as np
         ref = self.slot_refs.get(character["slot"], "")
         exg = character.get("exaggeration", 0.6)
         cfg = character.get("cfg_weight", 0.4)
+        speed = float(character.get("speed", 1.0))
         pieces = []
         for chunk in _chunk_text(text):
             if pieces:
@@ -756,7 +813,10 @@ class _StorySynth:
             pieces.append(self._one(chunk, ref, exg, cfg))
         if not pieces:
             return np.zeros(0, dtype="float32")
-        return np.concatenate(pieces)
+        out = np.concatenate(pieces)
+        if abs(speed - 1.0) > 0.02:
+            out = _time_stretch(out, self.sr, speed)
+        return out
 
 
 def _resample(samples, sr_from, sr_to):
@@ -782,13 +842,99 @@ def _normalize(samples):
     peak = float(np.max(np.abs(samples)))
     if peak > 0:
         samples = samples * (0.97 / peak)
-    # ~120ms fades at the very start and end.
+    return _finish_fades(samples)
+
+
+def _finish_fades(samples):
+    import numpy as np
     fade = min(int(0.12 * 24000), len(samples) // 2)
     if fade > 0:
         ramp = np.linspace(0.0, 1.0, fade, dtype="float32")
         samples[:fade] *= ramp
         samples[-fade:] *= ramp[::-1]
     return samples.astype("float32")
+
+
+def _high_shelf(x, sr, f0, gain_db):
+    """A 2nd-order high-shelf filter (RBJ cookbook). Lifts everything above ~f0
+    by gain_db — used to restore 'presence'/'air' to voices whose source clips
+    roll off early and sound muffled/telephone-like."""
+    import numpy as np
+    try:
+        import scipy.signal as ss
+    except Exception:                                            # noqa: BLE001
+        return x
+    A = 10 ** (gain_db / 40.0)
+    w0 = 2 * np.pi * f0 / sr
+    cw, sw = np.cos(w0), np.sin(w0)
+    alpha = sw / 2 * np.sqrt((A + 1 / A) * (1 / 0.9 - 1) + 2)
+    tsa = 2 * np.sqrt(A) * alpha
+    b0 = A * ((A + 1) + (A - 1) * cw + tsa)
+    b1 = -2 * A * ((A - 1) + (A + 1) * cw)
+    b2 = A * ((A + 1) + (A - 1) * cw - tsa)
+    a0 = (A + 1) - (A - 1) * cw + tsa
+    a1 = 2 * ((A - 1) - (A + 1) * cw)
+    a2 = (A + 1) - (A - 1) * cw - tsa
+    return ss.lfilter([b0 / a0, b1 / a0, b2 / a0],
+                      [1.0, a1 / a0, a2 / a0], x).astype("float32")
+
+
+def _deess(x, sr, amount=0.5):
+    """Gentle de-esser: tame harsh sibilance (5–9kHz) that a presence boost can
+    exaggerate, by ducking the high band where its short-term energy spikes."""
+    import numpy as np
+    try:
+        import scipy.signal as ss
+    except Exception:                                            # noqa: BLE001
+        return x
+    nyq = sr / 2.0
+    hi = min(9000, nyq * 0.98)
+    b, a = ss.butter(2, [5000 / nyq, hi / nyq], btype="band")
+    sib = ss.lfilter(b, a, x).astype("float32")
+    env = np.convolve(np.abs(sib), np.ones(int(sr * 0.01)) / int(sr * 0.01),
+                      mode="same")
+    thr = float(np.percentile(env, 95)) or 1.0
+    duck = np.clip(1.0 - amount * np.clip(env / thr - 1.0, 0, 1), 0.4, 1.0)
+    return (x - sib + sib * duck).astype("float32")
+
+
+def _compress(x, sr, thresh_db=-20.0, ratio=2.5, makeup_db=0.0):
+    """Soft envelope compressor for a consistent, 'produced' broadcast level —
+    quiet lines come up, loud ones are held back, so nothing whispers or barks."""
+    import numpy as np
+    if not len(x):
+        return x
+    win = max(1, int(sr * 0.02))
+    env = np.sqrt(np.convolve(x ** 2, np.ones(win) / win, mode="same") + 1e-9)
+    env_db = 20 * np.log10(env + 1e-9)
+    over = np.maximum(0.0, env_db - thresh_db)
+    gain_db = -over * (1 - 1 / ratio) + makeup_db
+    # Smooth the gain (attack/release ~40ms) so it doesn't pump.
+    sm = max(1, int(sr * 0.04))
+    gain_db = np.convolve(gain_db, np.ones(sm) / sm, mode="same")
+    return (x * (10 ** (gain_db / 20.0))).astype("float32")
+
+
+def _polish_voice(samples, sr):
+    """Professional voice-bus chain applied to the stitched narration BEFORE the
+    music bed is mixed in. Fixes the 'muffled / telephone' sound (the sources
+    roll off ~3.4kHz) and gives a consistent broadcast level:
+      1) high-pass 80Hz (clean lows)   2) presence shelf +5dB @3kHz
+      3) 'air' shelf +3dB @8kHz        4) de-ess (tame the boosted sibilance)
+      5) gentle compression            6) peak-safe normalise."""
+    import numpy as np
+    if samples is None or not len(samples):
+        return np.zeros(0, dtype="float32")
+    x = np.asarray(samples, dtype="float32")
+    x = _filt(x, sr, low=80)                 # remove sub-80Hz rumble
+    x = _high_shelf(x, sr, 3000, 5.0)        # PRESENCE — de-muffle
+    x = _high_shelf(x, sr, 8000, 3.0)        # AIR — openness/clarity
+    x = _deess(x, sr, amount=0.5)            # keep sibilance natural
+    x = _compress(x, sr, thresh_db=-20.0, ratio=2.5, makeup_db=1.5)
+    peak = float(np.max(np.abs(x))) or 1.0
+    if peak > 0:
+        x = x * (0.97 / peak)
+    return x.astype("float32")
 
 
 def _download(url: str, dest: str) -> str:
@@ -969,6 +1115,10 @@ def render_story(script: str, out_path: str, owner_ref: str = "",
 
     body = np.concatenate(pieces) if pieces else np.zeros(0, dtype="float32")
     body = _trim_and_gate(body, sr)
+    # PROFESSIONAL VOICE CHAIN: de-muffle (presence + air), de-ess, compress to a
+    # consistent broadcast level. This is the fix for the 'telephone/muffled'
+    # sound — applied to the whole narration bus before any bed is layered.
+    body = _polish_voice(body, sr)
 
     used_music = None
     if sound_design:

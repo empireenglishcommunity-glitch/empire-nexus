@@ -288,8 +288,8 @@ def test_pipeline_is_self_contained_without_runtime_clips():
     segs = sawt_tts.parse_script(
         "Narrator: Hello.\nMaya: Hi there.\nLeo: Good evening.")
     refs = mod._build_slot_refs(segs, owner_ref="", mai_ref="")
-    assert refs["owner"].endswith("narrator_default.ogg")   # self-contained
-    assert refs["mai"].endswith("maya_default.ogg")
+    assert refs["owner"].endswith("owner_voice.ogg")        # the owner's real voice
+    assert refs["mai"].endswith("mai_voice.ogg")            # Mai's real voice
     assert refs["male_us_1"].endswith("male_us_1.ogg")
     # No needed slot may be left unbacked.
     assert all(p for p in refs.values())
@@ -309,7 +309,7 @@ def test_runtime_clip_overrides_committed_default():
         open(owner, "wb").write(b"x")
         refs = mod._build_slot_refs(segs, owner_ref=owner, mai_ref="")
         assert refs["owner"] == owner                        # override wins
-        assert refs["mai"].endswith("maya_default.ogg")      # unset → default
+        assert refs["mai"].endswith("mai_voice.ogg")         # unset → default
 
 
 def test_pause_marker_parsing():

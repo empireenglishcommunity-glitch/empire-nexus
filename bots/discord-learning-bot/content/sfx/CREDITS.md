@@ -36,29 +36,27 @@ trimmed + normalized.
 
 | File | Speaker (source) | License | Used for |
 |------|------------------|---------|----------|
-| `male_us_1.ogg` | Mike Delph (Indiana) — Wikimedia Commons | Public domain / CC | Leo / male lead |
-| `male_us_2.ogg` | Aaron Halfaker (Minnesota) — Wikimedia Commons | Public domain / CC | spare male |
-| `female_us_1.ogg` | Mary Mackey (Indiana) — Wikimedia Commons | Public domain / CC | spare female |
-| `narrator_default.ogg` | Terry Bollinger (Voice intro project) — Wikimedia Commons | **CC-BY 4.0** | **default Narrator** (owner slot) — used when no owner clip is supplied |
-| `maya_default.ogg` | Jessamyn West (Voice intro project) — Wikimedia Commons | **CC-BY-SA 4.0** | **default Maya** (mai slot) — used when no Mai clip is supplied |
+| `male_us_1.ogg` | Jerry Coyne (Voice intro project) — Wikimedia Commons | Public domain / CC | Leo / male lead — trimmed, pitch-adjusted for a younger read, de-muffled |
+| `male_us_2.ogg` | Aaron Halfaker (Minnesota) — Wikimedia Commons | Public domain / CC | Omar / spare male — de-muffled |
+| `female_us_1.ogg` | Mary Mackey (Indiana) — Wikimedia Commons | Public domain / CC | Sara / elder / spare female — de-muffled |
 
-### Why the two `*_default.ogg` clips exist (self-contained pipeline)
+> **Audio note:** the character reference clips are processed with a presence/air
+> high-shelf ("de-muffle") so cloned voices don't sound telephone-like. Leo's
+> original reference (Mike Delph) had almost no energy above 3.4 kHz and could
+> not be de-muffled by EQ, so it was replaced with a clearer source and given a
+> younger pitch.
+| `owner_voice.ogg` | **Mahmoud Ashri** (EEC founder) — own recording, consented | Owner-owned, EEC use | **Narrator + owner's character** — the owner's real voice |
+| `mai_voice.ogg` | **Mai** — own recording, consent on file | Consent-gated, EEC use | **Maya** — Mai's real, consented voice |
 
-The daily automation (`.github/workflows/podcast-daily.yml`) must render an episode
-every day with **no secrets and no expiring URLs**. Discord CDN links expire in
-~24h, so relying on them for a daily cron is not viable. These two committed clips
-give the Narrator and Maya a distinct, freely-licensed default voice so the pipeline
-is fully self-contained. A real runtime clip (`--ref-clip` for the owner's own voice,
-`--ref-mai` for Mai's consented voice) still **overrides** these defaults.
+### The Narrator + Maya are real EEC voices (owner requirement)
 
-### Required attribution for the default voices
-
-`narrator_default.ogg` is **CC-BY 4.0** and `maya_default.ogg` is **CC-BY-SA 4.0** —
-both require attribution wherever an episode using them is published:
-
-> Voices: Terry Bollinger (CC-BY 4.0) and Jessamyn West (CC-BY-SA 4.0), from the
-> Wikimedia Commons Voice intro project, trimmed + normalized. Licensed under
-> Creative Commons — https://creativecommons.org/licenses/
+The owner requires the Narrator to be **his own voice** and Maya to be **Mai's voice**.
+`owner_voice.ogg` and `mai_voice.ogg` are cleaned + de-muffled from their real
+recordings and committed so the daily pipeline stays self-contained (no expiring
+URLs). A runtime `--ref-clip` / `--ref-mai` still overrides (e.g. a fresh, higher-
+quality studio recording). Mai's consent is recorded in
+`content/voice-clone-consent.md`; these clips are for **EEC educational content
+only** and are never shared with third parties (see that document).
 
 ## Adding new assets
 

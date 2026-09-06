@@ -31,8 +31,18 @@ def test_valid_episode_rejects_thin_or_malformed():
 
 
 def test_story_cast_matches_renderer_characters():
-    # The cast names the generator uses must be voiced by the renderer.
-    assert sawt_story.STORY_CAST == ["Narrator", "Maya", "Leo"]
+    # The three leads must always be in the cast, and every cast name must map to
+    # a voice the renderer knows (character_for → a real slot with a ref).
+    import importlib.util, pathlib
+    for lead in ("Narrator", "Maya", "Leo"):
+        assert lead in sawt_story.STORY_CAST
+    spec = importlib.util.spec_from_file_location(
+        "rp", pathlib.Path(__file__).resolve().parent.parent
+        / "scripts" / "render_podcast_episode.py")
+    rp = importlib.util.module_from_spec(spec); spec.loader.exec_module(rp)
+    for name in sawt_story.STORY_CAST:
+        ch = rp.character_for(name)
+        assert ch["slot"], f"{name} has no voice slot"
 
 
 # ── vote data model ─────────────────────────────────────────────────────────
@@ -83,7 +93,7 @@ def test_channel_topic_and_intro_describe_student_value():
     """The channel's topic + pinned intro must explain WHY it exists and how it
     helps students learn (owner directive: 'description of its value')."""
     topic = botmod._STORY_CHANNEL_TOPIC.lower()
-    assert "empire chronicles" in topic
+    assert "empire english chronicles" in topic
     assert "vote" in topic
     # Names at least one concrete learning benefit.
     assert any(w in topic for w in ("listening", "pronunciation", "vocabulary"))
