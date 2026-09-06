@@ -73,16 +73,18 @@ def test_ai_cast_uses_the_deterministic_engine():
         assert e["engine"] == sawt_cast.ENGINE_KOKORO, key
 
 
-def test_only_glitch_free_voices_are_cast():
-    """Voices measured to click at production speed are unusable, however well they
-    score elsewhere (am_puck 5, af_jessica 6 were removed for this)."""
-    banned = {"am_puck", "af_jessica", "am_fenrir", "af_bella", "af_heart",
-              "af_alloy", "am_michael", "am_eric", "am_liam", "af_river",
-              "af_sarah"}
+def test_no_cast_voice_fails_the_naturalness_gate():
+    """Voices that fail NATURALNESS are genuinely unusable — unlike small glitch
+    counts, which the de-click stage provably repairs. am_michael measured
+    0.014-0.016 (limit 0.012) and was the narrator the owner called unclear, so it
+    must never be cast; the worst glitch offenders (am_puck 5-9, af_jessica 6) are
+    also kept out to spare the repair stage unnecessary work."""
+    unusable = {"am_michael", "af_nicole",      # fail naturalness
+                "am_puck", "af_jessica"}        # worst measured glitch counts
     for key, e in sawt_cast.CAST.items():
         vid = e.get("voice_id")
         if vid:
-            assert vid not in banned, f"{key} uses {vid}, which failed a gate"
+            assert vid not in unusable, f"{key} uses {vid}, which failed a gate"
 
 
 def test_character_lookup_and_fallback():
