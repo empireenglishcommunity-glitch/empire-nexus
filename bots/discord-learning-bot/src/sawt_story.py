@@ -68,7 +68,12 @@ def target_length(level: str = None) -> tuple:
            "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
     # Aim just inside the middle of the window so normal variation stays legal.
     target_seconds = dmin + (dmax - dmin) * 0.45
-    return int(round(target_seconds / 60.0 * wpm / 10.0) * 10), target_seconds / 60.0
+    words = target_seconds / 60.0 * wpm
+    # OVER-ASK: language models reliably under-deliver on length. Measured — asked
+    # for 780 words, got 586 (75%). Asking for ~1.3x lands the real output inside
+    # the CEFR duration window instead of just under it.
+    words *= 1.3
+    return int(round(words / 10.0) * 10), target_seconds / 60.0
 
 
 def build_story_prompt(previous_summary: str, winning_choice: str,
@@ -230,8 +235,27 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
     fallback. Returns raw text (expected to contain a JSON object) or None.
 
     Retries with a smaller completion budget on HTTP 413, so a fully automatic
-    pipeline heals itself instead of silently producing no episode."""
+    pipeline heals itself instead of silently producing no episode.
+
+    PROVIDER ORDER IS EVIDENCE-BASED, and deliberately different from the rest of
+    the bot. Elsewhere Groq is primary because it is fast for short JSON answers.
+    For a STORY it is the wrong primary: the configured Groq model
+    (`openai/gpt-oss-120b`) is a REASONING model that spends its budget thinking and
+    then returns HTTP 200 with EMPTY content on long generations, and Groq's free
+    tier rate-limits quickly. Measured 2026-09-06: Groq failed three attempts in a
+    row on a CEFR-length episode while Gemini produced a complete 586-word script.
+    So story generation tries **Gemini first** and keeps Groq as the fallback."""
     max_tokens = _max_tokens_for(level)
+
+    # 1) Gemini first for long-form story text (see docstring).
+    try:
+        text = await ai_engine._call_gemini(prompt, temperature,
+                                            max_output_tokens=max_tokens)
+        if text:
+            return text
+        logger.warning("sawt.story: Gemini returned nothing; trying Groq")
+    except Exception as e:  # noqa: BLE001
+        logger.warning("sawt.story: Gemini error (%s); trying Groq", e)
     if config.GROQ_API_KEY:
         from . import groq_client
         payload = {
@@ -274,8 +298,6 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
                 logger.warning("sawt.story: Groq call error (attempt %s): %s",
                                attempt, e)
                 break
-    try:
-        return await ai_engine._call_gemini(prompt, temperature)
-    except Exception as e:  # noqa: BLE001
-        logger.warning("sawt.story: Gemini fallback error: %s", e)
-        return None
+    # Gemini was already tried first (see docstring); nothing left to fall back to.
+    logger.warning("sawt.story: no provider produced a usable script")
+    return None
