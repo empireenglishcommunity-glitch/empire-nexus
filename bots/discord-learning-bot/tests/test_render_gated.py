@@ -45,11 +45,13 @@ class _Harness:
         self._orig = {"render": rg.rv2.render, "gate": rg._gate,
                       "lines": rg._line_stems_report}
 
-        def fake_render(script_text, out, level, music, sound_design, stems_dir):
+        def fake_render(script_text, out, level, music, sound_design, stems_dir,
+                        seed=0, **kwargs):
             self.render_calls += 1
             pathlib.Path(out).write_bytes(b"FAKEAUDIO")
             return {"ok": True, "out_path": str(out), "duration_seconds": 330,
-                    "line_count": len(self.stems), "stems": self.stems}
+                    "line_count": len(self.stems), "stems": self.stems,
+                    "music": music, "used_assets": [], "credit": ""}
 
         def fake_gate(audio, script, level, transcriber=None):
             i = self.gate_calls

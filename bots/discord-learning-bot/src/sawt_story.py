@@ -21,20 +21,33 @@ import logging
 import re
 from typing import Optional
 
-from . import config, ai_engine
+from . import config, ai_engine, sawt_cast, sawt_bible, podcast_lab
 
 logger = logging.getLogger("empire-bot.sawt.story")
-
-# The recurring cast the renderer knows how to voice (see render_podcast_episode
-# CHARACTER_VOICES). Keep new characters within these names/roles or add a voice.
-STORY_CAST = ["Narrator", "Maya", "Leo", "Sara", "Omar", "The Stranger", "Mrs. Adel"]
-
-# Available inline effect + timing markers the script may use.
-STORY_SFX = ["knock", "creak", "shimmer"]
 
 # Level band for the story: mixed but pitched around A2–B1 so it's approachable
 # for most students while still engaging (English-only per the owner's decision).
 STORY_LEVEL = "A2"
+
+
+def story_cast_names() -> list:
+    """The speaking names the writer may use — DERIVED from the cast registry
+    (sawt_cast), never a hand-kept list, so the writer can only name characters the
+    renderer can actually voice (spec R2.7, R6.2)."""
+    return sawt_cast.speaking_names()
+
+
+def legal_sfx() -> list:
+    """The inline [SFX:...] names the writer may use — DERIVED from the podcast_lab
+    manifest (spec R5.6), so the writer can never request a sound we don't own.
+    Falls back to a tiny safe set only if the library can't be read."""
+    try:
+        names = podcast_lab.sfx_names()
+        if names:
+            return names
+    except Exception:                                            # noqa: BLE001
+        pass
+    return ["knock", "creak", "footsteps"]
 
 
 _STORY_SYSTEM = (
@@ -76,79 +89,148 @@ def target_length(level: str = None) -> tuple:
     return int(round(words / 10.0) * 10), target_seconds / 60.0
 
 
-def build_story_prompt(previous_summary: str, winning_choice: str,
-                       episode_number: int, level: str = None) -> str:
-    """Prompt the LLM to write the next episode as JSON (script + recap + the
-    next A/B vote). `previous_summary` is the story so far; `winning_choice` is
-    what the audience voted to happen next (empty for the very first episode).
-    `level` selects the CEFR profile that sets length and pace."""
-    cast = ", ".join(STORY_CAST)
-    sfx = ", ".join(f"[SFX:{s}]" for s in STORY_SFX)
-    target_words, target_minutes = target_length(level)
+# A curated, unambiguous SFX shortlist to SUGGEST in the prompt — the most
+# story-useful sounds. The validator still accepts the full podcast_lab vocabulary;
+# this just keeps the prompt readable and steers the writer to reliable effects.
+_SFX_SUGGESTED = ["knock", "door", "creak", "footsteps", "wind", "thunder",
+                  "clock", "bell", "crowd", "water", "fire", "glass"]
 
-    if winning_choice:
+# Curiosity devices the writer must land at least one of (spec §6.5 / task 4.7).
+_CURIOSITY_MENU = {
+    "unanswered-question": "raise a specific question and deliberately NOT answer it",
+    "ticking-clock": "put a clear time pressure on the characters",
+    "reframing-reveal": "reveal one fact that makes the listener re-read the scene",
+    "two-branches": "end with two genuinely tempting, very different choices",
+}
+
+
+def _sfx_menu() -> str:
+    """The [SFX:...] menu shown in the prompt — the curated shortlist intersected
+    with what the library actually owns, so we never suggest a missing effect."""
+    have = set(legal_sfx())
+    menu = [s for s in _SFX_SUGGESTED if s in have] or sorted(have)[:12]
+    return ", ".join(f"[SFX:{s}]" for s in menu)
+
+
+def build_story_prompt(previous_summary: str, winning_choice: str,
+                       episode_number: int, level: str = None,
+                       arc: dict = None, is_arc_opener: bool = False,
+                       is_arc_finale: bool = False, past_choices: list = None,
+                       motif_seen: bool = False) -> str:
+    """Prompt the LLM to write the next episode as JSON. Now ARC-AWARE (spec 4.4):
+    it injects the story bible (recurring characters + their wants), the current
+    arc (genre, setting, premise, mood, established facts), the CEFR length, the
+    legal SFX menu (from the owned library), and the arc's position (opener /
+    middle / finale). `arc` is the sawt_arc arc block; when omitted the prompt
+    degrades gracefully to a single warm standalone episode."""
+    target_words, target_minutes = target_length(level)
+    sfx = _sfx_menu()
+    arc = arc or {}
+    genre = arc.get("genre") or "everyday"
+    setting = arc.get("setting") or "a small town"
+    premise = arc.get("premise") or "an ordinary day turns on one small decision"
+    mood = arc.get("mood") or sawt_bible.genre_mood(genre)
+    leads = arc.get("leads") or sawt_bible.leads_for_arc(genre)
+    facts = arc.get("established_facts") or []
+    curiosity = arc.get("curiosity") or "unanswered-question"
+    curiosity_hint = _CURIOSITY_MENU.get(curiosity,
+                                         _CURIOSITY_MENU["unanswered-question"])
+
+    # --- Continuity / arc position ---------------------------------------------
+    if is_arc_opener and episode_number == 1:
         continuity = (
-            f"This is episode {episode_number}. The story so far:\n"
-            f"{previous_summary}\n\n"
-            f"The audience voted for this to happen next: \"{winning_choice}\".\n"
-            f"Continue the story from that choice.")
+            f"This is episode {episode_number} — the VERY FIRST episode of the "
+            f"series, and it OPENS a new story arc. Introduce the world and the "
+            f"lead characters and hook the listener fast.")
+    elif is_arc_opener:
+        continuity = (
+            f"This is episode {episode_number}. The previous arc has ended. START "
+            f"A BRAND-NEW, SELF-CONTAINED STORY — a fresh {genre} arc in a new "
+            f"place. Do NOT continue the old plot; only the recurring characters "
+            f"carry over. The story so far (for character continuity only):\n"
+            f"{previous_summary}")
     else:
-        continuity = (
-            f"This is episode {episode_number} — the OPENING episode. Introduce "
-            f"the world and characters and hook the listener fast.")
+        so_far = f"The story so far:\n{previous_summary}\n\n" if previous_summary else ""
+        chose = (f"The audience voted for this to happen next: \"{winning_choice}\".\n"
+                 f"Continue the story from that choice.\n" if winning_choice else "")
+        finale = ("This is the FINALE of the arc — bring the arc's central question "
+                  "to a satisfying RESOLUTION this episode, while still ending on a "
+                  "small hook and an A/B vote that opens tomorrow's brand-new arc.\n"
+                  if is_arc_finale else "")
+        continuity = (f"This is episode {episode_number}. {so_far}{chose}{finale}")
+
+    facts_block = ""
+    if facts:
+        facts_block = ("\nESTABLISHED FACTS you must stay consistent with (do not "
+                       "contradict these):\n" + "\n".join(f"- {f}" for f in facts))
+
+    # The listener-echo signature: occasionally nod to a past audience choice.
+    echo_block = ""
+    if past_choices:
+        echo_block = (f"\nLISTENER ECHO (optional, subtle): the audience has shaped "
+                      f"this story before — e.g. they once chose \"{past_choices[-1]}\". "
+                      f"You may quietly acknowledge that their choices mattered.")
+
+    # The recurring motif signature.
+    motif = sawt_bible.MOTIF
+    if motif_seen:
+        motif_block = (f"\nMOTIF: {motif['name']} has already appeared in this arc. "
+                       f"You may reference it again, lightly.")
+    else:
+        motif_block = (f"\nMOTIF (optional texture): you MAY let {motif['name']} "
+                       f"appear briefly. {motif['note']}")
 
     return f"""{continuity}
 
-Write the next episode of Empire English Chronicles as a spoken audio script.
+Write this episode of Empire English Chronicles as a spoken audio script.
+
+THIS ARC:
+- Genre: {genre}. Setting: {setting}.
+- Premise / engine of the arc: {premise}.
+- Emotional mood: {mood} (the background music will match this — write to it).
+- Leads to feature: {', '.join(leads)}.{facts_block}{echo_block}{motif_block}
 
 LENGTH — this is a hard requirement, not a guideline:
 Write approximately {target_words} words of SPOKEN text (all speaker lines added
-together). That is what fills a {target_minutes:.0f}-minute episode at this level's
-delivery pace, and an episode outside its length window is rejected automatically.
-Do not pad with repetition to reach it — use the room to develop the scene, let
-characters react, and build the tension properly.
+together). That fills a {target_minutes:.0f}-minute episode at this level's delivery
+pace; an episode outside its length window is rejected automatically. Do not pad —
+use the room to develop the scene, let characters react, and build tension.
 
-CAST (use these names exactly; the audio engine maps each to a distinct voice).
-The three LEADS appear often; the others are recurring/guest roles you may bring
-in when the story calls for them, to keep the cast varied and alive:
-- Narrator — warm host who tells the story slowly and speaks directly to the audience.
-- Maya — the protagonist (young woman, curious, brave).
-- Leo — a supporting character (young man, cautious).
-- Sara — a bright, quick friend (young woman).
-- Omar — a warm, steady man (a friend or ally).
-- The Stranger — a mysterious, low-voiced figure (use sparingly, for tension).
-- Mrs. Adel — an older, gentle mentor.
-Use 2–4 speaking characters per episode (not all at once) — enough for lively
-dialogue, not so many it gets confusing for a learner.
+CAST (use these names EXACTLY; each maps to a distinct voice — you may not invent
+new named characters, only use these):
+{sawt_bible.character_brief()}
+Use 2–4 speaking characters this episode (not all at once) — lively but not
+confusing for a learner. Feature the arc's leads above.
 
 STYLE:
 - CLEAR simple English (learners), but genuinely suspenseful and cinematic.
 - Real spoken dialogue, short sentences, natural rhythm.
-- IMPORTANT — who says what: CHARACTERS speak ONLY the words they say out loud.
-  The NARRATOR describes all ACTION and scene. NEVER put narration in a
-  character's line — do NOT write "Maya: I push the door open" or "Leo: I hear a
-  sound". Instead: "Narrator: Maya pushes the door open." A character line is
-  only the actual spoken words (e.g. "Maya: Hello? Is someone there?").
-- Do NOT write stage directions or delivery hints in parentheses (no "(low)",
-  "(whisper)", "(through comm)") — they get read aloud. Show tone through the
-  words themselves and the Narrator.
-- Sound effects: ONLY these exist — {sfx}. Use them on their OWN, never spoken by
-  a character. Do NOT invent other effects (no [SFX:wind], [SFX:heartbeat], etc.);
-  if you need atmosphere, have the Narrator describe it in words instead.
+- WHO SAYS WHAT: characters speak ONLY the words they say out loud; the NARRATOR
+  describes all action and scene. NEVER put narration in a character line — not
+  "Maya: I push the door open" but "Narrator: Maya pushes the door open."
+- NO stage directions or parenthetical delivery hints (no "(low)", "(whisper)") —
+  they get read aloud. Show tone through the words and the Narrator.
+- Sound effects: use ONLY from this menu — {sfx} — on their OWN line, never spoken
+  by a character. Do NOT invent effects; if you need other atmosphere, have the
+  Narrator describe it in words.
 - Use [PAUSE 2s] to hold tension, especially right before the cliffhanger.
-- Open with the Narrator's signature: "Welcome to Empire English Chronicles..."
-  and a one-line recap if this is not episode 1.
+- OPEN with the Narrator's signature "Welcome to Empire English Chronicles..."
+  {"and a ONE-LINE recap of where we left off" if episode_number > 1 else ""}.
+- CURIOSITY: this episode must {curiosity_hint}.
 - END on a strong cliffhanger, then the Narrator asks the audience to choose
-  between EXACTLY TWO options and says "Vote below. Tomorrow, the story continues
-  the way you choose."
+  between EXACTLY TWO clearly-different, both-tempting options, and says
+  "Vote below. Tomorrow, the story continues the way you choose."
 
-Return ONLY this JSON object:
+Return ONLY this JSON object (no preamble, no code fences):
 {{
   "title": "short episode title",
-  "script": "the full speaker-labelled script, one line per speaker turn, using Narrator:/Maya:/Leo:/Sara:/Omar:/The Stranger:/Mrs. Adel: and inline [SFX:...] and [PAUSE 2s] markers",
-  "recap": "2-3 sentence summary of what happened this episode (used to seed the next one)",
-  "vote_a": "short label for choice A (what Maya could do)",
-  "vote_b": "short label for choice B (the other option)"
+  "script": "the full speaker-labelled script, one line per speaker turn (Narrator:/Maya:/Leo:/Sara:/Mrs. Adel:/The Stranger:/Nour:) with inline [SFX:...] and [PAUSE 2s] markers",
+  "recap": "2-3 sentence summary of what happened THIS episode (seeds the next one)",
+  "facts": ["1-4 short new story facts established this episode, for continuity"],
+  "mood": "{mood}",
+  "vote_a": "short label for choice A",
+  "vote_b": "short label for choice B",
+  "motif_used": {str(bool(motif_seen)).lower()}
 }}"""
 
 
@@ -183,31 +265,88 @@ def _valid_episode(d: dict) -> bool:
     return len(lines) >= 4
 
 
-async def generate_episode(previous_summary: str = "", winning_choice: str = "",
-                           episode_number: int = 1,
-                           level: str = None) -> Optional[dict]:
-    """Generate the next Empire Chronicles episode. Returns a dict with keys
-    title, script, recap, vote_a, vote_b — or None if the LLM is unavailable or
-    returns something unusable. Never raises."""
-    prompt = build_story_prompt(previous_summary, winning_choice, episode_number,
-                                level=level)
-    try:
-        text = await _call_llm_json(prompt, temperature=0.9, level=level)
-    except Exception as e:  # noqa: BLE001
-        logger.warning("sawt.story: generation failed: %s", e)
-        return None
-    d = _extract_json(text or "")
-    if not _valid_episode(d):
-        logger.warning("sawt.story: LLM returned an unusable episode")
-        return None
-    # Normalize: keep only the fields we use, stringified + stripped.
+def _normalize_episode(d: dict, arc: dict = None) -> dict:
+    """Coerce a parsed LLM object into the episode dict the pipeline uses."""
+    arc = arc or {}
+    facts = d.get("facts")
+    if isinstance(facts, str):
+        facts = [facts]
+    facts = [str(f).strip() for f in (facts or []) if str(f).strip()][:4]
     return {
         "title": str(d["title"]).strip()[:200],
         "script": str(d["script"]).strip(),
         "recap": str(d.get("recap", "")).strip(),
+        "facts": facts,
+        "mood": (str(d.get("mood", "")).strip().lower()
+                 or arc.get("mood") or "warm"),
         "vote_a": str(d["vote_a"]).strip()[:100],
         "vote_b": str(d["vote_b"]).strip()[:100],
+        "motif_used": bool(d.get("motif_used", False)),
     }
+
+
+# Bounded regeneration: how many times to re-ask the writer, feeding back the
+# specific validator violations, before giving up (spec 4.6).
+MAX_REGEN_ATTEMPTS = 3
+
+
+async def generate_episode(previous_summary: str = "", winning_choice: str = "",
+                           episode_number: int = 1, level: str = None,
+                           arc: dict = None, is_arc_opener: bool = False,
+                           is_arc_finale: bool = False, past_choices: list = None,
+                           motif_seen: bool = False) -> Optional[dict]:
+    """Generate the next Empire Chronicles episode (arc-aware). Returns a dict with
+    keys title, script, recap, facts, mood, vote_a, vote_b, motif_used — or None if
+    the LLM is unavailable or no attempt passes validation. Never raises.
+
+    Runs BOUNDED REGENERATION (spec 4.6): if the generated script fails the script
+    validator, the specific violations are appended to the prompt and the writer is
+    asked again, up to MAX_REGEN_ATTEMPTS times. The best-effort last parse is
+    returned only if it structurally parses AND passes validation."""
+    base_prompt = build_story_prompt(
+        previous_summary, winning_choice, episode_number, level=level, arc=arc,
+        is_arc_opener=is_arc_opener, is_arc_finale=is_arc_finale,
+        past_choices=past_choices, motif_seen=motif_seen)
+
+    # Lazily import the validator so a broken validator import can never take the
+    # generator down; if it's unavailable we fall back to the structural check.
+    try:
+        from . import sawt_script_validator as validator
+    except Exception:                                            # noqa: BLE001
+        validator = None
+
+    feedback = ""
+    for attempt in range(1, MAX_REGEN_ATTEMPTS + 1):
+        prompt = base_prompt if not feedback else (
+            base_prompt + "\n\nYOUR PREVIOUS ATTEMPT WAS REJECTED. Fix EXACTLY "
+            "these problems and return the full corrected JSON:\n" + feedback)
+        try:
+            text = await _call_llm_json(prompt, temperature=0.9, level=level)
+        except Exception as e:                                   # noqa: BLE001
+            logger.warning("sawt.story: generation failed: %s", e)
+            return None
+        d = _extract_json(text or "")
+        if not _valid_episode(d):
+            logger.warning("sawt.story: attempt %s returned an unusable episode",
+                           attempt)
+            feedback = "- Return valid JSON with a title, a speaker-labelled " \
+                       "script of at least 4 lines, and two vote options."
+            continue
+        ep = _normalize_episode(d, arc)
+        if validator is None:
+            return ep
+        problems = validator.validate_episode(
+            ep, level=level, episode_number=episode_number, arc=arc,
+            is_arc_finale=is_arc_finale)
+        if not problems:
+            return ep
+        logger.warning("sawt.story: attempt %s failed validation: %s",
+                       attempt, "; ".join(problems))
+        feedback = "\n".join(f"- {p}" for p in problems)
+
+    logger.warning("sawt.story: exhausted %s attempts; no valid episode",
+                   MAX_REGEN_ATTEMPTS)
+    return None
 
 
 def _max_tokens_for(level: str = None) -> int:

@@ -384,15 +384,23 @@ def master(x, sr):
 
 
 # ── sound design ─────────────────────────────────────────────────────────────
+# Legacy fallback assets (kept only so a render still works if the lab can't be
+# read). The PRIMARY source is the licence-cleared Podcast Lab (src/podcast_lab),
+# selected by MOOD — spec 3.7.
 _SFX_DIR = BOT_DIR / "content" / "sfx"
 SFX_FILES = {"knock": "knock.ogg", "tap": "knock.ogg", "creak": "creak.ogg"}
 MUSIC_FILES = {"mystery": "music_mystery.ogg"}
 
+try:
+    from src import podcast_lab as _lab
+except Exception:                                                # noqa: BLE001
+    _lab = None
 
-def load_asset(rel, sr):
+
+def _load_path(p, sr):
+    """Load an absolute file path to mono float32 at `sr`, or None."""
     import numpy as np
-    p = _SFX_DIR / rel
-    if not p.exists():
+    if p is None or not pathlib.Path(p).exists():
         return None
     try:
         import soundfile as sf
@@ -404,16 +412,47 @@ def load_asset(rel, sr):
         return None
 
 
-def load_sfx(name, sr):
+def load_asset(rel, sr):
+    return _load_path(_SFX_DIR / rel, sr)
+
+
+def load_sfx(name, sr, used=None):
+    """Resolve [SFX:name] to audio. Tries the Podcast Lab first (by tag/stem), then
+    the legacy content/sfx/ files. Appends the chosen asset dict to `used` (for
+    attribution). Returns a normalised mono float32 array (possibly empty)."""
     import numpy as np
-    fn = SFX_FILES.get((name or "").lower())
-    if not fn:
-        return np.zeros(0, dtype="float32")
-    y = load_asset(fn, sr)
+    y = None
+    if _lab is not None:
+        try:
+            p, asset = _lab.resolve_sfx_path(name)
+            if p is not None:
+                y = _load_path(p, sr)
+                if y is not None and len(y) and used is not None and asset:
+                    used.append(asset)
+        except Exception:                                        # noqa: BLE001
+            y = None
+    if y is None or not len(y):                       # legacy fallback
+        fn = SFX_FILES.get((name or "").lower())
+        y = load_asset(fn, sr) if fn else None
     if y is None or not len(y):
         return np.zeros(0, dtype="float32")
     pk = float(np.max(np.abs(y))) or 1.0
     return (y * (0.55 / pk)).astype("float32")
+
+
+def _lab_bed(mood, sr, seed=0, used=None):
+    """A music bed for `mood` from the Podcast Lab, or None. Records the asset in
+    `used` for attribution."""
+    if _lab is None:
+        return None
+    try:
+        p, asset = _lab.select_bed_path(mood, seed=seed)
+        y = _load_path(p, sr)
+        if y is not None and len(y) and used is not None and asset:
+            used.append(asset)
+        return y
+    except Exception:                                            # noqa: BLE001
+        return None
 
 
 def duck_music(voice, bed, sr, base=0.20, ducked=0.06, outro=2.5):
@@ -473,14 +512,20 @@ def plan(script: str) -> dict:
 
 
 def render(script: str, out_path, level="A2", music="mystery",
-           sound_design=True, stems_dir=None) -> dict:
-    """Render an episode. Returns a result dict (also useful to the QA gate)."""
+           sound_design=True, stems_dir=None, seed=0) -> dict:
+    """Render an episode. Returns a result dict (also useful to the QA gate).
+
+    `music` is a MOOD name (e.g. 'mystery', 'warm'); the bed is chosen from the
+    Podcast Lab by that mood (spec 3.7). `seed` (e.g. episode number) varies which
+    bed is picked while staying reproducible for a given (mood, seed)."""
     import numpy as np
     import soundfile as sf
 
     segs = sawt_tts.parse_script(script)
     if not segs:
         raise SystemExit("No speaker lines found (expected 'Speaker: text').")
+
+    used_assets = []          # lab assets actually used, for attribution/credit
 
     # Which engines does this episode actually need? Only load what we use — the
     # clone engine is heavy and most episodes may not need it.
@@ -519,7 +564,7 @@ def render(script: str, out_path, level="A2", music="mystery",
 
         # Inline sound effects, placed AROUND speech so nothing is masked (R3.5).
         for m in _SFX_RE.finditer(raw):
-            fx = load_sfx(m.group(1), SR)
+            fx = load_sfx(m.group(1), SR, used=used_assets)
             if len(fx):
                 body = crossfade_append(body, fx, SR)
                 body = append_gap(body, SR, GAP_AFTER_SFX)
@@ -551,11 +596,14 @@ def render(script: str, out_path, level="A2", music="mystery",
         if i % 5 == 0 or i == len(segs):
             print(f"  [{i}/{len(segs)}] {time.time()-t0:.0f}s", flush=True)
 
-    # Sound design + mastering.
+    # Sound design + mastering. The bed is chosen from the Podcast Lab by MOOD
+    # (spec 3.7); if the lab can't provide one we fall back to the legacy file.
     used_music = None
     if sound_design and music and music.lower() != "none":
-        bed = load_asset(MUSIC_FILES.get(music.lower(), ""), SR) \
-            if MUSIC_FILES.get(music.lower()) else None
+        bed = _lab_bed(music.lower(), SR, seed=seed, used=used_assets)
+        if bed is None or not len(bed):
+            legacy = MUSIC_FILES.get(music.lower(), "")
+            bed = load_asset(legacy, SR) if legacy else None
         if bed is not None and len(bed):
             used_music = music
             # Crossfade the body in against the silent intro so speech doesn't
@@ -572,12 +620,24 @@ def render(script: str, out_path, level="A2", music="mystery",
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, SR, format="MP3")
 
+    # De-dup used assets (by file) and derive the human credit line.
+    seen = set()
+    uniq_used = []
+    for a in used_assets:
+        f = a.get("file")
+        if f and f not in seen:
+            seen.add(f)
+            uniq_used.append(a)
+    credit = _lab.credit_line(uniq_used) if _lab is not None else ""
+
     dur = len(audio) / SR
     print(f"\n  wrote {out} — {dur/60:.1f} min ({dur:.1f}s), {len(segs)} lines, "
-          f"music={used_music or 'none'}, in {time.time()-t0:.1f}s")
+          f"music={used_music or 'none'} (mood), in {time.time()-t0:.1f}s")
     return {"ok": True, "out_path": str(out), "duration_seconds": round(dur, 2),
             "line_count": len(segs), "music": used_music, "stems": stems,
-            "level": level}
+            "level": level,
+            "used_assets": [a.get("file") for a in uniq_used],
+            "credit": credit}
 
 
 def main():
@@ -586,7 +646,10 @@ def main():
     ap.add_argument("--script", required=True)
     ap.add_argument("--out", default="episode.mp3")
     ap.add_argument("--level", default="A2", help="CEFR level (drives native pace)")
-    ap.add_argument("--music", default="mystery", help="bed name or 'none'")
+    ap.add_argument("--music", default="mystery",
+                    help="MOOD for the bed (mystery/warm/wonder/...) or 'none'")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="episode number — varies bed choice, reproducibly")
     ap.add_argument("--no-sound-design", action="store_true")
     ap.add_argument("--stems-dir", default="",
                     help="also write per-line voice stems here (for per-line QA)")
@@ -603,7 +666,7 @@ def main():
 
     render(script, args.out, level=args.level, music=args.music,
            sound_design=not args.no_sound_design,
-           stems_dir=args.stems_dir or None)
+           stems_dir=args.stems_dir or None, seed=args.seed)
     return 0
 
 

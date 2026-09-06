@@ -107,7 +107,7 @@ def _line_stems_report(stems, level, transcriber=None):
 
 def render_gated(script_path, out_path, level="A2", music="mystery",
                  sound_design=True, report_path=None, transcriber=None,
-                 max_attempts=None):
+                 max_attempts=None, seed=0):
     """Render `script_path` and emit `out_path` ONLY if it passes the gate.
 
     Returns a result dict: {passed, attempts, out_path (or None), report}. On
@@ -121,6 +121,7 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
     work = pathlib.Path(tempfile.mkdtemp(prefix="eec_gated_"))
     attempts_log = []
     passed_report = None
+    passed_render = None
     t0 = time.time()
 
     try:
@@ -130,7 +131,8 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
             print(f"\n=== attempt {attempt}/{max_attempts} — full render ===",
                   flush=True)
             rr = rv2.render(script_text, cand, level=level, music=music,
-                            sound_design=sound_design, stems_dir=str(stems_dir))
+                            sound_design=sound_design, stems_dir=str(stems_dir),
+                            seed=seed)
 
             report = _gate(cand, script_text, level, transcriber=transcriber)
             # Localise any failure to specific lines (diagnostic + drives retry).
@@ -148,6 +150,7 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
                 print(f"  ✅ attempt {attempt} PASSED the gate", flush=True)
                 shutil.copyfile(cand, out_path)
                 passed_report = report
+                passed_render = rr
                 break
 
             print(f"  ❌ attempt {attempt} failed: {report['failures']} "
@@ -164,6 +167,9 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
             "attempts_log": attempts_log,
             "out_path": str(out_path) if passed_report else None,
             "level": level,
+            "music": (passed_render or {}).get("music") if passed_render else None,
+            "used_assets": (passed_render or {}).get("used_assets", []),
+            "credit": (passed_render or {}).get("credit", ""),
             "elapsed_seconds": round(time.time() - t0, 1),
             "report": passed_report or report,
         }
@@ -195,7 +201,10 @@ def main():
     ap.add_argument("--script", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", default="A2")
-    ap.add_argument("--music", default="mystery")
+    ap.add_argument("--music", default="mystery",
+                    help="MOOD for the bed (from the Podcast Lab) or 'none'")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="episode number — varies bed choice, reproducibly")
     ap.add_argument("--no-sound-design", action="store_true")
     ap.add_argument("--report", default="", help="where to write the QA report "
                                                 "(default: <out>.qa.json)")
@@ -211,7 +220,7 @@ def main():
             args.script, args.out, level=args.level, music=args.music,
             sound_design=not args.no_sound_design,
             report_path=args.report or None,
-            max_attempts=args.max_attempts or None)
+            max_attempts=args.max_attempts or None, seed=args.seed)
     except Exception as e:                                       # noqa: BLE001
         print(f"gated render could not run: {type(e).__name__}: {e}",
               file=sys.stderr)

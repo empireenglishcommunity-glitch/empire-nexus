@@ -30,7 +30,7 @@ BOT_DIR = pathlib.Path(__file__).resolve().parent.parent
 if str(BOT_DIR) not in sys.path:
     sys.path.insert(0, str(BOT_DIR))
 
-from src import sawt_story  # noqa: E402
+from src import sawt_story, sawt_arc  # noqa: E402
 
 STATE_FILE = "story-state.json"
 
@@ -52,20 +52,36 @@ def _save_state(out_dir: pathlib.Path, state: dict):
 
 
 async def _run(out_dir: pathlib.Path, winning_choice: str) -> int:
-    state = _load_state(out_dir)
-    episode_number = int(state.get("episode_number", 0)) + 1
-    # The winning choice comes from the CLI (the bot fills it after voting) or,
-    # failing that, from whatever the bot last wrote into the state file.
-    choice = winning_choice or state.get("winning_choice", "")
-    prev_recap = state.get("recap", "")
+    raw_state = _load_state(out_dir)
+    # Fold in the winning choice (CLI overrides the file the bot wrote) BEFORE
+    # planning, so the listener-echo history and continuity see it.
+    choice = winning_choice or raw_state.get("winning_choice", "")
+    if choice:
+        raw_state = sawt_arc.record_winning_choice(raw_state, choice)
 
-    print(f"Generating Empire Chronicles episode {episode_number} "
+    # Arc lifecycle decides this episode's context: which arc, opener/finale, and
+    # whether an arc must resolve now (tasks 4.2 / 4.3).
+    plan = sawt_arc.plan_next_episode(raw_state)
+    arc = plan["arc"]
+    episode_number = plan["episode_number"]
+    prev_recap = raw_state.get("recap", "")
+
+    print(f"Generating Empire Chronicles episode {episode_number} — "
+          f"arc {arc['arc_id']} ({arc['genre']}), "
+          f"episode {arc['episode_in_arc']}/{arc['planned_episodes']}"
+          f"{' [OPENER]' if plan['is_arc_opener'] else ''}"
+          f"{' [FINALE]' if plan['is_arc_finale'] else ''} "
           f"(continuing: {choice!r})")
+
     ep = await sawt_story.generate_episode(
         previous_summary=prev_recap, winning_choice=choice,
-        episode_number=episode_number)
+        episode_number=episode_number, arc=arc,
+        is_arc_opener=plan["is_arc_opener"], is_arc_finale=plan["is_arc_finale"],
+        past_choices=raw_state.get("past_choices", []),
+        motif_seen=bool(raw_state.get("motif_seen", False)))
     if not ep:
-        print("::error::story generation returned nothing (LLM unavailable?)")
+        print("::error::story generation returned nothing "
+              "(LLM unavailable or failed validation)")
         return 1
 
     slug = f"chronicles-ep{episode_number:02d}"
@@ -80,21 +96,31 @@ async def _run(out_dir: pathlib.Path, winning_choice: str) -> int:
         "vote_a": ep["vote_a"],
         "vote_b": ep["vote_b"],
         "recap": ep["recap"],
+        # Sound design + arc context the renderer and the bot post use.
+        "mood": ep.get("mood") or arc.get("mood") or "warm",
+        "arc_id": arc["arc_id"],
+        "genre": arc["genre"],
+        "episode_in_arc": arc["episode_in_arc"],
+        "is_arc_finale": plan["is_arc_finale"],
     }
     (out_dir / "episode-meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    # Advance state: next episode continues from THIS recap. The winning_choice
-    # is reset — the bot writes the real winner after voting closes.
-    _save_state(out_dir, {
-        "episode_number": episode_number,
-        "recap": ep["recap"],
-        "winning_choice": "",
-    })
+    # Advance state: store the recap + any established facts, remember the motif,
+    # and — if this was the arc finale — open the NEXT arc (a different genre) so
+    # tomorrow starts fresh. The winning_choice is left for the bot to fill after
+    # voting closes (record_winning_choice already reset it if we consumed one).
+    new_state = sawt_arc.apply_generated(
+        plan["state"], recap=ep["recap"], facts=ep.get("facts") or [],
+        was_finale=plan["is_arc_finale"], motif_used=bool(ep.get("motif_used")))
+    new_state["winning_choice"] = ""
+    _save_state(out_dir, new_state)
 
-    print(f"  wrote {script_path.name} — '{ep['title']}'")
+    print(f"  wrote {script_path.name} — '{ep['title']}'  (mood: {meta['mood']})")
     print(f"  vote A: {ep['vote_a']}")
     print(f"  vote B: {ep['vote_b']}")
+    if plan["is_arc_finale"]:
+        print(f"  arc {arc['arc_id']} RESOLVED — next arc will be a new genre")
     return 0
 
 
