@@ -44,21 +44,87 @@ LICENCE_MAP = {
 
 # The sourcing plan: for each story SITUATION, a search phrase + which library
 # category/tags it feeds. Kept to sounds a learner-story actually uses.
+# The plan aims to reach the spec floor: >=60 SFX, >=10 ambiences, >=12 music beds,
+# >=6 stings. Each (phrase, category, tags); `--per-situation N` pulls up to N usable
+# results per phrase, so this list x N comfortably clears the floor.
 SFX_PLAN = [
+    # ── doors / movement ─────────────────────────────────────────────────────
     ("door knock", "sfx", ["knock", "door"]),
     ("door creak", "sfx", ["creak", "door"]),
-    ("footsteps walking", "sfx", ["footsteps"]),
+    ("door slam", "sfx", ["slam", "door"]),
+    ("door open", "sfx", ["door", "open"]),
+    ("footsteps walking", "sfx", ["footsteps", "walk"]),
+    ("footsteps running", "sfx", ["footsteps", "run"]),
+    ("footsteps stairs", "sfx", ["footsteps", "stairs"]),
+    # ── time / tension ───────────────────────────────────────────────────────
     ("clock ticking", "sfx", ["clock", "ticking"]),
+    ("heartbeat", "sfx", ["heartbeat", "tension"]),
+    ("bell ring", "sfx", ["bell"]),
+    ("telephone ring", "sfx", ["phone", "ring"]),
+    ("alarm", "sfx", ["alarm"]),
+    ("whoosh", "sfx", ["whoosh", "transition"]),
+    # ── weather / nature one-shots ───────────────────────────────────────────
     ("thunder", "sfx", ["thunder", "storm"]),
     ("water drip", "sfx", ["water", "drip"]),
+    ("water splash", "sfx", ["water", "splash"]),
+    ("wave", "sfx", ["wave", "sea"]),
+    ("fire crackle", "sfx", ["fire"]),
+    # ── objects / everyday ───────────────────────────────────────────────────
     ("paper rustle", "sfx", ["paper"]),
-    ("bell ring", "sfx", ["bell"]),
     ("glass break", "sfx", ["glass", "break"]),
-    ("wind blowing", "ambience", ["wind"]),
-    ("rain", "ambience", ["rain"]),
-    ("forest birds", "ambience", ["forest", "nature"]),
+    ("keys jingle", "sfx", ["keys"]),
+    ("coin", "sfx", ["coin", "money"]),
+    ("switch click", "sfx", ["switch", "click"]),
+    ("camera shutter", "sfx", ["camera"]),
+    ("typing keyboard", "sfx", ["typing", "keyboard"]),
+    ("car engine", "sfx", ["car", "engine"]),
+    ("bicycle bell", "sfx", ["bicycle", "bell"]),
+    ("dog bark", "sfx", ["dog", "bark"]),
+    ("cat meow", "sfx", ["cat"]),
+    ("bird chirp", "sfx", ["bird", "chirp"]),
+    ("applause", "sfx", ["applause", "clap"]),
+    ("laughter", "sfx", ["laughter", "laugh"]),
+    ("gasp", "sfx", ["gasp"]),
+    # ── ambiences (beds of environment) ──────────────────────────────────────
+    ("wind blowing", "ambience", ["wind", "eerie"]),
+    ("rain", "ambience", ["rain", "sad"]),
+    ("forest birds", "ambience", ["forest", "nature", "calm"]),
     ("crowd talking", "ambience", ["crowd", "market"]),
     ("night crickets", "ambience", ["night", "eerie"]),
+    ("ocean waves", "ambience", ["ocean", "calm"]),
+    ("city street traffic", "ambience", ["city", "street"]),
+    ("cafe restaurant", "ambience", ["cafe", "warm"]),
+    ("river stream", "ambience", ["river", "water", "calm"]),
+    ("fireplace", "ambience", ["fire", "warm"]),
+    ("school classroom", "ambience", ["school", "classroom"]),
+    ("train station", "ambience", ["train", "station"]),
+]
+
+# Music beds are searched separately: Commons has a lot of instrumental CC-BY/CC0
+# tracks, but they need mood tagging by hand-ish keywords. We search by musical mood.
+MUSIC_PLAN = [
+    ("mysterious ambient instrumental", "music", ["mystery", "eerie"]),
+    ("suspense instrumental", "music", ["tension"]),
+    ("calm piano instrumental", "music", ["calm", "warm"]),
+    ("sad piano instrumental", "music", ["sad"]),
+    ("happy ukulele instrumental", "music", ["playful", "hopeful"]),
+    ("epic orchestral instrumental", "music", ["triumph"]),
+    ("dreamy ambient instrumental", "music", ["wonder"]),
+    ("cheerful instrumental background", "music", ["playful", "warm"]),
+    ("dark cinematic instrumental", "music", ["eerie", "tension"]),
+    ("gentle acoustic instrumental", "music", ["calm", "hopeful"]),
+    ("adventure instrumental", "music", ["wonder", "triumph"]),
+    ("emotional strings instrumental", "music", ["sad", "warm"]),
+]
+
+# Stings: short transition marks.
+STING_PLAN = [
+    ("chime transition", "sting", ["transition", "wonder"]),
+    ("drum hit", "sting", ["hit", "tension"]),
+    ("bell chime", "sting", ["chime", "intro"]),
+    ("swell riser", "sting", ["riser", "tension"]),
+    ("harp glissando", "sting", ["harp", "wonder"]),
+    ("piano sting", "sting", ["piano", "outro"]),
 ]
 
 
@@ -121,9 +187,10 @@ def _search_audio(phrase, limit=6):
     return [r["title"] for r in d.get("query", {}).get("search", [])]
 
 
-def run(dry_run=False, per_situation=1):
+def run(dry_run=False, per_situation=1, plans=None):
     got, skipped = 0, 0
-    for phrase, category, tags in SFX_PLAN:
+    full_plan = plans if plans is not None else (SFX_PLAN + MUSIC_PLAN + STING_PLAN)
+    for phrase, category, tags in full_plan:
         print(f"\n[{category}] {phrase!r} (tags {tags})")
         try:
             titles = _search_audio(phrase)

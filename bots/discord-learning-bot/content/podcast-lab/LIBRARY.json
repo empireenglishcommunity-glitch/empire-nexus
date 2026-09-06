@@ -2,6 +2,387 @@
   "version": 1,
   "assets": [
     {
+      "file": "amb_cafe_walla.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: cafe",
+      "tags": [
+        "cafe",
+        "crowd",
+        "warm"
+      ],
+      "duration": 11.91,
+      "source": "archive.org — SSE_Library_AMBIENCE — RESTAURANT & BAR/AMBRest_Banquet crowd walla; outdoors or large quiet_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_church_hall.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: hall",
+      "tags": [
+        "hall",
+        "quiet",
+        "wonder"
+      ],
+      "duration": 22.4,
+      "source": "archive.org — SSE_Library_AMBIENCE — RELIGIOUS/AMBRlgn_Church reactions 1_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_farmyard.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: farm",
+      "tags": [
+        "farm",
+        "rural",
+        "warm"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — FARM/AMBFarm_Barnyard bg_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_hall_murmur.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: hall",
+      "tags": [
+        "hall",
+        "crowd",
+        "tension"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — PUBLIC PLACE/AMBPubl_Courtroom murmur and mild surprise; multiple_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_harbour.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: harbour",
+      "tags": [
+        "harbour",
+        "water",
+        "adventure"
+      ],
+      "duration": 29.91,
+      "source": "archive.org — SSE_Library_AMBIENCE — NAUTICAL/AMBNaut_Water background; multiple ships? whistles_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_indoor_room.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: indoor",
+      "tags": [
+        "indoor",
+        "room",
+        "calm"
+      ],
+      "duration": 13.65,
+      "source": "archive.org — SSE_Library_AMBIENCE — OFFICE/AMBOffc_Movement in indoor space; office or waiting_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_jungle.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: jungle",
+      "tags": [
+        "jungle",
+        "nature",
+        "wonder"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — TROPICAL/AMBTrop_Jungle background 1_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_market.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: market",
+      "tags": [
+        "market",
+        "busy",
+        "adventure",
+        "mystery"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — MARKET/AMBMrkt_Street market in Marrakesh_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_old_town_street.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: historical",
+      "tags": [
+        "historical",
+        "town",
+        "adventure"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — HISTORICAL/AMBHist_Western street background with horses; wagons;_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_party.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: party",
+      "tags": [
+        "party",
+        "crowd",
+        "hopeful",
+        "playful"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — CELEBRATION/AMBCele_New Year?s Eve party crowd; much laughter_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_school_hallway.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: school",
+      "tags": [
+        "school",
+        "crowd",
+        "busy"
+      ],
+      "duration": 30.0,
+      "source": "archive.org — SSE_Library_AMBIENCE — SCHOOL/AMBSchl_High school students walla in hallway 2_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "amb_seaside.ogg",
+      "category": "ambience",
+      "description": "Environment ambience: seaside",
+      "tags": [
+        "seaside",
+        "water",
+        "calm"
+      ],
+      "duration": 20.63,
+      "source": "archive.org — SSE_Library_AMBIENCE — SEASIDE/AMBSea_Water background; urban noise in background_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "rain.ogg",
+      "category": "ambience",
+      "description": "Rain",
+      "tags": [
+        "rain",
+        "sad"
+      ],
+      "duration": 11.26,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — rain.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "tornado.ogg",
+      "category": "ambience",
+      "description": "Strong wind / storm",
+      "tags": [
+        "wind",
+        "storm",
+        "tension"
+      ],
+      "duration": 15.4,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — tornado.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "calm_adventure_wonder_12.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (adventure, wonder)",
+      "tags": [
+        "adventure",
+        "wonder"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_69_-_The_Traveller.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_calm_sad_14.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (calm, sad)",
+      "tags": [
+        "calm",
+        "sad"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_80_-_Drop_in_the_Ocean.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_calm_warm_1.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (calm, warm)",
+      "tags": [
+        "calm",
+        "warm"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_1_-_Still_Habitat.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_eerie_wonder_13.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (eerie, wonder)",
+      "tags": [
+        "eerie",
+        "wonder"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_78_-_Echoes_in_the_Valley.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_hopeful_6.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (hopeful)",
+      "tags": [
+        "hopeful"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_18_-_Before_Sunset_622D0F46-D1E8-44BE-AA22-B85E311A62BF.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_hopeful_calm_2.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (hopeful, calm)",
+      "tags": [
+        "hopeful",
+        "calm"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_11_-_The_Healing_Lake_8BE609A8-7115-4273-8A1A-CE5738459E7A.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_hopeful_wonder_7.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (hopeful, wonder)",
+      "tags": [
+        "hopeful",
+        "wonder",
+        "triumph"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_21_-_Heaven_Sings.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_mysterious_eerie_9.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (mysterious, eerie)",
+      "tags": [
+        "mysterious",
+        "eerie",
+        "mystery"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_27_-_Refracted_World.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_sad_4.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (sad)",
+      "tags": [
+        "sad"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_15_-_Painting_Twilight_B95718A4-8D99-474C-9B6B-07EC2087E161.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_sad_wonder_8.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (sad, wonder)",
+      "tags": [
+        "sad",
+        "wonder"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_22_-_Beauty_In_Decay.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_warm_calm_10.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (warm, calm)",
+      "tags": [
+        "warm",
+        "calm",
+        "playful"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_46_-_Morning_Dew.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_warm_hopeful_11.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (warm, hopeful)",
+      "tags": [
+        "warm",
+        "hopeful",
+        "triumph"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_60_-_Ember.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_wonder_eerie_5.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (wonder, eerie)",
+      "tags": [
+        "wonder",
+        "eerie"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_16_-_Star_Encounter_F14A4860-06AC-4C42-BB1B-E1E6B92152C5.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "calm_wonder_warm_3.ogg",
+      "category": "music",
+      "description": "Calm ambient bed (wonder, warm)",
+      "tags": [
+        "wonder",
+        "warm"
+      ],
+      "duration": 45.0,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_12_-_It_Was_Beautiful_A8151772-9133-4709-8419-D74050521F15.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
       "file": "clock_ticking_1.ogg",
       "category": "sfx",
       "description": "Clock ticking",
@@ -13,6 +394,58 @@
       "source": "Wikimedia Commons — File:LA2 kitchen clock.ogg",
       "licence": "Public Domain",
       "attribution": ""
+    },
+    {
+      "file": "crackling_fire.ogg",
+      "category": "sfx",
+      "description": "Crackling fire",
+      "tags": [
+        "fire",
+        "warm"
+      ],
+      "duration": 19.64,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — crackling_fire.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "crash.ogg",
+      "category": "sfx",
+      "description": "A crash",
+      "tags": [
+        "crash",
+        "impact"
+      ],
+      "duration": 5.63,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — crash.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "creaking.ogg",
+      "category": "sfx",
+      "description": "Wood creaking",
+      "tags": [
+        "creak",
+        "eerie"
+      ],
+      "duration": 4.53,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — creaking.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "creeking_door.ogg",
+      "category": "sfx",
+      "description": "Door creaking open",
+      "tags": [
+        "creak",
+        "door"
+      ],
+      "duration": 2.35,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — creeking_door.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
     },
     {
       "file": "door_creak_1.ogg",
@@ -41,6 +474,46 @@
       "attribution": ""
     },
     {
+      "file": "door_slamming.ogg",
+      "category": "sfx",
+      "description": "Door slamming shut",
+      "tags": [
+        "slam",
+        "door"
+      ],
+      "duration": 1.79,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — door_slamming.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "footsteps_cement.ogg",
+      "category": "sfx",
+      "description": "Footsteps on pavement",
+      "tags": [
+        "footsteps",
+        "street"
+      ],
+      "duration": 16.71,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — footsteps_cement.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "footsteps_grass.ogg",
+      "category": "sfx",
+      "description": "Footsteps on grass",
+      "tags": [
+        "footsteps",
+        "grass",
+        "nature"
+      ],
+      "duration": 21.19,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — footsteps_grass.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
       "file": "footsteps_walking_1.ogg",
       "category": "sfx",
       "description": "Footsteps walking",
@@ -49,6 +522,835 @@
       ],
       "duration": 0.68,
       "source": "Wikimedia Commons — File:LL-Q1860 (eng)-Grendelkhan-footsteps.wav",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "footsteps_wood.ogg",
+      "category": "sfx",
+      "description": "Footsteps on wood",
+      "tags": [
+        "footsteps",
+        "wood"
+      ],
+      "duration": 14.15,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — footsteps_wood.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "glasses_hitting.ogg",
+      "category": "sfx",
+      "description": "Glasses clinking",
+      "tags": [
+        "glass",
+        "clink"
+      ],
+      "duration": 0.36,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — glasses_hitting.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "horse_hooves.ogg",
+      "category": "sfx",
+      "description": "Horse hooves",
+      "tags": [
+        "horse",
+        "hooves"
+      ],
+      "duration": 41.6,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — horse_hooves.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "metal_scratching.ogg",
+      "category": "sfx",
+      "description": "Metal scratching",
+      "tags": [
+        "metal",
+        "scratch",
+        "eerie"
+      ],
+      "duration": 12.61,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — metal_scratching.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "roar.ogg",
+      "category": "sfx",
+      "description": "A loud roar",
+      "tags": [
+        "roar",
+        "monster",
+        "tension"
+      ],
+      "duration": 5.09,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — roar.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "scratching.ogg",
+      "category": "sfx",
+      "description": "Scratching sound",
+      "tags": [
+        "scratch",
+        "eerie"
+      ],
+      "duration": 7.96,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — scratching.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "sfx_alarm_clock.ogg",
+      "category": "sfx",
+      "description": "alarm effect",
+      "tags": [
+        "alarm",
+        "clock"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_ALARMS — CLOCK/ALRMClok_Electric buzzer alarm clock_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_appliance.ogg",
+      "category": "sfx",
+      "description": "machine effect",
+      "tags": [
+        "machine",
+        "indoor"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_MACHINES — APPLIANCE/MACHAppl_Garbage disposal grinding hard objects_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_bell.ogg",
+      "category": "sfx",
+      "description": "bell effect",
+      "tags": [
+        "bell"
+      ],
+      "duration": 4.83,
+      "source": "archive.org — SSE_Library_BELLS — MISC/BELLMisc-BOUY_Bell buoy_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_bicycle.ogg",
+      "category": "sfx",
+      "description": "bicycle effect",
+      "tags": [
+        "bicycle",
+        "street"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_VEHICLES — BICYCLE/VEHBike_10 speed bicycle; very close_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_buzzer.ogg",
+      "category": "sfx",
+      "description": "alarm effect",
+      "tags": [
+        "alarm",
+        "buzzer"
+      ],
+      "duration": 4.96,
+      "source": "archive.org — SSE_Library_ALARMS — BUZZER/ALRMBuzr_Bell and buzzer alarm_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_car_1.ogg",
+      "category": "sfx",
+      "description": "car effect",
+      "tags": [
+        "car",
+        "vehicle",
+        "street"
+      ],
+      "duration": 4.98,
+      "source": "archive.org — SSE_Library_VEHICLES — CAR/VEHCar_Car engine start medium distance; idle; idle_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_car_2.ogg",
+      "category": "sfx",
+      "description": "car effect",
+      "tags": [
+        "car",
+        "vehicle",
+        "street"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_VEHICLES — CAR/VEHCar_Car idles in garage_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_car_horn.ogg",
+      "category": "sfx",
+      "description": "car effect",
+      "tags": [
+        "car",
+        "horn",
+        "street"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_VEHICLES — HORN/VEHHorn_Car drive by with horn; doppler effect_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_chatter.ogg",
+      "category": "sfx",
+      "description": "crowd effect",
+      "tags": [
+        "crowd",
+        "chatter"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_CROWDS — CONVERSATION/CRWDConv_Interior crowd walla; men & women; polite_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_cheer.ogg",
+      "category": "sfx",
+      "description": "crowd effect",
+      "tags": [
+        "crowd",
+        "cheer",
+        "hopeful"
+      ],
+      "duration": 4.51,
+      "source": "archive.org — SSE_Library_CROWDS — CHEERING/CRWDCheer_Outdoor crowd reactions; cheering; very happy_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_children.ogg",
+      "category": "sfx",
+      "description": "crowd effect",
+      "tags": [
+        "crowd",
+        "children",
+        "school"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_CROWDS — CHILDREN/CRWDChld_Children being entertained; much laughing_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_crowd_react.ogg",
+      "category": "sfx",
+      "description": "crowd effect",
+      "tags": [
+        "crowd",
+        "reaction"
+      ],
+      "duration": 4.7,
+      "source": "archive.org — SSE_Library_CROWDS — REACTION/CRWDReac_Crowd reactions; oohs; ahh; cheering; laughing;_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_dog_1.ogg",
+      "category": "sfx",
+      "description": "dog effect",
+      "tags": [
+        "dog",
+        "animal"
+      ],
+      "duration": 4.66,
+      "source": "archive.org — SSE_Library_ANIMALS — DOG/ANMLDog_Distant dogs barking; growling; whimpering_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_dog_2.ogg",
+      "category": "sfx",
+      "description": "dog effect",
+      "tags": [
+        "dog",
+        "animal"
+      ],
+      "duration": 3.97,
+      "source": "archive.org — SSE_Library_ANIMALS — DOG/ANMLDog_Dog barking fast; calling attention to something_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_doorbell.ogg",
+      "category": "sfx",
+      "description": "bell effect",
+      "tags": [
+        "bell",
+        "door",
+        "indoor"
+      ],
+      "duration": 1.54,
+      "source": "archive.org — SSE_Library_BELLS — DOORBELL/BELLDoor_Door bell; door chime (Columbia Pictures)_CHS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_farm_animal_1.ogg",
+      "category": "sfx",
+      "description": "farm effect",
+      "tags": [
+        "farm",
+        "animal"
+      ],
+      "duration": 4.96,
+      "source": "archive.org — SSE_Library_ANIMALS — FARM/ANMLFarm_Billy Goat calls_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_farm_animal_2.ogg",
+      "category": "sfx",
+      "description": "farm effect",
+      "tags": [
+        "farm",
+        "animal"
+      ],
+      "duration": 4.96,
+      "source": "archive.org — SSE_Library_ANIMALS — FARM/ANMLFarm_Donkey braying_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_fire_burn.ogg",
+      "category": "sfx",
+      "description": "fire effect",
+      "tags": [
+        "fire",
+        "warm"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_FIRE — BURNING/FIREBurn_Fire burning in cornfield_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_fire_whoosh.ogg",
+      "category": "sfx",
+      "description": "fire effect",
+      "tags": [
+        "fire",
+        "whoosh"
+      ],
+      "duration": 2.37,
+      "source": "archive.org — SSE_Library_FIRE — WHOOSH/FIREWhsh_Flare whoosh_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_handbell.ogg",
+      "category": "sfx",
+      "description": "bell effect",
+      "tags": [
+        "bell",
+        "hand"
+      ],
+      "duration": 4.87,
+      "source": "archive.org — SSE_Library_BELLS — HANDBELL/BELLHand_Glass bell; medium size_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_horse_1.ogg",
+      "category": "sfx",
+      "description": "horse effect",
+      "tags": [
+        "horse",
+        "animal"
+      ],
+      "duration": 4.98,
+      "source": "archive.org — SSE_Library_ANIMALS — HORSE/ANMLHors_Classic horse whinny_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_horse_2.ogg",
+      "category": "sfx",
+      "description": "horse effect",
+      "tags": [
+        "horse",
+        "animal"
+      ],
+      "duration": 4.38,
+      "source": "archive.org — SSE_Library_ANIMALS — HORSE/ANMLHors_Excited horse whinny; strange squealing;_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_insect.ogg",
+      "category": "sfx",
+      "description": "insect effect",
+      "tags": [
+        "insect",
+        "nature"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_ANIMALS — INSECT/ANMLInsc_Bees swarming_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_laughter.ogg",
+      "category": "sfx",
+      "description": "crowd effect",
+      "tags": [
+        "crowd",
+        "laughter",
+        "warm"
+      ],
+      "duration": 4.87,
+      "source": "archive.org — SSE_Library_CROWDS — LAUGHTER/CRWDLaff_Polite crowd laughter; ?poor guy?; good bg;_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_lion.ogg",
+      "category": "sfx",
+      "description": "lion effect",
+      "tags": [
+        "lion",
+        "roar",
+        "danger"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_ANIMALS — CAT WILD/ANMLWcat_Lion eating with a low growl_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_mechanism_1.ogg",
+      "category": "sfx",
+      "description": "machine effect",
+      "tags": [
+        "machine",
+        "mechanical"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_MACHINES — MECHANISM/MACHMech_Mechanical bull steady; machine noise_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_mechanism_2.ogg",
+      "category": "sfx",
+      "description": "machine effect",
+      "tags": [
+        "machine",
+        "mechanical"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_MACHINES — MECHANISM/MACHMech_Merry go round carousel ? take 1 wooden machine_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_monkey.ogg",
+      "category": "sfx",
+      "description": "monkey effect",
+      "tags": [
+        "monkey",
+        "animal",
+        "jungle"
+      ],
+      "duration": 4.44,
+      "source": "archive.org — SSE_Library_ANIMALS — PRIMATE/ANMLPrim_Chimpanzee Chatter_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_old_machine.ogg",
+      "category": "sfx",
+      "description": "machine effect",
+      "tags": [
+        "machine",
+        "antique"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_MACHINES — ANTIQUE/MACHAntq-WINDMILL_Windmill turning and creaking_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_siren.ogg",
+      "category": "sfx",
+      "description": "alarm effect",
+      "tags": [
+        "alarm",
+        "siren",
+        "danger"
+      ],
+      "duration": 4.91,
+      "source": "archive.org — SSE_Library_ALARMS — SIREN/ALRMSirn_Distant siren_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_sizzle.ogg",
+      "category": "sfx",
+      "description": "fire effect",
+      "tags": [
+        "fire",
+        "cooking"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_FIRE — SIZZLE/FIRESizz-FUSE_Fuse burning_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_sparks.ogg",
+      "category": "sfx",
+      "description": "electric effect",
+      "tags": [
+        "electric",
+        "sparks"
+      ],
+      "duration": 4.85,
+      "source": "archive.org — SSE_Library_ELECTRICITY — SPARKS/ELECSprk_Huge hissing electric sparks nearby_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_splash.ogg",
+      "category": "sfx",
+      "description": "water effect",
+      "tags": [
+        "water",
+        "splash"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WATER — SPLASH/WATRSplsh_Swimming in pool_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_steam_train.ogg",
+      "category": "sfx",
+      "description": "train effect",
+      "tags": [
+        "train",
+        "steam",
+        "adventure"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_TRAINS — STEAM/TRNSteam_English steam train; slow in; hiss; stop_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_train_track.ogg",
+      "category": "sfx",
+      "description": "train effect",
+      "tags": [
+        "train",
+        "track"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_TRAINS — CLACK/TRNClak_Empty train cars pass by; no engine noise_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_water_flow_1.ogg",
+      "category": "sfx",
+      "description": "water effect",
+      "tags": [
+        "water",
+        "stream",
+        "nature"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WATER — FLOW/WATRFlow_Gentle river or stream flowing_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_water_flow_2.ogg",
+      "category": "sfx",
+      "description": "water effect",
+      "tags": [
+        "water",
+        "stream",
+        "nature"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WATER — FLOW/WATRFlow_Mountain stream gurgling and splashing_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_waves_1.ogg",
+      "category": "sfx",
+      "description": "water effect",
+      "tags": [
+        "water",
+        "waves",
+        "seaside"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WATER — SURF/WATRSurf_Close up surf_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_waves_2.ogg",
+      "category": "sfx",
+      "description": "water effect",
+      "tags": [
+        "water",
+        "waves",
+        "seaside"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WATER — SURF/WATRSurf_Medium surf on a flat beach_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_wild_animal.ogg",
+      "category": "sfx",
+      "description": "wild effect",
+      "tags": [
+        "wild",
+        "animal",
+        "nature"
+      ],
+      "duration": 4.98,
+      "source": "archive.org — SSE_Library_ANIMALS — WILD/ANMLWild_Camel moaning in distance_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_wind_1.ogg",
+      "category": "sfx",
+      "description": "wind effect",
+      "tags": [
+        "wind",
+        "weather",
+        "nature"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WIND — GENERAL/WIND_Cold Arctic wind_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_wind_2.ogg",
+      "category": "sfx",
+      "description": "wind effect",
+      "tags": [
+        "wind",
+        "weather",
+        "nature"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WIND — GENERAL/WIND_Jim Cook?s wind; bluster; prairie wind_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_wind_gust.ogg",
+      "category": "sfx",
+      "description": "wind effect",
+      "tags": [
+        "wind",
+        "gust",
+        "storm"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_WIND — GUST/WIND_Gusty desert wind_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sfx_zap.ogg",
+      "category": "sfx",
+      "description": "electric effect",
+      "tags": [
+        "electric",
+        "zap"
+      ],
+      "duration": 5.0,
+      "source": "archive.org — SSE_Library_ELECTRICITY — ZAP/ELECZap_Machine made electrical lightning explosions_CS_USC.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "slap.ogg",
+      "category": "sfx",
+      "description": "A slap",
+      "tags": [
+        "slap",
+        "impact"
+      ],
+      "duration": 0.85,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — slap.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "small_glass_shattering.ogg",
+      "category": "sfx",
+      "description": "Glass shattering",
+      "tags": [
+        "glass",
+        "break"
+      ],
+      "duration": 0.97,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — small_glass_shattering.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "stone_door.ogg",
+      "category": "sfx",
+      "description": "Heavy stone door",
+      "tags": [
+        "door",
+        "stone",
+        "eerie"
+      ],
+      "duration": 9.12,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — stone_door.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "thunder.ogg",
+      "category": "sfx",
+      "description": "Thunder",
+      "tags": [
+        "thunder",
+        "storm"
+      ],
+      "duration": 4.93,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — thunder.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "ticking_clock.ogg",
+      "category": "sfx",
+      "description": "Clock ticking",
+      "tags": [
+        "clock",
+        "ticking",
+        "tension"
+      ],
+      "duration": 19.0,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — ticking_clock.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "window_shattering.ogg",
+      "category": "sfx",
+      "description": "Window breaking",
+      "tags": [
+        "glass",
+        "window",
+        "break"
+      ],
+      "duration": 1.96,
+      "source": "archive.org — WilliamDyerSoundEffectsLibrary — window_shattering.ogg",
+      "licence": "CC-BY-3.0",
+      "attribution": "Sound effects by William Dyer (archive.org), CC-BY 2.5"
+    },
+    {
+      "file": "sting_eerie_6.ogg",
+      "category": "sting",
+      "description": "Short transition sting (eerie)",
+      "tags": [
+        "eerie",
+        "transition"
+      ],
+      "duration": 3.2,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_78_-_Echoes_in_the_Valley.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sting_hopeful_1.ogg",
+      "category": "sting",
+      "description": "Short transition sting (hopeful)",
+      "tags": [
+        "hopeful",
+        "transition"
+      ],
+      "duration": 3.2,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_21_-_Heaven_Sings.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sting_hopeful_3.ogg",
+      "category": "sting",
+      "description": "Short transition sting (hopeful)",
+      "tags": [
+        "hopeful",
+        "transition"
+      ],
+      "duration": 3.2,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_54_-_Rebirth.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sting_mysterious_5.ogg",
+      "category": "sting",
+      "description": "Short transition sting (mysterious)",
+      "tags": [
+        "mysterious",
+        "transition"
+      ],
+      "duration": 3.18,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_66_-_Glimmer_in_the_Dark.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sting_warm_4.ogg",
+      "category": "sting",
+      "description": "Short transition sting (warm)",
+      "tags": [
+        "warm",
+        "transition"
+      ],
+      "duration": 3.2,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_60_-_Ember.mp3",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "sting_wonder_2.ogg",
+      "category": "sting",
+      "description": "Short transition sting (wonder)",
+      "tags": [
+        "wonder",
+        "transition"
+      ],
+      "duration": 3.2,
+      "source": "archive.org — CalmPills — Uplifting_Pills_-_Calm_Pill_37_-_Tomorrows_Lights.mp3",
       "licence": "CC0",
       "attribution": ""
     }
