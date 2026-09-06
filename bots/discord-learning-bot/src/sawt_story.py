@@ -15,6 +15,7 @@ choice, in the cast format the renderer understands:
 It WRITES a script + the two vote options; it never renders audio (that's the
 offline renderer) and never posts anything (that's the bot).
 """
+import asyncio
 import json
 import logging
 import re
@@ -42,13 +43,43 @@ _STORY_SYSTEM = (
     "scripts in CLEAR, simple English. Return ONLY valid JSON — no preamble.")
 
 
+def target_length(level: str = None) -> tuple:
+    """(target_words, target_minutes) for an episode at `level`.
+
+    Derived from the SAME CEFR profile the rest of Empire English uses, so episode
+    length follows the learner's level (spec R7.1). Every v1 episode was 98-161s
+    against A2's 300-420s window and failed the duration gate — the generator was
+    asking for "~2 minutes" regardless of level.
+
+    Words are computed from the level's delivery pace: at slower paces the same
+    minute holds fewer words, so a slower level needs FEWER words for the same
+    duration, not more."""
+    lvl = level or STORY_LEVEL
+    try:
+        from . import config
+        prof = config.podcast_level_profile(lvl)
+        dmin, dmax = float(prof["duration_min"]), float(prof["duration_max"])
+        pace = prof.get("pace", "slow")
+    except Exception:                                            # noqa: BLE001
+        dmin, dmax, pace = 300.0, 420.0, "slow"
+    # Measured words-per-minute of the cast at each CEFR pace (benchmarked with
+    # scripts/benchmark_story_voices.py — see src/sawt_cast.PACE_SPEED).
+    wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
+           "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
+    # Aim just inside the middle of the window so normal variation stays legal.
+    target_seconds = dmin + (dmax - dmin) * 0.45
+    return int(round(target_seconds / 60.0 * wpm / 10.0) * 10), target_seconds / 60.0
+
+
 def build_story_prompt(previous_summary: str, winning_choice: str,
-                       episode_number: int) -> str:
+                       episode_number: int, level: str = None) -> str:
     """Prompt the LLM to write the next episode as JSON (script + recap + the
     next A/B vote). `previous_summary` is the story so far; `winning_choice` is
-    what the audience voted to happen next (empty for the very first episode)."""
+    what the audience voted to happen next (empty for the very first episode).
+    `level` selects the CEFR profile that sets length and pace."""
     cast = ", ".join(STORY_CAST)
     sfx = ", ".join(f"[SFX:{s}]" for s in STORY_SFX)
+    target_words, target_minutes = target_length(level)
 
     if winning_choice:
         continuity = (
@@ -63,7 +94,14 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
 
     return f"""{continuity}
 
-Write the next ~2-minute episode of Empire English Chronicles as a spoken audio script.
+Write the next episode of Empire English Chronicles as a spoken audio script.
+
+LENGTH — this is a hard requirement, not a guideline:
+Write approximately {target_words} words of SPOKEN text (all speaker lines added
+together). That is what fills a {target_minutes:.0f}-minute episode at this level's
+delivery pace, and an episode outside its length window is rejected automatically.
+Do not pad with repetition to reach it — use the room to develop the scene, let
+characters react, and build the tension properly.
 
 CAST (use these names exactly; the audio engine maps each to a distinct voice).
 The three LEADS appear often; the others are recurring/guest roles you may bring
@@ -141,13 +179,15 @@ def _valid_episode(d: dict) -> bool:
 
 
 async def generate_episode(previous_summary: str = "", winning_choice: str = "",
-                           episode_number: int = 1) -> Optional[dict]:
+                           episode_number: int = 1,
+                           level: str = None) -> Optional[dict]:
     """Generate the next Empire Chronicles episode. Returns a dict with keys
     title, script, recap, vote_a, vote_b — or None if the LLM is unavailable or
     returns something unusable. Never raises."""
-    prompt = build_story_prompt(previous_summary, winning_choice, episode_number)
+    prompt = build_story_prompt(previous_summary, winning_choice, episode_number,
+                                level=level)
     try:
-        text = await _call_llm_json(prompt, temperature=0.9)
+        text = await _call_llm_json(prompt, temperature=0.9, level=level)
     except Exception as e:  # noqa: BLE001
         logger.warning("sawt.story: generation failed: %s", e)
         return None
@@ -165,26 +205,75 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
     }
 
 
-async def _call_llm_json(prompt: str, temperature: float = 0.9) -> Optional[str]:
+def _max_tokens_for(level: str = None) -> int:
+    """Completion-token budget for one episode, sized from its target length.
+
+    WHY THIS IS COMPUTED, NOT GUESSED (all measured against the live provider):
+      * With no `max_tokens` at all, a CEFR-length episode came back truncated.
+      * `max_tokens=8000` was rejected outright with **HTTP 413 Payload Too Large**
+        — the cap applies to prompt + completion TOGETHER, so a big number is not
+        "safe", it is fatal.
+      * `max_tokens=2000` succeeded and produced a 725-word script (A2 target 780).
+      * The configured model is a REASONING model (`openai/gpt-oss-120b`), which
+        spends part of the budget thinking. Too small a budget therefore returns
+        HTTP 200 with EMPTY content rather than an error — a failure mode that is
+        easy to misread as "the LLM is down".
+    So the budget must be big enough to think AND write, but small enough to avoid
+    413: ~2.4 tokens per target word plus overhead, clamped to a proven window."""
+    words, _minutes = target_length(level)
+    return int(min(3200, max(2000, words * 2.4 + 800)))
+
+
+async def _call_llm_json(prompt: str, temperature: float = 0.9,
+                         level: str = None) -> Optional[str]:
     """Story LLM call: Groq primary (story-writer system prompt), Gemini
-    fallback. Returns raw text (expected to contain a JSON object) or None."""
+    fallback. Returns raw text (expected to contain a JSON object) or None.
+
+    Retries with a smaller completion budget on HTTP 413, so a fully automatic
+    pipeline heals itself instead of silently producing no episode."""
+    max_tokens = _max_tokens_for(level)
     if config.GROQ_API_KEY:
         from . import groq_client
         payload = {
             "model": config.GROQ_MODEL,
             "temperature": temperature,
+            # Sized to the episode, not guessed. See _max_tokens_for().
+            "max_tokens": max_tokens,
             "messages": [
                 {"role": "system", "content": _STORY_SYSTEM},
                 {"role": "user", "content": prompt},
             ],
         }
-        try:
-            result = await groq_client.chat_completion(payload, timeout_seconds=60)
-            if result.ok and result.text:
-                return result.text
-            logger.warning("sawt.story: Groq call failed (status=%s)", result.status)
-        except Exception as e:  # noqa: BLE001
-            logger.warning("sawt.story: Groq call error: %s", e)
+        # Retry ladder. Each failure mode needs a DIFFERENT response, which is why
+        # a single blanket retry never fixed this:
+        #   413            -> asked for too much: SHRINK the completion budget.
+        #   200 + no text  -> reasoning model ran out of room: GROW the budget.
+        #   429            -> rate limited: WAIT, then try the same budget again.
+        #   anything else   -> transport/model error: stop, let Gemini try.
+        budget = max_tokens
+        for attempt in range(1, 4):
+            payload["max_tokens"] = budget
+            try:
+                result = await groq_client.chat_completion(payload,
+                                                           timeout_seconds=120)
+                if result.ok and result.text:
+                    return result.text
+                text_len = len(result.text or "")
+                logger.warning("sawt.story: Groq unusable (attempt %s, "
+                               "max_tokens=%s, status=%s, text_len=%s)",
+                               attempt, budget, result.status, text_len)
+                if result.status == 413:
+                    budget = max(1200, int(budget * 0.6))
+                elif result.status == 429:
+                    await asyncio.sleep(min(30, 8 * attempt))
+                elif result.status == 200 and text_len == 0:
+                    budget = min(3200, int(budget * 1.4))
+                else:
+                    break
+            except Exception as e:  # noqa: BLE001
+                logger.warning("sawt.story: Groq call error (attempt %s): %s",
+                               attempt, e)
+                break
     try:
         return await ai_engine._call_gemini(prompt, temperature)
     except Exception as e:  # noqa: BLE001

@@ -1,0 +1,625 @@
+{
+  "generated_at": "2026-09-06T13:18:34Z",
+  "engine": "kokoro-onnx v1.0",
+  "speed": 1.0,
+  "standard": {
+    "wer_max": 0.05,
+    "flatness_max": 0.012,
+    "hard_cuts_max": 2,
+    "lufs_target": -16.0,
+    "lufs_tolerance": 1.0,
+    "true_peak_max_dbtp": -1.0,
+    "dead_air_max_s": 2.5,
+    "speech_over_bed_min_db": 12.0,
+    "min_line_seconds": 0.4,
+    "bandwidth_is_diagnostic_only": true,
+    "critical_metrics": [
+      "wer",
+      "hard_cuts",
+      "loudness_lufs",
+      "true_peak_dbtp"
+    ],
+    "max_render_attempts": 3
+  },
+  "surfaces": {
+    "narration": "The night was cold, and the long hallway was completely silent. Maya stopped walking and looked at the old wooden door in front of her.",
+    "dialogue": "Wait. Did you hear that sound? I think someone is standing behind us.",
+    "teaching": "Listen carefully. She opened the door slowly, and then she stepped inside."
+  },
+  "ranked": [
+    {
+      "voice": "am_eric",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00016,
+          "wpm": 223.9,
+          "duration_s": 6.7,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00013,
+          "wpm": 222.9,
+          "duration_s": 3.5,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00013,
+          "wpm": 192.9,
+          "duration_s": 3.73,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00014,
+      "mean_wpm": 213.2,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_liam",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00089,
+          "wpm": 215.0,
+          "duration_s": 6.98,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00042,
+          "wpm": 220.3,
+          "duration_s": 3.54,
+          "transcript": "Wait did you hear that sound? I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00033,
+          "wpm": 189.6,
+          "duration_s": 3.8,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00055,
+      "mean_wpm": 208.3,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_jessica",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00059,
+          "wpm": 219.7,
+          "duration_s": 6.83,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00065,
+          "wpm": 230.0,
+          "duration_s": 3.39,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00051,
+          "wpm": 190.7,
+          "duration_s": 3.78,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00059,
+      "mean_wpm": 213.5,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_aoede",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00069,
+          "wpm": 205.6,
+          "duration_s": 7.3,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00068,
+          "wpm": 220.3,
+          "duration_s": 3.54,
+          "transcript": "Wait, did you hear that sound? I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00047,
+          "wpm": 186.5,
+          "duration_s": 3.86,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00062,
+      "mean_wpm": 204.1,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_onyx",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00239,
+          "wpm": 201.5,
+          "duration_s": 7.45,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00014,
+          "wpm": 195.5,
+          "duration_s": 3.99,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00023,
+          "wpm": 161.5,
+          "duration_s": 4.46,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00092,
+      "mean_wpm": 186.2,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_river",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00103,
+          "wpm": 232.1,
+          "duration_s": 6.46,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00076,
+          "wpm": 216.3,
+          "duration_s": 3.61,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00097,
+          "wpm": 180.5,
+          "duration_s": 3.99,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00092,
+      "mean_wpm": 209.6,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_nova",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00294,
+          "wpm": 205.6,
+          "duration_s": 7.3,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00021,
+          "wpm": 190.4,
+          "duration_s": 4.1,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00063,
+          "wpm": 172.2,
+          "duration_s": 4.18,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00126,
+      "mean_wpm": 189.4,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_kore",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00164,
+          "wpm": 183.6,
+          "duration_s": 8.17,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00167,
+          "wpm": 196.6,
+          "duration_s": 3.97,
+          "transcript": "Wait, did you hear that sound? I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.001,
+          "wpm": 168.8,
+          "duration_s": 4.27,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00144,
+      "mean_wpm": 183.0,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_alloy",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00288,
+          "wpm": 199.2,
+          "duration_s": 7.53,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00027,
+          "wpm": 186.5,
+          "duration_s": 4.18,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00312,
+          "wpm": 161.5,
+          "duration_s": 4.46,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00209,
+      "mean_wpm": 182.4,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_adam",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00386,
+          "wpm": 206.2,
+          "duration_s": 7.27,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00231,
+          "wpm": 218.9,
+          "duration_s": 3.56,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00194,
+          "wpm": 182.4,
+          "duration_s": 3.95,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.0027,
+      "mean_wpm": 202.5,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_fenrir",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00311,
+          "wpm": 197.0,
+          "duration_s": 7.62,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00309,
+          "wpm": 210.1,
+          "duration_s": 3.71,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00231,
+          "wpm": 184.4,
+          "duration_s": 3.9,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00284,
+      "mean_wpm": 197.2,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_echo",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00444,
+          "wpm": 206.2,
+          "duration_s": 7.27,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00228,
+          "wpm": 199.8,
+          "duration_s": 3.9,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00331,
+          "wpm": 167.1,
+          "duration_s": 4.31,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00334,
+      "mean_wpm": 191.0,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_sarah",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00555,
+          "wpm": 200.3,
+          "duration_s": 7.49,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00416,
+          "wpm": 205.4,
+          "duration_s": 3.8,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00457,
+          "wpm": 171.3,
+          "duration_s": 4.2,
+          "transcript": "Listen carefully.  She opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00476,
+      "mean_wpm": 192.3,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_puck",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00977,
+          "wpm": 191.6,
+          "duration_s": 7.83,
+          "transcript": "The night was cold and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00236,
+          "wpm": 208.9,
+          "duration_s": 3.73,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00433,
+          "wpm": 179.5,
+          "duration_s": 4.01,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00549,
+      "mean_wpm": 193.3,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_bella",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00517,
+          "wpm": 194.8,
+          "duration_s": 7.7,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00412,
+          "wpm": 188.5,
+          "duration_s": 4.14,
+          "transcript": "Wait, did you hear that sound? I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00729,
+          "wpm": 167.9,
+          "duration_s": 4.29,
+          "transcript": "Listen carefully.  She opened the door slowly, and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00553,
+      "mean_wpm": 183.7,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "af_heart",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.00705,
+          "wpm": 197.5,
+          "duration_s": 7.59,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.00342,
+          "wpm": 213.8,
+          "duration_s": 3.65,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.00763,
+          "wpm": 176.7,
+          "duration_s": 4.07,
+          "transcript": "Listen carefully, she opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.00603,
+      "mean_wpm": 196.0,
+      "passes_wer": true,
+      "passes_flatness": true
+    },
+    {
+      "voice": "am_michael",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.01294,
+          "wpm": 179.8,
+          "duration_s": 8.34,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.01381,
+          "wpm": 194.5,
+          "duration_s": 4.01,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.01531,
+          "wpm": 160.7,
+          "duration_s": 4.48,
+          "transcript": "Listen carefully.  She opened the door slowly and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.01402,
+      "mean_wpm": 178.3,
+      "passes_wer": true,
+      "passes_flatness": false
+    },
+    {
+      "voice": "af_nicole",
+      "speed": 1.0,
+      "surfaces": {
+        "narration": {
+          "wer": 0.0,
+          "flatness": 0.03196,
+          "wpm": 125.8,
+          "duration_s": 11.93,
+          "transcript": "The night was cold, and the long hallway was completely silent.  Maya stopped walking and looked at the old wooden door in front of her."
+        },
+        "dialogue": {
+          "wer": 0.0,
+          "flatness": 0.02978,
+          "wpm": 147.4,
+          "duration_s": 5.29,
+          "transcript": "Wait, did you hear that sound?  I think someone is standing behind us."
+        },
+        "teaching": {
+          "wer": 0.0,
+          "flatness": 0.03105,
+          "wpm": 113.3,
+          "duration_s": 6.36,
+          "transcript": "Listen carefully.  She opened the door slowly, and then she stepped inside."
+        }
+      },
+      "mean_wer": 0.0,
+      "worst_wer": 0.0,
+      "mean_flatness": 0.03093,
+      "mean_wpm": 128.8,
+      "passes_wer": true,
+      "passes_flatness": false
+    }
+  ]
+}
