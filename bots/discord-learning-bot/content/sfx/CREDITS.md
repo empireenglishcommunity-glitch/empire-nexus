@@ -45,18 +45,24 @@ trimmed + normalized.
 > original reference (Mike Delph) had almost no energy above 3.4 kHz and could
 > not be de-muffled by EQ, so it was replaced with a clearer source and given a
 > younger pitch.
-| `owner_voice.ogg` | **Mahmoud Ashri** (EEC founder) — own recording, consented | Owner-owned, EEC use | **Narrator + owner's character** — the owner's real voice |
+| `owner_voice.ogg` | **Narrator** — clean American male, generated from Kokoro `am_michael` (Apache-2.0 model) | Model output, EEC use | **Narrator** — a clear, unmistakably-American host voice |
 | `mai_voice.ogg` | **Mai** — own recording, consent on file | Consent-gated, EEC use | **Maya** — Mai's real, consented voice |
 
-### The Narrator + Maya are real EEC voices (owner requirement)
+### Narrator = clean American voice; Maya = Mai's real voice
 
-The owner requires the Narrator to be **his own voice** and Maya to be **Mai's voice**.
-`owner_voice.ogg` and `mai_voice.ogg` are cleaned + de-muffled from their real
-recordings and committed so the daily pipeline stays self-contained (no expiring
-URLs). A runtime `--ref-clip` / `--ref-mai` still overrides (e.g. a fresh, higher-
-quality studio recording). Mai's consent is recorded in
-`content/voice-clone-consent.md`; these clips are for **EEC educational content
-only** and are never shared with third parties (see that document).
+Maya is **Mai's real, consented voice** (`content/voice-clone-consent.md`).
+
+The Narrator was originally cloned from the owner's own recording, but that clip
+was made on a phone/messaging app and was **telephone-bandwidth** (99% of its
+energy below ~3.7 kHz). Two consequences followed, both confirmed by frequency
+analysis: (1) the cloned narrator sounded **muffled / "on a phone"** — a clone
+can't be clearer than its source, and no EQ can add treble that was never
+recorded; (2) it **drifted toward a British accent** — a band-limited reference
+gives the model too few American-accent cues, so it leans on its own default.
+Per the owner's decision, the Narrator now uses a clean, full-bandwidth,
+**clearly-American** voice generated from Kokoro's `am_michael` (the same American
+voice family the practice site uses). If the owner later provides a
+studio-quality recording of his own voice, pass it via `--ref-clip` to override.
 
 ## Adding new assets
 
