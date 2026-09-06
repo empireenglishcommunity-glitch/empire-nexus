@@ -121,23 +121,23 @@ passes; the gate runs in CI.
 
 *Goal: the automatic system always has the right, licence-clear sound available.*
 
-- [ ] **3.1** Create the library structure (`music/`, `ambience/`, `sfx/`,
+- [x] **3.1** Create the library structure (`music/`, `ambience/`, `sfx/`,
       `stings/`, `voices/`) and the `LIBRARY.json` manifest schema (R5.1, R5.3).
-- [ ] **3.2** Build the ingest tool: normalise format/sample-rate/loudness per
+- [x] **3.2** Build the ingest tool: normalise format/sample-rate/loudness per
       category, trim, write manifest entries (R5.5).
-- [ ] **3.3** Build the licence/manifest checker: fails on any unlisted file,
+- [x] **3.3** Build the licence/manifest checker: fails on any unlisted file,
       missing licence/attribution, or disallowed licence; also reports library size
       against the budget (R5.4, R5.7).
-- [ ] **3.4** Generate `CREDITS.md` from the manifest, and emit CC-BY attribution
+- [x] **3.4** Generate `CREDITS.md` from the manifest, and emit CC-BY attribution
       automatically into episode posts (R5.4).
 - [ ] **3.5** Source and ingest the initial library to the R5.2 floor: **≥ 12 music
       beds** (≥ 6 moods), **≥ 10 ambiences**, **≥ 60 SFX**, **≥ 6 stings** — all
       CC0/public-domain/CC-BY, each with recorded attribution.
-- [ ] **3.6** Expose the legal SFX/mood vocabulary to the generator from the
+- [x] **3.6** Expose the legal SFX/mood vocabulary to the generator from the
       manifest, and enforce it in the validator (R5.6).
 - [ ] **3.7** Implement mood-aware scoring: the story's requested mood selects an
       appropriate bed/ambience.
-- [ ] **3.8** Tests: manifest↔disk parity, licence completeness, ingest
+- [x] **3.8** Tests: manifest↔disk parity, licence completeness, ingest
       normalisation, generator vocabulary derived from the manifest.
 
 **Exit criteria:** the library meets the floor, every asset has complete licence

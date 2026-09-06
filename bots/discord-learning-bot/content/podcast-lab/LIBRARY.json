@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "file": "clock_ticking_1.ogg",
+      "category": "sfx",
+      "description": "Clock ticking",
+      "tags": [
+        "clock",
+        "ticking"
+      ],
+      "duration": 20.0,
+      "source": "Wikimedia Commons — File:LA2 kitchen clock.ogg",
+      "licence": "Public Domain",
+      "attribution": ""
+    },
+    {
+      "file": "door_creak_1.ogg",
+      "category": "sfx",
+      "description": "Door creak",
+      "tags": [
+        "creak",
+        "door"
+      ],
+      "duration": 0.94,
+      "source": "Wikimedia Commons — File:LL-Q1860 (eng)-Knites-Sound recording. Door creaks.wav",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "door_knock_1.ogg",
+      "category": "sfx",
+      "description": "Door knock",
+      "tags": [
+        "knock",
+        "door"
+      ],
+      "duration": 2.43,
+      "source": "Wikimedia Commons — File:Knock on door.wav",
+      "licence": "CC0",
+      "attribution": ""
+    },
+    {
+      "file": "footsteps_walking_1.ogg",
+      "category": "sfx",
+      "description": "Footsteps walking",
+      "tags": [
+        "footsteps"
+      ],
+      "duration": 0.68,
+      "source": "Wikimedia Commons — File:LL-Q1860 (eng)-Grendelkhan-footsteps.wav",
+      "licence": "CC0",
+      "attribution": ""
+    }
+  ]
+}
