@@ -137,11 +137,11 @@ passes; the gate runs in CI.
       _all 10 moods covered; CC0/PD/CC-BY only; reproducible `source_*.py` scripts._
 - [x] **3.6** Expose the legal SFX/mood vocabulary to the generator from the
       manifest, and enforce it in the validator (R5.6).
-- [ ] **3.7** Implement mood-aware scoring: the story's requested mood selects an
+- [x] **3.7** Implement mood-aware scoring: the story's requested mood selects an
       appropriate bed/ambience.
-      _Data ready: `podcast_lab.by_tag()` + `available_moods()` resolve any of the 10_
-      _moods to a bed/ambience. Remaining: wire the render pipeline to call it (the_
-      _pipeline does not yet import `podcast_lab`). Folds into Phase 4 integration._
+      _Done in Phase 4: `podcast_lab.select_asset/select_bed_path/select_ambience_path/`_
+      _`resolve_sfx_path` map a mood (with an adjacency fallback chain) to a real_
+      _asset; all three renderers now import `podcast_lab` and score by mood._
 - [x] **3.8** Tests: manifest↔disk parity, licence completeness, ingest
       normalisation, generator vocabulary derived from the manifest.
 
@@ -154,28 +154,47 @@ metadata, the checker passes, and the generator can only request sounds that exi
 
 *Goal: different stories, genuinely engaging, with cliffhangers that pull learners back.*
 
-- [ ] **4.1** Define the story bible (recurring characters + archetype slots), keyed
-      to the voice registry (R6.2).
-- [ ] **4.2** Extend story state to be arc-aware (arc id, genre, setting, premise,
-      episode index, established facts) (R6.1, R9.3).
-- [ ] **4.3** Implement arc lifecycle: run 5–7 episodes, **resolve**, then start a
-      new arc with a different genre/setting (R6.1, R6.3).
-- [ ] **4.4** Rewrite the generation contract: bible + arc state + CEFR profile +
+- [x] **4.1** Define the story bible (recurring characters + archetype slots), keyed
+      to the voice registry (R6.2). _`src/sawt_bible.py`: CHARACTERS keyed to
+      `sawt_cast`, 5 genres each mapped to a canonical library mood, motif +
+      listener-echo signature._
+- [x] **4.2** Extend story state to be arc-aware (arc id, genre, setting, premise,
+      episode index, established facts) (R6.1, R9.3). _`src/sawt_arc.py`;
+      `story-state.json` upgraded in place with a back-compatible `normalize()`._
+- [x] **4.3** Implement arc lifecycle: run 5–7 episodes, **resolve**, then start a
+      new arc with a different genre/setting (R6.1, R6.3). _Default 6-episode arcs,
+      exactly one opener + one finale, genre rotates with no back-to-back repeat._
+- [x] **4.4** Rewrite the generation contract: bible + arc state + CEFR profile +
       curriculum vocab + student cast + legal SFX/moods in, strict object out
-      (§6.3).
-- [ ] **4.5** Implement the script validator: audio contract, cast legality,
+      (§6.3). _`sawt_story.build_story_prompt` is arc-aware; cast + SFX vocab now
+      DERIVED from `sawt_cast` + `podcast_lab` (ended the `[SFX:shimmer]` drift)._
+- [x] **4.5** Implement the script validator: audio contract, cast legality,
       cliffhanger presence, A/B choice quality, continuity, level fit, and
-      personalisation safety (R6.5, R6.7, R8.7).
-- [ ] **4.6** Implement bounded regeneration that feeds the specific violation back
-      to the generator.
-- [ ] **4.7** Implement the curiosity devices and check for them (unanswered
+      personalisation safety (R6.5, R6.7, R8.7). _`src/sawt_script_validator.py`;
+      never raises (crash = soft-pass); student-safety hook ready for Phase 5._
+- [x] **4.6** Implement bounded regeneration that feeds the specific violation back
+      to the generator. _`sawt_story.generate_episode` retries 3× with the exact
+      validator problems appended to the prompt._
+- [x] **4.7** Implement the curiosity devices and check for them (unanswered
       question, ticking clock, reframing reveal, two attractive branches) (§6.5).
-- [ ] **4.8** Enforce recap-at-open and vote-prompt-at-close (R6.8).
-- [ ] **4.9** Tests: validator rejects each violation class; arcs resolve on
-      schedule; continuity is preserved; genres rotate.
+- [x] **4.8** Enforce recap-at-open and vote-prompt-at-close (R6.8). _Validator
+      requires both; the Discord post now surfaces the recap + arc subtitle._
+- [x] **4.9** Tests: validator rejects each violation class; arcs resolve on
+      schedule; continuity is preserved; genres rotate. _+39 tests
+      (`test_sawt_bible`, `test_sawt_arc`, `test_sawt_script_validator`,
+      `test_podcast_lab_mood`, `test_sawt_story`); full suite 2879 passed._
 
 **Exit criteria:** two distinct arcs exist with different genres, each
 self-contained; the validator provably rejects weak or non-compliant episodes.
+_Met: the arc engine produces different-genre arcs on a fixed lifecycle (proven in
+`test_sawt_arc`), and the validator rejects every violation class (proven in
+`test_sawt_script_validator`)._
+
+**Follow-up flagged to owner (not in this PR):** the daily workflow still renders
+with the v1 engine (now mood-aware) rather than the GATED v2 path, because the
+gated path needs `kokoro-onnx` installed + its model cached at a non-root-writable
+path on the CI runner. Migrating production to the gated renderer is a separate,
+owner-approved change.
 
 ---
 

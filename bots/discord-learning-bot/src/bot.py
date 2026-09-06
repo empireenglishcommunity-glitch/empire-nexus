@@ -6148,13 +6148,35 @@ async def _post_story_episode(guild, meta: dict, *, to_students: bool) -> Option
             description=f"Empire Chronicles episode {meta['episode_number']}",
             audio_url=str(audio))
 
+    # Recap-at-open in the POST (spec 4.8): for any episode after the first, show
+    # the previous episode's recap so a returning listener is caught up at a glance.
+    recap = str(meta.get("recap", "") or "").strip()
+    recap_line = ""
+    if int(meta.get("episode_number", 1)) > 1 and recap:
+        recap_line = f"_Previously: {recap}_\n\n"
+
+    # A quiet arc/genre subtitle when we know it (arc-aware meta from Phase 4).
+    genre = str(meta.get("genre", "") or "").strip()
+    ep_in_arc = meta.get("episode_in_arc")
+    arc_line = ""
+    if genre and ep_in_arc:
+        arc_line = f"_{genre.title()} arc · part {ep_in_arc}_\n"
+
+    # Attribution: the lab emits the exact CC-BY lines for the assets an episode
+    # used; fall back to the library-wide credit if none were recorded.
+    credit = str(meta.get("credit", "") or "").strip() or (
+        "Music & sound: Empire English Chronicles Podcast Lab "
+        "(CC0 / CC-BY — see content/podcast-lab/CREDITS.md).")
+
     body = (f"🎙️ **Empire English Chronicles — Episode {meta['episode_number']}**\n"
-            f"**{meta['title']}**\n\n"
+            f"**{meta['title']}**\n"
+            f"{arc_line}\n"
+            f"{recap_line}"
             f"🅰️ {meta['vote_a']}\n"
             f"🅱️ {meta['vote_b']}\n\n"
             f"React 🅰️ or 🅱️ to choose what happens next — tomorrow's episode "
             f"follows your vote!\n"
-            f"_Music: \"Lights\" by Rafael Krux (CC-BY 4.0)._")
+            f"_{credit}_")
     try:
         with open(audio, "rb") as fh:
             msg = await channel.send(

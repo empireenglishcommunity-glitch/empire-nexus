@@ -47,6 +47,12 @@ if str(BOT_DIR) not in sys.path:
     sys.path.insert(0, str(BOT_DIR))
 
 from src import sawt_tts  # noqa: E402  (parse_script + voice_for — no heavy deps)
+try:                                                             # noqa: E402
+    from src import podcast_lab as _lab   # mood-aware bed/SFX from the owned library
+except Exception:                                                # noqa: BLE001
+    _lab = None
+# Assets the render actually pulled from the Podcast Lab, for attribution/credit.
+_LAB_USED = []
 
 # Pace descriptor (from config.PODCAST_LEVEL_PROFILES) -> a delivery-speed hint.
 # Lower = slower delivery. Graded so an A1 episode is markedly slower than C2.
@@ -730,21 +736,57 @@ def _load_audio(path, sr):
 
 
 def load_sfx(name, sr):
-    """Return the REAL sound effect for `name` (mono float32 @ sr). Falls back to
-    a synthesized version if the asset file is missing."""
+    """Return the REAL sound effect for `name` (mono float32 @ sr). Resolves from
+    the owned Podcast Lab first (by tag/stem), then the legacy content/sfx/ file,
+    then a synthesized fallback — so the pipeline never hard-fails."""
     import numpy as np
+    # 1) Podcast Lab (licence-cleared, mood/tag indexed) — the primary source.
+    if _lab is not None:
+        try:
+            p, asset = _lab.resolve_sfx_path(name)
+            if p is not None:
+                y = _load_audio(str(p), sr)
+                if y is not None and len(y):
+                    if asset:
+                        _LAB_USED.append(asset)
+                    pk = float(np.max(np.abs(y))) or 1.0
+                    return (y * (0.7 / pk)).astype("float32")
+        except Exception:                                        # noqa: BLE001
+            pass
+    # 2) legacy bundled file.
     fn = SFX_FILES.get(name.lower())
     if fn:
         y = _load_audio(os.path.join(_SFX_DIR, fn), sr)
         if y is not None:
             pk = float(np.max(np.abs(y))) or 1.0
             return (y * (0.7 / pk)).astype("float32")
+    # 3) synth fallback.
     synth = _SFX_SYNTH.get(name.lower())
     return synth(sr) if synth else np.zeros(0, dtype="float32")
 
 
 def load_music(name, sr):
-    """Return a background-music bed (mono float32 @ sr), or None if unavailable."""
+    """Return a background-music bed (mono float32 @ sr), or None if unavailable.
+
+    `name` is treated as a MOOD (spec 3.7): the bed is chosen from the owned
+    Podcast Lab by that mood, falling back to the legacy bundled bed. The sentinel
+    'none' (or empty) means 'no bed' and always returns None."""
+    import numpy as np                                            # noqa: F401
+    if not name or str(name).lower() == "none":
+        return None
+    # 1) Podcast Lab by mood.
+    if _lab is not None:
+        try:
+            p, asset = _lab.select_bed_path(name)
+            if p is not None:
+                y = _load_audio(str(p), sr)
+                if y is not None and len(y):
+                    if asset:
+                        _LAB_USED.append(asset)
+                    return y
+        except Exception:                                        # noqa: BLE001
+            pass
+    # 2) legacy bundled bed.
     fn = MUSIC_FILES.get((name or "").lower())
     if not fn:
         return None

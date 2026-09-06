@@ -86,17 +86,22 @@ jobs:
           [ -f owner_voice_ref.wav ] && echo "owner=owner_voice_ref.wav" >> "$GITHUB_OUTPUT"
           [ -f mai_voice_ref.wav ]   && echo "mai=mai_voice_ref.wav"     >> "$GITHUB_OUTPUT"
 
-      - name: Render the episode (cast + real sound design)
+      - name: Render the episode (cast + mood-matched sound design)
         env:
           REF_OWNER: ${{ steps.refs.outputs.owner }}
           REF_MAI: ${{ steps.refs.outputs.mai }}
         run: |
-          SCRIPT_PATH=$(python3 -c "import json;print(json.load(open('content/podcast-scripts/episode-meta.json'))['script_path'])")
-          SLUG=$(python3 -c "import json;print(json.load(open('content/podcast-scripts/episode-meta.json'))['slug'])")
+          META=content/podcast-scripts/episode-meta.json
+          SCRIPT_PATH=$(python3 -c "import json;print(json.load(open('$META'))['script_path'])")
+          SLUG=$(python3 -c "import json;print(json.load(open('$META'))['slug'])")
+          # The arc engine picks a MOOD per episode (spec 3.7/Phase 4); pass it to
+          # the renderer so the background bed matches the story. Older meta without
+          # a mood falls back to 'warm'.
+          MOOD=$(python3 -c "import json;print(json.load(open('$META')).get('mood') or 'warm')")
           mkdir -p content/podcast-audio
           python3 scripts/render_podcast_episode.py \
             --script "$SCRIPT_PATH" \
-            --story --music mystery \
+            --story --music "$MOOD" \
             --out "content/podcast-audio/$SLUG.mp3" \
             ${REF_OWNER:+--ref-clip "$REF_OWNER"} \
             ${REF_MAI:+--ref-mai "$REF_MAI"}

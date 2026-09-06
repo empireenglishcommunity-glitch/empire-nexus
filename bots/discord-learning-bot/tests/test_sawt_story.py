@@ -6,11 +6,49 @@ from src import sawt_story, database, flag_registry
 
 # ── story generation helpers (pure, no LLM) ─────────────────────────────────
 def test_build_story_prompt_opening_vs_continuation():
-    opening = sawt_story.build_story_prompt("", "", 1)
-    assert "OPENING" in opening
+    # A flagged arc opener for episode 1 introduces the world (arc-aware contract).
+    opening = sawt_story.build_story_prompt("", "", 1, is_arc_opener=True)
+    assert "FIRST episode" in opening and "OPENS a new story arc" in opening
+    # A continuation weaves in the recap + the audience's winning choice.
     cont = sawt_story.build_story_prompt("Maya found a key.", "open the door", 5)
     assert "open the door" in cont and "episode 5" in cont
     assert "Maya found a key." in cont
+
+
+def test_build_story_prompt_is_arc_aware():
+    arc = {"arc_id": 2, "genre": "wonder", "setting": "a quiet town",
+           "premise": "something impossible happens", "mood": "wonder",
+           "curiosity": "reframing-reveal", "leads": ["Maya", "Leo"],
+           "established_facts": ["the lights hum at night"]}
+    p = sawt_story.build_story_prompt("prev", "", 3, arc=arc, is_arc_finale=True)
+    assert "wonder" in p and "a quiet town" in p
+    assert "the lights hum at night" in p          # established facts injected
+    assert "FINALE" in p                            # finale instruction present
+
+
+def test_prompt_vocab_is_derived_from_the_registries():
+    # cast + sfx menus in the prompt must come from the real registries, not a
+    # hand-kept list (the old drift bug: it listed [SFX:shimmer], which is gone).
+    from src import sawt_cast, podcast_lab
+    names = sawt_story.story_cast_names()
+    assert names == sawt_cast.speaking_names()
+    menu = sawt_story._sfx_menu()
+    assert "shimmer" not in menu                    # the drifted, missing effect
+    # every suggested effect is a real, resolvable library sound
+    import re
+    for eff in re.findall(r"\[SFX:([^\]]+)\]", menu):
+        assert eff in podcast_lab.sfx_names()
+
+
+def test_normalize_episode_coerces_fields():
+    d = {"title": "  T  ", "script": "Narrator: hi.\nMaya: yo.\nLeo: ok.\nNarrator: end.",
+         "recap": " r ", "facts": "a single fact", "mood": " Mystery ",
+         "vote_a": "A", "vote_b": "B", "motif_used": 1}
+    ep = sawt_story._normalize_episode(d, arc={"mood": "warm"})
+    assert ep["title"] == "T" and ep["recap"] == "r"
+    assert ep["facts"] == ["a single fact"]         # string coerced to list
+    assert ep["mood"] == "mystery"                   # lowercased
+    assert ep["motif_used"] is True
 
 
 def test_extract_json_tolerates_code_fences():
@@ -30,19 +68,19 @@ def test_valid_episode_rejects_thin_or_malformed():
         {"title": "t", "script": "Narrator: hi.", "vote_a": "a", "vote_b": "b"})
 
 
-def test_story_cast_matches_renderer_characters():
-    # The three leads must always be in the cast, and every cast name must map to
-    # a voice the renderer knows (character_for → a real slot with a ref).
-    import importlib.util, pathlib
+def test_story_cast_is_derived_from_the_cast_registry():
+    # The generator's allowed names come straight from sawt_cast (single source of
+    # truth), so they can never drift from the voices the renderer knows (R2.7).
+    from src import sawt_cast
+    names = sawt_story.story_cast_names()
     for lead in ("Narrator", "Maya", "Leo"):
-        assert lead in sawt_story.STORY_CAST
-    spec = importlib.util.spec_from_file_location(
-        "rp", pathlib.Path(__file__).resolve().parent.parent
-        / "scripts" / "render_podcast_episode.py")
-    rp = importlib.util.module_from_spec(spec); spec.loader.exec_module(rp)
-    for name in sawt_story.STORY_CAST:
-        ch = rp.character_for(name)
-        assert ch["slot"], f"{name} has no voice slot"
+        assert lead in names
+    assert names == sawt_cast.speaking_names()
+    # Every allowed name maps (whole-word) to a real cast entry with a voice.
+    for name in names:
+        ch = sawt_cast.character_for(name)
+        assert ch["key"] in sawt_cast.CAST
+        assert ch.get("voice_id") or ch.get("clone_ref"), f"{name} has no voice"
 
 
 # ── vote data model ─────────────────────────────────────────────────────────
