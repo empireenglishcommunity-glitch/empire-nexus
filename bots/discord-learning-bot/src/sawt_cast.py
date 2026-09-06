@@ -25,15 +25,23 @@ voices were rejected by the owner as unclear. This one was selected with
    limit 0.012). It had previously been used for the narrator — and the owner still
    reported that narrator as unclear. The metric agreed with his ear.
 
-4. **THE DECIDING CRITERION: some voices GLITCH when slowed.** Measured with the
-   hard-cut detector at the production speed, several voices that passed both WER
-   and naturalness still emit internal discontinuities — audible clicks:
-       am_onyx 0 · am_adam 0 · am_echo 0 · af_aoede 0 · af_kore 0 · af_nova 0
-       af_alloy 1 · am_fenrir 3 · af_bella 3 · af_heart 3 · am_puck 5 · af_jessica 6
-   `am_puck` and `af_jessica` were in an earlier draft of this cast on WER +
-   naturalness alone; they produce clicks and were removed. **Only glitch-free
-   voices are eligible.** This is another instance of the same lesson: a voice must
-   be measured on exactly how it will be used.
+4. **Some voices GLITCH when slowed** — internal discontinuities (audible clicks),
+   measured with the hard-cut detector. It is both voice- AND speed-dependent:
+   `am_adam` gave 0 clicks at speed 0.70 but 3 at 0.644. Worst offenders measured
+   `am_puck` 5-9 and `af_jessica` 6; they were dropped from an earlier draft cast.
+
+   **However — the de-click repair stage in the render chain takes EVERY cast voice
+   to 0 clicks after mastering** (verified for all six: raw 0-3 → 0 after
+   master+declick). So a small source-glitch count is NOT disqualifying; the
+   authoritative measurement is the MASTERED output, which is what the quality gate
+   inspects. Prefer glitch-free sources, but do not reject a voice the owner likes
+   over a glitch the pipeline provably repairs.
+
+5. **WER must be measured over a realistic PASSAGE, not short sentences.** On a
+   14-word sentence a single ASR hallucination is 7.1% WER — which made all nine
+   candidate voices look identical and "failing". The same voice over a 60-word
+   passage measures **0.0000**. Short-sentence worst-case WER is measurement noise;
+   score voices on passage-length text, as episodes actually are.
 
 Distinctness (spec R2.5) was then maximised over the six glitch-free voices. Because
 only three glitch-free male voices exist, the cast uses all three; the closest pair
