@@ -72,13 +72,21 @@ def _parse_retry_after(header_value: Optional[str]) -> Optional[float]:
     return seconds if seconds >= 0 else None
 
 
-async def chat_completion(payload: dict, timeout_seconds: float) -> GroqResult:
+async def chat_completion(payload: dict, timeout_seconds: float,
+                          max_retry_after: float = None) -> GroqResult:
     """POST a chat-completion ``payload`` to Groq with one bounded 429 retry.
 
     ``payload`` is the full request body (model, messages, temperature,
     optional max_tokens). Callers keep their own GROQ_API_KEY guard and
     decide how to track failures / fall back based on the returned status.
+
+    ``max_retry_after`` overrides how long we'll honour a 429 Retry-After. Live,
+    user-facing callers keep the default small cap (never make a user wait); an
+    OFFLINE caller like the daily story generator can pass a larger value, because
+    Groq's free tier often returns Retry-After of 7-15s and the offline job has the
+    time to wait rather than fall back to a dead Gemini.
     """
+    cap = MAX_RETRY_AFTER_SECONDS if max_retry_after is None else float(max_retry_after)
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {config.GROQ_API_KEY}",
@@ -111,13 +119,13 @@ async def chat_completion(payload: dict, timeout_seconds: float) -> GroqResult:
             # server is telling us to come back *soon*.
             if result.status == 429:
                 wait = retry_after if retry_after is not None else DEFAULT_RETRY_WAIT_SECONDS
-                if wait <= MAX_RETRY_AFTER_SECONDS:
+                if wait <= cap:
                     logger.info(f"Groq 429 rate-limit; retrying once after {wait:.1f}s")
                     await asyncio.sleep(wait)
                     retry_result, _ = await _attempt(session)
                     return retry_result
                 logger.warning(
-                    f"Groq 429 with Retry-After={wait:.0f}s (> {MAX_RETRY_AFTER_SECONDS:.0f}s cap); "
+                    f"Groq 429 with Retry-After={wait:.0f}s (> {cap:.0f}s cap); "
                     f"not waiting, falling back"
                 )
             return result

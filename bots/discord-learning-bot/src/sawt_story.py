@@ -422,8 +422,12 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
         for attempt in range(1, 4):
             payload["max_tokens"] = budget
             try:
+                # Offline daily job: honour a longer Retry-After than live callers,
+                # since Groq's free tier often asks for 7-15s and Gemini may be
+                # unavailable — waiting beats producing no episode.
                 result = await groq_client.chat_completion(payload,
-                                                           timeout_seconds=120)
+                                                           timeout_seconds=120,
+                                                           max_retry_after=20.0)
                 if result.ok and result.text:
                     return result.text
                 text_len = len(result.text or "")

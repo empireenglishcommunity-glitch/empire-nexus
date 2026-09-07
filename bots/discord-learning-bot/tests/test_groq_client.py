@@ -146,6 +146,26 @@ async def test_429_with_large_retry_after_does_not_wait_or_retry(monkeypatch):
     sleep.assert_not_awaited()
 
 
+@pytest.mark.asyncio
+async def test_offline_caller_may_wait_longer_via_max_retry_after(monkeypatch):
+    """An OFFLINE caller (the daily story generator) can raise the Retry-After cap,
+    so a 'come back in 12s' IS honoured and the retry succeeds — the live default
+    (5s) would have given up. This is what lets generation ride out Groq's free-tier
+    rate-limit instead of failing to a dead Gemini."""
+    monkeypatch.setattr(groq_client.config, "GROQ_API_KEY", "test-key")
+    session = _FakeSession([
+        _FakeResp(429, headers={"Retry-After": "12"}),
+        _FakeResp(200, json_data=_ok_body("ok")),
+    ])
+    with patch("src.groq_client.aiohttp.ClientSession", return_value=session), \
+         patch("src.groq_client.asyncio.sleep", new=AsyncMock()) as sleep:
+        result = await groq_client.chat_completion(
+            {"model": "m", "messages": []}, 120, max_retry_after=20.0)
+    assert result.ok is True and result.text == "ok"
+    assert session.post_calls == 2          # waited + retried
+    sleep.assert_awaited_once()
+
+
 # ============================================================
 #  Non-429 failures are NOT retried
 # ============================================================
