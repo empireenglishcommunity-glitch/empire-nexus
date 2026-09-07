@@ -563,15 +563,28 @@ def _batch_synth_isolated(segs, level, work_dir):
         by_engine[kind].append((i, ch["display"], text))
 
     cache = {}
+    paths = {}                             # {index: stem wav path} for reuse/deletion
     for kind, items in by_engine.items():
         if not items:
             continue
         py = _worker_python_for(kind)
         manifest = []
         for i, display, text in items:
+            out = work_dir / f"line{i:03d}_{kind}.wav"
+            paths[i] = out
+            # REUSE: if this line's stem is already on disk (a previous attempt,
+            # not deleted because it passed), load it and don't re-synthesise.
+            if out.exists():
+                y = _read_wav_at_sr(out)
+                if y is not None and len(y):
+                    cache[i] = y
+                    continue
             manifest.append({"index": i, "character": display, "level": level,
-                             "text": text,
-                             "out": str(work_dir / f"line{i:03d}_{kind}.wav")})
+                             "text": text, "out": str(out)})
+        if not manifest:
+            print(f"  all {kind} lines reused from cache (0 to synthesise)",
+                  flush=True)
+            continue
         mpath = work_dir / f"manifest_{kind}.json"
         mpath.write_text(json.dumps(manifest), encoding="utf-8")
         print(f"  batch-synth {len(manifest)} {kind} line(s) in one worker …",
@@ -596,7 +609,7 @@ def _batch_synth_isolated(segs, level, work_dir):
                   f"(rc={r.returncode})")
             if err:
                 print(f"       stderr: {err[-1200:]}")
-    return cache
+    return cache, paths
 
 
 def synth_line_for(text, ch, level, kokoro, clone, isolated_cache=None, index=None):
@@ -633,12 +646,19 @@ def plan(script: str) -> dict:
 
 
 def render(script: str, out_path, level="A2", music="mystery",
-           sound_design=True, stems_dir=None, seed=0) -> dict:
+           sound_design=True, stems_dir=None, seed=0, reuse_stems_dir=None) -> dict:
     """Render an episode. Returns a result dict (also useful to the QA gate).
 
     `music` is a MOOD name (e.g. 'mystery', 'warm'); the bed is chosen from the
     Podcast Lab by that mood (spec 3.7). `seed` (e.g. episode number) varies which
-    bed is picked while staying reproducible for a given (mood, seed)."""
+    bed is picked while staying reproducible for a given (mood, seed).
+
+    `reuse_stems_dir` (isolated engines only): a persistent directory of per-line
+    stem WAVs the gated orchestrator keeps across retry attempts. A line whose stem
+    already exists there is REUSED, not re-synthesised — so a retry only re-voices
+    the lines the orchestrator deleted (the failing ones). Kokoro is deterministic,
+    so reusing its stems is exact; this turns a 3× full-render worst case into one
+    full render plus a few targeted line fixes."""
     import numpy as np
     import soundfile as sf
 
@@ -679,10 +699,18 @@ def render(script: str, out_path, level="A2", music="mystery",
     # (model loaded once), before assembly. Cache is {segment_index: audio @ SR}.
     import tempfile as _tempfile
     isolated_cache = {}
+    isolated_paths = {}
     _batch_dir = None
     if kokoro_isolated or clone_isolated:
-        _batch_dir = pathlib.Path(_tempfile.mkdtemp(prefix="eec_batch_"))
-        isolated_cache = _batch_synth_isolated(segs, level, _batch_dir)
+        if reuse_stems_dir:
+            _batch_dir = pathlib.Path(reuse_stems_dir)
+            _batch_dir.mkdir(parents=True, exist_ok=True)
+            _keep_batch_dir = True         # orchestrator owns it across attempts
+        else:
+            _batch_dir = pathlib.Path(_tempfile.mkdtemp(prefix="eec_batch_"))
+            _keep_batch_dir = False
+        isolated_cache, isolated_paths = _batch_synth_isolated(segs, level,
+                                                               _batch_dir)
 
     body = np.zeros(0, dtype="float32")
     prev_key = None
@@ -721,10 +749,16 @@ def render(script: str, out_path, level="A2", music="mystery",
                               isolated_cache=isolated_cache, index=i)
         if len(line):
             if stems_dir:
-                sp = pathlib.Path(stems_dir)
-                sp.mkdir(parents=True, exist_ok=True)
-                f = sp / f"line{i:03d}_{key}.wav"
-                sf.write(str(f), line, SR)
+                # For an isolated line, the batch worker already wrote its stem WAV;
+                # record THAT path (so the orchestrator's per-line reuse/deletion
+                # targets the same file). Otherwise write the in-process stem.
+                if i in isolated_paths and pathlib.Path(isolated_paths[i]).exists():
+                    f = pathlib.Path(isolated_paths[i])
+                else:
+                    sp = pathlib.Path(stems_dir)
+                    sp.mkdir(parents=True, exist_ok=True)
+                    f = sp / f"line{i:03d}_{key}.wav"
+                    sf.write(str(f), line, SR)
                 stems.append({"index": i, "character": key, "file": str(f),
                               "seconds": round(len(line) / SR, 2), "text": text})
             body = crossfade_append(body, line, SR)
@@ -757,8 +791,9 @@ def render(script: str, out_path, level="A2", music="mystery",
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, SR, format="MP3")
 
-    # Clean up the isolated-batch scratch dir.
-    if _batch_dir is not None:
+    # Clean up the isolated-batch scratch dir — unless the orchestrator owns it
+    # (reuse_stems_dir) and will reuse it across gate-retry attempts.
+    if _batch_dir is not None and not _keep_batch_dir:
         import shutil as _shutil
         _shutil.rmtree(_batch_dir, ignore_errors=True)
 

@@ -133,11 +133,18 @@ def test_batch_synth_groups_by_engine_and_caches(monkeypatch, tmp_path):
     # Narrator (kokoro) + Maya (clone) + Narrator again -> 2 kokoro, 1 clone.
     segs = [("Narrator", "Hello there."), ("Maya", "I am here."),
             ("Narrator", "And so it began.")]
-    cache = mod._batch_synth_isolated(segs, "A2", tmp_path)
+    cache, paths = mod._batch_synth_isolated(segs, "A2", tmp_path)
     assert set(cache.keys()) == {1, 2, 3}          # all three lines cached
+    assert set(paths.keys()) == {1, 2, 3}          # and a stem path per line
     assert sorted(engines_invoked) == ["clone", "kokoro"]   # one worker per engine
     for y in cache.values():
         assert len(y) == mod.SR                     # 1s @ SR
+
+    # REUSE: a second call with the WAVs already on disk synthesises NOTHING.
+    engines_invoked.clear()
+    cache2, _ = mod._batch_synth_isolated(segs, "A2", tmp_path)
+    assert set(cache2.keys()) == {1, 2, 3}          # still all cached (from disk)
+    assert engines_invoked == []                    # no worker invoked — pure reuse
 
 
 # ── worker contract (engine mocked) ─────────────────────────────────────────
