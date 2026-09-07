@@ -12,10 +12,20 @@ standard it must meet, and what to do when a run fails.
 
 ---
 
-## 1. The daily loop (happy path — zero human action, R9.1)
+## 1. The build (OWNER-TRIGGERED — no daily schedule)
+
+> **This is owner-triggered, not automated.** Reliable free-tier LLM generation
+> could not be guaranteed every single day, so instead of a fragile daily cron the
+> owner starts each episode when they want one. There is **no schedule** and **no
+> failure alerting** — you run it, and you see the pass/fail outcome directly in the
+> run log. Fail-closed still holds: nothing is committed or posted unless the QA
+> gate passes.
+
+**How to make an episode:** GitHub → Actions → "podcast daily (empire chronicles)"
+→ **Run workflow** (optionally set a winning-choice override). Then:
 
 ```
-03:00 UTC (07:00 Dubai)  →  GitHub Actions: podcast-daily.yml
+Run workflow (manual)  →  GitHub Actions: podcast-daily.yml
   1. Generate   scripts/generate_daily_story.py
        • reads content/podcast-scripts/story-state.json (episode #, recap,
          winning vote, arc position)
@@ -29,17 +39,17 @@ standard it must meet, and what to do when a run fails.
        • runs the QA gate; emits the MP3 ONLY if every critical metric passes
        • advances the cameo rotation ONLY on a passing emit (R9.3)
   3. Observability  scripts/record_episode_run.py  (always, pass or fail → DB)
-  4. Alert on failure  scripts/notify_ops.py  (Telegram to the owner, R9.4)
-  5. Commit  the script + MP3 + meta back to the repo (only if something emitted)
+  4. Commit  the script + MP3 + meta back to the repo (only if the gate passed)
 
-Bot side (discord.py, once per day at SAWT_STORY_HOUR):
+Bot side (discord.py, when a new episode has been committed):
   • daily_story_post() reads the newest committed episode and posts it to the
     HIDDEN #podcast channel for owner approval, with 🅰️/🅱️ vote reactions.
   • Students see nothing until the owner runs /reveal-podcast.
 ```
 
-If the gate fails, **nothing is written**, the commit step finds nothing new, the
-bot keeps yesterday's state, and the owner is alerted. Fail-closed and loud.
+If any stage fails, **nothing is written/committed**, the previous state is
+untouched, and you see exactly why in the run log. Fail-closed. (No automatic
+alerting — the run is owner-triggered, so the outcome is in front of you.)
 
 ---
 
@@ -105,8 +115,8 @@ Feature flag: the whole daily feature is gated by `sawt_daily_story`
 
 ## 5. Failure runbook
 
-**Symptom: the daily Actions run failed / owner got a 🚨 alert.**
-1. Open the run (link is in the alert) → the "Render" step log. Look for
+**Symptom: a triggered Actions run failed (red ✗ in the Actions tab).**
+1. Open the run → the "Render" step log. Look for
    `❌ attempt … failed: [<metrics>]` and `NOT EMITTED`.
 2. The QA report in the log lists each metric's value. Identify the failing one:
    - `wer` high → a mis-heard/awkward line; usually transient — the next daily
@@ -146,7 +156,7 @@ Feature flag: the whole daily feature is gated by `sawt_daily_story`
 | Cast + guest voices | `src/sawt_cast.py` |
 | CEFR alignment | `src/sawt_syllabus.py` |
 | Student cameos | `src/sawt_roster.py` |
-| Observability / alerts | `scripts/record_episode_run.py`, `scripts/notify_ops.py`, `scripts/qa_failure_summary.py` |
+| Observability | `scripts/record_episode_run.py`, `scripts/qa_failure_summary.py` |
 | Daily entry point | `scripts/generate_daily_story.py` |
 | Automation | `.github/workflows/podcast-daily.yml` |
 | Compute/LLM strategy | `docs/PODCAST-COMPUTE-AND-LLM-STRATEGY.md` |

@@ -270,19 +270,23 @@ level's profile and reinforce the current curriculum week.
 
 *Goal: it runs itself, forever, safely.*
 
-- [x] **7.1** Make the scheduled pipeline fully hands-off end-to-end: generate →
-      validate → render → gate → commit → post (R9.1). _`podcast-daily.yml` cron +
-      `bot.daily_story_post`; proven live across episodes 2–4 with zero human
-      action._
+- [x] **7.1** End-to-end pipeline: generate → validate → render → gate → commit →
+      post (R9.1). _**Owner decision (revised):** run OWNER-TRIGGERED, not on a daily
+      cron — the free-tier LLM could not be guaranteed reliable enough for unattended
+      daily runs. `podcast-daily.yml` is now `workflow_dispatch`-only; the pipeline +
+      `bot.daily_story_post` are otherwise unchanged (proven live across episodes
+      2–4)._
 - [x] **7.2** Guarantee idempotency and safe re-runs; no double-posting, no state
       corruption (R9.2). _Bot de-dups on episode number before posting; the run log
       UPSERTs by slug; `concurrency: podcast-daily` prevents overlapping runs._
 - [x] **7.3** Advance story state **only** on a verified episode (R9.3). _State is
       advanced by the generator; the cameo rotation is advanced ONLY on a passing
       emit; a failed render writes nothing (fail-closed)._
-- [x] **7.4** Alerting on every escalation path, with actionable detail (R9.4).
-      _On a failed render the workflow calls `scripts/notify_ops.py` (Telegram to
-      the owner) with the failing metrics + run link, via `qa_failure_summary.py`._
+- [x] **7.4** Escalation visibility (R9.4). _**Owner decision (revised):** since the
+      build is owner-triggered, no automatic alerting is used — the owner sees the
+      pass/fail outcome directly in the run they started. Fail-closed still holds
+      (nothing commits/posts unless the gate passed); `qa_failure_summary.py` remains
+      for a readable failure summary in the log._
 - [x] **7.5** Per-episode observability record: inputs, metrics, attempts, outcome
       (R9.5). _`podcast_runs` table + `scripts/record_episode_run.py` (records pass
       AND fail); reviewable with `/story-runs`._
