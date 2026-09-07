@@ -1,6 +1,6 @@
 {
-  "episode_number": 2,
-  "recap": "Maya enters the Grand City Library through an impossible open gate. She finds a warm, blank book and a brass key with a red ribbon on the table. The book reveals the word 'Run' in glowing blue ink, and the library begins to feel dangerous.",
+  "episode_number": 3,
+  "recap": "Maya and Leo discover fresh footprints leading from the locked window to the center table. A mysterious voice, Mrs. Adel, reveals that the library is in danger of collapsing due to a missing title. A stranger appears and warns Maya not to use the brass key, claiming it will wake a dangerous 'sleeper'. Maya is left holding the burning key, forced to decide whether to turn it or not.",
   "winning_choice": "",
   "motif_seen": true,
   "past_choices": [],
@@ -16,13 +16,17 @@
       "Leo",
       "Mrs. Adel"
     ],
-    "episode_in_arc": 1,
+    "episode_in_arc": 2,
     "planned_episodes": 6,
     "established_facts": [
       "The library’s side gate was open despite being locked from the outside.",
       "There is a book with no title and blank pages that feels warm.",
       "A brass key with a worn red ribbon was found on the central table.",
-      "The book wrote the word 'Run' in glowing blue ink."
+      "The book wrote the word 'Run' in glowing blue ink.",
+      "The footprints near the window are fresh and made of water, despite no rain.",
+      "The grandfather clock struck one, causing the library lights to turn blue.",
+      "The word 'Turn' appeared on the table in glowing blue ink.",
+      "The Stranger smells like snow and iron and warns that the key wakes a 'sleeper'."
     ],
     "previous_genre": null
   }

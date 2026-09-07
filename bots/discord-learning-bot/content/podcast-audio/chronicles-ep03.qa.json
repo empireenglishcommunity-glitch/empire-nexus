@@ -1,0 +1,270 @@
+{
+  "passed": true,
+  "attempts": 1,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "passed": true,
+      "failures": [],
+      "unmeasured_critical": [],
+      "failing_lines": []
+    }
+  ],
+  "out_path": "content/podcast-audio/chronicles-ep03.mp3",
+  "level": "A2",
+  "music": "mystery",
+  "used_assets": [
+    "calm_mysterious_eerie_9.ogg"
+  ],
+  "credit": "Music & sound: Empire English Chronicles Podcast Lab (CC0 — see content/podcast-lab/CREDITS.md).",
+  "elapsed_seconds": 280.5,
+  "report": {
+    "audio": "/tmp/eec_gated_js3ju_h6/attempt1.mp3",
+    "level": "A2",
+    "standard": {
+      "wer_max": 0.05,
+      "flatness_max": 0.012,
+      "hard_cuts_max": 2,
+      "lufs_target": -16.0,
+      "lufs_tolerance": 1.0,
+      "true_peak_max_dbtp": -1.0,
+      "dead_air_max_s": 2.5,
+      "speech_over_bed_min_db": 12.0,
+      "min_line_seconds": 0.4,
+      "bandwidth_is_diagnostic_only": true,
+      "critical_metrics": [
+        "wer",
+        "hard_cuts",
+        "loudness_lufs",
+        "true_peak_dbtp"
+      ],
+      "max_render_attempts": 3
+    },
+    "metrics": {
+      "wer": {
+        "status": "PASS",
+        "value": 0.0364,
+        "threshold": 0.05,
+        "note": "797 reference words"
+      },
+      "flatness": {
+        "status": "INFO",
+        "value": 0.0025,
+        "threshold": 0.012,
+        "note": "mastered mix: DIAGNOSTIC ONLY (music bed masks voice naturalness) - gate this on per-line voice stems instead"
+      },
+      "hard_cuts": {
+        "status": "PASS",
+        "value": 0,
+        "threshold": 2,
+        "note": "none"
+      },
+      "loudness_lufs": {
+        "status": "PASS",
+        "value": -16.73,
+        "threshold": "-16.0 +/- 1.0",
+        "note": ""
+      },
+      "true_peak_dbtp": {
+        "status": "PASS",
+        "value": -3.68,
+        "threshold": -1.0,
+        "note": ""
+      },
+      "dead_air_s": {
+        "status": "PASS",
+        "value": 1.51,
+        "threshold": 2.5,
+        "note": "106 gaps; script pause budget 2.0s"
+      },
+      "speech_over_bed_db": {
+        "status": "PASS",
+        "value": 29.8,
+        "threshold": 12.0,
+        "note": "proxy measurement"
+      },
+      "duration_s": {
+        "status": "PASS",
+        "value": 401.1,
+        "threshold": "300.0-420.0",
+        "note": "CEFR profile for A2"
+      },
+      "bandwidth_above_3k4_pct": {
+        "status": "INFO",
+        "value": 4.8,
+        "threshold": null,
+        "note": "diagnostic only - never a pass/fail criterion"
+      }
+    },
+    "passed": true,
+    "duration_seconds": 401.09,
+    "transcript": "Welcome to Empire English Chronicles.  Last time Maya found a warm book with the word run glowing on the page.  Now she is not alone.  The grand city library is empty.  But something is wrong.  The shadows are too long.  And the air smells like old dust and rain.  Maya stands by the central table.  The blank book lies open.  The brass key with the red ribbon sits next to it.  She does not touch the book.  She looks at the key.  Look at this.  It's cold.  The book is hot.  But the key is freezing.  It feels like ice in my hand.  Maya let it go.  We are late.  The librarians said to be quiet.  And I think the floorboards are listening.  Please be careful.  Leo, listen to me.  This key is wet.  It is not just cold water.  It is shining.  Like do.  But there is no rain inside.  There is a window leak.  I see it.  Look there by the high shelf.  Maya looks up.  The high window is cracked.  A thin line of moonlight cuts through the dark.  There is no rain.  But the floor near the window is wet.  Five distinct footprints lead from the window to the center of the room.  They stop exactly where the table is.  These are not old footprints.  They are fresh.  The water is drying, but not gone.  Who came in?  The gate was locked.  Remember, you had to force it open.  No one else could have entered.  Maybe they did not enter through the gate.  Maybe they stepped through the wall.  A sound, soft, like a sock on wood.  It comes from the stacks to their left.  The shadows stretch and twist.  Leo steps in front of Maya.  He is brave.  But his hand is shaking.  The stand behind me to do not move.  We wait for the sound to stop.  If it moves, we run to the exit now.  The silence returns, but it is not empty.  It is heavy.  A whisper comes from the dark.  It is a woman's voice.  Soft and old.  You have found the key, my dear.  But the key does not open a door.  It opens a memory.  It talk to us.  Show yourself.  We are scared.  Do not be scared.  Be curious.  The book wrote run, but it did not say where.  The footprints show where they came from.  The key shows what they left behind.  Think Maya.  What is missing?  The title.  The book has no title.  The key has no tag.  These things are incomplete, like a sentence with no verb.  The library is a body.  The books are its bones.  If a bone is missing, the body cannot stand.  You must find the title or the library will fall.  The grandfather clock in the corner strikes one.  The sound is loud and sharp.  Suddenly, the lights flicker.  The warm glow of the desk lamp turns blue.  Matching the ink on the page, the brass key in Maya's hand begins to hum.  There is a low vibrating sound that she can feel in her teeth.  Maya give it to me, it is changing.  No, it is singing.  It wants to be used.  I see it now.  The red ribbon is tied in a specific knot.  It is not a bow.  It is a lock.  Maya looks at the window again.  The footprints are fading.  The water is disappearing into the wood.  But a new mark appears on the table.  Here is a circle of blue ink.  Hot and bright inside the circle.  The word turn begins to glow, letter by letter.  The first letter is a tea, then, and you.  The air grows cold.  The hairs on Maya's arms stand up.  The key in her hand bites her palm.  Not with pain, but with heat.  She looks at Leo.  He is pale.  He nods slowly.  He trusts her.  Maya lifts the key.  She aligns the red ribbon with the glowing circle.  She is about to turn it, but then, a voice from the far end of the library speaks.  It is a man's voice, cold, flat, like a closed door.  I do not turn.  If you turn, you wake the sleeper, and the sleeper does not like to be found.  Maya freezes.  Her hand is half way.  The key is burning.  The word turn is almost complete.  The stranger is not hiding in the dark.  He is right behind her.  She can smell his cologne.  It smells like snow and iron.  Maya looks at Leo.  Leo looks at the book.  Maya looks at the key.  She must choose.  Does she trust the stranger's warning?  Or does she trust the glowing command of the ancient library?  The library breathes.  The key waits.  What will Maya do?",
+    "failures": [],
+    "unmeasured_critical": [],
+    "failing_lines": [],
+    "line_detail": [
+      {
+        "index": 1,
+        "character": "narrator",
+        "seconds": 44.67,
+        "issues": [],
+        "text": "Welcome to Empire English Chronicles. Last time, Maya found a warm book with the word 'Run' glowing on the page. Now, she is not alone. The Grand City Library is empty, but something is wrong. The shadows are too long, and the air smells like old dust and rain. Maya stands by the central table. The blank book lies open. The brass key with the red ribbon sits next to it. She does not touch the book. She looks at the key."
+      },
+      {
+        "index": 2,
+        "character": "maya",
+        "seconds": 8.0,
+        "issues": [],
+        "text": "Look at this. It’s cold. The book is hot, but the key is freezing. It feels like ice in my hand."
+      },
+      {
+        "index": 3,
+        "character": "leo",
+        "seconds": 10.31,
+        "issues": [],
+        "text": "Maya, let it go. We are late. The librarian said to be quiet, and I think the floorboards are listening. Please, be careful."
+      },
+      {
+        "index": 4,
+        "character": "maya",
+        "seconds": 10.5,
+        "issues": [],
+        "text": "Leo, listen to me. This key is wet. It is not just cold water. It is shining. Like dew. But there is no rain inside."
+      },
+      {
+        "index": 5,
+        "character": "leo",
+        "seconds": 5.4,
+        "issues": [],
+        "text": "There is a window leak. I see it. Look there, by the high shelf."
+      },
+      {
+        "index": 6,
+        "character": "narrator",
+        "seconds": 25.18,
+        "issues": [],
+        "text": "Maya looks up. The high window is cracked. A thin line of moonlight cuts through the dark. There is no rain. But the floor near the window is wet. Five distinct footprints lead from the window to the center of the room. They stop exactly where the table is."
+      },
+      {
+        "index": 7,
+        "character": "maya",
+        "seconds": 6.49,
+        "issues": [],
+        "text": "These are not old footprints. They are fresh. The water is drying, but not gone."
+      },
+      {
+        "index": 8,
+        "character": "leo",
+        "seconds": 8.75,
+        "issues": [],
+        "text": "Who came in? The gate was locked. Remember? You had to force it open. No one else could have entered."
+      },
+      {
+        "index": 9,
+        "character": "maya",
+        "seconds": 5.08,
+        "issues": [],
+        "text": "Maybe they did not enter through the gate. Maybe they stepped through the wall."
+      },
+      {
+        "index": 10,
+        "character": "narrator",
+        "seconds": 18.9,
+        "issues": [],
+        "text": "A sound. Soft. Like a sock on wood. It comes from the stacks to their left. The shadows stretch and twist. Leo steps in front of Maya. He is brave, but his hand is shaking."
+      },
+      {
+        "index": 11,
+        "character": "leo",
+        "seconds": 9.18,
+        "issues": [],
+        "text": "Stand behind me. Do not move. We wait for the sound to stop. If it moves, we run to the exit. Now."
+      },
+      {
+        "index": 12,
+        "character": "narrator",
+        "seconds": 14.69,
+        "issues": [],
+        "text": "The silence returns. But it is not empty. It is heavy. A whisper comes from the dark. It is a woman’s voice, soft and old."
+      },
+      {
+        "index": 13,
+        "character": "mrs_adel",
+        "seconds": 6.97,
+        "issues": [],
+        "text": "You have found the key, my dear. But the key does not open a door. It opens a memory."
+      },
+      {
+        "index": 14,
+        "character": "leo",
+        "seconds": 4.12,
+        "issues": [],
+        "text": "Talk to us! Show yourself! We are scared."
+      },
+      {
+        "index": 15,
+        "character": "mrs_adel",
+        "seconds": 14.79,
+        "issues": [],
+        "text": "Do not be scared. Be curious. The book wrote 'Run'. But it did not say where. The footprints show where they came from. The key shows what they left behind. Think, Maya. What is missing?"
+      },
+      {
+        "index": 16,
+        "character": "maya",
+        "seconds": 9.17,
+        "issues": [],
+        "text": "The title. The book has no title. The key has no tag. These things are incomplete. Like a sentence with no verb."
+      },
+      {
+        "index": 17,
+        "character": "mrs_adel",
+        "seconds": 12.1,
+        "issues": [],
+        "text": "The library is a body. The books are its bones. If a bone is missing, the body cannot stand. You must find the title, or the library will fall."
+      },
+      {
+        "index": 18,
+        "character": "narrator",
+        "seconds": 29.41,
+        "issues": [],
+        "text": "The grandfather clock in the corner strikes one. The sound is loud and sharp. Suddenly, the lights flicker. The warm glow of the desk lamp turns blue, matching the ink on the page. The brass key in Maya’s hand begins to hum. It is a low, vibrating sound that she can feel in her teeth."
+      },
+      {
+        "index": 19,
+        "character": "leo",
+        "seconds": 3.39,
+        "issues": [],
+        "text": "Maya, give it to me. It is changing."
+      },
+      {
+        "index": 20,
+        "character": "maya",
+        "seconds": 12.19,
+        "issues": [],
+        "text": "No. It is singing. It wants to be used. I see it now. The red ribbon is tied in a specific knot. It is not a bow. It is a lock."
+      },
+      {
+        "index": 21,
+        "character": "narrator",
+        "seconds": 72.89,
+        "issues": [],
+        "text": "Maya looks at the window again. The footprints are fading. The water is disappearing into the wood. But a new mark appears on the table. It is a circle of blue ink, hot and bright. Inside the circle, the word 'Turn' begins to glow, letter by letter. The first letter is a 'T'. Then an 'U'. The air grows cold. The hairs on Maya’s arms stand up. The key in her hand bites her palm, not with pain, but with heat. She looks at Leo. He is pale. He nods slowly. He trusts her. Maya lifts the key. She aligns the red ribbon with the glowing circle. She is about to turn it. But then, a voice from the far end of the library speaks. It is a man’s voice. Cold. Flat. Like a closed door."
+      },
+      {
+        "index": 22,
+        "character": "stranger",
+        "seconds": 9.3,
+        "issues": [],
+        "text": "Do not turn. If you turn, you wake the sleeper. And the sleeper does not like to be found."
+      },
+      {
+        "index": 23,
+        "character": "narrator",
+        "seconds": 46.59,
+        "issues": [],
+        "text": "Maya freezes. Her hand is halfway. The key is burning. The word 'Turn' is almost complete. The Stranger is not hiding in the dark. He is right behind her. She can smell his cologne. It smells like snow and iron. Maya looks at Leo. Leo looks at the book. Maya looks at the key. She must choose. Does she trust the stranger’s warning, or does she trust the glowing command of the ancient library? The library breathes. The key waits. What will Maya do?"
+      }
+    ],
+    "attempt": 1
+  }
+}
