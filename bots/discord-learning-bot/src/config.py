@@ -100,13 +100,22 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 # Override via GROQ_MODEL if Groq's lineup changes — no code change needed.
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
-# Dedicated model for STORY generation (long-form spoken script). A standard
-# instruction model, NOT a reasoning model, so it actually writes the full episode
-# instead of returning empty-200. llama-3.3-70b-versatile is a current Groq
-# PRODUCTION model (verified 2026-09-07 on console.groq.com/docs/models:
-# 131,072 context / 32,768 max completion, 280 T/s). An earlier code comment claimed
-# it was retired — that was wrong; the live model list shows it in production.
+# Dedicated model(s) for STORY generation (long-form spoken script). Model ACCESS
+# is per-KEY on Groq too: measured 2026-09-07, this key gets HTTP 404 on
+# `llama-3.3-70b-versatile` (listed as production in Groq's public docs, but not
+# available to this key) while `openai/gpt-oss-120b` works (200/429). So story
+# generation tries a CHAIN and uses the first model that returns real text — never
+# betting the whole pipeline on one model id. Standard instruction models are
+# preferred (they write the full episode); the gpt-oss reasoning models are last
+# because they can return empty-200 on long output, but they're known-accessible.
 GROQ_STORY_MODEL = os.getenv("GROQ_STORY_MODEL", "llama-3.3-70b-versatile")
+GROQ_STORY_MODEL_FALLBACKS = [
+    m.strip() for m in os.getenv(
+        "GROQ_STORY_MODEL_FALLBACKS",
+        "llama-3.1-8b-instant,meta-llama/llama-4-scout-17b-16e-instruct,"
+        "openai/gpt-oss-120b,openai/gpt-oss-20b"
+    ).split(",") if m.strip()
+]
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")
 
 # Nutq — self-hosted phoneme pronunciation scorer (services/nutq-scorer).
