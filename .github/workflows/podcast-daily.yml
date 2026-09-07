@@ -1,28 +1,23 @@
 name: podcast daily (empire chronicles)
 
-# The DAILY automation for the Empire Chronicles serialized story. Once a day it:
+# OWNER-TRIGGERED build for the Empire Chronicles serialized story. It runs ONLY
+# when the owner starts it (the "Run workflow" button / workflow_dispatch) — there
+# is deliberately NO daily schedule. Reliable free-tier LLM generation could not be
+# guaranteed day-in day-out, so the owner drives each episode instead. When run it:
 #   1. generates the next episode's script (continuing the audience's winning
 #      vote, read from content/podcast-scripts/story-state.json),
 #   2. renders it to an MP3 with the cast + real sound design,
-#   3. commits the script + MP3 + episode-meta.json back to the repo,
-# so the bot can pick up the newest ready episode and post it to the hidden
-# podcast channel for the owner's approval (students only see it after approval).
+#   3. runs the QA gate and, ONLY if it passes, commits the script + MP3 + meta,
+# so the bot picks up the ready episode and posts it to the hidden podcast channel
+# for the owner's approval (students only see it after /reveal-podcast). If any
+# stage fails, NOTHING is committed and the previous state is untouched — the
+# outcome is visible in this run's log (no schedule = no silent failures).
 #
-# Voices are SELF-CONTAINED: every character (narrator, Maya, Leo, extras) has a
-# distinct, freely-licensed reference clip committed in content/sfx/voices/, so
-# this workflow needs NO secrets and NO external URLs to render — it just works.
-#
-# OPTIONAL overrides (only if you want the owner's own / Mai's consented voice):
-# set repo secrets OWNER_VOICE_URL and/or MAI_VOICE_URL to stable, non-expiring
-# direct URLs. Leave them unset and the committed default voices are used.
-# NOTE: Discord CDN URLs expire (~24h) and must NOT be used here — use a stable
-# host (a GitHub release asset, etc.) or just rely on the committed defaults.
-# The bot writes the winning choice into story-state.json before this runs; you
-# can also override it manually via the workflow_dispatch input.
+# Voices are SELF-CONTAINED: every character has a distinct, freely-licensed
+# reference clip committed in content/sfx/voices/, so this needs NO external URLs.
+# The bot writes the winning choice into story-state.json (via /story-approve); you
+# can also override it manually via the workflow_dispatch input below.
 on:
-  schedule:
-    # 03:00 UTC = 07:00 Asia/Dubai — the episode is ready before the morning.
-    - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       winning_choice:
@@ -76,6 +71,7 @@ jobs:
           "$RUNNER_TEMP/venv-kokoro/bin/python" -c "import kokoro_onnx, numpy; print('kokoro venv ok, numpy', numpy.__version__)"
 
       - name: Generate the next episode script (continuing the winning vote)
+        id: generate
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -140,22 +136,9 @@ jobs:
           [ -f "$REPORT" ] && python3 scripts/record_episode_run.py \
             --report "$REPORT" --meta "$META" || echo "no report to record"
 
-      # R9.4 — fail LOUDLY: if the gated render failed (non-zero), alert the owner
-      # on Telegram with the failing metrics, then let the job fail. Fail-closed is
-      # already guaranteed (nothing was written), this just makes it audible.
-      - name: Alert the owner on gate failure
-        if: failure() && steps.render.conclusion == 'failure'
-        env:
-          OPS_BOT_TOKEN: ${{ secrets.OPS_BOT_TOKEN }}
-          OPS_CHAT_ID: ${{ secrets.OPS_CHAT_ID }}
-        run: |
-          REPORT="${{ steps.render.outputs.report }}"
-          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          SLUG="${{ steps.render.outputs.slug }}"
-          # Extract the failing metrics into a shell var with a self-contained
-          # helper (kept out of the YAML to avoid inline-python quoting pitfalls).
-          DETAIL=$(python3 scripts/qa_failure_summary.py "$REPORT" || echo "no QA report")
-          python3 scripts/notify_ops.py --text "🚨 Empire Chronicles daily FAILED the QA gate — no episode emitted (yesterday's state kept). $SLUG: $DETAIL. Run: $RUN_URL"
+      # No failure alerting: this workflow is OWNER-TRIGGERED, so the owner sees the
+      # pass/fail outcome directly in this run's log. Fail-closed still holds —
+      # nothing is committed unless the gate passed (see the commit step below).
 
       - name: Commit the new episode (script + audio + meta) for the bot
         run: |
