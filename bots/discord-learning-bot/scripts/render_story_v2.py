@@ -525,75 +525,97 @@ def _worker_python_for(engine_kind: str) -> str:
     return _WORKER_PY.get(engine_kind, "") if ISOLATION_ENABLED else ""
 
 
-def _synth_line_isolated(text, ch, level, engine_kind: str):
-    """Synthesise one line by shelling out to voice_worker.py under the engine's
-    dedicated venv. Returns mono float32 @ SR, or None on failure (caller decides
-    the fallback). Uses a text FILE for the line so no shell-quoting edge case can
-    corrupt it."""
-    import subprocess
-    import tempfile
+def _read_wav_at_sr(path):
+    """Load a WAV to mono float32 @ SR, or None."""
     import numpy as np
     import soundfile as sf
-
-    py = _worker_python_for(engine_kind)
-    if not py:
-        return None
-    work = pathlib.Path(tempfile.mkdtemp(prefix="eec_voice_"))
     try:
-        txt = work / "line.txt"
-        txt.write_text(text, encoding="utf-8")
-        out = work / "line.wav"
+        y, file_sr = sf.read(str(path), dtype="float32", always_2d=False)
+    except Exception:                                            # noqa: BLE001
+        return None
+    if getattr(y, "ndim", 1) > 1:
+        y = y.mean(axis=1)
+    y = np.asarray(y, dtype="float32")
+    return resample(y, file_sr, SR) if file_sr != SR else y
+
+
+def _batch_synth_isolated(segs, level, work_dir):
+    """Pre-synthesise ALL isolated-engine lines with ONE worker invocation per
+    engine (the engine model is loaded ONCE per episode, not per line — a fresh
+    subprocess per line would reload a multi-GB model each time). Returns a dict
+    {segment_index: mono float32 @ SR} for every line an isolated worker produced.
+
+    Only lines whose engine has a configured worker are batched here; the rest are
+    left for the in-process path in the assembly loop."""
+    import json
+    import subprocess
+
+    # Group line indices by the engine that will voice them.
+    by_engine = {"kokoro": [], "clone": []}
+    for i, (label, raw) in enumerate(segs, 1):
+        ch = sawt_cast.character_for(label)
+        kind = "clone" if ch["engine"] == sawt_cast.ENGINE_CLONE else "kokoro"
+        if not _worker_python_for(kind):
+            continue                       # not isolated → handled in-process
+        text = spoken_text(raw)
+        if not text:
+            continue
+        by_engine[kind].append((i, ch["display"], text))
+
+    cache = {}
+    for kind, items in by_engine.items():
+        if not items:
+            continue
+        py = _worker_python_for(kind)
+        manifest = []
+        for i, display, text in items:
+            manifest.append({"index": i, "character": display, "level": level,
+                             "text": text,
+                             "out": str(work_dir / f"line{i:03d}_{kind}.wav")})
+        mpath = work_dir / f"manifest_{kind}.json"
+        mpath.write_text(json.dumps(manifest), encoding="utf-8")
+        print(f"  batch-synth {len(manifest)} {kind} line(s) in one worker …",
+              flush=True)
         cmd = [py, str(BOT_DIR / "scripts" / "voice_worker.py"),
-               "--engine", engine_kind, "--character", ch["display"],
-               "--level", level, "--text-file", str(txt), "--out", str(out)]
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
-        if r.returncode != 0 or not out.exists():
-            # Surface BOTH streams and the tail (ONNX prints a benign PCI warning to
-            # stderr that would otherwise mask the real error) so failures are
-            # diagnosable in CI.
+               "--engine", kind, "--manifest", str(mpath)]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=5400)
+        except Exception as e:                                   # noqa: BLE001
+            print(f"    ⚠️ {kind} batch worker error: {e}")
+            continue
+        # Load whatever WAVs the worker managed to write (partial success is fine —
+        # missing lines fall back / the gate is the backstop).
+        for item in manifest:
+            y = _read_wav_at_sr(item["out"])
+            if y is not None and len(y):
+                cache[item["index"]] = y
+        got = sum(1 for it in manifest if it["index"] in cache)
+        if got != len(manifest):
             err = (r.stderr or "").strip()
-            outp = (r.stdout or "").strip()
-            print(f"    ⚠️ isolated {engine_kind} worker failed "
-                  f"(rc={r.returncode}, wav_exists={out.exists()})")
-            if outp:
-                print(f"       stdout: {outp[-600:]}")
+            print(f"    ⚠️ {kind} batch produced {got}/{len(manifest)} lines "
+                  f"(rc={r.returncode})")
             if err:
                 print(f"       stderr: {err[-1200:]}")
-            return None
-        y, file_sr = sf.read(str(out), dtype="float32", always_2d=False)
-        if getattr(y, "ndim", 1) > 1:
-            y = y.mean(axis=1)
-        y = np.asarray(y, dtype="float32")
-        return resample(y, file_sr, SR) if file_sr != SR else y
-    except Exception as e:                                       # noqa: BLE001
-        print(f"    ⚠️ isolated {engine_kind} worker error: {e}")
-        return None
-    finally:
-        import shutil
-        shutil.rmtree(work, ignore_errors=True)
+    return cache
 
 
-def synth_line_for(text, ch, level, kokoro, clone):
-    """Synthesise one line, choosing isolation-vs-in-process automatically.
-
-    If engine isolation is enabled AND a worker interpreter is configured for the
-    line's engine, run it in that subprocess; otherwise use the in-process engine
-    passed in (kokoro/clone). This is the single seam the render loop calls."""
+def synth_line_for(text, ch, level, kokoro, clone, isolated_cache=None, index=None):
+    """Return the audio for one line. If this line was pre-synthesised by an
+    isolated batch worker, use that cached WAV; otherwise synthesise in-process with
+    the engine passed in. This is the single seam the render loop calls."""
     engine_kind = ("clone"
                    if ch.get("engine") == sawt_cast.ENGINE_CLONE else "kokoro")
     if _worker_python_for(engine_kind):
-        y = _synth_line_isolated(text, ch, level, engine_kind)
-        if y is not None and len(y):
-            return y
-        # The isolated worker failed. Only fall back to an in-process engine if one
-        # actually exists — under isolation it does NOT (we skipped loading it to
-        # avoid the numpy conflict), so calling synth_line would hit `.say` on None.
+        if isolated_cache is not None and index in isolated_cache:
+            return isolated_cache[index]
+        # The batch worker was expected to produce this line but didn't, and under
+        # isolation there is no in-process engine to fall back to.
         have_inprocess = (clone is not None if engine_kind == "clone"
                           else kokoro is not None)
         if not have_inprocess:
             raise RuntimeError(
-                f"isolated {engine_kind} voice worker failed and no in-process "
-                f"engine is available to fall back to")
+                f"isolated {engine_kind} voice worker did not produce line "
+                f"{index}; no in-process engine to fall back to")
     return synth_line(text, ch, level, kokoro, clone)
 
 
@@ -653,6 +675,15 @@ def render(script: str, out_path, level="A2", music="mystery",
     print(f"  engines: kokoro={'isolated' if kokoro_isolated else ('yes' if kokoro else 'no')} "
           f"clone={'isolated' if clone_isolated else ('yes' if clone else 'no')}")
 
+    # Isolated engines: pre-synthesise all their lines in ONE worker per engine
+    # (model loaded once), before assembly. Cache is {segment_index: audio @ SR}.
+    import tempfile as _tempfile
+    isolated_cache = {}
+    _batch_dir = None
+    if kokoro_isolated or clone_isolated:
+        _batch_dir = pathlib.Path(_tempfile.mkdtemp(prefix="eec_batch_"))
+        isolated_cache = _batch_synth_isolated(segs, level, _batch_dir)
+
     body = np.zeros(0, dtype="float32")
     prev_key = None
     stems = []
@@ -684,9 +715,10 @@ def render(script: str, out_path, level="A2", music="mystery",
             prev_key = key
             continue
 
-        # Synthesise one line. `synth_line_for` routes to an isolated per-engine
-        # subprocess when configured (Option A), else uses the in-process engine.
-        line = synth_line_for(text, ch, level, kokoro, clone)
+        # Synthesise one line: use the isolated batch cache when present, else the
+        # in-process engine.
+        line = synth_line_for(text, ch, level, kokoro, clone,
+                              isolated_cache=isolated_cache, index=i)
         if len(line):
             if stems_dir:
                 sp = pathlib.Path(stems_dir)
@@ -724,6 +756,11 @@ def render(script: str, out_path, level="A2", music="mystery",
     out = pathlib.Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, SR, format="MP3")
+
+    # Clean up the isolated-batch scratch dir.
+    if _batch_dir is not None:
+        import shutil as _shutil
+        _shutil.rmtree(_batch_dir, ignore_errors=True)
 
     # De-dup used assets (by file) and derive the human credit line.
     seen = set()

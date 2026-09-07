@@ -32,9 +32,17 @@ def _make_fake_worker_python(tmp_path):
         "import sys, json\n"
         "import numpy as np, soundfile as sf\n"
         "a = sys.argv\n"
-        "out = a[a.index('--out')+1]\n"
-        "sf.write(out, (np.random.randn(9600).astype('float32')*0.05), 24000, format='WAV')\n"
-        "print(json.dumps({'ok': True, 'seconds': 0.4, 'sr': 24000}))\n",
+        "def wav(p):\n"
+        "    sf.write(p, (np.random.randn(9600).astype('float32')*0.05), 24000, format='WAV')\n"
+        "if '--manifest' in a:\n"          # BATCH mode: write every line's out
+        "    m = json.load(open(a[a.index('--manifest')+1]))\n"
+        "    res = []\n"
+        "    for it in m:\n"
+        "        wav(it['out']); res.append({'index': it['index'], 'ok': True, 'seconds': 0.4})\n"
+        "    print(json.dumps({'ok': True, 'results': res, 'sr': 24000}))\n"
+        "else:\n"                          # single-line mode
+        "    wav(a[a.index('--out')+1])\n"
+        "    print(json.dumps({'ok': True, 'seconds': 0.4, 'sr': 24000}))\n",
         encoding="utf-8")
     # a shell shim that ignores the real voice_worker.py path arg and runs our stub
     shim = tmp_path / "fakepython"
