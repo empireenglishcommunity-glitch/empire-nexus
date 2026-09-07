@@ -376,3 +376,37 @@ def test_rendered_pauses_never_exceed_the_dead_air_limit(tmp_path, monkeypatch):
         y = y.mean(axis=1)
     worst, _runs = qa.measure_dead_air(np.asarray(y, dtype="float32"), sr)
     assert worst <= STD.DEAD_AIR_MAX_S, f"worst silence {worst}s exceeds limit"
+
+
+
+@pytest.mark.asyncio
+async def test_story_uses_groq_primary_and_the_story_model_not_gemini(monkeypatch):
+    """Story generation is Groq-PRIMARY (2026-09-07): Gemini kept 403/404-ing on the
+    project key, so it must not be depended on. When Groq succeeds, Gemini is never
+    called, and Groq is asked with the dedicated long-form story model."""
+    from src import sawt_story, config, groq_client, ai_engine
+
+    used_model = {}
+
+    async def fake_chat(payload, timeout_seconds, **kwargs):
+        used_model["model"] = payload["model"]
+
+        class R:
+            ok, text, status = True, '{"ok":1}', 200
+        return R()
+
+    gemini_called = {"n": 0}
+
+    async def fake_gemini(*a, **k):
+        gemini_called["n"] += 1
+        return "SHOULD-NOT-BE-USED"
+
+    monkeypatch.setattr(config, "GROQ_API_KEY", "test-key")
+    monkeypatch.setattr(groq_client, "chat_completion", fake_chat)
+    monkeypatch.setattr(ai_engine, "_call_gemini", fake_gemini)
+
+    out = await sawt_story._call_llm_json("prompt", level="A2")
+    assert out == '{"ok":1}'
+    assert gemini_called["n"] == 0, "Gemini must not be called when Groq succeeds"
+    assert used_model["model"] == config.GROQ_STORY_MODEL
+    assert "versatile" in config.GROQ_STORY_MODEL     # a standard instruction model
