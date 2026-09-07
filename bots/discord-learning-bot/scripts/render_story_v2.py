@@ -571,6 +571,8 @@ def _batch_synth_isolated(segs, level, work_dir):
     import json
     import subprocess
 
+    import soundfile as sf
+
     # Group line indices by the engine that will voice them.
     by_engine = {"kokoro": [], "clone": []}
     for i, (label, raw) in enumerate(segs, 1):
@@ -595,6 +597,9 @@ def _batch_synth_isolated(segs, level, work_dir):
             paths[i] = out
             # REUSE: if this line's stem is already on disk (a previous attempt,
             # not deleted because it passed), load it and don't re-synthesise.
+            # Such a stem was written by this function AFTER declicking, so it is
+            # already clean (declick converges to 0 clicks — re-running would be a
+            # no-op anyway), so no need to declick again here.
             if out.exists():
                 y = _read_wav_at_sr(out)
                 if y is not None and len(y):
@@ -622,7 +627,21 @@ def _batch_synth_isolated(segs, level, work_dir):
         for item in manifest:
             y = _read_wav_at_sr(item["out"])
             if y is not None and len(y):
+                # DECLICK the raw stem before caching AND overwrite the on-disk WAV.
+                # The mastering step only declicks the FINAL MIX, but the QA gate
+                # ALSO inspects each per-line voice stem (render_episode_gated
+                # ._line_stems_report) — and the raw Kokoro stem for a long line can
+                # carry internal chunk-join clicks. Declicking here (the SAME proven
+                # declicker the mix uses) makes the stem the gate reads match the
+                # clean audio that actually goes into the mix, so a deterministic
+                # engine can't fail the per-line hard_cuts check on identical output
+                # every attempt. Idempotent: declick converges to 0 clicks.
+                y = declick(y, SR)
                 cache[item["index"]] = y
+                try:
+                    sf.write(str(item["out"]), y, SR)
+                except Exception:                                # noqa: BLE001
+                    pass
         got = sum(1 for it in manifest if it["index"] in cache)
         if got != len(manifest):
             err = (r.stderr or "").strip()

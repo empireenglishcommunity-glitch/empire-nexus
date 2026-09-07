@@ -163,9 +163,13 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
                   f"unmeasured={report['unmeasured_critical']} "
                   f"failing_lines={failing_lines}", flush=True)
             # Delete ONLY the failing lines' stems so the next attempt re-synthesises
-            # just those (the clone engine is stochastic, so a re-roll can fix Maya
-            # lines); every passing line is reused. A whole-episode failure (empty
-            # failing_lines but gate failed) clears all stems for a fresh render.
+            # just those. A re-synthesised stem is now DECLICKED at synth time (see
+            # render_story_v2._batch_synth_isolated), so the raw chunk-join clicks
+            # that used to fail the per-line hard_cuts check are already gone on the
+            # FIRST attempt — this retry path is the backstop for a genuinely bad
+            # render, not the primary defence. Every passing line is reused; a
+            # whole-episode failure (empty failing_lines but gate failed) clears all
+            # stems for a fresh render.
             if failing_lines:
                 for st in rr.get("stems", []):
                     if st["index"] in failing_lines:
