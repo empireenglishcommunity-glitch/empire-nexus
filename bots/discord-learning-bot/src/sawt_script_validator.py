@@ -104,8 +104,16 @@ def _level_word_window(level: str) -> tuple:
         dmin, dmax, pace = 300.0, 420.0, "slow"
     wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
            "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
-    lo = dmin / 60.0 * wpm * (1 - _LEVEL_FIT_SLACK)
-    hi = dmax / 60.0 * wpm * (1 + _LEVEL_FIT_SLACK)
+    # The word window must match what the AUDIO gate actually allows: final duration
+    # = spoken words at `wpm` PLUS ~28s of non-speech overhead (intro/outro/per-line
+    # gaps/pauses). If we allow words up to dmax*(1+slack), the rendered audio blows
+    # past dmax and the duration gate rejects it (measured 2026-09-07: a script the
+    # validator passed rendered to 490s, over A2's 420s). So convert the
+    # OVERHEAD-ADJUSTED duration window to words, with NO positive slack on the high
+    # side (a small negative margin keeps the render comfortably inside).
+    OVERHEAD_S = 45.0        # must match sawt_story.target_length's overhead margin
+    lo = max(30.0, dmin - OVERHEAD_S) / 60.0 * wpm * (1 - _LEVEL_FIT_SLACK)
+    hi = max(60.0, dmax - OVERHEAD_S) / 60.0 * wpm * 0.98
     return int(lo), int(hi)
 
 
