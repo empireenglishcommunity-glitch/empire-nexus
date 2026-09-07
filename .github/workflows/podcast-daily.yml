@@ -104,6 +104,9 @@ jobs:
           # reproducible) which bed is picked. Older meta falls back to 'warm'/0.
           MOOD=$(python3 -c "import json;print(json.load(open('$META')).get('mood') or 'warm')")
           EPNUM=$(python3 -c "import json;print(json.load(open('$META')).get('episode_number') or 0)")
+          # Phase 6: the CEFR level the generator pitched this episode at drives the
+          # render PACE and the duration-gate WINDOW. Fall back to A2 for older meta.
+          LEVEL=$(python3 -c "import json;print(json.load(open('$META')).get('level') or 'A2')")
           mkdir -p content/podcast-audio "$KOKORO_CACHE_DIR"
           # GATED renderer: renders with the v2 cast engine (isolated per-engine
           # subprocesses), then REFUSES to emit an episode that fails the audio QA
@@ -111,6 +114,7 @@ jobs:
           # new and the bot keeps yesterday's state (fail-closed, spec Phase 2).
           python3 scripts/render_episode_gated.py \
             --script "$SCRIPT_PATH" \
+            --level "$LEVEL" \
             --music "$MOOD" \
             --seed "$EPNUM" \
             --out "content/podcast-audio/$SLUG.mp3" \

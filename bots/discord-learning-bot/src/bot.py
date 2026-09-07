@@ -6060,6 +6060,8 @@ _STORY_CHANNEL_INTRO = (
     "care about, which is how words stick.\n"
     "• 🔁 **A daily habit** — a tiny, fun reason to practise English every "
     "single day.\n\n"
+    "_Episodes are **CEFR-aligned, not certified** — pitched at your level and "
+    "this week's words, to support your learning (not an exam)._\n\n"
     "No pressure, no grades — just listen, enjoy, and vote. See you in the "
     "story! 🕯️"
 )

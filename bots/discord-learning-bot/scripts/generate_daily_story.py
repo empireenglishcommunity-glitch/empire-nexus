@@ -37,6 +37,11 @@ try:                                                              # Phase 5 (opt
 except Exception:                                                 # noqa: BLE001
     sawt_roster = None
 
+try:                                                              # Phase 6 (optional)
+    from src import sawt_syllabus
+except Exception:                                                 # noqa: BLE001
+    sawt_syllabus = None
+
 STATE_FILE = "story-state.json"
 
 
@@ -72,6 +77,23 @@ async def _run(out_dir: pathlib.Path, winning_choice: str,
     episode_number = plan["episode_number"]
     prev_recap = raw_state.get("recap", "")
 
+    # Phase 6: pitch the episode at the level the active student body occupies
+    # (live data, never hardcoded) and reinforce this week's curriculum words.
+    # Best-effort: falls back to the story default level with no vocabulary when
+    # the DB/curriculum isn't readable (e.g. offline CI), so it never blocks.
+    level, week, vocabulary = sawt_story.STORY_LEVEL, None, []
+    if sawt_syllabus is not None:
+        try:
+            syl = sawt_syllabus.plan_for_today()
+            level = syl.get("level") or level
+            week = syl.get("week")
+            vocabulary = syl.get("vocabulary") or []
+        except Exception as e:                                    # noqa: BLE001
+            print(f"  (syllabus resolution skipped: {e})")
+    print(f"  CEFR target: level {level}"
+          + (f", curriculum week {week}" if week else "")
+          + (f", reinforcing {len(vocabulary)} word(s)" if vocabulary else ""))
+
     print(f"Generating Empire Chronicles episode {episode_number} — "
           f"arc {arc['arc_id']} ({arc['genre']}), "
           f"episode {arc['episode_in_arc']}/{arc['planned_episodes']}"
@@ -94,11 +116,11 @@ async def _run(out_dir: pathlib.Path, winning_choice: str,
 
     ep = await sawt_story.generate_episode(
         previous_summary=prev_recap, winning_choice=choice,
-        episode_number=episode_number, arc=arc,
+        episode_number=episode_number, level=level, arc=arc,
         is_arc_opener=plan["is_arc_opener"], is_arc_finale=plan["is_arc_finale"],
         past_choices=raw_state.get("past_choices", []),
         motif_seen=bool(raw_state.get("motif_seen", False)),
-        student_cameos=cameos)
+        student_cameos=cameos, vocabulary=vocabulary)
     if not ep:
         print("::error::story generation returned nothing "
               "(LLM unavailable or failed validation)")
@@ -122,6 +144,11 @@ async def _run(out_dir: pathlib.Path, winning_choice: str,
         "genre": arc["genre"],
         "episode_in_arc": arc["episode_in_arc"],
         "is_arc_finale": plan["is_arc_finale"],
+        # Phase 6: the CEFR level this episode is pitched at (drives the render
+        # pace + the duration gate window) and the curriculum tie-in it reinforces.
+        "level": level,
+        "curriculum_week": week,
+        "vocabulary": vocabulary,
         # Phase 5: the learner cameos woven into this episode. The renderer reads
         # these to voice each guest with a gender-matched voice, and advances the
         # rotation bookkeeping ONLY after the episode actually emits (R9.3).
