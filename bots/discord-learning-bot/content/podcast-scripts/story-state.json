@@ -1,6 +1,6 @@
 {
-  "episode_number": 3,
-  "recap": "Maya and Leo discover fresh footprints leading from the locked window to the center table. A mysterious voice, Mrs. Adel, reveals that the library is in danger of collapsing due to a missing title. A stranger appears and warns Maya not to use the brass key, claiming it will wake a dangerous 'sleeper'. Maya is left holding the burning key, forced to decide whether to turn it or not.",
+  "episode_number": 4,
+  "recap": "Maya and Leo discover that the library is a broken memory, not just a building. Mrs. Adel reveals that the clock has broken time, causing the strange events to happen. A new word appears in the book, and Maya must decide how to use the key before the ceiling collapses.",
   "winning_choice": "",
   "motif_seen": true,
   "past_choices": [],
@@ -16,7 +16,7 @@
       "Leo",
       "Mrs. Adel"
     ],
-    "episode_in_arc": 2,
+    "episode_in_arc": 3,
     "planned_episodes": 6,
     "established_facts": [
       "The library’s side gate was open despite being locked from the outside.",
@@ -26,7 +26,11 @@
       "The footprints near the window are fresh and made of water, despite no rain.",
       "The grandfather clock struck one, causing the library lights to turn blue.",
       "The word 'Turn' appeared on the table in glowing blue ink.",
-      "The Stranger smells like snow and iron and warns that the key wakes a 'sleeper'."
+      "The Stranger smells like snow and iron and warns that the key wakes a 'sleeper'.",
+      "Mrs. Adel was present in the library last week and last night.",
+      "The library is described as a memory that can be broken.",
+      "The brass key is for a 'heart', not a door.",
+      "New glowing blue ink is forming on the blank book page."
     ],
     "previous_genre": null
   }

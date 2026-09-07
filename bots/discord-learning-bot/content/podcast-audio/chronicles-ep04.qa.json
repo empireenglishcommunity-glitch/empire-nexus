@@ -1,0 +1,347 @@
+{
+  "passed": true,
+  "attempts": 1,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "passed": true,
+      "failures": [],
+      "unmeasured_critical": [],
+      "failing_lines": []
+    }
+  ],
+  "out_path": "content/podcast-audio/chronicles-ep04.mp3",
+  "level": "A2",
+  "music": "mystery",
+  "used_assets": [
+    "calm_mysterious_eerie_9.ogg"
+  ],
+  "credit": "Music & sound: Empire English Chronicles Podcast Lab (CC0 — see content/podcast-lab/CREDITS.md).",
+  "elapsed_seconds": 219.4,
+  "report": {
+    "audio": "/tmp/eec_gated_pwcvj3xf/attempt1.mp3",
+    "level": "A2",
+    "standard": {
+      "wer_max": 0.05,
+      "flatness_max": 0.012,
+      "hard_cuts_max": 2,
+      "lufs_target": -16.0,
+      "lufs_tolerance": 1.0,
+      "true_peak_max_dbtp": -1.0,
+      "dead_air_max_s": 2.5,
+      "speech_over_bed_min_db": 12.0,
+      "min_line_seconds": 0.4,
+      "bandwidth_is_diagnostic_only": true,
+      "critical_metrics": [
+        "wer",
+        "hard_cuts",
+        "loudness_lufs",
+        "true_peak_dbtp"
+      ],
+      "max_render_attempts": 3
+    },
+    "metrics": {
+      "wer": {
+        "status": "PASS",
+        "value": 0.0346,
+        "threshold": 0.05,
+        "note": "694 reference words"
+      },
+      "flatness": {
+        "status": "INFO",
+        "value": 0.0028,
+        "threshold": 0.012,
+        "note": "mastered mix: DIAGNOSTIC ONLY (music bed masks voice naturalness) - gate this on per-line voice stems instead"
+      },
+      "hard_cuts": {
+        "status": "PASS",
+        "value": 0,
+        "threshold": 2,
+        "note": "none"
+      },
+      "loudness_lufs": {
+        "status": "PASS",
+        "value": -16.63,
+        "threshold": "-16.0 +/- 1.0",
+        "note": ""
+      },
+      "true_peak_dbtp": {
+        "status": "PASS",
+        "value": -1.33,
+        "threshold": -1.0,
+        "note": ""
+      },
+      "dead_air_s": {
+        "status": "PASS",
+        "value": 1.51,
+        "threshold": 2.5,
+        "note": "76 gaps; script pause budget 2.0s"
+      },
+      "speech_over_bed_db": {
+        "status": "PASS",
+        "value": 30.6,
+        "threshold": 12.0,
+        "note": "proxy measurement"
+      },
+      "duration_s": {
+        "status": "PASS",
+        "value": 355.6,
+        "threshold": "300.0-420.0",
+        "note": "CEFR profile for A2"
+      },
+      "bandwidth_above_3k4_pct": {
+        "status": "INFO",
+        "value": 4.8,
+        "threshold": null,
+        "note": "diagnostic only - never a pass/fail criterion"
+      }
+    },
+    "passed": true,
+    "duration_seconds": 355.61,
+    "transcript": "Welcome back to Empire English Chronicles, last time the stranger warned Maya that the  brass key would wake a sleeping danger.  Now the library is silent, but the air is heavy.  Maya stands in the center of the room, the burning key in her hand.  Leo looks at the clock.  The hands are frozen, he checks his watch.  Here is one minute.  After midnight, he feels a cold shiver run down his spine.  Maya, listen to me, we need to leave right now.  I can hear it Leo, it is inside the walls, it sounds like breathing.  There is just the wind, the side gate was open yesterday, but it is locked now, nothing  can come in.  Maya looks at the window, the water footprints are still there.  Glistening in the blue light, she looks at the brass key.  The red ribbon is snapped, the metal is hot, but it does not burn her fingers, it feels  like holding a warm stone from the sun.  The voice said the library is in danger, if I do not turn the key, the roof will fall.  If I do turn it, something wakes up, we have to choose.  We choose safe day, we walk out the front door, we forget this place.  Maya takes a step back, the floorboard creaks under her shoe.  It sounds like a bone breaking, suddenly a soft light appears near the grandfather clock.  Meth is a dell, is standing there, she is not wearing her usual uniform, she wears a long,  dark dress that moves with the air, even though the room is still.  You do not have to guess my dear.  Mrs. Medell, how did you get in here?  I was here last week, I was here last night, I have been waiting for the truth to surface.  The truth, the library is scary, we should go.  Do you remember the book with no title?  Yes, the pages were blank, then the word run appeared.  In the footprints, made of water, but there was no rain.  I don't understand, why are things appearing that shouldn't be there?  Because the library is not a building, it is a memory, and memories can be wrong.  They can be broken, the key is not for a door, it is for a heart.  Maya looks at Leo, Leo looks at the door, the lights flicker, the blue color,  becomes darker, almost purple, the silence in the room becomes loud.  Maya, wait, I am not ready for this, let's just go.  I can't, I felt it when I picked up the key, it wants to be used.  Who will you trust, the stranger who smells like snow and iron, or the book that wrote  in glowing blue ink?  I don't trust either one.  Then trust the clock, listen to it.  The grandfather clock ticks, tick, tick, tick, tick, then a loud crack echoes through the  floor, dust falls from the ceiling, the table shakes, the blank book slides across the wood,  it stops right in front of Maya.  Maya, move.  The book is moving on its own, look.  The pages, Russell, new ink begins to form on the white page, it glows bright blue, the  letters appear one by one, T you are Ren.  It says turn again, why, what are we turning?  In time, the clock strikes one and time breaks, yesterday is today, last night is now.  You have the stone in your pocket, you sit, you sit how, you know, you have always known.  Maya looks at the brass key, she looks at the cracking ceiling, she looks at Leo, whose face  is pale with fear, she takes a deep breath, the air tastes like metal and snow, she rises  the kaya, the red ribbon, hangs down like a flag of surrender, the dust falls harder,  the lights go out in the total darkness, a single blue spark bursts from the key, it shoots  toward the grandfather clock, Maya makes her choice, what will she do, will she lock the  door to protect the library, or will she open the gate to let the past out, vote below tomorrow,  the story continues the way you choose.",
+    "failures": [],
+    "unmeasured_critical": [],
+    "failing_lines": [],
+    "line_detail": [
+      {
+        "index": 1,
+        "character": "narrator",
+        "seconds": 24.93,
+        "issues": [],
+        "text": "Welcome back to Empire English Chronicles. Last time, the Stranger warned Maya that the brass key would wake a sleeping danger. Now, the library is silent, but the air is heavy. Maya stands in the center of the room, the burning key in her hand."
+      },
+      {
+        "index": 2,
+        "character": "narrator",
+        "seconds": 14.82,
+        "issues": [],
+        "text": "Leo looks at the clock. The hands are frozen. He checks his watch. It is one minute after midnight. He feels a cold shiver run down his spine."
+      },
+      {
+        "index": 3,
+        "character": "leo",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Maya, listen to me. We need to leave. Right now."
+      },
+      {
+        "index": 4,
+        "character": "maya",
+        "seconds": 5.41,
+        "issues": [],
+        "text": "I can hear it, Leo. It is inside the walls. It sounds like breathing."
+      },
+      {
+        "index": 5,
+        "character": "leo",
+        "seconds": 8.71,
+        "issues": [],
+        "text": "It is just the wind. The side gate was open yesterday, but it is locked now. Nothing can come in."
+      },
+      {
+        "index": 6,
+        "character": "narrator",
+        "seconds": 23.43,
+        "issues": [],
+        "text": "Maya looks at the window. The water footprints are still there, glistening in the blue light. She looks at the brass key. The red ribbon is snapped. The metal is hot, but it does not burn her fingers. It feels like holding a warm stone from the sun."
+      },
+      {
+        "index": 7,
+        "character": "maya",
+        "seconds": 11.49,
+        "issues": [],
+        "text": "The voice said the library is in danger. If I do not turn the key, the roof will fall. If I do turn it, something wakes up. We have to choose."
+      },
+      {
+        "index": 8,
+        "character": "leo",
+        "seconds": 5.75,
+        "issues": [],
+        "text": "We choose safety. We walk out the front door. We forget this place."
+      },
+      {
+        "index": 9,
+        "character": "narrator",
+        "seconds": 30.0,
+        "issues": [],
+        "text": "Maya takes a step back. The floorboard creaks under her shoe. It sounds like a bone breaking. Suddenly, a soft light appears near the grandfather clock. Mrs. Adel is standing there. She is not wearing her usual uniform. She wears a long, dark dress that moves with the air, even though the room is still."
+      },
+      {
+        "index": 10,
+        "character": "mrs_adel",
+        "seconds": 2.48,
+        "issues": [],
+        "text": "You do not have to guess, my dear."
+      },
+      {
+        "index": 11,
+        "character": "maya",
+        "seconds": 3.53,
+        "issues": [],
+        "text": "Mrs. Adel? How did you get in here?"
+      },
+      {
+        "index": 12,
+        "character": "mrs_adel",
+        "seconds": 7.16,
+        "issues": [],
+        "text": "I was here last week. I was here last night. I have been waiting for the truth to surface."
+      },
+      {
+        "index": 13,
+        "character": "leo",
+        "seconds": 4.64,
+        "issues": [],
+        "text": "The truth? The library is scary. We should go."
+      },
+      {
+        "index": 14,
+        "character": "mrs_adel",
+        "seconds": 3.2,
+        "issues": [],
+        "text": "Do you remember the book with no title?"
+      },
+      {
+        "index": 15,
+        "character": "maya",
+        "seconds": 4.61,
+        "issues": [],
+        "text": "Yes. The pages were blank. Then the word 'Run' appeared."
+      },
+      {
+        "index": 16,
+        "character": "mrs_adel",
+        "seconds": 4.62,
+        "issues": [],
+        "text": "And the footprints? Made of water, but there was no rain."
+      },
+      {
+        "index": 17,
+        "character": "maya",
+        "seconds": 4.53,
+        "issues": [],
+        "text": "I don't understand. Why are things appearing that shouldn't be there?"
+      },
+      {
+        "index": 18,
+        "character": "mrs_adel",
+        "seconds": 12.0,
+        "issues": [],
+        "text": "Because the library is not a building. It is a memory. And memories can be wrong. They can be broken. The key is not for a door. It is for a heart."
+      },
+      {
+        "index": 19,
+        "character": "narrator",
+        "seconds": 15.04,
+        "issues": [],
+        "text": "Maya looks at Leo. Leo looks at the door. The lights flicker. The blue color becomes darker, almost purple. The silence in the room becomes loud."
+      },
+      {
+        "index": 20,
+        "character": "leo",
+        "seconds": 4.97,
+        "issues": [],
+        "text": "Maya, wait. I am not ready for this. Let's just go."
+      },
+      {
+        "index": 21,
+        "character": "maya",
+        "seconds": 5.4,
+        "issues": [],
+        "text": "I can't. I felt it when I picked up the key. It wants to be used."
+      },
+      {
+        "index": 22,
+        "character": "mrs_adel",
+        "seconds": 8.57,
+        "issues": [],
+        "text": "Who will you trust? The Stranger who smells like snow and iron? Or the book that wrote in glowing blue ink?"
+      },
+      {
+        "index": 23,
+        "character": "maya",
+        "seconds": 1.8,
+        "issues": [],
+        "text": "I don't trust either one."
+      },
+      {
+        "index": 24,
+        "character": "mrs_adel",
+        "seconds": 3.08,
+        "issues": [],
+        "text": "Then trust the clock. Listen to it."
+      },
+      {
+        "index": 25,
+        "character": "narrator",
+        "seconds": 23.6,
+        "issues": [],
+        "text": "The grandfather clock ticks. Tick. Tock. Tick. Tock. Then, a loud crack echoes through the floor. Dust falls from the ceiling. The table shakes. The blank book slides across the wood. It stops right in front of Maya."
+      },
+      {
+        "index": 26,
+        "character": "leo",
+        "seconds": 2.03,
+        "issues": [],
+        "text": "Maya! Move!"
+      },
+      {
+        "index": 27,
+        "character": "maya",
+        "seconds": 3.04,
+        "issues": [],
+        "text": "The book is moving on its own. Look!"
+      },
+      {
+        "index": 28,
+        "character": "narrator",
+        "seconds": 14.91,
+        "issues": [],
+        "text": "The pages rustle. New ink begins to form on the white page. It glows bright blue. The letters appear one by one. T-U-R-N."
+      },
+      {
+        "index": 29,
+        "character": "leo",
+        "seconds": 4.21,
+        "issues": [],
+        "text": "It says turn again. Why? What are we turning?"
+      },
+      {
+        "index": 30,
+        "character": "mrs_adel",
+        "seconds": 11.21,
+        "issues": [],
+        "text": "Time. The clock strikes one, and time breaks. Yesterday is today. Last night is now. You have the stone in your pocket. Use it."
+      },
+      {
+        "index": 31,
+        "character": "maya",
+        "seconds": 1.24,
+        "issues": [],
+        "text": "Use it how?"
+      },
+      {
+        "index": 32,
+        "character": "mrs_adel",
+        "seconds": 2.72,
+        "issues": [],
+        "text": "You know. You have always known."
+      },
+      {
+        "index": 33,
+        "character": "narrator",
+        "seconds": 25.14,
+        "issues": [],
+        "text": "Maya looks at the brass key. She looks at the cracking ceiling. She looks at Leo, whose face is pale with fear. She takes a deep breath. The air tastes like metal and snow. She raises the key. The red ribbon hangs down like a flag of surrender."
+      },
+      {
+        "index": 34,
+        "character": "narrator",
+        "seconds": 35.04,
+        "issues": [],
+        "text": "The dust falls harder. The lights go out. In the total darkness, a single blue spark bursts from the key. It shoots toward the grandfather clock. Maya makes her choice. What will she do? Will she lock the door to protect the library, or will she open the gate to let the past out? Vote below. Tomorrow, the story continues the way you choose."
+      }
+    ],
+    "attempt": 1
+  }
+}
