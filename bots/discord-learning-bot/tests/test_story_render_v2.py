@@ -409,7 +409,9 @@ async def test_story_uses_groq_primary_and_the_story_model_not_gemini(monkeypatc
     assert out == '{"ok":1}'
     assert gemini_called["n"] == 0, "Gemini must not be called when Groq succeeds"
     assert used_model["model"] == config.GROQ_STORY_MODEL
-    assert "versatile" in config.GROQ_STORY_MODEL     # a standard instruction model
+    # The story model must be one the production key can actually reach. Measured
+    # 2026-09-07: NO Llama model is accessible to the key, so it must never be one.
+    assert "llama" not in config.GROQ_STORY_MODEL.lower()
 
 
 
