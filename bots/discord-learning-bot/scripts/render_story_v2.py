@@ -783,9 +783,11 @@ def render(script: str, out_path, level="A2", music="mystery",
             bed = load_asset(legacy, SR) if legacy else None
         if bed is not None and len(bed):
             used_music = music
-            # Crossfade the body in against the silent intro so speech doesn't
-            # start on a step discontinuity (same class of click as gap edges).
-            voice = crossfade_append(silence(SR, 2.5), body, SR)
+            # Short musical lead-in before speech. Kept UNDER the dead-air limit:
+            # duck_music fades the bed up over ~1s, so a long silent intro reads as
+            # dead air to the QA gate (measured: a 2.5s intro -> a 2.52s silence run
+            # that failed the gate). 1.5s gives a graceful lead without dead air.
+            voice = crossfade_append(silence(SR, 1.5), body, SR)
             audio = duck_music(voice, bed, SR)
         else:
             audio = append_gap(body, SR, 0.8)
