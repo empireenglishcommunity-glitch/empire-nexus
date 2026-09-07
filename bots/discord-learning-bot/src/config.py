@@ -101,18 +101,24 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 # Dedicated model(s) for STORY generation (long-form spoken script). Model ACCESS
-# is per-KEY on Groq too: measured 2026-09-07, this key gets HTTP 404 on
-# `llama-3.3-70b-versatile` (listed as production in Groq's public docs, but not
-# available to this key) while `openai/gpt-oss-120b` works (200/429). So story
-# generation tries a CHAIN and uses the first model that returns real text — never
-# betting the whole pipeline on one model id. Standard instruction models are
-# preferred (they write the full episode); the gpt-oss reasoning models are last
-# because they can return empty-200 on long output, but they're known-accessible.
-GROQ_STORY_MODEL = os.getenv("GROQ_STORY_MODEL", "llama-3.3-70b-versatile")
+# is per-KEY on Groq. MEASURED against the production key on 2026-09-07 (queried
+# GET /openai/v1/models directly): the key can access qwen/qwen3.x-27b and the
+# openai/gpt-oss-* family, but NO Llama models (llama-3.3-70b-versatile,
+# llama-3.1-8b-instant, llama-4-scout ALL return HTTP 404) — which was the repeated
+# generation failure. So the chain is pinned to models this key really has, ordered
+# by suitability:
+#   * qwen/qwen3.8-27b — VERIFIED best: a standard instruction model that wrote a
+#     full valid 778-word A2 episode on the server. Clean output, no <think> block.
+#   * qwen/qwen3.6-27b is deliberately NOT used — it emits <think> reasoning that
+#     pollutes the JSON.
+#   * openai/gpt-oss-120b / -20b are REASONING models (can return empty-200 on long
+#     output) but are known-accessible, so they're the fallback.
+# generation tries the CHAIN and uses the first model that returns real text; a
+# 404/400/5xx on one model moves to the next. All overridable via env.
+GROQ_STORY_MODEL = os.getenv("GROQ_STORY_MODEL", "qwen/qwen3.8-27b")
 GROQ_STORY_MODEL_FALLBACKS = [
     m.strip() for m in os.getenv(
         "GROQ_STORY_MODEL_FALLBACKS",
-        "llama-3.1-8b-instant,meta-llama/llama-4-scout-17b-16e-instruct,"
         "openai/gpt-oss-120b,openai/gpt-oss-20b"
     ).split(",") if m.strip()
 ]
