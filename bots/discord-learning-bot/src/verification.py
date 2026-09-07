@@ -138,11 +138,41 @@ def record_quiz_correct(discord_id: str):
 # ============================================================
 
 def on_voice_join(discord_id: str):
-    """Called when a member joins a voice channel."""
+    """Called when a member joins a voice channel.
+
+    Defensive: if there is ALREADY a live session (join_time set), leave it alone.
+    A genuine re-join is always preceded by on_voice_leave (which persists elapsed
+    and clears join_time), so a join arriving while a session is still live is a
+    spurious/duplicate event (e.g. a reconnect) — resetting join_time there would
+    discard time the student actually spent (the '15 min shown as 2 min' bug)."""
+    existing = _voice_sessions.get(discord_id)
+    if existing and existing.get("join_time"):
+        return
     _voice_sessions[discord_id] = {
         "join_time": datetime.datetime.now(),
-        "total_minutes": _voice_sessions.get(discord_id, {}).get("total_minutes", 0),
+        "total_minutes": (existing or {}).get("total_minutes", 0),
     }
+
+
+def recover_voice_session(discord_id: str):
+    """Re-seed an in-memory session for a member found already sitting in voice at
+    startup — but ONLY if they don't already have a LIVE session.
+
+    WHY THIS EXISTS (bug fix): the startup recovery scan runs from on_ready, and
+    discord.py fires on_ready on EVERY gateway reconnect/RESUME, not just the first
+    boot. The scan used to call on_voice_join(), which unconditionally RESETS
+    join_time to now. So if the bot's connection blipped while a student was sitting
+    in voice, their accumulated time was thrown away and the community task showed
+    only the minutes since the last reconnect (real report: 15 min counted as 2).
+
+    This preserves an existing running session (join_time untouched) and only seeds
+    a fresh join_time when there is genuinely none — which is the real
+    restart-mid-session case the scan was meant to cover.
+    """
+    session = _voice_sessions.get(discord_id)
+    if session and session.get("join_time"):
+        return                                   # already counting — do NOT reset it
+    on_voice_join(discord_id)
 
 
 def on_voice_leave(discord_id: str):

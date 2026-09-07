@@ -526,15 +526,21 @@ async def on_ready():
     # already sitting in a voice channel, there was no join event for that
     # session, so on_voice_leave later finds no join_time and credits zero —
     # the student can genuinely spend 10+ min in voice across a restart yet
-    # have the community task show 0/10. Re-seed an in-memory join_time (=now)
-    # for everyone currently in voice so at least their post-restart time is
-    # counted. Best-effort, guild-scoped, ignores bots.
+    # have the community task show 0/10. Re-seed an in-memory join_time for
+    # everyone currently in voice so at least their post-restart time is counted.
+    #
+    # CRITICAL: use recover_voice_session (NOT on_voice_join). on_ready fires on
+    # every gateway RECONNECT/RESUME — not just the first boot — and on_voice_join
+    # would RESET a live join_time to now, discarding time already accrued (real
+    # report: a 15-min sit counted as 2 min after a mid-session reconnect).
+    # recover_voice_session only seeds when there is no live session, so a reconnect
+    # preserves the original join_time. Best-effort, guild-scoped, ignores bots.
     try:
         for _guild in bot.guilds:
             for _vc in _guild.voice_channels:
                 for _mem in _vc.members:
                     if not _mem.bot:
-                        verification.on_voice_join(str(_mem.id))
+                        verification.recover_voice_session(str(_mem.id))
     except Exception as e:
         logger.warning(f"Voice-session recovery scan failed: {e}")
 

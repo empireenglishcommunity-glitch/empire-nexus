@@ -382,3 +382,62 @@ async def test_verify_community_chat_window_uses_dubai_day_start():
     assert after.tzinfo is not None
     assert (after.hour, after.minute, after.second) == (0, 0, 0)
     assert after.date() == database._today_local()
+
+
+
+# ============================================================
+#  RECONNECT-MID-SESSION REGRESSION (the "15 min shown as 2 min" bug)
+# ============================================================
+#
+# on_ready fires on every gateway reconnect/RESUME, and the startup voice-recovery
+# scan used to call on_voice_join() for everyone already sitting in voice — which
+# RESET join_time to now and discarded the time already accrued. These tests lock
+# in that a spurious join / a recovery scan NEVER resets a live session.
+
+def test_reconnect_does_not_reset_live_voice_session():
+    """A duplicate on_voice_join (e.g. from a reconnect) while a session is LIVE
+    must NOT reset the accrued time — the real 15→2 minute bug."""
+    verification.on_voice_join("u1")
+    verification._voice_sessions["u1"]["join_time"] = (
+        datetime.datetime.now() - datetime.timedelta(minutes=15)
+    )
+    # A spurious re-join arrives (reconnect) — join_time must be preserved.
+    verification.on_voice_join("u1")
+    minutes = verification.get_voice_minutes_today("u1")
+    assert 14 <= minutes <= 16, minutes
+
+
+def test_recovery_scan_preserves_live_session():
+    """recover_voice_session (used by the on_ready startup scan) must leave a live
+    session's join_time untouched, so a reconnect can't wipe accrued minutes."""
+    verification.on_voice_join("u1")
+    verification._voice_sessions["u1"]["join_time"] = (
+        datetime.datetime.now() - datetime.timedelta(minutes=15)
+    )
+    verification.recover_voice_session("u1")
+    minutes = verification.get_voice_minutes_today("u1")
+    assert 14 <= minutes <= 16, minutes
+
+
+def test_recovery_scan_seeds_when_no_live_session():
+    """When the bot genuinely missed the join (was down at join time), the recovery
+    scan DOES seed a fresh session so post-restart time is still counted."""
+    assert verification._voice_sessions.get("u1", {}).get("join_time") in (None, )
+    verification.recover_voice_session("u1")
+    assert verification._voice_sessions["u1"]["join_time"] is not None
+
+
+def test_switch_channel_still_credits_time():
+    """A genuine channel move (leave→join in one event) still persists the elapsed
+    time from the first channel — the leave runs before the (no-op-on-live) join."""
+    from src import database
+    database.register_member("u1", "U1")
+    verification.on_voice_join("u1")
+    verification._voice_sessions["u1"]["join_time"] = (
+        datetime.datetime.now() - datetime.timedelta(minutes=8)
+    )
+    # Switch channels: on_voice_state_update calls leave then join.
+    verification.on_voice_leave("u1")
+    verification.on_voice_join("u1")
+    minutes = verification.get_voice_minutes_today("u1")
+    assert minutes >= 7, minutes            # the 8 min from the first channel kept
