@@ -202,22 +202,32 @@ owner-approved change.
 
 *Goal: learners hear their own names — correctly, fairly, and safely.*
 
-- [ ] **5.1** Create the cast-roster table (story name, gender, opt-out, rotation
-      bookkeeping) with migration (§9.1).
-- [ ] **5.2** Build the owner-facing roster flow: review/confirm/correct story names
+- [x] **5.1** Create the cast-roster table (story name, gender, opt-out, rotation
+      bookkeeping) with migration (§9.1). _`story_roster` table + accessors in
+      `src/database.py` (upsert/get/eligible/mark_featured/set_opt_out)._
+- [x] **5.2** Build the owner-facing roster flow: review/confirm/correct story names
       and genders in bulk, seeded from `members` where trustworthy (R8.4).
-- [ ] **5.3** Implement gender-matched casting with **no inference**: unknown ⇒ not
-      cast (R8.2, R8.3, P4).
-- [ ] **5.4** Implement fair rotation by least-recently-featured (R8.5) and
-      opt-out (R8.6).
-- [ ] **5.5** Implement graceful degradation: empty roster ⇒ name-free stories, the
-      daily episode never blocks (R8.4).
-- [ ] **5.6** Enforce dignity rules in the validator: a student-named character is
-      never an antagonist and never gets embarrassing dialogue (R8.7).
-- [ ] **5.7** Enforce the privacy posture: first name only, own community only
-      (R8.8).
-- [ ] **5.8** Tests: gender matching, zero-inference guarantee, rotation fairness,
-      opt-out honoured, degradation path, dignity rejection.
+      _`/roster [seed]`, `/roster-confirm`, `/roster-name`, `/roster-optout`,
+      `/roster-optin` in `src/ops_commands.py`._
+- [x] **5.3** Implement gender-matched casting with **no inference**: unknown ⇒ not
+      cast (R8.2, R8.3, P4). _`sawt_roster.seed_from_members` skips unknown gender;
+      `upsert_story_roster` refuses a row without a known gender._
+- [x] **5.4** Implement fair rotation by least-recently-featured (R8.5) and
+      opt-out (R8.6). _`eligible_story_roster` orders by last_featured_at;
+      bookkeeping advanced ONLY on emit._
+- [x] **5.5** Implement graceful degradation: empty roster ⇒ name-free stories, the
+      daily episode never blocks (R8.4). _`select_cameos` returns [] on any
+      problem; the generator/renderer never require cameos._
+- [x] **5.6** Enforce dignity rules in the validator: a student-named character is
+      never an antagonist and never gets embarrassing dialogue (R8.7). _Expanded
+      hook in `sawt_script_validator.py` (never antagonist; no demeaning words
+      spoken-by or addressed-to the guest)._
+- [x] **5.7** Enforce the privacy posture: first name only, own community only
+      (R8.8). _First-name-only stored + validated (rejects a following surname);
+      single-GUILD_ID scope by construction._
+- [x] **5.8** Tests: gender matching, zero-inference guarantee, rotation fairness,
+      opt-out honoured, degradation path, dignity rejection. _`tests/test_sawt_roster.py`
+      (13 tests)._
 
 **Exit criteria:** names appear correctly gender-matched and rotating, opt-outs are
 honoured, and there is **no** case of a guessed gender.

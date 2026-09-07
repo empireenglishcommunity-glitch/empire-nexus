@@ -114,7 +114,8 @@ jobs:
             --music "$MOOD" \
             --seed "$EPNUM" \
             --out "content/podcast-audio/$SLUG.mp3" \
-            --report "content/podcast-audio/$SLUG.qa.json"
+            --report "content/podcast-audio/$SLUG.qa.json" \
+            --cameos-json "$META"
           # Fold the render's licence credit line into the meta for the bot's post.
           python3 scripts/merge_credit_into_meta.py \
             "$META" "content/podcast-audio/$SLUG.qa.json" || true

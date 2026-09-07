@@ -165,6 +165,70 @@ CAST = {
 # character's voice (the old cloning engine's worst failure mode).
 DEFAULT_CHARACTER = "narrator"
 
+
+# ── GUEST LEARNER VOICES (Phase 5 cameos) ────────────────────────────────────
+# Brief student cameos are voiced by dedicated GUEST voices, gender-matched, and
+# deliberately DISTINCT from the fixed cast's voices so a guest never sounds like
+# a lead. These Kokoro voices are not used by any CAST entry above. A cameo is
+# assigned a stable voice by its name (hash), so the same guest keeps one voice
+# within an episode. Gender comes from the roster (KNOWN only — never guessed).
+GUEST_VOICES = {
+    "female": ["af_sarah", "af_sky", "af_jessica"],
+    "male": ["am_michael", "am_liam", "am_fenrir"],
+}
+GUEST_SPEED_FACTOR = 1.0
+
+# Process-level cameo registry: {first_name_lower: {"display","gender","voice_id"}}.
+# The generator/renderer registers the episode's cameos so character_for() can map
+# a cameo speaker label to a real gender-matched guest voice instead of the
+# narrator fallback. Cleared per render.
+_CAMEO_REGISTRY: dict = {}
+
+
+def register_cameos(cameos: list) -> None:
+    """Register this episode's student cameos so their lines get a gender-matched
+    guest voice. `cameos` is a list of {story_name, gender}. Genders other than
+    male/female are IGNORED (never guessed) — such a cameo would fall back to the
+    narrator rather than be assigned a gendered voice."""
+    _CAMEO_REGISTRY.clear()
+    for c in (cameos or []):
+        name = (c.get("story_name") or "").strip()
+        gender = (c.get("gender") or "").strip().lower()
+        if not name or gender not in ("female", "male"):
+            continue
+        pool = GUEST_VOICES.get(gender) or []
+        if not pool:
+            continue
+        # Stable per-name assignment (deterministic across attempts/retries).
+        idx = (sum(ord(ch) for ch in name.lower())) % len(pool)
+        _CAMEO_REGISTRY[name.lower()] = {
+            "display": name, "gender": gender, "voice_id": pool[idx],
+        }
+
+
+def clear_cameos() -> None:
+    """Forget any registered cameos (call at the end of a render)."""
+    _CAMEO_REGISTRY.clear()
+
+
+def _cameo_entry_for(low: str, words: set) -> dict:
+    """Return a synthetic cast-style entry for a registered cameo speaker, or None.
+    Matches on the cameo's first name as a whole word so 'Amina:' resolves but an
+    unrelated line does not."""
+    for name_low, info in _CAMEO_REGISTRY.items():
+        if name_low == low or name_low in words:
+            return {
+                "key": f"cameo:{name_low}",
+                "display": info["display"],
+                "gender": info["gender"],
+                "engine": ENGINE_KOKORO,
+                "voice_id": info["voice_id"],
+                "speed_factor": GUEST_SPEED_FACTOR,
+                "match": (name_low,),
+                "role": "A guest learner making a brief, friendly appearance.",
+            }
+    return None
+
 # CEFR pace → native synthesis speed. The practice site's measured per-level word-
 # rate targets are the reference; Kokoro's American voices run ~185-215 wpm at
 # speed 1.0, so these factors bring each level near its target. Set natively at
@@ -205,6 +269,11 @@ def character_for(speaker_label: str) -> dict:
         for token in entry["match"]:
             if token in words or token == low:
                 return {"key": key, **entry}
+    # Phase 5: a registered student cameo gets a gender-matched GUEST voice rather
+    # than the narrator fallback, so a learner's line doesn't sound like the host.
+    cameo = _cameo_entry_for(low, words)
+    if cameo is not None:
+        return cameo
     return {"key": DEFAULT_CHARACTER, **CAST[DEFAULT_CHARACTER]}
 
 

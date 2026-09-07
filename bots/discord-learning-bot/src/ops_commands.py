@@ -792,3 +792,108 @@ async def handle_nudge(args: str, bot) -> str:
         return f"✅ Nudge sent to *{ops_hub.escape_markdown(safe_name)}*\\."
     except Exception as e:
         return f"❌ Could not DM {ops_hub.escape_markdown(safe_name)}: {ops_hub.escape_markdown(str(e)[:100])}"
+
+
+
+# ============================================================
+#  Empire Chronicles STUDENT CAST ROSTER (Sawt — Phase 5)
+#  Owner-facing review/confirm/correct flow for story-cameo names.
+#  Names are FIRST NAME ONLY and only students with a KNOWN gender are
+#  ever eligible (zero inference). Nothing is cast until the owner confirms.
+# ============================================================
+
+@command("/roster")
+async def handle_roster(args: str, bot) -> str:
+    """Show the story-cameo roster (Phase 5). `/roster seed` first seeds/refreshes
+    it from members with a known gender (unconfirmed), then shows the list.
+
+    Legend: ✅ confirmed (castable), ⏳ needs confirming, 🚫 opted out."""
+    from . import sawt_roster
+    action = (args or "").strip().lower()
+    seeded_note = ""
+    if action == "seed":
+        n = sawt_roster.seed_from_members()
+        seeded_note = f"_Seeded/updated {n} entr{'y' if n == 1 else 'ies'} from members\\._\n\n"
+
+    rows = database.get_story_roster()
+    if not rows:
+        return ("*🎭 Story cameo roster*\n━━━━━━━━━━━━━━━━━━━━\n\n"
+                "Empty\\. Run `/roster seed` to seed it from students who have set "
+                "a gender, then `/roster\\-confirm <id>` to make them castable\\.")
+
+    lines = ["*🎭 Story cameo roster*", "━━━━━━━━━━━━━━━━━━━━", seeded_note.rstrip(), ""]
+    for r in rows:
+        if int(r.get("opt_out", 0)):
+            mark = "🚫"
+        elif int(r.get("confirmed", 0)):
+            mark = "✅"
+        else:
+            mark = "⏳"
+        name = ops_hub.escape_markdown(r["story_name"])
+        g = ops_hub.escape_markdown(r["gender"])
+        did = ops_hub.escape_markdown(str(r["discord_id"]))
+        feat = int(r.get("times_featured", 0))
+        lines.append(f"{mark} *{name}* \\({g}\\) — featured {feat}× — `{did}`")
+    lines += [
+        "",
+        "_`/roster\\-confirm <id>` — make castable_",
+        "_`/roster\\-name <id> <FirstName>` — correct the name_",
+        "_`/roster\\-optout <id>` \\| `/roster\\-optin <id>`_",
+    ]
+    return "\n".join(lines)
+
+
+@command("/roster-confirm")
+async def handle_roster_confirm(args: str, bot) -> str:
+    """Confirm a roster entry (name + gender reviewed) so it becomes castable."""
+    did = (args or "").strip().split()[0] if (args or "").strip() else ""
+    if not did:
+        return "Usage: `/roster\\-confirm <discord_id>`"
+    row = next((r for r in database.get_story_roster()
+                if str(r["discord_id"]) == did), None)
+    if not row:
+        return f"❌ No roster entry for `{ops_hub.escape_markdown(did)}`\\."
+    ok = database.upsert_story_roster(did, row["story_name"], row["gender"],
+                                      confirmed=True)
+    if not ok:
+        return ("❌ Could not confirm — the entry has no known gender\\. Set the "
+                "student's gender first, then `/roster seed`\\.")
+    return (f"✅ Confirmed *{ops_hub.escape_markdown(row['story_name'])}* "
+            f"\\({ops_hub.escape_markdown(row['gender'])}\\) — now castable\\.")
+
+
+@command("/roster-name")
+async def handle_roster_name(args: str, bot) -> str:
+    """Correct a student's STORY name (first name only)."""
+    parts = (args or "").strip().split()
+    if len(parts) < 2:
+        return "Usage: `/roster\\-name <discord_id> <FirstName>`"
+    did, new_name = parts[0], parts[1]
+    row = next((r for r in database.get_story_roster()
+                if str(r["discord_id"]) == did), None)
+    if not row:
+        return f"❌ No roster entry for `{ops_hub.escape_markdown(did)}`\\."
+    # Keep confirmation state; only the name changes.
+    database.upsert_story_roster(did, new_name, row["gender"],
+                                 confirmed=bool(row.get("confirmed")))
+    return f"✅ Story name set to *{ops_hub.escape_markdown(new_name.split()[0])}*\\."
+
+
+@command("/roster-optout")
+async def handle_roster_optout(args: str, bot) -> str:
+    """Exclude a student from story cameos (kept in the table, just never cast)."""
+    did = (args or "").strip().split()[0] if (args or "").strip() else ""
+    if not did:
+        return "Usage: `/roster\\-optout <discord_id>`"
+    database.set_story_opt_out(did, True)
+    return f"🚫 `{ops_hub.escape_markdown(did)}` opted OUT of story cameos\\."
+
+
+@command("/roster-optin")
+async def handle_roster_optin(args: str, bot) -> str:
+    """Re-include a previously opted-out student in story cameos."""
+    did = (args or "").strip().split()[0] if (args or "").strip() else ""
+    if not did:
+        return "Usage: `/roster\\-optin <discord_id>`"
+    database.set_story_opt_out(did, False)
+    return f"✅ `{ops_hub.escape_markdown(did)}` opted IN to story cameos\\."

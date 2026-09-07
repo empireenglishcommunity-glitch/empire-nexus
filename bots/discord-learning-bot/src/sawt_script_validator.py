@@ -161,6 +161,11 @@ def validate_episode(ep: dict, level: str = None, episode_number: int = 1,
 
         # --- cast legality ----------------------------------------------------
         legal_display = {n.lower() for n in sawt_cast.speaking_names()}
+        # Phase 5: student cameo first names are ADDITIONALLY-legal speakers (they
+        # are voiced by a guest cast voice at render time). Match on the first name
+        # so a "Amina:" line from a guest learner isn't flagged as an illegal cast.
+        cameo_lower = {str(n).strip().lower() for n in (student_names or [])
+                       if str(n).strip()}
         seen_illegal = set()
         for spk, _text in segments:
             entry = sawt_cast.character_for(spk)
@@ -169,7 +174,8 @@ def validate_episode(ep: dict, level: str = None, episode_number: int = 1,
             low = spk.lower().strip()
             known = (low in legal_display
                      or entry["key"] != sawt_cast.DEFAULT_CHARACTER
-                     or "narrator" in low or "host" in low)
+                     or "narrator" in low or "host" in low
+                     or any(cn == low or cn in low.split() for cn in cameo_lower))
             if not known and low not in seen_illegal:
                 seen_illegal.add(low)
         if seen_illegal:
@@ -271,22 +277,57 @@ def validate_episode(ep: dict, level: str = None, episode_number: int = 1,
                 problems.append(
                     f"Do not contradict an established fact: '{f}'.")
 
-        # --- personalisation safety (R8.7) — Phase 5 hook --------------------
+        # --- personalisation safety + privacy (R8.7 / R8.8) — Phase 5 --------
+        # A learner given a cameo must be treated with DIGNITY: never the villain,
+        # never insulted/humiliated/frightened, and referred to by FIRST NAME ONLY.
+        _DEMEANING = (
+            "villain", "evil", "wicked", "stupid", "idiot", "fool", "dumb",
+            "ugly", "hate you", "worthless", "useless", "coward", "liar",
+            "loser", "pathetic", "weak", "cruel", "monster", "enemy",
+        )
+        # Words that, near the student's name in narration, cast them as the
+        # antagonist / the one at fault.
+        _ANTAGONIST_NEAR = ("villain", "antagonist", "the enemy", "evil",
+                            "bad guy", "traitor", "culprit")
+        low_all = script.lower()
         for name in (student_names or []):
             nl = str(name).strip().lower()
             if not nl:
                 continue
-            # If a learner-named character exists, they must never be cast as the
-            # antagonist / villain, and never given demeaning dialogue.
+            flagged = False
+            # (1) NO demeaning words may appear in the student's OWN lines, nor in
+            #     any line that ADDRESSES the student by name (an insult aimed at
+            #     them, e.g. "Maya: Amina, you are useless").
             for spk, text in segments:
-                if nl in spk.lower():
+                tl = text.lower()
+                spoken_by_student = (nl == spk.lower().strip()
+                                     or nl in spk.lower().split())
+                addressed_to_student = nl in tl
+                if (spoken_by_student or addressed_to_student) and \
+                        any(w in tl for w in _DEMEANING):
+                    problems.append(
+                        f"Student guest '{name}' must never speak or receive "
+                        f"demeaning words. Give them only kind, capable lines.")
+                    flagged = True
+                    break
+            # (2) narration/other lines must not cast the student as the
+            #     antagonist or aim an insult AT them (e.g. "... you idiot, {name}").
+            if not flagged:
+                for spk, text in segments:
                     tl = text.lower()
-                    if any(w in tl for w in ("villain", "evil", "stupid", "idiot",
-                                             "hate you", "worthless")):
+                    if nl in tl and any(w in tl for w in _ANTAGONIST_NEAR):
                         problems.append(
-                            f"Student-named character '{name}' must never be an "
-                            f"antagonist or receive demeaning dialogue.")
+                            f"Student guest '{name}' must never be cast as the "
+                            f"antagonist/villain. Keep them a friendly guest.")
+                        flagged = True
                         break
+            # (3) privacy: FIRST NAME ONLY. If the name appears followed by a
+            #     capitalised surname (e.g. "Amina Hassan"), reject it.
+            if not flagged and re.search(rf"\b{re.escape(name)}\s+[A-Z][a-z]+",
+                                        script):
+                problems.append(
+                    f"Refer to the guest learner as '{name}' only — first name "
+                    f"only, never a full name.")
     except Exception:                                            # noqa: BLE001
         # A validator crash must NEVER block the pipeline or spin regeneration
         # forever: treat an internal error as a soft-pass (no problems reported).
