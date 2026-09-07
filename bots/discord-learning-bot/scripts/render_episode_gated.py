@@ -124,15 +124,21 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
     passed_render = None
     t0 = time.time()
 
+    # A persistent per-line STEM CACHE shared across attempts. Kokoro is
+    # deterministic, so its stems are reused unchanged; on a retry we delete ONLY
+    # the failing lines' stems, so just those are re-synthesised (design §10.3).
+    # This avoids re-voicing a whole ~40-line episode on every attempt — the
+    # difference between a multi-minute retry and a ~40-minute one on CPU.
+    reuse_dir = work / "stems_shared"
     try:
         for attempt in range(1, max_attempts + 1):
             cand = work / f"attempt{attempt}.mp3"
-            stems_dir = work / f"stems{attempt}"
-            print(f"\n=== attempt {attempt}/{max_attempts} — full render ===",
-                  flush=True)
+            print(f"\n=== attempt {attempt}/{max_attempts} "
+                  f"({'full render' if attempt == 1 else 'reusing passing stems'}) "
+                  f"===", flush=True)
             rr = rv2.render(script_text, cand, level=level, music=music,
-                            sound_design=sound_design, stems_dir=str(stems_dir),
-                            seed=seed)
+                            sound_design=sound_design, stems_dir=str(reuse_dir),
+                            seed=seed, reuse_stems_dir=str(reuse_dir))
 
             report = _gate(cand, script_text, level, transcriber=transcriber)
             # Localise any failure to specific lines (diagnostic + drives retry).
@@ -156,10 +162,19 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
             print(f"  ❌ attempt {attempt} failed: {report['failures']} "
                   f"unmeasured={report['unmeasured_critical']} "
                   f"failing_lines={failing_lines}", flush=True)
-            # A persistent, deterministic failure (Kokoro) will not fix itself by
-            # re-rolling; the report names the offending line text so a human can
-            # act. We still try again because the clone engine (Mai) is stochastic
-            # and SFX/mix interactions can vary.
+            # Delete ONLY the failing lines' stems so the next attempt re-synthesises
+            # just those (the clone engine is stochastic, so a re-roll can fix Maya
+            # lines); every passing line is reused. A whole-episode failure (empty
+            # failing_lines but gate failed) clears all stems for a fresh render.
+            if failing_lines:
+                for st in rr.get("stems", []):
+                    if st["index"] in failing_lines:
+                        try:
+                            pathlib.Path(st["file"]).unlink(missing_ok=True)
+                        except Exception:                        # noqa: BLE001
+                            pass
+            else:
+                shutil.rmtree(reuse_dir, ignore_errors=True)
 
         result = {
             "passed": passed_report is not None,
