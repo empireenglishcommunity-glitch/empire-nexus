@@ -79,17 +79,25 @@ def target_length(level: str = None) -> tuple:
     # scripts/benchmark_story_voices.py — see src/sawt_cast.PACE_SPEED).
     wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
            "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
-    # Aim a little below the middle of the window so the delivered audio has room.
-    target_seconds = dmin + (dmax - dmin) * 0.40
+    # The gate measures FINAL AUDIO duration = spoken words at `wpm` PLUS non-speech
+    # overhead the words don't account for: the musical intro (~1.5s), the outro
+    # (~2.5s), a short gap between every line (~0.3-0.5s each — dozens of them), and
+    # any [PAUSE] beats. Measured 2026-09-07: 65 lines of speech that computed to
+    # ~400s rendered to 424s (over A2's 420s ceiling). So budget the WORDS against
+    # the window MINUS that overhead, not the raw window.
+    OVERHEAD_S = 45.0                      # intro+outro+per-line gaps+pauses, measured
+                                           # (2026-09-07: 28s under-shot -> 421s; a
+                                           # bigger margin lands the render well
+                                           # inside the ceiling)
+    usable_max = max(60.0, dmax - OVERHEAD_S)
+    usable_min = max(30.0, dmin - OVERHEAD_S)
+    # Aim a little below the middle of the (overhead-adjusted) window for room.
+    target_seconds = usable_min + (usable_max - usable_min) * 0.40
     words = target_seconds / 60.0 * wpm
-    # OVER-ASK: language models often under-deliver on length (measured: asked 780,
-    # got 586). A mild over-ask lands the usual output inside the window.
+    # Mild over-ask (LLMs often under-deliver: measured asked 780, got 586)...
     words *= 1.15
-    # BUT the gate rejects anything over duration_max, and the LLM SOMETIMES delivers
-    # the full ask (measured 2026-09-07: asked 1020 words -> 461s, over A2's 420s
-    # ceiling -> duration_s FAIL). So CLAMP the ask so that even a full delivery
-    # stays safely under duration_max (a ~5% margin below the ceiling).
-    max_words = (dmax * 0.95) / 60.0 * wpm
+    # ...but CLAMP so even a FULL delivery + overhead stays ~5% under the ceiling.
+    max_words = (usable_max * 0.95) / 60.0 * wpm
     words = min(words, max_words)
     return int(round(words / 10.0) * 10), target_seconds / 60.0
 
