@@ -29,6 +29,7 @@ from __future__ import annotations
 import re
 
 from . import sawt_cast, podcast_lab, sawt_story, sawt_bible
+from . import audio_standards as STD
 
 # Inline [SFX:name] or [SFX:a|b] markers, anywhere in the text.
 _SFX_RE = re.compile(r"\[sfx:\s*([^\]]+)\]", re.IGNORECASE)
@@ -154,10 +155,17 @@ def validate_episode(ep: dict, level: str = None, episode_number: int = 1,
         script = str(ep.get("script", "") or "")
         segments = _spoken_segments(script)
 
-        # --- structural floor -------------------------------------------------
+        # --- structural floor + ceiling ---------------------------------------
         if len(segments) < 4:
             problems.append("The script has fewer than 4 spoken lines — write a "
                             "full episode of dialogue and narration.")
+        # R9.6: hard cap on spoken lines so an over-long script can't run away in
+        # synthesis cost — it's rejected (and regenerated) rather than voiced.
+        max_lines = getattr(STD, "MAX_SPOKEN_LINES", 120)
+        if len(segments) > max_lines:
+            problems.append(
+                f"Too many spoken lines ({len(segments)} > {max_lines}). Tell a "
+                f"tighter episode with fewer, stronger turns.")
 
         # --- cast legality ----------------------------------------------------
         legal_display = {n.lower() for n in sawt_cast.speaking_names()}

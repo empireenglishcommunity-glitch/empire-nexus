@@ -953,6 +953,29 @@ CREATE TABLE IF NOT EXISTS story_roster (
 );
 CREATE INDEX IF NOT EXISTS idx_story_roster_rotation
     ON story_roster(opt_out, last_featured_at);
+
+-- Empire Chronicles PER-EPISODE RUN LOG (Sawt — Phase 7 / R9.5 observability).
+-- One row per daily-pipeline run, whether it EMITTED or FAILED, so the owner can
+-- review outcomes over time (attempts, gate result, metrics, render time). Written
+-- by scripts/record_episode_run.py from the render's qa.json. `slug` is the natural
+-- key; a re-run of the same slug UPSERTs (idempotent — no duplicate history rows).
+CREATE TABLE IF NOT EXISTS podcast_runs (
+    slug            TEXT PRIMARY KEY,
+    episode_number  INTEGER,
+    level           TEXT DEFAULT '',
+    passed          INTEGER NOT NULL DEFAULT 0,  -- 1 = emitted, 0 = failed the gate
+    attempts        INTEGER NOT NULL DEFAULT 0,
+    failures        TEXT DEFAULT '',             -- comma-joined failing metric names
+    wer             REAL DEFAULT NULL,
+    hard_cuts       INTEGER DEFAULT NULL,
+    dead_air_s      REAL DEFAULT NULL,
+    loudness_lufs   REAL DEFAULT NULL,
+    true_peak_dbtp  REAL DEFAULT NULL,
+    duration_s      REAL DEFAULT NULL,
+    elapsed_seconds REAL DEFAULT NULL,
+    recorded_at     TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_podcast_runs_recorded ON podcast_runs(recorded_at);
 """
 
 
@@ -1535,6 +1558,68 @@ def mark_story_featured(discord_ids: list) -> None:
     )
     conn.commit()
     conn.close()
+
+
+# ============================================================
+#  EMPIRE CHRONICLES PER-EPISODE RUN LOG (Sawt — Phase 7 / R9.5)
+# ============================================================
+
+def record_podcast_run(slug: str, *, episode_number: int = None, level: str = "",
+                       passed: bool = False, attempts: int = 0,
+                       failures: list = None, metrics: dict = None,
+                       elapsed_seconds: float = None) -> None:
+    """Persist the outcome of one daily-pipeline run (emitted OR failed) so the
+    owner has a queryable history (R9.5). UPSERT by slug — re-running a slug
+    overwrites its row rather than piling up duplicates. Never raises."""
+    m = metrics or {}
+
+    def _num(key):
+        v = m.get(key)
+        if isinstance(v, dict):
+            v = v.get("value")
+        return v if isinstance(v, (int, float)) else None
+
+    try:
+        conn = _connect()
+        conn.execute(
+            """INSERT INTO podcast_runs
+                 (slug, episode_number, level, passed, attempts, failures,
+                  wer, hard_cuts, dead_air_s, loudness_lufs, true_peak_dbtp,
+                  duration_s, elapsed_seconds, recorded_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,datetime('now'))
+               ON CONFLICT(slug) DO UPDATE SET
+                 episode_number=excluded.episode_number, level=excluded.level,
+                 passed=excluded.passed, attempts=excluded.attempts,
+                 failures=excluded.failures, wer=excluded.wer,
+                 hard_cuts=excluded.hard_cuts, dead_air_s=excluded.dead_air_s,
+                 loudness_lufs=excluded.loudness_lufs,
+                 true_peak_dbtp=excluded.true_peak_dbtp,
+                 duration_s=excluded.duration_s,
+                 elapsed_seconds=excluded.elapsed_seconds,
+                 recorded_at=datetime('now')""",
+            (str(slug), episode_number, level or "", 1 if passed else 0,
+             int(attempts or 0), ",".join(failures or []),
+             _num("wer"), _num("hard_cuts"), _num("dead_air_s"),
+             _num("loudness_lufs"), _num("true_peak_dbtp"), _num("duration_s"),
+             elapsed_seconds),
+        )
+        conn.commit()
+        conn.close()
+    except Exception:                                            # noqa: BLE001
+        # This log is best-effort telemetry — a failure to record it must never
+        # affect the pipeline outcome, so swallow (module has no logger by design).
+        pass
+
+
+def recent_podcast_runs(limit: int = 10) -> list[dict]:
+    """The most recent daily-pipeline runs, newest first (R9.5 review)."""
+    conn = _connect()
+    rows = conn.execute(
+        "SELECT * FROM podcast_runs ORDER BY recorded_at DESC LIMIT ?",
+        (int(limit),),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 
 # ============================================================
