@@ -383,8 +383,16 @@ def _max_tokens_for(level: str = None) -> int:
         easy to misread as "the LLM is down".
     So the budget must be big enough to think AND write, but small enough to avoid
     413: ~2.4 tokens per target word plus overhead, clamped to a proven window."""
+    # SIZED FOR THE KEY'S TPM LIMIT, not just the episode. Measured 2026-09-08
+    # against the production key: qwen/qwen3.8-27b has an 8000 tokens-per-minute
+    # on-demand limit, and Groq reserves (prompt_tokens + max_tokens) against it up
+    # front. The story prompt is ~1100 tokens, so a max_tokens of 2648-3200 reserved
+    # ~3700-4300 tokens/request — only ~2 requests fit in a minute, and the regen +
+    # model-retry loops then hammered straight into HTTP 429 ("Request too large").
+    # A full A2 episode (~770 words) needs only ~1100-1400 completion tokens, so a
+    # 1600 ceiling writes the whole episode AND leaves TPM headroom for retries.
     words, _minutes = target_length(level)
-    return int(min(3200, max(2000, words * 2.4 + 800)))
+    return int(min(1600, max(900, words * 1.7 + 400)))
 
 
 async def _call_llm_json(prompt: str, temperature: float = 0.9,
@@ -450,11 +458,20 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
                                    "max_tokens=%s, status=%s, text_len=%s)",
                                    model, attempt, budget, result.status, text_len)
                     if result.status == 413:
-                        budget = max(1200, int(budget * 0.6))
+                        budget = max(700, int(budget * 0.6))
                     elif result.status == 429:
-                        await asyncio.sleep(min(30, 8 * attempt))
+                        # The good models' 429 is a TOKENS-PER-MINUTE limit (measured
+                        # 8000 TPM on qwen3.8), which refills on a ~60s window. A
+                        # short 8-24s nap lands back in the SAME exhausted window and
+                        # 429s again — the storm we saw. Wait out most of the minute
+                        # so the budget actually refills before retrying (offline job,
+                        # so the wait is fine).
+                        await asyncio.sleep(min(60, 20 * attempt))
                     elif result.status == 200 and text_len == 0:
-                        budget = min(3200, int(budget * 1.4))
+                        # Reasoning-model empty-200: grow the budget, but never past a
+                        # TPM-safe ceiling (a too-large max_tokens is itself a 429 —
+                        # "Request too large" — on an 8000 TPM key).
+                        budget = min(1600, int(budget * 1.4) + 200)
                     else:
                         # 404/400/5xx etc. — this model won't work; try the next one.
                         next_model = True
