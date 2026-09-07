@@ -839,6 +839,37 @@ def render(script: str, out_path, level="A2", music="mystery",
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, SR, format="MP3")
 
+    # POST-ENCODE DE-CLICK (delivered-domain pass).
+    #
+    # master() de-clicks the FLOAT signal to 0, but MP3 ENCODING itself introduces
+    # new micro-discontinuities: lossy quantisation reshapes sample-to-sample steps,
+    # so the DECODED file the QA gate actually measures can show a couple of clicks
+    # that were not present pre-encode. Measured 2026-09-08: a mix that was 0 clicks
+    # in float decoded to 2 clicks at 105.79s / 242.07s (tiny ~0.04 deltas — pure
+    # MP3 artefacts); re-declicking the DECODED signal returned it to 0. Because the
+    # detector and the delivered file must agree, iterate in the delivered domain:
+    # decode → measure → if clicks remain, declick the decoded signal and re-encode.
+    # Bounded and idempotent (declick converges to 0). This closes the gap that let
+    # a longer episode fail the episode-level hard_cuts gate with no margin.
+    try:
+        import numpy as _np
+        for _ in range(3):
+            y_dec = _read_wav_at_sr(str(out))
+            if y_dec is None or not len(y_dec):
+                break
+            d = _np.abs(_np.diff(y_dec.astype("float32")))
+            win = max(64, int(SR * 0.02))
+            local = _np.convolve(d, _np.ones(win, dtype="float32") / win,
+                                 mode="same") + 1e-9
+            hits = _np.where((d > STD.HARD_CUT_DELTA_FLOOR) &
+                             (d > STD.HARD_CUT_MAD_FACTOR * local))[0]
+            if not len(hits):
+                break                                  # delivered file is clean
+            y_dec = declick(y_dec, SR)
+            sf.write(str(out), y_dec, SR, format="MP3")
+    except Exception:                                            # noqa: BLE001
+        pass
+
     # Clean up the isolated-batch scratch dir — unless the orchestrator owns it
     # (reuse_stems_dir) and will reuse it across gate-retry attempts.
     if _batch_dir is not None and not _keep_batch_dir:
