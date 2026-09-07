@@ -83,7 +83,7 @@ async def test_script_llm_call_does_not_force_json(monkeypatch):
         text = "Host: hi"
         status = 200
 
-    async def fake_chat(payload, timeout_seconds):
+    async def fake_chat(payload, timeout_seconds, **kwargs):
         captured["payload"] = payload
         return FakeResult()
 

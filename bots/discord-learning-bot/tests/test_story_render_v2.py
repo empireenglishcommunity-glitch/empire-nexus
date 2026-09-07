@@ -303,7 +303,7 @@ async def test_retry_ladder_shrinks_on_413_and_grows_on_empty_200():
 
     seen = []
 
-    async def fake_chat(payload, timeout_seconds):
+    async def fake_chat(payload, timeout_seconds, **kwargs):
         seen.append(payload["max_tokens"])
         if len(seen) == 1:
             return R(False, None, 413)       # too big
