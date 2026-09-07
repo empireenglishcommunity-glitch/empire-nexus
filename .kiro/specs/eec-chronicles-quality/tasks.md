@@ -238,20 +238,28 @@ honoured, and there is **no** case of a guessed gender.
 
 *Goal: the podcast teaches the same syllabus as everything else.*
 
-- [ ] **6.1** Drive pace, vocabulary band, and duration from
-      `config.PODCAST_LEVEL_PROFILES` (R7.1).
-- [ ] **6.2** Implement the target-level resolver from **live** student data (today
-      A1-dominant), never hardcoded (R7.2).
-- [ ] **6.3** Weave the current curriculum week's vocabulary into episodes via
+- [x] **6.1** Drive pace, vocabulary band, and duration from
+      `config.PODCAST_LEVEL_PROFILES` (R7.1). _`target_length`,
+      `sawt_cast.speed_for_level`, and the gate's `duration_window` all read the
+      profile; the resolved level now flows to the renderer via meta `--level`._
+- [x] **6.2** Implement the target-level resolver from **live** student data (today
+      A1-dominant), never hardcoded (R7.2). _`sawt_syllabus.resolve_target_level`
+      = mode of active members' levels, tie-break low; falls back to STORY_LEVEL._
+- [x] **6.3** Weave the current curriculum week's vocabulary into episodes via
       `curriculum.get_vocabulary_for_week()` / `member_week_number()` — naturally,
-      never as a word list (R7.3).
-- [ ] **6.4** Enforce duration against the level's window in the gate (R1.3/R7.1).
-- [ ] **6.5** Reserve the Arabic-support hook (`arabic_ratio`) without enabling it
-      (R7.4).
-- [ ] **6.6** Ensure student-facing wording says **"CEFR-aligned, not certified."**
-      (R7.5).
-- [ ] **6.7** Tests: profile drives the render; target level follows live data;
+      never as a word list (R7.3). _`sawt_syllabus.resolve_current_week` (median
+      week) + `vocabulary_for` → a "weave naturally, never a list" prompt block._
+- [x] **6.4** Enforce duration against the level's window in the gate (R1.3/R7.1).
+      _`audio_qa` uses `STD.duration_window(level)`; the render is invoked with the
+      resolved `--level`._
+- [x] **6.5** Reserve the Arabic-support hook (`arabic_ratio`) without enabling it
+      (R7.4). _`sawt_syllabus.arabic_directive` gated by `ARABIC_SCAFFOLDING_ENABLED`
+      (False); wired into the prompt but returns '' today._
+- [x] **6.6** Ensure student-facing wording says **"CEFR-aligned, not certified."**
+      (R7.5). _Added to the pinned podcast-channel intro._
+- [x] **6.7** Tests: profile drives the render; target level follows live data;
       curriculum words actually appear; duration gate reflects the level.
+      _`tests/test_sawt_syllabus.py` (11 tests)._
 
 **Exit criteria:** episode length/pace/vocabulary demonstrably follow the target
 level's profile and reinforce the current curriculum week.

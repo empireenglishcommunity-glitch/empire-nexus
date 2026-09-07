@@ -130,7 +130,8 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
                        arc: dict = None, is_arc_opener: bool = False,
                        is_arc_finale: bool = False, past_choices: list = None,
                        motif_seen: bool = False,
-                       student_cameos: list = None) -> str:
+                       student_cameos: list = None,
+                       vocabulary: list = None) -> str:
     """Prompt the LLM to write the next episode as JSON. Now ARC-AWARE (spec 4.4):
     it injects the story bible (recurring characters + their wants), the current
     arc (genre, setting, premise, mood, established facts), the CEFR length, the
@@ -199,6 +200,30 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
     # comes with its KNOWN gender so the writer keeps pronouns/role right (we never
     # guess a gender). These names become ADDITIONALLY-allowed speakers on top of
     # the fixed cast; the validator enforces the dignity rules.
+    # ARABIC SCAFFOLDING (Phase 6 / R7.4) — reserved hook, disabled today. Returns
+    # '' unless sawt_syllabus.ARABIC_SCAFFOLDING_ENABLED is turned on, so enabling
+    # Arabic later needs no change here.
+    arabic_block = ""
+    try:
+        from . import sawt_syllabus
+        arabic_block = sawt_syllabus.arabic_directive(level)
+    except Exception:                                            # noqa: BLE001
+        arabic_block = ""
+
+    # CURRICULUM VOCABULARY (Phase 6 / R7.3). The current teaching week's target
+    # words, to REINFORCE naturally inside the story — never as a word list, quiz,
+    # or definition. Optional: empty when the curriculum isn't readable.
+    vocab_block = ""
+    vocab_list = [str(w).strip() for w in (vocabulary or []) if str(w).strip()]
+    if vocab_list:
+        vocab_block = (
+            "\n\nCURRICULUM TIE-IN (this week's words): "
+            + ", ".join(f"\"{w}\"" for w in vocab_list) + ".\n"
+            "Weave SEVERAL of these words NATURALLY into the dialogue and narration "
+            "so a learner meets them in a real context — never as a list, a "
+            "definition, or a vocabulary lesson. If a word doesn't fit the scene, "
+            "skip it rather than force it.")
+
     cameo_block = ""
     cameo_names_list = [c.get("story_name") for c in (student_cameos or [])
                         if c.get("story_name")]
@@ -239,7 +264,7 @@ CAST (use these names EXACTLY; each maps to a distinct voice — you may not inv
 new named characters, only use these{" plus the GUEST LEARNERS listed below" if cameo_names_list else ""}):
 {sawt_bible.character_brief()}
 Use 2–4 speaking characters this episode (not all at once) — lively but not
-confusing for a learner. Feature the arc's leads above.{cameo_block}
+confusing for a learner. Feature the arc's leads above.{cameo_block}{vocab_block}{arabic_block}
 
 STYLE:
 - CLEAR simple English (learners), but genuinely suspenseful and cinematic.
@@ -340,7 +365,8 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
                            arc: dict = None, is_arc_opener: bool = False,
                            is_arc_finale: bool = False, past_choices: list = None,
                            motif_seen: bool = False,
-                           student_cameos: list = None) -> Optional[dict]:
+                           student_cameos: list = None,
+                           vocabulary: list = None) -> Optional[dict]:
     """Generate the next Empire Chronicles episode (arc-aware). Returns a dict with
     keys title, script, recap, facts, mood, vote_a, vote_b, motif_used — or None if
     the LLM is unavailable or no attempt passes validation. Never raises.
@@ -361,7 +387,7 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
         previous_summary, winning_choice, episode_number, level=level, arc=arc,
         is_arc_opener=is_arc_opener, is_arc_finale=is_arc_finale,
         past_choices=past_choices, motif_seen=motif_seen,
-        student_cameos=student_cameos)
+        student_cameos=student_cameos, vocabulary=vocabulary)
 
     # Lazily import the validator so a broken validator import can never take the
     # generator down; if it's unavailable we fall back to the structural check.
