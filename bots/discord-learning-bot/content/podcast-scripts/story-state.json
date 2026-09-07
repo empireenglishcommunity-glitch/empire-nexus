@@ -1,5 +1,29 @@
 {
-  "episode_number": 1,
-  "recap": "Maya, new in the city, hears a strange knocking from the locked, empty apartment next door, where a soft blue light glows under the door. A cautious neighbour, Leo, says he has heard it every night and warns that the last person to open it never told anyone what they saw. As the freezing door handle begins to turn by itself, Maya must decide whether to open it or run.",
-  "winning_choice": ""
+  "episode_number": 2,
+  "recap": "Maya enters the Grand City Library through an impossible open gate. She finds a warm, blank book and a brass key with a red ribbon on the table. The book reveals the word 'Run' in glowing blue ink, and the library begins to feel dangerous.",
+  "winning_choice": "",
+  "motif_seen": true,
+  "past_choices": [],
+  "arc": {
+    "arc_id": 1,
+    "genre": "mystery",
+    "setting": "an old library after closing",
+    "premise": "something small is out of place, and no one else has noticed",
+    "mood": "mystery",
+    "curiosity": "unanswered-question",
+    "leads": [
+      "Maya",
+      "Leo",
+      "Mrs. Adel"
+    ],
+    "episode_in_arc": 1,
+    "planned_episodes": 6,
+    "established_facts": [
+      "The library’s side gate was open despite being locked from the outside.",
+      "There is a book with no title and blank pages that feels warm.",
+      "A brass key with a worn red ribbon was found on the central table.",
+      "The book wrote the word 'Run' in glowing blue ink."
+    ],
+    "previous_genre": null
+  }
 }

@@ -1,0 +1,333 @@
+{
+  "passed": true,
+  "attempts": 1,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "passed": true,
+      "failures": [],
+      "unmeasured_critical": [],
+      "failing_lines": []
+    }
+  ],
+  "out_path": "content/podcast-audio/chronicles-ep02.mp3",
+  "level": "A2",
+  "music": "mystery",
+  "used_assets": [
+    "calm_mysterious_eerie_9.ogg"
+  ],
+  "credit": "Music & sound: Empire English Chronicles Podcast Lab (CC0 — see content/podcast-lab/CREDITS.md).",
+  "elapsed_seconds": 253.1,
+  "report": {
+    "audio": "/tmp/eec_gated_mj76ykjx/attempt1.mp3",
+    "level": "A2",
+    "standard": {
+      "wer_max": 0.05,
+      "flatness_max": 0.012,
+      "hard_cuts_max": 2,
+      "lufs_target": -16.0,
+      "lufs_tolerance": 1.0,
+      "true_peak_max_dbtp": -1.0,
+      "dead_air_max_s": 2.5,
+      "speech_over_bed_min_db": 12.0,
+      "min_line_seconds": 0.4,
+      "bandwidth_is_diagnostic_only": true,
+      "critical_metrics": [
+        "wer",
+        "hard_cuts",
+        "loudness_lufs",
+        "true_peak_dbtp"
+      ],
+      "max_render_attempts": 3
+    },
+    "metrics": {
+      "wer": {
+        "status": "PASS",
+        "value": 0.047,
+        "threshold": 0.05,
+        "note": "681 reference words"
+      },
+      "flatness": {
+        "status": "INFO",
+        "value": 0.0024,
+        "threshold": 0.012,
+        "note": "mastered mix: DIAGNOSTIC ONLY (music bed masks voice naturalness) - gate this on per-line voice stems instead"
+      },
+      "hard_cuts": {
+        "status": "PASS",
+        "value": 0,
+        "threshold": 2,
+        "note": "none"
+      },
+      "loudness_lufs": {
+        "status": "PASS",
+        "value": -16.01,
+        "threshold": "-16.0 +/- 1.0",
+        "note": ""
+      },
+      "true_peak_dbtp": {
+        "status": "PASS",
+        "value": -2.06,
+        "threshold": -1.0,
+        "note": ""
+      },
+      "dead_air_s": {
+        "status": "PASS",
+        "value": 1.51,
+        "threshold": 2.5,
+        "note": "146 gaps; script pause budget 2.0s"
+      },
+      "speech_over_bed_db": {
+        "status": "PASS",
+        "value": 32.2,
+        "threshold": 12.0,
+        "note": "proxy measurement"
+      },
+      "duration_s": {
+        "status": "PASS",
+        "value": 365.2,
+        "threshold": "300.0-420.0",
+        "note": "CEFR profile for A2"
+      },
+      "bandwidth_above_3k4_pct": {
+        "status": "INFO",
+        "value": 3.7,
+        "threshold": null,
+        "note": "diagnostic only - never a pass/fail criterion"
+      }
+    },
+    "passed": true,
+    "duration_seconds": 365.16,
+    "transcript": "Welcome to Empire English Chronicles, last time Maya left her apartment with a secret.  But today we step into a different world.  Here is night, the air is cold and still.  The Grand City Library stands tall against the dark sky.  Its windows are dark but inside.  Something is wrong.  Maya stands in the tall lobby.  The floor is made of old wood.  It creeks under her shoes.  It is too quiet. I can hear my own heartbeat.  Maya looks at the grand clock on the wall.  It stops at midnight.  The second hand does not move.  She looks around.  The shelves rise high.  Full of old books, the air smells of dust and paper.  A light appears in the distance.  Leo walks toward her.  He looks worried.  He holds his flashlight low.  You should not be here, Maya.  My key only opens the front door.  It does not open the restricted wing.  How did you get in?  I did not use a key.  The side gate was open.  I just walked in.  That is not possible.  The gate is locked from the outside.  I checked it an hour ago.  Maya does not like the sound of Leo's voice.  Here is steady, but shanky.  She notices a small detail on the central table.  A single book lies open.  The pages are blank, but the spine has no title.  Here is just smooth, white leather.  What is that?  Do not touch it.  Before Leo can stop her, Maya reaches out.  The book feels warm under her fingers.  The leather is soft.  She looks up.  Meth is a dell.  Stands by the stairs.  She holds a brass key in her hand.  A worn red ribbon is tied to the top of the key.  The key is on a long chain.  The book is waiting Maya.  It has been waiting for a long time.  Mrs. Medell, are you the gatekeeper?  I am just a reader, but tonight the library speaks.  Do you hear it?  The clock on the wall makes a deep, slow tick, but it is not coming from the clock.  Here is coming from the book.  The blank pages begin to ripple, like water in a small breeze.  Maya, listen to me.  We have to go now.  Now, look at the cover.  The leather is moving.  Something is trying to get out.  The light from Leo's flashlight flickers.  The shadows in the library stretch and grow long.  Meth is a dell.  Smiles gently.  She places the brass key on the table.  Next to the open book, the key hangs over the edge.  Some doors are not made of wood, Leo.  They are made of words.  And this book is the lock.  That is not true.  It is a trick, a hallucination.  Maya, stop looking at it.  It knows my name, Leo.  I can feel it.  The temperature drops.  Maya's breath becomes visible in the cold air.  The brass key swings on its chain.  Even though there is no wind in the room.  It swings toward the edge of the table.  It makes a tiny, metallic sound.  Clink!  Clink!  It is almost on the floor.  A knock comes from the wall.  Behind the shelves.  It is sharp.  Enthistant.  Knock!  Knock!  Knock!  Who is there?  No one answers.  The knocking stops.  But the book opens one page further.  A single word appears on the page.  Here is written in ink.  That glows a soft blue.  The word is run.  It says run.  It says leave.  Maya, sayy's myth is.  Her dell, the old woman, is no longer smiling.  Her face is pale.  She looks at the brass key.  Then at Maya, she steps back.  Away from the table.  The key is not for the door, Maya.  It is for you.  Decide.  The blue ink on the page begins to spread.  It creeps toward the edge of the book.  The air feels heavy, pressing down.  On Maya's chest, the library is holding its breath.  Two choices stand before you.  Walk away and forget the strange library.  Or take the brass key and try to close the book.",
+    "failures": [],
+    "unmeasured_critical": [],
+    "failing_lines": [],
+    "line_detail": [
+      {
+        "index": 1,
+        "character": "narrator",
+        "seconds": 18.25,
+        "issues": [],
+        "text": "Welcome to Empire English Chronicles. Last time, Maya left her apartment with a secret, but today, we step into a different world. It is night. The air is cold and still."
+      },
+      {
+        "index": 2,
+        "character": "narrator",
+        "seconds": 21.54,
+        "issues": [],
+        "text": "The Grand City Library stands tall against the dark sky. Its windows are dark. But inside, something is wrong. Maya stands in the tall lobby. The floor is made of old wood. It creaks under her shoes."
+      },
+      {
+        "index": 3,
+        "character": "maya",
+        "seconds": 3.95,
+        "issues": [],
+        "text": "It is too quiet. I can hear my own heartbeat."
+      },
+      {
+        "index": 4,
+        "character": "narrator",
+        "seconds": 19.59,
+        "issues": [],
+        "text": "Maya looks at the grand clock on the wall. It stops at midnight. The second hand does not move. She looks around. The shelves rise high, full of old books. The air smells of dust and paper."
+      },
+      {
+        "index": 5,
+        "character": "narrator",
+        "seconds": 10.08,
+        "issues": [],
+        "text": "A light appears in the distance. Leo walks toward her. He looks worried. He holds his flashlight low."
+      },
+      {
+        "index": 6,
+        "character": "leo",
+        "seconds": 9.91,
+        "issues": [],
+        "text": "You should not be here, Maya. My key only opens the front door. It does not open the restricted wing. How did you get in?"
+      },
+      {
+        "index": 7,
+        "character": "maya",
+        "seconds": 5.39,
+        "issues": [],
+        "text": "I did not use a key. The side gate was open. I just walked in."
+      },
+      {
+        "index": 8,
+        "character": "leo",
+        "seconds": 7.11,
+        "issues": [],
+        "text": "That is not possible. The gate is locked from the outside. I checked it an hour ago."
+      },
+      {
+        "index": 9,
+        "character": "narrator",
+        "seconds": 25.28,
+        "issues": [],
+        "text": "Maya does not like the sound of Leo’s voice. It is steady, but shaky. She notices a small detail. On the central table, a single book lies open. The pages are blank. But the spine has no title. It is just smooth, white leather."
+      },
+      {
+        "index": 10,
+        "character": "maya",
+        "seconds": 1.22,
+        "issues": [],
+        "text": "What is that?"
+      },
+      {
+        "index": 11,
+        "character": "leo",
+        "seconds": 1.58,
+        "issues": [],
+        "text": "Do not touch it."
+      },
+      {
+        "index": 12,
+        "character": "narrator",
+        "seconds": 28.77,
+        "issues": [],
+        "text": "Before Leo can stop her, Maya reaches out. The book feels warm. Under her fingers, the leather is soft. She looks up. Mrs. Adel stands by the stairs. She holds a brass key in her hand. A worn red ribbon is tied to the top of the key. The key is on a long chain."
+      },
+      {
+        "index": 13,
+        "character": "mrs_adel",
+        "seconds": 4.81,
+        "issues": [],
+        "text": "The book is waiting, Maya. It has been waiting for a long time."
+      },
+      {
+        "index": 14,
+        "character": "maya",
+        "seconds": 3.64,
+        "issues": [],
+        "text": "Mrs. Adel? Are you the gatekeeper?"
+      },
+      {
+        "index": 15,
+        "character": "mrs_adel",
+        "seconds": 5.65,
+        "issues": [],
+        "text": "I am just a reader. But tonight, the library speaks. Do you hear it?"
+      },
+      {
+        "index": 16,
+        "character": "narrator",
+        "seconds": 18.02,
+        "issues": [],
+        "text": "The clock on the wall makes a deep, slow tick. But it is not coming from the clock. It is coming from the book. The blank pages begin to ripple, like water in a small breeze."
+      },
+      {
+        "index": 17,
+        "character": "leo",
+        "seconds": 4.29,
+        "issues": [],
+        "text": "Maya, listen to me. We have to go. Now."
+      },
+      {
+        "index": 18,
+        "character": "maya",
+        "seconds": 5.95,
+        "issues": [],
+        "text": "No. Look at the cover. The leather is moving. Something is trying to get out."
+      },
+      {
+        "index": 19,
+        "character": "narrator",
+        "seconds": 22.29,
+        "issues": [],
+        "text": "The light from Leo’s flashlight flickers. The shadows in the library stretch and grow long. Mrs. Adel smiles gently. She places the brass key on the table next to the open book. The key hangs over the edge."
+      },
+      {
+        "index": 20,
+        "character": "mrs_adel",
+        "seconds": 7.06,
+        "issues": [],
+        "text": "Some doors are not made of wood, Leo. They are made of words. And this book is the lock."
+      },
+      {
+        "index": 21,
+        "character": "leo",
+        "seconds": 7.26,
+        "issues": [],
+        "text": "That is not true. It is a trick. A hallucination. Maya, stop looking at it."
+      },
+      {
+        "index": 22,
+        "character": "maya",
+        "seconds": 3.61,
+        "issues": [],
+        "text": "It knows my name, Leo. I can feel it."
+      },
+      {
+        "index": 23,
+        "character": "narrator",
+        "seconds": 27.22,
+        "issues": [],
+        "text": "The temperature drops. Maya’s breath becomes visible in the cold air. The brass key swings on its chain, even though there is no wind in the room. It swings toward the edge of the table. It makes a tiny, metallic sound. Clink. Clink. It is almost on the floor."
+      },
+      {
+        "index": 24,
+        "character": "narrator",
+        "seconds": 10.64,
+        "issues": [],
+        "text": "A knock comes from the wall behind the shelves. It is sharp. Insistent. Knock. Knock. Knock."
+      },
+      {
+        "index": 25,
+        "character": "leo",
+        "seconds": 1.31,
+        "issues": [],
+        "text": "Who is there?"
+      },
+      {
+        "index": 26,
+        "character": "narrator",
+        "seconds": 19.62,
+        "issues": [],
+        "text": "No one answers. The knocking stops. But the book opens one page further. A single word appears on the page. It is written in ink that glows a soft blue. The word is: Run."
+      },
+      {
+        "index": 27,
+        "character": "maya",
+        "seconds": 1.3,
+        "issues": [],
+        "text": "It says run."
+      },
+      {
+        "index": 28,
+        "character": "leo",
+        "seconds": 1.48,
+        "issues": [],
+        "text": "It says leave."
+      },
+      {
+        "index": 29,
+        "character": "narrator",
+        "seconds": 17.71,
+        "issues": [],
+        "text": "Mayan sees Mrs. Adel. The old woman is no longer smiling. Her face is pale. She looks at the brass key, then at Maya. She steps back, away from the table."
+      },
+      {
+        "index": 30,
+        "character": "mrs_adel",
+        "seconds": 5.07,
+        "issues": [],
+        "text": "The key is not for the door, Maya. It is for you. Decide."
+      },
+      {
+        "index": 31,
+        "character": "narrator",
+        "seconds": 16.6,
+        "issues": [],
+        "text": "The blue ink on the page begins to spread. It creeps toward the edge of the book. The air feels heavy. Pressing down on Maya’s chest. The library is holding its breath."
+      },
+      {
+        "index": 32,
+        "character": "narrator",
+        "seconds": 12.87,
+        "issues": [],
+        "text": "Two choices stand before you. Walk away and forget the strange library? Or take the brass key and try to close the book?"
+      }
+    ],
+    "attempt": 1
+  }
+}

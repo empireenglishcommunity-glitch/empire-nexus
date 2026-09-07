@@ -1,31 +1,75 @@
-Narrator: Welcome to Empire English Chronicles. Last time, Maya heard a strange knocking and saw a blue light under a locked door.
-Narrator: Maya takes a deep breath. The cold handle turns by itself.
-[SFX:creak]
-Narrator: The door opens slowly, revealing a dark hallway. A soft blue glow spills into the room.
-Maya: Hello? Is anyone there?
-Narrator: The light swirls around her feet. The air feels cold and still.
-[SFX:shimmer]
-Maya: I can see a hallway. It is empty, but the walls... they are covered with strange symbols.
-Narrator: Maya steps forward. The symbols pulse gently, like a quiet heartbeat.
-Maya: What does this mean? Who left these marks?
-Narrator: A low voice echoes from the darkness.
-The Stranger: You have entered the space between.
-Maya: Who are you? Show yourself!
-Narrator: The voice does not answer. Instead, a faint wind brushes past her, carrying a faint scent of rain.
-Maya: I feel... I feel like I should keep moving.
-Narrator: She sees a door at the far end, also glowing blue.
-Maya: There is another door. Maybe it leads out.
-Narrator: A cold hand seems to brush her shoulder, then fades.
-[Maya pauses, listening]
-Narrator: The hallway is silent. The blue light flickers, as if waiting.
-[MAYA looks back toward the entrance]
-Maya: I can go back. I can close the door.
-Narrator: The blue light grows brighter, filling the hallway.
-[SFX:shimmer]
-Narrator: The air vibrates. A shadow moves at the far wall.
-The Stranger: Choose, Maya. Stay, or go.
-Narrator: The shadow turns, revealing a narrow stairway descending into darkness.
-Maya: I must decide.
-Narrator: What will Maya do next? Will she follow the stairway down, or will she return to the safety of the hallway?
-Narrator: Vote below. Tomorrow, the story continues the way you choose.
-Narrator: Vote A: Maya walks down the stairway. Vote B: Maya returns to the hallway.
+Narrator: Welcome to Empire English Chronicles. Last time, Maya left her apartment with a secret, but today, we step into a different world. It is night. The air is cold and still.
+
+[SFX:wind]
+
+Narrator: The Grand City Library stands tall against the dark sky. Its windows are dark. But inside, something is wrong. Maya stands in the tall lobby. The floor is made of old wood. It creaks under her shoes.
+
+Maya: It is too quiet. I can hear my own heartbeat.
+
+Narrator: Maya looks at the grand clock on the wall. It stops at midnight. The second hand does not move. She looks around. The shelves rise high, full of old books. The air smells of dust and paper.
+
+[SFX:footsteps]
+
+Narrator: A light appears in the distance. Leo walks toward her. He looks worried. He holds his flashlight low.
+
+Leo: You should not be here, Maya. My key only opens the front door. It does not open the restricted wing. How did you get in?
+
+Maya: I did not use a key. The side gate was open. I just walked in.
+
+Leo: That is not possible. The gate is locked from the outside. I checked it an hour ago.
+
+Narrator: Maya does not like the sound of Leo’s voice. It is steady, but shaky. She notices a small detail. On the central table, a single book lies open. The pages are blank. But the spine has no title. It is just smooth, white leather.
+
+Maya: What is that?
+
+Leo: Do not touch it.
+
+Narrator: Before Leo can stop her, Maya reaches out. The book feels warm. Under her fingers, the leather is soft. She looks up. Mrs. Adel stands by the stairs. She holds a brass key in her hand. A worn red ribbon is tied to the top of the key. The key is on a long chain.
+
+Mrs. Adel: The book is waiting, Maya. It has been waiting for a long time.
+
+Maya: Mrs. Adel? Are you the gatekeeper?
+
+Mrs. Adel: I am just a reader. But tonight, the library speaks. Do you hear it?
+
+[SFX:clock]
+
+Narrator: The clock on the wall makes a deep, slow tick. But it is not coming from the clock. It is coming from the book. The blank pages begin to ripple, like water in a small breeze.
+
+Leo: Maya, listen to me. We have to go. Now.
+
+Maya: No. Look at the cover. The leather is moving. Something is trying to get out.
+
+Narrator: The light from Leo’s flashlight flickers. The shadows in the library stretch and grow long. Mrs. Adel smiles gently. She places the brass key on the table next to the open book. The key hangs over the edge.
+
+Mrs. Adel: Some doors are not made of wood, Leo. They are made of words. And this book is the lock.
+
+Leo: That is not true. It is a trick. A hallucination. Maya, stop looking at it.
+
+Maya: It knows my name, Leo. I can feel it.
+
+Narrator: The temperature drops. Maya’s breath becomes visible in the cold air. The brass key swings on its chain, even though there is no wind in the room. It swings toward the edge of the table. It makes a tiny, metallic sound. Clink. Clink. It is almost on the floor.
+
+[SFX:knock]
+
+Narrator: A knock comes from the wall behind the shelves. It is sharp. Insistent. Knock. Knock. Knock.
+
+Leo: Who is there?
+
+Narrator: No one answers. The knocking stops. But the book opens one page further. A single word appears on the page. It is written in ink that glows a soft blue. The word is: Run.
+
+Maya: It says run.
+
+Leo: It says leave.
+
+Narrator: Mayan sees Mrs. Adel. The old woman is no longer smiling. Her face is pale. She looks at the brass key, then at Maya. She steps back, away from the table.
+
+Mrs. Adel: The key is not for the door, Maya. It is for you. Decide.
+
+Narrator: The blue ink on the page begins to spread. It creeps toward the edge of the book. The air feels heavy. Pressing down on Maya’s chest. The library is holding its breath.
+
+[PAUSE 2s]
+
+Narrator: Two choices stand before you. Walk away and forget the strange library? Or take the brass key and try to close the book?
+
+Vote below. Tomorrow, the story continues the way you choose.
