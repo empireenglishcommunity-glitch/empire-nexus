@@ -88,13 +88,26 @@ CAST = {
     },
     "maya": {
         "display": "Maya",
+        # ── v1 LAUNCH DECISION (2026-09-07, owner-approved) ─────────────────
+        # Maya is TEMPORARILY voiced by Kokoro instead of Mai's Chatterbox clone.
+        # WHY: the clone engine is the pipeline's slowest AND flakiest part —
+        # measured in CI it took ~24 min for 13 lines and randomly failed a line
+        # (token-repetition -> forced EOS -> no audio), which crashed the whole
+        # gated render. Kokoro-only makes the render ~3-4 min, single-engine, and
+        # glitch-free, so we can SHIP a real daily episode now. Mai's real cloned
+        # voice is a planned upgrade on the working system — restore by setting
+        # engine=ENGINE_CLONE + clone_ref=CLONE_REF_MAI (kept below, commented).
+        # ─────────────────────────────────────────────────────────────────────
         "gender": "female",
-        "engine": ENGINE_CLONE,         # Mai's REAL voice — the owner's requirement
-        "clone_ref": CLONE_REF_MAI,
+        "engine": ENGINE_KOKORO,
+        "voice_id": "af_bella",         # warm, expressive young female — distinct
+                                        # from Sara(af_aoede)/Mrs.Adel(af_kore)/Nour(af_nova)
+        # "engine": ENGINE_CLONE, "clone_ref": CLONE_REF_MAI,  # ← restore for Mai's real voice
         "speed_factor": 1.0,
         "match": ("maya", "mai"),
         "role": "The protagonist. Curious, brave, thinks out loud.",
-        "benchmark": {"note": "real consented human voice; accepted by the owner"},
+        "benchmark": {"note": "v1: Kokoro af_bella (temporary); Mai's clone to be "
+                              "restored once the daily pipeline is proven live"},
     },
     "leo": {
         "display": "Leo",

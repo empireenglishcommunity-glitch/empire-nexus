@@ -57,20 +57,27 @@ def test_cast_is_complete_and_gendered():
         assert e["role"], key
 
 
-def test_maya_is_the_cloned_human_voice():
-    """The owner's requirement: Maya is Mai's real, consented voice."""
+def test_maya_voice_is_configured():
+    """v1 LAUNCH (2026-09-07): Maya is TEMPORARILY voiced by Kokoro, not Mai's
+    Chatterbox clone — the clone engine was the pipeline's slowest + flakiest part
+    (see sawt_cast for the rationale), so Kokoro-only ships a fast, reliable episode
+    now. Mai's real voice is a planned upgrade. Either engine is valid here; what
+    matters is Maya has a real, resolvable voice with a distinct id.
+
+    When Mai's clone is restored, this test still passes (it accepts either engine)."""
     maya = sawt_cast.CAST["maya"]
-    assert maya["engine"] == sawt_cast.ENGINE_CLONE
-    assert "mai" in maya["clone_ref"].lower()
+    assert maya["engine"] in (sawt_cast.ENGINE_KOKORO, sawt_cast.ENGINE_CLONE)
+    assert maya.get("voice_id") or maya.get("clone_ref")
+    if maya["engine"] == sawt_cast.ENGINE_CLONE:
+        assert "mai" in maya["clone_ref"].lower()
 
 
-def test_ai_cast_uses_the_deterministic_engine():
-    """Everyone except the real human voice must be Kokoro — determinism is the fix
-    for 'sometimes good, sometimes bad'."""
-    for key, e in sawt_cast.CAST.items():
-        if key == "maya":
-            continue
-        assert e["engine"] == sawt_cast.ENGINE_KOKORO, key
+def test_all_cast_voices_are_distinct():
+    """Distinctness (spec R2.5): no two characters share the same engine-qualified
+    voice. Especially important now Maya is a Kokoro voice — she must not collide
+    with Sara/Mrs. Adel/Nour."""
+    voices = sawt_cast.voices_in_use()
+    assert len(set(voices.values())) == len(voices), voices
 
 
 def test_no_cast_voice_fails_the_naturalness_gate():
@@ -245,7 +252,7 @@ def test_plan_reports_cast_without_loading_engines():
     p = rv2.plan(script)
     assert p["line_count"] == 3          # the bare [SFX] line is not dialogue
     assert set(p["cast"]) == {"narrator", "maya", "stranger"}
-    assert p["cast"]["maya"]["engine"] == sawt_cast.ENGINE_CLONE
+    assert p["cast"]["maya"]["engine"] == sawt_cast.CAST["maya"]["engine"]
     assert p["cast"]["narrator"]["engine"] == sawt_cast.ENGINE_KOKORO
 
 

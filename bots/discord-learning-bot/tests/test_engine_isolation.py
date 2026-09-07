@@ -130,13 +130,20 @@ def test_batch_synth_groups_by_engine_and_caches(monkeypatch, tmp_path):
 
     monkeypatch.setattr(_sp, "run", fake_run)
 
-    # Narrator (kokoro) + Maya (clone) + Narrator again -> 2 kokoro, 1 clone.
+    # Three lines from the real cast. The batch groups by whatever engine each
+    # character actually uses (v1 cast is all Kokoro; if Mai's clone is restored,
+    # a clone worker would also be invoked — the assertion derives the expected
+    # engines from the cast so it stays correct either way).
+    from src import sawt_cast
     segs = [("Narrator", "Hello there."), ("Maya", "I am here."),
             ("Narrator", "And so it began.")]
+    expected_engines = sorted({
+        "clone" if sawt_cast.character_for(lbl)["engine"] == sawt_cast.ENGINE_CLONE
+        else "kokoro" for lbl, _ in segs})
     cache, paths = mod._batch_synth_isolated(segs, "A2", tmp_path)
     assert set(cache.keys()) == {1, 2, 3}          # all three lines cached
     assert set(paths.keys()) == {1, 2, 3}          # and a stem path per line
-    assert sorted(engines_invoked) == ["clone", "kokoro"]   # one worker per engine
+    assert sorted(set(engines_invoked)) == expected_engines  # one worker per engine
     for y in cache.values():
         assert len(y) == mod.SR                     # 1s @ SR
 
