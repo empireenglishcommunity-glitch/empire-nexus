@@ -60,27 +60,20 @@ jobs:
           # measured the gate fails closed). faster-whisper runs on CPU.
           pip install --quiet faster-whisper
 
-      - name: Build ISOLATED TTS engine venvs (Kokoro numpy>=2, Chatterbox numpy<2)
+      - name: Build the Kokoro TTS engine venv
         run: |
-          # The two engines have incompatible numpy pins, so each gets its own venv.
-          # The renderer calls scripts/voice_worker.py under the right one per line.
+          # v1 is KOKORO-ONLY: the whole cast (incl. Maya) is voiced by Kokoro, so
+          # there is no Chatterbox clone engine to isolate. One venv, fast + reliable.
+          # (When Mai's cloned voice is restored, add a separate numpy<2 chatterbox
+          # venv here + set EEC_CLONE_PYTHON below — the isolation code still supports
+          # it.) The venv also needs the renderer's per-line deps (librosa/soundfile/
+          # scipy) and python-dotenv (src.config is imported for CEFR pace).
           set -e
-          # Each venv also needs the audio-processing deps the renderer's per-line
-          # synth path uses (render_story_v2.synth_line -> librosa/soundfile/scipy)
-          # and python-dotenv (src.config is imported for CEFR pace). numpy is pinned
-          # to each engine's requirement.
           python3 -m venv "$RUNNER_TEMP/venv-kokoro"
           "$RUNNER_TEMP/venv-kokoro/bin/pip" install --quiet --upgrade pip
           "$RUNNER_TEMP/venv-kokoro/bin/pip" install --quiet \
             "kokoro-onnx==0.4.9" soundfile librosa scipy "numpy>=2.0.2" python-dotenv
-
-          python3 -m venv "$RUNNER_TEMP/venv-clone"
-          "$RUNNER_TEMP/venv-clone/bin/pip" install --quiet --upgrade pip
-          "$RUNNER_TEMP/venv-clone/bin/pip" install --quiet \
-            chatterbox-tts soundfile librosa scipy python-dotenv
-          # Sanity: each engine imports in its own venv (fail the build early if not).
           "$RUNNER_TEMP/venv-kokoro/bin/python" -c "import kokoro_onnx, numpy; print('kokoro venv ok, numpy', numpy.__version__)"
-          "$RUNNER_TEMP/venv-clone/bin/python" -c "import chatterbox, numpy; print('clone venv ok, numpy', numpy.__version__)"
 
       - name: Generate the next episode script (continuing the winning vote)
         env:
@@ -94,11 +87,11 @@ jobs:
 
       - name: Render the episode (GATED v2 — isolated engines + QA gate)
         env:
-          # Turn on engine isolation and point each engine at its own venv. The v2
-          # renderer runs scripts/voice_worker.py under these per line.
+          # Turn on engine isolation and point Kokoro at its venv. The v2 renderer
+          # runs scripts/voice_worker.py under it per line. (v1 is Kokoro-only, so no
+          # EEC_CLONE_PYTHON — restore it alongside a chatterbox venv for Mai's voice.)
           EEC_ISOLATE_ENGINES: "1"
           EEC_KOKORO_PYTHON: ${{ runner.temp }}/venv-kokoro/bin/python
-          EEC_CLONE_PYTHON: ${{ runner.temp }}/venv-clone/bin/python
           # Kokoro model cache in a writable path (default /root/.cache is not
           # writable on the runner). The worker venv reads this env too.
           KOKORO_CACHE_DIR: ${{ runner.temp }}/kokoro-cache
