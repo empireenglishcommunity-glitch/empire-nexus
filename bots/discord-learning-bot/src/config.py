@@ -67,11 +67,22 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 # If generation starts failing with 404, re-list the models the key can use
 # (GET /v1beta/models) and update this — do not assume the key or the code is wrong.
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
-# Ordered fallbacks tried when GEMINI_MODEL itself fails (retirement / 503 spikes).
+# Ordered fallbacks tried when GEMINI_MODEL itself fails. ai_engine now retries the
+# next model on 403/404/429/500/503 — so this chain spans BOTH the newest models
+# AND the broadly-accessible ones, because access is per-key/per-tier:
+#   * measured 2026-09-07: a newly-issued key returned HTTP 403 on every gemini-3.x
+#     model (tier has no access) — so the chain must include a model the key CAN
+#     reach or Gemini is dead and we lean entirely on a rate-limited Groq.
+#   * the "-latest" aliases auto-resolve to whatever the key is entitled to, and the
+#     gemini-2.5-* models remain widely available (retire Oct 2026), so they are the
+#     safety net for keys without gemini-3.x access.
+# If generation fails, list what the key can use (GET /v1beta/models) and update.
 GEMINI_MODEL_FALLBACKS = [
     m.strip() for m in os.getenv(
         "GEMINI_MODEL_FALLBACKS",
-        "gemini-3.1-flash-lite,gemini-3.6-flash,gemini-flash-lite-latest"
+        "gemini-3.1-flash-lite,gemini-3.6-flash,"
+        "gemini-flash-latest,gemini-flash-lite-latest,"
+        "gemini-2.5-flash,gemini-2.5-flash-lite"
     ).split(",") if m.strip()
 ]
 # Aql (#15) Phase A1.2: separate from GEMINI_MODEL above (which is the

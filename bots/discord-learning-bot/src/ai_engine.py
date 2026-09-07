@@ -70,8 +70,15 @@ async def _call_gemini(prompt: str, temperature: float = 0.8,
                             continue
                         logger.warning("Gemini API error (%s): %s", model,
                                        resp.status)
-                        # 404 = retired model, 503 = transient spike → try another.
-                        if resp.status not in (404, 503, 429, 500):
+                        # Try the next model on any PER-MODEL failure:
+                        #   404 = retired model, 503 = transient spike,
+                        #   429 = per-model rate limit, 500 = server error,
+                        #   403 = this key/tier can't access THIS model (a
+                        #         different model in the chain often IS allowed —
+                        #         measured 2026-09-07: a key 403'd on gemini-3.x
+                        #         but works on gemini-2.5-flash).
+                        # Only a 401 (bad key) is fatal for every model.
+                        if resp.status not in (403, 404, 429, 500, 503):
                             return None
                 except Exception as e:                           # noqa: BLE001
                     logger.warning("Gemini call failed (%s): %s", model, e)

@@ -91,6 +91,55 @@ async def test_call_gemini_returns_none_without_api_key():
 
 
 @pytest.mark.asyncio
+async def test_gemini_403_falls_through_to_next_model(monkeypatch):
+    """A 403 on one model (key/tier can't access it) must NOT abort — the next
+    model in the chain is tried, and an accessible one succeeds. Regression for
+    the 2026-09-07 production failure where every gemini-3.x model 403'd."""
+    from src import config, ai_engine as ae
+
+    monkeypatch.setattr(config, "GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(config, "GEMINI_MODEL", "gemini-3.5-flash-lite")
+    monkeypatch.setattr(config, "GEMINI_MODEL_FALLBACKS",
+                        ["gemini-2.5-flash"])
+
+    calls = []
+
+    class _Resp:
+        def __init__(self, status, text=""):
+            self.status = status
+            self._text = text
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *a):
+            return False
+
+        async def json(self):
+            return {"candidates": [{"content": {"parts": [{"text": self._text}]}}]}
+
+    class _Session:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *a):
+            return False
+
+        def post(self, url, **kw):
+            # first model 403s, the fallback 200s
+            if "gemini-3.5-flash-lite" in url:
+                calls.append("403")
+                return _Resp(403)
+            calls.append("200")
+            return _Resp(200, "Once upon a time.")
+
+    monkeypatch.setattr(ae.aiohttp, "ClientSession", lambda *a, **k: _Session())
+    out = await ae._call_gemini("write a story")
+    assert out == "Once upon a time."
+    assert calls == ["403", "200"]          # tried model 1 (403) then model 2 (ok)
+
+
+@pytest.mark.asyncio
 async def test_call_groq_returns_none_without_api_key():
     result = await ai_engine._call_groq("any prompt")
     assert result is None
