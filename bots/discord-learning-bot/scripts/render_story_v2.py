@@ -733,10 +733,16 @@ def render(script: str, out_path, level="A2", music="mystery",
                 body = crossfade_append(body, fx, SR)
                 body = append_gap(body, SR, GAP_AFTER_SFX)
 
-        # Deliberate dramatic pauses.
+        # Deliberate dramatic pauses — but a pause creates CONTINUOUS SILENCE, and
+        # the audio QA gate rejects any silence run longer than DEAD_AIR_MAX_S. A
+        # speaker-change gap (up to GAP_SPEAKER_CHANGE) may already precede this
+        # pause in the same turn, so cap the pause so gap+pause stays safely under
+        # the limit. Otherwise a legit "[PAUSE 3s]" before the cliffhanger fails the
+        # whole episode (measured: attempts failed on dead_air_s).
+        _max_pause = max(0.5, STD.DEAD_AIR_MAX_S - GAP_SPEAKER_CHANGE - 0.2)
         for pm in _PAUSE_RE.finditer(raw):
             secs = float(pm.group(1)) if pm.group(1) else 1.0
-            body = append_gap(body, SR, min(secs, 5.0))
+            body = append_gap(body, SR, min(secs, _max_pause))
 
         text = spoken_text(raw)
         if not text:

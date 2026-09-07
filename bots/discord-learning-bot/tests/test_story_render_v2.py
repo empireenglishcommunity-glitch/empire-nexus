@@ -336,3 +336,43 @@ def test_truncated_json_fails_cleanly_rather_than_crashing():
     from src import sawt_story
     assert sawt_story._extract_json('{"title":"X","script":"Narrator: hel') is None
     assert sawt_story._valid_episode(None) is False
+
+
+
+def test_rendered_pauses_never_exceed_the_dead_air_limit(tmp_path, monkeypatch):
+    """A big [PAUSE] in the script must NOT create a silence run longer than the
+    QA gate allows (DEAD_AIR_MAX_S). Regression for the production run that failed
+    the gate on 'dead_air_s' because a [PAUSE 2s] stacked on a speaker-change gap.
+
+    We stub synthesis with short voiced blips so the ONLY long silences are the
+    composed gaps/pauses, then measure the worst silence run the same way the gate
+    does."""
+    import soundfile as sf
+    qa = _load("audio_qa", "scripts/audio_qa.py")
+
+    # Stub every line to 0.5s of tone so silence runs come only from gaps/pauses.
+    def fake_synth_line(text, ch, level, kokoro, clone):
+        n = int(rv2.SR * 0.5)
+        t = np.linspace(0, 0.5, n, endpoint=False)
+        return (0.2 * np.sin(2 * np.pi * 180 * t)).astype("float32")
+
+    monkeypatch.setattr(rv2, "synth_line_for",
+                        lambda *a, **k: fake_synth_line(a[0], a[1], a[2], None, None))
+    # Neither real engine is available in the test env; stub their constructors so
+    # render() doesn't try to load them (synth_line_for is stubbed anyway).
+    monkeypatch.setattr(rv2, "KokoroEngine", lambda: object())
+    monkeypatch.setattr(rv2, "CloneEngine", lambda ref: object())
+
+    # Narrator only (kokoro) keeps the stub path simple while still exercising the
+    # PAUSE handling; Maya would need the clone engine which we don't load in tests.
+    script = ("Narrator: The house was very quiet tonight.\n"
+              "Narrator: Is anyone there? [PAUSE 5s]\n"
+              "Narrator: No one answered, and the light went out.\n")
+    out = tmp_path / "ep.mp3"
+    rv2.render(script, out, level="A2", music="none", sound_design=False)
+
+    y, sr = sf.read(str(out))
+    if y.ndim > 1:
+        y = y.mean(axis=1)
+    worst, _runs = qa.measure_dead_air(np.asarray(y, dtype="float32"), sr)
+    assert worst <= STD.DEAD_AIR_MAX_S, f"worst silence {worst}s exceeds limit"

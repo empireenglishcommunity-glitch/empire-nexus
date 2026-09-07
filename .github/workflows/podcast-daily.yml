@@ -56,6 +56,9 @@ jobs:
           # and the QA gate — none of which need a TTS engine, so no numpy conflict.
           pip install --quiet aiohttp python-dotenv setuptools
           pip install --quiet soundfile librosa "numpy>=2" scipy pyloudnorm
+          # ASR for the QA gate's WER check (a CRITICAL metric — if it can't be
+          # measured the gate fails closed). faster-whisper runs on CPU.
+          pip install --quiet faster-whisper
 
       - name: Build ISOLATED TTS engine venvs (Kokoro numpy>=2, Chatterbox numpy<2)
         run: |
