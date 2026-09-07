@@ -109,16 +109,21 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 # by suitability:
 #   * qwen/qwen3.8-27b — VERIFIED best: a standard instruction model that wrote a
 #     full valid 778-word A2 episode on the server. Clean output, no <think> block.
-#   * qwen/qwen3.6-27b is deliberately NOT used — it emits <think> reasoning that
-#     pollutes the JSON.
+#   * groq/compound and groq/compound-mini — VERIFIED clean-JSON instruction models
+#     the key CAN reach; used as the primary fallbacks when qwen is rate-limited
+#     (429). Measured 2026-09-08: both returned a well-formed episode JSON with no
+#     <think> pollution (compound-mini has reasoning_len=0).
+#   * qwen/qwen3.6-27b emits <think> reasoning; it IS in the chain but its output is
+#     sanitised (the <think>…</think> block is stripped) before JSON parsing.
 #   * openai/gpt-oss-120b / -20b are REASONING models (can return empty-200 on long
-#     output) but are known-accessible, so they're the fallback.
+#     output), so they are LAST — a known-accessible but unreliable last resort.
 # generation tries the CHAIN and uses the first model that returns real text; a
 # 404/400/5xx on one model moves to the next. All overridable via env.
 GROQ_STORY_MODEL = os.getenv("GROQ_STORY_MODEL", "qwen/qwen3.8-27b")
 GROQ_STORY_MODEL_FALLBACKS = [
     m.strip() for m in os.getenv(
         "GROQ_STORY_MODEL_FALLBACKS",
+        "groq/compound,groq/compound-mini,qwen/qwen3.6-27b,"
         "openai/gpt-oss-120b,openai/gpt-oss-20b"
     ).split(",") if m.strip()
 ]
