@@ -410,3 +410,35 @@ async def test_story_uses_groq_primary_and_the_story_model_not_gemini(monkeypatc
     assert gemini_called["n"] == 0, "Gemini must not be called when Groq succeeds"
     assert used_model["model"] == config.GROQ_STORY_MODEL
     assert "versatile" in config.GROQ_STORY_MODEL     # a standard instruction model
+
+
+
+@pytest.mark.asyncio
+async def test_story_tries_next_groq_model_on_404(monkeypatch):
+    """Groq model access is per-key: a 404 on one model must move to the NEXT model
+    in the chain, not fail generation. Regression for the key that 404s on
+    llama-3.3-70b-versatile but works on a fallback."""
+    from src import sawt_story, config, groq_client
+
+    monkeypatch.setattr(config, "GROQ_API_KEY", "test-key")
+    monkeypatch.setattr(config, "GROQ_STORY_MODEL", "model-a")
+    monkeypatch.setattr(config, "GROQ_STORY_MODEL_FALLBACKS", ["model-b", "model-c"])
+
+    tried = []
+
+    async def fake_chat(payload, timeout_seconds, **kwargs):
+        tried.append(payload["model"])
+
+        class R:
+            pass
+        r = R()
+        if payload["model"] == "model-a":
+            r.ok, r.text, r.status = False, None, 404      # not accessible
+        else:
+            r.ok, r.text, r.status = True, '{"ok":1}', 200  # model-b works
+        return r
+
+    monkeypatch.setattr(groq_client, "chat_completion", fake_chat)
+    out = await sawt_story._call_llm_json("prompt", level="A2")
+    assert out == '{"ok":1}'
+    assert tried == ["model-a", "model-b"], tried   # moved on after the 404

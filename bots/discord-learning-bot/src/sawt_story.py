@@ -392,49 +392,61 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
     7-15s) — waiting beats producing no episode."""
     max_tokens = _max_tokens_for(level)
 
-    # 1) Groq PRIMARY with the dedicated long-form story model.
+    # 1) Groq PRIMARY. Model ACCESS is per-key (measured: this key 404s on
+    #    llama-3.3-70b-versatile), so try a CHAIN of candidate models and use the
+    #    first that returns real text. 404/400 on one model -> try the next.
     if config.GROQ_API_KEY:
         from . import groq_client
-        payload = {
-            "model": getattr(config, "GROQ_STORY_MODEL", config.GROQ_MODEL),
-            "temperature": temperature,
-            "max_tokens": max_tokens,          # sized to the episode; see _max_tokens_for()
-            "messages": [
-                {"role": "system", "content": _STORY_SYSTEM},
-                {"role": "user", "content": prompt},
-            ],
-        }
-        # Retry ladder. Each failure mode needs a DIFFERENT response:
-        #   413            -> asked for too much: SHRINK the completion budget.
-        #   200 + no text  -> model ran out of room: GROW the budget.
-        #   429            -> rate limited: WAIT (offline job), then retry.
-        #   anything else   -> transport/model error: stop, try Gemini if present.
-        budget = max_tokens
-        for attempt in range(1, 4):
-            payload["max_tokens"] = budget
-            try:
-                result = await groq_client.chat_completion(payload,
-                                                           timeout_seconds=120,
-                                                           max_retry_after=20.0)
-                if result.ok and result.text:
-                    return result.text
-                text_len = len(result.text or "")
-                logger.warning("sawt.story: Groq unusable (attempt %s, model=%s, "
-                               "max_tokens=%s, status=%s, text_len=%s)",
-                               attempt, payload["model"], budget, result.status,
-                               text_len)
-                if result.status == 413:
-                    budget = max(1200, int(budget * 0.6))
-                elif result.status == 429:
-                    await asyncio.sleep(min(30, 8 * attempt))
-                elif result.status == 200 and text_len == 0:
-                    budget = min(3200, int(budget * 1.4))
-                else:
+        models = [getattr(config, "GROQ_STORY_MODEL", config.GROQ_MODEL)] + [
+            m for m in getattr(config, "GROQ_STORY_MODEL_FALLBACKS", [])
+            if m != getattr(config, "GROQ_STORY_MODEL", None)
+        ]
+        for model in models:
+            payload = {
+                "model": model,
+                "temperature": temperature,
+                "max_tokens": max_tokens,      # sized to the episode; see _max_tokens_for()
+                "messages": [
+                    {"role": "system", "content": _STORY_SYSTEM},
+                    {"role": "user", "content": prompt},
+                ],
+            }
+            # Per-model retry ladder. Each failure mode needs a DIFFERENT response:
+            #   413            -> asked for too much: SHRINK the completion budget.
+            #   200 + no text  -> model ran out of room: GROW the budget.
+            #   429            -> rate limited: WAIT (offline job), then retry.
+            #   404/400        -> model not accessible to this key: NEXT model.
+            #   anything else   -> transport/model error: NEXT model.
+            budget = max_tokens
+            next_model = False
+            for attempt in range(1, 4):
+                payload["max_tokens"] = budget
+                try:
+                    result = await groq_client.chat_completion(
+                        payload, timeout_seconds=120, max_retry_after=20.0)
+                    if result.ok and result.text:
+                        return result.text
+                    text_len = len(result.text or "")
+                    logger.warning("sawt.story: Groq unusable (model=%s, attempt %s, "
+                                   "max_tokens=%s, status=%s, text_len=%s)",
+                                   model, attempt, budget, result.status, text_len)
+                    if result.status == 413:
+                        budget = max(1200, int(budget * 0.6))
+                    elif result.status == 429:
+                        await asyncio.sleep(min(30, 8 * attempt))
+                    elif result.status == 200 and text_len == 0:
+                        budget = min(3200, int(budget * 1.4))
+                    else:
+                        # 404/400/5xx etc. — this model won't work; try the next one.
+                        next_model = True
+                        break
+                except Exception as e:  # noqa: BLE001
+                    logger.warning("sawt.story: Groq call error (model=%s, "
+                                   "attempt %s): %s", model, attempt, e)
+                    next_model = True
                     break
-            except Exception as e:  # noqa: BLE001
-                logger.warning("sawt.story: Groq call error (attempt %s): %s",
-                               attempt, e)
-                break
+            if next_model:
+                continue
 
     # 2) Gemini LAST RESORT — only if a key is configured. Often unavailable for the
     #    project's key (403/404), so it must never be depended on.
