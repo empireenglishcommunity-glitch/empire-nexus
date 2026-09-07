@@ -251,6 +251,12 @@ def _extract_json(text: str) -> Optional[dict]:
     """Pull the JSON object out of an LLM response (tolerant of code fences)."""
     if not text:
         return None
+    # Strip <think>…</think> reasoning blocks first. Some accessible Groq models
+    # (e.g. qwen/qwen3.6-27b) prepend a reasoning block that can itself contain
+    # braces, which would derail the outermost-{…} match below. Remove it (and any
+    # unclosed trailing "<think>…" with no closer) before looking for the JSON.
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.S | re.I)
+    text = re.sub(r"<think>.*$", "", text, flags=re.S | re.I)
     # Strip ```json fences if present.
     text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
     # Grab the outermost {...}.
@@ -430,8 +436,13 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
             for attempt in range(1, 4):
                 payload["max_tokens"] = budget
                 try:
+                    # This is the OFFLINE daily job (not user-facing), so it can
+                    # afford to honour a longer Retry-After: Groq free-tier 429s on
+                    # the good models come back with 24-35s waits, and WAITING for
+                    # the primary beats cascading to a weaker fallback. 40s covers
+                    # the observed range.
                     result = await groq_client.chat_completion(
-                        payload, timeout_seconds=120, max_retry_after=20.0)
+                        payload, timeout_seconds=120, max_retry_after=40.0)
                     if result.ok and result.text:
                         return result.text
                     text_len = len(result.text or "")
