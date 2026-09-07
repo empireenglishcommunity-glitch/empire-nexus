@@ -284,15 +284,19 @@ def test_prompt_states_the_length_requirement():
 # ── LLM budget + retry ladder (hard-won, live-measured failure modes) ────────
 def test_max_tokens_is_sized_from_the_episode_length():
     """Not a magic number: too small returns EMPTY content from the reasoning
-    model, too large is rejected with HTTP 413 (the cap covers prompt+completion)."""
+    model, and too large is rejected with a rate-limit 429 ("Request too large")
+    on the key's 8000 tokens-per-minute limit (the cap covers prompt+completion).
+    Measured 2026-09-08: max_tokens=1600 wrote a full 930-word episode
+    (completion_tokens=1337, finish_reason=stop) while staying TPM-safe."""
     from src import sawt_story
     a1 = sawt_story._max_tokens_for("A1")
     a2 = sawt_story._max_tokens_for("A2")
     b1 = sawt_story._max_tokens_for("B1")
     assert a1 <= a2 <= b1, (a1, a2, b1)
-    # Inside the window proven to work against the live provider.
+    # Inside the TPM-safe window proven to work against the live provider: big
+    # enough to write the episode, small enough to avoid the 8000-TPM "too large".
     for v in (a1, a2, b1):
-        assert 2000 <= v <= 3200, v
+        assert 900 <= v <= 1600, v
 
 
 @pytest.mark.asyncio

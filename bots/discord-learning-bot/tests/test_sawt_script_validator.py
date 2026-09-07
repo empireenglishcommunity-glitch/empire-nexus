@@ -24,7 +24,7 @@ def _arc():
 
 
 def _good_script(words=430):
-    filler = " ".join(["The old room was quiet and cold and strange tonight."] * 45)
+    filler = " ".join(["The old room was quiet and cold and strange tonight."] * 63)
     return f"""Narrator: Welcome to Empire English Chronicles. Last time, Maya found a brass key.
 Narrator: {filler}
 Maya: Leo, do you hear that sound? Something is moving behind the shelves.

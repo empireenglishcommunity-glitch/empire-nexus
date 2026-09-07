@@ -105,14 +105,19 @@ def _level_word_window(level: str) -> tuple:
     wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
            "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
     # The word window must match what the AUDIO gate actually allows: final duration
-    # = spoken words at `wpm` PLUS ~28s of non-speech overhead (intro/outro/per-line
-    # gaps/pauses). If we allow words up to dmax*(1+slack), the rendered audio blows
-    # past dmax and the duration gate rejects it (measured 2026-09-07: a script the
-    # validator passed rendered to 490s, over A2's 420s). So convert the
-    # OVERHEAD-ADJUSTED duration window to words, with NO positive slack on the high
-    # side (a small negative margin keeps the render comfortably inside).
+    # = spoken words at `wpm` PLUS ~45s of non-speech overhead (intro/outro/per-line
+    # gaps/pauses). BOTH bounds must keep the render INSIDE [dmin, dmax]:
+    #   * HIGH bound: NO positive slack (a small negative margin, *0.98) so a full
+    #     delivery can't blow past dmax (measured 2026-09-07: a script the validator
+    #     passed rendered to 490s, over A2's 420s).
+    #   * LOW bound: NO negative slack. The previous code multiplied the low bound by
+    #     (1 - 0.25), which accepted scripts ~25% shorter than dmin needs — so a
+    #     valid-by-words script rendered to 225s and FAILED the 300s duration floor
+    #     (measured 2026-09-07, 'The Silent Page'). A small POSITIVE margin (*1.05)
+    #     keeps the shortest accepted script comfortably above dmin even when Kokoro
+    #     delivers slightly faster than the modelled WPM.
     OVERHEAD_S = 45.0        # must match sawt_story.target_length's overhead margin
-    lo = max(30.0, dmin - OVERHEAD_S) / 60.0 * wpm * (1 - _LEVEL_FIT_SLACK)
+    lo = max(30.0, dmin - OVERHEAD_S) / 60.0 * wpm * 1.05
     hi = max(60.0, dmax - OVERHEAD_S) / 60.0 * wpm * 0.98
     return int(lo), int(hi)
 
