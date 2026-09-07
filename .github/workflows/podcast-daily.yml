@@ -86,6 +86,7 @@ jobs:
             ${WINNING_CHOICE:+--winning-choice "$WINNING_CHOICE"}
 
       - name: Render the episode (GATED v2 — isolated engines + QA gate)
+        id: render
         env:
           # Turn on engine isolation and point Kokoro at its venv. The v2 renderer
           # runs scripts/voice_worker.py under it per line. (v1 is Kokoro-only, so no
@@ -107,6 +108,9 @@ jobs:
           # Phase 6: the CEFR level the generator pitched this episode at drives the
           # render PACE and the duration-gate WINDOW. Fall back to A2 for older meta.
           LEVEL=$(python3 -c "import json;print(json.load(open('$META')).get('level') or 'A2')")
+          # Expose slug/report to later steps (observability + alerting).
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "report=content/podcast-audio/$SLUG.qa.json" >> "$GITHUB_OUTPUT"
           mkdir -p content/podcast-audio "$KOKORO_CACHE_DIR"
           # GATED renderer: renders with the v2 cast engine (isolated per-engine
           # subprocesses), then REFUSES to emit an episode that fails the audio QA
@@ -123,6 +127,35 @@ jobs:
           # Fold the render's licence credit line into the meta for the bot's post.
           python3 scripts/merge_credit_into_meta.py \
             "$META" "content/podcast-audio/$SLUG.qa.json" || true
+
+      # R9.5 — observability: persist this run's outcome (emitted or failed) to the
+      # queryable podcast_runs log. `if: always()` so a FAILED render is recorded
+      # too. Best-effort (the script never fails the job); in CI there's no DB, so
+      # it's a no-op there and the real record is written server-side.
+      - name: Record the run outcome (observability)
+        if: always()
+        run: |
+          META=content/podcast-scripts/episode-meta.json
+          REPORT="${{ steps.render.outputs.report }}"
+          [ -f "$REPORT" ] && python3 scripts/record_episode_run.py \
+            --report "$REPORT" --meta "$META" || echo "no report to record"
+
+      # R9.4 — fail LOUDLY: if the gated render failed (non-zero), alert the owner
+      # on Telegram with the failing metrics, then let the job fail. Fail-closed is
+      # already guaranteed (nothing was written), this just makes it audible.
+      - name: Alert the owner on gate failure
+        if: failure() && steps.render.conclusion == 'failure'
+        env:
+          OPS_BOT_TOKEN: ${{ secrets.OPS_BOT_TOKEN }}
+          OPS_CHAT_ID: ${{ secrets.OPS_CHAT_ID }}
+        run: |
+          REPORT="${{ steps.render.outputs.report }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLUG="${{ steps.render.outputs.slug }}"
+          # Extract the failing metrics into a shell var with a self-contained
+          # helper (kept out of the YAML to avoid inline-python quoting pitfalls).
+          DETAIL=$(python3 scripts/qa_failure_summary.py "$REPORT" || echo "no QA report")
+          python3 scripts/notify_ops.py --text "🚨 Empire Chronicles daily FAILED the QA gate — no episode emitted (yesterday's state kept). $SLUG: $DETAIL. Run: $RUN_URL"
 
       - name: Commit the new episode (script + audio + meta) for the bot
         run: |

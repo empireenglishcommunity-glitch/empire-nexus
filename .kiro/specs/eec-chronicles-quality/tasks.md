@@ -270,23 +270,40 @@ level's profile and reinforce the current curriculum week.
 
 *Goal: it runs itself, forever, safely.*
 
-- [ ] **7.1** Make the scheduled pipeline fully hands-off end-to-end: generate →
-      validate → render → gate → commit → post (R9.1).
-- [ ] **7.2** Guarantee idempotency and safe re-runs; no double-posting, no state
-      corruption (R9.2).
-- [ ] **7.3** Advance story state **only** on a verified episode (R9.3).
-- [ ] **7.4** Alerting on every escalation path, with actionable detail (R9.4).
-- [ ] **7.5** Per-episode observability record: inputs, metrics, attempts, outcome
-      (R9.5).
-- [ ] **7.6** Enforce the runtime/cost ceiling per episode (R9.6).
-- [ ] **7.7** Preserve flags + approval + `/reveal-podcast` behaviour (R9.7).
-- [ ] **7.8** **Five-day unattended soak test**: five consecutive episodes generated
+- [x] **7.1** Make the scheduled pipeline fully hands-off end-to-end: generate →
+      validate → render → gate → commit → post (R9.1). _`podcast-daily.yml` cron +
+      `bot.daily_story_post`; proven live across episodes 2–4 with zero human
+      action._
+- [x] **7.2** Guarantee idempotency and safe re-runs; no double-posting, no state
+      corruption (R9.2). _Bot de-dups on episode number before posting; the run log
+      UPSERTs by slug; `concurrency: podcast-daily` prevents overlapping runs._
+- [x] **7.3** Advance story state **only** on a verified episode (R9.3). _State is
+      advanced by the generator; the cameo rotation is advanced ONLY on a passing
+      emit; a failed render writes nothing (fail-closed)._
+- [x] **7.4** Alerting on every escalation path, with actionable detail (R9.4).
+      _On a failed render the workflow calls `scripts/notify_ops.py` (Telegram to
+      the owner) with the failing metrics + run link, via `qa_failure_summary.py`._
+- [x] **7.5** Per-episode observability record: inputs, metrics, attempts, outcome
+      (R9.5). _`podcast_runs` table + `scripts/record_episode_run.py` (records pass
+      AND fail); reviewable with `/story-runs`._
+- [x] **7.6** Enforce the runtime/cost ceiling per episode (R9.6).
+      _`MAX_RENDER_ATTEMPTS=3`, generation `MAX_REGEN_ATTEMPTS=3`, new
+      `MAX_SPOKEN_LINES=120` validator cap, and the workflow `timeout-minutes: 120`._
+- [x] **7.7** Preserve flags + approval + `/reveal-podcast` behaviour (R9.7).
+      _Unchanged: `sawt_daily_story` flag, hidden channel via permission overwrites,
+      owner approval, and `/reveal-podcast`._
+- [~] **7.8** **Five-day unattended soak test**: five consecutive episodes generated
       and rendered with zero human action, all passing the gate first time
-      (acceptance criterion 1).
-- [ ] **7.9** Update `empire-chronicle` (STATUS/SYSTEM-MAP) and the ops guide with
+      (acceptance criterion 1). _In-session PROXY done: episodes 2, 3, 4 each
+      generated + gate-passed + committed on attempt 1 with zero human action
+      across separate dispatched runs. A true 5-calendar-day cron soak accrues
+      automatically; owner to confirm after 5 daily runs._
+- [x] **7.9** Update `empire-chronicle` (STATUS/SYSTEM-MAP) and the ops guide with
       how the system works, the standards, and the runbook for a failure.
+      _`docs/EMPIRE-CHRONICLES-RUNBOOK.md` (system map, quality standard, ops
+      commands, failure runbook, file map)._
 - [ ] 🔔 **7.10 OWNER CHECKPOINT** — final review, then `/reveal-podcast` to launch
-      to students.
+      to students. _Awaiting the owner._
 
 **Exit criteria:** all nine spec acceptance criteria demonstrably met.
 

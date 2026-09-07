@@ -897,3 +897,43 @@ async def handle_roster_optin(args: str, bot) -> str:
         return "Usage: `/roster\\-optin <discord_id>`"
     database.set_story_opt_out(did, False)
     return f"✅ `{ops_hub.escape_markdown(did)}` opted IN to story cameos\\."
+
+
+
+# ============================================================
+#  /story-runs — Empire Chronicles per-episode run history (Sawt — Phase 7 / R9.5)
+# ============================================================
+
+@command("/story-runs")
+async def handle_story_runs(args: str, bot) -> str:
+    """Recent daily-pipeline outcomes: which episodes emitted vs failed the gate,
+    with attempts and the key metrics — the owner's observability window (R9.5)."""
+    try:
+        n = int((args or "").strip() or "8")
+    except ValueError:
+        n = 8
+    n = max(1, min(n, 25))
+    runs = database.recent_podcast_runs(n)
+    if not runs:
+        return ("*🎬 Empire Chronicles — recent runs*\n━━━━━━━━━━━━━━━━━━━━\n\n"
+                "No runs recorded yet\\.")
+    lines = ["*🎬 Empire Chronicles — recent runs*", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for r in runs:
+        mark = "✅" if int(r.get("passed", 0)) else "❌"
+        slug = ops_hub.escape_markdown(str(r.get("slug", "?")))
+        lvl = ops_hub.escape_markdown(str(r.get("level", "") or "?"))
+        att = int(r.get("attempts", 0) or 0)
+        if int(r.get("passed", 0)):
+            wer = r.get("wer")
+            dur = r.get("duration_s")
+            detail = ""
+            if isinstance(wer, (int, float)):
+                detail += f" wer {wer:.3f}"
+            if isinstance(dur, (int, float)):
+                detail += f" · {dur:.0f}s"
+            detail = ops_hub.escape_markdown(detail)
+        else:
+            fails = (r.get("failures") or "").replace(",", ", ")
+            detail = " — " + ops_hub.escape_markdown(fails or "unknown")
+        lines.append(f"{mark} `{slug}` \\({lvl}, {att} try\\){detail}")
+    return "\n".join(lines)

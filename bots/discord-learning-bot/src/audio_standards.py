@@ -129,6 +129,13 @@ CRITICAL_METRICS = ("wer", "hard_cuts", "loudness_lufs", "true_peak_dbtp")
 # Bounded retries, so an automatic system can never run away (R9.6).
 MAX_RENDER_ATTEMPTS = 3
 
+# Hard ceiling on spoken lines per episode (R9.6). Synthesis cost scales with the
+# line count, so this bounds the per-episode synthesis work regardless of what the
+# LLM returns — a runaway 300-line script is rejected by the validator (and
+# regenerated) instead of being voiced. Generous: even a long C2 episode
+# (~1200 words) is well under this at natural sentence lengths.
+MAX_SPOKEN_LINES = 120
+
 
 def duration_window(level: str) -> tuple:
     """Allowed (min_seconds, max_seconds) for an episode at `level`.
