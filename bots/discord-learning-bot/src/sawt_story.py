@@ -79,13 +79,18 @@ def target_length(level: str = None) -> tuple:
     # scripts/benchmark_story_voices.py — see src/sawt_cast.PACE_SPEED).
     wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
            "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
-    # Aim just inside the middle of the window so normal variation stays legal.
-    target_seconds = dmin + (dmax - dmin) * 0.45
+    # Aim a little below the middle of the window so the delivered audio has room.
+    target_seconds = dmin + (dmax - dmin) * 0.40
     words = target_seconds / 60.0 * wpm
-    # OVER-ASK: language models reliably under-deliver on length. Measured — asked
-    # for 780 words, got 586 (75%). Asking for ~1.3x lands the real output inside
-    # the CEFR duration window instead of just under it.
-    words *= 1.3
+    # OVER-ASK: language models often under-deliver on length (measured: asked 780,
+    # got 586). A mild over-ask lands the usual output inside the window.
+    words *= 1.15
+    # BUT the gate rejects anything over duration_max, and the LLM SOMETIMES delivers
+    # the full ask (measured 2026-09-07: asked 1020 words -> 461s, over A2's 420s
+    # ceiling -> duration_s FAIL). So CLAMP the ask so that even a full delivery
+    # stays safely under duration_max (a ~5% margin below the ceiling).
+    max_words = (dmax * 0.95) / 60.0 * wpm
+    words = min(words, max_words)
     return int(round(words / 10.0) * 10), target_seconds / 60.0
 
 
