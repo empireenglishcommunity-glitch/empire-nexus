@@ -93,12 +93,20 @@ GEMINI_MODEL_FALLBACKS = [
 # (design.md Section 11's cost analysis).
 GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-# Groq's llama-3.3-70b-versatile was deprecated (2026-06-17) and shut down
-# (2026-08-16), so the old default now returns errors and breaks every AI
-# feature. Groq points production traffic at the openai/gpt-oss-* models, so the
-# default is updated accordingly. Override via the GROQ_MODEL env var if Groq's
-# lineup changes again — no code change needed.
+# The bot's general-purpose Groq model for short JSON answers. openai/gpt-oss-120b
+# is a REASONING model — fine for short structured replies, but it burns its budget
+# "thinking" and returns empty content on long-form generation (measured), so it is
+# the WRONG model for writing a full story episode (see GROQ_STORY_MODEL below).
+# Override via GROQ_MODEL if Groq's lineup changes — no code change needed.
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+
+# Dedicated model for STORY generation (long-form spoken script). A standard
+# instruction model, NOT a reasoning model, so it actually writes the full episode
+# instead of returning empty-200. llama-3.3-70b-versatile is a current Groq
+# PRODUCTION model (verified 2026-09-07 on console.groq.com/docs/models:
+# 131,072 context / 32,768 max completion, 280 T/s). An earlier code comment claimed
+# it was retired — that was wrong; the live model list shows it in production.
+GROQ_STORY_MODEL = os.getenv("GROQ_STORY_MODEL", "llama-3.3-70b-versatile")
 GROQ_WHISPER_MODEL = os.getenv("GROQ_WHISPER_MODEL", "whisper-large-v3")
 
 # Nutq — self-hosted phoneme pronunciation scorer (services/nutq-scorer).

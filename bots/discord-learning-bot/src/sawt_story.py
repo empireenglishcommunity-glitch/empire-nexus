@@ -375,65 +375,54 @@ def _max_tokens_for(level: str = None) -> int:
 
 async def _call_llm_json(prompt: str, temperature: float = 0.9,
                          level: str = None) -> Optional[str]:
-    """Story LLM call: Groq primary (story-writer system prompt), Gemini
-    fallback. Returns raw text (expected to contain a JSON object) or None.
+    """Story LLM call. Returns raw text (expected to contain a JSON object) or None.
 
-    Retries with a smaller completion budget on HTTP 413, so a fully automatic
-    pipeline heals itself instead of silently producing no episode.
-
-    PROVIDER ORDER IS EVIDENCE-BASED, and deliberately different from the rest of
-    the bot. Elsewhere Groq is primary because it is fast for short JSON answers.
-    For a STORY it is the wrong primary: the configured Groq model
-    (`openai/gpt-oss-120b`) is a REASONING model that spends its budget thinking and
-    then returns HTTP 200 with EMPTY content on long generations, and Groq's free
-    tier rate-limits quickly. Measured 2026-09-06: Groq failed three attempts in a
-    row on a CEFR-length episode while Gemini produced a complete 586-word script.
-    So story generation tries **Gemini first** and keeps Groq as the fallback."""
+    PROVIDER ORDER (evidence-based, 2026-09-07): **Groq is primary**, Gemini is an
+    OPTIONAL last resort.
+      * Gemini kept costing time/credits: the available key returned 403 on every
+        gemini-3.x model (no tier access) and 404 on gemini-2.5 (unavailable), so it
+        produced NOTHING while we burned retries on it. It's now last, and only
+        tried if a key is set.
+      * Groq works and is fast, but the general model `openai/gpt-oss-120b` is a
+        REASONING model that returns empty-200 on long generations. So story
+        generation uses a dedicated STANDARD instruction model,
+        `config.GROQ_STORY_MODEL` (llama-3.3-70b-versatile: 131k context / 32k max
+        completion), which actually writes the full episode.
+    The offline job also honours a longer Groq Retry-After (free-tier 429s are
+    7-15s) — waiting beats producing no episode."""
     max_tokens = _max_tokens_for(level)
 
-    # 1) Gemini first for long-form story text (see docstring).
-    try:
-        text = await ai_engine._call_gemini(prompt, temperature,
-                                            max_output_tokens=max_tokens)
-        if text:
-            return text
-        logger.warning("sawt.story: Gemini returned nothing; trying Groq")
-    except Exception as e:  # noqa: BLE001
-        logger.warning("sawt.story: Gemini error (%s); trying Groq", e)
+    # 1) Groq PRIMARY with the dedicated long-form story model.
     if config.GROQ_API_KEY:
         from . import groq_client
         payload = {
-            "model": config.GROQ_MODEL,
+            "model": getattr(config, "GROQ_STORY_MODEL", config.GROQ_MODEL),
             "temperature": temperature,
-            # Sized to the episode, not guessed. See _max_tokens_for().
-            "max_tokens": max_tokens,
+            "max_tokens": max_tokens,          # sized to the episode; see _max_tokens_for()
             "messages": [
                 {"role": "system", "content": _STORY_SYSTEM},
                 {"role": "user", "content": prompt},
             ],
         }
-        # Retry ladder. Each failure mode needs a DIFFERENT response, which is why
-        # a single blanket retry never fixed this:
+        # Retry ladder. Each failure mode needs a DIFFERENT response:
         #   413            -> asked for too much: SHRINK the completion budget.
-        #   200 + no text  -> reasoning model ran out of room: GROW the budget.
-        #   429            -> rate limited: WAIT, then try the same budget again.
-        #   anything else   -> transport/model error: stop, let Gemini try.
+        #   200 + no text  -> model ran out of room: GROW the budget.
+        #   429            -> rate limited: WAIT (offline job), then retry.
+        #   anything else   -> transport/model error: stop, try Gemini if present.
         budget = max_tokens
         for attempt in range(1, 4):
             payload["max_tokens"] = budget
             try:
-                # Offline daily job: honour a longer Retry-After than live callers,
-                # since Groq's free tier often asks for 7-15s and Gemini may be
-                # unavailable — waiting beats producing no episode.
                 result = await groq_client.chat_completion(payload,
                                                            timeout_seconds=120,
                                                            max_retry_after=20.0)
                 if result.ok and result.text:
                     return result.text
                 text_len = len(result.text or "")
-                logger.warning("sawt.story: Groq unusable (attempt %s, "
+                logger.warning("sawt.story: Groq unusable (attempt %s, model=%s, "
                                "max_tokens=%s, status=%s, text_len=%s)",
-                               attempt, budget, result.status, text_len)
+                               attempt, payload["model"], budget, result.status,
+                               text_len)
                 if result.status == 413:
                     budget = max(1200, int(budget * 0.6))
                 elif result.status == 429:
@@ -446,6 +435,18 @@ async def _call_llm_json(prompt: str, temperature: float = 0.9,
                 logger.warning("sawt.story: Groq call error (attempt %s): %s",
                                attempt, e)
                 break
-    # Gemini was already tried first (see docstring); nothing left to fall back to.
+
+    # 2) Gemini LAST RESORT — only if a key is configured. Often unavailable for the
+    #    project's key (403/404), so it must never be depended on.
+    if config.GEMINI_API_KEY:
+        try:
+            text = await ai_engine._call_gemini(prompt, temperature,
+                                                max_output_tokens=max_tokens)
+            if text:
+                return text
+            logger.warning("sawt.story: Gemini returned nothing")
+        except Exception as e:  # noqa: BLE001
+            logger.warning("sawt.story: Gemini error (%s)", e)
+
     logger.warning("sawt.story: no provider produced a usable script")
     return None
