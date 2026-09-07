@@ -129,7 +129,8 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
                        episode_number: int, level: str = None,
                        arc: dict = None, is_arc_opener: bool = False,
                        is_arc_finale: bool = False, past_choices: list = None,
-                       motif_seen: bool = False) -> str:
+                       motif_seen: bool = False,
+                       student_cameos: list = None) -> str:
     """Prompt the LLM to write the next episode as JSON. Now ARC-AWARE (spec 4.4):
     it injects the story bible (recurring characters + their wants), the current
     arc (genre, setting, premise, mood, established facts), the CEFR length, the
@@ -193,6 +194,31 @@ def build_story_prompt(previous_summary: str, winning_choice: str,
         motif_block = (f"\nMOTIF (optional texture): you MAY let {motif['name']} "
                        f"appear briefly. {motif['note']}")
 
+    # STUDENT CAMEOS (Phase 5). Real learners appear as brief, friendly guest
+    # characters — never the villain, never embarrassed, first name only. Each
+    # comes with its KNOWN gender so the writer keeps pronouns/role right (we never
+    # guess a gender). These names become ADDITIONALLY-allowed speakers on top of
+    # the fixed cast; the validator enforces the dignity rules.
+    cameo_block = ""
+    cameo_names_list = [c.get("story_name") for c in (student_cameos or [])
+                        if c.get("story_name")]
+    if cameo_names_list:
+        who = ", ".join(
+            f"{c['story_name']} ({(c.get('gender') or '').strip() or 'unspecified'})"
+            for c in student_cameos if c.get("story_name"))
+        cameo_block = (
+            f"\n\nGUEST LEARNERS (feature warmly, briefly): {who}.\n"
+            f"- These are REAL students of our community appearing as a friendly "
+            f"treat. Give EACH a short, positive moment (a helpful line, a kind "
+            f"exchange, a small brave act) — a background guest, not the focus.\n"
+            f"- Use their gender ONLY for correct pronouns/role; do not comment on "
+            f"it. Use their FIRST NAME exactly as given.\n"
+            f"- ABSOLUTE RULES: a guest learner is NEVER the villain/antagonist, is "
+            f"NEVER mocked, insulted, frightened, humiliated or shown failing, and "
+            f"NEVER says or receives demeaning words. If in doubt, make them kind "
+            f"and capable. They may speak, so label their lines with their first "
+            f"name (e.g. '{cameo_names_list[0]}: ...').")
+
     return f"""{continuity}
 
 Write this episode of Empire English Chronicles as a spoken audio script.
@@ -210,10 +236,10 @@ pace; an episode outside its length window is rejected automatically. Do not pad
 use the room to develop the scene, let characters react, and build tension.
 
 CAST (use these names EXACTLY; each maps to a distinct voice — you may not invent
-new named characters, only use these):
+new named characters, only use these{" plus the GUEST LEARNERS listed below" if cameo_names_list else ""}):
 {sawt_bible.character_brief()}
 Use 2–4 speaking characters this episode (not all at once) — lively but not
-confusing for a learner. Feature the arc's leads above.
+confusing for a learner. Feature the arc's leads above.{cameo_block}
 
 STYLE:
 - CLEAR simple English (learners), but genuinely suspenseful and cinematic.
@@ -313,19 +339,29 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
                            episode_number: int = 1, level: str = None,
                            arc: dict = None, is_arc_opener: bool = False,
                            is_arc_finale: bool = False, past_choices: list = None,
-                           motif_seen: bool = False) -> Optional[dict]:
+                           motif_seen: bool = False,
+                           student_cameos: list = None) -> Optional[dict]:
     """Generate the next Empire Chronicles episode (arc-aware). Returns a dict with
     keys title, script, recap, facts, mood, vote_a, vote_b, motif_used — or None if
     the LLM is unavailable or no attempt passes validation. Never raises.
+
+    `student_cameos` (Phase 5) is an optional list of {story_name, gender} learner
+    cameos to weave in as brief, friendly background characters; the prompt and the
+    validator both receive them so they are cast safely (gender-matched, never an
+    antagonist, first-name only). Omit/empty ⇒ a name-free episode (R8.4).
 
     Runs BOUNDED REGENERATION (spec 4.6): if the generated script fails the script
     validator, the specific violations are appended to the prompt and the writer is
     asked again, up to MAX_REGEN_ATTEMPTS times. The best-effort last parse is
     returned only if it structurally parses AND passes validation."""
+    student_cameos = student_cameos or []
+    student_names = [c.get("story_name") for c in student_cameos
+                     if c.get("story_name")]
     base_prompt = build_story_prompt(
         previous_summary, winning_choice, episode_number, level=level, arc=arc,
         is_arc_opener=is_arc_opener, is_arc_finale=is_arc_finale,
-        past_choices=past_choices, motif_seen=motif_seen)
+        past_choices=past_choices, motif_seen=motif_seen,
+        student_cameos=student_cameos)
 
     # Lazily import the validator so a broken validator import can never take the
     # generator down; if it's unavailable we fall back to the structural check.
@@ -356,7 +392,7 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
             return ep
         problems = validator.validate_episode(
             ep, level=level, episode_number=episode_number, arc=arc,
-            is_arc_finale=is_arc_finale)
+            is_arc_finale=is_arc_finale, student_names=student_names)
         if not problems:
             return ep
         logger.warning("sawt.story: attempt %s failed validation: %s",

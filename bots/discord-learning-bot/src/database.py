@@ -925,6 +925,34 @@ CREATE TABLE IF NOT EXISTS podcast_votes (
     PRIMARY KEY (discord_id, episode_id),
     FOREIGN KEY (episode_id) REFERENCES podcast_episodes(episode_id)
 );
+
+-- Empire Chronicles STUDENT CAST ROSTER (Phase 5 — personalisation).
+-- Which learners may be given a brief, friendly cameo appearance (by FIRST NAME
+-- ONLY) in the daily story. Deliberately a SEPARATE table from `members`:
+--   * story_name is a first-name-only, owner-confirmable label (never the full
+--     discord_name), satisfying the first-name-only privacy posture (R8.8);
+--   * gender is COPIED from members at seed time and is only ever 'male'/'female'
+--     — an empty/unknown gender is NEVER seeded, so a name can never be cast with
+--     a guessed gender (R8.2/R8.3, zero inference);
+--   * opt_out lets a student be excluded without deleting their member row (R8.6);
+--   * featured bookkeeping drives least-recently-featured fair rotation (R8.5),
+--     advanced ONLY when an episode is actually emitted (verified), never on a
+--     failed/aborted render.
+-- Scope is implicitly the single community (config.GUILD_ID) — every members row
+-- belongs to it — so "own community only" (R8.8) holds by construction.
+CREATE TABLE IF NOT EXISTS story_roster (
+    discord_id      TEXT PRIMARY KEY,
+    story_name      TEXT NOT NULL,              -- FIRST NAME ONLY, owner-confirmable
+    gender          TEXT NOT NULL,              -- 'male'|'female' only (never '')
+    opt_out         INTEGER NOT NULL DEFAULT 0, -- 1 = never feature this student
+    confirmed       INTEGER NOT NULL DEFAULT 0, -- owner has reviewed name+gender
+    times_featured  INTEGER NOT NULL DEFAULT 0,
+    last_featured_at TEXT DEFAULT NULL,         -- naive UTC; drives rotation
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (discord_id) REFERENCES members(discord_id)
+);
+CREATE INDEX IF NOT EXISTS idx_story_roster_rotation
+    ON story_roster(opt_out, last_featured_at);
 """
 
 
@@ -1401,6 +1429,112 @@ def members_at_level(level: str) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+# ============================================================
+#  EMPIRE CHRONICLES STUDENT CAST ROSTER (Sawt — Phase 5)
+#  First-name-only, gender-known-only cameo roster for the daily story.
+#  Zero gender inference, opt-out honoured, least-recently-featured rotation.
+# ============================================================
+
+def upsert_story_roster(discord_id: str, story_name: str, gender: str,
+                        confirmed: bool = False) -> bool:
+    """Add or update a student's story-cast entry. Returns True on success.
+
+    REFUSES to store a row without a KNOWN gender ('male'/'female') — an unknown
+    or empty gender is never guessed, so such a member simply isn't castable
+    (R8.2/R8.3). `story_name` is stored as a FIRST NAME ONLY: the caller passes a
+    single given name (privacy posture R8.8); we defensively keep only the first
+    whitespace-separated token here too.
+    """
+    g = (gender or "").strip().lower()
+    if g not in ("male", "female"):
+        return False
+    first = (story_name or "").strip().split()[0] if (story_name or "").strip() else ""
+    if not first:
+        return False
+    conn = _connect()
+    try:
+        conn.execute(
+            """INSERT INTO story_roster (discord_id, story_name, gender, confirmed)
+               VALUES (?, ?, ?, ?)
+               ON CONFLICT(discord_id) DO UPDATE SET
+                 story_name=excluded.story_name,
+                 gender=excluded.gender,
+                 confirmed=excluded.confirmed""",
+            (str(discord_id), first, g, 1 if confirmed else 0),
+        )
+        conn.commit()
+        return True
+    finally:
+        conn.close()
+
+
+def set_story_opt_out(discord_id: str, opt_out: bool) -> None:
+    """Opt a student in/out of story cameos without deleting their roster row."""
+    conn = _connect()
+    conn.execute("UPDATE story_roster SET opt_out=? WHERE discord_id=?",
+                 (1 if opt_out else 0, str(discord_id)))
+    conn.commit()
+    conn.close()
+
+
+def get_story_roster(include_unconfirmed: bool = True,
+                     include_opted_out: bool = True) -> list[dict]:
+    """Return story-roster rows, most-recently-added first. Filters are opt-in so
+    the owner-facing review flow can see everything while selection uses the
+    stricter eligible set below."""
+    q = "SELECT * FROM story_roster"
+    conds = []
+    if not include_unconfirmed:
+        conds.append("confirmed=1")
+    if not include_opted_out:
+        conds.append("opt_out=0")
+    if conds:
+        q += " WHERE " + " AND ".join(conds)
+    q += " ORDER BY created_at DESC"
+    conn = _connect()
+    rows = conn.execute(q).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def eligible_story_roster() -> list[dict]:
+    """The castable roster: CONFIRMED, NOT opted out, with a known gender, ordered
+    LEAST-RECENTLY-FEATURED FIRST (NULL last_featured_at — never featured — sorts
+    first) so fair rotation is a simple prefix of this list (R8.5).
+
+    A known gender is enforced at write time, but we re-assert it here so a bad
+    manual DB edit can never leak an unknown-gender row into casting.
+    """
+    conn = _connect()
+    rows = conn.execute(
+        """SELECT * FROM story_roster
+           WHERE opt_out=0 AND confirmed=1 AND gender IN ('male','female')
+           ORDER BY (last_featured_at IS NOT NULL), last_featured_at ASC,
+                    times_featured ASC, created_at ASC"""
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def mark_story_featured(discord_ids: list) -> None:
+    """Record that these students were featured in an EMITTED episode: bump
+    times_featured and stamp last_featured_at (naive UTC, matching the rest of the
+    schema). Called ONLY after an episode passes the gate and is committed, so a
+    failed render never consumes a student's turn in the rotation (R8.5/R9.3)."""
+    ids = [str(i) for i in (discord_ids or []) if str(i).strip()]
+    if not ids:
+        return
+    stamp = utcnow().isoformat(sep=" ", timespec="seconds")
+    conn = _connect()
+    conn.executemany(
+        "UPDATE story_roster SET times_featured = times_featured + 1, "
+        "last_featured_at = ? WHERE discord_id = ?",
+        [(stamp, i) for i in ids],
+    )
+    conn.commit()
+    conn.close()
 
 
 # ============================================================

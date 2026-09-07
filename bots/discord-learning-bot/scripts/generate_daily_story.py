@@ -32,6 +32,11 @@ if str(BOT_DIR) not in sys.path:
 
 from src import sawt_story, sawt_arc  # noqa: E402
 
+try:                                                              # Phase 5 (optional)
+    from src import sawt_roster
+except Exception:                                                 # noqa: BLE001
+    sawt_roster = None
+
 STATE_FILE = "story-state.json"
 
 
@@ -51,7 +56,8 @@ def _save_state(out_dir: pathlib.Path, state: dict):
         json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-async def _run(out_dir: pathlib.Path, winning_choice: str) -> int:
+async def _run(out_dir: pathlib.Path, winning_choice: str,
+               no_cameos: bool = False) -> int:
     raw_state = _load_state(out_dir)
     # Fold in the winning choice (CLI overrides the file the bot wrote) BEFORE
     # planning, so the listener-echo history and continuity see it.
@@ -73,12 +79,26 @@ async def _run(out_dir: pathlib.Path, winning_choice: str) -> int:
           f"{' [FINALE]' if plan['is_arc_finale'] else ''} "
           f"(continuing: {choice!r})")
 
+    # Phase 5: pick a few learner cameos (least-recently-featured, gender-matched,
+    # opt-out honoured). Best-effort: any problem or an empty roster yields NO
+    # cameos and a name-free episode — it must NEVER block the daily episode.
+    cameos = []
+    if sawt_roster is not None and not no_cameos:
+        try:
+            cameos = sawt_roster.select_cameos()
+        except Exception as e:                                    # noqa: BLE001
+            print(f"  (cameo selection skipped: {e})")
+            cameos = []
+    if cameos:
+        print(f"  guest learners: {', '.join(c['story_name'] for c in cameos)}")
+
     ep = await sawt_story.generate_episode(
         previous_summary=prev_recap, winning_choice=choice,
         episode_number=episode_number, arc=arc,
         is_arc_opener=plan["is_arc_opener"], is_arc_finale=plan["is_arc_finale"],
         past_choices=raw_state.get("past_choices", []),
-        motif_seen=bool(raw_state.get("motif_seen", False)))
+        motif_seen=bool(raw_state.get("motif_seen", False)),
+        student_cameos=cameos)
     if not ep:
         print("::error::story generation returned nothing "
               "(LLM unavailable or failed validation)")
@@ -102,6 +122,14 @@ async def _run(out_dir: pathlib.Path, winning_choice: str) -> int:
         "genre": arc["genre"],
         "episode_in_arc": arc["episode_in_arc"],
         "is_arc_finale": plan["is_arc_finale"],
+        # Phase 5: the learner cameos woven into this episode. The renderer reads
+        # these to voice each guest with a gender-matched voice, and advances the
+        # rotation bookkeeping ONLY after the episode actually emits (R9.3).
+        "student_cameos": [
+            {"discord_id": c.get("discord_id"), "story_name": c["story_name"],
+             "gender": c.get("gender")}
+            for c in cameos if c.get("story_name")
+        ],
     }
     (out_dir / "episode-meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -132,10 +160,12 @@ def main():
     ap.add_argument("--winning-choice", default="",
                     help="the audience's winning choice to continue from "
                          "(overrides story-state.json)")
+    ap.add_argument("--no-cameos", action="store_true",
+                    help="disable student-name cameos for this run (Phase 5)")
     args = ap.parse_args()
     out_dir = pathlib.Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    return asyncio.run(_run(out_dir, args.winning_choice))
+    return asyncio.run(_run(out_dir, args.winning_choice, no_cameos=args.no_cameos))
 
 
 if __name__ == "__main__":

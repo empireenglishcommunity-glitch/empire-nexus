@@ -107,16 +107,30 @@ def _line_stems_report(stems, level, transcriber=None):
 
 def render_gated(script_path, out_path, level="A2", music="mystery",
                  sound_design=True, report_path=None, transcriber=None,
-                 max_attempts=None, seed=0):
+                 max_attempts=None, seed=0, cameos=None):
     """Render `script_path` and emit `out_path` ONLY if it passes the gate.
 
     Returns a result dict: {passed, attempts, out_path (or None), report}. On
     failure `out_path` is NOT written (a stale/previous file is left untouched),
-    and the report explains why so the caller can alert the owner."""
+    and the report explains why so the caller can alert the owner.
+
+    `cameos` (Phase 5) is the episode's student cameos [{discord_id,story_name,
+    gender}]. They are registered so each guest learner's lines get a
+    gender-matched guest voice, and — ONLY if the episode EMITS — the rotation
+    bookkeeping is advanced (a failed render never consumes a learner's turn)."""
     script_path = pathlib.Path(script_path)
     out_path = pathlib.Path(out_path)
     script_text = script_path.read_text(encoding="utf-8")
     max_attempts = max_attempts or STD.MAX_RENDER_ATTEMPTS
+
+    # Phase 5: register cameo voices for this render (gender-matched guest voices).
+    cameos = cameos or []
+    try:
+        import importlib
+        _cast = importlib.import_module("src.sawt_cast")
+        _cast.register_cameos(cameos)
+    except Exception:                                            # noqa: BLE001
+        _cast = None
 
     work = pathlib.Path(tempfile.mkdtemp(prefix="eec_gated_"))
     attempts_log = []
@@ -205,6 +219,16 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
         if passed_report:
             print(f"\n✅ EMITTED {out_path} after {result['attempts']} attempt(s). "
                   f"Report → {rp}")
+            # Phase 5: advance rotation bookkeeping ONLY now that the episode has
+            # actually emitted (R9.3) — a failed render never consumes a turn.
+            if cameos:
+                try:
+                    from src import sawt_roster
+                    sawt_roster.record_featured(cameos)
+                    print(f"  rotation: featured "
+                          f"{', '.join(c.get('story_name','?') for c in cameos)}")
+                except Exception:                                # noqa: BLE001
+                    pass
         else:
             print(f"\n❌ NOT EMITTED — failed the gate after {result['attempts']} "
                   f"attempt(s). No episode written; previous state untouched. "
@@ -212,6 +236,11 @@ def render_gated(script_path, out_path, level="A2", music="mystery",
         return result
     finally:
         shutil.rmtree(work, ignore_errors=True)
+        if _cast is not None:
+            try:
+                _cast.clear_cameos()
+            except Exception:                                    # noqa: BLE001
+                pass
 
 
 def main():
@@ -229,17 +258,32 @@ def main():
                                                 "(default: <out>.qa.json)")
     ap.add_argument("--max-attempts", type=int, default=0,
                     help="override the standard's MAX_RENDER_ATTEMPTS")
+    ap.add_argument("--cameos-json", default="",
+                    help="path to episode-meta.json; its 'student_cameos' are "
+                         "voiced with gender-matched guest voices and their "
+                         "rotation is advanced on emit (Phase 5)")
     args = ap.parse_args()
 
     if not pathlib.Path(args.script).exists():
         print(f"script not found: {args.script}", file=sys.stderr)
         return 2
+
+    cameos = []
+    if args.cameos_json and pathlib.Path(args.cameos_json).exists():
+        try:
+            _meta = json.loads(pathlib.Path(args.cameos_json).read_text(encoding="utf-8"))
+            cameos = _meta.get("student_cameos") or []
+        except Exception as e:                                   # noqa: BLE001
+            print(f"  (could not read cameos from {args.cameos_json}: {e})",
+                  file=sys.stderr)
+            cameos = []
     try:
         result = render_gated(
             args.script, args.out, level=args.level, music=args.music,
             sound_design=not args.no_sound_design,
             report_path=args.report or None,
-            max_attempts=args.max_attempts or None, seed=args.seed)
+            max_attempts=args.max_attempts or None, seed=args.seed,
+            cameos=cameos)
     except Exception as e:                                       # noqa: BLE001
         print(f"gated render could not run: {type(e).__name__}: {e}",
               file=sys.stderr)

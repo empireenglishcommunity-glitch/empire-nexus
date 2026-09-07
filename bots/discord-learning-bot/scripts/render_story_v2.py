@@ -306,6 +306,46 @@ def declick(x, sr, window_ms=3.0, passes=14):
     return y
 
 
+def _peak_limit(y, sr, ceiling):
+    """Lookahead true-peak limiter: attenuate ONLY the moments above `ceiling`
+    (linear), leaving the rest — and thus integrated loudness — essentially
+    unchanged. Returns a new float32 array. Reused by master() (twice) and the
+    delivered-domain post-encode pass so peak control is identical everywhere.
+
+    Order matters (real-limiter order):
+      need   -> per-sample gain that would fit under the ceiling
+      min    -> sliding MINIMUM so the gain is down BEFORE the peak (lookahead)
+      smooth -> moving average so the gain envelope is continuous (no dips/clicks)
+    Anything still over after that is soft-saturated (tanh) — continuous, unlike a
+    hard clip whose sharp edge becomes MP3 inter-sample overshoot."""
+    import numpy as np
+    y = np.asarray(y, dtype="float32")
+    if not len(y):
+        return y
+    absy = np.abs(y)
+    if not (absy > ceiling).any():
+        return y
+    need = np.minimum(1.0, ceiling / np.maximum(absy, 1e-9)).astype("float32")
+    look = max(8, int(sr * 0.003))                     # ~3ms lookahead
+    try:
+        from scipy.ndimage import minimum_filter1d
+        gain = minimum_filter1d(need, size=2 * look + 1, mode="nearest")
+    except Exception:                                            # noqa: BLE001
+        gain = need.copy()
+        for s in range(1, look + 1):
+            gain[:-s] = np.minimum(gain[:-s], need[s:])
+            gain[s:] = np.minimum(gain[s:], need[:-s])
+    win = max(8, int(sr * 0.004))                      # ~4ms release smoothing
+    gain = np.convolve(gain, np.ones(win, dtype="float32") / win,
+                       mode="same").astype("float32")
+    y = (y * gain).astype("float32")
+    hot = np.abs(y) > ceiling
+    if hot.any():
+        y[hot] = (np.sign(y[hot]) * ceiling *
+                  np.tanh(np.abs(y[hot]) / ceiling)).astype("float32")
+    return y
+
+
 def master(x, sr):
     """Mastering chain (R1.3 / design §5): high-pass, loudness-normalise to
     -16 LUFS, limit true peak to -1 dBTP, short programme fades.
@@ -341,43 +381,17 @@ def master(x, sr):
     # measured -25.95 LUFS against a -16 target. A limiter attenuates only the
     # moments that are too loud, so integrated loudness stays on target.
     # Margin covers TWO things: the oversampled true-peak measurement, and MP3
-    # ENCODE OVERSHOOT. Measured: limiting to -1.5 dBFS produced a decoded MP3 whose
-    # true peak was -0.63 dBTP — i.e. lossy encoding pushed it over the -1.0 limit.
-    # 2.5 dB of margin keeps the delivered file legal.
-    ceiling = 10 ** ((STD.TRUE_PEAK_MAX_DBTP - 2.5) / 20.0)
-    absy = np.abs(y)
-    if (absy > ceiling).any():
-        # A LOOKAHEAD limiter, in the order real limiters use:
-        #   need  -> per-sample gain that would fit under the ceiling
-        #   min   -> sliding MINIMUM so the gain is already down BEFORE the peak
-        #   smooth-> moving average so the gain envelope is continuous
-        # Taking minimum(smoothed, need) afterwards would reintroduce sharp
-        # per-sample dips — measured: it added 10 clicks. Sliding-min THEN smooth
-        # is what keeps the envelope click-free.
-        need = np.minimum(1.0, ceiling / np.maximum(absy, 1e-9)).astype("float32")
-        look = max(8, int(sr * 0.003))                 # ~3ms lookahead
-        try:
-            from scipy.ndimage import minimum_filter1d
-            gain = minimum_filter1d(need, size=2 * look + 1, mode="nearest")
-        except Exception:                                        # noqa: BLE001
-            # numpy fallback: min over a shifted stack
-            gain = need.copy()
-            for s in range(1, look + 1):
-                gain[:-s] = np.minimum(gain[:-s], need[s:])
-                gain[s:] = np.minimum(gain[s:], need[:-s])
-        win = max(8, int(sr * 0.004))                  # ~4ms release smoothing
-        gain = np.convolve(gain, np.ones(win, dtype="float32") / win,
-                           mode="same").astype("float32")
-        y = (y * gain).astype("float32")
-        # Anything still above the ceiling is handled by SOFT saturation, which is
-        # continuous (hard clipping is itself a discontinuity, i.e. a click).
-        hot = np.abs(y) > ceiling
-        if hot.any():
-            y[hot] = (np.sign(y[hot]) * ceiling *
-                      np.tanh(np.abs(y[hot]) / ceiling)).astype("float32")
+    # ENCODE OVERSHOOT. Measured 2026-09-08: some mixes (bright guest voices over a
+    # bed) push MP3 overshoot to ~3.4 dB, so a 2.5 dB margin was NOT enough and the
+    # decoded file measured -0.3 dBTP. 4.0 dB of margin (ceiling -5.0 dBFS) covers
+    # the worst measured overshoot while integrated loudness stays on target.
+    ceiling = 10 ** ((STD.TRUE_PEAK_MAX_DBTP - 4.0) / 20.0)
+    y = _peak_limit(y, sr, ceiling)
 
-    # 4) re-check loudness after limiting and correct any small drift, re-limiting
-    #    gently if needed (converges in one pass for speech).
+    # 4) re-check loudness after limiting and correct any small drift. If the
+    #    correction scales UP, re-run the LIMITER (never a hard clip — clipping
+    #    creates the sharp edges MP3 turns into inter-sample overshoot, which was
+    #    exactly the true-peak failure this replaced).
     try:
         import pyloudnorm as pyln
         meter = pyln.Meter(sr)
@@ -385,8 +399,8 @@ def master(x, sr):
         if np.isfinite(cur):
             drift = STD.LUFS_TARGET - cur
             if abs(drift) > 0.3:
-                gain = 10 ** (drift / 20.0)
-                y = np.clip(y * gain, -ceiling, ceiling).astype("float32")
+                y = (y * (10 ** (drift / 20.0))).astype("float32")
+                y = _peak_limit(y, sr, ceiling)
     except Exception:                                            # noqa: BLE001
         pass
     # 5) DE-CLICK repair.
@@ -875,15 +889,15 @@ def render(script: str, out_path, level="A2", music="mystery",
             xi = _np.linspace(0, len(y_dec) - 1, num=n, endpoint=True)
             up = _np.interp(xi, _np.arange(len(y_dec)), y_dec.astype("float64"))
             peak = float(_np.max(_np.abs(up))) if len(up) else 0.0
-            if peak > 0:
-                tp_dbtp = 20.0 * _np.log10(peak)
-                # Keep a 0.3 dB guard UNDER the limit so re-encode overshoot can't
-                # nudge it back over.
-                target_dbtp = STD.TRUE_PEAK_MAX_DBTP - 0.3
-                if tp_dbtp > target_dbtp:
-                    y_dec = (y_dec * (10 ** ((target_dbtp - tp_dbtp) / 20.0))
-                             ).astype("float32")
-                    changed = True
+            if peak > 0 and (20.0 * _np.log10(peak)) > (STD.TRUE_PEAK_MAX_DBTP - 0.3):
+                # LIMIT (don't globally attenuate) so integrated loudness is
+                # preserved — a plain trim would drop a mix that's already near the
+                # loudness floor out the bottom of the window. Limit to a low
+                # ceiling so that even after MP3 re-encode adds its overshoot the
+                # decoded peak stays under the -1.0 dBTP limit.
+                ceiling = 10 ** ((STD.TRUE_PEAK_MAX_DBTP - 4.0) / 20.0)
+                y_dec = _peak_limit(y_dec, SR, ceiling)
+                changed = True
             if not changed:
                 break                                  # delivered file is legal
             sf.write(str(out), y_dec, SR, format="MP3")
