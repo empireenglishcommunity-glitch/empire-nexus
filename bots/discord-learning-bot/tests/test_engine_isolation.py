@@ -90,6 +90,19 @@ def test_synth_line_for_routes_to_isolated_when_worker_set(monkeypatch):
     assert seen["kind"] == "clone" and len(out) == 200
 
 
+def test_isolated_failure_without_in_process_engine_raises_cleanly(monkeypatch):
+    """Under isolation the in-process engines are NOT loaded. If the isolated
+    worker fails, synth_line_for must raise a clear RuntimeError — never call
+    `.say` on a None engine (the crash seen in the first production run)."""
+    import pytest
+    mod = _load_rv2()
+    monkeypatch.setattr(mod, "_worker_python_for", lambda k: "/venvs/x/bin/python")
+    monkeypatch.setattr(mod, "_synth_line_isolated", lambda *a, **k: None)  # fail
+    ch = {"key": "narrator", "display": "Narrator", "engine": "kokoro"}
+    with pytest.raises(RuntimeError, match="voice worker failed"):
+        mod.synth_line_for("hi", ch, "A2", kokoro=None, clone=None)
+
+
 def test_synth_line_for_falls_back_when_isolated_fails(monkeypatch):
     mod = _load_rv2()
     calls = {"in_process": 0}

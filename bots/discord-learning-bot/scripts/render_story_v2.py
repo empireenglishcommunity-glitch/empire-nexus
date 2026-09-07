@@ -548,8 +548,17 @@ def _synth_line_isolated(text, ch, level, engine_kind: str):
                "--level", level, "--text-file", str(txt), "--out", str(out)]
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
         if r.returncode != 0 or not out.exists():
-            print(f"    ⚠️ isolated {engine_kind} worker failed: "
-                  f"{(r.stderr or '').strip()[:200]}")
+            # Surface BOTH streams and the tail (ONNX prints a benign PCI warning to
+            # stderr that would otherwise mask the real error) so failures are
+            # diagnosable in CI.
+            err = (r.stderr or "").strip()
+            outp = (r.stdout or "").strip()
+            print(f"    ⚠️ isolated {engine_kind} worker failed "
+                  f"(rc={r.returncode}, wav_exists={out.exists()})")
+            if outp:
+                print(f"       stdout: {outp[-600:]}")
+            if err:
+                print(f"       stderr: {err[-1200:]}")
             return None
         y, file_sr = sf.read(str(out), dtype="float32", always_2d=False)
         if getattr(y, "ndim", 1) > 1:
@@ -576,7 +585,15 @@ def synth_line_for(text, ch, level, kokoro, clone):
         y = _synth_line_isolated(text, ch, level, engine_kind)
         if y is not None and len(y):
             return y
-        # fall through to in-process if a worker is somehow unavailable
+        # The isolated worker failed. Only fall back to an in-process engine if one
+        # actually exists — under isolation it does NOT (we skipped loading it to
+        # avoid the numpy conflict), so calling synth_line would hit `.say` on None.
+        have_inprocess = (clone is not None if engine_kind == "clone"
+                          else kokoro is not None)
+        if not have_inprocess:
+            raise RuntimeError(
+                f"isolated {engine_kind} voice worker failed and no in-process "
+                f"engine is available to fall back to")
     return synth_line(text, ch, level, kokoro, clone)
 
 

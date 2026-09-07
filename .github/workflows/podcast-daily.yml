@@ -62,15 +62,19 @@ jobs:
           # The two engines have incompatible numpy pins, so each gets its own venv.
           # The renderer calls scripts/voice_worker.py under the right one per line.
           set -e
+          # Each venv also needs the audio-processing deps the renderer's per-line
+          # synth path uses (render_story_v2.synth_line -> librosa/soundfile/scipy)
+          # and python-dotenv (src.config is imported for CEFR pace). numpy is pinned
+          # to each engine's requirement.
           python3 -m venv "$RUNNER_TEMP/venv-kokoro"
           "$RUNNER_TEMP/venv-kokoro/bin/pip" install --quiet --upgrade pip
           "$RUNNER_TEMP/venv-kokoro/bin/pip" install --quiet \
-            "kokoro-onnx==0.4.9" soundfile "numpy>=2.0.2" python-dotenv
+            "kokoro-onnx==0.4.9" soundfile librosa scipy "numpy>=2.0.2" python-dotenv
 
           python3 -m venv "$RUNNER_TEMP/venv-clone"
           "$RUNNER_TEMP/venv-clone/bin/pip" install --quiet --upgrade pip
           "$RUNNER_TEMP/venv-clone/bin/pip" install --quiet \
-            chatterbox-tts soundfile python-dotenv
+            chatterbox-tts soundfile librosa scipy python-dotenv
           # Sanity: each engine imports in its own venv (fail the build early if not).
           "$RUNNER_TEMP/venv-kokoro/bin/python" -c "import kokoro_onnx, numpy; print('kokoro venv ok, numpy', numpy.__version__)"
           "$RUNNER_TEMP/venv-clone/bin/python" -c "import chatterbox, numpy; print('clone venv ok, numpy', numpy.__version__)"
