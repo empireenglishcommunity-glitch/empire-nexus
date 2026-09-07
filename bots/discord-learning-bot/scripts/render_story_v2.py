@@ -839,33 +839,53 @@ def render(script: str, out_path, level="A2", music="mystery",
     out.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(out), audio, SR, format="MP3")
 
-    # POST-ENCODE DE-CLICK (delivered-domain pass).
+    # POST-ENCODE CORRECTION (delivered-domain pass).
     #
-    # master() de-clicks the FLOAT signal to 0, but MP3 ENCODING itself introduces
-    # new micro-discontinuities: lossy quantisation reshapes sample-to-sample steps,
-    # so the DECODED file the QA gate actually measures can show a couple of clicks
-    # that were not present pre-encode. Measured 2026-09-08: a mix that was 0 clicks
-    # in float decoded to 2 clicks at 105.79s / 242.07s (tiny ~0.04 deltas — pure
-    # MP3 artefacts); re-declicking the DECODED signal returned it to 0. Because the
-    # detector and the delivered file must agree, iterate in the delivered domain:
-    # decode → measure → if clicks remain, declick the decoded signal and re-encode.
-    # Bounded and idempotent (declick converges to 0). This closes the gap that let
-    # a longer episode fail the episode-level hard_cuts gate with no margin.
+    # master() de-clicks and true-peak-limits the FLOAT signal, but MP3 ENCODING
+    # itself changes the DECODED file the QA gate actually measures:
+    #   * lossy quantisation reshapes sample-to-sample steps, so a mix that was 0
+    #     clicks in float can decode to a couple of clicks (measured 2026-09-08: 0
+    #     -> 2 clicks at 105.79s/242.07s, tiny ~0.04 deltas = pure MP3 artefacts);
+    #   * inter-sample / encode OVERSHOOT can push the decoded true peak above the
+    #     -1.0 dBTP limit even though the float was limited with margin (measured
+    #     2026-09-07: an episode limited pre-encode decoded to a failing true peak).
+    # The detector and the DELIVERED file must agree, so correct in the delivered
+    # domain: decode → measure with the gate's OWN detectors → if clicks remain
+    # declick, and if the true peak is over the limit attenuate by the exact excess
+    # (plus a small guard) → re-encode. Bounded and idempotent (both converge).
     try:
         import numpy as _np
-        for _ in range(3):
+        for _ in range(4):
             y_dec = _read_wav_at_sr(str(out))
             if y_dec is None or not len(y_dec):
                 break
+            changed = False
+            # (a) delivered-domain clicks
             d = _np.abs(_np.diff(y_dec.astype("float32")))
             win = max(64, int(SR * 0.02))
             local = _np.convolve(d, _np.ones(win, dtype="float32") / win,
                                  mode="same") + 1e-9
             hits = _np.where((d > STD.HARD_CUT_DELTA_FLOOR) &
                              (d > STD.HARD_CUT_MAD_FACTOR * local))[0]
-            if not len(hits):
-                break                                  # delivered file is clean
-            y_dec = declick(y_dec, SR)
+            if len(hits):
+                y_dec = declick(y_dec, SR)
+                changed = True
+            # (b) delivered-domain true peak (oversampled, same method as the gate)
+            n = len(y_dec) * 4
+            xi = _np.linspace(0, len(y_dec) - 1, num=n, endpoint=True)
+            up = _np.interp(xi, _np.arange(len(y_dec)), y_dec.astype("float64"))
+            peak = float(_np.max(_np.abs(up))) if len(up) else 0.0
+            if peak > 0:
+                tp_dbtp = 20.0 * _np.log10(peak)
+                # Keep a 0.3 dB guard UNDER the limit so re-encode overshoot can't
+                # nudge it back over.
+                target_dbtp = STD.TRUE_PEAK_MAX_DBTP - 0.3
+                if tp_dbtp > target_dbtp:
+                    y_dec = (y_dec * (10 ** ((target_dbtp - tp_dbtp) / 20.0))
+                             ).astype("float32")
+                    changed = True
+            if not changed:
+                break                                  # delivered file is legal
             sf.write(str(out), y_dec, SR, format="MP3")
     except Exception:                                            # noqa: BLE001
         pass
