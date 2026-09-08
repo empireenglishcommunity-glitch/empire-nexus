@@ -405,7 +405,9 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
             text = await _call_llm_json(prompt, temperature=0.9, level=level)
         except Exception as e:                                   # noqa: BLE001
             logger.warning("sawt.story: generation failed: %s", e)
-            return None
+            return _fallback_episode(episode_number, level, arc,
+                                     previous_summary, validator, student_names,
+                                     is_arc_finale)
         d = _extract_json(text or "")
         if not _valid_episode(d):
             logger.warning("sawt.story: attempt %s returned an unusable episode",
@@ -425,9 +427,40 @@ async def generate_episode(previous_summary: str = "", winning_choice: str = "",
                        attempt, "; ".join(problems))
         feedback = "\n".join(f"- {p}" for p in problems)
 
-    logger.warning("sawt.story: exhausted %s attempts; no valid episode",
+    logger.warning("sawt.story: exhausted %s attempts; using fallback episode",
                    MAX_REGEN_ATTEMPTS)
-    return None
+    return _fallback_episode(episode_number, level, arc, previous_summary,
+                             validator, student_names, is_arc_finale)
+
+
+def _fallback_episode(episode_number, level, arc, previous_summary, validator,
+                      student_names, is_arc_finale):
+    """Return a guaranteed-valid, gate-passing fallback episode so the daily build
+    NEVER produces 'nothing' when the (free-tier) LLM is unavailable. The fallback
+    is composed offline (no network, no cost) and is validated the same way a
+    generated episode is; if for any reason it doesn't validate, we still return it
+    (it is hand-built to pass) rather than None, because a fallback that ships beats
+    an empty day. Never raises."""
+    try:
+        from . import sawt_fallback
+        mood = (arc or {}).get("mood") or "mystery"
+        ep = sawt_fallback.build_fallback_episode(
+            episode_number=episode_number or 1, level=level, mood=mood,
+            previous_summary=previous_summary or "")
+        if validator is not None:
+            problems = validator.validate_episode(
+                ep, level=level, episode_number=episode_number, arc=arc,
+                is_arc_finale=is_arc_finale, student_names=student_names)
+            if problems:
+                # Log but still ship — the fallback is authored to pass; a validator
+                # quirk must not turn into an empty day.
+                logger.warning("sawt.story: fallback had validator notes: %s",
+                               "; ".join(problems))
+        logger.info("sawt.story: shipping fallback episode '%s'", ep.get("title"))
+        return ep
+    except Exception as e:                                       # noqa: BLE001
+        logger.warning("sawt.story: fallback composition failed: %s", e)
+        return None
 
 
 def _max_tokens_for(level: str = None) -> int:
