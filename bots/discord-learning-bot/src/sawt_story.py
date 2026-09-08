@@ -77,8 +77,13 @@ def target_length(level: str = None) -> tuple:
         dmin, dmax, pace = 300.0, 420.0, "slow"
     # Measured words-per-minute of the cast at each CEFR pace (benchmarked with
     # scripts/benchmark_story_voices.py — see src/sawt_cast.PACE_SPEED).
-    wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
-           "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
+    # MEASURED 2026-09-08 at the current PACE_SPEED values (af_bella): very_slow
+    # 0.74->121, slow 0.82->145, moderate 0.90->157, natural 0.96->165 wpm. These
+    # MUST track PACE_SPEED (they were re-measured together when the slow end was
+    # raised to fix robotic delivery) and MUST match the identical table in
+    # sawt_script_validator._level_word_window.
+    wpm = {"very_slow": 121.0, "slow": 145.0, "moderate": 157.0,
+           "natural": 165.0, "fast": 190.0, "native": 205.0}.get(pace, 145.0)
     # The gate measures FINAL AUDIO duration = spoken words at `wpm` PLUS non-speech
     # overhead the words don't account for: the musical intro (~1.5s), the outro
     # (~2.5s), a short gap between every line (~0.3-0.5s each — dozens of them), and

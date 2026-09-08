@@ -299,3 +299,36 @@ def test_bandwidth_is_reported_but_never_fails(tmp_path):
     bw = r["metrics"]["bandwidth_above_3k4_pct"]
     assert bw["status"] == qa.INFO
     assert "bandwidth_above_3k4_pct" not in r["failures"]
+
+
+
+# ============================================================
+#  REPETITION / TTS STUTTER (owner report: cast repeats a word/sentence)
+# ============================================================
+
+def test_repetition_none_on_clean_transcript():
+    assert qa.measure_repetition("maya opened the door", "maya opened the door")[0] == 0
+
+
+def test_repetition_detects_word_stutter():
+    n, ex = qa.measure_repetition("maya opened the door",
+                                  "maya opened opened the door")
+    assert n == 1 and "opened" in ex
+
+
+def test_repetition_detects_phrase_stutter():
+    n, ex = qa.measure_repetition(
+        "there is another door maybe it leads out",
+        "there is another there is another door maybe it leads out")
+    assert n == 1 and any("there is another" in e for e in ex)
+
+
+def test_repetition_ignores_genuine_script_repeat():
+    """A script that really says 'no, no' must NOT be flagged as a stutter."""
+    assert qa.measure_repetition("no no i will not go", "no no i will not go")[0] == 0
+
+
+def test_repetition_is_a_gating_metric_in_standard():
+    """REPETITION_MAX exists and the gate wires a pass/fail 'repetition' metric."""
+    assert hasattr(STD, "REPETITION_MAX")
+    assert isinstance(STD.REPETITION_MAX, int)
