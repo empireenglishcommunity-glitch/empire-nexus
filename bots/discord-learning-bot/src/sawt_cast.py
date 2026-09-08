@@ -109,55 +109,65 @@ CAST = {
         "benchmark": {"note": "v1: Kokoro af_bella (temporary); Mai's clone to be "
                               "restored once the daily pipeline is proven live"},
     },
+    # ── NATURALNESS RE-CAST (2026-09-08, owner feedback) ───────────────────
+    # The owner found Maya (af_bella) and the Narrator (am_santa) natural, but the
+    # rest robotic. Re-measured every candidate at the ACTUAL slow delivery speed
+    # and matched the LIKED voices' profile — the tell for "robotic" was low PITCH
+    # VARIATION (monotone): af_bella=6.0 / am_santa=7.0 semitones, while the old
+    # picks were the flattest (am_echo 5.05, am_adam 5.67, and af_aoede/af_kore had
+    # near-zero spectral flatness = synthetic timbre). New picks match the liked
+    # profile (pitchVar ~6-7, flatness under the 0.012 gate) AND stay pitch-distinct.
     "leo": {
         "display": "Leo",
         "gender": "male",
         "engine": ENGINE_KOKORO,
-        "voice_id": "am_adam",          # ~120Hz, classic American male
+        "voice_id": "am_fenrir",        # ~121Hz, expressive (pitchVar 6.20) — was am_adam (monotone 5.67)
         "speed_factor": 1.0,
         "match": ("leo",),
         "role": "Cautious, loyal friend. Voice of hesitation and warning.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00240, "glitches": 0},
+        "benchmark": {"pitch_var": 6.20, "flatness": 0.0038, "median_hz": 121},
     },
     "stranger": {
         "display": "The Stranger",
         "gender": "male",
         "engine": ENGINE_KOKORO,
-        "voice_id": "am_echo",          # ~103Hz — glitch-free at slow speed
-        "speed_factor": 0.90,           # slower = colder, more deliberate
+        "voice_id": "am_onyx",          # ~86Hz, deep + very clean — was am_echo (monotone 5.05).
+                                        # NOT am_michael: it fails the naturalness gate (0.014>0.012).
+        "speed_factor": 0.94,           # deliberate, but not so slow it turns robotic
         "match": ("stranger", "figure", "shadow", "keeper"),
         "role": "Mysterious presence. Speaks rarely, slowly, and never explains.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00272, "glitches": 0},
+        "benchmark": {"pitch_var": 5.70, "flatness": 0.0001, "median_hz": 86},
     },
     "sara": {
         "display": "Sara",
         "gender": "female",
         "engine": ENGINE_KOKORO,
-        "voice_id": "af_aoede",         # ~177Hz, bright — glitch-free at slow speed
-        "speed_factor": 1.04,
+        "voice_id": "af_heart",         # ~186Hz, Kokoro's warmest female (pitchVar 6.68) — was af_aoede
+        "speed_factor": 1.02,
         "match": ("sara", "sarah"),
         "role": "Bright, quick-thinking friend. Optimistic and funny.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00062, "glitches": 0},
+        "benchmark": {"pitch_var": 6.68, "flatness": 0.0097, "median_hz": 186},
     },
     "mrs_adel": {
         "display": "Mrs. Adel",
         "gender": "female",
         "engine": ENGINE_KOKORO,
-        "voice_id": "af_kore",          # ~144Hz, lower/steadier — glitch-free
-        "speed_factor": 0.94,
+        "voice_id": "af_river",         # ~171Hz, warm/steady mentor (6.17) — was af_kore (synthetic 0.0012)
+        "speed_factor": 0.96,
         "match": ("mrs", "mrs.", "adel", "teacher", "elder", "grandmother"),
         "role": "Older mentor. Calm, gentle, knows more than she says.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00129, "glitches": 0},
+        "benchmark": {"pitch_var": 6.17, "flatness": 0.0008, "median_hz": 171},
     },
     "child": {
         "display": "Nour",
         "gender": "female",
         "engine": ENGINE_KOKORO,
-        "voice_id": "af_nova",          # ~153Hz — glitch-free at slow speed
-        "speed_factor": 1.06,
+        "voice_id": "af_alloy",         # ~138Hz, clean + expressive (5.88) — was af_nova.
+                                        # NOT af_jessica/af_nicole (excluded: glitches / naturalness).
+        "speed_factor": 1.04,
         "match": ("nour", "child", "kid", "little"),
         "role": "A curious child. Asks the questions everyone else is afraid to.",
-        "benchmark": {"worst_wer": 0.0, "flatness": 0.00118, "glitches": 0},
+        "benchmark": {"pitch_var": 5.88, "flatness": 0.0026, "median_hz": 138},
     },
 }
 
@@ -173,8 +183,11 @@ DEFAULT_CHARACTER = "narrator"
 # assigned a stable voice by its name (hash), so the same guest keeps one voice
 # within an episode. Gender comes from the roster (KNOWN only — never guessed).
 GUEST_VOICES = {
-    "female": ["af_sarah", "af_sky", "af_jessica"],
-    "male": ["am_michael", "am_liam", "am_fenrir"],
+    # Natural, gate-safe voices distinct from the fixed cast (and never the
+    # excluded am_michael/af_jessica/af_nicole/am_puck). Guests are brief, so a
+    # little overlap in register is fine — the ear cares most about naturalness.
+    "female": ["af_sarah", "bf_isabella", "bf_emma"],
+    "male": ["am_liam", "am_eric", "bm_george"],
 }
 GUEST_SPEED_FACTOR = 1.0
 
@@ -233,15 +246,21 @@ def _cameo_entry_for(low: str, words: set) -> dict:
 # rate targets are the reference; Kokoro's American voices run ~185-215 wpm at
 # speed 1.0, so these factors bring each level near its target. Set natively at
 # synthesis time — NEVER by stretching rendered audio.
+# NOTE on the slow end (2026-09-08): Kokoro is trained near speed 1.0 and turns
+# audibly ROBOTIC (and more glitch-prone) when pushed much below ~0.75. The old
+# very_slow=0.62 / slow=0.70 were a big part of the "robotic" complaint. Raised the
+# slow end toward Kokoro's natural range while keeping it clearly learner-paced;
+# the CEFR duration windows still hold (verified — target_length/word-window are
+# derived from these same numbers, so they move together).
 PACE_SPEED = {
-    "very_slow": 0.62,      # A1
-    "slow": 0.70,           # A2   (the speed the cast was benchmarked at)
-    "moderate": 0.82,       # B1
-    "natural": 0.92,        # B2
+    "very_slow": 0.74,      # A1  (was 0.62 — too robotic)
+    "slow": 0.82,           # A2  (was 0.70)
+    "moderate": 0.90,       # B1
+    "natural": 0.96,        # B2
     "fast": 1.0,            # C1
     "native": 1.08,         # C2
 }
-DEFAULT_PACE_SPEED = 0.70
+DEFAULT_PACE_SPEED = 0.82
 
 
 def speed_for_level(level: str, character_key: str = None) -> float:

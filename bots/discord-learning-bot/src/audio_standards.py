@@ -28,6 +28,16 @@ See `.kiro/specs/eec-chronicles-quality/requirements.md` (R1) for the full contr
 # all of which the old cloning engine produced.
 WER_MAX = 0.05
 
+# ── Repetition (TTS stutter) ─────────────────────────────────────────────────
+# The TTS engine can occasionally re-utter a word or short phrase (a "stutter"),
+# which WER alone tolerates because the extra words still overlap the reference.
+# We detect it separately: a phrase (2-3 words) heard CONSECUTIVELY TWICE in the
+# transcript that is NOT a genuine repeat in the script is a synthesis stutter.
+# Max allowed such events per episode; over this the gate fails so the line is
+# re-rendered. 0 would be ideal but ASR itself occasionally duplicates a word, so
+# a tiny tolerance avoids false positives on a clean render.
+REPETITION_MAX = 1
+
 # ── Naturalness ──────────────────────────────────────────────────────────────
 # Mean spectral flatness of the VOICE. Low = tonal/voice-like; high = noisy or
 # over-processed.

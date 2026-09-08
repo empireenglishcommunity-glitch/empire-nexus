@@ -244,6 +244,44 @@ def word_error_rate(reference: str, hypothesis: str) -> float:
     return float(prev[len(hyp)]) / float(len(ref))
 
 
+def measure_repetition(reference: str, hypothesis: str) -> tuple:
+    """Count TTS 'stutter' events: a short phrase heard CONSECUTIVELY TWICE in the
+    ASR transcript that is NOT a genuine consecutive repeat in the script.
+
+    Returns (count, examples). WER tolerates a stutter because the duplicated words
+    still overlap the reference, so this is measured separately. We look at adjacent
+    duplicate unigrams, bigrams and trigrams in the hypothesis, and subtract any
+    that are ALSO adjacent duplicates in the reference (so a script that really says
+    'no, no' is not flagged)."""
+    hyp = normalise_words(hypothesis)
+    ref = normalise_words(reference)
+
+    def _adjacent_dupes(words):
+        seen = set()
+        events = []
+        for n in (3, 2, 1):                      # longer phrases first (stronger signal)
+            for i in range(len(words) - 2 * n + 1):
+                a = tuple(words[i:i + n])
+                b = tuple(words[i + n:i + 2 * n])
+                if a == b:
+                    events.append((i, a))
+        return events
+
+    ref_dupes = {a for _i, a in _adjacent_dupes(ref)}
+    hyp_events = _adjacent_dupes(hyp)
+    # Collapse overlapping detections and drop genuine script repeats.
+    flagged, used = [], set()
+    for i, a in sorted(hyp_events, key=lambda e: (e[0], -len(e[1]))):
+        if a in ref_dupes:
+            continue
+        span = set(range(i, i + 2 * len(a)))
+        if span & used:
+            continue
+        used |= span
+        flagged.append(" ".join(a))
+    return len(flagged), flagged[:5]
+
+
 def default_transcriber(path, model_size="base.en"):
     """Transcribe with faster-whisper. Returns text, or None if unavailable —
     the caller then fails closed (WER is a critical metric)."""
@@ -310,6 +348,12 @@ def analyze(audio_path, script_text=None, level="A2", transcriber=None,
                    round(wer, 4), STD.WER_MAX,
                    f"{len(normalise_words(ref))} reference words")
             report["transcript"] = tx
+            # Repetition / TTS stutter (reuses the same transcript — no extra ASR).
+            reps, rep_examples = measure_repetition(ref, tx)
+            rep_max = getattr(STD, "REPETITION_MAX", 1)
+            _check(report, "repetition",
+                   PASS if reps <= rep_max else FAIL, reps, rep_max,
+                   (f"repeated: {rep_examples}" if rep_examples else "none"))
 
     # 2) Naturalness — only authoritative on VOICE-ONLY audio (see docstring).
     flat = measure_flatness(y, sr)
@@ -396,8 +440,8 @@ def format_report(report) -> str:
     """Human-readable summary (what a person reads in CI output)."""
     lines = [f"AUDIO QA — {report['audio']}",
              f"  duration {report.get('duration_seconds')}s · level {report['level']}"]
-    order = ["wer", "flatness", "hard_cuts", "loudness_lufs", "true_peak_dbtp",
-             "dead_air_s", "speech_over_bed_db", "duration_s",
+    order = ["wer", "repetition", "flatness", "hard_cuts", "loudness_lufs",
+             "true_peak_dbtp", "dead_air_s", "speech_over_bed_db", "duration_s",
              "bandwidth_above_3k4_pct"]
     for k in order:
         m = report["metrics"].get(k)

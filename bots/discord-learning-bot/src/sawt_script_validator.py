@@ -103,8 +103,10 @@ def _level_word_window(level: str) -> tuple:
         pace = prof.get("pace", "slow")
     except Exception:                                            # noqa: BLE001
         dmin, dmax, pace = 300.0, 420.0, "slow"
-    wpm = {"very_slow": 118.0, "slow": 133.0, "moderate": 155.0,
-           "natural": 175.0, "fast": 190.0, "native": 205.0}.get(pace, 133.0)
+    # MUST match sawt_story.target_length's table (re-measured 2026-09-08 when the
+    # PACE_SPEED slow end was raised to fix robotic delivery).
+    wpm = {"very_slow": 121.0, "slow": 145.0, "moderate": 157.0,
+           "natural": 165.0, "fast": 190.0, "native": 205.0}.get(pace, 145.0)
     # The word window must match what the AUDIO gate actually allows: final duration
     # = spoken words at `wpm` PLUS ~45s of non-speech overhead (intro/outro/per-line
     # gaps/pauses). BOTH bounds must keep the render INSIDE [dmin, dmax]:
