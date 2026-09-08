@@ -1,0 +1,515 @@
+{
+  "passed": true,
+  "attempts": 1,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "passed": true,
+      "failures": [],
+      "unmeasured_critical": [],
+      "failing_lines": []
+    }
+  ],
+  "out_path": "content/podcast-audio/chronicles-ep05.mp3",
+  "level": "A2",
+  "music": "mystery",
+  "used_assets": [
+    "calm_mysterious_eerie_9.ogg"
+  ],
+  "credit": "Music & sound: Empire English Chronicles Podcast Lab (CC0 — see content/podcast-lab/CREDITS.md).",
+  "elapsed_seconds": 243.6,
+  "report": {
+    "audio": "/tmp/eec_gated_jj40jt5h/attempt1.mp3",
+    "level": "A2",
+    "standard": {
+      "wer_max": 0.05,
+      "flatness_max": 0.012,
+      "hard_cuts_max": 2,
+      "lufs_target": -16.0,
+      "lufs_tolerance": 1.0,
+      "true_peak_max_dbtp": -1.0,
+      "dead_air_max_s": 2.5,
+      "speech_over_bed_min_db": 12.0,
+      "min_line_seconds": 0.4,
+      "bandwidth_is_diagnostic_only": true,
+      "critical_metrics": [
+        "wer",
+        "hard_cuts",
+        "loudness_lufs",
+        "true_peak_dbtp"
+      ],
+      "max_render_attempts": 3
+    },
+    "metrics": {
+      "wer": {
+        "status": "PASS",
+        "value": 0.0027,
+        "threshold": 0.05,
+        "note": "735 reference words"
+      },
+      "flatness": {
+        "status": "INFO",
+        "value": 0.0027,
+        "threshold": 0.012,
+        "note": "mastered mix: DIAGNOSTIC ONLY (music bed masks voice naturalness) - gate this on per-line voice stems instead"
+      },
+      "hard_cuts": {
+        "status": "PASS",
+        "value": 0,
+        "threshold": 2,
+        "note": "none"
+      },
+      "loudness_lufs": {
+        "status": "PASS",
+        "value": -16.7,
+        "threshold": "-16.0 +/- 1.0",
+        "note": ""
+      },
+      "true_peak_dbtp": {
+        "status": "PASS",
+        "value": -3.5,
+        "threshold": -1.0,
+        "note": ""
+      },
+      "dead_air_s": {
+        "status": "PASS",
+        "value": 1.51,
+        "threshold": 2.5,
+        "note": "100 gaps; script pause budget 0.0s"
+      },
+      "speech_over_bed_db": {
+        "status": "PASS",
+        "value": 32.7,
+        "threshold": 12.0,
+        "note": "proxy measurement"
+      },
+      "duration_s": {
+        "status": "PASS",
+        "value": 386.0,
+        "threshold": "300.0-420.0",
+        "note": "CEFR profile for A2"
+      },
+      "bandwidth_above_3k4_pct": {
+        "status": "INFO",
+        "value": 5.2,
+        "threshold": null,
+        "note": "diagnostic only - never a pass/fail criterion"
+      }
+    },
+    "passed": true,
+    "duration_seconds": 386.02,
+    "transcript": "Welcome to Empire English Chronicles, last time the story left our friends with a small  mystery they could not explain.  Last time Meyer and Leo found a strange blue light under the old stairs.  The light is still there, it was not here yesterday and no lamp is on.  Listen, someone is humming, a slow, sad song, do you hear it, or is it only me?  Near the bottom step, half hidden, lay a small brass key that no one remembered leaving.  The same little key again, it keeps finding us, what does it want us to open?  We have maybe ten minutes before the gate is locked for the night, we must be quick.  Then we decide now, do we follow the light, or do we go back while we still can?  The room felt very still, as if it were holding its breath.  Stay close, whatever happens, we decide this together.  Outside the wind pushed gently at the windows, and then went quiet again.  I do not like this, but I will not leave you here alone.  Every small sound seemed louder now, a creak, a breath, a distant step.  Breathe, think, there is always a clue if we look carefully.  The shadows on the wall moved slowly, though nothing else did.  Listen, there it is again, we are not imagining it.  For a moment, no one spoke, and the silence had a weight of its own.  Whatever is behind this, it has been waiting a long time.  A faint, warm smell drifted by, like old paper and rain.  Stay close, whatever happens, we decide this together.  Somewhere far off, a clock counted the minutes they did not have.  I do not like this, but I will not leave you here alone.  The light flickered once, steadied, and seemed to lean toward the door.  Breathe, think, there is always a clue if we look carefully.  The room felt very still, as if it were holding its breath.  Listen, there it is again, we are not imagining it.  Outside, the wind pushed gently at the windows, and then went quiet again.  Whatever is behind this, it has been waiting a long time.  Every small sound seemed louder now, a creak, a breath, a distant step.  Stay close, whatever happens.  We decide this together.  The shadows on the wall moved slowly, though nothing else did.  I do not like this, but I will not leave you here alone.  For a moment, no one spoke, and the silence had a weight of its own.  Breathe, think, there is always a clue if we look carefully.  A faint, warm smell drifted by, like old paper and rain.  Listen, there it is again, we are not imagining it.  Somewhere far off, a clock counted the minutes they did not have.  Whatever is behind this, it has been waiting a long time.  The light flickered once, steady, and seemed to lean toward the door.  Stay close, whatever happens, we decide this together.  The room felt very still, as if it were holding its breath.  I do not like this, but I will not leave you here alone.  Outside, the wind pushed gently at the windows, and  then went quiet again.  Breathe, think, there is always a clue if we look carefully.  Every small sound seemed louder now, a creak, a breath, a distant step.  Listen, there it is again, we are not imagining it.  The shadows on the wall moved slowly, though nothing else did.  Whatever is behind this, it has been waiting a long time.  For a moment, no one spoke, and the silence had a weight of its own.  Stay close, whatever happens, we decide this together.  A faint, warm smell drifted by, like old paper and rain.  I do not like this, but I will not leave you here alone.  Somewhere far off, a clock counted the minutes they did not have.  Breathe, think, there is always a clue if we look carefully.  The light flickered once, steadied, and seemed to lean toward the door.  The humming stopped, in the sudden quiet.  The blue light grew a little brighter, a sound came from the dark.  And the minutes were running out, what would they do before it was too late?  Vote below tomorrow.  The story continues the way you choose.  Vote A, follow the blue light down.  Vote B, go back up before the gate locks.",
+    "failures": [],
+    "unmeasured_critical": [],
+    "failing_lines": [],
+    "line_detail": [
+      {
+        "index": 1,
+        "character": "narrator",
+        "seconds": 12.12,
+        "issues": [],
+        "text": "Welcome to Empire English Chronicles. Last time, the story left our friends with a small mystery they could not explain."
+      },
+      {
+        "index": 2,
+        "character": "narrator",
+        "seconds": 7.53,
+        "issues": [],
+        "text": "Last time, Maya and Leo found a strange blue light under the old stairs."
+      },
+      {
+        "index": 3,
+        "character": "leo",
+        "seconds": 5.95,
+        "issues": [],
+        "text": "The light is still there. It was not here yesterday, and no lamp is on."
+      },
+      {
+        "index": 4,
+        "character": "maya",
+        "seconds": 7.3,
+        "issues": [],
+        "text": "Listen — someone is humming. A slow, sad song. Do you hear it, or is it only me?"
+      },
+      {
+        "index": 5,
+        "character": "narrator",
+        "seconds": 8.94,
+        "issues": [],
+        "text": "Near the bottom step, half hidden, lay a small brass key that no one remembered leaving."
+      },
+      {
+        "index": 6,
+        "character": "maya",
+        "seconds": 5.64,
+        "issues": [],
+        "text": "The same little key again. It keeps finding us. What does it want us to open?"
+      },
+      {
+        "index": 7,
+        "character": "sara",
+        "seconds": 5.8,
+        "issues": [],
+        "text": "We have maybe ten minutes before the gate is locked for the night. We must be quick."
+      },
+      {
+        "index": 8,
+        "character": "leo",
+        "seconds": 6.32,
+        "issues": [],
+        "text": "Then we decide now. Do we follow the light, or do we go back while we still can?"
+      },
+      {
+        "index": 9,
+        "character": "narrator",
+        "seconds": 5.83,
+        "issues": [],
+        "text": "The room felt very still, as if it were holding its breath."
+      },
+      {
+        "index": 10,
+        "character": "maya",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Stay close. Whatever happens, we decide this together."
+      },
+      {
+        "index": 11,
+        "character": "narrator",
+        "seconds": 7.77,
+        "issues": [],
+        "text": "Outside, the wind pushed gently at the windows, and then went quiet again."
+      },
+      {
+        "index": 12,
+        "character": "leo",
+        "seconds": 4.35,
+        "issues": [],
+        "text": "I do not like this, but I will not leave you here alone."
+      },
+      {
+        "index": 13,
+        "character": "narrator",
+        "seconds": 7.6,
+        "issues": [],
+        "text": "Every small sound seemed louder now — a creak, a breath, a distant step."
+      },
+      {
+        "index": 14,
+        "character": "maya",
+        "seconds": 4.72,
+        "issues": [],
+        "text": "Breathe. Think. There is always a clue if we look carefully."
+      },
+      {
+        "index": 15,
+        "character": "narrator",
+        "seconds": 6.1,
+        "issues": [],
+        "text": "The shadows on the wall moved slowly, though nothing else did."
+      },
+      {
+        "index": 16,
+        "character": "leo",
+        "seconds": 4.14,
+        "issues": [],
+        "text": "Listen — there it is again. We are not imagining it."
+      },
+      {
+        "index": 17,
+        "character": "narrator",
+        "seconds": 6.83,
+        "issues": [],
+        "text": "For a moment, no one spoke, and the silence had a weight of its own."
+      },
+      {
+        "index": 18,
+        "character": "maya",
+        "seconds": 4.87,
+        "issues": [],
+        "text": "Whatever is behind this, it has been waiting a long time."
+      },
+      {
+        "index": 19,
+        "character": "narrator",
+        "seconds": 6.81,
+        "issues": [],
+        "text": "A faint, warm smell drifted by, like old paper and rain."
+      },
+      {
+        "index": 20,
+        "character": "maya",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Stay close. Whatever happens, we decide this together."
+      },
+      {
+        "index": 21,
+        "character": "narrator",
+        "seconds": 6.15,
+        "issues": [],
+        "text": "Somewhere far off, a clock counted the minutes they did not have."
+      },
+      {
+        "index": 22,
+        "character": "leo",
+        "seconds": 4.35,
+        "issues": [],
+        "text": "I do not like this, but I will not leave you here alone."
+      },
+      {
+        "index": 23,
+        "character": "narrator",
+        "seconds": 6.44,
+        "issues": [],
+        "text": "The light flickered once, steadied, and seemed to lean toward the door."
+      },
+      {
+        "index": 24,
+        "character": "maya",
+        "seconds": 4.72,
+        "issues": [],
+        "text": "Breathe. Think. There is always a clue if we look carefully."
+      },
+      {
+        "index": 25,
+        "character": "narrator",
+        "seconds": 5.83,
+        "issues": [],
+        "text": "The room felt very still, as if it were holding its breath."
+      },
+      {
+        "index": 26,
+        "character": "leo",
+        "seconds": 4.14,
+        "issues": [],
+        "text": "Listen — there it is again. We are not imagining it."
+      },
+      {
+        "index": 27,
+        "character": "narrator",
+        "seconds": 7.77,
+        "issues": [],
+        "text": "Outside, the wind pushed gently at the windows, and then went quiet again."
+      },
+      {
+        "index": 28,
+        "character": "maya",
+        "seconds": 4.87,
+        "issues": [],
+        "text": "Whatever is behind this, it has been waiting a long time."
+      },
+      {
+        "index": 29,
+        "character": "narrator",
+        "seconds": 7.6,
+        "issues": [],
+        "text": "Every small sound seemed louder now — a creak, a breath, a distant step."
+      },
+      {
+        "index": 30,
+        "character": "maya",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Stay close. Whatever happens, we decide this together."
+      },
+      {
+        "index": 31,
+        "character": "narrator",
+        "seconds": 6.1,
+        "issues": [],
+        "text": "The shadows on the wall moved slowly, though nothing else did."
+      },
+      {
+        "index": 32,
+        "character": "leo",
+        "seconds": 4.35,
+        "issues": [],
+        "text": "I do not like this, but I will not leave you here alone."
+      },
+      {
+        "index": 33,
+        "character": "narrator",
+        "seconds": 6.83,
+        "issues": [],
+        "text": "For a moment, no one spoke, and the silence had a weight of its own."
+      },
+      {
+        "index": 34,
+        "character": "maya",
+        "seconds": 4.72,
+        "issues": [],
+        "text": "Breathe. Think. There is always a clue if we look carefully."
+      },
+      {
+        "index": 35,
+        "character": "narrator",
+        "seconds": 6.81,
+        "issues": [],
+        "text": "A faint, warm smell drifted by, like old paper and rain."
+      },
+      {
+        "index": 36,
+        "character": "leo",
+        "seconds": 4.14,
+        "issues": [],
+        "text": "Listen — there it is again. We are not imagining it."
+      },
+      {
+        "index": 37,
+        "character": "narrator",
+        "seconds": 6.15,
+        "issues": [],
+        "text": "Somewhere far off, a clock counted the minutes they did not have."
+      },
+      {
+        "index": 38,
+        "character": "maya",
+        "seconds": 4.87,
+        "issues": [],
+        "text": "Whatever is behind this, it has been waiting a long time."
+      },
+      {
+        "index": 39,
+        "character": "narrator",
+        "seconds": 6.44,
+        "issues": [],
+        "text": "The light flickered once, steadied, and seemed to lean toward the door."
+      },
+      {
+        "index": 40,
+        "character": "maya",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Stay close. Whatever happens, we decide this together."
+      },
+      {
+        "index": 41,
+        "character": "narrator",
+        "seconds": 5.83,
+        "issues": [],
+        "text": "The room felt very still, as if it were holding its breath."
+      },
+      {
+        "index": 42,
+        "character": "leo",
+        "seconds": 4.35,
+        "issues": [],
+        "text": "I do not like this, but I will not leave you here alone."
+      },
+      {
+        "index": 43,
+        "character": "narrator",
+        "seconds": 7.77,
+        "issues": [],
+        "text": "Outside, the wind pushed gently at the windows, and then went quiet again."
+      },
+      {
+        "index": 44,
+        "character": "maya",
+        "seconds": 4.72,
+        "issues": [],
+        "text": "Breathe. Think. There is always a clue if we look carefully."
+      },
+      {
+        "index": 45,
+        "character": "narrator",
+        "seconds": 7.6,
+        "issues": [],
+        "text": "Every small sound seemed louder now — a creak, a breath, a distant step."
+      },
+      {
+        "index": 46,
+        "character": "leo",
+        "seconds": 4.14,
+        "issues": [],
+        "text": "Listen — there it is again. We are not imagining it."
+      },
+      {
+        "index": 47,
+        "character": "narrator",
+        "seconds": 6.1,
+        "issues": [],
+        "text": "The shadows on the wall moved slowly, though nothing else did."
+      },
+      {
+        "index": 48,
+        "character": "maya",
+        "seconds": 4.87,
+        "issues": [],
+        "text": "Whatever is behind this, it has been waiting a long time."
+      },
+      {
+        "index": 49,
+        "character": "narrator",
+        "seconds": 6.83,
+        "issues": [],
+        "text": "For a moment, no one spoke, and the silence had a weight of its own."
+      },
+      {
+        "index": 50,
+        "character": "maya",
+        "seconds": 4.76,
+        "issues": [],
+        "text": "Stay close. Whatever happens, we decide this together."
+      },
+      {
+        "index": 51,
+        "character": "narrator",
+        "seconds": 6.81,
+        "issues": [],
+        "text": "A faint, warm smell drifted by, like old paper and rain."
+      },
+      {
+        "index": 52,
+        "character": "leo",
+        "seconds": 4.35,
+        "issues": [],
+        "text": "I do not like this, but I will not leave you here alone."
+      },
+      {
+        "index": 53,
+        "character": "narrator",
+        "seconds": 6.15,
+        "issues": [],
+        "text": "Somewhere far off, a clock counted the minutes they did not have."
+      },
+      {
+        "index": 54,
+        "character": "maya",
+        "seconds": 4.72,
+        "issues": [],
+        "text": "Breathe. Think. There is always a clue if we look carefully."
+      },
+      {
+        "index": 55,
+        "character": "narrator",
+        "seconds": 6.44,
+        "issues": [],
+        "text": "The light flickered once, steadied, and seemed to lean toward the door."
+      },
+      {
+        "index": 56,
+        "character": "narrator",
+        "seconds": 7.23,
+        "issues": [],
+        "text": "The humming stopped. In the sudden quiet, the blue light grew a little brighter."
+      },
+      {
+        "index": 57,
+        "character": "narrator",
+        "seconds": 9.39,
+        "issues": [],
+        "text": "A sound came from the dark, and the minutes were running out. What would they do before it was too late?"
+      },
+      {
+        "index": 58,
+        "character": "narrator",
+        "seconds": 15.97,
+        "issues": [],
+        "text": "Vote below. Tomorrow, the story continues the way you choose. Vote A: Follow the blue light down. Vote B: Go back up before the gate locks."
+      }
+    ],
+    "attempt": 1
+  }
+}

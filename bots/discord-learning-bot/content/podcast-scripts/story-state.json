@@ -1,6 +1,6 @@
 {
-  "episode_number": 4,
-  "recap": "Maya and Leo discover that the library is a broken memory, not just a building. Mrs. Adel reveals that the clock has broken time, causing the strange events to happen. A new word appears in the book, and Maya must decide how to use the key before the ceiling collapses.",
+  "episode_number": 5,
+  "recap": "In the quiet school hall at dusk, Maya and Leo find the brass key again and must choose whether to follow the mystery or step back.",
   "winning_choice": "",
   "motif_seen": true,
   "past_choices": [],
@@ -16,11 +16,9 @@
       "Leo",
       "Mrs. Adel"
     ],
-    "episode_in_arc": 3,
+    "episode_in_arc": 4,
     "planned_episodes": 6,
     "established_facts": [
-      "The library’s side gate was open despite being locked from the outside.",
-      "There is a book with no title and blank pages that feels warm.",
       "A brass key with a worn red ribbon was found on the central table.",
       "The book wrote the word 'Run' in glowing blue ink.",
       "The footprints near the window are fresh and made of water, despite no rain.",
@@ -30,7 +28,9 @@
       "Mrs. Adel was present in the library last week and last night.",
       "The library is described as a memory that can be broken.",
       "The brass key is for a 'heart', not a door.",
-      "New glowing blue ink is forming on the blank book page."
+      "New glowing blue ink is forming on the blank book page.",
+      "the brass key keeps reappearing",
+      "the friends were in the quiet school hall at dusk"
     ],
     "previous_genre": null
   }
