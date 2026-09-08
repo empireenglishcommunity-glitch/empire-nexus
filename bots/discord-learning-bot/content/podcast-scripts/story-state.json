@@ -1,6 +1,6 @@
 {
-  "episode_number": 5,
-  "recap": "In the quiet school hall at dusk, Maya and Leo find the brass key again and must choose whether to follow the mystery or step back.",
+  "episode_number": 6,
+  "recap": "In Mrs. Adel's small shop on a rainy evening, Maya and Leo find the brass key again and must choose whether to follow the mystery or step back.",
   "winning_choice": "",
   "motif_seen": true,
   "past_choices": [],
@@ -16,10 +16,9 @@
       "Leo",
       "Mrs. Adel"
     ],
-    "episode_in_arc": 4,
+    "episode_in_arc": 5,
     "planned_episodes": 6,
     "established_facts": [
-      "A brass key with a worn red ribbon was found on the central table.",
       "The book wrote the word 'Run' in glowing blue ink.",
       "The footprints near the window are fresh and made of water, despite no rain.",
       "The grandfather clock struck one, causing the library lights to turn blue.",
@@ -30,7 +29,8 @@
       "The brass key is for a 'heart', not a door.",
       "New glowing blue ink is forming on the blank book page.",
       "the brass key keeps reappearing",
-      "the friends were in the quiet school hall at dusk"
+      "the friends were in the quiet school hall at dusk",
+      "the friends were in Mrs. Adel's small shop on a rainy evening"
     ],
     "previous_genre": null
   }
